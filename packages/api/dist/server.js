@@ -14,8 +14,10 @@ import adminRoutes from "./interfaces/admin.routes.js";
 import agentRoutes from "./interfaces/agent.routes.js";
 import { registerWebhookRoutes as webhookRoutes } from "@automantpro/agent";
 dotenv.config();
-const PORT = parseInt(process.env.PORT ?? "3000", 10);
-const HOST = process.env.HOST ?? "0.0.0.0";
+// GoDaddy (y otros contenedores) inyectan PORT y pueden definir HOST=127.0.0.1;
+// la API debe escuchar siempre en todas las interfaces para ser alcanzable.
+const PORT = Number(process.env.PORT) || 3000;
+const HOST = process.env.LISTEN_HOST || "0.0.0.0";
 const app = Fastify({
     logger: {
         level: process.env.NODE_ENV === "production" ? "info" : "debug",
