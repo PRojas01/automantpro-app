@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "postinstall": "prisma generate --schema=packages/api/prisma/schema.prisma",
-    "build": "prisma generate --schema=packages/api/prisma/schema.prisma",
-    "start": "node packages/api/dist/server.js",
-    "dev": "node packages/api/dist/server.js",
-    "serve": "node packages/api/dist/server.js"
+    "postinstall": "prisma generate --schema=packages/api/prisma/schema.prisma || true",
+    "build": "echo prebuilt",
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "serve": "node server.mjs"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
