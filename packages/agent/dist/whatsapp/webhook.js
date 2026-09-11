@@ -9,20 +9,33 @@ function getOrCreateSession(phoneNumber) {
     }
     return session;
 }
+// Las rutas se registran en la raíz del plugin: el prefijo lo define quien lo monta
+// (la API lo monta en /wa/webhook), para no duplicar el segmento.
 export async function registerWebhookRoutes(app) {
-    app.get("/webhook", async (request, reply) => {
+    app.get("/", async (request, reply) => {
+        const secret = process.env.WEBHOOK_SECRET;
+        if (!secret) {
+            await reply.code(503).send({ error: "Webhook no configurado" });
+            return;
+        }
         const query = request.query;
         const mode = query["hub.mode"];
         const token = query["hub.verify_token"];
         const challenge = query["hub.challenge"];
-        if (mode === "subscribe" && token === process.env.WEBHOOK_SECRET) {
+        if (mode === "subscribe" && token === secret) {
             await reply.code(200).send(challenge);
         }
         else {
             await reply.code(403).send({ error: "Verification failed" });
         }
     });
-    app.post("/webhook", async (request, reply) => {
+    app.post("/", async (request, reply) => {
+        // Sin secreto configurado el webhook no procesa nada: evita un endpoint público
+        // capaz de abrir sesiones y gastar llamadas a la IA.
+        if (!process.env.WEBHOOK_SECRET) {
+            await reply.code(503).send({ error: "Webhook no configurado" });
+            return;
+        }
         const signature = request.headers["x-hub-signature-256"];
         const rawBody = JSON.stringify(request.body);
         if (!verifyWebhookSignature(rawBody, signature)) {

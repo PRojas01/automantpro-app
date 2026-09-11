@@ -61073,8 +61073,8 @@ function getConfig() {
 function verifyWebhookSignature(body, signatureHeader) {
   const config = getConfig();
   if (!config.webhookSecret) {
-    console.warn("WEBHOOK_SECRET not set \u2014 skipping signature verification");
-    return true;
+    console.warn("WEBHOOK_SECRET no configurado: se rechaza la petici\xF3n del webhook");
+    return false;
   }
   if (!signatureHeader) {
     return false;
@@ -61161,18 +61161,27 @@ function getOrCreateSession(phoneNumber) {
   return session;
 }
 async function registerWebhookRoutes(app2) {
-  app2.get("/webhook", async (request, reply) => {
+  app2.get("/", async (request, reply) => {
+    const secret = process.env.WEBHOOK_SECRET;
+    if (!secret) {
+      await reply.code(503).send({ error: "Webhook no configurado" });
+      return;
+    }
     const query = request.query;
     const mode = query["hub.mode"];
     const token = query["hub.verify_token"];
     const challenge = query["hub.challenge"];
-    if (mode === "subscribe" && token === process.env.WEBHOOK_SECRET) {
+    if (mode === "subscribe" && token === secret) {
       await reply.code(200).send(challenge);
     } else {
       await reply.code(403).send({ error: "Verification failed" });
     }
   });
-  app2.post("/webhook", async (request, reply) => {
+  app2.post("/", async (request, reply) => {
+    if (!process.env.WEBHOOK_SECRET) {
+      await reply.code(503).send({ error: "Webhook no configurado" });
+      return;
+    }
     const signature = request.headers["x-hub-signature-256"];
     const rawBody = JSON.stringify(request.body);
     if (!verifyWebhookSignature(rawBody, signature)) {
@@ -61292,7 +61301,7 @@ await app.register(orderRoutes, { prefix: apiPrefix });
 await app.register(marketplaceRoutes, { prefix: apiPrefix });
 await app.register(adminRoutes, { prefix: apiPrefix });
 await app.register(agentRoutes, { prefix: apiPrefix });
-await app.register(registerWebhookRoutes, { prefix: "/webhook" });
+await app.register(registerWebhookRoutes, { prefix: "/wa/webhook" });
 app.get("/health", async () => ({ status: "ok", jwt: jwtSecretSource }));
 app.get("/", async () => ({ status: "ok", service: "AutoMantPro API" }));
 app.setErrorHandler((error, request, reply) => {

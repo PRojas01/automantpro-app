@@ -10,8 +10,9 @@ function getConfig() {
 export function verifyWebhookSignature(body, signatureHeader) {
     const config = getConfig();
     if (!config.webhookSecret) {
-        console.warn("WEBHOOK_SECRET not set — skipping signature verification");
-        return true;
+        // Sin secreto configurado no se puede verificar nada: se rechaza (nunca se omite la verificación).
+        console.warn("WEBHOOK_SECRET no configurado: se rechaza la petición del webhook");
+        return false;
     }
     if (!signatureHeader) {
         return false;
