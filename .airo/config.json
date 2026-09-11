@@ -1,4 +1,4 @@
 {
   "build": "NODE_ENV=production npm run build",
-  "serve": "NODE_ENV=production node server.mjs"
+  "serve": "NODE_ENV=production node packages/api/dist/server.js"
 }
