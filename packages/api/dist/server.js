@@ -49,6 +49,8 @@ await app.register(adminRoutes, { prefix: apiPrefix });
 await app.register(agentRoutes, { prefix: apiPrefix });
 await app.register(webhookRoutes, { prefix: "/webhook" });
 app.get("/health", async () => ({ status: "ok" }));
+// La plataforma (GoDaddy) revisa la salud con GET / y HEAD /; Fastify atiende HEAD automáticamente.
+app.get("/", async () => ({ status: "ok", service: "AutoMantPro API" }));
 app.setErrorHandler((error, request, reply) => {
     const statusCode = error.statusCode ?? 500;
     const code = error.code;
