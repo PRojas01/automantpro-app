@@ -61240,6 +61240,7 @@ async function agentRoutes(app2) {
 }
 
 // packages/api/dist/server.js
+import { randomBytes } from "node:crypto";
 import_dotenv.default.config();
 var PORT = Number(process.env.PORT) || 3e3;
 var HOST = process.env.LISTEN_HOST || "0.0.0.0";
@@ -61252,13 +61253,32 @@ await app.register(import_cors.default, {
   origin: process.env.NODE_ENV === "production" ? false : true
 });
 var isProduction = process.env.NODE_ENV === "production";
-var jwtSecret = process.env.JWT_SECRET;
-if (isProduction && (!jwtSecret || jwtSecret.length < 32 || jwtSecret === "dev-secret-change-in-production-min-32-chars")) {
-  app.log.fatal("JWT_SECRET must be set to a strong secret of at least 32 chars in production");
-  process.exit(1);
+var DEV_SECRET = "dev-secret-change-in-production-min-32-chars";
+var configuredSecret = process.env.JWT_SECRET?.trim();
+var secretIsStrong = !!configuredSecret && configuredSecret.length >= 32 && configuredSecret !== DEV_SECRET;
+var jwtSecret;
+var jwtSecretSource;
+if (secretIsStrong) {
+  jwtSecret = configuredSecret;
+  jwtSecretSource = "env";
+} else if (isProduction) {
+  jwtSecret = randomBytes(48).toString("hex");
+  jwtSecretSource = "ephemeral";
+  app.log.warn({ jwtSecretPresent: !!configuredSecret }, "JWT_SECRET ausente o d\xE9bil: se usa un secreto ef\xEDmero aleatorio; configure JWT_SECRET (>= 32 caracteres) en la plataforma");
+} else {
+  jwtSecret = DEV_SECRET;
+  jwtSecretSource = "dev";
 }
+app.log.info({
+  env: {
+    NODE_ENV: process.env.NODE_ENV ?? "unset",
+    PORT: process.env.PORT ? "set" : "missing",
+    JWT_SECRET: configuredSecret ? secretIsStrong ? "set" : "weak" : "missing",
+    DATABASE_URL: process.env.DATABASE_URL ? "set" : "missing"
+  }
+}, "configuraci\xF3n de arranque");
 await app.register(import_jwt.default, {
-  secret: jwtSecret ?? "dev-secret-change-in-production-min-32-chars",
+  secret: jwtSecret,
   sign: { expiresIn: process.env.JWT_ACCESS_EXPIRY ?? "15m" }
 });
 var apiPrefix = "/api/v1";
@@ -61273,7 +61293,7 @@ await app.register(marketplaceRoutes, { prefix: apiPrefix });
 await app.register(adminRoutes, { prefix: apiPrefix });
 await app.register(agentRoutes, { prefix: apiPrefix });
 await app.register(registerWebhookRoutes, { prefix: "/webhook" });
-app.get("/health", async () => ({ status: "ok" }));
+app.get("/health", async () => ({ status: "ok", jwt: jwtSecretSource }));
 app.get("/", async () => ({ status: "ok", service: "AutoMantPro API" }));
 app.setErrorHandler((error, request, reply) => {
   const statusCode = error.statusCode ?? 500;
