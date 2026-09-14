@@ -83,7 +83,19 @@ export async function getSchemaStatus(conn) {
         missing: EXPECTED_TABLES.filter((t) => !presentSet.has(t.toLowerCase())),
     };
 }
-export async function applySchema(conn, statements = ALL_STATEMENTS) {
+/** Errores que indican que el objeto ya existe (otra ejecución lo creó): se cuentan como omitidos. */
+const ALREADY_APPLIED = new Set(["ER_DUP_FIELDNAME", "ER_DUP_KEYNAME", "ER_TABLE_EXISTS_ERROR", "ER_FK_DUP_NAME", "ER_MULTIPLE_PRI_KEY"]);
+let queue = Promise.resolve();
+/**
+ * Aplica el esquema. Las ejecuciones del mismo proceso van en fila (el arranque del servidor y el
+ * botón del panel pueden coincidir); entre procesos, los errores de "ya existe" no detienen nada.
+ */
+export function applySchema(conn, statements = ALL_STATEMENTS) {
+    const run = queue.then(() => applySchemaNow(conn, statements));
+    queue = run.catch(() => undefined);
+    return run;
+}
+async function applySchemaNow(conn, statements = ALL_STATEMENTS) {
     const info = await serverInfo(conn);
     const beforeTables = (await listTables(conn)).length;
     const results = [];
@@ -99,6 +111,10 @@ export async function applySchema(conn, statements = ALL_STATEMENTS) {
         }
         catch (err) {
             const e = err;
+            if (e.code && ALREADY_APPLIED.has(e.code)) {
+                results.push({ ...base, status: "skipped" });
+                continue;
+            }
             results.push({
                 ...base,
                 status: "failed",

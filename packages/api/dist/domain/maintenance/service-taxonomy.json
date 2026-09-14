@@ -1,0 +1,716 @@
+{
+  "version": "1.0.0",
+  "source": "docs/25-diseno-producto-whatsapp-30dias.md §1.3 — taxonomía de servicios (22 categorías)",
+  "generatedAt": "2026-09-11",
+  "note": "Catálogo maestro de servicios. 'periodic' indica si el servicio entra en el plan de mantenimiento (tiene intervalo en maintenance-rules.json); los no periódicos (carrocería, detailing, grúa…) se solicitan bajo demanda. appliesTo: clases y combustibles a los que aplica ('*' = todas). durationMin y costRefUsd son valores REFERENCIALES conservadores del mercado ecuatoriano (USD), orientativos para el plan; no son presupuesto.",
+  "categories": [
+    {
+      "id": "prevencion",
+      "name": "Mantenimiento preventivo por km",
+      "order": 1,
+      "subservices": [
+        {
+          "id": "prep_inspeccion",
+          "name": "Inspección multipunto preventiva",
+          "detail": "Revisión visual y funcional de los principales sistemas del vehículo.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 60,
+          "costRefUsd": 25,
+          "costNote": "Referencial; checklist básico de 25–35 USD según taller."
+        }
+      ]
+    },
+    {
+      "id": "lubricacion",
+      "name": "Lubricación / aceite",
+      "order": 2,
+      "subservices": [
+        {
+          "id": "aceite_motor",
+          "name": "Cambio de aceite y filtro de motor",
+          "detail": "Aceite según especificación del fabricante y filtro nuevo.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["*"],
+            "fuels": ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+          },
+          "durationMin": 60,
+          "costRefUsd": 45,
+          "costNote": "Referencial; 30–70 USD según gama y tipo de aceite. NO aplica a BEV (sin motor de combustión)."
+        }
+      ]
+    },
+    {
+      "id": "motor",
+      "name": "Motor",
+      "order": 3,
+      "subservices": [
+        {
+          "id": "motor_bujias",
+          "name": "Cambio de bujías / kit de encendido",
+          "detail": "Bujías nuevas y prueba del sistema de encendido (no aplica a diésel ni a BEV).",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano"],
+            "fuels": ["gasolina", "glp_gnv", "hev", "phev"]
+          },
+          "durationMin": 90,
+          "costRefUsd": 80,
+          "costNote": "Referencial por juego; 50–120 USD según motor y número de cilindros."
+        },
+        {
+          "id": "motor_filtro_aire",
+          "name": "Cambio de filtro de aire",
+          "detail": "Reemplazo del elemento filtrante de admisión de aire.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["*"],
+            "fuels": ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+          },
+          "durationMin": 30,
+          "costRefUsd": 18,
+          "costNote": "Referencial; 12–35 USD según marca. NO aplica a BEV."
+        },
+        {
+          "id": "motor_correa",
+          "name": "Revisión / cambio de correas",
+          "detail": "Inspección y cambio de correa(s) de distribución o de accesorios según especificación.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+          },
+          "durationMin": 180,
+          "costRefUsd": 250,
+          "costNote": "Referencial; 150–400 USD según motor. Catálogo conservador de manuales típicos."
+        }
+      ]
+    },
+    {
+      "id": "inyeccion",
+      "name": "Inyección / combustible",
+      "order": 4,
+      "subservices": [
+        {
+          "id": "iny_filtro_combustible",
+          "name": "Cambio de filtro de combustible",
+          "detail": "Reemplazo del filtro de combustible del sistema de inyección.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["*"],
+            "fuels": ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+          },
+          "durationMin": 60,
+          "costRefUsd": 35,
+          "costNote": "Referencial; 25–60 USD. Los de diésel suelen cambiarse con mayor frecuencia. NO aplica a BEV."
+        },
+        {
+          "id": "iny_limpieza",
+          "name": "Limpieza de inyectores / sistema",
+          "detail": "Limpieza del sistema de inyección (banco o aditivo de limpieza).",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+            "fuels": ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+          },
+          "durationMin": 90,
+          "costRefUsd": 80,
+          "costNote": "Referencial; 50–120 USD. NO aplica a BEV."
+        }
+      ]
+    },
+    {
+      "id": "refrigeracion",
+      "name": "Refrigeración",
+      "order": 5,
+      "subservices": [
+        {
+          "id": "ref_antifreeze",
+          "name": "Cambio de refrigerante / anticongelante",
+          "detail": "Reemplazo del líquido refrigerante y revisión de fugas.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 60,
+          "costRefUsd": 45,
+          "costNote": "Referencial; 35–70 USD. Aplica también a BEV (refrigeración de batería y electrónica)."
+        },
+        {
+          "id": "ref_radiador",
+          "name": "Lavado de radiador / sistema",
+          "detail": "Lavado del circuito de refrigeración y revisión de mangueras.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+            "fuels": ["*"]
+          },
+          "durationMin": 90,
+          "costRefUsd": 60,
+          "costNote": "Referencial; 40–90 USD."
+        }
+      ]
+    },
+    {
+      "id": "frenos",
+      "name": "Frenos",
+      "order": 6,
+      "subservices": [
+        {
+          "id": "freno_liquido",
+          "name": "Cambio de líquido de frenos",
+          "detail": "Sangría y reemplazo del líquido de frenos (carácter higroscópico).",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 60,
+          "costRefUsd": 35,
+          "costNote": "Referencial; 25–55 USD."
+        },
+        {
+          "id": "freno_pastillas",
+          "name": "Inspección / cambio de pastillas y discos",
+          "detail": "Inspección de espesor de pastillas y discos; reposición según desgaste.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 90,
+          "costRefUsd": 90,
+          "costNote": "Referencial (juego delantero); 60–160 USD según vehículo."
+        },
+        {
+          "id": "freno_regulacion",
+          "name": "Regulación de frenos (moto)",
+          "detail": "Ajuste y revisión del sistema de frenos de motocicleta / cuadrón.",
+          "periodic": true,
+          "appliesTo": { "classes": ["motocicleta", "cuadron"], "fuels": ["*"] },
+          "durationMin": 45,
+          "costRefUsd": 20,
+          "costNote": "Referencial; 15–30 USD."
+        }
+      ]
+    },
+    {
+      "id": "suspension",
+      "name": "Suspensión y dirección",
+      "order": 7,
+      "subservices": [
+        {
+          "id": "susp_amortiguadores",
+          "name": "Revisión / cambio de amortiguadores",
+          "detail": "Prueba y sustitución de amortiguadores y bujes según desgaste.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["*"]
+          },
+          "durationMin": 90,
+          "costRefUsd": 150,
+          "costNote": "Referencial por eje; 100–250 USD."
+        },
+        {
+          "id": "susp_direccion",
+          "name": "Inspección de suspensión y dirección",
+          "detail": "Inspección de terminales, rótulas, barra y juego de dirección.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["*"]
+          },
+          "durationMin": 45,
+          "costRefUsd": 25,
+          "costNote": "Referencial; 20–40 USD."
+        }
+      ]
+    },
+    {
+      "id": "transmision",
+      "name": "Transmisión / embrague",
+      "order": 8,
+      "subservices": [
+        {
+          "id": "trans_aceite_caja",
+          "name": "Cambio de aceite de caja / diferencial",
+          "detail": "Reemplazo del lubricante de la caja de cambios y diferencial.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 90,
+          "costRefUsd": 65,
+          "costNote": "Referencial; 45–110 USD. En BEV aplica al lubricante de la transmisión de reducción."
+        },
+        {
+          "id": "trans_filtro_caja",
+          "name": "Cambio de filtro de caja automática",
+          "detail": "Reemplazo del filtro y servicio de la caja automática.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano"],
+            "fuels": ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+          },
+          "durationMin": 120,
+          "costRefUsd": 90,
+          "costNote": "Referencial; 70–150 USD."
+        },
+        {
+          "id": "trans_embrague",
+          "name": "Revisión de embrague",
+          "detail": "Inspección del desgaste del embrague y ajuste según el caso.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+          },
+          "durationMin": 60,
+          "costRefUsd": 40,
+          "costNote": "Referencial (revisión); 30–60 USD. El kit de embrague se cotiza aparte."
+        },
+        {
+          "id": "trans_cadena",
+          "name": "Ajuste y lubricación de cadena (moto)",
+          "detail": "Limpieza, ajuste y lubricación de la cadena de transmisión.",
+          "periodic": true,
+          "appliesTo": { "classes": ["motocicleta", "cuadron"], "fuels": ["*"] },
+          "durationMin": 30,
+          "costRefUsd": 15,
+          "costNote": "Referencial; 10–25 USD."
+        }
+      ]
+    },
+    {
+      "id": "neumaticos",
+      "name": "Neumáticos / alineación / balanceo",
+      "order": 9,
+      "subservices": [
+        {
+          "id": "llanta_rotacion",
+          "name": "Rotación de neumáticos",
+          "detail": "Rotación cruzada de neumáticos para desgaste parejo.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["*"]
+          },
+          "durationMin": 45,
+          "costRefUsd": 12,
+          "costNote": "Referencial; 8–20 USD."
+        },
+        {
+          "id": "llanta_alineacion",
+          "name": "Alineación y balanceo",
+          "detail": "Alineación de dirección y balanceo de las ruedas.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["*"]
+          },
+          "durationMin": 60,
+          "costRefUsd": 30,
+          "costNote": "Referencial; 20–45 USD."
+        },
+        {
+          "id": "llanta_presion",
+          "name": "Revisión de presión y desgaste",
+          "detail": "Control de presión de inflado y profundidad del dibujo.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 30,
+          "costRefUsd": 10,
+          "costNote": "Referencial; 5–15 USD."
+        },
+        {
+          "id": "llanta_cambio",
+          "name": "Cambio de neumáticos",
+          "detail": "Sustitución de llantas por vida útil o desgaste.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 90,
+          "costRefUsd": 150,
+          "costNote": "Referencial por juego de 2; el precio varía por marca y perfil."
+        }
+      ]
+    },
+    {
+      "id": "electrico",
+      "name": "Eléctrico / batería",
+      "order": 10,
+      "subservices": [
+        {
+          "id": "elec_bateria",
+          "name": "Prueba y mantenimiento de batería",
+          "detail": "Prueba de carga, estado de los bornes y mantenimiento de la batería de 12 V.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 30,
+          "costRefUsd": 10,
+          "costNote": "Referencial; 5–15 USD. Aplica a todos, incluido BEV (batería de servicios)."
+        },
+        {
+          "id": "elec_alternador",
+          "name": "Revisión de alternador / sistema de carga",
+          "detail": "Comprobación del sistema de carga del vehículo.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 45,
+          "costRefUsd": 25,
+          "costNote": "Referencial; 20–40 USD."
+        },
+        {
+          "id": "elec_luces",
+          "name": "Revisión de luces y señalización",
+          "detail": "Verificación de luces exteriores, interiores y señalización del tablero.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 30,
+          "costRefUsd": 8,
+          "costNote": "Referencial; 5–12 USD."
+        }
+      ]
+    },
+    {
+      "id": "electronica",
+      "name": "Electrónica / escáner",
+      "order": 11,
+      "subservices": [
+        {
+          "id": "escaner_diagnostico",
+          "name": "Escaneo electrónico de códigos",
+          "detail": "Lectura de códigos de falla y prueba de módulos electrónicos.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 45,
+          "costRefUsd": 25,
+          "costNote": "Referencial; 20–40 USD."
+        }
+      ]
+    },
+    {
+      "id": "climatizacion",
+      "name": "Climatización",
+      "order": 12,
+      "subservices": [
+        {
+          "id": "clima_filtro_cabina",
+          "name": "Cambio de filtro de cabina",
+          "detail": "Reemplazo del filtro de habitáculo del aire acondicionado.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["*"]
+          },
+          "durationMin": 30,
+          "costRefUsd": 25,
+          "costNote": "Referencial; 18–40 USD."
+        },
+        {
+          "id": "clima_recarga",
+          "name": "Recarga y mantenimiento de A/C",
+          "detail": "Recarga de gas refrigerante y revisión del circuito de climatización.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["*"]
+          },
+          "durationMin": 90,
+          "costRefUsd": 80,
+          "costNote": "Referencial; 60–120 USD."
+        },
+        {
+          "id": "clima_desinfeccion",
+          "name": "Desinfección del sistema de climatización",
+          "detail": "Limpieza y desinfección de ductos y evaporador (control de olores).",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["*"]
+          },
+          "durationMin": 30,
+          "costRefUsd": 20,
+          "costNote": "Referencial; 15–35 USD."
+        }
+      ]
+    },
+    {
+      "id": "escape",
+      "name": "Escape / emisiones",
+      "order": 13,
+      "subservices": [
+        {
+          "id": "escape_gases",
+          "name": "Revisión de escape y emisiones",
+          "detail": "Inspección del sistema de escape y control de emisiones.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+          },
+          "durationMin": 30,
+          "costRefUsd": 15,
+          "costNote": "Referencial; 10–25 USD. NO aplica a BEV (sin escape)."
+        },
+        {
+          "id": "escape_mofle",
+          "name": "Cambio de mofle / silenciador",
+          "detail": "Sustitución del silenciador o tramos del sistema de escape.",
+          "periodic": false,
+          "appliesTo": {
+            "classes": ["*"],
+            "fuels": ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+          },
+          "durationMin": 90,
+          "costRefUsd": 120,
+          "costNote": "Referencial; 80–200 USD. Bajo demanda."
+        }
+      ]
+    },
+    {
+      "id": "carroceria",
+      "name": "Carrocería / pintura",
+      "order": 14,
+      "subservices": [
+        {
+          "id": "carro_enderezada",
+          "name": "Enderezada y pintura",
+          "detail": "Reparación de abolladuras y pintura de paneles.",
+          "periodic": false,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 240,
+          "costRefUsd": 250,
+          "costNote": "Referencial por panel; depende de daño. Bajo demanda."
+        },
+        {
+          "id": "carro_anticorrosiva",
+          "name": "Protección anticorrosiva",
+          "detail": "Tratamiento anticorrosivo de bajos y cavidades.",
+          "periodic": false,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 90,
+          "costRefUsd": 60,
+          "costNote": "Referencial; 45–90 USD. Bajo demanda."
+        }
+      ]
+    },
+    {
+      "id": "vidrios",
+      "name": "Vidrios",
+      "order": 15,
+      "subservices": [
+        {
+          "id": "vidrio_parabrisas",
+          "name": "Cambio / reparación de parabrisas",
+          "detail": "Reparación de fisuras o sustitución del parabrisas.",
+          "periodic": false,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["*"]
+          },
+          "durationMin": 60,
+          "costRefUsd": 120,
+          "costNote": "Referencial; 90–250 USD según vehículo. Bajo demanda."
+        },
+        {
+          "id": "vidrio_limpiadores",
+          "name": "Cambio de escobillas / plumillas",
+          "detail": "Sustitución de las escobillas de limpiaparabrisas.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+            "fuels": ["*"]
+          },
+          "durationMin": 15,
+          "costRefUsd": 12,
+          "costNote": "Referencial; juega por juego de 2."
+        }
+      ]
+    },
+    {
+      "id": "interior",
+      "name": "Interior / tapicería",
+      "order": 16,
+      "subservices": [
+        {
+          "id": "interior_limpieza",
+          "name": "Limpieza de tapicería y tablero",
+          "detail": "Limpieza profunda de asientos, alfombras y tablero.",
+          "periodic": false,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+            "fuels": ["*"]
+          },
+          "durationMin": 120,
+          "costRefUsd": 45,
+          "costNote": "Referencial; 35–70 USD. Bajo demanda."
+        }
+      ]
+    },
+    {
+      "id": "lavado",
+      "name": "Lavado / detailing",
+      "order": 17,
+      "subservices": [
+        {
+          "id": "lavado_exterior",
+          "name": "Lavado exterior con sellador",
+          "detail": "Lavado completo y sellador protector de pintura.",
+          "periodic": false,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 45,
+          "costRefUsd": 15,
+          "costNote": "Referencial; 10–25 USD. Bajo demanda."
+        },
+        {
+          "id": "lavado_detailing",
+          "name": "Detailing completo",
+          "detail": "Lavado, pulido, descontaminación y acabado profesional.",
+          "periodic": false,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 180,
+          "costRefUsd": 80,
+          "costNote": "Referencial; 60–140 USD. Bajo demanda."
+        }
+      ]
+    },
+    {
+      "id": "diesel",
+      "name": "Diésel / turbo",
+      "order": 18,
+      "subservices": [
+        {
+          "id": "die_turbo",
+          "name": "Revisión de turbo / admisión",
+          "detail": "Inspección del turbocompresor y del sistema de admisión.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["comercial_liviano", "camion", "bus"],
+            "fuels": ["diesel"]
+          },
+          "durationMin": 90,
+          "costRefUsd": 90,
+          "costNote": "Referencial (revisión); 60–140 USD."
+        },
+        {
+          "id": "die_inyectores",
+          "name": "Prueba de inyectores diésel",
+          "detail": "Prueba en banco y ajuste / reemplazo de inyectores diésel.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+            "fuels": ["diesel"]
+          },
+          "durationMin": 120,
+          "costRefUsd": 110,
+          "costNote": "Referencial; 80–180 USD."
+        },
+        {
+          "id": "die_dpf",
+          "name": "Limpieza de filtro de partículas (DPF)",
+          "detail": "Limpieza / regeneración del filtro de partículas diésel.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["comercial_liviano", "camion", "bus"],
+            "fuels": ["diesel"]
+          },
+          "durationMin": 120,
+          "costRefUsd": 130,
+          "costNote": "Referencial; 90–200 USD."
+        }
+      ]
+    },
+    {
+      "id": "alto_voltaje",
+      "name": "Alto voltaje (EV/HEV)",
+      "order": 19,
+      "subservices": [
+        {
+          "id": "hv_inspeccion",
+          "name": "Inspección del sistema de alto voltaje",
+          "detail": "Revisión de cables, conectores y aislamiento del sistema de alto voltaje.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano"],
+            "fuels": ["hev", "phev", "bev"]
+          },
+          "durationMin": 60,
+          "costRefUsd": 35,
+          "costNote": "Referencial; 25–55 USD. SOLO híbridos y eléctricos."
+        },
+        {
+          "id": "hv_bateria_traccion",
+          "name": "Prueba de batería de tracción",
+          "detail": "Prueba de capacidad y estado de la batería de alta tensión.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano"],
+            "fuels": ["hev", "phev", "bev"]
+          },
+          "durationMin": 90,
+          "costRefUsd": 50,
+          "costNote": "Referencial; 35–80 USD. SOLO híbridos y eléctricos."
+        }
+      ]
+    },
+    {
+      "id": "glp_gnv",
+      "name": "GLP/GNV",
+      "order": 20,
+      "subservices": [
+        {
+          "id": "glp_inspeccion",
+          "name": "Inspección periódica del sistema de gas",
+          "detail": "Inspección reglamentaria del sistema GLP/GNV (comprobación de fugas y válvulas).",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano"],
+            "fuels": ["glp_gnv"]
+          },
+          "durationMin": 60,
+          "costRefUsd": 45,
+          "costNote": "Referencial; 30–60 USD. Solo vehículos con sistema de gas."
+        },
+        {
+          "id": "glp_filtro",
+          "name": "Cambio de filtro de gas",
+          "detail": "Reemplazo del filtro del sistema de gas licuado / natural vehicular.",
+          "periodic": true,
+          "appliesTo": {
+            "classes": ["liviano", "van", "comercial_liviano"],
+            "fuels": ["glp_gnv"]
+          },
+          "durationMin": 60,
+          "costRefUsd": 40,
+          "costNote": "Referencial; 30–55 USD."
+        }
+      ]
+    },
+    {
+      "id": "grua",
+      "name": "Grúa / asistencia",
+      "order": 21,
+      "subservices": [
+        {
+          "id": "grua_remolque",
+          "name": "Servicio de grúa / remolque",
+          "detail": "Traslado del vehículo con grúa o asistencia en carretera.",
+          "periodic": false,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 120,
+          "costRefUsd": 60,
+          "costNote": "Referencial por carrera corta; 40–90 USD. Bajo demanda."
+        }
+      ]
+    },
+    {
+      "id": "rtv",
+      "name": "Pre-revisión técnica vehicular (RTV)",
+      "order": 22,
+      "subservices": [
+        {
+          "id": "rtv_pretest",
+          "name": "Pre-chequeo para RTV",
+          "detail": "Chequeo previo de los puntos que revisa la Revisión Técnica Vehicular.",
+          "periodic": true,
+          "appliesTo": { "classes": ["*"], "fuels": ["*"] },
+          "durationMin": 60,
+          "costRefUsd": 35,
+          "costNote": "Referencial; 25–50 USD. Período anual."
+        }
+      ]
+    }
+  ]
+}

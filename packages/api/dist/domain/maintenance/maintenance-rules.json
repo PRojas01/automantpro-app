@@ -1,0 +1,543 @@
+{
+  "version": "1.0.0",
+  "source": "Motor de reglas de mantenimiento — referencial",
+  "generatedAt": "2026-09-11",
+  "note": "Valores conservadores basados en manuales de mantenimiento TÍPICOS y prácticas del mercado ecuatoriano (referencial, sin datos de una marca concreta). intervalKm e intervalMonths son los intervalos base; severeFactor (0,5–0,8) se aplica cuando el uso es SEVERO (Sierra: altitud y pendientes; uso por defecto en Quito). Las combinaciones (clase, combustible) por servicio coinciden EXACTAMENTE con appliesTo de service-taxonomy.json; si un servicio o combinación no aparece aquí, no entra en el plan.",
+  "rules": [
+    {
+      "serviceId": "prep_inspeccion",
+      "classId": ["*"],
+      "fuelId": ["*"],
+      "intervalKm": 5000,
+      "intervalMonths": 6,
+      "severeFactor": 0.7,
+      "note": "Inspección multipunto preventiva cada 5.000 km / 6 meses."
+    },
+    {
+      "serviceId": "aceite_motor",
+      "classId": ["motocicleta"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 2000,
+      "intervalMonths": 3,
+      "severeFactor": 0.7,
+      "note": "Motos: cambio de aceite frecuente."
+    },
+    {
+      "serviceId": "aceite_motor",
+      "classId": ["cuadron"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 3000,
+      "intervalMonths": 4,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "aceite_motor",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["gasolina", "glp_gnv"],
+      "intervalKm": 5000,
+      "intervalMonths": 6,
+      "severeFactor": 0.7,
+      "note": "Livianos gasolina/GLP: 5.000 km / 6 meses (conservador para uso con GLP)."
+    },
+    {
+      "serviceId": "aceite_motor",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["hev", "phev"],
+      "intervalKm": 10000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7,
+      "note": "Híbridos: el motor de combustión trabaja menos, intervalo mayor."
+    },
+    {
+      "serviceId": "aceite_motor",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["diesel"],
+      "intervalKm": 6000,
+      "intervalMonths": 6,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "aceite_motor",
+      "classId": ["camion", "bus"],
+      "fuelId": ["gasolina", "glp_gnv", "hev", "phev"],
+      "intervalKm": 6000,
+      "intervalMonths": 6,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "aceite_motor",
+      "classId": ["camion", "bus"],
+      "fuelId": ["diesel"],
+      "intervalKm": 10000,
+      "intervalMonths": 6,
+      "severeFactor": 0.7,
+      "note": "Vehículos pesados diésel con intervalos de aceite más largos."
+    },
+    {
+      "serviceId": "aceite_motor",
+      "classId": ["maquinaria_liviana"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 2000,
+      "intervalMonths": 4,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "motor_bujias",
+      "classId": ["motocicleta", "cuadron"],
+      "fuelId": ["gasolina", "glp_gnv", "hev", "phev"],
+      "intervalKm": 8000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "motor_bujias",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["gasolina", "glp_gnv"],
+      "intervalKm": 30000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "motor_bujias",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["hev", "phev"],
+      "intervalKm": 40000,
+      "intervalMonths": 36,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "motor_filtro_aire",
+      "classId": ["motocicleta", "cuadron"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 6000,
+      "intervalMonths": 6,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "motor_filtro_aire",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 15000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "motor_filtro_aire",
+      "classId": ["camion", "bus"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 20000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "motor_filtro_aire",
+      "classId": ["maquinaria_liviana"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 10000,
+      "intervalMonths": 6,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "motor_correa",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["gasolina", "glp_gnv"],
+      "intervalKm": 60000,
+      "intervalMonths": 48,
+      "severeFactor": 0.8
+    },
+    {
+      "serviceId": "motor_correa",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["hev", "phev", "diesel"],
+      "intervalKm": 80000,
+      "intervalMonths": 48,
+      "severeFactor": 0.8
+    },
+    {
+      "serviceId": "motor_correa",
+      "classId": ["camion", "bus"],
+      "fuelId": ["gasolina", "glp_gnv"],
+      "intervalKm": 60000,
+      "intervalMonths": 48,
+      "severeFactor": 0.8
+    },
+    {
+      "serviceId": "motor_correa",
+      "classId": ["camion", "bus"],
+      "fuelId": ["hev", "phev", "diesel"],
+      "intervalKm": 80000,
+      "intervalMonths": 48,
+      "severeFactor": 0.8
+    },
+    {
+      "serviceId": "iny_filtro_combustible",
+      "classId": ["motocicleta", "cuadron"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 10000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "iny_filtro_combustible",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["gasolina", "glp_gnv", "hev", "phev"],
+      "intervalKm": 30000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "iny_filtro_combustible",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["diesel"],
+      "intervalKm": 20000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7,
+      "note": "Diésel: filtro de combustible con servicio más frecuente."
+    },
+    {
+      "serviceId": "iny_filtro_combustible",
+      "classId": ["camion", "bus"],
+      "fuelId": ["gasolina", "glp_gnv", "hev", "phev"],
+      "intervalKm": 30000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "iny_filtro_combustible",
+      "classId": ["camion", "bus"],
+      "fuelId": ["diesel"],
+      "intervalKm": 20000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "iny_filtro_combustible",
+      "classId": ["maquinaria_liviana"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 15000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "iny_limpieza",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 30000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "ref_antifreeze",
+      "classId": ["motocicleta", "cuadron"],
+      "fuelId": ["*"],
+      "intervalKm": 20000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "ref_antifreeze",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["*"],
+      "intervalKm": 40000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "ref_antifreeze",
+      "classId": ["maquinaria_liviana"],
+      "fuelId": ["*"],
+      "intervalKm": 20000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "ref_radiador",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+      "fuelId": ["*"],
+      "intervalKm": 60000,
+      "intervalMonths": 36,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "freno_liquido",
+      "classId": ["*"],
+      "fuelId": ["*"],
+      "intervalKm": 40000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7,
+      "note": "El líquido de frenos se degrada por humedad aunque no se recorra."
+    },
+    {
+      "serviceId": "freno_pastillas",
+      "classId": ["*"],
+      "fuelId": ["*"],
+      "intervalKm": 30000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7,
+      "note": "Inspección; la reposición depende del desgaste real."
+    },
+    {
+      "serviceId": "freno_regulacion",
+      "classId": ["motocicleta", "cuadron"],
+      "fuelId": ["*"],
+      "intervalKm": 5000,
+      "intervalMonths": 6,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "susp_amortiguadores",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["*"],
+      "intervalKm": 60000,
+      "intervalMonths": 48,
+      "severeFactor": 0.8
+    },
+    {
+      "serviceId": "susp_direccion",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["*"],
+      "intervalKm": 30000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "trans_aceite_caja",
+      "classId": ["motocicleta", "cuadron"],
+      "fuelId": ["*"],
+      "intervalKm": 6000,
+      "intervalMonths": 6,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "trans_aceite_caja",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 60000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "trans_aceite_caja",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["bev"],
+      "intervalKm": 80000,
+      "intervalMonths": 48,
+      "severeFactor": 0.7,
+      "note": "BEV: lubricante de la transmisión de reducción."
+    },
+    {
+      "serviceId": "trans_aceite_caja",
+      "classId": ["camion", "bus"],
+      "fuelId": ["*"],
+      "intervalKm": 60000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "trans_aceite_caja",
+      "classId": ["maquinaria_liviana"],
+      "fuelId": ["*"],
+      "intervalKm": 40000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "trans_filtro_caja",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 60000,
+      "intervalMonths": 36,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "trans_embrague",
+      "classId": ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 50000,
+      "intervalMonths": 36,
+      "severeFactor": 0.7,
+      "note": "Revisión de embrague; el reemplazo se cotiza según desgaste."
+    },
+    {
+      "serviceId": "trans_cadena",
+      "classId": ["motocicleta", "cuadron"],
+      "fuelId": ["*"],
+      "intervalKm": 2000,
+      "intervalMonths": 2,
+      "severeFactor": 0.7,
+      "note": "Cadena de moto: ajuste y lubricación cada 2.000 km / 2 meses."
+    },
+    {
+      "serviceId": "llanta_rotacion",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["*"],
+      "intervalKm": 10000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "llanta_alineacion",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["*"],
+      "intervalKm": 10000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "llanta_presion",
+      "classId": ["*"],
+      "fuelId": ["*"],
+      "intervalKm": 5000,
+      "intervalMonths": 3,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "llanta_cambio",
+      "classId": ["*"],
+      "fuelId": ["*"],
+      "intervalKm": 50000,
+      "intervalMonths": 48,
+      "severeFactor": 0.7,
+      "note": "Referencial por vida útil de llanta; depende del desgaste del dibujo."
+    },
+    {
+      "serviceId": "elec_bateria",
+      "classId": ["*"],
+      "fuelId": ["*"],
+      "intervalKm": 20000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "elec_alternador",
+      "classId": ["*"],
+      "fuelId": ["*"],
+      "intervalKm": 60000,
+      "intervalMonths": 48,
+      "severeFactor": 0.8
+    },
+    {
+      "serviceId": "elec_luces",
+      "classId": ["*"],
+      "fuelId": ["*"],
+      "intervalKm": 15000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "escaner_diagnostico",
+      "classId": ["*"],
+      "fuelId": ["*"],
+      "intervalKm": 20000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "clima_filtro_cabina",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["*"],
+      "intervalKm": 15000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "clima_recarga",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["*"],
+      "intervalKm": 24000,
+      "intervalMonths": 24,
+      "severeFactor": 0.8
+    },
+    {
+      "serviceId": "clima_desinfeccion",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["*"],
+      "intervalKm": 12000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "escape_gases",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+      "intervalKm": 20000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "vidrio_limpiadores",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus"],
+      "fuelId": ["*"],
+      "intervalKm": 12000,
+      "intervalMonths": 6,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "die_turbo",
+      "classId": ["comercial_liviano", "camion", "bus"],
+      "fuelId": ["diesel"],
+      "intervalKm": 60000,
+      "intervalMonths": 48,
+      "severeFactor": 0.8
+    },
+    {
+      "serviceId": "die_inyectores",
+      "classId": ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+      "fuelId": ["diesel"],
+      "intervalKm": 30000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "die_dpf",
+      "classId": ["comercial_liviano", "camion", "bus"],
+      "fuelId": ["diesel"],
+      "intervalKm": 80000,
+      "intervalMonths": 48,
+      "severeFactor": 0.8
+    },
+    {
+      "serviceId": "hv_inspeccion",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["hev", "phev", "bev"],
+      "intervalKm": 20000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7,
+      "note": "SOLO híbridos y eléctricos: sistema de alto voltaje."
+    },
+    {
+      "serviceId": "hv_bateria_traccion",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["hev", "phev", "bev"],
+      "intervalKm": 30000,
+      "intervalMonths": 24,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "glp_inspeccion",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["glp_gnv"],
+      "intervalKm": 20000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7,
+      "note": "Inspección reglamentaria del sistema de gas."
+    },
+    {
+      "serviceId": "glp_filtro",
+      "classId": ["liviano", "van", "comercial_liviano"],
+      "fuelId": ["glp_gnv"],
+      "intervalKm": 20000,
+      "intervalMonths": 12,
+      "severeFactor": 0.7
+    },
+    {
+      "serviceId": "rtv_pretest",
+      "classId": ["*"],
+      "fuelId": ["*"],
+      "intervalKm": null,
+      "intervalMonths": 12,
+      "severeFactor": 0.8,
+      "note": "Pre-chequeo para Revisión Técnica Vehicular: por tiempo (anual)."
+    }
+  ]
+}

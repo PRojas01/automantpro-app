@@ -10,6 +10,11 @@ export declare function listByUser(userId: string): Promise<{
     year: number;
     currentKm: number;
     plan: import("@prisma/client/runtime/library").JsonValue | null;
+    vehicleClass: string | null;
+    fuel: string | null;
+    plate: string | null;
+    usageProfile: string | null;
+    remindersOptIn: boolean;
 }[]>;
 export declare function create(userId: string, input: CreateVehicleInput): Promise<{
     model: string;
@@ -22,6 +27,11 @@ export declare function create(userId: string, input: CreateVehicleInput): Promi
     year: number;
     currentKm: number;
     plan: import("@prisma/client/runtime/library").JsonValue | null;
+    vehicleClass: string | null;
+    fuel: string | null;
+    plate: string | null;
+    usageProfile: string | null;
+    remindersOptIn: boolean;
 }>;
 export declare function update(userId: string, vehicleId: string, input: UpdateVehicleInput): Promise<{
     model: string;
@@ -34,6 +44,11 @@ export declare function update(userId: string, vehicleId: string, input: UpdateV
     year: number;
     currentKm: number;
     plan: import("@prisma/client/runtime/library").JsonValue | null;
+    vehicleClass: string | null;
+    fuel: string | null;
+    plate: string | null;
+    usageProfile: string | null;
+    remindersOptIn: boolean;
 } | null>;
 export declare function findByIdAndUser(vehicleId: string, userId: string): Promise<{
     model: string;
@@ -46,6 +61,11 @@ export declare function findByIdAndUser(vehicleId: string, userId: string): Prom
     year: number;
     currentKm: number;
     plan: import("@prisma/client/runtime/library").JsonValue | null;
+    vehicleClass: string | null;
+    fuel: string | null;
+    plate: string | null;
+    usageProfile: string | null;
+    remindersOptIn: boolean;
 } | null>;
 export declare function getMaintenancePlan(vehicleId: string): Promise<{
     id: string;

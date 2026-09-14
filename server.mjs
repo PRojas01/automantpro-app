@@ -97,11 +97,11 @@ var require_queue = __commonJS({
         get concurrency() {
           return _concurrency;
         },
-        set concurrency(value) {
-          if (!(value >= 1)) {
+        set concurrency(value2) {
+          if (!(value2 >= 1)) {
             throw new Error("fastqueue concurrency must be equal to or greater than 1");
           }
-          _concurrency = value;
+          _concurrency = value2;
           if (self2.paused) return;
           for (; queueHead && _running < _concurrency; ) {
             _running++;
@@ -161,11 +161,11 @@ var require_queue = __commonJS({
       function idle() {
         return _running === 0 && self2.length() === 0;
       }
-      function push(value, done) {
+      function push(value2, done) {
         var current = cache.get();
         current.context = context;
         current.release = release;
-        current.value = value;
+        current.value = value2;
         current.callback = done || noop;
         current.errorHandler = errorHandler;
         if (_running >= _concurrency || self2.paused) {
@@ -182,11 +182,11 @@ var require_queue = __commonJS({
           worker.call(context, current.value, current.worked);
         }
       }
-      function unshift(value, done) {
+      function unshift(value2, done) {
         var current = cache.get();
         current.context = context;
         current.release = release;
-        current.value = value;
+        current.value = value2;
         current.callback = done || noop;
         current.errorHandler = errorHandler;
         if (_running >= _concurrency || self2.paused) {
@@ -298,16 +298,16 @@ var require_queue = __commonJS({
           cb(null, res);
         }, cb);
       }
-      var queue = fastqueue(context, asyncWrapper, _concurrency);
-      var pushCb = queue.push;
-      var unshiftCb = queue.unshift;
-      queue.push = push;
-      queue.unshift = unshift;
-      queue.drained = drained;
-      return queue;
-      function push(value) {
+      var queue2 = fastqueue(context, asyncWrapper, _concurrency);
+      var pushCb = queue2.push;
+      var unshiftCb = queue2.unshift;
+      queue2.push = push;
+      queue2.unshift = unshift;
+      queue2.drained = drained;
+      return queue2;
+      function push(value2) {
         var p = new Promise(function(resolve, reject) {
-          pushCb(value, function(err, result) {
+          pushCb(value2, function(err, result) {
             if (err) {
               reject(err);
               return;
@@ -318,9 +318,9 @@ var require_queue = __commonJS({
         p.catch(noop);
         return p;
       }
-      function unshift(value) {
+      function unshift(value2) {
         var p = new Promise(function(resolve, reject) {
-          unshiftCb(value, function(err, result) {
+          unshiftCb(value2, function(err, result) {
             if (err) {
               reject(err);
               return;
@@ -334,14 +334,14 @@ var require_queue = __commonJS({
       function drained() {
         var p = new Promise(function(resolve) {
           process.nextTick(function() {
-            if (queue.idle()) {
+            if (queue2.idle()) {
               resolve();
             } else {
-              var previousDrain = queue.drain;
-              queue.drain = function() {
+              var previousDrain = queue2.drain;
+              queue2.drain = function() {
                 if (typeof previousDrain === "function") previousDrain();
                 resolve();
-                queue.drain = previousDrain;
+                queue2.drain = previousDrain;
               };
             }
           });
@@ -743,8 +743,8 @@ var require_plugin = __commonJS({
     var { AVV_ERR_PLUGIN_EXEC_TIMEOUT } = require_errors();
     var { getPluginName } = require_get_plugin_name();
     var { isPromiseLike } = require_is_promise_like();
-    function Plugin(queue, func, options, isAfter, timeout) {
-      this.queue = queue;
+    function Plugin(queue2, func, options, isAfter, timeout) {
+      this.queue = queue2;
       this.func = func;
       this.options = options;
       this.isAfter = isAfter;
@@ -801,7 +801,7 @@ var require_plugin = __commonJS({
         debug("exec: resolving promise", name);
         maybePromiseLike.then(
           () => process.nextTick(done),
-          (e) => process.nextTick(done, e)
+          (e2) => process.nextTick(done, e2)
         );
       } else if (func.length < 3) {
         done();
@@ -1411,7 +1411,7 @@ var require_avvio = __commonJS({
           debug("resolving close/onClose promise");
           promise.then(
             () => process.nextTick(cb),
-            (e) => process.nextTick(cb, e)
+            (e2) => process.nextTick(cb, e2)
           );
         } else {
           process.nextTick(cb);
@@ -2445,8 +2445,8 @@ var require_hooks = __commonJS({
         if (fn.length === 1) {
           try {
             fn.call(server2, done);
-          } catch (e) {
-            done(e);
+          } catch (e2) {
+            done(e2);
           }
           return;
         }
@@ -3420,10 +3420,10 @@ var require_toad_cache = __commonJS({
       keys() {
         return this.items.keys();
       }
-      set(key, value) {
+      set(key, value2) {
         const existing = this.items.get(key);
         if (existing !== void 0) {
-          existing.value = value;
+          existing.value = value2;
           existing.expiry = this.ttl > 0 ? Date.now() + this.ttl : this.ttl;
           return;
         }
@@ -3435,7 +3435,7 @@ var require_toad_cache = __commonJS({
           key,
           prev: this.last,
           next: null,
-          value
+          value: value2
         };
         this.items.set(key, item);
         if (this.size === 1) {
@@ -3525,10 +3525,10 @@ var require_toad_cache = __commonJS({
       keys() {
         return Object.keys(this.items);
       }
-      set(key, value) {
+      set(key, value2) {
         const existing = this.items[key];
         if (existing !== void 0) {
-          existing.value = value;
+          existing.value = value2;
           existing.expiry = this.ttl > 0 ? Date.now() + this.ttl : this.ttl;
           return;
         }
@@ -3540,7 +3540,7 @@ var require_toad_cache = __commonJS({
           key,
           prev: this.last,
           next: null,
-          value
+          value: value2
         };
         this.items[key] = item;
         if (++this.size === 1) {
@@ -3687,10 +3687,10 @@ var require_toad_cache = __commonJS({
       keys() {
         return this.items.keys();
       }
-      set(key, value) {
+      set(key, value2) {
         const existing = this.items.get(key);
         if (existing !== void 0) {
-          existing.value = value;
+          existing.value = value2;
           existing.expiry = this.ttl > 0 ? Date.now() + this.ttl : this.ttl;
           this.bumpLru(existing);
           return;
@@ -3703,7 +3703,7 @@ var require_toad_cache = __commonJS({
           key,
           prev: this.last,
           next: null,
-          value
+          value: value2
         };
         this.items.set(key, item);
         if (this.size === 1) {
@@ -3815,10 +3815,10 @@ var require_toad_cache = __commonJS({
       keys() {
         return Object.keys(this.items);
       }
-      set(key, value) {
+      set(key, value2) {
         const existing = this.items[key];
         if (existing !== void 0) {
-          existing.value = value;
+          existing.value = value2;
           existing.expiry = this.ttl > 0 ? Date.now() + this.ttl : this.ttl;
           this.bumpLru(existing);
           return;
@@ -3831,7 +3831,7 @@ var require_toad_cache = __commonJS({
           key,
           prev: this.last,
           next: null,
-          value
+          value: value2
         };
         this.items[key] = item;
         if (++this.size === 1) {
@@ -3933,8 +3933,8 @@ var require_toad_cache = __commonJS({
       getStatistics() {
         return this.hitStatistics.getStatistics();
       }
-      set(key, value) {
-        super.set(key, value);
+      set(key, value2) {
+        super.set(key, value2);
         this.hitStatistics.addSet();
         this.hitStatistics.setCacheSize(this.size);
       }
@@ -4068,14 +4068,14 @@ var require_content_type = __commonJS({
         let matches = keyValuePairsReg.exec(paramsList);
         while (matches) {
           const key = matches[1].toLowerCase();
-          let value = matches[2];
-          if (value.charCodeAt(0) === 34) {
-            value = value.slice(1, -1);
-            if (value.indexOf("\\") !== -1) {
-              value = value.replace(quotedPairReg, "$1");
+          let value2 = matches[2];
+          if (value2.charCodeAt(0) === 34) {
+            value2 = value2.slice(1, -1);
+            if (value2.indexOf("\\") !== -1) {
+              value2 = value2.replace(quotedPairReg, "$1");
             }
           }
-          this.#parameters.set(key, value);
+          this.#parameters.set(key, value2);
           matches = keyValuePairsReg.exec(paramsList);
         }
       }
@@ -4104,8 +4104,8 @@ var require_content_type = __commonJS({
       toString() {
         if (this.#string) return this.#string;
         const parameters = [];
-        for (const [key, value] of this.#parameters.entries()) {
-          parameters.push(`${key}="${value}"`);
+        for (const [key, value2] of this.#parameters.entries()) {
+          parameters.push(`${key}="${value2}"`);
         }
         const result = [this.#type, "/", this.#subtype];
         if (parameters.length > 0) {
@@ -5671,7 +5671,7 @@ var require_initial_config_validation = __commonJS({
     function validateInitialConfig(options) {
       const opts = deepClone(options);
       if (!validate(opts)) {
-        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e) => e.message)));
+        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e2) => e2.message)));
         error.errors = validate.errors;
         throw error;
       }
@@ -5680,11 +5680,11 @@ var require_initial_config_validation = __commonJS({
     function deepFreezeObject(object) {
       const properties = Object.getOwnPropertyNames(object);
       for (const name of properties) {
-        const value = object[name];
-        if (ArrayBuffer.isView(value) && !(value instanceof DataView)) {
+        const value2 = object[name];
+        if (ArrayBuffer.isView(value2) && !(value2 instanceof DataView)) {
           continue;
         }
-        object[name] = value && typeof value === "object" ? deepFreezeObject(value) : value;
+        object[name] = value2 && typeof value2 === "object" ? deepFreezeObject(value2) : value2;
       }
       return Object.freeze(object);
     }
@@ -5720,8 +5720,8 @@ var require_log_controller = __commonJS({
        * @param {object} req  Raw or Fastify request object.
        * @returns {boolean}   `true` when logging should be skipped.
        */
-      isLogDisabled(req) {
-        return this.isDisableRequestLoggingFunction ? this.disableRequestLogging(req) : this.disableRequestLogging;
+      isLogDisabled(req2) {
+        return this.isDisableRequestLoggingFunction ? this.disableRequestLogging(req2) : this.disableRequestLogging;
       }
       /**
        * Logs an incoming request at `info` level.
@@ -6132,32 +6132,32 @@ var require_req = __commonJS({
       writable: true,
       value: {}
     });
-    function reqSerializer(req) {
-      const connection = req.info || req.socket;
+    function reqSerializer(req2) {
+      const connection = req2.info || req2.socket;
       const _req = Object.create(pinoReqProto);
-      _req.id = typeof req.id === "function" ? req.id() : req.id || (req.info ? req.info.id : void 0);
-      _req.method = req.method;
-      if (req.originalUrl) {
-        _req.url = req.originalUrl;
+      _req.id = typeof req2.id === "function" ? req2.id() : req2.id || (req2.info ? req2.info.id : void 0);
+      _req.method = req2.method;
+      if (req2.originalUrl) {
+        _req.url = req2.originalUrl;
       } else {
-        const path = req.path;
-        _req.url = typeof path === "string" ? path : req.url ? req.url.path || req.url : void 0;
+        const path = req2.path;
+        _req.url = typeof path === "string" ? path : req2.url ? req2.url.path || req2.url : void 0;
       }
-      if (req.query) {
-        _req.query = req.query;
+      if (req2.query) {
+        _req.query = req2.query;
       }
-      if (req.params) {
-        _req.params = req.params;
+      if (req2.params) {
+        _req.params = req2.params;
       }
-      _req.headers = req.headers;
+      _req.headers = req2.headers;
       _req.remoteAddress = connection && connection.remoteAddress;
       _req.remotePort = connection && connection.remotePort;
-      _req.raw = req.raw || req;
+      _req.raw = req2.raw || req2;
       return _req;
     }
-    function mapHttpRequest(req) {
+    function mapHttpRequest(req2) {
       return {
-        req: reqSerializer(req)
+        req: reqSerializer(req2)
       };
     }
   }
@@ -6235,8 +6235,8 @@ var require_pino_std_serializers = __commonJS({
       },
       wrapRequestSerializer: function wrapRequestSerializer(customSerializer) {
         if (customSerializer === reqSerializers.reqSerializer) return customSerializer;
-        return function wrappedReqSerializer(req) {
-          return customSerializer(reqSerializers.reqSerializer(req));
+        return function wrappedReqSerializer(req2) {
+          return customSerializer(reqSerializers.reqSerializer(req2));
         };
       },
       wrapResponseSerializer: function wrapResponseSerializer(customSerializer) {
@@ -6349,7 +6349,7 @@ var require_redact = __commonJS({
       }
       return parts;
     }
-    function setValue(obj, parts, value) {
+    function setValue(obj, parts, value2) {
       let current = obj;
       for (let i = 0; i < parts.length - 1; i++) {
         const key = parts[i];
@@ -6365,18 +6365,18 @@ var require_redact = __commonJS({
       if (lastKey === "*") {
         if (Array.isArray(current)) {
           for (let i = 0; i < current.length; i++) {
-            current[i] = value;
+            current[i] = value2;
           }
         } else if (typeof current === "object" && current !== null) {
           for (const key in current) {
             if (Object.prototype.hasOwnProperty.call(current, key)) {
-              current[key] = value;
+              current[key] = value2;
             }
           }
         }
       } else {
         if (typeof current === "object" && current !== null && lastKey in current && Object.prototype.hasOwnProperty.call(current, lastKey)) {
-          current[lastKey] = value;
+          current[lastKey] = value2;
         }
       }
       return true;
@@ -6452,11 +6452,11 @@ var require_redact = __commonJS({
           if (remove) {
             removeKey(obj, parts);
           } else {
-            const value = getValueIfExists(obj, parts);
-            if (value === PATH_NOT_FOUND) {
+            const value2 = getValueIfExists(obj, parts);
+            if (value2 === PATH_NOT_FOUND) {
               continue;
             }
-            const actualCensor = typeof censor === "function" ? censor(value, parts) : censor;
+            const actualCensor = typeof censor === "function" ? censor(value2, parts) : censor;
             setValue(obj, parts, actualCensor);
           }
         }
@@ -6532,9 +6532,9 @@ var require_redact = __commonJS({
           }
         } else {
           if (afterWildcard.includes("*")) {
-            const wrappedCensor = typeof censor === "function" ? (value, path) => {
+            const wrappedCensor = typeof censor === "function" ? (value2, path) => {
               const fullPath = [...pathArray.slice(0, pathLength), ...path];
-              return censor(value, fullPath);
+              return censor(value2, fullPath);
             } : censor;
             redactWildcardPath(current, afterWildcard, wrappedCensor, originalPath, remove);
           } else {
@@ -6831,10 +6831,10 @@ var require_redaction = __commonJS({
       };
       return [...Object.keys(shape), ...Object.getOwnPropertySymbols(shape)].reduce((o, k) => {
         if (shape[k] === null) {
-          o[k] = (value) => topCensor(value, [k]);
+          o[k] = (value2) => topCensor(value2, [k]);
         } else {
-          const wrappedCensor = typeof censor === "function" ? (value, path) => {
-            return censor(value, [k, ...path]);
+          const wrappedCensor = typeof censor === "function" ? (value2, path) => {
+            return censor(value2, [k, ...path]);
           } : censor;
           o[k] = Redact({
             paths: shape[k],
@@ -6884,11 +6884,11 @@ var require_time = __commonJS({
       const date = new Date(msSinceEpoch);
       const year = date.getUTCFullYear();
       const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
-      const day = date.getUTCDate().toString().padStart(2, "0");
+      const day2 = date.getUTCDate().toString().padStart(2, "0");
       const hours = date.getUTCHours().toString().padStart(2, "0");
       const minutes = date.getUTCMinutes().toString().padStart(2, "0");
       const seconds = date.getUTCSeconds().toString().padStart(2, "0");
-      return `,"time":"${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${nanosWithinSecond.toString().padStart(9, "0")}Z"`;
+      return `,"time":"${year}-${month}-${day2}T${hours}:${minutes}:${seconds}.${nanosWithinSecond.toString().padStart(9, "0")}Z"`;
     };
     module.exports = { nullTime, epochTime, unixTime, isoTime, isoTimeNano };
   }
@@ -6901,7 +6901,7 @@ var require_quick_format_unescaped = __commonJS({
     function tryStringify(o) {
       try {
         return JSON.stringify(o);
-      } catch (e) {
+      } catch (e2) {
         return '"[Circular]"';
       }
     }
@@ -7893,8 +7893,8 @@ var require_thread_stream = __commonJS({
       });
     }
     var FakeWeakRef = class {
-      constructor(value) {
-        this._value = value;
+      constructor(value2) {
+        this._value = value2;
       }
       deref() {
         return this._value;
@@ -8434,8 +8434,8 @@ var require_transport = __commonJS({
           continue;
         }
         if (token.startsWith("--require=") || token.startsWith("-r=") || token.startsWith("--import=")) {
-          const value = token.slice(token.indexOf("=") + 1);
-          if (shouldDropPreload(value)) {
+          const value2 = token.slice(token.indexOf("=") + 1);
+          if (shouldDropPreload(value2)) {
             changed = true;
             continue;
           }
@@ -8444,8 +8444,8 @@ var require_transport = __commonJS({
       }
       return changed ? sanitized.join(" ") : nodeOptions;
     }
-    function shouldDropPreload(value) {
-      const unquoted = stripQuotes(value);
+    function shouldDropPreload(value2) {
+      const unquoted = stripQuotes(value2);
       if (!unquoted) {
         return false;
       }
@@ -8459,13 +8459,13 @@ var require_transport = __commonJS({
       }
       return isAbsolute(path) && !existsSync(path);
     }
-    function stripQuotes(value) {
-      const first = value[0];
-      const last = value[value.length - 1];
+    function stripQuotes(value2) {
+      const first = value2[0];
+      const last = value2[value2.length - 1];
       if (first === '"' && last === '"' || first === "'" && last === "'") {
-        return value.slice(1, -1);
+        return value2.slice(1, -1);
       }
-      return value;
+      return value2;
     }
     function buildStream(filename, workerData, workerOpts, sync, name) {
       if (!workerOpts.execArgv && hasPreloadFlags() && __require.main === void 0) {
@@ -8713,67 +8713,67 @@ var require_tools = __commonJS({
       const errorKey = this[errorKeySym];
       let data = this[lsCacheSym][num] + time;
       data = data + chindings;
-      let value;
+      let value2;
       if (formatters.log) {
         obj = formatters.log(obj);
       }
       const wildcardStringifier = stringifiers[wildcardFirstSym];
       let propStr = "";
       for (const key in obj) {
-        value = obj[key];
-        if (Object.prototype.hasOwnProperty.call(obj, key) && value !== void 0) {
+        value2 = obj[key];
+        if (Object.prototype.hasOwnProperty.call(obj, key) && value2 !== void 0) {
           if (serializers[key]) {
-            value = serializers[key](value);
+            value2 = serializers[key](value2);
           } else if (key === errorKey && serializers.err) {
-            value = serializers.err(value);
+            value2 = serializers.err(value2);
           }
           const stringifier = stringifiers[key] || wildcardStringifier;
-          switch (typeof value) {
+          switch (typeof value2) {
             case "undefined":
             case "function":
               continue;
             case "number":
-              if (Number.isFinite(value) === false) {
-                value = null;
+              if (Number.isFinite(value2) === false) {
+                value2 = null;
               }
             // this case explicitly falls through to the next one
             case "boolean":
-              if (stringifier) value = stringifier(value);
+              if (stringifier) value2 = stringifier(value2);
               break;
             case "string":
-              value = (stringifier || asString)(value);
+              value2 = (stringifier || asString)(value2);
               break;
             default:
-              value = (stringifier || stringify2)(value, stringifySafe);
+              value2 = (stringifier || stringify2)(value2, stringifySafe);
           }
-          if (value === void 0) continue;
+          if (value2 === void 0) continue;
           const strKey = asString(key);
-          propStr += "," + strKey + ":" + value;
+          propStr += "," + strKey + ":" + value2;
         }
       }
       let msgStr = "";
       if (msg !== void 0) {
-        value = serializers[messageKey] ? serializers[messageKey](msg) : msg;
+        value2 = serializers[messageKey] ? serializers[messageKey](msg) : msg;
         const stringifier = stringifiers[messageKey] || wildcardStringifier;
-        switch (typeof value) {
+        switch (typeof value2) {
           case "function":
             break;
           case "number":
-            if (Number.isFinite(value) === false) {
-              value = null;
+            if (Number.isFinite(value2) === false) {
+              value2 = null;
             }
           // this case explicitly falls through to the next one
           case "boolean":
-            if (stringifier) value = stringifier(value);
-            msgStr = ',"' + messageKey + '":' + value;
+            if (stringifier) value2 = stringifier(value2);
+            msgStr = ',"' + messageKey + '":' + value2;
             break;
           case "string":
-            value = (stringifier || asString)(value);
-            msgStr = ',"' + messageKey + '":' + value;
+            value2 = (stringifier || asString)(value2);
+            msgStr = ',"' + messageKey + '":' + value2;
             break;
           default:
-            value = (stringifier || stringify2)(value, stringifySafe);
-            msgStr = ',"' + messageKey + '":' + value;
+            value2 = (stringifier || stringify2)(value2, stringifySafe);
+            msgStr = ',"' + messageKey + '":' + value2;
         }
       }
       if (this[nestedKeySym] && propStr) {
@@ -8783,7 +8783,7 @@ var require_tools = __commonJS({
       }
     }
     function asChindings(instance, bindings) {
-      let value;
+      let value2;
       let data = instance[chindingsSym];
       const stringify2 = instance[stringifySym];
       const stringifySafe = instance[stringifySafeSym];
@@ -8793,13 +8793,13 @@ var require_tools = __commonJS({
       const formatter = instance[formattersSym].bindings;
       bindings = formatter(bindings);
       for (const key in bindings) {
-        value = bindings[key];
-        const valid = (key.length < 5 || key !== "level" && key !== "serializers" && key !== "formatters" && key !== "customLevels") && bindings.hasOwnProperty(key) && value !== void 0;
+        value2 = bindings[key];
+        const valid = (key.length < 5 || key !== "level" && key !== "serializers" && key !== "formatters" && key !== "customLevels") && bindings.hasOwnProperty(key) && value2 !== void 0;
         if (valid === true) {
-          value = serializers[key] ? serializers[key](value) : value;
-          value = (stringifiers[key] || wildcardStringifier || stringify2)(value, stringifySafe);
-          if (value === void 0) continue;
-          data += ',"' + key + '":' + value;
+          value2 = serializers[key] ? serializers[key](value2) : value2;
+          value2 = (stringifiers[key] || wildcardStringifier || stringify2)(value2, stringifySafe);
+          if (value2 === void 0) continue;
+          data += ',"' + key + '":' + value2;
         }
       }
       return data;
@@ -8976,7 +8976,7 @@ var require_levels = __commonJS({
           if (typeof stream.flushSync === "function") {
             try {
               stream.flushSync();
-            } catch (e) {
+            } catch (e2) {
             }
           }
         };
@@ -9425,8 +9425,8 @@ var require_safe_stable_stringify = __commonJS({
       ),
       Symbol.toStringTag
     ).get;
-    function isTypedArrayWithEntries(value) {
-      return typedArrayPrototypeGetSymbolToStringTag.call(value) !== void 0 && value.length !== 0;
+    function isTypedArrayWithEntries(value2) {
+      return typedArrayPrototypeGetSymbolToStringTag.call(value2) !== void 0 && value2.length !== 0;
     }
     function stringifyTypedArray(array, separator, maximumBreadth) {
       if (array.length < maximumBreadth) {
@@ -9460,40 +9460,40 @@ var require_safe_stable_stringify = __commonJS({
       return '"[Circular]"';
     }
     function getDeterministicOption(options) {
-      let value;
+      let value2;
       if (hasOwnProperty.call(options, "deterministic")) {
-        value = options.deterministic;
-        if (typeof value !== "boolean" && typeof value !== "function") {
+        value2 = options.deterministic;
+        if (typeof value2 !== "boolean" && typeof value2 !== "function") {
           throw new TypeError('The "deterministic" argument must be of type boolean or comparator function');
         }
       }
-      return value === void 0 ? true : value;
+      return value2 === void 0 ? true : value2;
     }
     function getBooleanOption(options, key) {
-      let value;
+      let value2;
       if (hasOwnProperty.call(options, key)) {
-        value = options[key];
-        if (typeof value !== "boolean") {
+        value2 = options[key];
+        if (typeof value2 !== "boolean") {
           throw new TypeError(`The "${key}" argument must be of type boolean`);
         }
       }
-      return value === void 0 ? true : value;
+      return value2 === void 0 ? true : value2;
     }
     function getPositiveIntegerOption(options, key) {
-      let value;
+      let value2;
       if (hasOwnProperty.call(options, key)) {
-        value = options[key];
-        if (typeof value !== "number") {
+        value2 = options[key];
+        if (typeof value2 !== "number") {
           throw new TypeError(`The "${key}" argument must be of type number`);
         }
-        if (!Number.isInteger(value)) {
+        if (!Number.isInteger(value2)) {
           throw new TypeError(`The "${key}" argument must be an integer`);
         }
-        if (value < 1) {
+        if (value2 < 1) {
           throw new RangeError(`The "${key}" argument must be >= 1`);
         }
       }
-      return value === void 0 ? Infinity : value;
+      return value2 === void 0 ? Infinity : value2;
     }
     function getItemCount(number) {
       if (number === 1) {
@@ -9503,23 +9503,23 @@ var require_safe_stable_stringify = __commonJS({
     }
     function getUniqueReplacerSet(replacerArray) {
       const replacerSet = /* @__PURE__ */ new Set();
-      for (const value of replacerArray) {
-        if (typeof value === "string" || typeof value === "number") {
-          replacerSet.add(String(value));
+      for (const value2 of replacerArray) {
+        if (typeof value2 === "string" || typeof value2 === "number") {
+          replacerSet.add(String(value2));
         }
       }
       return replacerSet;
     }
     function getStrictOption(options) {
       if (hasOwnProperty.call(options, "strict")) {
-        const value = options.strict;
-        if (typeof value !== "boolean") {
+        const value2 = options.strict;
+        if (typeof value2 !== "boolean") {
           throw new TypeError('The "strict" argument must be of type boolean');
         }
-        if (value) {
-          return (value2) => {
-            let message2 = `Object can not safely be stringified. Received type ${typeof value2}`;
-            if (typeof value2 !== "function") message2 += ` (${value2.toString()})`;
+        if (value2) {
+          return (value3) => {
+            let message2 = `Object can not safely be stringified. Received type ${typeof value3}`;
+            if (typeof value3 !== "function") message2 += ` (${value3.toString()})`;
             throw new Error(message2);
           };
         }
@@ -9543,32 +9543,32 @@ var require_safe_stable_stringify = __commonJS({
       const maximumDepth = getPositiveIntegerOption(options, "maximumDepth");
       const maximumBreadth = getPositiveIntegerOption(options, "maximumBreadth");
       function stringifyFnReplacer(key, parent, stack, replacer, spacer, indentation) {
-        let value = parent[key];
-        if (typeof value === "object" && value !== null && typeof value.toJSON === "function") {
-          value = value.toJSON(key);
+        let value2 = parent[key];
+        if (typeof value2 === "object" && value2 !== null && typeof value2.toJSON === "function") {
+          value2 = value2.toJSON(key);
         }
-        value = replacer.call(parent, key, value);
-        switch (typeof value) {
+        value2 = replacer.call(parent, key, value2);
+        switch (typeof value2) {
           case "string":
-            return strEscape(value);
+            return strEscape(value2);
           case "object": {
-            if (value === null) {
+            if (value2 === null) {
               return "null";
             }
-            if (stack.indexOf(value) !== -1) {
+            if (stack.indexOf(value2) !== -1) {
               return circularValue;
             }
             let res = "";
             let join = ",";
             const originalIndentation = indentation;
-            if (Array.isArray(value)) {
-              if (value.length === 0) {
+            if (Array.isArray(value2)) {
+              if (value2.length === 0) {
                 return "[]";
               }
               if (maximumDepth < stack.length + 1) {
                 return '"[Array]"';
               }
-              stack.push(value);
+              stack.push(value2);
               if (spacer !== "") {
                 indentation += spacer;
                 res += `
@@ -9576,17 +9576,17 @@ ${indentation}`;
                 join = `,
 ${indentation}`;
               }
-              const maximumValuesToStringify = Math.min(value.length, maximumBreadth);
+              const maximumValuesToStringify = Math.min(value2.length, maximumBreadth);
               let i = 0;
               for (; i < maximumValuesToStringify - 1; i++) {
-                const tmp2 = stringifyFnReplacer(String(i), value, stack, replacer, spacer, indentation);
+                const tmp2 = stringifyFnReplacer(String(i), value2, stack, replacer, spacer, indentation);
                 res += tmp2 !== void 0 ? tmp2 : "null";
                 res += join;
               }
-              const tmp = stringifyFnReplacer(String(i), value, stack, replacer, spacer, indentation);
+              const tmp = stringifyFnReplacer(String(i), value2, stack, replacer, spacer, indentation);
               res += tmp !== void 0 ? tmp : "null";
-              if (value.length - 1 > maximumBreadth) {
-                const removedKeys = value.length - maximumBreadth - 1;
+              if (value2.length - 1 > maximumBreadth) {
+                const removedKeys = value2.length - maximumBreadth - 1;
                 res += `${join}"... ${getItemCount(removedKeys)} not stringified"`;
               }
               if (spacer !== "") {
@@ -9596,7 +9596,7 @@ ${originalIndentation}`;
               stack.pop();
               return `[${res}]`;
             }
-            let keys = Object.keys(value);
+            let keys = Object.keys(value2);
             const keyLength = keys.length;
             if (keyLength === 0) {
               return "{}";
@@ -9613,13 +9613,13 @@ ${indentation}`;
               whitespace = " ";
             }
             const maximumPropertiesToStringify = Math.min(keyLength, maximumBreadth);
-            if (deterministic && !isTypedArrayWithEntries(value)) {
+            if (deterministic && !isTypedArrayWithEntries(value2)) {
               keys = sort(keys, comparator);
             }
-            stack.push(value);
+            stack.push(value2);
             for (let i = 0; i < maximumPropertiesToStringify; i++) {
               const key2 = keys[i];
-              const tmp = stringifyFnReplacer(key2, value, stack, replacer, spacer, indentation);
+              const tmp = stringifyFnReplacer(key2, value2, stack, replacer, spacer, indentation);
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key2)}:${whitespace}${tmp}`;
                 separator = join;
@@ -9639,45 +9639,45 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value) ? String(value) : fail ? fail(value) : "null";
+            return isFinite(value2) ? String(value2) : fail ? fail(value2) : "null";
           case "boolean":
-            return value === true ? "true" : "false";
+            return value2 === true ? "true" : "false";
           case "undefined":
             return void 0;
           case "bigint":
             if (bigint) {
-              return String(value);
+              return String(value2);
             }
           // fallthrough
           default:
-            return fail ? fail(value) : void 0;
+            return fail ? fail(value2) : void 0;
         }
       }
-      function stringifyArrayReplacer(key, value, stack, replacer, spacer, indentation) {
-        if (typeof value === "object" && value !== null && typeof value.toJSON === "function") {
-          value = value.toJSON(key);
+      function stringifyArrayReplacer(key, value2, stack, replacer, spacer, indentation) {
+        if (typeof value2 === "object" && value2 !== null && typeof value2.toJSON === "function") {
+          value2 = value2.toJSON(key);
         }
-        switch (typeof value) {
+        switch (typeof value2) {
           case "string":
-            return strEscape(value);
+            return strEscape(value2);
           case "object": {
-            if (value === null) {
+            if (value2 === null) {
               return "null";
             }
-            if (stack.indexOf(value) !== -1) {
+            if (stack.indexOf(value2) !== -1) {
               return circularValue;
             }
             const originalIndentation = indentation;
             let res = "";
             let join = ",";
-            if (Array.isArray(value)) {
-              if (value.length === 0) {
+            if (Array.isArray(value2)) {
+              if (value2.length === 0) {
                 return "[]";
               }
               if (maximumDepth < stack.length + 1) {
                 return '"[Array]"';
               }
-              stack.push(value);
+              stack.push(value2);
               if (spacer !== "") {
                 indentation += spacer;
                 res += `
@@ -9685,17 +9685,17 @@ ${indentation}`;
                 join = `,
 ${indentation}`;
               }
-              const maximumValuesToStringify = Math.min(value.length, maximumBreadth);
+              const maximumValuesToStringify = Math.min(value2.length, maximumBreadth);
               let i = 0;
               for (; i < maximumValuesToStringify - 1; i++) {
-                const tmp2 = stringifyArrayReplacer(String(i), value[i], stack, replacer, spacer, indentation);
+                const tmp2 = stringifyArrayReplacer(String(i), value2[i], stack, replacer, spacer, indentation);
                 res += tmp2 !== void 0 ? tmp2 : "null";
                 res += join;
               }
-              const tmp = stringifyArrayReplacer(String(i), value[i], stack, replacer, spacer, indentation);
+              const tmp = stringifyArrayReplacer(String(i), value2[i], stack, replacer, spacer, indentation);
               res += tmp !== void 0 ? tmp : "null";
-              if (value.length - 1 > maximumBreadth) {
-                const removedKeys = value.length - maximumBreadth - 1;
+              if (value2.length - 1 > maximumBreadth) {
+                const removedKeys = value2.length - maximumBreadth - 1;
                 res += `${join}"... ${getItemCount(removedKeys)} not stringified"`;
               }
               if (spacer !== "") {
@@ -9705,7 +9705,7 @@ ${originalIndentation}`;
               stack.pop();
               return `[${res}]`;
             }
-            stack.push(value);
+            stack.push(value2);
             let whitespace = "";
             if (spacer !== "") {
               indentation += spacer;
@@ -9715,7 +9715,7 @@ ${indentation}`;
             }
             let separator = "";
             for (const key2 of replacer) {
-              const tmp = stringifyArrayReplacer(key2, value[key2], stack, replacer, spacer, indentation);
+              const tmp = stringifyArrayReplacer(key2, value2[key2], stack, replacer, spacer, indentation);
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key2)}:${whitespace}${tmp}`;
                 separator = join;
@@ -9730,65 +9730,65 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value) ? String(value) : fail ? fail(value) : "null";
+            return isFinite(value2) ? String(value2) : fail ? fail(value2) : "null";
           case "boolean":
-            return value === true ? "true" : "false";
+            return value2 === true ? "true" : "false";
           case "undefined":
             return void 0;
           case "bigint":
             if (bigint) {
-              return String(value);
+              return String(value2);
             }
           // fallthrough
           default:
-            return fail ? fail(value) : void 0;
+            return fail ? fail(value2) : void 0;
         }
       }
-      function stringifyIndent(key, value, stack, spacer, indentation) {
-        switch (typeof value) {
+      function stringifyIndent(key, value2, stack, spacer, indentation) {
+        switch (typeof value2) {
           case "string":
-            return strEscape(value);
+            return strEscape(value2);
           case "object": {
-            if (value === null) {
+            if (value2 === null) {
               return "null";
             }
-            if (typeof value.toJSON === "function") {
-              value = value.toJSON(key);
-              if (typeof value !== "object") {
-                return stringifyIndent(key, value, stack, spacer, indentation);
+            if (typeof value2.toJSON === "function") {
+              value2 = value2.toJSON(key);
+              if (typeof value2 !== "object") {
+                return stringifyIndent(key, value2, stack, spacer, indentation);
               }
-              if (value === null) {
+              if (value2 === null) {
                 return "null";
               }
             }
-            if (stack.indexOf(value) !== -1) {
+            if (stack.indexOf(value2) !== -1) {
               return circularValue;
             }
             const originalIndentation = indentation;
-            if (Array.isArray(value)) {
-              if (value.length === 0) {
+            if (Array.isArray(value2)) {
+              if (value2.length === 0) {
                 return "[]";
               }
               if (maximumDepth < stack.length + 1) {
                 return '"[Array]"';
               }
-              stack.push(value);
+              stack.push(value2);
               indentation += spacer;
               let res2 = `
 ${indentation}`;
               const join2 = `,
 ${indentation}`;
-              const maximumValuesToStringify = Math.min(value.length, maximumBreadth);
+              const maximumValuesToStringify = Math.min(value2.length, maximumBreadth);
               let i = 0;
               for (; i < maximumValuesToStringify - 1; i++) {
-                const tmp2 = stringifyIndent(String(i), value[i], stack, spacer, indentation);
+                const tmp2 = stringifyIndent(String(i), value2[i], stack, spacer, indentation);
                 res2 += tmp2 !== void 0 ? tmp2 : "null";
                 res2 += join2;
               }
-              const tmp = stringifyIndent(String(i), value[i], stack, spacer, indentation);
+              const tmp = stringifyIndent(String(i), value2[i], stack, spacer, indentation);
               res2 += tmp !== void 0 ? tmp : "null";
-              if (value.length - 1 > maximumBreadth) {
-                const removedKeys = value.length - maximumBreadth - 1;
+              if (value2.length - 1 > maximumBreadth) {
+                const removedKeys = value2.length - maximumBreadth - 1;
                 res2 += `${join2}"... ${getItemCount(removedKeys)} not stringified"`;
               }
               res2 += `
@@ -9796,7 +9796,7 @@ ${originalIndentation}`;
               stack.pop();
               return `[${res2}]`;
             }
-            let keys = Object.keys(value);
+            let keys = Object.keys(value2);
             const keyLength = keys.length;
             if (keyLength === 0) {
               return "{}";
@@ -9810,19 +9810,19 @@ ${indentation}`;
             let res = "";
             let separator = "";
             let maximumPropertiesToStringify = Math.min(keyLength, maximumBreadth);
-            if (isTypedArrayWithEntries(value)) {
-              res += stringifyTypedArray(value, join, maximumBreadth);
-              keys = keys.slice(value.length);
-              maximumPropertiesToStringify -= value.length;
+            if (isTypedArrayWithEntries(value2)) {
+              res += stringifyTypedArray(value2, join, maximumBreadth);
+              keys = keys.slice(value2.length);
+              maximumPropertiesToStringify -= value2.length;
               separator = join;
             }
             if (deterministic) {
               keys = sort(keys, comparator);
             }
-            stack.push(value);
+            stack.push(value2);
             for (let i = 0; i < maximumPropertiesToStringify; i++) {
               const key2 = keys[i];
-              const tmp = stringifyIndent(key2, value[key2], stack, spacer, indentation);
+              const tmp = stringifyIndent(key2, value2[key2], stack, spacer, indentation);
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key2)}: ${tmp}`;
                 separator = join;
@@ -9842,67 +9842,67 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value) ? String(value) : fail ? fail(value) : "null";
+            return isFinite(value2) ? String(value2) : fail ? fail(value2) : "null";
           case "boolean":
-            return value === true ? "true" : "false";
+            return value2 === true ? "true" : "false";
           case "undefined":
             return void 0;
           case "bigint":
             if (bigint) {
-              return String(value);
+              return String(value2);
             }
           // fallthrough
           default:
-            return fail ? fail(value) : void 0;
+            return fail ? fail(value2) : void 0;
         }
       }
-      function stringifySimple(key, value, stack) {
-        switch (typeof value) {
+      function stringifySimple(key, value2, stack) {
+        switch (typeof value2) {
           case "string":
-            return strEscape(value);
+            return strEscape(value2);
           case "object": {
-            if (value === null) {
+            if (value2 === null) {
               return "null";
             }
-            if (typeof value.toJSON === "function") {
-              value = value.toJSON(key);
-              if (typeof value !== "object") {
-                return stringifySimple(key, value, stack);
+            if (typeof value2.toJSON === "function") {
+              value2 = value2.toJSON(key);
+              if (typeof value2 !== "object") {
+                return stringifySimple(key, value2, stack);
               }
-              if (value === null) {
+              if (value2 === null) {
                 return "null";
               }
             }
-            if (stack.indexOf(value) !== -1) {
+            if (stack.indexOf(value2) !== -1) {
               return circularValue;
             }
             let res = "";
-            const hasLength = value.length !== void 0;
-            if (hasLength && Array.isArray(value)) {
-              if (value.length === 0) {
+            const hasLength = value2.length !== void 0;
+            if (hasLength && Array.isArray(value2)) {
+              if (value2.length === 0) {
                 return "[]";
               }
               if (maximumDepth < stack.length + 1) {
                 return '"[Array]"';
               }
-              stack.push(value);
-              const maximumValuesToStringify = Math.min(value.length, maximumBreadth);
+              stack.push(value2);
+              const maximumValuesToStringify = Math.min(value2.length, maximumBreadth);
               let i = 0;
               for (; i < maximumValuesToStringify - 1; i++) {
-                const tmp2 = stringifySimple(String(i), value[i], stack);
+                const tmp2 = stringifySimple(String(i), value2[i], stack);
                 res += tmp2 !== void 0 ? tmp2 : "null";
                 res += ",";
               }
-              const tmp = stringifySimple(String(i), value[i], stack);
+              const tmp = stringifySimple(String(i), value2[i], stack);
               res += tmp !== void 0 ? tmp : "null";
-              if (value.length - 1 > maximumBreadth) {
-                const removedKeys = value.length - maximumBreadth - 1;
+              if (value2.length - 1 > maximumBreadth) {
+                const removedKeys = value2.length - maximumBreadth - 1;
                 res += `,"... ${getItemCount(removedKeys)} not stringified"`;
               }
               stack.pop();
               return `[${res}]`;
             }
-            let keys = Object.keys(value);
+            let keys = Object.keys(value2);
             const keyLength = keys.length;
             if (keyLength === 0) {
               return "{}";
@@ -9912,19 +9912,19 @@ ${originalIndentation}`;
             }
             let separator = "";
             let maximumPropertiesToStringify = Math.min(keyLength, maximumBreadth);
-            if (hasLength && isTypedArrayWithEntries(value)) {
-              res += stringifyTypedArray(value, ",", maximumBreadth);
-              keys = keys.slice(value.length);
-              maximumPropertiesToStringify -= value.length;
+            if (hasLength && isTypedArrayWithEntries(value2)) {
+              res += stringifyTypedArray(value2, ",", maximumBreadth);
+              keys = keys.slice(value2.length);
+              maximumPropertiesToStringify -= value2.length;
               separator = ",";
             }
             if (deterministic) {
               keys = sort(keys, comparator);
             }
-            stack.push(value);
+            stack.push(value2);
             for (let i = 0; i < maximumPropertiesToStringify; i++) {
               const key2 = keys[i];
-              const tmp = stringifySimple(key2, value[key2], stack);
+              const tmp = stringifySimple(key2, value2[key2], stack);
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key2)}:${tmp}`;
                 separator = ",";
@@ -9938,21 +9938,21 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value) ? String(value) : fail ? fail(value) : "null";
+            return isFinite(value2) ? String(value2) : fail ? fail(value2) : "null";
           case "boolean":
-            return value === true ? "true" : "false";
+            return value2 === true ? "true" : "false";
           case "undefined":
             return void 0;
           case "bigint":
             if (bigint) {
-              return String(value);
+              return String(value2);
             }
           // fallthrough
           default:
-            return fail ? fail(value) : void 0;
+            return fail ? fail(value2) : void 0;
         }
       }
-      function stringify2(value, replacer, space) {
+      function stringify2(value2, replacer, space) {
         if (arguments.length > 1) {
           let spacer = "";
           if (typeof space === "number") {
@@ -9962,17 +9962,17 @@ ${originalIndentation}`;
           }
           if (replacer != null) {
             if (typeof replacer === "function") {
-              return stringifyFnReplacer("", { "": value }, [], replacer, spacer, "");
+              return stringifyFnReplacer("", { "": value2 }, [], replacer, spacer, "");
             }
             if (Array.isArray(replacer)) {
-              return stringifyArrayReplacer("", value, [], getUniqueReplacerSet(replacer), spacer, "");
+              return stringifyArrayReplacer("", value2, [], getUniqueReplacerSet(replacer), spacer, "");
             }
           }
           if (spacer.length !== 0) {
-            return stringifyIndent("", value, [], spacer, "");
+            return stringifyIndent("", value2, [], spacer, "");
           }
         }
-        return stringifySimple("", value, []);
+        return stringifySimple("", value2, []);
       }
       return stringify2;
     }
@@ -10391,14 +10391,14 @@ var require_logger_pino = __commonJS({
       return logger;
     }
     var serializers = {
-      req: function asReqValue(req) {
+      req: function asReqValue(req2) {
         return {
-          method: req.method,
-          url: req.url,
-          version: req.headers && req.headers["accept-version"],
-          host: req.host,
-          remoteAddress: req.ip,
-          remotePort: req.socket ? req.socket.remotePort : void 0
+          method: req2.method,
+          url: req2.url,
+          version: req2.headers && req2.headers["accept-version"],
+          host: req2.host,
+          remoteAddress: req2.ip,
+          remotePort: req2.socket ? req2.socket.remotePort : void 0
         };
       },
       err: pino.stdSerializers.err,
@@ -10431,11 +10431,11 @@ var require_logger_factory = __commonJS({
       kLogController
     } = require_symbols2();
     var { LogController } = require_log_controller();
-    function createChildLogger(context, logger, req, reqId, loggerOpts) {
+    function createChildLogger(context, logger, req2, reqId, loggerOpts) {
       const loggerBindings = {
         [context.server[kLogController].requestIdLogLabel]: reqId
       };
-      const child = context.childLoggerFactory.call(context.server, logger, loggerBindings, loggerOpts || {}, req);
+      const child = context.childLoggerFactory.call(context.server, logger, loggerBindings, loggerOpts || {}, req2);
       if (context.childLoggerFactory !== defaultChildLoggerFactory) {
         validateLogger(child, true);
       }
@@ -11298,8 +11298,8 @@ var require_reply = __commonJS({
         get() {
           return this.raw.statusCode;
         },
-        set(value) {
-          this.code(value);
+        set(value2) {
+          this.code(value2);
         }
       },
       routeOptions: {
@@ -11395,8 +11395,8 @@ var require_reply = __commonJS({
     };
     Reply.prototype.getHeader = function(key) {
       key = key.toLowerCase();
-      const value = this[kReplyHeaders][key];
-      return value !== void 0 ? value : this.raw.getHeader(key);
+      const value2 = this[kReplyHeaders][key];
+      return value2 !== void 0 ? value2 : this.raw.getHeader(key);
     };
     Reply.prototype.getHeaders = function() {
       return {
@@ -11416,19 +11416,19 @@ var require_reply = __commonJS({
       }
       return this;
     };
-    Reply.prototype.header = function(key, value = "") {
+    Reply.prototype.header = function(key, value2 = "") {
       key = key.toLowerCase();
       if (this[kReplyHeaders][key] && key === "set-cookie") {
         if (typeof this[kReplyHeaders][key] === "string") {
           this[kReplyHeaders][key] = [this[kReplyHeaders][key]];
         }
-        if (Array.isArray(value)) {
-          Array.prototype.push.apply(this[kReplyHeaders][key], value);
+        if (Array.isArray(value2)) {
+          Array.prototype.push.apply(this[kReplyHeaders][key], value2);
         } else {
-          this[kReplyHeaders][key].push(value);
+          this[kReplyHeaders][key].push(value2);
         }
       } else {
-        this[kReplyHeaders][key] = value;
+        this[kReplyHeaders][key] = value2;
       }
       return this;
     };
@@ -11625,9 +11625,9 @@ var require_reply = __commonJS({
         } else {
           payload = serialize(reply[kRouteContext], payload, reply.raw.statusCode, reply[kReplyHeaders]["content-type"]);
         }
-      } catch (e) {
-        wrapSerializationError(e, reply);
-        onErrorHook(reply, e);
+      } catch (e2) {
+        wrapSerializationError(e2, reply);
+        onErrorHook(reply, e2);
         return;
       }
       onSendHook(reply, payload);
@@ -11668,7 +11668,7 @@ var require_reply = __commonJS({
     }
     function onSendEnd(reply, payload) {
       const res = reply.raw;
-      const req = reply.request;
+      const req2 = reply.request;
       if (reply[kReplyTrailers] !== null) {
         const trailerHeaders = Object.keys(reply[kReplyTrailers]);
         let header = "";
@@ -11702,7 +11702,7 @@ var require_reply = __commonJS({
       }
       const statusCode = res.statusCode;
       if (payload === void 0 || payload === null) {
-        if (statusCode >= 200 && statusCode !== 204 && statusCode !== 304 && req.method !== "HEAD" && reply[kReplyTrailers] === null) {
+        if (statusCode >= 200 && statusCode !== 204 && statusCode !== 304 && req2.method !== "HEAD" && reply[kReplyTrailers] === null) {
           reply[kReplyHeaders]["content-length"] = "0";
         }
         safeWriteHead(reply, statusCode);
@@ -11733,7 +11733,7 @@ var require_reply = __commonJS({
       }
       if (reply[kReplyTrailers] === null) {
         const contentLength = reply[kReplyHeaders]["content-length"];
-        if (!contentLength || req.raw.method !== "HEAD" && Number(contentLength) !== Buffer.byteLength(payload)) {
+        if (!contentLength || req2.raw.method !== "HEAD" && Number(contentLength) !== Buffer.byteLength(payload)) {
           reply[kReplyHeaders]["content-length"] = "" + Buffer.byteLength(payload);
         }
       }
@@ -11906,12 +11906,12 @@ var require_reply = __commonJS({
         }
       }
       for (const trailerName of trailerHeaders) {
-        let cb = function(err, value) {
+        let cb = function(err, value2) {
           if (cbAlreadyCalled) return;
           cbAlreadyCalled = true;
           handled++;
           if (err) reply.log.debug(err);
-          else trailers[trailerName] = value;
+          else trailers[trailerName] = value2;
           process.nextTick(send);
         };
         if (typeof reply[kReplyTrailers][trailerName] !== "function") continue;
@@ -12043,12 +12043,12 @@ var require_reply = __commonJS({
 var require_forwarded = __commonJS({
   "node_modules/@fastify/forwarded/index.js"(exports, module) {
     "use strict";
-    function forwarded(req) {
-      if (!req) {
+    function forwarded(req2) {
+      if (!req2) {
         throw new TypeError("argument req is required");
       }
-      const header = req.headers["x-forwarded-for"];
-      const socketAddr = req.socket.remoteAddress;
+      const header = req2.headers["x-forwarded-for"];
+      const socketAddr = req2.socket.remoteAddress;
       if (!header || typeof header !== "string") {
         return [socketAddr];
       } else if (header.indexOf(",") === -1) {
@@ -12320,8 +12320,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e });
+        } catch (e2) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e2 });
         }
       };
       ipaddr.IPv4.isIPv4 = function(string) {
@@ -12370,8 +12370,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e });
+        } catch (e2) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e2 });
         }
       };
       ipaddr.IPv4.parse = function(string) {
@@ -12398,7 +12398,7 @@ var require_ipaddr = __commonJS({
         throw new Error("ipaddr: string is not formatted like an IPv4 CIDR range");
       };
       ipaddr.IPv4.parser = function(string) {
-        let match, part, value;
+        let match, part, value2;
         if (match = string.match(ipv4Regexes.fourOctet)) {
           return function() {
             const ref = match.slice(1, 6);
@@ -12410,15 +12410,15 @@ var require_ipaddr = __commonJS({
             return results;
           }();
         } else if (match = string.match(ipv4Regexes.longValue)) {
-          value = parseIntAuto(match[1]);
-          if (value > 4294967295 || value < 0) {
+          value2 = parseIntAuto(match[1]);
+          if (value2 > 4294967295 || value2 < 0) {
             throw new Error("ipaddr: address outside defined range");
           }
           return function() {
             const results = [];
             let shift;
             for (shift = 0; shift <= 24; shift += 8) {
-              results.push(value >> shift & 255);
+              results.push(value2 >> shift & 255);
             }
             return results;
           }().reverse();
@@ -12426,28 +12426,28 @@ var require_ipaddr = __commonJS({
           return function() {
             const ref = match.slice(1, 4);
             const results = [];
-            value = parseIntAuto(ref[1]);
-            if (value > 16777215 || value < 0) {
+            value2 = parseIntAuto(ref[1]);
+            if (value2 > 16777215 || value2 < 0) {
               throw new Error("ipaddr: address outside defined range");
             }
             results.push(parseIntAuto(ref[0]));
-            results.push(value >> 16 & 255);
-            results.push(value >> 8 & 255);
-            results.push(value & 255);
+            results.push(value2 >> 16 & 255);
+            results.push(value2 >> 8 & 255);
+            results.push(value2 & 255);
             return results;
           }();
         } else if (match = string.match(ipv4Regexes.threeOctet)) {
           return function() {
             const ref = match.slice(1, 5);
             const results = [];
-            value = parseIntAuto(ref[2]);
-            if (value > 65535 || value < 0) {
+            value2 = parseIntAuto(ref[2]);
+            if (value2 > 65535 || value2 < 0) {
               throw new Error("ipaddr: address outside defined range");
             }
             results.push(parseIntAuto(ref[0]));
             results.push(parseIntAuto(ref[1]));
-            results.push(value >> 8 & 255);
-            results.push(value & 255);
+            results.push(value2 >> 8 & 255);
+            results.push(value2 & 255);
             return results;
           }();
         } else {
@@ -12696,8 +12696,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e });
+        } catch (e2) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e2 });
         }
       };
       ipaddr.IPv6.isIPv6 = function(string) {
@@ -12739,8 +12739,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e });
+        } catch (e2) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e2 });
         }
       };
       ipaddr.IPv6.parse = function(string) {
@@ -12852,8 +12852,8 @@ var require_ipaddr = __commonJS({
         } catch {
           try {
             return ipaddr.IPv4.parseCIDR(string);
-          } catch (e) {
-            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e });
+          } catch (e2) {
+            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e2 });
           }
         }
       };
@@ -12914,8 +12914,8 @@ var require_proxy_addr = __commonJS({
       loopback: ["127.0.0.1/8", "::1/128"],
       uniquelocal: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "fc00::/7"]
     };
-    function alladdrs(req, trust) {
-      const addrs = forwarded(req);
+    function alladdrs(req2, trust) {
+      const addrs = forwarded(req2);
       if (!trust) {
         return addrs;
       }
@@ -12993,14 +12993,14 @@ var require_proxy_addr = __commonJS({
       const kind = ip.kind();
       return kind === "ipv4" ? ip.prefixLengthFromSubnetMask() : null;
     }
-    function proxyaddr(req, trust) {
-      if (!req) {
+    function proxyaddr(req2, trust) {
+      if (!req2) {
         throw new TypeError("req argument is required");
       }
       if (!trust) {
         throw new TypeError("trust argument is required");
       }
-      const addrs = alladdrs(req, trust);
+      const addrs = alladdrs(req2, trust);
       return addrs[addrs.length - 1];
     }
     function trustNone() {
@@ -13086,11 +13086,11 @@ var require_request = __commonJS({
       querystring: kSchemaQuerystring,
       query: kSchemaQuerystring
     };
-    function Request(id, params, req, query, log, context) {
+    function Request(id, params, req2, query, log, context) {
       this.id = id;
       this[kRouteContext] = context;
       this.params = params;
-      this.raw = req;
+      this.raw = req2;
       this.query = query;
       this.log = log;
       this.body = void 0;
@@ -13125,11 +13125,11 @@ var require_request = __commonJS({
     }
     function buildRegularRequest(R) {
       const props = R.props.slice();
-      function _Request(id, params, req, query, log, context) {
+      function _Request(id, params, req2, query, log, context) {
         this.id = id;
         this[kRouteContext] = context;
         this.params = params;
-        this.raw = req;
+        this.raw = req2;
         this.query = query;
         this.log = log;
         this.body = void 0;
@@ -13384,9 +13384,9 @@ var require_request = __commonJS({
         }
       },
       setDecorator: {
-        value: function(name, value) {
+        value: function(name, value2) {
           assertsRequestDecoration(this, name);
-          this[name] = value;
+          this[name] = value2;
         }
       }
     });
@@ -13475,8 +13475,8 @@ var require_context = __commonJS({
       let text = "";
       const separator = ", ";
       for (let i = 0; i !== errors.length; ++i) {
-        const e = errors[i];
-        text += dataVar + (e.instancePath || "") + " " + e.message + separator;
+        const e2 = errors[i];
+        text += dataVar + (e2.instancePath || "") + " " + e2.message + separator;
       }
       return new Error(text.slice(0, -separator.length));
     }
@@ -13551,9 +13551,9 @@ var require_secure_json_parse = __commonJS({
             delete node.constructor;
           }
           for (const key in node) {
-            const value = node[key];
-            if (value && typeof value === "object") {
-              next.push(value);
+            const value2 = node[key];
+            if (value2 && typeof value2 === "object") {
+              next.push(value2);
             }
           }
         }
@@ -13849,7 +13849,7 @@ var require_content_type_parser = __commonJS({
     function getDefaultJsonParser(onProtoPoisoning, onConstructorPoisoning) {
       const parseOptions = { protoAction: onProtoPoisoning, constructorAction: onConstructorPoisoning };
       return defaultJsonParser;
-      function defaultJsonParser(req, body, done) {
+      function defaultJsonParser(req2, body, done) {
         if (body.length === 0) {
           done(new FST_ERR_CTP_EMPTY_JSON_BODY(), void 0);
           return;
@@ -13861,7 +13861,7 @@ var require_content_type_parser = __commonJS({
         }
       }
     }
-    function defaultPlainTextParser(req, body, done) {
+    function defaultPlainTextParser(req2, body, done) {
       done(null, body);
     }
     function Parser(asString, asBuffer, bodyLimit, fn) {
@@ -14144,8 +14144,8 @@ var require_scope = __commonJS({
         super(nameStr);
         this.prefix = prefix;
       }
-      setValue(value, { property, itemIndex }) {
-        this.value = value;
+      setValue(value2, { property, itemIndex }) {
+        this.value = value2;
         this.scopePath = (0, code_1._)`.${new code_1.Name(property)}[${itemIndex}]`;
       }
     };
@@ -14164,13 +14164,13 @@ var require_scope = __commonJS({
       name(prefix) {
         return new ValueScopeName(prefix, this._newName(prefix));
       }
-      value(nameOrPrefix, value) {
+      value(nameOrPrefix, value2) {
         var _a;
-        if (value.ref === void 0)
+        if (value2.ref === void 0)
           throw new Error("CodeGen: ref must be passed in value");
         const name = this.toName(nameOrPrefix);
         const { prefix } = name;
-        const valueKey = (_a = value.key) !== null && _a !== void 0 ? _a : value.ref;
+        const valueKey = (_a = value2.key) !== null && _a !== void 0 ? _a : value2.ref;
         let vs = this._values[prefix];
         if (vs) {
           const _name = vs.get(valueKey);
@@ -14182,8 +14182,8 @@ var require_scope = __commonJS({
         vs.set(valueKey, name);
         const s = this._scope[prefix] || (this._scope[prefix] = []);
         const itemIndex = s.length;
-        s[itemIndex] = value.ref;
-        name.setValue(value, { property: prefix, itemIndex });
+        s[itemIndex] = value2.ref;
+        name.setValue(value2, { property: prefix, itemIndex });
         return name;
       }
       getValue(prefix, keyOrRef) {
@@ -14471,17 +14471,17 @@ var require_codegen = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e = this.else;
-        if (e) {
-          const ns = e.optimizeNodes();
-          e = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e2 = this.else;
+        if (e2) {
+          const ns = e2.optimizeNodes();
+          e2 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e) {
+        if (e2) {
           if (cond === false)
-            return e instanceof _If ? e : e.nodes;
+            return e2 instanceof _If ? e2 : e2.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e instanceof _If ? [e] : e.nodes);
+          return new _If(not(cond), e2 instanceof _If ? [e2] : e2.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -14653,8 +14653,8 @@ var require_codegen = __commonJS({
         return this._extScope.name(prefix);
       }
       // reserves unique name in the external scope and assigns value to it
-      scopeValue(prefixOrName, value) {
-        const name = this._extScope.value(prefixOrName, value);
+      scopeValue(prefixOrName, value2) {
+        const name = this._extScope.value(prefixOrName, value2);
         const vs = this._values[name.prefix] || (this._values[name.prefix] = /* @__PURE__ */ new Set());
         vs.add(name);
         return name;
@@ -14708,13 +14708,13 @@ var require_codegen = __commonJS({
       // returns code for object literal for the passed argument list of key-value pairs
       object(...keyValues) {
         const code = ["{"];
-        for (const [key, value] of keyValues) {
+        for (const [key, value2] of keyValues) {
           if (code.length > 1)
             code.push(",");
           code.push(key);
-          if (key !== value || this.opts.es5) {
+          if (key !== value2 || this.opts.es5) {
             code.push(":");
-            (0, code_1.addCodeArg)(code, value);
+            (0, code_1.addCodeArg)(code, value2);
           }
         }
         code.push("}");
@@ -14793,10 +14793,10 @@ var require_codegen = __commonJS({
         return this._leafNode(new Break(label));
       }
       // `return` statement
-      return(value) {
+      return(value2) {
         const node = new Return();
         this._blockNode(node);
-        this.code(value);
+        this.code(value2);
         if (node.nodes.length !== 1)
           throw new Error('CodeGen: "return" should have one node');
         return this._endBlockNode(Return);
@@ -14925,8 +14925,8 @@ var require_codegen = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e) {
-        return e instanceof code_1._Code && e._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e2) {
+        return e2 instanceof code_1._Code && e2._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -15794,7 +15794,7 @@ var require_keyword = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e) => gen.assign(valid, false).if((0, codegen_1._)`${e} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e}.errors`), () => gen.throw(e)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e2) => gen.assign(valid, false).if((0, codegen_1._)`${e2} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e2}.errors`), () => gen.throw(e2)));
         return ruleErrs;
       }
       function validateSync() {
@@ -16871,12 +16871,12 @@ var require_compile = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e) {
+      } catch (e2) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e;
+        throw e2;
       } finally {
         this._compilations.delete(sch);
       }
@@ -17930,8 +17930,8 @@ var require_fast_uri = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e;
+        } catch (e2) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e2;
           return true;
         }
       }
@@ -18090,13 +18090,13 @@ var require_fast_uri = __commonJS({
       if (typeof uri !== "string" && typeof uri !== "object") {
         return void 0;
       }
-      let value;
+      let value2;
       try {
-        value = typeof uri === "string" ? uri : serialize(uri, opts);
+        value2 = typeof uri === "string" ? uri : serialize(uri, opts);
       } catch {
         return void 0;
       }
-      const { normalized, malformedAuthorityOrPort, malformedPercentEncoding, malformedSchemeSpecific, malformedHost, malformedScheme } = normalizeStringWithStatus(value, opts);
+      const { normalized, malformedAuthorityOrPort, malformedPercentEncoding, malformedSchemeSpecific, malformedHost, malformedScheme } = normalizeStringWithStatus(value2, opts);
       return malformedAuthorityOrPort || malformedPercentEncoding || malformedSchemeSpecific || malformedHost || malformedScheme ? void 0 : normalized;
     }
     var fastUri = {
@@ -18317,11 +18317,11 @@ var require_core = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e) {
-            if (!(e instanceof ref_error_1.default))
-              throw e;
-            checkLoaded.call(this, e);
-            await loadMissingSchema.call(this, e.missingSchema);
+          } catch (e2) {
+            if (!(e2 instanceof ref_error_1.default))
+              throw e2;
+            checkLoaded.call(this, e2);
+            await loadMissingSchema.call(this, e2.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
@@ -18517,7 +18517,7 @@ var require_core = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e) => `${dataVar}${e.instancePath} ${e.message}`).reduce((text, msg) => text + separator + msg);
+        return errors.map((e2) => `${dataVar}${e2.instancePath} ${e2.message}`).reduce((text, msg) => text + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -18825,9 +18825,9 @@ var require_ref = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e) => {
-          gen.if((0, codegen_1._)`!(${e} instanceof ${it.ValidationError})`, () => gen.throw(e));
-          addErrorsFrom(e);
+        }, (e2) => {
+          gen.if((0, codegen_1._)`!(${e2} instanceof ${it.ValidationError})`, () => gen.throw(e2));
+          addErrorsFrom(e2);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -18963,13 +18963,13 @@ var require_ucs2length = __commonJS({
       const len = str.length;
       let length = 0;
       let pos = 0;
-      let value;
+      let value2;
       while (pos < len) {
         length++;
-        value = str.charCodeAt(pos++);
-        if (value >= 55296 && value <= 56319 && pos < len) {
-          value = str.charCodeAt(pos);
-          if ((value & 64512) === 56320)
+        value2 = str.charCodeAt(pos++);
+        if (value2 >= 55296 && value2 <= 56319 && pos < len) {
+          value2 = str.charCodeAt(pos);
+          if ((value2 & 64512) === 56320)
             pos++;
         }
       }
@@ -21071,7 +21071,7 @@ var require_enum2 = __commonJS({
         } else {
           if (!Array.isArray(schema))
             throw new Error("ajv implementation error");
-          valid = (0, codegen_1.and)(isString, (0, codegen_1.or)(...schema.map((value) => (0, codegen_1._)`${data} === ${value}`)));
+          valid = (0, codegen_1.and)(isString, (0, codegen_1.or)(...schema.map((value2) => (0, codegen_1._)`${data} === ${value2}`)));
           if (parentSchema.nullable)
             valid = (0, codegen_1.or)((0, codegen_1._)`${data} === null`, valid);
         }
@@ -21673,12 +21673,12 @@ var require_serialize = __commonJS({
         const serialize = makeSerialize(this.scope.get());
         this.scope.value(serializeName, { ref: serialize });
         sch.serialize = serialize;
-      } catch (e) {
+      } catch (e2) {
         if (sourceCode)
           this.logger.error("Error compiling serializer, function code:", sourceCode);
         delete sch.serialize;
         delete sch.serializeName;
-        throw e;
+        throw e2;
       } finally {
         this._compilations.delete(sch);
       }
@@ -21723,8 +21723,8 @@ var require_serialize = __commonJS({
       addComma(cxt, first);
       serializeString({ ...cxt, data: key });
       gen.add(names_1.default.json, (0, codegen_1.str)`:`);
-      const value = gen.const("value", (0, codegen_1._)`${data}${(0, codegen_1.getProperty)(key)}`);
-      serializeCode({ ...cxt, schema, data: value });
+      const value2 = gen.const("value", (0, codegen_1._)`${data}${(0, codegen_1.getProperty)(key)}`);
+      serializeCode({ ...cxt, schema, data: value2 });
     }
     function serializeDiscriminator(cxt) {
       const { gen, schema, data } = cxt;
@@ -21765,10 +21765,10 @@ var require_serialize = __commonJS({
       if (first)
         firstProp = gen.let("first", true);
       for (const key of optProps) {
-        const value = keyValue(key);
-        gen.if((0, codegen_1.and)((0, codegen_1._)`${value} !== undefined`, (0, code_1.isOwnProperty)(gen, data, key)), () => {
+        const value2 = keyValue(key);
+        gen.if((0, codegen_1.and)((0, codegen_1._)`${value2} !== undefined`, (0, code_1.isOwnProperty)(gen, data, key)), () => {
           addComma(cxt, firstProp);
-          serializeProperty(key, optionalProperties[key], value);
+          serializeProperty(key, optionalProperties[key], value2);
         });
       }
       if (schema.additionalProperties) {
@@ -21788,9 +21788,9 @@ var require_serialize = __commonJS({
       function keyValue(key) {
         return gen.const("value", (0, codegen_1._)`${data}${(0, codegen_1.getProperty)(key)}`);
       }
-      function serializeProperty(key, propSchema, value) {
+      function serializeProperty(key, propSchema, value2) {
         gen.add(names_1.default.json, (0, codegen_1.str)`${JSON.stringify(key)}:`);
-        serializeCode({ ...cxt, schema: propSchema, data: value });
+        serializeCode({ ...cxt, schema: propSchema, data: value2 });
       }
       function isAdditional(key, ps) {
         return ps.length ? (0, codegen_1.and)(...ps.map((p) => (0, codegen_1._)`${key} !== ${p}`)) : true;
@@ -21867,8 +21867,8 @@ var require_parseJson = __commonJS({
       try {
         parseJson.position = pos + s.length;
         return JSON.parse(s);
-      } catch (e) {
-        matches = rxParseJson.exec(e.message);
+      } catch (e2) {
+        matches = rxParseJson.exec(e2.message);
         if (!matches) {
           parseJson.message = "unexpected end";
           return void 0;
@@ -22084,12 +22084,12 @@ var require_parse = __commonJS({
         const parse = makeParse(this.scope.get());
         this.scope.value(parseName, { ref: parse });
         sch.parse = parse;
-      } catch (e) {
+      } catch (e2) {
         if (sourceCode)
           this.logger.error("Error compiling parser, function code:", sourceCode);
         delete sch.parse;
         delete sch.parseName;
-        throw e;
+        throw e2;
       } finally {
         this._compilations.delete(sch);
       }
@@ -22181,7 +22181,7 @@ var require_parse = __commonJS({
       parseToken(cxt, "{");
       gen.assign(data, (0, codegen_1._)`{}`);
       const startPos = gen.const("pos", names_1.default.jsonPos);
-      const value = gen.let("value");
+      const value2 = gen.let("value");
       const tag = gen.let("tag");
       tryParseItems(cxt, "}", () => {
         const key = gen.let("key");
@@ -22194,7 +22194,7 @@ var require_parse = __commonJS({
             gen.assign((0, codegen_1._)`${data}[${key}]`, tag);
             gen.break();
           },
-          () => parseEmpty({ ...cxt, data: value })
+          () => parseEmpty({ ...cxt, data: value2 })
           // can be discarded/skipped
         );
       });
@@ -22300,10 +22300,10 @@ var require_parse = __commonJS({
       const enumSch = schema.enum;
       parseToken(cxt, '"');
       gen.if(false);
-      for (const value of enumSch) {
-        const valueStr = JSON.stringify(value).slice(1);
+      for (const value2 of enumSch) {
+        const valueStr = JSON.stringify(value2).slice(1);
         gen.elseIf((0, codegen_1._)`${jsonSlice(valueStr.length)} === ${valueStr}`);
-        gen.assign(data, (0, codegen_1.str)`${value}`);
+        gen.assign(data, (0, codegen_1.str)`${value2}`);
         gen.add(names_1.default.jsonPos, valueStr.length);
       }
       gen.else();
@@ -23303,23 +23303,23 @@ var require_schemes2 = __commonJS({
             continue;
           }
           const name = eqIdx === -1 ? token : token.slice(0, eqIdx);
-          const value = eqIdx === -1 ? "" : token.slice(eqIdx + 1);
+          const value2 = eqIdx === -1 ? "" : token.slice(eqIdx + 1);
           if (name === "to") {
-            const addrs = value.split(",");
+            const addrs = value2.split(",");
             for (let j = 0; j < addrs.length; j++) to.push(addrs[j]);
             continue;
           }
           if (name === "subject") {
-            mailtoComponent.subject = decodeHex(value);
+            mailtoComponent.subject = decodeHex(value2);
             continue;
           }
           if (name === "body") {
-            mailtoComponent.body = decodeHex(value);
+            mailtoComponent.body = decodeHex(value2);
             continue;
           }
           if (headers === null) headers = /** @type {Record<string,string>} */
           /* @__PURE__ */ Object.create(null);
-          headers[decodeHex(name)] = decodeHex(value);
+          headers[decodeHex(name)] = decodeHex(value2);
         }
         if (headers !== null) mailtoComponent.headers = headers;
       }
@@ -23642,8 +23642,8 @@ var require_fast_uri2 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e;
+        } catch (e2) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e2;
           return true;
         }
       }
@@ -23802,13 +23802,13 @@ var require_fast_uri2 = __commonJS({
       if (typeof uri !== "string" && typeof uri !== "object") {
         return void 0;
       }
-      let value;
+      let value2;
       try {
-        value = typeof uri === "string" ? uri : serialize(uri, opts);
+        value2 = typeof uri === "string" ? uri : serialize(uri, opts);
       } catch {
         return void 0;
       }
-      const { normalized, malformedAuthorityOrPort, malformedPercentEncoding, malformedSchemeSpecific, malformedHost, malformedScheme } = normalizeStringWithStatus(value, opts);
+      const { normalized, malformedAuthorityOrPort, malformedPercentEncoding, malformedSchemeSpecific, malformedHost, malformedScheme } = normalizeStringWithStatus(value2, opts);
       return malformedAuthorityOrPort || malformedPercentEncoding || malformedSchemeSpecific || malformedHost || malformedScheme ? void 0 : normalized;
     }
     var fastUri = {
@@ -23927,8 +23927,8 @@ var require_formats = __commonJS({
         return false;
       const year = +matches[1];
       const month = +matches[2];
-      const day = +matches[3];
-      return month >= 1 && month <= 12 && day >= 1 && day <= (month === 2 && isLeapYear(year) ? 29 : DAYS[month]);
+      const day2 = +matches[3];
+      return month >= 1 && month <= 12 && day2 >= 1 && day2 <= (month === 2 && isLeapYear(year) ? 29 : DAYS[month]);
     }
     function compareDate(d1, d2) {
       if (!(d1 && d2))
@@ -24024,11 +24024,11 @@ var require_formats = __commonJS({
     }
     var MIN_INT32 = -(2 ** 31);
     var MAX_INT32 = 2 ** 31 - 1;
-    function validateInt32(value) {
-      return Number.isInteger(value) && value <= MAX_INT32 && value >= MIN_INT32;
+    function validateInt32(value2) {
+      return Number.isInteger(value2) && value2 <= MAX_INT32 && value2 >= MIN_INT32;
     }
-    function validateInt64(value) {
-      return Number.isInteger(value);
+    function validateInt64(value2) {
+      return Number.isInteger(value2);
     }
     function validateNumber() {
       return true;
@@ -24040,7 +24040,7 @@ var require_formats = __commonJS({
       try {
         new RegExp(str);
         return true;
-      } catch (e) {
+      } catch (e2) {
         return false;
       }
     }
@@ -24658,9 +24658,9 @@ var require_json_schema_ref_resolver = __commonJS({
           });
         }
         for (const key in derefSchema) {
-          const value = derefSchema[key];
-          if (typeof value === "object" && value !== null) {
-            derefSchema[key] = this.#addDerefSchema(value, rootSchemaId, false, refs);
+          const value2 = derefSchema[key];
+          if (typeof value2 === "object" && value2 !== null) {
+            derefSchema[key] = this.#addDerefSchema(value2, rootSchemaId, false, refs);
           }
         }
         return derefSchema;
@@ -25054,8 +25054,8 @@ var require_scope2 = __commonJS({
         super(nameStr);
         this.prefix = prefix;
       }
-      setValue(value, { property, itemIndex }) {
-        this.value = value;
+      setValue(value2, { property, itemIndex }) {
+        this.value = value2;
         this.scopePath = (0, code_1._)`.${new code_1.Name(property)}[${itemIndex}]`;
       }
     };
@@ -25074,13 +25074,13 @@ var require_scope2 = __commonJS({
       name(prefix) {
         return new ValueScopeName(prefix, this._newName(prefix));
       }
-      value(nameOrPrefix, value) {
+      value(nameOrPrefix, value2) {
         var _a;
-        if (value.ref === void 0)
+        if (value2.ref === void 0)
           throw new Error("CodeGen: ref must be passed in value");
         const name = this.toName(nameOrPrefix);
         const { prefix } = name;
-        const valueKey = (_a = value.key) !== null && _a !== void 0 ? _a : value.ref;
+        const valueKey = (_a = value2.key) !== null && _a !== void 0 ? _a : value2.ref;
         let vs = this._values[prefix];
         if (vs) {
           const _name = vs.get(valueKey);
@@ -25092,8 +25092,8 @@ var require_scope2 = __commonJS({
         vs.set(valueKey, name);
         const s = this._scope[prefix] || (this._scope[prefix] = []);
         const itemIndex = s.length;
-        s[itemIndex] = value.ref;
-        name.setValue(value, { property: prefix, itemIndex });
+        s[itemIndex] = value2.ref;
+        name.setValue(value2, { property: prefix, itemIndex });
         return name;
       }
       getValue(prefix, keyOrRef) {
@@ -25381,17 +25381,17 @@ var require_codegen2 = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e = this.else;
-        if (e) {
-          const ns = e.optimizeNodes();
-          e = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e2 = this.else;
+        if (e2) {
+          const ns = e2.optimizeNodes();
+          e2 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e) {
+        if (e2) {
           if (cond === false)
-            return e instanceof _If ? e : e.nodes;
+            return e2 instanceof _If ? e2 : e2.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e instanceof _If ? [e] : e.nodes);
+          return new _If(not(cond), e2 instanceof _If ? [e2] : e2.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -25563,8 +25563,8 @@ var require_codegen2 = __commonJS({
         return this._extScope.name(prefix);
       }
       // reserves unique name in the external scope and assigns value to it
-      scopeValue(prefixOrName, value) {
-        const name = this._extScope.value(prefixOrName, value);
+      scopeValue(prefixOrName, value2) {
+        const name = this._extScope.value(prefixOrName, value2);
         const vs = this._values[name.prefix] || (this._values[name.prefix] = /* @__PURE__ */ new Set());
         vs.add(name);
         return name;
@@ -25618,13 +25618,13 @@ var require_codegen2 = __commonJS({
       // returns code for object literal for the passed argument list of key-value pairs
       object(...keyValues) {
         const code = ["{"];
-        for (const [key, value] of keyValues) {
+        for (const [key, value2] of keyValues) {
           if (code.length > 1)
             code.push(",");
           code.push(key);
-          if (key !== value || this.opts.es5) {
+          if (key !== value2 || this.opts.es5) {
             code.push(":");
-            (0, code_1.addCodeArg)(code, value);
+            (0, code_1.addCodeArg)(code, value2);
           }
         }
         code.push("}");
@@ -25703,10 +25703,10 @@ var require_codegen2 = __commonJS({
         return this._leafNode(new Break(label));
       }
       // `return` statement
-      return(value) {
+      return(value2) {
         const node = new Return();
         this._blockNode(node);
-        this.code(value);
+        this.code(value2);
         if (node.nodes.length !== 1)
           throw new Error('CodeGen: "return" should have one node');
         return this._endBlockNode(Return);
@@ -25835,8 +25835,8 @@ var require_codegen2 = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e) {
-        return e instanceof code_1._Code && e._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e2) {
+        return e2 instanceof code_1._Code && e2._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -26704,7 +26704,7 @@ var require_keyword2 = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e) => gen.assign(valid, false).if((0, codegen_1._)`${e} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e}.errors`), () => gen.throw(e)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e2) => gen.assign(valid, false).if((0, codegen_1._)`${e2} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e2}.errors`), () => gen.throw(e2)));
         return ruleErrs;
       }
       function validateSync() {
@@ -27746,12 +27746,12 @@ var require_compile2 = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e) {
+      } catch (e2) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e;
+        throw e2;
       } finally {
         this._compilations.delete(sch);
       }
@@ -28805,8 +28805,8 @@ var require_fast_uri3 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e;
+        } catch (e2) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e2;
           return true;
         }
       }
@@ -28965,13 +28965,13 @@ var require_fast_uri3 = __commonJS({
       if (typeof uri !== "string" && typeof uri !== "object") {
         return void 0;
       }
-      let value;
+      let value2;
       try {
-        value = typeof uri === "string" ? uri : serialize(uri, opts);
+        value2 = typeof uri === "string" ? uri : serialize(uri, opts);
       } catch {
         return void 0;
       }
-      const { normalized, malformedAuthorityOrPort, malformedPercentEncoding, malformedSchemeSpecific, malformedHost, malformedScheme } = normalizeStringWithStatus(value, opts);
+      const { normalized, malformedAuthorityOrPort, malformedPercentEncoding, malformedSchemeSpecific, malformedHost, malformedScheme } = normalizeStringWithStatus(value2, opts);
       return malformedAuthorityOrPort || malformedPercentEncoding || malformedSchemeSpecific || malformedHost || malformedScheme ? void 0 : normalized;
     }
     var fastUri = {
@@ -29192,11 +29192,11 @@ var require_core3 = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e) {
-            if (!(e instanceof ref_error_1.default))
-              throw e;
-            checkLoaded.call(this, e);
-            await loadMissingSchema.call(this, e.missingSchema);
+          } catch (e2) {
+            if (!(e2 instanceof ref_error_1.default))
+              throw e2;
+            checkLoaded.call(this, e2);
+            await loadMissingSchema.call(this, e2.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
@@ -29392,7 +29392,7 @@ var require_core3 = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e) => `${dataVar}${e.instancePath} ${e.message}`).reduce((text, msg) => text + separator + msg);
+        return errors.map((e2) => `${dataVar}${e2.instancePath} ${e2.message}`).reduce((text, msg) => text + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -29700,9 +29700,9 @@ var require_ref3 = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e) => {
-          gen.if((0, codegen_1._)`!(${e} instanceof ${it.ValidationError})`, () => gen.throw(e));
-          addErrorsFrom(e);
+        }, (e2) => {
+          gen.if((0, codegen_1._)`!(${e2} instanceof ${it.ValidationError})`, () => gen.throw(e2));
+          addErrorsFrom(e2);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -29838,13 +29838,13 @@ var require_ucs2length2 = __commonJS({
       const len = str.length;
       let length = 0;
       let pos = 0;
-      let value;
+      let value2;
       while (pos < len) {
         length++;
-        value = str.charCodeAt(pos++);
-        if (value >= 55296 && value <= 56319 && pos < len) {
-          value = str.charCodeAt(pos);
-          if ((value & 64512) === 56320)
+        value2 = str.charCodeAt(pos++);
+        if (value2 >= 55296 && value2 <= 56319 && pos < len) {
+          value2 = str.charCodeAt(pos);
+          if ((value2 & 64512) === 56320)
             pos++;
         }
       }
@@ -32483,23 +32483,23 @@ var require_schemes4 = __commonJS({
             continue;
           }
           const name = eqIdx === -1 ? token : token.slice(0, eqIdx);
-          const value = eqIdx === -1 ? "" : token.slice(eqIdx + 1);
+          const value2 = eqIdx === -1 ? "" : token.slice(eqIdx + 1);
           if (name === "to") {
-            const addrs = value.split(",");
+            const addrs = value2.split(",");
             for (let j = 0; j < addrs.length; j++) to.push(addrs[j]);
             continue;
           }
           if (name === "subject") {
-            mailtoComponent.subject = decodeHex(value);
+            mailtoComponent.subject = decodeHex(value2);
             continue;
           }
           if (name === "body") {
-            mailtoComponent.body = decodeHex(value);
+            mailtoComponent.body = decodeHex(value2);
             continue;
           }
           if (headers === null) headers = /** @type {Record<string,string>} */
           /* @__PURE__ */ Object.create(null);
-          headers[decodeHex(name)] = decodeHex(value);
+          headers[decodeHex(name)] = decodeHex(value2);
         }
         if (headers !== null) mailtoComponent.headers = headers;
       }
@@ -32822,8 +32822,8 @@ var require_fast_uri4 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e;
+        } catch (e2) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e2;
           return true;
         }
       }
@@ -32982,13 +32982,13 @@ var require_fast_uri4 = __commonJS({
       if (typeof uri !== "string" && typeof uri !== "object") {
         return void 0;
       }
-      let value;
+      let value2;
       try {
-        value = typeof uri === "string" ? uri : serialize(uri, opts);
+        value2 = typeof uri === "string" ? uri : serialize(uri, opts);
       } catch {
         return void 0;
       }
-      const { normalized, malformedAuthorityOrPort, malformedPercentEncoding, malformedSchemeSpecific, malformedHost, malformedScheme } = normalizeStringWithStatus(value, opts);
+      const { normalized, malformedAuthorityOrPort, malformedPercentEncoding, malformedSchemeSpecific, malformedHost, malformedScheme } = normalizeStringWithStatus(value2, opts);
       return malformedAuthorityOrPort || malformedPercentEncoding || malformedSchemeSpecific || malformedHost || malformedScheme ? void 0 : normalized;
     }
     var fastUri = {
@@ -33089,8 +33089,8 @@ var require_formats2 = __commonJS({
         return false;
       const year = +matches[1];
       const month = +matches[2];
-      const day = +matches[3];
-      return month >= 1 && month <= 12 && day >= 1 && day <= (month === 2 && isLeapYear(year) ? 29 : DAYS[month]);
+      const day2 = +matches[3];
+      return month >= 1 && month <= 12 && day2 >= 1 && day2 <= (month === 2 && isLeapYear(year) ? 29 : DAYS[month]);
     }
     function compareDate(d1, d2) {
       if (!(d1 && d2))
@@ -33186,11 +33186,11 @@ var require_formats2 = __commonJS({
     }
     var MIN_INT32 = -(2 ** 31);
     var MAX_INT32 = 2 ** 31 - 1;
-    function validateInt32(value) {
-      return Number.isInteger(value) && value <= MAX_INT32 && value >= MIN_INT32;
+    function validateInt32(value2) {
+      return Number.isInteger(value2) && value2 <= MAX_INT32 && value2 >= MIN_INT32;
     }
-    function validateInt64(value) {
-      return Number.isInteger(value);
+    function validateInt64(value2) {
+      return Number.isInteger(value2);
     }
     function validateNumber() {
       return true;
@@ -33202,7 +33202,7 @@ var require_formats2 = __commonJS({
       try {
         new RegExp(str);
         return true;
-      } catch (e) {
+      } catch (e2) {
         return false;
       }
     }
@@ -34530,7 +34530,7 @@ var require_resolvers = __commonJS({
       let intersection = arrays[0];
       for (let i = 1; i < arrays.length; i++) {
         intersection = intersection.filter(
-          (value) => arrays[i].includes(value)
+          (value2) => arrays[i].includes(value2)
         );
       }
       return intersection;
@@ -34561,9 +34561,9 @@ var require_resolvers = __commonJS({
     function arraysUnion(keyword, values, mergedSchema) {
       const union = [];
       for (const array of values) {
-        for (const value of array) {
-          if (!union.includes(value)) {
-            union.push(value);
+        for (const value2 of array) {
+          if (!union.includes(value2)) {
+            union.push(value2);
           }
         }
       }
@@ -34579,14 +34579,14 @@ var require_resolvers = __commonJS({
       const gcd = (a, b) => !b ? a : gcd(b, a % b);
       const lcm = (a, b) => a * b / gcd(a, b);
       let scale = 1;
-      for (const value of values) {
-        while (value * scale % 1 !== 0) {
+      for (const value2 of values) {
+        while (value2 * scale % 1 !== 0) {
           scale *= 10;
         }
       }
       let multiple = values[0] * scale;
-      for (const value of values) {
-        multiple = lcm(multiple, value * scale);
+      for (const value2 of values) {
+        multiple = lcm(multiple, value2 * scale);
       }
       mergedSchema[keyword] = multiple / scale;
     }
@@ -34602,8 +34602,8 @@ var require_resolvers = __commonJS({
     function skip() {
     }
     function booleanAnd(keyword, values, mergedSchema) {
-      for (const value of values) {
-        if (value === false) {
+      for (const value2 of values) {
+        if (value2 === false) {
           mergedSchema[keyword] = false;
           return;
         }
@@ -34611,8 +34611,8 @@ var require_resolvers = __commonJS({
       mergedSchema[keyword] = true;
     }
     function booleanOr(keyword, values, mergedSchema) {
-      for (const value of values) {
-        if (value === true) {
+      for (const value2 of values) {
+        if (value2 === true) {
           mergedSchema[keyword] = true;
           return;
         }
@@ -35312,16 +35312,16 @@ ${contextFunctionCode}`,
             resolvedLocation = resolveRef(context, propertyLocation);
           }
           const sanitizedKey = JSON.stringify(key);
-          const value = `value_${key.replace(/[^a-zA-Z0-9]/g, "_")}_${context.uid++}`;
+          const value2 = `value_${key.replace(/[^a-zA-Z0-9]/g, "_")}_${context.uid++}`;
           const defaultValue = resolvedLocation.schema.default;
           const isRequired = requiredProperties.includes(key);
           const currentAddComma = i === 0 ? "" : "json += JSON_STR_COMMA";
           code += `
-      const ${value} = ${objVar}[${sanitizedKey}]
-      if (${value} !== undefined) {
+      const ${value2} = ${objVar}[${sanitizedKey}]
+      if (${value2} !== undefined) {
         ${currentAddComma}
         json += ${JSON.stringify(sanitizedKey + ":")}
-        ${buildValue(context, resolvedLocation, `${value}`)}
+        ${buildValue(context, resolvedLocation, `${value2}`)}
       }`;
           if (defaultValue !== void 0) {
             code += ` else {
@@ -35352,15 +35352,15 @@ ${contextFunctionCode}`,
             propertyLocation = resolveRef(context, propertyLocation);
           }
           const sanitizedKey = JSON.stringify(key);
-          const value = `value_${key.replace(/[^a-zA-Z0-9]/g, "_")}_${context.uid++}`;
+          const value2 = `value_${key.replace(/[^a-zA-Z0-9]/g, "_")}_${context.uid++}`;
           const defaultValue = propertyLocation.schema.default;
           const isRequired = requiredProperties.includes(key);
           code += `
-          const ${value} = ${objVar}[${sanitizedKey}]
-          if (${value} !== undefined) {
+          const ${value2} = ${objVar}[${sanitizedKey}]
+          if (${value2} !== undefined) {
             ${addComma}
             json += ${JSON.stringify(sanitizedKey + ":")}
-            ${buildValue(context, propertyLocation, `${value}`)}
+            ${buildValue(context, propertyLocation, `${value2}`)}
           }`;
           if (defaultValue !== void 0) {
             code += ` else {
@@ -35415,14 +35415,14 @@ ${contextFunctionCode}`,
         context.mergedSchemasIds.set(clonedSchema, mergedSchemaRef);
       }
       for (const key in schema) {
-        let value = schema[key];
-        if (key === "$ref" && typeof value === "string" && value.charAt(0) === "#") {
-          value = schemaId + value;
+        let value2 = schema[key];
+        if (key === "$ref" && typeof value2 === "string" && value2.charAt(0) === "#") {
+          value2 = schemaId + value2;
         }
-        if (typeof value === "object" && value !== null) {
-          value = cloneOriginSchema(context, value, schemaId);
+        if (typeof value2 === "object" && value2 !== null) {
+          value2 = cloneOriginSchema(context, value2, schemaId);
         }
-        clonedSchema[key] = value;
+        clonedSchema[key] = value2;
       }
       return clonedSchema;
     }
@@ -35527,12 +35527,12 @@ ${contextFunctionCode}`,
               itemLocation = resolveRef(context, itemLocation);
               item = itemLocation.schema;
             }
-            const value = `value_${i}`;
-            functionCode += `const ${value} = obj[${i}]`;
-            const tmpRes = buildValue(context, itemLocation, value);
+            const value2 = `value_${i}`;
+            functionCode += `const ${value2} = obj[${i}]`;
+            const tmpRes = buildValue(context, itemLocation, value2);
             functionCode += `
         if (${i} < arrayLength) {
-          if (${buildArrayTypeCondition(item.type, value)}) {
+          if (${buildArrayTypeCondition(item.type, value2)}) {
             if (${i}) {
               json += JSON_STR_COMMA
             }
@@ -35608,12 +35608,12 @@ ${contextFunctionCode}`,
             itemLocation = resolveRef(context, itemLocation);
             item = itemLocation.schema;
           }
-          const value = `value_${i}_${context.uid++}`;
-          inlinedCode += `const ${value} = ${objVar}[${i}]`;
-          const tmpRes = buildValue(context, itemLocation, value);
+          const value2 = `value_${i}_${context.uid++}`;
+          inlinedCode += `const ${value2} = ${objVar}[${i}]`;
+          const tmpRes = buildValue(context, itemLocation, value2);
           inlinedCode += `
         if (${i} < arrayLength_${objVar}) {
-          if (${buildArrayTypeCondition(item.type, value)}) {
+          if (${buildArrayTypeCondition(item.type, value2)}) {
             !addComma_${localUid} && (addComma_${localUid} = true) || (json += JSON_STR_COMMA)
             ${tmpRes}
           } else {
@@ -36336,20 +36336,20 @@ var require_re = __commonJS({
       ["\\d", MAX_LENGTH],
       [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH]
     ];
-    var makeSafeRegex = (value) => {
+    var makeSafeRegex = (value2) => {
       for (const [token, max] of safeRegexReplacements) {
-        value = value.split(`${token}*`).join(`${token}{0,${max}}`).split(`${token}+`).join(`${token}{1,${max}}`);
+        value2 = value2.split(`${token}*`).join(`${token}{0,${max}}`).split(`${token}+`).join(`${token}{1,${max}}`);
       }
-      return value;
+      return value2;
     };
-    var createToken = (name, value, isGlobal) => {
-      const safe = makeSafeRegex(value);
+    var createToken = (name, value2, isGlobal) => {
+      const safe = makeSafeRegex(value2);
       const index = R++;
-      debug(name, index, value);
+      debug(name, index, value2);
       t[name] = index;
-      src[index] = value;
+      src[index] = value2;
       safeSrc[index] = safe;
-      re[index] = new RegExp(value, isGlobal ? "g" : void 0);
+      re[index] = new RegExp(value2, isGlobal ? "g" : void 0);
       safeRe[index] = new RegExp(safe, isGlobal ? "g" : void 0);
     };
     createToken("NUMERICIDENTIFIER", "0|[1-9]\\d*");
@@ -37167,26 +37167,26 @@ var require_lrucache = __commonJS({
         this.map = /* @__PURE__ */ new Map();
       }
       get(key) {
-        const value = this.map.get(key);
-        if (value === void 0) {
+        const value2 = this.map.get(key);
+        if (value2 === void 0) {
           return void 0;
         } else {
           this.map.delete(key);
-          this.map.set(key, value);
-          return value;
+          this.map.set(key, value2);
+          return value2;
         }
       }
       delete(key) {
         return this.map.delete(key);
       }
-      set(key, value) {
+      set(key, value2) {
         const deleted = this.delete(key);
-        if (!deleted && value !== void 0) {
+        if (!deleted && value2 !== void 0) {
           if (this.map.size >= this.max) {
             const firstKey = this.map.keys().next().value;
             this.delete(firstKey);
           }
-          this.map.set(key, value);
+          this.map.set(key, value2);
         }
         return this;
       }
@@ -38411,8 +38411,8 @@ var require_req_id_gen_factory = __commonJS({
       }
       return genReqId;
     }
-    function getGenReqId(contextServer, req) {
-      return contextServer[kGenReqId](req);
+    function getGenReqId(contextServer, req2) {
+      return contextServer[kGenReqId](req2);
     }
     function buildDefaultGenReqId() {
       const maxInt = 2147483647;
@@ -38423,8 +38423,8 @@ var require_req_id_gen_factory = __commonJS({
       };
     }
     function buildOptionalHeaderReqId(requestIdHeader, genReqId) {
-      return function(req) {
-        return req.headers[requestIdHeader] || genReqId(req);
+      return function(req2) {
+        return req2.headers[requestIdHeader] || genReqId(req2);
       };
     }
     module.exports = {
@@ -38906,7 +38906,7 @@ var require_parse3 = __commonJS({
       }
       let inputLength = input.length;
       let key = "";
-      let value = "";
+      let value2 = "";
       let startingIndex = -1;
       let equalityIndex = -1;
       let shouldDecodeKey = false;
@@ -38931,26 +38931,26 @@ var require_parse3 = __commonJS({
               key = fastDecode(key) || key;
             }
             if (hasBothKeyValuePair) {
-              value = input.slice(equalityIndex + 1, i);
+              value2 = input.slice(equalityIndex + 1, i);
               if (valueHasPlus) {
-                value = value.replace(plusRegex, " ");
+                value2 = value2.replace(plusRegex, " ");
               }
               if (shouldDecodeValue) {
-                value = fastDecode(value) || value;
+                value2 = fastDecode(value2) || value2;
               }
             }
             const currentValue = result[key];
             if (currentValue === void 0) {
-              result[key] = value;
+              result[key] = value2;
             } else {
               if (currentValue.pop) {
-                currentValue.push(value);
+                currentValue.push(value2);
               } else {
-                result[key] = [currentValue, value];
+                result[key] = [currentValue, value2];
               }
             }
           }
-          value = "";
+          value2 = "";
           startingIndex = i;
           equalityIndex = i;
           shouldDecodeKey = false;
@@ -39178,16 +39178,16 @@ var require_stringify = __commonJS({
   "node_modules/fast-querystring/lib/stringify.js"(exports, module) {
     "use strict";
     var { encodeString } = require_querystring();
-    function getAsPrimitive(value) {
-      const type = typeof value;
+    function getAsPrimitive(value2) {
+      const type = typeof value2;
       if (type === "string") {
-        return encodeString(value);
+        return encodeString(value2);
       } else if (type === "bigint") {
-        return value.toString();
+        return value2.toString();
       } else if (type === "boolean") {
-        return value ? "true" : "false";
-      } else if (type === "number" && Number.isFinite(value)) {
-        return value < 1e21 ? "" + value : encodeString("" + value);
+        return value2 ? "true" : "false";
+      } else if (type === "number" && Number.isFinite(value2)) {
+        return value2 < 1e21 ? "" + value2 : encodeString("" + value2);
       }
       return "";
     }
@@ -39202,23 +39202,23 @@ var require_stringify = __commonJS({
       let valueLength = 0;
       for (let i = 0; i < keyLength; i++) {
         const key = keys[i];
-        const value = input[key];
+        const value2 = input[key];
         const encodedKey = encodeString(key) + "=";
         if (i) {
           result += separator;
         }
-        if (Array.isArray(value)) {
-          valueLength = value.length;
+        if (Array.isArray(value2)) {
+          valueLength = value2.length;
           for (let j = 0; j < valueLength; j++) {
             if (j) {
               result += separator;
             }
             result += encodedKey;
-            result += getAsPrimitive(value[j]);
+            result += getAsPrimitive(value2[j]);
           }
         } else {
           result += encodedKey;
-          result += getAsPrimitive(value);
+          result += getAsPrimitive(value2);
         }
       }
       return result;
@@ -39506,8 +39506,8 @@ var require_tokenizer = __commonJS({
                   while (i < str.length && digit.test(str[i])) {
                     digits += str[i++];
                   }
-                  let value = parseInt(digits, 10);
-                  const reference = { type: types_1.types.REFERENCE, value };
+                  let value2 = parseInt(digits, 10);
+                  const reference = { type: types_1.types.REFERENCE, value: value2 };
                   last.push(reference);
                   referenceQueue.push({ reference, stack: last, index: last.length - 1 });
                 } else {
@@ -40035,7 +40035,7 @@ var require_http_method = __commonJS({
         };
       },
       /* c8 ignore next 1 */
-      deriveConstraint: (req) => req.method,
+      deriveConstraint: (req2) => req2.method,
       mustMatchWhenDerived: true
     };
   }
@@ -40053,14 +40053,14 @@ var require_pretty_print = __commonJS({
       const keys = Object.keys(obj);
       for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
-        const value = obj[key];
+        const value2 = obj[key];
         const isLast = i === keys.length - 1;
         const nodePrefix = isLast ? "\u2514\u2500\u2500 " : "\u251C\u2500\u2500 ";
         const childPrefix = isLast ? "    " : "\u2502   ";
-        const nodeData = value[treeDataSymbol] || "";
+        const nodeData = value2[treeDataSymbol] || "";
         const prefixedNodeData = nodeData.replaceAll("\n", "\n" + parentPrefix + childPrefix);
         tree += parentPrefix + nodePrefix + key + prefixedNodeData + "\n";
-        tree += printObjectTree(value, parentPrefix + childPrefix);
+        tree += printObjectTree(value2, parentPrefix + childPrefix);
       }
       return tree;
     }
@@ -40098,9 +40098,9 @@ var require_pretty_print = __commonJS({
     }
     function serializeMetaData(metaData) {
       let serializedMetaData = "";
-      for (const [key, value] of Object.entries(metaData)) {
+      for (const [key, value2] of Object.entries(metaData)) {
         serializedMetaData += `
-\u2022 (${key}) ${value}`;
+\u2022 (${key}) ${value2}`;
       }
       return serializedMetaData;
     }
@@ -40111,9 +40111,9 @@ var require_pretty_print = __commonJS({
       return { ...route, method, opts: { constraints } };
     }
     function serializeConstraints(constraints) {
-      return JSON.stringify(constraints, (_key, value) => {
-        if (value instanceof RegExp) return value.toString();
-        return value;
+      return JSON.stringify(constraints, (_key, value2) => {
+        if (value2 instanceof RegExp) return value2.toString();
+        return value2;
       });
     }
     function serializeRoute(route) {
@@ -40603,8 +40603,8 @@ var require_accept_version = __commonJS({
       name: "version",
       mustMatchWhenDerived: true,
       storage: SemVerStore,
-      validate(value) {
-        assert(typeof value === "string", "Version should be a string");
+      validate(value2) {
+        assert(typeof value2 === "string", "Version should be a string");
       }
     };
   }
@@ -40635,13 +40635,13 @@ var require_accept_host = __commonJS({
           }
           regexCache.set(host, void 0);
         },
-        set: (host, value) => {
+        set: (host, value2) => {
           if (host instanceof RegExp) {
             const safeRegex = new RegExp(host.source, host.flags.replace(/[gy]/g, ""));
-            regexHosts.push({ host: safeRegex, value });
+            regexHosts.push({ host: safeRegex, value: value2 });
             regexCache.clear();
           } else {
-            hosts.set(host, value);
+            hosts.set(host, value2);
           }
         }
       };
@@ -40650,8 +40650,8 @@ var require_accept_host = __commonJS({
       name: "host",
       mustMatchWhenDerived: false,
       storage: HostStorage,
-      validate(value) {
-        assert(typeof value === "string" || Object.prototype.toString.call(value) === "[object RegExp]", "Host should be a string or a RegExp");
+      validate(value2) {
+        assert(typeof value2 === "string" || Object.prototype.toString.call(value2) === "[object RegExp]", "Host should be a string or a RegExp");
       }
     };
   }
@@ -40705,14 +40705,14 @@ var require_constrainer = __commonJS({
           this.noteUsage({ [strategy.name]: strategy });
         }
       }
-      deriveConstraints(req, ctx, done) {
-        const constraints = this.deriveSyncConstraints(req, ctx);
+      deriveConstraints(req2, ctx, done) {
+        const constraints = this.deriveSyncConstraints(req2, ctx);
         if (done === void 0) {
           return constraints;
         }
-        this.deriveAsyncConstraints(constraints, req, ctx, done);
+        this.deriveAsyncConstraints(constraints, req2, ctx, done);
       }
-      deriveSyncConstraints(req, ctx) {
+      deriveSyncConstraints(req2, ctx) {
         return void 0;
       }
       // When new constraints start getting used, we need to rebuild the deriver to derive them. Do so if we see novel constraints used.
@@ -40742,8 +40742,8 @@ var require_constrainer = __commonJS({
       validateConstraints(constraints) {
         for (const key in constraints) {
           if (!Object.hasOwn(constraints, key)) continue;
-          const value = constraints[key];
-          if (typeof value === "undefined") {
+          const value2 = constraints[key];
+          if (typeof value2 === "undefined") {
             throw new Error("Can't pass an undefined constraint value, must pass null or no key at all");
           }
           const strategy = this.strategies[key];
@@ -40751,11 +40751,11 @@ var require_constrainer = __commonJS({
             throw new Error(`No strategy registered for constraint key ${key}`);
           }
           if (strategy.validate) {
-            strategy.validate(value);
+            strategy.validate(value2);
           }
         }
       }
-      deriveAsyncConstraints(constraints, req, ctx, done) {
+      deriveAsyncConstraints(constraints, req2, ctx, done) {
         let asyncConstraintsCount = this.asyncStrategiesInUse.size;
         if (asyncConstraintsCount === 0) {
           done(null, constraints);
@@ -40765,7 +40765,7 @@ var require_constrainer = __commonJS({
         constraints = constraints || {};
         for (const key of this.asyncStrategiesInUse) {
           const strategy = this.strategies[key];
-          strategy.deriveConstraint(req, ctx, (err, constraintValue) => {
+          strategy.deriveConstraint(req2, ctx, (err, constraintValue) => {
             if (errored) return;
             if (err !== null) {
               errored = true;
@@ -41387,33 +41387,33 @@ var require_find_my_way = __commonJS({
       const newRoutes = this.routes.filter(predicate);
       this._rebuild(newRoutes);
     };
-    Router.prototype.lookup = function lookup(req, res, ctx, done) {
+    Router.prototype.lookup = function lookup(req2, res, ctx, done) {
       if (typeof ctx === "function") {
         done = ctx;
         ctx = void 0;
       }
       if (done === void 0) {
-        const constraints = this.constrainer.deriveConstraints(req, ctx);
-        const handle = this.find(req.method, req.url, constraints);
-        return this.callHandler(handle, req, res, ctx);
+        const constraints = this.constrainer.deriveConstraints(req2, ctx);
+        const handle = this.find(req2.method, req2.url, constraints);
+        return this.callHandler(handle, req2, res, ctx);
       }
-      this.constrainer.deriveConstraints(req, ctx, (err, constraints) => {
+      this.constrainer.deriveConstraints(req2, ctx, (err, constraints) => {
         if (err !== null) {
           done(err);
           return;
         }
         try {
-          const handle = this.find(req.method, req.url, constraints);
-          const result = this.callHandler(handle, req, res, ctx);
+          const handle = this.find(req2.method, req2.url, constraints);
+          const result = this.callHandler(handle, req2, res, ctx);
           done(null, result);
         } catch (err2) {
           done(err2);
         }
       });
     };
-    Router.prototype.callHandler = function callHandler(handle, req, res, ctx) {
-      if (handle === null) return this._defaultRoute(req, res, ctx);
-      return ctx === void 0 ? handle.handler(req, res, handle.params, handle.store, handle.searchParams) : handle.handler.call(ctx, req, res, handle.params, handle.store, handle.searchParams);
+    Router.prototype.callHandler = function callHandler(handle, req2, res, ctx) {
+      if (handle === null) return this._defaultRoute(req2, res, ctx);
+      return ctx === void 0 ? handle.handler(req2, res, handle.params, handle.store, handle.searchParams) : handle.handler.call(ctx, req2, res, handle.params, handle.store, handle.searchParams);
     };
     Router.prototype.find = function find(method, path, derivedConstraints) {
       let currentNode = method === "GET" ? this._treeGET : this.trees[method];
@@ -41569,9 +41569,9 @@ var require_find_my_way = __commonJS({
         this._on(method, path, opts, handler, store);
       }
     };
-    Router.prototype._defaultRoute = function(req, res, ctx) {
+    Router.prototype._defaultRoute = function(req2, res, ctx) {
       if (this.defaultRoute !== null) {
-        return ctx === void 0 ? this.defaultRoute(req, res) : this.defaultRoute.call(ctx, req, res);
+        return ctx === void 0 ? this.defaultRoute(req2, res) : this.defaultRoute.call(ctx, req2, res);
       } else {
         res.statusCode = 404;
         res.end();
@@ -41583,7 +41583,7 @@ var require_find_my_way = __commonJS({
       }
       const onBadUrl = this.onBadUrl;
       return {
-        handler: (req, res, ctx) => onBadUrl(path, req, res),
+        handler: (req2, res, ctx) => onBadUrl(path, req2, res),
         params: {},
         store: null
       };
@@ -41594,7 +41594,7 @@ var require_find_my_way = __commonJS({
       }
       const onMaxParamLength = this.onMaxParamLength;
       return {
-        handler: (req, res, ctx) => onMaxParamLength(path, req, res),
+        handler: (req2, res, ctx) => onMaxParamLength(path, req2, res),
         params: {},
         store: null
       };
@@ -41731,7 +41731,7 @@ var require_find_my_way = __commonJS({
 var require_head_route = __commonJS({
   "node_modules/fastify/lib/head-route.js"(exports, module) {
     "use strict";
-    function headRouteOnSendHandler(req, reply, payload, done) {
+    function headRouteOnSendHandler(req2, reply, payload, done) {
       if (payload === void 0) {
         reply.header("content-length", "0");
         done(null, null);
@@ -42139,8 +42139,8 @@ var require_route = __commonJS({
           }
         }
       }
-      function routeHandler(req, res, params, context, query) {
-        const id = getGenReqId(context.server, req);
+      function routeHandler(req2, res, params, context, query) {
+        const id = getGenReqId(context.server, req2);
         let childLogger;
         if (hasLogger === false && context.childLoggerFactory === defaultChildLoggerFactory) {
           childLogger = logger;
@@ -42151,10 +42151,10 @@ var require_route = __commonJS({
           if (context.logSerializers) {
             loggerOpts.serializers = context.logSerializers;
           }
-          childLogger = createChildLogger(context, logger, req, id, loggerOpts);
+          childLogger = createChildLogger(context, logger, req2, id, loggerOpts);
         }
         if (closing === true) {
-          if (req.httpVersionMajor !== 2) {
+          if (req2.httpVersionMajor !== 2) {
             res.setHeader("Connection", "close");
           }
           if (return503OnClosing) {
@@ -42168,18 +42168,18 @@ var require_route = __commonJS({
             return;
           }
         }
-        const connHeader = String.prototype.toLowerCase.call(req.headers.connection || "");
+        const connHeader = String.prototype.toLowerCase.call(req2.headers.connection || "");
         if (connHeader === "keep-alive") {
-          if (keepAliveConnections.has(req.socket) === false) {
-            keepAliveConnections.add(req.socket);
-            req.socket.on("close", removeTrackedSocket.bind({ keepAliveConnections, socket: req.socket }));
+          if (keepAliveConnections.has(req2.socket) === false) {
+            keepAliveConnections.add(req2.socket);
+            req2.socket.on("close", removeTrackedSocket.bind({ keepAliveConnections, socket: req2.socket }));
           }
         }
-        if (req.headers[kRequestAcceptVersion] !== void 0) {
-          req.headers["accept-version"] = req.headers[kRequestAcceptVersion];
-          req.headers[kRequestAcceptVersion] = void 0;
+        if (req2.headers[kRequestAcceptVersion] !== void 0) {
+          req2.headers["accept-version"] = req2.headers[kRequestAcceptVersion];
+          req2.headers[kRequestAcceptVersion] = void 0;
         }
-        const request = new context.Request(id, params, req, query, childLogger, context);
+        const request = new context.Request(id, params, req2, query, childLogger, context);
         const reply = new context.Reply(res, request, childLogger);
         context.server[kLogController].incomingRequest(request, reply);
         const handlerTimeout = context.handlerTimeout;
@@ -42200,7 +42200,7 @@ var require_route = __commonJS({
             }
             clearTimeout(request[kTimeoutTimer]);
           };
-          req.on("close", onAbort);
+          req2.on("close", onAbort);
           request[kOnAbort] = onAbort;
         }
         if (hasLogger === true || context.onResponse !== null || handlerTimeout > 0) {
@@ -42223,8 +42223,8 @@ var require_route = __commonJS({
           runPreParsing(null, request, reply);
         }
         if (context.onRequestAbort !== null) {
-          req.on("close", () => {
-            if (req.aborted) {
+          req2.on("close", () => {
+            if (req2.aborted) {
               onRequestAbortHookRunner(
                 context.onRequestAbort,
                 request,
@@ -42369,11 +42369,11 @@ var require_four_oh_four = __commonJS({
         });
       }
       function createRouteEventHandler() {
-        return function onRouteEvent(path, req, res) {
+        return function onRouteEvent(path, req2, res) {
           const fourOhFourContext = this[kFourOhFourLevelInstance][kFourOhFourContext];
-          const id = getGenReqId(fourOhFourContext.server, req);
-          const childLogger = createChildLogger(fourOhFourContext, logger, req, id);
-          const request = new Request(id, null, req, null, childLogger, fourOhFourContext);
+          const id = getGenReqId(fourOhFourContext.server, req2);
+          const childLogger = createChildLogger(fourOhFourContext, logger, req2, id);
+          const request = new Request(id, null, req2, null, childLogger, fourOhFourContext);
           const reply = new Reply(res, request, childLogger);
           _routeEventHandler(request, reply);
         };
@@ -42452,11 +42452,11 @@ var require_four_oh_four = __commonJS({
         router.all(prefix + (prefix.endsWith("/") ? "*" : "/*"), routeHandler, context);
         router.all(prefix, routeHandler, context);
       }
-      function fourOhFourFallBack(req, res) {
+      function fourOhFourFallBack(req2, res) {
         const fourOhFourContext = this[kFourOhFourLevelInstance][kFourOhFourContext];
-        const id = getGenReqId(fourOhFourContext.server, req);
-        const childLogger = createChildLogger(fourOhFourContext, logger, req, id);
-        const request = new Request(id, null, req, null, childLogger, fourOhFourContext);
+        const id = getGenReqId(fourOhFourContext.server, req2);
+        const childLogger = createChildLogger(fourOhFourContext, logger, req2, id);
+        const request = new Request(id, null, req2, null, childLogger, fourOhFourContext);
         const reply = new Reply(res, request, childLogger);
         fourOhFourContext.server[kLogController].incomingRequest(request, reply);
         request.log.warn("the default handler for 404 did not catch this, this is likely a fastify bug, please report it");
@@ -42598,11 +42598,11 @@ var require_dist5 = __commonJS({
         if (!cookieNameRegExp.test(name)) {
           throw new TypeError(`cookie name is invalid: ${name}`);
         }
-        const value = enc(val);
-        if (!cookieValueRegExp.test(value)) {
+        const value2 = enc(val);
+        if (!cookieValueRegExp.test(value2)) {
           throw new TypeError(`cookie val is invalid: ${val}`);
         }
-        cookieStrings.push(`${name}=${value}`);
+        cookieStrings.push(`${name}=${value2}`);
       }
       return cookieStrings.join("; ");
     }
@@ -42613,11 +42613,11 @@ var require_dist5 = __commonJS({
       if (!cookieNameRegExp.test(cookie.name)) {
         throw new TypeError(`argument name is invalid: ${cookie.name}`);
       }
-      const value = cookie.value ? enc(cookie.value) : "";
-      if (!cookieValueRegExp.test(value)) {
+      const value2 = cookie.value ? enc(cookie.value) : "";
+      if (!cookieValueRegExp.test(value2)) {
         throw new TypeError(`argument val is invalid: ${cookie.value}`);
       }
-      let str = cookie.name + "=" + value;
+      let str = cookie.name + "=" + value2;
       if (cookie.maxAge !== void 0) {
         if (!Number.isInteger(cookie.maxAge)) {
           throw new TypeError(`option maxAge is invalid: ${cookie.maxAge}`);
@@ -42778,7 +42778,7 @@ var require_dist5 = __commonJS({
         return str;
       try {
         return decodeURIComponent(str);
-      } catch (e) {
+      } catch (e2) {
         return str;
       }
     }
@@ -42861,21 +42861,21 @@ var require_parse_url = __commonJS({
         query = new URLSearchParams(query);
         for (const key of query.keys()) {
           result.searchParams.delete(key);
-          for (const value of query.getAll(key)) {
-            result.searchParams.append(key, value);
+          for (const value2 of query.getAll(key)) {
+            result.searchParams.append(key, value2);
           }
         }
       } else {
         const merged = Object.assign({}, url.query, query);
         for (const key in merged) {
-          const value = merged[key];
-          if (Array.isArray(value)) {
+          const value2 = merged[key];
+          if (Array.isArray(value2)) {
             result.searchParams.delete(key);
-            for (const param of value) {
+            for (const param of value2) {
               result.searchParams.append(key, param);
             }
           } else {
-            result.searchParams.set(key, value);
+            result.searchParams.set(key, value2);
           }
         }
       }
@@ -42900,28 +42900,28 @@ var require_form_data = __commonJS({
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
       const escape2 = (str) => str.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
-      const normalizeLinefeeds = (value) => value.replace(/\r?\n|\r/g, "\r\n");
+      const normalizeLinefeeds = (value2) => value2.replace(/\r?\n|\r/g, "\r\n");
       const linebreak = new Uint8Array([13, 10]);
       async function* asyncIterator() {
-        for (const [name, value] of formdata) {
-          if (typeof value === "string") {
+        for (const [name, value2] of formdata) {
+          if (typeof value2 === "string") {
             yield textEncoder.encode(`${prefix}; name="${escape2(normalizeLinefeeds(name))}"\r
 \r
 `);
-            yield textEncoder.encode(`${normalizeLinefeeds(value)}\r
+            yield textEncoder.encode(`${normalizeLinefeeds(value2)}\r
 `);
           } else {
             let header = `${prefix}; name="${escape2(normalizeLinefeeds(name))}"`;
-            value.name && (header += `; filename="${escape2(value.name)}"`);
+            value2.name && (header += `; filename="${escape2(value2.name)}"`);
             header += `\r
-Content-Type: ${value.type || "application/octet-stream"}\r
+Content-Type: ${value2.type || "application/octet-stream"}\r
 \r
 `;
             yield textEncoder.encode(header);
-            if (value.stream) {
-              yield* value.stream();
+            if (value2.stream) {
+              yield* value2.stream();
             } else {
-              yield value;
+              yield value2;
             }
             yield linebreak;
           }
@@ -42994,15 +42994,15 @@ var require_request2 = __commonJS({
       this.headers = {};
       this.rawHeaders = [];
       const headers = options.headers || {};
-      for (const field in headers) {
-        const fieldLowerCase = field.toLowerCase();
-        if ((fieldLowerCase === "user-agent" || fieldLowerCase === "content-type") && headers[field] === void 0) {
+      for (const field2 in headers) {
+        const fieldLowerCase = field2.toLowerCase();
+        if ((fieldLowerCase === "user-agent" || fieldLowerCase === "content-type") && headers[field2] === void 0) {
           this.headers[fieldLowerCase] = void 0;
           continue;
         }
-        const value = headers[field];
-        assert(value !== void 0, 'invalid value "undefined" for header ' + field);
-        this.headers[fieldLowerCase] = "" + value;
+        const value2 = headers[field2];
+        assert(value2 !== void 0, 'invalid value "undefined" for header ' + field2);
+        this.headers[fieldLowerCase] = "" + value2;
       }
       if ("user-agent" in this.headers === false) {
         this.headers["user-agent"] = "lightMyRequest";
@@ -43153,59 +43153,59 @@ var require_set_cookie = __commonJS({
       var nameValuePairStr = parts.shift();
       var parsed = parseNameValuePair(nameValuePairStr);
       var name = parsed.name;
-      var value = parsed.value;
+      var value2 = parsed.value;
       options = options ? Object.assign({}, defaultParseOptions, options) : defaultParseOptions;
       if (isForbiddenKey(name)) {
         return null;
       }
       try {
-        value = options.decodeValues ? decodeURIComponent(value) : value;
-      } catch (e) {
+        value2 = options.decodeValues ? decodeURIComponent(value2) : value2;
+      } catch (e2) {
         console.error(
           "set-cookie-parser: failed to decode cookie value. Set options.decodeValues=false to disable decoding.",
-          e
+          e2
         );
       }
       var cookie = createNullObj();
       cookie.name = name;
-      cookie.value = value;
+      cookie.value = value2;
       parts.forEach(function(part) {
         var sides = part.split("=");
         var key = sides.shift().trimLeft().toLowerCase();
         if (isForbiddenKey(key)) {
           return;
         }
-        var value2 = sides.join("=");
+        var value3 = sides.join("=");
         if (key === "expires") {
-          cookie.expires = new Date(value2);
+          cookie.expires = new Date(value3);
         } else if (key === "max-age") {
-          var n = parseInt(value2, 10);
+          var n = parseInt(value3, 10);
           if (!Number.isNaN(n)) cookie.maxAge = n;
         } else if (key === "secure") {
           cookie.secure = true;
         } else if (key === "httponly") {
           cookie.httpOnly = true;
         } else if (key === "samesite") {
-          cookie.sameSite = value2;
+          cookie.sameSite = value3;
         } else if (key === "partitioned") {
           cookie.partitioned = true;
         } else if (key) {
-          cookie[key] = value2;
+          cookie[key] = value3;
         }
       });
       return cookie;
     }
     function parseNameValuePair(nameValuePairStr) {
       var name = "";
-      var value = "";
+      var value2 = "";
       var nameValueArr = nameValuePairStr.split("=");
       if (nameValueArr.length > 1) {
         name = nameValueArr.shift();
-        value = nameValueArr.join("=");
+        value2 = nameValueArr.join("=");
       } else {
-        value = nameValuePairStr;
+        value2 = nameValuePairStr;
       }
-      return { name, value };
+      return { name, value: value2 };
     }
     function parse(input, options) {
       options = options ? Object.assign({}, defaultParseOptions, options) : defaultParseOptions;
@@ -43321,12 +43321,12 @@ var require_response = __commonJS({
     var { Writable, Readable, addAbortSignal } = __require("node:stream");
     var util2 = __require("node:util");
     var setCookie = require_set_cookie();
-    function Response(req, onEnd, reject) {
-      http.ServerResponse.call(this, req);
-      if (req._lightMyRequest?.payloadAsStream) {
+    function Response(req2, onEnd, reject) {
+      http.ServerResponse.call(this, req2);
+      if (req2._lightMyRequest?.payloadAsStream) {
         const read = this.emit.bind(this, "drain");
         this._lightMyRequest = { headers: null, trailers: {}, stream: new Readable({ read }) };
-        const signal = req._lightMyRequest.signal;
+        const signal = req2._lightMyRequest.signal;
         if (signal) {
           addAbortSignal(signal, this._lightMyRequest.stream);
         }
@@ -43379,7 +43379,7 @@ var require_response = __commonJS({
       } else {
         this.once("finish", () => {
           const res = generatePayload(this);
-          res.raw.req = req;
+          res.raw.req = req2;
           onEndSuccess(res);
         });
       }
@@ -43487,7 +43487,7 @@ var require_response = __commonJS({
       for (const headerName of Object.keys(headers)) {
         const headerValue = headers[headerName];
         if (Array.isArray(headerValue)) {
-          headers[headerName] = headerValue.map((value) => "" + value);
+          headers[headerName] = headerValue.map((value2) => "" + value2);
         } else {
           headers[headerName] = "" + headerValue;
         }
@@ -43497,9 +43497,9 @@ var require_response = __commonJS({
       response._lightMyRequest.headers = Object.assign({}, response.getHeaders());
       ["Date", "Connection", "Transfer-Encoding"].forEach((name) => {
         const regex = new RegExp("\\r\\n" + name + ": ([^\\r]*)\\r\\n");
-        const field = response._header?.match(regex);
-        if (field) {
-          response._lightMyRequest.headers[name.toLowerCase()] = field[1];
+        const field2 = response._header?.match(regex);
+        if (field2) {
+          response._lightMyRequest.headers[name.toLowerCase()] = field2[1];
         }
       });
     }
@@ -44352,8 +44352,8 @@ var require_light_my_request = __commonJS({
         return doInject(dispatchFunc, options, callback);
       }
     }
-    function supportStream1(req, next) {
-      const payload = req._lightMyRequest.payload;
+    function supportStream1(req2, next) {
+      const payload = req2._lightMyRequest.payload;
       if (!payload || payload._readableState || typeof payload.resume !== "function") {
         return next();
       }
@@ -44361,23 +44361,23 @@ var require_light_my_request = __commonJS({
       payload.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
       payload.on("end", () => {
         const payload2 = Buffer.concat(chunks);
-        req.headers["content-length"] = req.headers["content-length"] || "" + payload2.length;
-        delete req.headers["transfer-encoding"];
-        req._lightMyRequest.payload = payload2;
+        req2.headers["content-length"] = req2.headers["content-length"] || "" + payload2.length;
+        delete req2.headers["transfer-encoding"];
+        req2._lightMyRequest.payload = payload2;
         return next();
       });
       payload.resume();
     }
-    function makeRequest(dispatchFunc, server, req, res) {
-      req.once("error", function(err) {
+    function makeRequest(dispatchFunc, server, req2, res) {
+      req2.once("error", function(err) {
         if (this.destroyed) res.destroy(err);
       });
-      req.once("close", function() {
+      req2.once("close", function() {
         if (this.destroyed && !this._error) {
           res.destroy();
         }
       });
-      return supportStream1(req, () => dispatchFunc.call(server, req, res));
+      return supportStream1(req2, () => dispatchFunc.call(server, req2, res));
     }
     function doInject(dispatchFunc, options, callback) {
       options = typeof options === "string" ? { url: options } : options;
@@ -44385,7 +44385,7 @@ var require_light_my_request = __commonJS({
         assert(typeof dispatchFunc === "function", "dispatchFunc should be a function");
         const isOptionValid = optsValidator(options);
         if (!isOptionValid) {
-          throw new Error(optsValidator.errors.map((e) => e.message));
+          throw new Error(optsValidator.errors.map((e2) => e2.message));
         }
       }
       const server = options.server || {};
@@ -44395,14 +44395,14 @@ var require_light_my_request = __commonJS({
         Object.setPrototypeOf(Object.getPrototypeOf(dispatchFunc.response), Response.prototype);
       }
       if (typeof callback === "function") {
-        const req = new RequestConstructor(options);
-        const res = new Response(req, callback);
-        return makeRequest(dispatchFunc, server, req, res);
+        const req2 = new RequestConstructor(options);
+        const res = new Response(req2, callback);
+        return makeRequest(dispatchFunc, server, req2, res);
       } else {
         return new Promise((resolve, reject) => {
-          const req = new RequestConstructor(options);
-          const res = new Response(req, resolve, reject);
-          makeRequest(dispatchFunc, server, req, res);
+          const req2 = new RequestConstructor(options);
+          const res = new Response(req2, resolve, reject);
+          makeRequest(dispatchFunc, server, req2, res);
         });
       }
     }
@@ -44451,11 +44451,11 @@ var require_light_my_request = __commonJS({
       "query"
     ];
     chainMethods.forEach((method) => {
-      Chain.prototype[method] = function(value) {
+      Chain.prototype[method] = function(value2) {
         if (this._hasInvoked === true || this._promise) {
           throw new Error(errorMessage);
         }
-        this.option[method] = value;
+        this.option[method] = value2;
         return this;
       };
     });
@@ -44934,13 +44934,13 @@ var require_fastify = __commonJS({
             else lightMyRequest(httpHandler, opts, cb);
           });
         } else {
-          return lightMyRequest((req, res) => {
+          return lightMyRequest((req2, res) => {
             this.ready(function(err) {
               if (err) {
                 res.emit("error", err);
                 return;
               }
-              httpHandler(req, res);
+              httpHandler(req2, res);
             });
           }, opts);
         }
@@ -45033,18 +45033,18 @@ var require_fastify = __commonJS({
         this[kChildren].forEach((child) => child.addSchema(schema));
         return this;
       }
-      function defaultRoute(req, res) {
-        if (req.headers["accept-version"] !== void 0) {
-          req.headers[kRequestAcceptVersion] = req.headers["accept-version"];
-          req.headers["accept-version"] = void 0;
+      function defaultRoute(req2, res) {
+        if (req2.headers["accept-version"] !== void 0) {
+          req2.headers[kRequestAcceptVersion] = req2.headers["accept-version"];
+          req2.headers["accept-version"] = void 0;
         }
-        fourOhFour.router.lookup(req, res);
+        fourOhFour.router.lookup(req2, res);
       }
-      function onBadUrl(path, req, res) {
+      function onBadUrl(path, req2, res) {
         if (options.frameworkErrors) {
-          const id = getGenReqId(routeEventContext.server, req);
-          const childLogger = createChildLogger(routeEventContext, options.logger, req, id);
-          const request = new Request(id, null, req, null, childLogger, routeEventContext);
+          const id = getGenReqId(routeEventContext.server, req2);
+          const childLogger = createChildLogger(routeEventContext, options.logger, req2, id);
+          const request = new Request(id, null, req2, null, childLogger, routeEventContext);
           const reply = new Reply(res, request, childLogger);
           routeEventContext.server[kLogController].incomingRequest(request, reply);
           return options.frameworkErrors(new FST_ERR_BAD_URL(path), request, reply);
@@ -45061,11 +45061,11 @@ var require_fastify = __commonJS({
         });
         res.end(body);
       }
-      function onMaxParamLength(path, req, res) {
+      function onMaxParamLength(path, req2, res) {
         if (options.frameworkErrors) {
-          const id = getGenReqId(routeEventContext.server, req);
-          const childLogger = createChildLogger(routeEventContext, options.logger, req, id);
-          const request = new Request(id, null, req, null, childLogger, routeEventContext);
+          const id = getGenReqId(routeEventContext.server, req2);
+          const childLogger = createChildLogger(routeEventContext, options.logger, req2, id);
+          const request = new Request(id, null, req2, null, childLogger, routeEventContext);
           const reply = new Reply(res, request, childLogger);
           routeEventContext.server[kLogController].incomingRequest(request, reply);
           return options.frameworkErrors(new FST_ERR_MAX_PARAM_LENGTH(path), request, reply);
@@ -45082,14 +45082,14 @@ var require_fastify = __commonJS({
         });
         res.end(body);
       }
-      function buildAsyncConstraintCallback(isAsync2, req, res) {
+      function buildAsyncConstraintCallback(isAsync2, req2, res) {
         if (isAsync2 === false) return void 0;
         return function onAsyncConstraintError(err) {
           if (err) {
             if (options.frameworkErrors) {
-              const id = getGenReqId(routeEventContext.server, req);
-              const childLogger = createChildLogger(routeEventContext, options.logger, req, id);
-              const request = new Request(id, null, req, null, childLogger, routeEventContext);
+              const id = getGenReqId(routeEventContext.server, req2);
+              const childLogger = createChildLogger(routeEventContext, options.logger, req2, id);
+              const request = new Request(id, null, req2, null, childLogger, routeEventContext);
               const reply = new Reply(res, request, childLogger);
               routeEventContext.server[kLogController].incomingRequest(request, reply);
               return options.frameworkErrors(new FST_ERR_ASYNC_CONSTRAINT(), request, reply);
@@ -45166,19 +45166,19 @@ var require_fastify = __commonJS({
       }
       function wrapRouting(router2, { rewriteUrl, logger }) {
         let isAsync2;
-        return function preRouting(req, res) {
+        return function preRouting(req2, res) {
           if (isAsync2 === void 0) isAsync2 = router2.isAsyncConstraint();
           if (rewriteUrl) {
-            req.originalUrl = req.url;
-            const url = rewriteUrl.call(fastify2, req);
+            req2.originalUrl = req2.url;
+            const url = rewriteUrl.call(fastify2, req2);
             if (typeof url === "string") {
-              req.url = url;
+              req2.url = url;
             } else {
-              const err = new FST_ERR_ROUTE_REWRITE_NOT_STR(req.url, typeof url);
-              req.destroy(err);
+              const err = new FST_ERR_ROUTE_REWRITE_NOT_STR(req2.url, typeof url);
+              req2.destroy(err);
             }
           }
-          router2.routing(req, res, buildAsyncConstraintCallback(isAsync2, req, res));
+          router2.routing(req2, res, buildAsyncConstraintCallback(isAsync2, req2, res));
         };
       }
       function setGenReqId(func) {
@@ -45341,9 +45341,9 @@ var require_getPluginName = __commonJS({
       Error.stackTraceLimit = 10;
       try {
         throw new Error("anonymous function");
-      } catch (e) {
+      } catch (e2) {
         Error.stackTraceLimit = stackTraceLimit;
-        return extractPluginName(e.stack);
+        return extractPluginName(e2.stack);
       }
     };
     function extractPluginName(stack) {
@@ -45535,8 +45535,8 @@ var require_cors = __commonJS({
       "preParsing",
       "onSend"
     ];
-    function validateHook(value, next) {
-      if (validHooks.indexOf(value) !== -1) {
+    function validateHook(value2, next) {
+      if (validHooks.indexOf(value2) !== -1) {
         return;
       }
       next(new TypeError("@fastify/cors: Invalid hook option provided."));
@@ -45554,19 +45554,19 @@ var require_cors = __commonJS({
         const corsOptions = normalizeCorsOptions(opts);
         validateHook(corsOptions.hook, next);
         if (hookWithPayload.indexOf(corsOptions.hook) !== -1) {
-          fastify.addHook(corsOptions.hook, function handleCors(req, reply, _payload, next2) {
-            addCorsHeadersHandler(fastify, corsOptions, req, reply, next2);
+          fastify.addHook(corsOptions.hook, function handleCors(req2, reply, _payload, next2) {
+            addCorsHeadersHandler(fastify, corsOptions, req2, reply, next2);
           });
         } else {
-          fastify.addHook(corsOptions.hook, function handleCors(req, reply, next2) {
-            addCorsHeadersHandler(fastify, corsOptions, req, reply, next2);
+          fastify.addHook(corsOptions.hook, function handleCors(req2, reply, next2) {
+            addCorsHeadersHandler(fastify, corsOptions, req2, reply, next2);
           });
         }
       }
       if (opts.logLevel !== void 0) logLevel = opts.logLevel;
       if (opts.hideOptionsRoute !== void 0) hideOptionsRoute = opts.hideOptionsRoute;
-      fastify.options("*", { schema: { hide: hideOptionsRoute }, logLevel }, (req, reply) => {
-        if (!req.corsPreflightEnabled) {
+      fastify.options("*", { schema: { hide: hideOptionsRoute }, logLevel }, (req2, reply) => {
+        if (!req2.corsPreflightEnabled) {
           reply.callNotFound();
           return;
         }
@@ -45579,29 +45579,29 @@ var require_cors = __commonJS({
       validateHook(hook, next);
       if (optionsResolver.length === 2) {
         if (hookWithPayload.indexOf(hook) !== -1) {
-          fastify.addHook(hook, function handleCors(req, reply, _payload, next2) {
-            handleCorsOptionsCallbackDelegator(optionsResolver, fastify, req, reply, next2);
+          fastify.addHook(hook, function handleCors(req2, reply, _payload, next2) {
+            handleCorsOptionsCallbackDelegator(optionsResolver, fastify, req2, reply, next2);
           });
         } else {
-          fastify.addHook(hook, function handleCors(req, reply, next2) {
-            handleCorsOptionsCallbackDelegator(optionsResolver, fastify, req, reply, next2);
+          fastify.addHook(hook, function handleCors(req2, reply, next2) {
+            handleCorsOptionsCallbackDelegator(optionsResolver, fastify, req2, reply, next2);
           });
         }
       } else {
         if (hookWithPayload.indexOf(hook) !== -1) {
-          fastify.addHook(hook, function handleCors(req, reply, _payload, next2) {
-            const ret = optionsResolver(req);
+          fastify.addHook(hook, function handleCors(req2, reply, _payload, next2) {
+            const ret = optionsResolver(req2);
             if (ret && typeof ret.then === "function") {
-              ret.then((options) => addCorsHeadersHandler(fastify, normalizeCorsOptions(options, true), req, reply, next2)).catch(next2);
+              ret.then((options) => addCorsHeadersHandler(fastify, normalizeCorsOptions(options, true), req2, reply, next2)).catch(next2);
               return;
             }
             next2(new Error("Invalid CORS origin option"));
           });
         } else {
-          fastify.addHook(hook, function handleCors(req, reply, next2) {
-            const ret = optionsResolver(req);
+          fastify.addHook(hook, function handleCors(req2, reply, next2) {
+            const ret = optionsResolver(req2);
             if (ret && typeof ret.then === "function") {
-              ret.then((options) => addCorsHeadersHandler(fastify, normalizeCorsOptions(options, true), req, reply, next2)).catch(next2);
+              ret.then((options) => addCorsHeadersHandler(fastify, normalizeCorsOptions(options, true), req2, reply, next2)).catch(next2);
               return;
             }
             next2(new Error("Invalid CORS origin option"));
@@ -45609,12 +45609,12 @@ var require_cors = __commonJS({
         }
       }
     }
-    function handleCorsOptionsCallbackDelegator(optionsResolver, fastify, req, reply, next) {
-      optionsResolver(req, (err, options) => {
+    function handleCorsOptionsCallbackDelegator(optionsResolver, fastify, req2, reply, next) {
+      optionsResolver(req2, (err, options) => {
         if (err) {
           next(err);
         } else {
-          addCorsHeadersHandler(fastify, normalizeCorsOptions(options, true), req, reply, next);
+          addCorsHeadersHandler(fastify, normalizeCorsOptions(options, true), req2, reply, next);
         }
       });
     }
@@ -45631,33 +45631,33 @@ var require_cors = __commonJS({
       corsOptions.dynamic = dynamic || false;
       return corsOptions;
     }
-    function addCorsHeadersHandler(fastify, globalOptions, req, reply, next) {
-      const options = { ...globalOptions, ...req.routeOptions.config?.cors };
+    function addCorsHeadersHandler(fastify, globalOptions, req2, reply, next) {
+      const options = { ...globalOptions, ...req2.routeOptions.config?.cors };
       if (typeof options.origin !== "string" && options.origin !== false || options.dynamic) {
         addOriginToVaryHeader(reply);
       }
       const resolveOriginOption = typeof options.origin === "function" ? resolveOriginWrapper(fastify, options.origin) : (_, cb) => cb(null, options.origin);
-      resolveOriginOption(req, (error, resolvedOriginOption) => {
+      resolveOriginOption(req2, (error, resolvedOriginOption) => {
         if (error !== null) {
           return next(error);
         }
         if (resolvedOriginOption === false) {
           return next();
         }
-        if (req.routeOptions.config?.cors === false) {
+        if (req2.routeOptions.config?.cors === false) {
           return next();
         }
         if (!resolvedOriginOption) {
           return next(new Error("Invalid CORS origin option"));
         }
-        addCorsHeaders(req, reply, resolvedOriginOption, options);
-        if (req.raw.method === "OPTIONS" && options.preflight === true) {
-          if (options.strictPreflight === true && (!req.headers.origin || !req.headers["access-control-request-method"])) {
+        addCorsHeaders(req2, reply, resolvedOriginOption, options);
+        if (req2.raw.method === "OPTIONS" && options.preflight === true) {
+          if (options.strictPreflight === true && (!req2.headers.origin || !req2.headers["access-control-request-method"])) {
             reply.status(400).type("text/plain").send("Invalid Preflight Request");
             return;
           }
-          req.corsPreflightEnabled = true;
-          addPreflightHeaders(req, reply, options);
+          req2.corsPreflightEnabled = true;
+          addPreflightHeaders(req2, reply, options);
           if (!options.preflightContinue) {
             reply.code(options.optionsSuccessStatus).header("Content-Length", "0").send();
             return;
@@ -45666,8 +45666,8 @@ var require_cors = __commonJS({
         return next();
       });
     }
-    function addCorsHeaders(req, reply, originOption, corsOptions) {
-      const origin = getAccessControlAllowOriginHeader(req.headers.origin, originOption);
+    function addCorsHeaders(req2, reply, originOption, corsOptions) {
+      const origin = getAccessControlAllowOriginHeader(req2.headers.origin, originOption);
       if (origin) {
         reply.header("Access-Control-Allow-Origin", origin);
       }
@@ -45681,14 +45681,14 @@ var require_cors = __commonJS({
         );
       }
     }
-    function addPreflightHeaders(req, reply, corsOptions) {
+    function addPreflightHeaders(req2, reply, corsOptions) {
       reply.header(
         "Access-Control-Allow-Methods",
         Array.isArray(corsOptions.methods) ? corsOptions.methods.join(", ") : corsOptions.methods
       );
       if (corsOptions.allowedHeaders === null) {
         addAccessControlRequestHeadersToVaryHeader(reply);
-        const reqAllowedHeaders = req.headers["access-control-request-headers"];
+        const reqAllowedHeaders = req2.headers["access-control-request-headers"];
         if (reqAllowedHeaders !== void 0) {
           reply.header("Access-Control-Allow-Headers", reqAllowedHeaders);
         }
@@ -45706,8 +45706,8 @@ var require_cors = __commonJS({
       }
     }
     function resolveOriginWrapper(fastify, origin) {
-      return function(req, cb) {
-        const result = origin.call(fastify, req.headers.origin, cb);
+      return function(req2, cb) {
+        const result = origin.call(fastify, req2.headers.origin, cb);
         if (result && typeof result.then === "function") {
           result.then((res) => cb(null, res), cb);
         }
@@ -45859,9 +45859,9 @@ var require_decoder = __commonJS({
           throw new TokenError(TokenError.codes.invalidPayload, "The payload must be an object", { payload });
         }
         return complete ? { header, payload, signature: signatureSegment, input: token.slice(0, lastSeparator) } : payload;
-      } catch (e) {
+      } catch (e2) {
         throw TokenError.wrap(
-          e,
+          e2,
           TokenError.codes.malformed,
           `The token ${validHeader ? "payload" : "header"} is not a valid base64url serialized JSON.`
         );
@@ -45907,9 +45907,9 @@ var require_iterator = __commonJS({
         return { done: false, value: sequence[i++] };
       });
     };
-    Iterator.is = function(value) {
-      if (value instanceof Iterator) return true;
-      return typeof value === "object" && value !== null && typeof value.next === "function";
+    Iterator.is = function(value2) {
+      if (value2 instanceof Iterator) return true;
+      return typeof value2 === "object" && value2 !== null && typeof value2.next === "function";
     };
     module.exports = Iterator;
   }
@@ -45993,18 +45993,18 @@ var require_typed_arrays = __commonJS({
         return Int32Array;
       return Float64Array;
     };
-    exports.getNumberType = function(value) {
-      if (value === (value | 0)) {
-        if (Math.sign(value) === -1) {
-          if (value <= 127 && value >= -128)
+    exports.getNumberType = function(value2) {
+      if (value2 === (value2 | 0)) {
+        if (Math.sign(value2) === -1) {
+          if (value2 <= 127 && value2 >= -128)
             return Int8Array;
-          if (value <= 32767 && value >= -32768)
+          if (value2 <= 32767 && value2 >= -32768)
             return Int16Array;
           return Int32Array;
         } else {
-          if (value <= 255)
+          if (value2 <= 255)
             return Uint8Array;
-          if (value <= 65535)
+          if (value2 <= 65535)
             return Uint16Array;
           return Uint32Array;
         }
@@ -46034,8 +46034,8 @@ var require_typed_arrays = __commonJS({
       }
       return maxType;
     };
-    exports.isTypedArray = function(value) {
-      return typeof ArrayBuffer !== "undefined" && ArrayBuffer.isView(value);
+    exports.isTypedArray = function(value2) {
+      return typeof ArrayBuffer !== "undefined" && ArrayBuffer.isView(value2);
     };
     exports.concat = function() {
       var length = 0, i, o, l;
@@ -46077,8 +46077,8 @@ var require_iterables = __commonJS({
       var l = guessLength(target);
       var array = typeof l === "number" ? new Array(l) : [];
       var i = 0;
-      forEach(target, function(value) {
-        array[i++] = value;
+      forEach(target, function(value2) {
+        array[i++] = value2;
       });
       return array;
     }
@@ -46088,8 +46088,8 @@ var require_iterables = __commonJS({
       var array = typeof l === "number" ? new Array(l) : [];
       var indices = typeof l === "number" ? new IndexArray(l) : [];
       var i = 0;
-      forEach(target, function(value) {
-        array[i] = value;
+      forEach(target, function(value2) {
+        array[i] = value2;
         indices[i] = i++;
       });
       return [array, indices];
@@ -46151,11 +46151,11 @@ var require_lru_cache = __commonJS({
       this.forward[pointer] = oldHead;
       return this;
     };
-    LRUCache.prototype.set = function(key, value) {
+    LRUCache.prototype.set = function(key, value2) {
       var pointer = this.items[key];
       if (typeof pointer !== "undefined") {
         this.splayOnTop(pointer);
-        this.V[pointer] = value;
+        this.V[pointer] = value2;
         return;
       }
       if (this.size < this.capacity) {
@@ -46167,19 +46167,19 @@ var require_lru_cache = __commonJS({
       }
       this.items[key] = pointer;
       this.K[pointer] = key;
-      this.V[pointer] = value;
+      this.V[pointer] = value2;
       this.forward[pointer] = this.head;
       this.backward[this.head] = pointer;
       this.head = pointer;
     };
-    LRUCache.prototype.setpop = function(key, value) {
+    LRUCache.prototype.setpop = function(key, value2) {
       var oldValue = null;
       var oldKey = null;
       var pointer = this.items[key];
       if (typeof pointer !== "undefined") {
         this.splayOnTop(pointer);
         oldValue = this.V[pointer];
-        this.V[pointer] = value;
+        this.V[pointer] = value2;
         return { evicted: false, key, value: oldValue };
       }
       if (this.size < this.capacity) {
@@ -46193,7 +46193,7 @@ var require_lru_cache = __commonJS({
       }
       this.items[key] = pointer;
       this.K[pointer] = key;
-      this.V[pointer] = value;
+      this.V[pointer] = value2;
       this.forward[pointer] = this.head;
       this.backward[this.head] = pointer;
       this.head = pointer;
@@ -46251,13 +46251,13 @@ var require_lru_cache = __commonJS({
       return new Iterator(function() {
         if (i >= l)
           return { done: true };
-        var value = values[pointer];
+        var value2 = values[pointer];
         i++;
         if (i < l)
           pointer = forward[pointer];
         return {
           done: false,
-          value
+          value: value2
         };
       });
     };
@@ -46267,13 +46267,13 @@ var require_lru_cache = __commonJS({
       return new Iterator(function() {
         if (i >= l)
           return { done: true };
-        var key = keys[pointer], value = values[pointer];
+        var key = keys[pointer], value2 = values[pointer];
         i++;
         if (i < l)
           pointer = forward[pointer];
         return {
           done: false,
-          value: [key, value]
+          value: [key, value2]
         };
       });
     };
@@ -46303,8 +46303,8 @@ var require_lru_cache = __commonJS({
         Values = null;
       }
       var cache = new LRUCache(Keys, Values, capacity);
-      forEach(iterable, function(value, key) {
-        cache.set(key, value);
+      forEach(iterable, function(value2, key) {
+        cache.set(key, value2);
       });
       return cache;
     };
@@ -46358,7 +46358,7 @@ var require_bn = __commonJS({
         } else {
           Buffer2 = __require("buffer").Buffer;
         }
-      } catch (e) {
+      } catch (e2) {
       }
       BN.isBN = function isBN(num) {
         if (num instanceof BN) {
@@ -49171,7 +49171,7 @@ var require_inherits = __commonJS({
       util2 = __require("util");
       if (typeof util2.inherits !== "function") throw "";
       module.exports = util2.inherits;
-    } catch (e) {
+    } catch (e2) {
       module.exports = require_inherits_browser();
     }
     var util2;
@@ -49199,14 +49199,14 @@ var require_safer = __commonJS({
     }
     safer.Buffer.prototype = Buffer2.prototype;
     if (!Safer.from || Safer.from === Uint8Array.from) {
-      Safer.from = function(value, encodingOrOffset, length) {
-        if (typeof value === "number") {
-          throw new TypeError('The "value" argument must not be of type number. Received type ' + typeof value);
+      Safer.from = function(value2, encodingOrOffset, length) {
+        if (typeof value2 === "number") {
+          throw new TypeError('The "value" argument must not be of type number. Received type ' + typeof value2);
         }
-        if (value && typeof value.length === "undefined") {
-          throw new TypeError("The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof value);
+        if (value2 && typeof value2.length === "undefined") {
+          throw new TypeError("The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof value2);
         }
-        return Buffer2(value, encodingOrOffset, length);
+        return Buffer2(value2, encodingOrOffset, length);
       };
     }
     if (!Safer.alloc) {
@@ -49231,7 +49231,7 @@ var require_safer = __commonJS({
     if (!safer.kStringMaxLength) {
       try {
         safer.kStringMaxLength = process.binding("buffer").kStringMaxLength;
-      } catch (e) {
+      } catch (e2) {
       }
     }
     if (!safer.constants) {
@@ -49279,11 +49279,11 @@ var require_reporter = __commonJS({
       const state = this._reporterState;
       state.path = state.path.slice(0, index - 1);
     };
-    Reporter.prototype.leaveKey = function leaveKey(index, key, value) {
+    Reporter.prototype.leaveKey = function leaveKey(index, key, value2) {
       const state = this._reporterState;
       this.exitKey(index);
       if (state.obj !== null)
-        state.obj[key] = value;
+        state.obj[key] = value2;
     };
     Reporter.prototype.path = function path() {
       return this._reporterState.path.join("/");
@@ -49338,8 +49338,8 @@ var require_reporter = __commonJS({
       if (!this.stack) {
         try {
           throw new Error(this.message);
-        } catch (e) {
-          this.stack = e.stack;
+        } catch (e2) {
+          this.stack = e2.stack;
         }
       }
       return this;
@@ -49406,28 +49406,28 @@ var require_buffer = __commonJS({
     DecoderBuffer.prototype.raw = function raw(save) {
       return this.base.slice(save ? save.offset : this.offset, this.length);
     };
-    function EncoderBuffer(value, reporter) {
-      if (Array.isArray(value)) {
+    function EncoderBuffer(value2, reporter) {
+      if (Array.isArray(value2)) {
         this.length = 0;
-        this.value = value.map(function(item) {
+        this.value = value2.map(function(item) {
           if (!EncoderBuffer.isEncoderBuffer(item))
             item = new EncoderBuffer(item, reporter);
           this.length += item.length;
           return item;
         }, this);
-      } else if (typeof value === "number") {
-        if (!(0 <= value && value <= 255))
+      } else if (typeof value2 === "number") {
+        if (!(0 <= value2 && value2 <= 255))
           return reporter.error("non-byte EncoderBuffer value");
-        this.value = value;
+        this.value = value2;
         this.length = 1;
-      } else if (typeof value === "string") {
-        this.value = value;
-        this.length = Buffer2.byteLength(value);
-      } else if (Buffer2.isBuffer(value)) {
-        this.value = value;
-        this.length = value.length;
+      } else if (typeof value2 === "string") {
+        this.value = value2;
+        this.length = Buffer2.byteLength(value2);
+      } else if (Buffer2.isBuffer(value2)) {
+        this.value = value2;
+        this.length = value2.length;
       } else {
-        return reporter.error("Unsupported type: " + typeof value);
+        return reporter.error("Unsupported type: " + typeof value2);
       }
     }
     exports.EncoderBuffer = EncoderBuffer;
@@ -49646,8 +49646,8 @@ var require_node2 = __commonJS({
           Object.keys(arg).forEach(function(key) {
             if (key == (key | 0))
               key |= 0;
-            const value = arg[key];
-            res[value] = key;
+            const value2 = arg[key];
+            res[value2] = key;
           });
           return res;
         });
@@ -49759,7 +49759,7 @@ var require_node2 = __commonJS({
             else
               this._decodeChoice(input, options);
             present = true;
-          } catch (e) {
+          } catch (e2) {
             present = false;
           }
           input.restore(save);
@@ -49873,12 +49873,12 @@ var require_node2 = __commonJS({
         const save = input.save();
         const node = state.choice[key];
         try {
-          const value = node._decode(input, options);
-          if (input.isError(value))
+          const value2 = node._decode(input, options);
+          if (input.isError(value2))
             return false;
-          result = { type: key, value };
+          result = { type: key, value: value2 };
           match = true;
-        } catch (e) {
+        } catch (e2) {
           input.restore(save);
           return false;
         }
@@ -50023,8 +50023,8 @@ var require_der = __commonJS({
       Object.keys(map).forEach(function(key) {
         if ((key | 0) == key)
           key = key | 0;
-        const value = map[key];
-        res[value] = key;
+        const value2 = map[key];
+        res[value2] = key;
       });
       return res;
     }
@@ -50256,8 +50256,8 @@ var require_der2 = __commonJS({
       }
       return this._createEncoderBuffer(Buffer2.from(out));
     };
-    DERNode.prototype._encodeBool = function encodeBool(value) {
-      return this._createEncoderBuffer(value ? 255 : 0);
+    DERNode.prototype._encodeBool = function encodeBool(value2) {
+      return this._createEncoderBuffer(value2 ? 255 : 0);
     };
     DERNode.prototype._use = function use(entity, obj) {
       if (typeof entity === "function")
@@ -50506,21 +50506,21 @@ var require_der3 = __commonJS({
       const str = buffer.raw().toString();
       let year;
       let mon;
-      let day;
+      let day2;
       let hour;
       let min;
       let sec;
       if (tag === "gentime") {
         year = str.slice(0, 4) | 0;
         mon = str.slice(4, 6) | 0;
-        day = str.slice(6, 8) | 0;
+        day2 = str.slice(6, 8) | 0;
         hour = str.slice(8, 10) | 0;
         min = str.slice(10, 12) | 0;
         sec = str.slice(12, 14) | 0;
       } else if (tag === "utctime") {
         year = str.slice(0, 2) | 0;
         mon = str.slice(2, 4) | 0;
-        day = str.slice(4, 6) | 0;
+        day2 = str.slice(4, 6) | 0;
         hour = str.slice(6, 8) | 0;
         min = str.slice(8, 10) | 0;
         sec = str.slice(10, 12) | 0;
@@ -50531,7 +50531,7 @@ var require_der3 = __commonJS({
       } else {
         return buffer.error("Decoding " + tag + " time is not supported yet");
       }
-      return Date.UTC(year, mon - 1, day, hour, min, sec, 0);
+      return Date.UTC(year, mon - 1, day2, hour, min, sec, 0);
     };
     DERNode.prototype._decodeNull = function decodeNull() {
       return null;
@@ -50734,8 +50734,8 @@ var require_constants3 = __commonJS({
       Object.keys(map).forEach(function(key) {
         if ((key | 0) == key)
           key = key | 0;
-        const value = map[key];
-        res[value] = key;
+        const value2 = map[key];
+        res[value2] = key;
       });
       return res;
     };
@@ -51043,9 +51043,9 @@ var require_crypto = __commonJS({
     function base64UrlReplacer(c) {
       return encoderMap[c];
     }
-    function cacheSet(cache, key, value, error) {
-      cache.set(key, [value, error]);
-      return value || error;
+    function cacheSet(cache, key, value2, error) {
+      cache.set(key, [value2, error]);
+      return value2 || error;
     }
     function isAsymmetricJwk(candidate) {
       return Boolean(candidate) && typeof candidate === "object" && asymmetricJwkKtys.has(candidate.kty);
@@ -51186,12 +51186,12 @@ var require_crypto = __commonJS({
           return cacheSet(privateKeysCache, key, providedAlgorithm);
         }
         return cacheSet(privateKeysCache, key, detectedAlgorithm);
-      } catch (e) {
+      } catch (e2) {
         throw cacheSet(
           privateKeysCache,
           key,
           null,
-          TokenError.wrap(e, TokenError.codes.invalidKey, "Unsupported PEM private key.")
+          TokenError.wrap(e2, TokenError.codes.invalidKey, "Unsupported PEM private key.")
         );
       }
     }
@@ -51215,12 +51215,12 @@ var require_crypto = __commonJS({
           throw new TokenError(TokenError.codes.invalidKey, "The public key must be a string or a buffer.");
         }
         return cacheSet(publicKeysCache, key, performDetectPublicKeyAlgorithms(key));
-      } catch (e) {
+      } catch (e2) {
         throw cacheSet(
           publicKeysCache,
           key,
           null,
-          TokenError.wrap(e, TokenError.codes.invalidKey, "Unsupported PEM public key.")
+          TokenError.wrap(e2, TokenError.codes.invalidKey, "Unsupported PEM public key.")
         );
       }
     }
@@ -51254,8 +51254,8 @@ var require_crypto = __commonJS({
             raw = directSign(void 0, Buffer.from(input, "utf-8"), key).toString("base64");
         }
         return raw.replace(base64UrlMatcher, base64UrlReplacer);
-      } catch (e) {
-        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e });
+      } catch (e2) {
+        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e2 });
       }
     }
     function verifySignature(algorithm, key, input, signature) {
@@ -51284,8 +51284,8 @@ var require_crypto = __commonJS({
           signature = joseToDer(signature, algorithm);
         }
         return createVerify("RSA-" + alg).update(input).verify(options, signature);
-      } catch (e) {
-        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e });
+      } catch (e2) {
+        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e2 });
       }
     }
     module.exports = {
@@ -51394,8 +51394,8 @@ var require_verifier = __commonJS({
       }
       return isSecret ? createSecretKey(key) : createPublicKey(key);
     }
-    function isRegExpLike(value) {
-      return isRegExp(value) || value instanceof RegExp;
+    function isRegExpLike(value2) {
+      return isRegExp(value2) || value2 instanceof RegExp;
     }
     function checkForUnsafeRegExp(raw, optionName) {
       const patterns = Array.isArray(raw) ? raw : [raw];
@@ -51446,16 +51446,16 @@ var require_verifier = __commonJS({
       clockTolerance,
       errorCacheTTL,
       cacheKeyBuilder
-    }, value) {
+    }, value2) {
       if (!cache) {
-        return value;
+        return value2;
       }
-      const cacheValue = [value, 0, 0];
-      if (value instanceof TokenError) {
-        const ttl = typeof errorCacheTTL === "function" ? errorCacheTTL(value) : errorCacheTTL;
+      const cacheValue = [value2, 0, 0];
+      if (value2 instanceof TokenError) {
+        const ttl = typeof errorCacheTTL === "function" ? errorCacheTTL(value2) : errorCacheTTL;
         cacheValue[2] = clockTimestamp + clockTolerance + ttl;
         cache.set(cacheKeyBuilder(token), cacheValue);
-        return value;
+        return value2;
       }
       const hasIat = payload && typeof payload.iat === "number";
       if (hasIat) {
@@ -51471,7 +51471,7 @@ var require_verifier = __commonJS({
       const maxTTL = clockTimestamp + clockTolerance + cacheTTL;
       cacheValue[2] = cacheValue[2] === 0 ? maxTTL : Math.min(cacheValue[2], maxTTL);
       cache.set(cacheKeyBuilder(token), cacheValue);
-      return value;
+      return value2;
     }
     function handleCachedResult(cached, callback, promise) {
       if (cached instanceof TokenError) {
@@ -51510,8 +51510,8 @@ var require_verifier = __commonJS({
         throw new TokenError(TokenError.codes.invalidClaimValue, failureMessage);
       }
     }
-    function validateClaimDateValue(value, modifier, now, greater, errorCode, errorVerb) {
-      const adjusted = value * 1e3 + (modifier || 0);
+    function validateClaimDateValue(value2, modifier, now, greater, errorCode, errorVerb) {
+      const adjusted = value2 * 1e3 + (modifier || 0);
       const valid = greater ? now >= adjusted : now <= adjusted;
       if (!valid) {
         throw new TokenError(TokenError.codes[errorCode], `The token ${errorVerb} at ${new Date(adjusted).toISOString()}.`);
@@ -51582,15 +51582,15 @@ var require_verifier = __commonJS({
       }
       const now = clockTimestamp || Date.now();
       for (const { type, claim, allowed, array, modifier, greater, errorCode, errorVerb } of validators) {
-        const value = payload[claim];
-        const isArray = Array.isArray(value);
-        const values = isArray ? value : [value];
+        const value2 = payload[claim];
+        const isArray = Array.isArray(value2);
+        const values = isArray ? value2 : [value2];
         if (!(claim in payload)) {
           continue;
         }
         validateClaimType(values, claim, array, isArray, type === "date" ? "number" : "string");
         if (type === "date") {
-          validateClaimDateValue(value, modifier, now, greater, errorCode, errorVerb);
+          validateClaimDateValue(value2, modifier, now, greater, errorCode, errorVerb);
         } else {
           validateClaimValues(values, claim, allowed, isArray);
         }
@@ -51626,24 +51626,24 @@ var require_verifier = __commonJS({
         throw error;
       }
       if (cache) {
-        const [value, min, max] = cache.get(cacheKeyBuilder(token)) || [void 0, 0, 0];
+        const [value2, min, max] = cache.get(cacheKeyBuilder(token)) || [void 0, 0, 0];
         const now = clockTimestamp || Date.now();
         if (
           /* istanbul ignore next */
-          typeof value !== "undefined" && (min === 0 || now < min && value.code === "FAST_JWT_INACTIVE" || now >= min && value.code !== "FAST_JWT_INACTIVE") && (max === 0 || now <= max)
+          typeof value2 !== "undefined" && (min === 0 || now < min && value2.code === "FAST_JWT_INACTIVE" || now >= min && value2.code !== "FAST_JWT_INACTIVE") && (max === 0 || now <= max)
         ) {
-          return handleCachedResult(value, callback, promise);
+          return handleCachedResult(value2, callback, promise);
         }
       }
       let decoded;
       try {
         decoded = decode(token);
-      } catch (e) {
+      } catch (e2) {
         if (callback) {
-          callback(e);
+          callback(e2);
           return promise;
         }
-        throw e;
+        throw e2;
       }
       const { header, payload, signature, input } = decoded;
       const cacheContext = {
@@ -51672,8 +51672,8 @@ var require_verifier = __commonJS({
         try {
           verifyToken(key, decoded, validationContext);
           return cacheSet(cacheContext, complete ? { header, payload, signature, input } : payload);
-        } catch (e) {
-          throw cacheSet(cacheContext, e);
+        } catch (e2) {
+          throw cacheSet(cacheContext, e2);
         }
       }
       getAsyncKey(key, { header, payload, signature }, (err, currentKey) => {
@@ -51704,8 +51704,8 @@ var require_verifier = __commonJS({
           }
           currentKey = prepareKeyOrSecret(currentKey, availableAlgorithms[0] === hsAlgorithms[0]);
           verifyToken(currentKey, decoded, validationContext);
-        } catch (e) {
-          return callback(cacheSet(cacheContext, e));
+        } catch (e2) {
+          return callback(cacheSet(cacheContext, e2));
         }
         callback(null, cacheSet(cacheContext, complete ? { header, payload, signature, input: token } : payload));
       });
@@ -52023,8 +52023,8 @@ var require_signer = __commonJS({
           const encodedHeader = Buffer.from(JSON.stringify(header), "utf-8").toString("base64").replace(base64UrlMatcher, base64UrlReplacer);
           const input = encodedHeader + "." + encodedPayload;
           token = input + "." + createSignature(algorithm, currentKey, input);
-        } catch (e) {
-          return callback(e);
+        } catch (e2) {
+          return callback(e2);
         }
         callback(null, token);
       });
@@ -52130,9 +52130,9 @@ var require_signer = __commonJS({
         throw new TokenError(TokenError.codes.invalidOption, "The header option must be a object.");
       }
       const fpo = { jti, aud, iss, sub, nonce };
-      const fixedPayload = Object.entries(fpo).reduce((obj, [key2, value]) => {
-        if (value !== void 0) {
-          obj[key2] = value;
+      const fixedPayload = Object.entries(fpo).reduce((obj, [key2, value2]) => {
+        if (value2 !== void 0) {
+          obj[key2] = value2;
         }
         return obj;
       }, {});
@@ -52205,13 +52205,13 @@ var require_parallel = __commonJS({
     function fastparallel(options) {
       options = xtend(defaults, options);
       var released = options.released;
-      var queue = reusify(options.results ? ResultsHolder : NoResultsHolder);
+      var queue2 = reusify(options.results ? ResultsHolder : NoResultsHolder);
       var queueSingleCaller = reusify(SingleCaller);
       var goArray = options.results ? goResultsArray : goNoResultsArray;
       var goFunc = options.results ? goResultsFunc : goNoResultsFunc;
       return parallel;
       function parallel(that, toCall, arg, done) {
-        var holder = queue.get();
+        var holder = queue2.get();
         done = done || nop;
         if (toCall.length === 0) {
           done.call(that);
@@ -52231,7 +52231,7 @@ var require_parallel = __commonJS({
         }
       }
       function release(holder) {
-        queue.release(holder);
+        queue2.release(holder);
         released(holder);
       }
       function singleCallerRelease(holder) {
@@ -52390,10 +52390,10 @@ var require_series = __commonJS({
     function fastseries(options) {
       options = xtend(defaults, options);
       var released = options.released;
-      var queue = reusify(options.results ? ResultsHolder : NoResultsHolder);
+      var queue2 = reusify(options.results ? ResultsHolder : NoResultsHolder);
       return series;
       function series(that, toCall, arg, done) {
-        var holder = queue.get();
+        var holder = queue2.get();
         holder._released = release;
         done = done || nop;
         if (toCall.length === 0) {
@@ -52413,7 +52413,7 @@ var require_series = __commonJS({
         }
       }
       function release(holder) {
-        queue.release(holder);
+        queue2.release(holder);
         released();
       }
     }
@@ -52501,10 +52501,10 @@ var require_fall = __commonJS({
         template = context;
         context = null;
       }
-      var queue = reusify(Holder);
+      var queue2 = reusify(Holder);
       return template ? compiled : fall;
       function fall() {
-        var current = queue.get();
+        var current = queue2.get();
         current.release = release;
         if (arguments.length === 3) {
           current.context = arguments[0];
@@ -52518,10 +52518,10 @@ var require_fall = __commonJS({
         current.work();
       }
       function release(holder) {
-        queue.release(holder);
+        queue2.release(holder);
       }
       function compiled() {
-        var current = queue.get();
+        var current = queue2.get();
         current.release = release;
         current.list = template;
         var args;
@@ -52809,8 +52809,8 @@ var require_jwt = __commonJS({
     function fastifyJwt(fastify, options, next) {
       try {
         validateOptions(options);
-      } catch (e) {
-        return next(e);
+      } catch (e2) {
+        return next(e2);
       }
       const {
         cookie,
@@ -52962,11 +52962,11 @@ var require_jwt = __commonJS({
             if (request.cookies[cookie.cookieName]) {
               const tokenValue = request.cookies[cookie.cookieName];
               if (cookie.signed) {
-                const { valid, value } = request.unsignCookie(tokenValue);
+                const { valid, value: value2 } = request.unsignCookie(tokenValue);
                 if (!valid) {
                   throw new NoAuthorizationInCookieError();
                 }
-                token = value;
+                token = value2;
               } else {
                 token = tokenValue;
               }
@@ -53303,15 +53303,15 @@ var require_main = __commonJS({
       let match;
       while ((match = LINE.exec(lines)) != null) {
         const key = match[1];
-        let value = match[2] || "";
-        value = value.trim();
-        const maybeQuote = value[0];
-        value = value.replace(/^(['"`])([\s\S]*)\1$/mg, "$2");
+        let value2 = match[2] || "";
+        value2 = value2.trim();
+        const maybeQuote = value2[0];
+        value2 = value2.replace(/^(['"`])([\s\S]*)\1$/mg, "$2");
         if (maybeQuote === '"') {
-          value = value.replace(/\\n/g, "\n");
-          value = value.replace(/\\r/g, "\r");
+          value2 = value2.replace(/\\n/g, "\n");
+          value2 = value2.replace(/\\r/g, "\r");
         }
-        obj[key] = value;
+        obj[key] = value2;
       }
       return obj;
     }
@@ -53459,11 +53459,11 @@ var require_main = __commonJS({
         try {
           const parsed = DotenvModule.parse(fs.readFileSync(path2, { encoding }));
           DotenvModule.populate(parsedAll, parsed, options);
-        } catch (e) {
+        } catch (e2) {
           if (debug) {
-            _debug(`Failed to load ${path2} ${e.message}`);
+            _debug(`Failed to load ${path2} ${e2.message}`);
           }
-          lastError = e;
+          lastError = e2;
         }
       }
       let processEnv = process.env;
@@ -53478,11 +53478,11 @@ var require_main = __commonJS({
           try {
             const relative = path.relative(process.cwd(), filePath);
             shortPaths.push(relative);
-          } catch (e) {
+          } catch (e2) {
             if (debug) {
-              _debug(`Failed to load ${filePath} ${e.message}`);
+              _debug(`Failed to load ${filePath} ${e2.message}`);
             }
-            lastError = e;
+            lastError = e2;
           }
         }
         _log(`injecting env (${keysCount}) from ${shortPaths.join(",")}`);
@@ -53594,13 +53594,13 @@ var require_bcrypt = __commonJS({
         if (typeof module !== "undefined" && module && module["exports"])
           try {
             return __require("crypto")["randomBytes"](len);
-          } catch (e) {
+          } catch (e2) {
           }
         try {
           var a;
           (self["crypto"] || self["msCrypto"])["getRandomValues"](a = new Uint32Array(len));
           return Array.prototype.slice.call(a);
-        } catch (e) {
+        } catch (e2) {
         }
         if (!randomFallback)
           throw Error("Neither WebCryptoAPI nor a crypto module is available. Use bcrypt.setRandomFallback to set an alternative");
@@ -53610,7 +53610,7 @@ var require_bcrypt = __commonJS({
       try {
         random(1);
         randomAvailable = true;
-      } catch (e) {
+      } catch (e2) {
       }
       randomFallback = null;
       bcrypt2.setRandomFallback = function(random2) {
@@ -55440,8 +55440,8 @@ var init_util = __esm({
         return util2.objectValues(filtered);
       };
       util2.objectValues = (obj) => {
-        return util2.objectKeys(obj).map(function(e) {
-          return obj[e];
+        return util2.objectKeys(obj).map(function(e2) {
+          return obj[e2];
         });
       };
       util2.objectKeys = typeof Object.keys === "function" ? (obj) => Object.keys(obj) : (object) => {
@@ -55465,11 +55465,11 @@ var init_util = __esm({
         return array.map((val) => typeof val === "string" ? `'${val}'` : val).join(separator);
       }
       util2.joinValues = joinValues;
-      util2.jsonStringifyReplacer = (_, value) => {
-        if (typeof value === "bigint") {
-          return value.toString();
+      util2.jsonStringifyReplacer = (_, value2) => {
+        if (typeof value2 === "bigint") {
+          return value2.toString();
         }
-        return value;
+        return value2;
       };
     })(util || (util = {}));
     (function(objectUtil2) {
@@ -55632,9 +55632,9 @@ var init_ZodError = __esm({
         processError(this);
         return fieldErrors;
       }
-      static assert(value) {
-        if (!(value instanceof _ZodError)) {
-          throw new Error(`Not a ZodError: ${value}`);
+      static assert(value2) {
+        if (!(value2 instanceof _ZodError)) {
+          throw new Error(`Not a ZodError: ${value2}`);
         }
       }
       toString() {
@@ -55874,10 +55874,10 @@ var init_parseUtil = __esm({
         const syncPairs = [];
         for (const pair of pairs) {
           const key = await pair.key;
-          const value = await pair.value;
+          const value2 = await pair.value;
           syncPairs.push({
             key,
-            value
+            value: value2
           });
         }
         return _ParseStatus.mergeObjectSync(status, syncPairs);
@@ -55885,17 +55885,17 @@ var init_parseUtil = __esm({
       static mergeObjectSync(status, pairs) {
         const finalObject = {};
         for (const pair of pairs) {
-          const { key, value } = pair;
+          const { key, value: value2 } = pair;
           if (key.status === "aborted")
             return INVALID;
-          if (value.status === "aborted")
+          if (value2.status === "aborted")
             return INVALID;
           if (key.status === "dirty")
             status.dirty();
-          if (value.status === "dirty")
+          if (value2.status === "dirty")
             status.dirty();
-          if (key.value !== "__proto__" && (typeof value.value !== "undefined" || pair.alwaysSet)) {
-            finalObject[key.value] = value.value;
+          if (key.value !== "__proto__" && (typeof value2.value !== "undefined" || pair.alwaysSet)) {
+            finalObject[key.value] = value2.value;
           }
         }
         return { status: status.value, value: finalObject };
@@ -55904,8 +55904,8 @@ var init_parseUtil = __esm({
     INVALID = Object.freeze({
       status: "aborted"
     });
-    DIRTY = (value) => ({ status: "dirty", value });
-    OK = (value) => ({ status: "valid", value });
+    DIRTY = (value2) => ({ status: "dirty", value: value2 });
+    OK = (value2) => ({ status: "valid", value: value2 });
     isAborted = (x) => x.status === "aborted";
     isDirty = (x) => x.status === "dirty";
     isValid = (x) => x.status === "valid";
@@ -56131,10 +56131,10 @@ var init_types = __esm({
     init_parseUtil();
     init_util();
     ParseInputLazyPath = class {
-      constructor(parent, value, path, key) {
+      constructor(parent, value2, path, key) {
         this._cachedPath = [];
         this.parent = parent;
-        this.data = value;
+        this.data = value2;
         this._path = path;
         this._key = key;
       }
@@ -56870,25 +56870,25 @@ var init_types = __esm({
           ...errorUtil.errToObj(message2)
         });
       }
-      includes(value, options) {
+      includes(value2, options) {
         return this._addCheck({
           kind: "includes",
-          value,
+          value: value2,
           position: options?.position,
           ...errorUtil.errToObj(options?.message)
         });
       }
-      startsWith(value, message2) {
+      startsWith(value2, message2) {
         return this._addCheck({
           kind: "startsWith",
-          value,
+          value: value2,
           ...errorUtil.errToObj(message2)
         });
       }
-      endsWith(value, message2) {
+      endsWith(value2, message2) {
         return this._addCheck({
           kind: "endsWith",
-          value,
+          value: value2,
           ...errorUtil.errToObj(message2)
         });
       }
@@ -57102,26 +57102,26 @@ var init_types = __esm({
         }
         return { status: status.value, value: input.data };
       }
-      gte(value, message2) {
-        return this.setLimit("min", value, true, errorUtil.toString(message2));
+      gte(value2, message2) {
+        return this.setLimit("min", value2, true, errorUtil.toString(message2));
       }
-      gt(value, message2) {
-        return this.setLimit("min", value, false, errorUtil.toString(message2));
+      gt(value2, message2) {
+        return this.setLimit("min", value2, false, errorUtil.toString(message2));
       }
-      lte(value, message2) {
-        return this.setLimit("max", value, true, errorUtil.toString(message2));
+      lte(value2, message2) {
+        return this.setLimit("max", value2, true, errorUtil.toString(message2));
       }
-      lt(value, message2) {
-        return this.setLimit("max", value, false, errorUtil.toString(message2));
+      lt(value2, message2) {
+        return this.setLimit("max", value2, false, errorUtil.toString(message2));
       }
-      setLimit(kind, value, inclusive, message2) {
+      setLimit(kind, value2, inclusive, message2) {
         return new _ZodNumber({
           ...this._def,
           checks: [
             ...this._def.checks,
             {
               kind,
-              value,
+              value: value2,
               inclusive,
               message: errorUtil.toString(message2)
             }
@@ -57172,10 +57172,10 @@ var init_types = __esm({
           message: errorUtil.toString(message2)
         });
       }
-      multipleOf(value, message2) {
+      multipleOf(value2, message2) {
         return this._addCheck({
           kind: "multipleOf",
-          value,
+          value: value2,
           message: errorUtil.toString(message2)
         });
       }
@@ -57318,26 +57318,26 @@ var init_types = __esm({
         });
         return INVALID;
       }
-      gte(value, message2) {
-        return this.setLimit("min", value, true, errorUtil.toString(message2));
+      gte(value2, message2) {
+        return this.setLimit("min", value2, true, errorUtil.toString(message2));
       }
-      gt(value, message2) {
-        return this.setLimit("min", value, false, errorUtil.toString(message2));
+      gt(value2, message2) {
+        return this.setLimit("min", value2, false, errorUtil.toString(message2));
       }
-      lte(value, message2) {
-        return this.setLimit("max", value, true, errorUtil.toString(message2));
+      lte(value2, message2) {
+        return this.setLimit("max", value2, true, errorUtil.toString(message2));
       }
-      lt(value, message2) {
-        return this.setLimit("max", value, false, errorUtil.toString(message2));
+      lt(value2, message2) {
+        return this.setLimit("max", value2, false, errorUtil.toString(message2));
       }
-      setLimit(kind, value, inclusive, message2) {
+      setLimit(kind, value2, inclusive, message2) {
         return new _ZodBigInt({
           ...this._def,
           checks: [
             ...this._def.checks,
             {
               kind,
-              value,
+              value: value2,
               inclusive,
               message: errorUtil.toString(message2)
             }
@@ -57382,10 +57382,10 @@ var init_types = __esm({
           message: errorUtil.toString(message2)
         });
       }
-      multipleOf(value, message2) {
+      multipleOf(value2, message2) {
         return this._addCheck({
           kind: "multipleOf",
-          value,
+          value: value2,
           message: errorUtil.toString(message2)
         });
       }
@@ -57823,10 +57823,10 @@ var init_types = __esm({
         const pairs = [];
         for (const key of shapeKeys) {
           const keyValidator = shape[key];
-          const value = ctx.data[key];
+          const value2 = ctx.data[key];
           pairs.push({
             key: { status: "valid", value: key },
-            value: keyValidator._parse(new ParseInputLazyPath(ctx, value, ctx.path, key)),
+            value: keyValidator._parse(new ParseInputLazyPath(ctx, value2, ctx.path, key)),
             alwaysSet: key in ctx.data
           });
         }
@@ -57854,11 +57854,11 @@ var init_types = __esm({
         } else {
           const catchall = this._def.catchall;
           for (const key of extraKeys) {
-            const value = ctx.data[key];
+            const value2 = ctx.data[key];
             pairs.push({
               key: { status: "valid", value: key },
               value: catchall._parse(
-                new ParseInputLazyPath(ctx, value, ctx.path, key)
+                new ParseInputLazyPath(ctx, value2, ctx.path, key)
                 //, ctx.child(key), value, getParsedType(value)
               ),
               alwaysSet: key in ctx.data
@@ -57870,10 +57870,10 @@ var init_types = __esm({
             const syncPairs = [];
             for (const pair of pairs) {
               const key = await pair.key;
-              const value = await pair.value;
+              const value2 = await pair.value;
               syncPairs.push({
                 key,
-                value,
+                value: value2,
                 alwaysSet: pair.alwaysSet
               });
             }
@@ -58304,11 +58304,11 @@ var init_types = __esm({
           if (!discriminatorValues.length) {
             throw new Error(`A discriminator value for key \`${discriminator}\` could not be extracted from all schema options`);
           }
-          for (const value of discriminatorValues) {
-            if (optionsMap.has(value)) {
-              throw new Error(`Discriminator property ${String(discriminator)} has duplicate value ${String(value)}`);
+          for (const value2 of discriminatorValues) {
+            if (optionsMap.has(value2)) {
+              throw new Error(`Discriminator property ${String(discriminator)} has duplicate value ${String(value2)}`);
             }
-            optionsMap.set(value, type);
+            optionsMap.set(value2, type);
           }
         }
         return new _ZodDiscriminatedUnion({
@@ -58512,10 +58512,10 @@ var init_types = __esm({
         }
         const keyType = this._def.keyType;
         const valueType = this._def.valueType;
-        const pairs = [...ctx.data.entries()].map(([key, value], index) => {
+        const pairs = [...ctx.data.entries()].map(([key, value2], index) => {
           return {
             key: keyType._parse(new ParseInputLazyPath(ctx, key, ctx.path, [index, "key"])),
-            value: valueType._parse(new ParseInputLazyPath(ctx, value, ctx.path, [index, "value"]))
+            value: valueType._parse(new ParseInputLazyPath(ctx, value2, ctx.path, [index, "value"]))
           };
         });
         if (ctx.common.async) {
@@ -58523,14 +58523,14 @@ var init_types = __esm({
           return Promise.resolve().then(async () => {
             for (const pair of pairs) {
               const key = await pair.key;
-              const value = await pair.value;
-              if (key.status === "aborted" || value.status === "aborted") {
+              const value2 = await pair.value;
+              if (key.status === "aborted" || value2.status === "aborted") {
                 return INVALID;
               }
-              if (key.status === "dirty" || value.status === "dirty") {
+              if (key.status === "dirty" || value2.status === "dirty") {
                 status.dirty();
               }
-              finalMap.set(key.value, value.value);
+              finalMap.set(key.value, value2.value);
             }
             return { status: status.value, value: finalMap };
           });
@@ -58538,14 +58538,14 @@ var init_types = __esm({
           const finalMap = /* @__PURE__ */ new Map();
           for (const pair of pairs) {
             const key = pair.key;
-            const value = pair.value;
-            if (key.status === "aborted" || value.status === "aborted") {
+            const value2 = pair.value;
+            if (key.status === "aborted" || value2.status === "aborted") {
               return INVALID;
             }
-            if (key.status === "dirty" || value.status === "dirty") {
+            if (key.status === "dirty" || value2.status === "dirty") {
               status.dirty();
             }
-            finalMap.set(key.value, value.value);
+            finalMap.set(key.value, value2.value);
           }
           return { status: status.value, value: finalMap };
         }
@@ -58687,13 +58687,13 @@ var init_types = __esm({
           const me = this;
           return OK(async function(...args) {
             const error = new ZodError([]);
-            const parsedArgs = await me._def.args.parseAsync(args, params).catch((e) => {
-              error.addIssue(makeArgsIssue(args, e));
+            const parsedArgs = await me._def.args.parseAsync(args, params).catch((e2) => {
+              error.addIssue(makeArgsIssue(args, e2));
               throw error;
             });
             const result = await Reflect.apply(fn, this, parsedArgs);
-            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params).catch((e) => {
-              error.addIssue(makeReturnsIssue(result, e));
+            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params).catch((e2) => {
+              error.addIssue(makeReturnsIssue(result, e2));
               throw error;
             });
             return parsedReturns;
@@ -58783,9 +58783,9 @@ var init_types = __esm({
         return this._def.value;
       }
     };
-    ZodLiteral.create = (value, params) => {
+    ZodLiteral.create = (value2, params) => {
       return new ZodLiteral({
-        value,
+        value: value2,
         typeName: ZodFirstPartyTypeKind.ZodLiteral,
         ...processCreateParams(params)
       });
@@ -59538,8 +59538,8 @@ var init_media = __esm({
 });
 
 // packages/api/dist/interfaces/entry/page.js
-function escapeHtml(value) {
-  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+function escapeHtml(value2) {
+  return value2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 function buildLinks(number, code, ref) {
   const text = `Hola AutoMantPro, quiero empezar. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
@@ -60038,6 +60038,9 @@ var init_statements = __esm({
 });
 
 // packages/api/dist/infrastructure/schema-setup/statements-extra.js
+function addColumn(table, column, definition) {
+  return { kind: "addColumn", target: `${table}.${column}`, sql: `ALTER TABLE \`${table}\` ADD COLUMN \`${column}\` ${definition}` };
+}
 var EXTRA_TABLES, APP_SETTING_TABLE_SQL, EXTRA_STATEMENTS;
 var init_statements_extra = __esm({
   "packages/api/dist/infrastructure/schema-setup/statements-extra.js"() {
@@ -60059,7 +60062,31 @@ var init_statements_extra = __esm({
         kind: "createTable",
         target: "AppSetting",
         sql: APP_SETTING_TABLE_SQL
-      }
+      },
+      // Registro por perfil (docs/33 §2.3): datos básicos, consentimiento y datos del vehículo o negocio.
+      addColumn("User", "city", "VARCHAR(191) NULL"),
+      addColumn("User", "consentAt", "DATETIME(3) NULL"),
+      addColumn("User", "consentVersion", "VARCHAR(191) NULL"),
+      addColumn("User", "source", "VARCHAR(191) NULL"),
+      addColumn("User", "notes", "TEXT NULL"),
+      addColumn("Vehicle", "vehicleClass", "VARCHAR(191) NULL"),
+      addColumn("Vehicle", "fuel", "VARCHAR(191) NULL"),
+      addColumn("Vehicle", "plate", "VARCHAR(191) NULL"),
+      addColumn("Vehicle", "usageProfile", "VARCHAR(191) NULL"),
+      addColumn("Vehicle", "remindersOptIn", "BOOLEAN NOT NULL DEFAULT false"),
+      addColumn("Shop", "ruc", "VARCHAR(191) NULL"),
+      addColumn("Shop", "zone", "VARCHAR(191) NULL"),
+      addColumn("Shop", "hours", "VARCHAR(191) NULL"),
+      addColumn("Shop", "contactName", "VARCHAR(191) NULL"),
+      addColumn("Shop", "email", "VARCHAR(191) NULL"),
+      addColumn("Store", "ruc", "VARCHAR(191) NULL"),
+      addColumn("Store", "zone", "VARCHAR(191) NULL"),
+      addColumn("Store", "hours", "VARCHAR(191) NULL"),
+      addColumn("Store", "contactName", "VARCHAR(191) NULL"),
+      addColumn("Store", "email", "VARCHAR(191) NULL"),
+      addColumn("Store", "categories", "TEXT NULL"),
+      addColumn("Store", "delivery", "BOOLEAN NOT NULL DEFAULT false"),
+      addColumn("Store", "verificationStatus", "ENUM('pending', 'verified', 'rejected') NOT NULL DEFAULT 'pending'")
     ];
   }
 });
@@ -60127,7 +60154,7 @@ var require_lib2 = __commonJS({
         SET_CLAUSE_TERMINATORS_BY_FIRST[first] = [word];
     }
     var hasOwnProperty = Object.prototype.hasOwnProperty;
-    var isRecord = (value) => typeof value === "object" && value !== null && !Array.isArray(value) && !(value instanceof Set) && !(value instanceof Map);
+    var isRecord = (value2) => typeof value2 === "object" && value2 !== null && !Array.isArray(value2) && !(value2 instanceof Set) && !(value2 instanceof Map);
     var isWordChar = (code) => code >= 65 && code <= 90 || code >= 97 && code <= 122 || code >= 48 && code <= 57 || code === 95;
     var isWhitespace = (code) => code === charCode.space || code === charCode.tab || code === charCode.newline || code === charCode.carriageReturn;
     var toLower = (code) => code | 32;
@@ -60285,21 +60312,21 @@ var require_lib2 = __commonJS({
       }
       return -1;
     };
-    var isDate = (value) => Object.prototype.toString.call(value) === "[object Date]";
-    var isTemporal = (value) => Object.prototype.toString.call(value).startsWith("[object Temporal.");
-    var hasSqlString = (value) => typeof value === "object" && value !== null && "toSqlString" in value && typeof value.toSqlString === "function";
-    var escapeString = (value) => {
+    var isDate = (value2) => Object.prototype.toString.call(value2) === "[object Date]";
+    var isTemporal = (value2) => Object.prototype.toString.call(value2).startsWith("[object Temporal.");
+    var hasSqlString = (value2) => typeof value2 === "object" && value2 !== null && "toSqlString" in value2 && typeof value2.toSqlString === "function";
+    var escapeString = (value2) => {
       const escapeChars = regex.escapeChars;
       escapeChars.lastIndex = 0;
-      const first = escapeChars.exec(value);
+      const first = escapeChars.exec(value2);
       if (first === null)
-        return `'${value}'`;
-      const length = value.length;
-      let result = "'" + value.slice(0, first.index);
+        return `'${value2}'`;
+      const length = value2.length;
+      let result = "'" + value2.slice(0, first.index);
       let chunkStart = first.index;
       for (let i = first.index; i < length; i++) {
         let escaped;
-        switch (value.charCodeAt(i)) {
+        switch (value2.charCodeAt(i)) {
           case 0:
             escaped = "\\0";
             break;
@@ -60330,14 +60357,14 @@ var require_lib2 = __commonJS({
           default:
             continue;
         }
-        result += value.slice(chunkStart, i) + escaped;
+        result += value2.slice(chunkStart, i) + escaped;
         chunkStart = i + 1;
       }
-      return result + value.slice(chunkStart) + "'";
+      return result + value2.slice(chunkStart) + "'";
     };
-    var pad2 = (value) => value < 10 ? "0" + value : "" + value;
-    var pad3 = (value) => value < 10 ? "00" + value : value < 100 ? "0" + value : "" + value;
-    var pad4 = (value) => value < 10 ? "000" + value : value < 100 ? "00" + value : value < 1e3 ? "0" + value : "" + value;
+    var pad2 = (value2) => value2 < 10 ? "0" + value2 : "" + value2;
+    var pad3 = (value2) => value2 < 10 ? "00" + value2 : value2 < 100 ? "0" + value2 : "" + value2;
+    var pad4 = (value2) => value2 < 10 ? "000" + value2 : value2 < 100 ? "00" + value2 : value2 < 1e3 ? "0" + value2 : "" + value2;
     var convertTimezone = (tz) => {
       if (tz === "Z")
         return 0;
@@ -60351,7 +60378,7 @@ var require_lib2 = __commonJS({
         return "NULL";
       let year;
       let month;
-      let day;
+      let day2;
       let hour;
       let minute;
       let second;
@@ -60359,7 +60386,7 @@ var require_lib2 = __commonJS({
       if (timezone === "local") {
         year = date.getFullYear();
         month = date.getMonth() + 1;
-        day = date.getDate();
+        day2 = date.getDate();
         hour = date.getHours();
         minute = date.getMinutes();
         second = date.getSeconds();
@@ -60372,35 +60399,35 @@ var require_lib2 = __commonJS({
         const adjustedDate = new Date(time);
         year = adjustedDate.getUTCFullYear();
         month = adjustedDate.getUTCMonth() + 1;
-        day = adjustedDate.getUTCDate();
+        day2 = adjustedDate.getUTCDate();
         hour = adjustedDate.getUTCHours();
         minute = adjustedDate.getUTCMinutes();
         second = adjustedDate.getUTCSeconds();
         millisecond = adjustedDate.getUTCMilliseconds();
       }
-      return escapeString(pad4(year) + "-" + pad2(month) + "-" + pad2(day) + " " + pad2(hour) + ":" + pad2(minute) + ":" + pad2(second) + "." + pad3(millisecond));
+      return escapeString(pad4(year) + "-" + pad2(month) + "-" + pad2(day2) + " " + pad2(hour) + ":" + pad2(minute) + ":" + pad2(second) + "." + pad3(millisecond));
     };
     exports.dateToString = dateToString;
-    var temporalToString = (value, timezone) => {
-      if (typeof value.epochMilliseconds === "number")
-        return (0, exports.dateToString)(new Date(value.epochMilliseconds), timezone || "local");
-      if (value[Symbol.toStringTag] === "Temporal.PlainDateTime")
-        return escapeString(value.toString().replace("T", " "));
-      return escapeString(value.toString());
+    var temporalToString = (value2, timezone) => {
+      if (typeof value2.epochMilliseconds === "number")
+        return (0, exports.dateToString)(new Date(value2.epochMilliseconds), timezone || "local");
+      if (value2[Symbol.toStringTag] === "Temporal.PlainDateTime")
+        return escapeString(value2.toString().replace("T", " "));
+      return escapeString(value2.toString());
     };
     exports.temporalToString = temporalToString;
-    var escapeId = (value, forbidQualified) => {
-      if (Array.isArray(value)) {
-        const length = value.length;
+    var escapeId = (value2, forbidQualified) => {
+      if (Array.isArray(value2)) {
+        const length = value2.length;
         let sql = "";
         for (let i = 0; i < length; i++) {
           if (i > 0)
             sql += ", ";
-          sql += (0, exports.escapeId)(value[i], forbidQualified);
+          sql += (0, exports.escapeId)(value2[i], forbidQualified);
         }
         return sql;
       }
-      const identifier = String(value);
+      const identifier = String(value2);
       const hasJsonOperator = !forbidQualified && identifier.indexOf("->") !== -1;
       if (forbidQualified || hasJsonOperator) {
         if (identifier.indexOf("`") === -1)
@@ -60415,28 +60442,28 @@ var require_lib2 = __commonJS({
     var objectToValues = (object, timezone) => {
       let sql = "";
       if (object instanceof Map) {
-        for (const [key, value] of object) {
-          if (typeof value === "function")
+        for (const [key, value2] of object) {
+          if (typeof value2 === "function")
             continue;
           if (sql.length > 0)
             sql += ", ";
           sql += (0, exports.escapeId)(String(key));
           sql += " = ";
-          sql += (0, exports.escape)(value, true, timezone);
+          sql += (0, exports.escape)(value2, true, timezone);
         }
         return sql;
       }
       for (const key in object) {
         if (!hasOwnProperty.call(object, key))
           continue;
-        const value = object[key];
-        if (typeof value === "function")
+        const value2 = object[key];
+        if (typeof value2 === "function")
           continue;
         if (sql.length > 0)
           sql += ", ";
         sql += (0, exports.escapeId)(key);
         sql += " = ";
-        sql += (0, exports.escape)(value, true, timezone);
+        sql += (0, exports.escape)(value2, true, timezone);
       }
       return sql;
     };
@@ -60449,51 +60476,51 @@ var require_lib2 = __commonJS({
       for (let i = 0; i < length; i++) {
         if (i > 0)
           sql += ", ";
-        const value = array[i];
-        if (Array.isArray(value))
-          sql += `(${(0, exports.arrayToList)(value, timezone)})`;
-        else if (value instanceof Set)
-          sql += `(${(0, exports.arrayToList)(Array.from(value), timezone)})`;
+        const value2 = array[i];
+        if (Array.isArray(value2))
+          sql += `(${(0, exports.arrayToList)(value2, timezone)})`;
+        else if (value2 instanceof Set)
+          sql += `(${(0, exports.arrayToList)(Array.from(value2), timezone)})`;
         else
-          sql += (0, exports.escape)(value, true, timezone);
+          sql += (0, exports.escape)(value2, true, timezone);
       }
       return sql;
     };
     exports.arrayToList = arrayToList;
-    var escape2 = (value, stringifyObjects, timezone) => {
-      if (value === void 0 || value === null)
+    var escape2 = (value2, stringifyObjects, timezone) => {
+      if (value2 === void 0 || value2 === null)
         return "NULL";
-      switch (typeof value) {
+      switch (typeof value2) {
         case "boolean":
-          return value ? "true" : "false";
+          return value2 ? "true" : "false";
         case "number":
         case "bigint":
-          return value + "";
+          return value2 + "";
         case "object": {
-          if (isDate(value))
-            return (0, exports.dateToString)(value, timezone || "local");
-          if (isTemporal(value))
-            return (0, exports.temporalToString)(value, timezone);
-          if (Array.isArray(value))
-            return (0, exports.arrayToList)(value, timezone);
-          if (value instanceof Set)
-            return (0, exports.arrayToList)(Array.from(value), timezone);
-          if (buffer_1.Buffer.isBuffer(value))
-            return (0, exports.bufferToString)(value);
-          if (value instanceof Uint8Array)
-            return (0, exports.bufferToString)(buffer_1.Buffer.from(value));
-          if (hasSqlString(value))
-            return String(value.toSqlString());
+          if (isDate(value2))
+            return (0, exports.dateToString)(value2, timezone || "local");
+          if (isTemporal(value2))
+            return (0, exports.temporalToString)(value2, timezone);
+          if (Array.isArray(value2))
+            return (0, exports.arrayToList)(value2, timezone);
+          if (value2 instanceof Set)
+            return (0, exports.arrayToList)(Array.from(value2), timezone);
+          if (buffer_1.Buffer.isBuffer(value2))
+            return (0, exports.bufferToString)(value2);
+          if (value2 instanceof Uint8Array)
+            return (0, exports.bufferToString)(buffer_1.Buffer.from(value2));
+          if (hasSqlString(value2))
+            return String(value2.toSqlString());
           if (!(stringifyObjects === void 0 || stringifyObjects === null))
-            return escapeString(String(value));
-          if (isRecord(value) || value instanceof Map)
-            return (0, exports.objectToValues)(value, timezone);
-          return escapeString(String(value));
+            return escapeString(String(value2));
+          if (isRecord(value2) || value2 instanceof Map)
+            return (0, exports.objectToValues)(value2, timezone);
+          return escapeString(String(value2));
         }
         case "string":
-          return escapeString(value);
+          return escapeString(value2);
         default:
-          return escapeString(String(value));
+          return escapeString(String(value2));
       }
     };
     exports.escape = escape2;
@@ -60662,7 +60689,7 @@ var require_lib3 = __commonJS({
       };
       return {
         /** Adds a key-value pair to the cache. Updates the value if the key already exists. */
-        set(key, value) {
+        set(key, value2) {
           if (key === void 0)
             return;
           let index = keyMap.get(key);
@@ -60680,14 +60707,14 @@ var require_lib3 = __commonJS({
             }
             keyMap.set(key, index);
             keyList[index] = key;
-            valList[index] = value;
+            valList[index] = value2;
             if (size === 1)
               head = tail = index;
             else
               linkTail(index);
           } else {
             onEviction === null || onEviction === void 0 ? void 0 : onEviction(key, valList[index]);
-            valList[index] = value;
+            valList[index] = value2;
             moveToTail(index);
           }
         },
@@ -60736,8 +60763,8 @@ var require_lib3 = __commonJS({
           let current = tail;
           for (let i = 0; i < size; i++) {
             const key = keyList[current];
-            const value = valList[current];
-            callback(value, key);
+            const value2 = valList[current];
+            callback(value2, key);
             current = prev[current];
           }
         },
@@ -60864,8 +60891,8 @@ var require_parser_cache = __commonJS({
     function optionBits(type, options, config, nestTables, dateStrings) {
       return (type === "binary" ? 1 : 0) | (options.rowsAsArray ? 2 : 0) | (options.supportBigNumbers || config.supportBigNumbers ? 4 : 0) | (options.bigNumberStrings || config.bigNumberStrings ? 8 : 0) | typeCastKind(options.typeCast) << 4 | (options.decimalNumbers ? 64 : 0) | (config.jsonStrings ? 128 : 0) | (nestTables === true ? 256 : 0) | (typeof nestTables === "string" ? 512 : 0) | (dateStrings === true ? 1024 : 0) | (Array.isArray(dateStrings) ? 2048 : 0);
     }
-    function mixNumber(hash, value) {
-      return Math.imul(hash ^ (value | 0), 2654435761) | 0;
+    function mixNumber(hash, value2) {
+      return Math.imul(hash ^ (value2 | 0), 2654435761) | 0;
     }
     function mixString(hash, string) {
       if (typeof string !== "string") {
@@ -60896,21 +60923,21 @@ var require_parser_cache = __commonJS({
       }
       hash = mixNumber(hash, fields.length);
       for (let i = 0; i < fields.length; ++i) {
-        const field = fields[i];
+        const field2 = fields[i];
         hash = mixNumber(
           hash,
-          field.columnType | field.characterSet << 8 | field.decimals << 24
+          field2.columnType | field2.characterSet << 8 | field2.decimals << 24
         );
-        hash = mixNumber(hash, field.flags);
-        hash = mixString(hash, field.name);
-        if (field.extendedTypeName !== void 0) {
-          hash = mixString(hash, field.extendedTypeName);
+        hash = mixNumber(hash, field2.flags);
+        hash = mixString(hash, field2.name);
+        if (field2.extendedTypeName !== void 0) {
+          hash = mixString(hash, field2.extendedTypeName);
         }
-        if (field.extendedFormat !== void 0) {
-          hash = mixString(hash, field.extendedFormat);
+        if (field2.extendedFormat !== void 0) {
+          hash = mixString(hash, field2.extendedFormat);
         }
         if (includeTable) {
-          hash = mixString(hash, field.table);
+          hash = mixString(hash, field2.table);
         }
       }
       return hash & 1073741823;
@@ -60951,16 +60978,16 @@ var require_parser_cache = __commonJS({
         this.extendedFormats = new Array(count2);
         this.tables = this.nestTables === false ? null : new Array(count2);
         for (let i = 0; i < count2; ++i) {
-          const field = fields[i];
-          this.columnTypes[i] = field.columnType;
-          this.characterSets[i] = field.characterSet;
-          this.flags[i] = field.flags;
-          this.decimals[i] = field.decimals;
-          this.names[i] = field.name;
-          this.extendedTypeNames[i] = field.extendedTypeName;
-          this.extendedFormats[i] = field.extendedFormat;
+          const field2 = fields[i];
+          this.columnTypes[i] = field2.columnType;
+          this.characterSets[i] = field2.characterSet;
+          this.flags[i] = field2.flags;
+          this.decimals[i] = field2.decimals;
+          this.names[i] = field2.name;
+          this.extendedTypeNames[i] = field2.extendedTypeName;
+          this.extendedFormats[i] = field2.extendedFormat;
           if (this.tables !== null) {
-            this.tables[i] = field.table;
+            this.tables[i] = field2.table;
           }
         }
       }
@@ -60976,8 +61003,8 @@ var require_parser_cache = __commonJS({
           return false;
         }
         for (let i = 0; i < fields.length; ++i) {
-          const field = fields[i];
-          if (this.columnTypes[i] !== field.columnType || this.characterSets[i] !== field.characterSet || this.flags[i] !== field.flags || this.decimals[i] !== field.decimals || this.names[i] !== field.name || this.extendedTypeNames[i] !== field.extendedTypeName || this.extendedFormats[i] !== field.extendedFormat || this.tables !== null && this.tables[i] !== field.table) {
+          const field2 = fields[i];
+          if (this.columnTypes[i] !== field2.columnType || this.characterSets[i] !== field2.characterSet || this.flags[i] !== field2.flags || this.decimals[i] !== field2.decimals || this.names[i] !== field2.name || this.extendedTypeNames[i] !== field2.extendedTypeName || this.extendedFormats[i] !== field2.extendedFormat || this.tables !== null && this.tables[i] !== field2.table) {
             return false;
           }
         }
@@ -65598,49 +65625,49 @@ var require_umd = __commonJS({
         function isLong(obj) {
           return (obj && obj["__isLong__"]) === true;
         }
-        function ctz32(value) {
-          var c = Math.clz32(value & -value);
-          return value ? 31 - c : c;
+        function ctz32(value2) {
+          var c = Math.clz32(value2 & -value2);
+          return value2 ? 31 - c : c;
         }
         Long.isLong = isLong;
         var INT_CACHE = {};
         var UINT_CACHE = {};
-        function fromInt(value, unsigned) {
+        function fromInt(value2, unsigned) {
           var obj, cachedObj, cache;
           if (unsigned) {
-            value >>>= 0;
-            if (cache = 0 <= value && value < 256) {
-              cachedObj = UINT_CACHE[value];
+            value2 >>>= 0;
+            if (cache = 0 <= value2 && value2 < 256) {
+              cachedObj = UINT_CACHE[value2];
               if (cachedObj) return cachedObj;
             }
-            obj = fromBits(value, 0, true);
-            if (cache) UINT_CACHE[value] = obj;
+            obj = fromBits(value2, 0, true);
+            if (cache) UINT_CACHE[value2] = obj;
             return obj;
           } else {
-            value |= 0;
-            if (cache = -128 <= value && value < 128) {
-              cachedObj = INT_CACHE[value];
+            value2 |= 0;
+            if (cache = -128 <= value2 && value2 < 128) {
+              cachedObj = INT_CACHE[value2];
               if (cachedObj) return cachedObj;
             }
-            obj = fromBits(value, value < 0 ? -1 : 0, false);
-            if (cache) INT_CACHE[value] = obj;
+            obj = fromBits(value2, value2 < 0 ? -1 : 0, false);
+            if (cache) INT_CACHE[value2] = obj;
             return obj;
           }
         }
         Long.fromInt = fromInt;
-        function fromNumber(value, unsigned) {
-          if (isNaN(value)) return unsigned ? UZERO : ZERO;
+        function fromNumber(value2, unsigned) {
+          if (isNaN(value2)) return unsigned ? UZERO : ZERO;
           if (unsigned) {
-            if (value < 0) return UZERO;
-            if (value >= TWO_PWR_64_DBL) return MAX_UNSIGNED_VALUE;
+            if (value2 < 0) return UZERO;
+            if (value2 >= TWO_PWR_64_DBL) return MAX_UNSIGNED_VALUE;
           } else {
-            if (value <= -TWO_PWR_63_DBL) return MIN_VALUE;
-            if (value + 1 >= TWO_PWR_63_DBL) return MAX_VALUE;
+            if (value2 <= -TWO_PWR_63_DBL) return MIN_VALUE;
+            if (value2 + 1 >= TWO_PWR_63_DBL) return MAX_VALUE;
           }
-          if (value < 0) return fromNumber(-value, unsigned).neg();
+          if (value2 < 0) return fromNumber(-value2, unsigned).neg();
           return fromBits(
-            value % TWO_PWR_32_DBL | 0,
-            value / TWO_PWR_32_DBL | 0,
+            value2 % TWO_PWR_32_DBL | 0,
+            value2 / TWO_PWR_32_DBL | 0,
             unsigned
           );
         }
@@ -65670,13 +65697,13 @@ var require_umd = __commonJS({
           var radixToPower = fromNumber(pow_dbl(radix, 8));
           var result = ZERO;
           for (var i = 0; i < str.length; i += 8) {
-            var size = Math.min(8, str.length - i), value = parseInt(str.substring(i, i + size), radix);
+            var size = Math.min(8, str.length - i), value2 = parseInt(str.substring(i, i + size), radix);
             if (size < 8) {
               var power = fromNumber(pow_dbl(radix, size));
-              result = result.mul(power).add(fromNumber(value));
+              result = result.mul(power).add(fromNumber(value2));
             } else {
               result = result.mul(radixToPower);
-              result = result.add(fromNumber(value));
+              result = result.add(fromNumber(value2));
             }
           }
           result.unsigned = unsigned;
@@ -66187,14 +66214,14 @@ var require_umd = __commonJS({
           );
         };
         if (typeof BigInt === "function") {
-          Long.fromBigInt = function fromBigInt(value, unsigned) {
-            var lowBits = Number(BigInt.asIntN(32, value));
-            var highBits = Number(BigInt.asIntN(32, value >> BigInt(32)));
+          Long.fromBigInt = function fromBigInt(value2, unsigned) {
+            var lowBits = Number(BigInt.asIntN(32, value2));
+            var highBits = Number(BigInt.asIntN(32, value2 >> BigInt(32)));
             return fromBits(lowBits, highBits, unsigned);
           };
-          Long.fromValue = function fromValueWithBigInt(value, unsigned) {
-            if (typeof value === "bigint") return Long.fromBigInt(value, unsigned);
-            return fromValue(value, unsigned);
+          Long.fromValue = function fromValueWithBigInt(value2, unsigned) {
+            if (typeof value2 === "bigint") return Long.fromBigInt(value2, unsigned);
+            return fromValue(value2, unsigned);
           };
           LongPrototype.toBigInt = function toBigInt() {
             var lowBigInt = BigInt(this.low >>> 0);
@@ -69723,8 +69750,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res);
           done();
-        } catch (e) {
-          done(e);
+        } catch (e2) {
+          done(e2);
         }
       };
       IconvLiteEncoderStream.prototype._flush = function(done) {
@@ -69732,8 +69759,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res);
           done();
-        } catch (e) {
-          done(e);
+        } catch (e2) {
+          done(e2);
         }
       };
       IconvLiteEncoderStream.prototype.collect = function(cb) {
@@ -69764,8 +69791,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e) {
-          done(e);
+        } catch (e2) {
+          done(e2);
         }
       };
       IconvLiteDecoderStream.prototype._flush = function(done) {
@@ -69773,8 +69800,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e) {
-          done(e);
+        } catch (e2) {
+          done(e2);
         }
       };
       IconvLiteDecoderStream.prototype.collect = function(cb) {
@@ -69830,7 +69857,7 @@ var require_lib4 = __commonJS({
       try {
         module.exports.getCodec(enc);
         return true;
-      } catch (e) {
+      } catch (e2) {
         return false;
       }
     };
@@ -69913,7 +69940,7 @@ var require_lib4 = __commonJS({
     var streamModule;
     try {
       streamModule = __require("stream");
-    } catch (e) {
+    } catch (e2) {
     }
     if (streamModule && streamModule.Transform) {
       module.exports.enableStreamingAPI(streamModule);
@@ -70240,13 +70267,13 @@ ${msg}:
       "__proto__"
     ]);
     exports.privateObjectProps = privateObjectProps;
-    var fieldEscape = (field, isEval = true) => {
-      if (privateObjectProps.has(field)) {
+    var fieldEscape = (field2, isEval = true) => {
+      if (privateObjectProps.has(field2)) {
         throw new Error(
-          `The field name (${field}) can't be the same as an object's private property.`
+          `The field name (${field2}) can't be the same as an object's private property.`
         );
       }
-      return isEval ? srcEscape(field) : field;
+      return isEval ? srcEscape(field2) : field2;
     };
     exports.fieldEscape = fieldEscape;
   }
@@ -70259,7 +70286,7 @@ var require_local_date = __commonJS({
     var Types = require_types6();
     var helpers = require_helpers();
     var MS_PER_HOUR = 36e5;
-    var MS_PER_DAY = 864e5;
+    var MS_PER_DAY2 = 864e5;
     var MAX_CACHED_HOURS = 4096;
     var hourOffsets = /* @__PURE__ */ new Map();
     var lastTimezone = readTimezone();
@@ -70277,11 +70304,11 @@ var require_local_date = __commonJS({
         hourOffsets.clear();
       }
     }
-    function daysFromCivil(year, month, day) {
+    function daysFromCivil(year, month, day2) {
       const y = month <= 2 ? year - 1 : year;
       const era = Math.floor(y / 400);
       const yearOfEra = y - era * 400;
-      const dayOfYear = ((153 * ((month + 9) % 12) + 2) / 5 | 0) + day - 1;
+      const dayOfYear = ((153 * ((month + 9) % 12) + 2) / 5 | 0) + day2 - 1;
       const dayOfEra = yearOfEra * 365 + (yearOfEra / 4 | 0) - (yearOfEra / 100 | 0) + dayOfYear;
       return era * 146097 + dayOfEra - 719468;
     }
@@ -70305,19 +70332,19 @@ var require_local_date = __commonJS({
       }
       return offset2;
     }
-    function localDate(year, month, day, hours, minutes, seconds, milliseconds) {
+    function localDate(year, month, day2, hours, minutes, seconds, milliseconds) {
       if (year < 100 || month < 1 || month > 12) {
         return new Date(
           year,
           month - 1,
-          day,
+          day2,
           hours,
           minutes,
           seconds,
           milliseconds
         );
       }
-      const wallTime = daysFromCivil(year, month, day) * MS_PER_DAY + hours * MS_PER_HOUR + minutes * 6e4 + seconds * 1e3 + Math.trunc(milliseconds);
+      const wallTime = daysFromCivil(year, month, day2) * MS_PER_DAY2 + hours * MS_PER_HOUR + minutes * 6e4 + seconds * 1e3 + Math.trunc(milliseconds);
       const hour = Math.floor(wallTime / MS_PER_HOUR);
       let offset2 = hourOffsets.get(hour);
       if (offset2 === void 0) {
@@ -70331,7 +70358,7 @@ var require_local_date = __commonJS({
         return new Date(
           year,
           month - 1,
-          day,
+          day2,
           hours,
           minutes,
           seconds,
@@ -70340,12 +70367,12 @@ var require_local_date = __commonJS({
       }
       return new Date(wallTime - offset2);
     }
-    function usesLocalDate(field, options, config) {
+    function usesLocalDate(field2, options, config) {
       const timezone = options.timezone || config.timezone;
       if (timezone && timezone !== "local") {
         return false;
       }
-      const type = field.columnType;
+      const type = field2.columnType;
       if (type !== Types.DATE && type !== Types.DATETIME && type !== Types.TIMESTAMP && type !== Types.NEWDATE) {
         return false;
       }
@@ -70379,8 +70406,8 @@ var require_packet = __commonJS({
     var Types = require_types6();
     var ZERO_DATE = "0000-00-00";
     var pad = "000000000000";
-    function leftPad(num, value) {
-      const s = value.toString();
+    function leftPad(num, value2) {
+      const s = value2.toString();
       if (s.length >= num) {
         return s;
       }
@@ -70390,19 +70417,19 @@ var require_packet = __commonJS({
     var plus = "+".charCodeAt(0);
     var jsonSourceAccessSupported = (() => {
       let supported = false;
-      JSON.parse("0", (key, value, context) => {
+      JSON.parse("0", (key, value2, context) => {
         supported = context !== void 0 && typeof context.source === "string";
-        return value;
+        return value2;
       });
       return supported;
     })();
     var jsonBigNumeral = /\d{16}/;
     var jsonIntegerSource = /^-?\d+$/;
-    function jsonBigNumberReviver(key, value, context) {
-      if (typeof value === "number" && !Number.isSafeInteger(value) && context !== void 0 && jsonIntegerSource.test(context.source)) {
+    function jsonBigNumberReviver(key, value2, context) {
+      if (typeof value2 === "number" && !Number.isSafeInteger(value2) && context !== void 0 && jsonIntegerSource.test(context.source)) {
         return context.source;
       }
-      return value;
+      return value2;
     }
     var dot = ".".charCodeAt(0);
     var exponent = "e".charCodeAt(0);
@@ -72430,11 +72457,11 @@ var require_column_definition = __commonJS({
         );
         while (packet.offset < extendedMetadataEnd) {
           const id = packet.readInt8();
-          const value = packet.readLengthCodedString("ascii");
+          const value2 = packet.readLengthCodedString("ascii");
           if (id === 0) {
-            this.extendedTypeName = value;
+            this.extendedTypeName = value2;
           } else if (id === 1) {
-            this.extendedFormat = value;
+            this.extendedFormat = value2;
           }
         }
         packet.offset = extendedMetadataEnd;
@@ -72576,9 +72603,9 @@ var require_column_definition = __commonJS({
       }
       static toPacket(column, sequenceId) {
         let length = 17;
-        fields.forEach((field) => {
+        fields.forEach((field2) => {
           length += Packet.lengthCodedStringLength(
-            column[field],
+            column[field2],
             CharsetToEncoding[column.characterSet]
           );
         });
@@ -72703,9 +72730,9 @@ var require_typed_parameter = __commonJS({
     }
     var TIME_PATTERN = /^(-)?(\d+):([0-5]?\d):([0-5]?\d)(?:\.(\d{1,6}))?$/;
     var TypedParameter = class {
-      constructor(type, value, unsigned) {
+      constructor(type, value2, unsigned) {
         this.type = type;
-        this.value = value;
+        this.value = value2;
         this.unsigned = unsigned;
       }
       [Symbol.for("nodejs.util.inspect.custom")]() {
@@ -72713,43 +72740,43 @@ var require_typed_parameter = __commonJS({
         return `${name}${this.unsigned ? " UNSIGNED" : ""}(${String(this.value)})`;
       }
     };
-    function toInteger(value, name) {
-      switch (typeof value) {
+    function toInteger(value2, name) {
+      switch (typeof value2) {
         case "bigint":
-          return value;
+          return value2;
         case "boolean":
-          return value ? 1n : 0n;
+          return value2 ? 1n : 0n;
         case "number":
-          if (!Number.isInteger(value)) {
+          if (!Number.isInteger(value2)) {
             throw new TypeError(
-              `${name} parameter must be an integer, got ${value}`
+              `${name} parameter must be an integer, got ${value2}`
             );
           }
-          if (!Number.isSafeInteger(value)) {
+          if (!Number.isSafeInteger(value2)) {
             throw new RangeError(
-              `${name} parameter ${value} exceeds Number.MAX_SAFE_INTEGER and has already lost precision; pass a string or BigInt instead`
+              `${name} parameter ${value2} exceeds Number.MAX_SAFE_INTEGER and has already lost precision; pass a string or BigInt instead`
             );
           }
-          return BigInt(value);
+          return BigInt(value2);
         case "string":
           try {
-            return BigInt(value.trim());
+            return BigInt(value2.trim());
           } catch (cause) {
             throw new TypeError(
-              `${name} parameter must be an integer, got ${JSON.stringify(value)}`,
+              `${name} parameter must be an integer, got ${JSON.stringify(value2)}`,
               { cause }
             );
           }
         default:
           throw new TypeError(
-            `${name} parameter must be an integer, got ${typeof value}`
+            `${name} parameter must be an integer, got ${typeof value2}`
           );
       }
     }
-    function checkedInteger(value, type, bytes, unsigned) {
+    function checkedInteger(value2, type, bytes, unsigned) {
       const name = Types[type];
       const bits = BigInt(bytes * 8);
-      const n = toInteger(value, name);
+      const n = toInteger(value2, name);
       const min = unsigned ? 0n : -(1n << bits - 1n);
       const max = unsigned ? (1n << bits) - 1n : (1n << bits - 1n) - 1n;
       if (n < min || n > max) {
@@ -72759,18 +72786,18 @@ var require_typed_parameter = __commonJS({
       }
       return n;
     }
-    function integerHint(value, type, unsigned) {
+    function integerHint(value2, type, unsigned) {
       const bytes = INTEGER_BYTES[type];
       if (!bytes || !HINT_UPGRADABLE.has(type)) {
         return null;
       }
       let n;
-      if (typeof value === "bigint") {
-        n = value;
-      } else if (typeof value === "boolean") {
-        n = value ? 1n : 0n;
-      } else if (typeof value === "number" && Number.isSafeInteger(value)) {
-        n = BigInt(value);
+      if (typeof value2 === "bigint") {
+        n = value2;
+      } else if (typeof value2 === "boolean") {
+        n = value2 ? 1n : 0n;
+      } else if (typeof value2 === "number" && Number.isSafeInteger(value2)) {
+        n = BigInt(value2);
       } else {
         return null;
       }
@@ -72789,10 +72816,10 @@ var require_typed_parameter = __commonJS({
       return WIRE_TYPE[type] || type;
     }
     function integerEncoder(type, bytes) {
-      return (value, unsigned) => {
+      return (value2, unsigned) => {
         const wire = BigInt.asUintN(
           bytes * 8,
-          checkedInteger(value, type, bytes, unsigned)
+          checkedInteger(value2, type, bytes, unsigned)
         );
         return {
           value: bytes === 8 ? wire : Number(wire),
@@ -72803,29 +72830,29 @@ var require_typed_parameter = __commonJS({
         };
       };
     }
-    function toDate(value, name) {
-      const date = value instanceof Date ? value : new Date(value);
+    function toDate2(value2, name) {
+      const date = value2 instanceof Date ? value2 : new Date(value2);
       if (Number.isNaN(date.getTime())) {
         throw new TypeError(
-          `${name} parameter must be a valid Date, got ${String(value)}`
+          `${name} parameter must be a valid Date, got ${String(value2)}`
         );
       }
       return date;
     }
     function temporalEncoder(type, timezone) {
       const name = Types[type];
-      return (value) => ({
-        value: toDate(value, name),
+      return (value2) => ({
+        value: toDate2(value2, name),
         length: 12,
         writer(v) {
           this.writeDate(v, timezone);
         }
       });
     }
-    function toTimeParts(value) {
-      if (typeof value === "number") {
-        const negative = value < 0;
-        let rest = Math.abs(value);
+    function toTimeParts(value2) {
+      if (typeof value2 === "number") {
+        const negative = value2 < 0;
+        let rest = Math.abs(value2);
         const microseconds = Math.round(rest % 1e3 * 1e3);
         rest = Math.floor(rest / 1e3);
         const seconds = rest % 60;
@@ -72840,10 +72867,10 @@ var require_typed_parameter = __commonJS({
           microseconds
         };
       }
-      const match = TIME_PATTERN.exec(String(value));
+      const match = TIME_PATTERN.exec(String(value2));
       if (!match) {
         throw new TypeError(
-          `TIME parameter must be 'HH:MM:SS[.ffffff]' or milliseconds, got ${JSON.stringify(String(value))}`
+          `TIME parameter must be 'HH:MM:SS[.ffffff]' or milliseconds, got ${JSON.stringify(String(value2))}`
         );
       }
       const hours = Number(match[2]);
@@ -72857,8 +72884,8 @@ var require_typed_parameter = __commonJS({
       };
     }
     function timeEncoder() {
-      return (value) => {
-        const parts = toTimeParts(value);
+      return (value2) => {
+        const parts = toTimeParts(value2);
         return {
           value: parts,
           length: Packet.timeLength(parts),
@@ -72869,9 +72896,9 @@ var require_typed_parameter = __commonJS({
       };
     }
     function lengthCodedEncoder(encoding) {
-      return (value) => {
-        if (!Buffer.isBuffer(value)) {
-          const string = typeof value === "string" ? value : String(value);
+      return (value2) => {
+        if (!Buffer.isBuffer(value2)) {
+          const string = typeof value2 === "string" ? value2 : String(value2);
           if (StringParser.hasFastUtf8Write && (encoding === "utf8" || encoding === "utf-8")) {
             const byteLength = Buffer.byteLength(string, "utf8");
             return {
@@ -72881,19 +72908,19 @@ var require_typed_parameter = __commonJS({
               writer: Packet.prototype.writeLengthCodedUtf8String
             };
           }
-          value = StringParser.encode(string, encoding);
+          value2 = StringParser.encode(string, encoding);
         }
         return {
-          value,
-          length: Packet.lengthCodedNumberLength(value.length) + value.length,
+          value: value2,
+          length: Packet.lengthCodedNumberLength(value2.length) + value2.length,
           writer: Packet.prototype.writeLengthCodedBuffer
         };
       };
     }
     function jsonEncoder(encoding) {
       const encodeText = lengthCodedEncoder(encoding);
-      return (value) => encodeText(
-        typeof value === "string" || Buffer.isBuffer(value) ? value : JSON.stringify(value)
+      return (value2) => encodeText(
+        typeof value2 === "string" || Buffer.isBuffer(value2) ? value2 : JSON.stringify(value2)
       );
     }
     function encoderFor(type, encoding, timezone) {
@@ -72901,15 +72928,15 @@ var require_typed_parameter = __commonJS({
         return integerEncoder(type, INTEGER_BYTES[type]);
       }
       if (type === Types.DOUBLE) {
-        return (value) => ({
-          value: Number(value),
+        return (value2) => ({
+          value: Number(value2),
           length: 8,
           writer: Packet.prototype.writeDouble
         });
       }
       if (type === Types.FLOAT) {
-        return (value) => ({
-          value: Number(value),
+        return (value2) => ({
+          value: Number(value2),
           length: 4,
           writer: Packet.prototype.writeFloat
         });
@@ -72979,14 +73006,14 @@ var require_typed_parameter = __commonJS({
     for (const type of SUPPORTED) {
       const name = Types[type];
       const bytes = INTEGER_BYTES[type];
-      const build = bytes ? (value, unsigned) => new TypedParameter(
+      const build = bytes ? (value2, unsigned) => new TypedParameter(
         type,
-        value === null ? null : checkedInteger(value, type, bytes, unsigned),
+        value2 === null ? null : checkedInteger(value2, type, bytes, unsigned),
         unsigned
-      ) : (value, unsigned) => new TypedParameter(type, value, unsigned);
-      const factory = (value) => build(value, false);
+      ) : (value2, unsigned) => new TypedParameter(type, value2, unsigned);
+      const factory = (value2) => build(value2, false);
       if (bytes) {
-        factory.unsigned = (value) => build(value, true);
+        factory.unsigned = (value2) => build(value2, true);
       }
       types[name] = factory;
     }
@@ -73018,16 +73045,16 @@ var require_encode_parameter = __commonJS({
       integerHint
     } = require_typed_parameter();
     var FieldFlags = require_field_flags();
-    function isJSON(value) {
-      return Array.isArray(value) || value.constructor === Object || typeof value.toJSON === "function" && !Buffer.isBuffer(value);
+    function isJSON(value2) {
+      return Array.isArray(value2) || value2.constructor === Object || typeof value2.toJSON === "function" && !Buffer.isBuffer(value2);
     }
-    function toParameter(value, encoding, timezone, jsonAsString, hint) {
-      if (value instanceof TypedParameter) {
-        return encodeTypedParameter(value, encoding, timezone, jsonAsString);
+    function toParameter(value2, encoding, timezone, jsonAsString, hint) {
+      if (value2 instanceof TypedParameter) {
+        return encodeTypedParameter(value2, encoding, timezone, jsonAsString);
       }
       if (hint) {
         const hinted = integerHint(
-          value,
+          value2,
           hint.columnType,
           Boolean(hint.flags & FieldFlags.UNSIGNED)
         );
@@ -73038,8 +73065,8 @@ var require_encode_parameter = __commonJS({
       let type = Types.VAR_STRING;
       let length;
       let writer = Packet.prototype.writeLengthCodedBuffer;
-      if (value !== null) {
-        switch (typeof value) {
+      if (value2 !== null) {
+        switch (typeof value2) {
           case "undefined":
             throw new TypeError("Bind parameters must not contain undefined");
           case "number":
@@ -73048,51 +73075,51 @@ var require_encode_parameter = __commonJS({
             writer = Packet.prototype.writeDouble;
             break;
           case "boolean":
-            value = value | 0;
+            value2 = value2 | 0;
             type = Types.TINY;
             length = 1;
             writer = Packet.prototype.writeInt8;
             break;
           case "object":
-            if (Object.prototype.toString.call(value) === "[object Date]") {
+            if (Object.prototype.toString.call(value2) === "[object Date]") {
               type = Types.DATETIME;
               length = 12;
-              writer = function(value2) {
-                return Packet.prototype.writeDate.call(this, value2, timezone);
+              writer = function(value3) {
+                return Packet.prototype.writeDate.call(this, value3, timezone);
               };
-            } else if (isJSON(value)) {
-              value = JSON.stringify(value);
+            } else if (isJSON(value2)) {
+              value2 = JSON.stringify(value2);
               if (!jsonAsString) {
                 type = Types.JSON;
               }
-            } else if (Buffer.isBuffer(value)) {
+            } else if (Buffer.isBuffer(value2)) {
               type = Types.BLOB;
-              length = Packet.lengthCodedNumberLength(value.length) + value.length;
+              length = Packet.lengthCodedNumberLength(value2.length) + value2.length;
               writer = Packet.prototype.writeLengthCodedBuffer;
             }
             break;
           default:
-            value = value.toString();
+            value2 = value2.toString();
         }
       } else {
-        value = "";
+        value2 = "";
         type = Types.NULL;
         length = 0;
         writer = writeNothing;
       }
       let byteLength;
       if (length === void 0) {
-        if (typeof value === "string" && StringParser.hasFastUtf8Write && (encoding === "utf8" || encoding === "utf-8")) {
-          byteLength = Buffer.byteLength(value, "utf8");
+        if (typeof value2 === "string" && StringParser.hasFastUtf8Write && (encoding === "utf8" || encoding === "utf-8")) {
+          byteLength = Buffer.byteLength(value2, "utf8");
           length = Packet.lengthCodedNumberLength(byteLength) + byteLength;
           writer = Packet.prototype.writeLengthCodedUtf8String;
         } else {
-          value = StringParser.encode(value, encoding);
-          length = Packet.lengthCodedNumberLength(value.length) + value.length;
+          value2 = StringParser.encode(value2, encoding);
+          length = Packet.lengthCodedNumberLength(value2.length) + value2.length;
         }
       }
       return {
-        value,
+        value: value2,
         type,
         length,
         byteLength,
@@ -74915,9 +74942,9 @@ var require_client_handshake = __commonJS({
         }
       }
       handshakeInit(helloPacket, connection) {
-        this.on("error", (e) => {
-          connection._fatalError = e;
-          connection._protocolError = e;
+        this.on("error", (e2) => {
+          connection._fatalError = e2;
+          connection._protocolError = e2;
         });
         this.handshake = Packets.Handshake.fromPacket(helloPacket);
         if (connection.config.debug) {
@@ -75689,9 +75716,9 @@ var require_text_parser = __commonJS({
     for (const t in Types) {
       typeNames[Types[t]] = t;
     }
-    function readCodeFor(field, encodingExpr, config, options) {
-      const type = field.columnType;
-      const charset = field.characterSet;
+    function readCodeFor(field2, encodingExpr, config, options) {
+      const type = field2.columnType;
+      const charset = field2.characterSet;
       const supportBigNumbers = Boolean(
         options.supportBigNumbers || config.supportBigNumbers
       );
@@ -75700,7 +75727,7 @@ var require_text_parser = __commonJS({
       );
       const timezone = options.timezone || config.timezone;
       const dateStrings = options.dateStrings || config.dateStrings;
-      if (field.extendedFormat === "json") {
+      if (field2.extendedFormat === "json") {
         return config.jsonStrings ? `packet.readLengthCodedString(${encodingExpr})` : `packet.parseJson(${encodingExpr}, ${supportBigNumbers})`;
       }
       switch (type) {
@@ -75756,19 +75783,19 @@ var require_text_parser = __commonJS({
       if (typeof config.typeCast === "function" && typeof options.typeCast !== "function") {
         options.typeCast = config.typeCast;
       }
-      function wrap(field, _this) {
+      function wrap(field2, _this) {
         return {
-          type: typeNames[field.columnType],
-          extendedTypeName: field.extendedTypeName,
-          extendedFormat: field.extendedFormat,
-          length: field.columnLength,
-          db: field.schema,
-          table: field.table,
-          name: field.name,
-          string: function(encoding = field.encoding) {
-            if (field.columnType === Types.JSON && encoding === field.encoding) {
+          type: typeNames[field2.columnType],
+          extendedTypeName: field2.extendedTypeName,
+          extendedFormat: field2.extendedFormat,
+          length: field2.columnLength,
+          db: field2.schema,
+          table: field2.table,
+          name: field2.name,
+          string: function(encoding = field2.encoding) {
+            if (field2.columnType === Types.JSON && encoding === field2.encoding) {
               console.warn(
-                `typeCast: JSON column "${field.name}" is interpreted as BINARY by default, recommended to manually set utf8 encoding: \`field.string("utf8")\``
+                `typeCast: JSON column "${field2.name}" is interpreted as BINARY by default, recommended to manually set utf8 encoding: \`field.string("utf8")\``
               );
             }
             return _this.packet.readLengthCodedString(encoding);
@@ -75790,7 +75817,7 @@ var require_text_parser = __commonJS({
         parserFn("this[`wrap${i}`] = wrap(fields[i], _this);");
         parserFn("}");
       }
-      if (fields.some((field) => LocalDate.usesLocalDate(field, options, config))) {
+      if (fields.some((field2) => LocalDate.usesLocalDate(field2, options, config))) {
         parserFn("LocalDate.checkTimezone();");
       }
       parserFn("}");
@@ -75874,7 +75901,7 @@ var require_static_text_parser = __commonJS({
     }
     function readField({
       packet,
-      field,
+      field: field2,
       type,
       charset,
       encoding,
@@ -75889,7 +75916,7 @@ var require_static_text_parser = __commonJS({
       );
       const timezone = options.timezone || config.timezone;
       const dateStrings = options.dateStrings || config.dateStrings;
-      if (field.extendedFormat === "json") {
+      if (field2.extendedFormat === "json") {
         return config.jsonStrings ? packet.readLengthCodedString(encoding) : packet.parseJson(encoding, supportBigNumbers);
       }
       switch (type) {
@@ -75940,19 +75967,19 @@ var require_static_text_parser = __commonJS({
           return packet.readLengthCodedString(encoding);
       }
     }
-    function createTypecastField(field, packet) {
+    function createTypecastField(field2, packet) {
       return {
-        type: typeNames[field.columnType],
-        extendedTypeName: field.extendedTypeName,
-        extendedFormat: field.extendedFormat,
-        length: field.columnLength,
-        db: field.schema,
-        table: field.table,
-        name: field.name,
-        string: function(encoding = field.encoding) {
-          if (field.columnType === Types.JSON && encoding === field.encoding) {
+        type: typeNames[field2.columnType],
+        extendedTypeName: field2.extendedTypeName,
+        extendedFormat: field2.extendedFormat,
+        length: field2.columnLength,
+        db: field2.schema,
+        table: field2.table,
+        name: field2.name,
+        string: function(encoding = field2.encoding) {
+          if (field2.columnType === Types.JSON && encoding === field2.encoding) {
             console.warn(
-              `typeCast: JSON column "${field.name}" is interpreted as BINARY by default, recommended to manually set utf8 encoding: \`field.string("utf8")\``
+              `typeCast: JSON column "${field2.name}" is interpreted as BINARY by default, recommended to manually set utf8 encoding: \`field.string("utf8")\``
             );
           }
           return packet.readLengthCodedString(encoding);
@@ -75966,44 +75993,44 @@ var require_static_text_parser = __commonJS({
       };
     }
     function getTextParser(fields, options, config) {
-      if (fields.some((field) => LocalDate.usesLocalDate(field, options, config))) {
+      if (fields.some((field2) => LocalDate.usesLocalDate(field2, options, config))) {
         LocalDate.checkTimezone();
       }
       return {
         next(packet, fields2, options2) {
           const result = options2.rowsAsArray ? [] : {};
           for (let i = 0; i < fields2.length; i++) {
-            const field = fields2[i];
+            const field2 = fields2[i];
             const typeCast = options2.typeCast ? options2.typeCast : config.typeCast;
             const next = () => readField({
               packet,
-              field,
-              type: field.columnType,
-              encoding: field.encoding,
-              charset: field.characterSet,
+              field: field2,
+              type: field2.columnType,
+              encoding: field2.encoding,
+              charset: field2.characterSet,
               config,
               options: options2
             });
-            let value;
+            let value2;
             if (options2.typeCast === false) {
-              value = packet.readLengthCodedBuffer();
+              value2 = packet.readLengthCodedBuffer();
             } else if (typeof typeCast === "function") {
-              value = typeCast(createTypecastField(field, packet), next);
+              value2 = typeCast(createTypecastField(field2, packet), next);
             } else {
-              value = next();
+              value2 = next();
             }
             if (options2.rowsAsArray) {
-              result.push(value);
+              result.push(value2);
             } else if (typeof options2.nestTables === "string") {
-              result[`${helpers.fieldEscape(field.table, false)}${options2.nestTables}${helpers.fieldEscape(field.name, false)}`] = value;
+              result[`${helpers.fieldEscape(field2.table, false)}${options2.nestTables}${helpers.fieldEscape(field2.name, false)}`] = value2;
             } else if (options2.nestTables) {
-              const tableName = helpers.fieldEscape(field.table, false);
+              const tableName = helpers.fieldEscape(field2.table, false);
               if (!result[tableName]) {
                 result[tableName] = {};
               }
-              result[tableName][helpers.fieldEscape(field.name, false)] = value;
+              result[tableName][helpers.fieldEscape(field2.name, false)] = value2;
             } else {
-              result[helpers.fieldEscape(field.name, false)] = value;
+              result[helpers.fieldEscape(field2.name, false)] = value2;
             }
           }
           return result;
@@ -76578,14 +76605,14 @@ var require_connection_config = __commonJS({
           user: decodeURIComponent(parsedUrl.username),
           password: decodeURIComponent(parsedUrl.password)
         };
-        for (const [key, value] of parsedUrl.searchParams) {
+        for (const [key, value2] of parsedUrl.searchParams) {
           if (key in options) {
             continue;
           }
           try {
-            options[key] = JSON.parse(value);
+            options[key] = JSON.parse(value2);
           } catch {
-            options[key] = value;
+            options[key] = value2;
           }
         }
         return options;
@@ -76671,21 +76698,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows2, fields;
+          let rows3, fields;
           if (this._resultIndex === 0) {
-            rows2 = this._rows[0];
+            rows3 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows2 = this._rows;
+            rows3 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows2, fields);
+              this.onResult(null, rows3, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows2);
+              this.onResult(null, rows3);
             });
           }
         }
@@ -76784,17 +76811,17 @@ var require_query2 = __commonJS({
       readField(packet, connection) {
         this._receivedFieldsCount++;
         if (this._fields[this._resultIndex].length !== this._fieldCount) {
-          const field = new Packets.ColumnDefinition(
+          const field2 = new Packets.ColumnDefinition(
             packet,
             connection.clientEncoding,
             connection._mariadbExtendedMetadata
           );
-          this._fields[this._resultIndex].push(field);
+          this._fields[this._resultIndex].push(field2);
           if (connection.config.debug) {
             console.log("        Column definition:");
-            console.log(`          name: ${field.name}`);
-            console.log(`          type: ${field.columnType}`);
-            console.log(`         flags: ${field.flags}`);
+            console.log(`          name: ${field2.name}`);
+            console.log(`          type: ${field2.columnType}`);
+            console.log(`         flags: ${field2.flags}`);
           }
         }
         if (this._receivedFieldsCount === this._fieldCount) {
@@ -76957,7 +76984,7 @@ var require_binary_parser = __commonJS({
     for (const t in Types) {
       typeNames[Types[t]] = t;
     }
-    function readCodeFor(field, config, options, fieldNum) {
+    function readCodeFor(field2, config, options, fieldNum) {
       const supportBigNumbers = Boolean(
         options.supportBigNumbers || config.supportBigNumbers
       );
@@ -76966,11 +76993,11 @@ var require_binary_parser = __commonJS({
       );
       const timezone = options.timezone || config.timezone;
       const dateStrings = options.dateStrings || config.dateStrings;
-      const unsigned = field.flags & FieldFlags.UNSIGNED;
-      if (field.extendedFormat === "json") {
+      const unsigned = field2.flags & FieldFlags.UNSIGNED;
+      if (field2.extendedFormat === "json") {
         return config.jsonStrings ? `packet.readLengthCodedString(fields[${fieldNum}].encoding)` : `packet.parseJson(fields[${fieldNum}].encoding, ${supportBigNumbers});`;
       }
-      switch (field.columnType) {
+      switch (field2.columnType) {
         case Types.TINY:
           return unsigned ? "packet.readInt8();" : "packet.readSInt8();";
         case Types.SHORT:
@@ -76990,8 +77017,8 @@ var require_binary_parser = __commonJS({
         case Types.DATETIME:
         case Types.TIMESTAMP:
         case Types.NEWDATE:
-          if (helpers.typeMatch(field.columnType, dateStrings, Types)) {
-            return `packet.readDateTimeString(${parseInt(field.decimals, 10)}, ${null}, ${field.columnType});`;
+          if (helpers.typeMatch(field2.columnType, dateStrings, Types)) {
+            return `packet.readDateTimeString(${parseInt(field2.decimals, 10)}, ${null}, ${field2.columnType});`;
           }
           return `packet.readDateTime(${helpers.srcEscape(timezone)});`;
         case Types.TIME:
@@ -77017,7 +77044,7 @@ var require_binary_parser = __commonJS({
           }
           return unsigned ? "packet.readInt64();" : "packet.readSInt64();";
         default:
-          if (field.characterSet === Charsets.BINARY) {
+          if (field2.characterSet === Charsets.BINARY) {
             return "packet.readLengthCodedBuffer();";
           }
           return `packet.readLengthCodedString(fields[${fieldNum}].encoding)`;
@@ -77026,40 +77053,40 @@ var require_binary_parser = __commonJS({
     function compile(fields, options, config) {
       const parserFn = genFunc();
       const nullBitmapLength = Math.floor((fields.length + 7 + 2) / 8);
-      function fieldMetadata(field) {
+      function fieldMetadata(field2) {
         return {
-          type: typeNames[field.columnType],
-          extendedTypeName: field.extendedTypeName,
-          extendedFormat: field.extendedFormat,
-          length: field.columnLength,
-          db: field.schema,
-          table: field.table,
-          name: field.name
+          type: typeNames[field2.columnType],
+          extendedTypeName: field2.extendedTypeName,
+          extendedFormat: field2.extendedFormat,
+          length: field2.columnLength,
+          db: field2.schema,
+          table: field2.table,
+          name: field2.name
         };
       }
-      function wrap(field, packet) {
+      function wrap(field2, packet) {
         return {
-          ...fieldMetadata(field),
-          string: function(encoding = field.encoding) {
-            if (field.columnType === Types.JSON && encoding === field.encoding) {
+          ...fieldMetadata(field2),
+          string: function(encoding = field2.encoding) {
+            if (field2.columnType === Types.JSON && encoding === field2.encoding) {
               console.warn(
-                `typeCast: JSON column "${field.name}" is interpreted as BINARY by default, recommended to manually set utf8 encoding: \`field.string("utf8")\``
+                `typeCast: JSON column "${field2.name}" is interpreted as BINARY by default, recommended to manually set utf8 encoding: \`field.string("utf8")\``
               );
             }
             if ([Types.DATETIME, Types.NEWDATE, Types.TIMESTAMP, Types.DATE].includes(
-              field.columnType
+              field2.columnType
             )) {
               return packet.readDateTimeString(
-                parseInt(field.decimals, 10),
+                parseInt(field2.decimals, 10),
                 " ",
-                field.columnType
+                field2.columnType
               );
             }
-            if (field.columnType === Types.TINY) {
-              const unsigned = field.flags & FieldFlags.UNSIGNED;
+            if (field2.columnType === Types.TINY) {
+              const unsigned = field2.flags & FieldFlags.UNSIGNED;
               return String(unsigned ? packet.readInt8() : packet.readSInt8());
             }
-            if (field.columnType === Types.TIME) {
+            if (field2.columnType === Types.TIME) {
               return packet.readTimeString();
             }
             return packet.readLengthCodedString(encoding);
@@ -77072,9 +77099,9 @@ var require_binary_parser = __commonJS({
           }
         };
       }
-      function wrapNull(field) {
+      function wrapNull(field2) {
         return {
-          ...fieldMetadata(field),
+          ...fieldMetadata(field2),
           string: function() {
             return null;
           },
@@ -77089,7 +77116,7 @@ var require_binary_parser = __commonJS({
       parserFn("(function(){");
       parserFn("return class BinaryRow {");
       parserFn("constructor() {");
-      if (fields.some((field) => LocalDate.usesLocalDate(field, options, config))) {
+      if (fields.some((field2) => LocalDate.usesLocalDate(field2, options, config))) {
         parserFn("LocalDate.checkTimezone();");
       }
       parserFn("}");
@@ -77188,10 +77215,10 @@ var require_static_binary_parser = __commonJS({
       typeNames[Types[t]] = t;
     }
     function getBinaryParser(fields, queryOptions, config) {
-      if (fields.some((field) => LocalDate.usesLocalDate(field, queryOptions, config))) {
+      if (fields.some((field2) => LocalDate.usesLocalDate(field2, queryOptions, config))) {
         LocalDate.checkTimezone();
       }
-      function readCode(field, config2, options, fieldNum, packet) {
+      function readCode(field2, config2, options, fieldNum, packet) {
         const supportBigNumbers = Boolean(
           options.supportBigNumbers || config2.supportBigNumbers
         );
@@ -77200,11 +77227,11 @@ var require_static_binary_parser = __commonJS({
         );
         const timezone = options.timezone || config2.timezone;
         const dateStrings = options.dateStrings || config2.dateStrings;
-        const unsigned = field.flags & FieldFlags.UNSIGNED;
-        if (field.extendedFormat === "json") {
-          return config2.jsonStrings ? packet.readLengthCodedString(field.encoding) : packet.parseJson(field.encoding, supportBigNumbers);
+        const unsigned = field2.flags & FieldFlags.UNSIGNED;
+        if (field2.extendedFormat === "json") {
+          return config2.jsonStrings ? packet.readLengthCodedString(field2.encoding) : packet.parseJson(field2.encoding, supportBigNumbers);
         }
-        switch (field.columnType) {
+        switch (field2.columnType) {
           case Types.TINY:
             return unsigned ? packet.readInt8() : packet.readSInt8();
           case Types.SHORT:
@@ -77224,10 +77251,10 @@ var require_static_binary_parser = __commonJS({
           case Types.DATETIME:
           case Types.TIMESTAMP:
           case Types.NEWDATE:
-            return helpers.typeMatch(field.columnType, dateStrings, Types) ? packet.readDateTimeString(
-              parseInt(field.decimals, 10),
+            return helpers.typeMatch(field2.columnType, dateStrings, Types) ? packet.readDateTimeString(
+              parseInt(field2.decimals, 10),
               null,
-              field.columnType
+              field2.columnType
             ) : packet.readDateTime(timezone);
           case Types.TIME:
             return packet.readTimeString();
@@ -77245,18 +77272,18 @@ var require_static_binary_parser = __commonJS({
               return unsigned ? packet.readInt64JSNumber() : packet.readSInt64JSNumber();
             return bigNumberStrings ? unsigned ? packet.readInt64String() : packet.readSInt64String() : unsigned ? packet.readInt64() : packet.readSInt64();
           default:
-            return field.characterSet === Charsets.BINARY ? packet.readLengthCodedBuffer() : packet.readLengthCodedString(fields[fieldNum].encoding);
+            return field2.characterSet === Charsets.BINARY ? packet.readLengthCodedBuffer() : packet.readLengthCodedString(fields[fieldNum].encoding);
         }
       }
-      function wrapNull(field) {
+      function wrapNull(field2) {
         return {
-          type: typeNames[field.columnType],
-          extendedTypeName: field.extendedTypeName,
-          extendedFormat: field.extendedFormat,
-          length: field.columnLength,
-          db: field.schema,
-          table: field.table,
-          name: field.name,
+          type: typeNames[field2.columnType],
+          extendedTypeName: field2.extendedTypeName,
+          extendedFormat: field2.extendedFormat,
+          length: field2.columnLength,
+          db: field2.schema,
+          table: field2.table,
+          name: field2.name,
           string: function() {
             return null;
           },
@@ -77282,28 +77309,28 @@ var require_static_binary_parser = __commonJS({
           let currentFieldNullBit = 4;
           let nullByteIndex = 0;
           for (let i = 0; i < fields2.length; i++) {
-            const field = fields2[i];
+            const field2 = fields2[i];
             const typeCast = options.typeCast !== void 0 ? options.typeCast : config.typeCast;
-            let value;
+            let value2;
             if (nullBitmaskBytes[nullByteIndex] & currentFieldNullBit) {
-              value = typeof typeCast === "function" ? typeCast(wrapNull(field), () => null) : null;
+              value2 = typeof typeCast === "function" ? typeCast(wrapNull(field2), () => null) : null;
             } else if (options.typeCast === false) {
-              value = packet.readLengthCodedBuffer();
+              value2 = packet.readLengthCodedBuffer();
             } else {
-              const next = () => readCode(field, config, options, i, packet);
-              value = typeof typeCast === "function" ? typeCast(
+              const next = () => readCode(field2, config, options, i, packet);
+              value2 = typeof typeCast === "function" ? typeCast(
                 {
-                  type: typeNames[field.columnType],
-                  extendedTypeName: field.extendedTypeName,
-                  extendedFormat: field.extendedFormat,
-                  length: field.columnLength,
-                  db: field.schema,
-                  table: field.table,
-                  name: field.name,
-                  string: function(encoding = field.encoding) {
-                    if (field.columnType === Types.JSON && encoding === field.encoding) {
+                  type: typeNames[field2.columnType],
+                  extendedTypeName: field2.extendedTypeName,
+                  extendedFormat: field2.extendedFormat,
+                  length: field2.columnLength,
+                  db: field2.schema,
+                  table: field2.table,
+                  name: field2.name,
+                  string: function(encoding = field2.encoding) {
+                    if (field2.columnType === Types.JSON && encoding === field2.encoding) {
                       console.warn(
-                        `typeCast: JSON column "${field.name}" is interpreted as BINARY by default, recommended to manually set utf8 encoding: \`field.string("utf8")\``
+                        `typeCast: JSON column "${field2.name}" is interpreted as BINARY by default, recommended to manually set utf8 encoding: \`field.string("utf8")\``
                       );
                     }
                     if ([
@@ -77311,20 +77338,20 @@ var require_static_binary_parser = __commonJS({
                       Types.NEWDATE,
                       Types.TIMESTAMP,
                       Types.DATE
-                    ].includes(field.columnType)) {
+                    ].includes(field2.columnType)) {
                       return packet.readDateTimeString(
-                        parseInt(field.decimals, 10),
+                        parseInt(field2.decimals, 10),
                         " ",
-                        field.columnType
+                        field2.columnType
                       );
                     }
-                    if (field.columnType === Types.TINY) {
-                      const unsigned = field.flags & FieldFlags.UNSIGNED;
+                    if (field2.columnType === Types.TINY) {
+                      const unsigned = field2.flags & FieldFlags.UNSIGNED;
                       return String(
                         unsigned ? packet.readInt8() : packet.readSInt8()
                       );
                     }
-                    if (field.columnType === Types.TIME) {
+                    if (field2.columnType === Types.TIME) {
                       return packet.readTimeString();
                     }
                     return packet.readLengthCodedString(encoding);
@@ -77340,23 +77367,23 @@ var require_static_binary_parser = __commonJS({
               ) : next();
             }
             if (options.rowsAsArray) {
-              result[i] = value;
+              result[i] = value2;
             } else if (typeof options.nestTables === "string") {
               const key = helpers.fieldEscape(
-                field.table + options.nestTables + field.name,
+                field2.table + options.nestTables + field2.name,
                 false
               );
-              result[key] = value;
+              result[key] = value2;
             } else if (options.nestTables === true) {
-              const tableName = helpers.fieldEscape(field.table, false);
+              const tableName = helpers.fieldEscape(field2.table, false);
               if (!result[tableName]) {
                 result[tableName] = {};
               }
-              const fieldName = helpers.fieldEscape(field.name, false);
-              result[tableName][fieldName] = value;
+              const fieldName = helpers.fieldEscape(field2.name, false);
+              result[tableName][fieldName] = value2;
             } else {
-              const key = helpers.fieldEscape(field.name, false);
-              result[key] = value;
+              const key = helpers.fieldEscape(field2.name, false);
+              result[key] = value2;
             }
             currentFieldNullBit *= 2;
             if (currentFieldNullBit === 256) {
@@ -77451,13 +77478,13 @@ var require_execute2 = __commonJS({
       }
       readField(packet, connection) {
         let fields;
-        const field = new Packets.ColumnDefinition(
+        const field2 = new Packets.ColumnDefinition(
           packet,
           connection.clientEncoding,
           connection._mariadbExtendedMetadata
         );
         this._receivedFieldsCount++;
-        this._fields[this._resultIndex].push(field);
+        this._fields[this._resultIndex].push(field2);
         if (this._receivedFieldsCount === this._fieldCount) {
           fields = this._fields[this._resultIndex];
           this.emit("fields", fields, this._resultIndex);
@@ -77966,8 +77993,8 @@ var require_reset_connection2 = __commonJS({
         this.onResult = callback;
       }
       start(packet, connection) {
-        const req = new Packets.ResetConnection();
-        connection.writePacket(req.toPacket());
+        const req2 = new Packets.ResetConnection();
+        connection.writePacket(req2.toPacket());
         return _ResetConnection.prototype.resetConnectionResponse;
       }
       resetConnectionResponse(packet, connection) {
@@ -78868,11 +78895,11 @@ var require_connection = __commonJS({
           this.config.timezone
         );
       }
-      escape(value) {
-        return SqlString.escape(value, false, this.config.timezone);
+      escape(value2) {
+        return SqlString.escape(value2, false, this.config.timezone);
       }
-      escapeId(value) {
-        return SqlString.escapeId(value, false);
+      escapeId(value2) {
+        return SqlString.escapeId(value2, false);
       }
       raw(sql) {
         return SqlString.raw(sql);
@@ -79242,9 +79269,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows2, columns, binary = false) {
+      writeTextResult(rows3, columns, binary = false) {
         this.writeColumns(columns);
-        rows2.forEach((row) => {
+        rows3.forEach((row) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column) => {
             arrayRow.push(row[column.name]);
@@ -79354,12 +79381,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve, reject, stackHolder) {
-      return function(err, rows2, fields) {
+      return function(err, rows3, fields) {
         if (err) {
           applyCapturedStack(err, stackHolder);
           reject(err);
         } else {
-          resolve([rows2, fields]);
+          resolve([rows3, fields]);
         }
       };
     }
@@ -79767,11 +79794,11 @@ var require_pool = __commonJS({
       }
       return err.errno === Errors.ER_OPTION_PREVENTS_STATEMENT || err.errno === Errors.ER_CANT_EXECUTE_IN_READ_ONLY_TRANSACTION || err.errno === Errors.ER_READ_ONLY_MODE;
     }
-    function spliceConnection(queue, connection) {
-      const len = queue.length;
+    function spliceConnection(queue2, connection) {
+      const len = queue2.length;
       for (let i = 0; i < len; i++) {
-        if (queue.get(i) === connection) {
-          queue.removeOne(i);
+        if (queue2.get(i) === connection) {
+          queue2.removeOne(i);
           break;
         }
       }
@@ -79967,9 +79994,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err2, rows2, fields) {
+              cmdQuery.onResult = function(err2, rows3, fields) {
                 queryError = err2 || null;
-                origOnResult(err2, rows2, fields);
+                origOnResult(err2, rows3, fields);
               };
             } else {
               cmdQuery.once("error", (err2) => {
@@ -79983,12 +80010,12 @@ var require_pool = __commonJS({
                 conn.release();
               }
             });
-          } catch (e) {
+          } catch (e2) {
             conn.release();
             if (typeof cmdQuery.onResult === "function") {
-              cmdQuery.onResult(e);
+              cmdQuery.onResult(e2);
             } else {
-              cmdQuery.emit("error", e);
+              cmdQuery.emit("error", e2);
             }
           }
         });
@@ -80004,17 +80031,17 @@ var require_pool = __commonJS({
             return cb(err);
           }
           try {
-            conn.execute(sql, values, (err2, rows2, fields) => {
+            conn.execute(sql, values, (err2, rows3, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
-              cb(err2, rows2, fields);
+              cb(err2, rows3, fields);
             }).once("end", () => {
               conn.release();
             });
-          } catch (e) {
+          } catch (e2) {
             conn.release();
-            return cb(e);
+            return cb(e2);
           }
         });
       }
@@ -80049,15 +80076,15 @@ var require_pool = __commonJS({
           this.config.connectionConfig.timezone
         );
       }
-      escape(value) {
+      escape(value2) {
         return SqlString.escape(
-          value,
+          value2,
           this.config.connectionConfig.stringifyObjects,
           this.config.connectionConfig.timezone
         );
       }
-      escapeId(value) {
-        return SqlString.escapeId(value, false);
+      escapeId(value2) {
+        return SqlString.escapeId(value2, false);
       }
     };
     module.exports = BasePool;
@@ -80300,9 +80327,9 @@ var require_pool_cluster = __commonJS({
             conn.query(query).once("end", () => {
               conn.release();
             });
-          } catch (e) {
+          } catch (e2) {
             conn.release();
-            throw e;
+            throw e2;
           }
         });
         return query;
@@ -80326,9 +80353,9 @@ var require_pool_cluster = __commonJS({
             conn.execute(sql, values, cb).once("end", () => {
               conn.release();
             });
-          } catch (e) {
+          } catch (e2) {
             conn.release();
-            throw e;
+            throw e2;
           }
         });
       }
@@ -80833,8 +80860,8 @@ async function openConnection(env = process.env) {
   });
 }
 function firstRow(result) {
-  const rows2 = result[0];
-  return Array.isArray(rows2) ? rows2[0] : void 0;
+  const rows3 = result[0];
+  return Array.isArray(rows3) ? rows3[0] : void 0;
 }
 async function count(conn, sql, params) {
   const row = firstRow(await conn.query(sql, params));
@@ -80863,8 +80890,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows2] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows2) ? rows2.map((r) => String(r.name)) : [];
+  const [rows3] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows3) ? rows3.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -80883,7 +80910,12 @@ async function getSchemaStatus(conn) {
     missing: EXPECTED_TABLES2.filter((t) => !presentSet.has(t.toLowerCase()))
   };
 }
-async function applySchema(conn, statements = ALL_STATEMENTS) {
+function applySchema(conn, statements = ALL_STATEMENTS) {
+  const run = queue.then(() => applySchemaNow(conn, statements));
+  queue = run.catch(() => void 0);
+  return run;
+}
+async function applySchemaNow(conn, statements = ALL_STATEMENTS) {
   const info = await serverInfo(conn);
   const beforeTables = (await listTables(conn)).length;
   const results = [];
@@ -80897,11 +80929,15 @@ async function applySchema(conn, statements = ALL_STATEMENTS) {
       await conn.query(statement.sql);
       results.push({ ...base, status: "applied" });
     } catch (err) {
-      const e = err;
+      const e2 = err;
+      if (e2.code && ALREADY_APPLIED.has(e2.code)) {
+        results.push({ ...base, status: "skipped" });
+        continue;
+      }
       results.push({
         ...base,
         status: "failed",
-        error: { code: e.code ?? "UNKNOWN", message: e.sqlMessage ?? e.message ?? "Error desconocido" }
+        error: { code: e2.code ?? "UNKNOWN", message: e2.sqlMessage ?? e2.message ?? "Error desconocido" }
       });
       break;
     }
@@ -80917,7 +80953,7 @@ async function applySchema(conn, statements = ALL_STATEMENTS) {
     results
   };
 }
-var ALL_STATEMENTS, EXPECTED_TABLES2, DB_ENV, tableExists, columnExists, indexExists, foreignKeyExists;
+var ALL_STATEMENTS, EXPECTED_TABLES2, DB_ENV, tableExists, columnExists, indexExists, foreignKeyExists, ALREADY_APPLIED, queue;
 var init_apply = __esm({
   "packages/api/dist/infrastructure/schema-setup/apply.js"() {
     "use strict";
@@ -80930,21 +80966,23 @@ var init_apply = __esm({
     columnExists = (conn, table, column) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ?", [table, column]);
     indexExists = (conn, table, index) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.statistics WHERE table_schema = DATABASE() AND table_name = ? AND index_name = ?", [table, index]);
     foreignKeyExists = (conn, table, constraint) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.table_constraints WHERE table_schema = DATABASE() AND table_name = ? AND constraint_name = ? AND constraint_type = 'FOREIGN KEY'", [table, constraint]);
+    ALREADY_APPLIED = /* @__PURE__ */ new Set(["ER_DUP_FIELDNAME", "ER_DUP_KEYNAME", "ER_TABLE_EXISTS_ERROR", "ER_FK_DUP_NAME", "ER_MULTIPLE_PRI_KEY"]);
+    queue = Promise.resolve();
   }
 });
 
 // packages/api/dist/infrastructure/settings/settings-store.js
 function cachedSetting(store, name, ttlMs = 6e4) {
-  let value = null;
+  let value2 = null;
   let loadedAt = 0;
   let pending = null;
   return {
     get() {
       if (loadedAt > 0 && Date.now() - loadedAt < ttlMs)
-        return Promise.resolve(value);
+        return Promise.resolve(value2);
       if (!pending) {
         pending = store.get(name).catch(() => null).then((v) => {
-          value = v;
+          value2 = v;
           loadedAt = Date.now();
           pending = null;
           return v;
@@ -80982,14 +81020,14 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows2] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row = Array.isArray(rows2) ? rows2[0] : void 0;
+          const [rows3] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row = Array.isArray(rows3) ? rows3[0] : void 0;
           return row?.value === void 0 || row.value === null ? null : String(row.value);
         });
       }
-      set(name, value, updatedBy) {
+      set(name, value2, updatedBy) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `AppSetting` (`name`, `value`, `updatedBy`, `updatedAt`) VALUES (?, ?, ?, CURRENT_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updatedBy` = VALUES(`updatedBy`), `updatedAt` = CURRENT_TIMESTAMP(3)", [name, value, updatedBy]);
+          await conn.query("INSERT INTO `AppSetting` (`name`, `value`, `updatedBy`, `updatedAt`) VALUES (?, ?, ?, CURRENT_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updatedBy` = VALUES(`updatedBy`), `updatedAt` = CURRENT_TIMESTAMP(3)", [name, value2, updatedBy]);
         });
       }
       remove(name) {
@@ -81248,18 +81286,18 @@ function signSessionCookie(sessionId, secret) {
   const signature = createHmac2("sha256", secret).update(sessionId).digest("base64url");
   return `${sessionId}.${signature}`;
 }
-function verifySessionCookie(value, secret) {
-  if (!value)
+function verifySessionCookie(value2, secret) {
+  if (!value2)
     return null;
-  const [sessionId, signature, extra] = value.split(".");
+  const [sessionId, signature, extra] = value2.split(".");
   if (!sessionId || !signature || extra !== void 0)
     return null;
   const expected = createHmac2("sha256", secret).update(sessionId).digest("base64url");
   return safeEqual(signature, expected) ? sessionId : null;
 }
-function buildSessionSetCookie(value, maxAgeSeconds = 12 * 60 * 60) {
+function buildSessionSetCookie(value2, maxAgeSeconds = 12 * 60 * 60) {
   const secure = allowInsecureAdminCookies() ? "" : " Secure;";
-  return `${SESSION_COOKIE}=${value}; HttpOnly;${secure} SameSite=Strict; Path=/admin; Max-Age=${maxAgeSeconds}`;
+  return `${SESSION_COOKIE}=${value2}; HttpOnly;${secure} SameSite=Strict; Path=/admin; Max-Age=${maxAgeSeconds}`;
 }
 function buildSessionClearCookie() {
   const secure = allowInsecureAdminCookies() ? "" : " Secure;";
@@ -81274,9 +81312,9 @@ function parseCookies(header) {
     if (index < 0)
       continue;
     const key = part.slice(0, index).trim();
-    const value = part.slice(index + 1).trim();
+    const value2 = part.slice(index + 1).trim();
     if (key)
-      out[key] = value;
+      out[key] = value2;
   }
   return out;
 }
@@ -81363,34 +81401,34 @@ function otpauthUri(email, secret, issuer = "AutoMantPro") {
 function base32Encode(input) {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
   let bits = 0;
-  let value = 0;
+  let value2 = 0;
   let output = "";
   for (const byte of input) {
-    value = value << 8 | byte;
+    value2 = value2 << 8 | byte;
     bits += 8;
     while (bits >= 5) {
-      output += alphabet[value >>> bits - 5 & 31];
+      output += alphabet[value2 >>> bits - 5 & 31];
       bits -= 5;
     }
   }
   if (bits > 0)
-    output += alphabet[value << 5 - bits & 31];
+    output += alphabet[value2 << 5 - bits & 31];
   return output;
 }
 function base32Decode(input) {
   const clean = input.toUpperCase().replace(/[\s=]/g, "");
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
   let bits = 0;
-  let value = 0;
+  let value2 = 0;
   const output = [];
   for (const char of clean) {
     const index = alphabet.indexOf(char);
     if (index < 0)
       throw new Error("Invalid base32 secret");
-    value = value << 5 | index;
+    value2 = value2 << 5 | index;
     bits += 5;
     if (bits >= 8) {
-      output.push(value >>> bits - 8 & 255);
+      output.push(value2 >>> bits - 8 & 255);
       bits -= 8;
     }
   }
@@ -81420,8 +81458,8 @@ __export(setup_exports, {
   tokenMatches: () => tokenMatches
 });
 import { createHash, timingSafeEqual as timingSafeEqual3 } from "node:crypto";
-function digest(value) {
-  return createHash("sha256").update(value).digest();
+function digest(value2) {
+  return createHash("sha256").update(value2).digest();
 }
 function tokenMatches(provided, expected) {
   if (typeof provided !== "string" || provided.length === 0)
@@ -81467,8 +81505,8 @@ async function setupRoutes(app2, options = {}) {
     try {
       conn = await connect();
     } catch (err) {
-      const e = err;
-      return reply.code(502).send({ error: "No se pudo conectar a la base de datos", code: e.code ?? "UNKNOWN" });
+      const e2 = err;
+      return reply.code(502).send({ error: "No se pudo conectar a la base de datos", code: e2.code ?? "UNKNOWN" });
     }
     try {
       return reply.send(await work(conn));
@@ -81508,11 +81546,11 @@ async function setupRoutes(app2, options = {}) {
         aviso: "Registra este c\xF3digo en tu app de autenticaci\xF3n ahora: no se volver\xE1 a mostrar."
       });
     } catch (err) {
-      const e = err;
+      const e2 = err;
       return reply.code(502).send({
         error: "No se pudo crear la cuenta de administrador",
-        code: e.code ?? "UNKNOWN",
-        detalle: e.sqlMessage ?? null
+        code: e2.code ?? "UNKNOWN",
+        detalle: e2.sqlMessage ?? null
       });
     }
   });
@@ -81541,7 +81579,7 @@ var init_setup = __esm({
 function layout(input) {
   const nonce = escapeHtml(input.nonce);
   const header = input.nav ? `<header><div class="brand">Auto<span>Mant</span>Pro \xB7 Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
+  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>` : "";
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>${escapeHtml(input.title)} \xB7 AutoMantPro Admin</title>
@@ -81572,13 +81610,17 @@ function kv(record) {
   return entries.map(([k, v]) => `<div>${escapeHtml(k)}: <strong>${v}</strong></div>`).join("");
 }
 function dashboardView(input) {
+  const roleLabels = { dueno: "Due\xF1o", taller: "Taller", almacen: "Almac\xE9n" };
+  const recentList = input.recent && input.recent.length > 0 ? input.recent.map((r) => `<div><a href="/admin/users/${escapeHtml(String(r.id))}">${escapeHtml(String(r.name ?? "\u2014"))}</a> <span class="muted">\xB7 ${escapeHtml(roleLabels[String(r.role)] ?? String(r.role ?? ""))}</span></div>`).join("") : `<p class="muted">${input.recent ? "A\xFAn no hay registros" : "Sin datos"}</p>`;
+  const registros = `<div class="card"><h2>Verificaciones pendientes</h2><div class="big">${input.pendingVerifications ?? "\u2014"}</div><p><a href="/admin/verifications">Revisar talleres y almacenes</a></p></div>
+  <div class="card"><h2>Registros recientes</h2>${recentList}<p><a class="button" href="/admin/users/new">+ Nuevo registro</a></p></div>`;
   const salud = `<div class="card"><h2>Salud</h2>
     <div>Versi\xF3n: <strong>${escapeHtml(input.version)}</strong></div>
     <div>Activo hace: <strong>${Math.floor(input.uptimeSeconds / 60)} min</strong></div>
     <div>Base de datos: <strong>${input.data ? "conectada" : "no conectada"}</strong></div>
     ${input.dbError ? `<div class="muted">${escapeHtml(input.dbError)}</div>` : ""}</div>`;
   if (!input.data) {
-    return `<h1>Tablero</h1><div class="grid">${salud}</div>`;
+    return `<h1>Tablero</h1><div class="grid">${registros}${salud}</div>`;
   }
   const d = input.data;
   const totalUsers = Object.values(d.usersByRole).reduce((a, b) => a + b, 0);
@@ -81586,14 +81628,14 @@ function dashboardView(input) {
   <div class="card"><h2>Operaci\xF3n</h2><div>Turnos hoy: <strong>${d.appointmentsToday}</strong></div><div>Turnos pendientes: <strong>${d.appointmentsPending}</strong></div><div>Conversaciones: <strong>${d.conversations}</strong></div><div>Mensajes 24 h: <strong>${d.messages24h}</strong></div></div>
   <div class="card"><h2>Crecimiento</h2><div class="big">${totalUsers}</div><div class="muted">usuarios</div>${kv(d.usersByRole)}<div>Veh\xEDculos: <strong>${d.vehicles}</strong></div><div>Almacenes: <strong>${d.stores}</strong></div></div>
   <div class="card"><h2>Talleres por verificaci\xF3n</h2>${kv(d.shopsByStatus)}</div>
-  ${salud}</div>`;
+  ${registros}${salud}</div>`;
 }
-function cell(value) {
-  if (value instanceof Date)
-    return escapeHtml(value.toISOString().replace("T", " ").slice(0, 16));
-  if (value === null || value === void 0)
+function cell(value2) {
+  if (value2 instanceof Date)
+    return escapeHtml(value2.toISOString().replace("T", " ").slice(0, 16));
+  if (value2 === null || value2 === void 0)
     return `<span class="muted">\u2014</span>`;
-  return escapeHtml(String(value));
+  return escapeHtml(String(value2));
 }
 function tableView(title, base, page, columns) {
   const head = columns.map(([, label]) => `<th>${escapeHtml(label)}</th>`).join("");
@@ -81630,6 +81672,14 @@ button{min-height:44px;padding:8px 16px;border:0;border-radius:10px;background:v
 .ok{color:var(--green);font-weight:600}.stack{display:grid;gap:12px;max-width:560px;margin:0 auto}
 .qr{background:#fff;padding:10px;border-radius:12px;display:inline-block;line-height:0}.qr svg{width:220px;height:220px;max-width:100%}
 code{word-break:break-all;font-size:15px}a{color:var(--cyan)}
+select,textarea{width:100%;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font:inherit;font-size:16px}
+textarea[readonly]{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}
+.wide{max-width:900px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row input{flex:1;min-width:180px}.between{justify-content:space-between}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px;margin:8px 0}.checks label{display:flex;gap:8px;align-items:center;font-weight:400;margin:0}
+input[type=checkbox]{width:auto;min-height:0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs a{padding:8px 14px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--text)}.tabs a.active{background:var(--cyan);border-color:var(--cyan);color:#fff}
+a.button{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--green);color:#fff;font-weight:700;text-decoration:none}
+button.danger{background:var(--red)}
 `;
   }
 });
@@ -81754,13 +81804,13 @@ var require_error_correction_level = __commonJS({
     exports.isValid = function isValid2(level) {
       return level && typeof level.bit !== "undefined" && level.bit >= 0 && level.bit < 4;
     };
-    exports.from = function from(value, defaultValue) {
-      if (exports.isValid(value)) {
-        return value;
+    exports.from = function from(value2, defaultValue) {
+      if (exports.isValid(value2)) {
+        return value2;
       }
       try {
-        return fromString(value);
-      } catch (e) {
+        return fromString(value2);
+      } catch (e2) {
         return defaultValue;
       }
     };
@@ -81813,16 +81863,16 @@ var require_bit_matrix = __commonJS({
       this.data = new Uint8Array(size * size);
       this.reservedBit = new Uint8Array(size * size);
     }
-    BitMatrix.prototype.set = function(row, col, value, reserved) {
+    BitMatrix.prototype.set = function(row, col, value2, reserved) {
       const index = row * this.size + col;
-      this.data[index] = value;
+      this.data[index] = value2;
       if (reserved) this.reservedBit[index] = true;
     };
     BitMatrix.prototype.get = function(row, col) {
       return this.data[row * this.size + col];
     };
-    BitMatrix.prototype.xor = function(row, col, value) {
-      this.data[row * this.size + col] ^= value;
+    BitMatrix.prototype.xor = function(row, col, value2) {
+      this.data[row * this.size + col] ^= value2;
     };
     BitMatrix.prototype.isReserved = function(row, col) {
       return this.reservedBit[row * this.size + col];
@@ -81907,8 +81957,8 @@ var require_mask_pattern = __commonJS({
     exports.isValid = function isValid2(mask) {
       return mask != null && mask !== "" && !isNaN(mask) && mask >= 0 && mask <= 7;
     };
-    exports.from = function from(value) {
-      return exports.isValid(value) ? parseInt(value, 10) : void 0;
+    exports.from = function from(value2) {
+      return exports.isValid(value2) ? parseInt(value2, 10) : void 0;
     };
     exports.getPenaltyN1 = function getPenaltyN1(data) {
       const size = data.size;
@@ -82594,13 +82644,13 @@ var require_mode = __commonJS({
           throw new Error("Unknown mode: " + string);
       }
     }
-    exports.from = function from(value, defaultValue) {
-      if (exports.isValid(value)) {
-        return value;
+    exports.from = function from(value2, defaultValue) {
+      if (exports.isValid(value2)) {
+        return value2;
       }
       try {
-        return fromString(value);
-      } catch (e) {
+        return fromString(value2);
+      } catch (e2) {
         return defaultValue;
       }
     };
@@ -82645,9 +82695,9 @@ var require_version = __commonJS({
       }
       return void 0;
     }
-    exports.from = function from(value, defaultValue) {
-      if (VersionCheck.isValid(value)) {
-        return parseInt(value, 10);
+    exports.from = function from(value2, defaultValue) {
+      if (VersionCheck.isValid(value2)) {
+        return parseInt(value2, 10);
       }
       return defaultValue;
     };
@@ -82738,17 +82788,17 @@ var require_numeric_data = __commonJS({
       return NumericData.getBitsLength(this.data.length);
     };
     NumericData.prototype.write = function write(bitBuffer) {
-      let i, group, value;
+      let i, group, value2;
       for (i = 0; i + 3 <= this.data.length; i += 3) {
         group = this.data.substr(i, 3);
-        value = parseInt(group, 10);
-        bitBuffer.put(value, 10);
+        value2 = parseInt(group, 10);
+        bitBuffer.put(value2, 10);
       }
       const remainingNum = this.data.length - i;
       if (remainingNum > 0) {
         group = this.data.substr(i);
-        value = parseInt(group, 10);
-        bitBuffer.put(value, remainingNum * 3 + 1);
+        value2 = parseInt(group, 10);
+        bitBuffer.put(value2, remainingNum * 3 + 1);
       }
     };
     module.exports = NumericData;
@@ -82822,9 +82872,9 @@ var require_alphanumeric_data = __commonJS({
     AlphanumericData.prototype.write = function write(bitBuffer) {
       let i;
       for (i = 0; i + 2 <= this.data.length; i += 2) {
-        let value = ALPHA_NUM_CHARS.indexOf(this.data[i]) * 45;
-        value += ALPHA_NUM_CHARS.indexOf(this.data[i + 1]);
-        bitBuffer.put(value, 11);
+        let value2 = ALPHA_NUM_CHARS.indexOf(this.data[i]) * 45;
+        value2 += ALPHA_NUM_CHARS.indexOf(this.data[i + 1]);
+        bitBuffer.put(value2, 11);
       }
       if (this.data.length % 2) {
         bitBuffer.put(ALPHA_NUM_CHARS.indexOf(this.data[i]), 6);
@@ -82885,18 +82935,18 @@ var require_kanji_data = __commonJS({
     KanjiData.prototype.write = function(bitBuffer) {
       let i;
       for (i = 0; i < this.data.length; i++) {
-        let value = Utils.toSJIS(this.data[i]);
-        if (value >= 33088 && value <= 40956) {
-          value -= 33088;
-        } else if (value >= 57408 && value <= 60351) {
-          value -= 49472;
+        let value2 = Utils.toSJIS(this.data[i]);
+        if (value2 >= 33088 && value2 <= 40956) {
+          value2 -= 33088;
+        } else if (value2 >= 57408 && value2 <= 60351) {
+          value2 -= 49472;
         } else {
           throw new Error(
             "Invalid SJIS character: " + this.data[i] + "\nMake sure your charset is UTF-8"
           );
         }
-        value = (value >>> 8 & 255) * 192 + (value & 255);
-        bitBuffer.put(value, 13);
+        value2 = (value2 >>> 8 & 255) * 192 + (value2 & 255);
+        bitBuffer.put(value2, 13);
       }
     };
     module.exports = KanjiData;
@@ -82982,8 +83032,8 @@ var require_dijkstra = __commonJS({
          * Add a new item to the queue and ensure the highest priority element
          * is at the front of the queue.
          */
-        push: function(value, cost) {
-          var item = { value, cost };
+        push: function(value2, cost) {
+          var item = { value: value2, cost };
           this.queue.push(item);
           this.queue.sort(this.sorter);
         },
@@ -83228,9 +83278,9 @@ var require_qrcode = __commonJS({
     function setupTimingPattern(matrix) {
       const size = matrix.size;
       for (let r = 8; r < size - 8; r++) {
-        const value = r % 2 === 0;
-        matrix.set(r, 6, value, true);
-        matrix.set(6, r, value, true);
+        const value2 = r % 2 === 0;
+        matrix.set(r, 6, value2, true);
+        matrix.set(6, r, value2, true);
       }
     }
     function setupAlignmentPattern(matrix, version) {
@@ -85932,7 +85982,7 @@ var require_canvas = __commonJS({
     function getCanvasElement() {
       try {
         return document.createElement("canvas");
-      } catch (e) {
+      } catch (e2) {
         throw new Error("You need to specify a canvas element");
       }
     }
@@ -86019,16 +86069,16 @@ var require_browser = __commonJS({
           try {
             const data = QRCode2.create(text, opts);
             resolve(renderFunc(data, canvas, opts));
-          } catch (e) {
-            reject(e);
+          } catch (e2) {
+            reject(e2);
           }
         });
       }
       try {
         const data = QRCode2.create(text, opts);
         cb(null, renderFunc(data, canvas, opts));
-      } catch (e) {
-        cb(e);
+      } catch (e2) {
+        cb(e2);
       }
     }
     exports.create = QRCode2.create;
@@ -86105,16 +86155,16 @@ var require_server2 = __commonJS({
             return renderFunc(data, params.opts, function(err, data2) {
               return err ? reject(err) : resolve(data2);
             });
-          } catch (e) {
-            reject(e);
+          } catch (e2) {
+            reject(e2);
           }
         });
       }
       try {
         const data = QRCode2.create(text, params.opts);
         return renderFunc(data, params.opts, params.cb);
-      } catch (e) {
-        params.cb(e);
+      } catch (e2) {
+        params.cb(e2);
       }
     }
     exports.create = QRCode2.create;
@@ -86255,9 +86305,9 @@ async function adminCount(store) {
     return err.code === "ER_NO_SUCH_TABLE" ? 0 : null;
   }
 }
-function setupCookie(value, maxAgeSeconds) {
+function setupCookie(value2, maxAgeSeconds) {
   const secure = allowInsecureAdminCookies() ? "" : " Secure;";
-  return `${SETUP_COOKIE}=${value}; HttpOnly;${secure} SameSite=Strict; Path=/admin; Max-Age=${maxAgeSeconds}`;
+  return `${SETUP_COOKIE}=${value2}; HttpOnly;${secure} SameSite=Strict; Path=/admin; Max-Age=${maxAgeSeconds}`;
 }
 function registerSetupWizard(app2, deps) {
   const { store } = deps;
@@ -86391,8 +86441,8 @@ function registerSetupWizard(app2, deps) {
     try {
       userId = await store.upsertAdmin({ email, name, passwordHash, totpSecret: secret, phone: `admin:${email}` });
     } catch (err) {
-      const e = err;
-      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e.code ?? "error"}${e.sqlMessage ? `: ${e.sqlMessage}` : ""}).` };
+      const e2 = err;
+      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e2.code ?? "error"}${e2.sqlMessage ? `: ${e2.sqlMessage}` : ""}).` };
       return back(reply);
     }
     recordLoginAttempt("setup", request.ip, true);
@@ -86710,28 +86760,2559 @@ var init_settings = __esm({
   }
 });
 
+// packages/api/dist/domain/maintenance/types.js
+var init_types2 = __esm({
+  "packages/api/dist/domain/maintenance/types.js"() {
+    "use strict";
+  }
+});
+
+// packages/api/dist/domain/maintenance/schemas.js
+var vehicleClassSchema, fuelSchema, vehicleClassesSchema, appliesToSchema, subserviceSchema, categorySchema, serviceTaxonomySchema, maintenanceRuleSchema, maintenanceRulesSchema;
+var init_schemas = __esm({
+  "packages/api/dist/domain/maintenance/schemas.js"() {
+    "use strict";
+    init_zod();
+    vehicleClassSchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1),
+      subtypes: external_exports.array(external_exports.string()).default([])
+    });
+    fuelSchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1)
+    });
+    vehicleClassesSchema = external_exports.object({
+      version: external_exports.string(),
+      source: external_exports.string(),
+      generatedAt: external_exports.string().optional(),
+      note: external_exports.string().optional(),
+      classes: external_exports.array(vehicleClassSchema).min(1),
+      fuels: external_exports.array(fuelSchema).min(1)
+    });
+    appliesToSchema = external_exports.object({
+      classes: external_exports.array(external_exports.string()).min(1),
+      fuels: external_exports.array(external_exports.string()).min(1)
+    });
+    subserviceSchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1),
+      detail: external_exports.string().optional(),
+      periodic: external_exports.boolean().default(false),
+      appliesTo: appliesToSchema,
+      durationMin: external_exports.number().int().min(1),
+      costRefUsd: external_exports.number().min(0),
+      costNote: external_exports.string().optional()
+    });
+    categorySchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1),
+      order: external_exports.number().int().min(1),
+      subservices: external_exports.array(subserviceSchema).min(1)
+    });
+    serviceTaxonomySchema = external_exports.object({
+      version: external_exports.string(),
+      source: external_exports.string(),
+      generatedAt: external_exports.string().optional(),
+      note: external_exports.string().optional(),
+      categories: external_exports.array(categorySchema)
+    });
+    maintenanceRuleSchema = external_exports.object({
+      serviceId: external_exports.string().min(1),
+      classId: external_exports.array(external_exports.string()).min(1),
+      fuelId: external_exports.array(external_exports.string()).min(1),
+      intervalKm: external_exports.number().int().positive().nullable(),
+      intervalMonths: external_exports.number().int().positive().nullable(),
+      severeFactor: external_exports.number().min(0.5).max(0.8),
+      note: external_exports.string().optional()
+    });
+    maintenanceRulesSchema = external_exports.object({
+      version: external_exports.string(),
+      source: external_exports.string(),
+      generatedAt: external_exports.string().optional(),
+      note: external_exports.string().optional(),
+      rules: external_exports.array(maintenanceRuleSchema)
+    });
+  }
+});
+
+// packages/api/dist/domain/maintenance/vehicle-classes.json
+var vehicle_classes_default;
+var init_vehicle_classes = __esm({
+  "packages/api/dist/domain/maintenance/vehicle-classes.json"() {
+    vehicle_classes_default = {
+      version: "1.0.0",
+      source: "docs/25-diseno-producto-whatsapp-30dias.md \xA71.3 \u2014 clases y combustibles",
+      generatedAt: "2026-09-11",
+      note: "Cat\xE1logo maestro de clases de veh\xEDculo y combustibles. Las clases son las 8 de la cobertura global; 'liviano' agrupa sed\xE1n, hatchback, SUV y pickup (misma l\xF3gica de mantenimiento).",
+      classes: [
+        {
+          id: "motocicleta",
+          name: "Motocicleta / Scooter",
+          subtypes: ["moto", "scooter", "motocicleta", "vespa", "cielo"]
+        },
+        {
+          id: "cuadron",
+          name: "Cuadr\xF3n / ATV",
+          subtypes: ["cuadron", "atv", "cuatrimoto", "quad", "cuv"]
+        },
+        {
+          id: "liviano",
+          name: "Liviano (sed\xE1n, hatchback, SUV, pickup)",
+          subtypes: ["sedan", "sed\xE1n", "hatchback", "suv", "camioneta", "pickup", "auto", "carro", "vehiculo"]
+        },
+        {
+          id: "van",
+          name: "Van / Furgoneta",
+          subtypes: ["van", "furgoneta", "furgon", "panel"]
+        },
+        {
+          id: "comercial_liviano",
+          name: "Comercial liviano",
+          subtypes: ["comercial_liviano", "comercial", "reparto", "furgon"]
+        },
+        {
+          id: "camion",
+          name: "Cami\xF3n mediano / pesado",
+          subtypes: ["camion", "camin", "truck", "cabezal", "volqueta", "carguero"]
+        },
+        {
+          id: "bus",
+          name: "Bus / Buseta",
+          subtypes: ["bus", "buseta", "cooperativa", "colectivo", "transporte_publico"]
+        },
+        {
+          id: "maquinaria_liviana",
+          name: "Maquinaria liviana",
+          subtypes: ["maquinaria", "maquinaria_liviana", "tractor", "retroexcavadora", "montacarga"]
+        }
+      ],
+      fuels: [
+        {
+          id: "gasolina",
+          name: "Gasolina"
+        },
+        {
+          id: "diesel",
+          name: "Di\xE9sel"
+        },
+        {
+          id: "hev",
+          name: "H\xEDbrido (HEV)"
+        },
+        {
+          id: "phev",
+          name: "H\xEDbrido enchufable (PHEV)"
+        },
+        {
+          id: "bev",
+          name: "El\xE9ctrico (BEV)"
+        },
+        {
+          id: "glp_gnv",
+          name: "GLP / GNV (gas)"
+        }
+      ]
+    };
+  }
+});
+
+// packages/api/dist/domain/maintenance/service-taxonomy.json
+var service_taxonomy_default;
+var init_service_taxonomy = __esm({
+  "packages/api/dist/domain/maintenance/service-taxonomy.json"() {
+    service_taxonomy_default = {
+      version: "1.0.0",
+      source: "docs/25-diseno-producto-whatsapp-30dias.md \xA71.3 \u2014 taxonom\xEDa de servicios (22 categor\xEDas)",
+      generatedAt: "2026-09-11",
+      note: "Cat\xE1logo maestro de servicios. 'periodic' indica si el servicio entra en el plan de mantenimiento (tiene intervalo en maintenance-rules.json); los no peri\xF3dicos (carrocer\xEDa, detailing, gr\xFAa\u2026) se solicitan bajo demanda. appliesTo: clases y combustibles a los que aplica ('*' = todas). durationMin y costRefUsd son valores REFERENCIALES conservadores del mercado ecuatoriano (USD), orientativos para el plan; no son presupuesto.",
+      categories: [
+        {
+          id: "prevencion",
+          name: "Mantenimiento preventivo por km",
+          order: 1,
+          subservices: [
+            {
+              id: "prep_inspeccion",
+              name: "Inspecci\xF3n multipunto preventiva",
+              detail: "Revisi\xF3n visual y funcional de los principales sistemas del veh\xEDculo.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 25,
+              costNote: "Referencial; checklist b\xE1sico de 25\u201335 USD seg\xFAn taller."
+            }
+          ]
+        },
+        {
+          id: "lubricacion",
+          name: "Lubricaci\xF3n / aceite",
+          order: 2,
+          subservices: [
+            {
+              id: "aceite_motor",
+              name: "Cambio de aceite y filtro de motor",
+              detail: "Aceite seg\xFAn especificaci\xF3n del fabricante y filtro nuevo.",
+              periodic: true,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 45,
+              costNote: "Referencial; 30\u201370 USD seg\xFAn gama y tipo de aceite. NO aplica a BEV (sin motor de combusti\xF3n)."
+            }
+          ]
+        },
+        {
+          id: "motor",
+          name: "Motor",
+          order: 3,
+          subservices: [
+            {
+              id: "motor_bujias",
+              name: "Cambio de buj\xEDas / kit de encendido",
+              detail: "Buj\xEDas nuevas y prueba del sistema de encendido (no aplica a di\xE9sel ni a BEV).",
+              periodic: true,
+              appliesTo: {
+                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano"],
+                fuels: ["gasolina", "glp_gnv", "hev", "phev"]
+              },
+              durationMin: 90,
+              costRefUsd: 80,
+              costNote: "Referencial por juego; 50\u2013120 USD seg\xFAn motor y n\xFAmero de cilindros."
+            },
+            {
+              id: "motor_filtro_aire",
+              name: "Cambio de filtro de aire",
+              detail: "Reemplazo del elemento filtrante de admisi\xF3n de aire.",
+              periodic: true,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 30,
+              costRefUsd: 18,
+              costNote: "Referencial; 12\u201335 USD seg\xFAn marca. NO aplica a BEV."
+            },
+            {
+              id: "motor_correa",
+              name: "Revisi\xF3n / cambio de correas",
+              detail: "Inspecci\xF3n y cambio de correa(s) de distribuci\xF3n o de accesorios seg\xFAn especificaci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 180,
+              costRefUsd: 250,
+              costNote: "Referencial; 150\u2013400 USD seg\xFAn motor. Cat\xE1logo conservador de manuales t\xEDpicos."
+            }
+          ]
+        },
+        {
+          id: "inyeccion",
+          name: "Inyecci\xF3n / combustible",
+          order: 4,
+          subservices: [
+            {
+              id: "iny_filtro_combustible",
+              name: "Cambio de filtro de combustible",
+              detail: "Reemplazo del filtro de combustible del sistema de inyecci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201360 USD. Los de di\xE9sel suelen cambiarse con mayor frecuencia. NO aplica a BEV."
+            },
+            {
+              id: "iny_limpieza",
+              name: "Limpieza de inyectores / sistema",
+              detail: "Limpieza del sistema de inyecci\xF3n (banco o aditivo de limpieza).",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 90,
+              costRefUsd: 80,
+              costNote: "Referencial; 50\u2013120 USD. NO aplica a BEV."
+            }
+          ]
+        },
+        {
+          id: "refrigeracion",
+          name: "Refrigeraci\xF3n",
+          order: 5,
+          subservices: [
+            {
+              id: "ref_antifreeze",
+              name: "Cambio de refrigerante / anticongelante",
+              detail: "Reemplazo del l\xEDquido refrigerante y revisi\xF3n de fugas.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 45,
+              costNote: "Referencial; 35\u201370 USD. Aplica tambi\xE9n a BEV (refrigeraci\xF3n de bater\xEDa y electr\xF3nica)."
+            },
+            {
+              id: "ref_radiador",
+              name: "Lavado de radiador / sistema",
+              detail: "Lavado del circuito de refrigeraci\xF3n y revisi\xF3n de mangueras.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["*"]
+              },
+              durationMin: 90,
+              costRefUsd: 60,
+              costNote: "Referencial; 40\u201390 USD."
+            }
+          ]
+        },
+        {
+          id: "frenos",
+          name: "Frenos",
+          order: 6,
+          subservices: [
+            {
+              id: "freno_liquido",
+              name: "Cambio de l\xEDquido de frenos",
+              detail: "Sangr\xEDa y reemplazo del l\xEDquido de frenos (car\xE1cter higrosc\xF3pico).",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201355 USD."
+            },
+            {
+              id: "freno_pastillas",
+              name: "Inspecci\xF3n / cambio de pastillas y discos",
+              detail: "Inspecci\xF3n de espesor de pastillas y discos; reposici\xF3n seg\xFAn desgaste.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 90,
+              costNote: "Referencial (juego delantero); 60\u2013160 USD seg\xFAn veh\xEDculo."
+            },
+            {
+              id: "freno_regulacion",
+              name: "Regulaci\xF3n de frenos (moto)",
+              detail: "Ajuste y revisi\xF3n del sistema de frenos de motocicleta / cuadr\xF3n.",
+              periodic: true,
+              appliesTo: { classes: ["motocicleta", "cuadron"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 20,
+              costNote: "Referencial; 15\u201330 USD."
+            }
+          ]
+        },
+        {
+          id: "suspension",
+          name: "Suspensi\xF3n y direcci\xF3n",
+          order: 7,
+          subservices: [
+            {
+              id: "susp_amortiguadores",
+              name: "Revisi\xF3n / cambio de amortiguadores",
+              detail: "Prueba y sustituci\xF3n de amortiguadores y bujes seg\xFAn desgaste.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 90,
+              costRefUsd: 150,
+              costNote: "Referencial por eje; 100\u2013250 USD."
+            },
+            {
+              id: "susp_direccion",
+              name: "Inspecci\xF3n de suspensi\xF3n y direcci\xF3n",
+              detail: "Inspecci\xF3n de terminales, r\xF3tulas, barra y juego de direcci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 45,
+              costRefUsd: 25,
+              costNote: "Referencial; 20\u201340 USD."
+            }
+          ]
+        },
+        {
+          id: "transmision",
+          name: "Transmisi\xF3n / embrague",
+          order: 8,
+          subservices: [
+            {
+              id: "trans_aceite_caja",
+              name: "Cambio de aceite de caja / diferencial",
+              detail: "Reemplazo del lubricante de la caja de cambios y diferencial.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 65,
+              costNote: "Referencial; 45\u2013110 USD. En BEV aplica al lubricante de la transmisi\xF3n de reducci\xF3n."
+            },
+            {
+              id: "trans_filtro_caja",
+              name: "Cambio de filtro de caja autom\xE1tica",
+              detail: "Reemplazo del filtro y servicio de la caja autom\xE1tica.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 120,
+              costRefUsd: 90,
+              costNote: "Referencial; 70\u2013150 USD."
+            },
+            {
+              id: "trans_embrague",
+              name: "Revisi\xF3n de embrague",
+              detail: "Inspecci\xF3n del desgaste del embrague y ajuste seg\xFAn el caso.",
+              periodic: true,
+              appliesTo: {
+                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 40,
+              costNote: "Referencial (revisi\xF3n); 30\u201360 USD. El kit de embrague se cotiza aparte."
+            },
+            {
+              id: "trans_cadena",
+              name: "Ajuste y lubricaci\xF3n de cadena (moto)",
+              detail: "Limpieza, ajuste y lubricaci\xF3n de la cadena de transmisi\xF3n.",
+              periodic: true,
+              appliesTo: { classes: ["motocicleta", "cuadron"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 15,
+              costNote: "Referencial; 10\u201325 USD."
+            }
+          ]
+        },
+        {
+          id: "neumaticos",
+          name: "Neum\xE1ticos / alineaci\xF3n / balanceo",
+          order: 9,
+          subservices: [
+            {
+              id: "llanta_rotacion",
+              name: "Rotaci\xF3n de neum\xE1ticos",
+              detail: "Rotaci\xF3n cruzada de neum\xE1ticos para desgaste parejo.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 45,
+              costRefUsd: 12,
+              costNote: "Referencial; 8\u201320 USD."
+            },
+            {
+              id: "llanta_alineacion",
+              name: "Alineaci\xF3n y balanceo",
+              detail: "Alineaci\xF3n de direcci\xF3n y balanceo de las ruedas.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 60,
+              costRefUsd: 30,
+              costNote: "Referencial; 20\u201345 USD."
+            },
+            {
+              id: "llanta_presion",
+              name: "Revisi\xF3n de presi\xF3n y desgaste",
+              detail: "Control de presi\xF3n de inflado y profundidad del dibujo.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 10,
+              costNote: "Referencial; 5\u201315 USD."
+            },
+            {
+              id: "llanta_cambio",
+              name: "Cambio de neum\xE1ticos",
+              detail: "Sustituci\xF3n de llantas por vida \xFAtil o desgaste.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 150,
+              costNote: "Referencial por juego de 2; el precio var\xEDa por marca y perfil."
+            }
+          ]
+        },
+        {
+          id: "electrico",
+          name: "El\xE9ctrico / bater\xEDa",
+          order: 10,
+          subservices: [
+            {
+              id: "elec_bateria",
+              name: "Prueba y mantenimiento de bater\xEDa",
+              detail: "Prueba de carga, estado de los bornes y mantenimiento de la bater\xEDa de 12 V.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 10,
+              costNote: "Referencial; 5\u201315 USD. Aplica a todos, incluido BEV (bater\xEDa de servicios)."
+            },
+            {
+              id: "elec_alternador",
+              name: "Revisi\xF3n de alternador / sistema de carga",
+              detail: "Comprobaci\xF3n del sistema de carga del veh\xEDculo.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 25,
+              costNote: "Referencial; 20\u201340 USD."
+            },
+            {
+              id: "elec_luces",
+              name: "Revisi\xF3n de luces y se\xF1alizaci\xF3n",
+              detail: "Verificaci\xF3n de luces exteriores, interiores y se\xF1alizaci\xF3n del tablero.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 8,
+              costNote: "Referencial; 5\u201312 USD."
+            }
+          ]
+        },
+        {
+          id: "electronica",
+          name: "Electr\xF3nica / esc\xE1ner",
+          order: 11,
+          subservices: [
+            {
+              id: "escaner_diagnostico",
+              name: "Escaneo electr\xF3nico de c\xF3digos",
+              detail: "Lectura de c\xF3digos de falla y prueba de m\xF3dulos electr\xF3nicos.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 25,
+              costNote: "Referencial; 20\u201340 USD."
+            }
+          ]
+        },
+        {
+          id: "climatizacion",
+          name: "Climatizaci\xF3n",
+          order: 12,
+          subservices: [
+            {
+              id: "clima_filtro_cabina",
+              name: "Cambio de filtro de cabina",
+              detail: "Reemplazo del filtro de habit\xE1culo del aire acondicionado.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 30,
+              costRefUsd: 25,
+              costNote: "Referencial; 18\u201340 USD."
+            },
+            {
+              id: "clima_recarga",
+              name: "Recarga y mantenimiento de A/C",
+              detail: "Recarga de gas refrigerante y revisi\xF3n del circuito de climatizaci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 90,
+              costRefUsd: 80,
+              costNote: "Referencial; 60\u2013120 USD."
+            },
+            {
+              id: "clima_desinfeccion",
+              name: "Desinfecci\xF3n del sistema de climatizaci\xF3n",
+              detail: "Limpieza y desinfecci\xF3n de ductos y evaporador (control de olores).",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 30,
+              costRefUsd: 20,
+              costNote: "Referencial; 15\u201335 USD."
+            }
+          ]
+        },
+        {
+          id: "escape",
+          name: "Escape / emisiones",
+          order: 13,
+          subservices: [
+            {
+              id: "escape_gases",
+              name: "Revisi\xF3n de escape y emisiones",
+              detail: "Inspecci\xF3n del sistema de escape y control de emisiones.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 30,
+              costRefUsd: 15,
+              costNote: "Referencial; 10\u201325 USD. NO aplica a BEV (sin escape)."
+            },
+            {
+              id: "escape_mofle",
+              name: "Cambio de mofle / silenciador",
+              detail: "Sustituci\xF3n del silenciador o tramos del sistema de escape.",
+              periodic: false,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 90,
+              costRefUsd: 120,
+              costNote: "Referencial; 80\u2013200 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "carroceria",
+          name: "Carrocer\xEDa / pintura",
+          order: 14,
+          subservices: [
+            {
+              id: "carro_enderezada",
+              name: "Enderezada y pintura",
+              detail: "Reparaci\xF3n de abolladuras y pintura de paneles.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 240,
+              costRefUsd: 250,
+              costNote: "Referencial por panel; depende de da\xF1o. Bajo demanda."
+            },
+            {
+              id: "carro_anticorrosiva",
+              name: "Protecci\xF3n anticorrosiva",
+              detail: "Tratamiento anticorrosivo de bajos y cavidades.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 60,
+              costNote: "Referencial; 45\u201390 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "vidrios",
+          name: "Vidrios",
+          order: 15,
+          subservices: [
+            {
+              id: "vidrio_parabrisas",
+              name: "Cambio / reparaci\xF3n de parabrisas",
+              detail: "Reparaci\xF3n de fisuras o sustituci\xF3n del parabrisas.",
+              periodic: false,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 60,
+              costRefUsd: 120,
+              costNote: "Referencial; 90\u2013250 USD seg\xFAn veh\xEDculo. Bajo demanda."
+            },
+            {
+              id: "vidrio_limpiadores",
+              name: "Cambio de escobillas / plumillas",
+              detail: "Sustituci\xF3n de las escobillas de limpiaparabrisas.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 15,
+              costRefUsd: 12,
+              costNote: "Referencial; juega por juego de 2."
+            }
+          ]
+        },
+        {
+          id: "interior",
+          name: "Interior / tapicer\xEDa",
+          order: 16,
+          subservices: [
+            {
+              id: "interior_limpieza",
+              name: "Limpieza de tapicer\xEDa y tablero",
+              detail: "Limpieza profunda de asientos, alfombras y tablero.",
+              periodic: false,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["*"]
+              },
+              durationMin: 120,
+              costRefUsd: 45,
+              costNote: "Referencial; 35\u201370 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "lavado",
+          name: "Lavado / detailing",
+          order: 17,
+          subservices: [
+            {
+              id: "lavado_exterior",
+              name: "Lavado exterior con sellador",
+              detail: "Lavado completo y sellador protector de pintura.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 15,
+              costNote: "Referencial; 10\u201325 USD. Bajo demanda."
+            },
+            {
+              id: "lavado_detailing",
+              name: "Detailing completo",
+              detail: "Lavado, pulido, descontaminaci\xF3n y acabado profesional.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 180,
+              costRefUsd: 80,
+              costNote: "Referencial; 60\u2013140 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "diesel",
+          name: "Di\xE9sel / turbo",
+          order: 18,
+          subservices: [
+            {
+              id: "die_turbo",
+              name: "Revisi\xF3n de turbo / admisi\xF3n",
+              detail: "Inspecci\xF3n del turbocompresor y del sistema de admisi\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["comercial_liviano", "camion", "bus"],
+                fuels: ["diesel"]
+              },
+              durationMin: 90,
+              costRefUsd: 90,
+              costNote: "Referencial (revisi\xF3n); 60\u2013140 USD."
+            },
+            {
+              id: "die_inyectores",
+              name: "Prueba de inyectores di\xE9sel",
+              detail: "Prueba en banco y ajuste / reemplazo de inyectores di\xE9sel.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["diesel"]
+              },
+              durationMin: 120,
+              costRefUsd: 110,
+              costNote: "Referencial; 80\u2013180 USD."
+            },
+            {
+              id: "die_dpf",
+              name: "Limpieza de filtro de part\xEDculas (DPF)",
+              detail: "Limpieza / regeneraci\xF3n del filtro de part\xEDculas di\xE9sel.",
+              periodic: true,
+              appliesTo: {
+                classes: ["comercial_liviano", "camion", "bus"],
+                fuels: ["diesel"]
+              },
+              durationMin: 120,
+              costRefUsd: 130,
+              costNote: "Referencial; 90\u2013200 USD."
+            }
+          ]
+        },
+        {
+          id: "alto_voltaje",
+          name: "Alto voltaje (EV/HEV)",
+          order: 19,
+          subservices: [
+            {
+              id: "hv_inspeccion",
+              name: "Inspecci\xF3n del sistema de alto voltaje",
+              detail: "Revisi\xF3n de cables, conectores y aislamiento del sistema de alto voltaje.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["hev", "phev", "bev"]
+              },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201355 USD. SOLO h\xEDbridos y el\xE9ctricos."
+            },
+            {
+              id: "hv_bateria_traccion",
+              name: "Prueba de bater\xEDa de tracci\xF3n",
+              detail: "Prueba de capacidad y estado de la bater\xEDa de alta tensi\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["hev", "phev", "bev"]
+              },
+              durationMin: 90,
+              costRefUsd: 50,
+              costNote: "Referencial; 35\u201380 USD. SOLO h\xEDbridos y el\xE9ctricos."
+            }
+          ]
+        },
+        {
+          id: "glp_gnv",
+          name: "GLP/GNV",
+          order: 20,
+          subservices: [
+            {
+              id: "glp_inspeccion",
+              name: "Inspecci\xF3n peri\xF3dica del sistema de gas",
+              detail: "Inspecci\xF3n reglamentaria del sistema GLP/GNV (comprobaci\xF3n de fugas y v\xE1lvulas).",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 45,
+              costNote: "Referencial; 30\u201360 USD. Solo veh\xEDculos con sistema de gas."
+            },
+            {
+              id: "glp_filtro",
+              name: "Cambio de filtro de gas",
+              detail: "Reemplazo del filtro del sistema de gas licuado / natural vehicular.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 40,
+              costNote: "Referencial; 30\u201355 USD."
+            }
+          ]
+        },
+        {
+          id: "grua",
+          name: "Gr\xFAa / asistencia",
+          order: 21,
+          subservices: [
+            {
+              id: "grua_remolque",
+              name: "Servicio de gr\xFAa / remolque",
+              detail: "Traslado del veh\xEDculo con gr\xFAa o asistencia en carretera.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 120,
+              costRefUsd: 60,
+              costNote: "Referencial por carrera corta; 40\u201390 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "rtv",
+          name: "Pre-revisi\xF3n t\xE9cnica vehicular (RTV)",
+          order: 22,
+          subservices: [
+            {
+              id: "rtv_pretest",
+              name: "Pre-chequeo para RTV",
+              detail: "Chequeo previo de los puntos que revisa la Revisi\xF3n T\xE9cnica Vehicular.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201350 USD. Per\xEDodo anual."
+            }
+          ]
+        }
+      ]
+    };
+  }
+});
+
+// packages/api/dist/domain/maintenance/maintenance-rules.json
+var maintenance_rules_default;
+var init_maintenance_rules = __esm({
+  "packages/api/dist/domain/maintenance/maintenance-rules.json"() {
+    maintenance_rules_default = {
+      version: "1.0.0",
+      source: "Motor de reglas de mantenimiento \u2014 referencial",
+      generatedAt: "2026-09-11",
+      note: "Valores conservadores basados en manuales de mantenimiento T\xCDPICOS y pr\xE1cticas del mercado ecuatoriano (referencial, sin datos de una marca concreta). intervalKm e intervalMonths son los intervalos base; severeFactor (0,5\u20130,8) se aplica cuando el uso es SEVERO (Sierra: altitud y pendientes; uso por defecto en Quito). Las combinaciones (clase, combustible) por servicio coinciden EXACTAMENTE con appliesTo de service-taxonomy.json; si un servicio o combinaci\xF3n no aparece aqu\xED, no entra en el plan.",
+      rules: [
+        {
+          serviceId: "prep_inspeccion",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 5e3,
+          intervalMonths: 6,
+          severeFactor: 0.7,
+          note: "Inspecci\xF3n multipunto preventiva cada 5.000 km / 6 meses."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["motocicleta"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e3,
+          intervalMonths: 3,
+          severeFactor: 0.7,
+          note: "Motos: cambio de aceite frecuente."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["cuadron"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 3e3,
+          intervalMonths: 4,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 5e3,
+          intervalMonths: 6,
+          severeFactor: 0.7,
+          note: "Livianos gasolina/GLP: 5.000 km / 6 meses (conservador para uso con GLP)."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "H\xEDbridos: el motor de combusti\xF3n trabaja menos, intervalo mayor."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["diesel"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 1e4,
+          intervalMonths: 6,
+          severeFactor: 0.7,
+          note: "Veh\xEDculos pesados di\xE9sel con intervalos de aceite m\xE1s largos."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e3,
+          intervalMonths: 4,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_bujias",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 8e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_bujias",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_bujias",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev"],
+          intervalKm: 4e4,
+          intervalMonths: 36,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 1e4,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev", "diesel"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["camion", "bus"],
+          fuelId: ["hev", "phev", "diesel"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["diesel"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "Di\xE9sel: filtro de combustible con servicio m\xE1s frecuente."
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_limpieza",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_antifreeze",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_antifreeze",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 4e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_antifreeze",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_radiador",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 36,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "freno_liquido",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 4e4,
+          intervalMonths: 24,
+          severeFactor: 0.7,
+          note: "El l\xEDquido de frenos se degrada por humedad aunque no se recorra."
+        },
+        {
+          serviceId: "freno_pastillas",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7,
+          note: "Inspecci\xF3n; la reposici\xF3n depende del desgaste real."
+        },
+        {
+          serviceId: "freno_regulacion",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 5e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "susp_amortiguadores",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "susp_direccion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["bev"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.7,
+          note: "BEV: lubricante de la transmisi\xF3n de reducci\xF3n."
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["*"],
+          intervalKm: 4e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_filtro_caja",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 36,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_embrague",
+          classId: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 5e4,
+          intervalMonths: 36,
+          severeFactor: 0.7,
+          note: "Revisi\xF3n de embrague; el reemplazo se cotiza seg\xFAn desgaste."
+        },
+        {
+          serviceId: "trans_cadena",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 2e3,
+          intervalMonths: 2,
+          severeFactor: 0.7,
+          note: "Cadena de moto: ajuste y lubricaci\xF3n cada 2.000 km / 2 meses."
+        },
+        {
+          serviceId: "llanta_rotacion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "llanta_alineacion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "llanta_presion",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 5e3,
+          intervalMonths: 3,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "llanta_cambio",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 5e4,
+          intervalMonths: 48,
+          severeFactor: 0.7,
+          note: "Referencial por vida \xFAtil de llanta; depende del desgaste del dibujo."
+        },
+        {
+          serviceId: "elec_bateria",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "elec_alternador",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "elec_luces",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "escaner_diagnostico",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "clima_filtro_cabina",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "clima_recarga",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 24e3,
+          intervalMonths: 24,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "clima_desinfeccion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 12e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "escape_gases",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "vidrio_limpiadores",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 12e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "die_turbo",
+          classId: ["comercial_liviano", "camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "die_inyectores",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+          fuelId: ["diesel"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "die_dpf",
+          classId: ["comercial_liviano", "camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "hv_inspeccion",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev", "bev"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "SOLO h\xEDbridos y el\xE9ctricos: sistema de alto voltaje."
+        },
+        {
+          serviceId: "hv_bateria_traccion",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev", "bev"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "glp_inspeccion",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "Inspecci\xF3n reglamentaria del sistema de gas."
+        },
+        {
+          serviceId: "glp_filtro",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "rtv_pretest",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: null,
+          intervalMonths: 12,
+          severeFactor: 0.8,
+          note: "Pre-chequeo para Revisi\xF3n T\xE9cnica Vehicular: por tiempo (anual)."
+        }
+      ]
+    };
+  }
+});
+
+// packages/api/dist/domain/maintenance/catalogs.js
+function findSubservice(serviceId) {
+  return SUBSERVICE_INDEX.get(serviceId);
+}
+function normalizeList(list5, allValues) {
+  const expanded = /* @__PURE__ */ new Set();
+  for (const value2 of list5) {
+    if (value2 === "*") {
+      for (const v of allValues)
+        expanded.add(v);
+    } else {
+      expanded.add(value2);
+    }
+  }
+  return [...expanded].sort();
+}
+function expandRules() {
+  const expanded = [];
+  for (const rule of maintenanceRules.rules) {
+    const classes = normalizeList(rule.classId, classIds);
+    const fuels = normalizeList(rule.fuelId, fuelIds);
+    for (const classId of classes) {
+      for (const fuelId of fuels) {
+        expanded.push({
+          serviceId: rule.serviceId,
+          classId,
+          fuelId,
+          intervalKm: rule.intervalKm,
+          intervalMonths: rule.intervalMonths,
+          severeFactor: rule.severeFactor,
+          note: rule.note
+        });
+      }
+    }
+  }
+  return expanded;
+}
+function resolveRules(classId, fuelId) {
+  return expandRules().filter((r) => r.classId === classId && r.fuelId === fuelId);
+}
+function isServiceApplicable(serviceId, classId, fuelId) {
+  const ref = findSubservice(serviceId);
+  if (!ref)
+    return false;
+  const classes = new Set(normalizeList(ref.subservice.appliesTo.classes, classIds));
+  const fuels = new Set(normalizeList(ref.subservice.appliesTo.fuels, fuelIds));
+  return classes.has(classId) && fuels.has(fuelId);
+}
+var vehicleClasses, serviceTaxonomy, maintenanceRules, classIds, fuelIds, SUBSERVICE_INDEX;
+var init_catalogs = __esm({
+  "packages/api/dist/domain/maintenance/catalogs.js"() {
+    "use strict";
+    init_vehicle_classes();
+    init_service_taxonomy();
+    init_maintenance_rules();
+    init_schemas();
+    vehicleClasses = vehicleClassesSchema.parse(vehicle_classes_default);
+    serviceTaxonomy = serviceTaxonomySchema.parse(service_taxonomy_default);
+    maintenanceRules = maintenanceRulesSchema.parse(maintenance_rules_default);
+    classIds = vehicleClasses.classes.map((c) => c.id);
+    fuelIds = vehicleClasses.fuels.map((f) => f.id);
+    SUBSERVICE_INDEX = /* @__PURE__ */ new Map();
+    for (const category of serviceTaxonomy.categories) {
+      for (const sub of category.subservices) {
+        if (SUBSERVICE_INDEX.has(sub.id)) {
+          throw new Error(`Duplicated subservice id '${sub.id}' in service-taxonomy.json`);
+        }
+        SUBSERVICE_INDEX.set(sub.id, { category, subservice: sub });
+      }
+    }
+  }
+});
+
+// packages/api/dist/domain/maintenance/plan-engine.js
+function toDate(input) {
+  return input instanceof Date ? new Date(input.getTime()) : new Date(input);
+}
+function daysBetween(a, b) {
+  const aDate = toDate(a);
+  const bDate = toDate(b);
+  const aUtc = Date.UTC(aDate.getFullYear(), aDate.getMonth(), aDate.getDate());
+  const bUtc = Date.UTC(bDate.getFullYear(), bDate.getMonth(), bDate.getDate());
+  return Math.round((bUtc - aUtc) / MS_PER_DAY);
+}
+function addMonths(date, months) {
+  const base = toDate(date);
+  return new Date(base.getTime() + months * DAYS_PER_MONTH * MS_PER_DAY);
+}
+function estimateKmPerDay(input) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const readings = [...input.odometerReadings ?? []].filter((r) => toDate(r.date).getTime() <= today.getTime()).sort((a, b) => toDate(a.date).getTime() - toDate(b.date).getTime());
+  for (let i = readings.length - 1; i >= 0; i -= 1) {
+    const reading = readings[i];
+    const days = daysBetween(reading.date, today);
+    if (days >= 1 && input.odometerKm > reading.km) {
+      const kmPerDay = (input.odometerKm - reading.km) / days;
+      return Math.round(kmPerDay * 10) / 10;
+    }
+  }
+  return DEFAULT_KM_PER_DAY[usageProfileOf(input)];
+}
+function usageProfileOf(input) {
+  return input.usageProfile ?? "urbano";
+}
+function lastReadingDaysAgo(input) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const readings = (input.odometerReadings ?? []).filter((r) => toDate(r.date).getTime() <= today.getTime());
+  if (readings.length === 0)
+    return null;
+  const latest = readings.reduce((a, b) => toDate(a.date).getTime() > toDate(b.date).getTime() ? a : b);
+  return Math.max(0, daysBetween(latest.date, today));
+}
+function computeItemStatus(remainingKm, remainingDays) {
+  const dueByKm = remainingKm !== null && remainingKm <= 0;
+  const dueByTime = remainingDays !== null && remainingDays <= 0;
+  if (dueByKm || dueByTime)
+    return "vencido";
+  const soonByKm = remainingKm !== null && remainingKm <= NEXT_WINDOW_KM;
+  const soonByTime = remainingDays !== null && remainingDays <= NEXT_WINDOW_DAYS;
+  if (soonByKm || soonByTime)
+    return "proximo";
+  return "al_dia";
+}
+function priorityFor(status) {
+  switch (status) {
+    case "vencido":
+      return "alta";
+    case "proximo":
+      return "media";
+    default:
+      return "baja";
+  }
+}
+function formatVencido(km, days) {
+  const parts = [];
+  if (km !== null && km <= 0)
+    parts.push(`hace ${Math.abs(km)} km`);
+  if (days !== null && days <= 0) {
+    const months = Math.max(1, Math.abs(Math.round(days / DAYS_PER_MONTH)));
+    parts.push(`hace ${months} ${months === 1 ? "mes" : "meses"}`);
+  }
+  return parts.length > 0 ? `Vencido ${parts.join(" y ")}` : "Vencido";
+}
+function formatProximo(km, days) {
+  if (km !== null && km <= NEXT_WINDOW_KM) {
+    return `En ${Math.max(0, km)} km`;
+  }
+  if (days !== null && days <= NEXT_WINDOW_DAYS) {
+    if (days >= 7) {
+      const weeks = Math.round(days / 7);
+      return `En ${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
+    }
+    return `En ${Math.max(0, Math.round(days))} ${Math.max(0, Math.round(days)) === 1 ? "d\xEDa" : "d\xEDas"}`;
+  }
+  return "Pr\xF3ximo";
+}
+function buildReason(status, remainingKm, remainingDays, effKm, effMonths) {
+  switch (status) {
+    case "vencido":
+      return formatVencido(remainingKm, remainingDays);
+    case "proximo":
+      return formatProximo(remainingKm, remainingDays);
+    default: {
+      const km = effKm === null ? "\u2014" : String(effKm);
+      const months = effMonths === null ? "\u2014" : String(effMonths);
+      return `Al d\xEDa (cada ${km} km / ${months} meses)`;
+    }
+  }
+}
+function latestLastService(lastServices, serviceId) {
+  const matches = lastServices.filter((s) => s.serviceId === serviceId).sort((a, b) => {
+    const aKm = a.km ?? 0;
+    const bKm = b.km ?? 0;
+    if (aKm !== bKm)
+      return bKm - aKm;
+    const aDate = a.date ? toDate(a.date).getTime() : 0;
+    const bDate = b.date ? toDate(b.date).getTime() : 0;
+    return bDate - aDate;
+  });
+  return matches[0];
+}
+function computeItem(input, serviceId) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const { classId, fuelId } = input.vehicle;
+  if (!isServiceApplicable(serviceId, classId, fuelId))
+    return null;
+  const ref = findSubservice(serviceId);
+  if (!ref || !ref.subservice.periodic)
+    return null;
+  const rule = resolveRules(classId, fuelId).find((r) => r.serviceId === serviceId);
+  if (!rule)
+    return null;
+  const severe = (input.usageProfile ?? "urbano") === "severo";
+  const factor = severe ? rule.severeFactor : 1;
+  const effKm = rule.intervalKm === null ? null : Math.round(rule.intervalKm * factor);
+  const effMonths = rule.intervalMonths === null ? null : rule.intervalMonths * factor;
+  const last = latestLastService(input.lastServices ?? [], serviceId);
+  const baseKm = last?.km ?? input.odometerKm;
+  const baseDate = last?.date ? toDate(last.date) : today;
+  const kmActive = effKm !== null;
+  const monthsActive = effMonths !== null;
+  const dueKm = kmActive ? baseKm + effKm : input.odometerKm;
+  const dueDate = monthsActive ? addMonths(baseDate, effMonths) : today;
+  const remainingKm = kmActive ? dueKm - input.odometerKm : null;
+  const remainingDays = monthsActive ? daysBetween(today, dueDate) : null;
+  const status = computeItemStatus(remainingKm, remainingDays);
+  return {
+    serviceId: ref.subservice.id,
+    serviceName: ref.subservice.name,
+    categoryId: ref.category.id,
+    categoryName: ref.category.name,
+    dueKm,
+    dueDate,
+    remainingKm,
+    remainingDays,
+    effKm,
+    effMonths,
+    status
+  };
+}
+function buildPlan(input) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const usageProfile = usageProfileOf(input);
+  const computed = [];
+  for (const category of serviceTaxonomy.categories) {
+    for (const subservice of category.subservices) {
+      if (!subservice.periodic)
+        continue;
+      const computation = computeItem(input, subservice.id);
+      if (!computation)
+        continue;
+      computed.push({
+        computation,
+        item: {
+          categoryId: computation.categoryId,
+          categoryName: computation.categoryName,
+          serviceId: computation.serviceId,
+          serviceName: computation.serviceName,
+          dueKm: computation.dueKm,
+          dueDate: computation.dueDate,
+          status: computation.status,
+          priority: priorityFor(computation.status),
+          costRefUsd: subservice.costRefUsd,
+          durationMin: subservice.durationMin,
+          remainingKm: computation.remainingKm ?? 0,
+          remainingDays: computation.remainingDays ?? 0,
+          reason: buildReason(computation.status, computation.remainingKm, computation.remainingDays, computation.effKm, computation.effMonths)
+        }
+      });
+    }
+  }
+  const urgency = (c) => {
+    const { remainingKm, remainingDays, effKm } = c.computation;
+    const kmUrgency = effKm !== null ? remainingKm ?? 0 : Number.MAX_SAFE_INTEGER;
+    const timeUrgency = c.computation.effMonths !== null ? remainingDays ?? 0 : Number.MAX_SAFE_INTEGER;
+    return Math.min(kmUrgency, timeUrgency);
+  };
+  computed.sort((a, b) => {
+    if (STATUS_ORDER[a.item.status] !== STATUS_ORDER[b.item.status]) {
+      return STATUS_ORDER[a.item.status] - STATUS_ORDER[b.item.status];
+    }
+    const aUrgency = urgency(a);
+    const bUrgency = urgency(b);
+    if (aUrgency !== bUrgency)
+      return aUrgency - bUrgency;
+    return a.item.serviceId.localeCompare(b.item.serviceId);
+  });
+  const items = computed.map((c) => c.item);
+  return {
+    generatedAt: today,
+    vehicle: input.vehicle,
+    odometerKm: input.odometerKm,
+    kmPerDay: estimateKmPerDay(input),
+    lastReadingDaysAgo: lastReadingDaysAgo(input),
+    usageProfile,
+    items
+  };
+}
+var MS_PER_DAY, DAYS_PER_MONTH, DEFAULT_KM_PER_DAY, NEXT_WINDOW_KM, NEXT_WINDOW_DAYS, STATUS_ORDER;
+var init_plan_engine = __esm({
+  "packages/api/dist/domain/maintenance/plan-engine.js"() {
+    "use strict";
+    init_catalogs();
+    init_catalogs();
+    MS_PER_DAY = 864e5;
+    DAYS_PER_MONTH = 30.44;
+    DEFAULT_KM_PER_DAY = {
+      urbano: 25,
+      carretera: 60,
+      severo: 40
+    };
+    NEXT_WINDOW_KM = 1e3;
+    NEXT_WINDOW_DAYS = 30;
+    STATUS_ORDER = { vencido: 0, proximo: 1, al_dia: 2 };
+  }
+});
+
+// packages/api/dist/domain/maintenance/plan-formatter.js
+function formatKm(value2) {
+  const rounded = String(Math.round(value2));
+  return rounded.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+function formatCost(costRefUsd) {
+  const rounded = Math.round(costRefUsd);
+  return `~$${rounded}`;
+}
+function fits(pageLines, newLine, maxLength) {
+  const joined = pageLines.length > 0 ? pageLines.join("\n") : "";
+  return joined.length === 0 ? newLine.length <= maxLength : joined.length + 1 + newLine.length <= maxLength;
+}
+function paginateText(headerLines, blocks, footerLines, maxLength = DEFAULT_MAX_LENGTH) {
+  let current = [...headerLines];
+  const pages = [];
+  const flush = () => {
+    pages.push(current);
+    current = [...headerLines];
+  };
+  for (let i = 0; i < blocks.length; i += 1) {
+    const block = blocks[i];
+    if (!fits(current, block, maxLength))
+      flush();
+    current.push(block);
+  }
+  for (const footerLine of footerLines) {
+    if (!fits(current, footerLine, maxLength))
+      flush();
+    current.push(footerLine);
+  }
+  if (current.length > 0 || pages.length === 0) {
+    pages.push(current);
+  }
+  return pages.map((page) => page.join("\n"));
+}
+function alDiaLine(items, budget) {
+  if (items.length === 0) {
+    return "\u{1F7E2} Al d\xEDa: ninguno pendiente";
+  }
+  const names = items.map((i) => i.serviceName);
+  const candidate = (shownCount) => {
+    const shown = names.slice(0, shownCount).join(", ");
+    const extra = names.length - shownCount;
+    const suffix = extra > 0 ? ` y ${extra} m\xE1s` : "";
+    return `\u{1F7E2} Al d\xEDa: ${shown}${suffix}`;
+  };
+  if (budget !== void 0) {
+    for (let shown = names.length; shown >= 1; shown -= 1) {
+      const line = candidate(shown);
+      if (line.length <= budget)
+        return line;
+    }
+  }
+  return candidate(5);
+}
+function formatPlanWhatsApp(ctx) {
+  const maxLength = ctx.maxLength ?? DEFAULT_MAX_LENGTH;
+  const { plan } = ctx;
+  let readingSuffix = "";
+  if (plan.lastReadingDaysAgo !== null) {
+    readingSuffix = plan.lastReadingDaysAgo === 0 ? " (actualizado hoy)" : ` (actualizado hace ${plan.lastReadingDaysAgo} d\xEDas)`;
+  }
+  const header = `${ctx.label} \xB7 ${formatKm(plan.odometerKm)} km${readingSuffix}`;
+  const vencidos = plan.items.filter((i) => i.status === "vencido");
+  const proximos = plan.items.filter((i) => i.status === "proximo");
+  const alDia = plan.items.filter((i) => i.status === "al_dia");
+  const numbered = [...vencidos, ...proximos];
+  const blocks = [];
+  const pushGroup = (title, group) => {
+    blocks.push(title);
+    if (group.length === 0) {
+      blocks.push("\xB7 ninguno");
+      return;
+    }
+    for (const item of group) {
+      const cost = formatCost(item.costRefUsd);
+      blocks.push(`${numbered.indexOf(item) + 1}) ${item.serviceName} \xB7 ${item.reason} \xB7 ${cost}`);
+    }
+  };
+  pushGroup("\u{1F534} Vencidos", vencidos);
+  pushGroup("\u{1F7E1} Pr\xF3ximos", proximos);
+  blocks.push(alDiaLine(alDia, maxLength - header.length - 1));
+  const firstOption = numbered.length + 1;
+  const footer = [
+    "",
+    "Responde con los n\xFAmeros que quieres atender (ej.: 1,3)",
+    `${firstOption}) Ver el plan completo   ${firstOption + 1}) Actualizar kilometraje   0) Men\xFA`
+  ];
+  return paginateText([header], blocks, footer, maxLength);
+}
+var DEFAULT_MAX_LENGTH;
+var init_plan_formatter = __esm({
+  "packages/api/dist/domain/maintenance/plan-formatter.js"() {
+    "use strict";
+    DEFAULT_MAX_LENGTH = 1024;
+  }
+});
+
+// packages/api/dist/domain/maintenance/validation.js
+var ALL_CLASSES, ALL_FUELS;
+var init_validation = __esm({
+  "packages/api/dist/domain/maintenance/validation.js"() {
+    "use strict";
+    init_catalogs();
+    ALL_CLASSES = new Set(classIds);
+    ALL_FUELS = new Set(fuelIds);
+  }
+});
+
+// packages/api/dist/domain/maintenance/index.js
+var init_maintenance = __esm({
+  "packages/api/dist/domain/maintenance/index.js"() {
+    "use strict";
+    init_types2();
+    init_schemas();
+    init_catalogs();
+    init_plan_engine();
+    init_plan_formatter();
+    init_validation();
+    init_catalogs();
+  }
+});
+
+// packages/api/dist/application/registration/schemas.js
+function normalizePlate(input) {
+  const value2 = input.toUpperCase().replace(/\s+/g, "");
+  const match = /^([A-Z]{3})-?(\d{3,4})$/.exec(value2);
+  return match ? `${match[1]}-${match[2]}` : null;
+}
+var PERFILES, CONSENT_VERSION, USAGE_PROFILES, categoryIds, req, commonFields, vehicleFields, businessFields, vehicleSchema, ownerSchema, shopSchema, storeSchema;
+var init_schemas2 = __esm({
+  "packages/api/dist/application/registration/schemas.js"() {
+    "use strict";
+    init_zod();
+    init_maintenance();
+    init_whatsapp_number();
+    PERFILES = ["dueno", "taller", "almacen"];
+    CONSENT_VERSION = "2026-09";
+    USAGE_PROFILES = ["urbano", "carretera", "severo"];
+    categoryIds = serviceTaxonomy.categories.map((c) => c.id);
+    req = (schema) => external_exports.preprocess((v) => v === void 0 || v === null ? "" : Array.isArray(v) ? v[0] : v, schema);
+    commonFields = {
+      phone: req(external_exports.string()).transform((v, ctx) => {
+        const digits = normalizeWhatsappNumber(v);
+        if (!digits) {
+          ctx.addIssue({ code: "custom", message: "Tel\xE9fono no v\xE1lido: usa un celular como 099 123 4567 o +593 99 123 4567" });
+          return external_exports.NEVER;
+        }
+        return `+${digits}`;
+      }),
+      name: req(external_exports.string().trim().min(3, "El nombre debe tener entre 3 y 60 caracteres").max(60, "El nombre debe tener entre 3 y 60 caracteres")),
+      city: req(external_exports.string().trim().min(2, "Indica la ciudad").max(120, "Ciudad demasiado larga")),
+      email: req(external_exports.string().trim().toLowerCase()).transform((v, ctx) => {
+        if (!v)
+          return null;
+        if (v.length > 191 || !external_exports.string().email().safeParse(v).success) {
+          ctx.addIssue({ code: "custom", message: "Correo no v\xE1lido" });
+          return external_exports.NEVER;
+        }
+        return v;
+      }),
+      source: req(external_exports.string().trim().max(40, "\xABC\xF3mo nos conoci\xF3\xBB es demasiado largo")).transform((v) => v || null),
+      notes: req(external_exports.string().trim().max(1e3, "Las notas son demasiado largas")).transform((v) => v || null),
+      consent: req(external_exports.string()).refine((v) => v === "on", "Falta el consentimiento LOPDP y la aceptaci\xF3n de t\xE9rminos")
+    };
+    vehicleFields = {
+      vehicleClass: req(external_exports.string()).refine((v) => classIds.includes(v), "Elige la clase de veh\xEDculo"),
+      fuel: req(external_exports.string()).refine((v) => fuelIds.includes(v), "Elige el combustible"),
+      make: req(external_exports.string().trim().min(1, "Indica la marca").max(60, "Marca demasiado larga")),
+      model: req(external_exports.string().trim().min(1, "Indica el modelo").max(60, "Modelo demasiado largo")),
+      year: req(external_exports.string().trim()).refine((v) => /^\d{4}$/.test(v), "A\xF1o no v\xE1lido").transform(Number).refine((y) => y >= 1970 && y <= (/* @__PURE__ */ new Date()).getFullYear() + 1, "El a\xF1o debe estar entre 1970 y el pr\xF3ximo a\xF1o"),
+      currentKm: req(external_exports.string()).transform((v) => v.replace(/[.\s,]/g, "")).refine((v) => /^\d{1,7}$/.test(v), "Kilometraje no v\xE1lido").transform(Number).refine((n) => n <= 2e6, "Kilometraje no v\xE1lido"),
+      plate: req(external_exports.string().trim()).transform((v, ctx) => {
+        if (!v)
+          return null;
+        const plate = normalizePlate(v);
+        if (!plate) {
+          ctx.addIssue({ code: "custom", message: "Placa no v\xE1lida: usa el formato ABC-1234" });
+          return external_exports.NEVER;
+        }
+        return plate;
+      }),
+      usageProfile: req(external_exports.string()).transform((v) => USAGE_PROFILES.includes(v) ? v : "urbano"),
+      reminders: external_exports.unknown().transform((v) => v === "on")
+    };
+    businessFields = {
+      businessName: req(external_exports.string().trim().min(2, "Indica el nombre comercial").max(120, "Nombre comercial demasiado largo")),
+      ruc: req(external_exports.string().trim()).refine((v) => /^\d{10}001$/.test(v), "RUC no v\xE1lido: 13 d\xEDgitos terminados en 001"),
+      address: req(external_exports.string().trim().min(5, "Indica la direcci\xF3n").max(200, "Direcci\xF3n demasiado larga")),
+      zone: req(external_exports.string().trim().max(120, "Zona demasiado larga")).transform((v) => v || null),
+      hours: req(external_exports.string().trim().max(120, "Horario demasiado largo")).transform((v) => v || null)
+    };
+    vehicleSchema = external_exports.object(vehicleFields);
+    ownerSchema = external_exports.object({ ...commonFields, ...vehicleFields });
+    shopSchema = external_exports.object({
+      ...commonFields,
+      ...businessFields,
+      services: external_exports.preprocess((v) => v === void 0 || v === null ? [] : Array.isArray(v) ? v : [v], external_exports.array(external_exports.string())).refine((list5) => list5.length > 0, "Elige al menos un servicio que ofrece el taller").refine((list5) => list5.every((id) => categoryIds.includes(id)), "Servicio no v\xE1lido")
+    });
+    storeSchema = external_exports.object({
+      ...commonFields,
+      ...businessFields,
+      categories: req(external_exports.string().trim().max(500, "Las categor\xEDas son demasiado largas")).transform((v) => v || null),
+      delivery: external_exports.unknown().transform((v) => v === "on")
+    });
+  }
+});
+
+// packages/api/dist/application/registration/plan-text.js
+function planTextFor(vehicle) {
+  const classId = vehicle.vehicleClass ? String(vehicle.vehicleClass) : "";
+  const fuelId = vehicle.fuel ? String(vehicle.fuel) : "";
+  if (!classId || !fuelId)
+    return null;
+  try {
+    const usage = USAGE.includes(String(vehicle.usageProfile)) ? String(vehicle.usageProfile) : "urbano";
+    const plan = buildPlan({
+      vehicle: { classId, fuelId },
+      odometerKm: Number(vehicle.currentKm) || 0,
+      usageProfile: usage
+    });
+    if (plan.items.length === 0)
+      return null;
+    const label = [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" ");
+    return formatPlanWhatsApp({ label, plan }).join("\n\n");
+  } catch {
+    return null;
+  }
+}
+var USAGE;
+var init_plan_text = __esm({
+  "packages/api/dist/application/registration/plan-text.js"() {
+    "use strict";
+    init_maintenance();
+    USAGE = ["urbano", "carretera", "severo"];
+  }
+});
+
+// packages/api/dist/interfaces/admin/views-registrations.js
+function day(value2) {
+  const date = value2 instanceof Date ? value2 : value2 ? new Date(String(value2)) : null;
+  return date && !Number.isNaN(date.getTime()) ? date.toISOString().slice(0, 10) : "\u2014";
+}
+function phoneLabel(value2) {
+  const text = String(value2 ?? "");
+  const digits = text.replace(/\D/g, "");
+  return text.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text;
+}
+function value(values, key) {
+  const v = values[key];
+  return Array.isArray(v) ? "" : e(v);
+}
+function field(values, name, label, attrs = "") {
+  return `<label for="f-${name}">${e(label)}</label><input id="f-${name}" name="${name}" value="${value(values, name)}" ${attrs}>`;
+}
+function select(values, name, label, options, placeholder) {
+  const selected = String(values[name] ?? "");
+  const opts = options.map(([id, text]) => `<option value="${e(id)}"${id === selected ? " selected" : ""}>${e(text)}</option>`).join("");
+  const empty = placeholder ? `<option value="">${e(placeholder)}</option>` : "";
+  return `<label for="f-${name}">${e(label)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
+}
+function checkbox(values, name, label) {
+  return `<div class="checks"><label><input type="checkbox" name="${name}"${values[name] === "on" ? " checked" : ""}> ${e(label)}</label></div>`;
+}
+function vehicleFields2(values) {
+  return `${select(values, "vehicleClass", "Clase de veh\xEDculo", vehicleClasses.classes.map((c) => [c.id, c.name]), "Elige\u2026")}
+    ${select(values, "fuel", "Combustible", vehicleClasses.fuels.map((f) => [f.id, f.name]), "Elige\u2026")}
+    ${field(values, "make", "Marca", 'required maxlength="60" placeholder="Toyota"')}
+    ${field(values, "model", "Modelo", 'required maxlength="60" placeholder="Corolla"')}
+    ${field(values, "year", "A\xF1o", 'required inputmode="numeric" maxlength="4" placeholder="2020"')}
+    ${field(values, "currentKm", "Kilometraje actual", 'required inputmode="numeric" placeholder="45000"')}
+    ${field(values, "plate", "Placa (opcional)", 'maxlength="9" placeholder="ABC-1234"')}
+    ${select(values, "usageProfile", "Uso", USAGE_OPTIONS)}
+    ${checkbox(values, "reminders", "Acepta recordatorios por WhatsApp")}`;
+}
+function usersListView(input) {
+  const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e(u.id)}">${e(u.name)}</a></td><td>${e(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
+            <td>${e(phoneLabel(u.phone))}</td><td>${e(u.city ?? "\u2014")}</td><td>${day(u.createdAt)}</td></tr>`).join("");
+  const q = encodeURIComponent(input.query);
+  const prev = input.page.page > 1 ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
+  const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
+  return `<div class="row between"><h1>Usuarios</h1><a class="button" href="/admin/users/new">+ Nuevo registro</a></div>
+  <form method="get" action="/admin/users" class="row"><input name="q" value="${e(input.query)}" placeholder="Buscar por nombre o tel\xE9fono" maxlength="60"><button type="submit">Buscar</button></form>
+  <div class="scroll"><table><thead><tr><th>Nombre</th><th>Perfil</th><th>Tel\xE9fono</th><th>Ciudad</th><th>Alta</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
+  <div class="pager">${prev}${next}</div>`;
+}
+function newUserView(input) {
+  const v = input.values;
+  const tabs = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e(ROLE_LABELS[p])}</a>`).join("");
+  const common = `<div class="card"><h2>Datos b\xE1sicos</h2>
+    ${input_phone(v)}
+    ${field(v, "name", input.perfil === "dueno" ? "Nombre y apellido" : "Nombre del responsable", 'required minlength="3" maxlength="60"')}
+    ${field(v, "city", "Ciudad", 'required maxlength="120" placeholder="Quito"')}
+    ${field(v, "email", "Correo (opcional)", 'type="email" maxlength="191"')}
+    ${field(v, "source", "C\xF3mo nos conoci\xF3 (opcional)", 'maxlength="40" placeholder="Redes, taller, recomendaci\xF3n\u2026"')}
+    <label for="f-notes">Notas internas (opcional)</label><textarea id="f-notes" name="notes" maxlength="1000" rows="3">${value(v, "notes")}</textarea>
+    ${checkbox(v, "consent", "Acept\xF3 el tratamiento de datos (LOPDP) y los t\xE9rminos por WhatsApp")}
+  </div>`;
+  let specific;
+  if (input.perfil === "dueno") {
+    specific = `<div class="card"><h2>Primer veh\xEDculo</h2>${vehicleFields2(v)}</div>`;
+  } else {
+    const business = `${field(v, "businessName", "Nombre comercial", 'required maxlength="120"')}
+      ${field(v, "ruc", "RUC", 'required inputmode="numeric" maxlength="13" placeholder="1790000000001"')}
+      ${field(v, "address", "Direcci\xF3n", 'required maxlength="200"')}
+      ${field(v, "zone", "Zona o barrio (opcional)", 'maxlength="120"')}
+      ${field(v, "hours", "Horario (opcional)", 'maxlength="120" placeholder="Lun\u2013Vie 08:00\u201318:00"')}`;
+    if (input.perfil === "taller") {
+      const chosen = Array.isArray(v.services) ? v.services.map(String) : v.services ? [String(v.services)] : [];
+      const services = serviceTaxonomy.categories.map((c) => `<label><input type="checkbox" name="services" value="${e(c.id)}"${chosen.includes(c.id) ? " checked" : ""}> ${e(c.name)}</label>`).join("");
+      specific = `<div class="card"><h2>Taller</h2>${business}<label>Servicios que ofrece</label><div class="checks">${services}</div>
+        <p class="muted">Queda en verificaci\xF3n hasta que lo apruebes; mientras tanto no aparece en las b\xFAsquedas.</p></div>`;
+    } else {
+      specific = `<div class="card"><h2>Almac\xE9n</h2>${business}
+        <label for="f-categories">Categor\xEDas y marcas que maneja (opcional)</label><textarea id="f-categories" name="categories" maxlength="500" rows="3">${value(v, "categories")}</textarea>
+        ${checkbox(v, "delivery", "Hace entregas a domicilio")}
+        <p class="muted">Queda en verificaci\xF3n hasta que lo apruebes.</p></div>`;
+    }
+  }
+  return `<div class="stack wide"><h1>Nuevo registro</h1><div class="tabs">${tabs}</div>
+  ${input.error ? `<p class="error" role="alert">${e(input.error)}</p>` : ""}
+  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField2(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">
+  ${common}${specific}
+  <button class="full" type="submit">Guardar registro</button></form></div>`;
+}
+function input_phone(values) {
+  return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567"');
+}
+function verificationForm(kind, id, userId, csrf) {
+  return `<form method="post" action="/admin/verifications/${kind}/${e(id)}">${csrfField2(csrf)}
+    <input type="hidden" name="returnTo" value="${e(userId)}">
+    <label for="reason-${e(id)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e(id)}" name="reason" maxlength="500">
+    <div class="row"><button type="submit" name="decision" value="verified">Aprobar</button><button class="danger" type="submit" name="decision" value="rejected">Rechazar</button></div></form>`;
+}
+function userDetailView(input) {
+  const { user, vehicles, shop, store } = input.detail;
+  const digits = String(user.phone ?? "").replace(/\D/g, "");
+  const chat = String(user.phone ?? "").startsWith("+") && digits.length >= 8 ? ` \xB7 <a href="https://wa.me/${e(digits)}" target="_blank" rel="noopener">Abrir chat</a>` : "";
+  const datos = `<div class="card"><h2>Datos</h2>
+    <div>Perfil: <strong>${e(ROLE_LABELS[String(user.role)] ?? user.role)}</strong></div>
+    <div>Tel\xE9fono: <strong>${e(phoneLabel(user.phone))}</strong>${chat}</div>
+    <div>Correo: ${e(user.email ?? "\u2014")}</div>
+    <div>Ciudad: ${e(user.city ?? "\u2014")}</div>
+    <div>Consentimiento: ${user.consentAt ? `${day(user.consentAt)} (versi\xF3n ${e(user.consentVersion ?? "\u2014")})` : '<span class="error">sin registrar</span>'}</div>
+    <div>C\xF3mo nos conoci\xF3: ${e(user.source ?? "\u2014")}</div>
+    ${user.notes ? `<div>Notas: ${e(user.notes)}</div>` : ""}
+    <div class="muted">Alta: ${day(user.createdAt)}</div></div>`;
+  const business = (title, b, extra, kind) => `<div class="card"><h2>${title}</h2>
+    <div><strong>${e(b.name)}</strong> \xB7 RUC ${e(b.ruc ?? "\u2014")}</div>
+    <div>${e(b.address)}, ${e(b.city)}${b.zone ? ` (${e(b.zone)})` : ""}</div>
+    <div>Horario: ${e(b.hours ?? "\u2014")}</div>${extra}
+    <div>Estado: <strong>${e(STATUS_LABELS[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
+    ${verificationForm(kind, b.id, user.id, input.csrf)}</div>`;
+  const shopCard = shop ? business("Taller", shop, `<div>Servicios: ${e(shop.services.map(categoryName).join(", ") || "\u2014")}</div>`, "shop") : "";
+  const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
+  const vehicleCards = vehicles.map((v) => {
+    const plan = input.plans[String(v.id)];
+    return `<div class="card"><h2>${e(v.make)} ${e(v.model)} ${e(v.year)}</h2>
+      <div>${e(Number(v.currentKm).toLocaleString("es-EC"))} km \xB7 ${e(className(v.vehicleClass))} \xB7 ${e(fuelName(v.fuel))}${v.plate ? ` \xB7 ${e(v.plate)}` : ""}</div>
+      <div class="muted">Uso ${e(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
+      ${plan ? `<label for="plan-${e(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e(v.id)}" readonly rows="12">${e(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}</div>`;
+  }).join("");
+  const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e(input.error)}</p>` : ""}
+      <form method="post" action="/admin/users/${e(user.id)}/vehicles" autocomplete="off">${csrfField2(input.csrf)}${vehicleFields2(input.values ?? {})}
+      <button class="full" type="submit">Agregar veh\xEDculo</button></form></div>` : "";
+  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e(user.name)}</h1>${flashHtml2(input.flash)}
+  ${datos}${shopCard}${storeCard}${vehicleCards}${addVehicle}</div>`;
+}
+function verificationsView(input) {
+  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e(item.userId)}">${e(item.name)}</a></td>
+            <td>${e(item.city)}</td><td>${e(item.ruc ?? "\u2014")}</td><td>${day(item.createdAt)}</td></tr>`).join("");
+  return `<h1>Verificaciones pendientes</h1>${flashHtml2(input.flash)}
+  <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
+  <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>`;
+}
+var ROLE_LABELS, STATUS_LABELS, USAGE_OPTIONS, e, csrfField2, flashHtml2, className, fuelName, categoryName;
+var init_views_registrations = __esm({
+  "packages/api/dist/interfaces/admin/views-registrations.js"() {
+    "use strict";
+    init_page();
+    init_whatsapp_number();
+    init_maintenance();
+    ROLE_LABELS = {
+      dueno: "Due\xF1o de veh\xEDculo",
+      taller: "Taller",
+      almacen: "Almac\xE9n",
+      admin: "Administrador"
+    };
+    STATUS_LABELS = { pending: "En verificaci\xF3n", verified: "Verificado", rejected: "Rechazado" };
+    USAGE_OPTIONS = [
+      ["urbano", "Urbano"],
+      ["carretera", "Carretera"],
+      ["severo", "Severo (Sierra, carga, lastre)"]
+    ];
+    e = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField2 = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
+    flashHtml2 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e(flash.text)}</p>` : "";
+    className = (id) => vehicleClasses.classes.find((c) => c.id === id)?.name ?? String(id ?? "\u2014");
+    fuelName = (id) => vehicleClasses.fuels.find((f) => f.id === id)?.name ?? String(id ?? "\u2014");
+    categoryName = (id) => serviceTaxonomy.categories.find((c) => c.id === id)?.name ?? id;
+  }
+});
+
+// packages/api/dist/interfaces/admin/registrations.js
+import { randomBytes as randomBytes4 } from "node:crypto";
+function dbError(err) {
+  const code = err.code;
+  if (code === "ER_DUP_ENTRY")
+    return { status: 409, text: "Ya existe un usuario con ese tel\xE9fono o correo. B\xFAscalo en Usuarios." };
+  if (code === "ER_BAD_FIELD_ERROR" || code === "ER_NO_SUCH_TABLE") {
+    return { status: 503, text: "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." };
+  }
+  return { status: 502, text: `No se pudo completar la operaci\xF3n (${code ?? "base de datos no disponible"}).` };
+}
+function toVehicle(data) {
+  return {
+    make: data.make,
+    model: data.model,
+    year: data.year,
+    currentKm: data.currentKm,
+    vehicleClass: data.vehicleClass,
+    fuel: data.fuel,
+    plate: data.plate,
+    usageProfile: data.usageProfile,
+    remindersOptIn: data.reminders
+  };
+}
+function flashFrom(request) {
+  const ok = request.query?.ok;
+  return typeof ok === "string" && OK_MESSAGES[ok] ? { kind: "ok", text: OK_MESSAGES[ok] } : void 0;
+}
+function registerRegistrationRoutes(app2, deps) {
+  const { registrations } = deps;
+  const errorPage = (request, reply, session, title, text, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text)}</p></div>`, session, status);
+  function withCsrf(request, reply) {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return null;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf)) {
+      errorPage(request, reply, session, "Solicitud inv\xE1lida", "Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.", 403);
+      return null;
+    }
+    return { session, body };
+  }
+  async function renderDetail(request, reply, session, id, extra = {}) {
+    let detail;
+    try {
+      detail = await registrations.getUserDetail(id);
+    } catch (err) {
+      const m = dbError(err);
+      return errorPage(request, reply, session, "Usuario", m.text, m.status);
+    }
+    if (!detail)
+      return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
+    const plans = {};
+    for (const vehicle of detail.vehicles)
+      plans[String(vehicle.id)] = planTextFor(vehicle);
+    return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values }), session, extra.status ?? 200);
+  }
+  app2.get("/users", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const query = request.query ?? {};
+    const q = typeof query.q === "string" ? query.q.trim().slice(0, 60) : "";
+    const raw = Number(query.page ?? 1);
+    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    try {
+      return deps.html(reply, request, "Usuarios", usersListView({ query: q, page: await registrations.searchUsers(q, page) }), session);
+    } catch (err) {
+      const m = dbError(err);
+      return errorPage(request, reply, session, "Usuarios", m.text, m.status);
+    }
+  });
+  app2.get("/users/new", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const requested = request.query?.perfil;
+    const perfil = PERFILES.includes(requested) ? requested : "dueno";
+    return deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: { consent: "", reminders: "on" } }), session);
+  });
+  app2.post("/users/new", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const perfil = PERFILES.includes(body.perfil) ? body.perfil : "dueno";
+    const invalid = (text, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text }), session, status);
+    const userFrom = async (data, keepEmail) => ({
+      phone: data.phone,
+      name: data.name,
+      city: data.city,
+      email: keepEmail ? data.email : null,
+      source: data.source,
+      notes: data.notes,
+      consentVersion: CONSENT_VERSION,
+      // Las cuentas creadas por el operador no inician sesión con contraseña: se guarda una aleatoria.
+      passwordHash: await hashPassword(randomBytes4(24).toString("hex"))
+    });
+    let userId;
+    try {
+      if (perfil === "dueno") {
+        const parsed = ownerSchema.safeParse(body);
+        if (!parsed.success)
+          return invalid(parsed.error.issues[0]?.message ?? "Datos inv\xE1lidos", 400);
+        userId = await registrations.createOwner(await userFrom(parsed.data, true), toVehicle(parsed.data));
+      } else if (perfil === "taller") {
+        const parsed = shopSchema.safeParse(body);
+        if (!parsed.success)
+          return invalid(parsed.error.issues[0]?.message ?? "Datos inv\xE1lidos", 400);
+        const d = parsed.data;
+        userId = await registrations.createShop(await userFrom(d, false), {
+          name: d.businessName,
+          address: d.address,
+          city: d.city,
+          zone: d.zone,
+          ruc: d.ruc,
+          hours: d.hours,
+          contactName: d.name,
+          email: d.email,
+          services: d.services
+        });
+      } else {
+        const parsed = storeSchema.safeParse(body);
+        if (!parsed.success)
+          return invalid(parsed.error.issues[0]?.message ?? "Datos inv\xE1lidos", 400);
+        const d = parsed.data;
+        userId = await registrations.createStore(await userFrom(d, false), {
+          name: d.businessName,
+          address: d.address,
+          city: d.city,
+          zone: d.zone,
+          ruc: d.ruc,
+          hours: d.hours,
+          contactName: d.name,
+          email: d.email,
+          categories: d.categories,
+          delivery: d.delivery
+        });
+      }
+    } catch (err) {
+      const m = dbError(err);
+      return invalid(m.text, m.status);
+    }
+    await deps.audit("admin.user.create", session.userId, `Alta de ${ROLE_LABELS[perfil]} ${userId} desde el panel`);
+    return reply.redirect(`/admin/users/${userId}?ok=creado`, 302);
+  });
+  app2.get("/users/:id", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
+    return renderDetail(request, reply, session, id, { flash: flashFrom(request) });
+  });
+  app2.post("/users/:id/vehicles", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
+    const parsed = vehicleSchema.safeParse(body);
+    if (!parsed.success) {
+      return renderDetail(request, reply, session, id, { error: parsed.error.issues[0]?.message ?? "Datos inv\xE1lidos", values: body, status: 400 });
+    }
+    try {
+      const detail = await registrations.getUserDetail(id);
+      if (!detail || String(detail.user.role) !== "dueno") {
+        return errorPage(request, reply, session, "Usuario", "Solo se agregan veh\xEDculos a due\xF1os registrados.", 400);
+      }
+      await registrations.addVehicle(id, toVehicle(parsed.data));
+    } catch (err) {
+      const m = dbError(err);
+      return renderDetail(request, reply, session, id, { error: m.text, values: body, status: m.status });
+    }
+    await deps.audit("admin.vehicle.create", session.userId, `Veh\xEDculo agregado al usuario ${id}`);
+    return reply.redirect(`/admin/users/${id}?ok=vehiculo`, 302);
+  });
+  app2.get("/verifications", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    try {
+      return deps.html(reply, request, "Verificaciones", verificationsView({ items: await registrations.pendingVerifications(), flash: flashFrom(request) }), session);
+    } catch (err) {
+      const m = dbError(err);
+      return errorPage(request, reply, session, "Verificaciones", m.text, m.status);
+    }
+  });
+  app2.post("/verifications/:kind/:id", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { kind, id } = request.params;
+    if (kind !== "shop" && kind !== "store" || !UUID.test(id)) {
+      return errorPage(request, reply, session, "Verificaciones", "Registro no encontrado.", 404);
+    }
+    const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
+    const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "";
+    const returnTo = typeof body.returnTo === "string" && UUID.test(body.returnTo) ? body.returnTo : null;
+    const fail = (text, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text }, status }) : errorPage(request, reply, session, "Verificaciones", text, status);
+    if (!decision)
+      return fail("Elige aprobar o rechazar.", 400);
+    if (decision === "rejected" && reason.length < 5)
+      return fail("Para rechazar escribe la observaci\xF3n que recibir\xE1 la entidad.", 400);
+    try {
+      const updated = await registrations.setVerification(kind, id, decision);
+      if (!updated)
+        return fail("Registro no encontrado.", 404);
+    } catch (err) {
+      const m = dbError(err);
+      return fail(m.text, m.status);
+    }
+    const label = kind === "shop" ? "Taller" : "Almac\xE9n";
+    await deps.audit(`admin.verification.${decision}`, session.userId, `${label} ${id}: ${reason || "sin observaciones"}`);
+    const ok = decision === "verified" ? "verificado" : "rechazado";
+    return reply.redirect(returnTo ? `/admin/users/${returnTo}?ok=${ok}` : `/admin/verifications?ok=${ok}`, 302);
+  });
+}
+var UUID, OK_MESSAGES;
+var init_registrations = __esm({
+  "packages/api/dist/interfaces/admin/registrations.js"() {
+    "use strict";
+    init_page();
+    init_password();
+    init_security();
+    init_schemas2();
+    init_plan_text();
+    init_views_registrations();
+    UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    OK_MESSAGES = {
+      creado: "Registro creado.",
+      vehiculo: "Veh\xEDculo agregado.",
+      verificado: "Verificaci\xF3n aprobada.",
+      rechazado: "Verificaci\xF3n rechazada."
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/registration/registration-store.js
+function rows2(result) {
+  return Array.isArray(result[0]) ? result[0] : [];
+}
+function parseServices(raw) {
+  if (Array.isArray(raw))
+    return raw.map(String);
+  if (typeof raw === "string") {
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed.map(String) : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+function pendingItem(kind) {
+  return (r) => ({
+    kind,
+    id: String(r.id),
+    userId: String(r.userId),
+    name: String(r.name),
+    city: String(r.city),
+    ruc: r.ruc ? String(r.ruc) : null,
+    createdAt: r.createdAt
+  });
+}
+var PAGE_SIZE2, MysqlRegistrationStore;
+var init_registration_store = __esm({
+  "packages/api/dist/infrastructure/registration/registration-store.js"() {
+    "use strict";
+    PAGE_SIZE2 = 25;
+    MysqlRegistrationStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      transaction(work) {
+        return this.run(async (conn) => {
+          await conn.query("START TRANSACTION");
+          try {
+            const result = await work(conn);
+            await conn.query("COMMIT");
+            return result;
+          } catch (err) {
+            await conn.query("ROLLBACK").catch(() => void 0);
+            throw err;
+          }
+        });
+      }
+      async uuid(conn) {
+        return String(rows2(await conn.query("SELECT UUID() AS id"))[0]?.id);
+      }
+      async insertUser(conn, user, role) {
+        const id = await this.uuid(conn);
+        await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'es', ?, CURRENT_TIMESTAMP(3), ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, user.email, user.phone, user.passwordHash, role, user.name, user.city, user.consentVersion, user.source, user.notes]);
+        return id;
+      }
+      async insertVehicle(conn, userId, v) {
+        const id = await this.uuid(conn);
+        await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, userId, v.make, v.model, v.year, v.currentKm, v.vehicleClass, v.fuel, v.plate, v.usageProfile, v.remindersOptIn]);
+        return id;
+      }
+      createOwner(user, vehicle) {
+        return this.transaction(async (conn) => {
+          const userId = await this.insertUser(conn, user, "dueno");
+          await this.insertVehicle(conn, userId, vehicle);
+          return userId;
+        });
+      }
+      createShop(user, shop) {
+        return this.transaction(async (conn) => {
+          const userId = await this.insertUser(conn, user, "taller");
+          const id = await this.uuid(conn);
+          await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, userId, shop.name, shop.address, shop.city, shop.zone, shop.ruc, shop.hours, shop.contactName, shop.email, JSON.stringify(shop.services)]);
+          return userId;
+        });
+      }
+      createStore(user, store) {
+        return this.transaction(async (conn) => {
+          const userId = await this.insertUser(conn, user, "almacen");
+          const id = await this.uuid(conn);
+          await conn.query("INSERT INTO `Store` (id, userId, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, userId, store.name, store.address, store.city, store.zone, store.ruc, store.hours, store.contactName, store.email, store.categories, store.delivery]);
+          return userId;
+        });
+      }
+      addVehicle(userId, vehicle) {
+        return this.run((conn) => this.insertVehicle(conn, userId, vehicle));
+      }
+      searchUsers(query, page) {
+        return this.run(async (conn) => {
+          const q = query.trim();
+          const like = `%${q.replace(/[\\%_]/g, "\\$&")}%`;
+          const digits = q.replace(/\D/g, "");
+          const likePhone = digits ? `%${digits}%` : like;
+          const items = rows2(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE2, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2]));
+          return { items, page, pageSize: PAGE_SIZE2 };
+        });
+      }
+      getUserDetail(id) {
+        return this.run(async (conn) => {
+          const user = rows2(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
+          if (!user)
+            return null;
+          const vehicles = rows2(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
+          const shopRow = rows2(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
+          const store = rows2(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
+          return {
+            user,
+            vehicles,
+            shop: shopRow ? { ...shopRow, services: parseServices(shopRow.specialties) } : null,
+            store: store ?? null
+          };
+        });
+      }
+      pendingVerifications() {
+        return this.run(async (conn) => {
+          const shops = rows2(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
+          const stores = rows2(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
+          return [...shops, ...stores].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        });
+      }
+      setVerification(kind, id, status) {
+        return this.run(async (conn) => {
+          const [result] = kind === "shop" ? await conn.query("UPDATE `Shop` SET verificationStatus = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [status, id]) : await conn.query("UPDATE `Store` SET verificationStatus = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [status, id]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      recentUsers(limit) {
+        return this.run(async (conn) => rows2(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
+      }
+      pendingCount() {
+        return this.run(async (conn) => {
+          const shops = Number(rows2(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const stores = Number(rows2(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          return shops + stores;
+        });
+      }
+    };
+  }
+});
+
 // packages/api/dist/interfaces/admin/index.js
 var admin_exports = {};
 __export(admin_exports, {
   adminPanelRoutes: () => adminPanelRoutes,
   default: () => admin_default
 });
-import { randomBytes as randomBytes4 } from "node:crypto";
+import { randomBytes as randomBytes5 } from "node:crypto";
 async function adminPanelRoutes(app2, options = {}) {
   const connect = options.connect ?? (() => openConnection());
   const store = options.store ?? new MysqlAdminStore(connect);
   const settings = options.settings ?? new MysqlSettingsStore(connect);
+  const registrations = options.registrations ?? new MysqlRegistrationStore(connect);
+  const dashboardDb = () => !!options.connect || !!options.registrations || missingDbEnv().length === 0;
   const startedAt = Date.now();
   app2.decorateRequest("cspNonce", "");
   app2.addContentTypeParser("application/x-www-form-urlencoded", { parseAs: "string" }, (_request, body, done) => {
     try {
-      done(null, Object.fromEntries(new URLSearchParams(String(body))));
+      const parsed = {};
+      for (const [key, value2] of new URLSearchParams(String(body))) {
+        const previous = parsed[key];
+        parsed[key] = previous === void 0 ? value2 : Array.isArray(previous) ? [...previous, value2] : [previous, value2];
+      }
+      done(null, parsed);
     } catch (err) {
       done(err, void 0);
     }
   });
   app2.addHook("onRequest", async (request, reply) => {
-    request.cspNonce = randomBytes4(16).toString("base64");
+    request.cspNonce = randomBytes5(16).toString("base64");
     reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${request.cspNonce}'; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`).header("X-Frame-Options", "DENY").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("Cache-Control", "no-store");
     if (!getAdminSessionSecret()) {
       return reply.code(503).type("text/html; charset=utf-8").send(layout({
@@ -86763,6 +89344,7 @@ async function adminPanelRoutes(app2, options = {}) {
   }
   registerSetupWizard(app2, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
   registerAccountRoutes(app2, { store, requireSession, html, audit });
+  registerRegistrationRoutes(app2, { registrations, requireSession, html, audit });
   registerSettingsRoutes(app2, {
     store,
     settings,
@@ -86851,21 +89433,32 @@ async function adminPanelRoutes(app2, options = {}) {
     if (!session)
       return reply;
     let data = null;
-    let dbError;
+    let dbError2;
     try {
       data = await store.dashboard();
     } catch (err) {
-      dbError = err.code ?? "Base de datos no conectada";
+      dbError2 = err.code ?? "Base de datos no conectada";
+    }
+    let recent = null;
+    let pending = null;
+    if (dashboardDb()) {
+      try {
+        [recent, pending] = await Promise.all([registrations.recentUsers(5), registrations.pendingCount()]);
+      } catch {
+        recent = null;
+        pending = null;
+      }
     }
     return html(reply, request, "Tablero", dashboardView({
       data,
+      recent,
+      pendingVerifications: pending,
       version: process.env.APP_VERSION ?? "dev",
       uptimeSeconds: Math.floor((Date.now() - startedAt) / 1e3),
-      dbError
+      dbError: dbError2
     }), session);
   });
   const lists = [
-    { path: "/users", title: "Usuarios", load: (p) => store.listUsers(p), columns: [["name", "Nombre"], ["role", "Perfil"], ["locale", "Idioma"], ["createdAt", "Alta"]] },
     { path: "/vehicles", title: "Veh\xEDculos", load: (p) => store.listVehicles(p), columns: [["make", "Marca"], ["model", "Modelo"], ["year", "A\xF1o"], ["currentKm", "Km"], ["createdAt", "Alta"]] },
     { path: "/shops", title: "Talleres", load: (p) => store.listShops(p), columns: [["name", "Nombre"], ["city", "Ciudad"], ["verificationStatus", "Verificaci\xF3n"], ["ratingAvg", "Calificaci\xF3n"], ["createdAt", "Alta"]] },
     { path: "/audit", title: "Auditor\xEDa", load: (p) => store.listAudit(p), columns: [["createdAt", "Fecha"], ["eventType", "Evento"], ["actorRole", "Rol"], ["reason", "Detalle"]] }
@@ -86897,6 +89490,8 @@ var init_admin = __esm({
     init_setup_wizard();
     init_account();
     init_settings();
+    init_registrations();
+    init_registration_store();
     init_settings_store();
     init_entry();
     GENERIC_LOGIN_ERROR = "Correo, contrase\xF1a o c\xF3digo incorrectos.";
@@ -86961,8 +89556,8 @@ function getClient() {
 var prisma = new Proxy({}, {
   get(_target, prop) {
     const real = getClient();
-    const value = real[prop];
-    return typeof value === "function" ? value.bind(real) : value;
+    const value2 = real[prop];
+    return typeof value2 === "function" ? value2.bind(real) : value2;
   }
 });
 
@@ -88441,9 +91036,9 @@ function loadGatewayConfig(env = process.env) {
     const missing = [];
     for (const tier of TIERS) {
       const envVar = MODEL_ENV_VARS[tier];
-      const value = env[envVar];
-      if (value) {
-        models[tier] = value;
+      const value2 = env[envVar];
+      if (value2) {
+        models[tier] = value2;
       } else {
         missing.push(envVar);
       }
@@ -88490,25 +91085,25 @@ var SENSITIVE_MASK = "[dato:REDACTED]";
 function redactPii(text) {
   return text.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
 }
-function redactValue(value, key) {
-  if (typeof value === "string") {
+function redactValue(value2, key) {
+  if (typeof value2 === "string") {
     if (SENSITIVE_KEYS.test(key))
       return SENSITIVE_MASK;
-    return redactPii(value);
+    return redactPii(value2);
   }
-  if (Array.isArray(value))
-    return value.map((item, i) => redactValue(item, key));
-  if (value !== null && typeof value === "object") {
+  if (Array.isArray(value2))
+    return value2.map((item, i) => redactValue(item, key));
+  if (value2 !== null && typeof value2 === "object") {
     const out = {};
-    for (const [k, v] of Object.entries(value)) {
+    for (const [k, v] of Object.entries(value2)) {
       out[k] = redactValue(v, k);
     }
     return out;
   }
-  return value;
+  return value2;
 }
-function redactJsonArgs(value) {
-  const redacted = redactValue(value, "");
+function redactJsonArgs(value2) {
+  const redacted = redactValue(value2, "");
   try {
     return JSON.stringify(redacted);
   } catch {
@@ -88727,8 +91322,8 @@ ${params.summary}`);
     if (!content)
       return { valid: false };
     try {
-      const value = JSON.parse(content);
-      const result = schema.safeParse(value);
+      const value2 = JSON.parse(content);
+      const result = schema.safeParse(value2);
       if (result.success)
         return { valid: true, value: result.data };
       return { valid: false };
@@ -89574,7 +92169,7 @@ init_entry();
 init_apply();
 init_settings_store();
 init_whatsapp_number();
-import { randomBytes as randomBytes5 } from "node:crypto";
+import { randomBytes as randomBytes6 } from "node:crypto";
 import_dotenv.default.config();
 var PORT = Number(process.env.PORT) || 3e3;
 var HOST = process.env.LISTEN_HOST || "0.0.0.0";
@@ -89596,7 +92191,7 @@ if (secretIsStrong) {
   jwtSecret = configuredSecret;
   jwtSecretSource = "env";
 } else if (isProduction) {
-  jwtSecret = randomBytes5(48).toString("hex");
+  jwtSecret = randomBytes6(48).toString("hex");
   jwtSecretSource = "ephemeral";
   app.log.warn({ jwtSecretPresent: !!configuredSecret }, "JWT_SECRET ausente o d\xE9bil: se usa un secreto ef\xEDmero aleatorio; configure JWT_SECRET (>= 32 caracteres) en la plataforma");
 } else {
@@ -89664,6 +92259,21 @@ app.setErrorHandler((error, request, reply) => {
 try {
   await app.listen({ port: PORT, host: HOST });
   app.log.info(`AutoMantPro API running on http://${HOST}:${PORT}`);
+  if (missingDbEnv().length === 0) {
+    void (async () => {
+      try {
+        const conn = await openConnection();
+        try {
+          const report = await applySchema(conn);
+          app.log.info({ applied: report.applied, failed: report.failed, tables: report.after.tables }, "esquema verificado al arrancar");
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      } catch (err) {
+        app.log.warn({ code: err.code }, "no se pudo verificar el esquema al arrancar");
+      }
+    })();
+  }
 } catch (err) {
   app.log.error(err);
   process.exit(1);

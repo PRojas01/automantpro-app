@@ -14,6 +14,11 @@ export declare function findByPhone(phone: string): Promise<{
     passwordHash: string;
     role: import("@prisma/client").$Enums.Role;
     locale: string;
+    city: string | null;
+    consentAt: Date | null;
+    consentVersion: string | null;
+    source: string | null;
+    notes: string | null;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date | null;
@@ -26,6 +31,11 @@ export declare function validateCredentials(input: LoginInput): Promise<{
     passwordHash: string;
     role: import("@prisma/client").$Enums.Role;
     locale: string;
+    city: string | null;
+    consentAt: Date | null;
+    consentVersion: string | null;
+    source: string | null;
+    notes: string | null;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date | null;

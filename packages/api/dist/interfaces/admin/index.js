@@ -7,6 +7,8 @@ import { dashboardView, layout, loginView, messageView, tableView, twoFactorView
 import { adminCount, registerSetupWizard } from "./setup-wizard.js";
 import { registerAccountRoutes } from "./account.js";
 import { registerSettingsRoutes } from "./settings.js";
+import { registerRegistrationRoutes } from "./registrations.js";
+import { MysqlRegistrationStore } from "../../infrastructure/registration/registration-store.js";
 import { MysqlSettingsStore } from "../../infrastructure/settings/settings-store.js";
 import { publicNumber } from "../entry/index.js";
 const GENERIC_LOGIN_ERROR = "Correo, contraseña o código incorrectos.";
@@ -16,11 +18,19 @@ export async function adminPanelRoutes(app, options = {}) {
     const connect = options.connect ?? (() => openConnection());
     const store = options.store ?? new MysqlAdminStore(connect);
     const settings = options.settings ?? new MysqlSettingsStore(connect);
+    const registrations = options.registrations ?? new MysqlRegistrationStore(connect);
+    const dashboardDb = () => !!options.connect || !!options.registrations || missingDbEnv().length === 0;
     const startedAt = Date.now();
     app.decorateRequest("cspNonce", "");
     app.addContentTypeParser("application/x-www-form-urlencoded", { parseAs: "string" }, (_request, body, done) => {
         try {
-            done(null, Object.fromEntries(new URLSearchParams(String(body))));
+            // Los campos repetidos (casillas de selección múltiple) llegan como arreglo.
+            const parsed = {};
+            for (const [key, value] of new URLSearchParams(String(body))) {
+                const previous = parsed[key];
+                parsed[key] = previous === undefined ? value : Array.isArray(previous) ? [...previous, value] : [previous, value];
+            }
+            done(null, parsed);
         }
         catch (err) {
             done(err, undefined);
@@ -70,6 +80,7 @@ export async function adminPanelRoutes(app, options = {}) {
     }
     registerSetupWizard(app, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
     registerAccountRoutes(app, { store, requireSession, html, audit });
+    registerRegistrationRoutes(app, { registrations, requireSession, html, audit });
     registerSettingsRoutes(app, {
         store,
         settings,
@@ -174,15 +185,27 @@ export async function adminPanelRoutes(app, options = {}) {
         catch (err) {
             dbError = err.code ?? "Base de datos no conectada";
         }
+        let recent = null;
+        let pending = null;
+        if (dashboardDb()) {
+            try {
+                [recent, pending] = await Promise.all([registrations.recentUsers(5), registrations.pendingCount()]);
+            }
+            catch {
+                recent = null;
+                pending = null;
+            }
+        }
         return html(reply, request, "Tablero", dashboardView({
             data,
+            recent,
+            pendingVerifications: pending,
             version: process.env.APP_VERSION ?? "dev",
             uptimeSeconds: Math.floor((Date.now() - startedAt) / 1000),
             dbError,
         }), session);
     });
     const lists = [
-        { path: "/users", title: "Usuarios", load: (p) => store.listUsers(p), columns: [["name", "Nombre"], ["role", "Perfil"], ["locale", "Idioma"], ["createdAt", "Alta"]] },
         { path: "/vehicles", title: "Vehículos", load: (p) => store.listVehicles(p), columns: [["make", "Marca"], ["model", "Modelo"], ["year", "Año"], ["currentKm", "Km"], ["createdAt", "Alta"]] },
         { path: "/shops", title: "Talleres", load: (p) => store.listShops(p), columns: [["name", "Nombre"], ["city", "Ciudad"], ["verificationStatus", "Verificación"], ["ratingAvg", "Calificación"], ["createdAt", "Alta"]] },
         { path: "/audit", title: "Auditoría", load: (p) => store.listAudit(p), columns: [["createdAt", "Fecha"], ["eventType", "Evento"], ["actorRole", "Rol"], ["reason", "Detalle"]] },

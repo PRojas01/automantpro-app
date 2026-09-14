@@ -42,5 +42,9 @@ export declare function missingDbEnv(env?: NodeJS.ProcessEnv): string[];
 /** Abre una conexión con mysql2 (una sola sentencia por consulta). */
 export declare function openConnection(env?: NodeJS.ProcessEnv): Promise<SqlConnection>;
 export declare function getSchemaStatus(conn: SqlConnection): Promise<SchemaStatus>;
+/**
+ * Aplica el esquema. Las ejecuciones del mismo proceso van en fila (el arranque del servidor y el
+ * botón del panel pueden coincidir); entre procesos, los errores de "ya existe" no detienen nada.
+ */
 export declare function applySchema(conn: SqlConnection, statements?: readonly SchemaStatement[]): Promise<SchemaReport>;
 //# sourceMappingURL=apply.d.ts.map

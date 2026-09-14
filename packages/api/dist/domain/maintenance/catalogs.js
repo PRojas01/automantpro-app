@@ -1,9 +1,7 @@
-import { createRequire } from "node:module";
+import vehicleClassesRaw from "./vehicle-classes.json" with { type: "json" };
+import taxonomyRaw from "./service-taxonomy.json" with { type: "json" };
+import rulesRaw from "./maintenance-rules.json" with { type: "json" };
 import { vehicleClassesSchema, serviceTaxonomySchema, maintenanceRulesSchema, } from "./schemas.js";
-const require = createRequire(import.meta.url);
-const vehicleClassesRaw = require("./vehicle-classes.json");
-const taxonomyRaw = require("./service-taxonomy.json");
-const rulesRaw = require("./maintenance-rules.json");
 /** Catálogo de clases validado con zod al cargar (lanza si el JSON es inválido). */
 export const vehicleClasses = vehicleClassesSchema.parse(vehicleClassesRaw);
 /** Taxonomía de servicios validada con zod al cargar. */

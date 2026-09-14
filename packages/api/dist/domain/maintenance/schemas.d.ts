@@ -51,8 +51,8 @@ export declare const vehicleClassesSchema: z.ZodObject<{
         id: string;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
-    version: string;
     source: string;
+    version: string;
     classes: {
         name: string;
         id: string;
@@ -65,8 +65,8 @@ export declare const vehicleClassesSchema: z.ZodObject<{
     generatedAt?: string | undefined;
     note?: string | undefined;
 }, {
-    version: string;
     source: string;
+    version: string;
     classes: {
         name: string;
         id: string;
@@ -302,8 +302,8 @@ export declare const serviceTaxonomySchema: z.ZodObject<{
         }[];
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
-    version: string;
     source: string;
+    version: string;
     categories: {
         name: string;
         id: string;
@@ -325,8 +325,8 @@ export declare const serviceTaxonomySchema: z.ZodObject<{
     generatedAt?: string | undefined;
     note?: string | undefined;
 }, {
-    version: string;
     source: string;
+    version: string;
     categories: {
         name: string;
         id: string;
@@ -404,8 +404,8 @@ export declare const maintenanceRulesSchema: z.ZodObject<{
         note?: string | undefined;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
-    version: string;
     source: string;
+    version: string;
     rules: {
         intervalKm: number | null;
         serviceId: string;
@@ -418,8 +418,8 @@ export declare const maintenanceRulesSchema: z.ZodObject<{
     generatedAt?: string | undefined;
     note?: string | undefined;
 }, {
-    version: string;
     source: string;
+    version: string;
     rules: {
         intervalKm: number | null;
         serviceId: string;

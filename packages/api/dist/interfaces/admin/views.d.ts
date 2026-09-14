@@ -14,6 +14,8 @@ export declare function dashboardView(input: {
     version: string;
     uptimeSeconds: number;
     dbError?: string;
+    recent?: Array<Record<string, unknown>> | null;
+    pendingVerifications?: number | null;
 }): string;
 export declare function tableView(title: string, base: string, page: Page<Record<string, unknown>>, columns: Array<[string, string]>): string;
 //# sourceMappingURL=views.d.ts.map

@@ -7,8 +7,8 @@ export declare function listPendingVerification(page: number, limit: number): Pr
             phone: string;
         };
         id: string;
-        address: string;
         city: string;
+        address: string;
         verificationStatus: import("@prisma/client").$Enums.VerificationStatus;
     }[];
     meta: {
@@ -20,15 +20,20 @@ export declare function listPendingVerification(page: number, limit: number): Pr
 export declare function verifyShop(shopId: string, status: "verified" | "rejected"): Promise<{
     name: string;
     id: string;
+    email: string | null;
+    city: string;
     createdAt: Date;
     updatedAt: Date;
     userId: string;
     address: string;
-    city: string;
     lat: number | null;
     lng: number | null;
     specialties: import("@prisma/client/runtime/library").JsonValue | null;
     verificationStatus: import("@prisma/client").$Enums.VerificationStatus;
     ratingAvg: number;
+    ruc: string | null;
+    zone: string | null;
+    hours: string | null;
+    contactName: string | null;
 } | null>;
 //# sourceMappingURL=admin.service.d.ts.map

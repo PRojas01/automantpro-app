@@ -1,0 +1,74 @@
+{
+  "version": "1.0.0",
+  "source": "docs/25-diseno-producto-whatsapp-30dias.md §1.3 — clases y combustibles",
+  "generatedAt": "2026-09-11",
+  "note": "Catálogo maestro de clases de vehículo y combustibles. Las clases son las 8 de la cobertura global; 'liviano' agrupa sedán, hatchback, SUV y pickup (misma lógica de mantenimiento).",
+  "classes": [
+    {
+      "id": "motocicleta",
+      "name": "Motocicleta / Scooter",
+      "subtypes": ["moto", "scooter", "motocicleta", "vespa", "cielo"]
+    },
+    {
+      "id": "cuadron",
+      "name": "Cuadrón / ATV",
+      "subtypes": ["cuadron", "atv", "cuatrimoto", "quad", "cuv"]
+    },
+    {
+      "id": "liviano",
+      "name": "Liviano (sedán, hatchback, SUV, pickup)",
+      "subtypes": ["sedan", "sedán", "hatchback", "suv", "camioneta", "pickup", "auto", "carro", "vehiculo"]
+    },
+    {
+      "id": "van",
+      "name": "Van / Furgoneta",
+      "subtypes": ["van", "furgoneta", "furgon", "panel"]
+    },
+    {
+      "id": "comercial_liviano",
+      "name": "Comercial liviano",
+      "subtypes": ["comercial_liviano", "comercial", "reparto", "furgon"]
+    },
+    {
+      "id": "camion",
+      "name": "Camión mediano / pesado",
+      "subtypes": ["camion", "camin", "truck", "cabezal", "volqueta", "carguero"]
+    },
+    {
+      "id": "bus",
+      "name": "Bus / Buseta",
+      "subtypes": ["bus", "buseta", "cooperativa", "colectivo", "transporte_publico"]
+    },
+    {
+      "id": "maquinaria_liviana",
+      "name": "Maquinaria liviana",
+      "subtypes": ["maquinaria", "maquinaria_liviana", "tractor", "retroexcavadora", "montacarga"]
+    }
+  ],
+  "fuels": [
+    {
+      "id": "gasolina",
+      "name": "Gasolina"
+    },
+    {
+      "id": "diesel",
+      "name": "Diésel"
+    },
+    {
+      "id": "hev",
+      "name": "Híbrido (HEV)"
+    },
+    {
+      "id": "phev",
+      "name": "Híbrido enchufable (PHEV)"
+    },
+    {
+      "id": "bev",
+      "name": "Eléctrico (BEV)"
+    },
+    {
+      "id": "glp_gnv",
+      "name": "GLP / GNV (gas)"
+    }
+  ]
+}

@@ -9,8 +9,8 @@ export declare function list(filters: ShopFilters): Promise<{
     data: {
         name: string;
         id: string;
-        address: string;
         city: string;
+        address: string;
         specialties: import("@prisma/client/runtime/library").JsonValue;
         verificationStatus: import("@prisma/client").$Enums.VerificationStatus;
         ratingAvg: number;
@@ -24,8 +24,8 @@ export declare function list(filters: ShopFilters): Promise<{
 export declare function findById(id: string): Promise<{
     name: string;
     id: string;
-    address: string;
     city: string;
+    address: string;
     lat: number | null;
     lng: number | null;
     specialties: import("@prisma/client/runtime/library").JsonValue;
@@ -39,16 +39,21 @@ export declare function getAvailability(shopId: string, date?: string): Promise<
 export declare function findByUserId(userId: string): Promise<{
     name: string;
     id: string;
+    email: string | null;
+    city: string;
     createdAt: Date;
     updatedAt: Date;
     userId: string;
     address: string;
-    city: string;
     lat: number | null;
     lng: number | null;
     specialties: import("@prisma/client/runtime/library").JsonValue | null;
     verificationStatus: import("@prisma/client").$Enums.VerificationStatus;
     ratingAvg: number;
+    ruc: string | null;
+    zone: string | null;
+    hours: string | null;
+    contactName: string | null;
 } | null>;
 export {};
 //# sourceMappingURL=shop.service.d.ts.map
