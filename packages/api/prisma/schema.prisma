@@ -95,6 +95,7 @@ model User {
   conversationsB Conversation[] @relation("ConversationUserB")
   subscriptions  Subscription[]
   transactions   Transaction[]
+  adminTotp      AdminTotp?
 }
 
 model Vehicle {
@@ -449,4 +450,14 @@ model Rating {
   score     Int
   comment   String?
   createdAt DateTime @default(now())
+}
+
+// Secreto TOTP (segundo factor) de las cuentas de administrador del panel /admin.
+model AdminTotp {
+  userId    String   @id
+  secret    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }

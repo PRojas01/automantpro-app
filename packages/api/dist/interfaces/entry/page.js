@@ -1,0 +1,102 @@
+// HTML de la página de entrada (docs/33 §1.2). Todo en línea: el servidor se empaqueta en un
+// único server.mjs, así que no se leen archivos del disco ni se usan CDNs externos.
+export function escapeHtml(value) {
+    return value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+export function buildLinks(number, code, ref) {
+    const text = `Hola AutoMantPro, quiero empezar. Código: ${code}${ref ? ` (ref: ${ref})` : ""}`;
+    const encoded = encodeURIComponent(text);
+    return {
+        text,
+        app: `whatsapp://send?phone=${number}&text=${encoded}`,
+        wame: `https://wa.me/${number}?text=${encoded}`,
+        web: `https://web.whatsapp.com/send?phone=${number}&text=${encoded}`,
+    };
+}
+function formatNumber(number) {
+    // 593XXXXXXXXX → +593 XX XXX XXXX (solo para mostrar)
+    if (number.startsWith("593") && number.length === 12) {
+        return `+593 ${number.slice(3, 5)} ${number.slice(5, 8)} ${number.slice(8)}`;
+    }
+    return `+${number}`;
+}
+const STYLES = `
+:root{--bg:#f5f8fa;--card:#ffffff;--text:#0f1b24;--muted:#51626f;--cyan:#00a8c6;--green:#16a34a;--ring:rgba(0,168,198,.35)}
+@media (prefers-color-scheme:dark){:root{--bg:#071116;--card:#0d1c24;--text:#e6f1f5;--muted:#9fb3bf;--cyan:#22d3ee;--green:#4ade80;--ring:rgba(34,211,238,.35)}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;padding:24px}
+main{width:100%;max-width:460px;background:var(--card);border-radius:20px;padding:32px 24px;box-shadow:0 10px 40px rgba(0,0,0,.08);text-align:center}
+.brand{font-weight:800;font-size:28px;letter-spacing:-.5px;margin:0}
+.brand span{color:var(--cyan)}
+.lead{font-size:20px;margin:8px 0 20px}
+ul{list-style:none;padding:0;margin:0 0 28px;text-align:left;display:grid;gap:10px}
+li{padding-left:28px;position:relative;color:var(--muted)}
+li::before{content:"✓";position:absolute;left:4px;color:var(--green);font-weight:700}
+.cta{display:block;width:100%;min-height:56px;border:0;border-radius:14px;background:var(--green);color:#fff;font-size:19px;font-weight:700;cursor:pointer}
+.cta:focus-visible{outline:4px solid var(--ring);outline-offset:2px}
+.cta:disabled{background:var(--muted);cursor:not-allowed}
+.small{margin-top:18px;font-size:14px;color:var(--muted)}
+.small a{color:var(--cyan)}
+.soon{margin-top:14px;font-weight:600}
+.legal{margin-top:22px;font-size:12px;color:var(--muted)}
+`;
+const SCRIPT = `
+(function(){
+  var b=document.getElementById('abrir');
+  if(!b||b.disabled)return;
+  b.addEventListener('click',function(){
+    var mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent||'');
+    if(mobile){
+      var start=Date.now();
+      window.location.href=b.getAttribute('data-app');
+      setTimeout(function(){
+        if(document.visibilityState==='visible'&&Date.now()-start<2500){window.location.href=b.getAttribute('data-wame');}
+      },1200);
+    }else{
+      var w=window.open(b.getAttribute('data-web'),'_blank','noopener');
+      if(!w){window.location.href=b.getAttribute('data-wame');}
+    }
+  });
+})();
+`;
+export function renderEntryPage(input) {
+    const nonce = escapeHtml(input.nonce);
+    const available = input.number !== null;
+    const links = available ? buildLinks(input.number, input.code, input.ref) : null;
+    const button = links
+        ? `<button id="abrir" class="cta" type="button" data-app="${escapeHtml(links.app)}" data-wame="${escapeHtml(links.wame)}" data-web="${escapeHtml(links.web)}">Abrir WhatsApp</button>
+    <p class="small">Escríbenos al <strong>${escapeHtml(formatNumber(input.number))}</strong> · <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> · <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a></p>
+    <p class="small">Tu código de inicio: <strong>${escapeHtml(input.code)}</strong></p>`
+        : `<button id="abrir" class="cta" type="button" disabled>Abrir WhatsApp</button>
+    <p class="soon">Muy pronto disponible por WhatsApp</p>`;
+    return `<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoMantPro · Tu mecánico de confianza en WhatsApp</title>
+<meta name="description" content="Diagnóstico con IA, plan de mantenimiento y talleres verificados, todo por WhatsApp.">
+<style nonce="${nonce}">${STYLES}</style>
+</head>
+<body>
+<main>
+  <h1 class="brand">Auto<span>Mant</span>Pro</h1>
+  <p class="lead">Tu mecánico de confianza, en WhatsApp</p>
+  <ul>
+    <li>Diagnóstico de tu vehículo con IA</li>
+    <li>Plan de mantenimiento a tu medida</li>
+    <li>Talleres y repuestos verificados cerca de ti</li>
+  </ul>
+  ${button}
+  <p class="legal">Al escribirnos aceptas nuestros <a href="/terminos">términos y política de privacidad</a> (LOPDP).</p>
+</main>
+<script nonce="${nonce}">${SCRIPT}</script>
+</body>
+</html>`;
+}
+//# sourceMappingURL=page.js.map
