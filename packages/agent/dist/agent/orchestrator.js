@@ -1,22 +1,32 @@
-import { MockLLMProvider } from "../llm/mock.js";
-import { OpenAIProvider } from "../llm/openai.js";
+import { CallCycle } from "../llm-gateway/call-cycle.js";
+import { fromLegacyProvider, MockLLMAdapter } from "../llm-gateway/adapters/mock.js";
+import { OpenAIAdapter } from "../llm-gateway/adapters/openai.js";
+import { buildConfig, loadGatewayConfig } from "../llm-gateway/config.js";
+import { InMemoryPromptStore, InMemoryQuotaStore, InMemoryToolCallStore, InMemoryToolExecutor, InMemoryUsageStore, } from "../llm-gateway/ports.js";
 import { AGENT_TOOLS } from "./tools.js";
-import { loadSystemPrompt, buildInitialGreeting } from "../prompts/loader.js";
+import { buildInitialGreeting } from "../prompts/loader.js";
 export class AgentOrchestrator {
-    llm;
+    providerKind;
     toolHandlers = new Map();
     sessions = new Map();
-    constructor(provider) {
-        if (provider === "openai") {
-            this.llm = new OpenAIProvider();
-        }
-        else {
-            this.llm = new MockLLMProvider();
-        }
+    promptStore = new InMemoryPromptStore();
+    usageStore = new InMemoryUsageStore();
+    toolCallStore = new InMemoryToolCallStore();
+    quota = new InMemoryQuotaStore();
+    cycle = null;
+    adapterOverride = null;
+    configOverride = null;
+    constructor(provider = "mock") {
+        this.providerKind = provider;
         this.registerDefaultTools();
     }
+    setConfig(config) {
+        this.configOverride = config;
+        this.cycle = null;
+    }
     setLLMProvider(provider) {
-        this.llm = provider;
+        this.adapterOverride = fromLegacyProvider(provider);
+        this.cycle = null;
     }
     registerTool(name, handler) {
         this.toolHandlers.set(name, handler);
@@ -30,50 +40,23 @@ export class AgentOrchestrator {
             session = { messages: [], firstMessage: true };
             this.sessions.set(sessionId, session);
         }
-        const systemPrompt = loadSystemPrompt();
-        const messages = [
-            { role: "system", content: systemPrompt },
-            ...session.messages,
-        ];
+        const priorTurns = [...session.messages];
         if (session.firstMessage) {
             session.firstMessage = false;
             session.messages.push({ role: "user", content: userMessage });
             const greeting = buildInitialGreeting();
             session.messages.push({ role: "assistant", content: greeting });
-            const llmMessages = [
-                { role: "system", content: systemPrompt },
-                ...messages.map((m) => ({ role: m.role, content: m.content })),
-                { role: "user", content: userMessage },
-            ];
-            const response = await this.llm.chat(llmMessages, AGENT_TOOLS);
-            if (response.tool_calls && response.tool_calls.length > 0) {
-                const toolCalls = this.convertToolCalls(response.tool_calls);
-                const toolResults = await this.executeToolCalls(toolCalls);
-                const assistantMsg = response.content ?? this.buildToolResponse(toolResults);
-                session.messages.push({ role: "assistant", content: assistantMsg });
-                return assistantMsg;
-            }
-            const assistantMsg = response.content ?? greeting;
-            session.messages.push({ role: "assistant", content: assistantMsg });
-            return assistantMsg;
+            const result = await this.runCycle(priorTurns, userMessage);
+            const reply = result.outcome === "ok" && result.content ? result.content : greeting;
+            if (reply !== greeting)
+                session.messages[session.messages.length - 1].content = reply;
+            return reply;
         }
         session.messages.push({ role: "user", content: userMessage });
-        const llmMessages = [
-            { role: "system", content: systemPrompt },
-            ...messages.map((m) => ({ role: m.role, content: m.content })),
-            { role: "user", content: userMessage },
-        ];
-        const response = await this.llm.chat(llmMessages, AGENT_TOOLS);
-        if (response.tool_calls && response.tool_calls.length > 0) {
-            const toolCalls = this.convertToolCalls(response.tool_calls);
-            const toolResults = await this.executeToolCalls(toolCalls);
-            const assistantMsg = response.content ?? this.buildToolResponse(toolResults);
-            session.messages.push({ role: "assistant", content: assistantMsg });
-            return assistantMsg;
-        }
-        const assistantMsg = response.content ?? "¿En qué puedo ayudarte?";
-        session.messages.push({ role: "assistant", content: assistantMsg });
-        return assistantMsg;
+        const result = await this.runCycle(priorTurns, userMessage);
+        const reply = result.content ?? "¿En qué puedo ayudarte?";
+        session.messages.push({ role: "assistant", content: reply });
+        return reply;
     }
     getSessionMessages(sessionId) {
         return this.sessions.get(sessionId)?.messages ?? [];
@@ -81,47 +64,41 @@ export class AgentOrchestrator {
     clearSession(sessionId) {
         this.sessions.delete(sessionId);
     }
-    convertToolCalls(toolCalls) {
-        return toolCalls.map((tc) => ({
-            name: tc.function.name,
-            arguments: JSON.parse(tc.function.arguments || "{}"),
-        }));
+    getUsage() {
+        return this.usageStore.list();
     }
-    async executeToolCalls(toolCalls) {
-        const results = [];
-        for (const tc of toolCalls) {
-            const handler = this.toolHandlers.get(tc.name);
-            if (handler) {
-                try {
-                    const result = await handler(tc.arguments);
-                    results.push(result);
-                }
-                catch (err) {
-                    results.push({
-                        toolName: tc.name,
-                        success: false,
-                        data: null,
-                        error: err instanceof Error ? err.message : String(err),
-                    });
-                }
-            }
-            else {
-                results.push({
-                    toolName: tc.name,
-                    success: false,
-                    data: null,
-                    error: `Tool '${tc.name}' not registered`,
-                });
-            }
-        }
-        return results;
+    getToolCalls() {
+        return this.toolCallStore.list();
     }
-    buildToolResponse(results) {
-        const successful = results.filter((r) => r.success);
-        if (successful.length === 0) {
-            return "No pude procesar la solicitud. ¿Podrías提供更多 detalles?";
-        }
-        return JSON.stringify(successful.map((r) => r.data), null, 2);
+    ensureCycle() {
+        if (this.cycle)
+            return this.cycle;
+        const config = this.configOverride ??
+            (this.providerKind === "openai" ? loadGatewayConfig() : buildConfig({ provider: "mock" }));
+        const adapter = this.adapterOverride ??
+            (this.providerKind === "openai" ? new OpenAIAdapter(config) : new MockLLMAdapter());
+        const executor = new InMemoryToolExecutor(this.toolHandlers);
+        this.cycle = new CallCycle({
+            adapter,
+            promptStore: this.promptStore,
+            executor,
+            quota: this.quota,
+            usageStore: this.usageStore,
+            toolCallStore: this.toolCallStore,
+            config,
+        });
+        return this.cycle;
+    }
+    async runCycle(priorTurns, userMessage) {
+        const cycle = this.ensureCycle();
+        const params = {
+            agent: "owner",
+            tier: "fast",
+            turns: priorTurns,
+            userMessage,
+            tools: AGENT_TOOLS,
+        };
+        return cycle.run(params);
     }
     registerDefaultTools() {
         this.toolHandlers.set("register_vehicle", async (args) => ({

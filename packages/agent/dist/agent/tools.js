@@ -71,6 +71,7 @@ export const AGENT_TOOLS = [
     {
         name: "book_appointment",
         description: "Agenda una cita con un taller certificado y genera un link de WhatsApp para contacto directo.",
+        requiresConfirmation: true,
         parameters: {
             type: "object",
             properties: {

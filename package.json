@@ -14,7 +14,7 @@
     "@prisma/client": "^6.19.3",
     "asn1.js": "^5.4.1",
     "sonic-boom": "^5.0.1",
-    "prisma": "^6.12.0"
+    "prisma": "^6.19.3"
   },
   "workspaces": [
     "packages/api",

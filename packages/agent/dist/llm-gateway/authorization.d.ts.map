@@ -1,0 +1,1 @@
+{"version":3,"file":"authorization.d.ts","sourceRoot":"","sources":["../../src/llm-gateway/authorization.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,YAAY,CAAC;AA2C5C,eAAO,MAAM,oBAAoB,EAAE,MAAM,CAAC,SAAS,EAAE,MAAM,EAAE,CAW5D,CAAC;AAEF,wBAAgB,qBAAqB,CAAC,KAAK,EAAE,SAAS,EAAE,QAAQ,EAAE,MAAM,GAAG,OAAO,CAEjF"}

@@ -80,6 +80,7 @@ export interface ToolDefinition {
     name: string;
     description: string;
     parameters: Record<string, unknown>;
+    requiresConfirmation?: boolean;
 }
 export interface ToolResult {
     toolName: string;
@@ -100,6 +101,7 @@ export interface LLMMessage {
     content: string;
     tool_call_id?: string;
     name?: string;
+    tool_calls?: LLMToolCall[];
 }
 export interface LLMToolCall {
     id: string;
