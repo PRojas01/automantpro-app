@@ -801,7 +801,7 @@ var require_plugin = __commonJS({
         debug("exec: resolving promise", name);
         maybePromiseLike.then(
           () => process.nextTick(done),
-          (e2) => process.nextTick(done, e2)
+          (e3) => process.nextTick(done, e3)
         );
       } else if (func.length < 3) {
         done();
@@ -1411,7 +1411,7 @@ var require_avvio = __commonJS({
           debug("resolving close/onClose promise");
           promise.then(
             () => process.nextTick(cb),
-            (e2) => process.nextTick(cb, e2)
+            (e3) => process.nextTick(cb, e3)
           );
         } else {
           process.nextTick(cb);
@@ -2445,8 +2445,8 @@ var require_hooks = __commonJS({
         if (fn.length === 1) {
           try {
             fn.call(server2, done);
-          } catch (e2) {
-            done(e2);
+          } catch (e3) {
+            done(e3);
           }
           return;
         }
@@ -5671,7 +5671,7 @@ var require_initial_config_validation = __commonJS({
     function validateInitialConfig(options) {
       const opts = deepClone(options);
       if (!validate(opts)) {
-        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e2) => e2.message)));
+        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e3) => e3.message)));
         error.errors = validate.errors;
         throw error;
       }
@@ -6901,7 +6901,7 @@ var require_quick_format_unescaped = __commonJS({
     function tryStringify(o) {
       try {
         return JSON.stringify(o);
-      } catch (e2) {
+      } catch (e3) {
         return '"[Circular]"';
       }
     }
@@ -8976,7 +8976,7 @@ var require_levels = __commonJS({
           if (typeof stream.flushSync === "function") {
             try {
               stream.flushSync();
-            } catch (e2) {
+            } catch (e3) {
             }
           }
         };
@@ -11625,9 +11625,9 @@ var require_reply = __commonJS({
         } else {
           payload = serialize(reply[kRouteContext], payload, reply.raw.statusCode, reply[kReplyHeaders]["content-type"]);
         }
-      } catch (e2) {
-        wrapSerializationError(e2, reply);
-        onErrorHook(reply, e2);
+      } catch (e3) {
+        wrapSerializationError(e3, reply);
+        onErrorHook(reply, e3);
         return;
       }
       onSendHook(reply, payload);
@@ -12320,8 +12320,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e2) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e2 });
+        } catch (e3) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e3 });
         }
       };
       ipaddr.IPv4.isIPv4 = function(string) {
@@ -12370,8 +12370,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e2) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e2 });
+        } catch (e3) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e3 });
         }
       };
       ipaddr.IPv4.parse = function(string) {
@@ -12696,8 +12696,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e2) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e2 });
+        } catch (e3) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e3 });
         }
       };
       ipaddr.IPv6.isIPv6 = function(string) {
@@ -12739,8 +12739,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e2) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e2 });
+        } catch (e3) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e3 });
         }
       };
       ipaddr.IPv6.parse = function(string) {
@@ -12852,8 +12852,8 @@ var require_ipaddr = __commonJS({
         } catch {
           try {
             return ipaddr.IPv4.parseCIDR(string);
-          } catch (e2) {
-            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e2 });
+          } catch (e3) {
+            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e3 });
           }
         }
       };
@@ -13472,13 +13472,13 @@ var require_context = __commonJS({
       this.server = server;
     }
     function defaultSchemaErrorFormatter(errors, dataVar) {
-      let text = "";
+      let text2 = "";
       const separator = ", ";
       for (let i = 0; i !== errors.length; ++i) {
-        const e2 = errors[i];
-        text += dataVar + (e2.instancePath || "") + " " + e2.message + separator;
+        const e3 = errors[i];
+        text2 += dataVar + (e3.instancePath || "") + " " + e3.message + separator;
       }
-      return new Error(text.slice(0, -separator.length));
+      return new Error(text2.slice(0, -separator.length));
     }
     module.exports = Context;
   }
@@ -13491,20 +13491,20 @@ var require_secure_json_parse = __commonJS({
     var hasBuffer = typeof Buffer !== "undefined";
     var suspectProtoRx = /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
     var suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
-    function _parse(text, reviver, options) {
+    function _parse(text2, reviver, options) {
       if (options == null) {
         if (reviver !== null && typeof reviver === "object") {
           options = reviver;
           reviver = void 0;
         }
       }
-      if (hasBuffer && Buffer.isBuffer(text)) {
-        text = text.toString();
+      if (hasBuffer && Buffer.isBuffer(text2)) {
+        text2 = text2.toString();
       }
-      if (text && text.charCodeAt(0) === 65279) {
-        text = text.slice(1);
+      if (text2 && text2.charCodeAt(0) === 65279) {
+        text2 = text2.slice(1);
       }
-      const obj = JSON.parse(text, reviver);
+      const obj = JSON.parse(text2, reviver);
       if (obj === null || typeof obj !== "object") {
         return obj;
       }
@@ -13514,15 +13514,15 @@ var require_secure_json_parse = __commonJS({
         return obj;
       }
       if (protoAction !== "ignore" && constructorAction !== "ignore") {
-        if (suspectProtoRx.test(text) === false && suspectConstructorRx.test(text) === false) {
+        if (suspectProtoRx.test(text2) === false && suspectConstructorRx.test(text2) === false) {
           return obj;
         }
       } else if (protoAction !== "ignore" && constructorAction === "ignore") {
-        if (suspectProtoRx.test(text) === false) {
+        if (suspectProtoRx.test(text2) === false) {
           return obj;
         }
       } else {
-        if (suspectConstructorRx.test(text) === false) {
+        if (suspectConstructorRx.test(text2) === false) {
           return obj;
         }
       }
@@ -13560,20 +13560,20 @@ var require_secure_json_parse = __commonJS({
       }
       return obj;
     }
-    function parse(text, reviver, options) {
+    function parse(text2, reviver, options) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text, reviver, options);
+        return _parse(text2, reviver, options);
       } finally {
         Error.stackTraceLimit = stackTraceLimit;
       }
     }
-    function safeParse(text, reviver) {
+    function safeParse(text2, reviver) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text, reviver, { safe: true });
+        return _parse(text2, reviver, { safe: true });
       } catch {
         return void 0;
       } finally {
@@ -14471,17 +14471,17 @@ var require_codegen = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e2 = this.else;
-        if (e2) {
-          const ns = e2.optimizeNodes();
-          e2 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e3 = this.else;
+        if (e3) {
+          const ns = e3.optimizeNodes();
+          e3 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e2) {
+        if (e3) {
           if (cond === false)
-            return e2 instanceof _If ? e2 : e2.nodes;
+            return e3 instanceof _If ? e3 : e3.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e2 instanceof _If ? [e2] : e2.nodes);
+          return new _If(not(cond), e3 instanceof _If ? [e3] : e3.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -14925,8 +14925,8 @@ var require_codegen = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e2) {
-        return e2 instanceof code_1._Code && e2._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e3) {
+        return e3 instanceof code_1._Code && e3._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -15794,7 +15794,7 @@ var require_keyword = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e2) => gen.assign(valid, false).if((0, codegen_1._)`${e2} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e2}.errors`), () => gen.throw(e2)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e3) => gen.assign(valid, false).if((0, codegen_1._)`${e3} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e3}.errors`), () => gen.throw(e3)));
         return ruleErrs;
       }
       function validateSync() {
@@ -16871,12 +16871,12 @@ var require_compile = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e2) {
+      } catch (e3) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e2;
+        throw e3;
       } finally {
         this._compilations.delete(sch);
       }
@@ -17930,8 +17930,8 @@ var require_fast_uri = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e2) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e2;
+        } catch (e3) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e3;
           return true;
         }
       }
@@ -18317,11 +18317,11 @@ var require_core = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e2) {
-            if (!(e2 instanceof ref_error_1.default))
-              throw e2;
-            checkLoaded.call(this, e2);
-            await loadMissingSchema.call(this, e2.missingSchema);
+          } catch (e3) {
+            if (!(e3 instanceof ref_error_1.default))
+              throw e3;
+            checkLoaded.call(this, e3);
+            await loadMissingSchema.call(this, e3.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
@@ -18517,7 +18517,7 @@ var require_core = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e2) => `${dataVar}${e2.instancePath} ${e2.message}`).reduce((text, msg) => text + separator + msg);
+        return errors.map((e3) => `${dataVar}${e3.instancePath} ${e3.message}`).reduce((text2, msg) => text2 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -18825,9 +18825,9 @@ var require_ref = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e2) => {
-          gen.if((0, codegen_1._)`!(${e2} instanceof ${it.ValidationError})`, () => gen.throw(e2));
-          addErrorsFrom(e2);
+        }, (e3) => {
+          gen.if((0, codegen_1._)`!(${e3} instanceof ${it.ValidationError})`, () => gen.throw(e3));
+          addErrorsFrom(e3);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -21673,12 +21673,12 @@ var require_serialize = __commonJS({
         const serialize = makeSerialize(this.scope.get());
         this.scope.value(serializeName, { ref: serialize });
         sch.serialize = serialize;
-      } catch (e2) {
+      } catch (e3) {
         if (sourceCode)
           this.logger.error("Error compiling serializer, function code:", sourceCode);
         delete sch.serialize;
         delete sch.serializeName;
-        throw e2;
+        throw e3;
       } finally {
         this._compilations.delete(sch);
       }
@@ -21867,8 +21867,8 @@ var require_parseJson = __commonJS({
       try {
         parseJson.position = pos + s.length;
         return JSON.parse(s);
-      } catch (e2) {
-        matches = rxParseJson.exec(e2.message);
+      } catch (e3) {
+        matches = rxParseJson.exec(e3.message);
         if (!matches) {
           parseJson.message = "unexpected end";
           return void 0;
@@ -22084,12 +22084,12 @@ var require_parse = __commonJS({
         const parse = makeParse(this.scope.get());
         this.scope.value(parseName, { ref: parse });
         sch.parse = parse;
-      } catch (e2) {
+      } catch (e3) {
         if (sourceCode)
           this.logger.error("Error compiling parser, function code:", sourceCode);
         delete sch.parse;
         delete sch.parseName;
-        throw e2;
+        throw e3;
       } finally {
         this._compilations.delete(sch);
       }
@@ -23642,8 +23642,8 @@ var require_fast_uri2 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e2) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e2;
+        } catch (e3) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e3;
           return true;
         }
       }
@@ -24040,7 +24040,7 @@ var require_formats = __commonJS({
       try {
         new RegExp(str);
         return true;
-      } catch (e2) {
+      } catch (e3) {
         return false;
       }
     }
@@ -25381,17 +25381,17 @@ var require_codegen2 = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e2 = this.else;
-        if (e2) {
-          const ns = e2.optimizeNodes();
-          e2 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e3 = this.else;
+        if (e3) {
+          const ns = e3.optimizeNodes();
+          e3 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e2) {
+        if (e3) {
           if (cond === false)
-            return e2 instanceof _If ? e2 : e2.nodes;
+            return e3 instanceof _If ? e3 : e3.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e2 instanceof _If ? [e2] : e2.nodes);
+          return new _If(not(cond), e3 instanceof _If ? [e3] : e3.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -25835,8 +25835,8 @@ var require_codegen2 = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e2) {
-        return e2 instanceof code_1._Code && e2._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e3) {
+        return e3 instanceof code_1._Code && e3._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -26704,7 +26704,7 @@ var require_keyword2 = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e2) => gen.assign(valid, false).if((0, codegen_1._)`${e2} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e2}.errors`), () => gen.throw(e2)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e3) => gen.assign(valid, false).if((0, codegen_1._)`${e3} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e3}.errors`), () => gen.throw(e3)));
         return ruleErrs;
       }
       function validateSync() {
@@ -27746,12 +27746,12 @@ var require_compile2 = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e2) {
+      } catch (e3) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e2;
+        throw e3;
       } finally {
         this._compilations.delete(sch);
       }
@@ -28805,8 +28805,8 @@ var require_fast_uri3 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e2) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e2;
+        } catch (e3) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e3;
           return true;
         }
       }
@@ -29192,11 +29192,11 @@ var require_core3 = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e2) {
-            if (!(e2 instanceof ref_error_1.default))
-              throw e2;
-            checkLoaded.call(this, e2);
-            await loadMissingSchema.call(this, e2.missingSchema);
+          } catch (e3) {
+            if (!(e3 instanceof ref_error_1.default))
+              throw e3;
+            checkLoaded.call(this, e3);
+            await loadMissingSchema.call(this, e3.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
@@ -29392,7 +29392,7 @@ var require_core3 = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e2) => `${dataVar}${e2.instancePath} ${e2.message}`).reduce((text, msg) => text + separator + msg);
+        return errors.map((e3) => `${dataVar}${e3.instancePath} ${e3.message}`).reduce((text2, msg) => text2 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -29700,9 +29700,9 @@ var require_ref3 = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e2) => {
-          gen.if((0, codegen_1._)`!(${e2} instanceof ${it.ValidationError})`, () => gen.throw(e2));
-          addErrorsFrom(e2);
+        }, (e3) => {
+          gen.if((0, codegen_1._)`!(${e3} instanceof ${it.ValidationError})`, () => gen.throw(e3));
+          addErrorsFrom(e3);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -32822,8 +32822,8 @@ var require_fast_uri4 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e2) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e2;
+        } catch (e3) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e3;
           return true;
         }
       }
@@ -33202,7 +33202,7 @@ var require_formats2 = __commonJS({
       try {
         new RegExp(str);
         return true;
-      } catch (e2) {
+      } catch (e3) {
         return false;
       }
     }
@@ -42778,7 +42778,7 @@ var require_dist5 = __commonJS({
         return str;
       try {
         return decodeURIComponent(str);
-      } catch (e2) {
+      } catch (e3) {
         return str;
       }
     }
@@ -43160,10 +43160,10 @@ var require_set_cookie = __commonJS({
       }
       try {
         value2 = options.decodeValues ? decodeURIComponent(value2) : value2;
-      } catch (e2) {
+      } catch (e3) {
         console.error(
           "set-cookie-parser: failed to decode cookie value. Set options.decodeValues=false to disable decoding.",
-          e2
+          e3
         );
       }
       var cookie = createNullObj();
@@ -44385,7 +44385,7 @@ var require_light_my_request = __commonJS({
         assert(typeof dispatchFunc === "function", "dispatchFunc should be a function");
         const isOptionValid = optsValidator(options);
         if (!isOptionValid) {
-          throw new Error(optsValidator.errors.map((e2) => e2.message));
+          throw new Error(optsValidator.errors.map((e3) => e3.message));
         }
       }
       const server = options.server || {};
@@ -45341,9 +45341,9 @@ var require_getPluginName = __commonJS({
       Error.stackTraceLimit = 10;
       try {
         throw new Error("anonymous function");
-      } catch (e2) {
+      } catch (e3) {
         Error.stackTraceLimit = stackTraceLimit;
-        return extractPluginName(e2.stack);
+        return extractPluginName(e3.stack);
       }
     };
     function extractPluginName(stack) {
@@ -45859,9 +45859,9 @@ var require_decoder = __commonJS({
           throw new TokenError(TokenError.codes.invalidPayload, "The payload must be an object", { payload });
         }
         return complete ? { header, payload, signature: signatureSegment, input: token.slice(0, lastSeparator) } : payload;
-      } catch (e2) {
+      } catch (e3) {
         throw TokenError.wrap(
-          e2,
+          e3,
           TokenError.codes.malformed,
           `The token ${validHeader ? "payload" : "header"} is not a valid base64url serialized JSON.`
         );
@@ -46358,7 +46358,7 @@ var require_bn = __commonJS({
         } else {
           Buffer2 = __require("buffer").Buffer;
         }
-      } catch (e2) {
+      } catch (e3) {
       }
       BN.isBN = function isBN(num) {
         if (num instanceof BN) {
@@ -49171,7 +49171,7 @@ var require_inherits = __commonJS({
       util2 = __require("util");
       if (typeof util2.inherits !== "function") throw "";
       module.exports = util2.inherits;
-    } catch (e2) {
+    } catch (e3) {
       module.exports = require_inherits_browser();
     }
     var util2;
@@ -49231,7 +49231,7 @@ var require_safer = __commonJS({
     if (!safer.kStringMaxLength) {
       try {
         safer.kStringMaxLength = process.binding("buffer").kStringMaxLength;
-      } catch (e2) {
+      } catch (e3) {
       }
     }
     if (!safer.constants) {
@@ -49338,8 +49338,8 @@ var require_reporter = __commonJS({
       if (!this.stack) {
         try {
           throw new Error(this.message);
-        } catch (e2) {
-          this.stack = e2.stack;
+        } catch (e3) {
+          this.stack = e3.stack;
         }
       }
       return this;
@@ -49759,7 +49759,7 @@ var require_node2 = __commonJS({
             else
               this._decodeChoice(input, options);
             present = true;
-          } catch (e2) {
+          } catch (e3) {
             present = false;
           }
           input.restore(save);
@@ -49878,7 +49878,7 @@ var require_node2 = __commonJS({
             return false;
           result = { type: key, value: value2 };
           match = true;
-        } catch (e2) {
+        } catch (e3) {
           input.restore(save);
           return false;
         }
@@ -50988,7 +50988,7 @@ var require_crypto = __commonJS({
       createHmac: createHmac3,
       createVerify,
       createSign,
-      timingSafeEqual: timingSafeEqual4,
+      timingSafeEqual: timingSafeEqual3,
       createPublicKey,
       constants: {
         RSA_PKCS1_PSS_PADDING,
@@ -51186,12 +51186,12 @@ var require_crypto = __commonJS({
           return cacheSet(privateKeysCache, key, providedAlgorithm);
         }
         return cacheSet(privateKeysCache, key, detectedAlgorithm);
-      } catch (e2) {
+      } catch (e3) {
         throw cacheSet(
           privateKeysCache,
           key,
           null,
-          TokenError.wrap(e2, TokenError.codes.invalidKey, "Unsupported PEM private key.")
+          TokenError.wrap(e3, TokenError.codes.invalidKey, "Unsupported PEM private key.")
         );
       }
     }
@@ -51215,12 +51215,12 @@ var require_crypto = __commonJS({
           throw new TokenError(TokenError.codes.invalidKey, "The public key must be a string or a buffer.");
         }
         return cacheSet(publicKeysCache, key, performDetectPublicKeyAlgorithms(key));
-      } catch (e2) {
+      } catch (e3) {
         throw cacheSet(
           publicKeysCache,
           key,
           null,
-          TokenError.wrap(e2, TokenError.codes.invalidKey, "Unsupported PEM public key.")
+          TokenError.wrap(e3, TokenError.codes.invalidKey, "Unsupported PEM public key.")
         );
       }
     }
@@ -51254,8 +51254,8 @@ var require_crypto = __commonJS({
             raw = directSign(void 0, Buffer.from(input, "utf-8"), key).toString("base64");
         }
         return raw.replace(base64UrlMatcher, base64UrlReplacer);
-      } catch (e2) {
-        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e2 });
+      } catch (e3) {
+        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e3 });
       }
     }
     function verifySignature(algorithm, key, input, signature) {
@@ -51265,7 +51265,7 @@ var require_crypto = __commonJS({
         signature = Buffer.from(signature, "base64");
         if (type === "HS") {
           try {
-            return timingSafeEqual4(createHmac3(alg, key).update(input).digest(), signature);
+            return timingSafeEqual3(createHmac3(alg, key).update(input).digest(), signature);
           } catch {
             return false;
           }
@@ -51284,8 +51284,8 @@ var require_crypto = __commonJS({
           signature = joseToDer(signature, algorithm);
         }
         return createVerify("RSA-" + alg).update(input).verify(options, signature);
-      } catch (e2) {
-        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e2 });
+      } catch (e3) {
+        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e3 });
       }
     }
     module.exports = {
@@ -51307,7 +51307,7 @@ var require_crypto = __commonJS({
 var require_utils5 = __commonJS({
   "node_modules/fast-jwt/src/utils.js"(exports, module) {
     "use strict";
-    var { createHash: createHash2 } = __require("node:crypto");
+    var { createHash } = __require("node:crypto");
     var algorithmMatcher = /"alg"\s*:\s*"[HERP]S(256|384)"/m;
     var edAlgorithmMatcher = /"alg"\s*:\s*"EdDSA"/m;
     var ed448CurveMatcher = /"crv"\s*:\s*"Ed448"/m;
@@ -51343,10 +51343,10 @@ var require_utils5 = __commonJS({
       const header = Buffer.from(rawHeader, "base64").toString("utf-8");
       let hasher;
       if (header.match(edAlgorithmMatcher) && header.match(ed448CurveMatcher)) {
-        hasher = createHash2("shake256", { outputLength: 114 });
+        hasher = createHash("shake256", { outputLength: 114 });
       } else {
         const mo = header.match(algorithmMatcher);
-        hasher = createHash2(`sha${mo ? mo[1] : "512"}`);
+        hasher = createHash(`sha${mo ? mo[1] : "512"}`);
       }
       return hasher.update(token).digest("hex");
     }
@@ -51638,12 +51638,12 @@ var require_verifier = __commonJS({
       let decoded;
       try {
         decoded = decode(token);
-      } catch (e2) {
+      } catch (e3) {
         if (callback) {
-          callback(e2);
+          callback(e3);
           return promise;
         }
-        throw e2;
+        throw e3;
       }
       const { header, payload, signature, input } = decoded;
       const cacheContext = {
@@ -51672,8 +51672,8 @@ var require_verifier = __commonJS({
         try {
           verifyToken(key, decoded, validationContext);
           return cacheSet(cacheContext, complete ? { header, payload, signature, input } : payload);
-        } catch (e2) {
-          throw cacheSet(cacheContext, e2);
+        } catch (e3) {
+          throw cacheSet(cacheContext, e3);
         }
       }
       getAsyncKey(key, { header, payload, signature }, (err, currentKey) => {
@@ -51704,8 +51704,8 @@ var require_verifier = __commonJS({
           }
           currentKey = prepareKeyOrSecret(currentKey, availableAlgorithms[0] === hsAlgorithms[0]);
           verifyToken(currentKey, decoded, validationContext);
-        } catch (e2) {
-          return callback(cacheSet(cacheContext, e2));
+        } catch (e3) {
+          return callback(cacheSet(cacheContext, e3));
         }
         callback(null, cacheSet(cacheContext, complete ? { header, payload, signature, input: token } : payload));
       });
@@ -52023,8 +52023,8 @@ var require_signer = __commonJS({
           const encodedHeader = Buffer.from(JSON.stringify(header), "utf-8").toString("base64").replace(base64UrlMatcher, base64UrlReplacer);
           const input = encodedHeader + "." + encodedPayload;
           token = input + "." + createSignature(algorithm, currentKey, input);
-        } catch (e2) {
-          return callback(e2);
+        } catch (e3) {
+          return callback(e3);
         }
         callback(null, token);
       });
@@ -52809,8 +52809,8 @@ var require_jwt = __commonJS({
     function fastifyJwt(fastify, options, next) {
       try {
         validateOptions(options);
-      } catch (e2) {
-        return next(e2);
+      } catch (e3) {
+        return next(e3);
       }
       const {
         cookie,
@@ -53459,11 +53459,11 @@ var require_main = __commonJS({
         try {
           const parsed = DotenvModule.parse(fs.readFileSync(path2, { encoding }));
           DotenvModule.populate(parsedAll, parsed, options);
-        } catch (e2) {
+        } catch (e3) {
           if (debug) {
-            _debug(`Failed to load ${path2} ${e2.message}`);
+            _debug(`Failed to load ${path2} ${e3.message}`);
           }
-          lastError = e2;
+          lastError = e3;
         }
       }
       let processEnv = process.env;
@@ -53478,11 +53478,11 @@ var require_main = __commonJS({
           try {
             const relative = path.relative(process.cwd(), filePath);
             shortPaths.push(relative);
-          } catch (e2) {
+          } catch (e3) {
             if (debug) {
-              _debug(`Failed to load ${filePath} ${e2.message}`);
+              _debug(`Failed to load ${filePath} ${e3.message}`);
             }
-            lastError = e2;
+            lastError = e3;
           }
         }
         _log(`injecting env (${keysCount}) from ${shortPaths.join(",")}`);
@@ -53594,13 +53594,13 @@ var require_bcrypt = __commonJS({
         if (typeof module !== "undefined" && module && module["exports"])
           try {
             return __require("crypto")["randomBytes"](len);
-          } catch (e2) {
+          } catch (e3) {
           }
         try {
           var a;
           (self["crypto"] || self["msCrypto"])["getRandomValues"](a = new Uint32Array(len));
           return Array.prototype.slice.call(a);
-        } catch (e2) {
+        } catch (e3) {
         }
         if (!randomFallback)
           throw Error("Neither WebCryptoAPI nor a crypto module is available. Use bcrypt.setRandomFallback to set an alternative");
@@ -53610,7 +53610,7 @@ var require_bcrypt = __commonJS({
       try {
         random(1);
         randomAvailable = true;
-      } catch (e2) {
+      } catch (e3) {
       }
       randomFallback = null;
       bcrypt2.setRandomFallback = function(random2) {
@@ -55440,8 +55440,8 @@ var init_util = __esm({
         return util2.objectValues(filtered);
       };
       util2.objectValues = (obj) => {
-        return util2.objectKeys(obj).map(function(e2) {
-          return obj[e2];
+        return util2.objectKeys(obj).map(function(e3) {
+          return obj[e3];
         });
       };
       util2.objectKeys = typeof Object.keys === "function" ? (obj) => Object.keys(obj) : (object) => {
@@ -58687,13 +58687,13 @@ var init_types = __esm({
           const me = this;
           return OK(async function(...args) {
             const error = new ZodError([]);
-            const parsedArgs = await me._def.args.parseAsync(args, params).catch((e2) => {
-              error.addIssue(makeArgsIssue(args, e2));
+            const parsedArgs = await me._def.args.parseAsync(args, params).catch((e3) => {
+              error.addIssue(makeArgsIssue(args, e3));
               throw error;
             });
             const result = await Reflect.apply(fn, this, parsedArgs);
-            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params).catch((e2) => {
-              error.addIssue(makeReturnsIssue(result, e2));
+            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params).catch((e3) => {
+              error.addIssue(makeReturnsIssue(result, e3));
               throw error;
             });
             return parsedReturns;
@@ -59542,10 +59542,10 @@ function escapeHtml(value2) {
   return value2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 function buildLinks(number, code, ref) {
-  const text = `Hola AutoMantPro, quiero empezar. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
-  const encoded = encodeURIComponent(text);
+  const text2 = `Hola AutoMantPro, quiero empezar. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
+  const encoded = encodeURIComponent(text2);
   return {
-    text,
+    text: text2,
     app: `whatsapp://send?phone=${number}&text=${encoded}`,
     wame: `https://wa.me/${number}?text=${encoded}`,
     web: `https://web.whatsapp.com/send?phone=${number}&text=${encoded}`
@@ -60086,7 +60086,12 @@ var init_statements_extra = __esm({
       addColumn("Store", "email", "VARCHAR(191) NULL"),
       addColumn("Store", "categories", "TEXT NULL"),
       addColumn("Store", "delivery", "BOOLEAN NOT NULL DEFAULT false"),
-      addColumn("Store", "verificationStatus", "ENUM('pending', 'verified', 'rejected') NOT NULL DEFAULT 'pending'")
+      addColumn("Store", "verificationStatus", "ENUM('pending', 'verified', 'rejected') NOT NULL DEFAULT 'pending'"),
+      // Turnos agendados desde el panel (docs/34 D5 y T3).
+      addColumn("Appointment", "services", "JSON NULL"),
+      addColumn("Appointment", "notes", "TEXT NULL"),
+      addColumn("Appointment", "cancelReason", "VARCHAR(191) NULL"),
+      addColumn("Appointment", "updatedAt", "DATETIME(3) NULL")
     ];
   }
 });
@@ -69750,8 +69755,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res);
           done();
-        } catch (e2) {
-          done(e2);
+        } catch (e3) {
+          done(e3);
         }
       };
       IconvLiteEncoderStream.prototype._flush = function(done) {
@@ -69759,8 +69764,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res);
           done();
-        } catch (e2) {
-          done(e2);
+        } catch (e3) {
+          done(e3);
         }
       };
       IconvLiteEncoderStream.prototype.collect = function(cb) {
@@ -69791,8 +69796,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e2) {
-          done(e2);
+        } catch (e3) {
+          done(e3);
         }
       };
       IconvLiteDecoderStream.prototype._flush = function(done) {
@@ -69800,8 +69805,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e2) {
-          done(e2);
+        } catch (e3) {
+          done(e3);
         }
       };
       IconvLiteDecoderStream.prototype.collect = function(cb) {
@@ -69857,7 +69862,7 @@ var require_lib4 = __commonJS({
       try {
         module.exports.getCodec(enc);
         return true;
-      } catch (e2) {
+      } catch (e3) {
         return false;
       }
     };
@@ -69940,7 +69945,7 @@ var require_lib4 = __commonJS({
     var streamModule;
     try {
       streamModule = __require("stream");
-    } catch (e2) {
+    } catch (e3) {
     }
     if (streamModule && streamModule.Transform) {
       module.exports.enableStreamingAPI(streamModule);
@@ -70235,12 +70240,12 @@ var require_helpers = __commonJS({
       const REQUIRE_TERMINATOR = "";
       highlightFn = __require(`cardinal${REQUIRE_TERMINATOR}`).highlight;
     } catch {
-      highlightFn = (text) => {
+      highlightFn = (text2) => {
         if (!cardinalRecommended) {
           console.log("For nicer debug output consider install cardinal@^2.0.0");
           cardinalRecommended = true;
         }
-        return text;
+        return text2;
       };
     }
     function printDebugWithCode(msg, code) {
@@ -74942,9 +74947,9 @@ var require_client_handshake = __commonJS({
         }
       }
       handshakeInit(helloPacket, connection) {
-        this.on("error", (e2) => {
-          connection._fatalError = e2;
-          connection._protocolError = e2;
+        this.on("error", (e3) => {
+          connection._fatalError = e3;
+          connection._protocolError = e3;
         });
         this.handshake = Packets.Handshake.fromPacket(helloPacket);
         if (connection.config.debug) {
@@ -76698,21 +76703,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows3, fields;
+          let rows4, fields;
           if (this._resultIndex === 0) {
-            rows3 = this._rows[0];
+            rows4 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows3 = this._rows;
+            rows4 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows3, fields);
+              this.onResult(null, rows4, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows3);
+              this.onResult(null, rows4);
             });
           }
         }
@@ -79269,9 +79274,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows3, columns, binary = false) {
+      writeTextResult(rows4, columns, binary = false) {
         this.writeColumns(columns);
-        rows3.forEach((row) => {
+        rows4.forEach((row) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column) => {
             arrayRow.push(row[column.name]);
@@ -79381,12 +79386,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve, reject, stackHolder) {
-      return function(err, rows3, fields) {
+      return function(err, rows4, fields) {
         if (err) {
           applyCapturedStack(err, stackHolder);
           reject(err);
         } else {
-          resolve([rows3, fields]);
+          resolve([rows4, fields]);
         }
       };
     }
@@ -79994,9 +79999,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err2, rows3, fields) {
+              cmdQuery.onResult = function(err2, rows4, fields) {
                 queryError = err2 || null;
-                origOnResult(err2, rows3, fields);
+                origOnResult(err2, rows4, fields);
               };
             } else {
               cmdQuery.once("error", (err2) => {
@@ -80010,12 +80015,12 @@ var require_pool = __commonJS({
                 conn.release();
               }
             });
-          } catch (e2) {
+          } catch (e3) {
             conn.release();
             if (typeof cmdQuery.onResult === "function") {
-              cmdQuery.onResult(e2);
+              cmdQuery.onResult(e3);
             } else {
-              cmdQuery.emit("error", e2);
+              cmdQuery.emit("error", e3);
             }
           }
         });
@@ -80031,17 +80036,17 @@ var require_pool = __commonJS({
             return cb(err);
           }
           try {
-            conn.execute(sql, values, (err2, rows3, fields) => {
+            conn.execute(sql, values, (err2, rows4, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
-              cb(err2, rows3, fields);
+              cb(err2, rows4, fields);
             }).once("end", () => {
               conn.release();
             });
-          } catch (e2) {
+          } catch (e3) {
             conn.release();
-            return cb(e2);
+            return cb(e3);
           }
         });
       }
@@ -80327,9 +80332,9 @@ var require_pool_cluster = __commonJS({
             conn.query(query).once("end", () => {
               conn.release();
             });
-          } catch (e2) {
+          } catch (e3) {
             conn.release();
-            throw e2;
+            throw e3;
           }
         });
         return query;
@@ -80353,9 +80358,9 @@ var require_pool_cluster = __commonJS({
             conn.execute(sql, values, cb).once("end", () => {
               conn.release();
             });
-          } catch (e2) {
+          } catch (e3) {
             conn.release();
-            throw e2;
+            throw e3;
           }
         });
       }
@@ -80847,7 +80852,7 @@ function missingDbEnv(env = process.env) {
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise2(), 1));
   if (env.DATABASE_URL?.trim()) {
-    return await mysql.createConnection({ uri: env.DATABASE_URL, multipleStatements: false });
+    return await mysql.createConnection({ uri: env.DATABASE_URL, multipleStatements: false, timezone: "Z" });
   }
   return await mysql.createConnection({
     host: env.DB_HOST,
@@ -80856,12 +80861,13 @@ async function openConnection(env = process.env) {
     password: env.DB_PASSWORD,
     database: env.DB_NAME,
     multipleStatements: false,
+    timezone: "Z",
     connectTimeout: 1e4
   });
 }
 function firstRow(result) {
-  const rows3 = result[0];
-  return Array.isArray(rows3) ? rows3[0] : void 0;
+  const rows4 = result[0];
+  return Array.isArray(rows4) ? rows4[0] : void 0;
 }
 async function count(conn, sql, params) {
   const row = firstRow(await conn.query(sql, params));
@@ -80890,8 +80896,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows3] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows3) ? rows3.map((r) => String(r.name)) : [];
+  const [rows4] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows4) ? rows4.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -80929,15 +80935,15 @@ async function applySchemaNow(conn, statements = ALL_STATEMENTS) {
       await conn.query(statement.sql);
       results.push({ ...base, status: "applied" });
     } catch (err) {
-      const e2 = err;
-      if (e2.code && ALREADY_APPLIED.has(e2.code)) {
+      const e3 = err;
+      if (e3.code && ALREADY_APPLIED.has(e3.code)) {
         results.push({ ...base, status: "skipped" });
         continue;
       }
       results.push({
         ...base,
         status: "failed",
-        error: { code: e2.code ?? "UNKNOWN", message: e2.sqlMessage ?? e2.message ?? "Error desconocido" }
+        error: { code: e3.code ?? "UNKNOWN", message: e3.sqlMessage ?? e3.message ?? "Error desconocido" }
       });
       break;
     }
@@ -81020,8 +81026,8 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows3] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row = Array.isArray(rows3) ? rows3[0] : void 0;
+          const [rows4] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row = Array.isArray(rows4) ? rows4[0] : void 0;
           return row?.value === void 0 || row.value === null ? null : String(row.value);
         });
       }
@@ -81381,9 +81387,9 @@ function hotp(key, counter, digits = TOTP_DIGITS) {
   const counterBuffer = Buffer.alloc(8);
   counterBuffer.writeUInt32BE(Math.floor(counter / 4294967296), 0);
   counterBuffer.writeUInt32BE(counter >>> 0, 4);
-  const digest2 = createHmac2("sha1", key).update(counterBuffer).digest();
-  const byteAt = (index) => digest2[index] ?? 0;
-  const offset2 = byteAt(digest2.length - 1) & 15;
+  const digest = createHmac2("sha1", key).update(counterBuffer).digest();
+  const byteAt = (index) => digest[index] ?? 0;
+  const offset2 = byteAt(digest.length - 1) & 15;
   const binary = (byteAt(offset2) & 127) << 24 | (byteAt(offset2 + 1) & 255) << 16 | (byteAt(offset2 + 2) & 255) << 8 | byteAt(offset2 + 3) & 255;
   return String(binary % 10 ** digits).padStart(digits, "0");
 }
@@ -81450,136 +81456,11 @@ var init_security = __esm({
   }
 });
 
-// packages/api/dist/interfaces/setup/index.js
-var setup_exports = {};
-__export(setup_exports, {
-  default: () => setup_default,
-  setupRoutes: () => setupRoutes,
-  tokenMatches: () => tokenMatches
-});
-import { createHash, timingSafeEqual as timingSafeEqual3 } from "node:crypto";
-function digest(value2) {
-  return createHash("sha256").update(value2).digest();
-}
-function tokenMatches(provided, expected) {
-  if (typeof provided !== "string" || provided.length === 0)
-    return false;
-  return timingSafeEqual3(digest(provided), digest(expected));
-}
-async function setupRoutes(app2, options = {}) {
-  const env = options.env ?? process.env;
-  const connect = options.connect ?? (() => openConnection(env));
-  const adminStore = options.adminStore ?? new MysqlAdminStore(connect);
-  const failures = /* @__PURE__ */ new Map();
-  let running = false;
-  function notFound(request, reply) {
-    return reply.code(404).send({ message: `Route ${request.method}:${request.url} not found`, error: "Not Found", statusCode: 404 });
-  }
-  app2.addHook("onRequest", async (request, reply) => {
-    reply.header("Cache-Control", "no-store");
-    const expected = env.SETUP_TOKEN?.trim();
-    if (!expected || expected.length < 32)
-      return notFound(request, reply);
-    const now = Date.now();
-    const record = failures.get(request.ip);
-    if (record && now - record.windowStart > WINDOW_MS)
-      failures.delete(request.ip);
-    const current = failures.get(request.ip);
-    if (current && current.count >= MAX_FAILURES) {
-      return reply.code(429).send({ error: "Demasiados intentos; espera 15 minutos" });
-    }
-    if (!tokenMatches(request.headers["x-setup-token"], expected)) {
-      const next = current ?? { count: 0, windowStart: now };
-      next.count += 1;
-      failures.set(request.ip, next);
-      return reply.code(401).send({ error: "Token de configuraci\xF3n inv\xE1lido" });
-    }
-    failures.delete(request.ip);
-    const missing = options.connect ? [] : missingDbEnv(env);
-    if (missing.length > 0) {
-      return reply.code(503).send({ error: "Base de datos no configurada", missing });
-    }
-  });
-  async function withConnection(reply, work) {
-    let conn;
-    try {
-      conn = await connect();
-    } catch (err) {
-      const e2 = err;
-      return reply.code(502).send({ error: "No se pudo conectar a la base de datos", code: e2.code ?? "UNKNOWN" });
-    }
-    try {
-      return reply.send(await work(conn));
-    } finally {
-      await conn.end().catch(() => void 0);
-    }
-  }
-  app2.get("/schema", async (_request, reply) => withConnection(reply, (conn) => getSchemaStatus(conn)));
-  app2.post("/schema", async (_request, reply) => {
-    if (running)
-      return reply.code(409).send({ error: "Ya hay una aplicaci\xF3n del esquema en curso" });
-    running = true;
-    try {
-      return await withConnection(reply, (conn) => applySchema(conn));
-    } finally {
-      running = false;
-    }
-  });
-  app2.post("/admin", async (request, reply) => {
-    const parsed = adminInput.safeParse(request.body);
-    if (!parsed.success) {
-      return reply.code(400).send({
-        error: "Datos inv\xE1lidos: correo v\xE1lido, nombre de 3 a 60 caracteres y contrase\xF1a de al menos 12"
-      });
-    }
-    const { email, name, password } = parsed.data;
-    try {
-      const passwordHash = await hashPassword(password);
-      const totpSecret = generateTotpSecret();
-      const userId = await adminStore.upsertAdmin({ email, name, passwordHash, totpSecret, phone: `admin:${email}` });
-      await adminStore.recordAudit({ eventType: "admin.account.bootstrap", actorUserId: userId, reason: "Alta desde /setup/admin" }).catch(() => void 0);
-      return reply.send({
-        ok: true,
-        email,
-        otpauthUri: otpauthUri(email, totpSecret),
-        secret: totpSecret,
-        aviso: "Registra este c\xF3digo en tu app de autenticaci\xF3n ahora: no se volver\xE1 a mostrar."
-      });
-    } catch (err) {
-      const e2 = err;
-      return reply.code(502).send({
-        error: "No se pudo crear la cuenta de administrador",
-        code: e2.code ?? "UNKNOWN",
-        detalle: e2.sqlMessage ?? null
-      });
-    }
-  });
-}
-var MAX_FAILURES, WINDOW_MS, adminInput, setup_default;
-var init_setup = __esm({
-  "packages/api/dist/interfaces/setup/index.js"() {
-    "use strict";
-    init_zod();
-    init_apply();
-    init_admin_store();
-    init_password();
-    init_security();
-    MAX_FAILURES = 5;
-    WINDOW_MS = 15 * 60 * 1e3;
-    adminInput = external_exports.object({
-      email: external_exports.string().trim().toLowerCase().email().max(191),
-      name: external_exports.string().trim().min(3).max(60),
-      password: external_exports.string().min(12).max(200)
-    });
-    setup_default = setupRoutes;
-  }
-});
-
 // packages/api/dist/interfaces/admin/views.js
 function layout(input) {
   const nonce = escapeHtml(input.nonce);
   const header = input.nav ? `<header><div class="brand">Auto<span>Mant</span>Pro \xB7 Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
+  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/appointments">Turnos</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>` : "";
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>${escapeHtml(input.title)} \xB7 AutoMantPro Admin</title>
@@ -81600,8 +81481,8 @@ function twoFactorView(error) {
   <label for="code">C\xF3digo</label><input id="code" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="one-time-code">
   <button class="full" type="submit">Entrar</button></form>`;
 }
-function messageView(title, text) {
-  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text)}</p></div>`;
+function messageView(title, text2) {
+  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text2)}</p></div>`;
 }
 function kv(record) {
   const entries = Object.entries(record);
@@ -81680,6 +81561,8 @@ input[type=checkbox]{width:auto;min-height:0}
 .tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs a{padding:8px 14px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--text)}.tabs a.active{background:var(--cyan);border-color:var(--cyan);color:#fff}
 a.button{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--green);color:#fff;font-weight:700;text-decoration:none}
 button.danger{background:var(--red)}
+input[type=radio]{width:auto;min-height:0;margin-top:4px}.choice{display:flex;gap:10px;align-items:flex-start;font-weight:400;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0}
+.card form{margin-bottom:8px}
 `;
   }
 });
@@ -81810,7 +81693,7 @@ var require_error_correction_level = __commonJS({
       }
       try {
         return fromString(value2);
-      } catch (e2) {
+      } catch (e3) {
         return defaultValue;
       }
     };
@@ -82650,7 +82533,7 @@ var require_mode = __commonJS({
       }
       try {
         return fromString(value2);
-      } catch (e2) {
+      } catch (e3) {
         return defaultValue;
       }
     };
@@ -85982,7 +85865,7 @@ var require_canvas = __commonJS({
     function getCanvasElement() {
       try {
         return document.createElement("canvas");
-      } catch (e2) {
+      } catch (e3) {
         throw new Error("You need to specify a canvas element");
       }
     }
@@ -86027,7 +85910,7 @@ var require_browser = __commonJS({
     var QRCode2 = require_qrcode();
     var CanvasRenderer = require_canvas();
     var SvgRenderer = require_svg_tag();
-    function renderCanvas(renderFunc, canvas, text, opts, cb) {
+    function renderCanvas(renderFunc, canvas, text2, opts, cb) {
       const args = [].slice.call(arguments, 1);
       const argsNum = args.length;
       const isLastArgCb = typeof args[argsNum - 1] === "function";
@@ -86039,8 +85922,8 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 2) {
-          cb = text;
-          text = canvas;
+          cb = text2;
+          text2 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 3) {
           if (canvas.getContext && typeof cb === "undefined") {
@@ -86048,8 +85931,8 @@ var require_browser = __commonJS({
             opts = void 0;
           } else {
             cb = opts;
-            opts = text;
-            text = canvas;
+            opts = text2;
+            text2 = canvas;
             canvas = void 0;
           }
         }
@@ -86058,27 +85941,27 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 1) {
-          text = canvas;
+          text2 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 2 && !canvas.getContext) {
-          opts = text;
-          text = canvas;
+          opts = text2;
+          text2 = canvas;
           canvas = void 0;
         }
         return new Promise(function(resolve, reject) {
           try {
-            const data = QRCode2.create(text, opts);
+            const data = QRCode2.create(text2, opts);
             resolve(renderFunc(data, canvas, opts));
-          } catch (e2) {
-            reject(e2);
+          } catch (e3) {
+            reject(e3);
           }
         });
       }
       try {
-        const data = QRCode2.create(text, opts);
+        const data = QRCode2.create(text2, opts);
         cb(null, renderFunc(data, canvas, opts));
-      } catch (e2) {
-        cb(e2);
+      } catch (e3) {
+        cb(e3);
       }
     }
     exports.create = QRCode2.create;
@@ -86099,8 +85982,8 @@ var require_server2 = __commonJS({
     var Utf8Renderer = require_utf8();
     var TerminalRenderer = require_terminal2();
     var SvgRenderer = require_svg();
-    function checkParams(text, opts, cb) {
-      if (typeof text === "undefined") {
+    function checkParams(text2, opts, cb) {
+      if (typeof text2 === "undefined") {
         throw new Error("String required as first argument");
       }
       if (typeof cb === "undefined") {
@@ -86147,65 +86030,65 @@ var require_server2 = __commonJS({
           return Utf8Renderer;
       }
     }
-    function render(renderFunc, text, params) {
+    function render(renderFunc, text2, params) {
       if (!params.cb) {
         return new Promise(function(resolve, reject) {
           try {
-            const data = QRCode2.create(text, params.opts);
+            const data = QRCode2.create(text2, params.opts);
             return renderFunc(data, params.opts, function(err, data2) {
               return err ? reject(err) : resolve(data2);
             });
-          } catch (e2) {
-            reject(e2);
+          } catch (e3) {
+            reject(e3);
           }
         });
       }
       try {
-        const data = QRCode2.create(text, params.opts);
+        const data = QRCode2.create(text2, params.opts);
         return renderFunc(data, params.opts, params.cb);
-      } catch (e2) {
-        params.cb(e2);
+      } catch (e3) {
+        params.cb(e3);
       }
     }
     exports.create = QRCode2.create;
     exports.toCanvas = require_browser().toCanvas;
-    exports.toString = function toString2(text, opts, cb) {
-      const params = checkParams(text, opts, cb);
+    exports.toString = function toString2(text2, opts, cb) {
+      const params = checkParams(text2, opts, cb);
       const type = params.opts ? params.opts.type : void 0;
       const renderer = getStringRendererFromType(type);
-      return render(renderer.render, text, params);
+      return render(renderer.render, text2, params);
     };
-    exports.toDataURL = function toDataURL(text, opts, cb) {
-      const params = checkParams(text, opts, cb);
+    exports.toDataURL = function toDataURL(text2, opts, cb) {
+      const params = checkParams(text2, opts, cb);
       const renderer = getRendererFromType(params.opts.type);
-      return render(renderer.renderToDataURL, text, params);
+      return render(renderer.renderToDataURL, text2, params);
     };
-    exports.toBuffer = function toBuffer(text, opts, cb) {
-      const params = checkParams(text, opts, cb);
+    exports.toBuffer = function toBuffer(text2, opts, cb) {
+      const params = checkParams(text2, opts, cb);
       const renderer = getRendererFromType(params.opts.type);
-      return render(renderer.renderToBuffer, text, params);
+      return render(renderer.renderToBuffer, text2, params);
     };
-    exports.toFile = function toFile(path, text, opts, cb) {
-      if (typeof path !== "string" || !(typeof text === "string" || typeof text === "object")) {
+    exports.toFile = function toFile(path, text2, opts, cb) {
+      if (typeof path !== "string" || !(typeof text2 === "string" || typeof text2 === "object")) {
         throw new Error("Invalid argument");
       }
       if (arguments.length < 3 && !canPromise()) {
         throw new Error("Too few arguments provided");
       }
-      const params = checkParams(text, opts, cb);
+      const params = checkParams(text2, opts, cb);
       const type = params.opts.type || getTypeFromFilename(path);
       const renderer = getRendererFromType(type);
       const renderToFile = renderer.renderToFile.bind(null, path);
-      return render(renderToFile, text, params);
+      return render(renderToFile, text2, params);
     };
-    exports.toFileStream = function toFileStream(stream, text, opts) {
+    exports.toFileStream = function toFileStream(stream, text2, opts) {
       if (arguments.length < 2) {
         throw new Error("Too few arguments provided");
       }
-      const params = checkParams(text, opts, stream.emit.bind(stream, "error"));
+      const params = checkParams(text2, opts, stream.emit.bind(stream, "error"));
       const renderer = getRendererFromType("png");
       const renderToFileStream = renderer.renderToFileStream.bind(null, stream);
-      render(renderToFileStream, text, params);
+      render(renderToFileStream, text2, params);
     };
   }
 });
@@ -86295,8 +86178,8 @@ var init_views_setup = __esm({
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
 import { randomBytes as randomBytes3 } from "node:crypto";
-function qrSvg(text) {
-  return QRCode.toString(text, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
+function qrSvg(text2) {
+  return QRCode.toString(text2, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
 async function adminCount(store) {
   try {
@@ -86441,8 +86324,8 @@ function registerSetupWizard(app2, deps) {
     try {
       userId = await store.upsertAdmin({ email, name, passwordHash, totpSecret: secret, phone: `admin:${email}` });
     } catch (err) {
-      const e2 = err;
-      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e2.code ?? "error"}${e2.sqlMessage ? `: ${e2.sqlMessage}` : ""}).` };
+      const e3 = err;
+      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e3.code ?? "error"}${e3.sqlMessage ? `: ${e3.sqlMessage}` : ""}).` };
       return back(reply);
     }
     recordLoginAttempt("setup", request.ip, true);
@@ -88492,6 +88375,15 @@ function formatKm(value2) {
   const rounded = String(Math.round(value2));
   return rounded.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
+function formatDuration(totalMin) {
+  const hours = Math.floor(totalMin / 60);
+  const minutes = totalMin % 60;
+  if (hours === 0)
+    return `${minutes} min`;
+  if (minutes === 0)
+    return `${hours} h`;
+  return `${hours} h ${minutes} min`;
+}
 function formatCost(costRefUsd) {
   const rounded = Math.round(costRefUsd);
   return `~$${rounded}`;
@@ -88697,25 +88589,27 @@ var init_schemas2 = __esm({
 });
 
 // packages/api/dist/application/registration/plan-text.js
-function planTextFor(vehicle) {
+function planFor(vehicle) {
   const classId = vehicle.vehicleClass ? String(vehicle.vehicleClass) : "";
   const fuelId = vehicle.fuel ? String(vehicle.fuel) : "";
   if (!classId || !fuelId)
     return null;
   try {
     const usage = USAGE.includes(String(vehicle.usageProfile)) ? String(vehicle.usageProfile) : "urbano";
-    const plan = buildPlan({
-      vehicle: { classId, fuelId },
-      odometerKm: Number(vehicle.currentKm) || 0,
-      usageProfile: usage
-    });
-    if (plan.items.length === 0)
-      return null;
-    const label = [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" ");
-    return formatPlanWhatsApp({ label, plan }).join("\n\n");
+    return buildPlan({ vehicle: { classId, fuelId }, odometerKm: Number(vehicle.currentKm) || 0, usageProfile: usage });
   } catch {
     return null;
   }
+}
+function planItemsFor(vehicle) {
+  return planFor(vehicle)?.items ?? [];
+}
+function planTextFor(vehicle) {
+  const plan = planFor(vehicle);
+  if (!plan || plan.items.length === 0)
+    return null;
+  const label = [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" ");
+  return formatPlanWhatsApp({ label, plan }).join("\n\n");
 }
 var USAGE;
 var init_plan_text = __esm({
@@ -88726,31 +88620,310 @@ var init_plan_text = __esm({
   }
 });
 
+// packages/api/dist/application/appointments/messages.js
+function parseEcDateTime(date, time) {
+  if (typeof date !== "string" || typeof time !== "string")
+    return null;
+  const d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date.trim());
+  const t = /^(\d{2}):(\d{2})$/.exec(time.trim());
+  if (!d || !t)
+    return null;
+  const [year, month, day2] = [Number(d[1]), Number(d[2]), Number(d[3])];
+  const [hour, minute] = [Number(t[1]), Number(t[2])];
+  if (hour > 23 || minute > 59)
+    return null;
+  const base = new Date(Date.UTC(year, month - 1, day2));
+  if (base.getUTCFullYear() !== year || base.getUTCMonth() !== month - 1 || base.getUTCDate() !== day2)
+    return null;
+  return new Date(base.getTime() + OFFSET_MS + (hour * 60 + minute) * 60 * 1e3);
+}
+function ecDayRange(now = /* @__PURE__ */ new Date()) {
+  const local = new Date(now.getTime() - OFFSET_MS);
+  const start = new Date(Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate()) + OFFSET_MS);
+  return { start, end: new Date(start.getTime() + DAY_MS) };
+}
+function formatEcDateTime(value2) {
+  const date = value2 instanceof Date ? value2 : new Date(String(value2));
+  if (Number.isNaN(date.getTime()))
+    return "\u2014";
+  return new Intl.DateTimeFormat("es-EC", {
+    timeZone: TIME_ZONE,
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  }).format(date);
+}
+function serviceNames(ids) {
+  return ids.map((id) => findSubservice(id)?.subservice.name ?? id);
+}
+function categoriesFor(ids) {
+  return [...new Set(ids.map((id) => findSubservice(id)?.category.id).filter((c) => !!c))];
+}
+function selectionSummary(ids) {
+  let cost = 0;
+  let minutes = 0;
+  const lines = ["Servicios elegidos:"];
+  for (const id of ids) {
+    const ref = findSubservice(id);
+    if (!ref)
+      continue;
+    cost += ref.subservice.costRefUsd;
+    minutes += ref.subservice.durationMin;
+    lines.push(`\u2022 ${ref.subservice.name} (\u2248 ${usd(ref.subservice.costRefUsd)})`);
+  }
+  lines.push(`Total referencial: \u2248 ${usd(cost)} \xB7 ${formatDuration(minutes)} aprox.`);
+  return lines.join("\n");
+}
+function shopListMessage(shops) {
+  const lines = ["Estos talleres verificados cubren lo que necesitas:", ""];
+  shops.slice(0, 8).forEach((shop, i) => {
+    const zone = shop.zone ? ` \xB7 ${shop.zone}` : "";
+    const rating = shop.ratingAvg > 0 ? ` \xB7 \u2B50 ${shop.ratingAvg.toFixed(1)}` : "";
+    const coverage = shop.covered === shop.needed ? "cubre todo" : `cubre ${shop.covered} de ${shop.needed}`;
+    lines.push(`${i + 1}) ${shop.name}${zone}${rating} \xB7 ${coverage}`);
+  });
+  lines.push("", "Responde con el n\xFAmero del taller y el d\xEDa y la hora que prefieres.");
+  return lines.join("\n");
+}
+function servicesText(a) {
+  const names = serviceNames(a.services);
+  return names.length > 0 ? names.join(", ") : a.summary ?? "\u2014";
+}
+function ownerMessage(a) {
+  const when = formatEcDateTime(a.scheduledAt);
+  switch (a.status) {
+    case "confirmed":
+      return `\u2705 Tu turno est\xE1 confirmado
+\u{1F527} ${a.shopName}
+\u{1F4CD} ${a.shopAddress}, ${a.shopCity}
+\u{1F5D3}\uFE0F ${when}
+\u{1F697} ${vehicleText(a)}
+\u{1F6E0}\uFE0F ${servicesText(a)}
+
+Te lo recuerdo un d\xEDa antes. Si necesitas cambiarlo, escr\xEDbeme.`;
+    case "completed":
+      return `\u{1F3C1} Tu servicio en ${a.shopName} qued\xF3 registrado como completado.
+\u{1F697} ${vehicleText(a)}
+
+\xBFC\xF3mo te fue? Califica del 1 al 5 y cu\xE9ntame si todo qued\xF3 bien.`;
+    case "cancelled":
+      return `\u274C Tu turno en ${a.shopName} del ${when} fue cancelado${a.cancelReason ? `: ${a.cancelReason}` : ""}.
+
+\xBFQuieres que te busque otro horario u otro taller?`;
+    default:
+      return `\u{1F4C5} Solicitud de turno enviada
+\u{1F527} ${a.shopName}
+\u{1F4CD} ${a.shopAddress}, ${a.shopCity}
+\u{1F5D3}\uFE0F ${when}
+\u{1F697} ${vehicleText(a)}
+\u{1F6E0}\uFE0F ${servicesText(a)}
+
+Te confirmo apenas el taller responda.`;
+  }
+}
+function shopRequestMessage(a) {
+  return `\u{1F514} Nueva solicitud de turno \u2014 AutoMantPro
+\u{1F5D3}\uFE0F ${formatEcDateTime(a.scheduledAt)}
+\u{1F697} ${vehicleText(a)}
+\u{1F6E0}\uFE0F ${servicesText(a)}${a.notes ? `
+\u{1F4DD} ${a.notes}` : ""}
+
+Responde: 1) Aceptar \xB7 2) Proponer otro horario \xB7 3) Rechazar`;
+}
+var TIME_ZONE, OFFSET_MS, DAY_MS, STATUS_LABELS, ALLOWED_TRANSITIONS, usd, vehicleText;
+var init_messages = __esm({
+  "packages/api/dist/application/appointments/messages.js"() {
+    "use strict";
+    init_maintenance();
+    TIME_ZONE = "America/Guayaquil";
+    OFFSET_MS = 5 * 60 * 60 * 1e3;
+    DAY_MS = 24 * 60 * 60 * 1e3;
+    STATUS_LABELS = {
+      pending: "Solicitado",
+      confirmed: "Confirmado",
+      completed: "Completado",
+      cancelled: "Cancelado"
+    };
+    ALLOWED_TRANSITIONS = {
+      pending: ["confirmed", "cancelled"],
+      confirmed: ["completed", "cancelled"],
+      completed: [],
+      cancelled: []
+    };
+    usd = (value2) => `$${Math.round(value2)}`;
+    vehicleText = (a) => `${a.vehicleLabel}${a.plate ? ` \xB7 ${a.plate}` : ""}`;
+  }
+});
+
+// packages/api/dist/interfaces/admin/views-appointments.js
+function chatLink(phone, label) {
+  const raw = String(phone ?? "");
+  const digits = raw.replace(/\D/g, "");
+  if (!raw.startsWith("+") || digits.length < 8)
+    return "";
+  return `<a href="https://wa.me/${e(digits)}" target="_blank" rel="noopener">${e(label)} (${e(formatWhatsappNumber(digits))})</a>`;
+}
+function copyBox(id, label, content, rows4 = 8) {
+  return `<label for="${id}">${e(label)}</label><textarea id="${id}" readonly rows="${rows4}">${e(content)}</textarea>`;
+}
+function appointmentsListView(input) {
+  const tabs = FILTERS.map(([id, label]) => `<a href="/admin/appointments?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e(label)}</a>`).join("");
+  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin turnos</td></tr>` : input.page.items.map((a) => `<tr><td><a href="/admin/appointments/${e(a.id)}">${e(formatEcDateTime(a.scheduledAt))}</a></td><td>${e(STATUS_LABELS[a.status] ?? a.status)}</td>
+            <td>${e(a.shopName)}</td><td><a href="/admin/users/${e(a.ownerId)}">${e(a.ownerName)}</a></td><td>${e(a.vehicleLabel)}</td><td>${e(servicesLabel(a))}</td></tr>`).join("");
+  const prev = input.page.page > 1 ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
+  const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
+  return `<h1>Turnos</h1>${flashHtml2(input.flash)}<div class="tabs">${tabs}</div>
+  <p class="muted">Para agendar, abre la ficha de un due\xF1o y pulsa \xABAgendar turno\xBB en su veh\xEDculo.</p>
+  <div class="scroll"><table><thead><tr><th>Fecha (hora de Ecuador)</th><th>Estado</th><th>Taller</th><th>Due\xF1o</th><th>Veh\xEDculo</th><th>Servicios</th></tr></thead><tbody>${body}</tbody></table></div>
+  <div class="pager">${prev}${next}</div>`;
+}
+function appointmentDetailView(input) {
+  const a = input.appointment;
+  const transitions = ALLOWED_TRANSITIONS[a.status] ?? [];
+  const actions = [];
+  if (transitions.includes("confirmed")) {
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField2(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
+  }
+  if (transitions.includes("completed")) {
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField2(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
+  }
+  if (transitions.includes("cancelled")) {
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField2(input.csrf)}<input type="hidden" name="status" value="cancelled">
+      <label for="reason">Motivo de la cancelaci\xF3n</label><input id="reason" name="reason" maxlength="191" required>
+      <button class="danger" type="submit">Cancelar turno</button></form>`);
+  }
+  const shopMessage = a.status === "pending" ? copyBox("msg-shop", "Mensaje para el taller", shopRequestMessage(a)) : "";
+  return `<div class="stack wide"><p><a href="/admin/appointments">\u2190 Turnos</a></p>
+  <h1>Turno \xB7 ${e(formatEcDateTime(a.scheduledAt))}</h1>${flashHtml2(input.flash)}
+  <div class="card"><h2>Resumen</h2>
+    <div>Estado: <strong>${e(STATUS_LABELS[a.status] ?? a.status)}</strong>${a.cancelReason ? ` \xB7 ${e(a.cancelReason)}` : ""}</div>
+    <div>Taller: <strong>${e(a.shopName)}</strong> \xB7 ${e(a.shopAddress)}, ${e(a.shopCity)}</div>
+    <div>Due\xF1o: <a href="/admin/users/${e(a.ownerId)}">${e(a.ownerName)}</a></div>
+    <div>Veh\xEDculo: ${e(a.vehicleLabel)}${a.plate ? ` \xB7 ${e(a.plate)}` : ""}</div>
+    <div>Servicios: ${e(servicesLabel(a))}</div>
+    ${a.notes ? `<div>Notas: ${e(a.notes)}</div>` : ""}
+  </div>
+  <div class="card"><h2>Mensajes para enviar por WhatsApp</h2>
+    ${shopMessage}
+    ${copyBox("msg-owner", "Mensaje para el due\xF1o", ownerMessage(a))}
+    <p class="row">${chatLink(a.shopPhone, "Abrir chat del taller")} ${chatLink(a.ownerPhone, "Abrir chat del due\xF1o")}</p>
+  </div>
+  ${actions.length > 0 ? `<div class="card"><h2>Cambiar estado</h2>${actions.join("")}</div>` : ""}
+  </div>`;
+}
+function scheduleView(input) {
+  const ownerId = e(input.owner.id);
+  const vehicleId = e(input.vehicle.id);
+  const values = input.values ?? {};
+  const vehicleTabs = input.vehicles.length > 1 ? `<div class="tabs">${input.vehicles.map((v) => `<a href="/admin/users/${ownerId}/schedule?vehicleId=${e(v.id)}"${String(v.id) === String(input.vehicle.id) ? ' class="active"' : ""}>${e(v.make)} ${e(v.model)}</a>`).join("")}</div>` : "";
+  const defaults = input.items.filter((i) => i.status !== "al_dia").map((i) => i.serviceId);
+  const checked = input.selected.length > 0 ? input.selected : defaults;
+  const itemChecks = input.items.length === 0 ? `<p class="muted">Este veh\xEDculo no tiene plan (faltan clase o combustible).</p>` : `<div class="checks">${input.items.map((i) => `<label><input type="checkbox" name="services" value="${e(i.serviceId)}"${checked.includes(i.serviceId) ? " checked" : ""}> ${e(i.serviceName)} <span class="muted">\xB7 ${e(PLAN_STATUS[i.status] ?? i.status)}</span></label>`).join("")}</div>`;
+  let results = "";
+  if (input.shops !== null) {
+    const summary = copyBox("msg-selection", "Resumen de servicios para el due\xF1o", selectionSummary(input.selected), 6);
+    if (input.shops.length === 0) {
+      results = `<div class="card"><h2>Talleres</h2>${summary}<p class="error">No hay talleres verificados que ofrezcan estos servicios.</p></div>`;
+    } else {
+      const notice = input.sameCity ? "" : `<p class="muted">No hay talleres verificados en ${e(input.owner.city ?? "su ciudad")}; se muestran los de otras ciudades.</p>`;
+      const hidden = input.selected.map((id) => `<input type="hidden" name="services" value="${e(id)}">`).join("");
+      const options = input.shops.map((shop, i) => `<label class="choice"><input type="radio" name="shopId" value="${e(shop.id)}"${String(values.shopId ?? "") === shop.id || i === 0 && !values.shopId ? " checked" : ""} required>
+          <span><strong>${e(shop.name)}</strong> \xB7 ${e(shop.city)}${shop.zone ? ` (${e(shop.zone)})` : ""}<br><span class="muted">${shop.covered === shop.needed ? "Cubre todo" : `Cubre ${shop.covered} de ${shop.needed}`}${shop.hours ? ` \xB7 ${e(shop.hours)}` : ""}</span></span></label>`).join("");
+      results = `<div class="card"><h2>Talleres</h2>${notice}${summary}
+        ${copyBox("msg-shops", "Lista de talleres para el due\xF1o", shopListMessage(input.shops))}
+        <form method="post" action="/admin/appointments">${csrfField2(input.csrf)}
+        <input type="hidden" name="ownerId" value="${ownerId}"><input type="hidden" name="vehicleId" value="${vehicleId}">${hidden}
+        ${options}
+        <div class="row"><span><label for="date">D\xEDa</label><input id="date" name="date" type="date" value="${e(values.date)}" required></span>
+        <span><label for="time">Hora (Ecuador)</label><input id="time" name="time" type="time" value="${e(values.time)}" required></span></div>
+        <label for="notes">Notas para el taller (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e(values.notes)}</textarea>
+        <button class="full" type="submit">Solicitar turno</button></form></div>`;
+    }
+  }
+  return `<div class="stack wide"><p><a href="/admin/users/${ownerId}">\u2190 ${e(input.owner.name)}</a></p>
+  <h1>Agendar turno</h1>${input.error ? `<p class="error" role="alert">${e(input.error)}</p>` : ""}${vehicleTabs}
+  <div class="card"><h2>${e(input.vehicle.make)} ${e(input.vehicle.model)} ${e(input.vehicle.year)} \xB7 \xBFQu\xE9 servicios?</h2>
+    <form method="get" action="/admin/users/${ownerId}/schedule"><input type="hidden" name="vehicleId" value="${vehicleId}">
+    ${itemChecks}<button type="submit">Buscar talleres</button></form></div>
+  ${results}</div>`;
+}
+function userAppointmentsSection(appointments) {
+  if (appointments.length === 0)
+    return "";
+  const items = appointments.map((a) => `<div><a href="/admin/appointments/${e(a.id)}">${e(formatEcDateTime(a.scheduledAt))}</a> \xB7 ${e(STATUS_LABELS[a.status] ?? a.status)} \xB7 ${e(a.shopName)} \xB7 ${e(a.vehicleLabel)}</div>`).join("");
+  return `<div class="card"><h2>Turnos</h2>${items}</div>`;
+}
+function eventText(event) {
+  const p = event.payload;
+  switch (event.type) {
+    case "operator.note":
+      return `\u{1F4DD} ${String(p.text ?? "")}${p.channel && p.channel !== "whatsapp" ? ` (${String(p.channel)})` : ""}`;
+    case "appointment.created":
+      return `\u{1F4C5} Turno solicitado en ${String(p.shopName ?? "un taller")} para ${formatEcDateTime(p.scheduledAt)}`;
+    case "appointment.status":
+      return `\u{1F504} Turno ${String(STATUS_LABELS[String(p.status)] ?? p.status).toLowerCase()}${p.reason ? `: ${String(p.reason)}` : ""}`;
+    default:
+      return event.type;
+  }
+}
+function bitacoraSection(userId, events, csrf) {
+  const list5 = events.length === 0 ? `<p class="muted">Sin actividad registrada.</p>` : events.map((ev) => `<div><span class="muted">${e(formatEcDateTime(ev.createdAt))}</span> \xB7 ${e(eventText(ev))}</div>`).join("");
+  return `<div class="card"><h2>Bit\xE1cora</h2>
+    <form method="post" action="/admin/users/${e(userId)}/notes">${csrfField2(csrf)}
+    <label for="note-text">Nueva nota (qu\xE9 se convers\xF3 o acord\xF3)</label><textarea id="note-text" name="text" maxlength="2000" rows="3" required></textarea>
+    <label for="note-channel">Canal</label><select id="note-channel" name="channel"><option value="whatsapp">WhatsApp</option><option value="llamada">Llamada</option><option value="otro">Otro</option></select>
+    <button type="submit">Agregar nota</button></form>
+    ${list5}</div>`;
+}
+var e, csrfField2, flashHtml2, FILTERS, PLAN_STATUS, servicesLabel;
+var init_views_appointments = __esm({
+  "packages/api/dist/interfaces/admin/views-appointments.js"() {
+    "use strict";
+    init_page();
+    init_whatsapp_number();
+    init_messages();
+    e = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField2 = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
+    flashHtml2 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e(flash.text)}</p>` : "";
+    FILTERS = [
+      ["hoy", "Hoy"],
+      ["proximos", "Pr\xF3ximos"],
+      ["pendientes", "Por confirmar"],
+      ["todos", "Todos"]
+    ];
+    PLAN_STATUS = { vencido: "\u{1F534} Vencido", proximo: "\u{1F7E1} Pr\xF3ximo", al_dia: "\u{1F7E2} Al d\xEDa" };
+    servicesLabel = (a) => serviceNames(a.services).join(", ") || a.summary || "\u2014";
+  }
+});
+
 // packages/api/dist/interfaces/admin/views-registrations.js
 function day(value2) {
   const date = value2 instanceof Date ? value2 : value2 ? new Date(String(value2)) : null;
   return date && !Number.isNaN(date.getTime()) ? date.toISOString().slice(0, 10) : "\u2014";
 }
 function phoneLabel(value2) {
-  const text = String(value2 ?? "");
-  const digits = text.replace(/\D/g, "");
-  return text.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text;
+  const text2 = String(value2 ?? "");
+  const digits = text2.replace(/\D/g, "");
+  return text2.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text2;
 }
 function value(values, key) {
   const v = values[key];
-  return Array.isArray(v) ? "" : e(v);
+  return Array.isArray(v) ? "" : e2(v);
 }
 function field(values, name, label, attrs = "") {
-  return `<label for="f-${name}">${e(label)}</label><input id="f-${name}" name="${name}" value="${value(values, name)}" ${attrs}>`;
+  return `<label for="f-${name}">${e2(label)}</label><input id="f-${name}" name="${name}" value="${value(values, name)}" ${attrs}>`;
 }
 function select(values, name, label, options, placeholder) {
   const selected = String(values[name] ?? "");
-  const opts = options.map(([id, text]) => `<option value="${e(id)}"${id === selected ? " selected" : ""}>${e(text)}</option>`).join("");
-  const empty = placeholder ? `<option value="">${e(placeholder)}</option>` : "";
-  return `<label for="f-${name}">${e(label)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
+  const opts = options.map(([id, text2]) => `<option value="${e2(id)}"${id === selected ? " selected" : ""}>${e2(text2)}</option>`).join("");
+  const empty = placeholder ? `<option value="">${e2(placeholder)}</option>` : "";
+  return `<label for="f-${name}">${e2(label)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
 }
 function checkbox(values, name, label) {
-  return `<div class="checks"><label><input type="checkbox" name="${name}"${values[name] === "on" ? " checked" : ""}> ${e(label)}</label></div>`;
+  return `<div class="checks"><label><input type="checkbox" name="${name}"${values[name] === "on" ? " checked" : ""}> ${e2(label)}</label></div>`;
 }
 function vehicleFields2(values) {
   return `${select(values, "vehicleClass", "Clase de veh\xEDculo", vehicleClasses.classes.map((c) => [c.id, c.name]), "Elige\u2026")}
@@ -88764,19 +88937,19 @@ function vehicleFields2(values) {
     ${checkbox(values, "reminders", "Acepta recordatorios por WhatsApp")}`;
 }
 function usersListView(input) {
-  const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e(u.id)}">${e(u.name)}</a></td><td>${e(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
-            <td>${e(phoneLabel(u.phone))}</td><td>${e(u.city ?? "\u2014")}</td><td>${day(u.createdAt)}</td></tr>`).join("");
+  const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e2(u.id)}">${e2(u.name)}</a></td><td>${e2(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
+            <td>${e2(phoneLabel(u.phone))}</td><td>${e2(u.city ?? "\u2014")}</td><td>${day(u.createdAt)}</td></tr>`).join("");
   const q = encodeURIComponent(input.query);
   const prev = input.page.page > 1 ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<div class="row between"><h1>Usuarios</h1><a class="button" href="/admin/users/new">+ Nuevo registro</a></div>
-  <form method="get" action="/admin/users" class="row"><input name="q" value="${e(input.query)}" placeholder="Buscar por nombre o tel\xE9fono" maxlength="60"><button type="submit">Buscar</button></form>
+  <form method="get" action="/admin/users" class="row"><input name="q" value="${e2(input.query)}" placeholder="Buscar por nombre o tel\xE9fono" maxlength="60"><button type="submit">Buscar</button></form>
   <div class="scroll"><table><thead><tr><th>Nombre</th><th>Perfil</th><th>Tel\xE9fono</th><th>Ciudad</th><th>Alta</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
 }
 function newUserView(input) {
   const v = input.values;
-  const tabs = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e(ROLE_LABELS[p])}</a>`).join("");
+  const tabs = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e2(ROLE_LABELS[p])}</a>`).join("");
   const common = `<div class="card"><h2>Datos b\xE1sicos</h2>
     ${input_phone(v)}
     ${field(v, "name", input.perfil === "dueno" ? "Nombre y apellido" : "Nombre del responsable", 'required minlength="3" maxlength="60"')}
@@ -88797,7 +88970,7 @@ function newUserView(input) {
       ${field(v, "hours", "Horario (opcional)", 'maxlength="120" placeholder="Lun\u2013Vie 08:00\u201318:00"')}`;
     if (input.perfil === "taller") {
       const chosen = Array.isArray(v.services) ? v.services.map(String) : v.services ? [String(v.services)] : [];
-      const services = serviceTaxonomy.categories.map((c) => `<label><input type="checkbox" name="services" value="${e(c.id)}"${chosen.includes(c.id) ? " checked" : ""}> ${e(c.name)}</label>`).join("");
+      const services = serviceTaxonomy.categories.map((c) => `<label><input type="checkbox" name="services" value="${e2(c.id)}"${chosen.includes(c.id) ? " checked" : ""}> ${e2(c.name)}</label>`).join("");
       specific = `<div class="card"><h2>Taller</h2>${business}<label>Servicios que ofrece</label><div class="checks">${services}</div>
         <p class="muted">Queda en verificaci\xF3n hasta que lo apruebes; mientras tanto no aparece en las b\xFAsquedas.</p></div>`;
     } else {
@@ -88808,8 +88981,8 @@ function newUserView(input) {
     }
   }
   return `<div class="stack wide"><h1>Nuevo registro</h1><div class="tabs">${tabs}</div>
-  ${input.error ? `<p class="error" role="alert">${e(input.error)}</p>` : ""}
-  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField2(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">
+  ${input.error ? `<p class="error" role="alert">${e2(input.error)}</p>` : ""}
+  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField3(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">
   ${common}${specific}
   <button class="full" type="submit">Guardar registro</button></form></div>`;
 }
@@ -88817,74 +88990,75 @@ function input_phone(values) {
   return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567"');
 }
 function verificationForm(kind, id, userId, csrf) {
-  return `<form method="post" action="/admin/verifications/${kind}/${e(id)}">${csrfField2(csrf)}
-    <input type="hidden" name="returnTo" value="${e(userId)}">
-    <label for="reason-${e(id)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e(id)}" name="reason" maxlength="500">
+  return `<form method="post" action="/admin/verifications/${kind}/${e2(id)}">${csrfField3(csrf)}
+    <input type="hidden" name="returnTo" value="${e2(userId)}">
+    <label for="reason-${e2(id)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e2(id)}" name="reason" maxlength="500">
     <div class="row"><button type="submit" name="decision" value="verified">Aprobar</button><button class="danger" type="submit" name="decision" value="rejected">Rechazar</button></div></form>`;
 }
 function userDetailView(input) {
   const { user, vehicles, shop, store } = input.detail;
   const digits = String(user.phone ?? "").replace(/\D/g, "");
-  const chat = String(user.phone ?? "").startsWith("+") && digits.length >= 8 ? ` \xB7 <a href="https://wa.me/${e(digits)}" target="_blank" rel="noopener">Abrir chat</a>` : "";
+  const chat = String(user.phone ?? "").startsWith("+") && digits.length >= 8 ? ` \xB7 <a href="https://wa.me/${e2(digits)}" target="_blank" rel="noopener">Abrir chat</a>` : "";
   const datos = `<div class="card"><h2>Datos</h2>
-    <div>Perfil: <strong>${e(ROLE_LABELS[String(user.role)] ?? user.role)}</strong></div>
-    <div>Tel\xE9fono: <strong>${e(phoneLabel(user.phone))}</strong>${chat}</div>
-    <div>Correo: ${e(user.email ?? "\u2014")}</div>
-    <div>Ciudad: ${e(user.city ?? "\u2014")}</div>
-    <div>Consentimiento: ${user.consentAt ? `${day(user.consentAt)} (versi\xF3n ${e(user.consentVersion ?? "\u2014")})` : '<span class="error">sin registrar</span>'}</div>
-    <div>C\xF3mo nos conoci\xF3: ${e(user.source ?? "\u2014")}</div>
-    ${user.notes ? `<div>Notas: ${e(user.notes)}</div>` : ""}
+    <div>Perfil: <strong>${e2(ROLE_LABELS[String(user.role)] ?? user.role)}</strong></div>
+    <div>Tel\xE9fono: <strong>${e2(phoneLabel(user.phone))}</strong>${chat}</div>
+    <div>Correo: ${e2(user.email ?? "\u2014")}</div>
+    <div>Ciudad: ${e2(user.city ?? "\u2014")}</div>
+    <div>Consentimiento: ${user.consentAt ? `${day(user.consentAt)} (versi\xF3n ${e2(user.consentVersion ?? "\u2014")})` : '<span class="error">sin registrar</span>'}</div>
+    <div>C\xF3mo nos conoci\xF3: ${e2(user.source ?? "\u2014")}</div>
+    ${user.notes ? `<div>Notas: ${e2(user.notes)}</div>` : ""}
     <div class="muted">Alta: ${day(user.createdAt)}</div></div>`;
   const business = (title, b, extra, kind) => `<div class="card"><h2>${title}</h2>
-    <div><strong>${e(b.name)}</strong> \xB7 RUC ${e(b.ruc ?? "\u2014")}</div>
-    <div>${e(b.address)}, ${e(b.city)}${b.zone ? ` (${e(b.zone)})` : ""}</div>
-    <div>Horario: ${e(b.hours ?? "\u2014")}</div>${extra}
-    <div>Estado: <strong>${e(STATUS_LABELS[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
+    <div><strong>${e2(b.name)}</strong> \xB7 RUC ${e2(b.ruc ?? "\u2014")}</div>
+    <div>${e2(b.address)}, ${e2(b.city)}${b.zone ? ` (${e2(b.zone)})` : ""}</div>
+    <div>Horario: ${e2(b.hours ?? "\u2014")}</div>${extra}
+    <div>Estado: <strong>${e2(STATUS_LABELS2[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
     ${verificationForm(kind, b.id, user.id, input.csrf)}</div>`;
-  const shopCard = shop ? business("Taller", shop, `<div>Servicios: ${e(shop.services.map(categoryName).join(", ") || "\u2014")}</div>`, "shop") : "";
-  const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
+  const shopCard = shop ? business("Taller", shop, `<div>Servicios: ${e2(shop.services.map(categoryName).join(", ") || "\u2014")}</div>`, "shop") : "";
+  const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e2(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
   const vehicleCards = vehicles.map((v) => {
     const plan = input.plans[String(v.id)];
-    return `<div class="card"><h2>${e(v.make)} ${e(v.model)} ${e(v.year)}</h2>
-      <div>${e(Number(v.currentKm).toLocaleString("es-EC"))} km \xB7 ${e(className(v.vehicleClass))} \xB7 ${e(fuelName(v.fuel))}${v.plate ? ` \xB7 ${e(v.plate)}` : ""}</div>
-      <div class="muted">Uso ${e(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
-      ${plan ? `<label for="plan-${e(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e(v.id)}" readonly rows="12">${e(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}</div>`;
+    return `<div class="card"><h2>${e2(v.make)} ${e2(v.model)} ${e2(v.year)}</h2>
+      <div>${e2(Number(v.currentKm).toLocaleString("es-EC"))} km \xB7 ${e2(className(v.vehicleClass))} \xB7 ${e2(fuelName(v.fuel))}${v.plate ? ` \xB7 ${e2(v.plate)}` : ""}</div>
+      <div class="muted">Uso ${e2(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
+      ${plan ? `<label for="plan-${e2(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e2(v.id)}" readonly rows="12">${e2(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e2(user.id)}/schedule?vehicleId=${e2(v.id)}">Agendar turno</a></p>` : ""}</div>`;
   }).join("");
-  const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e(input.error)}</p>` : ""}
-      <form method="post" action="/admin/users/${e(user.id)}/vehicles" autocomplete="off">${csrfField2(input.csrf)}${vehicleFields2(input.values ?? {})}
+  const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e2(input.error)}</p>` : ""}
+      <form method="post" action="/admin/users/${e2(user.id)}/vehicles" autocomplete="off">${csrfField3(input.csrf)}${vehicleFields2(input.values ?? {})}
       <button class="full" type="submit">Agregar veh\xEDculo</button></form></div>` : "";
-  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e(user.name)}</h1>${flashHtml2(input.flash)}
-  ${datos}${shopCard}${storeCard}${vehicleCards}${addVehicle}</div>`;
+  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e2(user.name)}</h1>${flashHtml3(input.flash)}
+  ${datos}${shopCard}${storeCard}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
 }
 function verificationsView(input) {
-  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e(item.userId)}">${e(item.name)}</a></td>
-            <td>${e(item.city)}</td><td>${e(item.ruc ?? "\u2014")}</td><td>${day(item.createdAt)}</td></tr>`).join("");
-  return `<h1>Verificaciones pendientes</h1>${flashHtml2(input.flash)}
+  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e2(item.userId)}">${e2(item.name)}</a></td>
+            <td>${e2(item.city)}</td><td>${e2(item.ruc ?? "\u2014")}</td><td>${day(item.createdAt)}</td></tr>`).join("");
+  return `<h1>Verificaciones pendientes</h1>${flashHtml3(input.flash)}
   <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
-var ROLE_LABELS, STATUS_LABELS, USAGE_OPTIONS, e, csrfField2, flashHtml2, className, fuelName, categoryName;
+var ROLE_LABELS, STATUS_LABELS2, USAGE_OPTIONS, e2, csrfField3, flashHtml3, className, fuelName, categoryName;
 var init_views_registrations = __esm({
   "packages/api/dist/interfaces/admin/views-registrations.js"() {
     "use strict";
     init_page();
     init_whatsapp_number();
     init_maintenance();
+    init_views_appointments();
     ROLE_LABELS = {
       dueno: "Due\xF1o de veh\xEDculo",
       taller: "Taller",
       almacen: "Almac\xE9n",
       admin: "Administrador"
     };
-    STATUS_LABELS = { pending: "En verificaci\xF3n", verified: "Verificado", rejected: "Rechazado" };
+    STATUS_LABELS2 = { pending: "En verificaci\xF3n", verified: "Verificado", rejected: "Rechazado" };
     USAGE_OPTIONS = [
       ["urbano", "Urbano"],
       ["carretera", "Carretera"],
       ["severo", "Severo (Sierra, carga, lastre)"]
     ];
-    e = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField2 = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
-    flashHtml2 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e(flash.text)}</p>` : "";
+    e2 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField3 = (token) => `<input type="hidden" name="csrf" value="${e2(token)}">`;
+    flashHtml3 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e2(flash.text)}</p>` : "";
     className = (id) => vehicleClasses.classes.find((c) => c.id === id)?.name ?? String(id ?? "\u2014");
     fuelName = (id) => vehicleClasses.fuels.find((f) => f.id === id)?.name ?? String(id ?? "\u2014");
     categoryName = (id) => serviceTaxonomy.categories.find((c) => c.id === id)?.name ?? id;
@@ -88921,7 +89095,7 @@ function flashFrom(request) {
 }
 function registerRegistrationRoutes(app2, deps) {
   const { registrations } = deps;
-  const errorPage = (request, reply, session, title, text, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text2, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text2)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -88946,7 +89120,15 @@ function registerRegistrationRoutes(app2, deps) {
     const plans = {};
     for (const vehicle of detail.vehicles)
       plans[String(vehicle.id)] = planTextFor(vehicle);
-    return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values }), session, extra.status ?? 200);
+    let appointmentsList = [];
+    let events = [];
+    if (deps.appointments) {
+      try {
+        [appointmentsList, events] = await Promise.all([deps.appointments.listForUser(id), deps.appointments.userEvents(id, 30)]);
+      } catch {
+      }
+    }
+    return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values, appointments: appointmentsList, events }), session, extra.status ?? 200);
   }
   app2.get("/users", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -88977,7 +89159,7 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const perfil = PERFILES.includes(body.perfil) ? body.perfil : "dueno";
-    const invalid = (text, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text }), session, status);
+    const invalid = (text2, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text2 }), session, status);
     const userFrom = async (data, keepEmail) => ({
       phone: data.phone,
       name: data.name,
@@ -89094,7 +89276,7 @@ function registerRegistrationRoutes(app2, deps) {
     const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "";
     const returnTo = typeof body.returnTo === "string" && UUID.test(body.returnTo) ? body.returnTo : null;
-    const fail = (text, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text }, status }) : errorPage(request, reply, session, "Verificaciones", text, status);
+    const fail = (text2, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text2 }, status }) : errorPage(request, reply, session, "Verificaciones", text2, status);
     if (!decision)
       return fail("Elige aprobar o rechazar.", 400);
     if (decision === "rejected" && reason.length < 5)
@@ -89128,13 +89310,415 @@ var init_registrations = __esm({
       creado: "Registro creado.",
       vehiculo: "Veh\xEDculo agregado.",
       verificado: "Verificaci\xF3n aprobada.",
-      rechazado: "Verificaci\xF3n rechazada."
+      rechazado: "Verificaci\xF3n rechazada.",
+      nota: "Nota agregada a la bit\xE1cora."
+    };
+  }
+});
+
+// packages/api/dist/application/appointments/matching.js
+function rankShops(shops, neededCategories) {
+  const needed = [...new Set(neededCategories)];
+  return shops.map((shop) => ({ ...shop, covered: needed.filter((c) => shop.services.includes(c)).length, needed: needed.length })).filter((shop) => needed.length === 0 || shop.covered > 0).sort((a, b) => b.covered - a.covered || b.ratingAvg - a.ratingAvg || a.name.localeCompare(b.name, "es"));
+}
+var init_matching = __esm({
+  "packages/api/dist/application/appointments/matching.js"() {
+    "use strict";
+  }
+});
+
+// packages/api/dist/interfaces/admin/appointments.js
+function dbErrorText(err) {
+  const code = err.code;
+  if (code === "ER_BAD_FIELD_ERROR" || code === "ER_NO_SUCH_TABLE") {
+    return { status: 503, text: "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." };
+  }
+  return { status: 502, text: `No se pudo completar la operaci\xF3n (${code ?? "base de datos no disponible"}).` };
+}
+function registerAppointmentRoutes(app2, deps) {
+  const { appointments, registrations } = deps;
+  const errorPage = (request, reply, session, title, text2, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text2)}</p></div>`, session, status);
+  function withCsrf(request, reply) {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return null;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf)) {
+      errorPage(request, reply, session, "Solicitud inv\xE1lida", "Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.", 403);
+      return null;
+    }
+    return { session, body };
+  }
+  async function renderSchedule(request, reply, session, ownerId, vehicleId, selected, extra = {}) {
+    let detail;
+    try {
+      detail = await registrations.getUserDetail(ownerId);
+    } catch (err) {
+      const m = dbErrorText(err);
+      return errorPage(request, reply, session, "Agendar turno", m.text, m.status);
+    }
+    if (!detail || String(detail.user.role) !== "dueno") {
+      return errorPage(request, reply, session, "Agendar turno", "Solo se agendan turnos para due\xF1os de veh\xEDculo registrados.", 404);
+    }
+    const vehicle = detail.vehicles.find((v) => String(v.id) === vehicleId) ?? detail.vehicles[0];
+    if (!vehicle)
+      return errorPage(request, reply, session, "Agendar turno", "El due\xF1o no tiene veh\xEDculos registrados.", 400);
+    let shops = null;
+    let sameCity = true;
+    if (selected.length > 0 && extra.search !== false) {
+      try {
+        let candidates = await appointments.verifiedShops(String(detail.user.city ?? ""));
+        if (candidates.length === 0) {
+          candidates = await appointments.verifiedShops("");
+          sameCity = false;
+        }
+        shops = rankShops(candidates, categoriesFor(selected));
+      } catch (err) {
+        const m = dbErrorText(err);
+        return errorPage(request, reply, session, "Agendar turno", m.text, m.status);
+      }
+    }
+    return deps.html(reply, request, "Agendar turno", scheduleView({
+      owner: detail.user,
+      vehicles: detail.vehicles,
+      vehicle,
+      items: planItemsFor(vehicle),
+      selected,
+      shops,
+      sameCity,
+      csrf: session.csrfToken,
+      error: extra.error,
+      values: extra.values
+    }), session, extra.status ?? 200);
+  }
+  app2.get("/users/:id/schedule", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const { id } = request.params;
+    if (!UUID2.test(id))
+      return errorPage(request, reply, session, "Agendar turno", "Usuario no encontrado.", 404);
+    const query = request.query ?? {};
+    const vehicleId = typeof query.vehicleId === "string" ? query.vehicleId : void 0;
+    return renderSchedule(request, reply, session, id, vehicleId, validServices(asList(query.services)));
+  });
+  app2.post("/appointments", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const ownerId = typeof body.ownerId === "string" && UUID2.test(body.ownerId) ? body.ownerId : null;
+    if (!ownerId)
+      return errorPage(request, reply, session, "Agendar turno", "Usuario no encontrado.", 404);
+    const vehicleId = typeof body.vehicleId === "string" ? body.vehicleId : "";
+    const services = validServices(asList(body.services));
+    const shopId = typeof body.shopId === "string" && UUID2.test(body.shopId) ? body.shopId : null;
+    const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, 500) || null : null;
+    const scheduledAt = parseEcDateTime(body.date, body.time);
+    const fail = (error, status = 400) => renderSchedule(request, reply, session, ownerId, vehicleId, services, { error, values: body, status });
+    if (services.length === 0)
+      return fail("Elige al menos un servicio.");
+    if (!shopId)
+      return fail("Elige un taller.");
+    if (!scheduledAt)
+      return fail("Fecha u hora no v\xE1lida.");
+    const now = Date.now();
+    if (scheduledAt.getTime() < now - 5 * 60 * 1e3)
+      return fail("La fecha y hora ya pasaron: elige un horario futuro.");
+    if (scheduledAt.getTime() > now + MAX_AHEAD_MS)
+      return fail("Solo se agendan turnos dentro de los pr\xF3ximos 6 meses.");
+    let id;
+    let shopName;
+    try {
+      const detail = await registrations.getUserDetail(ownerId);
+      if (!detail || String(detail.user.role) !== "dueno")
+        return fail("Solo se agendan turnos para due\xF1os de veh\xEDculo registrados.", 404);
+      if (!detail.vehicles.some((v) => String(v.id) === vehicleId))
+        return fail("El veh\xEDculo no pertenece a este due\xF1o.");
+      const shop = (await appointments.verifiedShops("")).find((s) => s.id === shopId);
+      if (!shop)
+        return fail("El taller elegido no est\xE1 verificado.");
+      shopName = shop.name;
+      id = await appointments.createAppointment({
+        ownerId,
+        vehicleId,
+        shopId,
+        scheduledAt,
+        services,
+        notes,
+        summary: serviceNames(services).join(", ").slice(0, 191)
+      });
+      const created = await appointments.getAppointment(id);
+      const payload = { appointmentId: id, scheduledAt: scheduledAt.toISOString(), shopName };
+      const entities = [ownerId, created?.shopUserId].filter((v) => !!v);
+      for (const entityId of entities) {
+        await appointments.recordEvent({ type: "appointment.created", actorUserId: session.userId, entityType: "User", entityId, payload });
+      }
+    } catch (err) {
+      const m = dbErrorText(err);
+      return fail(m.text, m.status);
+    }
+    await deps.audit("admin.appointment.create", session.userId, `Turno ${id} en ${shopName} para el usuario ${ownerId}`);
+    return reply.redirect(`/admin/appointments/${id}?ok=creado`, 302);
+  });
+  app2.get("/appointments", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const query = request.query ?? {};
+    const filter = FILTERS2.includes(query.f) ? query.f : "proximos";
+    const raw = Number(query.page ?? 1);
+    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    try {
+      return deps.html(reply, request, "Turnos", appointmentsListView({ filter, page: await appointments.listAppointments(filter, page) }), session);
+    } catch (err) {
+      const m = dbErrorText(err);
+      return errorPage(request, reply, session, "Turnos", m.text, m.status);
+    }
+  });
+  async function renderAppointment(request, reply, session, id, flash, status = 200) {
+    let appointment;
+    try {
+      appointment = await appointments.getAppointment(id);
+    } catch (err) {
+      const m = dbErrorText(err);
+      return errorPage(request, reply, session, "Turno", m.text, m.status);
+    }
+    if (!appointment)
+      return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
+    return deps.html(reply, request, "Turno", appointmentDetailView({ appointment, csrf: session.csrfToken, flash }), session, status);
+  }
+  app2.get("/appointments/:id", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const { id } = request.params;
+    if (!UUID2.test(id))
+      return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
+    const ok = request.query?.ok;
+    const flash = typeof ok === "string" && OK_MESSAGES2[ok] ? { kind: "ok", text: OK_MESSAGES2[ok] } : void 0;
+    return renderAppointment(request, reply, session, id, flash);
+  });
+  app2.post("/appointments/:id/status", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID2.test(id))
+      return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
+    const status = body.status;
+    const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 191) : "";
+    try {
+      const appointment = await appointments.getAppointment(id);
+      if (!appointment)
+        return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
+      if (!(ALLOWED_TRANSITIONS[appointment.status] ?? []).includes(status) || status === "pending") {
+        return renderAppointment(request, reply, session, id, { kind: "error", text: "Ese cambio de estado no es posible." }, 400);
+      }
+      if (status === "cancelled" && reason.length < 5) {
+        return renderAppointment(request, reply, session, id, { kind: "error", text: "Escribe el motivo de la cancelaci\xF3n." }, 400);
+      }
+      await appointments.setStatus(id, status, status === "cancelled" ? reason : null);
+      const payload = { appointmentId: id, status, reason: status === "cancelled" ? reason : null };
+      for (const entityId of [appointment.ownerId, appointment.shopUserId]) {
+        await appointments.recordEvent({ type: "appointment.status", actorUserId: session.userId, entityType: "User", entityId, payload });
+      }
+    } catch (err) {
+      const m = dbErrorText(err);
+      return errorPage(request, reply, session, "Turno", m.text, m.status);
+    }
+    await deps.audit(`admin.appointment.${status}`, session.userId, `Turno ${id}${reason ? `: ${reason}` : ""}`);
+    return reply.redirect(`/admin/appointments/${id}?ok=estado`, 302);
+  });
+  app2.post("/users/:id/notes", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID2.test(id))
+      return errorPage(request, reply, session, "Bit\xE1cora", "Usuario no encontrado.", 404);
+    const content = typeof body.text === "string" ? body.text.trim() : "";
+    if (content.length < 2 || content.length > 2e3) {
+      return errorPage(request, reply, session, "Bit\xE1cora", "La nota debe tener entre 2 y 2000 caracteres.", 400);
+    }
+    const channel = body.channel === "llamada" || body.channel === "otro" ? body.channel : "whatsapp";
+    try {
+      if (!await registrations.getUserDetail(id))
+        return errorPage(request, reply, session, "Bit\xE1cora", "Usuario no encontrado.", 404);
+      await appointments.recordEvent({ type: "operator.note", actorUserId: session.userId, entityType: "User", entityId: id, payload: { text: content, channel } });
+    } catch (err) {
+      const m = dbErrorText(err);
+      return errorPage(request, reply, session, "Bit\xE1cora", m.text, m.status);
+    }
+    await deps.audit("admin.note.create", session.userId, `Nota en la bit\xE1cora del usuario ${id}`);
+    return reply.redirect(`/admin/users/${id}?ok=nota`, 302);
+  });
+}
+var UUID2, FILTERS2, MAX_AHEAD_MS, OK_MESSAGES2, asList, validServices;
+var init_appointments = __esm({
+  "packages/api/dist/interfaces/admin/appointments.js"() {
+    "use strict";
+    init_page();
+    init_security();
+    init_maintenance();
+    init_matching();
+    init_messages();
+    init_plan_text();
+    init_views_appointments();
+    UUID2 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS2 = ["hoy", "proximos", "pendientes", "todos"];
+    MAX_AHEAD_MS = 180 * 24 * 60 * 60 * 1e3;
+    OK_MESSAGES2 = {
+      creado: "Turno solicitado. Env\xEDa los mensajes al taller y al due\xF1o.",
+      estado: "Estado actualizado. Env\xEDa el mensaje al due\xF1o."
+    };
+    asList = (value2) => value2 === void 0 || value2 === null ? [] : (Array.isArray(value2) ? value2 : [value2]).map(String);
+    validServices = (ids) => [...new Set(ids)].filter((id) => !!findSubservice(id));
+  }
+});
+
+// packages/api/dist/infrastructure/appointments/appointment-store.js
+function rows2(result) {
+  return Array.isArray(result[0]) ? result[0] : [];
+}
+function jsonValue(raw) {
+  if (typeof raw !== "string")
+    return raw;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+function stringList(raw) {
+  const value2 = jsonValue(raw);
+  return Array.isArray(value2) ? value2.map(String) : [];
+}
+function toAppointment(r) {
+  return {
+    id: String(r.id),
+    scheduledAt: r.scheduledAt,
+    status: String(r.status),
+    summary: text(r.summary),
+    services: stringList(r.services),
+    notes: text(r.notes),
+    cancelReason: text(r.cancelReason),
+    createdAt: r.createdAt,
+    vehicleId: String(r.vehicleId),
+    vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
+    plate: text(r.plate),
+    ownerId: String(r.ownerId),
+    ownerName: String(r.ownerName),
+    ownerPhone: String(r.ownerPhone),
+    shopId: String(r.shopId),
+    shopName: String(r.shopName),
+    shopAddress: String(r.shopAddress),
+    shopCity: String(r.shopCity),
+    shopUserId: String(r.shopUserId),
+    shopPhone: String(r.shopPhone)
+  };
+}
+var PAGE_SIZE2, SELECT_APPOINTMENTS, LIST_TODAY, LIST_UPCOMING, LIST_PENDING, LIST_ALL, GET_ONE, FOR_USER, text, MysqlAppointmentStore;
+var init_appointment_store = __esm({
+  "packages/api/dist/infrastructure/appointments/appointment-store.js"() {
+    "use strict";
+    init_messages();
+    PAGE_SIZE2 = 25;
+    SELECT_APPOINTMENTS = "SELECT a.id, a.scheduledAt, a.status, a.summary, a.services, a.notes, a.cancelReason, a.createdAt, v.id AS vehicleId, v.make, v.model, v.year, v.plate, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, s.id AS shopId, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, su.id AS shopUserId, su.phone AS shopPhone FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` o ON o.id = a.ownerId JOIN `Shop` s ON s.id = a.shopId JOIN `User` su ON su.id = s.userId";
+    LIST_TODAY = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
+    LIST_UPCOMING = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.status IN ('pending', 'confirmed') ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
+    LIST_PENDING = `${SELECT_APPOINTMENTS} WHERE a.status = 'pending' ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
+    LIST_ALL = `${SELECT_APPOINTMENTS} ORDER BY a.scheduledAt DESC LIMIT ? OFFSET ?`;
+    GET_ONE = `${SELECT_APPOINTMENTS} WHERE a.id = ? LIMIT 1`;
+    FOR_USER = `${SELECT_APPOINTMENTS} WHERE a.ownerId = ? OR su.id = ? ORDER BY a.scheduledAt DESC LIMIT 20`;
+    text = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    MysqlAppointmentStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      verifiedShops(city) {
+        return this.run(async (conn) => rows2(await conn.query("SELECT id, name, address, city, zone, hours, ratingAvg, specialties FROM `Shop` WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ORDER BY name LIMIT 200", [city.trim(), city.trim()])).map((r) => ({
+          id: String(r.id),
+          name: String(r.name),
+          address: String(r.address),
+          city: String(r.city),
+          zone: text(r.zone),
+          hours: text(r.hours),
+          ratingAvg: Number(r.ratingAvg ?? 0),
+          services: stringList(r.specialties)
+        })));
+      }
+      createAppointment(input) {
+        return this.run(async (conn) => {
+          const id = String(rows2(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          await conn.query("INSERT INTO `Appointment` (id, vehicleId, shopId, ownerId, scheduledAt, status, summary, services, notes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, input.vehicleId, input.shopId, input.ownerId, input.scheduledAt, input.summary, JSON.stringify(input.services), input.notes]);
+          return id;
+        });
+      }
+      getAppointment(id) {
+        return this.run(async (conn) => {
+          const row = rows2(await conn.query(GET_ONE, [id]))[0];
+          return row ? toAppointment(row) : null;
+        });
+      }
+      listAppointments(filter, page, now = /* @__PURE__ */ new Date()) {
+        return this.run(async (conn) => {
+          const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2;
+          let result;
+          if (filter === "hoy") {
+            const { start, end } = ecDayRange(now);
+            result = await conn.query(LIST_TODAY, [start, end, PAGE_SIZE2, offset2]);
+          } else if (filter === "proximos") {
+            result = await conn.query(LIST_UPCOMING, [now, PAGE_SIZE2, offset2]);
+          } else if (filter === "pendientes") {
+            result = await conn.query(LIST_PENDING, [PAGE_SIZE2, offset2]);
+          } else {
+            result = await conn.query(LIST_ALL, [PAGE_SIZE2, offset2]);
+          }
+          return { items: rows2(result).map(toAppointment), page, pageSize: PAGE_SIZE2 };
+        });
+      }
+      listForUser(userId) {
+        return this.run(async (conn) => rows2(await conn.query(FOR_USER, [userId, userId])).map(toAppointment));
+      }
+      setStatus(id, status, cancelReason) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `Appointment` SET status = ?, cancelReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [status, cancelReason, id]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      recordEvent(input) {
+        return this.run(async (conn) => {
+          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [input.type, input.actorUserId, input.entityType, input.entityId, JSON.stringify(input.payload)]);
+        });
+      }
+      userEvents(userId, limit) {
+        return this.run(async (conn) => rows2(await conn.query("SELECT type, payload, createdAt FROM `Event` WHERE entityType = 'User' AND entityId = ? ORDER BY createdAt DESC LIMIT ?", [userId, limit])).map((r) => {
+          const payload = jsonValue(r.payload);
+          return {
+            type: String(r.type),
+            payload: payload && typeof payload === "object" && !Array.isArray(payload) ? payload : {},
+            createdAt: r.createdAt
+          };
+        }));
+      }
     };
   }
 });
 
 // packages/api/dist/infrastructure/registration/registration-store.js
-function rows2(result) {
+function rows3(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function parseServices(raw) {
@@ -89161,11 +89745,11 @@ function pendingItem(kind) {
     createdAt: r.createdAt
   });
 }
-var PAGE_SIZE2, MysqlRegistrationStore;
+var PAGE_SIZE3, MysqlRegistrationStore;
 var init_registration_store = __esm({
   "packages/api/dist/infrastructure/registration/registration-store.js"() {
     "use strict";
-    PAGE_SIZE2 = 25;
+    PAGE_SIZE3 = 25;
     MysqlRegistrationStore = class {
       connect;
       constructor(connect) {
@@ -89193,7 +89777,7 @@ var init_registration_store = __esm({
         });
       }
       async uuid(conn) {
-        return String(rows2(await conn.query("SELECT UUID() AS id"))[0]?.id);
+        return String(rows3(await conn.query("SELECT UUID() AS id"))[0]?.id);
       }
       async insertUser(conn, user, role) {
         const id = await this.uuid(conn);
@@ -89237,18 +89821,18 @@ var init_registration_store = __esm({
           const like = `%${q.replace(/[\\%_]/g, "\\$&")}%`;
           const digits = q.replace(/\D/g, "");
           const likePhone = digits ? `%${digits}%` : like;
-          const items = rows2(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE2, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2]));
-          return { items, page, pageSize: PAGE_SIZE2 };
+          const items = rows3(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE3, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3]));
+          return { items, page, pageSize: PAGE_SIZE3 };
         });
       }
       getUserDetail(id) {
         return this.run(async (conn) => {
-          const user = rows2(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
+          const user = rows3(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
           if (!user)
             return null;
-          const vehicles = rows2(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
-          const shopRow = rows2(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
-          const store = rows2(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
+          const vehicles = rows3(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
+          const shopRow = rows3(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
+          const store = rows3(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
           return {
             user,
             vehicles,
@@ -89259,8 +89843,8 @@ var init_registration_store = __esm({
       }
       pendingVerifications() {
         return this.run(async (conn) => {
-          const shops = rows2(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
-          const stores = rows2(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
+          const shops = rows3(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
+          const stores = rows3(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
           return [...shops, ...stores].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
         });
       }
@@ -89271,12 +89855,12 @@ var init_registration_store = __esm({
         });
       }
       recentUsers(limit) {
-        return this.run(async (conn) => rows2(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
+        return this.run(async (conn) => rows3(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const shops = Number(rows2(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
-          const stores = Number(rows2(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const shops = Number(rows3(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const stores = Number(rows3(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
           return shops + stores;
         });
       }
@@ -89296,6 +89880,8 @@ async function adminPanelRoutes(app2, options = {}) {
   const store = options.store ?? new MysqlAdminStore(connect);
   const settings = options.settings ?? new MysqlSettingsStore(connect);
   const registrations = options.registrations ?? new MysqlRegistrationStore(connect);
+  const appointments = options.appointments ?? new MysqlAppointmentStore(connect);
+  const detailAppointments = options.appointments || options.connect || missingDbEnv().length === 0 ? appointments : void 0;
   const dashboardDb = () => !!options.connect || !!options.registrations || missingDbEnv().length === 0;
   const startedAt = Date.now();
   app2.decorateRequest("cspNonce", "");
@@ -89344,7 +89930,8 @@ async function adminPanelRoutes(app2, options = {}) {
   }
   registerSetupWizard(app2, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
   registerAccountRoutes(app2, { store, requireSession, html, audit });
-  registerRegistrationRoutes(app2, { registrations, requireSession, html, audit });
+  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, requireSession, html, audit });
+  registerAppointmentRoutes(app2, { appointments, registrations, requireSession, html, audit });
   registerSettingsRoutes(app2, {
     store,
     settings,
@@ -89491,6 +90078,8 @@ var init_admin = __esm({
     init_account();
     init_settings();
     init_registrations();
+    init_appointments();
+    init_appointment_store();
     init_registration_store();
     init_settings_store();
     init_entry();
@@ -90768,14 +91357,14 @@ function mapUsage(usage) {
     cachedTokens: usage?.prompt_tokens_details?.cached_tokens
   };
 }
-function classifyHttpError(status, text) {
+function classifyHttpError(status, text2) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text2}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text2}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text2}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text2}`, "other", status);
 }
 var OpenAIAdapter = class {
   cfg;
@@ -90844,8 +91433,8 @@ var OpenAIAdapter = class {
       throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
     }
     if (!res.ok) {
-      const text = await res.text().catch(() => "");
-      throw classifyHttpError(res.status, text);
+      const text2 = await res.text().catch(() => "");
+      throw classifyHttpError(res.status, text2);
     }
     const data = await res.json();
     return { content: data.text ?? null };
@@ -90883,8 +91472,8 @@ var OpenAIAdapter = class {
       throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
     }
     if (!res.ok) {
-      const text = await res.text().catch(() => "");
-      throw classifyHttpError(res.status, text);
+      const text2 = await res.text().catch(() => "");
+      throw classifyHttpError(res.status, text2);
     }
     const data = await res.json();
     const choice = data.choices?.[0];
@@ -91082,8 +91671,8 @@ var SENSITIVE_KEYS = /^(phone|telefono|c(el|)ular|email|e-mail|correo|correo_e|r
 var EMAIL_MASK = "[correo:REDACTED]";
 var PHONE_MASK = "[telefono:REDACTED]";
 var SENSITIVE_MASK = "[dato:REDACTED]";
-function redactPii(text) {
-  return text.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
+function redactPii(text2) {
+  return text2.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
 }
 function redactValue(value2, key) {
   if (typeof value2 === "string") {
@@ -92007,7 +92596,7 @@ function verifyWebhookSignature(body, signatureHeader) {
     return false;
   }
 }
-async function sendWhatsAppMessage(to, text) {
+async function sendWhatsAppMessage(to, text2) {
   const config = getConfig();
   if (!config.token || !config.phoneNumberId) {
     return { success: false, error: "WHATSAPP_TOKEN or WHATSAPP_PHONE_ID not configured" };
@@ -92024,7 +92613,7 @@ async function sendWhatsAppMessage(to, text) {
         messaging_product: "whatsapp",
         to,
         type: "text",
-        text: { body: text }
+        text: { body: text2 }
       })
     });
     if (!response.ok) {
@@ -92222,8 +92811,6 @@ await app.register(marketplaceRoutes, { prefix: apiPrefix });
 await app.register(adminRoutes, { prefix: apiPrefix });
 await app.register(agentRoutes, { prefix: apiPrefix });
 await app.register(registerWebhookRoutes, { prefix: "/wa/webhook" });
-var { setupRoutes: setupRoutes2 } = await Promise.resolve().then(() => (init_setup(), setup_exports));
-await app.register(setupRoutes2, { prefix: "/setup" });
 var settingsStore = new MysqlSettingsStore(() => openConnection());
 var whatsappNumber = cachedSetting(settingsStore, WHATSAPP_NUMBER_KEY, 6e4);
 var { adminPanelRoutes: adminPanelRoutes2 } = await Promise.resolve().then(() => (init_admin(), admin_exports));

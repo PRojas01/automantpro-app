@@ -11,23 +11,31 @@ export declare function create(ownerId: string, input: CreateAppointmentInput): 
     };
 } & {
     id: string;
+    notes: string | null;
     createdAt: Date;
+    updatedAt: Date | null;
     vehicleId: string;
     shopId: string;
     ownerId: string;
     scheduledAt: Date;
     status: import("@prisma/client").$Enums.AppointmentStatus;
     summary: string | null;
+    services: import("@prisma/client/runtime/library").JsonValue | null;
+    cancelReason: string | null;
 }) | null>;
 export declare function update(appointmentId: string, userId: string, userRole: string, input: UpdateAppointmentInput): Promise<{
     id: string;
+    notes: string | null;
     createdAt: Date;
+    updatedAt: Date | null;
     vehicleId: string;
     shopId: string;
     ownerId: string;
     scheduledAt: Date;
     status: import("@prisma/client").$Enums.AppointmentStatus;
     summary: string | null;
+    services: import("@prisma/client/runtime/library").JsonValue | null;
+    cancelReason: string | null;
 } | null>;
 export declare function list(userId: string, userRole: string, filters: {
     status?: string;
@@ -46,13 +54,17 @@ export declare function list(userId: string, userRole: string, filters: {
         };
     } & {
         id: string;
+        notes: string | null;
         createdAt: Date;
+        updatedAt: Date | null;
         vehicleId: string;
         shopId: string;
         ownerId: string;
         scheduledAt: Date;
         status: import("@prisma/client").$Enums.AppointmentStatus;
         summary: string | null;
+        services: import("@prisma/client/runtime/library").JsonValue | null;
+        cancelReason: string | null;
     })[];
     meta: {
         page: number;

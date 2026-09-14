@@ -14,7 +14,7 @@ export function missingDbEnv(env = process.env) {
 export async function openConnection(env = process.env) {
     const mysql = await import("mysql2/promise");
     if (env.DATABASE_URL?.trim()) {
-        return (await mysql.createConnection({ uri: env.DATABASE_URL, multipleStatements: false }));
+        return (await mysql.createConnection({ uri: env.DATABASE_URL, multipleStatements: false, timezone: "Z" }));
     }
     return (await mysql.createConnection({
         host: env.DB_HOST,
@@ -23,6 +23,7 @@ export async function openConnection(env = process.env) {
         password: env.DB_PASSWORD,
         database: env.DB_NAME,
         multipleStatements: false,
+        timezone: "Z",
         connectTimeout: 10_000,
     }));
 }

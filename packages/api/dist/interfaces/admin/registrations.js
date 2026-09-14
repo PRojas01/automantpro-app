@@ -11,6 +11,7 @@ const OK_MESSAGES = {
     vehiculo: "Vehículo agregado.",
     verificado: "Verificación aprobada.",
     rechazado: "Verificación rechazada.",
+    nota: "Nota agregada a la bitácora.",
 };
 function dbError(err) {
     const code = err.code;
@@ -66,7 +67,17 @@ export function registerRegistrationRoutes(app, deps) {
         const plans = {};
         for (const vehicle of detail.vehicles)
             plans[String(vehicle.id)] = planTextFor(vehicle);
-        return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values }), session, extra.status ?? 200);
+        let appointmentsList = [];
+        let events = [];
+        if (deps.appointments) {
+            try {
+                [appointmentsList, events] = await Promise.all([deps.appointments.listForUser(id), deps.appointments.userEvents(id, 30)]);
+            }
+            catch {
+                // sin turnos ni bitácora si la base no responde: la ficha se muestra igual
+            }
+        }
+        return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values, appointments: appointmentsList, events }), session, extra.status ?? 200);
     }
     app.get("/users", async (request, reply) => {
         const session = deps.requireSession(request, reply);

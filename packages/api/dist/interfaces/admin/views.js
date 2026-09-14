@@ -32,12 +32,14 @@ input[type=checkbox]{width:auto;min-height:0}
 .tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs a{padding:8px 14px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--text)}.tabs a.active{background:var(--cyan);border-color:var(--cyan);color:#fff}
 a.button{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--green);color:#fff;font-weight:700;text-decoration:none}
 button.danger{background:var(--red)}
+input[type=radio]{width:auto;min-height:0;margin-top:4px}.choice{display:flex;gap:10px;align-items:flex-start;font-weight:400;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0}
+.card form{margin-bottom:8px}
 `;
 export function layout(input) {
     const nonce = escapeHtml(input.nonce);
     const header = input.nav
         ? `<header><div class="brand">Auto<span>Mant</span>Pro · Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Vehículos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/audit">Auditoría</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
+  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Vehículos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/appointments">Turnos</a><a href="/admin/audit">Auditoría</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>`
         : "";
     return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">

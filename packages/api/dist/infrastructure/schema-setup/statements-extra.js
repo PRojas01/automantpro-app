@@ -46,5 +46,10 @@ export const EXTRA_STATEMENTS = [
     addColumn("Store", "categories", "TEXT NULL"),
     addColumn("Store", "delivery", "BOOLEAN NOT NULL DEFAULT false"),
     addColumn("Store", "verificationStatus", "ENUM('pending', 'verified', 'rejected') NOT NULL DEFAULT 'pending'"),
+    // Turnos agendados desde el panel (docs/34 D5 y T3).
+    addColumn("Appointment", "services", "JSON NULL"),
+    addColumn("Appointment", "notes", "TEXT NULL"),
+    addColumn("Appointment", "cancelReason", "VARCHAR(191) NULL"),
+    addColumn("Appointment", "updatedAt", "DATETIME(3) NULL"),
 ];
 //# sourceMappingURL=statements-extra.js.map

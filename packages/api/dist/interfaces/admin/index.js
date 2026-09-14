@@ -8,6 +8,8 @@ import { adminCount, registerSetupWizard } from "./setup-wizard.js";
 import { registerAccountRoutes } from "./account.js";
 import { registerSettingsRoutes } from "./settings.js";
 import { registerRegistrationRoutes } from "./registrations.js";
+import { registerAppointmentRoutes } from "./appointments.js";
+import { MysqlAppointmentStore } from "../../infrastructure/appointments/appointment-store.js";
 import { MysqlRegistrationStore } from "../../infrastructure/registration/registration-store.js";
 import { MysqlSettingsStore } from "../../infrastructure/settings/settings-store.js";
 import { publicNumber } from "../entry/index.js";
@@ -19,6 +21,9 @@ export async function adminPanelRoutes(app, options = {}) {
     const store = options.store ?? new MysqlAdminStore(connect);
     const settings = options.settings ?? new MysqlSettingsStore(connect);
     const registrations = options.registrations ?? new MysqlRegistrationStore(connect);
+    const appointments = options.appointments ?? new MysqlAppointmentStore(connect);
+    // La ficha consulta turnos y bitácora solo si hay base configurada (evita esperas en pruebas sin base).
+    const detailAppointments = options.appointments || options.connect || missingDbEnv().length === 0 ? appointments : undefined;
     const dashboardDb = () => !!options.connect || !!options.registrations || missingDbEnv().length === 0;
     const startedAt = Date.now();
     app.decorateRequest("cspNonce", "");
@@ -80,7 +85,8 @@ export async function adminPanelRoutes(app, options = {}) {
     }
     registerSetupWizard(app, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
     registerAccountRoutes(app, { store, requireSession, html, audit });
-    registerRegistrationRoutes(app, { registrations, requireSession, html, audit });
+    registerRegistrationRoutes(app, { registrations, appointments: detailAppointments, requireSession, html, audit });
+    registerAppointmentRoutes(app, { appointments, registrations, requireSession, html, audit });
     registerSettingsRoutes(app, {
         store,
         settings,

@@ -238,6 +238,10 @@ model Appointment {
   scheduledAt DateTime
   status      AppointmentStatus @default(pending)
   summary     String?
+  services     Json?
+  notes        String?   @db.Text
+  cancelReason String?
+  updatedAt    DateTime?
   createdAt   DateTime          @default(now())
 
   vehicle Vehicle @relation(fields: [vehicleId], references: [id])
