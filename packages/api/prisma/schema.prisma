@@ -461,3 +461,10 @@ model AdminTotp {
 
   user User @relation(fields: [userId], references: [id])
 }
+
+model AppSetting {
+  name      String   @id
+  value     String   @db.Text
+  updatedBy String?
+  updatedAt DateTime @default(now())
+}

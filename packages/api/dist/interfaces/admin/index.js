@@ -6,12 +6,16 @@ import { SESSION_COOKIE, buildSessionClearCookie, buildSessionSetCookie, checkRa
 import { dashboardView, layout, loginView, messageView, tableView, twoFactorView } from "./views.js";
 import { adminCount, registerSetupWizard } from "./setup-wizard.js";
 import { registerAccountRoutes } from "./account.js";
+import { registerSettingsRoutes } from "./settings.js";
+import { MysqlSettingsStore } from "../../infrastructure/settings/settings-store.js";
+import { publicNumber } from "../entry/index.js";
 const GENERIC_LOGIN_ERROR = "Correo, contraseña o código incorrectos.";
 // Hash bcrypt válido usado para igualar el tiempo de respuesta cuando el correo no existe.
 const DUMMY_HASH = "$2b$12$C6UzMDM.H6dfI/f/IKcEeO7Ib6c/3QeM2vzU6ZL4t3Ai7GQWm3y3C";
 export async function adminPanelRoutes(app, options = {}) {
     const connect = options.connect ?? (() => openConnection());
     const store = options.store ?? new MysqlAdminStore(connect);
+    const settings = options.settings ?? new MysqlSettingsStore(connect);
     const startedAt = Date.now();
     app.decorateRequest("cspNonce", "");
     app.addContentTypeParser("application/x-www-form-urlencoded", { parseAs: "string" }, (_request, body, done) => {
@@ -66,6 +70,16 @@ export async function adminPanelRoutes(app, options = {}) {
     }
     registerSetupWizard(app, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
     registerAccountRoutes(app, { store, requireSession, html, audit });
+    registerSettingsRoutes(app, {
+        store,
+        settings,
+        connect,
+        requireSession,
+        html,
+        audit,
+        envNumber: publicNumber,
+        onChanged: () => options.onSettingsChanged?.(),
+    });
     app.get("/login", async (request, reply) => {
         // Sin administradores todavía: se abre el asistente de puesta en marcha.
         if ((await adminCount(store)) === 0)

@@ -29,7 +29,7 @@ export function layout(input) {
     const nonce = escapeHtml(input.nonce);
     const header = input.nav
         ? `<header><div class="brand">Auto<span>Mant</span>Pro · Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Vehículos</a><a href="/admin/shops">Talleres</a><a href="/admin/audit">Auditoría</a><a href="/admin/account">Mi cuenta</a></nav>
+  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Vehículos</a><a href="/admin/shops">Talleres</a><a href="/admin/audit">Auditoría</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>`
         : "";
     return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">

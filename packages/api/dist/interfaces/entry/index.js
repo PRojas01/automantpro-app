@@ -27,7 +27,20 @@ export function newVisitCode() {
         code += CODE_ALPHABET[randomInt(CODE_ALPHABET.length)];
     return `AMP-${code}`;
 }
-export async function entryRoutes(app) {
+async function effectiveNumber(options) {
+    if (options.resolveNumber) {
+        try {
+            const digits = ((await options.resolveNumber()) ?? "").replace(/\D/g, "");
+            if (digits.length >= 8 && digits.length <= 15)
+                return digits;
+        }
+        catch {
+            // base de datos no disponible: se usa el secreto de la plataforma
+        }
+    }
+    return publicNumber();
+}
+export async function entryRoutes(app, options = {}) {
     // Solo GET: Fastify expone HEAD automáticamente con el mismo manejador (sin cuerpo).
     app.get("/", async (request, reply) => {
         if (request.method === "HEAD" || !wantsHtml(request.headers.accept)) {
@@ -36,7 +49,7 @@ export async function entryRoutes(app) {
         const nonce = randomBytes(16).toString("base64");
         const query = request.query;
         const html = renderEntryPage({
-            number: publicNumber(),
+            number: await effectiveNumber(options),
             code: newVisitCode(),
             ref: sanitizeRef(query?.ref),
             nonce,

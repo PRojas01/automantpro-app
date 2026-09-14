@@ -59636,6 +59636,65 @@ li::before{content:"\u2713";position:absolute;left:4px;color:var(--green);font-w
   }
 });
 
+// packages/api/dist/interfaces/entry/index.js
+import { randomBytes, randomInt } from "node:crypto";
+function wantsHtml(accept) {
+  if (!accept)
+    return false;
+  return accept.split(",").some((part) => part.trim().toLowerCase().startsWith("text/html"));
+}
+function sanitizeRef(ref) {
+  if (typeof ref !== "string")
+    return null;
+  return /^[A-Za-z0-9_-]{1,32}$/.test(ref) ? ref : null;
+}
+function publicNumber() {
+  const digits = (process.env.WA_PUBLIC_NUMBER ?? "").replace(/\D/g, "");
+  return digits.length >= 8 && digits.length <= 15 ? digits : null;
+}
+function newVisitCode() {
+  let code = "";
+  for (let i = 0; i < 4; i++)
+    code += CODE_ALPHABET[randomInt(CODE_ALPHABET.length)];
+  return `AMP-${code}`;
+}
+async function effectiveNumber(options) {
+  if (options.resolveNumber) {
+    try {
+      const digits = (await options.resolveNumber() ?? "").replace(/\D/g, "");
+      if (digits.length >= 8 && digits.length <= 15)
+        return digits;
+    } catch {
+    }
+  }
+  return publicNumber();
+}
+async function entryRoutes(app2, options = {}) {
+  app2.get("/", async (request, reply) => {
+    if (request.method === "HEAD" || !wantsHtml(request.headers.accept)) {
+      return reply.send(API_STATUS);
+    }
+    const nonce = randomBytes(16).toString("base64");
+    const query = request.query;
+    const html = renderEntryPage({
+      number: await effectiveNumber(options),
+      code: newVisitCode(),
+      ref: sanitizeRef(query?.ref),
+      nonce
+    });
+    return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
+  });
+}
+var API_STATUS, CODE_ALPHABET;
+var init_entry = __esm({
+  "packages/api/dist/interfaces/entry/index.js"() {
+    "use strict";
+    init_page();
+    API_STATUS = { status: "ok", service: "AutoMantPro API" };
+    CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  }
+});
+
 // packages/api/dist/infrastructure/schema-setup/statements.js
 var EXPECTED_TABLES, SCHEMA_STATEMENTS;
 var init_statements = __esm({
@@ -59979,11 +60038,12 @@ var init_statements = __esm({
 });
 
 // packages/api/dist/infrastructure/schema-setup/statements-extra.js
-var EXTRA_TABLES, EXTRA_STATEMENTS;
+var EXTRA_TABLES, APP_SETTING_TABLE_SQL, EXTRA_STATEMENTS;
 var init_statements_extra = __esm({
   "packages/api/dist/infrastructure/schema-setup/statements-extra.js"() {
     "use strict";
-    EXTRA_TABLES = ["AdminTotp"];
+    EXTRA_TABLES = ["AdminTotp", "AppSetting"];
+    APP_SETTING_TABLE_SQL = "CREATE TABLE IF NOT EXISTS `AppSetting` (\n    `name` VARCHAR(191) NOT NULL,\n    `value` TEXT NOT NULL,\n    `updatedBy` VARCHAR(191) NULL,\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    PRIMARY KEY (`name`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
     EXTRA_STATEMENTS = [
       {
         kind: "createTable",
@@ -59994,6 +60054,11 @@ var init_statements_extra = __esm({
         kind: "addForeignKey",
         target: "AdminTotp.AdminTotp_userId_fkey",
         sql: "ALTER TABLE `AdminTotp` ADD CONSTRAINT `AdminTotp_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE"
+      },
+      {
+        kind: "createTable",
+        target: "AppSetting",
+        sql: APP_SETTING_TABLE_SQL
       }
     ];
   }
@@ -80868,6 +80933,103 @@ var init_apply = __esm({
   }
 });
 
+// packages/api/dist/infrastructure/settings/settings-store.js
+function cachedSetting(store, name, ttlMs = 6e4) {
+  let value = null;
+  let loadedAt = 0;
+  let pending = null;
+  return {
+    get() {
+      if (loadedAt > 0 && Date.now() - loadedAt < ttlMs)
+        return Promise.resolve(value);
+      if (!pending) {
+        pending = store.get(name).catch(() => null).then((v) => {
+          value = v;
+          loadedAt = Date.now();
+          pending = null;
+          return v;
+        });
+      }
+      return pending;
+    },
+    invalidate() {
+      loadedAt = 0;
+    }
+  };
+}
+var MysqlSettingsStore;
+var init_settings_store = __esm({
+  "packages/api/dist/infrastructure/settings/settings-store.js"() {
+    "use strict";
+    init_statements_extra();
+    MysqlSettingsStore = class {
+      connect;
+      tableReady = false;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          if (!this.tableReady) {
+            await conn.query(APP_SETTING_TABLE_SQL);
+            this.tableReady = true;
+          }
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      get(name) {
+        return this.run(async (conn) => {
+          const [rows2] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row = Array.isArray(rows2) ? rows2[0] : void 0;
+          return row?.value === void 0 || row.value === null ? null : String(row.value);
+        });
+      }
+      set(name, value, updatedBy) {
+        return this.run(async (conn) => {
+          await conn.query("INSERT INTO `AppSetting` (`name`, `value`, `updatedBy`, `updatedAt`) VALUES (?, ?, ?, CURRENT_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updatedBy` = VALUES(`updatedBy`), `updatedAt` = CURRENT_TIMESTAMP(3)", [name, value, updatedBy]);
+        });
+      }
+      remove(name) {
+        return this.run(async (conn) => {
+          await conn.query("DELETE FROM `AppSetting` WHERE `name` = ?", [name]);
+        });
+      }
+    };
+  }
+});
+
+// packages/api/dist/application/settings/whatsapp-number.js
+function normalizeWhatsappNumber(input) {
+  if (typeof input !== "string")
+    return null;
+  let digits = input.replace(/\D/g, "");
+  if (digits.startsWith("00"))
+    digits = digits.slice(2);
+  if (digits.length === 10 && digits.startsWith("09"))
+    digits = `593${digits.slice(1)}`;
+  else if (digits.length === 9 && digits.startsWith("9"))
+    digits = `593${digits}`;
+  if (digits.startsWith("593"))
+    return /^5939\d{8}$/.test(digits) ? digits : null;
+  return digits.length >= 8 && digits.length <= 15 ? digits : null;
+}
+function formatWhatsappNumber(digits) {
+  if (digits.startsWith("593") && digits.length === 12) {
+    return `+593 ${digits.slice(3, 5)} ${digits.slice(5, 8)} ${digits.slice(8)}`;
+  }
+  return `+${digits}`;
+}
+var WHATSAPP_NUMBER_KEY;
+var init_whatsapp_number = __esm({
+  "packages/api/dist/application/settings/whatsapp-number.js"() {
+    "use strict";
+    WHATSAPP_NUMBER_KEY = "whatsapp.publicNumber";
+  }
+});
+
 // packages/api/dist/infrastructure/admin/admin-store.js
 function rows(result) {
   return Array.isArray(result[0]) ? result[0] : [];
@@ -81379,7 +81541,7 @@ var init_setup = __esm({
 function layout(input) {
   const nonce = escapeHtml(input.nonce);
   const header = input.nav ? `<header><div class="brand">Auto<span>Mant</span>Pro \xB7 Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/account">Mi cuenta</a></nav>
+  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>` : "";
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>${escapeHtml(input.title)} \xB7 AutoMantPro Admin</title>
@@ -86406,6 +86568,148 @@ var init_account = __esm({
   }
 });
 
+// packages/api/dist/interfaces/admin/views-settings.js
+function settingsView(input) {
+  const csrf = `<input type="hidden" name="csrf" value="${escapeHtml(input.csrf)}">`;
+  const effective = input.whatsapp.stored ?? input.whatsapp.env;
+  const origin = input.whatsapp.stored ? "configurado en este panel" : input.whatsapp.env ? "tomado del secreto WA_PUBLIC_NUMBER de GoDaddy" : "sin configurar: la p\xE1gina de inicio muestra \xABMuy pronto\xBB";
+  const current = effective ? `<p>N\xFAmero en uso: <strong>${escapeHtml(formatWhatsappNumber(effective))}</strong> <span class="muted">(${origin})</span></p>
+       <p><a href="https://wa.me/${escapeHtml(effective)}" rel="noopener" target="_blank">Probar el enlace de WhatsApp</a></p>` : `<p class="error">${origin}</p>`;
+  const remove = input.whatsapp.stored ? `<button type="submit" name="action" value="remove">Quitar y usar el secreto de GoDaddy</button>` : "";
+  const flash = input.flash ? `<p class="${input.flash.kind === "ok" ? "ok" : "error"}" role="status">${escapeHtml(input.flash.text)}</p>` : "";
+  const db = input.db ? input.db.present >= input.db.total ? `<p class="ok">Base de datos al d\xEDa (${input.db.present} de ${input.db.total} tablas).</p>` : `<p>${input.db.present} de ${input.db.total} tablas. Hay actualizaciones pendientes.</p>
+         <form method="post" action="/admin/settings/schema">${csrf}<button type="submit">Aplicar actualizaciones</button></form>` : `<p class="error">No se pudo consultar la base de datos.</p>`;
+  return `<div class="stack"><h1>Ajustes</h1>${flash}
+  <div class="card"><h2>N\xFAmero p\xFAblico de WhatsApp</h2>${current}
+    <form method="post" action="/admin/settings/whatsapp" autocomplete="off">${csrf}
+    <label for="number">Nuevo n\xFAmero</label>
+    <input id="number" name="number" inputmode="tel" placeholder="099 123 4567 o +593 99 123 4567" value="">
+    <p class="muted">Es el n\xFAmero al que la p\xE1gina automantpro.app env\xEDa a los visitantes. Se aplica en menos de un minuto.</p>
+    <label for="current-settings">Tu contrase\xF1a actual</label>
+    <input id="current-settings" name="current" type="password" required autocomplete="current-password">
+    <button class="full" type="submit" name="action" value="save">Guardar n\xFAmero</button>
+    ${remove}</form></div>
+  <div class="card"><h2>Base de datos</h2>${db}</div>
+  </div>`;
+}
+var init_views_settings = __esm({
+  "packages/api/dist/interfaces/admin/views-settings.js"() {
+    "use strict";
+    init_page();
+    init_whatsapp_number();
+  }
+});
+
+// packages/api/dist/interfaces/admin/settings.js
+function registerSettingsRoutes(app2, deps) {
+  async function withConn(work) {
+    const conn = await deps.connect();
+    try {
+      return await work(conn);
+    } finally {
+      await conn.end().catch(() => void 0);
+    }
+  }
+  async function render(request, reply, session, flash, status = 200) {
+    let stored = null;
+    let db = null;
+    try {
+      stored = await deps.settings.get(WHATSAPP_NUMBER_KEY);
+    } catch {
+    }
+    try {
+      const s = await withConn((conn) => getSchemaStatus(conn));
+      db = { present: s.present.length, total: s.present.length + s.missing.length };
+    } catch {
+      db = null;
+    }
+    return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, flash }), session, status);
+  }
+  function checkCsrf(request, reply) {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return null;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf)) {
+      deps.html(reply, request, "Ajustes", `<p class="error">Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.</p>`, session, 403);
+      return null;
+    }
+    return { session, body };
+  }
+  app2.get("/settings", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    return render(request, reply, session);
+  });
+  app2.post("/settings/whatsapp", async (request, reply) => {
+    const ctx = checkCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const account = await deps.store.findAdminById(session.userId);
+    if (!account)
+      return render(request, reply, session, { kind: "error", text: "Cuenta no encontrada." }, 404);
+    if (!checkRateLimit(account.email, request.ip).allowed) {
+      return render(request, reply, session, { kind: "error", text: "Demasiados intentos. Espera unos minutos." }, 429);
+    }
+    const passwordOk = await comparePassword(typeof body.current === "string" ? body.current : "", account.passwordHash);
+    if (!passwordOk) {
+      recordLoginAttempt(account.email, request.ip, false);
+      return render(request, reply, session, { kind: "error", text: "La contrase\xF1a actual no es correcta." }, 400);
+    }
+    let before = null;
+    try {
+      before = await deps.settings.get(WHATSAPP_NUMBER_KEY);
+    } catch {
+      return render(request, reply, session, { kind: "error", text: "Base de datos no disponible." }, 503);
+    }
+    if (body.action === "remove") {
+      await deps.settings.remove(WHATSAPP_NUMBER_KEY);
+      deps.onChanged();
+      await deps.audit("admin.settings.whatsapp", account.id, `N\xFAmero p\xFAblico de WhatsApp: ${before ?? "\u2014"} \u2192 secreto de la plataforma`);
+      return render(request, reply, session, { kind: "ok", text: "N\xFAmero quitado. La p\xE1gina usa el secreto de GoDaddy." });
+    }
+    const number = normalizeWhatsappNumber(body.number);
+    if (!number) {
+      return render(request, reply, session, { kind: "error", text: "N\xFAmero no v\xE1lido. Un celular de Ecuador tiene 9 d\xEDgitos despu\xE9s de +593 (por ejemplo +593 99 123 4567 o 099 123 4567). Revisa que no falte ning\xFAn d\xEDgito." }, 400);
+    }
+    await deps.settings.set(WHATSAPP_NUMBER_KEY, number, account.id);
+    deps.onChanged();
+    await deps.audit("admin.settings.whatsapp", account.id, `N\xFAmero p\xFAblico de WhatsApp: ${before ?? "\u2014"} \u2192 ${number}`);
+    return render(request, reply, session, {
+      kind: "ok",
+      text: `N\xFAmero actualizado a ${formatWhatsappNumber(number)}. La p\xE1gina de inicio ya lo usa.`
+    });
+  });
+  app2.post("/settings/schema", async (request, reply) => {
+    const ctx = checkCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    let flash;
+    try {
+      const report = await withConn((conn) => applySchema(conn));
+      const failed = report.results.find((r) => r.status === "failed");
+      flash = failed ? { kind: "error", text: `No se pudo aplicar ${failed.target}: ${failed.error?.message ?? "error desconocido"}` } : { kind: "ok", text: `Base de datos actualizada: ${report.after.tables} tablas.` };
+      if (!failed)
+        await deps.audit("admin.settings.schema", ctx.session.userId, `Esquema aplicado: ${report.applied} cambios`);
+    } catch (err) {
+      flash = { kind: "error", text: `No se pudo conectar a la base de datos (${err.code ?? "error"}).` };
+    }
+    return render(request, reply, ctx.session, flash);
+  });
+}
+var init_settings = __esm({
+  "packages/api/dist/interfaces/admin/settings.js"() {
+    "use strict";
+    init_apply();
+    init_password();
+    init_security();
+    init_whatsapp_number();
+    init_views_settings();
+  }
+});
+
 // packages/api/dist/interfaces/admin/index.js
 var admin_exports = {};
 __export(admin_exports, {
@@ -86416,6 +86720,7 @@ import { randomBytes as randomBytes4 } from "node:crypto";
 async function adminPanelRoutes(app2, options = {}) {
   const connect = options.connect ?? (() => openConnection());
   const store = options.store ?? new MysqlAdminStore(connect);
+  const settings = options.settings ?? new MysqlSettingsStore(connect);
   const startedAt = Date.now();
   app2.decorateRequest("cspNonce", "");
   app2.addContentTypeParser("application/x-www-form-urlencoded", { parseAs: "string" }, (_request, body, done) => {
@@ -86458,6 +86763,16 @@ async function adminPanelRoutes(app2, options = {}) {
   }
   registerSetupWizard(app2, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
   registerAccountRoutes(app2, { store, requireSession, html, audit });
+  registerSettingsRoutes(app2, {
+    store,
+    settings,
+    connect,
+    requireSession,
+    html,
+    audit,
+    envNumber: publicNumber,
+    onChanged: () => options.onSettingsChanged?.()
+  });
   app2.get("/login", async (request, reply) => {
     if (await adminCount(store) === 0)
       return reply.redirect("/admin/setup", 302);
@@ -86581,6 +86896,9 @@ var init_admin = __esm({
     init_views();
     init_setup_wizard();
     init_account();
+    init_settings();
+    init_settings_store();
+    init_entry();
     GENERIC_LOGIN_ERROR = "Correo, contrase\xF1a o c\xF3digo incorrectos.";
     DUMMY_HASH = "$2b$12$C6UzMDM.H6dfI/f/IKcEeO7Ib6c/3QeM2vzU6ZL4t3Ai7GQWm3y3C";
     admin_default = adminPanelRoutes;
@@ -89251,49 +89569,11 @@ async function agentRoutes(app2) {
   });
 }
 
-// packages/api/dist/interfaces/entry/index.js
-init_page();
-import { randomBytes, randomInt } from "node:crypto";
-var API_STATUS = { status: "ok", service: "AutoMantPro API" };
-var CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-function wantsHtml(accept) {
-  if (!accept)
-    return false;
-  return accept.split(",").some((part) => part.trim().toLowerCase().startsWith("text/html"));
-}
-function sanitizeRef(ref) {
-  if (typeof ref !== "string")
-    return null;
-  return /^[A-Za-z0-9_-]{1,32}$/.test(ref) ? ref : null;
-}
-function publicNumber() {
-  const digits = (process.env.WA_PUBLIC_NUMBER ?? "").replace(/\D/g, "");
-  return digits.length >= 8 && digits.length <= 15 ? digits : null;
-}
-function newVisitCode() {
-  let code = "";
-  for (let i = 0; i < 4; i++)
-    code += CODE_ALPHABET[randomInt(CODE_ALPHABET.length)];
-  return `AMP-${code}`;
-}
-async function entryRoutes(app2) {
-  app2.get("/", async (request, reply) => {
-    if (request.method === "HEAD" || !wantsHtml(request.headers.accept)) {
-      return reply.send(API_STATUS);
-    }
-    const nonce = randomBytes(16).toString("base64");
-    const query = request.query;
-    const html = renderEntryPage({
-      number: publicNumber(),
-      code: newVisitCode(),
-      ref: sanitizeRef(query?.ref),
-      nonce
-    });
-    return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
-  });
-}
-
 // packages/api/dist/server.js
+init_entry();
+init_apply();
+init_settings_store();
+init_whatsapp_number();
 import { randomBytes as randomBytes5 } from "node:crypto";
 import_dotenv.default.config();
 var PORT = Number(process.env.PORT) || 3e3;
@@ -89349,10 +89629,16 @@ await app.register(agentRoutes, { prefix: apiPrefix });
 await app.register(registerWebhookRoutes, { prefix: "/wa/webhook" });
 var { setupRoutes: setupRoutes2 } = await Promise.resolve().then(() => (init_setup(), setup_exports));
 await app.register(setupRoutes2, { prefix: "/setup" });
+var settingsStore = new MysqlSettingsStore(() => openConnection());
+var whatsappNumber = cachedSetting(settingsStore, WHATSAPP_NUMBER_KEY, 6e4);
 var { adminPanelRoutes: adminPanelRoutes2 } = await Promise.resolve().then(() => (init_admin(), admin_exports));
-await app.register(adminPanelRoutes2, { prefix: "/admin" });
+await app.register(adminPanelRoutes2, {
+  prefix: "/admin",
+  settings: settingsStore,
+  onSettingsChanged: () => whatsappNumber.invalidate()
+});
 app.get("/health", async () => ({ status: "ok", jwt: jwtSecretSource }));
-await app.register(entryRoutes);
+await app.register(entryRoutes, { resolveNumber: () => whatsappNumber.get() });
 app.setErrorHandler((error, request, reply) => {
   const statusCode = error.statusCode ?? 500;
   const code = error.code;
