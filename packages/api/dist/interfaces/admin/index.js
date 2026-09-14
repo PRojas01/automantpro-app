@@ -4,11 +4,14 @@ import { openConnection, missingDbEnv } from "../../infrastructure/schema-setup/
 import { comparePassword } from "../../infrastructure/password.js";
 import { SESSION_COOKIE, buildSessionClearCookie, buildSessionSetCookie, checkRateLimit, consumePendingSession, createPendingSession, deleteSession, getAdminSessionSecret, getSession, parseCookies, promoteSession, recordLoginAttempt, signSessionCookie, verifyCsrf, verifySessionCookie, verifyTotp, } from "../../application/admin/security.js";
 import { dashboardView, layout, loginView, messageView, tableView, twoFactorView } from "./views.js";
+import { adminCount, registerSetupWizard } from "./setup-wizard.js";
+import { registerAccountRoutes } from "./account.js";
 const GENERIC_LOGIN_ERROR = "Correo, contraseña o código incorrectos.";
 // Hash bcrypt válido usado para igualar el tiempo de respuesta cuando el correo no existe.
 const DUMMY_HASH = "$2b$12$C6UzMDM.H6dfI/f/IKcEeO7Ib6c/3QeM2vzU6ZL4t3Ai7GQWm3y3C";
 export async function adminPanelRoutes(app, options = {}) {
-    const store = options.store ?? new MysqlAdminStore(() => openConnection());
+    const connect = options.connect ?? (() => openConnection());
+    const store = options.store ?? new MysqlAdminStore(connect);
     const startedAt = Date.now();
     app.decorateRequest("cspNonce", "");
     app.addContentTypeParser("application/x-www-form-urlencoded", { parseAs: "string" }, (_request, body, done) => {
@@ -61,7 +64,14 @@ export async function adminPanelRoutes(app, options = {}) {
     async function audit(eventType, actorUserId, reason) {
         await store.recordAudit({ eventType, actorUserId, reason }).catch(() => undefined);
     }
-    app.get("/login", async (request, reply) => html(reply, request, "Ingresar", loginView()));
+    registerSetupWizard(app, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
+    registerAccountRoutes(app, { store, requireSession, html, audit });
+    app.get("/login", async (request, reply) => {
+        // Sin administradores todavía: se abre el asistente de puesta en marcha.
+        if ((await adminCount(store)) === 0)
+            return reply.redirect("/admin/setup", 302);
+        return html(reply, request, "Ingresar", loginView());
+    });
     app.post("/login", async (request, reply) => {
         const body = (request.body ?? {});
         const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";

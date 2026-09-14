@@ -23,6 +23,15 @@ export interface Page<T> {
 }
 export interface AdminStore {
     findAdminByEmail(email: string): Promise<AdminAccount | null>;
+    findAdminById(id: string): Promise<AdminAccount | null>;
+    /** Administradores activos con segundo factor configurado. */
+    countAdmins(): Promise<number>;
+    updateAdminProfile(id: string, input: {
+        email: string;
+        name: string;
+    }): Promise<void>;
+    updateAdminPassword(id: string, passwordHash: string): Promise<void>;
+    updateAdminTotp(id: string, secret: string): Promise<void>;
     upsertAdmin(input: {
         email: string;
         name: string;
@@ -53,6 +62,14 @@ export declare class MysqlAdminStore implements AdminStore {
         totpSecret: string;
         phone: string;
     }): Promise<string>;
+    findAdminById(id: string): Promise<AdminAccount | null>;
+    countAdmins(): Promise<number>;
+    updateAdminProfile(id: string, input: {
+        email: string;
+        name: string;
+    }): Promise<void>;
+    updateAdminPassword(id: string, passwordHash: string): Promise<void>;
+    updateAdminTotp(id: string, secret: string): Promise<void>;
     recordAudit(input: {
         eventType: string;
         actorUserId?: string | null;

@@ -21,12 +21,15 @@ input{width:100%;min-height:44px;padding:8px 10px;border:1px solid var(--line);b
 button{min-height:44px;padding:8px 16px;border:0;border-radius:10px;background:var(--green);color:#fff;font-weight:700;cursor:pointer}
 .full{width:100%;margin-top:18px}.error{color:var(--red);font-weight:600}.muted{color:var(--muted)}
 .pager{margin:12px 0;display:flex;gap:12px}.pager a{color:var(--cyan)}
+.ok{color:var(--green);font-weight:600}.stack{display:grid;gap:12px;max-width:560px;margin:0 auto}
+.qr{background:#fff;padding:10px;border-radius:12px;display:inline-block;line-height:0}.qr svg{width:220px;height:220px;max-width:100%}
+code{word-break:break-all;font-size:15px}a{color:var(--cyan)}
 `;
 export function layout(input) {
     const nonce = escapeHtml(input.nonce);
     const header = input.nav
         ? `<header><div class="brand">Auto<span>Mant</span>Pro · Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Vehículos</a><a href="/admin/shops">Talleres</a><a href="/admin/audit">Auditoría</a></nav>
+  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Vehículos</a><a href="/admin/shops">Talleres</a><a href="/admin/audit">Auditoría</a><a href="/admin/account">Mi cuenta</a></nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>`
         : "";
     return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">

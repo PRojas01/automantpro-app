@@ -61,6 +61,38 @@ export class MysqlAdminStore {
             return id;
         });
     }
+    findAdminById(id) {
+        return this.run(async (conn) => {
+            const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id]))[0];
+            if (!row)
+                return null;
+            return {
+                id: String(row.id),
+                email: String(row.email),
+                name: String(row.name),
+                passwordHash: String(row.passwordHash),
+                totpSecret: row.totpSecret ? String(row.totpSecret) : null,
+            };
+        });
+    }
+    countAdmins() {
+        return this.run((conn) => scalar(conn, "SELECT COUNT(*) AS n FROM `User` u JOIN `AdminTotp` t ON t.userId = u.id WHERE u.role = 'admin' AND u.deletedAt IS NULL"));
+    }
+    updateAdminProfile(id, input) {
+        return this.run(async (conn) => {
+            await conn.query("UPDATE `User` SET email = ?, name = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role = 'admin'", [input.email.toLowerCase(), input.name, id]);
+        });
+    }
+    updateAdminPassword(id, passwordHash) {
+        return this.run(async (conn) => {
+            await conn.query("UPDATE `User` SET passwordHash = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role = 'admin'", [passwordHash, id]);
+        });
+    }
+    updateAdminTotp(id, secret) {
+        return this.run(async (conn) => {
+            await conn.query("UPDATE `AdminTotp` SET secret = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ?", [secret, id]);
+        });
+    }
     recordAudit(input) {
         return this.run(async (conn) => {
             await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, reason, createdAt) VALUES (UUID(), ?, ?, 'admin', ?, CURRENT_TIMESTAMP(3))", [input.eventType, input.actorUserId ?? null, input.reason ?? null]);
