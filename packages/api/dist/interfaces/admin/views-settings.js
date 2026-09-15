@@ -36,6 +36,7 @@ export function settingsView(input) {
     <input id="current-settings" name="current" type="password" required autocomplete="current-password">
     <button class="full" type="submit" name="action" value="save">Guardar número</button>
     ${remove}</form></div>
+  ${aiCard(input.ai, csrf)}
   ${legalCard(input.legal, csrf)}
   <div class="card"><h2>Base de datos</h2>${db}</div>
   </div>`;
@@ -53,5 +54,28 @@ function legalCard(legal, csrf) {
     <form method="post" action="/admin/settings/legal" autocomplete="off">${csrf}${inputs}
     <label for="current-legal">Tu contraseña actual</label><input id="current-legal" name="current" type="password" required autocomplete="current-password">
     <button class="full" type="submit">Guardar datos de la empresa</button></form></div>`;
+}
+function aiCard(ai, csrf) {
+    if (ai === undefined)
+        return "";
+    if (ai === null)
+        return `<div class="card"><h2>Copiloto de IA</h2><p class="error">No se pudo consultar el estado de la IA.</p></div>`;
+    const configured = ai.missing.length === 0;
+    const status = ai.available
+        ? `<p class="ok">Disponible para los operadores.</p>`
+        : `<p class="error">${escapeHtml(ai.reason ?? "No disponible.")}</p>`;
+    const spent = ai.spentTodayUsd === null ? "—" : `US$ ${ai.spentTodayUsd.toFixed(4)}`;
+    const feedback = ai.feedback ? `${ai.feedback.good} útiles · ${ai.feedback.bad} no sirvieron (últimos 30 días)` : "—";
+    return `<div class="card"><h2>Copiloto de IA</h2>${status}
+    <div>Proveedor: <strong>${escapeHtml(ai.provider ?? "sin configurar")}</strong>${ai.model ? ` · modelo <strong>${escapeHtml(ai.model)}</strong>` : ""}</div>
+    <div>Gasto de hoy: <strong>${escapeHtml(spent)}</strong> de US$ ${escapeHtml(ai.budgetUsd.toFixed(2))}</div>
+    <div>Valoraciones: ${escapeHtml(feedback)}</div>
+    ${configured ? "" : `<p class="muted">Configura en los secretos de GoDaddy: LLM_PROVIDER (openai o anthropic), LLM_API_KEY y LLM_MODEL_SMART; luego vuelve a publicar.</p>`}
+    ${ai.pricesDefaulted ? `<p class="muted">Sin precios configurados: el gasto se estima con valores altos. Define LLM_PRICE_INPUT_PER_MTOK y LLM_PRICE_OUTPUT_PER_MTOK con los precios de tu modelo.</p>` : ""}
+    <form method="post" action="/admin/settings/ai" autocomplete="off">${csrf}
+    <div class="checks"><label><input type="checkbox" name="enabled"${ai.enabled ? " checked" : ""}> IA encendida</label></div>
+    <label for="ai-budget">Tope diario (US$)</label><input id="ai-budget" name="budget" inputmode="decimal" value="${escapeHtml(String(ai.budgetUsd).replace(".", ","))}" required>
+    <label for="current-ai">Tu contraseña actual</label><input id="current-ai" name="current" type="password" required autocomplete="current-password">
+    <button class="full" type="submit">Guardar IA</button></form></div>`;
 }
 //# sourceMappingURL=views-settings.js.map

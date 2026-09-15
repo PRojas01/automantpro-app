@@ -3,6 +3,7 @@ import { comparePassword } from "../../infrastructure/password.js";
 import { checkRateLimit, recordLoginAttempt, verifyCsrf, } from "../../application/admin/security.js";
 import { WHATSAPP_NUMBER_KEY, formatWhatsappNumber, normalizeWhatsappNumber, } from "../../application/settings/whatsapp-number.js";
 import { settingsView } from "./views-settings.js";
+import { parseAmount } from "../../application/work-orders/workflow.js";
 import { LEGAL_FIELDS, emptyLegalData, legalSettingKey, validateLegalField, } from "../../application/legal/documents.js";
 export function registerSettingsRoutes(app, deps) {
     async function withConn(work) {
@@ -25,6 +26,7 @@ export function registerSettingsRoutes(app, deps) {
         catch {
             // sin base: los datos legales se muestran vacíos
         }
+        const ai = deps.copilot ? await deps.copilot.status().catch(() => null) : null;
         try {
             stored = await deps.settings.get(WHATSAPP_NUMBER_KEY);
         }
@@ -38,7 +40,7 @@ export function registerSettingsRoutes(app, deps) {
         catch {
             db = null;
         }
-        return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, legal, flash }), session, status);
+        return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, legal, ai, flash }), session, status);
     }
     function checkCsrf(request, reply) {
         const session = deps.requireSession(request, reply);
@@ -134,6 +136,37 @@ export function registerSettingsRoutes(app, deps) {
         const filled = values.filter((v) => v.value).map((v) => v.field.label).join(", ") || "ninguno";
         await deps.audit("admin.settings.legal", account.id, `Datos legales actualizados (completos: ${filled})`);
         return render(request, reply, session, { kind: "ok", text: "Datos de la empresa guardados. Las páginas de términos y privacidad ya los muestran." });
+    });
+    app.post("/settings/ai", async (request, reply) => {
+        const ctx = checkCsrf(request, reply);
+        if (!ctx)
+            return reply;
+        const { session, body } = ctx;
+        if (!deps.copilot)
+            return render(request, reply, session, { kind: "error", text: "El copiloto de IA no está disponible." }, 400);
+        const account = await deps.store.findAdminById(session.userId);
+        if (!account)
+            return render(request, reply, session, { kind: "error", text: "Cuenta no encontrada." }, 404);
+        if (!checkRateLimit(account.email, request.ip).allowed) {
+            return render(request, reply, session, { kind: "error", text: "Demasiados intentos. Espera unos minutos." }, 429);
+        }
+        if (!(await comparePassword(typeof body.current === "string" ? body.current : "", account.passwordHash))) {
+            recordLoginAttempt(account.email, request.ip, false);
+            return render(request, reply, session, { kind: "error", text: "La contraseña actual no es correcta." }, 400);
+        }
+        const budget = parseAmount(body.budget);
+        if (budget === null || budget > 100)
+            return render(request, reply, session, { kind: "error", text: "Tope diario no válido: entre 0 y 100 dólares." }, 400);
+        const enabled = body.enabled === "on";
+        try {
+            await deps.copilot.setEnabled(enabled, account.id);
+            await deps.copilot.setBudget(budget, account.id);
+        }
+        catch {
+            return render(request, reply, session, { kind: "error", text: "Base de datos no disponible." }, 503);
+        }
+        await deps.audit("admin.settings.ai", account.id, `IA ${enabled ? "encendida" : "apagada"}, tope diario US$ ${budget.toFixed(2)}`);
+        return render(request, reply, session, { kind: "ok", text: `IA ${enabled ? "encendida" : "apagada"}. Tope diario: US$ ${budget.toFixed(2)}.` });
     });
     app.post("/settings/schema", async (request, reply) => {
         const ctx = checkCsrf(request, reply);

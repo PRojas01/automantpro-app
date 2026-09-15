@@ -43,6 +43,31 @@ function resultCard(result, csrf) {
     <h2>Pendientes del último chat</h2>${tasks}
     ${message}</div>`;
 }
+function copilotCard(input) {
+    const { csrf, copilot, draft } = input;
+    const hiddenQuery = `<input type="hidden" name="q" value="${e(input.query)}">`;
+    let draftBlock = "";
+    if (draft?.ok) {
+        const feedback = draft.usageId
+            ? `<form method="post" action="/admin/attend/feedback" class="row">${csrfField(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e(draft.usageId)}">
+        <input name="reason" maxlength="191" placeholder="¿Qué le faltó o sobró? (opcional)">
+        <button type="submit" name="score" value="good">👍 Útil</button><button class="danger" type="submit" name="score" value="bad">👎 No sirvió</button></form>`
+            : "";
+        draftBlock = `<p class="muted">Borrador generado por IA: revísalo y corrígelo antes de enviarlo. Costo estimado US$ ${e(draft.costUsd.toFixed(4))}.</p>
+      <label for="draft">Borrador de la IA</label><textarea id="draft" rows="10">${e(draft.reply)}</textarea>
+      ${draft.note ? `<p><strong>Nota para ti:</strong> ${e(draft.note)}</p>` : ""}${feedback}`;
+    }
+    else if (draft) {
+        draftBlock = `<p class="error" role="alert">${e(draft.message)}</p><p class="muted">Usa el mensaje sugerido de arriba.</p>`;
+    }
+    const form = copilot.available
+        ? `<form method="post" action="/admin/attend/draft" autocomplete="off">${csrfField(csrf)}${hiddenQuery}
+      <label for="customer-message">Mensaje del cliente</label><textarea id="customer-message" name="message" rows="4" maxlength="2000" required>${e(input.customerText)}</textarea>
+      <label for="instruction">Indicación para la IA (opcional)</label><input id="instruction" name="instruction" maxlength="300" value="${e(input.instruction)}" placeholder="Ofrécele turno para el jueves en la mañana">
+      <button class="full" type="submit">Sugerir respuesta con IA</button></form>`
+        : `<p class="muted">${e(copilot.reason ?? "La IA no está disponible.")} Revísalo en <a href="/admin/settings">Ajustes</a>.</p>`;
+    return `<div class="card"><h2>Copiloto de IA</h2>${draftBlock}${form}</div>`;
+}
 export function attendView(input) {
     return `<div class="stack wide"><h1>Atender a un contacto</h1>
   <p class="muted">Pega el número o el primer mensaje que llegó por WhatsApp. Te digo si es nuevo o registrado, su perfil, lo pendiente y el mensaje para responder.</p>
@@ -50,6 +75,10 @@ export function attendView(input) {
   <form method="post" action="/admin/attend" autocomplete="off">${csrfField(input.csrf)}
   <label for="q">Número o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. Código: AMP-XXXX · 099 123 4567">${e(input.query)}</textarea>
   <button class="full" type="submit">Identificar</button></form>
-  ${input.result ? resultCard(input.result, input.csrf) : ""}</div>`;
+  ${input.flash ? `<p class="ok" role="status">${e(input.flash)}</p>` : ""}
+  ${input.result ? resultCard(input.result, input.csrf) : ""}
+  ${input.result?.phone && input.copilot
+        ? copilotCard({ csrf: input.csrf, query: input.query, copilot: input.copilot, draft: input.draft, customerText: input.customerText ?? input.query, instruction: input.instruction ?? "" })
+        : ""}</div>`;
 }
 //# sourceMappingURL=views-attend.js.map

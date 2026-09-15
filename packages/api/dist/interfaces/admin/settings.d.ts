@@ -3,6 +3,7 @@ import type { AdminStore } from "../../infrastructure/admin/admin-store.js";
 import type { SettingsStore } from "../../infrastructure/settings/settings-store.js";
 import { type SqlConnection } from "../../infrastructure/schema-setup/apply.js";
 import { type AdminSession } from "../../application/admin/security.js";
+import type { CopilotService } from "../../application/copilot/service.js";
 export interface SettingsDeps {
     store: AdminStore;
     settings: SettingsStore;
@@ -12,6 +13,7 @@ export interface SettingsDeps {
     audit(eventType: string, actorUserId: string | null, reason: string): Promise<void>;
     envNumber(): string | null;
     onChanged(): void;
+    copilot?: CopilotService;
 }
 export declare function registerSettingsRoutes(app: FastifyInstance, deps: SettingsDeps): void;
 //# sourceMappingURL=settings.d.ts.map

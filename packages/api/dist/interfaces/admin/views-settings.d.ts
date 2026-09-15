@@ -1,5 +1,6 @@
 import type { Flash } from "./views-setup.js";
 import { type LegalData } from "../../application/legal/documents.js";
+import type { CopilotStatus } from "../../application/copilot/service.js";
 export declare function settingsView(input: {
     csrf: string;
     whatsapp: {
@@ -11,6 +12,7 @@ export declare function settingsView(input: {
         total: number;
     } | null;
     legal?: LegalData;
+    ai?: CopilotStatus | null;
     flash?: Flash;
 }): string;
 //# sourceMappingURL=views-settings.d.ts.map

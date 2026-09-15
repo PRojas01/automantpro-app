@@ -13,6 +13,8 @@ import { registerAttendRoutes } from "./attend.js";
 import { registerWorkOrderRoutes } from "./work-orders.js";
 import { registerQuoteRoutes } from "./quotes.js";
 import { MysqlQuoteStore } from "../../infrastructure/quotes/quote-store.js";
+import { CopilotService } from "../../application/copilot/service.js";
+import { MysqlCopilotStore } from "../../infrastructure/copilot/copilot-store.js";
 import { MysqlWorkOrderStore } from "../../infrastructure/work-orders/work-order-store.js";
 import { MysqlVisitStore } from "../../infrastructure/visits/visit-store.js";
 import { MysqlAppointmentStore } from "../../infrastructure/appointments/appointment-store.js";
@@ -34,6 +36,8 @@ export async function adminPanelRoutes(app, options = {}) {
     const detailWorkOrders = options.workOrders || options.connect || missingDbEnv().length === 0 ? workOrders : undefined;
     const quotes = options.quotes ?? new MysqlQuoteStore(connect);
     const detailQuotes = options.quotes || options.connect || missingDbEnv().length === 0 ? quotes : undefined;
+    const copilot = options.copilot ?? new CopilotService({ settings, store: new MysqlCopilotStore(connect) });
+    const detailCopilot = options.copilot || options.connect || missingDbEnv().length === 0 ? copilot : undefined;
     const dashboardDb = () => !!options.connect || !!options.registrations || missingDbEnv().length === 0;
     const startedAt = Date.now();
     app.decorateRequest("cspNonce", "");
@@ -104,6 +108,8 @@ export async function adminPanelRoutes(app, options = {}) {
         appointments: detailAppointments,
         workOrders: detailWorkOrders,
         quotes: detailQuotes,
+        copilot: detailCopilot,
+        audit,
         visits: detailAppointments ? (options.visits ?? new MysqlVisitStore(connect)) : options.visits,
         requireSession,
         html,
@@ -116,6 +122,7 @@ export async function adminPanelRoutes(app, options = {}) {
         html,
         audit,
         envNumber: publicNumber,
+        copilot: detailCopilot,
         onChanged: () => options.onSettingsChanged?.(),
     });
     app.get("/login", async (request, reply) => {
