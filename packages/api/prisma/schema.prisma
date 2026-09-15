@@ -274,6 +274,12 @@ model Order {
   toShopId   String?
   toStoreId  String?
   status     OrderStatus @default(requested)
+  quoteRequestId String?
+  quoteId        String?
+  stage          String?   @db.VarChar(20)
+  total          Decimal?  @db.Decimal(10, 2)
+  cancelReason   String?
+  updatedAt      DateTime?
   createdAt  DateTime    @default(now())
 
   fromUser User        @relation("order_from", fields: [fromUserId], references: [id])
@@ -536,4 +542,44 @@ model WorkOrderItem {
   createdAt   DateTime @default(now())
 
   @@index([workOrderId])
+}
+
+model QuoteRequest {
+  id          String   @id @default(uuid())
+  number      Int      @unique
+  requesterId String
+  vehicleId   String?
+  workOrderId String?
+  partName    String
+  partCode    String?
+  quantity    Int      @default(1)
+  city        String
+  notes       String?  @db.Text
+  status      String   @default("abierta") @db.VarChar(20)
+  closeReason String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  @@index([requesterId])
+  @@index([status, createdAt])
+}
+
+model Quote {
+  id           String    @id @default(uuid())
+  requestId    String
+  storeId      String
+  status       String    @default("invitado") @db.VarChar(20)
+  unitPrice    Decimal?  @db.Decimal(10, 2)
+  brand        String?
+  availability String?
+  warrantyDays Int?
+  deliveryTime String?
+  validDays    Int?
+  notes        String?
+  lossReason   String?   @db.VarChar(40)
+  respondedAt  DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@unique([requestId, storeId])
+  @@index([storeId, status])
 }

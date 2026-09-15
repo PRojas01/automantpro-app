@@ -1,6 +1,7 @@
 import { ecDayRange, formatEcDateTime } from "../appointments/messages.js";
 import { planItemsFor } from "../registration/plan-text.js";
 import { normalizeWhatsappNumber } from "../settings/whatsapp-number.js";
+import { ORDER_STAGE_LABELS, quoteRequestCode } from "../quotes/workflow.js";
 import { IN_SHOP_STATUSES, OPEN_STATUSES, WORK_ORDER_LABELS, formatUsd, workOrderCode } from "../work-orders/workflow.js";
 export const NEW_CONTACT_MESSAGE = "¡Hola! 👋 Bienvenido a AutoMantPro 🚗\nTu vehículo, tu taller y tus repuestos, conectados en un solo chat.\n\n¿Quién eres?\n1) 🚗 Soy nuevo y tengo un vehículo\n2) 🔧 Soy nuevo y tengo un taller\n3) 📦 Soy nuevo y tengo un almacén de repuestos\n4) 🔑 Ya tengo cuenta (te escribo desde otro número)\n\nResponde con el número.";
 const MENUS = {
@@ -85,6 +86,23 @@ export function pendingTasks(ctx) {
         const open = orders.filter((o) => o.shopUserId === userId && OPEN_STATUSES.includes(o.status)).length;
         if (open > 0)
             tasks.push({ text: `🧾 Tienes ${plural(open, "orden de trabajo abierta", "órdenes de trabajo abiertas")}.`, forCustomer: true });
+    }
+    const quotes = ctx.quotes;
+    if (quotes) {
+        for (const r of quotes.requests.filter((x) => x.status === "abierta")) {
+            tasks.push({ text: `💰 Tu solicitud de cotización de ${r.partName} (${quoteRequestCode(r.number)}) está en curso; te envío la comparativa apenas respondan los almacenes.`, forCustomer: true });
+        }
+        for (const o of quotes.orders.filter((x) => x.requesterId === userId && ["confirmado", "preparando", "despachado"].includes(x.stage))) {
+            tasks.push({ text: `📦 Tu pedido de ${o.partName} en ${o.storeName} está ${String(ORDER_STAGE_LABELS[o.stage]).toLowerCase()}.`, forCustomer: true });
+        }
+        if (role === "almacen") {
+            const toAnswer = quotes.storeQuotes.filter((q) => q.status === "invitado" && q.requestStatus === "abierta").length;
+            if (toAnswer > 0)
+                tasks.push({ text: `📨 Tienes ${plural(toAnswer, "solicitud de cotización", "solicitudes de cotización")} por responder.`, forCustomer: true });
+            const toShip = quotes.orders.filter((o) => o.storeUserId === userId && ["confirmado", "preparando"].includes(o.stage)).length;
+            if (toShip > 0)
+                tasks.push({ text: `🧾 Tienes ${plural(toShip, "pedido", "pedidos")} por despachar.`, forCustomer: true });
+        }
     }
     const lastNote = ctx.events.find((ev) => ev.type === "operator.note");
     if (lastNote) {

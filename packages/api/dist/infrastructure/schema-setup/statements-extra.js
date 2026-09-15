@@ -1,6 +1,6 @@
 // Sentencias agregadas a mano (no provienen de los SQL generados). Se aplican después de
 // SCHEMA_STATEMENTS con las mismas comprobaciones de existencia. Solo agregan: nunca borran.
-export const EXTRA_TABLES = ["AdminTotp", "AppSetting", "WorkOrder", "WorkOrderItem"];
+export const EXTRA_TABLES = ["AdminTotp", "AppSetting", "WorkOrder", "WorkOrderItem", "QuoteRequest", "Quote"];
 /** Ajustes editables desde el panel (por ejemplo, el número público de WhatsApp). */
 export const APP_SETTING_TABLE_SQL = "CREATE TABLE IF NOT EXISTS `AppSetting` (\n    `name` VARCHAR(191) NOT NULL,\n    `value` TEXT NOT NULL,\n    `updatedBy` VARCHAR(191) NULL,\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    PRIMARY KEY (`name`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 function addColumn(table, column, definition) {
@@ -82,5 +82,37 @@ export const EXTRA_STATEMENTS = [
         target: "WorkOrderItem.WorkOrderItem_workOrderId_fkey",
         sql: "ALTER TABLE `WorkOrderItem` ADD CONSTRAINT `WorkOrderItem_workOrderId_fkey` FOREIGN KEY (`workOrderId`) REFERENCES `WorkOrder`(`id`) ON DELETE CASCADE ON UPDATE CASCADE",
     },
+    // Cotizaciones de repuestos y pedidos a almacenes (docs/34 D9, A4, A5 y T9).
+    {
+        kind: "createTable",
+        target: "QuoteRequest",
+        sql: "CREATE TABLE IF NOT EXISTS `QuoteRequest` (\n    `id` VARCHAR(191) NOT NULL,\n    `number` INTEGER NOT NULL,\n    `requesterId` VARCHAR(191) NOT NULL,\n    `vehicleId` VARCHAR(191) NULL,\n    `workOrderId` VARCHAR(191) NULL,\n    `partName` VARCHAR(191) NOT NULL,\n    `partCode` VARCHAR(191) NULL,\n    `quantity` INTEGER NOT NULL DEFAULT 1,\n    `city` VARCHAR(191) NOT NULL,\n    `notes` TEXT NULL,\n    `status` VARCHAR(20) NOT NULL DEFAULT 'abierta',\n    `closeReason` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    UNIQUE INDEX `QuoteRequest_number_key`(`number`),\n    INDEX `QuoteRequest_requesterId_idx`(`requesterId`),\n    INDEX `QuoteRequest_status_createdAt_idx`(`status`, `createdAt`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+    },
+    {
+        kind: "createTable",
+        target: "Quote",
+        sql: "CREATE TABLE IF NOT EXISTS `Quote` (\n    `id` VARCHAR(191) NOT NULL,\n    `requestId` VARCHAR(191) NOT NULL,\n    `storeId` VARCHAR(191) NOT NULL,\n    `status` VARCHAR(20) NOT NULL DEFAULT 'invitado',\n    `unitPrice` DECIMAL(10, 2) NULL,\n    `brand` VARCHAR(191) NULL,\n    `availability` VARCHAR(191) NULL,\n    `warrantyDays` INTEGER NULL,\n    `deliveryTime` VARCHAR(191) NULL,\n    `validDays` INTEGER NULL,\n    `notes` VARCHAR(191) NULL,\n    `lossReason` VARCHAR(40) NULL,\n    `respondedAt` DATETIME(3) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    UNIQUE INDEX `Quote_requestId_storeId_key`(`requestId`, `storeId`),\n    INDEX `Quote_storeId_status_idx`(`storeId`, `status`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+    },
+    {
+        kind: "addForeignKey",
+        target: "QuoteRequest.QuoteRequest_requesterId_fkey",
+        sql: "ALTER TABLE `QuoteRequest` ADD CONSTRAINT `QuoteRequest_requesterId_fkey` FOREIGN KEY (`requesterId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE",
+    },
+    {
+        kind: "addForeignKey",
+        target: "Quote.Quote_requestId_fkey",
+        sql: "ALTER TABLE `Quote` ADD CONSTRAINT `Quote_requestId_fkey` FOREIGN KEY (`requestId`) REFERENCES `QuoteRequest`(`id`) ON DELETE CASCADE ON UPDATE CASCADE",
+    },
+    {
+        kind: "addForeignKey",
+        target: "Quote.Quote_storeId_fkey",
+        sql: "ALTER TABLE `Quote` ADD CONSTRAINT `Quote_storeId_fkey` FOREIGN KEY (`storeId`) REFERENCES `Store`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE",
+    },
+    addColumn("Order", "quoteRequestId", "VARCHAR(191) NULL"),
+    addColumn("Order", "quoteId", "VARCHAR(191) NULL"),
+    addColumn("Order", "stage", "VARCHAR(20) NULL"),
+    addColumn("Order", "total", "DECIMAL(10, 2) NULL"),
+    addColumn("Order", "cancelReason", "VARCHAR(191) NULL"),
+    addColumn("Order", "updatedAt", "DATETIME(3) NULL"),
 ];
 //# sourceMappingURL=statements-extra.js.map

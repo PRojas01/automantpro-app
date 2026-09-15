@@ -1,6 +1,7 @@
 import type { AppointmentRow, EventRow } from "../../infrastructure/appointments/appointment-store.js";
 import type { UserDetail } from "../../infrastructure/registration/registration-store.js";
 import type { WorkOrderRow } from "../../infrastructure/work-orders/work-order-store.js";
+import type { UserQuotes } from "../../infrastructure/quotes/quote-store.js";
 export interface PendingTask {
     text: string;
     /** true: se incluye en el mensaje al contacto; false: solo lo ve el operador. */
@@ -11,6 +12,7 @@ export interface ContactContext {
     appointments: AppointmentRow[];
     events: EventRow[];
     workOrders?: WorkOrderRow[];
+    quotes?: UserQuotes | null;
     now?: Date;
 }
 export declare const NEW_CONTACT_MESSAGE = "\u00A1Hola! \uD83D\uDC4B Bienvenido a AutoMantPro \uD83D\uDE97\nTu veh\u00EDculo, tu taller y tus repuestos, conectados en un solo chat.\n\n\u00BFQui\u00E9n eres?\n1) \uD83D\uDE97 Soy nuevo y tengo un veh\u00EDculo\n2) \uD83D\uDD27 Soy nuevo y tengo un taller\n3) \uD83D\uDCE6 Soy nuevo y tengo un almac\u00E9n de repuestos\n4) \uD83D\uDD11 Ya tengo cuenta (te escribo desde otro n\u00FAmero)\n\nResponde con el n\u00FAmero.";

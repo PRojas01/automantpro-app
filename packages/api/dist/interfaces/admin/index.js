@@ -11,6 +11,8 @@ import { registerRegistrationRoutes } from "./registrations.js";
 import { registerAppointmentRoutes } from "./appointments.js";
 import { registerAttendRoutes } from "./attend.js";
 import { registerWorkOrderRoutes } from "./work-orders.js";
+import { registerQuoteRoutes } from "./quotes.js";
+import { MysqlQuoteStore } from "../../infrastructure/quotes/quote-store.js";
 import { MysqlWorkOrderStore } from "../../infrastructure/work-orders/work-order-store.js";
 import { MysqlVisitStore } from "../../infrastructure/visits/visit-store.js";
 import { MysqlAppointmentStore } from "../../infrastructure/appointments/appointment-store.js";
@@ -30,6 +32,8 @@ export async function adminPanelRoutes(app, options = {}) {
     const detailAppointments = options.appointments || options.connect || missingDbEnv().length === 0 ? appointments : undefined;
     const workOrders = options.workOrders ?? new MysqlWorkOrderStore(connect);
     const detailWorkOrders = options.workOrders || options.connect || missingDbEnv().length === 0 ? workOrders : undefined;
+    const quotes = options.quotes ?? new MysqlQuoteStore(connect);
+    const detailQuotes = options.quotes || options.connect || missingDbEnv().length === 0 ? quotes : undefined;
     const dashboardDb = () => !!options.connect || !!options.registrations || missingDbEnv().length === 0;
     const startedAt = Date.now();
     app.decorateRequest("cspNonce", "");
@@ -91,13 +95,15 @@ export async function adminPanelRoutes(app, options = {}) {
     }
     registerSetupWizard(app, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
     registerAccountRoutes(app, { store, requireSession, html, audit });
-    registerRegistrationRoutes(app, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, requireSession, html, audit });
+    registerRegistrationRoutes(app, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, requireSession, html, audit });
     registerAppointmentRoutes(app, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit });
     registerWorkOrderRoutes(app, { workOrders, appointments, registrations, requireSession, html, audit });
+    registerQuoteRoutes(app, { quotes, registrations, appointments, workOrders, requireSession, html, audit });
     registerAttendRoutes(app, {
         registrations,
         appointments: detailAppointments,
         workOrders: detailWorkOrders,
+        quotes: detailQuotes,
         visits: detailAppointments ? (options.visits ?? new MysqlVisitStore(connect)) : options.visits,
         requireSession,
         html,

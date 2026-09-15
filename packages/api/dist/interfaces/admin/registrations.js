@@ -88,7 +88,16 @@ export function registerRegistrationRoutes(app, deps) {
                 // sin órdenes ni historial si la base no responde
             }
         }
-        return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values, appointments: appointmentsList, events, workOrders: workOrdersList, history }), session, extra.status ?? 200);
+        let quotesData = null;
+        if (deps.quotes) {
+            try {
+                quotesData = await deps.quotes.listForUser(id);
+            }
+            catch {
+                // sin cotizaciones si la base no responde
+            }
+        }
+        return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values, appointments: appointmentsList, events, workOrders: workOrdersList, history, quotes: quotesData }), session, extra.status ?? 200);
     }
     app.get("/users", async (request, reply) => {
         const session = deps.requireSession(request, reply);

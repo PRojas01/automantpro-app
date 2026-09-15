@@ -136,6 +136,7 @@ export function workOrderDetailView(input) {
     ${order.status === "cerrada" ? `<div>Salida: ${e(km(order.exitKm))} · garantía ${e(order.warrantyDays)} días${order.nextService ? ` · próximo: ${e(order.nextService)}` : ""}</div>` : ""}
   </div>
   <div class="card"><h2>Diagnóstico</h2>${diagnosis}</div>
+  ${order.status !== "cerrada" && order.status !== "cancelada" ? `<div class="card"><h2>Repuestos</h2><p class="muted">Si el taller necesita comprar repuestos, pide cotizaciones a los almacenes verificados.</p><a class="button" href="/admin/quotes/new?workOrderId=${e(order.id)}">Pedir repuestos a almacenes</a></div>` : ""}
   <div class="card"><h2>Presupuesto</h2>
     <div class="scroll"><table><thead><tr><th>Tipo</th><th>Descripción</th><th>Marca / código</th><th>Cant.</th><th>P. unit.</th><th>Total</th>${editable ? "<th></th>" : ""}</tr></thead>
     <tbody>${itemRows}</tbody></table></div>
