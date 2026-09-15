@@ -801,7 +801,7 @@ var require_plugin = __commonJS({
         debug("exec: resolving promise", name);
         maybePromiseLike.then(
           () => process.nextTick(done),
-          (e3) => process.nextTick(done, e3)
+          (e4) => process.nextTick(done, e4)
         );
       } else if (func.length < 3) {
         done();
@@ -1411,7 +1411,7 @@ var require_avvio = __commonJS({
           debug("resolving close/onClose promise");
           promise.then(
             () => process.nextTick(cb),
-            (e3) => process.nextTick(cb, e3)
+            (e4) => process.nextTick(cb, e4)
           );
         } else {
           process.nextTick(cb);
@@ -2445,8 +2445,8 @@ var require_hooks = __commonJS({
         if (fn.length === 1) {
           try {
             fn.call(server2, done);
-          } catch (e3) {
-            done(e3);
+          } catch (e4) {
+            done(e4);
           }
           return;
         }
@@ -5671,7 +5671,7 @@ var require_initial_config_validation = __commonJS({
     function validateInitialConfig(options) {
       const opts = deepClone(options);
       if (!validate(opts)) {
-        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e3) => e3.message)));
+        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e4) => e4.message)));
         error.errors = validate.errors;
         throw error;
       }
@@ -6901,7 +6901,7 @@ var require_quick_format_unescaped = __commonJS({
     function tryStringify(o) {
       try {
         return JSON.stringify(o);
-      } catch (e3) {
+      } catch (e4) {
         return '"[Circular]"';
       }
     }
@@ -8976,7 +8976,7 @@ var require_levels = __commonJS({
           if (typeof stream.flushSync === "function") {
             try {
               stream.flushSync();
-            } catch (e3) {
+            } catch (e4) {
             }
           }
         };
@@ -11625,9 +11625,9 @@ var require_reply = __commonJS({
         } else {
           payload = serialize(reply[kRouteContext], payload, reply.raw.statusCode, reply[kReplyHeaders]["content-type"]);
         }
-      } catch (e3) {
-        wrapSerializationError(e3, reply);
-        onErrorHook(reply, e3);
+      } catch (e4) {
+        wrapSerializationError(e4, reply);
+        onErrorHook(reply, e4);
         return;
       }
       onSendHook(reply, payload);
@@ -12320,8 +12320,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e3) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e3 });
+        } catch (e4) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e4 });
         }
       };
       ipaddr.IPv4.isIPv4 = function(string) {
@@ -12370,8 +12370,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e3) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e3 });
+        } catch (e4) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e4 });
         }
       };
       ipaddr.IPv4.parse = function(string) {
@@ -12696,8 +12696,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e3) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e3 });
+        } catch (e4) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e4 });
         }
       };
       ipaddr.IPv6.isIPv6 = function(string) {
@@ -12739,8 +12739,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e3) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e3 });
+        } catch (e4) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e4 });
         }
       };
       ipaddr.IPv6.parse = function(string) {
@@ -12852,8 +12852,8 @@ var require_ipaddr = __commonJS({
         } catch {
           try {
             return ipaddr.IPv4.parseCIDR(string);
-          } catch (e3) {
-            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e3 });
+          } catch (e4) {
+            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e4 });
           }
         }
       };
@@ -13475,8 +13475,8 @@ var require_context = __commonJS({
       let text2 = "";
       const separator = ", ";
       for (let i = 0; i !== errors.length; ++i) {
-        const e3 = errors[i];
-        text2 += dataVar + (e3.instancePath || "") + " " + e3.message + separator;
+        const e4 = errors[i];
+        text2 += dataVar + (e4.instancePath || "") + " " + e4.message + separator;
       }
       return new Error(text2.slice(0, -separator.length));
     }
@@ -14471,17 +14471,17 @@ var require_codegen = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e3 = this.else;
-        if (e3) {
-          const ns = e3.optimizeNodes();
-          e3 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e4 = this.else;
+        if (e4) {
+          const ns = e4.optimizeNodes();
+          e4 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e3) {
+        if (e4) {
           if (cond === false)
-            return e3 instanceof _If ? e3 : e3.nodes;
+            return e4 instanceof _If ? e4 : e4.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e3 instanceof _If ? [e3] : e3.nodes);
+          return new _If(not(cond), e4 instanceof _If ? [e4] : e4.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -14925,8 +14925,8 @@ var require_codegen = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e3) {
-        return e3 instanceof code_1._Code && e3._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e4) {
+        return e4 instanceof code_1._Code && e4._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -15794,7 +15794,7 @@ var require_keyword = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e3) => gen.assign(valid, false).if((0, codegen_1._)`${e3} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e3}.errors`), () => gen.throw(e3)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e4) => gen.assign(valid, false).if((0, codegen_1._)`${e4} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e4}.errors`), () => gen.throw(e4)));
         return ruleErrs;
       }
       function validateSync() {
@@ -16871,12 +16871,12 @@ var require_compile = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e3) {
+      } catch (e4) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e3;
+        throw e4;
       } finally {
         this._compilations.delete(sch);
       }
@@ -17930,8 +17930,8 @@ var require_fast_uri = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e3) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e3;
+        } catch (e4) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e4;
           return true;
         }
       }
@@ -18317,11 +18317,11 @@ var require_core = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e3) {
-            if (!(e3 instanceof ref_error_1.default))
-              throw e3;
-            checkLoaded.call(this, e3);
-            await loadMissingSchema.call(this, e3.missingSchema);
+          } catch (e4) {
+            if (!(e4 instanceof ref_error_1.default))
+              throw e4;
+            checkLoaded.call(this, e4);
+            await loadMissingSchema.call(this, e4.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
@@ -18517,7 +18517,7 @@ var require_core = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e3) => `${dataVar}${e3.instancePath} ${e3.message}`).reduce((text2, msg) => text2 + separator + msg);
+        return errors.map((e4) => `${dataVar}${e4.instancePath} ${e4.message}`).reduce((text2, msg) => text2 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -18825,9 +18825,9 @@ var require_ref = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e3) => {
-          gen.if((0, codegen_1._)`!(${e3} instanceof ${it.ValidationError})`, () => gen.throw(e3));
-          addErrorsFrom(e3);
+        }, (e4) => {
+          gen.if((0, codegen_1._)`!(${e4} instanceof ${it.ValidationError})`, () => gen.throw(e4));
+          addErrorsFrom(e4);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -21673,12 +21673,12 @@ var require_serialize = __commonJS({
         const serialize = makeSerialize(this.scope.get());
         this.scope.value(serializeName, { ref: serialize });
         sch.serialize = serialize;
-      } catch (e3) {
+      } catch (e4) {
         if (sourceCode)
           this.logger.error("Error compiling serializer, function code:", sourceCode);
         delete sch.serialize;
         delete sch.serializeName;
-        throw e3;
+        throw e4;
       } finally {
         this._compilations.delete(sch);
       }
@@ -21867,8 +21867,8 @@ var require_parseJson = __commonJS({
       try {
         parseJson.position = pos + s.length;
         return JSON.parse(s);
-      } catch (e3) {
-        matches = rxParseJson.exec(e3.message);
+      } catch (e4) {
+        matches = rxParseJson.exec(e4.message);
         if (!matches) {
           parseJson.message = "unexpected end";
           return void 0;
@@ -22084,12 +22084,12 @@ var require_parse = __commonJS({
         const parse = makeParse(this.scope.get());
         this.scope.value(parseName, { ref: parse });
         sch.parse = parse;
-      } catch (e3) {
+      } catch (e4) {
         if (sourceCode)
           this.logger.error("Error compiling parser, function code:", sourceCode);
         delete sch.parse;
         delete sch.parseName;
-        throw e3;
+        throw e4;
       } finally {
         this._compilations.delete(sch);
       }
@@ -23642,8 +23642,8 @@ var require_fast_uri2 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e3) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e3;
+        } catch (e4) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e4;
           return true;
         }
       }
@@ -24040,7 +24040,7 @@ var require_formats = __commonJS({
       try {
         new RegExp(str);
         return true;
-      } catch (e3) {
+      } catch (e4) {
         return false;
       }
     }
@@ -25381,17 +25381,17 @@ var require_codegen2 = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e3 = this.else;
-        if (e3) {
-          const ns = e3.optimizeNodes();
-          e3 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e4 = this.else;
+        if (e4) {
+          const ns = e4.optimizeNodes();
+          e4 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e3) {
+        if (e4) {
           if (cond === false)
-            return e3 instanceof _If ? e3 : e3.nodes;
+            return e4 instanceof _If ? e4 : e4.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e3 instanceof _If ? [e3] : e3.nodes);
+          return new _If(not(cond), e4 instanceof _If ? [e4] : e4.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -25835,8 +25835,8 @@ var require_codegen2 = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e3) {
-        return e3 instanceof code_1._Code && e3._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e4) {
+        return e4 instanceof code_1._Code && e4._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -26704,7 +26704,7 @@ var require_keyword2 = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e3) => gen.assign(valid, false).if((0, codegen_1._)`${e3} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e3}.errors`), () => gen.throw(e3)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e4) => gen.assign(valid, false).if((0, codegen_1._)`${e4} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e4}.errors`), () => gen.throw(e4)));
         return ruleErrs;
       }
       function validateSync() {
@@ -27746,12 +27746,12 @@ var require_compile2 = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e3) {
+      } catch (e4) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e3;
+        throw e4;
       } finally {
         this._compilations.delete(sch);
       }
@@ -28805,8 +28805,8 @@ var require_fast_uri3 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e3) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e3;
+        } catch (e4) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e4;
           return true;
         }
       }
@@ -29192,11 +29192,11 @@ var require_core3 = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e3) {
-            if (!(e3 instanceof ref_error_1.default))
-              throw e3;
-            checkLoaded.call(this, e3);
-            await loadMissingSchema.call(this, e3.missingSchema);
+          } catch (e4) {
+            if (!(e4 instanceof ref_error_1.default))
+              throw e4;
+            checkLoaded.call(this, e4);
+            await loadMissingSchema.call(this, e4.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
@@ -29392,7 +29392,7 @@ var require_core3 = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e3) => `${dataVar}${e3.instancePath} ${e3.message}`).reduce((text2, msg) => text2 + separator + msg);
+        return errors.map((e4) => `${dataVar}${e4.instancePath} ${e4.message}`).reduce((text2, msg) => text2 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -29700,9 +29700,9 @@ var require_ref3 = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e3) => {
-          gen.if((0, codegen_1._)`!(${e3} instanceof ${it.ValidationError})`, () => gen.throw(e3));
-          addErrorsFrom(e3);
+        }, (e4) => {
+          gen.if((0, codegen_1._)`!(${e4} instanceof ${it.ValidationError})`, () => gen.throw(e4));
+          addErrorsFrom(e4);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -32822,8 +32822,8 @@ var require_fast_uri4 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e3) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e3;
+        } catch (e4) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e4;
           return true;
         }
       }
@@ -33202,7 +33202,7 @@ var require_formats2 = __commonJS({
       try {
         new RegExp(str);
         return true;
-      } catch (e3) {
+      } catch (e4) {
         return false;
       }
     }
@@ -42778,7 +42778,7 @@ var require_dist5 = __commonJS({
         return str;
       try {
         return decodeURIComponent(str);
-      } catch (e3) {
+      } catch (e4) {
         return str;
       }
     }
@@ -43160,10 +43160,10 @@ var require_set_cookie = __commonJS({
       }
       try {
         value2 = options.decodeValues ? decodeURIComponent(value2) : value2;
-      } catch (e3) {
+      } catch (e4) {
         console.error(
           "set-cookie-parser: failed to decode cookie value. Set options.decodeValues=false to disable decoding.",
-          e3
+          e4
         );
       }
       var cookie = createNullObj();
@@ -44385,7 +44385,7 @@ var require_light_my_request = __commonJS({
         assert(typeof dispatchFunc === "function", "dispatchFunc should be a function");
         const isOptionValid = optsValidator(options);
         if (!isOptionValid) {
-          throw new Error(optsValidator.errors.map((e3) => e3.message));
+          throw new Error(optsValidator.errors.map((e4) => e4.message));
         }
       }
       const server = options.server || {};
@@ -45341,9 +45341,9 @@ var require_getPluginName = __commonJS({
       Error.stackTraceLimit = 10;
       try {
         throw new Error("anonymous function");
-      } catch (e3) {
+      } catch (e4) {
         Error.stackTraceLimit = stackTraceLimit;
-        return extractPluginName(e3.stack);
+        return extractPluginName(e4.stack);
       }
     };
     function extractPluginName(stack) {
@@ -45859,9 +45859,9 @@ var require_decoder = __commonJS({
           throw new TokenError(TokenError.codes.invalidPayload, "The payload must be an object", { payload });
         }
         return complete ? { header, payload, signature: signatureSegment, input: token.slice(0, lastSeparator) } : payload;
-      } catch (e3) {
+      } catch (e4) {
         throw TokenError.wrap(
-          e3,
+          e4,
           TokenError.codes.malformed,
           `The token ${validHeader ? "payload" : "header"} is not a valid base64url serialized JSON.`
         );
@@ -46358,7 +46358,7 @@ var require_bn = __commonJS({
         } else {
           Buffer2 = __require("buffer").Buffer;
         }
-      } catch (e3) {
+      } catch (e4) {
       }
       BN.isBN = function isBN(num) {
         if (num instanceof BN) {
@@ -49171,7 +49171,7 @@ var require_inherits = __commonJS({
       util2 = __require("util");
       if (typeof util2.inherits !== "function") throw "";
       module.exports = util2.inherits;
-    } catch (e3) {
+    } catch (e4) {
       module.exports = require_inherits_browser();
     }
     var util2;
@@ -49231,7 +49231,7 @@ var require_safer = __commonJS({
     if (!safer.kStringMaxLength) {
       try {
         safer.kStringMaxLength = process.binding("buffer").kStringMaxLength;
-      } catch (e3) {
+      } catch (e4) {
       }
     }
     if (!safer.constants) {
@@ -49338,8 +49338,8 @@ var require_reporter = __commonJS({
       if (!this.stack) {
         try {
           throw new Error(this.message);
-        } catch (e3) {
-          this.stack = e3.stack;
+        } catch (e4) {
+          this.stack = e4.stack;
         }
       }
       return this;
@@ -49759,7 +49759,7 @@ var require_node2 = __commonJS({
             else
               this._decodeChoice(input, options);
             present = true;
-          } catch (e3) {
+          } catch (e4) {
             present = false;
           }
           input.restore(save);
@@ -49878,7 +49878,7 @@ var require_node2 = __commonJS({
             return false;
           result = { type: key, value: value2 };
           match = true;
-        } catch (e3) {
+        } catch (e4) {
           input.restore(save);
           return false;
         }
@@ -51186,12 +51186,12 @@ var require_crypto = __commonJS({
           return cacheSet(privateKeysCache, key, providedAlgorithm);
         }
         return cacheSet(privateKeysCache, key, detectedAlgorithm);
-      } catch (e3) {
+      } catch (e4) {
         throw cacheSet(
           privateKeysCache,
           key,
           null,
-          TokenError.wrap(e3, TokenError.codes.invalidKey, "Unsupported PEM private key.")
+          TokenError.wrap(e4, TokenError.codes.invalidKey, "Unsupported PEM private key.")
         );
       }
     }
@@ -51215,12 +51215,12 @@ var require_crypto = __commonJS({
           throw new TokenError(TokenError.codes.invalidKey, "The public key must be a string or a buffer.");
         }
         return cacheSet(publicKeysCache, key, performDetectPublicKeyAlgorithms(key));
-      } catch (e3) {
+      } catch (e4) {
         throw cacheSet(
           publicKeysCache,
           key,
           null,
-          TokenError.wrap(e3, TokenError.codes.invalidKey, "Unsupported PEM public key.")
+          TokenError.wrap(e4, TokenError.codes.invalidKey, "Unsupported PEM public key.")
         );
       }
     }
@@ -51254,8 +51254,8 @@ var require_crypto = __commonJS({
             raw = directSign(void 0, Buffer.from(input, "utf-8"), key).toString("base64");
         }
         return raw.replace(base64UrlMatcher, base64UrlReplacer);
-      } catch (e3) {
-        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e3 });
+      } catch (e4) {
+        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e4 });
       }
     }
     function verifySignature(algorithm, key, input, signature) {
@@ -51284,8 +51284,8 @@ var require_crypto = __commonJS({
           signature = joseToDer(signature, algorithm);
         }
         return createVerify("RSA-" + alg).update(input).verify(options, signature);
-      } catch (e3) {
-        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e3 });
+      } catch (e4) {
+        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e4 });
       }
     }
     module.exports = {
@@ -51638,12 +51638,12 @@ var require_verifier = __commonJS({
       let decoded;
       try {
         decoded = decode(token);
-      } catch (e3) {
+      } catch (e4) {
         if (callback) {
-          callback(e3);
+          callback(e4);
           return promise;
         }
-        throw e3;
+        throw e4;
       }
       const { header, payload, signature, input } = decoded;
       const cacheContext = {
@@ -51672,8 +51672,8 @@ var require_verifier = __commonJS({
         try {
           verifyToken(key, decoded, validationContext);
           return cacheSet(cacheContext, complete ? { header, payload, signature, input } : payload);
-        } catch (e3) {
-          throw cacheSet(cacheContext, e3);
+        } catch (e4) {
+          throw cacheSet(cacheContext, e4);
         }
       }
       getAsyncKey(key, { header, payload, signature }, (err, currentKey) => {
@@ -51704,8 +51704,8 @@ var require_verifier = __commonJS({
           }
           currentKey = prepareKeyOrSecret(currentKey, availableAlgorithms[0] === hsAlgorithms[0]);
           verifyToken(currentKey, decoded, validationContext);
-        } catch (e3) {
-          return callback(cacheSet(cacheContext, e3));
+        } catch (e4) {
+          return callback(cacheSet(cacheContext, e4));
         }
         callback(null, cacheSet(cacheContext, complete ? { header, payload, signature, input: token } : payload));
       });
@@ -52023,8 +52023,8 @@ var require_signer = __commonJS({
           const encodedHeader = Buffer.from(JSON.stringify(header), "utf-8").toString("base64").replace(base64UrlMatcher, base64UrlReplacer);
           const input = encodedHeader + "." + encodedPayload;
           token = input + "." + createSignature(algorithm, currentKey, input);
-        } catch (e3) {
-          return callback(e3);
+        } catch (e4) {
+          return callback(e4);
         }
         callback(null, token);
       });
@@ -52809,8 +52809,8 @@ var require_jwt = __commonJS({
     function fastifyJwt(fastify, options, next) {
       try {
         validateOptions(options);
-      } catch (e3) {
-        return next(e3);
+      } catch (e4) {
+        return next(e4);
       }
       const {
         cookie,
@@ -53459,11 +53459,11 @@ var require_main = __commonJS({
         try {
           const parsed = DotenvModule.parse(fs.readFileSync(path2, { encoding }));
           DotenvModule.populate(parsedAll, parsed, options);
-        } catch (e3) {
+        } catch (e4) {
           if (debug) {
-            _debug(`Failed to load ${path2} ${e3.message}`);
+            _debug(`Failed to load ${path2} ${e4.message}`);
           }
-          lastError = e3;
+          lastError = e4;
         }
       }
       let processEnv = process.env;
@@ -53478,11 +53478,11 @@ var require_main = __commonJS({
           try {
             const relative = path.relative(process.cwd(), filePath);
             shortPaths.push(relative);
-          } catch (e3) {
+          } catch (e4) {
             if (debug) {
-              _debug(`Failed to load ${filePath} ${e3.message}`);
+              _debug(`Failed to load ${filePath} ${e4.message}`);
             }
-            lastError = e3;
+            lastError = e4;
           }
         }
         _log(`injecting env (${keysCount}) from ${shortPaths.join(",")}`);
@@ -53594,13 +53594,13 @@ var require_bcrypt = __commonJS({
         if (typeof module !== "undefined" && module && module["exports"])
           try {
             return __require("crypto")["randomBytes"](len);
-          } catch (e3) {
+          } catch (e4) {
           }
         try {
           var a;
           (self["crypto"] || self["msCrypto"])["getRandomValues"](a = new Uint32Array(len));
           return Array.prototype.slice.call(a);
-        } catch (e3) {
+        } catch (e4) {
         }
         if (!randomFallback)
           throw Error("Neither WebCryptoAPI nor a crypto module is available. Use bcrypt.setRandomFallback to set an alternative");
@@ -53610,7 +53610,7 @@ var require_bcrypt = __commonJS({
       try {
         random(1);
         randomAvailable = true;
-      } catch (e3) {
+      } catch (e4) {
       }
       randomFallback = null;
       bcrypt2.setRandomFallback = function(random2) {
@@ -55440,8 +55440,8 @@ var init_util = __esm({
         return util2.objectValues(filtered);
       };
       util2.objectValues = (obj) => {
-        return util2.objectKeys(obj).map(function(e3) {
-          return obj[e3];
+        return util2.objectKeys(obj).map(function(e4) {
+          return obj[e4];
         });
       };
       util2.objectKeys = typeof Object.keys === "function" ? (obj) => Object.keys(obj) : (object) => {
@@ -58687,13 +58687,13 @@ var init_types = __esm({
           const me = this;
           return OK(async function(...args) {
             const error = new ZodError([]);
-            const parsedArgs = await me._def.args.parseAsync(args, params).catch((e3) => {
-              error.addIssue(makeArgsIssue(args, e3));
+            const parsedArgs = await me._def.args.parseAsync(args, params).catch((e4) => {
+              error.addIssue(makeArgsIssue(args, e4));
               throw error;
             });
             const result = await Reflect.apply(fn, this, parsedArgs);
-            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params).catch((e3) => {
-              error.addIssue(makeReturnsIssue(result, e3));
+            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params).catch((e4) => {
+              error.addIssue(makeReturnsIssue(result, e4));
               throw error;
             });
             return parsedReturns;
@@ -59584,7 +59584,7 @@ function renderEntryPage(input) {
     <li>Talleres y repuestos verificados cerca de ti</li>
   </ul>
   ${button}
-  <p class="legal">Al escribirnos aceptas nuestros <a href="/terminos">t\xE9rminos y pol\xEDtica de privacidad</a> (LOPDP).</p>
+  <p class="legal">Al escribirnos aceptas los <a href="/terminos">t\xE9rminos y condiciones</a> y la <a href="/privacidad">pol\xEDtica de privacidad</a> (LOPDP).</p>
 </main>
 <script nonce="${nonce}">${SCRIPT}</script>
 </body>
@@ -59670,28 +59670,42 @@ async function effectiveNumber(options) {
   return publicNumber();
 }
 async function entryRoutes(app2, options = {}) {
+  const visitWindows = /* @__PURE__ */ new Map();
+  const allowVisit = (ip) => {
+    const now = Date.now();
+    const current = visitWindows.get(ip);
+    if (!current || now - current.start > 60 * 60 * 1e3) {
+      if (visitWindows.size > 5e3)
+        visitWindows.clear();
+      visitWindows.set(ip, { count: 1, start: now });
+      return true;
+    }
+    current.count += 1;
+    return current.count <= VISITS_PER_HOUR;
+  };
   app2.get("/", async (request, reply) => {
     if (request.method === "HEAD" || !wantsHtml(request.headers.accept)) {
       return reply.send(API_STATUS);
     }
     const nonce = randomBytes(16).toString("base64");
     const query = request.query;
-    const html = renderEntryPage({
-      number: await effectiveNumber(options),
-      code: newVisitCode(),
-      ref: sanitizeRef(query?.ref),
-      nonce
-    });
+    const code = newVisitCode();
+    const ref = sanitizeRef(query?.ref);
+    if (options.onVisit && allowVisit(request.ip)) {
+      Promise.resolve().then(() => options.onVisit?.(code, ref)).catch(() => void 0);
+    }
+    const html = renderEntryPage({ number: await effectiveNumber(options), code, ref, nonce });
     return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
   });
 }
-var API_STATUS, CODE_ALPHABET;
+var API_STATUS, CODE_ALPHABET, VISITS_PER_HOUR;
 var init_entry = __esm({
   "packages/api/dist/interfaces/entry/index.js"() {
     "use strict";
     init_page();
     API_STATUS = { status: "ok", service: "AutoMantPro API" };
     CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    VISITS_PER_HOUR = 30;
   }
 });
 
@@ -69755,8 +69769,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res);
           done();
-        } catch (e3) {
-          done(e3);
+        } catch (e4) {
+          done(e4);
         }
       };
       IconvLiteEncoderStream.prototype._flush = function(done) {
@@ -69764,8 +69778,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res);
           done();
-        } catch (e3) {
-          done(e3);
+        } catch (e4) {
+          done(e4);
         }
       };
       IconvLiteEncoderStream.prototype.collect = function(cb) {
@@ -69796,8 +69810,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e3) {
-          done(e3);
+        } catch (e4) {
+          done(e4);
         }
       };
       IconvLiteDecoderStream.prototype._flush = function(done) {
@@ -69805,8 +69819,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e3) {
-          done(e3);
+        } catch (e4) {
+          done(e4);
         }
       };
       IconvLiteDecoderStream.prototype.collect = function(cb) {
@@ -69862,7 +69876,7 @@ var require_lib4 = __commonJS({
       try {
         module.exports.getCodec(enc);
         return true;
-      } catch (e3) {
+      } catch (e4) {
         return false;
       }
     };
@@ -69945,7 +69959,7 @@ var require_lib4 = __commonJS({
     var streamModule;
     try {
       streamModule = __require("stream");
-    } catch (e3) {
+    } catch (e4) {
     }
     if (streamModule && streamModule.Transform) {
       module.exports.enableStreamingAPI(streamModule);
@@ -74947,9 +74961,9 @@ var require_client_handshake = __commonJS({
         }
       }
       handshakeInit(helloPacket, connection) {
-        this.on("error", (e3) => {
-          connection._fatalError = e3;
-          connection._protocolError = e3;
+        this.on("error", (e4) => {
+          connection._fatalError = e4;
+          connection._protocolError = e4;
         });
         this.handshake = Packets.Handshake.fromPacket(helloPacket);
         if (connection.config.debug) {
@@ -80015,12 +80029,12 @@ var require_pool = __commonJS({
                 conn.release();
               }
             });
-          } catch (e3) {
+          } catch (e4) {
             conn.release();
             if (typeof cmdQuery.onResult === "function") {
-              cmdQuery.onResult(e3);
+              cmdQuery.onResult(e4);
             } else {
-              cmdQuery.emit("error", e3);
+              cmdQuery.emit("error", e4);
             }
           }
         });
@@ -80044,9 +80058,9 @@ var require_pool = __commonJS({
             }).once("end", () => {
               conn.release();
             });
-          } catch (e3) {
+          } catch (e4) {
             conn.release();
-            return cb(e3);
+            return cb(e4);
           }
         });
       }
@@ -80332,9 +80346,9 @@ var require_pool_cluster = __commonJS({
             conn.query(query).once("end", () => {
               conn.release();
             });
-          } catch (e3) {
+          } catch (e4) {
             conn.release();
-            throw e3;
+            throw e4;
           }
         });
         return query;
@@ -80358,9 +80372,9 @@ var require_pool_cluster = __commonJS({
             conn.execute(sql, values, cb).once("end", () => {
               conn.release();
             });
-          } catch (e3) {
+          } catch (e4) {
             conn.release();
-            throw e3;
+            throw e4;
           }
         });
       }
@@ -80935,15 +80949,15 @@ async function applySchemaNow(conn, statements = ALL_STATEMENTS) {
       await conn.query(statement.sql);
       results.push({ ...base, status: "applied" });
     } catch (err) {
-      const e3 = err;
-      if (e3.code && ALREADY_APPLIED.has(e3.code)) {
+      const e4 = err;
+      if (e4.code && ALREADY_APPLIED.has(e4.code)) {
         results.push({ ...base, status: "skipped" });
         continue;
       }
       results.push({
         ...base,
         status: "failed",
-        error: { code: e3.code ?? "UNKNOWN", message: e3.sqlMessage ?? e3.message ?? "Error desconocido" }
+        error: { code: e4.code ?? "UNKNOWN", message: e4.sqlMessage ?? e4.message ?? "Error desconocido" }
       });
       break;
     }
@@ -81071,6 +81085,2275 @@ var init_whatsapp_number = __esm({
   "packages/api/dist/application/settings/whatsapp-number.js"() {
     "use strict";
     WHATSAPP_NUMBER_KEY = "whatsapp.publicNumber";
+  }
+});
+
+// packages/api/dist/infrastructure/visits/visit-store.js
+var MAX_AGE_MS, MysqlVisitStore;
+var init_visit_store = __esm({
+  "packages/api/dist/infrastructure/visits/visit-store.js"() {
+    "use strict";
+    MAX_AGE_MS = 7 * 24 * 60 * 60 * 1e3;
+    MysqlVisitStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      record(code, ref) {
+        return this.run(async (conn) => {
+          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), 'entry.visit', NULL, NULL, 'Visit', ?, ?, CURRENT_TIMESTAMP(3))", [code, JSON.stringify({ ref })]);
+        });
+      }
+      find(code, now = /* @__PURE__ */ new Date()) {
+        return this.run(async (conn) => {
+          const [rows4] = await conn.query("SELECT payload, createdAt FROM `Event` WHERE type = 'entry.visit' AND entityType = 'Visit' AND entityId = ? AND createdAt >= ? ORDER BY createdAt DESC LIMIT 1", [code, new Date(now.getTime() - MAX_AGE_MS)]);
+          const row = Array.isArray(rows4) ? rows4[0] : void 0;
+          if (!row)
+            return null;
+          let payload = row.payload;
+          if (typeof payload === "string") {
+            try {
+              payload = JSON.parse(payload);
+            } catch {
+              payload = null;
+            }
+          }
+          const ref = payload && typeof payload === "object" && "ref" in payload ? payload.ref : null;
+          return { code, ref: typeof ref === "string" ? ref : null, createdAt: row.createdAt };
+        });
+      }
+    };
+  }
+});
+
+// packages/api/dist/domain/maintenance/types.js
+var init_types2 = __esm({
+  "packages/api/dist/domain/maintenance/types.js"() {
+    "use strict";
+  }
+});
+
+// packages/api/dist/domain/maintenance/schemas.js
+var vehicleClassSchema, fuelSchema, vehicleClassesSchema, appliesToSchema, subserviceSchema, categorySchema, serviceTaxonomySchema, maintenanceRuleSchema, maintenanceRulesSchema;
+var init_schemas = __esm({
+  "packages/api/dist/domain/maintenance/schemas.js"() {
+    "use strict";
+    init_zod();
+    vehicleClassSchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1),
+      subtypes: external_exports.array(external_exports.string()).default([])
+    });
+    fuelSchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1)
+    });
+    vehicleClassesSchema = external_exports.object({
+      version: external_exports.string(),
+      source: external_exports.string(),
+      generatedAt: external_exports.string().optional(),
+      note: external_exports.string().optional(),
+      classes: external_exports.array(vehicleClassSchema).min(1),
+      fuels: external_exports.array(fuelSchema).min(1)
+    });
+    appliesToSchema = external_exports.object({
+      classes: external_exports.array(external_exports.string()).min(1),
+      fuels: external_exports.array(external_exports.string()).min(1)
+    });
+    subserviceSchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1),
+      detail: external_exports.string().optional(),
+      periodic: external_exports.boolean().default(false),
+      appliesTo: appliesToSchema,
+      durationMin: external_exports.number().int().min(1),
+      costRefUsd: external_exports.number().min(0),
+      costNote: external_exports.string().optional()
+    });
+    categorySchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1),
+      order: external_exports.number().int().min(1),
+      subservices: external_exports.array(subserviceSchema).min(1)
+    });
+    serviceTaxonomySchema = external_exports.object({
+      version: external_exports.string(),
+      source: external_exports.string(),
+      generatedAt: external_exports.string().optional(),
+      note: external_exports.string().optional(),
+      categories: external_exports.array(categorySchema)
+    });
+    maintenanceRuleSchema = external_exports.object({
+      serviceId: external_exports.string().min(1),
+      classId: external_exports.array(external_exports.string()).min(1),
+      fuelId: external_exports.array(external_exports.string()).min(1),
+      intervalKm: external_exports.number().int().positive().nullable(),
+      intervalMonths: external_exports.number().int().positive().nullable(),
+      severeFactor: external_exports.number().min(0.5).max(0.8),
+      note: external_exports.string().optional()
+    });
+    maintenanceRulesSchema = external_exports.object({
+      version: external_exports.string(),
+      source: external_exports.string(),
+      generatedAt: external_exports.string().optional(),
+      note: external_exports.string().optional(),
+      rules: external_exports.array(maintenanceRuleSchema)
+    });
+  }
+});
+
+// packages/api/dist/domain/maintenance/vehicle-classes.json
+var vehicle_classes_default;
+var init_vehicle_classes = __esm({
+  "packages/api/dist/domain/maintenance/vehicle-classes.json"() {
+    vehicle_classes_default = {
+      version: "1.0.0",
+      source: "docs/25-diseno-producto-whatsapp-30dias.md \xA71.3 \u2014 clases y combustibles",
+      generatedAt: "2026-09-11",
+      note: "Cat\xE1logo maestro de clases de veh\xEDculo y combustibles. Las clases son las 8 de la cobertura global; 'liviano' agrupa sed\xE1n, hatchback, SUV y pickup (misma l\xF3gica de mantenimiento).",
+      classes: [
+        {
+          id: "motocicleta",
+          name: "Motocicleta / Scooter",
+          subtypes: ["moto", "scooter", "motocicleta", "vespa", "cielo"]
+        },
+        {
+          id: "cuadron",
+          name: "Cuadr\xF3n / ATV",
+          subtypes: ["cuadron", "atv", "cuatrimoto", "quad", "cuv"]
+        },
+        {
+          id: "liviano",
+          name: "Liviano (sed\xE1n, hatchback, SUV, pickup)",
+          subtypes: ["sedan", "sed\xE1n", "hatchback", "suv", "camioneta", "pickup", "auto", "carro", "vehiculo"]
+        },
+        {
+          id: "van",
+          name: "Van / Furgoneta",
+          subtypes: ["van", "furgoneta", "furgon", "panel"]
+        },
+        {
+          id: "comercial_liviano",
+          name: "Comercial liviano",
+          subtypes: ["comercial_liviano", "comercial", "reparto", "furgon"]
+        },
+        {
+          id: "camion",
+          name: "Cami\xF3n mediano / pesado",
+          subtypes: ["camion", "camin", "truck", "cabezal", "volqueta", "carguero"]
+        },
+        {
+          id: "bus",
+          name: "Bus / Buseta",
+          subtypes: ["bus", "buseta", "cooperativa", "colectivo", "transporte_publico"]
+        },
+        {
+          id: "maquinaria_liviana",
+          name: "Maquinaria liviana",
+          subtypes: ["maquinaria", "maquinaria_liviana", "tractor", "retroexcavadora", "montacarga"]
+        }
+      ],
+      fuels: [
+        {
+          id: "gasolina",
+          name: "Gasolina"
+        },
+        {
+          id: "diesel",
+          name: "Di\xE9sel"
+        },
+        {
+          id: "hev",
+          name: "H\xEDbrido (HEV)"
+        },
+        {
+          id: "phev",
+          name: "H\xEDbrido enchufable (PHEV)"
+        },
+        {
+          id: "bev",
+          name: "El\xE9ctrico (BEV)"
+        },
+        {
+          id: "glp_gnv",
+          name: "GLP / GNV (gas)"
+        }
+      ]
+    };
+  }
+});
+
+// packages/api/dist/domain/maintenance/service-taxonomy.json
+var service_taxonomy_default;
+var init_service_taxonomy = __esm({
+  "packages/api/dist/domain/maintenance/service-taxonomy.json"() {
+    service_taxonomy_default = {
+      version: "1.0.0",
+      source: "docs/25-diseno-producto-whatsapp-30dias.md \xA71.3 \u2014 taxonom\xEDa de servicios (22 categor\xEDas)",
+      generatedAt: "2026-09-11",
+      note: "Cat\xE1logo maestro de servicios. 'periodic' indica si el servicio entra en el plan de mantenimiento (tiene intervalo en maintenance-rules.json); los no peri\xF3dicos (carrocer\xEDa, detailing, gr\xFAa\u2026) se solicitan bajo demanda. appliesTo: clases y combustibles a los que aplica ('*' = todas). durationMin y costRefUsd son valores REFERENCIALES conservadores del mercado ecuatoriano (USD), orientativos para el plan; no son presupuesto.",
+      categories: [
+        {
+          id: "prevencion",
+          name: "Mantenimiento preventivo por km",
+          order: 1,
+          subservices: [
+            {
+              id: "prep_inspeccion",
+              name: "Inspecci\xF3n multipunto preventiva",
+              detail: "Revisi\xF3n visual y funcional de los principales sistemas del veh\xEDculo.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 25,
+              costNote: "Referencial; checklist b\xE1sico de 25\u201335 USD seg\xFAn taller."
+            }
+          ]
+        },
+        {
+          id: "lubricacion",
+          name: "Lubricaci\xF3n / aceite",
+          order: 2,
+          subservices: [
+            {
+              id: "aceite_motor",
+              name: "Cambio de aceite y filtro de motor",
+              detail: "Aceite seg\xFAn especificaci\xF3n del fabricante y filtro nuevo.",
+              periodic: true,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 45,
+              costNote: "Referencial; 30\u201370 USD seg\xFAn gama y tipo de aceite. NO aplica a BEV (sin motor de combusti\xF3n)."
+            }
+          ]
+        },
+        {
+          id: "motor",
+          name: "Motor",
+          order: 3,
+          subservices: [
+            {
+              id: "motor_bujias",
+              name: "Cambio de buj\xEDas / kit de encendido",
+              detail: "Buj\xEDas nuevas y prueba del sistema de encendido (no aplica a di\xE9sel ni a BEV).",
+              periodic: true,
+              appliesTo: {
+                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano"],
+                fuels: ["gasolina", "glp_gnv", "hev", "phev"]
+              },
+              durationMin: 90,
+              costRefUsd: 80,
+              costNote: "Referencial por juego; 50\u2013120 USD seg\xFAn motor y n\xFAmero de cilindros."
+            },
+            {
+              id: "motor_filtro_aire",
+              name: "Cambio de filtro de aire",
+              detail: "Reemplazo del elemento filtrante de admisi\xF3n de aire.",
+              periodic: true,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 30,
+              costRefUsd: 18,
+              costNote: "Referencial; 12\u201335 USD seg\xFAn marca. NO aplica a BEV."
+            },
+            {
+              id: "motor_correa",
+              name: "Revisi\xF3n / cambio de correas",
+              detail: "Inspecci\xF3n y cambio de correa(s) de distribuci\xF3n o de accesorios seg\xFAn especificaci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 180,
+              costRefUsd: 250,
+              costNote: "Referencial; 150\u2013400 USD seg\xFAn motor. Cat\xE1logo conservador de manuales t\xEDpicos."
+            }
+          ]
+        },
+        {
+          id: "inyeccion",
+          name: "Inyecci\xF3n / combustible",
+          order: 4,
+          subservices: [
+            {
+              id: "iny_filtro_combustible",
+              name: "Cambio de filtro de combustible",
+              detail: "Reemplazo del filtro de combustible del sistema de inyecci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201360 USD. Los de di\xE9sel suelen cambiarse con mayor frecuencia. NO aplica a BEV."
+            },
+            {
+              id: "iny_limpieza",
+              name: "Limpieza de inyectores / sistema",
+              detail: "Limpieza del sistema de inyecci\xF3n (banco o aditivo de limpieza).",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 90,
+              costRefUsd: 80,
+              costNote: "Referencial; 50\u2013120 USD. NO aplica a BEV."
+            }
+          ]
+        },
+        {
+          id: "refrigeracion",
+          name: "Refrigeraci\xF3n",
+          order: 5,
+          subservices: [
+            {
+              id: "ref_antifreeze",
+              name: "Cambio de refrigerante / anticongelante",
+              detail: "Reemplazo del l\xEDquido refrigerante y revisi\xF3n de fugas.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 45,
+              costNote: "Referencial; 35\u201370 USD. Aplica tambi\xE9n a BEV (refrigeraci\xF3n de bater\xEDa y electr\xF3nica)."
+            },
+            {
+              id: "ref_radiador",
+              name: "Lavado de radiador / sistema",
+              detail: "Lavado del circuito de refrigeraci\xF3n y revisi\xF3n de mangueras.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["*"]
+              },
+              durationMin: 90,
+              costRefUsd: 60,
+              costNote: "Referencial; 40\u201390 USD."
+            }
+          ]
+        },
+        {
+          id: "frenos",
+          name: "Frenos",
+          order: 6,
+          subservices: [
+            {
+              id: "freno_liquido",
+              name: "Cambio de l\xEDquido de frenos",
+              detail: "Sangr\xEDa y reemplazo del l\xEDquido de frenos (car\xE1cter higrosc\xF3pico).",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201355 USD."
+            },
+            {
+              id: "freno_pastillas",
+              name: "Inspecci\xF3n / cambio de pastillas y discos",
+              detail: "Inspecci\xF3n de espesor de pastillas y discos; reposici\xF3n seg\xFAn desgaste.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 90,
+              costNote: "Referencial (juego delantero); 60\u2013160 USD seg\xFAn veh\xEDculo."
+            },
+            {
+              id: "freno_regulacion",
+              name: "Regulaci\xF3n de frenos (moto)",
+              detail: "Ajuste y revisi\xF3n del sistema de frenos de motocicleta / cuadr\xF3n.",
+              periodic: true,
+              appliesTo: { classes: ["motocicleta", "cuadron"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 20,
+              costNote: "Referencial; 15\u201330 USD."
+            }
+          ]
+        },
+        {
+          id: "suspension",
+          name: "Suspensi\xF3n y direcci\xF3n",
+          order: 7,
+          subservices: [
+            {
+              id: "susp_amortiguadores",
+              name: "Revisi\xF3n / cambio de amortiguadores",
+              detail: "Prueba y sustituci\xF3n de amortiguadores y bujes seg\xFAn desgaste.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 90,
+              costRefUsd: 150,
+              costNote: "Referencial por eje; 100\u2013250 USD."
+            },
+            {
+              id: "susp_direccion",
+              name: "Inspecci\xF3n de suspensi\xF3n y direcci\xF3n",
+              detail: "Inspecci\xF3n de terminales, r\xF3tulas, barra y juego de direcci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 45,
+              costRefUsd: 25,
+              costNote: "Referencial; 20\u201340 USD."
+            }
+          ]
+        },
+        {
+          id: "transmision",
+          name: "Transmisi\xF3n / embrague",
+          order: 8,
+          subservices: [
+            {
+              id: "trans_aceite_caja",
+              name: "Cambio de aceite de caja / diferencial",
+              detail: "Reemplazo del lubricante de la caja de cambios y diferencial.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 65,
+              costNote: "Referencial; 45\u2013110 USD. En BEV aplica al lubricante de la transmisi\xF3n de reducci\xF3n."
+            },
+            {
+              id: "trans_filtro_caja",
+              name: "Cambio de filtro de caja autom\xE1tica",
+              detail: "Reemplazo del filtro y servicio de la caja autom\xE1tica.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 120,
+              costRefUsd: 90,
+              costNote: "Referencial; 70\u2013150 USD."
+            },
+            {
+              id: "trans_embrague",
+              name: "Revisi\xF3n de embrague",
+              detail: "Inspecci\xF3n del desgaste del embrague y ajuste seg\xFAn el caso.",
+              periodic: true,
+              appliesTo: {
+                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 40,
+              costNote: "Referencial (revisi\xF3n); 30\u201360 USD. El kit de embrague se cotiza aparte."
+            },
+            {
+              id: "trans_cadena",
+              name: "Ajuste y lubricaci\xF3n de cadena (moto)",
+              detail: "Limpieza, ajuste y lubricaci\xF3n de la cadena de transmisi\xF3n.",
+              periodic: true,
+              appliesTo: { classes: ["motocicleta", "cuadron"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 15,
+              costNote: "Referencial; 10\u201325 USD."
+            }
+          ]
+        },
+        {
+          id: "neumaticos",
+          name: "Neum\xE1ticos / alineaci\xF3n / balanceo",
+          order: 9,
+          subservices: [
+            {
+              id: "llanta_rotacion",
+              name: "Rotaci\xF3n de neum\xE1ticos",
+              detail: "Rotaci\xF3n cruzada de neum\xE1ticos para desgaste parejo.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 45,
+              costRefUsd: 12,
+              costNote: "Referencial; 8\u201320 USD."
+            },
+            {
+              id: "llanta_alineacion",
+              name: "Alineaci\xF3n y balanceo",
+              detail: "Alineaci\xF3n de direcci\xF3n y balanceo de las ruedas.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 60,
+              costRefUsd: 30,
+              costNote: "Referencial; 20\u201345 USD."
+            },
+            {
+              id: "llanta_presion",
+              name: "Revisi\xF3n de presi\xF3n y desgaste",
+              detail: "Control de presi\xF3n de inflado y profundidad del dibujo.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 10,
+              costNote: "Referencial; 5\u201315 USD."
+            },
+            {
+              id: "llanta_cambio",
+              name: "Cambio de neum\xE1ticos",
+              detail: "Sustituci\xF3n de llantas por vida \xFAtil o desgaste.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 150,
+              costNote: "Referencial por juego de 2; el precio var\xEDa por marca y perfil."
+            }
+          ]
+        },
+        {
+          id: "electrico",
+          name: "El\xE9ctrico / bater\xEDa",
+          order: 10,
+          subservices: [
+            {
+              id: "elec_bateria",
+              name: "Prueba y mantenimiento de bater\xEDa",
+              detail: "Prueba de carga, estado de los bornes y mantenimiento de la bater\xEDa de 12 V.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 10,
+              costNote: "Referencial; 5\u201315 USD. Aplica a todos, incluido BEV (bater\xEDa de servicios)."
+            },
+            {
+              id: "elec_alternador",
+              name: "Revisi\xF3n de alternador / sistema de carga",
+              detail: "Comprobaci\xF3n del sistema de carga del veh\xEDculo.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 25,
+              costNote: "Referencial; 20\u201340 USD."
+            },
+            {
+              id: "elec_luces",
+              name: "Revisi\xF3n de luces y se\xF1alizaci\xF3n",
+              detail: "Verificaci\xF3n de luces exteriores, interiores y se\xF1alizaci\xF3n del tablero.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 8,
+              costNote: "Referencial; 5\u201312 USD."
+            }
+          ]
+        },
+        {
+          id: "electronica",
+          name: "Electr\xF3nica / esc\xE1ner",
+          order: 11,
+          subservices: [
+            {
+              id: "escaner_diagnostico",
+              name: "Escaneo electr\xF3nico de c\xF3digos",
+              detail: "Lectura de c\xF3digos de falla y prueba de m\xF3dulos electr\xF3nicos.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 25,
+              costNote: "Referencial; 20\u201340 USD."
+            }
+          ]
+        },
+        {
+          id: "climatizacion",
+          name: "Climatizaci\xF3n",
+          order: 12,
+          subservices: [
+            {
+              id: "clima_filtro_cabina",
+              name: "Cambio de filtro de cabina",
+              detail: "Reemplazo del filtro de habit\xE1culo del aire acondicionado.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 30,
+              costRefUsd: 25,
+              costNote: "Referencial; 18\u201340 USD."
+            },
+            {
+              id: "clima_recarga",
+              name: "Recarga y mantenimiento de A/C",
+              detail: "Recarga de gas refrigerante y revisi\xF3n del circuito de climatizaci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 90,
+              costRefUsd: 80,
+              costNote: "Referencial; 60\u2013120 USD."
+            },
+            {
+              id: "clima_desinfeccion",
+              name: "Desinfecci\xF3n del sistema de climatizaci\xF3n",
+              detail: "Limpieza y desinfecci\xF3n de ductos y evaporador (control de olores).",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 30,
+              costRefUsd: 20,
+              costNote: "Referencial; 15\u201335 USD."
+            }
+          ]
+        },
+        {
+          id: "escape",
+          name: "Escape / emisiones",
+          order: 13,
+          subservices: [
+            {
+              id: "escape_gases",
+              name: "Revisi\xF3n de escape y emisiones",
+              detail: "Inspecci\xF3n del sistema de escape y control de emisiones.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 30,
+              costRefUsd: 15,
+              costNote: "Referencial; 10\u201325 USD. NO aplica a BEV (sin escape)."
+            },
+            {
+              id: "escape_mofle",
+              name: "Cambio de mofle / silenciador",
+              detail: "Sustituci\xF3n del silenciador o tramos del sistema de escape.",
+              periodic: false,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 90,
+              costRefUsd: 120,
+              costNote: "Referencial; 80\u2013200 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "carroceria",
+          name: "Carrocer\xEDa / pintura",
+          order: 14,
+          subservices: [
+            {
+              id: "carro_enderezada",
+              name: "Enderezada y pintura",
+              detail: "Reparaci\xF3n de abolladuras y pintura de paneles.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 240,
+              costRefUsd: 250,
+              costNote: "Referencial por panel; depende de da\xF1o. Bajo demanda."
+            },
+            {
+              id: "carro_anticorrosiva",
+              name: "Protecci\xF3n anticorrosiva",
+              detail: "Tratamiento anticorrosivo de bajos y cavidades.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 60,
+              costNote: "Referencial; 45\u201390 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "vidrios",
+          name: "Vidrios",
+          order: 15,
+          subservices: [
+            {
+              id: "vidrio_parabrisas",
+              name: "Cambio / reparaci\xF3n de parabrisas",
+              detail: "Reparaci\xF3n de fisuras o sustituci\xF3n del parabrisas.",
+              periodic: false,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 60,
+              costRefUsd: 120,
+              costNote: "Referencial; 90\u2013250 USD seg\xFAn veh\xEDculo. Bajo demanda."
+            },
+            {
+              id: "vidrio_limpiadores",
+              name: "Cambio de escobillas / plumillas",
+              detail: "Sustituci\xF3n de las escobillas de limpiaparabrisas.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 15,
+              costRefUsd: 12,
+              costNote: "Referencial; juega por juego de 2."
+            }
+          ]
+        },
+        {
+          id: "interior",
+          name: "Interior / tapicer\xEDa",
+          order: 16,
+          subservices: [
+            {
+              id: "interior_limpieza",
+              name: "Limpieza de tapicer\xEDa y tablero",
+              detail: "Limpieza profunda de asientos, alfombras y tablero.",
+              periodic: false,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["*"]
+              },
+              durationMin: 120,
+              costRefUsd: 45,
+              costNote: "Referencial; 35\u201370 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "lavado",
+          name: "Lavado / detailing",
+          order: 17,
+          subservices: [
+            {
+              id: "lavado_exterior",
+              name: "Lavado exterior con sellador",
+              detail: "Lavado completo y sellador protector de pintura.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 15,
+              costNote: "Referencial; 10\u201325 USD. Bajo demanda."
+            },
+            {
+              id: "lavado_detailing",
+              name: "Detailing completo",
+              detail: "Lavado, pulido, descontaminaci\xF3n y acabado profesional.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 180,
+              costRefUsd: 80,
+              costNote: "Referencial; 60\u2013140 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "diesel",
+          name: "Di\xE9sel / turbo",
+          order: 18,
+          subservices: [
+            {
+              id: "die_turbo",
+              name: "Revisi\xF3n de turbo / admisi\xF3n",
+              detail: "Inspecci\xF3n del turbocompresor y del sistema de admisi\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["comercial_liviano", "camion", "bus"],
+                fuels: ["diesel"]
+              },
+              durationMin: 90,
+              costRefUsd: 90,
+              costNote: "Referencial (revisi\xF3n); 60\u2013140 USD."
+            },
+            {
+              id: "die_inyectores",
+              name: "Prueba de inyectores di\xE9sel",
+              detail: "Prueba en banco y ajuste / reemplazo de inyectores di\xE9sel.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["diesel"]
+              },
+              durationMin: 120,
+              costRefUsd: 110,
+              costNote: "Referencial; 80\u2013180 USD."
+            },
+            {
+              id: "die_dpf",
+              name: "Limpieza de filtro de part\xEDculas (DPF)",
+              detail: "Limpieza / regeneraci\xF3n del filtro de part\xEDculas di\xE9sel.",
+              periodic: true,
+              appliesTo: {
+                classes: ["comercial_liviano", "camion", "bus"],
+                fuels: ["diesel"]
+              },
+              durationMin: 120,
+              costRefUsd: 130,
+              costNote: "Referencial; 90\u2013200 USD."
+            }
+          ]
+        },
+        {
+          id: "alto_voltaje",
+          name: "Alto voltaje (EV/HEV)",
+          order: 19,
+          subservices: [
+            {
+              id: "hv_inspeccion",
+              name: "Inspecci\xF3n del sistema de alto voltaje",
+              detail: "Revisi\xF3n de cables, conectores y aislamiento del sistema de alto voltaje.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["hev", "phev", "bev"]
+              },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201355 USD. SOLO h\xEDbridos y el\xE9ctricos."
+            },
+            {
+              id: "hv_bateria_traccion",
+              name: "Prueba de bater\xEDa de tracci\xF3n",
+              detail: "Prueba de capacidad y estado de la bater\xEDa de alta tensi\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["hev", "phev", "bev"]
+              },
+              durationMin: 90,
+              costRefUsd: 50,
+              costNote: "Referencial; 35\u201380 USD. SOLO h\xEDbridos y el\xE9ctricos."
+            }
+          ]
+        },
+        {
+          id: "glp_gnv",
+          name: "GLP/GNV",
+          order: 20,
+          subservices: [
+            {
+              id: "glp_inspeccion",
+              name: "Inspecci\xF3n peri\xF3dica del sistema de gas",
+              detail: "Inspecci\xF3n reglamentaria del sistema GLP/GNV (comprobaci\xF3n de fugas y v\xE1lvulas).",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 45,
+              costNote: "Referencial; 30\u201360 USD. Solo veh\xEDculos con sistema de gas."
+            },
+            {
+              id: "glp_filtro",
+              name: "Cambio de filtro de gas",
+              detail: "Reemplazo del filtro del sistema de gas licuado / natural vehicular.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 40,
+              costNote: "Referencial; 30\u201355 USD."
+            }
+          ]
+        },
+        {
+          id: "grua",
+          name: "Gr\xFAa / asistencia",
+          order: 21,
+          subservices: [
+            {
+              id: "grua_remolque",
+              name: "Servicio de gr\xFAa / remolque",
+              detail: "Traslado del veh\xEDculo con gr\xFAa o asistencia en carretera.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 120,
+              costRefUsd: 60,
+              costNote: "Referencial por carrera corta; 40\u201390 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "rtv",
+          name: "Pre-revisi\xF3n t\xE9cnica vehicular (RTV)",
+          order: 22,
+          subservices: [
+            {
+              id: "rtv_pretest",
+              name: "Pre-chequeo para RTV",
+              detail: "Chequeo previo de los puntos que revisa la Revisi\xF3n T\xE9cnica Vehicular.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201350 USD. Per\xEDodo anual."
+            }
+          ]
+        }
+      ]
+    };
+  }
+});
+
+// packages/api/dist/domain/maintenance/maintenance-rules.json
+var maintenance_rules_default;
+var init_maintenance_rules = __esm({
+  "packages/api/dist/domain/maintenance/maintenance-rules.json"() {
+    maintenance_rules_default = {
+      version: "1.0.0",
+      source: "Motor de reglas de mantenimiento \u2014 referencial",
+      generatedAt: "2026-09-11",
+      note: "Valores conservadores basados en manuales de mantenimiento T\xCDPICOS y pr\xE1cticas del mercado ecuatoriano (referencial, sin datos de una marca concreta). intervalKm e intervalMonths son los intervalos base; severeFactor (0,5\u20130,8) se aplica cuando el uso es SEVERO (Sierra: altitud y pendientes; uso por defecto en Quito). Las combinaciones (clase, combustible) por servicio coinciden EXACTAMENTE con appliesTo de service-taxonomy.json; si un servicio o combinaci\xF3n no aparece aqu\xED, no entra en el plan.",
+      rules: [
+        {
+          serviceId: "prep_inspeccion",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 5e3,
+          intervalMonths: 6,
+          severeFactor: 0.7,
+          note: "Inspecci\xF3n multipunto preventiva cada 5.000 km / 6 meses."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["motocicleta"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e3,
+          intervalMonths: 3,
+          severeFactor: 0.7,
+          note: "Motos: cambio de aceite frecuente."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["cuadron"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 3e3,
+          intervalMonths: 4,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 5e3,
+          intervalMonths: 6,
+          severeFactor: 0.7,
+          note: "Livianos gasolina/GLP: 5.000 km / 6 meses (conservador para uso con GLP)."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "H\xEDbridos: el motor de combusti\xF3n trabaja menos, intervalo mayor."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["diesel"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 1e4,
+          intervalMonths: 6,
+          severeFactor: 0.7,
+          note: "Veh\xEDculos pesados di\xE9sel con intervalos de aceite m\xE1s largos."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e3,
+          intervalMonths: 4,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_bujias",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 8e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_bujias",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_bujias",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev"],
+          intervalKm: 4e4,
+          intervalMonths: 36,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 1e4,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev", "diesel"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["camion", "bus"],
+          fuelId: ["hev", "phev", "diesel"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["diesel"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "Di\xE9sel: filtro de combustible con servicio m\xE1s frecuente."
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_limpieza",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_antifreeze",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_antifreeze",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 4e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_antifreeze",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_radiador",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 36,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "freno_liquido",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 4e4,
+          intervalMonths: 24,
+          severeFactor: 0.7,
+          note: "El l\xEDquido de frenos se degrada por humedad aunque no se recorra."
+        },
+        {
+          serviceId: "freno_pastillas",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7,
+          note: "Inspecci\xF3n; la reposici\xF3n depende del desgaste real."
+        },
+        {
+          serviceId: "freno_regulacion",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 5e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "susp_amortiguadores",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "susp_direccion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["bev"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.7,
+          note: "BEV: lubricante de la transmisi\xF3n de reducci\xF3n."
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["*"],
+          intervalKm: 4e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_filtro_caja",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 36,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_embrague",
+          classId: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 5e4,
+          intervalMonths: 36,
+          severeFactor: 0.7,
+          note: "Revisi\xF3n de embrague; el reemplazo se cotiza seg\xFAn desgaste."
+        },
+        {
+          serviceId: "trans_cadena",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 2e3,
+          intervalMonths: 2,
+          severeFactor: 0.7,
+          note: "Cadena de moto: ajuste y lubricaci\xF3n cada 2.000 km / 2 meses."
+        },
+        {
+          serviceId: "llanta_rotacion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "llanta_alineacion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "llanta_presion",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 5e3,
+          intervalMonths: 3,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "llanta_cambio",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 5e4,
+          intervalMonths: 48,
+          severeFactor: 0.7,
+          note: "Referencial por vida \xFAtil de llanta; depende del desgaste del dibujo."
+        },
+        {
+          serviceId: "elec_bateria",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "elec_alternador",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "elec_luces",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "escaner_diagnostico",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "clima_filtro_cabina",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "clima_recarga",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 24e3,
+          intervalMonths: 24,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "clima_desinfeccion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 12e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "escape_gases",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "vidrio_limpiadores",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 12e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "die_turbo",
+          classId: ["comercial_liviano", "camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "die_inyectores",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+          fuelId: ["diesel"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "die_dpf",
+          classId: ["comercial_liviano", "camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "hv_inspeccion",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev", "bev"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "SOLO h\xEDbridos y el\xE9ctricos: sistema de alto voltaje."
+        },
+        {
+          serviceId: "hv_bateria_traccion",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev", "bev"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "glp_inspeccion",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "Inspecci\xF3n reglamentaria del sistema de gas."
+        },
+        {
+          serviceId: "glp_filtro",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "rtv_pretest",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: null,
+          intervalMonths: 12,
+          severeFactor: 0.8,
+          note: "Pre-chequeo para Revisi\xF3n T\xE9cnica Vehicular: por tiempo (anual)."
+        }
+      ]
+    };
+  }
+});
+
+// packages/api/dist/domain/maintenance/catalogs.js
+function findSubservice(serviceId) {
+  return SUBSERVICE_INDEX.get(serviceId);
+}
+function normalizeList(list5, allValues) {
+  const expanded = /* @__PURE__ */ new Set();
+  for (const value2 of list5) {
+    if (value2 === "*") {
+      for (const v of allValues)
+        expanded.add(v);
+    } else {
+      expanded.add(value2);
+    }
+  }
+  return [...expanded].sort();
+}
+function expandRules() {
+  const expanded = [];
+  for (const rule of maintenanceRules.rules) {
+    const classes = normalizeList(rule.classId, classIds);
+    const fuels = normalizeList(rule.fuelId, fuelIds);
+    for (const classId of classes) {
+      for (const fuelId of fuels) {
+        expanded.push({
+          serviceId: rule.serviceId,
+          classId,
+          fuelId,
+          intervalKm: rule.intervalKm,
+          intervalMonths: rule.intervalMonths,
+          severeFactor: rule.severeFactor,
+          note: rule.note
+        });
+      }
+    }
+  }
+  return expanded;
+}
+function resolveRules(classId, fuelId) {
+  return expandRules().filter((r) => r.classId === classId && r.fuelId === fuelId);
+}
+function isServiceApplicable(serviceId, classId, fuelId) {
+  const ref = findSubservice(serviceId);
+  if (!ref)
+    return false;
+  const classes = new Set(normalizeList(ref.subservice.appliesTo.classes, classIds));
+  const fuels = new Set(normalizeList(ref.subservice.appliesTo.fuels, fuelIds));
+  return classes.has(classId) && fuels.has(fuelId);
+}
+var vehicleClasses, serviceTaxonomy, maintenanceRules, classIds, fuelIds, SUBSERVICE_INDEX;
+var init_catalogs = __esm({
+  "packages/api/dist/domain/maintenance/catalogs.js"() {
+    "use strict";
+    init_vehicle_classes();
+    init_service_taxonomy();
+    init_maintenance_rules();
+    init_schemas();
+    vehicleClasses = vehicleClassesSchema.parse(vehicle_classes_default);
+    serviceTaxonomy = serviceTaxonomySchema.parse(service_taxonomy_default);
+    maintenanceRules = maintenanceRulesSchema.parse(maintenance_rules_default);
+    classIds = vehicleClasses.classes.map((c) => c.id);
+    fuelIds = vehicleClasses.fuels.map((f) => f.id);
+    SUBSERVICE_INDEX = /* @__PURE__ */ new Map();
+    for (const category of serviceTaxonomy.categories) {
+      for (const sub of category.subservices) {
+        if (SUBSERVICE_INDEX.has(sub.id)) {
+          throw new Error(`Duplicated subservice id '${sub.id}' in service-taxonomy.json`);
+        }
+        SUBSERVICE_INDEX.set(sub.id, { category, subservice: sub });
+      }
+    }
+  }
+});
+
+// packages/api/dist/domain/maintenance/plan-engine.js
+function toDate(input) {
+  return input instanceof Date ? new Date(input.getTime()) : new Date(input);
+}
+function daysBetween(a, b) {
+  const aDate = toDate(a);
+  const bDate = toDate(b);
+  const aUtc = Date.UTC(aDate.getFullYear(), aDate.getMonth(), aDate.getDate());
+  const bUtc = Date.UTC(bDate.getFullYear(), bDate.getMonth(), bDate.getDate());
+  return Math.round((bUtc - aUtc) / MS_PER_DAY);
+}
+function addMonths(date, months) {
+  const base = toDate(date);
+  return new Date(base.getTime() + months * DAYS_PER_MONTH * MS_PER_DAY);
+}
+function estimateKmPerDay(input) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const readings = [...input.odometerReadings ?? []].filter((r) => toDate(r.date).getTime() <= today.getTime()).sort((a, b) => toDate(a.date).getTime() - toDate(b.date).getTime());
+  for (let i = readings.length - 1; i >= 0; i -= 1) {
+    const reading = readings[i];
+    const days = daysBetween(reading.date, today);
+    if (days >= 1 && input.odometerKm > reading.km) {
+      const kmPerDay = (input.odometerKm - reading.km) / days;
+      return Math.round(kmPerDay * 10) / 10;
+    }
+  }
+  return DEFAULT_KM_PER_DAY[usageProfileOf(input)];
+}
+function usageProfileOf(input) {
+  return input.usageProfile ?? "urbano";
+}
+function lastReadingDaysAgo(input) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const readings = (input.odometerReadings ?? []).filter((r) => toDate(r.date).getTime() <= today.getTime());
+  if (readings.length === 0)
+    return null;
+  const latest = readings.reduce((a, b) => toDate(a.date).getTime() > toDate(b.date).getTime() ? a : b);
+  return Math.max(0, daysBetween(latest.date, today));
+}
+function computeItemStatus(remainingKm, remainingDays) {
+  const dueByKm = remainingKm !== null && remainingKm <= 0;
+  const dueByTime = remainingDays !== null && remainingDays <= 0;
+  if (dueByKm || dueByTime)
+    return "vencido";
+  const soonByKm = remainingKm !== null && remainingKm <= NEXT_WINDOW_KM;
+  const soonByTime = remainingDays !== null && remainingDays <= NEXT_WINDOW_DAYS;
+  if (soonByKm || soonByTime)
+    return "proximo";
+  return "al_dia";
+}
+function priorityFor(status) {
+  switch (status) {
+    case "vencido":
+      return "alta";
+    case "proximo":
+      return "media";
+    default:
+      return "baja";
+  }
+}
+function formatVencido(km, days) {
+  const parts = [];
+  if (km !== null && km <= 0)
+    parts.push(`hace ${Math.abs(km)} km`);
+  if (days !== null && days <= 0) {
+    const months = Math.max(1, Math.abs(Math.round(days / DAYS_PER_MONTH)));
+    parts.push(`hace ${months} ${months === 1 ? "mes" : "meses"}`);
+  }
+  return parts.length > 0 ? `Vencido ${parts.join(" y ")}` : "Vencido";
+}
+function formatProximo(km, days) {
+  if (km !== null && km <= NEXT_WINDOW_KM) {
+    return `En ${Math.max(0, km)} km`;
+  }
+  if (days !== null && days <= NEXT_WINDOW_DAYS) {
+    if (days >= 7) {
+      const weeks = Math.round(days / 7);
+      return `En ${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
+    }
+    return `En ${Math.max(0, Math.round(days))} ${Math.max(0, Math.round(days)) === 1 ? "d\xEDa" : "d\xEDas"}`;
+  }
+  return "Pr\xF3ximo";
+}
+function buildReason(status, remainingKm, remainingDays, effKm, effMonths) {
+  switch (status) {
+    case "vencido":
+      return formatVencido(remainingKm, remainingDays);
+    case "proximo":
+      return formatProximo(remainingKm, remainingDays);
+    default: {
+      const km = effKm === null ? "\u2014" : String(effKm);
+      const months = effMonths === null ? "\u2014" : String(effMonths);
+      return `Al d\xEDa (cada ${km} km / ${months} meses)`;
+    }
+  }
+}
+function latestLastService(lastServices, serviceId) {
+  const matches = lastServices.filter((s) => s.serviceId === serviceId).sort((a, b) => {
+    const aKm = a.km ?? 0;
+    const bKm = b.km ?? 0;
+    if (aKm !== bKm)
+      return bKm - aKm;
+    const aDate = a.date ? toDate(a.date).getTime() : 0;
+    const bDate = b.date ? toDate(b.date).getTime() : 0;
+    return bDate - aDate;
+  });
+  return matches[0];
+}
+function computeItem(input, serviceId) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const { classId, fuelId } = input.vehicle;
+  if (!isServiceApplicable(serviceId, classId, fuelId))
+    return null;
+  const ref = findSubservice(serviceId);
+  if (!ref || !ref.subservice.periodic)
+    return null;
+  const rule = resolveRules(classId, fuelId).find((r) => r.serviceId === serviceId);
+  if (!rule)
+    return null;
+  const severe = (input.usageProfile ?? "urbano") === "severo";
+  const factor = severe ? rule.severeFactor : 1;
+  const effKm = rule.intervalKm === null ? null : Math.round(rule.intervalKm * factor);
+  const effMonths = rule.intervalMonths === null ? null : rule.intervalMonths * factor;
+  const last = latestLastService(input.lastServices ?? [], serviceId);
+  const baseKm = last?.km ?? input.odometerKm;
+  const baseDate = last?.date ? toDate(last.date) : today;
+  const kmActive = effKm !== null;
+  const monthsActive = effMonths !== null;
+  const dueKm = kmActive ? baseKm + effKm : input.odometerKm;
+  const dueDate = monthsActive ? addMonths(baseDate, effMonths) : today;
+  const remainingKm = kmActive ? dueKm - input.odometerKm : null;
+  const remainingDays = monthsActive ? daysBetween(today, dueDate) : null;
+  const status = computeItemStatus(remainingKm, remainingDays);
+  return {
+    serviceId: ref.subservice.id,
+    serviceName: ref.subservice.name,
+    categoryId: ref.category.id,
+    categoryName: ref.category.name,
+    dueKm,
+    dueDate,
+    remainingKm,
+    remainingDays,
+    effKm,
+    effMonths,
+    status
+  };
+}
+function buildPlan(input) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const usageProfile = usageProfileOf(input);
+  const computed = [];
+  for (const category of serviceTaxonomy.categories) {
+    for (const subservice of category.subservices) {
+      if (!subservice.periodic)
+        continue;
+      const computation = computeItem(input, subservice.id);
+      if (!computation)
+        continue;
+      computed.push({
+        computation,
+        item: {
+          categoryId: computation.categoryId,
+          categoryName: computation.categoryName,
+          serviceId: computation.serviceId,
+          serviceName: computation.serviceName,
+          dueKm: computation.dueKm,
+          dueDate: computation.dueDate,
+          status: computation.status,
+          priority: priorityFor(computation.status),
+          costRefUsd: subservice.costRefUsd,
+          durationMin: subservice.durationMin,
+          remainingKm: computation.remainingKm ?? 0,
+          remainingDays: computation.remainingDays ?? 0,
+          reason: buildReason(computation.status, computation.remainingKm, computation.remainingDays, computation.effKm, computation.effMonths)
+        }
+      });
+    }
+  }
+  const urgency = (c) => {
+    const { remainingKm, remainingDays, effKm } = c.computation;
+    const kmUrgency = effKm !== null ? remainingKm ?? 0 : Number.MAX_SAFE_INTEGER;
+    const timeUrgency = c.computation.effMonths !== null ? remainingDays ?? 0 : Number.MAX_SAFE_INTEGER;
+    return Math.min(kmUrgency, timeUrgency);
+  };
+  computed.sort((a, b) => {
+    if (STATUS_ORDER[a.item.status] !== STATUS_ORDER[b.item.status]) {
+      return STATUS_ORDER[a.item.status] - STATUS_ORDER[b.item.status];
+    }
+    const aUrgency = urgency(a);
+    const bUrgency = urgency(b);
+    if (aUrgency !== bUrgency)
+      return aUrgency - bUrgency;
+    return a.item.serviceId.localeCompare(b.item.serviceId);
+  });
+  const items = computed.map((c) => c.item);
+  return {
+    generatedAt: today,
+    vehicle: input.vehicle,
+    odometerKm: input.odometerKm,
+    kmPerDay: estimateKmPerDay(input),
+    lastReadingDaysAgo: lastReadingDaysAgo(input),
+    usageProfile,
+    items
+  };
+}
+var MS_PER_DAY, DAYS_PER_MONTH, DEFAULT_KM_PER_DAY, NEXT_WINDOW_KM, NEXT_WINDOW_DAYS, STATUS_ORDER;
+var init_plan_engine = __esm({
+  "packages/api/dist/domain/maintenance/plan-engine.js"() {
+    "use strict";
+    init_catalogs();
+    init_catalogs();
+    MS_PER_DAY = 864e5;
+    DAYS_PER_MONTH = 30.44;
+    DEFAULT_KM_PER_DAY = {
+      urbano: 25,
+      carretera: 60,
+      severo: 40
+    };
+    NEXT_WINDOW_KM = 1e3;
+    NEXT_WINDOW_DAYS = 30;
+    STATUS_ORDER = { vencido: 0, proximo: 1, al_dia: 2 };
+  }
+});
+
+// packages/api/dist/domain/maintenance/plan-formatter.js
+function formatKm(value2) {
+  const rounded = String(Math.round(value2));
+  return rounded.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+function formatDuration(totalMin) {
+  const hours = Math.floor(totalMin / 60);
+  const minutes = totalMin % 60;
+  if (hours === 0)
+    return `${minutes} min`;
+  if (minutes === 0)
+    return `${hours} h`;
+  return `${hours} h ${minutes} min`;
+}
+function formatCost(costRefUsd) {
+  const rounded = Math.round(costRefUsd);
+  return `~$${rounded}`;
+}
+function fits(pageLines, newLine, maxLength) {
+  const joined = pageLines.length > 0 ? pageLines.join("\n") : "";
+  return joined.length === 0 ? newLine.length <= maxLength : joined.length + 1 + newLine.length <= maxLength;
+}
+function paginateText(headerLines, blocks, footerLines, maxLength = DEFAULT_MAX_LENGTH) {
+  let current = [...headerLines];
+  const pages = [];
+  const flush = () => {
+    pages.push(current);
+    current = [...headerLines];
+  };
+  for (let i = 0; i < blocks.length; i += 1) {
+    const block = blocks[i];
+    if (!fits(current, block, maxLength))
+      flush();
+    current.push(block);
+  }
+  for (const footerLine of footerLines) {
+    if (!fits(current, footerLine, maxLength))
+      flush();
+    current.push(footerLine);
+  }
+  if (current.length > 0 || pages.length === 0) {
+    pages.push(current);
+  }
+  return pages.map((page) => page.join("\n"));
+}
+function alDiaLine(items, budget) {
+  if (items.length === 0) {
+    return "\u{1F7E2} Al d\xEDa: ninguno pendiente";
+  }
+  const names = items.map((i) => i.serviceName);
+  const candidate = (shownCount) => {
+    const shown = names.slice(0, shownCount).join(", ");
+    const extra = names.length - shownCount;
+    const suffix = extra > 0 ? ` y ${extra} m\xE1s` : "";
+    return `\u{1F7E2} Al d\xEDa: ${shown}${suffix}`;
+  };
+  if (budget !== void 0) {
+    for (let shown = names.length; shown >= 1; shown -= 1) {
+      const line = candidate(shown);
+      if (line.length <= budget)
+        return line;
+    }
+  }
+  return candidate(5);
+}
+function formatPlanWhatsApp(ctx) {
+  const maxLength = ctx.maxLength ?? DEFAULT_MAX_LENGTH;
+  const { plan } = ctx;
+  let readingSuffix = "";
+  if (plan.lastReadingDaysAgo !== null) {
+    readingSuffix = plan.lastReadingDaysAgo === 0 ? " (actualizado hoy)" : ` (actualizado hace ${plan.lastReadingDaysAgo} d\xEDas)`;
+  }
+  const header = `${ctx.label} \xB7 ${formatKm(plan.odometerKm)} km${readingSuffix}`;
+  const vencidos = plan.items.filter((i) => i.status === "vencido");
+  const proximos = plan.items.filter((i) => i.status === "proximo");
+  const alDia = plan.items.filter((i) => i.status === "al_dia");
+  const numbered = [...vencidos, ...proximos];
+  const blocks = [];
+  const pushGroup = (title, group) => {
+    blocks.push(title);
+    if (group.length === 0) {
+      blocks.push("\xB7 ninguno");
+      return;
+    }
+    for (const item of group) {
+      const cost = formatCost(item.costRefUsd);
+      blocks.push(`${numbered.indexOf(item) + 1}) ${item.serviceName} \xB7 ${item.reason} \xB7 ${cost}`);
+    }
+  };
+  pushGroup("\u{1F534} Vencidos", vencidos);
+  pushGroup("\u{1F7E1} Pr\xF3ximos", proximos);
+  blocks.push(alDiaLine(alDia, maxLength - header.length - 1));
+  const firstOption = numbered.length + 1;
+  const footer = [
+    "",
+    "Responde con los n\xFAmeros que quieres atender (ej.: 1,3)",
+    `${firstOption}) Ver el plan completo   ${firstOption + 1}) Actualizar kilometraje   0) Men\xFA`
+  ];
+  return paginateText([header], blocks, footer, maxLength);
+}
+var DEFAULT_MAX_LENGTH;
+var init_plan_formatter = __esm({
+  "packages/api/dist/domain/maintenance/plan-formatter.js"() {
+    "use strict";
+    DEFAULT_MAX_LENGTH = 1024;
+  }
+});
+
+// packages/api/dist/domain/maintenance/validation.js
+var ALL_CLASSES, ALL_FUELS;
+var init_validation = __esm({
+  "packages/api/dist/domain/maintenance/validation.js"() {
+    "use strict";
+    init_catalogs();
+    ALL_CLASSES = new Set(classIds);
+    ALL_FUELS = new Set(fuelIds);
+  }
+});
+
+// packages/api/dist/domain/maintenance/index.js
+var init_maintenance = __esm({
+  "packages/api/dist/domain/maintenance/index.js"() {
+    "use strict";
+    init_types2();
+    init_schemas();
+    init_catalogs();
+    init_plan_engine();
+    init_plan_formatter();
+    init_validation();
+    init_catalogs();
+  }
+});
+
+// packages/api/dist/application/registration/schemas.js
+function normalizePlate(input) {
+  const value2 = input.toUpperCase().replace(/\s+/g, "");
+  const match = /^([A-Z]{3})-?(\d{3,4})$/.exec(value2);
+  return match ? `${match[1]}-${match[2]}` : null;
+}
+var PERFILES, CONSENT_VERSION, USAGE_PROFILES, categoryIds, req, commonFields, vehicleFields, businessFields, vehicleSchema, ownerSchema, shopSchema, storeSchema;
+var init_schemas2 = __esm({
+  "packages/api/dist/application/registration/schemas.js"() {
+    "use strict";
+    init_zod();
+    init_maintenance();
+    init_whatsapp_number();
+    PERFILES = ["dueno", "taller", "almacen"];
+    CONSENT_VERSION = "2026-09";
+    USAGE_PROFILES = ["urbano", "carretera", "severo"];
+    categoryIds = serviceTaxonomy.categories.map((c) => c.id);
+    req = (schema) => external_exports.preprocess((v) => v === void 0 || v === null ? "" : Array.isArray(v) ? v[0] : v, schema);
+    commonFields = {
+      phone: req(external_exports.string()).transform((v, ctx) => {
+        const digits = normalizeWhatsappNumber(v);
+        if (!digits) {
+          ctx.addIssue({ code: "custom", message: "Tel\xE9fono no v\xE1lido: usa un celular como 099 123 4567 o +593 99 123 4567" });
+          return external_exports.NEVER;
+        }
+        return `+${digits}`;
+      }),
+      name: req(external_exports.string().trim().min(3, "El nombre debe tener entre 3 y 60 caracteres").max(60, "El nombre debe tener entre 3 y 60 caracteres")),
+      city: req(external_exports.string().trim().min(2, "Indica la ciudad").max(120, "Ciudad demasiado larga")),
+      email: req(external_exports.string().trim().toLowerCase()).transform((v, ctx) => {
+        if (!v)
+          return null;
+        if (v.length > 191 || !external_exports.string().email().safeParse(v).success) {
+          ctx.addIssue({ code: "custom", message: "Correo no v\xE1lido" });
+          return external_exports.NEVER;
+        }
+        return v;
+      }),
+      source: req(external_exports.string().trim().max(40, "\xABC\xF3mo nos conoci\xF3\xBB es demasiado largo")).transform((v) => v || null),
+      notes: req(external_exports.string().trim().max(1e3, "Las notas son demasiado largas")).transform((v) => v || null),
+      consent: req(external_exports.string()).refine((v) => v === "on", "Falta el consentimiento LOPDP y la aceptaci\xF3n de t\xE9rminos")
+    };
+    vehicleFields = {
+      vehicleClass: req(external_exports.string()).refine((v) => classIds.includes(v), "Elige la clase de veh\xEDculo"),
+      fuel: req(external_exports.string()).refine((v) => fuelIds.includes(v), "Elige el combustible"),
+      make: req(external_exports.string().trim().min(1, "Indica la marca").max(60, "Marca demasiado larga")),
+      model: req(external_exports.string().trim().min(1, "Indica el modelo").max(60, "Modelo demasiado largo")),
+      year: req(external_exports.string().trim()).refine((v) => /^\d{4}$/.test(v), "A\xF1o no v\xE1lido").transform(Number).refine((y) => y >= 1970 && y <= (/* @__PURE__ */ new Date()).getFullYear() + 1, "El a\xF1o debe estar entre 1970 y el pr\xF3ximo a\xF1o"),
+      currentKm: req(external_exports.string()).transform((v) => v.replace(/[.\s,]/g, "")).refine((v) => /^\d{1,7}$/.test(v), "Kilometraje no v\xE1lido").transform(Number).refine((n) => n <= 2e6, "Kilometraje no v\xE1lido"),
+      plate: req(external_exports.string().trim()).transform((v, ctx) => {
+        if (!v)
+          return null;
+        const plate = normalizePlate(v);
+        if (!plate) {
+          ctx.addIssue({ code: "custom", message: "Placa no v\xE1lida: usa el formato ABC-1234" });
+          return external_exports.NEVER;
+        }
+        return plate;
+      }),
+      usageProfile: req(external_exports.string()).transform((v) => USAGE_PROFILES.includes(v) ? v : "urbano"),
+      reminders: external_exports.unknown().transform((v) => v === "on")
+    };
+    businessFields = {
+      businessName: req(external_exports.string().trim().min(2, "Indica el nombre comercial").max(120, "Nombre comercial demasiado largo")),
+      ruc: req(external_exports.string().trim()).refine((v) => /^\d{10}001$/.test(v), "RUC no v\xE1lido: 13 d\xEDgitos terminados en 001"),
+      address: req(external_exports.string().trim().min(5, "Indica la direcci\xF3n").max(200, "Direcci\xF3n demasiado larga")),
+      zone: req(external_exports.string().trim().max(120, "Zona demasiado larga")).transform((v) => v || null),
+      hours: req(external_exports.string().trim().max(120, "Horario demasiado largo")).transform((v) => v || null)
+    };
+    vehicleSchema = external_exports.object(vehicleFields);
+    ownerSchema = external_exports.object({ ...commonFields, ...vehicleFields });
+    shopSchema = external_exports.object({
+      ...commonFields,
+      ...businessFields,
+      services: external_exports.preprocess((v) => v === void 0 || v === null ? [] : Array.isArray(v) ? v : [v], external_exports.array(external_exports.string())).refine((list5) => list5.length > 0, "Elige al menos un servicio que ofrece el taller").refine((list5) => list5.every((id) => categoryIds.includes(id)), "Servicio no v\xE1lido")
+    });
+    storeSchema = external_exports.object({
+      ...commonFields,
+      ...businessFields,
+      categories: req(external_exports.string().trim().max(500, "Las categor\xEDas son demasiado largas")).transform((v) => v || null),
+      delivery: external_exports.unknown().transform((v) => v === "on")
+    });
+  }
+});
+
+// packages/api/dist/application/legal/documents.js
+function emptyLegalData() {
+  return { razonSocial: null, ruc: null, domicilio: null, representante: null, correo: null };
+}
+function isLegalComplete(data) {
+  return LEGAL_FIELDS.every((f) => !!data[f.key]);
+}
+function validateLegalField(key, value2) {
+  if (!value2)
+    return null;
+  switch (key) {
+    case "ruc":
+      return /^\d{10}001$/.test(value2) ? null : "RUC no v\xE1lido: 13 d\xEDgitos terminados en 001.";
+    case "correo":
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value2) && value2.length <= 191 ? null : "Correo no v\xE1lido.";
+    case "razonSocial":
+      return value2.length >= 3 && value2.length <= 160 ? null : "La raz\xF3n social debe tener entre 3 y 160 caracteres.";
+    case "domicilio":
+      return value2.length >= 5 && value2.length <= 200 ? null : "El domicilio debe tener entre 5 y 200 caracteres.";
+    case "representante":
+      return value2.length >= 3 && value2.length <= 120 ? null : "El nombre del representante debe tener entre 3 y 120 caracteres.";
+    default:
+      return null;
+  }
+}
+function createLegalLoader(settings, ttlMs = 6e4) {
+  let cached = null;
+  let loadedAt = 0;
+  return {
+    async get() {
+      if (cached && Date.now() - loadedAt < ttlMs)
+        return cached;
+      const data = emptyLegalData();
+      try {
+        for (const field2 of LEGAL_FIELDS)
+          data[field2.key] = await settings.get(legalSettingKey(field2.key));
+      } catch {
+      }
+      cached = data;
+      loadedAt = Date.now();
+      return data;
+    },
+    invalidate() {
+      cached = null;
+      loadedAt = 0;
+    }
+  };
+}
+function company(data) {
+  return {
+    name: data.razonSocial ?? PENDING,
+    ruc: data.ruc ?? PENDING,
+    address: data.domicilio ?? PENDING,
+    representative: data.representante ?? PENDING,
+    email: data.correo ?? PENDING
+  };
+}
+function termsSections(data) {
+  const c = company(data);
+  return [
+    {
+      title: "1. Qui\xE9nes somos y aceptaci\xF3n",
+      paragraphs: [
+        `Estos t\xE9rminos regulan el uso de AutoMantPro, plataforma tecnol\xF3gica operada por ${c.name}, con RUC ${c.ruc}, domicilio en ${c.address} y representada legalmente por ${c.representative} (en adelante, \xABAutoMantPro\xBB).`,
+        "Quien use el servicio como due\xF1o de veh\xEDculo, taller o almac\xE9n de repuestos (en adelante, \xABel usuario\xBB) acepta estos t\xE9rminos y la pol\xEDtica de privacidad al responder \xABAcepto\xBB por WhatsApp o al confirmar su registro. La aceptaci\xF3n queda registrada con su fecha, la versi\xF3n del documento y el canal."
+      ]
+    },
+    {
+      title: "2. Objeto",
+      paragraphs: [
+        "Regular el acceso y uso de los servicios de AutoMantPro para la gesti\xF3n del mantenimiento preventivo y correctivo de veh\xEDculos: registro del veh\xEDculo, plan de mantenimiento, orientaci\xF3n ante s\xEDntomas, b\xFAsqueda de talleres verificados, agendamiento de turnos, cotizaci\xF3n de repuestos, historial y calificaci\xF3n de los servicios recibidos."
+      ]
+    },
+    {
+      title: "3. Naturaleza de la relaci\xF3n",
+      paragraphs: [
+        "La relaci\xF3n es de car\xE1cter civil y mercantil. No genera relaci\xF3n laboral, de subordinaci\xF3n ni de representaci\xF3n entre las partes.",
+        "AutoMantPro act\xFAa como intermediario tecnol\xF3gico. Los servicios mec\xE1nicos y la venta de repuestos los prestan los talleres y almacenes, bajo su propia responsabilidad."
+      ]
+    },
+    {
+      title: "4. Servicios seg\xFAn el perfil",
+      items: [
+        "Due\xF1o de veh\xEDculo: registro de sus veh\xEDculos, plan y alertas de mantenimiento, orientaci\xF3n ante s\xEDntomas, recomendaci\xF3n de talleres verificados cercanos, solicitud de turnos, cotizaci\xF3n de repuestos, historial digital y calificaci\xF3n de servicios.",
+        "Taller: perfil verificado, recepci\xF3n y gesti\xF3n de solicitudes de turno, \xF3rdenes de trabajo, alertas a sus clientes y reportes de desempe\xF1o.",
+        "Almac\xE9n de repuestos: perfil verificado, cat\xE1logo, recepci\xF3n y respuesta de solicitudes de cotizaci\xF3n y seguimiento de pedidos."
+      ]
+    },
+    {
+      title: "5. Obligaciones del due\xF1o de veh\xEDculo",
+      items: [
+        "Proporcionar informaci\xF3n veraz y completa sobre su veh\xEDculo.",
+        "Asistir a los turnos o avisar su cancelaci\xF3n con anticipaci\xF3n.",
+        "Pagar directamente al taller o almac\xE9n los servicios y repuestos que contrate.",
+        "Evaluar los servicios recibidos de manera objetiva y responsable.",
+        "No usar la plataforma para fines contrarios a la ley o fraudulentos."
+      ]
+    },
+    {
+      title: "6. Obligaciones de talleres y almacenes",
+      items: [
+        "Superar la verificaci\xF3n de AutoMantPro: RUC v\xE1lido, permisos de funcionamiento vigentes y, en el caso de los talleres, p\xF3lizas vigentes de responsabilidad civil y de custodia de veh\xEDculos.",
+        "Prestar sus servicios con los est\xE1ndares de calidad y atenci\xF3n de la plataforma, y cumplir las normas de higiene, seguridad, ambiente y legislaci\xF3n laboral vigentes.",
+        "Mantener actualizada la informaci\xF3n de su perfil, sus servicios, horarios y precios informados.",
+        "Responder las solicitudes de turno en un m\xE1ximo de 24 horas (talleres) y las solicitudes de cotizaci\xF3n en un m\xE1ximo de 48 horas (almacenes).",
+        "Reportar la ejecuci\xF3n de los servicios gestionados a trav\xE9s de la plataforma y permitir su evaluaci\xF3n por parte de los clientes."
+      ]
+    },
+    {
+      title: "7. Verificaci\xF3n y suspensi\xF3n",
+      paragraphs: [
+        "Los talleres y almacenes aparecen en las b\xFAsquedas solo despu\xE9s de que AutoMantPro aprueba su verificaci\xF3n. AutoMantPro puede observar o rechazar un registro, o suspender a quien incumpla estos t\xE9rminos, entregue informaci\xF3n falsa o reciba quejas reiteradas, indicando siempre el motivo."
+      ]
+    },
+    {
+      title: "8. Prueba gratuita, planes y pagos",
+      items: [
+        "Cada perfil tiene una prueba gratuita de 90 d\xEDas o hasta alcanzar los topes de uso de su perfil, lo que ocurra primero.",
+        "Al terminar la prueba, el servicio contin\xFAa con el plan que el usuario elija. Los precios se informan en d\xF3lares, con IVA incluido, antes de contratar.",
+        "En esta etapa AutoMantPro no cobra comisi\xF3n a talleres ni almacenes por los servicios o ventas que se generen en la plataforma; solo cobra la suscripci\xF3n del plan elegido.",
+        "Los due\xF1os de veh\xEDculo pueden cancelar su plan en cualquier momento, sin permanencia m\xEDnima."
+      ]
+    },
+    {
+      title: "9. Limitaci\xF3n de responsabilidad",
+      paragraphs: [
+        "Las orientaciones ante s\xEDntomas, los planes de mantenimiento y los costos que muestra AutoMantPro son referenciales y no reemplazan la inspecci\xF3n presencial de un profesional.",
+        "AutoMantPro no es responsable por fallas t\xE9cnicas, da\xF1os, p\xE9rdidas, demoras o mala ejecuci\xF3n atribuibles a los talleres o almacenes, ni garantiza el resultado del servicio contratado con ellos. Sin embargo, verifica previamente sus permisos, seguros y reputaci\xF3n, y atiende los reclamos que se le presenten."
+      ]
+    },
+    {
+      title: "10. Uso de marca e informaci\xF3n comercial",
+      paragraphs: [
+        "Los talleres y almacenes autorizan a AutoMantPro a mostrar su nombre comercial, logotipo, direcci\xF3n, especialidades y calificaciones dentro de la plataforma y en materiales promocionales digitales. Este uso es no exclusivo y no implica cesi\xF3n de derechos."
+      ]
+    },
+    {
+      title: "11. Confidencialidad",
+      paragraphs: [
+        "Las partes mantendr\xE1n la confidencialidad de la informaci\xF3n t\xE9cnica, comercial o de clientes que conozcan por el uso de la plataforma, durante la relaci\xF3n y hasta doce (12) meses despu\xE9s de terminada."
+      ]
+    },
+    {
+      title: "12. Datos personales",
+      paragraphs: [
+        "El tratamiento de datos personales se rige por la Ley Org\xE1nica de Protecci\xF3n de Datos Personales y por la pol\xEDtica de privacidad publicada en automantpro.app/privacidad."
+      ]
+    },
+    {
+      title: "13. Vigencia y terminaci\xF3n",
+      items: [
+        "Para los due\xF1os de veh\xEDculo, estos t\xE9rminos rigen mientras mantengan una cuenta activa. Pueden terminar en cualquier momento pidiendo la eliminaci\xF3n de su cuenta.",
+        "Para los talleres y almacenes, la relaci\xF3n dura doce (12) meses desde su aceptaci\xF3n y se renueva autom\xE1ticamente por per\xEDodos iguales, salvo aviso escrito de cualquiera de las partes con al menos treinta (30) d\xEDas de anticipaci\xF3n.",
+        "AutoMantPro puede suspender o terminar el servicio por uso indebido o por incumplimiento de estos t\xE9rminos."
+      ]
+    },
+    {
+      title: "14. Cambios a estos t\xE9rminos",
+      paragraphs: [
+        "Si estos t\xE9rminos cambian, se publicar\xE1 una nueva versi\xF3n y se avisar\xE1 por WhatsApp. Para seguir usando el servicio ser\xE1 necesario aceptar la nueva versi\xF3n."
+      ]
+    },
+    {
+      title: "15. Ley aplicable y controversias",
+      paragraphs: [
+        "Estos t\xE9rminos se rigen por las leyes de la Rep\xFAblica del Ecuador. Cualquier controversia se tratar\xE1 primero mediante di\xE1logo directo entre las partes; si persiste, se someter\xE1 a los jueces civiles de la ciudad de Quito, conforme al C\xF3digo Org\xE1nico General de Procesos."
+      ]
+    },
+    {
+      title: "16. Contacto",
+      paragraphs: [`Por el WhatsApp oficial de AutoMantPro o al correo ${c.email}.`]
+    }
+  ];
+}
+function privacySections(data) {
+  const c = company(data);
+  return [
+    {
+      title: "1. Responsable del tratamiento",
+      paragraphs: [`${c.name}, con RUC ${c.ruc} y domicilio en ${c.address}. Contacto para datos personales: ${c.email}.`]
+    },
+    {
+      title: "2. Datos que tratamos",
+      items: [
+        "Identificaci\xF3n y contacto: nombre, n\xFAmero de WhatsApp, ciudad y, si lo entregas, correo electr\xF3nico.",
+        "Veh\xEDculo: clase, marca, modelo, a\xF1o, combustible, kilometraje, placa (opcional) y tipo de uso.",
+        "Talleres y almacenes: nombre comercial, RUC, direcci\xF3n, horario, servicios o categor\xEDas y nombre del responsable.",
+        "Uso del servicio: conversaciones de atenci\xF3n, turnos, cotizaciones, calificaciones y notas de seguimiento.",
+        "Visitas a automantpro.app: un c\xF3digo de inicio y el origen de la visita, sin guardar tu direcci\xF3n IP.",
+        "Registro de tu consentimiento: fecha, versi\xF3n de estos documentos y canal."
+      ]
+    },
+    {
+      title: "3. Datos que no pedimos",
+      paragraphs: [
+        "No pedimos tu c\xE9dula ni datos de tarjetas por el chat, ni datos sensibles como salud, religi\xF3n u orientaci\xF3n pol\xEDtica. Si los env\xEDas por error, no los usaremos y los eliminaremos."
+      ]
+    },
+    {
+      title: "4. Para qu\xE9 usamos tus datos",
+      items: [
+        "Registrarte y prestarte el servicio seg\xFAn tu perfil.",
+        "Calcular el plan de mantenimiento de tus veh\xEDculos y, si lo aceptas, enviarte recordatorios.",
+        "Conectarte con los talleres y almacenes que elijas, agendar turnos y gestionar cotizaciones.",
+        "Atender tus consultas, reclamos y solicitudes.",
+        "Verificar a talleres y almacenes, prevenir fraudes y proteger la seguridad de la plataforma.",
+        "Cumplir obligaciones legales y tributarias.",
+        "Mejorar el servicio con informaci\xF3n estad\xEDstica que no te identifica."
+      ]
+    },
+    {
+      title: "5. Base legal",
+      items: [
+        "Tu consentimiento, que otorgas al aceptar por WhatsApp y puedes retirar cuando quieras.",
+        "La ejecuci\xF3n de la relaci\xF3n que tienes con AutoMantPro (turnos, cotizaciones, suscripci\xF3n).",
+        "El cumplimiento de obligaciones legales, como la facturaci\xF3n."
+      ]
+    },
+    {
+      title: "6. Con qui\xE9n compartimos tus datos",
+      items: [
+        "Con el taller o almac\xE9n que eliges, solo lo necesario para atenderte: tu nombre, tu veh\xEDculo, los servicios o repuestos y la fecha acordada.",
+        "Con proveedores que nos prestan servicios bajo contrato y solo para esos fines: mensajer\xEDa (WhatsApp, de Meta Platforms), alojamiento y base de datos, pasarela de pagos y, cuando se activen, servicios de inteligencia artificial.",
+        "Algunos de esos proveedores operan fuera del Ecuador; en esos casos la transferencia se hace con las garant\xEDas que exige la LOPDP.",
+        "Con autoridades competentes, cuando la ley lo exija.",
+        "Nunca vendemos tus datos."
+      ]
+    },
+    {
+      title: "7. Cu\xE1nto tiempo los conservamos",
+      paragraphs: [
+        "Mientras tu cuenta est\xE9 activa. Si pides eliminarla, tienes 30 d\xEDas para arrepentirte; despu\xE9s eliminamos o anonimizamos tus datos, salvo los que la ley obligue a conservar, como los tributarios, que se guardan solo por el plazo legal. Los registros de visitas no permiten identificarte."
+      ]
+    },
+    {
+      title: "8. Tus derechos",
+      paragraphs: [
+        `Puedes pedir acceso a tus datos, su rectificaci\xF3n o actualizaci\xF3n, su eliminaci\xF3n, oponerte a su tratamiento, su portabilidad, la suspensi\xF3n del tratamiento y no ser objeto de decisiones basadas solo en tratamientos automatizados. Escr\xEDbenos por el WhatsApp oficial o al correo ${c.email}; respondemos dentro de los plazos de la LOPDP.`,
+        "Si no est\xE1s conforme con nuestra respuesta, puedes presentar un reclamo ante la Superintendencia de Protecci\xF3n de Datos Personales."
+      ]
+    },
+    {
+      title: "9. Seguridad",
+      paragraphs: [
+        "Usamos conexiones cifradas (HTTPS), acceso restringido al panel de administraci\xF3n con contrase\xF1a y segundo factor, registros de auditor\xEDa de las acciones administrativas y registros t\xE9cnicos sin datos personales."
+      ]
+    },
+    {
+      title: "10. Menores de edad",
+      paragraphs: ["AutoMantPro est\xE1 dirigido a personas mayores de 18 a\xF1os."]
+    },
+    {
+      title: "11. Cambios a esta pol\xEDtica",
+      paragraphs: [
+        "Si esta pol\xEDtica cambia, publicaremos una nueva versi\xF3n en automantpro.app/privacidad y te avisaremos por WhatsApp antes de aplicarla."
+      ]
+    }
+  ];
+}
+var LEGAL_VERSION, LEGAL_EFFECTIVE_DATE, LEGAL_FIELDS, legalSettingKey, PENDING;
+var init_documents = __esm({
+  "packages/api/dist/application/legal/documents.js"() {
+    "use strict";
+    init_schemas2();
+    LEGAL_VERSION = CONSENT_VERSION;
+    LEGAL_EFFECTIVE_DATE = "15 de septiembre de 2026";
+    LEGAL_FIELDS = [
+      { key: "razonSocial", label: "Raz\xF3n social", placeholder: "Nombre legal de la empresa" },
+      { key: "ruc", label: "RUC", placeholder: "13 d\xEDgitos terminados en 001" },
+      { key: "domicilio", label: "Domicilio", placeholder: "Direcci\xF3n y ciudad" },
+      { key: "representante", label: "Representante legal", placeholder: "Nombre y apellido" },
+      { key: "correo", label: "Correo para temas legales y datos personales", placeholder: "correo@dominio" }
+    ];
+    legalSettingKey = (key) => `legal.${key}`;
+    PENDING = "[pendiente]";
   }
 });
 
@@ -81222,7 +83505,7 @@ var init_admin_store = __esm({
 });
 
 // packages/api/dist/application/admin/security.js
-import { createHmac as createHmac2, randomBytes as randomBytes2, timingSafeEqual as timingSafeEqual2 } from "node:crypto";
+import { createHmac as createHmac2, randomBytes as randomBytes3, timingSafeEqual as timingSafeEqual2 } from "node:crypto";
 function getAdminSessionSecret() {
   const secret = process.env.ADMIN_SESSION_SECRET?.trim();
   return secret && secret.length >= 32 ? secret : null;
@@ -81231,12 +83514,12 @@ function allowInsecureAdminCookies() {
   return process.env.NODE_ENV !== "production" && process.env.ADMIN_INSECURE_COOKIES === "1";
 }
 function createCsrfToken() {
-  return randomBytes2(24).toString("base64url");
+  return randomBytes3(24).toString("base64url");
 }
 function createPendingSession(user) {
   const now = Date.now();
   const session = {
-    id: randomBytes2(24).toString("base64url"),
+    id: randomBytes3(24).toString("base64url"),
     userId: user.id,
     email: user.email,
     twoFactorVerified: false,
@@ -81370,7 +83653,7 @@ function safeEqual(a, b) {
   return left.length === right.length && timingSafeEqual2(left, right);
 }
 function generateTotpSecret(bytes = 20) {
-  return base32Encode(randomBytes2(bytes));
+  return base32Encode(randomBytes3(bytes));
 }
 function verifyTotp(secret, code, timestampMs = Date.now()) {
   if (!/^\d{6}$/.test(code))
@@ -81460,11 +83743,11 @@ var init_security = __esm({
 function layout(input) {
   const nonce = escapeHtml(input.nonce);
   const header = input.nav ? `<header><div class="brand">Auto<span>Mant</span>Pro \xB7 Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/appointments">Turnos</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
+  <nav><a href="/admin">Tablero</a><a href="/admin/attend">Atender</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/appointments">Turnos</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>` : "";
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>${escapeHtml(input.title)} \xB7 AutoMantPro Admin</title>
-<style nonce="${nonce}">${STYLES2}</style></head><body>${header}<main>${input.body}</main></body></html>`;
+<style nonce="${nonce}">${STYLES3}</style></head><body>${header}<main>${input.body}</main></body></html>`;
 }
 function loginView(error) {
   return `<form class="login" method="post" action="/admin/login" autocomplete="on">
@@ -81493,7 +83776,8 @@ function kv(record) {
 function dashboardView(input) {
   const roleLabels = { dueno: "Due\xF1o", taller: "Taller", almacen: "Almac\xE9n" };
   const recentList = input.recent && input.recent.length > 0 ? input.recent.map((r) => `<div><a href="/admin/users/${escapeHtml(String(r.id))}">${escapeHtml(String(r.name ?? "\u2014"))}</a> <span class="muted">\xB7 ${escapeHtml(roleLabels[String(r.role)] ?? String(r.role ?? ""))}</span></div>`).join("") : `<p class="muted">${input.recent ? "A\xFAn no hay registros" : "Sin datos"}</p>`;
-  const registros = `<div class="card"><h2>Verificaciones pendientes</h2><div class="big">${input.pendingVerifications ?? "\u2014"}</div><p><a href="/admin/verifications">Revisar talleres y almacenes</a></p></div>
+  const registros = `<div class="card"><h2>Atender a un contacto</h2><p class="muted">Pega su n\xFAmero o su primer mensaje: te digo si es nuevo o registrado y qu\xE9 tiene pendiente.</p><p><a class="button" href="/admin/attend">Atender</a></p></div>
+  <div class="card"><h2>Verificaciones pendientes</h2><div class="big">${input.pendingVerifications ?? "\u2014"}</div><p><a href="/admin/verifications">Revisar talleres y almacenes</a></p></div>
   <div class="card"><h2>Registros recientes</h2>${recentList}<p><a class="button" href="/admin/users/new">+ Nuevo registro</a></p></div>`;
   const salud = `<div class="card"><h2>Salud</h2>
     <div>Versi\xF3n: <strong>${escapeHtml(input.version)}</strong></div>
@@ -81525,12 +83809,12 @@ function tableView(title, base, page, columns) {
   const next = page.items.length === page.pageSize ? `<a href="${base}?page=${page.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>${escapeHtml(title)}</h1><div class="scroll"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div><div class="pager">${prev}${next}</div>`;
 }
-var STYLES2;
+var STYLES3;
 var init_views = __esm({
   "packages/api/dist/interfaces/admin/views.js"() {
     "use strict";
     init_page();
-    STYLES2 = `
+    STYLES3 = `
 :root{--bg:#f5f8fa;--card:#fff;--text:#0f1b24;--muted:#51626f;--line:#e2e8ee;--cyan:#00a8c6;--green:#16a34a;--red:#dc2626}
 @media (prefers-color-scheme:dark){:root{--bg:#071116;--card:#0d1c24;--text:#e6f1f5;--muted:#9fb3bf;--line:#1e3440;--cyan:#22d3ee;--green:#4ade80;--red:#f87171}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
@@ -81693,7 +83977,7 @@ var require_error_correction_level = __commonJS({
       }
       try {
         return fromString(value2);
-      } catch (e3) {
+      } catch (e4) {
         return defaultValue;
       }
     };
@@ -82533,7 +84817,7 @@ var require_mode = __commonJS({
       }
       try {
         return fromString(value2);
-      } catch (e3) {
+      } catch (e4) {
         return defaultValue;
       }
     };
@@ -85865,7 +88149,7 @@ var require_canvas = __commonJS({
     function getCanvasElement() {
       try {
         return document.createElement("canvas");
-      } catch (e3) {
+      } catch (e4) {
         throw new Error("You need to specify a canvas element");
       }
     }
@@ -85952,16 +88236,16 @@ var require_browser = __commonJS({
           try {
             const data = QRCode2.create(text2, opts);
             resolve(renderFunc(data, canvas, opts));
-          } catch (e3) {
-            reject(e3);
+          } catch (e4) {
+            reject(e4);
           }
         });
       }
       try {
         const data = QRCode2.create(text2, opts);
         cb(null, renderFunc(data, canvas, opts));
-      } catch (e3) {
-        cb(e3);
+      } catch (e4) {
+        cb(e4);
       }
     }
     exports.create = QRCode2.create;
@@ -86038,16 +88322,16 @@ var require_server2 = __commonJS({
             return renderFunc(data, params.opts, function(err, data2) {
               return err ? reject(err) : resolve(data2);
             });
-          } catch (e3) {
-            reject(e3);
+          } catch (e4) {
+            reject(e4);
           }
         });
       }
       try {
         const data = QRCode2.create(text2, params.opts);
         return renderFunc(data, params.opts, params.cb);
-      } catch (e3) {
-        params.cb(e3);
+      } catch (e4) {
+        params.cb(e4);
       }
     }
     exports.create = QRCode2.create;
@@ -86177,7 +88461,7 @@ var init_views_setup = __esm({
 });
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
-import { randomBytes as randomBytes3 } from "node:crypto";
+import { randomBytes as randomBytes4 } from "node:crypto";
 function qrSvg(text2) {
   return QRCode.toString(text2, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
@@ -86209,7 +88493,7 @@ function registerSetupWizard(app2, deps) {
     return state;
   }
   function newState(reply) {
-    const state = { id: randomBytes3(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
+    const state = { id: randomBytes4(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
     states.set(state.id, state);
     reply.header("Set-Cookie", setupCookie(signSessionCookie(state.id, getAdminSessionSecret()), STATE_TTL_MS / 1e3));
     return state;
@@ -86324,8 +88608,8 @@ function registerSetupWizard(app2, deps) {
     try {
       userId = await store.upsertAdmin({ email, name, passwordHash, totpSecret: secret, phone: `admin:${email}` });
     } catch (err) {
-      const e3 = err;
-      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e3.code ?? "error"}${e3.sqlMessage ? `: ${e3.sqlMessage}` : ""}).` };
+      const e4 = err;
+      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e4.code ?? "error"}${e4.sqlMessage ? `: ${e4.sqlMessage}` : ""}).` };
       return back(reply);
     }
     recordLoginAttempt("setup", request.ip, true);
@@ -86522,14 +88806,28 @@ function settingsView(input) {
     <input id="current-settings" name="current" type="password" required autocomplete="current-password">
     <button class="full" type="submit" name="action" value="save">Guardar n\xFAmero</button>
     ${remove}</form></div>
+  ${legalCard(input.legal, csrf)}
   <div class="card"><h2>Base de datos</h2>${db}</div>
   </div>`;
+}
+function legalCard(legal, csrf) {
+  if (!legal)
+    return "";
+  const status = isLegalComplete(legal) ? `<p class="ok">Datos completos. Versi\xF3n ${escapeHtml(LEGAL_VERSION)} publicada.</p>` : `<p class="error">Faltan datos: las p\xE1ginas muestran \xAB[pendiente]\xBB y un aviso de documento en revisi\xF3n.</p>`;
+  const inputs = LEGAL_FIELDS.map((f) => `<label for="legal-${f.key}">${escapeHtml(f.label)}</label><input id="legal-${f.key}" name="${f.key}" value="${escapeHtml(legal[f.key] ?? "")}" placeholder="${escapeHtml(f.placeholder)}" maxlength="200">`).join("");
+  return `<div class="card"><h2>Datos de la empresa para t\xE9rminos y privacidad</h2>${status}
+    <p><a href="/terminos" target="_blank" rel="noopener">Ver t\xE9rminos y condiciones</a> \xB7 <a href="/privacidad" target="_blank" rel="noopener">Ver pol\xEDtica de privacidad</a></p>
+    <p class="muted">Confirma con tu abogado la raz\xF3n social y el tipo de empresa antes de completarlos.</p>
+    <form method="post" action="/admin/settings/legal" autocomplete="off">${csrf}${inputs}
+    <label for="current-legal">Tu contrase\xF1a actual</label><input id="current-legal" name="current" type="password" required autocomplete="current-password">
+    <button class="full" type="submit">Guardar datos de la empresa</button></form></div>`;
 }
 var init_views_settings = __esm({
   "packages/api/dist/interfaces/admin/views-settings.js"() {
     "use strict";
     init_page();
     init_whatsapp_number();
+    init_documents();
   }
 });
 
@@ -86546,6 +88844,12 @@ function registerSettingsRoutes(app2, deps) {
   async function render(request, reply, session, flash, status = 200) {
     let stored = null;
     let db = null;
+    const legal = emptyLegalData();
+    try {
+      for (const field2 of LEGAL_FIELDS)
+        legal[field2.key] = await deps.settings.get(legalSettingKey(field2.key));
+    } catch {
+    }
     try {
       stored = await deps.settings.get(WHATSAPP_NUMBER_KEY);
     } catch {
@@ -86556,7 +88860,7 @@ function registerSettingsRoutes(app2, deps) {
     } catch {
       db = null;
     }
-    return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, flash }), session, status);
+    return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, legal, flash }), session, status);
   }
   function checkCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
@@ -86615,6 +88919,42 @@ function registerSettingsRoutes(app2, deps) {
       text: `N\xFAmero actualizado a ${formatWhatsappNumber(number)}. La p\xE1gina de inicio ya lo usa.`
     });
   });
+  app2.post("/settings/legal", async (request, reply) => {
+    const ctx = checkCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const account = await deps.store.findAdminById(session.userId);
+    if (!account)
+      return render(request, reply, session, { kind: "error", text: "Cuenta no encontrada." }, 404);
+    if (!checkRateLimit(account.email, request.ip).allowed) {
+      return render(request, reply, session, { kind: "error", text: "Demasiados intentos. Espera unos minutos." }, 429);
+    }
+    if (!await comparePassword(typeof body.current === "string" ? body.current : "", account.passwordHash)) {
+      recordLoginAttempt(account.email, request.ip, false);
+      return render(request, reply, session, { kind: "error", text: "La contrase\xF1a actual no es correcta." }, 400);
+    }
+    const values = LEGAL_FIELDS.map((field2) => ({ field: field2, value: typeof body[field2.key] === "string" ? String(body[field2.key]).trim() : "" }));
+    for (const { field: field2, value: value2 } of values) {
+      const error = validateLegalField(field2.key, value2);
+      if (error)
+        return render(request, reply, session, { kind: "error", text: error }, 400);
+    }
+    try {
+      for (const { field: field2, value: value2 } of values) {
+        if (value2)
+          await deps.settings.set(legalSettingKey(field2.key), value2, account.id);
+        else
+          await deps.settings.remove(legalSettingKey(field2.key));
+      }
+    } catch {
+      return render(request, reply, session, { kind: "error", text: "Base de datos no disponible." }, 503);
+    }
+    deps.onChanged();
+    const filled = values.filter((v) => v.value).map((v) => v.field.label).join(", ") || "ninguno";
+    await deps.audit("admin.settings.legal", account.id, `Datos legales actualizados (completos: ${filled})`);
+    return render(request, reply, session, { kind: "ok", text: "Datos de la empresa guardados. Las p\xE1ginas de t\xE9rminos y privacidad ya los muestran." });
+  });
   app2.post("/settings/schema", async (request, reply) => {
     const ctx = checkCsrf(request, reply);
     if (!ctx)
@@ -86640,1951 +88980,7 @@ var init_settings = __esm({
     init_security();
     init_whatsapp_number();
     init_views_settings();
-  }
-});
-
-// packages/api/dist/domain/maintenance/types.js
-var init_types2 = __esm({
-  "packages/api/dist/domain/maintenance/types.js"() {
-    "use strict";
-  }
-});
-
-// packages/api/dist/domain/maintenance/schemas.js
-var vehicleClassSchema, fuelSchema, vehicleClassesSchema, appliesToSchema, subserviceSchema, categorySchema, serviceTaxonomySchema, maintenanceRuleSchema, maintenanceRulesSchema;
-var init_schemas = __esm({
-  "packages/api/dist/domain/maintenance/schemas.js"() {
-    "use strict";
-    init_zod();
-    vehicleClassSchema = external_exports.object({
-      id: external_exports.string().min(1),
-      name: external_exports.string().min(1),
-      subtypes: external_exports.array(external_exports.string()).default([])
-    });
-    fuelSchema = external_exports.object({
-      id: external_exports.string().min(1),
-      name: external_exports.string().min(1)
-    });
-    vehicleClassesSchema = external_exports.object({
-      version: external_exports.string(),
-      source: external_exports.string(),
-      generatedAt: external_exports.string().optional(),
-      note: external_exports.string().optional(),
-      classes: external_exports.array(vehicleClassSchema).min(1),
-      fuels: external_exports.array(fuelSchema).min(1)
-    });
-    appliesToSchema = external_exports.object({
-      classes: external_exports.array(external_exports.string()).min(1),
-      fuels: external_exports.array(external_exports.string()).min(1)
-    });
-    subserviceSchema = external_exports.object({
-      id: external_exports.string().min(1),
-      name: external_exports.string().min(1),
-      detail: external_exports.string().optional(),
-      periodic: external_exports.boolean().default(false),
-      appliesTo: appliesToSchema,
-      durationMin: external_exports.number().int().min(1),
-      costRefUsd: external_exports.number().min(0),
-      costNote: external_exports.string().optional()
-    });
-    categorySchema = external_exports.object({
-      id: external_exports.string().min(1),
-      name: external_exports.string().min(1),
-      order: external_exports.number().int().min(1),
-      subservices: external_exports.array(subserviceSchema).min(1)
-    });
-    serviceTaxonomySchema = external_exports.object({
-      version: external_exports.string(),
-      source: external_exports.string(),
-      generatedAt: external_exports.string().optional(),
-      note: external_exports.string().optional(),
-      categories: external_exports.array(categorySchema)
-    });
-    maintenanceRuleSchema = external_exports.object({
-      serviceId: external_exports.string().min(1),
-      classId: external_exports.array(external_exports.string()).min(1),
-      fuelId: external_exports.array(external_exports.string()).min(1),
-      intervalKm: external_exports.number().int().positive().nullable(),
-      intervalMonths: external_exports.number().int().positive().nullable(),
-      severeFactor: external_exports.number().min(0.5).max(0.8),
-      note: external_exports.string().optional()
-    });
-    maintenanceRulesSchema = external_exports.object({
-      version: external_exports.string(),
-      source: external_exports.string(),
-      generatedAt: external_exports.string().optional(),
-      note: external_exports.string().optional(),
-      rules: external_exports.array(maintenanceRuleSchema)
-    });
-  }
-});
-
-// packages/api/dist/domain/maintenance/vehicle-classes.json
-var vehicle_classes_default;
-var init_vehicle_classes = __esm({
-  "packages/api/dist/domain/maintenance/vehicle-classes.json"() {
-    vehicle_classes_default = {
-      version: "1.0.0",
-      source: "docs/25-diseno-producto-whatsapp-30dias.md \xA71.3 \u2014 clases y combustibles",
-      generatedAt: "2026-09-11",
-      note: "Cat\xE1logo maestro de clases de veh\xEDculo y combustibles. Las clases son las 8 de la cobertura global; 'liviano' agrupa sed\xE1n, hatchback, SUV y pickup (misma l\xF3gica de mantenimiento).",
-      classes: [
-        {
-          id: "motocicleta",
-          name: "Motocicleta / Scooter",
-          subtypes: ["moto", "scooter", "motocicleta", "vespa", "cielo"]
-        },
-        {
-          id: "cuadron",
-          name: "Cuadr\xF3n / ATV",
-          subtypes: ["cuadron", "atv", "cuatrimoto", "quad", "cuv"]
-        },
-        {
-          id: "liviano",
-          name: "Liviano (sed\xE1n, hatchback, SUV, pickup)",
-          subtypes: ["sedan", "sed\xE1n", "hatchback", "suv", "camioneta", "pickup", "auto", "carro", "vehiculo"]
-        },
-        {
-          id: "van",
-          name: "Van / Furgoneta",
-          subtypes: ["van", "furgoneta", "furgon", "panel"]
-        },
-        {
-          id: "comercial_liviano",
-          name: "Comercial liviano",
-          subtypes: ["comercial_liviano", "comercial", "reparto", "furgon"]
-        },
-        {
-          id: "camion",
-          name: "Cami\xF3n mediano / pesado",
-          subtypes: ["camion", "camin", "truck", "cabezal", "volqueta", "carguero"]
-        },
-        {
-          id: "bus",
-          name: "Bus / Buseta",
-          subtypes: ["bus", "buseta", "cooperativa", "colectivo", "transporte_publico"]
-        },
-        {
-          id: "maquinaria_liviana",
-          name: "Maquinaria liviana",
-          subtypes: ["maquinaria", "maquinaria_liviana", "tractor", "retroexcavadora", "montacarga"]
-        }
-      ],
-      fuels: [
-        {
-          id: "gasolina",
-          name: "Gasolina"
-        },
-        {
-          id: "diesel",
-          name: "Di\xE9sel"
-        },
-        {
-          id: "hev",
-          name: "H\xEDbrido (HEV)"
-        },
-        {
-          id: "phev",
-          name: "H\xEDbrido enchufable (PHEV)"
-        },
-        {
-          id: "bev",
-          name: "El\xE9ctrico (BEV)"
-        },
-        {
-          id: "glp_gnv",
-          name: "GLP / GNV (gas)"
-        }
-      ]
-    };
-  }
-});
-
-// packages/api/dist/domain/maintenance/service-taxonomy.json
-var service_taxonomy_default;
-var init_service_taxonomy = __esm({
-  "packages/api/dist/domain/maintenance/service-taxonomy.json"() {
-    service_taxonomy_default = {
-      version: "1.0.0",
-      source: "docs/25-diseno-producto-whatsapp-30dias.md \xA71.3 \u2014 taxonom\xEDa de servicios (22 categor\xEDas)",
-      generatedAt: "2026-09-11",
-      note: "Cat\xE1logo maestro de servicios. 'periodic' indica si el servicio entra en el plan de mantenimiento (tiene intervalo en maintenance-rules.json); los no peri\xF3dicos (carrocer\xEDa, detailing, gr\xFAa\u2026) se solicitan bajo demanda. appliesTo: clases y combustibles a los que aplica ('*' = todas). durationMin y costRefUsd son valores REFERENCIALES conservadores del mercado ecuatoriano (USD), orientativos para el plan; no son presupuesto.",
-      categories: [
-        {
-          id: "prevencion",
-          name: "Mantenimiento preventivo por km",
-          order: 1,
-          subservices: [
-            {
-              id: "prep_inspeccion",
-              name: "Inspecci\xF3n multipunto preventiva",
-              detail: "Revisi\xF3n visual y funcional de los principales sistemas del veh\xEDculo.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 60,
-              costRefUsd: 25,
-              costNote: "Referencial; checklist b\xE1sico de 25\u201335 USD seg\xFAn taller."
-            }
-          ]
-        },
-        {
-          id: "lubricacion",
-          name: "Lubricaci\xF3n / aceite",
-          order: 2,
-          subservices: [
-            {
-              id: "aceite_motor",
-              name: "Cambio de aceite y filtro de motor",
-              detail: "Aceite seg\xFAn especificaci\xF3n del fabricante y filtro nuevo.",
-              periodic: true,
-              appliesTo: {
-                classes: ["*"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 60,
-              costRefUsd: 45,
-              costNote: "Referencial; 30\u201370 USD seg\xFAn gama y tipo de aceite. NO aplica a BEV (sin motor de combusti\xF3n)."
-            }
-          ]
-        },
-        {
-          id: "motor",
-          name: "Motor",
-          order: 3,
-          subservices: [
-            {
-              id: "motor_bujias",
-              name: "Cambio de buj\xEDas / kit de encendido",
-              detail: "Buj\xEDas nuevas y prueba del sistema de encendido (no aplica a di\xE9sel ni a BEV).",
-              periodic: true,
-              appliesTo: {
-                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano"],
-                fuels: ["gasolina", "glp_gnv", "hev", "phev"]
-              },
-              durationMin: 90,
-              costRefUsd: 80,
-              costNote: "Referencial por juego; 50\u2013120 USD seg\xFAn motor y n\xFAmero de cilindros."
-            },
-            {
-              id: "motor_filtro_aire",
-              name: "Cambio de filtro de aire",
-              detail: "Reemplazo del elemento filtrante de admisi\xF3n de aire.",
-              periodic: true,
-              appliesTo: {
-                classes: ["*"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 30,
-              costRefUsd: 18,
-              costNote: "Referencial; 12\u201335 USD seg\xFAn marca. NO aplica a BEV."
-            },
-            {
-              id: "motor_correa",
-              name: "Revisi\xF3n / cambio de correas",
-              detail: "Inspecci\xF3n y cambio de correa(s) de distribuci\xF3n o de accesorios seg\xFAn especificaci\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 180,
-              costRefUsd: 250,
-              costNote: "Referencial; 150\u2013400 USD seg\xFAn motor. Cat\xE1logo conservador de manuales t\xEDpicos."
-            }
-          ]
-        },
-        {
-          id: "inyeccion",
-          name: "Inyecci\xF3n / combustible",
-          order: 4,
-          subservices: [
-            {
-              id: "iny_filtro_combustible",
-              name: "Cambio de filtro de combustible",
-              detail: "Reemplazo del filtro de combustible del sistema de inyecci\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["*"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 60,
-              costRefUsd: 35,
-              costNote: "Referencial; 25\u201360 USD. Los de di\xE9sel suelen cambiarse con mayor frecuencia. NO aplica a BEV."
-            },
-            {
-              id: "iny_limpieza",
-              name: "Limpieza de inyectores / sistema",
-              detail: "Limpieza del sistema de inyecci\xF3n (banco o aditivo de limpieza).",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 90,
-              costRefUsd: 80,
-              costNote: "Referencial; 50\u2013120 USD. NO aplica a BEV."
-            }
-          ]
-        },
-        {
-          id: "refrigeracion",
-          name: "Refrigeraci\xF3n",
-          order: 5,
-          subservices: [
-            {
-              id: "ref_antifreeze",
-              name: "Cambio de refrigerante / anticongelante",
-              detail: "Reemplazo del l\xEDquido refrigerante y revisi\xF3n de fugas.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 60,
-              costRefUsd: 45,
-              costNote: "Referencial; 35\u201370 USD. Aplica tambi\xE9n a BEV (refrigeraci\xF3n de bater\xEDa y electr\xF3nica)."
-            },
-            {
-              id: "ref_radiador",
-              name: "Lavado de radiador / sistema",
-              detail: "Lavado del circuito de refrigeraci\xF3n y revisi\xF3n de mangueras.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-                fuels: ["*"]
-              },
-              durationMin: 90,
-              costRefUsd: 60,
-              costNote: "Referencial; 40\u201390 USD."
-            }
-          ]
-        },
-        {
-          id: "frenos",
-          name: "Frenos",
-          order: 6,
-          subservices: [
-            {
-              id: "freno_liquido",
-              name: "Cambio de l\xEDquido de frenos",
-              detail: "Sangr\xEDa y reemplazo del l\xEDquido de frenos (car\xE1cter higrosc\xF3pico).",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 60,
-              costRefUsd: 35,
-              costNote: "Referencial; 25\u201355 USD."
-            },
-            {
-              id: "freno_pastillas",
-              name: "Inspecci\xF3n / cambio de pastillas y discos",
-              detail: "Inspecci\xF3n de espesor de pastillas y discos; reposici\xF3n seg\xFAn desgaste.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 90,
-              costRefUsd: 90,
-              costNote: "Referencial (juego delantero); 60\u2013160 USD seg\xFAn veh\xEDculo."
-            },
-            {
-              id: "freno_regulacion",
-              name: "Regulaci\xF3n de frenos (moto)",
-              detail: "Ajuste y revisi\xF3n del sistema de frenos de motocicleta / cuadr\xF3n.",
-              periodic: true,
-              appliesTo: { classes: ["motocicleta", "cuadron"], fuels: ["*"] },
-              durationMin: 45,
-              costRefUsd: 20,
-              costNote: "Referencial; 15\u201330 USD."
-            }
-          ]
-        },
-        {
-          id: "suspension",
-          name: "Suspensi\xF3n y direcci\xF3n",
-          order: 7,
-          subservices: [
-            {
-              id: "susp_amortiguadores",
-              name: "Revisi\xF3n / cambio de amortiguadores",
-              detail: "Prueba y sustituci\xF3n de amortiguadores y bujes seg\xFAn desgaste.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 90,
-              costRefUsd: 150,
-              costNote: "Referencial por eje; 100\u2013250 USD."
-            },
-            {
-              id: "susp_direccion",
-              name: "Inspecci\xF3n de suspensi\xF3n y direcci\xF3n",
-              detail: "Inspecci\xF3n de terminales, r\xF3tulas, barra y juego de direcci\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 45,
-              costRefUsd: 25,
-              costNote: "Referencial; 20\u201340 USD."
-            }
-          ]
-        },
-        {
-          id: "transmision",
-          name: "Transmisi\xF3n / embrague",
-          order: 8,
-          subservices: [
-            {
-              id: "trans_aceite_caja",
-              name: "Cambio de aceite de caja / diferencial",
-              detail: "Reemplazo del lubricante de la caja de cambios y diferencial.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 90,
-              costRefUsd: 65,
-              costNote: "Referencial; 45\u2013110 USD. En BEV aplica al lubricante de la transmisi\xF3n de reducci\xF3n."
-            },
-            {
-              id: "trans_filtro_caja",
-              name: "Cambio de filtro de caja autom\xE1tica",
-              detail: "Reemplazo del filtro y servicio de la caja autom\xE1tica.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 120,
-              costRefUsd: 90,
-              costNote: "Referencial; 70\u2013150 USD."
-            },
-            {
-              id: "trans_embrague",
-              name: "Revisi\xF3n de embrague",
-              detail: "Inspecci\xF3n del desgaste del embrague y ajuste seg\xFAn el caso.",
-              periodic: true,
-              appliesTo: {
-                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 60,
-              costRefUsd: 40,
-              costNote: "Referencial (revisi\xF3n); 30\u201360 USD. El kit de embrague se cotiza aparte."
-            },
-            {
-              id: "trans_cadena",
-              name: "Ajuste y lubricaci\xF3n de cadena (moto)",
-              detail: "Limpieza, ajuste y lubricaci\xF3n de la cadena de transmisi\xF3n.",
-              periodic: true,
-              appliesTo: { classes: ["motocicleta", "cuadron"], fuels: ["*"] },
-              durationMin: 30,
-              costRefUsd: 15,
-              costNote: "Referencial; 10\u201325 USD."
-            }
-          ]
-        },
-        {
-          id: "neumaticos",
-          name: "Neum\xE1ticos / alineaci\xF3n / balanceo",
-          order: 9,
-          subservices: [
-            {
-              id: "llanta_rotacion",
-              name: "Rotaci\xF3n de neum\xE1ticos",
-              detail: "Rotaci\xF3n cruzada de neum\xE1ticos para desgaste parejo.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 45,
-              costRefUsd: 12,
-              costNote: "Referencial; 8\u201320 USD."
-            },
-            {
-              id: "llanta_alineacion",
-              name: "Alineaci\xF3n y balanceo",
-              detail: "Alineaci\xF3n de direcci\xF3n y balanceo de las ruedas.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 60,
-              costRefUsd: 30,
-              costNote: "Referencial; 20\u201345 USD."
-            },
-            {
-              id: "llanta_presion",
-              name: "Revisi\xF3n de presi\xF3n y desgaste",
-              detail: "Control de presi\xF3n de inflado y profundidad del dibujo.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 30,
-              costRefUsd: 10,
-              costNote: "Referencial; 5\u201315 USD."
-            },
-            {
-              id: "llanta_cambio",
-              name: "Cambio de neum\xE1ticos",
-              detail: "Sustituci\xF3n de llantas por vida \xFAtil o desgaste.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 90,
-              costRefUsd: 150,
-              costNote: "Referencial por juego de 2; el precio var\xEDa por marca y perfil."
-            }
-          ]
-        },
-        {
-          id: "electrico",
-          name: "El\xE9ctrico / bater\xEDa",
-          order: 10,
-          subservices: [
-            {
-              id: "elec_bateria",
-              name: "Prueba y mantenimiento de bater\xEDa",
-              detail: "Prueba de carga, estado de los bornes y mantenimiento de la bater\xEDa de 12 V.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 30,
-              costRefUsd: 10,
-              costNote: "Referencial; 5\u201315 USD. Aplica a todos, incluido BEV (bater\xEDa de servicios)."
-            },
-            {
-              id: "elec_alternador",
-              name: "Revisi\xF3n de alternador / sistema de carga",
-              detail: "Comprobaci\xF3n del sistema de carga del veh\xEDculo.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 45,
-              costRefUsd: 25,
-              costNote: "Referencial; 20\u201340 USD."
-            },
-            {
-              id: "elec_luces",
-              name: "Revisi\xF3n de luces y se\xF1alizaci\xF3n",
-              detail: "Verificaci\xF3n de luces exteriores, interiores y se\xF1alizaci\xF3n del tablero.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 30,
-              costRefUsd: 8,
-              costNote: "Referencial; 5\u201312 USD."
-            }
-          ]
-        },
-        {
-          id: "electronica",
-          name: "Electr\xF3nica / esc\xE1ner",
-          order: 11,
-          subservices: [
-            {
-              id: "escaner_diagnostico",
-              name: "Escaneo electr\xF3nico de c\xF3digos",
-              detail: "Lectura de c\xF3digos de falla y prueba de m\xF3dulos electr\xF3nicos.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 45,
-              costRefUsd: 25,
-              costNote: "Referencial; 20\u201340 USD."
-            }
-          ]
-        },
-        {
-          id: "climatizacion",
-          name: "Climatizaci\xF3n",
-          order: 12,
-          subservices: [
-            {
-              id: "clima_filtro_cabina",
-              name: "Cambio de filtro de cabina",
-              detail: "Reemplazo del filtro de habit\xE1culo del aire acondicionado.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 30,
-              costRefUsd: 25,
-              costNote: "Referencial; 18\u201340 USD."
-            },
-            {
-              id: "clima_recarga",
-              name: "Recarga y mantenimiento de A/C",
-              detail: "Recarga de gas refrigerante y revisi\xF3n del circuito de climatizaci\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 90,
-              costRefUsd: 80,
-              costNote: "Referencial; 60\u2013120 USD."
-            },
-            {
-              id: "clima_desinfeccion",
-              name: "Desinfecci\xF3n del sistema de climatizaci\xF3n",
-              detail: "Limpieza y desinfecci\xF3n de ductos y evaporador (control de olores).",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 30,
-              costRefUsd: 20,
-              costNote: "Referencial; 15\u201335 USD."
-            }
-          ]
-        },
-        {
-          id: "escape",
-          name: "Escape / emisiones",
-          order: 13,
-          subservices: [
-            {
-              id: "escape_gases",
-              name: "Revisi\xF3n de escape y emisiones",
-              detail: "Inspecci\xF3n del sistema de escape y control de emisiones.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 30,
-              costRefUsd: 15,
-              costNote: "Referencial; 10\u201325 USD. NO aplica a BEV (sin escape)."
-            },
-            {
-              id: "escape_mofle",
-              name: "Cambio de mofle / silenciador",
-              detail: "Sustituci\xF3n del silenciador o tramos del sistema de escape.",
-              periodic: false,
-              appliesTo: {
-                classes: ["*"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 90,
-              costRefUsd: 120,
-              costNote: "Referencial; 80\u2013200 USD. Bajo demanda."
-            }
-          ]
-        },
-        {
-          id: "carroceria",
-          name: "Carrocer\xEDa / pintura",
-          order: 14,
-          subservices: [
-            {
-              id: "carro_enderezada",
-              name: "Enderezada y pintura",
-              detail: "Reparaci\xF3n de abolladuras y pintura de paneles.",
-              periodic: false,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 240,
-              costRefUsd: 250,
-              costNote: "Referencial por panel; depende de da\xF1o. Bajo demanda."
-            },
-            {
-              id: "carro_anticorrosiva",
-              name: "Protecci\xF3n anticorrosiva",
-              detail: "Tratamiento anticorrosivo de bajos y cavidades.",
-              periodic: false,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 90,
-              costRefUsd: 60,
-              costNote: "Referencial; 45\u201390 USD. Bajo demanda."
-            }
-          ]
-        },
-        {
-          id: "vidrios",
-          name: "Vidrios",
-          order: 15,
-          subservices: [
-            {
-              id: "vidrio_parabrisas",
-              name: "Cambio / reparaci\xF3n de parabrisas",
-              detail: "Reparaci\xF3n de fisuras o sustituci\xF3n del parabrisas.",
-              periodic: false,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 60,
-              costRefUsd: 120,
-              costNote: "Referencial; 90\u2013250 USD seg\xFAn veh\xEDculo. Bajo demanda."
-            },
-            {
-              id: "vidrio_limpiadores",
-              name: "Cambio de escobillas / plumillas",
-              detail: "Sustituci\xF3n de las escobillas de limpiaparabrisas.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 15,
-              costRefUsd: 12,
-              costNote: "Referencial; juega por juego de 2."
-            }
-          ]
-        },
-        {
-          id: "interior",
-          name: "Interior / tapicer\xEDa",
-          order: 16,
-          subservices: [
-            {
-              id: "interior_limpieza",
-              name: "Limpieza de tapicer\xEDa y tablero",
-              detail: "Limpieza profunda de asientos, alfombras y tablero.",
-              periodic: false,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-                fuels: ["*"]
-              },
-              durationMin: 120,
-              costRefUsd: 45,
-              costNote: "Referencial; 35\u201370 USD. Bajo demanda."
-            }
-          ]
-        },
-        {
-          id: "lavado",
-          name: "Lavado / detailing",
-          order: 17,
-          subservices: [
-            {
-              id: "lavado_exterior",
-              name: "Lavado exterior con sellador",
-              detail: "Lavado completo y sellador protector de pintura.",
-              periodic: false,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 45,
-              costRefUsd: 15,
-              costNote: "Referencial; 10\u201325 USD. Bajo demanda."
-            },
-            {
-              id: "lavado_detailing",
-              name: "Detailing completo",
-              detail: "Lavado, pulido, descontaminaci\xF3n y acabado profesional.",
-              periodic: false,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 180,
-              costRefUsd: 80,
-              costNote: "Referencial; 60\u2013140 USD. Bajo demanda."
-            }
-          ]
-        },
-        {
-          id: "diesel",
-          name: "Di\xE9sel / turbo",
-          order: 18,
-          subservices: [
-            {
-              id: "die_turbo",
-              name: "Revisi\xF3n de turbo / admisi\xF3n",
-              detail: "Inspecci\xF3n del turbocompresor y del sistema de admisi\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["comercial_liviano", "camion", "bus"],
-                fuels: ["diesel"]
-              },
-              durationMin: 90,
-              costRefUsd: 90,
-              costNote: "Referencial (revisi\xF3n); 60\u2013140 USD."
-            },
-            {
-              id: "die_inyectores",
-              name: "Prueba de inyectores di\xE9sel",
-              detail: "Prueba en banco y ajuste / reemplazo de inyectores di\xE9sel.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-                fuels: ["diesel"]
-              },
-              durationMin: 120,
-              costRefUsd: 110,
-              costNote: "Referencial; 80\u2013180 USD."
-            },
-            {
-              id: "die_dpf",
-              name: "Limpieza de filtro de part\xEDculas (DPF)",
-              detail: "Limpieza / regeneraci\xF3n del filtro de part\xEDculas di\xE9sel.",
-              periodic: true,
-              appliesTo: {
-                classes: ["comercial_liviano", "camion", "bus"],
-                fuels: ["diesel"]
-              },
-              durationMin: 120,
-              costRefUsd: 130,
-              costNote: "Referencial; 90\u2013200 USD."
-            }
-          ]
-        },
-        {
-          id: "alto_voltaje",
-          name: "Alto voltaje (EV/HEV)",
-          order: 19,
-          subservices: [
-            {
-              id: "hv_inspeccion",
-              name: "Inspecci\xF3n del sistema de alto voltaje",
-              detail: "Revisi\xF3n de cables, conectores y aislamiento del sistema de alto voltaje.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["hev", "phev", "bev"]
-              },
-              durationMin: 60,
-              costRefUsd: 35,
-              costNote: "Referencial; 25\u201355 USD. SOLO h\xEDbridos y el\xE9ctricos."
-            },
-            {
-              id: "hv_bateria_traccion",
-              name: "Prueba de bater\xEDa de tracci\xF3n",
-              detail: "Prueba de capacidad y estado de la bater\xEDa de alta tensi\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["hev", "phev", "bev"]
-              },
-              durationMin: 90,
-              costRefUsd: 50,
-              costNote: "Referencial; 35\u201380 USD. SOLO h\xEDbridos y el\xE9ctricos."
-            }
-          ]
-        },
-        {
-          id: "glp_gnv",
-          name: "GLP/GNV",
-          order: 20,
-          subservices: [
-            {
-              id: "glp_inspeccion",
-              name: "Inspecci\xF3n peri\xF3dica del sistema de gas",
-              detail: "Inspecci\xF3n reglamentaria del sistema GLP/GNV (comprobaci\xF3n de fugas y v\xE1lvulas).",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["glp_gnv"]
-              },
-              durationMin: 60,
-              costRefUsd: 45,
-              costNote: "Referencial; 30\u201360 USD. Solo veh\xEDculos con sistema de gas."
-            },
-            {
-              id: "glp_filtro",
-              name: "Cambio de filtro de gas",
-              detail: "Reemplazo del filtro del sistema de gas licuado / natural vehicular.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["glp_gnv"]
-              },
-              durationMin: 60,
-              costRefUsd: 40,
-              costNote: "Referencial; 30\u201355 USD."
-            }
-          ]
-        },
-        {
-          id: "grua",
-          name: "Gr\xFAa / asistencia",
-          order: 21,
-          subservices: [
-            {
-              id: "grua_remolque",
-              name: "Servicio de gr\xFAa / remolque",
-              detail: "Traslado del veh\xEDculo con gr\xFAa o asistencia en carretera.",
-              periodic: false,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 120,
-              costRefUsd: 60,
-              costNote: "Referencial por carrera corta; 40\u201390 USD. Bajo demanda."
-            }
-          ]
-        },
-        {
-          id: "rtv",
-          name: "Pre-revisi\xF3n t\xE9cnica vehicular (RTV)",
-          order: 22,
-          subservices: [
-            {
-              id: "rtv_pretest",
-              name: "Pre-chequeo para RTV",
-              detail: "Chequeo previo de los puntos que revisa la Revisi\xF3n T\xE9cnica Vehicular.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 60,
-              costRefUsd: 35,
-              costNote: "Referencial; 25\u201350 USD. Per\xEDodo anual."
-            }
-          ]
-        }
-      ]
-    };
-  }
-});
-
-// packages/api/dist/domain/maintenance/maintenance-rules.json
-var maintenance_rules_default;
-var init_maintenance_rules = __esm({
-  "packages/api/dist/domain/maintenance/maintenance-rules.json"() {
-    maintenance_rules_default = {
-      version: "1.0.0",
-      source: "Motor de reglas de mantenimiento \u2014 referencial",
-      generatedAt: "2026-09-11",
-      note: "Valores conservadores basados en manuales de mantenimiento T\xCDPICOS y pr\xE1cticas del mercado ecuatoriano (referencial, sin datos de una marca concreta). intervalKm e intervalMonths son los intervalos base; severeFactor (0,5\u20130,8) se aplica cuando el uso es SEVERO (Sierra: altitud y pendientes; uso por defecto en Quito). Las combinaciones (clase, combustible) por servicio coinciden EXACTAMENTE con appliesTo de service-taxonomy.json; si un servicio o combinaci\xF3n no aparece aqu\xED, no entra en el plan.",
-      rules: [
-        {
-          serviceId: "prep_inspeccion",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 5e3,
-          intervalMonths: 6,
-          severeFactor: 0.7,
-          note: "Inspecci\xF3n multipunto preventiva cada 5.000 km / 6 meses."
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["motocicleta"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 2e3,
-          intervalMonths: 3,
-          severeFactor: 0.7,
-          note: "Motos: cambio de aceite frecuente."
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["cuadron"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 3e3,
-          intervalMonths: 4,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "glp_gnv"],
-          intervalKm: 5e3,
-          intervalMonths: 6,
-          severeFactor: 0.7,
-          note: "Livianos gasolina/GLP: 5.000 km / 6 meses (conservador para uso con GLP)."
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["hev", "phev"],
-          intervalKm: 1e4,
-          intervalMonths: 12,
-          severeFactor: 0.7,
-          note: "H\xEDbridos: el motor de combusti\xF3n trabaja menos, intervalo mayor."
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["diesel"],
-          intervalKm: 6e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["camion", "bus"],
-          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
-          intervalKm: 6e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["camion", "bus"],
-          fuelId: ["diesel"],
-          intervalKm: 1e4,
-          intervalMonths: 6,
-          severeFactor: 0.7,
-          note: "Veh\xEDculos pesados di\xE9sel con intervalos de aceite m\xE1s largos."
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["maquinaria_liviana"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 2e3,
-          intervalMonths: 4,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_bujias",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
-          intervalKm: 8e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_bujias",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "glp_gnv"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_bujias",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["hev", "phev"],
-          intervalKm: 4e4,
-          intervalMonths: 36,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_filtro_aire",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 6e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_filtro_aire",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 15e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_filtro_aire",
-          classId: ["camion", "bus"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_filtro_aire",
-          classId: ["maquinaria_liviana"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 1e4,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_correa",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "glp_gnv"],
-          intervalKm: 6e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "motor_correa",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["hev", "phev", "diesel"],
-          intervalKm: 8e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "motor_correa",
-          classId: ["camion", "bus"],
-          fuelId: ["gasolina", "glp_gnv"],
-          intervalKm: 6e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "motor_correa",
-          classId: ["camion", "bus"],
-          fuelId: ["hev", "phev", "diesel"],
-          intervalKm: 8e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 1e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["diesel"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7,
-          note: "Di\xE9sel: filtro de combustible con servicio m\xE1s frecuente."
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["camion", "bus"],
-          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["camion", "bus"],
-          fuelId: ["diesel"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["maquinaria_liviana"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 15e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "iny_limpieza",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "ref_antifreeze",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["*"],
-          intervalKm: 2e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "ref_antifreeze",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 4e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "ref_antifreeze",
-          classId: ["maquinaria_liviana"],
-          fuelId: ["*"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "ref_radiador",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-          fuelId: ["*"],
-          intervalKm: 6e4,
-          intervalMonths: 36,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "freno_liquido",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 4e4,
-          intervalMonths: 24,
-          severeFactor: 0.7,
-          note: "El l\xEDquido de frenos se degrada por humedad aunque no se recorra."
-        },
-        {
-          serviceId: "freno_pastillas",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7,
-          note: "Inspecci\xF3n; la reposici\xF3n depende del desgaste real."
-        },
-        {
-          serviceId: "freno_regulacion",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["*"],
-          intervalKm: 5e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "susp_amortiguadores",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 6e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "susp_direccion",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_aceite_caja",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["*"],
-          intervalKm: 6e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_aceite_caja",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 6e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_aceite_caja",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["bev"],
-          intervalKm: 8e4,
-          intervalMonths: 48,
-          severeFactor: 0.7,
-          note: "BEV: lubricante de la transmisi\xF3n de reducci\xF3n."
-        },
-        {
-          serviceId: "trans_aceite_caja",
-          classId: ["camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 6e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_aceite_caja",
-          classId: ["maquinaria_liviana"],
-          fuelId: ["*"],
-          intervalKm: 4e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_filtro_caja",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 6e4,
-          intervalMonths: 36,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_embrague",
-          classId: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 5e4,
-          intervalMonths: 36,
-          severeFactor: 0.7,
-          note: "Revisi\xF3n de embrague; el reemplazo se cotiza seg\xFAn desgaste."
-        },
-        {
-          serviceId: "trans_cadena",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["*"],
-          intervalKm: 2e3,
-          intervalMonths: 2,
-          severeFactor: 0.7,
-          note: "Cadena de moto: ajuste y lubricaci\xF3n cada 2.000 km / 2 meses."
-        },
-        {
-          serviceId: "llanta_rotacion",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 1e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "llanta_alineacion",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 1e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "llanta_presion",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 5e3,
-          intervalMonths: 3,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "llanta_cambio",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 5e4,
-          intervalMonths: 48,
-          severeFactor: 0.7,
-          note: "Referencial por vida \xFAtil de llanta; depende del desgaste del dibujo."
-        },
-        {
-          serviceId: "elec_bateria",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "elec_alternador",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 6e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "elec_luces",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 15e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "escaner_diagnostico",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "clima_filtro_cabina",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 15e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "clima_recarga",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 24e3,
-          intervalMonths: 24,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "clima_desinfeccion",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 12e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "escape_gases",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "vidrio_limpiadores",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 12e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "die_turbo",
-          classId: ["comercial_liviano", "camion", "bus"],
-          fuelId: ["diesel"],
-          intervalKm: 6e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "die_inyectores",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-          fuelId: ["diesel"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "die_dpf",
-          classId: ["comercial_liviano", "camion", "bus"],
-          fuelId: ["diesel"],
-          intervalKm: 8e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "hv_inspeccion",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["hev", "phev", "bev"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7,
-          note: "SOLO h\xEDbridos y el\xE9ctricos: sistema de alto voltaje."
-        },
-        {
-          serviceId: "hv_bateria_traccion",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["hev", "phev", "bev"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "glp_inspeccion",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["glp_gnv"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7,
-          note: "Inspecci\xF3n reglamentaria del sistema de gas."
-        },
-        {
-          serviceId: "glp_filtro",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["glp_gnv"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "rtv_pretest",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: null,
-          intervalMonths: 12,
-          severeFactor: 0.8,
-          note: "Pre-chequeo para Revisi\xF3n T\xE9cnica Vehicular: por tiempo (anual)."
-        }
-      ]
-    };
-  }
-});
-
-// packages/api/dist/domain/maintenance/catalogs.js
-function findSubservice(serviceId) {
-  return SUBSERVICE_INDEX.get(serviceId);
-}
-function normalizeList(list5, allValues) {
-  const expanded = /* @__PURE__ */ new Set();
-  for (const value2 of list5) {
-    if (value2 === "*") {
-      for (const v of allValues)
-        expanded.add(v);
-    } else {
-      expanded.add(value2);
-    }
-  }
-  return [...expanded].sort();
-}
-function expandRules() {
-  const expanded = [];
-  for (const rule of maintenanceRules.rules) {
-    const classes = normalizeList(rule.classId, classIds);
-    const fuels = normalizeList(rule.fuelId, fuelIds);
-    for (const classId of classes) {
-      for (const fuelId of fuels) {
-        expanded.push({
-          serviceId: rule.serviceId,
-          classId,
-          fuelId,
-          intervalKm: rule.intervalKm,
-          intervalMonths: rule.intervalMonths,
-          severeFactor: rule.severeFactor,
-          note: rule.note
-        });
-      }
-    }
-  }
-  return expanded;
-}
-function resolveRules(classId, fuelId) {
-  return expandRules().filter((r) => r.classId === classId && r.fuelId === fuelId);
-}
-function isServiceApplicable(serviceId, classId, fuelId) {
-  const ref = findSubservice(serviceId);
-  if (!ref)
-    return false;
-  const classes = new Set(normalizeList(ref.subservice.appliesTo.classes, classIds));
-  const fuels = new Set(normalizeList(ref.subservice.appliesTo.fuels, fuelIds));
-  return classes.has(classId) && fuels.has(fuelId);
-}
-var vehicleClasses, serviceTaxonomy, maintenanceRules, classIds, fuelIds, SUBSERVICE_INDEX;
-var init_catalogs = __esm({
-  "packages/api/dist/domain/maintenance/catalogs.js"() {
-    "use strict";
-    init_vehicle_classes();
-    init_service_taxonomy();
-    init_maintenance_rules();
-    init_schemas();
-    vehicleClasses = vehicleClassesSchema.parse(vehicle_classes_default);
-    serviceTaxonomy = serviceTaxonomySchema.parse(service_taxonomy_default);
-    maintenanceRules = maintenanceRulesSchema.parse(maintenance_rules_default);
-    classIds = vehicleClasses.classes.map((c) => c.id);
-    fuelIds = vehicleClasses.fuels.map((f) => f.id);
-    SUBSERVICE_INDEX = /* @__PURE__ */ new Map();
-    for (const category of serviceTaxonomy.categories) {
-      for (const sub of category.subservices) {
-        if (SUBSERVICE_INDEX.has(sub.id)) {
-          throw new Error(`Duplicated subservice id '${sub.id}' in service-taxonomy.json`);
-        }
-        SUBSERVICE_INDEX.set(sub.id, { category, subservice: sub });
-      }
-    }
-  }
-});
-
-// packages/api/dist/domain/maintenance/plan-engine.js
-function toDate(input) {
-  return input instanceof Date ? new Date(input.getTime()) : new Date(input);
-}
-function daysBetween(a, b) {
-  const aDate = toDate(a);
-  const bDate = toDate(b);
-  const aUtc = Date.UTC(aDate.getFullYear(), aDate.getMonth(), aDate.getDate());
-  const bUtc = Date.UTC(bDate.getFullYear(), bDate.getMonth(), bDate.getDate());
-  return Math.round((bUtc - aUtc) / MS_PER_DAY);
-}
-function addMonths(date, months) {
-  const base = toDate(date);
-  return new Date(base.getTime() + months * DAYS_PER_MONTH * MS_PER_DAY);
-}
-function estimateKmPerDay(input) {
-  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
-  const readings = [...input.odometerReadings ?? []].filter((r) => toDate(r.date).getTime() <= today.getTime()).sort((a, b) => toDate(a.date).getTime() - toDate(b.date).getTime());
-  for (let i = readings.length - 1; i >= 0; i -= 1) {
-    const reading = readings[i];
-    const days = daysBetween(reading.date, today);
-    if (days >= 1 && input.odometerKm > reading.km) {
-      const kmPerDay = (input.odometerKm - reading.km) / days;
-      return Math.round(kmPerDay * 10) / 10;
-    }
-  }
-  return DEFAULT_KM_PER_DAY[usageProfileOf(input)];
-}
-function usageProfileOf(input) {
-  return input.usageProfile ?? "urbano";
-}
-function lastReadingDaysAgo(input) {
-  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
-  const readings = (input.odometerReadings ?? []).filter((r) => toDate(r.date).getTime() <= today.getTime());
-  if (readings.length === 0)
-    return null;
-  const latest = readings.reduce((a, b) => toDate(a.date).getTime() > toDate(b.date).getTime() ? a : b);
-  return Math.max(0, daysBetween(latest.date, today));
-}
-function computeItemStatus(remainingKm, remainingDays) {
-  const dueByKm = remainingKm !== null && remainingKm <= 0;
-  const dueByTime = remainingDays !== null && remainingDays <= 0;
-  if (dueByKm || dueByTime)
-    return "vencido";
-  const soonByKm = remainingKm !== null && remainingKm <= NEXT_WINDOW_KM;
-  const soonByTime = remainingDays !== null && remainingDays <= NEXT_WINDOW_DAYS;
-  if (soonByKm || soonByTime)
-    return "proximo";
-  return "al_dia";
-}
-function priorityFor(status) {
-  switch (status) {
-    case "vencido":
-      return "alta";
-    case "proximo":
-      return "media";
-    default:
-      return "baja";
-  }
-}
-function formatVencido(km, days) {
-  const parts = [];
-  if (km !== null && km <= 0)
-    parts.push(`hace ${Math.abs(km)} km`);
-  if (days !== null && days <= 0) {
-    const months = Math.max(1, Math.abs(Math.round(days / DAYS_PER_MONTH)));
-    parts.push(`hace ${months} ${months === 1 ? "mes" : "meses"}`);
-  }
-  return parts.length > 0 ? `Vencido ${parts.join(" y ")}` : "Vencido";
-}
-function formatProximo(km, days) {
-  if (km !== null && km <= NEXT_WINDOW_KM) {
-    return `En ${Math.max(0, km)} km`;
-  }
-  if (days !== null && days <= NEXT_WINDOW_DAYS) {
-    if (days >= 7) {
-      const weeks = Math.round(days / 7);
-      return `En ${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
-    }
-    return `En ${Math.max(0, Math.round(days))} ${Math.max(0, Math.round(days)) === 1 ? "d\xEDa" : "d\xEDas"}`;
-  }
-  return "Pr\xF3ximo";
-}
-function buildReason(status, remainingKm, remainingDays, effKm, effMonths) {
-  switch (status) {
-    case "vencido":
-      return formatVencido(remainingKm, remainingDays);
-    case "proximo":
-      return formatProximo(remainingKm, remainingDays);
-    default: {
-      const km = effKm === null ? "\u2014" : String(effKm);
-      const months = effMonths === null ? "\u2014" : String(effMonths);
-      return `Al d\xEDa (cada ${km} km / ${months} meses)`;
-    }
-  }
-}
-function latestLastService(lastServices, serviceId) {
-  const matches = lastServices.filter((s) => s.serviceId === serviceId).sort((a, b) => {
-    const aKm = a.km ?? 0;
-    const bKm = b.km ?? 0;
-    if (aKm !== bKm)
-      return bKm - aKm;
-    const aDate = a.date ? toDate(a.date).getTime() : 0;
-    const bDate = b.date ? toDate(b.date).getTime() : 0;
-    return bDate - aDate;
-  });
-  return matches[0];
-}
-function computeItem(input, serviceId) {
-  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
-  const { classId, fuelId } = input.vehicle;
-  if (!isServiceApplicable(serviceId, classId, fuelId))
-    return null;
-  const ref = findSubservice(serviceId);
-  if (!ref || !ref.subservice.periodic)
-    return null;
-  const rule = resolveRules(classId, fuelId).find((r) => r.serviceId === serviceId);
-  if (!rule)
-    return null;
-  const severe = (input.usageProfile ?? "urbano") === "severo";
-  const factor = severe ? rule.severeFactor : 1;
-  const effKm = rule.intervalKm === null ? null : Math.round(rule.intervalKm * factor);
-  const effMonths = rule.intervalMonths === null ? null : rule.intervalMonths * factor;
-  const last = latestLastService(input.lastServices ?? [], serviceId);
-  const baseKm = last?.km ?? input.odometerKm;
-  const baseDate = last?.date ? toDate(last.date) : today;
-  const kmActive = effKm !== null;
-  const monthsActive = effMonths !== null;
-  const dueKm = kmActive ? baseKm + effKm : input.odometerKm;
-  const dueDate = monthsActive ? addMonths(baseDate, effMonths) : today;
-  const remainingKm = kmActive ? dueKm - input.odometerKm : null;
-  const remainingDays = monthsActive ? daysBetween(today, dueDate) : null;
-  const status = computeItemStatus(remainingKm, remainingDays);
-  return {
-    serviceId: ref.subservice.id,
-    serviceName: ref.subservice.name,
-    categoryId: ref.category.id,
-    categoryName: ref.category.name,
-    dueKm,
-    dueDate,
-    remainingKm,
-    remainingDays,
-    effKm,
-    effMonths,
-    status
-  };
-}
-function buildPlan(input) {
-  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
-  const usageProfile = usageProfileOf(input);
-  const computed = [];
-  for (const category of serviceTaxonomy.categories) {
-    for (const subservice of category.subservices) {
-      if (!subservice.periodic)
-        continue;
-      const computation = computeItem(input, subservice.id);
-      if (!computation)
-        continue;
-      computed.push({
-        computation,
-        item: {
-          categoryId: computation.categoryId,
-          categoryName: computation.categoryName,
-          serviceId: computation.serviceId,
-          serviceName: computation.serviceName,
-          dueKm: computation.dueKm,
-          dueDate: computation.dueDate,
-          status: computation.status,
-          priority: priorityFor(computation.status),
-          costRefUsd: subservice.costRefUsd,
-          durationMin: subservice.durationMin,
-          remainingKm: computation.remainingKm ?? 0,
-          remainingDays: computation.remainingDays ?? 0,
-          reason: buildReason(computation.status, computation.remainingKm, computation.remainingDays, computation.effKm, computation.effMonths)
-        }
-      });
-    }
-  }
-  const urgency = (c) => {
-    const { remainingKm, remainingDays, effKm } = c.computation;
-    const kmUrgency = effKm !== null ? remainingKm ?? 0 : Number.MAX_SAFE_INTEGER;
-    const timeUrgency = c.computation.effMonths !== null ? remainingDays ?? 0 : Number.MAX_SAFE_INTEGER;
-    return Math.min(kmUrgency, timeUrgency);
-  };
-  computed.sort((a, b) => {
-    if (STATUS_ORDER[a.item.status] !== STATUS_ORDER[b.item.status]) {
-      return STATUS_ORDER[a.item.status] - STATUS_ORDER[b.item.status];
-    }
-    const aUrgency = urgency(a);
-    const bUrgency = urgency(b);
-    if (aUrgency !== bUrgency)
-      return aUrgency - bUrgency;
-    return a.item.serviceId.localeCompare(b.item.serviceId);
-  });
-  const items = computed.map((c) => c.item);
-  return {
-    generatedAt: today,
-    vehicle: input.vehicle,
-    odometerKm: input.odometerKm,
-    kmPerDay: estimateKmPerDay(input),
-    lastReadingDaysAgo: lastReadingDaysAgo(input),
-    usageProfile,
-    items
-  };
-}
-var MS_PER_DAY, DAYS_PER_MONTH, DEFAULT_KM_PER_DAY, NEXT_WINDOW_KM, NEXT_WINDOW_DAYS, STATUS_ORDER;
-var init_plan_engine = __esm({
-  "packages/api/dist/domain/maintenance/plan-engine.js"() {
-    "use strict";
-    init_catalogs();
-    init_catalogs();
-    MS_PER_DAY = 864e5;
-    DAYS_PER_MONTH = 30.44;
-    DEFAULT_KM_PER_DAY = {
-      urbano: 25,
-      carretera: 60,
-      severo: 40
-    };
-    NEXT_WINDOW_KM = 1e3;
-    NEXT_WINDOW_DAYS = 30;
-    STATUS_ORDER = { vencido: 0, proximo: 1, al_dia: 2 };
-  }
-});
-
-// packages/api/dist/domain/maintenance/plan-formatter.js
-function formatKm(value2) {
-  const rounded = String(Math.round(value2));
-  return rounded.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
-function formatDuration(totalMin) {
-  const hours = Math.floor(totalMin / 60);
-  const minutes = totalMin % 60;
-  if (hours === 0)
-    return `${minutes} min`;
-  if (minutes === 0)
-    return `${hours} h`;
-  return `${hours} h ${minutes} min`;
-}
-function formatCost(costRefUsd) {
-  const rounded = Math.round(costRefUsd);
-  return `~$${rounded}`;
-}
-function fits(pageLines, newLine, maxLength) {
-  const joined = pageLines.length > 0 ? pageLines.join("\n") : "";
-  return joined.length === 0 ? newLine.length <= maxLength : joined.length + 1 + newLine.length <= maxLength;
-}
-function paginateText(headerLines, blocks, footerLines, maxLength = DEFAULT_MAX_LENGTH) {
-  let current = [...headerLines];
-  const pages = [];
-  const flush = () => {
-    pages.push(current);
-    current = [...headerLines];
-  };
-  for (let i = 0; i < blocks.length; i += 1) {
-    const block = blocks[i];
-    if (!fits(current, block, maxLength))
-      flush();
-    current.push(block);
-  }
-  for (const footerLine of footerLines) {
-    if (!fits(current, footerLine, maxLength))
-      flush();
-    current.push(footerLine);
-  }
-  if (current.length > 0 || pages.length === 0) {
-    pages.push(current);
-  }
-  return pages.map((page) => page.join("\n"));
-}
-function alDiaLine(items, budget) {
-  if (items.length === 0) {
-    return "\u{1F7E2} Al d\xEDa: ninguno pendiente";
-  }
-  const names = items.map((i) => i.serviceName);
-  const candidate = (shownCount) => {
-    const shown = names.slice(0, shownCount).join(", ");
-    const extra = names.length - shownCount;
-    const suffix = extra > 0 ? ` y ${extra} m\xE1s` : "";
-    return `\u{1F7E2} Al d\xEDa: ${shown}${suffix}`;
-  };
-  if (budget !== void 0) {
-    for (let shown = names.length; shown >= 1; shown -= 1) {
-      const line = candidate(shown);
-      if (line.length <= budget)
-        return line;
-    }
-  }
-  return candidate(5);
-}
-function formatPlanWhatsApp(ctx) {
-  const maxLength = ctx.maxLength ?? DEFAULT_MAX_LENGTH;
-  const { plan } = ctx;
-  let readingSuffix = "";
-  if (plan.lastReadingDaysAgo !== null) {
-    readingSuffix = plan.lastReadingDaysAgo === 0 ? " (actualizado hoy)" : ` (actualizado hace ${plan.lastReadingDaysAgo} d\xEDas)`;
-  }
-  const header = `${ctx.label} \xB7 ${formatKm(plan.odometerKm)} km${readingSuffix}`;
-  const vencidos = plan.items.filter((i) => i.status === "vencido");
-  const proximos = plan.items.filter((i) => i.status === "proximo");
-  const alDia = plan.items.filter((i) => i.status === "al_dia");
-  const numbered = [...vencidos, ...proximos];
-  const blocks = [];
-  const pushGroup = (title, group) => {
-    blocks.push(title);
-    if (group.length === 0) {
-      blocks.push("\xB7 ninguno");
-      return;
-    }
-    for (const item of group) {
-      const cost = formatCost(item.costRefUsd);
-      blocks.push(`${numbered.indexOf(item) + 1}) ${item.serviceName} \xB7 ${item.reason} \xB7 ${cost}`);
-    }
-  };
-  pushGroup("\u{1F534} Vencidos", vencidos);
-  pushGroup("\u{1F7E1} Pr\xF3ximos", proximos);
-  blocks.push(alDiaLine(alDia, maxLength - header.length - 1));
-  const firstOption = numbered.length + 1;
-  const footer = [
-    "",
-    "Responde con los n\xFAmeros que quieres atender (ej.: 1,3)",
-    `${firstOption}) Ver el plan completo   ${firstOption + 1}) Actualizar kilometraje   0) Men\xFA`
-  ];
-  return paginateText([header], blocks, footer, maxLength);
-}
-var DEFAULT_MAX_LENGTH;
-var init_plan_formatter = __esm({
-  "packages/api/dist/domain/maintenance/plan-formatter.js"() {
-    "use strict";
-    DEFAULT_MAX_LENGTH = 1024;
-  }
-});
-
-// packages/api/dist/domain/maintenance/validation.js
-var ALL_CLASSES, ALL_FUELS;
-var init_validation = __esm({
-  "packages/api/dist/domain/maintenance/validation.js"() {
-    "use strict";
-    init_catalogs();
-    ALL_CLASSES = new Set(classIds);
-    ALL_FUELS = new Set(fuelIds);
-  }
-});
-
-// packages/api/dist/domain/maintenance/index.js
-var init_maintenance = __esm({
-  "packages/api/dist/domain/maintenance/index.js"() {
-    "use strict";
-    init_types2();
-    init_schemas();
-    init_catalogs();
-    init_plan_engine();
-    init_plan_formatter();
-    init_validation();
-    init_catalogs();
-  }
-});
-
-// packages/api/dist/application/registration/schemas.js
-function normalizePlate(input) {
-  const value2 = input.toUpperCase().replace(/\s+/g, "");
-  const match = /^([A-Z]{3})-?(\d{3,4})$/.exec(value2);
-  return match ? `${match[1]}-${match[2]}` : null;
-}
-var PERFILES, CONSENT_VERSION, USAGE_PROFILES, categoryIds, req, commonFields, vehicleFields, businessFields, vehicleSchema, ownerSchema, shopSchema, storeSchema;
-var init_schemas2 = __esm({
-  "packages/api/dist/application/registration/schemas.js"() {
-    "use strict";
-    init_zod();
-    init_maintenance();
-    init_whatsapp_number();
-    PERFILES = ["dueno", "taller", "almacen"];
-    CONSENT_VERSION = "2026-09";
-    USAGE_PROFILES = ["urbano", "carretera", "severo"];
-    categoryIds = serviceTaxonomy.categories.map((c) => c.id);
-    req = (schema) => external_exports.preprocess((v) => v === void 0 || v === null ? "" : Array.isArray(v) ? v[0] : v, schema);
-    commonFields = {
-      phone: req(external_exports.string()).transform((v, ctx) => {
-        const digits = normalizeWhatsappNumber(v);
-        if (!digits) {
-          ctx.addIssue({ code: "custom", message: "Tel\xE9fono no v\xE1lido: usa un celular como 099 123 4567 o +593 99 123 4567" });
-          return external_exports.NEVER;
-        }
-        return `+${digits}`;
-      }),
-      name: req(external_exports.string().trim().min(3, "El nombre debe tener entre 3 y 60 caracteres").max(60, "El nombre debe tener entre 3 y 60 caracteres")),
-      city: req(external_exports.string().trim().min(2, "Indica la ciudad").max(120, "Ciudad demasiado larga")),
-      email: req(external_exports.string().trim().toLowerCase()).transform((v, ctx) => {
-        if (!v)
-          return null;
-        if (v.length > 191 || !external_exports.string().email().safeParse(v).success) {
-          ctx.addIssue({ code: "custom", message: "Correo no v\xE1lido" });
-          return external_exports.NEVER;
-        }
-        return v;
-      }),
-      source: req(external_exports.string().trim().max(40, "\xABC\xF3mo nos conoci\xF3\xBB es demasiado largo")).transform((v) => v || null),
-      notes: req(external_exports.string().trim().max(1e3, "Las notas son demasiado largas")).transform((v) => v || null),
-      consent: req(external_exports.string()).refine((v) => v === "on", "Falta el consentimiento LOPDP y la aceptaci\xF3n de t\xE9rminos")
-    };
-    vehicleFields = {
-      vehicleClass: req(external_exports.string()).refine((v) => classIds.includes(v), "Elige la clase de veh\xEDculo"),
-      fuel: req(external_exports.string()).refine((v) => fuelIds.includes(v), "Elige el combustible"),
-      make: req(external_exports.string().trim().min(1, "Indica la marca").max(60, "Marca demasiado larga")),
-      model: req(external_exports.string().trim().min(1, "Indica el modelo").max(60, "Modelo demasiado largo")),
-      year: req(external_exports.string().trim()).refine((v) => /^\d{4}$/.test(v), "A\xF1o no v\xE1lido").transform(Number).refine((y) => y >= 1970 && y <= (/* @__PURE__ */ new Date()).getFullYear() + 1, "El a\xF1o debe estar entre 1970 y el pr\xF3ximo a\xF1o"),
-      currentKm: req(external_exports.string()).transform((v) => v.replace(/[.\s,]/g, "")).refine((v) => /^\d{1,7}$/.test(v), "Kilometraje no v\xE1lido").transform(Number).refine((n) => n <= 2e6, "Kilometraje no v\xE1lido"),
-      plate: req(external_exports.string().trim()).transform((v, ctx) => {
-        if (!v)
-          return null;
-        const plate = normalizePlate(v);
-        if (!plate) {
-          ctx.addIssue({ code: "custom", message: "Placa no v\xE1lida: usa el formato ABC-1234" });
-          return external_exports.NEVER;
-        }
-        return plate;
-      }),
-      usageProfile: req(external_exports.string()).transform((v) => USAGE_PROFILES.includes(v) ? v : "urbano"),
-      reminders: external_exports.unknown().transform((v) => v === "on")
-    };
-    businessFields = {
-      businessName: req(external_exports.string().trim().min(2, "Indica el nombre comercial").max(120, "Nombre comercial demasiado largo")),
-      ruc: req(external_exports.string().trim()).refine((v) => /^\d{10}001$/.test(v), "RUC no v\xE1lido: 13 d\xEDgitos terminados en 001"),
-      address: req(external_exports.string().trim().min(5, "Indica la direcci\xF3n").max(200, "Direcci\xF3n demasiado larga")),
-      zone: req(external_exports.string().trim().max(120, "Zona demasiado larga")).transform((v) => v || null),
-      hours: req(external_exports.string().trim().max(120, "Horario demasiado largo")).transform((v) => v || null)
-    };
-    vehicleSchema = external_exports.object(vehicleFields);
-    ownerSchema = external_exports.object({ ...commonFields, ...vehicleFields });
-    shopSchema = external_exports.object({
-      ...commonFields,
-      ...businessFields,
-      services: external_exports.preprocess((v) => v === void 0 || v === null ? [] : Array.isArray(v) ? v : [v], external_exports.array(external_exports.string())).refine((list5) => list5.length > 0, "Elige al menos un servicio que ofrece el taller").refine((list5) => list5.every((id) => categoryIds.includes(id)), "Servicio no v\xE1lido")
-    });
-    storeSchema = external_exports.object({
-      ...commonFields,
-      ...businessFields,
-      categories: req(external_exports.string().trim().max(500, "Las categor\xEDas son demasiado largas")).transform((v) => v || null),
-      delivery: external_exports.unknown().transform((v) => v === "on")
-    });
+    init_documents();
   }
 });
 
@@ -89066,7 +89462,7 @@ var init_views_registrations = __esm({
 });
 
 // packages/api/dist/interfaces/admin/registrations.js
-import { randomBytes as randomBytes4 } from "node:crypto";
+import { randomBytes as randomBytes5 } from "node:crypto";
 function dbError(err) {
   const code = err.code;
   if (code === "ER_DUP_ENTRY")
@@ -89153,6 +89549,14 @@ function registerRegistrationRoutes(app2, deps) {
     const perfil = PERFILES.includes(requested) ? requested : "dueno";
     return deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: { consent: "", reminders: "on" } }), session);
   });
+  app2.post("/users/new/start", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const perfil = PERFILES.includes(ctx.body.perfil) ? ctx.body.perfil : "dueno";
+    const digits = normalizeWhatsappNumber(ctx.body.phone);
+    return deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: ctx.session.csrfToken, values: { phone: digits ? `+${digits}` : "", consent: "", reminders: "on" } }), ctx.session);
+  });
   app2.post("/users/new", async (request, reply) => {
     const ctx = withCsrf(request, reply);
     if (!ctx)
@@ -89169,7 +89573,7 @@ function registerRegistrationRoutes(app2, deps) {
       notes: data.notes,
       consentVersion: CONSENT_VERSION,
       // Las cuentas creadas por el operador no inician sesión con contraseña: se guarda una aleatoria.
-      passwordHash: await hashPassword(randomBytes4(24).toString("hex"))
+      passwordHash: await hashPassword(randomBytes5(24).toString("hex"))
     });
     let userId;
     try {
@@ -89304,6 +89708,7 @@ var init_registrations = __esm({
     init_security();
     init_schemas2();
     init_plan_text();
+    init_whatsapp_number();
     init_views_registrations();
     UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     OK_MESSAGES = {
@@ -89576,6 +89981,235 @@ var init_appointments = __esm({
     };
     asList = (value2) => value2 === void 0 || value2 === null ? [] : (Array.isArray(value2) ? value2 : [value2]).map(String);
     validServices = (ids) => [...new Set(ids)].filter((id) => !!findSubservice(id));
+  }
+});
+
+// packages/api/dist/application/attend/welcome.js
+function pendingTasks(ctx) {
+  const { detail } = ctx;
+  if (!detail)
+    return [];
+  const now = ctx.now ?? /* @__PURE__ */ new Date();
+  const role = String(detail.user.role);
+  const userId = String(detail.user.id);
+  const tasks = [];
+  const current = (a) => new Date(a.scheduledAt).getTime() >= now.getTime() - 2 * 60 * 60 * 1e3;
+  if (!detail.user.consentAt) {
+    tasks.push({ text: "Falta registrar el consentimiento LOPDP: p\xEDdelo antes de guardar m\xE1s datos.", forCustomer: false });
+  }
+  if (role === "dueno") {
+    for (const a of ctx.appointments.filter((x) => x.ownerId === userId && current(x))) {
+      if (a.status === "confirmed") {
+        tasks.push({ text: `\u{1F4C5} Tienes turno el ${formatEcDateTime(a.scheduledAt)} en ${a.shopName}.`, forCustomer: true });
+      } else if (a.status === "pending") {
+        tasks.push({
+          text: `\u23F3 Tu solicitud de turno en ${a.shopName} para el ${formatEcDateTime(a.scheduledAt)} espera confirmaci\xF3n del taller.`,
+          forCustomer: true
+        });
+      }
+    }
+    if (detail.vehicles.length === 0) {
+      tasks.push({ text: "No tiene veh\xEDculos registrados: agrega el primero desde su ficha.", forCustomer: false });
+    }
+    for (const vehicle of detail.vehicles) {
+      const overdue = planItemsFor(vehicle).filter((i) => i.status === "vencido").length;
+      if (overdue > 0) {
+        const label = [vehicle.make, vehicle.model].filter(Boolean).join(" ");
+        tasks.push({ text: `\u{1F534} El plan de tu ${label} tiene ${plural(overdue, "servicio vencido", "servicios vencidos")}.`, forCustomer: true });
+      }
+    }
+  }
+  const business = role === "taller" ? detail.shop : role === "almacen" ? detail.store : null;
+  if (business) {
+    const label = role === "taller" ? "taller" : "almac\xE9n";
+    if (business.verificationStatus === "pending") {
+      tasks.push({ text: `\u{1F552} Tu ${label} est\xE1 en verificaci\xF3n; te aviso apenas quede aprobado.`, forCustomer: true });
+    } else if (business.verificationStatus === "rejected") {
+      tasks.push({ text: `\u26A0\uFE0F Tu registro de ${label} tiene una observaci\xF3n pendiente por corregir.`, forCustomer: true });
+    }
+  }
+  if (role === "taller") {
+    const mine = ctx.appointments.filter((a) => a.shopUserId === userId);
+    const requests = mine.filter((a) => a.status === "pending" && current(a)).length;
+    if (requests > 0) {
+      tasks.push({ text: `\u{1F514} Tienes ${plural(requests, "solicitud de turno", "solicitudes de turno")} por responder.`, forCustomer: true });
+    }
+    const { start, end } = ecDayRange(now);
+    const today = mine.filter((a) => {
+      const t = new Date(a.scheduledAt).getTime();
+      return a.status === "confirmed" && t >= start.getTime() && t < end.getTime();
+    }).length;
+    if (today > 0)
+      tasks.push({ text: `\u{1F4C5} Hoy atiendes ${plural(today, "turno", "turnos")}.`, forCustomer: true });
+  }
+  const lastNote = ctx.events.find((ev) => ev.type === "operator.note");
+  if (lastNote) {
+    tasks.push({ text: `\xDAltima nota (${formatEcDateTime(lastNote.createdAt)}): ${String(lastNote.payload.text ?? "")}`, forCustomer: false });
+  }
+  return tasks;
+}
+function welcomeMessage(ctx) {
+  if (!ctx.detail)
+    return NEW_CONTACT_MESSAGE;
+  const role = String(ctx.detail.user.role);
+  const name = firstName(ctx.detail.user.name);
+  const pendings = pendingTasks(ctx).filter((t) => t.forCustomer).map((t) => t.text);
+  const parts = [`\xA1Hola${name ? ` ${name}` : ""}! \u{1F44B} Qu\xE9 gusto saludarte de nuevo.`];
+  if (pendings.length > 0)
+    parts.push(pendings.join("\n"));
+  parts.push(MENUS[role] ?? "\xBFEn qu\xE9 te puedo ayudar hoy?");
+  return parts.join("\n\n");
+}
+function parseContactInput(input) {
+  const text2 = input.slice(0, 2e3);
+  const code = /\bAMP-[A-HJ-NP-Z2-9]{4}\b/i.exec(text2)?.[0]?.toUpperCase() ?? null;
+  const rest = code ? text2.split(new RegExp(code, "i")).join(" ") : text2;
+  for (const candidate of rest.match(/\+?\d[\d\s().-]{6,}\d/g) ?? []) {
+    const digits = normalizeWhatsappNumber(candidate);
+    if (digits)
+      return { phone: `+${digits}`, code };
+  }
+  return { phone: null, code };
+}
+var NEW_CONTACT_MESSAGE, MENUS, firstName, plural;
+var init_welcome = __esm({
+  "packages/api/dist/application/attend/welcome.js"() {
+    "use strict";
+    init_messages();
+    init_plan_text();
+    init_whatsapp_number();
+    NEW_CONTACT_MESSAGE = "\xA1Hola! \u{1F44B} Bienvenido a AutoMantPro \u{1F697}\nTu veh\xEDculo, tu taller y tus repuestos, conectados en un solo chat.\n\n\xBFQui\xE9n eres?\n1) \u{1F697} Soy nuevo y tengo un veh\xEDculo\n2) \u{1F527} Soy nuevo y tengo un taller\n3) \u{1F4E6} Soy nuevo y tengo un almac\xE9n de repuestos\n4) \u{1F511} Ya tengo cuenta (te escribo desde otro n\xFAmero)\n\nResponde con el n\xFAmero.";
+    MENUS = {
+      dueno: "\xBFQu\xE9 necesitas hoy?\n1) \u{1F697} Mis veh\xEDculos y su plan\n2) \u{1F50D} Tengo un s\xEDntoma o ruido\n3) \u{1F4C5} Agendar en un taller\n4) \u{1F4E6} Cotizar un repuesto\n5) \u{1F64B} Hablar con una persona",
+      taller: "\xBFQu\xE9 hacemos hoy?\n1) \u{1F4C5} Agenda de hoy\n2) \u{1F514} Solicitudes de turno\n3) \u{1F9FE} \xD3rdenes de trabajo\n4) \u{1F465} Mis clientes\n5) \u{1F527} Mi taller y servicios\n6) \u{1F64B} Hablar con una persona",
+      almacen: "\xBFQu\xE9 hacemos hoy?\n1) \u{1F4AC} Cotizaciones por responder\n2) \u{1F4E6} Mis pedidos\n3) \u{1F4CB} Cat\xE1logo\n4) \u{1F3EA} Mi almac\xE9n\n5) \u{1F64B} Hablar con una persona"
+    };
+    firstName = (name) => String(name ?? "").trim().split(/\s+/)[0] ?? "";
+    plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+  }
+});
+
+// packages/api/dist/interfaces/admin/views-attend.js
+function visitLine(result) {
+  if (!result.code)
+    return "";
+  if (result.visit) {
+    return `<div>\u{1F310} Lleg\xF3 desde automantpro.app el ${e3(formatEcDateTime(result.visit.createdAt))}${result.visit.ref ? ` \xB7 origen: <strong>${e3(result.visit.ref)}</strong>` : ""} (c\xF3digo ${e3(result.code)}).</div>`;
+  }
+  return `<div class="muted">El c\xF3digo ${e3(result.code)} ${result.visitLookup ? "no corresponde a una visita de los \xFAltimos 7 d\xEDas" : "no se pudo consultar"}.</div>`;
+}
+function resultCard(result, csrf) {
+  if (!result.phone) {
+    return `<div class="card">${visitLine(result)}<p class="error">No encontr\xE9 un celular de Ecuador en lo que pegaste. Pega el n\xFAmero del contacto (por ejemplo 099 123 4567).</p></div>`;
+  }
+  const digits = phoneDigits(result.phone);
+  const chat = `<a href="https://wa.me/${e3(digits)}" target="_blank" rel="noopener">Abrir chat</a>`;
+  const message2 = `<label for="welcome">Mensaje para enviar</label><textarea id="welcome" readonly rows="10">${e3(result.message)}</textarea>`;
+  if (!result.detail) {
+    return `<div class="card"><h2>Contacto nuevo</h2>
+      <div><strong>${e3(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}
+      <p class="muted">No est\xE1 registrado. Env\xEDa la bienvenida y, cuando diga qui\xE9n es, reg\xEDstralo.</p>
+      ${message2}
+      <form method="post" action="/admin/users/new/start" class="row">${csrfField4(csrf)}<input type="hidden" name="phone" value="${e3(result.phone)}">
+      <select name="perfil" aria-label="Perfil"><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n</option></select>
+      <button type="submit">Registrar</button></form></div>`;
+  }
+  const { user, vehicles } = result.detail;
+  const role = String(user.role);
+  const tasks = result.tasks.length === 0 ? `<p class="muted">Sin pendientes.</p>` : `<ul>${result.tasks.map((t) => `<li>${e3(t.text)}${t.forCustomer ? "" : ' <span class="muted">(solo para ti)</span>'}</li>`).join("")}</ul>`;
+  const schedule = role === "dueno" && vehicles[0] ? ` \xB7 <a href="/admin/users/${e3(user.id)}/schedule?vehicleId=${e3(vehicles[0].id)}">Agendar turno</a>` : "";
+  return `<div class="card"><h2>${e3(ROLE_LABELS[role] ?? role)} registrado</h2>
+    <div><strong>${e3(user.name)}</strong> \xB7 ${e3(formatWhatsappNumber(digits))} \xB7 ${chat}</div>${visitLine(result)}
+    <div><a href="/admin/users/${e3(user.id)}">Ver ficha</a>${schedule}</div>
+    <h2>Pendientes del \xFAltimo chat</h2>${tasks}
+    ${message2}</div>`;
+}
+function attendView(input) {
+  return `<div class="stack wide"><h1>Atender a un contacto</h1>
+  <p class="muted">Pega el n\xFAmero o el primer mensaje que lleg\xF3 por WhatsApp. Te digo si es nuevo o registrado, su perfil, lo pendiente y el mensaje para responder.</p>
+  ${input.error ? `<p class="error" role="alert">${e3(input.error)}</p>` : ""}
+  <form method="post" action="/admin/attend" autocomplete="off">${csrfField4(input.csrf)}
+  <label for="q">N\xFAmero o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. C\xF3digo: AMP-XXXX \xB7 099 123 4567">${e3(input.query)}</textarea>
+  <button class="full" type="submit">Identificar</button></form>
+  ${input.result ? resultCard(input.result, input.csrf) : ""}</div>`;
+}
+var e3, csrfField4, phoneDigits;
+var init_views_attend = __esm({
+  "packages/api/dist/interfaces/admin/views-attend.js"() {
+    "use strict";
+    init_page();
+    init_whatsapp_number();
+    init_messages();
+    init_views_registrations();
+    e3 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField4 = (token) => `<input type="hidden" name="csrf" value="${e3(token)}">`;
+    phoneDigits = (phone) => phone.replace(/\D/g, "");
+  }
+});
+
+// packages/api/dist/interfaces/admin/attend.js
+function registerAttendRoutes(app2, deps) {
+  app2.get("/attend", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    return deps.html(reply, request, "Atender", attendView({ csrf: session.csrfToken, query: "" }), session);
+  });
+  app2.post("/attend", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf)) {
+      return deps.html(reply, request, "Atender", `<div class="card"><p class="error">Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.</p></div>`, session, 403);
+    }
+    const query = typeof body.q === "string" ? body.q.slice(0, 2e3) : "";
+    const { phone, code } = parseContactInput(query);
+    let detail = null;
+    let appointments = [];
+    let events = [];
+    try {
+      if (phone) {
+        const found = await deps.registrations.searchUsers(phone.replace(/\D/g, ""), 1);
+        const row = found.items.find((u) => String(u.phone) === phone);
+        if (row)
+          detail = await deps.registrations.getUserDetail(String(row.id));
+      }
+      if (detail && deps.appointments) {
+        [appointments, events] = await Promise.all([
+          deps.appointments.listForUser(String(detail.user.id)),
+          deps.appointments.userEvents(String(detail.user.id), 10)
+        ]);
+      }
+    } catch (err) {
+      const code2 = err.code ?? "base de datos no disponible";
+      return deps.html(reply, request, "Atender", `${attendView({ csrf: session.csrfToken, query })}<div class="card"><p class="error">No se pudo consultar la base de datos (${escapeHtml(code2)}).</p></div>`, session, 502);
+    }
+    let visit = null;
+    let visitLookup = false;
+    if (code && deps.visits) {
+      try {
+        visit = await deps.visits.find(code);
+        visitLookup = true;
+      } catch {
+        visitLookup = false;
+      }
+    }
+    const ctx = { detail, appointments, events };
+    return deps.html(reply, request, "Atender", attendView({
+      csrf: session.csrfToken,
+      query,
+      result: { phone, code, visit, visitLookup, detail, tasks: pendingTasks(ctx), message: welcomeMessage(ctx) }
+    }), session);
+  });
+}
+var init_attend = __esm({
+  "packages/api/dist/interfaces/admin/attend.js"() {
+    "use strict";
+    init_page();
+    init_security();
+    init_welcome();
+    init_views_attend();
   }
 });
 
@@ -89874,7 +90508,7 @@ __export(admin_exports, {
   adminPanelRoutes: () => adminPanelRoutes,
   default: () => admin_default
 });
-import { randomBytes as randomBytes5 } from "node:crypto";
+import { randomBytes as randomBytes6 } from "node:crypto";
 async function adminPanelRoutes(app2, options = {}) {
   const connect = options.connect ?? (() => openConnection());
   const store = options.store ?? new MysqlAdminStore(connect);
@@ -89898,7 +90532,7 @@ async function adminPanelRoutes(app2, options = {}) {
     }
   });
   app2.addHook("onRequest", async (request, reply) => {
-    request.cspNonce = randomBytes5(16).toString("base64");
+    request.cspNonce = randomBytes6(16).toString("base64");
     reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${request.cspNonce}'; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`).header("X-Frame-Options", "DENY").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("Cache-Control", "no-store");
     if (!getAdminSessionSecret()) {
       return reply.code(503).type("text/html; charset=utf-8").send(layout({
@@ -89932,6 +90566,13 @@ async function adminPanelRoutes(app2, options = {}) {
   registerAccountRoutes(app2, { store, requireSession, html, audit });
   registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, requireSession, html, audit });
   registerAppointmentRoutes(app2, { appointments, registrations, requireSession, html, audit });
+  registerAttendRoutes(app2, {
+    registrations,
+    appointments: detailAppointments,
+    visits: detailAppointments ? options.visits ?? new MysqlVisitStore(connect) : options.visits,
+    requireSession,
+    html
+  });
   registerSettingsRoutes(app2, {
     store,
     settings,
@@ -90079,6 +90720,8 @@ var init_admin = __esm({
     init_settings();
     init_registrations();
     init_appointments();
+    init_attend();
+    init_visit_store();
     init_appointment_store();
     init_registration_store();
     init_settings_store();
@@ -92758,7 +93401,78 @@ init_entry();
 init_apply();
 init_settings_store();
 init_whatsapp_number();
-import { randomBytes as randomBytes6 } from "node:crypto";
+init_visit_store();
+init_documents();
+
+// packages/api/dist/interfaces/legal/index.js
+init_page();
+init_documents();
+import { randomBytes as randomBytes2 } from "node:crypto";
+var STYLES2 = `
+:root{--bg:#f5f8fa;--card:#ffffff;--text:#0f1b24;--muted:#51626f;--cyan:#00a8c6;--amber:#b45309;--line:#e2e8ee}
+@media (prefers-color-scheme:dark){:root{--bg:#071116;--card:#0d1c24;--text:#e6f1f5;--muted:#9fb3bf;--cyan:#22d3ee;--amber:#fbbf24;--line:#1e3440}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;padding:24px 16px}
+main{max-width:760px;margin:0 auto;background:var(--card);border-radius:20px;padding:28px 24px;box-shadow:0 10px 40px rgba(0,0,0,.08)}
+.brand{font-weight:800;font-size:22px;margin:0;text-decoration:none;color:var(--text)}.brand span{color:var(--cyan)}
+h1{font-size:26px;margin:18px 0 4px}h2{font-size:18px;margin:26px 0 6px}
+p,li{color:var(--text)}ul{padding-left:22px}li{margin:6px 0}
+.meta{color:var(--muted);font-size:14px;margin:0 0 12px}
+.notice{border:1px solid var(--amber);color:var(--amber);border-radius:12px;padding:10px 14px;font-weight:600}
+a{color:var(--cyan)}nav{display:flex;gap:16px;flex-wrap:wrap;margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:14px}
+`;
+function renderSections(sections) {
+  return sections.map((s) => {
+    const paragraphs = (s.paragraphs ?? []).map((p) => `<p>${escapeHtml(p)}</p>`).join("");
+    const items = s.items ? `<ul>${s.items.map((i) => `<li>${escapeHtml(i)}</li>`).join("")}</ul>` : "";
+    return `<h2>${escapeHtml(s.title)}</h2>${paragraphs}${items}`;
+  }).join("");
+}
+function renderLegalPage(input) {
+  const nonce = escapeHtml(input.nonce);
+  const notice = input.complete ? "" : `<p class="notice" role="note">Documento en revisi\xF3n: algunos datos de la empresa est\xE1n pendientes y se completar\xE1n en breve.</p>`;
+  return `<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${escapeHtml(input.title)} \xB7 AutoMantPro</title>
+<style nonce="${nonce}">${STYLES2}</style>
+</head>
+<body>
+<main>
+  <a class="brand" href="/">Auto<span>Mant</span>Pro</a>
+  <h1>${escapeHtml(input.title)}</h1>
+  <p class="meta">Versi\xF3n ${escapeHtml(LEGAL_VERSION)} \xB7 Vigente desde el ${escapeHtml(LEGAL_EFFECTIVE_DATE)}</p>
+  ${notice}
+  ${renderSections(input.sections)}
+  <nav><a href="/">Inicio</a><a href="/terminos">T\xE9rminos y condiciones</a><a href="/privacidad">Pol\xEDtica de privacidad</a></nav>
+</main>
+</body>
+</html>`;
+}
+async function legalRoutes(app2, options = {}) {
+  const load = options.load ?? (async () => emptyLegalData());
+  const pages = [
+    { path: "/terminos", title: "T\xE9rminos y condiciones de uso", sections: termsSections },
+    { path: "/privacidad", title: "Pol\xEDtica de privacidad", sections: privacySections }
+  ];
+  for (const page of pages) {
+    app2.get(page.path, async (_request, reply) => {
+      let data;
+      try {
+        data = await load();
+      } catch {
+        data = emptyLegalData();
+      }
+      const nonce = randomBytes2(16).toString("base64");
+      return reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-cache").type("text/html; charset=utf-8").send(renderLegalPage({ title: page.title, sections: page.sections(data), complete: isLegalComplete(data), nonce }));
+    });
+  }
+}
+
+// packages/api/dist/server.js
+import { randomBytes as randomBytes7 } from "node:crypto";
 import_dotenv.default.config();
 var PORT = Number(process.env.PORT) || 3e3;
 var HOST = process.env.LISTEN_HOST || "0.0.0.0";
@@ -92780,7 +93494,7 @@ if (secretIsStrong) {
   jwtSecret = configuredSecret;
   jwtSecretSource = "env";
 } else if (isProduction) {
-  jwtSecret = randomBytes6(48).toString("hex");
+  jwtSecret = randomBytes7(48).toString("hex");
   jwtSecretSource = "ephemeral";
   app.log.warn({ jwtSecretPresent: !!configuredSecret }, "JWT_SECRET ausente o d\xE9bil: se usa un secreto ef\xEDmero aleatorio; configure JWT_SECRET (>= 32 caracteres) en la plataforma");
 } else {
@@ -92813,14 +93527,24 @@ await app.register(agentRoutes, { prefix: apiPrefix });
 await app.register(registerWebhookRoutes, { prefix: "/wa/webhook" });
 var settingsStore = new MysqlSettingsStore(() => openConnection());
 var whatsappNumber = cachedSetting(settingsStore, WHATSAPP_NUMBER_KEY, 6e4);
+var visitStore = new MysqlVisitStore(() => openConnection());
+var legalData = createLegalLoader(settingsStore);
 var { adminPanelRoutes: adminPanelRoutes2 } = await Promise.resolve().then(() => (init_admin(), admin_exports));
 await app.register(adminPanelRoutes2, {
   prefix: "/admin",
   settings: settingsStore,
-  onSettingsChanged: () => whatsappNumber.invalidate()
+  visits: visitStore,
+  onSettingsChanged: () => {
+    whatsappNumber.invalidate();
+    legalData.invalidate();
+  }
 });
 app.get("/health", async () => ({ status: "ok", jwt: jwtSecretSource }));
-await app.register(entryRoutes, { resolveNumber: () => whatsappNumber.get() });
+await app.register(entryRoutes, {
+  resolveNumber: () => whatsappNumber.get(),
+  onVisit: missingDbEnv().length === 0 ? (code, ref) => visitStore.record(code, ref) : void 0
+});
+await app.register(legalRoutes, { load: () => legalData.get() });
 app.setErrorHandler((error, request, reply) => {
   const statusCode = error.statusCode ?? 500;
   const code = error.code;

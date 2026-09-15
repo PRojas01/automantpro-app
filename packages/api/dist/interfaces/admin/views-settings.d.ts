@@ -1,4 +1,5 @@
 import type { Flash } from "./views-setup.js";
+import { type LegalData } from "../../application/legal/documents.js";
 export declare function settingsView(input: {
     csrf: string;
     whatsapp: {
@@ -9,6 +10,7 @@ export declare function settingsView(input: {
         present: number;
         total: number;
     } | null;
+    legal?: LegalData;
     flash?: Flash;
 }): string;
 //# sourceMappingURL=views-settings.d.ts.map

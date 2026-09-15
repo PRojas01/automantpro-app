@@ -4,6 +4,7 @@ import { hashPassword } from "../../infrastructure/password.js";
 import { verifyCsrf } from "../../application/admin/security.js";
 import { CONSENT_VERSION, PERFILES, ownerSchema, shopSchema, storeSchema, vehicleSchema, } from "../../application/registration/schemas.js";
 import { planTextFor } from "../../application/registration/plan-text.js";
+import { normalizeWhatsappNumber } from "../../application/settings/whatsapp-number.js";
 import { ROLE_LABELS, newUserView, userDetailView, usersListView, verificationsView } from "./views-registrations.js";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const OK_MESSAGES = {
@@ -102,6 +103,14 @@ export function registerRegistrationRoutes(app, deps) {
         const requested = request.query?.perfil;
         const perfil = PERFILES.includes(requested) ? requested : "dueno";
         return deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: { consent: "", reminders: "on" } }), session);
+    });
+    app.post("/users/new/start", async (request, reply) => {
+        const ctx = withCsrf(request, reply);
+        if (!ctx)
+            return reply;
+        const perfil = PERFILES.includes(ctx.body.perfil) ? ctx.body.perfil : "dueno";
+        const digits = normalizeWhatsappNumber(ctx.body.phone);
+        return deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: ctx.session.csrfToken, values: { phone: digits ? `+${digits}` : "", consent: "", reminders: "on" } }), ctx.session);
     });
     app.post("/users/new", async (request, reply) => {
         const ctx = withCsrf(request, reply);

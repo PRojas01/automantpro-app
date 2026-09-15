@@ -27,6 +27,7 @@ export function newVisitCode() {
         code += CODE_ALPHABET[randomInt(CODE_ALPHABET.length)];
     return `AMP-${code}`;
 }
+const VISITS_PER_HOUR = 30;
 async function effectiveNumber(options) {
     if (options.resolveNumber) {
         try {
@@ -41,6 +42,19 @@ async function effectiveNumber(options) {
     return publicNumber();
 }
 export async function entryRoutes(app, options = {}) {
+    const visitWindows = new Map();
+    const allowVisit = (ip) => {
+        const now = Date.now();
+        const current = visitWindows.get(ip);
+        if (!current || now - current.start > 60 * 60 * 1000) {
+            if (visitWindows.size > 5000)
+                visitWindows.clear();
+            visitWindows.set(ip, { count: 1, start: now });
+            return true;
+        }
+        current.count += 1;
+        return current.count <= VISITS_PER_HOUR;
+    };
     // Solo GET: Fastify expone HEAD automáticamente con el mismo manejador (sin cuerpo).
     app.get("/", async (request, reply) => {
         if (request.method === "HEAD" || !wantsHtml(request.headers.accept)) {
@@ -48,12 +62,15 @@ export async function entryRoutes(app, options = {}) {
         }
         const nonce = randomBytes(16).toString("base64");
         const query = request.query;
-        const html = renderEntryPage({
-            number: await effectiveNumber(options),
-            code: newVisitCode(),
-            ref: sanitizeRef(query?.ref),
-            nonce,
-        });
+        const code = newVisitCode();
+        const ref = sanitizeRef(query?.ref);
+        if (options.onVisit && allowVisit(request.ip)) {
+            // En segundo plano: la página no espera a la base de datos y un fallo no la rompe.
+            Promise.resolve()
+                .then(() => options.onVisit?.(code, ref))
+                .catch(() => undefined);
+        }
+        const html = renderEntryPage({ number: await effectiveNumber(options), code, ref, nonce });
         return reply
             .header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`)
             .header("X-Content-Type-Options", "nosniff")

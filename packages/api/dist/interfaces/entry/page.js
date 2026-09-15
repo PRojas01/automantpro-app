@@ -93,7 +93,7 @@ export function renderEntryPage(input) {
     <li>Talleres y repuestos verificados cerca de ti</li>
   </ul>
   ${button}
-  <p class="legal">Al escribirnos aceptas nuestros <a href="/terminos">términos y política de privacidad</a> (LOPDP).</p>
+  <p class="legal">Al escribirnos aceptas los <a href="/terminos">términos y condiciones</a> y la <a href="/privacidad">política de privacidad</a> (LOPDP).</p>
 </main>
 <script nonce="${nonce}">${SCRIPT}</script>
 </body>

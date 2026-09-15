@@ -3,6 +3,7 @@ import { comparePassword } from "../../infrastructure/password.js";
 import { checkRateLimit, recordLoginAttempt, verifyCsrf, } from "../../application/admin/security.js";
 import { WHATSAPP_NUMBER_KEY, formatWhatsappNumber, normalizeWhatsappNumber, } from "../../application/settings/whatsapp-number.js";
 import { settingsView } from "./views-settings.js";
+import { LEGAL_FIELDS, emptyLegalData, legalSettingKey, validateLegalField, } from "../../application/legal/documents.js";
 export function registerSettingsRoutes(app, deps) {
     async function withConn(work) {
         const conn = await deps.connect();
@@ -16,6 +17,14 @@ export function registerSettingsRoutes(app, deps) {
     async function render(request, reply, session, flash, status = 200) {
         let stored = null;
         let db = null;
+        const legal = emptyLegalData();
+        try {
+            for (const field of LEGAL_FIELDS)
+                legal[field.key] = await deps.settings.get(legalSettingKey(field.key));
+        }
+        catch {
+            // sin base: los datos legales se muestran vacíos
+        }
         try {
             stored = await deps.settings.get(WHATSAPP_NUMBER_KEY);
         }
@@ -29,7 +38,7 @@ export function registerSettingsRoutes(app, deps) {
         catch {
             db = null;
         }
-        return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, flash }), session, status);
+        return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, legal, flash }), session, status);
     }
     function checkCsrf(request, reply) {
         const session = deps.requireSession(request, reply);
@@ -88,6 +97,43 @@ export function registerSettingsRoutes(app, deps) {
             kind: "ok",
             text: `Número actualizado a ${formatWhatsappNumber(number)}. La página de inicio ya lo usa.`,
         });
+    });
+    app.post("/settings/legal", async (request, reply) => {
+        const ctx = checkCsrf(request, reply);
+        if (!ctx)
+            return reply;
+        const { session, body } = ctx;
+        const account = await deps.store.findAdminById(session.userId);
+        if (!account)
+            return render(request, reply, session, { kind: "error", text: "Cuenta no encontrada." }, 404);
+        if (!checkRateLimit(account.email, request.ip).allowed) {
+            return render(request, reply, session, { kind: "error", text: "Demasiados intentos. Espera unos minutos." }, 429);
+        }
+        if (!(await comparePassword(typeof body.current === "string" ? body.current : "", account.passwordHash))) {
+            recordLoginAttempt(account.email, request.ip, false);
+            return render(request, reply, session, { kind: "error", text: "La contraseña actual no es correcta." }, 400);
+        }
+        const values = LEGAL_FIELDS.map((field) => ({ field, value: typeof body[field.key] === "string" ? String(body[field.key]).trim() : "" }));
+        for (const { field, value } of values) {
+            const error = validateLegalField(field.key, value);
+            if (error)
+                return render(request, reply, session, { kind: "error", text: error }, 400);
+        }
+        try {
+            for (const { field, value } of values) {
+                if (value)
+                    await deps.settings.set(legalSettingKey(field.key), value, account.id);
+                else
+                    await deps.settings.remove(legalSettingKey(field.key));
+            }
+        }
+        catch {
+            return render(request, reply, session, { kind: "error", text: "Base de datos no disponible." }, 503);
+        }
+        deps.onChanged();
+        const filled = values.filter((v) => v.value).map((v) => v.field.label).join(", ") || "ninguno";
+        await deps.audit("admin.settings.legal", account.id, `Datos legales actualizados (completos: ${filled})`);
+        return render(request, reply, session, { kind: "ok", text: "Datos de la empresa guardados. Las páginas de términos y privacidad ya los muestran." });
     });
     app.post("/settings/schema", async (request, reply) => {
         const ctx = checkCsrf(request, reply);

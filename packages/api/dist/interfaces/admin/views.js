@@ -39,7 +39,7 @@ export function layout(input) {
     const nonce = escapeHtml(input.nonce);
     const header = input.nav
         ? `<header><div class="brand">Auto<span>Mant</span>Pro · Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Vehículos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/appointments">Turnos</a><a href="/admin/audit">Auditoría</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
+  <nav><a href="/admin">Tablero</a><a href="/admin/attend">Atender</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Vehículos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/appointments">Turnos</a><a href="/admin/audit">Auditoría</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>`
         : "";
     return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -77,7 +77,8 @@ export function dashboardView(input) {
             .map((r) => `<div><a href="/admin/users/${escapeHtml(String(r.id))}">${escapeHtml(String(r.name ?? "—"))}</a> <span class="muted">· ${escapeHtml(roleLabels[String(r.role)] ?? String(r.role ?? ""))}</span></div>`)
             .join("")
         : `<p class="muted">${input.recent ? "Aún no hay registros" : "Sin datos"}</p>`;
-    const registros = `<div class="card"><h2>Verificaciones pendientes</h2><div class="big">${input.pendingVerifications ?? "—"}</div><p><a href="/admin/verifications">Revisar talleres y almacenes</a></p></div>
+    const registros = `<div class="card"><h2>Atender a un contacto</h2><p class="muted">Pega su número o su primer mensaje: te digo si es nuevo o registrado y qué tiene pendiente.</p><p><a class="button" href="/admin/attend">Atender</a></p></div>
+  <div class="card"><h2>Verificaciones pendientes</h2><div class="big">${input.pendingVerifications ?? "—"}</div><p><a href="/admin/verifications">Revisar talleres y almacenes</a></p></div>
   <div class="card"><h2>Registros recientes</h2>${recentList}<p><a class="button" href="/admin/users/new">+ Nuevo registro</a></p></div>`;
     const salud = `<div class="card"><h2>Salud</h2>
     <div>Versión: <strong>${escapeHtml(input.version)}</strong></div>

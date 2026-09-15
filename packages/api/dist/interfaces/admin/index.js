@@ -9,6 +9,8 @@ import { registerAccountRoutes } from "./account.js";
 import { registerSettingsRoutes } from "./settings.js";
 import { registerRegistrationRoutes } from "./registrations.js";
 import { registerAppointmentRoutes } from "./appointments.js";
+import { registerAttendRoutes } from "./attend.js";
+import { MysqlVisitStore } from "../../infrastructure/visits/visit-store.js";
 import { MysqlAppointmentStore } from "../../infrastructure/appointments/appointment-store.js";
 import { MysqlRegistrationStore } from "../../infrastructure/registration/registration-store.js";
 import { MysqlSettingsStore } from "../../infrastructure/settings/settings-store.js";
@@ -87,6 +89,13 @@ export async function adminPanelRoutes(app, options = {}) {
     registerAccountRoutes(app, { store, requireSession, html, audit });
     registerRegistrationRoutes(app, { registrations, appointments: detailAppointments, requireSession, html, audit });
     registerAppointmentRoutes(app, { appointments, registrations, requireSession, html, audit });
+    registerAttendRoutes(app, {
+        registrations,
+        appointments: detailAppointments,
+        visits: detailAppointments ? (options.visits ?? new MysqlVisitStore(connect)) : options.visits,
+        requireSession,
+        html,
+    });
     registerSettingsRoutes(app, {
         store,
         settings,
