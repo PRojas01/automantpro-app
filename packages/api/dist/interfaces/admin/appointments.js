@@ -177,7 +177,8 @@ export function registerAppointmentRoutes(app, deps) {
         }
         if (!appointment)
             return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
-        return deps.html(reply, request, "Turno", appointmentDetailView({ appointment, csrf: session.csrfToken, flash }), session, status);
+        const workOrderId = deps.workOrders ? await deps.workOrders.findByAppointment(id).catch(() => null) : null;
+        return deps.html(reply, request, "Turno", appointmentDetailView({ appointment, csrf: session.csrfToken, flash, workOrderId }), session, status);
     }
     app.get("/appointments/:id", async (request, reply) => {
         const session = deps.requireSession(request, reply);

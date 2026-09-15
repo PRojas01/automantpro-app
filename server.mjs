@@ -801,7 +801,7 @@ var require_plugin = __commonJS({
         debug("exec: resolving promise", name);
         maybePromiseLike.then(
           () => process.nextTick(done),
-          (e4) => process.nextTick(done, e4)
+          (e5) => process.nextTick(done, e5)
         );
       } else if (func.length < 3) {
         done();
@@ -1411,7 +1411,7 @@ var require_avvio = __commonJS({
           debug("resolving close/onClose promise");
           promise.then(
             () => process.nextTick(cb),
-            (e4) => process.nextTick(cb, e4)
+            (e5) => process.nextTick(cb, e5)
           );
         } else {
           process.nextTick(cb);
@@ -2445,8 +2445,8 @@ var require_hooks = __commonJS({
         if (fn.length === 1) {
           try {
             fn.call(server2, done);
-          } catch (e4) {
-            done(e4);
+          } catch (e5) {
+            done(e5);
           }
           return;
         }
@@ -5671,7 +5671,7 @@ var require_initial_config_validation = __commonJS({
     function validateInitialConfig(options) {
       const opts = deepClone(options);
       if (!validate(opts)) {
-        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e4) => e4.message)));
+        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e5) => e5.message)));
         error.errors = validate.errors;
         throw error;
       }
@@ -6792,10 +6792,10 @@ var require_redaction = __commonJS({
     var strict = false;
     function redaction(opts, serialize) {
       const { paths, censor, remove } = handle(opts);
-      const shape = paths.reduce((o, str) => {
+      const shape = paths.reduce((o, str2) => {
         rx.lastIndex = 0;
-        const first = rx.exec(str);
-        const next = rx.exec(str);
+        const first = rx.exec(str2);
+        const next = rx.exec(str2);
         let ns = first[1] !== void 0 ? first[1].replace(/^(?:"|'|`)(.*)(?:"|'|`)$/, "$1") : first[0];
         if (ns === "*") {
           ns = wildcardFirstSym;
@@ -6808,7 +6808,7 @@ var require_redaction = __commonJS({
           return o;
         }
         const { index } = next;
-        const nextPath = `${str.substr(index, str.length - 1)}`;
+        const nextPath = `${str2.substr(index, str2.length - 1)}`;
         o[ns] = o[ns] || [];
         if (ns !== wildcardFirstSym && o[ns].length === 0) {
           o[ns].push(...o[wildcardFirstSym] || []);
@@ -6901,7 +6901,7 @@ var require_quick_format_unescaped = __commonJS({
     function tryStringify(o) {
       try {
         return JSON.stringify(o);
-      } catch (e4) {
+      } catch (e5) {
         return '"[Circular]"';
       }
     }
@@ -6924,7 +6924,7 @@ var require_quick_format_unescaped = __commonJS({
       }
       var argLen = args.length;
       if (argLen === 0) return f;
-      var str = "";
+      var str2 = "";
       var a = 1 - offset2;
       var lastPos = -1;
       var flen = f && f.length || 0;
@@ -6939,8 +6939,8 @@ var require_quick_format_unescaped = __commonJS({
                 break;
               if (args[a] == null) break;
               if (lastPos < i)
-                str += f.slice(lastPos, i);
-              str += Number(args[a]);
+                str2 += f.slice(lastPos, i);
+              str2 += Number(args[a]);
               lastPos = i + 2;
               i++;
               break;
@@ -6949,8 +6949,8 @@ var require_quick_format_unescaped = __commonJS({
                 break;
               if (args[a] == null) break;
               if (lastPos < i)
-                str += f.slice(lastPos, i);
-              str += Math.floor(Number(args[a]));
+                str2 += f.slice(lastPos, i);
+              str2 += Math.floor(Number(args[a]));
               lastPos = i + 2;
               i++;
               break;
@@ -6963,21 +6963,21 @@ var require_quick_format_unescaped = __commonJS({
                 break;
               if (args[a] === void 0) break;
               if (lastPos < i)
-                str += f.slice(lastPos, i);
+                str2 += f.slice(lastPos, i);
               var type = typeof args[a];
               if (type === "string") {
-                str += "'" + args[a] + "'";
+                str2 += "'" + args[a] + "'";
                 lastPos = i + 2;
                 i++;
                 break;
               }
               if (type === "function") {
-                str += args[a].name || "<anonymous>";
+                str2 += args[a].name || "<anonymous>";
                 lastPos = i + 2;
                 i++;
                 break;
               }
-              str += ss(args[a]);
+              str2 += ss(args[a]);
               lastPos = i + 2;
               i++;
               break;
@@ -6985,15 +6985,15 @@ var require_quick_format_unescaped = __commonJS({
               if (a >= argLen)
                 break;
               if (lastPos < i)
-                str += f.slice(lastPos, i);
-              str += String(args[a]);
+                str2 += f.slice(lastPos, i);
+              str2 += String(args[a]);
               lastPos = i + 2;
               i++;
               break;
             case 37:
               if (lastPos < i)
-                str += f.slice(lastPos, i);
-              str += "%";
+                str2 += f.slice(lastPos, i);
+              str2 += "%";
               lastPos = i + 2;
               i++;
               a--;
@@ -7006,9 +7006,9 @@ var require_quick_format_unescaped = __commonJS({
       if (lastPos === -1)
         return f;
       else if (lastPos < flen) {
-        str += f.slice(lastPos);
+        str2 += f.slice(lastPos);
       }
-      return str;
+      return str2;
     }
   }
 });
@@ -8632,7 +8632,7 @@ var require_tools = __commonJS({
     var transport = require_transport();
     var [nodeMajor] = process.versions.node.split(".").map((v) => Number(v));
     var asJsonChan = diagChan.tracingChannel("pino_asJson");
-    var asString = nodeMajor >= 25 ? (str) => JSON.stringify(str) : _asString;
+    var asString = nodeMajor >= 25 ? (str2) => JSON.stringify(str2) : _asString;
     function noop() {
     }
     function genLog(level, hook) {
@@ -8670,29 +8670,29 @@ var require_tools = __commonJS({
         }
       }
     }
-    function _asString(str) {
+    function _asString(str2) {
       let result = "";
       let last = 0;
       let found = false;
       let point = 255;
-      const l = str.length;
+      const l = str2.length;
       if (l > 100) {
-        return JSON.stringify(str);
+        return JSON.stringify(str2);
       }
       for (var i = 0; i < l && point >= 32; i++) {
-        point = str.charCodeAt(i);
+        point = str2.charCodeAt(i);
         if (point === 34 || point === 92) {
-          result += str.slice(last, i) + "\\";
+          result += str2.slice(last, i) + "\\";
           last = i;
           found = true;
         }
       }
       if (!found) {
-        result = str;
+        result = str2;
       } else {
-        result += str.slice(last);
+        result += str2.slice(last);
       }
-      return point < 32 ? JSON.stringify(str) : '"' + result + '"';
+      return point < 32 ? JSON.stringify(str2) : '"' + result + '"';
     }
     function asJson(obj, msg, num, time) {
       if (asJsonChan.hasSubscribers === false) {
@@ -8976,7 +8976,7 @@ var require_levels = __commonJS({
           if (typeof stream.flushSync === "function") {
             try {
               stream.flushSync();
-            } catch (e4) {
+            } catch (e5) {
             }
           }
         };
@@ -9396,11 +9396,11 @@ var require_safe_stable_stringify = __commonJS({
     exports.configure = configure;
     module.exports = stringify;
     var strEscapeSequencesRegExp = /[\u0000-\u001f\u0022\u005c\ud800-\udfff]/;
-    function strEscape(str) {
-      if (str.length < 5e3 && !strEscapeSequencesRegExp.test(str)) {
-        return `"${str}"`;
+    function strEscape(str2) {
+      if (str2.length < 5e3 && !strEscapeSequencesRegExp.test(str2)) {
+        return `"${str2}"`;
       }
-      return JSON.stringify(str);
+      return JSON.stringify(str2);
     }
     function sort(array, comparator) {
       if (array.length > 200 || comparator) {
@@ -10767,8 +10767,8 @@ var require_serializer = __commonJS({
         }
         throw new Error(`The value "${date}" cannot be converted to a time.`);
       }
-      asString(str) {
-        const len = str.length;
+      asString(str2) {
+        const len = str2.length;
         if (len === 0) {
           return '""';
         } else if (len < 42) {
@@ -10776,25 +10776,25 @@ var require_serializer = __commonJS({
           let last = -1;
           let point = 255;
           for (let i = 0; i < len; i++) {
-            point = str.charCodeAt(i);
+            point = str2.charCodeAt(i);
             if (point === 34 || // '"'
             point === 92) {
               last === -1 && (last = 0);
-              result += str.slice(last, i) + "\\";
+              result += str2.slice(last, i) + "\\";
               last = i;
             } else if (point < 32 || point >= 55296 && point <= 57343) {
-              return JSON.stringify(str);
+              return JSON.stringify(str2);
             }
           }
-          return last === -1 && '"' + str + '"' || '"' + result + str.slice(last) + '"';
-        } else if (len < 5e3 && STR_ESCAPE.test(str) === false) {
-          return '"' + str + '"';
+          return last === -1 && '"' + str2 + '"' || '"' + result + str2.slice(last) + '"';
+        } else if (len < 5e3 && STR_ESCAPE.test(str2) === false) {
+          return '"' + str2 + '"';
         } else {
-          return JSON.stringify(str);
+          return JSON.stringify(str2);
         }
       }
-      asUnsafeString(str) {
-        return '"' + str + '"';
+      asUnsafeString(str2) {
+        return '"' + str2 + '"';
       }
       getState() {
         return this._options;
@@ -11625,9 +11625,9 @@ var require_reply = __commonJS({
         } else {
           payload = serialize(reply[kRouteContext], payload, reply.raw.statusCode, reply[kReplyHeaders]["content-type"]);
         }
-      } catch (e4) {
-        wrapSerializationError(e4, reply);
-        onErrorHook(reply, e4);
+      } catch (e5) {
+        wrapSerializationError(e5, reply);
+        onErrorHook(reply, e5);
         return;
       }
       onSendHook(reply, payload);
@@ -12320,8 +12320,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e4) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e4 });
+        } catch (e5) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e5 });
         }
       };
       ipaddr.IPv4.isIPv4 = function(string) {
@@ -12370,8 +12370,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e4) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e4 });
+        } catch (e5) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e5 });
         }
       };
       ipaddr.IPv4.parse = function(string) {
@@ -12696,8 +12696,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e4) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e4 });
+        } catch (e5) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e5 });
         }
       };
       ipaddr.IPv6.isIPv6 = function(string) {
@@ -12739,8 +12739,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e4) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e4 });
+        } catch (e5) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e5 });
         }
       };
       ipaddr.IPv6.parse = function(string) {
@@ -12852,8 +12852,8 @@ var require_ipaddr = __commonJS({
         } catch {
           try {
             return ipaddr.IPv4.parseCIDR(string);
-          } catch (e4) {
-            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e4 });
+          } catch (e5) {
+            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e5 });
           }
         }
       };
@@ -12964,11 +12964,11 @@ var require_proxy_addr = __commonJS({
     }
     function parseipNotation(note) {
       const pos = note.lastIndexOf("/");
-      const str = pos !== -1 ? note.substring(0, pos) : note;
-      if (!isip(str)) {
-        throw new TypeError("invalid IP address: " + str);
+      const str2 = pos !== -1 ? note.substring(0, pos) : note;
+      if (!isip(str2)) {
+        throw new TypeError("invalid IP address: " + str2);
       }
-      let ip = parseip(str);
+      let ip = parseip(str2);
       if (pos === -1 && ip.kind() === "ipv6" && ip.isIPv4MappedAddress()) {
         ip = ip.toIPv4Address();
       }
@@ -13472,13 +13472,13 @@ var require_context = __commonJS({
       this.server = server;
     }
     function defaultSchemaErrorFormatter(errors, dataVar) {
-      let text2 = "";
+      let text3 = "";
       const separator = ", ";
       for (let i = 0; i !== errors.length; ++i) {
-        const e4 = errors[i];
-        text2 += dataVar + (e4.instancePath || "") + " " + e4.message + separator;
+        const e5 = errors[i];
+        text3 += dataVar + (e5.instancePath || "") + " " + e5.message + separator;
       }
-      return new Error(text2.slice(0, -separator.length));
+      return new Error(text3.slice(0, -separator.length));
     }
     module.exports = Context;
   }
@@ -13491,20 +13491,20 @@ var require_secure_json_parse = __commonJS({
     var hasBuffer = typeof Buffer !== "undefined";
     var suspectProtoRx = /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
     var suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
-    function _parse(text2, reviver, options) {
+    function _parse(text3, reviver, options) {
       if (options == null) {
         if (reviver !== null && typeof reviver === "object") {
           options = reviver;
           reviver = void 0;
         }
       }
-      if (hasBuffer && Buffer.isBuffer(text2)) {
-        text2 = text2.toString();
+      if (hasBuffer && Buffer.isBuffer(text3)) {
+        text3 = text3.toString();
       }
-      if (text2 && text2.charCodeAt(0) === 65279) {
-        text2 = text2.slice(1);
+      if (text3 && text3.charCodeAt(0) === 65279) {
+        text3 = text3.slice(1);
       }
-      const obj = JSON.parse(text2, reviver);
+      const obj = JSON.parse(text3, reviver);
       if (obj === null || typeof obj !== "object") {
         return obj;
       }
@@ -13514,15 +13514,15 @@ var require_secure_json_parse = __commonJS({
         return obj;
       }
       if (protoAction !== "ignore" && constructorAction !== "ignore") {
-        if (suspectProtoRx.test(text2) === false && suspectConstructorRx.test(text2) === false) {
+        if (suspectProtoRx.test(text3) === false && suspectConstructorRx.test(text3) === false) {
           return obj;
         }
       } else if (protoAction !== "ignore" && constructorAction === "ignore") {
-        if (suspectProtoRx.test(text2) === false) {
+        if (suspectProtoRx.test(text3) === false) {
           return obj;
         }
       } else {
-        if (suspectConstructorRx.test(text2) === false) {
+        if (suspectConstructorRx.test(text3) === false) {
           return obj;
         }
       }
@@ -13560,20 +13560,20 @@ var require_secure_json_parse = __commonJS({
       }
       return obj;
     }
-    function parse(text2, reviver, options) {
+    function parse(text3, reviver, options) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text2, reviver, options);
+        return _parse(text3, reviver, options);
       } finally {
         Error.stackTraceLimit = stackTraceLimit;
       }
     }
-    function safeParse(text2, reviver) {
+    function safeParse(text3, reviver) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text2, reviver, { safe: true });
+        return _parse(text3, reviver, { safe: true });
       } catch {
         return void 0;
       } finally {
@@ -14005,7 +14005,7 @@ var require_code = __commonJS({
     }
     exports._ = _;
     var plus = new _Code("+");
-    function str(strs, ...args) {
+    function str2(strs, ...args) {
       const expr = [safeStringify(strs[0])];
       let i = 0;
       while (i < args.length) {
@@ -14016,7 +14016,7 @@ var require_code = __commonJS({
       optimize(expr);
       return new _Code(expr);
     }
-    exports.str = str;
+    exports.str = str2;
     function addCodeArg(code, arg) {
       if (arg instanceof _Code)
         code.push(...arg._items);
@@ -14059,7 +14059,7 @@ var require_code = __commonJS({
       return;
     }
     function strConcat(c1, c2) {
-      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str`${c1}${c2}`;
+      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str2`${c1}${c2}`;
     }
     exports.strConcat = strConcat;
     function interpolate(x) {
@@ -14471,17 +14471,17 @@ var require_codegen = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e4 = this.else;
-        if (e4) {
-          const ns = e4.optimizeNodes();
-          e4 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e5 = this.else;
+        if (e5) {
+          const ns = e5.optimizeNodes();
+          e5 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e4) {
+        if (e5) {
           if (cond === false)
-            return e4 instanceof _If ? e4 : e4.nodes;
+            return e5 instanceof _If ? e5 : e5.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e4 instanceof _If ? [e4] : e4.nodes);
+          return new _If(not(cond), e5 instanceof _If ? [e5] : e5.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -14925,8 +14925,8 @@ var require_codegen = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e4) {
-        return e4 instanceof code_1._Code && e4._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e5) {
+        return e5 instanceof code_1._Code && e5._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -15021,22 +15021,22 @@ var require_util = __commonJS({
       return (0, codegen_1._)`${topSchemaRef}${schemaPath}${(0, codegen_1.getProperty)(keyword)}`;
     }
     exports.schemaRefOrVal = schemaRefOrVal;
-    function unescapeFragment(str) {
-      return unescapeJsonPointer(decodeURIComponent(str));
+    function unescapeFragment(str2) {
+      return unescapeJsonPointer(decodeURIComponent(str2));
     }
     exports.unescapeFragment = unescapeFragment;
-    function escapeFragment(str) {
-      return encodeURIComponent(escapeJsonPointer(str));
+    function escapeFragment(str2) {
+      return encodeURIComponent(escapeJsonPointer(str2));
     }
     exports.escapeFragment = escapeFragment;
-    function escapeJsonPointer(str) {
-      if (typeof str == "number")
-        return `${str}`;
-      return str.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPointer(str2) {
+      if (typeof str2 == "number")
+        return `${str2}`;
+      return str2.replace(/~/g, "~0").replace(/\//g, "~1");
     }
     exports.escapeJsonPointer = escapeJsonPointer;
-    function unescapeJsonPointer(str) {
-      return str.replace(/~1/g, "/").replace(/~0/g, "~");
+    function unescapeJsonPointer(str2) {
+      return str2.replace(/~1/g, "/").replace(/~0/g, "~");
     }
     exports.unescapeJsonPointer = unescapeJsonPointer;
     function eachItem(xs, f) {
@@ -15794,7 +15794,7 @@ var require_keyword = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e4) => gen.assign(valid, false).if((0, codegen_1._)`${e4} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e4}.errors`), () => gen.throw(e4)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e5) => gen.assign(valid, false).if((0, codegen_1._)`${e5} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e5}.errors`), () => gen.throw(e5)));
         return ruleErrs;
       }
       function validateSync() {
@@ -16061,8 +16061,8 @@ var require_json_schema_traverse = __commonJS({
         post(schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
       }
     }
-    function escapeJsonPtr(str) {
-      return str.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPtr(str2) {
+      return str2.replace(/~/g, "~0").replace(/\//g, "~1");
     }
   }
 });
@@ -16871,12 +16871,12 @@ var require_compile = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e4) {
+      } catch (e5) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e4;
+        throw e5;
       } finally {
         this._compilations.delete(sch);
       }
@@ -17158,10 +17158,10 @@ var require_utils = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str, token) {
+    function findToken(str2, token) {
       let ind = 0;
-      for (let i = 0; i < str.length; i++) {
-        if (str[i] === token) ind++;
+      for (let i = 0; i < str2.length; i++) {
+        if (str2[i] === token) ind++;
       }
       return ind;
     }
@@ -17930,8 +17930,8 @@ var require_fast_uri = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e4) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e4;
+        } catch (e5) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e5;
           return true;
         }
       }
@@ -18164,7 +18164,7 @@ var require_core = __commonJS({
     var util_1 = require_util();
     var $dataRefSchema = require_data();
     var uri_1 = require_uri();
-    var defaultRegExp = (str, flags) => new RegExp(str, flags);
+    var defaultRegExp = (str2, flags) => new RegExp(str2, flags);
     defaultRegExp.code = "new RegExp";
     var META_IGNORE_OPTIONS = ["removeAdditional", "useDefaults", "coerceTypes"];
     var EXT_SCOPE_NAMES = /* @__PURE__ */ new Set([
@@ -18317,11 +18317,11 @@ var require_core = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e4) {
-            if (!(e4 instanceof ref_error_1.default))
-              throw e4;
-            checkLoaded.call(this, e4);
-            await loadMissingSchema.call(this, e4.missingSchema);
+          } catch (e5) {
+            if (!(e5 instanceof ref_error_1.default))
+              throw e5;
+            checkLoaded.call(this, e5);
+            await loadMissingSchema.call(this, e5.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
@@ -18517,7 +18517,7 @@ var require_core = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e4) => `${dataVar}${e4.instancePath} ${e4.message}`).reduce((text2, msg) => text2 + separator + msg);
+        return errors.map((e5) => `${dataVar}${e5.instancePath} ${e5.message}`).reduce((text3, msg) => text3 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -18825,9 +18825,9 @@ var require_ref = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e4) => {
-          gen.if((0, codegen_1._)`!(${e4} instanceof ${it.ValidationError})`, () => gen.throw(e4));
-          addErrorsFrom(e4);
+        }, (e5) => {
+          gen.if((0, codegen_1._)`!(${e5} instanceof ${it.ValidationError})`, () => gen.throw(e5));
+          addErrorsFrom(e5);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -18959,16 +18959,16 @@ var require_ucs2length = __commonJS({
   "node_modules/fastify/node_modules/ajv/dist/runtime/ucs2length.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    function ucs2length(str) {
-      const len = str.length;
+    function ucs2length(str2) {
+      const len = str2.length;
       let length = 0;
       let pos = 0;
       let value2;
       while (pos < len) {
         length++;
-        value2 = str.charCodeAt(pos++);
+        value2 = str2.charCodeAt(pos++);
         if (value2 >= 55296 && value2 <= 56319 && pos < len) {
-          value2 = str.charCodeAt(pos);
+          value2 = str2.charCodeAt(pos);
           if ((value2 & 64512) === 56320)
             pos++;
         }
@@ -20884,13 +20884,13 @@ var require_timestamp = __commonJS({
     var DATE = /^(\d\d\d\d)-(\d\d)-(\d\d)$/;
     var TIME = /^(\d\d):(\d\d):(\d\d)(?:\.\d+)?(?:z|([+-]\d\d)(?::?(\d\d))?)$/i;
     var DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    function validTimestamp(str, allowDate) {
-      const dt = str.split(DT_SEPARATOR);
+    function validTimestamp(str2, allowDate) {
+      const dt = str2.split(DT_SEPARATOR);
       return dt.length === 2 && validDate(dt[0]) && validTime(dt[1]) || allowDate && dt.length === 1 && validDate(dt[0]);
     }
     exports.default = validTimestamp;
-    function validDate(str) {
-      const matches = DATE.exec(str);
+    function validDate(str2) {
+      const matches = DATE.exec(str2);
       if (!matches)
         return false;
       const y = +matches[1];
@@ -20899,8 +20899,8 @@ var require_timestamp = __commonJS({
       return m >= 1 && m <= 12 && d >= 1 && (d <= DAYS[m] || // leap year: https://tools.ietf.org/html/rfc3339#appendix-C
       m === 2 && d === 29 && (y % 100 === 0 ? y % 400 === 0 : y % 4 === 0));
     }
-    function validTime(str) {
-      const matches = TIME.exec(str);
+    function validTime(str2) {
+      const matches = TIME.exec(str2);
       if (!matches)
         return false;
       const hr = +matches[1];
@@ -21673,12 +21673,12 @@ var require_serialize = __commonJS({
         const serialize = makeSerialize(this.scope.get());
         this.scope.value(serializeName, { ref: serialize });
         sch.serialize = serialize;
-      } catch (e4) {
+      } catch (e5) {
         if (sourceCode)
           this.logger.error("Error compiling serializer, function code:", sourceCode);
         delete sch.serialize;
         delete sch.serializeName;
-        throw e4;
+        throw e5;
       } finally {
         this._compilations.delete(sch);
       }
@@ -21867,8 +21867,8 @@ var require_parseJson = __commonJS({
       try {
         parseJson.position = pos + s.length;
         return JSON.parse(s);
-      } catch (e4) {
-        matches = rxParseJson.exec(e4.message);
+      } catch (e5) {
+        matches = rxParseJson.exec(e5.message);
         if (!matches) {
           parseJson.message = "unexpected end";
           return void 0;
@@ -21963,7 +21963,7 @@ var require_parseJson = __commonJS({
     var CODE_A = "a".charCodeAt(0);
     var CODE_0 = "0".charCodeAt(0);
     function parseJsonString(s, pos) {
-      let str = "";
+      let str2 = "";
       let c;
       parseJsonString.message = void 0;
       while (true) {
@@ -21973,7 +21973,7 @@ var require_parseJson = __commonJS({
         if (c === "\\") {
           c = s[pos];
           if (c in escapedChars) {
-            str += escapedChars[c];
+            str2 += escapedChars[c];
             pos++;
           } else if (c === "u") {
             pos++;
@@ -21997,7 +21997,7 @@ var require_parseJson = __commonJS({
               }
               pos++;
             }
-            str += String.fromCharCode(code);
+            str2 += String.fromCharCode(code);
           } else {
             errorMessage(`unexpected token ${c}`);
             return void 0;
@@ -22007,7 +22007,7 @@ var require_parseJson = __commonJS({
           return void 0;
         } else {
           if (c.charCodeAt(0) >= 32) {
-            str += c;
+            str2 += c;
           } else {
             errorMessage(`unexpected token ${c}`);
             return void 0;
@@ -22015,7 +22015,7 @@ var require_parseJson = __commonJS({
         }
       }
       parseJsonString.position = pos;
-      return str;
+      return str2;
       function errorMessage(msg) {
         parseJsonString.position = pos;
         parseJsonString.message = msg;
@@ -22084,12 +22084,12 @@ var require_parse = __commonJS({
         const parse = makeParse(this.scope.get());
         this.scope.value(parseName, { ref: parse });
         sch.parse = parse;
-      } catch (e4) {
+      } catch (e5) {
         if (sourceCode)
           this.logger.error("Error compiling parser, function code:", sourceCode);
         delete sch.parse;
         delete sch.parseName;
-        throw e4;
+        throw e5;
       } finally {
         this._compilations.delete(sch);
       }
@@ -22609,10 +22609,10 @@ var require_utils2 = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str, token) {
+    function findToken(str2, token) {
       let ind = 0;
-      for (let i = 0; i < str.length; i++) {
-        if (str[i] === token) ind++;
+      for (let i = 0; i < str2.length; i++) {
+        if (str2[i] === token) ind++;
       }
       return ind;
     }
@@ -23192,14 +23192,14 @@ var require_schemes2 = __commonJS({
     var MAILTO_DOMAIN_LITERAL = /^\[[\x21-\x5A\x5E-\x7E]*\]$/u;
     var MAILTO_DOMAIN_ERROR = "URI mailto has an invalid recipient domain.";
     var HAS_SURROGATE = /[\uD800-\uDFFF]/u;
-    function decodeHex(str) {
-      if (typeof str !== "string" || str.indexOf("%") === -1) {
-        return str;
+    function decodeHex(str2) {
+      if (typeof str2 !== "string" || str2.indexOf("%") === -1) {
+        return str2;
       }
       try {
-        return decodeURIComponent(str);
+        return decodeURIComponent(str2);
       } catch {
-        return str;
+        return str2;
       }
     }
     function replaceLoneSurrogates(input) {
@@ -23642,8 +23642,8 @@ var require_fast_uri2 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e4) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e4;
+        } catch (e5) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e5;
           return true;
         }
       }
@@ -23921,8 +23921,8 @@ var require_formats = __commonJS({
     }
     var DATE = /^(\d\d\d\d)-(\d\d)-(\d\d)$/;
     var DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    function date(str) {
-      const matches = DATE.exec(str);
+    function date(str2) {
+      const matches = DATE.exec(str2);
       if (!matches)
         return false;
       const year = +matches[1];
@@ -23941,8 +23941,8 @@ var require_formats = __commonJS({
     }
     var TIME = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)(z|([+-])(\d\d)(?::?(\d\d))?)?$/i;
     function getTime(strictTimeZone) {
-      return function time(str) {
-        const matches = TIME.exec(str);
+      return function time(str2) {
+        const matches = TIME.exec(str2);
         if (!matches)
           return false;
         const hr = +matches[1];
@@ -23988,8 +23988,8 @@ var require_formats = __commonJS({
     var DATE_TIME_SEPARATOR = /t|\s/i;
     function getDateTime(strictTimeZone) {
       const time = getTime(strictTimeZone);
-      return function date_time(str) {
-        const dateTime = str.split(DATE_TIME_SEPARATOR);
+      return function date_time(str2) {
+        const dateTime = str2.split(DATE_TIME_SEPARATOR);
         return dateTime.length === 2 && date(dateTime[0]) && time(dateTime[1]);
       };
     }
@@ -24014,13 +24014,13 @@ var require_formats = __commonJS({
     }
     var NOT_URI_FRAGMENT = /\/|:/;
     var URI = /^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)(?:\?(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?$/i;
-    function uri(str) {
-      return NOT_URI_FRAGMENT.test(str) && URI.test(str);
+    function uri(str2) {
+      return NOT_URI_FRAGMENT.test(str2) && URI.test(str2);
     }
     var BYTE = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/gm;
-    function byte(str) {
+    function byte(str2) {
       BYTE.lastIndex = 0;
-      return BYTE.test(str);
+      return BYTE.test(str2);
     }
     var MIN_INT32 = -(2 ** 31);
     var MAX_INT32 = 2 ** 31 - 1;
@@ -24034,13 +24034,13 @@ var require_formats = __commonJS({
       return true;
     }
     var Z_ANCHOR = /[^\\]\\Z/;
-    function regex(str) {
-      if (Z_ANCHOR.test(str))
+    function regex(str2) {
+      if (Z_ANCHOR.test(str2))
         return false;
       try {
-        new RegExp(str);
+        new RegExp(str2);
         return true;
-      } catch (e4) {
+      } catch (e5) {
         return false;
       }
     }
@@ -24808,8 +24808,8 @@ var require_serializer2 = __commonJS({
         }
         throw new Error(`The value "${date}" cannot be converted to a time.`);
       }
-      asString(str) {
-        const len = str.length;
+      asString(str2) {
+        const len = str2.length;
         if (len === 0) {
           return '""';
         } else if (len < 42) {
@@ -24817,25 +24817,25 @@ var require_serializer2 = __commonJS({
           let last = -1;
           let point = 255;
           for (let i = 0; i < len; i++) {
-            point = str.charCodeAt(i);
+            point = str2.charCodeAt(i);
             if (point === 34 || // '"'
             point === 92) {
               last === -1 && (last = 0);
-              result += str.slice(last, i) + "\\";
+              result += str2.slice(last, i) + "\\";
               last = i;
             } else if (point < 32 || point >= 55296 && point <= 57343) {
-              return JSON.stringify(str);
+              return JSON.stringify(str2);
             }
           }
-          return last === -1 && '"' + str + '"' || '"' + result + str.slice(last) + '"';
-        } else if (len < 5e3 && STR_ESCAPE.test(str) === false) {
-          return '"' + str + '"';
+          return last === -1 && '"' + str2 + '"' || '"' + result + str2.slice(last) + '"';
+        } else if (len < 5e3 && STR_ESCAPE.test(str2) === false) {
+          return '"' + str2 + '"';
         } else {
-          return JSON.stringify(str);
+          return JSON.stringify(str2);
         }
       }
-      asUnsafeString(str) {
-        return '"' + str + '"';
+      asUnsafeString(str2) {
+        return '"' + str2 + '"';
       }
       getState() {
         return this._options;
@@ -24915,7 +24915,7 @@ var require_code3 = __commonJS({
     }
     exports._ = _;
     var plus = new _Code("+");
-    function str(strs, ...args) {
+    function str2(strs, ...args) {
       const expr = [safeStringify(strs[0])];
       let i = 0;
       while (i < args.length) {
@@ -24926,7 +24926,7 @@ var require_code3 = __commonJS({
       optimize(expr);
       return new _Code(expr);
     }
-    exports.str = str;
+    exports.str = str2;
     function addCodeArg(code, arg) {
       if (arg instanceof _Code)
         code.push(...arg._items);
@@ -24969,7 +24969,7 @@ var require_code3 = __commonJS({
       return;
     }
     function strConcat(c1, c2) {
-      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str`${c1}${c2}`;
+      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str2`${c1}${c2}`;
     }
     exports.strConcat = strConcat;
     function interpolate(x) {
@@ -25381,17 +25381,17 @@ var require_codegen2 = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e4 = this.else;
-        if (e4) {
-          const ns = e4.optimizeNodes();
-          e4 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e5 = this.else;
+        if (e5) {
+          const ns = e5.optimizeNodes();
+          e5 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e4) {
+        if (e5) {
           if (cond === false)
-            return e4 instanceof _If ? e4 : e4.nodes;
+            return e5 instanceof _If ? e5 : e5.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e4 instanceof _If ? [e4] : e4.nodes);
+          return new _If(not(cond), e5 instanceof _If ? [e5] : e5.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -25835,8 +25835,8 @@ var require_codegen2 = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e4) {
-        return e4 instanceof code_1._Code && e4._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e5) {
+        return e5 instanceof code_1._Code && e5._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -25931,22 +25931,22 @@ var require_util2 = __commonJS({
       return (0, codegen_1._)`${topSchemaRef}${schemaPath}${(0, codegen_1.getProperty)(keyword)}`;
     }
     exports.schemaRefOrVal = schemaRefOrVal;
-    function unescapeFragment(str) {
-      return unescapeJsonPointer(decodeURIComponent(str));
+    function unescapeFragment(str2) {
+      return unescapeJsonPointer(decodeURIComponent(str2));
     }
     exports.unescapeFragment = unescapeFragment;
-    function escapeFragment(str) {
-      return encodeURIComponent(escapeJsonPointer(str));
+    function escapeFragment(str2) {
+      return encodeURIComponent(escapeJsonPointer(str2));
     }
     exports.escapeFragment = escapeFragment;
-    function escapeJsonPointer(str) {
-      if (typeof str == "number")
-        return `${str}`;
-      return str.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPointer(str2) {
+      if (typeof str2 == "number")
+        return `${str2}`;
+      return str2.replace(/~/g, "~0").replace(/\//g, "~1");
     }
     exports.escapeJsonPointer = escapeJsonPointer;
-    function unescapeJsonPointer(str) {
-      return str.replace(/~1/g, "/").replace(/~0/g, "~");
+    function unescapeJsonPointer(str2) {
+      return str2.replace(/~1/g, "/").replace(/~0/g, "~");
     }
     exports.unescapeJsonPointer = unescapeJsonPointer;
     function eachItem(xs, f) {
@@ -26704,7 +26704,7 @@ var require_keyword2 = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e4) => gen.assign(valid, false).if((0, codegen_1._)`${e4} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e4}.errors`), () => gen.throw(e4)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e5) => gen.assign(valid, false).if((0, codegen_1._)`${e5} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e5}.errors`), () => gen.throw(e5)));
         return ruleErrs;
       }
       function validateSync() {
@@ -26936,8 +26936,8 @@ var require_json_schema_traverse2 = __commonJS({
         post(schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
       }
     }
-    function escapeJsonPtr(str) {
-      return str.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPtr(str2) {
+      return str2.replace(/~/g, "~0").replace(/\//g, "~1");
     }
   }
 });
@@ -27746,12 +27746,12 @@ var require_compile2 = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e4) {
+      } catch (e5) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e4;
+        throw e5;
       } finally {
         this._compilations.delete(sch);
       }
@@ -28033,10 +28033,10 @@ var require_utils3 = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str, token) {
+    function findToken(str2, token) {
       let ind = 0;
-      for (let i = 0; i < str.length; i++) {
-        if (str[i] === token) ind++;
+      for (let i = 0; i < str2.length; i++) {
+        if (str2[i] === token) ind++;
       }
       return ind;
     }
@@ -28805,8 +28805,8 @@ var require_fast_uri3 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e4) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e4;
+        } catch (e5) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e5;
           return true;
         }
       }
@@ -29039,7 +29039,7 @@ var require_core3 = __commonJS({
     var util_1 = require_util2();
     var $dataRefSchema = require_data2();
     var uri_1 = require_uri2();
-    var defaultRegExp = (str, flags) => new RegExp(str, flags);
+    var defaultRegExp = (str2, flags) => new RegExp(str2, flags);
     defaultRegExp.code = "new RegExp";
     var META_IGNORE_OPTIONS = ["removeAdditional", "useDefaults", "coerceTypes"];
     var EXT_SCOPE_NAMES = /* @__PURE__ */ new Set([
@@ -29192,11 +29192,11 @@ var require_core3 = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e4) {
-            if (!(e4 instanceof ref_error_1.default))
-              throw e4;
-            checkLoaded.call(this, e4);
-            await loadMissingSchema.call(this, e4.missingSchema);
+          } catch (e5) {
+            if (!(e5 instanceof ref_error_1.default))
+              throw e5;
+            checkLoaded.call(this, e5);
+            await loadMissingSchema.call(this, e5.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
@@ -29392,7 +29392,7 @@ var require_core3 = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e4) => `${dataVar}${e4.instancePath} ${e4.message}`).reduce((text2, msg) => text2 + separator + msg);
+        return errors.map((e5) => `${dataVar}${e5.instancePath} ${e5.message}`).reduce((text3, msg) => text3 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -29700,9 +29700,9 @@ var require_ref3 = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e4) => {
-          gen.if((0, codegen_1._)`!(${e4} instanceof ${it.ValidationError})`, () => gen.throw(e4));
-          addErrorsFrom(e4);
+        }, (e5) => {
+          gen.if((0, codegen_1._)`!(${e5} instanceof ${it.ValidationError})`, () => gen.throw(e5));
+          addErrorsFrom(e5);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -29834,16 +29834,16 @@ var require_ucs2length2 = __commonJS({
   "node_modules/@fastify/fast-json-stringify-compiler/node_modules/ajv/dist/runtime/ucs2length.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    function ucs2length(str) {
-      const len = str.length;
+    function ucs2length(str2) {
+      const len = str2.length;
       let length = 0;
       let pos = 0;
       let value2;
       while (pos < len) {
         length++;
-        value2 = str.charCodeAt(pos++);
+        value2 = str2.charCodeAt(pos++);
         if (value2 >= 55296 && value2 <= 56319 && pos < len) {
-          value2 = str.charCodeAt(pos);
+          value2 = str2.charCodeAt(pos);
           if ((value2 & 64512) === 56320)
             pos++;
         }
@@ -31789,10 +31789,10 @@ var require_utils4 = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str, token) {
+    function findToken(str2, token) {
       let ind = 0;
-      for (let i = 0; i < str.length; i++) {
-        if (str[i] === token) ind++;
+      for (let i = 0; i < str2.length; i++) {
+        if (str2[i] === token) ind++;
       }
       return ind;
     }
@@ -32372,14 +32372,14 @@ var require_schemes4 = __commonJS({
     var MAILTO_DOMAIN_LITERAL = /^\[[\x21-\x5A\x5E-\x7E]*\]$/u;
     var MAILTO_DOMAIN_ERROR = "URI mailto has an invalid recipient domain.";
     var HAS_SURROGATE = /[\uD800-\uDFFF]/u;
-    function decodeHex(str) {
-      if (typeof str !== "string" || str.indexOf("%") === -1) {
-        return str;
+    function decodeHex(str2) {
+      if (typeof str2 !== "string" || str2.indexOf("%") === -1) {
+        return str2;
       }
       try {
-        return decodeURIComponent(str);
+        return decodeURIComponent(str2);
       } catch {
-        return str;
+        return str2;
       }
     }
     function replaceLoneSurrogates(input) {
@@ -32822,8 +32822,8 @@ var require_fast_uri4 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e4) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e4;
+        } catch (e5) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e5;
           return true;
         }
       }
@@ -33083,8 +33083,8 @@ var require_formats2 = __commonJS({
     }
     var DATE = /^(\d\d\d\d)-(\d\d)-(\d\d)$/;
     var DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    function date(str) {
-      const matches = DATE.exec(str);
+    function date(str2) {
+      const matches = DATE.exec(str2);
       if (!matches)
         return false;
       const year = +matches[1];
@@ -33103,8 +33103,8 @@ var require_formats2 = __commonJS({
     }
     var TIME = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)(z|([+-])(\d\d)(?::?(\d\d))?)?$/i;
     function getTime(strictTimeZone) {
-      return function time(str) {
-        const matches = TIME.exec(str);
+      return function time(str2) {
+        const matches = TIME.exec(str2);
         if (!matches)
           return false;
         const hr = +matches[1];
@@ -33150,8 +33150,8 @@ var require_formats2 = __commonJS({
     var DATE_TIME_SEPARATOR = /t|\s/i;
     function getDateTime(strictTimeZone) {
       const time = getTime(strictTimeZone);
-      return function date_time(str) {
-        const dateTime = str.split(DATE_TIME_SEPARATOR);
+      return function date_time(str2) {
+        const dateTime = str2.split(DATE_TIME_SEPARATOR);
         return dateTime.length === 2 && date(dateTime[0]) && time(dateTime[1]);
       };
     }
@@ -33176,13 +33176,13 @@ var require_formats2 = __commonJS({
     }
     var NOT_URI_FRAGMENT = /\/|:/;
     var URI = /^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)(?:\?(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?$/i;
-    function uri(str) {
-      return NOT_URI_FRAGMENT.test(str) && URI.test(str);
+    function uri(str2) {
+      return NOT_URI_FRAGMENT.test(str2) && URI.test(str2);
     }
     var BYTE = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/gm;
-    function byte(str) {
+    function byte(str2) {
       BYTE.lastIndex = 0;
-      return BYTE.test(str);
+      return BYTE.test(str2);
     }
     var MIN_INT32 = -(2 ** 31);
     var MAX_INT32 = 2 ** 31 - 1;
@@ -33196,13 +33196,13 @@ var require_formats2 = __commonJS({
       return true;
     }
     var Z_ANCHOR = /[^\\]\\Z/;
-    function regex(str) {
-      if (Z_ANCHOR.test(str))
+    function regex(str2) {
+      if (Z_ANCHOR.test(str2))
         return false;
       try {
-        new RegExp(str);
+        new RegExp(str2);
         return true;
-      } catch (e4) {
+      } catch (e5) {
         return false;
       }
     }
@@ -39128,24 +39128,24 @@ var require_querystring = __commonJS({
       0
       // 112 - 127
     ]);
-    function encodeString(str) {
-      const len = str.length;
+    function encodeString(str2) {
+      const len = str2.length;
       if (len === 0) return "";
       let out = "";
       let lastPos = 0;
       let i = 0;
       outer: for (; i < len; i++) {
-        let c = str.charCodeAt(i);
+        let c = str2.charCodeAt(i);
         while (c < 128) {
           if (noEscape[c] !== 1) {
-            if (lastPos < i) out += str.slice(lastPos, i);
+            if (lastPos < i) out += str2.slice(lastPos, i);
             lastPos = i + 1;
             out += hexTable[c];
           }
           if (++i === len) break outer;
-          c = str.charCodeAt(i);
+          c = str2.charCodeAt(i);
         }
-        if (lastPos < i) out += str.slice(lastPos, i);
+        if (lastPos < i) out += str2.slice(lastPos, i);
         if (c < 2048) {
           lastPos = i + 1;
           out += hexTable[192 | c >> 6] + hexTable[128 | c & 63];
@@ -39160,13 +39160,13 @@ var require_querystring = __commonJS({
         if (i >= len) {
           throw new Error("URI malformed");
         }
-        const c2 = str.charCodeAt(i) & 1023;
+        const c2 = str2.charCodeAt(i) & 1023;
         lastPos = i + 1;
         c = 65536 + ((c & 1023) << 10 | c2);
         out += hexTable[240 | c >> 18] + hexTable[128 | c >> 12 & 63] + hexTable[128 | c >> 6 & 63] + hexTable[128 | c & 63];
       }
-      if (lastPos === 0) return str;
-      if (lastPos < len) return out + str.slice(lastPos);
+      if (lastPos === 0) return str2;
+      if (lastPos < len) return out + str2.slice(lastPos);
       return out;
     }
     module.exports = { encodeString };
@@ -39382,9 +39382,9 @@ var require_util3 = __commonJS({
     var types_1 = require_types5();
     var sets = __importStar(require_sets());
     var CTRL = "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^ ?";
-    exports.strToChars = (str) => {
+    exports.strToChars = (str2) => {
       const charsRegex = /(\[\\b\])|(\\)?\\(?:u([A-F0-9]{4})|x([A-F0-9]{2})|c([@A-Z[\\\]^?])|([0tnvfr]))/g;
-      return str.replace(charsRegex, (s, b, lbs, a16, b16, dctrl, eslsh) => {
+      return str2.replace(charsRegex, (s, b, lbs, a16, b16, dctrl, eslsh) => {
         if (lbs) {
           return s;
         }
@@ -39400,11 +39400,11 @@ var require_util3 = __commonJS({
         return /[[\]{}^$.|?*+()]/.test(c) ? `\\${c}` : c;
       });
     };
-    exports.tokenizeClass = (str, regexpStr) => {
+    exports.tokenizeClass = (str2, regexpStr) => {
       var _a, _b, _c, _d, _e, _f, _g;
       let tokens = [], rs, c;
       const regexp = /\\(?:(w)|(d)|(s)|(W)|(D)|(S))|((?:(?:\\)(.)|([^\]\\]))-(((?:\\)])|(((?:\\)?([^\]])))))|(\])|(?:\\)?([^])/g;
-      while ((rs = regexp.exec(str)) !== null) {
+      while ((rs = regexp.exec(str2)) !== null) {
         const p = (_g = (_f = (_e = (_d = (_c = (_b = (_a = rs[1] && sets.words()) !== null && _a !== void 0 ? _a : rs[2] && sets.ints()) !== null && _b !== void 0 ? _b : rs[3] && sets.whitespace()) !== null && _c !== void 0 ? _c : rs[4] && sets.notWords()) !== null && _d !== void 0 ? _d : rs[5] && sets.notInts()) !== null && _e !== void 0 ? _e : rs[6] && sets.notWhitespace()) !== null && _f !== void 0 ? _f : rs[7] && {
           type: types_1.types.RANGE,
           from: (rs[8] || rs[9]).charCodeAt(0),
@@ -39467,15 +39467,15 @@ var require_tokenizer = __commonJS({
       const repeatErr = (col) => {
         throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Nothing to repeat at column ${col - 1}`);
       };
-      let str = util2.strToChars(regexpStr);
-      while (i < str.length) {
-        switch (c = str[i++]) {
+      let str2 = util2.strToChars(regexpStr);
+      while (i < str2.length) {
+        switch (c = str2[i++]) {
           // Handle escaped characters, inclues a few sets.
           case "\\":
-            if (i === str.length) {
+            if (i === str2.length) {
               throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: \\ at end of pattern`);
             }
-            switch (c = str[i++]) {
+            switch (c = str2[i++]) {
               case "b":
                 last.push({ type: types_1.types.POSITION, value: "b" });
                 break;
@@ -39503,8 +39503,8 @@ var require_tokenizer = __commonJS({
               default:
                 if (digit.test(c)) {
                   let digits = c;
-                  while (i < str.length && digit.test(str[i])) {
-                    digits += str[i++];
+                  while (i < str2.length && digit.test(str2[i])) {
+                    digits += str2[i++];
                   }
                   let value2 = parseInt(digits, 10);
                   const reference = { type: types_1.types.REFERENCE, value: value2 };
@@ -39525,13 +39525,13 @@ var require_tokenizer = __commonJS({
           // Handle custom sets.
           case "[": {
             let not;
-            if (str[i] === "^") {
+            if (str2[i] === "^") {
               not = true;
               i++;
             } else {
               not = false;
             }
-            let classTokens = util2.tokenizeClass(str.slice(i), regexpStr);
+            let classTokens = util2.tokenizeClass(str2.slice(i), regexpStr);
             i += classTokens[1];
             last.push({
               type: types_1.types.SET,
@@ -39551,8 +39551,8 @@ var require_tokenizer = __commonJS({
               stack: [],
               remember: true
             };
-            if (str[i] === "?") {
-              c = str[i + 1];
+            if (str2[i] === "?") {
+              c = str2[i + 1];
               i += 2;
               if (c === "=") {
                 group.followedBy = true;
@@ -39562,21 +39562,21 @@ var require_tokenizer = __commonJS({
                 group.remember = false;
               } else if (c === "<") {
                 let name = "";
-                if (captureGroupFirstChar.test(str[i])) {
-                  name += str[i];
+                if (captureGroupFirstChar.test(str2[i])) {
+                  name += str2[i];
                   i++;
                 } else {
-                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str[i]}' after '<' at column ${i + 1}`);
+                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str2[i]}' after '<' at column ${i + 1}`);
                 }
-                while (i < str.length && captureGroupChars.test(str[i])) {
-                  name += str[i];
+                while (i < str2.length && captureGroupChars.test(str2[i])) {
+                  name += str2[i];
                   i++;
                 }
                 if (!name) {
-                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str[i]}' after '<' at column ${i + 1}`);
+                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str2[i]}' after '<' at column ${i + 1}`);
                 }
-                if (str[i] !== ">") {
-                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Unclosed capture group name, expected '>', found '${str[i]}' at column ${i + 1}`);
+                if (str2[i] !== ">") {
+                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Unclosed capture group name, expected '>', found '${str2[i]}' at column ${i + 1}`);
                 }
                 group.name = name;
                 i++;
@@ -39619,7 +39619,7 @@ var require_tokenizer = __commonJS({
           // This design is chosen because there could be more than
           // one repetition symbols in a regex i.e. `a?+{2,3}`.
           case "{": {
-            let rs = /^(\d+)(,(\d+)?)?\}/.exec(str.slice(i)), min, max;
+            let rs = /^(\d+)(,(\d+)?)?\}/.exec(str2.slice(i)), min, max;
             if (rs !== null) {
               if (last.length === 0) {
                 repeatErr(i);
@@ -42564,25 +42564,25 @@ var require_dist5 = __commonJS({
       C.prototype = /* @__PURE__ */ Object.create(null);
       return C;
     })();
-    function parseCookie(str, options) {
+    function parseCookie(str2, options) {
       const obj = new NullObject();
-      const len = str.length;
+      const len = str2.length;
       if (len < 2)
         return obj;
       const dec = options?.decode || decode;
       let index = 0;
       do {
-        const eqIdx = eqIndex(str, index, len);
+        const eqIdx = eqIndex(str2, index, len);
         if (eqIdx === -1)
           break;
-        const endIdx = endIndex(str, index, len);
+        const endIdx = endIndex(str2, index, len);
         if (eqIdx > endIdx) {
-          index = str.lastIndexOf(";", eqIdx - 1) + 1;
+          index = str2.lastIndexOf(";", eqIdx - 1) + 1;
           continue;
         }
-        const key = valueSlice(str, index, eqIdx);
+        const key = valueSlice(str2, index, eqIdx);
         if (obj[key] === void 0) {
-          obj[key] = dec(valueSlice(str, eqIdx + 1, endIdx));
+          obj[key] = dec(valueSlice(str2, eqIdx + 1, endIdx));
         }
         index = endIdx + 1;
       } while (index < len);
@@ -42617,51 +42617,51 @@ var require_dist5 = __commonJS({
       if (!cookieValueRegExp.test(value2)) {
         throw new TypeError(`argument val is invalid: ${cookie.value}`);
       }
-      let str = cookie.name + "=" + value2;
+      let str2 = cookie.name + "=" + value2;
       if (cookie.maxAge !== void 0) {
         if (!Number.isInteger(cookie.maxAge)) {
           throw new TypeError(`option maxAge is invalid: ${cookie.maxAge}`);
         }
-        str += "; Max-Age=" + cookie.maxAge;
+        str2 += "; Max-Age=" + cookie.maxAge;
       }
       if (cookie.domain) {
         if (!domainValueRegExp.test(cookie.domain)) {
           throw new TypeError(`option domain is invalid: ${cookie.domain}`);
         }
-        str += "; Domain=" + cookie.domain;
+        str2 += "; Domain=" + cookie.domain;
       }
       if (cookie.path) {
         if (!pathValueRegExp.test(cookie.path)) {
           throw new TypeError(`option path is invalid: ${cookie.path}`);
         }
-        str += "; Path=" + cookie.path;
+        str2 += "; Path=" + cookie.path;
       }
       if (cookie.expires) {
         if (!isDate(cookie.expires) || !Number.isFinite(cookie.expires.valueOf())) {
           throw new TypeError(`option expires is invalid: ${cookie.expires}`);
         }
-        str += "; Expires=" + cookie.expires.toUTCString();
+        str2 += "; Expires=" + cookie.expires.toUTCString();
       }
       if (cookie.httpOnly) {
-        str += "; HttpOnly";
+        str2 += "; HttpOnly";
       }
       if (cookie.secure) {
-        str += "; Secure";
+        str2 += "; Secure";
       }
       if (cookie.partitioned) {
-        str += "; Partitioned";
+        str2 += "; Partitioned";
       }
       if (cookie.priority) {
         const priority = typeof cookie.priority === "string" ? cookie.priority.toLowerCase() : void 0;
         switch (priority) {
           case "low":
-            str += "; Priority=Low";
+            str2 += "; Priority=Low";
             break;
           case "medium":
-            str += "; Priority=Medium";
+            str2 += "; Priority=Medium";
             break;
           case "high":
-            str += "; Priority=High";
+            str2 += "; Priority=High";
             break;
           default:
             throw new TypeError(`option priority is invalid: ${cookie.priority}`);
@@ -42672,35 +42672,35 @@ var require_dist5 = __commonJS({
         switch (sameSite) {
           case true:
           case "strict":
-            str += "; SameSite=Strict";
+            str2 += "; SameSite=Strict";
             break;
           case "lax":
-            str += "; SameSite=Lax";
+            str2 += "; SameSite=Lax";
             break;
           case "none":
-            str += "; SameSite=None";
+            str2 += "; SameSite=None";
             break;
           default:
             throw new TypeError(`option sameSite is invalid: ${cookie.sameSite}`);
         }
       }
-      return str;
+      return str2;
     }
-    function parseSetCookie(str, options) {
+    function parseSetCookie(str2, options) {
       const dec = options?.decode || decode;
-      const len = str.length;
-      const endIdx = endIndex(str, 0, len);
-      const eqIdx = eqIndex(str, 0, endIdx);
-      const setCookie = eqIdx === -1 ? { name: "", value: dec(valueSlice(str, 0, endIdx)) } : {
-        name: valueSlice(str, 0, eqIdx),
-        value: dec(valueSlice(str, eqIdx + 1, endIdx))
+      const len = str2.length;
+      const endIdx = endIndex(str2, 0, len);
+      const eqIdx = eqIndex(str2, 0, endIdx);
+      const setCookie = eqIdx === -1 ? { name: "", value: dec(valueSlice(str2, 0, endIdx)) } : {
+        name: valueSlice(str2, 0, eqIdx),
+        value: dec(valueSlice(str2, eqIdx + 1, endIdx))
       };
       let index = endIdx + 1;
       while (index < len) {
-        const endIdx2 = endIndex(str, index, len);
-        const eqIdx2 = eqIndex(str, index, endIdx2);
-        const attr = eqIdx2 === -1 ? valueSlice(str, index, endIdx2) : valueSlice(str, index, eqIdx2);
-        const val = eqIdx2 === -1 ? void 0 : valueSlice(str, eqIdx2 + 1, endIdx2);
+        const endIdx2 = endIndex(str2, index, len);
+        const eqIdx2 = eqIndex(str2, index, endIdx2);
+        const attr = eqIdx2 === -1 ? valueSlice(str2, index, endIdx2) : valueSlice(str2, index, eqIdx2);
+        const val = eqIdx2 === -1 ? void 0 : valueSlice(str2, eqIdx2 + 1, endIdx2);
         switch (attr.toLowerCase()) {
           case "httponly":
             setCookie.httpOnly = true;
@@ -42749,37 +42749,37 @@ var require_dist5 = __commonJS({
       }
       return setCookie;
     }
-    function endIndex(str, min, len) {
-      const index = str.indexOf(";", min);
+    function endIndex(str2, min, len) {
+      const index = str2.indexOf(";", min);
       return index === -1 ? len : index;
     }
-    function eqIndex(str, min, max) {
-      const index = str.indexOf("=", min);
+    function eqIndex(str2, min, max) {
+      const index = str2.indexOf("=", min);
       return index < max ? index : -1;
     }
-    function valueSlice(str, min, max) {
+    function valueSlice(str2, min, max) {
       let start = min;
       let end = max;
       do {
-        const code = str.charCodeAt(start);
+        const code = str2.charCodeAt(start);
         if (code !== 32 && code !== 9)
           break;
       } while (++start < end);
       while (end > start) {
-        const code = str.charCodeAt(end - 1);
+        const code = str2.charCodeAt(end - 1);
         if (code !== 32 && code !== 9)
           break;
         end--;
       }
-      return str.slice(start, end);
+      return str2.slice(start, end);
     }
-    function decode(str) {
-      if (str.indexOf("%") === -1)
-        return str;
+    function decode(str2) {
+      if (str2.indexOf("%") === -1)
+        return str2;
       try {
-        return decodeURIComponent(str);
-      } catch (e4) {
-        return str;
+        return decodeURIComponent(str2);
+      } catch (e5) {
+        return str2;
       }
     }
     function isDate(val) {
@@ -42899,7 +42899,7 @@ var require_form_data = __commonJS({
       const boundary = `----formdata-${randomUUID()}`;
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
-      const escape2 = (str) => str.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
+      const escape2 = (str2) => str2.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
       const normalizeLinefeeds = (value2) => value2.replace(/\r?\n|\r/g, "\r\n");
       const linebreak = new Uint8Array([13, 10]);
       async function* asyncIterator() {
@@ -43145,8 +43145,8 @@ var require_set_cookie = __commonJS({
     function createNullObj() {
       return /* @__PURE__ */ Object.create(null);
     }
-    function isNonEmptyString(str) {
-      return typeof str === "string" && !!str.trim();
+    function isNonEmptyString(str2) {
+      return typeof str2 === "string" && !!str2.trim();
     }
     function parseString(setCookieValue, options) {
       var parts = setCookieValue.split(";").filter(isNonEmptyString);
@@ -43160,10 +43160,10 @@ var require_set_cookie = __commonJS({
       }
       try {
         value2 = options.decodeValues ? decodeURIComponent(value2) : value2;
-      } catch (e4) {
+      } catch (e5) {
         console.error(
           "set-cookie-parser: failed to decode cookie value. Set options.decodeValues=false to disable decoding.",
-          e4
+          e5
         );
       }
       var cookie = createNullObj();
@@ -43237,13 +43237,13 @@ var require_set_cookie = __commonJS({
         input = [input];
       }
       if (!options.map) {
-        return input.filter(isNonEmptyString).map(function(str) {
-          return parseString(str, options);
+        return input.filter(isNonEmptyString).map(function(str2) {
+          return parseString(str2, options);
         }).filter(Boolean);
       } else {
         var cookies = createNullObj();
-        return input.filter(isNonEmptyString).reduce(function(cookies2, str) {
-          var cookie = parseString(str, options);
+        return input.filter(isNonEmptyString).reduce(function(cookies2, str2) {
+          var cookie = parseString(str2, options);
           if (cookie && !isForbiddenKey(cookie.name)) {
             cookies2[cookie.name] = cookie;
           }
@@ -44385,7 +44385,7 @@ var require_light_my_request = __commonJS({
         assert(typeof dispatchFunc === "function", "dispatchFunc should be a function");
         const isOptionValid = optsValidator(options);
         if (!isOptionValid) {
-          throw new Error(optsValidator.errors.map((e4) => e4.message));
+          throw new Error(optsValidator.errors.map((e5) => e5.message));
         }
       }
       const server = options.server || {};
@@ -45341,9 +45341,9 @@ var require_getPluginName = __commonJS({
       Error.stackTraceLimit = 10;
       try {
         throw new Error("anonymous function");
-      } catch (e4) {
+      } catch (e5) {
         Error.stackTraceLimit = stackTraceLimit;
-        return extractPluginName(e4.stack);
+        return extractPluginName(e5.stack);
       }
     };
     function extractPluginName(stack) {
@@ -45859,9 +45859,9 @@ var require_decoder = __commonJS({
           throw new TokenError(TokenError.codes.invalidPayload, "The payload must be an object", { payload });
         }
         return complete ? { header, payload, signature: signatureSegment, input: token.slice(0, lastSeparator) } : payload;
-      } catch (e4) {
+      } catch (e5) {
         throw TokenError.wrap(
-          e4,
+          e5,
           TokenError.codes.malformed,
           `The token ${validHeader ? "payload" : "header"} is not a valid base64url serialized JSON.`
         );
@@ -46358,7 +46358,7 @@ var require_bn = __commonJS({
         } else {
           Buffer2 = __require("buffer").Buffer;
         }
-      } catch (e4) {
+      } catch (e5) {
       }
       BN.isBN = function isBN(num) {
         if (num instanceof BN) {
@@ -46521,11 +46521,11 @@ var require_bn = __commonJS({
         }
         this.strip();
       };
-      function parseBase(str, start, end, mul) {
+      function parseBase(str2, start, end, mul) {
         var r = 0;
-        var len = Math.min(str.length, end);
+        var len = Math.min(str2.length, end);
         for (var i = start; i < len; i++) {
-          var c = str.charCodeAt(i) - 48;
+          var c = str2.charCodeAt(i) - 48;
           r *= mul;
           if (c >= 49) {
             r += c - 49 + 10;
@@ -49171,7 +49171,7 @@ var require_inherits = __commonJS({
       util2 = __require("util");
       if (typeof util2.inherits !== "function") throw "";
       module.exports = util2.inherits;
-    } catch (e4) {
+    } catch (e5) {
       module.exports = require_inherits_browser();
     }
     var util2;
@@ -49231,7 +49231,7 @@ var require_safer = __commonJS({
     if (!safer.kStringMaxLength) {
       try {
         safer.kStringMaxLength = process.binding("buffer").kStringMaxLength;
-      } catch (e4) {
+      } catch (e5) {
       }
     }
     if (!safer.constants) {
@@ -49338,8 +49338,8 @@ var require_reporter = __commonJS({
       if (!this.stack) {
         try {
           throw new Error(this.message);
-        } catch (e4) {
-          this.stack = e4.stack;
+        } catch (e5) {
+          this.stack = e5.stack;
         }
       }
       return this;
@@ -49676,7 +49676,7 @@ var require_node2 = __commonJS({
       state.use = item;
       return this;
     };
-    Node.prototype.optional = function optional() {
+    Node.prototype.optional = function optional2() {
       const state = this._baseState;
       state.optional = true;
       return this;
@@ -49759,7 +49759,7 @@ var require_node2 = __commonJS({
             else
               this._decodeChoice(input, options);
             present = true;
-          } catch (e4) {
+          } catch (e5) {
             present = false;
           }
           input.restore(save);
@@ -49878,7 +49878,7 @@ var require_node2 = __commonJS({
             return false;
           result = { type: key, value: value2 };
           match = true;
-        } catch (e4) {
+        } catch (e5) {
           input.restore(save);
           return false;
         }
@@ -50005,11 +50005,11 @@ var require_node2 = __commonJS({
       else
         throw new Error("Unsupported tag: " + tag);
     };
-    Node.prototype._isNumstr = function isNumstr(str) {
-      return /^[0-9 ]*$/.test(str);
+    Node.prototype._isNumstr = function isNumstr(str2) {
+      return /^[0-9 ]*$/.test(str2);
     };
-    Node.prototype._isPrintstr = function isPrintstr(str) {
-      return /^[A-Za-z0-9 '()+,-./:=?]*$/.test(str);
+    Node.prototype._isPrintstr = function isPrintstr(str2) {
+      return /^[A-Za-z0-9 '()+,-./:=?]*$/.test(str2);
     };
   }
 });
@@ -50111,29 +50111,29 @@ var require_der2 = __commonJS({
         header[i] = j & 255;
       return this._createEncoderBuffer([header, content]);
     };
-    DERNode.prototype._encodeStr = function encodeStr(str, tag) {
+    DERNode.prototype._encodeStr = function encodeStr(str2, tag) {
       if (tag === "bitstr") {
-        return this._createEncoderBuffer([str.unused | 0, str.data]);
+        return this._createEncoderBuffer([str2.unused | 0, str2.data]);
       } else if (tag === "bmpstr") {
-        const buf = Buffer2.alloc(str.length * 2);
-        for (let i = 0; i < str.length; i++) {
-          buf.writeUInt16BE(str.charCodeAt(i), i * 2);
+        const buf = Buffer2.alloc(str2.length * 2);
+        for (let i = 0; i < str2.length; i++) {
+          buf.writeUInt16BE(str2.charCodeAt(i), i * 2);
         }
         return this._createEncoderBuffer(buf);
       } else if (tag === "numstr") {
-        if (!this._isNumstr(str)) {
+        if (!this._isNumstr(str2)) {
           return this.reporter.error("Encoding of string type: numstr supports only digits and space");
         }
-        return this._createEncoderBuffer(str);
+        return this._createEncoderBuffer(str2);
       } else if (tag === "printstr") {
-        if (!this._isPrintstr(str)) {
+        if (!this._isPrintstr(str2)) {
           return this.reporter.error("Encoding of string type: printstr supports only latin upper and lower case letters, digits, space, apostrophe, left and rigth parenthesis, plus sign, comma, hyphen, dot, slash, colon, equal sign, question mark");
         }
-        return this._createEncoderBuffer(str);
+        return this._createEncoderBuffer(str2);
       } else if (/str$/.test(tag)) {
-        return this._createEncoderBuffer(str);
+        return this._createEncoderBuffer(str2);
       } else if (tag === "objDesc") {
-        return this._createEncoderBuffer(str);
+        return this._createEncoderBuffer(str2);
       } else {
         return this.reporter.error("Encoding of string type: " + tag + " unsupported");
       }
@@ -50183,10 +50183,10 @@ var require_der2 = __commonJS({
         return num;
     }
     DERNode.prototype._encodeTime = function encodeTime(time, tag) {
-      let str;
+      let str2;
       const date = new Date(time);
       if (tag === "gentime") {
-        str = [
+        str2 = [
           two(date.getUTCFullYear()),
           two(date.getUTCMonth() + 1),
           two(date.getUTCDate()),
@@ -50196,7 +50196,7 @@ var require_der2 = __commonJS({
           "Z"
         ].join("");
       } else if (tag === "utctime") {
-        str = [
+        str2 = [
           two(date.getUTCFullYear() % 100),
           two(date.getUTCMonth() + 1),
           two(date.getUTCDate()),
@@ -50208,7 +50208,7 @@ var require_der2 = __commonJS({
       } else {
         this.reporter.error("Encoding " + tag + " time is not supported yet");
       }
-      return this._encodeStr(str, "octstr");
+      return this._encodeStr(str2, "octstr");
     };
     DERNode.prototype._encodeNull = function encodeNull() {
       return this._createEncoderBuffer("");
@@ -50444,11 +50444,11 @@ var require_der3 = __commonJS({
         const raw = buffer.raw();
         if (raw.length % 2 === 1)
           return buffer.error("Decoding of string type: bmpstr length mismatch");
-        let str = "";
+        let str2 = "";
         for (let i = 0; i < raw.length / 2; i++) {
-          str += String.fromCharCode(raw.readUInt16BE(i * 2));
+          str2 += String.fromCharCode(raw.readUInt16BE(i * 2));
         }
-        return str;
+        return str2;
       } else if (tag === "numstr") {
         const numstr = buffer.raw().toString("ascii");
         if (!this._isNumstr(numstr)) {
@@ -50503,7 +50503,7 @@ var require_der3 = __commonJS({
       return result;
     };
     DERNode.prototype._decodeTime = function decodeTime(buffer, tag) {
-      const str = buffer.raw().toString();
+      const str2 = buffer.raw().toString();
       let year;
       let mon;
       let day2;
@@ -50511,19 +50511,19 @@ var require_der3 = __commonJS({
       let min;
       let sec;
       if (tag === "gentime") {
-        year = str.slice(0, 4) | 0;
-        mon = str.slice(4, 6) | 0;
-        day2 = str.slice(6, 8) | 0;
-        hour = str.slice(8, 10) | 0;
-        min = str.slice(10, 12) | 0;
-        sec = str.slice(12, 14) | 0;
+        year = str2.slice(0, 4) | 0;
+        mon = str2.slice(4, 6) | 0;
+        day2 = str2.slice(6, 8) | 0;
+        hour = str2.slice(8, 10) | 0;
+        min = str2.slice(10, 12) | 0;
+        sec = str2.slice(12, 14) | 0;
       } else if (tag === "utctime") {
-        year = str.slice(0, 2) | 0;
-        mon = str.slice(2, 4) | 0;
-        day2 = str.slice(4, 6) | 0;
-        hour = str.slice(6, 8) | 0;
-        min = str.slice(8, 10) | 0;
-        sec = str.slice(10, 12) | 0;
+        year = str2.slice(0, 2) | 0;
+        mon = str2.slice(2, 4) | 0;
+        day2 = str2.slice(4, 6) | 0;
+        hour = str2.slice(6, 8) | 0;
+        min = str2.slice(8, 10) | 0;
+        sec = str2.slice(10, 12) | 0;
         if (year < 70)
           year = 2e3 + year;
         else
@@ -51186,12 +51186,12 @@ var require_crypto = __commonJS({
           return cacheSet(privateKeysCache, key, providedAlgorithm);
         }
         return cacheSet(privateKeysCache, key, detectedAlgorithm);
-      } catch (e4) {
+      } catch (e5) {
         throw cacheSet(
           privateKeysCache,
           key,
           null,
-          TokenError.wrap(e4, TokenError.codes.invalidKey, "Unsupported PEM private key.")
+          TokenError.wrap(e5, TokenError.codes.invalidKey, "Unsupported PEM private key.")
         );
       }
     }
@@ -51215,12 +51215,12 @@ var require_crypto = __commonJS({
           throw new TokenError(TokenError.codes.invalidKey, "The public key must be a string or a buffer.");
         }
         return cacheSet(publicKeysCache, key, performDetectPublicKeyAlgorithms(key));
-      } catch (e4) {
+      } catch (e5) {
         throw cacheSet(
           publicKeysCache,
           key,
           null,
-          TokenError.wrap(e4, TokenError.codes.invalidKey, "Unsupported PEM public key.")
+          TokenError.wrap(e5, TokenError.codes.invalidKey, "Unsupported PEM public key.")
         );
       }
     }
@@ -51254,8 +51254,8 @@ var require_crypto = __commonJS({
             raw = directSign(void 0, Buffer.from(input, "utf-8"), key).toString("base64");
         }
         return raw.replace(base64UrlMatcher, base64UrlReplacer);
-      } catch (e4) {
-        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e4 });
+      } catch (e5) {
+        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e5 });
       }
     }
     function verifySignature(algorithm, key, input, signature) {
@@ -51284,8 +51284,8 @@ var require_crypto = __commonJS({
           signature = joseToDer(signature, algorithm);
         }
         return createVerify("RSA-" + alg).update(input).verify(options, signature);
-      } catch (e4) {
-        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e4 });
+      } catch (e5) {
+        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e5 });
       }
     }
     module.exports = {
@@ -51638,12 +51638,12 @@ var require_verifier = __commonJS({
       let decoded;
       try {
         decoded = decode(token);
-      } catch (e4) {
+      } catch (e5) {
         if (callback) {
-          callback(e4);
+          callback(e5);
           return promise;
         }
-        throw e4;
+        throw e5;
       }
       const { header, payload, signature, input } = decoded;
       const cacheContext = {
@@ -51672,8 +51672,8 @@ var require_verifier = __commonJS({
         try {
           verifyToken(key, decoded, validationContext);
           return cacheSet(cacheContext, complete ? { header, payload, signature, input } : payload);
-        } catch (e4) {
-          throw cacheSet(cacheContext, e4);
+        } catch (e5) {
+          throw cacheSet(cacheContext, e5);
         }
       }
       getAsyncKey(key, { header, payload, signature }, (err, currentKey) => {
@@ -51704,8 +51704,8 @@ var require_verifier = __commonJS({
           }
           currentKey = prepareKeyOrSecret(currentKey, availableAlgorithms[0] === hsAlgorithms[0]);
           verifyToken(currentKey, decoded, validationContext);
-        } catch (e4) {
-          return callback(cacheSet(cacheContext, e4));
+        } catch (e5) {
+          return callback(cacheSet(cacheContext, e5));
         }
         callback(null, cacheSet(cacheContext, complete ? { header, payload, signature, input: token } : payload));
       });
@@ -51893,9 +51893,9 @@ var require_dist6 = __commonJS({
         return num;
       }
     }
-    function fmt(val, pfx, str, long) {
+    function fmt(val, pfx, str2, long) {
       var num = (val | 0) === val ? val : ~~(val + 0.5);
-      return pfx + num + (long ? " " + str + (num != 1 ? "s" : "") : str[0]);
+      return pfx + num + (long ? " " + str2 + (num != 1 ? "s" : "") : str2[0]);
     }
     function format(num, long) {
       var pfx = num < 0 ? "-" : "", abs = num < 0 ? -num : num;
@@ -52023,8 +52023,8 @@ var require_signer = __commonJS({
           const encodedHeader = Buffer.from(JSON.stringify(header), "utf-8").toString("base64").replace(base64UrlMatcher, base64UrlReplacer);
           const input = encodedHeader + "." + encodedPayload;
           token = input + "." + createSignature(algorithm, currentKey, input);
-        } catch (e4) {
-          return callback(e4);
+        } catch (e5) {
+          return callback(e5);
         }
         callback(null, token);
       });
@@ -52809,8 +52809,8 @@ var require_jwt = __commonJS({
     function fastifyJwt(fastify, options, next) {
       try {
         validateOptions(options);
-      } catch (e4) {
-        return next(e4);
+      } catch (e5) {
+        return next(e5);
       }
       const {
         cookie,
@@ -53459,11 +53459,11 @@ var require_main = __commonJS({
         try {
           const parsed = DotenvModule.parse(fs.readFileSync(path2, { encoding }));
           DotenvModule.populate(parsedAll, parsed, options);
-        } catch (e4) {
+        } catch (e5) {
           if (debug) {
-            _debug(`Failed to load ${path2} ${e4.message}`);
+            _debug(`Failed to load ${path2} ${e5.message}`);
           }
-          lastError = e4;
+          lastError = e5;
         }
       }
       let processEnv = process.env;
@@ -53478,11 +53478,11 @@ var require_main = __commonJS({
           try {
             const relative = path.relative(process.cwd(), filePath);
             shortPaths.push(relative);
-          } catch (e4) {
+          } catch (e5) {
             if (debug) {
-              _debug(`Failed to load ${filePath} ${e4.message}`);
+              _debug(`Failed to load ${filePath} ${e5.message}`);
             }
-            lastError = e4;
+            lastError = e5;
           }
         }
         _log(`injecting env (${keysCount}) from ${shortPaths.join(",")}`);
@@ -53594,13 +53594,13 @@ var require_bcrypt = __commonJS({
         if (typeof module !== "undefined" && module && module["exports"])
           try {
             return __require("crypto")["randomBytes"](len);
-          } catch (e4) {
+          } catch (e5) {
           }
         try {
           var a;
           (self["crypto"] || self["msCrypto"])["getRandomValues"](a = new Uint32Array(len));
           return Array.prototype.slice.call(a);
-        } catch (e4) {
+        } catch (e5) {
         }
         if (!randomFallback)
           throw Error("Neither WebCryptoAPI nor a crypto module is available. Use bcrypt.setRandomFallback to set an alternative");
@@ -53610,7 +53610,7 @@ var require_bcrypt = __commonJS({
       try {
         random(1);
         randomAvailable = true;
-      } catch (e4) {
+      } catch (e5) {
       }
       randomFallback = null;
       bcrypt2.setRandomFallback = function(random2) {
@@ -53765,11 +53765,11 @@ var require_bcrypt = __commonJS({
         return hash.substring(0, 29);
       };
       var nextTick = typeof process !== "undefined" && process && typeof process.nextTick === "function" ? typeof setImmediate === "function" ? setImmediate : process.nextTick : setTimeout;
-      function stringToBytes(str) {
+      function stringToBytes(str2) {
         var out = [], i = 0;
         utfx.encodeUTF16toUTF8(function() {
-          if (i >= str.length) return null;
-          return str.charCodeAt(i++);
+          if (i >= str2.length) return null;
+          return str2.charCodeAt(i++);
         }, function(b) {
           out.push(b);
         });
@@ -55440,8 +55440,8 @@ var init_util = __esm({
         return util2.objectValues(filtered);
       };
       util2.objectValues = (obj) => {
-        return util2.objectKeys(obj).map(function(e4) {
-          return obj[e4];
+        return util2.objectKeys(obj).map(function(e5) {
+          return obj[e5];
         });
       };
       util2.objectKeys = typeof Object.keys === "function" ? (obj) => Object.keys(obj) : (object) => {
@@ -58687,13 +58687,13 @@ var init_types = __esm({
           const me = this;
           return OK(async function(...args) {
             const error = new ZodError([]);
-            const parsedArgs = await me._def.args.parseAsync(args, params).catch((e4) => {
-              error.addIssue(makeArgsIssue(args, e4));
+            const parsedArgs = await me._def.args.parseAsync(args, params).catch((e5) => {
+              error.addIssue(makeArgsIssue(args, e5));
               throw error;
             });
             const result = await Reflect.apply(fn, this, parsedArgs);
-            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params).catch((e4) => {
-              error.addIssue(makeReturnsIssue(result, e4));
+            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params).catch((e5) => {
+              error.addIssue(makeReturnsIssue(result, e5));
               throw error;
             });
             return parsedReturns;
@@ -59542,10 +59542,10 @@ function escapeHtml(value2) {
   return value2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 function buildLinks(number, code, ref) {
-  const text2 = `Hola AutoMantPro, quiero empezar. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
-  const encoded = encodeURIComponent(text2);
+  const text3 = `Hola AutoMantPro, quiero empezar. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
+  const encoded = encodeURIComponent(text3);
   return {
-    text: text2,
+    text: text3,
     app: `whatsapp://send?phone=${number}&text=${encoded}`,
     wame: `https://wa.me/${number}?text=${encoded}`,
     web: `https://web.whatsapp.com/send?phone=${number}&text=${encoded}`
@@ -59572,6 +59572,10 @@ function renderEntryPage(input) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AutoMantPro \xB7 Tu mec\xE1nico de confianza en WhatsApp</title>
 <meta name="description" content="Diagn\xF3stico con IA, plan de mantenimiento y talleres verificados, todo por WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://automantpro.app/">
+<meta property="og:title" content="AutoMantPro \xB7 Tu mec\xE1nico de confianza en WhatsApp">
+<meta property="og:description" content="Plan de mantenimiento, talleres verificados y repuestos, todo por WhatsApp.">
 <style nonce="${nonce}">${STYLES}</style>
 </head>
 <body>
@@ -59658,6 +59662,9 @@ function newVisitCode() {
     code += CODE_ALPHABET[randomInt(CODE_ALPHABET.length)];
   return `AMP-${code}`;
 }
+function isPreviewBot(userAgent) {
+  return typeof userAgent === "string" && PREVIEW_BOTS.test(userAgent);
+}
 async function effectiveNumber(options) {
   if (options.resolveNumber) {
     try {
@@ -59688,17 +59695,22 @@ async function entryRoutes(app2, options = {}) {
       return reply.send(API_STATUS);
     }
     const nonce = randomBytes(16).toString("base64");
-    const query = request.query;
+    const query = request.query ?? {};
     const code = newVisitCode();
-    const ref = sanitizeRef(query?.ref);
-    if (options.onVisit && allowVisit(request.ip)) {
+    const ref = sanitizeRef(query.ref);
+    const bot = isPreviewBot(request.headers["user-agent"]);
+    const number = await effectiveNumber(options);
+    if (!bot && options.onVisit && allowVisit(request.ip)) {
       Promise.resolve().then(() => options.onVisit?.(code, ref)).catch(() => void 0);
     }
-    const html = renderEntryPage({ number: await effectiveNumber(options), code, ref, nonce });
+    if (number && !bot && !("pagina" in query)) {
+      return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number, code, ref).wame, 302);
+    }
+    const html = renderEntryPage({ number, code, ref, nonce });
     return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
   });
 }
-var API_STATUS, CODE_ALPHABET, VISITS_PER_HOUR;
+var API_STATUS, CODE_ALPHABET, VISITS_PER_HOUR, PREVIEW_BOTS;
 var init_entry = __esm({
   "packages/api/dist/interfaces/entry/index.js"() {
     "use strict";
@@ -59706,6 +59718,7 @@ var init_entry = __esm({
     API_STATUS = { status: "ok", service: "AutoMantPro API" };
     CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     VISITS_PER_HOUR = 30;
+    PREVIEW_BOTS = /facebookexternalhit|facebot|whatsapp|twitterbot|slackbot|telegrambot|linkedinbot|discordbot|googlebot|bingbot|applebot|pinterest|skypeuripreview|redditbot|embedly/i;
   }
 });
 
@@ -60059,7 +60072,7 @@ var EXTRA_TABLES, APP_SETTING_TABLE_SQL, EXTRA_STATEMENTS;
 var init_statements_extra = __esm({
   "packages/api/dist/infrastructure/schema-setup/statements-extra.js"() {
     "use strict";
-    EXTRA_TABLES = ["AdminTotp", "AppSetting"];
+    EXTRA_TABLES = ["AdminTotp", "AppSetting", "WorkOrder", "WorkOrderItem"];
     APP_SETTING_TABLE_SQL = "CREATE TABLE IF NOT EXISTS `AppSetting` (\n    `name` VARCHAR(191) NOT NULL,\n    `value` TEXT NOT NULL,\n    `updatedBy` VARCHAR(191) NULL,\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    PRIMARY KEY (`name`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
     EXTRA_STATEMENTS = [
       {
@@ -60105,7 +60118,38 @@ var init_statements_extra = __esm({
       addColumn("Appointment", "services", "JSON NULL"),
       addColumn("Appointment", "notes", "TEXT NULL"),
       addColumn("Appointment", "cancelReason", "VARCHAR(191) NULL"),
-      addColumn("Appointment", "updatedAt", "DATETIME(3) NULL")
+      addColumn("Appointment", "updatedAt", "DATETIME(3) NULL"),
+      // Órdenes de trabajo del taller (docs/34 T4–T6).
+      {
+        kind: "createTable",
+        target: "WorkOrder",
+        sql: "CREATE TABLE IF NOT EXISTS `WorkOrder` (\n    `id` VARCHAR(191) NOT NULL,\n    `number` INTEGER NOT NULL,\n    `shopId` VARCHAR(191) NOT NULL,\n    `ownerId` VARCHAR(191) NOT NULL,\n    `vehicleId` VARCHAR(191) NOT NULL,\n    `appointmentId` VARCHAR(191) NULL,\n    `status` VARCHAR(40) NOT NULL DEFAULT 'recepcion',\n    `intakeKm` INTEGER NULL,\n    `intakeNotes` TEXT NULL,\n    `diagnosis` TEXT NULL,\n    `rejectionReason` VARCHAR(191) NULL,\n    `cancelReason` VARCHAR(191) NULL,\n    `exitKm` INTEGER NULL,\n    `warrantyDays` INTEGER NULL,\n    `nextService` VARCHAR(191) NULL,\n    `diagnosisOutcome` VARCHAR(20) NULL,\n    `outcomeNote` VARCHAR(191) NULL,\n    `total` DECIMAL(10, 2) NOT NULL DEFAULT 0,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `closedAt` DATETIME(3) NULL,\n\n    UNIQUE INDEX `WorkOrder_number_key`(`number`),\n    INDEX `WorkOrder_shopId_status_idx`(`shopId`, `status`),\n    INDEX `WorkOrder_vehicleId_idx`(`vehicleId`),\n    INDEX `WorkOrder_appointmentId_idx`(`appointmentId`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      {
+        kind: "createTable",
+        target: "WorkOrderItem",
+        sql: "CREATE TABLE IF NOT EXISTS `WorkOrderItem` (\n    `id` VARCHAR(191) NOT NULL,\n    `workOrderId` VARCHAR(191) NOT NULL,\n    `kind` VARCHAR(20) NOT NULL,\n    `description` VARCHAR(191) NOT NULL,\n    `brand` VARCHAR(191) NULL,\n    `partCode` VARCHAR(191) NULL,\n    `quantity` DECIMAL(10, 2) NOT NULL DEFAULT 1,\n    `unitPrice` DECIMAL(10, 2) NOT NULL DEFAULT 0,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    INDEX `WorkOrderItem_workOrderId_idx`(`workOrderId`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      {
+        kind: "addForeignKey",
+        target: "WorkOrder.WorkOrder_shopId_fkey",
+        sql: "ALTER TABLE `WorkOrder` ADD CONSTRAINT `WorkOrder_shopId_fkey` FOREIGN KEY (`shopId`) REFERENCES `Shop`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE"
+      },
+      {
+        kind: "addForeignKey",
+        target: "WorkOrder.WorkOrder_ownerId_fkey",
+        sql: "ALTER TABLE `WorkOrder` ADD CONSTRAINT `WorkOrder_ownerId_fkey` FOREIGN KEY (`ownerId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE"
+      },
+      {
+        kind: "addForeignKey",
+        target: "WorkOrder.WorkOrder_vehicleId_fkey",
+        sql: "ALTER TABLE `WorkOrder` ADD CONSTRAINT `WorkOrder_vehicleId_fkey` FOREIGN KEY (`vehicleId`) REFERENCES `Vehicle`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE"
+      },
+      {
+        kind: "addForeignKey",
+        target: "WorkOrderItem.WorkOrderItem_workOrderId_fkey",
+        sql: "ALTER TABLE `WorkOrderItem` ADD CONSTRAINT `WorkOrderItem_workOrderId_fkey` FOREIGN KEY (`workOrderId`) REFERENCES `WorkOrder`(`id`) ON DELETE CASCADE ON UPDATE CASCADE"
+      }
     ];
   }
 });
@@ -65696,27 +65740,27 @@ var require_umd = __commonJS({
         }
         Long.fromBits = fromBits;
         var pow_dbl = Math.pow;
-        function fromString(str, unsigned, radix) {
-          if (str.length === 0) throw Error("empty string");
+        function fromString(str2, unsigned, radix) {
+          if (str2.length === 0) throw Error("empty string");
           if (typeof unsigned === "number") {
             radix = unsigned;
             unsigned = false;
           } else {
             unsigned = !!unsigned;
           }
-          if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
+          if (str2 === "NaN" || str2 === "Infinity" || str2 === "+Infinity" || str2 === "-Infinity")
             return unsigned ? UZERO : ZERO;
           radix = radix || 10;
           if (radix < 2 || 36 < radix) throw RangeError("radix");
           var p;
-          if ((p = str.indexOf("-")) > 0) throw Error("interior hyphen");
+          if ((p = str2.indexOf("-")) > 0) throw Error("interior hyphen");
           else if (p === 0) {
-            return fromString(str.substring(1), unsigned, radix).neg();
+            return fromString(str2.substring(1), unsigned, radix).neg();
           }
           var radixToPower = fromNumber(pow_dbl(radix, 8));
           var result = ZERO;
-          for (var i = 0; i < str.length; i += 8) {
-            var size = Math.min(8, str.length - i), value2 = parseInt(str.substring(i, i + size), radix);
+          for (var i = 0; i < str2.length; i += 8) {
+            var size = Math.min(8, str2.length - i), value2 = parseInt(str2.substring(i, i + size), radix);
             if (size < 8) {
               var power = fromNumber(pow_dbl(radix, size));
               result = result.mul(power).add(fromNumber(value2));
@@ -66264,12 +66308,12 @@ var require_bom_handling = __commonJS({
       this.encoder = encoder;
       this.addBOM = true;
     }
-    PrependBOMWrapper.prototype.write = function(str) {
+    PrependBOMWrapper.prototype.write = function(str2) {
       if (this.addBOM) {
-        str = BOMChar + str;
+        str2 = BOMChar + str2;
         this.addBOM = false;
       }
-      return this.encoder.write(str);
+      return this.encoder.write(str2);
     };
     PrependBOMWrapper.prototype.end = function() {
       return this.encoder.end();
@@ -66368,31 +66412,31 @@ var require_internal = __commonJS({
     function InternalEncoder(options, codec) {
       this.enc = codec.enc;
     }
-    InternalEncoder.prototype.write = function(str) {
-      return Buffer2.from(str, this.enc);
+    InternalEncoder.prototype.write = function(str2) {
+      return Buffer2.from(str2, this.enc);
     };
     InternalEncoder.prototype.end = function() {
     };
     function InternalEncoderBase64(options, codec) {
       this.prevStr = "";
     }
-    InternalEncoderBase64.prototype.write = function(str) {
-      str = this.prevStr + str;
-      var completeQuads = str.length - str.length % 4;
-      this.prevStr = str.slice(completeQuads);
-      str = str.slice(0, completeQuads);
-      return Buffer2.from(str, "base64");
+    InternalEncoderBase64.prototype.write = function(str2) {
+      str2 = this.prevStr + str2;
+      var completeQuads = str2.length - str2.length % 4;
+      this.prevStr = str2.slice(completeQuads);
+      str2 = str2.slice(0, completeQuads);
+      return Buffer2.from(str2, "base64");
     };
     InternalEncoderBase64.prototype.end = function() {
       return Buffer2.from(this.prevStr, "base64");
     };
     function InternalEncoderCesu8(options, codec) {
     }
-    InternalEncoderCesu8.prototype.write = function(str) {
-      var buf = Buffer2.alloc(str.length * 3);
+    InternalEncoderCesu8.prototype.write = function(str2) {
+      var buf = Buffer2.alloc(str2.length * 3);
       var bufIdx = 0;
-      for (var i = 0; i < str.length; i++) {
-        var charCode = str.charCodeAt(i);
+      for (var i = 0; i < str2.length; i++) {
+        var charCode = str2.charCodeAt(i);
         if (charCode < 128) {
           buf[bufIdx++] = charCode;
         } else if (charCode < 2048) {
@@ -66473,25 +66517,25 @@ var require_internal = __commonJS({
     function InternalEncoderUtf8(options, codec) {
       this.highSurrogate = "";
     }
-    InternalEncoderUtf8.prototype.write = function(str) {
+    InternalEncoderUtf8.prototype.write = function(str2) {
       if (this.highSurrogate) {
-        str = this.highSurrogate + str;
+        str2 = this.highSurrogate + str2;
         this.highSurrogate = "";
       }
-      if (str.length > 0) {
-        var charCode = str.charCodeAt(str.length - 1);
+      if (str2.length > 0) {
+        var charCode = str2.charCodeAt(str2.length - 1);
         if (charCode >= 55296 && charCode < 56320) {
-          this.highSurrogate = str[str.length - 1];
-          str = str.slice(0, str.length - 1);
+          this.highSurrogate = str2[str2.length - 1];
+          str2 = str2.slice(0, str2.length - 1);
         }
       }
-      return Buffer2.from(str, this.enc);
+      return Buffer2.from(str2, this.enc);
     };
     InternalEncoderUtf8.prototype.end = function() {
       if (this.highSurrogate) {
-        var str = this.highSurrogate;
+        var str2 = this.highSurrogate;
         this.highSurrogate = "";
-        return Buffer2.from(str, this.enc);
+        return Buffer2.from(str2, this.enc);
       }
     };
   }
@@ -66518,8 +66562,8 @@ var require_utf32 = __commonJS({
       this.isLE = codec.isLE;
       this.highSurrogate = 0;
     }
-    Utf32Encoder.prototype.write = function(str) {
-      var src = Buffer2.from(str, "ucs2");
+    Utf32Encoder.prototype.write = function(str2) {
+      var src = Buffer2.from(str2, "ucs2");
       var dst = Buffer2.alloc(src.length * 2 + 4);
       var write32 = this.isLE ? dst.writeUInt32LE : dst.writeUInt32BE;
       var offset2 = 0;
@@ -66644,8 +66688,8 @@ var require_utf32 = __commonJS({
       }
       this.encoder = codec.iconv.getEncoder(options.defaultEncoding || "utf-32le", options);
     }
-    Utf32AutoEncoder.prototype.write = function(str) {
-      return this.encoder.write(str);
+    Utf32AutoEncoder.prototype.write = function(str2) {
+      return this.encoder.write(str2);
     };
     Utf32AutoEncoder.prototype.end = function() {
       return this.encoder.end();
@@ -66745,8 +66789,8 @@ var require_utf16 = __commonJS({
     Utf16BECodec.prototype.bomAware = true;
     function Utf16BEEncoder() {
     }
-    Utf16BEEncoder.prototype.write = function(str) {
-      var buf = Buffer2.from(str, "ucs2");
+    Utf16BEEncoder.prototype.write = function(str2) {
+      var buf = Buffer2.from(str2, "ucs2");
       for (var i = 0; i < buf.length; i += 2) {
         var tmp = buf[i];
         buf[i] = buf[i + 1];
@@ -66795,8 +66839,8 @@ var require_utf16 = __commonJS({
       }
       this.encoder = codec.iconv.getEncoder("utf-16le", options);
     }
-    Utf16Encoder.prototype.write = function(str) {
-      return this.encoder.write(str);
+    Utf16Encoder.prototype.write = function(str2) {
+      return this.encoder.write(str2);
     };
     Utf16Encoder.prototype.end = function() {
       return this.encoder.end();
@@ -66892,8 +66936,8 @@ var require_utf7 = __commonJS({
     function Utf7Encoder(options, codec) {
       this.iconv = codec.iconv;
     }
-    Utf7Encoder.prototype.write = function(str) {
-      return Buffer2.from(str.replace(nonDirectChars, function(chunk) {
+    Utf7Encoder.prototype.write = function(str2) {
+      return Buffer2.from(str2.replace(nonDirectChars, function(chunk) {
         return "+" + (chunk === "+" ? "" : this.iconv.encode(chunk, "utf16-be").toString("base64").replace(/=+$/, "")) + "-";
       }.bind(this)));
     };
@@ -66977,14 +67021,14 @@ var require_utf7 = __commonJS({
       this.base64Accum = Buffer2.alloc(6);
       this.base64AccumIdx = 0;
     }
-    Utf7IMAPEncoder.prototype.write = function(str) {
+    Utf7IMAPEncoder.prototype.write = function(str2) {
       var inBase64 = this.inBase64;
       var base64Accum = this.base64Accum;
       var base64AccumIdx = this.base64AccumIdx;
-      var buf = Buffer2.alloc(str.length * 5 + 10);
+      var buf = Buffer2.alloc(str2.length * 5 + 10);
       var bufIdx = 0;
-      for (var i2 = 0; i2 < str.length; i2++) {
-        var uChar = str.charCodeAt(i2);
+      for (var i2 = 0; i2 < str2.length; i2++) {
+        var uChar = str2.charCodeAt(i2);
         if (uChar >= 32 && uChar <= 126) {
           if (inBase64) {
             if (base64AccumIdx > 0) {
@@ -67125,10 +67169,10 @@ var require_sbcs_codec = __commonJS({
     function SBCSEncoder(options, codec) {
       this.encodeBuf = codec.encodeBuf;
     }
-    SBCSEncoder.prototype.write = function(str) {
-      var buf = Buffer2.alloc(str.length);
-      for (var i = 0; i < str.length; i++) {
-        buf[i] = this.encodeBuf[str.charCodeAt(i)];
+    SBCSEncoder.prototype.write = function(str2) {
+      var buf = Buffer2.alloc(str2.length);
+      for (var i = 0; i < str2.length; i++) {
+        buf[i] = this.encodeBuf[str2.charCodeAt(i)];
       }
       return buf;
     };
@@ -68004,8 +68048,8 @@ var require_dbcs_codec = __commonJS({
       this.defaultCharSingleByte = codec.defCharSB;
       this.gb18030 = codec.gb18030;
     }
-    DBCSEncoder.prototype.write = function(str) {
-      var newBuf = Buffer2.alloc(str.length * (this.gb18030 ? 4 : 3));
+    DBCSEncoder.prototype.write = function(str2) {
+      var newBuf = Buffer2.alloc(str2.length * (this.gb18030 ? 4 : 3));
       var leadSurrogate = this.leadSurrogate;
       var seqObj = this.seqObj;
       var nextChar = -1;
@@ -68013,8 +68057,8 @@ var require_dbcs_codec = __commonJS({
       var j = 0;
       while (true) {
         if (nextChar === -1) {
-          if (i2 == str.length) break;
-          var uCode = str.charCodeAt(i2++);
+          if (i2 == str2.length) break;
+          var uCode = str2.charCodeAt(i2++);
         } else {
           var uCode = nextChar;
           nextChar = -1;
@@ -69769,8 +69813,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res);
           done();
-        } catch (e4) {
-          done(e4);
+        } catch (e5) {
+          done(e5);
         }
       };
       IconvLiteEncoderStream.prototype._flush = function(done) {
@@ -69778,8 +69822,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res);
           done();
-        } catch (e4) {
-          done(e4);
+        } catch (e5) {
+          done(e5);
         }
       };
       IconvLiteEncoderStream.prototype.collect = function(cb) {
@@ -69810,8 +69854,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e4) {
-          done(e4);
+        } catch (e5) {
+          done(e5);
         }
       };
       IconvLiteDecoderStream.prototype._flush = function(done) {
@@ -69819,8 +69863,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e4) {
-          done(e4);
+        } catch (e5) {
+          done(e5);
         }
       };
       IconvLiteDecoderStream.prototype.collect = function(cb) {
@@ -69852,10 +69896,10 @@ var require_lib4 = __commonJS({
     module.exports.encodings = null;
     module.exports.defaultCharUnicode = "\uFFFD";
     module.exports.defaultCharSingleByte = "?";
-    module.exports.encode = function encode(str, encoding, options) {
-      str = "" + (str || "");
+    module.exports.encode = function encode(str2, encoding, options) {
+      str2 = "" + (str2 || "");
       var encoder = module.exports.getEncoder(encoding, options);
-      var res = encoder.write(str);
+      var res = encoder.write(str2);
       var trail = encoder.end();
       return trail && trail.length > 0 ? Buffer2.concat([res, trail]) : res;
     };
@@ -69876,7 +69920,7 @@ var require_lib4 = __commonJS({
       try {
         module.exports.getCodec(enc);
         return true;
-      } catch (e4) {
+      } catch (e5) {
         return false;
       }
     };
@@ -69959,7 +70003,7 @@ var require_lib4 = __commonJS({
     var streamModule;
     try {
       streamModule = __require("stream");
-    } catch (e4) {
+    } catch (e5) {
     }
     if (streamModule && streamModule.Transform) {
       module.exports.enableStreamingAPI(streamModule);
@@ -70242,9 +70286,9 @@ var require_types6 = __commonJS({
 var require_helpers = __commonJS({
   "node_modules/mysql2/lib/helpers.js"(exports) {
     "use strict";
-    function srcEscape(str) {
+    function srcEscape(str2) {
       return JSON.stringify({
-        [str]: 1
+        [str2]: 1
       }).slice(1, -3);
     }
     exports.srcEscape = srcEscape;
@@ -70254,12 +70298,12 @@ var require_helpers = __commonJS({
       const REQUIRE_TERMINATOR = "";
       highlightFn = __require(`cardinal${REQUIRE_TERMINATOR}`).highlight;
     } catch {
-      highlightFn = (text2) => {
+      highlightFn = (text3) => {
         if (!cardinalRecommended) {
           console.log("For nicer debug output consider install cardinal@^2.0.0");
           cardinalRecommended = true;
         }
-        return text2;
+        return text3;
       };
     }
     function printDebugWithCode(msg, code) {
@@ -70671,14 +70715,14 @@ var require_packet = __commonJS({
           }
           return localDate(y, m, d, H, M, S, ms);
         }
-        let str = this.readDateTimeString(6, "T", null);
-        if (str.startsWith(ZERO_DATE)) {
+        let str2 = this.readDateTimeString(6, "T", null);
+        if (str2.startsWith(ZERO_DATE)) {
           return /* @__PURE__ */ new Date(NaN);
         }
-        if (str.length === 10) {
-          str += "T00:00:00";
+        if (str2.length === 10) {
+          str2 += "T00:00:00";
         }
-        return new Date(str + timezone);
+        return new Date(str2 + timezone);
       }
       readDateTimeString(decimals, timeSep, columnType) {
         const length = this.readInt8();
@@ -70689,37 +70733,37 @@ var require_packet = __commonJS({
         let M = 0;
         let S = 0;
         let ms = 0;
-        let str = ZERO_DATE;
+        let str2 = ZERO_DATE;
         if (length > 3) {
           y = this.readInt16();
           m = this.readInt8();
           d = this.readInt8();
-          str = [leftPad(4, y), leftPad(2, m), leftPad(2, d)].join("-");
+          str2 = [leftPad(4, y), leftPad(2, m), leftPad(2, d)].join("-");
         }
         if (length > 6) {
           H = this.readInt8();
           M = this.readInt8();
           S = this.readInt8();
-          str += `${timeSep || " "}${[
+          str2 += `${timeSep || " "}${[
             leftPad(2, H),
             leftPad(2, M),
             leftPad(2, S)
           ].join(":")}`;
         } else if (columnType === Types.DATETIME || columnType === Types.TIMESTAMP) {
-          str += " 00:00:00";
+          str2 += " 00:00:00";
         }
         if (length > 10) {
           ms = this.readInt32();
-          str += ".";
+          str2 += ".";
           if (decimals) {
             ms = leftPad(6, ms);
             if (ms.length > decimals) {
               ms = ms.substring(0, decimals);
             }
           }
-          str += ms;
+          str2 += ms;
         }
-        return str;
+        return str2;
       }
       // TIME - value as a string, Can be negative
       readTimeString(convertTtoMs) {
@@ -70826,20 +70870,20 @@ var require_packet = __commonJS({
           this.offset++;
           sign = -1;
         }
-        let str;
+        let str2;
         const numDigits = end - this.offset;
         if (supportBigNumbers) {
           if (numDigits >= 15) {
-            str = this.readString(end - this.offset, "binary");
-            result = parseInt(str, 10);
+            str2 = this.readString(end - this.offset, "binary");
+            result = parseInt(str2, 10);
             if (Number.isSafeInteger(sign * result)) {
               return sign * result;
             }
-            return sign === -1 ? `-${str}` : str;
+            return sign === -1 ? `-${str2}` : str2;
           }
           if (numDigits > 16) {
-            str = this.readString(end - this.offset);
-            return sign === -1 ? `-${str}` : str;
+            str2 = this.readString(end - this.offset);
+            return sign === -1 ? `-${str2}` : str2;
           }
         }
         if (this.buffer[this.offset] === plus) {
@@ -71004,11 +71048,11 @@ var require_packet = __commonJS({
       // With supportBigNumbers, unsafe integers become exact strings,
       // mirroring the option's behaviour for BIGINT columns
       parseJson(encoding, supportBigNumbers) {
-        const str = this.readLengthCodedString(encoding);
-        if (supportBigNumbers && jsonSourceAccessSupported && str !== null && jsonBigNumeral.test(str)) {
-          return JSON.parse(str, jsonBigNumberReviver);
+        const str2 = this.readLengthCodedString(encoding);
+        if (supportBigNumbers && jsonSourceAccessSupported && str2 !== null && jsonBigNumeral.test(str2)) {
+          return JSON.parse(str2, jsonBigNumberReviver);
         }
-        return JSON.parse(str);
+        return JSON.parse(str2);
       }
       parseDate(timezone) {
         const strLen = this.readLengthCodedNumber();
@@ -71049,9 +71093,9 @@ var require_packet = __commonJS({
             return /* @__PURE__ */ new Date(NaN);
           }
           if (y < 100) {
-            const str2 = StringParser.decode(b, "binary", s, s + len);
+            const str3 = StringParser.decode(b, "binary", s, s + len);
             this.offset += len;
-            return !timezone || timezone === "local" ? new Date(str2) : /* @__PURE__ */ new Date(`${str2}${timezone}`);
+            return !timezone || timezone === "local" ? new Date(str3) : /* @__PURE__ */ new Date(`${str3}${timezone}`);
           }
           const h = (b[s + 11] - 48) * 10 + (b[s + 12] - 48);
           const mi = (b[s + 14] - 48) * 10 + (b[s + 15] - 48);
@@ -71080,12 +71124,12 @@ var require_packet = __commonJS({
             `${StringParser.decode(b, "binary", s, s + len)}${timezone}`
           );
         }
-        const str = StringParser.decode(b, "binary", s, s + len);
+        const str2 = StringParser.decode(b, "binary", s, s + len);
         this.offset += len;
         if (!timezone || timezone === "local") {
-          return new Date(str);
+          return new Date(str2);
         }
-        return /* @__PURE__ */ new Date(`${str}${timezone}`);
+        return /* @__PURE__ */ new Date(`${str2}${timezone}`);
       }
       parseFloat(len) {
         if (len === null) {
@@ -71095,9 +71139,9 @@ var require_packet = __commonJS({
           return 0;
         }
         if (len > 17) {
-          const str = this.buffer.toString("utf8", this.offset, this.offset + len);
+          const str2 = this.buffer.toString("utf8", this.offset, this.offset + len);
           this.offset += len;
-          return Number.parseFloat(str);
+          return Number.parseFloat(str2);
         }
         let result = 0;
         const end = this.offset + len;
@@ -71118,9 +71162,9 @@ var require_packet = __commonJS({
             this.offset++;
           } else if (charCode === exponent || charCode === exponentCapital) {
             const start = end - len;
-            const str = this.buffer.toString("utf8", start, end);
+            const str2 = this.buffer.toString("utf8", start, end);
             this.offset = end;
-            return Number.parseFloat(str);
+            return Number.parseFloat(str2);
           } else {
             result *= 10;
             result += this.buffer[this.offset] - 48;
@@ -71358,8 +71402,8 @@ var require_packet = __commonJS({
         }
         return 9;
       }
-      static lengthCodedStringLength(str, encoding) {
-        const buf = StringParser.encode(str, encoding);
+      static lengthCodedStringLength(str2, encoding) {
+        const buf = StringParser.encode(str2, encoding);
         const slen = buf.length;
         return _Packet.lengthCodedNumberLength(slen) + slen;
       }
@@ -74497,8 +74541,8 @@ var require_mysql_native_password = __commonJS({
 var require_mysql_clear_password = __commonJS({
   "node_modules/mysql2/lib/auth_plugins/mysql_clear_password.js"(exports, module) {
     "use strict";
-    function bufferFromStr(str) {
-      return Buffer.from(`${str}\0`);
+    function bufferFromStr(str2) {
+      return Buffer.from(`${str2}\0`);
     }
     var create_mysql_clear_password_plugin = (pluginOptions) => function mysql_clear_password_plugin({ connection, command }) {
       const password = command.password || pluginOptions.password || connection.config.password;
@@ -74961,9 +75005,9 @@ var require_client_handshake = __commonJS({
         }
       }
       handshakeInit(helloPacket, connection) {
-        this.on("error", (e4) => {
-          connection._fatalError = e4;
-          connection._protocolError = e4;
+        this.on("error", (e5) => {
+          connection._fatalError = e5;
+          connection._protocolError = e5;
         });
         this.handshake = Packets.Handshake.fromPacket(helloPacket);
         if (connection.config.debug) {
@@ -75555,8 +75599,8 @@ var require_charsets = __commonJS({
 var require_is_property = __commonJS({
   "node_modules/is-property/is-property.js"(exports, module) {
     "use strict";
-    function isProperty(str) {
-      return /^[$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc][$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc0-9\u0300-\u036f\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u064b-\u0669\u0670\u06d6-\u06dc\u06df-\u06e4\u06e7\u06e8\u06ea-\u06ed\u06f0-\u06f9\u0711\u0730-\u074a\u07a6-\u07b0\u07c0-\u07c9\u07eb-\u07f3\u0816-\u0819\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0859-\u085b\u08e4-\u08fe\u0900-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09cb-\u09cd\u09d7\u09e2\u09e3\u09e6-\u09ef\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b62\u0b63\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c01-\u0c03\u0c3e-\u0c44\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62\u0c63\u0c66-\u0c6f\u0c82\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2\u0ce3\u0ce6-\u0cef\u0d02\u0d03\u0d3e-\u0d44\u0d46-\u0d48\u0d4a-\u0d4d\u0d57\u0d62\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0df2\u0df3\u0e31\u0e34-\u0e3a\u0e47-\u0e4e\u0e50-\u0e59\u0eb1\u0eb4-\u0eb9\u0ebb\u0ebc\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f3e\u0f3f\u0f71-\u0f84\u0f86\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u102b-\u103e\u1040-\u1049\u1056-\u1059\u105e-\u1060\u1062-\u1064\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17b4-\u17d3\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u18a9\u1920-\u192b\u1930-\u193b\u1946-\u194f\u19b0-\u19c0\u19c8\u19c9\u19d0-\u19d9\u1a17-\u1a1b\u1a55-\u1a5e\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1b00-\u1b04\u1b34-\u1b44\u1b50-\u1b59\u1b6b-\u1b73\u1b80-\u1b82\u1ba1-\u1bad\u1bb0-\u1bb9\u1be6-\u1bf3\u1c24-\u1c37\u1c40-\u1c49\u1c50-\u1c59\u1cd0-\u1cd2\u1cd4-\u1ce8\u1ced\u1cf2-\u1cf4\u1dc0-\u1de6\u1dfc-\u1dff\u200c\u200d\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2cef-\u2cf1\u2d7f\u2de0-\u2dff\u302a-\u302f\u3099\u309a\ua620-\ua629\ua66f\ua674-\ua67d\ua69f\ua6f0\ua6f1\ua802\ua806\ua80b\ua823-\ua827\ua880\ua881\ua8b4-\ua8c4\ua8d0-\ua8d9\ua8e0-\ua8f1\ua900-\ua909\ua926-\ua92d\ua947-\ua953\ua980-\ua983\ua9b3-\ua9c0\ua9d0-\ua9d9\uaa29-\uaa36\uaa43\uaa4c\uaa4d\uaa50-\uaa59\uaa7b\uaab0\uaab2-\uaab4\uaab7\uaab8\uaabe\uaabf\uaac1\uaaeb-\uaaef\uaaf5\uaaf6\uabe3-\uabea\uabec\uabed\uabf0-\uabf9\ufb1e\ufe00-\ufe0f\ufe20-\ufe26\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f]*$/.test(str);
+    function isProperty(str2) {
+      return /^[$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc][$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc0-9\u0300-\u036f\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u064b-\u0669\u0670\u06d6-\u06dc\u06df-\u06e4\u06e7\u06e8\u06ea-\u06ed\u06f0-\u06f9\u0711\u0730-\u074a\u07a6-\u07b0\u07c0-\u07c9\u07eb-\u07f3\u0816-\u0819\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0859-\u085b\u08e4-\u08fe\u0900-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09cb-\u09cd\u09d7\u09e2\u09e3\u09e6-\u09ef\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b62\u0b63\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c01-\u0c03\u0c3e-\u0c44\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62\u0c63\u0c66-\u0c6f\u0c82\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2\u0ce3\u0ce6-\u0cef\u0d02\u0d03\u0d3e-\u0d44\u0d46-\u0d48\u0d4a-\u0d4d\u0d57\u0d62\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0df2\u0df3\u0e31\u0e34-\u0e3a\u0e47-\u0e4e\u0e50-\u0e59\u0eb1\u0eb4-\u0eb9\u0ebb\u0ebc\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f3e\u0f3f\u0f71-\u0f84\u0f86\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u102b-\u103e\u1040-\u1049\u1056-\u1059\u105e-\u1060\u1062-\u1064\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17b4-\u17d3\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u18a9\u1920-\u192b\u1930-\u193b\u1946-\u194f\u19b0-\u19c0\u19c8\u19c9\u19d0-\u19d9\u1a17-\u1a1b\u1a55-\u1a5e\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1b00-\u1b04\u1b34-\u1b44\u1b50-\u1b59\u1b6b-\u1b73\u1b80-\u1b82\u1ba1-\u1bad\u1bb0-\u1bb9\u1be6-\u1bf3\u1c24-\u1c37\u1c40-\u1c49\u1c50-\u1c59\u1cd0-\u1cd2\u1cd4-\u1ce8\u1ced\u1cf2-\u1cf4\u1dc0-\u1de6\u1dfc-\u1dff\u200c\u200d\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2cef-\u2cf1\u2d7f\u2de0-\u2dff\u302a-\u302f\u3099\u309a\ua620-\ua629\ua66f\ua674-\ua67d\ua69f\ua6f0\ua6f1\ua802\ua806\ua80b\ua823-\ua827\ua880\ua881\ua8b4-\ua8c4\ua8d0-\ua8d9\ua8e0-\ua8f1\ua900-\ua909\ua926-\ua92d\ua947-\ua953\ua980-\ua983\ua9b3-\ua9c0\ua9d0-\ua9d9\uaa29-\uaa36\uaa43\uaa4c\uaa4d\uaa50-\uaa59\uaa7b\uaab0\uaab2-\uaab4\uaab7\uaab8\uaabe\uaabf\uaac1\uaaeb-\uaaef\uaaf5\uaaf6\uabe3-\uabea\uabec\uabed\uabf0-\uabf9\ufb1e\ufe00-\ufe0f\ufe20-\ufe26\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f]*$/.test(str2);
     }
     module.exports = isProperty;
   }
@@ -75644,10 +75688,10 @@ var require_generate_function = __commonJS({
       var lines = [];
       var indent = 0;
       var vars = {};
-      var push = function(str) {
+      var push = function(str2) {
         var spaces = "";
         while (spaces.length < indent * 2) spaces += "  ";
-        lines.push(spaces + str);
+        lines.push(spaces + str2);
       };
       var pushLine = function(line2) {
         if (INDENT_END.test(line2.trim()[0]) && INDENT_START.test(line2[line2.length - 1])) {
@@ -76717,21 +76761,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows4, fields;
+          let rows5, fields;
           if (this._resultIndex === 0) {
-            rows4 = this._rows[0];
+            rows5 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows4 = this._rows;
+            rows5 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows4, fields);
+              this.onResult(null, rows5, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows4);
+              this.onResult(null, rows5);
             });
           }
         }
@@ -79288,9 +79332,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows4, columns, binary = false) {
+      writeTextResult(rows5, columns, binary = false) {
         this.writeColumns(columns);
-        rows4.forEach((row) => {
+        rows5.forEach((row) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column) => {
             arrayRow.push(row[column.name]);
@@ -79400,12 +79444,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve, reject, stackHolder) {
-      return function(err, rows4, fields) {
+      return function(err, rows5, fields) {
         if (err) {
           applyCapturedStack(err, stackHolder);
           reject(err);
         } else {
-          resolve([rows4, fields]);
+          resolve([rows5, fields]);
         }
       };
     }
@@ -80013,9 +80057,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err2, rows4, fields) {
+              cmdQuery.onResult = function(err2, rows5, fields) {
                 queryError = err2 || null;
-                origOnResult(err2, rows4, fields);
+                origOnResult(err2, rows5, fields);
               };
             } else {
               cmdQuery.once("error", (err2) => {
@@ -80029,12 +80073,12 @@ var require_pool = __commonJS({
                 conn.release();
               }
             });
-          } catch (e4) {
+          } catch (e5) {
             conn.release();
             if (typeof cmdQuery.onResult === "function") {
-              cmdQuery.onResult(e4);
+              cmdQuery.onResult(e5);
             } else {
-              cmdQuery.emit("error", e4);
+              cmdQuery.emit("error", e5);
             }
           }
         });
@@ -80050,17 +80094,17 @@ var require_pool = __commonJS({
             return cb(err);
           }
           try {
-            conn.execute(sql, values, (err2, rows4, fields) => {
+            conn.execute(sql, values, (err2, rows5, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
-              cb(err2, rows4, fields);
+              cb(err2, rows5, fields);
             }).once("end", () => {
               conn.release();
             });
-          } catch (e4) {
+          } catch (e5) {
             conn.release();
-            return cb(e4);
+            return cb(e5);
           }
         });
       }
@@ -80346,9 +80390,9 @@ var require_pool_cluster = __commonJS({
             conn.query(query).once("end", () => {
               conn.release();
             });
-          } catch (e4) {
+          } catch (e5) {
             conn.release();
-            throw e4;
+            throw e5;
           }
         });
         return query;
@@ -80372,9 +80416,9 @@ var require_pool_cluster = __commonJS({
             conn.execute(sql, values, cb).once("end", () => {
               conn.release();
             });
-          } catch (e4) {
+          } catch (e5) {
             conn.release();
-            throw e4;
+            throw e5;
           }
         });
       }
@@ -80880,8 +80924,8 @@ async function openConnection(env = process.env) {
   });
 }
 function firstRow(result) {
-  const rows4 = result[0];
-  return Array.isArray(rows4) ? rows4[0] : void 0;
+  const rows5 = result[0];
+  return Array.isArray(rows5) ? rows5[0] : void 0;
 }
 async function count(conn, sql, params) {
   const row = firstRow(await conn.query(sql, params));
@@ -80910,8 +80954,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows4] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows4) ? rows4.map((r) => String(r.name)) : [];
+  const [rows5] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows5) ? rows5.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -80949,15 +80993,15 @@ async function applySchemaNow(conn, statements = ALL_STATEMENTS) {
       await conn.query(statement.sql);
       results.push({ ...base, status: "applied" });
     } catch (err) {
-      const e4 = err;
-      if (e4.code && ALREADY_APPLIED.has(e4.code)) {
+      const e5 = err;
+      if (e5.code && ALREADY_APPLIED.has(e5.code)) {
         results.push({ ...base, status: "skipped" });
         continue;
       }
       results.push({
         ...base,
         status: "failed",
-        error: { code: e4.code ?? "UNKNOWN", message: e4.sqlMessage ?? e4.message ?? "Error desconocido" }
+        error: { code: e5.code ?? "UNKNOWN", message: e5.sqlMessage ?? e5.message ?? "Error desconocido" }
       });
       break;
     }
@@ -81040,8 +81084,8 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows4] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row = Array.isArray(rows4) ? rows4[0] : void 0;
+          const [rows5] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row = Array.isArray(rows5) ? rows5[0] : void 0;
           return row?.value === void 0 || row.value === null ? null : String(row.value);
         });
       }
@@ -81114,8 +81158,8 @@ var init_visit_store = __esm({
       }
       find(code, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const [rows4] = await conn.query("SELECT payload, createdAt FROM `Event` WHERE type = 'entry.visit' AND entityType = 'Visit' AND entityId = ? AND createdAt >= ? ORDER BY createdAt DESC LIMIT 1", [code, new Date(now.getTime() - MAX_AGE_MS)]);
-          const row = Array.isArray(rows4) ? rows4[0] : void 0;
+          const [rows5] = await conn.query("SELECT payload, createdAt FROM `Event` WHERE type = 'entry.visit' AND entityType = 'Visit' AND entityId = ? AND createdAt >= ? ORDER BY createdAt DESC LIMIT 1", [code, new Date(now.getTime() - MAX_AGE_MS)]);
+          const row = Array.isArray(rows5) ? rows5[0] : void 0;
           if (!row)
             return null;
           let payload = row.payload;
@@ -82697,19 +82741,19 @@ function priorityFor(status) {
       return "baja";
   }
 }
-function formatVencido(km, days) {
+function formatVencido(km3, days) {
   const parts = [];
-  if (km !== null && km <= 0)
-    parts.push(`hace ${Math.abs(km)} km`);
+  if (km3 !== null && km3 <= 0)
+    parts.push(`hace ${Math.abs(km3)} km`);
   if (days !== null && days <= 0) {
     const months = Math.max(1, Math.abs(Math.round(days / DAYS_PER_MONTH)));
     parts.push(`hace ${months} ${months === 1 ? "mes" : "meses"}`);
   }
   return parts.length > 0 ? `Vencido ${parts.join(" y ")}` : "Vencido";
 }
-function formatProximo(km, days) {
-  if (km !== null && km <= NEXT_WINDOW_KM) {
-    return `En ${Math.max(0, km)} km`;
+function formatProximo(km3, days) {
+  if (km3 !== null && km3 <= NEXT_WINDOW_KM) {
+    return `En ${Math.max(0, km3)} km`;
   }
   if (days !== null && days <= NEXT_WINDOW_DAYS) {
     if (days >= 7) {
@@ -82727,9 +82771,9 @@ function buildReason(status, remainingKm, remainingDays, effKm, effMonths) {
     case "proximo":
       return formatProximo(remainingKm, remainingDays);
     default: {
-      const km = effKm === null ? "\u2014" : String(effKm);
+      const km3 = effKm === null ? "\u2014" : String(effKm);
       const months = effMonths === null ? "\u2014" : String(effMonths);
-      return `Al d\xEDa (cada ${km} km / ${months} meses)`;
+      return `Al d\xEDa (cada ${km3} km / ${months} meses)`;
     }
   }
 }
@@ -83743,7 +83787,7 @@ var init_security = __esm({
 function layout(input) {
   const nonce = escapeHtml(input.nonce);
   const header = input.nav ? `<header><div class="brand">Auto<span>Mant</span>Pro \xB7 Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/attend">Atender</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/appointments">Turnos</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
+  <nav><a href="/admin">Tablero</a><a href="/admin/attend">Atender</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/appointments">Turnos</a><a href="/admin/work-orders">\xD3rdenes</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>` : "";
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>${escapeHtml(input.title)} \xB7 AutoMantPro Admin</title>
@@ -83764,8 +83808,8 @@ function twoFactorView(error) {
   <label for="code">C\xF3digo</label><input id="code" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="one-time-code">
   <button class="full" type="submit">Entrar</button></form>`;
 }
-function messageView(title, text2) {
-  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text2)}</p></div>`;
+function messageView(title, text3) {
+  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text3)}</p></div>`;
 }
 function kv(record) {
   const entries = Object.entries(record);
@@ -83977,7 +84021,7 @@ var require_error_correction_level = __commonJS({
       }
       try {
         return fromString(value2);
-      } catch (e4) {
+      } catch (e5) {
         return defaultValue;
       }
     };
@@ -84731,14 +84775,14 @@ var require_regex = __commonJS({
     var TEST_KANJI = new RegExp("^" + kanji + "$");
     var TEST_NUMERIC = new RegExp("^" + numeric + "$");
     var TEST_ALPHANUMERIC = new RegExp("^[A-Z0-9 $%*+\\-./:]+$");
-    exports.testKanji = function testKanji(str) {
-      return TEST_KANJI.test(str);
+    exports.testKanji = function testKanji(str2) {
+      return TEST_KANJI.test(str2);
     };
-    exports.testNumeric = function testNumeric(str) {
-      return TEST_NUMERIC.test(str);
+    exports.testNumeric = function testNumeric(str2) {
+      return TEST_NUMERIC.test(str2);
     };
-    exports.testAlphanumeric = function testAlphanumeric(str) {
-      return TEST_ALPHANUMERIC.test(str);
+    exports.testAlphanumeric = function testAlphanumeric(str2) {
+      return TEST_ALPHANUMERIC.test(str2);
     };
   }
 });
@@ -84817,7 +84861,7 @@ var require_mode = __commonJS({
       }
       try {
         return fromString(value2);
-      } catch (e4) {
+      } catch (e5) {
         return defaultValue;
       }
     };
@@ -85232,13 +85276,13 @@ var require_segments = __commonJS({
     var Regex = require_regex();
     var Utils = require_utils6();
     var dijkstra = require_dijkstra();
-    function getStringByteLength(str) {
-      return unescape(encodeURIComponent(str)).length;
+    function getStringByteLength(str2) {
+      return unescape(encodeURIComponent(str2)).length;
     }
-    function getSegments(regex, mode, str) {
+    function getSegments(regex, mode, str2) {
       const segments = [];
       let result;
-      while ((result = regex.exec(str)) !== null) {
+      while ((result = regex.exec(str2)) !== null) {
         segments.push({
           data: result[0],
           index: result.index,
@@ -88064,13 +88108,13 @@ var require_svg_tag = __commonJS({
     var Utils = require_utils7();
     function getColorAttrib(color, attrib) {
       const alpha = color.a / 255;
-      const str = attrib + '="' + color.hex + '"';
-      return alpha < 1 ? str + " " + attrib + '-opacity="' + alpha.toFixed(2).slice(1) + '"' : str;
+      const str2 = attrib + '="' + color.hex + '"';
+      return alpha < 1 ? str2 + " " + attrib + '-opacity="' + alpha.toFixed(2).slice(1) + '"' : str2;
     }
     function svgCmd(cmd, x, y) {
-      let str = cmd + x;
-      if (typeof y !== "undefined") str += " " + y;
-      return str;
+      let str2 = cmd + x;
+      if (typeof y !== "undefined") str2 += " " + y;
+      return str2;
     }
     function qrToPath(data, size, margin) {
       let path = "";
@@ -88149,7 +88193,7 @@ var require_canvas = __commonJS({
     function getCanvasElement() {
       try {
         return document.createElement("canvas");
-      } catch (e4) {
+      } catch (e5) {
         throw new Error("You need to specify a canvas element");
       }
     }
@@ -88194,7 +88238,7 @@ var require_browser = __commonJS({
     var QRCode2 = require_qrcode();
     var CanvasRenderer = require_canvas();
     var SvgRenderer = require_svg_tag();
-    function renderCanvas(renderFunc, canvas, text2, opts, cb) {
+    function renderCanvas(renderFunc, canvas, text3, opts, cb) {
       const args = [].slice.call(arguments, 1);
       const argsNum = args.length;
       const isLastArgCb = typeof args[argsNum - 1] === "function";
@@ -88206,8 +88250,8 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 2) {
-          cb = text2;
-          text2 = canvas;
+          cb = text3;
+          text3 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 3) {
           if (canvas.getContext && typeof cb === "undefined") {
@@ -88215,8 +88259,8 @@ var require_browser = __commonJS({
             opts = void 0;
           } else {
             cb = opts;
-            opts = text2;
-            text2 = canvas;
+            opts = text3;
+            text3 = canvas;
             canvas = void 0;
           }
         }
@@ -88225,27 +88269,27 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 1) {
-          text2 = canvas;
+          text3 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 2 && !canvas.getContext) {
-          opts = text2;
-          text2 = canvas;
+          opts = text3;
+          text3 = canvas;
           canvas = void 0;
         }
         return new Promise(function(resolve, reject) {
           try {
-            const data = QRCode2.create(text2, opts);
+            const data = QRCode2.create(text3, opts);
             resolve(renderFunc(data, canvas, opts));
-          } catch (e4) {
-            reject(e4);
+          } catch (e5) {
+            reject(e5);
           }
         });
       }
       try {
-        const data = QRCode2.create(text2, opts);
+        const data = QRCode2.create(text3, opts);
         cb(null, renderFunc(data, canvas, opts));
-      } catch (e4) {
-        cb(e4);
+      } catch (e5) {
+        cb(e5);
       }
     }
     exports.create = QRCode2.create;
@@ -88266,8 +88310,8 @@ var require_server2 = __commonJS({
     var Utf8Renderer = require_utf8();
     var TerminalRenderer = require_terminal2();
     var SvgRenderer = require_svg();
-    function checkParams(text2, opts, cb) {
-      if (typeof text2 === "undefined") {
+    function checkParams(text3, opts, cb) {
+      if (typeof text3 === "undefined") {
         throw new Error("String required as first argument");
       }
       if (typeof cb === "undefined") {
@@ -88314,65 +88358,65 @@ var require_server2 = __commonJS({
           return Utf8Renderer;
       }
     }
-    function render(renderFunc, text2, params) {
+    function render(renderFunc, text3, params) {
       if (!params.cb) {
         return new Promise(function(resolve, reject) {
           try {
-            const data = QRCode2.create(text2, params.opts);
+            const data = QRCode2.create(text3, params.opts);
             return renderFunc(data, params.opts, function(err, data2) {
               return err ? reject(err) : resolve(data2);
             });
-          } catch (e4) {
-            reject(e4);
+          } catch (e5) {
+            reject(e5);
           }
         });
       }
       try {
-        const data = QRCode2.create(text2, params.opts);
+        const data = QRCode2.create(text3, params.opts);
         return renderFunc(data, params.opts, params.cb);
-      } catch (e4) {
-        params.cb(e4);
+      } catch (e5) {
+        params.cb(e5);
       }
     }
     exports.create = QRCode2.create;
     exports.toCanvas = require_browser().toCanvas;
-    exports.toString = function toString2(text2, opts, cb) {
-      const params = checkParams(text2, opts, cb);
+    exports.toString = function toString2(text3, opts, cb) {
+      const params = checkParams(text3, opts, cb);
       const type = params.opts ? params.opts.type : void 0;
       const renderer = getStringRendererFromType(type);
-      return render(renderer.render, text2, params);
+      return render(renderer.render, text3, params);
     };
-    exports.toDataURL = function toDataURL(text2, opts, cb) {
-      const params = checkParams(text2, opts, cb);
+    exports.toDataURL = function toDataURL(text3, opts, cb) {
+      const params = checkParams(text3, opts, cb);
       const renderer = getRendererFromType(params.opts.type);
-      return render(renderer.renderToDataURL, text2, params);
+      return render(renderer.renderToDataURL, text3, params);
     };
-    exports.toBuffer = function toBuffer(text2, opts, cb) {
-      const params = checkParams(text2, opts, cb);
+    exports.toBuffer = function toBuffer(text3, opts, cb) {
+      const params = checkParams(text3, opts, cb);
       const renderer = getRendererFromType(params.opts.type);
-      return render(renderer.renderToBuffer, text2, params);
+      return render(renderer.renderToBuffer, text3, params);
     };
-    exports.toFile = function toFile(path, text2, opts, cb) {
-      if (typeof path !== "string" || !(typeof text2 === "string" || typeof text2 === "object")) {
+    exports.toFile = function toFile(path, text3, opts, cb) {
+      if (typeof path !== "string" || !(typeof text3 === "string" || typeof text3 === "object")) {
         throw new Error("Invalid argument");
       }
       if (arguments.length < 3 && !canPromise()) {
         throw new Error("Too few arguments provided");
       }
-      const params = checkParams(text2, opts, cb);
+      const params = checkParams(text3, opts, cb);
       const type = params.opts.type || getTypeFromFilename(path);
       const renderer = getRendererFromType(type);
       const renderToFile = renderer.renderToFile.bind(null, path);
-      return render(renderToFile, text2, params);
+      return render(renderToFile, text3, params);
     };
-    exports.toFileStream = function toFileStream(stream, text2, opts) {
+    exports.toFileStream = function toFileStream(stream, text3, opts) {
       if (arguments.length < 2) {
         throw new Error("Too few arguments provided");
       }
-      const params = checkParams(text2, opts, stream.emit.bind(stream, "error"));
+      const params = checkParams(text3, opts, stream.emit.bind(stream, "error"));
       const renderer = getRendererFromType("png");
       const renderToFileStream = renderer.renderToFileStream.bind(null, stream);
-      render(renderToFileStream, text2, params);
+      render(renderToFileStream, text3, params);
     };
   }
 });
@@ -88462,8 +88506,8 @@ var init_views_setup = __esm({
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
 import { randomBytes as randomBytes4 } from "node:crypto";
-function qrSvg(text2) {
-  return QRCode.toString(text2, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
+function qrSvg(text3) {
+  return QRCode.toString(text3, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
 async function adminCount(store) {
   try {
@@ -88608,8 +88652,8 @@ function registerSetupWizard(app2, deps) {
     try {
       userId = await store.upsertAdmin({ email, name, passwordHash, totpSecret: secret, phone: `admin:${email}` });
     } catch (err) {
-      const e4 = err;
-      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e4.code ?? "error"}${e4.sqlMessage ? `: ${e4.sqlMessage}` : ""}).` };
+      const e5 = err;
+      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e5.code ?? "error"}${e5.sqlMessage ? `: ${e5.sqlMessage}` : ""}).` };
       return back(reply);
     }
     recordLoginAttempt("setup", request.ip, true);
@@ -89162,8 +89206,8 @@ function chatLink(phone, label) {
     return "";
   return `<a href="https://wa.me/${e(digits)}" target="_blank" rel="noopener">${e(label)} (${e(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox(id, label, content, rows4 = 8) {
-  return `<label for="${id}">${e(label)}</label><textarea id="${id}" readonly rows="${rows4}">${e(content)}</textarea>`;
+function copyBox(id, label, content, rows5 = 8) {
+  return `<label for="${id}">${e(label)}</label><textarea id="${id}" readonly rows="${rows5}">${e(content)}</textarea>`;
 }
 function appointmentsListView(input) {
   const tabs = FILTERS.map(([id, label]) => `<a href="/admin/appointments?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e(label)}</a>`).join("");
@@ -89207,6 +89251,7 @@ function appointmentDetailView(input) {
     ${copyBox("msg-owner", "Mensaje para el due\xF1o", ownerMessage(a))}
     <p class="row">${chatLink(a.shopPhone, "Abrir chat del taller")} ${chatLink(a.ownerPhone, "Abrir chat del due\xF1o")}</p>
   </div>
+  ${input.workOrderId ? `<div class="card"><h2>Orden de trabajo</h2><a class="button" href="/admin/work-orders/${e(input.workOrderId)}">Ver orden de trabajo</a></div>` : a.status === "confirmed" || a.status === "pending" ? `<div class="card"><h2>Orden de trabajo</h2><p class="muted">Cuando el veh\xEDculo llegue al taller, registra la recepci\xF3n.</p><a class="button" href="/admin/work-orders/new?appointmentId=${e(a.id)}">Abrir orden de trabajo</a></div>` : ""}
   ${actions.length > 0 ? `<div class="card"><h2>Cambiar estado</h2>${actions.join("")}</div>` : ""}
   </div>`;
 }
@@ -89295,31 +89340,327 @@ var init_views_appointments = __esm({
   }
 });
 
+// packages/api/dist/application/work-orders/workflow.js
+function parseAmount(input) {
+  if (typeof input !== "string")
+    return null;
+  let value2 = input.trim().replace(/[\s$]/g, "");
+  if (!value2)
+    return null;
+  if (value2.includes(",") && value2.includes("."))
+    value2 = value2.replace(/\./g, "").replace(",", ".");
+  else
+    value2 = value2.replace(",", ".");
+  if (!/^\d{1,7}(\.\d{1,2})?$/.test(value2))
+    return null;
+  return Number(value2);
+}
+function formatUsd(value2) {
+  return new Intl.NumberFormat("es-EC", { style: "currency", currency: "USD" }).format(value2);
+}
+function itemsTotal(items) {
+  return Math.round(items.reduce((sum, item) => sum + lineTotal(item), 0) * 100) / 100;
+}
+function itemLines(items) {
+  return items.map((i) => {
+    const quantity = i.quantity !== 1 ? ` x${String(i.quantity).replace(".", ",")}` : "";
+    const brand = i.brand ? ` (${i.brand})` : "";
+    return `\u2022 ${i.kind === "mano_obra" ? "Mano de obra: " : ""}${i.description}${brand}${quantity} \u2014 ${formatUsd(lineTotal(i))}`;
+  }).join("\n");
+}
+function quoteMessage(o, items) {
+  const diagnosis = o.diagnosis ? `
+\u{1F50E} Diagn\xF3stico: ${o.diagnosis}` : "";
+  return `\u{1F9FE} Presupuesto ${workOrderCode(o.number)} \u2014 ${o.shopName}
+\u{1F697} ${vehicleText2(o)}${diagnosis}
+
+${itemLines(items)}
+
+Total: ${formatUsd(itemsTotal(items))}
+
+Responde:
+1) \u2705 Apruebo
+2) \u274C No apruebo (cu\xE9ntame el motivo)
+
+El taller no har\xE1 ning\xFAn trabajo con costo sin tu aprobaci\xF3n.`;
+}
+function ownerWorkOrderMessage(o, items) {
+  const code = workOrderCode(o.number);
+  switch (o.status) {
+    case "presupuesto_enviado":
+      return quoteMessage(o, items);
+    case "aprobado":
+      return `\u2705 Registramos tu aprobaci\xF3n del presupuesto ${code} por ${formatUsd(o.total)}.
+El taller ${o.shopName} empieza el trabajo en tu ${o.vehicleLabel}.`;
+    case "rechazado":
+      return `Registramos que no apruebas el presupuesto ${code}${o.rejectionReason ? `: ${o.rejectionReason}` : ""}.
+\xBFQuieres que el taller te proponga otra opci\xF3n?`;
+    case "en_ejecucion":
+      return `\u{1F527} Tu ${o.vehicleLabel} est\xE1 en trabajo en ${o.shopName} (${code}). Te aviso apenas est\xE9 listo.`;
+    case "esperando_repuesto":
+      return `\u23F3 Estamos esperando un repuesto para tu ${o.vehicleLabel} (${code}). Te aviso cuando el trabajo contin\xFAe.`;
+    case "cerrada": {
+      const lines = [
+        `\u{1F3C1} Trabajo terminado \u2014 ${code}`,
+        `\u{1F527} ${o.shopName}`,
+        `\u{1F697} ${vehicleText2(o)}${o.exitKm !== null ? ` \xB7 ${km(o.exitKm)}` : ""}`,
+        "",
+        itemLines(items),
+        "",
+        `Total: ${formatUsd(o.total)}`
+      ];
+      if (o.warrantyDays)
+        lines.push(`\u{1F6E1}\uFE0F Garant\xEDa: ${o.warrantyDays} d\xEDas`);
+      if (o.nextService)
+        lines.push(`\u{1F4C5} Pr\xF3ximo servicio: ${o.nextService}`);
+      lines.push("", "\xBFC\xF3mo te fue? Califica el servicio del 1 al 5.");
+      return lines.join("\n");
+    }
+    case "cancelada":
+      return `La orden ${code} en ${o.shopName} fue cancelada${o.cancelReason ? `: ${o.cancelReason}` : ""}.`;
+    default:
+      return `\u{1F4CB} Recibimos tu ${o.vehicleLabel} en ${o.shopName}${o.intakeKm !== null ? ` con ${km(o.intakeKm)}` : ""} (${code}).
+Te enviaremos el presupuesto antes de hacer cualquier trabajo.`;
+  }
+}
+function shopWorkOrderMessage(o) {
+  const code = workOrderCode(o.number);
+  if (o.status === "aprobado")
+    return `\u2705 El cliente aprob\xF3 el presupuesto ${code} por ${formatUsd(o.total)}. Puedes iniciar el trabajo.`;
+  if (o.status === "rechazado")
+    return `\u274C El cliente no aprob\xF3 el presupuesto ${code}${o.rejectionReason ? `: ${o.rejectionReason}` : ""}.`;
+  return null;
+}
+function historyDescription(o, items) {
+  const parts = [`${workOrderCode(o.number)}: ${items.map((i) => i.description).join(", ") || "sin \xEDtems"}`];
+  if (o.diagnosis)
+    parts.push(`Diagn\xF3stico: ${o.diagnosis}`);
+  if (o.warrantyDays)
+    parts.push(`Garant\xEDa ${o.warrantyDays} d\xEDas`);
+  if (o.nextService)
+    parts.push(`Pr\xF3ximo: ${o.nextService}`);
+  return parts.join(" \xB7 ").slice(0, 2e3);
+}
+var WORK_ORDER_LABELS, WORK_ORDER_TRANSITIONS, EDITABLE_STATUSES, OPEN_STATUSES, IN_SHOP_STATUSES, ITEM_KINDS, DIAGNOSIS_OUTCOMES, workOrderCode, lineTotal, km, vehicleText2;
+var init_workflow = __esm({
+  "packages/api/dist/application/work-orders/workflow.js"() {
+    "use strict";
+    WORK_ORDER_LABELS = {
+      recepcion: "Recepci\xF3n",
+      presupuesto_enviado: "Presupuesto enviado",
+      aprobado: "Aprobado",
+      rechazado: "Presupuesto rechazado",
+      en_ejecucion: "En ejecuci\xF3n",
+      esperando_repuesto: "Esperando repuesto",
+      cerrada: "Cerrada",
+      cancelada: "Cancelada"
+    };
+    WORK_ORDER_TRANSITIONS = {
+      recepcion: ["presupuesto_enviado", "cancelada"],
+      presupuesto_enviado: ["aprobado", "rechazado", "cancelada"],
+      rechazado: ["presupuesto_enviado", "cancelada"],
+      aprobado: ["en_ejecucion", "cancelada"],
+      en_ejecucion: ["esperando_repuesto", "cerrada"],
+      esperando_repuesto: ["en_ejecucion", "cerrada"],
+      cerrada: [],
+      cancelada: []
+    };
+    EDITABLE_STATUSES = ["recepcion", "rechazado"];
+    OPEN_STATUSES = ["recepcion", "presupuesto_enviado", "aprobado", "rechazado", "en_ejecucion", "esperando_repuesto"];
+    IN_SHOP_STATUSES = ["aprobado", "en_ejecucion", "esperando_repuesto"];
+    ITEM_KINDS = [
+      ["repuesto", "Repuesto"],
+      ["mano_obra", "Mano de obra"]
+    ];
+    DIAGNOSIS_OUTCOMES = [
+      ["confirmado", "El diagn\xF3stico se confirm\xF3"],
+      ["parcial", "Se confirm\xF3 en parte"],
+      ["incorrecto", "La causa era otra"],
+      ["no_aplica", "No hubo diagn\xF3stico previo"]
+    ];
+    workOrderCode = (number) => `OT-${String(number).padStart(5, "0")}`;
+    lineTotal = (item) => Math.round(item.quantity * item.unitPrice * 100) / 100;
+    km = (value2) => `${Number(value2).toLocaleString("es-EC")} km`;
+    vehicleText2 = (o) => `${o.vehicleLabel}${o.plate ? ` \xB7 ${o.plate}` : ""}`;
+  }
+});
+
+// packages/api/dist/interfaces/admin/views-work-orders.js
+function chatLink2(phone, label) {
+  const digits = phone.replace(/\D/g, "");
+  if (!phone.startsWith("+") || digits.length < 8)
+    return "";
+  return `<a href="https://wa.me/${e2(digits)}" target="_blank" rel="noopener">${e2(label)} (${e2(formatWhatsappNumber(digits))})</a>`;
+}
+function copyBox2(id, label, content, rows5 = 9) {
+  return `<label for="${id}">${e2(label)}</label><textarea id="${id}" readonly rows="${rows5}">${e2(content)}</textarea>`;
+}
+function workOrdersListView(input) {
+  const tabs = FILTERS2.map(([id, label]) => `<a href="/admin/work-orders?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e2(label)}</a>`).join("");
+  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin \xF3rdenes</td></tr>` : input.page.items.map((o) => `<tr><td><a href="/admin/work-orders/${e2(o.id)}">${e2(workOrderCode(o.number))}</a></td><td>${e2(WORK_ORDER_LABELS[o.status] ?? o.status)}</td>
+            <td>${e2(o.shopName)}</td><td><a href="/admin/users/${e2(o.ownerId)}">${e2(o.ownerName)}</a></td><td>${e2(o.vehicleLabel)}</td><td>${e2(formatUsd(o.total))}</td></tr>`).join("");
+  const prev = input.page.page > 1 ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
+  const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
+  return `<h1>\xD3rdenes de trabajo</h1>${flashHtml3(input.flash)}<div class="tabs">${tabs}</div>
+  <p class="muted">Se abren desde un turno confirmado (\xABAbrir orden de trabajo\xBB) o desde la ficha del due\xF1o (\xABOrden de trabajo sin cita\xBB).</p>
+  <div class="scroll"><table><thead><tr><th>Orden</th><th>Estado</th><th>Taller</th><th>Due\xF1o</th><th>Veh\xEDculo</th><th>Total</th></tr></thead><tbody>${body}</tbody></table></div>
+  <div class="pager">${prev}${next}</div>`;
+}
+function newWorkOrderView(input) {
+  const v = input.values ?? {};
+  const intakeKm = v.intakeKm ?? input.vehicle.currentKm ?? "";
+  const shopField = input.appointment ? `<div>Taller: <strong>${e2(input.appointment.shopName)}</strong> \xB7 turno del ${e2(formatEcDateTime(input.appointment.scheduledAt))}</div>
+       <input type="hidden" name="appointmentId" value="${e2(input.appointment.id)}">` : input.shops.length === 0 ? `<p class="error">No hay talleres verificados. Aprueba un taller en Verificaciones antes de abrir una orden.</p>` : `<label for="shopId">Taller</label><select id="shopId" name="shopId" required>${input.shops.map((s) => `<option value="${e2(s.id)}"${String(v.shopId ?? "") === s.id ? " selected" : ""}>${e2(s.name)} \xB7 ${e2(s.city)}</option>`).join("")}</select>`;
+  return `<div class="stack wide"><p><a href="/admin/users/${e2(input.owner.id)}">\u2190 ${e2(input.owner.name)}</a></p>
+  <h1>Nueva orden de trabajo</h1>${input.error ? `<p class="error" role="alert">${e2(input.error)}</p>` : ""}
+  <form method="post" action="/admin/work-orders" autocomplete="off">${csrfField3(input.csrf)}
+  <input type="hidden" name="ownerId" value="${e2(input.owner.id)}"><input type="hidden" name="vehicleId" value="${e2(input.vehicle.id)}">
+  <div class="card"><h2>Recepci\xF3n del veh\xEDculo</h2>
+    <div>Due\xF1o: <strong>${e2(input.owner.name)}</strong></div>
+    <div>Veh\xEDculo: <strong>${e2(input.vehicle.make)} ${e2(input.vehicle.model)} ${e2(input.vehicle.year)}</strong>${input.vehicle.plate ? ` \xB7 ${e2(input.vehicle.plate)}` : ""} \xB7 \xFAltimo registro ${e2(km2(input.vehicle.currentKm))}</div>
+    ${shopField}
+    <label for="intakeKm">Kilometraje de ingreso</label><input id="intakeKm" name="intakeKm" inputmode="numeric" value="${e2(intakeKm)}" required>
+    <label for="intakeNotes">Observaciones de ingreso (estado, golpes, objetos, nivel de combustible)</label><textarea id="intakeNotes" name="intakeNotes" maxlength="1000" rows="3">${e2(v.intakeNotes)}</textarea>
+    <label for="diagnosis">Diagn\xF3stico inicial del taller (opcional)</label><textarea id="diagnosis" name="diagnosis" maxlength="1000" rows="2">${e2(v.diagnosis)}</textarea>
+  </div>
+  <button class="full" type="submit">Abrir orden de trabajo</button></form></div>`;
+}
+function statusButton(order, csrf, status, label, danger = false) {
+  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField3(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e2(label)}</button></form>`;
+}
+function reasonForm(order, csrf, status, label, button) {
+  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField3(csrf)}<input type="hidden" name="status" value="${status}">
+    <label for="reason-${status}">${e2(label)}</label><input id="reason-${status}" name="reason" maxlength="191" required>
+    <button class="danger" type="submit">${e2(button)}</button></form>`;
+}
+function workOrderDetailView(input) {
+  const { order, items, csrf } = input;
+  const code = workOrderCode(order.number);
+  const editable = EDITABLE_STATUSES.includes(order.status);
+  const transitions = WORK_ORDER_TRANSITIONS[order.status] ?? [];
+  const itemRows = items.length === 0 ? `<tr><td colspan="${editable ? 7 : 6}" class="muted">A\xFAn no hay \xEDtems en el presupuesto.</td></tr>` : items.map((i) => `<tr><td>${i.kind === "mano_obra" ? "Mano de obra" : "Repuesto"}</td><td>${e2(i.description)}</td><td>${e2([i.brand, i.partCode].filter(Boolean).join(" \xB7 ") || "\u2014")}</td>
+            <td>${e2(String(i.quantity).replace(".", ","))}</td><td>${e2(formatUsd(i.unitPrice))}</td><td>${e2(formatUsd(lineTotal(i)))}</td>
+            ${editable ? `<td><form method="post" action="/admin/work-orders/${e2(order.id)}/items/${e2(i.id)}/delete">${csrfField3(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
+  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/items" autocomplete="off">${csrfField3(csrf)}
+      <div class="row"><span><label for="kind">Tipo</label><select id="kind" name="kind">${ITEM_KINDS.map(([id, label]) => `<option value="${id}">${label}</option>`).join("")}</select></span>
+      <span style="flex:2"><label for="description">Descripci\xF3n</label><input id="description" name="description" maxlength="191" required></span></div>
+      <div class="row"><span><label for="brand">Marca (opcional)</label><input id="brand" name="brand" maxlength="60"></span><span><label for="partCode">C\xF3digo (opcional)</label><input id="partCode" name="partCode" maxlength="60"></span></div>
+      <div class="row"><span><label for="quantity">Cantidad</label><input id="quantity" name="quantity" value="1" inputmode="decimal" required></span><span><label for="unitPrice">Precio unitario (USD)</label><input id="unitPrice" name="unitPrice" inputmode="decimal" placeholder="45,50" required></span></div>
+      <button type="submit">Agregar al presupuesto</button></form>` : "";
+  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/diagnosis">${csrfField3(csrf)}
+      <label for="diag">Diagn\xF3stico del taller</label><textarea id="diag" name="diagnosis" maxlength="1000" rows="3">${e2(order.diagnosis)}</textarea>
+      <button type="submit">Guardar diagn\xF3stico</button></form>` : `<p>${e2(order.diagnosis ?? "Sin diagn\xF3stico registrado.")}</p>`;
+  const actions = [];
+  if (transitions.includes("presupuesto_enviado")) {
+    actions.push(items.length > 0 ? statusButton(order, csrf, "presupuesto_enviado", order.status === "rechazado" ? "Reenviar presupuesto al due\xF1o" : "Enviar presupuesto al due\xF1o") : `<p class="muted">Agrega al menos un \xEDtem para enviar el presupuesto.</p>`);
+  }
+  if (transitions.includes("aprobado"))
+    actions.push(statusButton(order, csrf, "aprobado", "El due\xF1o aprob\xF3 el presupuesto"));
+  if (transitions.includes("rechazado"))
+    actions.push(reasonForm(order, csrf, "rechazado", "Si el due\xF1o no aprob\xF3, \xBFqu\xE9 motivo dio?", "El due\xF1o no aprob\xF3"));
+  if (transitions.includes("en_ejecucion"))
+    actions.push(statusButton(order, csrf, "en_ejecucion", order.status === "esperando_repuesto" ? "Reanudar trabajo" : "Iniciar trabajo"));
+  if (transitions.includes("esperando_repuesto"))
+    actions.push(statusButton(order, csrf, "esperando_repuesto", "Esperando repuesto"));
+  if (transitions.includes("cerrada")) {
+    actions.push(`<form method="post" action="/admin/work-orders/${e2(order.id)}/close" autocomplete="off">${csrfField3(csrf)}
+      <h2>Cerrar con evidencia</h2>
+      <div class="row"><span><label for="exitKm">Kilometraje de salida</label><input id="exitKm" name="exitKm" inputmode="numeric" value="${e2(order.intakeKm ?? order.vehicleKm)}" required></span>
+      <span><label for="warrantyDays">Garant\xEDa (d\xEDas)</label><input id="warrantyDays" name="warrantyDays" inputmode="numeric" value="30" required></span></div>
+      <label for="nextService">Pr\xF3ximo servicio sugerido (opcional)</label><input id="nextService" name="nextService" maxlength="191" placeholder="Cambio de aceite a los 55.000 km">
+      <label for="diagnosisOutcome">Resultado del diagn\xF3stico</label><select id="diagnosisOutcome" name="diagnosisOutcome">${DIAGNOSIS_OUTCOMES.map(([id, label]) => `<option value="${id}">${label}</option>`).join("")}</select>
+      <label for="outcomeNote">Causa real o comentario (opcional)</label><input id="outcomeNote" name="outcomeNote" maxlength="191">
+      <button class="full" type="submit">Cerrar orden y guardar en el historial</button></form>`);
+  }
+  if (transitions.includes("cancelada"))
+    actions.push(reasonForm(order, csrf, "cancelada", "Motivo de la cancelaci\xF3n", "Cancelar orden"));
+  const shopMessage = shopWorkOrderMessage(order);
+  return `<div class="stack wide"><p><a href="/admin/work-orders">\u2190 \xD3rdenes de trabajo</a></p>
+  <h1>${e2(code)} \xB7 ${e2(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml3(input.flash)}
+  <div class="card"><h2>Resumen</h2>
+    <div>Taller: <strong>${e2(order.shopName)}</strong></div>
+    <div>Due\xF1o: <a href="/admin/users/${e2(order.ownerId)}">${e2(order.ownerName)}</a></div>
+    <div>Veh\xEDculo: ${e2(order.vehicleLabel)}${order.plate ? ` \xB7 ${e2(order.plate)}` : ""}</div>
+    ${order.appointmentId ? `<div>Turno: <a href="/admin/appointments/${e2(order.appointmentId)}">ver turno</a></div>` : "<div>Sin cita previa</div>"}
+    <div>Ingreso: ${order.intakeKm !== null ? e2(km2(order.intakeKm)) : "\u2014"} \xB7 ${e2(formatEcDateTime(order.createdAt))}</div>
+    ${order.intakeNotes ? `<div>Observaciones: ${e2(order.intakeNotes)}</div>` : ""}
+    ${order.rejectionReason ? `<div>Motivo del rechazo: ${e2(order.rejectionReason)}</div>` : ""}
+    ${order.cancelReason ? `<div>Motivo de la cancelaci\xF3n: ${e2(order.cancelReason)}</div>` : ""}
+    ${order.status === "cerrada" ? `<div>Salida: ${e2(km2(order.exitKm))} \xB7 garant\xEDa ${e2(order.warrantyDays)} d\xEDas${order.nextService ? ` \xB7 pr\xF3ximo: ${e2(order.nextService)}` : ""}</div>` : ""}
+  </div>
+  <div class="card"><h2>Diagn\xF3stico</h2>${diagnosis}</div>
+  <div class="card"><h2>Presupuesto</h2>
+    <div class="scroll"><table><thead><tr><th>Tipo</th><th>Descripci\xF3n</th><th>Marca / c\xF3digo</th><th>Cant.</th><th>P. unit.</th><th>Total</th>${editable ? "<th></th>" : ""}</tr></thead>
+    <tbody>${itemRows}</tbody></table></div>
+    <p><strong>Total: ${e2(formatUsd(order.total))}</strong></p>
+    ${editable ? "" : '<p class="muted">El presupuesto se edita solo en recepci\xF3n o despu\xE9s de un rechazo.</p>'}
+    ${addItem}
+  </div>
+  <div class="card"><h2>Mensajes para enviar por WhatsApp</h2>
+    ${copyBox2("msg-owner", "Mensaje para el due\xF1o", ownerWorkOrderMessage(order, items))}
+    ${shopMessage ? copyBox2("msg-shop", "Mensaje para el taller", shopMessage, 3) : ""}
+    <p class="row">${chatLink2(order.ownerPhone, "Abrir chat del due\xF1o")} ${chatLink2(order.shopPhone, "Abrir chat del taller")}</p>
+  </div>
+  ${actions.length > 0 ? `<div class="card"><h2>Siguiente paso</h2>${actions.join("")}</div>` : ""}
+  </div>`;
+}
+function userWorkOrdersSection(orders) {
+  if (orders.length === 0)
+    return "";
+  return `<div class="card"><h2>\xD3rdenes de trabajo</h2>${orders.map((o) => `<div><a href="/admin/work-orders/${e2(o.id)}">${e2(workOrderCode(o.number))}</a> \xB7 ${e2(WORK_ORDER_LABELS[o.status] ?? o.status)} \xB7 ${e2(o.shopName)} \xB7 ${e2(o.vehicleLabel)} \xB7 ${e2(formatUsd(o.total))}</div>`).join("")}</div>`;
+}
+function historySection(history) {
+  if (history.length === 0)
+    return "";
+  return `<div class="card"><h2>Historial de servicios</h2>${history.map((h) => `<div><span class="muted">${e2(formatEcDateTime(h.createdAt))}</span> \xB7 <strong>${e2(h.vehicleLabel)}</strong> \xB7 ${e2(h.shopName)} \xB7 ${e2(h.description)}${h.cost !== null ? ` \xB7 ${e2(formatUsd(h.cost))}` : ""}</div>`).join("")}</div>`;
+}
+var e2, csrfField3, flashHtml3, km2, FILTERS2;
+var init_views_work_orders = __esm({
+  "packages/api/dist/interfaces/admin/views-work-orders.js"() {
+    "use strict";
+    init_page();
+    init_whatsapp_number();
+    init_messages();
+    init_workflow();
+    e2 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField3 = (token) => `<input type="hidden" name="csrf" value="${e2(token)}">`;
+    flashHtml3 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e2(flash.text)}</p>` : "";
+    km2 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
+    FILTERS2 = [
+      ["abiertas", "Abiertas"],
+      ["por_aprobar", "Por aprobar"],
+      ["en_taller", "En el taller"],
+      ["cerradas", "Cerradas"],
+      ["todas", "Todas"]
+    ];
+  }
+});
+
 // packages/api/dist/interfaces/admin/views-registrations.js
 function day(value2) {
   const date = value2 instanceof Date ? value2 : value2 ? new Date(String(value2)) : null;
   return date && !Number.isNaN(date.getTime()) ? date.toISOString().slice(0, 10) : "\u2014";
 }
 function phoneLabel(value2) {
-  const text2 = String(value2 ?? "");
-  const digits = text2.replace(/\D/g, "");
-  return text2.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text2;
+  const text3 = String(value2 ?? "");
+  const digits = text3.replace(/\D/g, "");
+  return text3.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text3;
 }
 function value(values, key) {
   const v = values[key];
-  return Array.isArray(v) ? "" : e2(v);
+  return Array.isArray(v) ? "" : e3(v);
 }
 function field(values, name, label, attrs = "") {
-  return `<label for="f-${name}">${e2(label)}</label><input id="f-${name}" name="${name}" value="${value(values, name)}" ${attrs}>`;
+  return `<label for="f-${name}">${e3(label)}</label><input id="f-${name}" name="${name}" value="${value(values, name)}" ${attrs}>`;
 }
 function select(values, name, label, options, placeholder) {
   const selected = String(values[name] ?? "");
-  const opts = options.map(([id, text2]) => `<option value="${e2(id)}"${id === selected ? " selected" : ""}>${e2(text2)}</option>`).join("");
-  const empty = placeholder ? `<option value="">${e2(placeholder)}</option>` : "";
-  return `<label for="f-${name}">${e2(label)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
+  const opts = options.map(([id, text3]) => `<option value="${e3(id)}"${id === selected ? " selected" : ""}>${e3(text3)}</option>`).join("");
+  const empty = placeholder ? `<option value="">${e3(placeholder)}</option>` : "";
+  return `<label for="f-${name}">${e3(label)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
 }
 function checkbox(values, name, label) {
-  return `<div class="checks"><label><input type="checkbox" name="${name}"${values[name] === "on" ? " checked" : ""}> ${e2(label)}</label></div>`;
+  return `<div class="checks"><label><input type="checkbox" name="${name}"${values[name] === "on" ? " checked" : ""}> ${e3(label)}</label></div>`;
 }
 function vehicleFields2(values) {
   return `${select(values, "vehicleClass", "Clase de veh\xEDculo", vehicleClasses.classes.map((c) => [c.id, c.name]), "Elige\u2026")}
@@ -89333,19 +89674,19 @@ function vehicleFields2(values) {
     ${checkbox(values, "reminders", "Acepta recordatorios por WhatsApp")}`;
 }
 function usersListView(input) {
-  const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e2(u.id)}">${e2(u.name)}</a></td><td>${e2(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
-            <td>${e2(phoneLabel(u.phone))}</td><td>${e2(u.city ?? "\u2014")}</td><td>${day(u.createdAt)}</td></tr>`).join("");
+  const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e3(u.id)}">${e3(u.name)}</a></td><td>${e3(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
+            <td>${e3(phoneLabel(u.phone))}</td><td>${e3(u.city ?? "\u2014")}</td><td>${day(u.createdAt)}</td></tr>`).join("");
   const q = encodeURIComponent(input.query);
   const prev = input.page.page > 1 ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<div class="row between"><h1>Usuarios</h1><a class="button" href="/admin/users/new">+ Nuevo registro</a></div>
-  <form method="get" action="/admin/users" class="row"><input name="q" value="${e2(input.query)}" placeholder="Buscar por nombre o tel\xE9fono" maxlength="60"><button type="submit">Buscar</button></form>
+  <form method="get" action="/admin/users" class="row"><input name="q" value="${e3(input.query)}" placeholder="Buscar por nombre o tel\xE9fono" maxlength="60"><button type="submit">Buscar</button></form>
   <div class="scroll"><table><thead><tr><th>Nombre</th><th>Perfil</th><th>Tel\xE9fono</th><th>Ciudad</th><th>Alta</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
 }
 function newUserView(input) {
   const v = input.values;
-  const tabs = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e2(ROLE_LABELS[p])}</a>`).join("");
+  const tabs = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e3(ROLE_LABELS[p])}</a>`).join("");
   const common = `<div class="card"><h2>Datos b\xE1sicos</h2>
     ${input_phone(v)}
     ${field(v, "name", input.perfil === "dueno" ? "Nombre y apellido" : "Nombre del responsable", 'required minlength="3" maxlength="60"')}
@@ -89366,7 +89707,7 @@ function newUserView(input) {
       ${field(v, "hours", "Horario (opcional)", 'maxlength="120" placeholder="Lun\u2013Vie 08:00\u201318:00"')}`;
     if (input.perfil === "taller") {
       const chosen = Array.isArray(v.services) ? v.services.map(String) : v.services ? [String(v.services)] : [];
-      const services = serviceTaxonomy.categories.map((c) => `<label><input type="checkbox" name="services" value="${e2(c.id)}"${chosen.includes(c.id) ? " checked" : ""}> ${e2(c.name)}</label>`).join("");
+      const services = serviceTaxonomy.categories.map((c) => `<label><input type="checkbox" name="services" value="${e3(c.id)}"${chosen.includes(c.id) ? " checked" : ""}> ${e3(c.name)}</label>`).join("");
       specific = `<div class="card"><h2>Taller</h2>${business}<label>Servicios que ofrece</label><div class="checks">${services}</div>
         <p class="muted">Queda en verificaci\xF3n hasta que lo apruebes; mientras tanto no aparece en las b\xFAsquedas.</p></div>`;
     } else {
@@ -89377,8 +89718,8 @@ function newUserView(input) {
     }
   }
   return `<div class="stack wide"><h1>Nuevo registro</h1><div class="tabs">${tabs}</div>
-  ${input.error ? `<p class="error" role="alert">${e2(input.error)}</p>` : ""}
-  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField3(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">
+  ${input.error ? `<p class="error" role="alert">${e3(input.error)}</p>` : ""}
+  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField4(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">
   ${common}${specific}
   <button class="full" type="submit">Guardar registro</button></form></div>`;
 }
@@ -89386,53 +89727,53 @@ function input_phone(values) {
   return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567"');
 }
 function verificationForm(kind, id, userId, csrf) {
-  return `<form method="post" action="/admin/verifications/${kind}/${e2(id)}">${csrfField3(csrf)}
-    <input type="hidden" name="returnTo" value="${e2(userId)}">
-    <label for="reason-${e2(id)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e2(id)}" name="reason" maxlength="500">
+  return `<form method="post" action="/admin/verifications/${kind}/${e3(id)}">${csrfField4(csrf)}
+    <input type="hidden" name="returnTo" value="${e3(userId)}">
+    <label for="reason-${e3(id)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e3(id)}" name="reason" maxlength="500">
     <div class="row"><button type="submit" name="decision" value="verified">Aprobar</button><button class="danger" type="submit" name="decision" value="rejected">Rechazar</button></div></form>`;
 }
 function userDetailView(input) {
   const { user, vehicles, shop, store } = input.detail;
   const digits = String(user.phone ?? "").replace(/\D/g, "");
-  const chat = String(user.phone ?? "").startsWith("+") && digits.length >= 8 ? ` \xB7 <a href="https://wa.me/${e2(digits)}" target="_blank" rel="noopener">Abrir chat</a>` : "";
+  const chat = String(user.phone ?? "").startsWith("+") && digits.length >= 8 ? ` \xB7 <a href="https://wa.me/${e3(digits)}" target="_blank" rel="noopener">Abrir chat</a>` : "";
   const datos = `<div class="card"><h2>Datos</h2>
-    <div>Perfil: <strong>${e2(ROLE_LABELS[String(user.role)] ?? user.role)}</strong></div>
-    <div>Tel\xE9fono: <strong>${e2(phoneLabel(user.phone))}</strong>${chat}</div>
-    <div>Correo: ${e2(user.email ?? "\u2014")}</div>
-    <div>Ciudad: ${e2(user.city ?? "\u2014")}</div>
-    <div>Consentimiento: ${user.consentAt ? `${day(user.consentAt)} (versi\xF3n ${e2(user.consentVersion ?? "\u2014")})` : '<span class="error">sin registrar</span>'}</div>
-    <div>C\xF3mo nos conoci\xF3: ${e2(user.source ?? "\u2014")}</div>
-    ${user.notes ? `<div>Notas: ${e2(user.notes)}</div>` : ""}
+    <div>Perfil: <strong>${e3(ROLE_LABELS[String(user.role)] ?? user.role)}</strong></div>
+    <div>Tel\xE9fono: <strong>${e3(phoneLabel(user.phone))}</strong>${chat}</div>
+    <div>Correo: ${e3(user.email ?? "\u2014")}</div>
+    <div>Ciudad: ${e3(user.city ?? "\u2014")}</div>
+    <div>Consentimiento: ${user.consentAt ? `${day(user.consentAt)} (versi\xF3n ${e3(user.consentVersion ?? "\u2014")})` : '<span class="error">sin registrar</span>'}</div>
+    <div>C\xF3mo nos conoci\xF3: ${e3(user.source ?? "\u2014")}</div>
+    ${user.notes ? `<div>Notas: ${e3(user.notes)}</div>` : ""}
     <div class="muted">Alta: ${day(user.createdAt)}</div></div>`;
   const business = (title, b, extra, kind) => `<div class="card"><h2>${title}</h2>
-    <div><strong>${e2(b.name)}</strong> \xB7 RUC ${e2(b.ruc ?? "\u2014")}</div>
-    <div>${e2(b.address)}, ${e2(b.city)}${b.zone ? ` (${e2(b.zone)})` : ""}</div>
-    <div>Horario: ${e2(b.hours ?? "\u2014")}</div>${extra}
-    <div>Estado: <strong>${e2(STATUS_LABELS2[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
+    <div><strong>${e3(b.name)}</strong> \xB7 RUC ${e3(b.ruc ?? "\u2014")}</div>
+    <div>${e3(b.address)}, ${e3(b.city)}${b.zone ? ` (${e3(b.zone)})` : ""}</div>
+    <div>Horario: ${e3(b.hours ?? "\u2014")}</div>${extra}
+    <div>Estado: <strong>${e3(STATUS_LABELS2[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
     ${verificationForm(kind, b.id, user.id, input.csrf)}</div>`;
-  const shopCard = shop ? business("Taller", shop, `<div>Servicios: ${e2(shop.services.map(categoryName).join(", ") || "\u2014")}</div>`, "shop") : "";
-  const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e2(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
+  const shopCard = shop ? business("Taller", shop, `<div>Servicios: ${e3(shop.services.map(categoryName).join(", ") || "\u2014")}</div>`, "shop") : "";
+  const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e3(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
   const vehicleCards = vehicles.map((v) => {
     const plan = input.plans[String(v.id)];
-    return `<div class="card"><h2>${e2(v.make)} ${e2(v.model)} ${e2(v.year)}</h2>
-      <div>${e2(Number(v.currentKm).toLocaleString("es-EC"))} km \xB7 ${e2(className(v.vehicleClass))} \xB7 ${e2(fuelName(v.fuel))}${v.plate ? ` \xB7 ${e2(v.plate)}` : ""}</div>
-      <div class="muted">Uso ${e2(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
-      ${plan ? `<label for="plan-${e2(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e2(v.id)}" readonly rows="12">${e2(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e2(user.id)}/schedule?vehicleId=${e2(v.id)}">Agendar turno</a></p>` : ""}</div>`;
+    return `<div class="card"><h2>${e3(v.make)} ${e3(v.model)} ${e3(v.year)}</h2>
+      <div>${e3(Number(v.currentKm).toLocaleString("es-EC"))} km \xB7 ${e3(className(v.vehicleClass))} \xB7 ${e3(fuelName(v.fuel))}${v.plate ? ` \xB7 ${e3(v.plate)}` : ""}</div>
+      <div class="muted">Uso ${e3(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
+      ${plan ? `<label for="plan-${e3(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e3(v.id)}" readonly rows="12">${e3(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e3(user.id)}/schedule?vehicleId=${e3(v.id)}">Agendar turno</a> \xB7 <a href="/admin/work-orders/new?ownerId=${e3(user.id)}&amp;vehicleId=${e3(v.id)}">Orden de trabajo sin cita</a></p>` : ""}</div>`;
   }).join("");
-  const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e2(input.error)}</p>` : ""}
-      <form method="post" action="/admin/users/${e2(user.id)}/vehicles" autocomplete="off">${csrfField3(input.csrf)}${vehicleFields2(input.values ?? {})}
+  const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e3(input.error)}</p>` : ""}
+      <form method="post" action="/admin/users/${e3(user.id)}/vehicles" autocomplete="off">${csrfField4(input.csrf)}${vehicleFields2(input.values ?? {})}
       <button class="full" type="submit">Agregar veh\xEDculo</button></form></div>` : "";
-  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e2(user.name)}</h1>${flashHtml3(input.flash)}
-  ${datos}${shopCard}${storeCard}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
+  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e3(user.name)}</h1>${flashHtml4(input.flash)}
+  ${datos}${shopCard}${storeCard}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
 }
 function verificationsView(input) {
-  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e2(item.userId)}">${e2(item.name)}</a></td>
-            <td>${e2(item.city)}</td><td>${e2(item.ruc ?? "\u2014")}</td><td>${day(item.createdAt)}</td></tr>`).join("");
-  return `<h1>Verificaciones pendientes</h1>${flashHtml3(input.flash)}
+  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e3(item.userId)}">${e3(item.name)}</a></td>
+            <td>${e3(item.city)}</td><td>${e3(item.ruc ?? "\u2014")}</td><td>${day(item.createdAt)}</td></tr>`).join("");
+  return `<h1>Verificaciones pendientes</h1>${flashHtml4(input.flash)}
   <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
-var ROLE_LABELS, STATUS_LABELS2, USAGE_OPTIONS, e2, csrfField3, flashHtml3, className, fuelName, categoryName;
+var ROLE_LABELS, STATUS_LABELS2, USAGE_OPTIONS, e3, csrfField4, flashHtml4, className, fuelName, categoryName;
 var init_views_registrations = __esm({
   "packages/api/dist/interfaces/admin/views-registrations.js"() {
     "use strict";
@@ -89440,6 +89781,7 @@ var init_views_registrations = __esm({
     init_whatsapp_number();
     init_maintenance();
     init_views_appointments();
+    init_views_work_orders();
     ROLE_LABELS = {
       dueno: "Due\xF1o de veh\xEDculo",
       taller: "Taller",
@@ -89452,9 +89794,9 @@ var init_views_registrations = __esm({
       ["carretera", "Carretera"],
       ["severo", "Severo (Sierra, carga, lastre)"]
     ];
-    e2 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField3 = (token) => `<input type="hidden" name="csrf" value="${e2(token)}">`;
-    flashHtml3 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e2(flash.text)}</p>` : "";
+    e3 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField4 = (token) => `<input type="hidden" name="csrf" value="${e3(token)}">`;
+    flashHtml4 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
     className = (id) => vehicleClasses.classes.find((c) => c.id === id)?.name ?? String(id ?? "\u2014");
     fuelName = (id) => vehicleClasses.fuels.find((f) => f.id === id)?.name ?? String(id ?? "\u2014");
     categoryName = (id) => serviceTaxonomy.categories.find((c) => c.id === id)?.name ?? id;
@@ -89491,7 +89833,7 @@ function flashFrom(request) {
 }
 function registerRegistrationRoutes(app2, deps) {
   const { registrations } = deps;
-  const errorPage = (request, reply, session, title, text2, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text2)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text3, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text3)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -89524,7 +89866,15 @@ function registerRegistrationRoutes(app2, deps) {
       } catch {
       }
     }
-    return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values, appointments: appointmentsList, events }), session, extra.status ?? 200);
+    let workOrdersList = [];
+    let history = [];
+    if (deps.workOrders) {
+      try {
+        [workOrdersList, history] = await Promise.all([deps.workOrders.listForUser(id), deps.workOrders.historyForUser(id)]);
+      } catch {
+      }
+    }
+    return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values, appointments: appointmentsList, events, workOrders: workOrdersList, history }), session, extra.status ?? 200);
   }
   app2.get("/users", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -89563,7 +89913,7 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const perfil = PERFILES.includes(body.perfil) ? body.perfil : "dueno";
-    const invalid = (text2, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text2 }), session, status);
+    const invalid = (text3, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text3 }), session, status);
     const userFrom = async (data, keepEmail) => ({
       phone: data.phone,
       name: data.name,
@@ -89680,7 +90030,7 @@ function registerRegistrationRoutes(app2, deps) {
     const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "";
     const returnTo = typeof body.returnTo === "string" && UUID.test(body.returnTo) ? body.returnTo : null;
-    const fail = (text2, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text2 }, status }) : errorPage(request, reply, session, "Verificaciones", text2, status);
+    const fail = (text3, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text3 }, status }) : errorPage(request, reply, session, "Verificaciones", text3, status);
     if (!decision)
       return fail("Elige aprobar o rechazar.", 400);
     if (decision === "rejected" && reason.length < 5)
@@ -89742,7 +90092,7 @@ function dbErrorText(err) {
 }
 function registerAppointmentRoutes(app2, deps) {
   const { appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text2, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text2)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text3, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text3)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -89871,7 +90221,7 @@ function registerAppointmentRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const filter = FILTERS2.includes(query.f) ? query.f : "proximos";
+    const filter = FILTERS3.includes(query.f) ? query.f : "proximos";
     const raw = Number(query.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
@@ -89891,7 +90241,8 @@ function registerAppointmentRoutes(app2, deps) {
     }
     if (!appointment)
       return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
-    return deps.html(reply, request, "Turno", appointmentDetailView({ appointment, csrf: session.csrfToken, flash }), session, status);
+    const workOrderId = deps.workOrders ? await deps.workOrders.findByAppointment(id).catch(() => null) : null;
+    return deps.html(reply, request, "Turno", appointmentDetailView({ appointment, csrf: session.csrfToken, flash, workOrderId }), session, status);
   }
   app2.get("/appointments/:id", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -89961,7 +90312,7 @@ function registerAppointmentRoutes(app2, deps) {
     return reply.redirect(`/admin/users/${id}?ok=nota`, 302);
   });
 }
-var UUID2, FILTERS2, MAX_AHEAD_MS, OK_MESSAGES2, asList, validServices;
+var UUID2, FILTERS3, MAX_AHEAD_MS, OK_MESSAGES2, asList, validServices;
 var init_appointments = __esm({
   "packages/api/dist/interfaces/admin/appointments.js"() {
     "use strict";
@@ -89973,7 +90324,7 @@ var init_appointments = __esm({
     init_plan_text();
     init_views_appointments();
     UUID2 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    FILTERS2 = ["hoy", "proximos", "pendientes", "todos"];
+    FILTERS3 = ["hoy", "proximos", "pendientes", "todos"];
     MAX_AHEAD_MS = 180 * 24 * 60 * 60 * 1e3;
     OK_MESSAGES2 = {
       creado: "Turno solicitado. Env\xEDa los mensajes al taller y al due\xF1o.",
@@ -90042,6 +90393,21 @@ function pendingTasks(ctx) {
     if (today > 0)
       tasks.push({ text: `\u{1F4C5} Hoy atiendes ${plural(today, "turno", "turnos")}.`, forCustomer: true });
   }
+  const orders = ctx.workOrders ?? [];
+  if (role === "dueno") {
+    for (const o of orders.filter((x) => x.ownerId === userId)) {
+      if (o.status === "presupuesto_enviado") {
+        tasks.push({ text: `\u{1F9FE} Tienes un presupuesto por aprobar en ${o.shopName} (${workOrderCode(o.number)}): ${formatUsd(o.total)}.`, forCustomer: true });
+      } else if (IN_SHOP_STATUSES.includes(o.status)) {
+        tasks.push({ text: `\u{1F527} Tu ${o.vehicleLabel} est\xE1 en ${o.shopName} (${workOrderCode(o.number)}): ${String(WORK_ORDER_LABELS[o.status]).toLowerCase()}.`, forCustomer: true });
+      }
+    }
+  }
+  if (role === "taller") {
+    const open = orders.filter((o) => o.shopUserId === userId && OPEN_STATUSES.includes(o.status)).length;
+    if (open > 0)
+      tasks.push({ text: `\u{1F9FE} Tienes ${plural(open, "orden de trabajo abierta", "\xF3rdenes de trabajo abiertas")}.`, forCustomer: true });
+  }
   const lastNote = ctx.events.find((ev) => ev.type === "operator.note");
   if (lastNote) {
     tasks.push({ text: `\xDAltima nota (${formatEcDateTime(lastNote.createdAt)}): ${String(lastNote.payload.text ?? "")}`, forCustomer: false });
@@ -90061,9 +90427,9 @@ function welcomeMessage(ctx) {
   return parts.join("\n\n");
 }
 function parseContactInput(input) {
-  const text2 = input.slice(0, 2e3);
-  const code = /\bAMP-[A-HJ-NP-Z2-9]{4}\b/i.exec(text2)?.[0]?.toUpperCase() ?? null;
-  const rest = code ? text2.split(new RegExp(code, "i")).join(" ") : text2;
+  const text3 = input.slice(0, 2e3);
+  const code = /\bAMP-[A-HJ-NP-Z2-9]{4}\b/i.exec(text3)?.[0]?.toUpperCase() ?? null;
+  const rest = code ? text3.split(new RegExp(code, "i")).join(" ") : text3;
   for (const candidate of rest.match(/\+?\d[\d\s().-]{6,}\d/g) ?? []) {
     const digits = normalizeWhatsappNumber(candidate);
     if (digits)
@@ -90078,6 +90444,7 @@ var init_welcome = __esm({
     init_messages();
     init_plan_text();
     init_whatsapp_number();
+    init_workflow();
     NEW_CONTACT_MESSAGE = "\xA1Hola! \u{1F44B} Bienvenido a AutoMantPro \u{1F697}\nTu veh\xEDculo, tu taller y tus repuestos, conectados en un solo chat.\n\n\xBFQui\xE9n eres?\n1) \u{1F697} Soy nuevo y tengo un veh\xEDculo\n2) \u{1F527} Soy nuevo y tengo un taller\n3) \u{1F4E6} Soy nuevo y tengo un almac\xE9n de repuestos\n4) \u{1F511} Ya tengo cuenta (te escribo desde otro n\xFAmero)\n\nResponde con el n\xFAmero.";
     MENUS = {
       dueno: "\xBFQu\xE9 necesitas hoy?\n1) \u{1F697} Mis veh\xEDculos y su plan\n2) \u{1F50D} Tengo un s\xEDntoma o ruido\n3) \u{1F4C5} Agendar en un taller\n4) \u{1F4E6} Cotizar un repuesto\n5) \u{1F64B} Hablar con una persona",
@@ -90094,46 +90461,46 @@ function visitLine(result) {
   if (!result.code)
     return "";
   if (result.visit) {
-    return `<div>\u{1F310} Lleg\xF3 desde automantpro.app el ${e3(formatEcDateTime(result.visit.createdAt))}${result.visit.ref ? ` \xB7 origen: <strong>${e3(result.visit.ref)}</strong>` : ""} (c\xF3digo ${e3(result.code)}).</div>`;
+    return `<div>\u{1F310} Lleg\xF3 desde automantpro.app el ${e4(formatEcDateTime(result.visit.createdAt))}${result.visit.ref ? ` \xB7 origen: <strong>${e4(result.visit.ref)}</strong>` : ""} (c\xF3digo ${e4(result.code)}).</div>`;
   }
-  return `<div class="muted">El c\xF3digo ${e3(result.code)} ${result.visitLookup ? "no corresponde a una visita de los \xFAltimos 7 d\xEDas" : "no se pudo consultar"}.</div>`;
+  return `<div class="muted">El c\xF3digo ${e4(result.code)} ${result.visitLookup ? "no corresponde a una visita de los \xFAltimos 7 d\xEDas" : "no se pudo consultar"}.</div>`;
 }
 function resultCard(result, csrf) {
   if (!result.phone) {
     return `<div class="card">${visitLine(result)}<p class="error">No encontr\xE9 un celular de Ecuador en lo que pegaste. Pega el n\xFAmero del contacto (por ejemplo 099 123 4567).</p></div>`;
   }
   const digits = phoneDigits(result.phone);
-  const chat = `<a href="https://wa.me/${e3(digits)}" target="_blank" rel="noopener">Abrir chat</a>`;
-  const message2 = `<label for="welcome">Mensaje para enviar</label><textarea id="welcome" readonly rows="10">${e3(result.message)}</textarea>`;
+  const chat = `<a href="https://wa.me/${e4(digits)}" target="_blank" rel="noopener">Abrir chat</a>`;
+  const message2 = `<label for="welcome">Mensaje para enviar</label><textarea id="welcome" readonly rows="10">${e4(result.message)}</textarea>`;
   if (!result.detail) {
     return `<div class="card"><h2>Contacto nuevo</h2>
-      <div><strong>${e3(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}
+      <div><strong>${e4(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}
       <p class="muted">No est\xE1 registrado. Env\xEDa la bienvenida y, cuando diga qui\xE9n es, reg\xEDstralo.</p>
       ${message2}
-      <form method="post" action="/admin/users/new/start" class="row">${csrfField4(csrf)}<input type="hidden" name="phone" value="${e3(result.phone)}">
+      <form method="post" action="/admin/users/new/start" class="row">${csrfField5(csrf)}<input type="hidden" name="phone" value="${e4(result.phone)}">
       <select name="perfil" aria-label="Perfil"><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n</option></select>
       <button type="submit">Registrar</button></form></div>`;
   }
   const { user, vehicles } = result.detail;
   const role = String(user.role);
-  const tasks = result.tasks.length === 0 ? `<p class="muted">Sin pendientes.</p>` : `<ul>${result.tasks.map((t) => `<li>${e3(t.text)}${t.forCustomer ? "" : ' <span class="muted">(solo para ti)</span>'}</li>`).join("")}</ul>`;
-  const schedule = role === "dueno" && vehicles[0] ? ` \xB7 <a href="/admin/users/${e3(user.id)}/schedule?vehicleId=${e3(vehicles[0].id)}">Agendar turno</a>` : "";
-  return `<div class="card"><h2>${e3(ROLE_LABELS[role] ?? role)} registrado</h2>
-    <div><strong>${e3(user.name)}</strong> \xB7 ${e3(formatWhatsappNumber(digits))} \xB7 ${chat}</div>${visitLine(result)}
-    <div><a href="/admin/users/${e3(user.id)}">Ver ficha</a>${schedule}</div>
+  const tasks = result.tasks.length === 0 ? `<p class="muted">Sin pendientes.</p>` : `<ul>${result.tasks.map((t) => `<li>${e4(t.text)}${t.forCustomer ? "" : ' <span class="muted">(solo para ti)</span>'}</li>`).join("")}</ul>`;
+  const schedule = role === "dueno" && vehicles[0] ? ` \xB7 <a href="/admin/users/${e4(user.id)}/schedule?vehicleId=${e4(vehicles[0].id)}">Agendar turno</a>` : "";
+  return `<div class="card"><h2>${e4(ROLE_LABELS[role] ?? role)} registrado</h2>
+    <div><strong>${e4(user.name)}</strong> \xB7 ${e4(formatWhatsappNumber(digits))} \xB7 ${chat}</div>${visitLine(result)}
+    <div><a href="/admin/users/${e4(user.id)}">Ver ficha</a>${schedule}</div>
     <h2>Pendientes del \xFAltimo chat</h2>${tasks}
     ${message2}</div>`;
 }
 function attendView(input) {
   return `<div class="stack wide"><h1>Atender a un contacto</h1>
   <p class="muted">Pega el n\xFAmero o el primer mensaje que lleg\xF3 por WhatsApp. Te digo si es nuevo o registrado, su perfil, lo pendiente y el mensaje para responder.</p>
-  ${input.error ? `<p class="error" role="alert">${e3(input.error)}</p>` : ""}
-  <form method="post" action="/admin/attend" autocomplete="off">${csrfField4(input.csrf)}
-  <label for="q">N\xFAmero o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. C\xF3digo: AMP-XXXX \xB7 099 123 4567">${e3(input.query)}</textarea>
+  ${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}
+  <form method="post" action="/admin/attend" autocomplete="off">${csrfField5(input.csrf)}
+  <label for="q">N\xFAmero o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. C\xF3digo: AMP-XXXX \xB7 099 123 4567">${e4(input.query)}</textarea>
   <button class="full" type="submit">Identificar</button></form>
   ${input.result ? resultCard(input.result, input.csrf) : ""}</div>`;
 }
-var e3, csrfField4, phoneDigits;
+var e4, csrfField5, phoneDigits;
 var init_views_attend = __esm({
   "packages/api/dist/interfaces/admin/views-attend.js"() {
     "use strict";
@@ -90141,8 +90508,8 @@ var init_views_attend = __esm({
     init_whatsapp_number();
     init_messages();
     init_views_registrations();
-    e3 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField4 = (token) => `<input type="hidden" name="csrf" value="${e3(token)}">`;
+    e4 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField5 = (token) => `<input type="hidden" name="csrf" value="${e4(token)}">`;
     phoneDigits = (phone) => phone.replace(/\D/g, "");
   }
 });
@@ -90168,6 +90535,7 @@ function registerAttendRoutes(app2, deps) {
     let detail = null;
     let appointments = [];
     let events = [];
+    let workOrders = [];
     try {
       if (phone) {
         const found = await deps.registrations.searchUsers(phone.replace(/\D/g, ""), 1);
@@ -90175,6 +90543,8 @@ function registerAttendRoutes(app2, deps) {
         if (row)
           detail = await deps.registrations.getUserDetail(String(row.id));
       }
+      if (detail && deps.workOrders)
+        workOrders = await deps.workOrders.listForUser(String(detail.user.id));
       if (detail && deps.appointments) {
         [appointments, events] = await Promise.all([
           deps.appointments.listForUser(String(detail.user.id)),
@@ -90195,7 +90565,7 @@ function registerAttendRoutes(app2, deps) {
         visitLookup = false;
       }
     }
-    const ctx = { detail, appointments, events };
+    const ctx = { detail, appointments, events, workOrders };
     return deps.html(reply, request, "Atender", attendView({
       csrf: session.csrfToken,
       query,
@@ -90213,8 +90583,530 @@ var init_attend = __esm({
   }
 });
 
-// packages/api/dist/infrastructure/appointments/appointment-store.js
+// packages/api/dist/interfaces/admin/work-orders.js
+function wholeNumber(value2, min, max) {
+  const digits = typeof value2 === "string" ? value2.replace(/[.\s,]/g, "") : "";
+  if (!/^\d{1,7}$/.test(digits))
+    return null;
+  const n = Number(digits);
+  return n >= min && n <= max ? n : null;
+}
+function dbErrorText2(err) {
+  const code = err.code;
+  if (code === "ER_BAD_FIELD_ERROR" || code === "ER_NO_SUCH_TABLE") {
+    return { status: 503, text: "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." };
+  }
+  return { status: 502, text: `No se pudo completar la operaci\xF3n (${code ?? "base de datos no disponible"}).` };
+}
+function registerWorkOrderRoutes(app2, deps) {
+  const { workOrders, appointments, registrations } = deps;
+  const errorPage = (request, reply, session, title, text3, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text3)}</p></div>`, session, status);
+  function withCsrf(request, reply) {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return null;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf)) {
+      errorPage(request, reply, session, "Solicitud inv\xE1lida", "Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.", 403);
+      return null;
+    }
+    return { session, body };
+  }
+  async function renderOrder(request, reply, session, id, flash, status = 200) {
+    let found;
+    try {
+      found = await workOrders.get(id);
+    } catch (err) {
+      const m = dbErrorText2(err);
+      return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
+    }
+    if (!found)
+      return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+    return deps.html(reply, request, workOrderCode(found.order.number), workOrderDetailView({ ...found, csrf: session.csrfToken, flash }), session, status);
+  }
+  async function record(session, type, order, extra = {}) {
+    const payload = { workOrderId: order.id, code: workOrderCode(order.number), ...extra };
+    for (const entityId of [order.ownerId, order.shopUserId]) {
+      await appointments.recordEvent({ type, actorUserId: session.userId, entityType: "User", entityId, payload }).catch(() => void 0);
+    }
+  }
+  async function formContext(appointmentId, ownerId, vehicleId) {
+    const appointment = appointmentId ? await appointments.getAppointment(appointmentId) : null;
+    const owner = appointment?.ownerId ?? ownerId;
+    if (!owner)
+      return null;
+    const detail = await registrations.getUserDetail(owner);
+    if (!detail || String(detail.user.role) !== "dueno")
+      return null;
+    const vehicle = detail.vehicles.find((v) => String(v.id) === (appointment?.vehicleId ?? vehicleId)) ?? null;
+    if (!vehicle)
+      return null;
+    const shops = appointment ? [] : await appointments.verifiedShops("");
+    return { detail, vehicle, appointment, shops };
+  }
+  app2.get("/work-orders", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const query = request.query ?? {};
+    const filter = FILTERS4.includes(query.f) ? query.f : "abiertas";
+    const raw = Number(query.page ?? 1);
+    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    try {
+      return deps.html(reply, request, "\xD3rdenes de trabajo", workOrdersListView({ filter, page: await workOrders.list(filter, page) }), session);
+    } catch (err) {
+      const m = dbErrorText2(err);
+      return errorPage(request, reply, session, "\xD3rdenes de trabajo", m.text, m.status);
+    }
+  });
+  app2.get("/work-orders/new", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const query = request.query ?? {};
+    const pick = (key) => typeof query[key] === "string" && UUID3.test(query[key]) ? query[key] : null;
+    const appointmentId = pick("appointmentId");
+    try {
+      if (appointmentId) {
+        const existing = await workOrders.findByAppointment(appointmentId);
+        if (existing)
+          return reply.redirect(`/admin/work-orders/${existing}`, 302);
+      }
+      const ctx = await formContext(appointmentId, pick("ownerId"), pick("vehicleId"));
+      if (!ctx)
+        return errorPage(request, reply, session, "Nueva orden", "Abre la orden desde un turno o desde el veh\xEDculo de un due\xF1o registrado.", 404);
+      return deps.html(reply, request, "Nueva orden de trabajo", newWorkOrderView({ csrf: session.csrfToken, owner: ctx.detail.user, vehicle: ctx.vehicle, appointment: ctx.appointment, shops: ctx.shops }), session);
+    } catch (err) {
+      const m = dbErrorText2(err);
+      return errorPage(request, reply, session, "Nueva orden", m.text, m.status);
+    }
+  });
+  app2.post("/work-orders", async (request, reply) => {
+    const ctxCsrf = withCsrf(request, reply);
+    if (!ctxCsrf)
+      return reply;
+    const { session, body } = ctxCsrf;
+    const uuid = (key) => typeof body[key] === "string" && UUID3.test(body[key]) ? body[key] : null;
+    const appointmentId = uuid("appointmentId");
+    let id;
+    let order;
+    try {
+      const ctx = await formContext(appointmentId, uuid("ownerId"), uuid("vehicleId"));
+      if (!ctx)
+        return errorPage(request, reply, session, "Nueva orden", "Abre la orden desde un turno o desde el veh\xEDculo de un due\xF1o registrado.", 404);
+      const invalid = (error) => deps.html(reply, request, "Nueva orden de trabajo", newWorkOrderView({ csrf: session.csrfToken, owner: ctx.detail.user, vehicle: ctx.vehicle, appointment: ctx.appointment, shops: ctx.shops, values: body, error }), session, 400);
+      let shopId;
+      if (ctx.appointment) {
+        if (ctx.appointment.status !== "confirmed" && ctx.appointment.status !== "pending") {
+          return invalid("El turno ya no est\xE1 activo: abre la orden sin cita.");
+        }
+        const existing = await workOrders.findByAppointment(ctx.appointment.id);
+        if (existing)
+          return reply.redirect(`/admin/work-orders/${existing}`, 302);
+        shopId = ctx.appointment.shopId;
+      } else {
+        const chosen = uuid("shopId");
+        if (!chosen || !ctx.shops.some((s) => s.id === chosen))
+          return invalid("Elige un taller verificado.");
+        shopId = chosen;
+      }
+      const intakeKm = wholeNumber(body.intakeKm, 0, 2e6);
+      if (intakeKm === null)
+        return invalid("Kilometraje de ingreso no v\xE1lido.");
+      id = await workOrders.create({
+        shopId,
+        ownerId: String(ctx.detail.user.id),
+        vehicleId: String(ctx.vehicle.id),
+        appointmentId: ctx.appointment?.id ?? null,
+        intakeKm,
+        intakeNotes: optional(body.intakeNotes, 1e3),
+        diagnosis: optional(body.diagnosis, 1e3)
+      });
+      order = (await workOrders.get(id))?.order;
+    } catch (err) {
+      const m = dbErrorText2(err);
+      return errorPage(request, reply, session, "Nueva orden", m.text, m.status);
+    }
+    if (order)
+      await record(session, "workorder.created", order, { status: "recepcion", shopName: order.shopName });
+    await deps.audit("admin.workorder.create", session.userId, `Orden ${order ? workOrderCode(order.number) : id} abierta`);
+    return reply.redirect(`/admin/work-orders/${id}?ok=creada`, 302);
+  });
+  app2.get("/work-orders/:id", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const { id } = request.params;
+    if (!UUID3.test(id))
+      return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+    const ok = request.query?.ok;
+    return renderOrder(request, reply, session, id, typeof ok === "string" && OK_MESSAGES3[ok] ? { kind: "ok", text: OK_MESSAGES3[ok] } : void 0);
+  });
+  async function loadForAction(request, reply, session, id, needsEditable) {
+    const found = await workOrders.get(id);
+    if (!found) {
+      await errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+      return null;
+    }
+    if (needsEditable && !EDITABLE_STATUSES.includes(found.order.status)) {
+      await renderOrder(request, reply, session, id, { kind: "error", text: "El presupuesto solo se edita en recepci\xF3n o despu\xE9s de un rechazo." }, 400);
+      return null;
+    }
+    return found;
+  }
+  app2.post("/work-orders/:id/items", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID3.test(id))
+      return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+    try {
+      if (!await loadForAction(request, reply, session, id, true))
+        return reply;
+      const kind = ITEM_KINDS.some(([k]) => k === body.kind) ? String(body.kind) : null;
+      const description = str(body.description, 191);
+      const quantity = parseAmount(body.quantity);
+      const unitPrice = parseAmount(body.unitPrice);
+      const fail = (text3) => renderOrder(request, reply, session, id, { kind: "error", text: text3 }, 400);
+      if (!kind)
+        return fail("Elige si es repuesto o mano de obra.");
+      if (description.length < 2)
+        return fail("Escribe la descripci\xF3n del \xEDtem.");
+      if (quantity === null || quantity <= 0 || quantity > 999)
+        return fail("Cantidad no v\xE1lida.");
+      if (unitPrice === null || unitPrice > 1e5)
+        return fail("Precio unitario no v\xE1lido.");
+      await workOrders.addItem(id, { kind, description, brand: optional(body.brand, 60), partCode: optional(body.partCode, 60), quantity, unitPrice });
+    } catch (err) {
+      const m = dbErrorText2(err);
+      return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
+    }
+    return reply.redirect(`/admin/work-orders/${id}?ok=item`, 302);
+  });
+  app2.post("/work-orders/:id/items/:itemId/delete", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session } = ctx;
+    const { id, itemId } = request.params;
+    if (!UUID3.test(id) || !UUID3.test(itemId))
+      return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+    try {
+      if (!await loadForAction(request, reply, session, id, true))
+        return reply;
+      await workOrders.removeItem(id, itemId);
+    } catch (err) {
+      const m = dbErrorText2(err);
+      return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
+    }
+    return reply.redirect(`/admin/work-orders/${id}?ok=item`, 302);
+  });
+  app2.post("/work-orders/:id/diagnosis", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID3.test(id))
+      return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+    try {
+      if (!await loadForAction(request, reply, session, id, true))
+        return reply;
+      await workOrders.updateDiagnosis(id, optional(body.diagnosis, 1e3));
+    } catch (err) {
+      const m = dbErrorText2(err);
+      return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
+    }
+    return reply.redirect(`/admin/work-orders/${id}?ok=diagnostico`, 302);
+  });
+  app2.post("/work-orders/:id/status", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID3.test(id))
+      return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+    const next = String(body.status ?? "");
+    const reason = str(body.reason, 191);
+    let order;
+    try {
+      const found = await loadForAction(request, reply, session, id, false);
+      if (!found)
+        return reply;
+      order = found.order;
+      const fail = (text3) => renderOrder(request, reply, session, id, { kind: "error", text: text3 }, 400);
+      if (next === "cerrada" || !(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes(next))
+        return fail("Ese cambio de estado no es posible.");
+      if (next === "presupuesto_enviado" && found.items.length === 0)
+        return fail("Agrega al menos un \xEDtem antes de enviar el presupuesto.");
+      if ((next === "rechazado" || next === "cancelada") && reason.length < 5)
+        return fail("Escribe el motivo.");
+      const updated = await workOrders.setStatus(id, order.status, next, {
+        rejectionReason: next === "rechazado" ? reason : void 0,
+        cancelReason: next === "cancelada" ? reason : void 0
+      });
+      if (!updated)
+        return fail("La orden cambi\xF3 mientras tanto: revisa su estado actual.");
+    } catch (err) {
+      const m = dbErrorText2(err);
+      return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
+    }
+    await record(session, "workorder.status", order, { status: next, reason: reason || null });
+    await deps.audit(`admin.workorder.${next}`, session.userId, `${workOrderCode(order.number)}${reason ? `: ${reason}` : ""}`);
+    return reply.redirect(`/admin/work-orders/${id}?ok=estado`, 302);
+  });
+  app2.post("/work-orders/:id/close", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID3.test(id))
+      return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+    let order;
+    try {
+      const found = await loadForAction(request, reply, session, id, false);
+      if (!found)
+        return reply;
+      order = found.order;
+      const fail = (text3) => renderOrder(request, reply, session, id, { kind: "error", text: text3 }, 400);
+      if (!(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes("cerrada"))
+        return fail("Solo se cierra una orden en ejecuci\xF3n o esperando repuesto.");
+      const exitKm = wholeNumber(body.exitKm, 0, 2e6);
+      if (exitKm === null)
+        return fail("Kilometraje de salida no v\xE1lido.");
+      if (order.intakeKm !== null && exitKm < order.intakeKm)
+        return fail("El kilometraje de salida no puede ser menor que el de ingreso.");
+      const warrantyDays = wholeNumber(body.warrantyDays, 0, 3650);
+      if (warrantyDays === null)
+        return fail("D\xEDas de garant\xEDa no v\xE1lidos.");
+      const diagnosisOutcome = DIAGNOSIS_OUTCOMES.some(([k]) => k === body.diagnosisOutcome) ? String(body.diagnosisOutcome) : "no_aplica";
+      const nextService = optional(body.nextService, 191);
+      const closed = await workOrders.close(id, {
+        exitKm,
+        warrantyDays,
+        nextService,
+        diagnosisOutcome,
+        outcomeNote: optional(body.outcomeNote, 191),
+        historyDescription: historyDescription({ ...order, warrantyDays, nextService }, found.items)
+      });
+      if (!closed)
+        return fail("La orden cambi\xF3 mientras tanto: revisa su estado actual.");
+    } catch (err) {
+      const m = dbErrorText2(err);
+      return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
+    }
+    await record(session, "workorder.status", order, { status: "cerrada" });
+    await deps.audit("admin.workorder.cerrada", session.userId, `${workOrderCode(order.number)} cerrada`);
+    return reply.redirect(`/admin/work-orders/${id}?ok=cerrada`, 302);
+  });
+}
+var UUID3, FILTERS4, OK_MESSAGES3, str, optional;
+var init_work_orders = __esm({
+  "packages/api/dist/interfaces/admin/work-orders.js"() {
+    "use strict";
+    init_page();
+    init_security();
+    init_workflow();
+    init_views_work_orders();
+    UUID3 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS4 = ["abiertas", "por_aprobar", "en_taller", "cerradas", "todas"];
+    OK_MESSAGES3 = {
+      creada: "Orden abierta. Env\xEDa al due\xF1o el mensaje de recepci\xF3n.",
+      item: "Presupuesto actualizado.",
+      diagnostico: "Diagn\xF3stico guardado.",
+      estado: "Estado actualizado. Env\xEDa el mensaje al due\xF1o.",
+      cerrada: "Orden cerrada y guardada en el historial del veh\xEDculo. Env\xEDa el resumen al due\xF1o."
+    };
+    str = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+    optional = (value2, max) => str(value2, max) || null;
+  }
+});
+
+// packages/api/dist/infrastructure/work-orders/work-order-store.js
 function rows2(result) {
+  return Array.isArray(result[0]) ? result[0] : [];
+}
+function toOrder(r) {
+  return {
+    id: String(r.id),
+    number: Number(r.number),
+    status: String(r.status),
+    shopId: String(r.shopId),
+    shopName: String(r.shopName),
+    shopUserId: String(r.shopUserId),
+    shopPhone: String(r.shopPhone),
+    ownerId: String(r.ownerId),
+    ownerName: String(r.ownerName),
+    ownerPhone: String(r.ownerPhone),
+    vehicleId: String(r.vehicleId),
+    vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
+    plate: text(r.plate),
+    vehicleKm: Number(r.currentKm ?? 0),
+    appointmentId: text(r.appointmentId),
+    intakeKm: int(r.intakeKm),
+    intakeNotes: text(r.intakeNotes),
+    diagnosis: text(r.diagnosis),
+    rejectionReason: text(r.rejectionReason),
+    cancelReason: text(r.cancelReason),
+    exitKm: int(r.exitKm),
+    warrantyDays: int(r.warrantyDays),
+    nextService: text(r.nextService),
+    diagnosisOutcome: text(r.diagnosisOutcome),
+    outcomeNote: text(r.outcomeNote),
+    total: Number(r.total ?? 0),
+    createdAt: r.createdAt,
+    closedAt: r.closedAt ?? null
+  };
+}
+function toItem(r) {
+  return {
+    id: String(r.id),
+    kind: String(r.kind),
+    description: String(r.description),
+    brand: text(r.brand),
+    partCode: text(r.partCode),
+    quantity: Number(r.quantity),
+    unitPrice: Number(r.unitPrice)
+  };
+}
+var PAGE_SIZE2, SELECT_ORDERS, LIST_OPEN, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL, GET_ONE, FOR_USER, RECALCULATE_TOTAL, text, int, MysqlWorkOrderStore;
+var init_work_order_store = __esm({
+  "packages/api/dist/infrastructure/work-orders/work-order-store.js"() {
+    "use strict";
+    PAGE_SIZE2 = 25;
+    SELECT_ORDERS = "SELECT w.id, w.number, w.status, w.appointmentId, w.intakeKm, w.intakeNotes, w.diagnosis, w.rejectionReason, w.cancelReason, w.exitKm, w.warrantyDays, w.nextService, w.diagnosisOutcome, w.outcomeNote, w.total, w.createdAt, w.closedAt, s.id AS shopId, s.name AS shopName, su.id AS shopUserId, su.phone AS shopPhone, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, v.id AS vehicleId, v.make, v.model, v.year, v.plate, v.currentKm FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `User` su ON su.id = s.userId JOIN `User` o ON o.id = w.ownerId JOIN `Vehicle` v ON v.id = w.vehicleId";
+    LIST_OPEN = `${SELECT_ORDERS} WHERE w.status NOT IN ('cerrada', 'cancelada') ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
+    LIST_TO_APPROVE = `${SELECT_ORDERS} WHERE w.status = 'presupuesto_enviado' ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
+    LIST_IN_SHOP = `${SELECT_ORDERS} WHERE w.status IN ('aprobado', 'en_ejecucion', 'esperando_repuesto') ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
+    LIST_CLOSED = `${SELECT_ORDERS} WHERE w.status = 'cerrada' ORDER BY w.closedAt DESC LIMIT ? OFFSET ?`;
+    LIST_ALL = `${SELECT_ORDERS} ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
+    GET_ONE = `${SELECT_ORDERS} WHERE w.id = ? LIMIT 1`;
+    FOR_USER = `${SELECT_ORDERS} WHERE w.ownerId = ? OR su.id = ? ORDER BY w.createdAt DESC LIMIT 20`;
+    RECALCULATE_TOTAL = "UPDATE `WorkOrder` SET total = (SELECT COALESCE(SUM(ROUND(quantity * unitPrice, 2)), 0) FROM `WorkOrderItem` WHERE workOrderId = ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?";
+    text = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    int = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
+    MysqlWorkOrderStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      transaction(work) {
+        return this.run(async (conn) => {
+          await conn.query("START TRANSACTION");
+          try {
+            const result = await work(conn);
+            await conn.query("COMMIT");
+            return result;
+          } catch (err) {
+            await conn.query("ROLLBACK").catch(() => void 0);
+            throw err;
+          }
+        });
+      }
+      async create(input) {
+        const attempt = () => this.transaction(async (conn) => {
+          const id = String(rows2(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows2(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
+          await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, diagnosis, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, next, input.shopId, input.ownerId, input.vehicleId, input.appointmentId, input.intakeKm, input.intakeNotes, input.diagnosis]);
+          return id;
+        });
+        try {
+          return await attempt();
+        } catch (err) {
+          if (err.code === "ER_DUP_ENTRY")
+            return attempt();
+          throw err;
+        }
+      }
+      get(id) {
+        return this.run(async (conn) => {
+          const row = rows2(await conn.query(GET_ONE, [id]))[0];
+          if (!row)
+            return null;
+          const items = rows2(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id])).map(toItem);
+          return { order: toOrder(row), items };
+        });
+      }
+      list(filter, page) {
+        return this.run(async (conn) => {
+          const params = [PAGE_SIZE2, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2];
+          const sql = filter === "abiertas" ? LIST_OPEN : filter === "por_aprobar" ? LIST_TO_APPROVE : filter === "en_taller" ? LIST_IN_SHOP : filter === "cerradas" ? LIST_CLOSED : LIST_ALL;
+          return { items: rows2(await conn.query(sql, params)).map(toOrder), page, pageSize: PAGE_SIZE2 };
+        });
+      }
+      listForUser(userId) {
+        return this.run(async (conn) => rows2(await conn.query(FOR_USER, [userId, userId])).map(toOrder));
+      }
+      findByAppointment(appointmentId) {
+        return this.run(async (conn) => {
+          const row = rows2(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
+          return row ? String(row.id) : null;
+        });
+      }
+      addItem(workOrderId, item) {
+        return this.transaction(async (conn) => {
+          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [workOrderId, item.kind, item.description, item.brand, item.partCode, item.quantity, item.unitPrice]);
+          await conn.query(RECALCULATE_TOTAL, [workOrderId, workOrderId]);
+        });
+      }
+      removeItem(workOrderId, itemId) {
+        return this.transaction(async (conn) => {
+          await conn.query("DELETE FROM `WorkOrderItem` WHERE id = ? AND workOrderId = ?", [itemId, workOrderId]);
+          await conn.query(RECALCULATE_TOTAL, [workOrderId, workOrderId]);
+        });
+      }
+      updateDiagnosis(id, diagnosis) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `WorkOrder` SET diagnosis = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [diagnosis, id]);
+        });
+      }
+      setStatus(id, expected, next, fields = {}) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `WorkOrder` SET status = ?, rejectionReason = COALESCE(?, rejectionReason), cancelReason = COALESCE(?, cancelReason), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status = ?", [next, fields.rejectionReason ?? null, fields.cancelReason ?? null, id, expected]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      close(id, input) {
+        return this.transaction(async (conn) => {
+          const order = rows2(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id]))[0];
+          if (!order)
+            return false;
+          await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', exitKm = ?, warrantyDays = ?, nextService = ?, diagnosisOutcome = ?, outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.exitKm, input.warrantyDays, input.nextService, input.diagnosisOutcome, input.outcomeNote, id]);
+          await conn.query("INSERT INTO `Service` (id, vehicleId, shopId, appointmentId, description, cost, status, createdAt) VALUES (UUID(), ?, ?, ?, ?, ?, 'done', CURRENT_TIMESTAMP(3))", [order.vehicleId, order.shopId, order.appointmentId ?? null, input.historyDescription, order.total]);
+          await conn.query("UPDATE `Vehicle` SET currentKm = GREATEST(currentKm, ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.exitKm, order.vehicleId]);
+          if (order.appointmentId) {
+            await conn.query("UPDATE `Appointment` SET status = 'completed', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status IN ('pending', 'confirmed')", [order.appointmentId]);
+          }
+          return true;
+        });
+      }
+      historyForUser(userId) {
+        return this.run(async (conn) => rows2(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
+          createdAt: r.createdAt,
+          shopName: String(r.shopName),
+          vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
+          description: String(r.description),
+          cost: r.cost === null || r.cost === void 0 ? null : Number(r.cost)
+        })));
+      }
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/appointments/appointment-store.js
+function rows3(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function jsonValue(raw) {
@@ -90235,14 +91127,14 @@ function toAppointment(r) {
     id: String(r.id),
     scheduledAt: r.scheduledAt,
     status: String(r.status),
-    summary: text(r.summary),
+    summary: text2(r.summary),
     services: stringList(r.services),
-    notes: text(r.notes),
-    cancelReason: text(r.cancelReason),
+    notes: text2(r.notes),
+    cancelReason: text2(r.cancelReason),
     createdAt: r.createdAt,
     vehicleId: String(r.vehicleId),
     vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
-    plate: text(r.plate),
+    plate: text2(r.plate),
     ownerId: String(r.ownerId),
     ownerName: String(r.ownerName),
     ownerPhone: String(r.ownerPhone),
@@ -90254,20 +91146,20 @@ function toAppointment(r) {
     shopPhone: String(r.shopPhone)
   };
 }
-var PAGE_SIZE2, SELECT_APPOINTMENTS, LIST_TODAY, LIST_UPCOMING, LIST_PENDING, LIST_ALL, GET_ONE, FOR_USER, text, MysqlAppointmentStore;
+var PAGE_SIZE3, SELECT_APPOINTMENTS, LIST_TODAY, LIST_UPCOMING, LIST_PENDING, LIST_ALL2, GET_ONE2, FOR_USER2, text2, MysqlAppointmentStore;
 var init_appointment_store = __esm({
   "packages/api/dist/infrastructure/appointments/appointment-store.js"() {
     "use strict";
     init_messages();
-    PAGE_SIZE2 = 25;
+    PAGE_SIZE3 = 25;
     SELECT_APPOINTMENTS = "SELECT a.id, a.scheduledAt, a.status, a.summary, a.services, a.notes, a.cancelReason, a.createdAt, v.id AS vehicleId, v.make, v.model, v.year, v.plate, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, s.id AS shopId, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, su.id AS shopUserId, su.phone AS shopPhone FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` o ON o.id = a.ownerId JOIN `Shop` s ON s.id = a.shopId JOIN `User` su ON su.id = s.userId";
     LIST_TODAY = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
     LIST_UPCOMING = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.status IN ('pending', 'confirmed') ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
     LIST_PENDING = `${SELECT_APPOINTMENTS} WHERE a.status = 'pending' ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
-    LIST_ALL = `${SELECT_APPOINTMENTS} ORDER BY a.scheduledAt DESC LIMIT ? OFFSET ?`;
-    GET_ONE = `${SELECT_APPOINTMENTS} WHERE a.id = ? LIMIT 1`;
-    FOR_USER = `${SELECT_APPOINTMENTS} WHERE a.ownerId = ? OR su.id = ? ORDER BY a.scheduledAt DESC LIMIT 20`;
-    text = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    LIST_ALL2 = `${SELECT_APPOINTMENTS} ORDER BY a.scheduledAt DESC LIMIT ? OFFSET ?`;
+    GET_ONE2 = `${SELECT_APPOINTMENTS} WHERE a.id = ? LIMIT 1`;
+    FOR_USER2 = `${SELECT_APPOINTMENTS} WHERE a.ownerId = ? OR su.id = ? ORDER BY a.scheduledAt DESC LIMIT 20`;
+    text2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     MysqlAppointmentStore = class {
       connect;
       constructor(connect) {
@@ -90282,49 +91174,49 @@ var init_appointment_store = __esm({
         }
       }
       verifiedShops(city) {
-        return this.run(async (conn) => rows2(await conn.query("SELECT id, name, address, city, zone, hours, ratingAvg, specialties FROM `Shop` WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ORDER BY name LIMIT 200", [city.trim(), city.trim()])).map((r) => ({
+        return this.run(async (conn) => rows3(await conn.query("SELECT id, name, address, city, zone, hours, ratingAvg, specialties FROM `Shop` WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ORDER BY name LIMIT 200", [city.trim(), city.trim()])).map((r) => ({
           id: String(r.id),
           name: String(r.name),
           address: String(r.address),
           city: String(r.city),
-          zone: text(r.zone),
-          hours: text(r.hours),
+          zone: text2(r.zone),
+          hours: text2(r.hours),
           ratingAvg: Number(r.ratingAvg ?? 0),
           services: stringList(r.specialties)
         })));
       }
       createAppointment(input) {
         return this.run(async (conn) => {
-          const id = String(rows2(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const id = String(rows3(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("INSERT INTO `Appointment` (id, vehicleId, shopId, ownerId, scheduledAt, status, summary, services, notes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, input.vehicleId, input.shopId, input.ownerId, input.scheduledAt, input.summary, JSON.stringify(input.services), input.notes]);
           return id;
         });
       }
       getAppointment(id) {
         return this.run(async (conn) => {
-          const row = rows2(await conn.query(GET_ONE, [id]))[0];
+          const row = rows3(await conn.query(GET_ONE2, [id]))[0];
           return row ? toAppointment(row) : null;
         });
       }
       listAppointments(filter, page, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2;
+          const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3;
           let result;
           if (filter === "hoy") {
             const { start, end } = ecDayRange(now);
-            result = await conn.query(LIST_TODAY, [start, end, PAGE_SIZE2, offset2]);
+            result = await conn.query(LIST_TODAY, [start, end, PAGE_SIZE3, offset2]);
           } else if (filter === "proximos") {
-            result = await conn.query(LIST_UPCOMING, [now, PAGE_SIZE2, offset2]);
+            result = await conn.query(LIST_UPCOMING, [now, PAGE_SIZE3, offset2]);
           } else if (filter === "pendientes") {
-            result = await conn.query(LIST_PENDING, [PAGE_SIZE2, offset2]);
+            result = await conn.query(LIST_PENDING, [PAGE_SIZE3, offset2]);
           } else {
-            result = await conn.query(LIST_ALL, [PAGE_SIZE2, offset2]);
+            result = await conn.query(LIST_ALL2, [PAGE_SIZE3, offset2]);
           }
-          return { items: rows2(result).map(toAppointment), page, pageSize: PAGE_SIZE2 };
+          return { items: rows3(result).map(toAppointment), page, pageSize: PAGE_SIZE3 };
         });
       }
       listForUser(userId) {
-        return this.run(async (conn) => rows2(await conn.query(FOR_USER, [userId, userId])).map(toAppointment));
+        return this.run(async (conn) => rows3(await conn.query(FOR_USER2, [userId, userId])).map(toAppointment));
       }
       setStatus(id, status, cancelReason) {
         return this.run(async (conn) => {
@@ -90338,7 +91230,7 @@ var init_appointment_store = __esm({
         });
       }
       userEvents(userId, limit) {
-        return this.run(async (conn) => rows2(await conn.query("SELECT type, payload, createdAt FROM `Event` WHERE entityType = 'User' AND entityId = ? ORDER BY createdAt DESC LIMIT ?", [userId, limit])).map((r) => {
+        return this.run(async (conn) => rows3(await conn.query("SELECT type, payload, createdAt FROM `Event` WHERE entityType = 'User' AND entityId = ? ORDER BY createdAt DESC LIMIT ?", [userId, limit])).map((r) => {
           const payload = jsonValue(r.payload);
           return {
             type: String(r.type),
@@ -90352,7 +91244,7 @@ var init_appointment_store = __esm({
 });
 
 // packages/api/dist/infrastructure/registration/registration-store.js
-function rows3(result) {
+function rows4(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function parseServices(raw) {
@@ -90379,11 +91271,11 @@ function pendingItem(kind) {
     createdAt: r.createdAt
   });
 }
-var PAGE_SIZE3, MysqlRegistrationStore;
+var PAGE_SIZE4, MysqlRegistrationStore;
 var init_registration_store = __esm({
   "packages/api/dist/infrastructure/registration/registration-store.js"() {
     "use strict";
-    PAGE_SIZE3 = 25;
+    PAGE_SIZE4 = 25;
     MysqlRegistrationStore = class {
       connect;
       constructor(connect) {
@@ -90411,7 +91303,7 @@ var init_registration_store = __esm({
         });
       }
       async uuid(conn) {
-        return String(rows3(await conn.query("SELECT UUID() AS id"))[0]?.id);
+        return String(rows4(await conn.query("SELECT UUID() AS id"))[0]?.id);
       }
       async insertUser(conn, user, role) {
         const id = await this.uuid(conn);
@@ -90455,18 +91347,18 @@ var init_registration_store = __esm({
           const like = `%${q.replace(/[\\%_]/g, "\\$&")}%`;
           const digits = q.replace(/\D/g, "");
           const likePhone = digits ? `%${digits}%` : like;
-          const items = rows3(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE3, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3]));
-          return { items, page, pageSize: PAGE_SIZE3 };
+          const items = rows4(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE4, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE4]));
+          return { items, page, pageSize: PAGE_SIZE4 };
         });
       }
       getUserDetail(id) {
         return this.run(async (conn) => {
-          const user = rows3(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
+          const user = rows4(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
           if (!user)
             return null;
-          const vehicles = rows3(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
-          const shopRow = rows3(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
-          const store = rows3(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
+          const vehicles = rows4(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
+          const shopRow = rows4(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
+          const store = rows4(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
           return {
             user,
             vehicles,
@@ -90477,8 +91369,8 @@ var init_registration_store = __esm({
       }
       pendingVerifications() {
         return this.run(async (conn) => {
-          const shops = rows3(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
-          const stores = rows3(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
+          const shops = rows4(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
+          const stores = rows4(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
           return [...shops, ...stores].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
         });
       }
@@ -90489,12 +91381,12 @@ var init_registration_store = __esm({
         });
       }
       recentUsers(limit) {
-        return this.run(async (conn) => rows3(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
+        return this.run(async (conn) => rows4(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const shops = Number(rows3(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
-          const stores = Number(rows3(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const shops = Number(rows4(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const stores = Number(rows4(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
           return shops + stores;
         });
       }
@@ -90516,6 +91408,8 @@ async function adminPanelRoutes(app2, options = {}) {
   const registrations = options.registrations ?? new MysqlRegistrationStore(connect);
   const appointments = options.appointments ?? new MysqlAppointmentStore(connect);
   const detailAppointments = options.appointments || options.connect || missingDbEnv().length === 0 ? appointments : void 0;
+  const workOrders = options.workOrders ?? new MysqlWorkOrderStore(connect);
+  const detailWorkOrders = options.workOrders || options.connect || missingDbEnv().length === 0 ? workOrders : void 0;
   const dashboardDb = () => !!options.connect || !!options.registrations || missingDbEnv().length === 0;
   const startedAt = Date.now();
   app2.decorateRequest("cspNonce", "");
@@ -90564,11 +91458,13 @@ async function adminPanelRoutes(app2, options = {}) {
   }
   registerSetupWizard(app2, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
   registerAccountRoutes(app2, { store, requireSession, html, audit });
-  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, requireSession, html, audit });
-  registerAppointmentRoutes(app2, { appointments, registrations, requireSession, html, audit });
+  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, requireSession, html, audit });
+  registerAppointmentRoutes(app2, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit });
+  registerWorkOrderRoutes(app2, { workOrders, appointments, registrations, requireSession, html, audit });
   registerAttendRoutes(app2, {
     registrations,
     appointments: detailAppointments,
+    workOrders: detailWorkOrders,
     visits: detailAppointments ? options.visits ?? new MysqlVisitStore(connect) : options.visits,
     requireSession,
     html
@@ -90721,6 +91617,8 @@ var init_admin = __esm({
     init_registrations();
     init_appointments();
     init_attend();
+    init_work_orders();
+    init_work_order_store();
     init_visit_store();
     init_appointment_store();
     init_registration_store();
@@ -92000,14 +92898,14 @@ function mapUsage(usage) {
     cachedTokens: usage?.prompt_tokens_details?.cached_tokens
   };
 }
-function classifyHttpError(status, text2) {
+function classifyHttpError(status, text3) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text2}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text3}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text2}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text3}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text2}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text2}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text3}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text3}`, "other", status);
 }
 var OpenAIAdapter = class {
   cfg;
@@ -92076,8 +92974,8 @@ var OpenAIAdapter = class {
       throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
     }
     if (!res.ok) {
-      const text2 = await res.text().catch(() => "");
-      throw classifyHttpError(res.status, text2);
+      const text3 = await res.text().catch(() => "");
+      throw classifyHttpError(res.status, text3);
     }
     const data = await res.json();
     return { content: data.text ?? null };
@@ -92115,8 +93013,8 @@ var OpenAIAdapter = class {
       throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
     }
     if (!res.ok) {
-      const text2 = await res.text().catch(() => "");
-      throw classifyHttpError(res.status, text2);
+      const text3 = await res.text().catch(() => "");
+      throw classifyHttpError(res.status, text3);
     }
     const data = await res.json();
     const choice = data.choices?.[0];
@@ -92314,8 +93212,8 @@ var SENSITIVE_KEYS = /^(phone|telefono|c(el|)ular|email|e-mail|correo|correo_e|r
 var EMAIL_MASK = "[correo:REDACTED]";
 var PHONE_MASK = "[telefono:REDACTED]";
 var SENSITIVE_MASK = "[dato:REDACTED]";
-function redactPii(text2) {
-  return text2.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
+function redactPii(text3) {
+  return text3.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
 }
 function redactValue(value2, key) {
   if (typeof value2 === "string") {
@@ -93239,7 +94137,7 @@ function verifyWebhookSignature(body, signatureHeader) {
     return false;
   }
 }
-async function sendWhatsAppMessage(to, text2) {
+async function sendWhatsAppMessage(to, text3) {
   const config = getConfig();
   if (!config.token || !config.phoneNumberId) {
     return { success: false, error: "WHATSAPP_TOKEN or WHATSAPP_PHONE_ID not configured" };
@@ -93256,7 +94154,7 @@ async function sendWhatsAppMessage(to, text2) {
         messaging_product: "whatsapp",
         to,
         type: "text",
-        text: { body: text2 }
+        text: { body: text3 }
       })
     });
     if (!response.ok) {

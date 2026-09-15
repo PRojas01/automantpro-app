@@ -13,6 +13,7 @@ export declare function appointmentDetailView(input: {
     appointment: AppointmentRow;
     csrf: string;
     flash?: Flash;
+    workOrderId?: string | null;
 }): string;
 export declare function scheduleView(input: {
     owner: Row;

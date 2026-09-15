@@ -13,6 +13,7 @@ export interface EntryRoutesOptions {
     /** Registra la visita (código AMP-XXXX y origen) sin datos personales; no bloquea la página. */
     onVisit?: (code: string, ref: string | null) => Promise<void> | void;
 }
+export declare function isPreviewBot(userAgent: unknown): boolean;
 export declare function entryRoutes(app: FastifyInstance, options?: EntryRoutesOptions): Promise<void>;
 export default entryRoutes;
 //# sourceMappingURL=index.d.ts.map

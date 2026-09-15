@@ -2,6 +2,7 @@ import { escapeHtml } from "../entry/page.js";
 import { formatWhatsappNumber } from "../../application/settings/whatsapp-number.js";
 import { serviceTaxonomy, vehicleClasses } from "../../domain/maintenance/index.js";
 import { bitacoraSection, userAppointmentsSection } from "./views-appointments.js";
+import { historySection, userWorkOrdersSection } from "./views-work-orders.js";
 // Vistas de usuarios, alta por perfil, ficha y verificaciones (fase 1, docs/33 §2.3 y docs/34 G2/G4).
 export const ROLE_LABELS = {
     dueno: "Dueño de vehículo",
@@ -161,7 +162,7 @@ export function userDetailView(input) {
       <div class="muted">Uso ${e(v.usageProfile ?? "urbano")} · Recordatorios: ${v.remindersOptIn ? "sí" : "no"}</div>
       ${plan
             ? `<label for="plan-${e(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e(v.id)}" readonly rows="12">${e(plan)}</textarea>`
-            : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinación.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e(user.id)}/schedule?vehicleId=${e(v.id)}">Agendar turno</a></p>` : ""}</div>`;
+            : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinación.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e(user.id)}/schedule?vehicleId=${e(v.id)}">Agendar turno</a> · <a href="/admin/work-orders/new?ownerId=${e(user.id)}&amp;vehicleId=${e(v.id)}">Orden de trabajo sin cita</a></p>` : ""}</div>`;
     })
         .join("");
     const addVehicle = String(user.role) === "dueno"
@@ -170,7 +171,7 @@ export function userDetailView(input) {
       <button class="full" type="submit">Agregar vehículo</button></form></div>`
         : "";
     return `<div class="stack wide"><p><a href="/admin/users">← Usuarios</a></p><h1>${e(user.name)}</h1>${flashHtml(input.flash)}
-  ${datos}${shopCard}${storeCard}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
+  ${datos}${shopCard}${storeCard}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
 }
 export function verificationsView(input) {
     const body = input.items.length === 0

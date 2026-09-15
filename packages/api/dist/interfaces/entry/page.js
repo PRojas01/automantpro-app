@@ -81,6 +81,10 @@ export function renderEntryPage(input) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AutoMantPro · Tu mecánico de confianza en WhatsApp</title>
 <meta name="description" content="Diagnóstico con IA, plan de mantenimiento y talleres verificados, todo por WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://automantpro.app/">
+<meta property="og:title" content="AutoMantPro · Tu mecánico de confianza en WhatsApp">
+<meta property="og:description" content="Plan de mantenimiento, talleres verificados y repuestos, todo por WhatsApp.">
 <style nonce="${nonce}">${STYLES}</style>
 </head>
 <body>

@@ -1,6 +1,7 @@
 import { ecDayRange, formatEcDateTime } from "../appointments/messages.js";
 import { planItemsFor } from "../registration/plan-text.js";
 import { normalizeWhatsappNumber } from "../settings/whatsapp-number.js";
+import { IN_SHOP_STATUSES, OPEN_STATUSES, WORK_ORDER_LABELS, formatUsd, workOrderCode } from "../work-orders/workflow.js";
 export const NEW_CONTACT_MESSAGE = "¡Hola! 👋 Bienvenido a AutoMantPro 🚗\nTu vehículo, tu taller y tus repuestos, conectados en un solo chat.\n\n¿Quién eres?\n1) 🚗 Soy nuevo y tengo un vehículo\n2) 🔧 Soy nuevo y tengo un taller\n3) 📦 Soy nuevo y tengo un almacén de repuestos\n4) 🔑 Ya tengo cuenta (te escribo desde otro número)\n\nResponde con el número.";
 const MENUS = {
     dueno: "¿Qué necesitas hoy?\n1) 🚗 Mis vehículos y su plan\n2) 🔍 Tengo un síntoma o ruido\n3) 📅 Agendar en un taller\n4) 📦 Cotizar un repuesto\n5) 🙋 Hablar con una persona",
@@ -68,6 +69,22 @@ export function pendingTasks(ctx) {
         }).length;
         if (today > 0)
             tasks.push({ text: `📅 Hoy atiendes ${plural(today, "turno", "turnos")}.`, forCustomer: true });
+    }
+    const orders = ctx.workOrders ?? [];
+    if (role === "dueno") {
+        for (const o of orders.filter((x) => x.ownerId === userId)) {
+            if (o.status === "presupuesto_enviado") {
+                tasks.push({ text: `🧾 Tienes un presupuesto por aprobar en ${o.shopName} (${workOrderCode(o.number)}): ${formatUsd(o.total)}.`, forCustomer: true });
+            }
+            else if (IN_SHOP_STATUSES.includes(o.status)) {
+                tasks.push({ text: `🔧 Tu ${o.vehicleLabel} está en ${o.shopName} (${workOrderCode(o.number)}): ${String(WORK_ORDER_LABELS[o.status]).toLowerCase()}.`, forCustomer: true });
+            }
+        }
+    }
+    if (role === "taller") {
+        const open = orders.filter((o) => o.shopUserId === userId && OPEN_STATUSES.includes(o.status)).length;
+        if (open > 0)
+            tasks.push({ text: `🧾 Tienes ${plural(open, "orden de trabajo abierta", "órdenes de trabajo abiertas")}.`, forCustomer: true });
     }
     const lastNote = ctx.events.find((ev) => ev.type === "operator.note");
     if (lastNote) {

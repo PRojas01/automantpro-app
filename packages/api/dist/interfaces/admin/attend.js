@@ -22,6 +22,7 @@ export function registerAttendRoutes(app, deps) {
         let detail = null;
         let appointments = [];
         let events = [];
+        let workOrders = [];
         try {
             if (phone) {
                 const found = await deps.registrations.searchUsers(phone.replace(/\D/g, ""), 1);
@@ -29,6 +30,8 @@ export function registerAttendRoutes(app, deps) {
                 if (row)
                     detail = await deps.registrations.getUserDetail(String(row.id));
             }
+            if (detail && deps.workOrders)
+                workOrders = await deps.workOrders.listForUser(String(detail.user.id));
             if (detail && deps.appointments) {
                 [appointments, events] = await Promise.all([
                     deps.appointments.listForUser(String(detail.user.id)),
@@ -51,7 +54,7 @@ export function registerAttendRoutes(app, deps) {
                 visitLookup = false;
             }
         }
-        const ctx = { detail, appointments, events };
+        const ctx = { detail, appointments, events, workOrders };
         return deps.html(reply, request, "Atender", attendView({
             csrf: session.csrfToken,
             query,

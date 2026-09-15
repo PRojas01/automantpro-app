@@ -495,3 +495,45 @@ model AppSetting {
   updatedBy String?
   updatedAt DateTime @default(now())
 }
+
+model WorkOrder {
+  id               String    @id @default(uuid())
+  number           Int       @unique
+  shopId           String
+  ownerId          String
+  vehicleId        String
+  appointmentId    String?
+  status           String    @default("recepcion")
+  intakeKm         Int?
+  intakeNotes      String?   @db.Text
+  diagnosis        String?   @db.Text
+  rejectionReason  String?
+  cancelReason     String?
+  exitKm           Int?
+  warrantyDays     Int?
+  nextService      String?
+  diagnosisOutcome String?   @db.VarChar(20)
+  outcomeNote      String?
+  total            Decimal   @default(0) @db.Decimal(10, 2)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @default(now())
+  closedAt         DateTime?
+
+  @@index([shopId, status])
+  @@index([vehicleId])
+  @@index([appointmentId])
+}
+
+model WorkOrderItem {
+  id          String   @id @default(uuid())
+  workOrderId String
+  kind        String   @db.VarChar(20)
+  description String
+  brand       String?
+  partCode    String?
+  quantity    Decimal  @default(1) @db.Decimal(10, 2)
+  unitPrice   Decimal  @default(0) @db.Decimal(10, 2)
+  createdAt   DateTime @default(now())
+
+  @@index([workOrderId])
+}

@@ -70,6 +70,11 @@ export function appointmentDetailView(input) {
     ${copyBox("msg-owner", "Mensaje para el dueño", ownerMessage(a))}
     <p class="row">${chatLink(a.shopPhone, "Abrir chat del taller")} ${chatLink(a.ownerPhone, "Abrir chat del dueño")}</p>
   </div>
+  ${input.workOrderId
+        ? `<div class="card"><h2>Orden de trabajo</h2><a class="button" href="/admin/work-orders/${e(input.workOrderId)}">Ver orden de trabajo</a></div>`
+        : a.status === "confirmed" || a.status === "pending"
+            ? `<div class="card"><h2>Orden de trabajo</h2><p class="muted">Cuando el vehículo llegue al taller, registra la recepción.</p><a class="button" href="/admin/work-orders/new?appointmentId=${e(a.id)}">Abrir orden de trabajo</a></div>`
+            : ""}
   ${actions.length > 0 ? `<div class="card"><h2>Cambiar estado</h2>${actions.join("")}</div>` : ""}
   </div>`;
 }
