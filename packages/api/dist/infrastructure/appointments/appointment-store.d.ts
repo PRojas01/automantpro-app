@@ -57,6 +57,8 @@ export interface AppointmentStore {
     recordEvent(input: NewEvent): Promise<void>;
     userEvents(userId: string, limit: number): Promise<EventRow[]>;
 }
+/** Excluye a quien tiene una sanción vigente que bloquea búsquedas (docs/35 M5). */
+export declare const NOT_SANCTIONED: (alias: string) => string;
 export declare class MysqlAppointmentStore implements AppointmentStore {
     private readonly connect;
     constructor(connect: () => Promise<SqlConnection>);

@@ -5,6 +5,8 @@ export interface AdminAccount {
     name: string;
     passwordHash: string;
     totpSecret: string | null;
+    /** Rol del equipo; nulo en cuentas creadas antes de los roles (se tratan como administrador). */
+    staffRole?: string | null;
 }
 export interface DashboardData {
     usersByRole: Record<string, number>;

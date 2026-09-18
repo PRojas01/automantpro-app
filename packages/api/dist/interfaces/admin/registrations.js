@@ -5,6 +5,8 @@ import { verifyCsrf } from "../../application/admin/security.js";
 import { CONSENT_VERSION, PERFILES, ownerSchema, shopSchema, storeSchema, vehicleSchema, } from "../../application/registration/schemas.js";
 import { planTextFor } from "../../application/registration/plan-text.js";
 import { normalizeWhatsappNumber } from "../../application/settings/whatsapp-number.js";
+import { can } from "../../application/admin/permissions.js";
+import { cityAllowed } from "../../application/settings/platform.js";
 import { ROLE_LABELS, newUserView, userDetailView, usersListView, verificationsView } from "./views-registrations.js";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const OK_MESSAGES = {
@@ -13,6 +15,8 @@ const OK_MESSAGES = {
     verificado: "Verificación aprobada.",
     rechazado: "Verificación rechazada.",
     nota: "Nota agregada a la bitácora.",
+    sancion: "Sanción registrada: queda el motivo y el aviso a la entidad.",
+    lopdp: "Solicitud de datos registrada con su plazo de respuesta.",
 };
 function dbError(err) {
     const code = err.code;
@@ -97,7 +101,43 @@ export function registerRegistrationRoutes(app, deps) {
                 // sin cotizaciones si la base no responde
             }
         }
-        return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values, appointments: appointmentsList, events, workOrders: workOrdersList, history, quotes: quotesData }), session, extra.status ?? 200);
+        let relationsList = [];
+        let sanctionsList = [];
+        let dataRequests = [];
+        if (deps.relations) {
+            try {
+                [relationsList, sanctionsList] = await Promise.all([deps.relations.forUser(id), deps.relations.sanctionsForUser(id)]);
+            }
+            catch {
+                // sin vínculos ni sanciones si la base no responde
+            }
+        }
+        if (deps.data) {
+            try {
+                dataRequests = await deps.data.requestsForUser(id);
+            }
+            catch {
+                // sin solicitudes si la base no responde
+            }
+        }
+        return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({
+            detail,
+            csrf: session.csrfToken,
+            plans,
+            flash: extra.flash,
+            error: extra.error,
+            values: extra.values,
+            appointments: appointmentsList,
+            events,
+            workOrders: workOrdersList,
+            history,
+            quotes: quotesData,
+            relations: relationsList,
+            sanctions: sanctionsList,
+            canSanction: can(session.role, "sanctions"),
+            dataRequests,
+            canLopdp: can(session.role, "lopdp"),
+        }), session, extra.status ?? 200);
     }
     app.get("/users", async (request, reply) => {
         const session = deps.requireSession(request, reply);
@@ -149,6 +189,10 @@ export function registerRegistrationRoutes(app, deps) {
             // Las cuentas creadas por el operador no inician sesión con contraseña: se guarda una aleatoria.
             passwordHash: await hashPassword(randomBytes(24).toString("hex")),
         });
+        const operation = deps.platform ? await deps.platform() : null;
+        if (operation && typeof body.city === "string" && body.city.trim() && !cityAllowed(body.city.trim(), operation.cities)) {
+            return invalid(`Todavía no operamos en esa ciudad. Ciudades activas: ${operation.cities.join(", ")}.`, 400);
+        }
         let userId;
         try {
             if (perfil === "dueno") {

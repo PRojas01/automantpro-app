@@ -1,10 +1,12 @@
 import type { DashboardData, Page } from "../../infrastructure/admin/admin-store.js";
+import { type StaffRole } from "../../application/admin/permissions.js";
 export declare function layout(input: {
     title: string;
     nonce: string;
     body: string;
     csrfToken?: string;
     nav?: boolean;
+    role?: StaffRole;
 }): string;
 export declare function loginView(error?: string): string;
 export declare function twoFactorView(error?: string): string;

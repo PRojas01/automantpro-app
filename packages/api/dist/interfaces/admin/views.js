@@ -1,4 +1,5 @@
 import { escapeHtml } from "../entry/page.js";
+import { can } from "../../application/admin/permissions.js";
 // Vistas HTML del panel /admin. Todo en línea (el servidor se empaqueta en un único archivo)
 // y todo lo interpolado se escapa.
 const STYLES = `
@@ -35,11 +36,35 @@ button.danger{background:var(--red)}
 input[type=radio]{width:auto;min-height:0;margin-top:4px}.choice{display:flex;gap:10px;align-items:flex-start;font-weight:400;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0}
 .card form{margin-bottom:8px}
 `;
+// Menú del panel: cada enlace exige un permiso, así cada rol solo ve sus secciones.
+const NAV = [
+    { href: "/admin", label: "Tablero", capability: "read" },
+    { href: "/admin/attend", label: "Atender", capability: "attend" },
+    { href: "/admin/users", label: "Usuarios", capability: "read" },
+    { href: "/admin/vehicles", label: "Vehículos", capability: "read" },
+    { href: "/admin/shops", label: "Talleres", capability: "read" },
+    { href: "/admin/verifications", label: "Verificaciones", capability: "read" },
+    { href: "/admin/appointments", label: "Turnos", capability: "read" },
+    { href: "/admin/work-orders", label: "Órdenes", capability: "read" },
+    { href: "/admin/quotes", label: "Cotizaciones", capability: "read" },
+    { href: "/admin/relations", label: "Relaciones", capability: "read" },
+    { href: "/admin/disputes", label: "Disputas", capability: "read" },
+    { href: "/admin/sanctions", label: "Sanciones", capability: "sanctions" },
+    { href: "/admin/data-requests", label: "Datos (LOPDP)", capability: "lopdp" },
+    { href: "/admin/exports", label: "Respaldos", capability: "exports" },
+    { href: "/admin/audit", label: "Auditoría", capability: "read" },
+    { href: "/admin/settings", label: "Ajustes", capability: "settings" },
+    { href: "/admin/team", label: "Equipo", capability: "team" },
+    { href: "/admin/account", label: "Mi cuenta", capability: null },
+];
 export function layout(input) {
     const nonce = escapeHtml(input.nonce);
+    const links = NAV.filter((item) => item.capability === null || can(input.role, item.capability))
+        .map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`)
+        .join("");
     const header = input.nav
         ? `<header><div class="brand">Auto<span>Mant</span>Pro · Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/attend">Atender</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Vehículos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/appointments">Turnos</a><a href="/admin/work-orders">Órdenes</a><a href="/admin/quotes">Cotizaciones</a><a href="/admin/audit">Auditoría</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
+  <nav>${links}</nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>`
         : "";
     return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">

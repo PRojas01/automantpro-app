@@ -1,3 +1,4 @@
+import { type StaffRole } from "./permissions.js";
 declare const SESSION_COOKIE = "amp_admin_session";
 declare const SESSION_IDLE_MS: number;
 declare const SESSION_ABSOLUTE_MS: number;
@@ -5,6 +6,8 @@ export type AdminSession = {
     id: string;
     userId: string;
     email: string;
+    /** Rol del miembro del equipo; decide qué secciones del panel puede usar. */
+    role: StaffRole;
     twoFactorVerified: boolean;
     csrfToken: string;
     createdAt: number;
@@ -20,10 +23,13 @@ export declare function createCsrfToken(): string;
 export declare function createPendingSession(user: {
     id: string;
     email: string;
+    role?: string | null;
 }): PendingSession;
 export declare function consumePendingSession(id: string): PendingSession | null;
 export declare function promoteSession(session: PendingSession): AdminSession;
 export declare function getSession(id: string | undefined): AdminSession | null;
+/** Cierra todas las sesiones de una persona (al suspenderla o cambiarle el rol). */
+export declare function revokeSessionsForUser(userId: string): number;
 export declare function deleteSession(id: string | undefined): void;
 export declare function resetAdminSecurityStateForTests(): void;
 export declare function signSessionCookie(sessionId: string, secret: string): string;

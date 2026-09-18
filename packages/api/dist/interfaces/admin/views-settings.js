@@ -1,6 +1,7 @@
 import { escapeHtml } from "../entry/page.js";
 import { formatWhatsappNumber } from "../../application/settings/whatsapp-number.js";
 import { LEGAL_FIELDS, LEGAL_VERSION, isLegalComplete } from "../../application/legal/documents.js";
+import { FEATURES, inQuietHours } from "../../application/settings/platform.js";
 // Vista de Ajustes (/admin/settings).
 export function settingsView(input) {
     const csrf = `<input type="hidden" name="csrf" value="${escapeHtml(input.csrf)}">`;
@@ -36,10 +37,42 @@ export function settingsView(input) {
     <input id="current-settings" name="current" type="password" required autocomplete="current-password">
     <button class="full" type="submit" name="action" value="save">Guardar número</button>
     ${remove}</form></div>
+  ${platformCard(input.platform, csrf)}
   ${aiCard(input.ai, csrf)}
   ${legalCard(input.legal, csrf)}
   <div class="card"><h2>Base de datos</h2>${db}</div>
   </div>`;
+}
+/** Operación de la plataforma (docs/35 A2): ciudades, horario silencioso, bienvenida e interruptores. */
+function platformCard(platform, csrf) {
+    if (!platform)
+        return "";
+    const quiet = inQuietHours(platform)
+        ? `<p class="error">Ahora mismo estás en horario silencioso.</p>`
+        : platform.quietFrom && platform.quietTo
+            ? `<p class="ok">Horario silencioso configurado de ${escapeHtml(platform.quietFrom)} a ${escapeHtml(platform.quietTo)}.</p>`
+            : `<p class="muted">Sin horario silencioso: el panel no avisa a ninguna hora.</p>`;
+    const switches = FEATURES.map((f) => `<label><input type="checkbox" name="feature_${escapeHtml(f.key)}"${platform.features[f.key] ? " checked" : ""}> ${escapeHtml(f.label)}</label>`).join("");
+    const entry = `<p class="muted">Cómo abre automantpro.app:</p>
+    <label class="choice"><input type="radio" name="entryMode" value="directo"${platform.entryMode === "menu" ? "" : " checked"}>
+      <span><strong>Directo al chat</strong><br>Un solo salto a WhatsApp. Mejor para tarjetas, QR y el número compartido.</span></label>
+    <label class="choice"><input type="radio" name="entryMode" value="menu"${platform.entryMode === "menu" ? " checked" : ""}>
+      <span><strong>Menú de perfiles</strong><br>Muestra la página con «tengo un vehículo», «tengo un taller», «tengo un almacén» y «ya tengo cuenta»; el chat arranca con esa respuesta escrita. Mejor para campañas.</span></label>`;
+    return `<div class="card"><h2>Operación</h2>${quiet}
+    <form method="post" action="/admin/settings/platform" autocomplete="off">${csrf}
+    ${entry}
+    <label for="cities">Ciudades activas (separadas por comas; vacío = todas)</label>
+    <input id="cities" name="cities" value="${escapeHtml(platform.cities.join(", "))}" placeholder="Quito, Guayaquil, Cuenca">
+    <label for="quietFrom">Horario silencioso desde</label>
+    <input id="quietFrom" name="quietFrom" placeholder="21:00" value="${escapeHtml(platform.quietFrom ?? "")}">
+    <label for="quietTo">Hasta</label>
+    <input id="quietTo" name="quietTo" placeholder="07:00" value="${escapeHtml(platform.quietTo ?? "")}">
+    <label for="welcomeIntro">Línea extra en la bienvenida (opcional)</label>
+    <input id="welcomeIntro" name="welcomeIntro" maxlength="300" value="${escapeHtml(platform.welcomeIntro ?? "")}" placeholder="Estamos en pruebas gratuitas hasta diciembre.">
+    <p class="muted">Funciones encendidas:</p><div class="checks">${switches}</div>
+    <label for="current-platform">Tu contraseña actual</label>
+    <input id="current-platform" name="current" type="password" required autocomplete="current-password">
+    <button class="full" type="submit">Guardar operación</button></form></div>`;
 }
 function legalCard(legal, csrf) {
     if (!legal)

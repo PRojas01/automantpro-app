@@ -1,3 +1,4 @@
+import { NOT_SANCTIONED } from "../appointments/appointment-store.js";
 import { ORDER_STATUS_FOR_STAGE } from "../../application/quotes/workflow.js";
 const PAGE_SIZE = 25;
 const SELECT_REQUESTS = "SELECT q.id, q.number, q.status, q.requesterId, u.name AS requesterName, u.phone AS requesterPhone, u.role AS requesterRole, " +
@@ -120,7 +121,14 @@ export class MysqlQuoteStore {
         });
     }
     verifiedStores(city) {
-        return this.run(async (conn) => rows(await conn.query("SELECT id, name, city, zone, categories, delivery FROM `Store` WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ORDER BY name LIMIT 200", [city.trim(), city.trim()])).map((r) => ({
+        // Sin los almacenes sancionados (docs/35 M5); tolera que la tabla Sanction no exista aún.
+        const base = "SELECT id, name, city, zone, categories, delivery FROM `Store` st WHERE verificationStatus = 'verified' " +
+            "AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
+        return this.run(async (conn) => rows(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+            if (err.code !== "ER_NO_SUCH_TABLE")
+                throw err;
+            return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
+        })).map((r) => ({
             id: String(r.id),
             name: String(r.name),
             city: String(r.city),

@@ -13,6 +13,12 @@ function visitLine(result) {
     }
     return `<div class="muted">El código ${e(result.code)} ${result.visitLookup ? "no corresponde a una visita de los últimos 7 días" : "no se pudo consultar"}.</div>`;
 }
+const INTENT_LABELS = {
+    dueno: "Dijo que tiene un vehículo",
+    taller: "Dijo que tiene un taller",
+    almacen: "Dijo que tiene un almacén de repuestos",
+    cuenta: "Dijo que ya tiene cuenta (escribe desde otro número)",
+};
 function resultCard(result, csrf) {
     if (!result.phone) {
         return `<div class="card">${visitLine(result)}<p class="error">No encontré un celular de Ecuador en lo que pegaste. Pega el número del contacto (por ejemplo 099 123 4567).</p></div>`;
@@ -21,12 +27,15 @@ function resultCard(result, csrf) {
     const chat = `<a href="https://wa.me/${e(digits)}" target="_blank" rel="noopener">Abrir chat</a>`;
     const message = `<label for="welcome">Mensaje para enviar</label><textarea id="welcome" readonly rows="10">${e(result.message)}</textarea>`;
     if (!result.detail) {
+        const intent = result.intent ?? null;
+        const intentLine = intent ? `<p class="ok">${e(INTENT_LABELS[intent] ?? intent)}.</p>` : "";
+        const option = (value, label) => `<option value="${value}"${intent === value ? " selected" : ""}>${label}</option>`;
         return `<div class="card"><h2>Contacto nuevo</h2>
-      <div><strong>${e(formatWhatsappNumber(digits))}</strong> · ${chat}</div>${visitLine(result)}
-      <p class="muted">No está registrado. Envía la bienvenida y, cuando diga quién es, regístralo.</p>
+      <div><strong>${e(formatWhatsappNumber(digits))}</strong> · ${chat}</div>${visitLine(result)}${intentLine}
+      <p class="muted">${intent === "cuenta" ? "Dice que ya tiene cuenta: búscala por su número anterior antes de registrarlo de nuevo." : "No está registrado. Envía la bienvenida y, cuando diga quién es, regístralo."}</p>
       ${message}
       <form method="post" action="/admin/users/new/start" class="row">${csrfField(csrf)}<input type="hidden" name="phone" value="${e(result.phone)}">
-      <select name="perfil" aria-label="Perfil"><option value="dueno">Dueño de vehículo</option><option value="taller">Taller</option><option value="almacen">Almacén</option></select>
+      <select name="perfil" aria-label="Perfil">${option("dueno", "Dueño de vehículo")}${option("taller", "Taller")}${option("almacen", "Almacén")}</select>
       <button type="submit">Registrar</button></form></div>`;
     }
     const { user, vehicles } = result.detail;
@@ -70,6 +79,7 @@ function copilotCard(input) {
 }
 export function attendView(input) {
     return `<div class="stack wide"><h1>Atender a un contacto</h1>
+  ${input.notice ? `<div class="card"><p class="error" role="status">${e(input.notice)}</p></div>` : ""}
   <p class="muted">Pega el número o el primer mensaje que llegó por WhatsApp. Te digo si es nuevo o registrado, su perfil, lo pendiente y el mensaje para responder.</p>
   ${input.error ? `<p class="error" role="alert">${e(input.error)}</p>` : ""}
   <form method="post" action="/admin/attend" autocomplete="off">${csrfField(input.csrf)}

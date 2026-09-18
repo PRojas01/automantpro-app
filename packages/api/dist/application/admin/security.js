@@ -1,4 +1,5 @@
 import { createHmac, randomBytes, timingSafeEqual, } from "node:crypto";
+import { normalizeRole } from "./permissions.js";
 const SESSION_COOKIE = "amp_admin_session";
 const SESSION_IDLE_MS = 30 * 60 * 1000;
 const SESSION_ABSOLUTE_MS = 12 * 60 * 60 * 1000;
@@ -25,6 +26,7 @@ export function createPendingSession(user) {
         id: randomBytes(24).toString("base64url"),
         userId: user.id,
         email: user.email,
+        role: normalizeRole(user.role),
         twoFactorVerified: false,
         csrfToken: createCsrfToken(),
         createdAt: now,
@@ -63,6 +65,23 @@ export function getSession(id) {
     }
     session.lastSeenAt = Date.now();
     return session;
+}
+/** Cierra todas las sesiones de una persona (al suspenderla o cambiarle el rol). */
+export function revokeSessionsForUser(userId) {
+    let closed = 0;
+    for (const [id, session] of sessions) {
+        if (session.userId === userId) {
+            sessions.delete(id);
+            closed += 1;
+        }
+    }
+    for (const [id, session] of pendingSessions) {
+        if (session.userId === userId) {
+            pendingSessions.delete(id);
+            closed += 1;
+        }
+    }
+    return closed;
 }
 export function deleteSession(id) {
     if (!id)

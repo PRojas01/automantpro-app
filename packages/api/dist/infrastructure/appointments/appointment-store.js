@@ -1,5 +1,10 @@
 import { ecDayRange } from "../../application/appointments/messages.js";
 const PAGE_SIZE = 25;
+/** Excluye a quien tiene una sanción vigente que bloquea búsquedas (docs/35 M5). */
+export const NOT_SANCTIONED = (alias) => "AND NOT EXISTS (SELECT 1 FROM `Sanction` sn WHERE sn.userId = " +
+    alias +
+    ".userId AND sn.liftedAt IS NULL AND sn.startsAt <= UTC_TIMESTAMP(3) " +
+    "AND (sn.endsAt IS NULL OR sn.endsAt > UTC_TIMESTAMP(3)) AND sn.level IN ('suspension_busquedas', 'suspension', 'baja')) ";
 const SELECT_APPOINTMENTS = "SELECT a.id, a.scheduledAt, a.status, a.summary, a.services, a.notes, a.cancelReason, a.createdAt, " +
     "v.id AS vehicleId, v.make, v.model, v.year, v.plate, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, " +
     "s.id AS shopId, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, su.id AS shopUserId, su.phone AS shopPhone " +
@@ -68,7 +73,16 @@ export class MysqlAppointmentStore {
         }
     }
     verifiedShops(city) {
-        return this.run(async (conn) => rows(await conn.query("SELECT id, name, address, city, zone, hours, ratingAvg, specialties FROM `Shop` WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ORDER BY name LIMIT 200", [city.trim(), city.trim()])).map((r) => ({
+        // Los talleres con una sanción vigente que bloquea búsquedas no aparecen (docs/35 M5). Si la
+        // tabla Sanction todavía no existe (esquema recién publicado), se consulta sin ese filtro.
+        const base = "SELECT id, name, address, city, zone, hours, ratingAvg, specialties FROM `Shop` sh WHERE verificationStatus = 'verified' " +
+            "AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
+        const filter = NOT_SANCTIONED("sh");
+        return this.run(async (conn) => rows(await conn.query(`${base}${filter}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+            if (err.code !== "ER_NO_SUCH_TABLE")
+                throw err;
+            return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
+        })).map((r) => ({
             id: String(r.id),
             name: String(r.name),
             address: String(r.address),

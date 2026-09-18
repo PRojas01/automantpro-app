@@ -4,7 +4,13 @@ import type { AppointmentStore } from "../../infrastructure/appointments/appoint
 import type { RegistrationStore } from "../../infrastructure/registration/registration-store.js";
 import type { WorkOrderStore } from "../../infrastructure/work-orders/work-order-store.js";
 import type { QuoteStore } from "../../infrastructure/quotes/quote-store.js";
+import type { RelationLinker } from "../../application/relations/linker.js";
+import { type PlatformSettings } from "../../application/settings/platform.js";
 export interface QuoteDeps {
+    /** Crea un vínculo con cada almacén invitado (docs/35 §1). */
+    linker?: RelationLinker;
+    /** Ajustes de operación: interruptor de cotizaciones (docs/35 A2). */
+    platform?: () => Promise<PlatformSettings>;
     quotes: QuoteStore;
     registrations: RegistrationStore;
     appointments: AppointmentStore;

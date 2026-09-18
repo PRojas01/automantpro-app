@@ -4,6 +4,7 @@ import { findSubservice } from "../../domain/maintenance/index.js";
 import { rankShops } from "../../application/appointments/matching.js";
 import { ALLOWED_TRANSITIONS, categoriesFor, parseEcDateTime, serviceNames, } from "../../application/appointments/messages.js";
 import { planItemsFor } from "../../application/registration/plan-text.js";
+import { featurePaused } from "../../application/settings/platform.js";
 import { appointmentDetailView, appointmentsListView, scheduleView } from "./views-appointments.js";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const FILTERS = ["hoy", "proximos", "pendientes", "todos"];
@@ -104,6 +105,10 @@ export function registerAppointmentRoutes(app, deps) {
         const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, 500) || null : null;
         const scheduledAt = parseEcDateTime(body.date, body.time);
         const fail = (error, status = 400) => renderSchedule(request, reply, session, ownerId, vehicleId, services, { error, values: body, status });
+        const operation = deps.platform ? await deps.platform() : null;
+        const paused = operation ? featurePaused(operation, "appointments") : null;
+        if (paused)
+            return fail(paused);
         if (services.length === 0)
             return fail("Elige al menos un servicio.");
         if (!shopId)
@@ -139,6 +144,15 @@ export function registerAppointmentRoutes(app, deps) {
             const created = await appointments.getAppointment(id);
             const payload = { appointmentId: id, scheduledAt: scheduledAt.toISOString(), shopName };
             const entities = [ownerId, created?.shopUserId].filter((v) => !!v);
+            if (created?.shopUserId) {
+                await deps.linker?.fromAppointment({
+                    appointmentId: id,
+                    ownerId,
+                    shopUserId: created.shopUserId,
+                    subject: serviceNames(services).join(", ").slice(0, 191) || null,
+                    createdBy: session.userId,
+                });
+            }
             for (const entityId of entities) {
                 await appointments.recordEvent({ type: "appointment.created", actorUserId: session.userId, entityType: "User", entityId, payload });
             }

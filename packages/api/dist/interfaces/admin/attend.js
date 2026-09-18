@@ -1,7 +1,8 @@
 import { escapeHtml } from "../entry/page.js";
 import { verifyCsrf } from "../../application/admin/security.js";
-import { parseContactInput, pendingTasks, welcomeMessage } from "../../application/attend/welcome.js";
+import { detectProfileIntent, parseContactInput, pendingTasks, welcomeMessage } from "../../application/attend/welcome.js";
 import { attendView } from "./views-attend.js";
+import { quietNotice } from "../../application/settings/platform.js";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const DRAFTS_PER_HOUR = 30;
 export function registerAttendRoutes(app, deps) {
@@ -28,8 +29,11 @@ export function registerAttendRoutes(app, deps) {
         }
         return { session, body };
     }
+    async function operation() {
+        return deps.platform ? deps.platform().catch(() => null) : null;
+    }
     /** Identifica al contacto y reúne su contexto: perfil, turnos, órdenes, cotizaciones y notas. */
-    async function resolve(query) {
+    async function resolve(query, intro) {
         const { phone, code } = parseContactInput(query);
         let detail = null;
         let appointments = [];
@@ -64,7 +68,12 @@ export function registerAttendRoutes(app, deps) {
             }
         }
         const ctx = { detail, appointments, events, workOrders, quotes };
-        return { ctx, result: { phone, code, visit, visitLookup, detail, tasks: pendingTasks(ctx), message: welcomeMessage(ctx) } };
+        // La intención sale del mensaje pegado o de la opción que eligió en el menú de inicio.
+        const intent = detectProfileIntent(query) ?? visit?.profile ?? null;
+        return {
+            ctx,
+            result: { phone, code, visit, visitLookup, detail, intent, tasks: pendingTasks(ctx), message: welcomeMessage(ctx, { intro }) },
+        };
     }
     async function copilotStatus() {
         return deps.copilot ? deps.copilot.status().catch(() => null) : null;
@@ -77,7 +86,8 @@ export function registerAttendRoutes(app, deps) {
         const session = deps.requireSession(request, reply);
         if (!session)
             return reply;
-        return deps.html(reply, request, "Atender", attendView({ csrf: session.csrfToken, query: "" }), session);
+        const op = await operation();
+        return deps.html(reply, request, "Atender", attendView({ csrf: session.csrfToken, query: "", notice: op ? (quietNotice(op) ?? undefined) : undefined }), session);
     });
     app.post("/attend", async (request, reply) => {
         const csrfCtx = withCsrf(request, reply);
@@ -85,14 +95,22 @@ export function registerAttendRoutes(app, deps) {
             return reply;
         const { session, body } = csrfCtx;
         const query = typeof body.q === "string" ? body.q.slice(0, 2000) : "";
+        const op = await operation();
         let resolved;
         try {
-            resolved = await resolve(query);
+            resolved = await resolve(query, op?.welcomeIntro ?? null);
         }
         catch (err) {
             return databaseError(request, reply, session, query, err);
         }
-        return deps.html(reply, request, "Atender", attendView({ csrf: session.csrfToken, query, result: resolved.result, copilot: await copilotStatus(), customerText: query }), session);
+        return deps.html(reply, request, "Atender", attendView({
+            csrf: session.csrfToken,
+            query,
+            result: resolved.result,
+            copilot: await copilotStatus(),
+            customerText: query,
+            notice: op ? (quietNotice(op) ?? undefined) : undefined,
+        }), session);
     });
     app.post("/attend/draft", async (request, reply) => {
         const csrfCtx = withCsrf(request, reply);
@@ -102,9 +120,10 @@ export function registerAttendRoutes(app, deps) {
         const query = typeof body.q === "string" ? body.q.slice(0, 2000) : "";
         const customerText = typeof body.message === "string" ? body.message.trim().slice(0, 2000) : "";
         const instruction = typeof body.instruction === "string" ? body.instruction.trim().slice(0, 300) || null : null;
+        const op = await operation();
         let resolved;
         try {
-            resolved = await resolve(query);
+            resolved = await resolve(query, op?.welcomeIntro ?? null);
         }
         catch (err) {
             return databaseError(request, reply, session, query, err);
@@ -136,6 +155,7 @@ export function registerAttendRoutes(app, deps) {
             draft,
             customerText,
             instruction: instruction ?? "",
+            notice: op ? (quietNotice(op) ?? undefined) : undefined,
         }), session);
     });
     app.post("/attend/feedback", async (request, reply) => {

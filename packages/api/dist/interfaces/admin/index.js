@@ -2,9 +2,19 @@ import { randomBytes } from "node:crypto";
 import { MysqlAdminStore } from "../../infrastructure/admin/admin-store.js";
 import { openConnection, missingDbEnv } from "../../infrastructure/schema-setup/apply.js";
 import { comparePassword } from "../../infrastructure/password.js";
-import { SESSION_COOKIE, buildSessionClearCookie, buildSessionSetCookie, checkRateLimit, consumePendingSession, createPendingSession, deleteSession, getAdminSessionSecret, getSession, parseCookies, promoteSession, recordLoginAttempt, signSessionCookie, verifyCsrf, verifySessionCookie, verifyTotp, } from "../../application/admin/security.js";
+import { SESSION_COOKIE, buildSessionClearCookie, buildSessionSetCookie, checkRateLimit, consumePendingSession, createPendingSession, deleteSession, getAdminSessionSecret, getSession, parseCookies, promoteSession, recordLoginAttempt, signSessionCookie, verifyCsrf, verifySessionCookie, verifyTotp, generateTotpSecret, otpauthUri, } from "../../application/admin/security.js";
+import { can, requiredCapability } from "../../application/admin/permissions.js";
 import { dashboardView, layout, loginView, messageView, tableView, twoFactorView } from "./views.js";
-import { adminCount, registerSetupWizard } from "./setup-wizard.js";
+import { adminCount, qrSvg, registerSetupWizard } from "./setup-wizard.js";
+import { registerTeamRoutes } from "./team.js";
+import { enrollView } from "./views-team.js";
+import { MysqlStaffStore } from "../../infrastructure/staff/staff-store.js";
+import { registerRelationRoutes } from "./relations.js";
+import { registerDataRoutes } from "./data.js";
+import { MysqlDataStore } from "../../infrastructure/data/data-store.js";
+import { MysqlRelationStore } from "../../infrastructure/relations/relation-store.js";
+import { createRelationLinker } from "../../application/relations/linker.js";
+import { emptyPlatformSettings, loadPlatformSettings } from "../../application/settings/platform.js";
 import { registerAccountRoutes } from "./account.js";
 import { registerSettingsRoutes } from "./settings.js";
 import { registerRegistrationRoutes } from "./registrations.js";
@@ -22,6 +32,12 @@ import { MysqlRegistrationStore } from "../../infrastructure/registration/regist
 import { MysqlSettingsStore } from "../../infrastructure/settings/settings-store.js";
 import { publicNumber } from "../entry/index.js";
 const GENERIC_LOGIN_ERROR = "Correo, contraseña o código incorrectos.";
+const ENROLL_TTL_MS = 10 * 60 * 1000;
+/** Registros de segundo factor en curso (primer ingreso de un miembro nuevo del equipo). */
+const enrollments = new Map();
+export function resetEnrollmentsForTests() {
+    enrollments.clear();
+}
 // Hash bcrypt válido usado para igualar el tiempo de respuesta cuando el correo no existe.
 const DUMMY_HASH = "$2b$12$C6UzMDM.H6dfI/f/IKcEeO7Ib6c/3QeM2vzU6ZL4t3Ai7GQWm3y3C";
 export async function adminPanelRoutes(app, options = {}) {
@@ -38,6 +54,28 @@ export async function adminPanelRoutes(app, options = {}) {
     const detailQuotes = options.quotes || options.connect || missingDbEnv().length === 0 ? quotes : undefined;
     const copilot = options.copilot ?? new CopilotService({ settings, store: new MysqlCopilotStore(connect) });
     const detailCopilot = options.copilot || options.connect || missingDbEnv().length === 0 ? copilot : undefined;
+    const staff = options.staff ?? new MysqlStaffStore(connect);
+    const relations = options.relations ?? new MysqlRelationStore(connect);
+    const data = options.data ?? new MysqlDataStore(connect);
+    const detailData = options.data || options.connect || missingDbEnv().length === 0 ? data : undefined;
+    // El enlazador crea el vínculo al agendar, abrir una orden o cotizar; sin base no se usa.
+    const detailRelations = options.relations || options.connect || missingDbEnv().length === 0 ? relations : undefined;
+    const linker = detailRelations ? createRelationLinker(detailRelations) : undefined;
+    // Ajustes de operación (ciudades, silencio, interruptores) con caché de un minuto; al guardarlos
+    // desde Ajustes se invalida para que el cambio se note de inmediato.
+    let platformCache = null;
+    const platform = async () => {
+        if (platformCache && Date.now() - platformCache.at < 60_000)
+            return platformCache.value;
+        try {
+            const value = await loadPlatformSettings(settings);
+            platformCache = { value, at: Date.now() };
+            return value;
+        }
+        catch {
+            return emptyPlatformSettings();
+        }
+    };
     const dashboardDb = () => !!options.connect || !!options.registrations || missingDbEnv().length === 0;
     const startedAt = Date.now();
     app.decorateRequest("cspNonce", "");
@@ -74,11 +112,35 @@ export async function adminPanelRoutes(app, options = {}) {
             }));
         }
     });
+    // Gancho central de permisos (docs/39 §3): una sola puerta para todo el panel, de modo que
+    // ninguna ruta quede sin revisar. Sin sesión no decide nada: cada ruta redirige al login.
+    app.addHook("onRequest", async (request, reply) => {
+        const path = request.url.replace(/^\/admin/, "").split("?")[0] || "/";
+        const capability = requiredCapability(request.method, path);
+        if (!capability)
+            return;
+        const session = getSession(sessionFromCookie(request) ?? undefined);
+        if (!session || !session.twoFactorVerified)
+            return;
+        if (can(session.role, capability))
+            return;
+        return reply
+            .code(403)
+            .type("text/html; charset=utf-8")
+            .send(layout({
+            title: "Sin permiso",
+            nonce: request.cspNonce,
+            role: session.role,
+            nav: true,
+            csrfToken: session.csrfToken,
+            body: messageView("Sin permiso", "Tu rol no incluye esta sección. Si la necesitas, pídele a un administrador que te cambie el rol."),
+        }));
+    });
     function html(reply, request, title, body, session, status = 200) {
         return reply
             .code(status)
             .type("text/html; charset=utf-8")
-            .send(layout({ title, nonce: request.cspNonce, body, nav: !!session, csrfToken: session?.csrfToken }));
+            .send(layout({ title, nonce: request.cspNonce, body, nav: !!session, csrfToken: session?.csrfToken, role: session?.role }));
     }
     function sessionFromCookie(request) {
         const secret = getAdminSessionSecret();
@@ -99,10 +161,10 @@ export async function adminPanelRoutes(app, options = {}) {
     }
     registerSetupWizard(app, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
     registerAccountRoutes(app, { store, requireSession, html, audit });
-    registerRegistrationRoutes(app, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, requireSession, html, audit });
-    registerAppointmentRoutes(app, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit });
-    registerWorkOrderRoutes(app, { workOrders, appointments, registrations, requireSession, html, audit });
-    registerQuoteRoutes(app, { quotes, registrations, appointments, workOrders, requireSession, html, audit });
+    registerRegistrationRoutes(app, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, requireSession, html, audit, platform });
+    registerAppointmentRoutes(app, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit, linker, platform });
+    registerWorkOrderRoutes(app, { workOrders, appointments, registrations, requireSession, html, audit, linker, platform });
+    registerQuoteRoutes(app, { quotes, registrations, appointments, workOrders, requireSession, html, audit, linker, platform });
     registerAttendRoutes(app, {
         registrations,
         appointments: detailAppointments,
@@ -111,6 +173,7 @@ export async function adminPanelRoutes(app, options = {}) {
         copilot: detailCopilot,
         audit,
         visits: detailAppointments ? (options.visits ?? new MysqlVisitStore(connect)) : options.visits,
+        platform,
         requireSession,
         html,
     });
@@ -123,8 +186,14 @@ export async function adminPanelRoutes(app, options = {}) {
         audit,
         envNumber: publicNumber,
         copilot: detailCopilot,
-        onChanged: () => options.onSettingsChanged?.(),
+        onChanged: () => {
+            platformCache = null;
+            options.onSettingsChanged?.();
+        },
     });
+    registerTeamRoutes(app, { store, staff, requireSession, html, audit });
+    registerRelationRoutes(app, { relations, requireSession, html, audit });
+    registerDataRoutes(app, { data, requireSession, html, audit });
     app.get("/login", async (request, reply) => {
         // Sin administradores todavía: se abre el asistente de puesta en marcha.
         if ((await adminCount(store)) === 0)
@@ -150,16 +219,68 @@ export async function adminPanelRoutes(app, options = {}) {
             return html(reply, request, "Ingresar", loginView("Base de datos no disponible."), undefined, 503);
         }
         const passwordOk = await comparePassword(password, account?.passwordHash ?? DUMMY_HASH);
-        if (!account || !passwordOk || !account.totpSecret) {
+        if (!account || !passwordOk) {
             recordLoginAttempt(email, request.ip, false);
             await audit("admin.login.failed", account?.id ?? null, `Intento fallido desde ${request.ip}`);
             return html(reply, request, "Ingresar", loginView(GENERIC_LOGIN_ERROR), undefined, 401);
         }
-        const pending = createPendingSession({ id: account.id, email: account.email });
+        const pending = createPendingSession({ id: account.id, email: account.email, role: account.staffRole });
         const secret = getAdminSessionSecret();
+        // Cuenta nueva del equipo: primero registra su propio segundo factor.
+        if (!account.totpSecret) {
+            enrollments.set(pending.id, { secret: generateTotpSecret(), userId: account.id, email: account.email, createdAt: Date.now() });
+            return reply
+                .header("Set-Cookie", buildSessionSetCookie(signSessionCookie(pending.id, secret), 10 * 60))
+                .redirect("/admin/login/enroll", 302);
+        }
         return reply
             .header("Set-Cookie", buildSessionSetCookie(signSessionCookie(pending.id, secret), 5 * 60))
             .redirect("/admin/login/2fa", 302);
+    });
+    app.get("/login/enroll", async (request, reply) => {
+        const pendingId = sessionFromCookie(request);
+        const entry = pendingId ? enrollments.get(pendingId) : undefined;
+        if (!pendingId || !entry || Date.now() - entry.createdAt > ENROLL_TTL_MS) {
+            if (pendingId)
+                enrollments.delete(pendingId);
+            return reply.redirect("/admin/login", 302);
+        }
+        const uri = otpauthUri(entry.email, entry.secret);
+        return html(reply, request, "Segundo factor", enrollView({ qrSvg: await qrSvg(uri), secret: entry.secret }));
+    });
+    app.post("/login/enroll", async (request, reply) => {
+        const pendingId = sessionFromCookie(request);
+        const entry = pendingId ? enrollments.get(pendingId) : undefined;
+        if (!pendingId || !entry || Date.now() - entry.createdAt > ENROLL_TTL_MS) {
+            if (pendingId)
+                enrollments.delete(pendingId);
+            return reply.redirect("/admin/login", 302);
+        }
+        const body = (request.body ?? {});
+        const code = typeof body.code === "string" ? body.code.trim() : "";
+        if (!checkRateLimit(entry.email, request.ip).allowed) {
+            return html(reply, request, "Ingresar", loginView("Demasiados intentos. Espera unos minutos."), undefined, 429);
+        }
+        if (!verifyTotp(entry.secret, code)) {
+            recordLoginAttempt(entry.email, request.ip, false);
+            const uri = otpauthUri(entry.email, entry.secret);
+            return html(reply, request, "Segundo factor", enrollView({ qrSvg: await qrSvg(uri), secret: entry.secret, error: "Código incorrecto. Revisa que la hora del teléfono sea automática." }), undefined, 401);
+        }
+        try {
+            await staff.setTotp(entry.userId, entry.secret);
+        }
+        catch {
+            return html(reply, request, "Ingresar", loginView("Base de datos no disponible."), undefined, 503);
+        }
+        const pending = consumePendingSession(pendingId);
+        enrollments.delete(pendingId);
+        if (!pending)
+            return reply.redirect("/admin/login", 302);
+        recordLoginAttempt(entry.email, request.ip, true);
+        const active = promoteSession(pending);
+        await audit("admin.login.enroll", active.userId, `Segundo factor registrado desde ${request.ip}`);
+        const secret = getAdminSessionSecret();
+        return reply.header("Set-Cookie", buildSessionSetCookie(signSessionCookie(active.id, secret))).redirect("/admin", 302);
     });
     app.get("/login/2fa", async (request, reply) => {
         if (!sessionFromCookie(request))

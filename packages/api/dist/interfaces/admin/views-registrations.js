@@ -1,6 +1,8 @@
 import { escapeHtml } from "../entry/page.js";
 import { formatWhatsappNumber } from "../../application/settings/whatsapp-number.js";
 import { serviceTaxonomy, vehicleClasses } from "../../domain/maintenance/index.js";
+import { userDataRequestsCard } from "./views-data.js";
+import { RELATION_KIND_LABELS, RELATION_STATUS_LABELS, SANCTION_LEVELS, isActive as sanctionIsActive, relationCode, sanctionLabel, } from "../../application/relations/workflow.js";
 import { bitacoraSection, userAppointmentsSection } from "./views-appointments.js";
 import { historySection, userWorkOrdersSection } from "./views-work-orders.js";
 import { userQuotesSection } from "./views-quotes.js";
@@ -171,8 +173,38 @@ export function userDetailView(input) {
       <form method="post" action="/admin/users/${e(user.id)}/vehicles" autocomplete="off">${csrfField(input.csrf)}${vehicleFields(input.values ?? {})}
       <button class="full" type="submit">Agregar vehículo</button></form></div>`
         : "";
+    const moderation = moderationSection(String(user.id), input.relations ?? [], input.sanctions ?? [], input.csrf, !!input.canSanction);
+    const lopdp = input.canLopdp ? userDataRequestsCard(String(user.id), input.dataRequests ?? [], input.csrf) : "";
     return `<div class="stack wide"><p><a href="/admin/users">← Usuarios</a></p><h1>${e(user.name)}</h1>${flashHtml(input.flash)}
-  ${datos}${shopCard}${storeCard}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
+  ${datos}${shopCard}${storeCard}${moderation}${lopdp}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
+}
+/** Vínculos y sanciones de esta entidad (docs/35 M1 y M5). */
+function moderationSection(userId, relations, sanctions, csrf, canSanction) {
+    if (relations.length === 0 && sanctions.length === 0 && !canSanction)
+        return "";
+    const links = relations.length
+        ? `<ul>${relations
+            .map((r) => `<li><a href="/admin/relations/${e(r.id)}">${e(relationCode(r.number))}</a> · ${e(RELATION_KIND_LABELS[r.kind] ?? r.kind)} · ${e(RELATION_STATUS_LABELS[r.status] ?? r.status)}${r.subject ? ` · ${e(r.subject)}` : ""}</li>`)
+            .join("")}</ul>`
+        : `<p class="muted">Sin vínculos registrados.</p>`;
+    const active = sanctions.filter((s) => sanctionIsActive(s));
+    const history = sanctions.length
+        ? `<ul>${sanctions
+            .map((s) => `<li>${e(sanctionLabel(s.level))} · ${day(s.startsAt)}${s.endsAt ? ` → ${day(s.endsAt)}` : ""}${s.liftedAt ? " (levantada)" : sanctionIsActive(s) ? ' <span class="error">vigente</span>' : " (vencida)"} · ${e(s.reason.slice(0, 160))}</li>`)
+            .join("")}</ul>`
+        : `<p class="muted">Sin sanciones.</p>`;
+    const form = canSanction
+        ? `<form method="post" action="/admin/users/${e(userId)}/sanctions">${csrfField(csrf)}
+      <label for="sanction-level">Aplicar un paso de la escala</label>
+      <select id="sanction-level" name="level">${SANCTION_LEVELS.map((l) => `<option value="${e(l.key)}">${e(l.label)} — ${e(l.description)}</option>`).join("")}</select>
+      <label for="sanction-days">Días (vacío = el valor por defecto del paso)</label><input id="sanction-days" name="days" inputmode="numeric">
+      <label for="sanction-reason">Motivo (se le comunica)</label><input id="sanction-reason" name="reason" maxlength="500" required>
+      <button class="danger" type="submit">Aplicar sanción</button></form>`
+        : "";
+    return `<div class="card"><h2>Moderación</h2>
+    ${active.length ? `<p class="error">Sanción vigente: ${e(active.map((s) => sanctionLabel(s.level)).join(", "))}</p>` : ""}
+    <h2>Vínculos</h2>${links}
+    <h2>Sanciones</h2>${history}${form}</div>`;
 }
 export function verificationsView(input) {
     const body = input.items.length === 0

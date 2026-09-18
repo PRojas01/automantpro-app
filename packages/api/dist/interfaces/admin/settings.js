@@ -4,6 +4,7 @@ import { checkRateLimit, recordLoginAttempt, verifyCsrf, } from "../../applicati
 import { WHATSAPP_NUMBER_KEY, formatWhatsappNumber, normalizeWhatsappNumber, } from "../../application/settings/whatsapp-number.js";
 import { settingsView } from "./views-settings.js";
 import { parseAmount } from "../../application/work-orders/workflow.js";
+import { FEATURES, loadPlatformSettings, parseCities, parseEntryMode, parseTime, savePlatformSettings, } from "../../application/settings/platform.js";
 import { LEGAL_FIELDS, emptyLegalData, legalSettingKey, validateLegalField, } from "../../application/legal/documents.js";
 export function registerSettingsRoutes(app, deps) {
     async function withConn(work) {
@@ -27,6 +28,13 @@ export function registerSettingsRoutes(app, deps) {
             // sin base: los datos legales se muestran vacíos
         }
         const ai = deps.copilot ? await deps.copilot.status().catch(() => null) : null;
+        let platform;
+        try {
+            platform = await loadPlatformSettings(deps.settings);
+        }
+        catch {
+            platform = undefined; // sin base: la tarjeta de operación no se muestra
+        }
         try {
             stored = await deps.settings.get(WHATSAPP_NUMBER_KEY);
         }
@@ -40,7 +48,7 @@ export function registerSettingsRoutes(app, deps) {
         catch {
             db = null;
         }
-        return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, legal, ai, flash }), session, status);
+        return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, legal, ai, platform, flash }), session, status);
     }
     function checkCsrf(request, reply) {
         const session = deps.requireSession(request, reply);
@@ -99,6 +107,42 @@ export function registerSettingsRoutes(app, deps) {
             kind: "ok",
             text: `Número actualizado a ${formatWhatsappNumber(number)}. La página de inicio ya lo usa.`,
         });
+    });
+    app.post("/settings/platform", async (request, reply) => {
+        const ctx = checkCsrf(request, reply);
+        if (!ctx)
+            return reply;
+        const { session, body } = ctx;
+        const account = await deps.store.findAdminById(session.userId);
+        if (!account)
+            return render(request, reply, session, { kind: "error", text: "Cuenta no encontrada." }, 404);
+        if (!checkRateLimit(account.email, request.ip).allowed) {
+            return render(request, reply, session, { kind: "error", text: "Demasiados intentos. Espera unos minutos." }, 429);
+        }
+        if (!(await comparePassword(typeof body.current === "string" ? body.current : "", account.passwordHash))) {
+            recordLoginAttempt(account.email, request.ip, false);
+            return render(request, reply, session, { kind: "error", text: "La contraseña actual no es correcta." }, 400);
+        }
+        const cities = parseCities(body.cities);
+        const quietFrom = parseTime(body.quietFrom);
+        const quietTo = parseTime(body.quietTo);
+        if ((typeof body.quietFrom === "string" && body.quietFrom.trim() !== "" && !quietFrom) || (typeof body.quietTo === "string" && body.quietTo.trim() !== "" && !quietTo)) {
+            return render(request, reply, session, { kind: "error", text: "El horario silencioso usa el formato HH:MM (por ejemplo 21:00)." }, 400);
+        }
+        const features = {};
+        for (const feature of FEATURES)
+            features[feature.key] = body[`feature_${feature.key}`] === "on";
+        const welcomeIntro = typeof body.welcomeIntro === "string" ? body.welcomeIntro.trim().slice(0, 300) || null : null;
+        try {
+            await savePlatformSettings(deps.settings, { entryMode: parseEntryMode(body.entryMode), cities, quietFrom, quietTo, welcomeIntro, features }, account.id);
+        }
+        catch {
+            return render(request, reply, session, { kind: "error", text: "Base de datos no disponible." }, 503);
+        }
+        deps.onChanged();
+        const off = FEATURES.filter((f) => !features[f.key]).map((f) => f.label);
+        await deps.audit("admin.settings.platform", account.id, `Operación: inicio ${parseEntryMode(body.entryMode)}, ${cities.length ? `${cities.length} ciudades` : "todas las ciudades"}, silencio ${quietFrom ?? "—"}–${quietTo ?? "—"}${off.length ? `, pausadas: ${off.join(", ")}` : ""}`);
+        return render(request, reply, session, { kind: "ok", text: "Ajustes de operación guardados." });
     });
     app.post("/settings/legal", async (request, reply) => {
         const ctx = checkCsrf(request, reply);

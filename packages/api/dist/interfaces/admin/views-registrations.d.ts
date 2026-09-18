@@ -2,6 +2,8 @@ import type { Page } from "../../infrastructure/admin/admin-store.js";
 import type { PendingVerification, Row, UserDetail } from "../../infrastructure/registration/registration-store.js";
 import type { Perfil } from "../../application/registration/schemas.js";
 import type { Flash } from "./views-setup.js";
+import type { RelationRow, SanctionRow } from "../../infrastructure/relations/relation-store.js";
+import type { DataRequestRow } from "../../infrastructure/data/data-store.js";
 import type { AppointmentRow, EventRow } from "../../infrastructure/appointments/appointment-store.js";
 import type { ServiceHistoryRow, WorkOrderRow } from "../../infrastructure/work-orders/work-order-store.js";
 import type { UserQuotes } from "../../infrastructure/quotes/quote-store.js";
@@ -28,6 +30,11 @@ export declare function userDetailView(input: {
     workOrders?: WorkOrderRow[];
     history?: ServiceHistoryRow[];
     quotes?: UserQuotes | null;
+    relations?: RelationRow[];
+    sanctions?: SanctionRow[];
+    canSanction?: boolean;
+    dataRequests?: DataRequestRow[];
+    canLopdp?: boolean;
 }): string;
 export declare function verificationsView(input: {
     items: PendingVerification[];

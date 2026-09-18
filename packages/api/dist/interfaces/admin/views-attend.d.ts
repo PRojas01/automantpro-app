@@ -3,6 +3,8 @@ import type { UserDetail } from "../../infrastructure/registration/registration-
 import type { Visit } from "../../infrastructure/visits/visit-store.js";
 import type { CopilotStatus, DraftResult } from "../../application/copilot/service.js";
 export interface AttendResult {
+    /** Perfil que declaró el contacto en su mensaje, si se pudo detectar. */
+    intent?: string | null;
     phone: string | null;
     code: string | null;
     visit: Visit | null;
@@ -21,5 +23,6 @@ export declare function attendView(input: {
     customerText?: string;
     instruction?: string;
     flash?: string;
+    notice?: string;
 }): string;
 //# sourceMappingURL=views-attend.d.ts.map

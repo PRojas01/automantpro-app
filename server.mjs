@@ -1287,10 +1287,10 @@ var require_avvio = __commonJS({
     };
     Boot.prototype._trackPluginLoading = function(plugin) {
       const parentName = this._current[0]?.name || null;
-      plugin.once("start", (serverName, funcName, time) => {
-        const nodeId = this.pluginTree.start(parentName || null, funcName, time);
-        plugin.once("loaded", (serverName2, funcName2, time2) => {
-          this.pluginTree.stop(nodeId, time2);
+      plugin.once("start", (serverName, funcName, time2) => {
+        const nodeId = this.pluginTree.start(parentName || null, funcName, time2);
+        plugin.once("loaded", (serverName2, funcName2, time3) => {
+          this.pluginTree.stop(nodeId, time3);
         });
       });
     };
@@ -6792,10 +6792,10 @@ var require_redaction = __commonJS({
     var strict = false;
     function redaction(opts, serialize) {
       const { paths, censor, remove } = handle(opts);
-      const shape = paths.reduce((o, str3) => {
+      const shape = paths.reduce((o, str5) => {
         rx.lastIndex = 0;
-        const first = rx.exec(str3);
-        const next = rx.exec(str3);
+        const first = rx.exec(str5);
+        const next = rx.exec(str5);
         let ns = first[1] !== void 0 ? first[1].replace(/^(?:"|'|`)(.*)(?:"|'|`)$/, "$1") : first[0];
         if (ns === "*") {
           ns = wildcardFirstSym;
@@ -6808,7 +6808,7 @@ var require_redaction = __commonJS({
           return o;
         }
         const { index } = next;
-        const nextPath = `${str3.substr(index, str3.length - 1)}`;
+        const nextPath = `${str5.substr(index, str5.length - 1)}`;
         o[ns] = o[ns] || [];
         if (ns !== wildcardFirstSym && o[ns].length === 0) {
           o[ns].push(...o[wildcardFirstSym] || []);
@@ -6924,7 +6924,7 @@ var require_quick_format_unescaped = __commonJS({
       }
       var argLen = args.length;
       if (argLen === 0) return f;
-      var str3 = "";
+      var str5 = "";
       var a = 1 - offset2;
       var lastPos = -1;
       var flen = f && f.length || 0;
@@ -6939,8 +6939,8 @@ var require_quick_format_unescaped = __commonJS({
                 break;
               if (args[a] == null) break;
               if (lastPos < i)
-                str3 += f.slice(lastPos, i);
-              str3 += Number(args[a]);
+                str5 += f.slice(lastPos, i);
+              str5 += Number(args[a]);
               lastPos = i + 2;
               i++;
               break;
@@ -6949,8 +6949,8 @@ var require_quick_format_unescaped = __commonJS({
                 break;
               if (args[a] == null) break;
               if (lastPos < i)
-                str3 += f.slice(lastPos, i);
-              str3 += Math.floor(Number(args[a]));
+                str5 += f.slice(lastPos, i);
+              str5 += Math.floor(Number(args[a]));
               lastPos = i + 2;
               i++;
               break;
@@ -6963,21 +6963,21 @@ var require_quick_format_unescaped = __commonJS({
                 break;
               if (args[a] === void 0) break;
               if (lastPos < i)
-                str3 += f.slice(lastPos, i);
+                str5 += f.slice(lastPos, i);
               var type = typeof args[a];
               if (type === "string") {
-                str3 += "'" + args[a] + "'";
+                str5 += "'" + args[a] + "'";
                 lastPos = i + 2;
                 i++;
                 break;
               }
               if (type === "function") {
-                str3 += args[a].name || "<anonymous>";
+                str5 += args[a].name || "<anonymous>";
                 lastPos = i + 2;
                 i++;
                 break;
               }
-              str3 += ss(args[a]);
+              str5 += ss(args[a]);
               lastPos = i + 2;
               i++;
               break;
@@ -6985,15 +6985,15 @@ var require_quick_format_unescaped = __commonJS({
               if (a >= argLen)
                 break;
               if (lastPos < i)
-                str3 += f.slice(lastPos, i);
-              str3 += String(args[a]);
+                str5 += f.slice(lastPos, i);
+              str5 += String(args[a]);
               lastPos = i + 2;
               i++;
               break;
             case 37:
               if (lastPos < i)
-                str3 += f.slice(lastPos, i);
-              str3 += "%";
+                str5 += f.slice(lastPos, i);
+              str5 += "%";
               lastPos = i + 2;
               i++;
               a--;
@@ -7006,9 +7006,9 @@ var require_quick_format_unescaped = __commonJS({
       if (lastPos === -1)
         return f;
       else if (lastPos < flen) {
-        str3 += f.slice(lastPos);
+        str5 += f.slice(lastPos);
       }
-      return str3;
+      return str5;
     }
   }
 });
@@ -8632,7 +8632,7 @@ var require_tools = __commonJS({
     var transport = require_transport();
     var [nodeMajor] = process.versions.node.split(".").map((v) => Number(v));
     var asJsonChan = diagChan.tracingChannel("pino_asJson");
-    var asString = nodeMajor >= 25 ? (str3) => JSON.stringify(str3) : _asString;
+    var asString = nodeMajor >= 25 ? (str5) => JSON.stringify(str5) : _asString;
     function noop() {
     }
     function genLog(level, hook) {
@@ -8670,38 +8670,38 @@ var require_tools = __commonJS({
         }
       }
     }
-    function _asString(str3) {
+    function _asString(str5) {
       let result = "";
       let last = 0;
       let found = false;
       let point = 255;
-      const l = str3.length;
+      const l = str5.length;
       if (l > 100) {
-        return JSON.stringify(str3);
+        return JSON.stringify(str5);
       }
       for (var i = 0; i < l && point >= 32; i++) {
-        point = str3.charCodeAt(i);
+        point = str5.charCodeAt(i);
         if (point === 34 || point === 92) {
-          result += str3.slice(last, i) + "\\";
+          result += str5.slice(last, i) + "\\";
           last = i;
           found = true;
         }
       }
       if (!found) {
-        result = str3;
+        result = str5;
       } else {
-        result += str3.slice(last);
+        result += str5.slice(last);
       }
-      return point < 32 ? JSON.stringify(str3) : '"' + result + '"';
+      return point < 32 ? JSON.stringify(str5) : '"' + result + '"';
     }
-    function asJson(obj, msg, num2, time) {
+    function asJson(obj, msg, num2, time2) {
       if (asJsonChan.hasSubscribers === false) {
-        return _asJson.call(this, obj, msg, num2, time);
+        return _asJson.call(this, obj, msg, num2, time2);
       }
       const store = { instance: this, arguments };
-      return asJsonChan.traceSync(_asJson, store, this, obj, msg, num2, time);
+      return asJsonChan.traceSync(_asJson, store, this, obj, msg, num2, time2);
     }
-    function _asJson(obj, msg, num2, time) {
+    function _asJson(obj, msg, num2, time2) {
       const stringify2 = this[stringifySym];
       const stringifySafe = this[stringifySafeSym];
       const stringifiers = this[stringifiersSym];
@@ -8711,7 +8711,7 @@ var require_tools = __commonJS({
       const formatters = this[formattersSym];
       const messageKey = this[messageKeySym];
       const errorKey = this[errorKeySym];
-      let data = this[lsCacheSym][num2] + time;
+      let data = this[lsCacheSym][num2] + time2;
       data = data + chindings;
       let value2;
       if (formatters.log) {
@@ -9396,11 +9396,11 @@ var require_safe_stable_stringify = __commonJS({
     exports.configure = configure;
     module.exports = stringify;
     var strEscapeSequencesRegExp = /[\u0000-\u001f\u0022\u005c\ud800-\udfff]/;
-    function strEscape(str3) {
-      if (str3.length < 5e3 && !strEscapeSequencesRegExp.test(str3)) {
-        return `"${str3}"`;
+    function strEscape(str5) {
+      if (str5.length < 5e3 && !strEscapeSequencesRegExp.test(str5)) {
+        return `"${str5}"`;
       }
-      return JSON.stringify(str3);
+      return JSON.stringify(str5);
     }
     function sort(array, comparator) {
       if (array.length > 200 || comparator) {
@@ -10155,7 +10155,7 @@ var require_pino = __commonJS({
     var stdSerializers = require_pino_std_serializers();
     var caller = require_caller();
     var redaction = require_redaction();
-    var time = require_time();
+    var time2 = require_time();
     var proto = require_proto();
     var symbols = require_symbols3();
     var { configure } = require_safe_stable_stringify();
@@ -10196,7 +10196,7 @@ var require_pino = __commonJS({
       mixinMergeStrategySym,
       msgPrefixSym
     } = symbols;
-    var { epochTime, nullTime } = time;
+    var { epochTime, nullTime } = time2;
     var { pid } = process;
     var hostname = os.hostname();
     var defaultErrorSerializer = stdSerializers.err;
@@ -10232,11 +10232,11 @@ var require_pino = __commonJS({
       depthLimit: 5,
       edgeLimit: 100
     };
-    var normalize = createArgsNormalizer(defaultOptions);
+    var normalize2 = createArgsNormalizer(defaultOptions);
     var serializers = Object.assign(/* @__PURE__ */ Object.create(null), stdSerializers);
     function pino(...args) {
       const instance = {};
-      const { opts, stream } = normalize(instance, caller(), ...args);
+      const { opts, stream } = normalize2(instance, caller(), ...args);
       if (opts.level && typeof opts.level === "string" && DEFAULT_LEVELS[opts.level.toLowerCase()] !== void 0) opts.level = opts.level.toLowerCase();
       const {
         redact,
@@ -10292,8 +10292,8 @@ var require_pino = __commonJS({
           chindings = coreChindings(Object.assign({}, base, { name }));
         }
       }
-      const time2 = timestamp instanceof Function ? timestamp : timestamp ? epochTime : nullTime;
-      const timeSliceIndex = time2().indexOf(":") + 1;
+      const time3 = timestamp instanceof Function ? timestamp : timestamp ? epochTime : nullTime;
+      const timeSliceIndex = time3().indexOf(":") + 1;
       if (useOnlyCustomLevels && !customLevels) throw Error("customLevels is required if useOnlyCustomLevels is set true");
       if (mixin && typeof mixin !== "function") throw Error(`Unknown mixin type "${typeof mixin}" - expected "function"`);
       if (msgPrefix && typeof msgPrefix !== "string") throw Error(`Unknown msgPrefix type "${typeof msgPrefix}" - expected "string"`);
@@ -10309,7 +10309,7 @@ var require_pino = __commonJS({
         [levelCompSym]: levelCompFunc,
         [useOnlyCustomLevelsSym]: useOnlyCustomLevels,
         [streamSym]: stream,
-        [timeSym]: time2,
+        [timeSym]: time3,
         [timeSliceIndexSym]: timeSliceIndex,
         [stringifySym]: stringify,
         [stringifySafeSym]: stringifySafe,
@@ -10349,7 +10349,7 @@ var require_pino = __commonJS({
     module.exports.multistream = require_multistream();
     module.exports.levels = mappings();
     module.exports.stdSerializers = serializers;
-    module.exports.stdTimeFunctions = Object.assign({}, time);
+    module.exports.stdTimeFunctions = Object.assign({}, time2);
     module.exports.symbols = symbols;
     module.exports.version = version;
     module.exports.default = pino;
@@ -10734,8 +10734,8 @@ var require_serializer = __commonJS({
           return "" + num2;
         }
       }
-      asBoolean(bool) {
-        return bool && "true" || "false";
+      asBoolean(bool2) {
+        return bool2 && "true" || "false";
       }
       asDateTime(date) {
         if (date === null) return '""';
@@ -10767,8 +10767,8 @@ var require_serializer = __commonJS({
         }
         throw new Error(`The value "${date}" cannot be converted to a time.`);
       }
-      asString(str3) {
-        const len = str3.length;
+      asString(str5) {
+        const len = str5.length;
         if (len === 0) {
           return '""';
         } else if (len < 42) {
@@ -10776,25 +10776,25 @@ var require_serializer = __commonJS({
           let last = -1;
           let point = 255;
           for (let i = 0; i < len; i++) {
-            point = str3.charCodeAt(i);
+            point = str5.charCodeAt(i);
             if (point === 34 || // '"'
             point === 92) {
               last === -1 && (last = 0);
-              result += str3.slice(last, i) + "\\";
+              result += str5.slice(last, i) + "\\";
               last = i;
             } else if (point < 32 || point >= 55296 && point <= 57343) {
-              return JSON.stringify(str3);
+              return JSON.stringify(str5);
             }
           }
-          return last === -1 && '"' + str3 + '"' || '"' + result + str3.slice(last) + '"';
-        } else if (len < 5e3 && STR_ESCAPE.test(str3) === false) {
-          return '"' + str3 + '"';
+          return last === -1 && '"' + str5 + '"' || '"' + result + str5.slice(last) + '"';
+        } else if (len < 5e3 && STR_ESCAPE.test(str5) === false) {
+          return '"' + str5 + '"';
         } else {
-          return JSON.stringify(str3);
+          return JSON.stringify(str5);
         }
       }
-      asUnsafeString(str3) {
-        return '"' + str3 + '"';
+      asUnsafeString(str5) {
+        return '"' + str5 + '"';
       }
       getState() {
         return this._options;
@@ -12964,11 +12964,11 @@ var require_proxy_addr = __commonJS({
     }
     function parseipNotation(note) {
       const pos = note.lastIndexOf("/");
-      const str3 = pos !== -1 ? note.substring(0, pos) : note;
-      if (!isip(str3)) {
-        throw new TypeError("invalid IP address: " + str3);
+      const str5 = pos !== -1 ? note.substring(0, pos) : note;
+      if (!isip(str5)) {
+        throw new TypeError("invalid IP address: " + str5);
       }
-      let ip = parseip(str3);
+      let ip = parseip(str5);
       if (pos === -1 && ip.kind() === "ipv6" && ip.isIPv4MappedAddress()) {
         ip = ip.toIPv4Address();
       }
@@ -14005,7 +14005,7 @@ var require_code = __commonJS({
     }
     exports._ = _;
     var plus = new _Code("+");
-    function str3(strs, ...args) {
+    function str5(strs, ...args) {
       const expr = [safeStringify(strs[0])];
       let i = 0;
       while (i < args.length) {
@@ -14016,7 +14016,7 @@ var require_code = __commonJS({
       optimize(expr);
       return new _Code(expr);
     }
-    exports.str = str3;
+    exports.str = str5;
     function addCodeArg(code, arg) {
       if (arg instanceof _Code)
         code.push(...arg._items);
@@ -14059,7 +14059,7 @@ var require_code = __commonJS({
       return;
     }
     function strConcat(c1, c2) {
-      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str3`${c1}${c2}`;
+      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str5`${c1}${c2}`;
     }
     exports.strConcat = strConcat;
     function interpolate(x) {
@@ -15002,11 +15002,11 @@ var require_util = __commonJS({
       return false;
     }
     exports.schemaHasRules = schemaHasRules;
-    function schemaHasRulesButRef(schema, RULES) {
+    function schemaHasRulesButRef(schema, RULES2) {
       if (typeof schema == "boolean")
         return !schema;
       for (const key in schema)
-        if (key !== "$ref" && RULES.all[key])
+        if (key !== "$ref" && RULES2.all[key])
           return true;
       return false;
     }
@@ -15021,22 +15021,22 @@ var require_util = __commonJS({
       return (0, codegen_1._)`${topSchemaRef}${schemaPath}${(0, codegen_1.getProperty)(keyword)}`;
     }
     exports.schemaRefOrVal = schemaRefOrVal;
-    function unescapeFragment(str3) {
-      return unescapeJsonPointer(decodeURIComponent(str3));
+    function unescapeFragment(str5) {
+      return unescapeJsonPointer(decodeURIComponent(str5));
     }
     exports.unescapeFragment = unescapeFragment;
-    function escapeFragment(str3) {
-      return encodeURIComponent(escapeJsonPointer(str3));
+    function escapeFragment(str5) {
+      return encodeURIComponent(escapeJsonPointer(str5));
     }
     exports.escapeFragment = escapeFragment;
-    function escapeJsonPointer(str3) {
-      if (typeof str3 == "number")
-        return `${str3}`;
-      return str3.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPointer(str5) {
+      if (typeof str5 == "number")
+        return `${str5}`;
+      return str5.replace(/~/g, "~0").replace(/\//g, "~1");
     }
     exports.escapeJsonPointer = escapeJsonPointer;
-    function unescapeJsonPointer(str3) {
-      return str3.replace(/~1/g, "/").replace(/~0/g, "~");
+    function unescapeJsonPointer(str5) {
+      return str5.replace(/~1/g, "/").replace(/~0/g, "~");
     }
     exports.unescapeJsonPointer = unescapeJsonPointer;
     function eachItem(xs, f) {
@@ -16061,8 +16061,8 @@ var require_json_schema_traverse = __commonJS({
         post(schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
       }
     }
-    function escapeJsonPtr(str3) {
-      return str3.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPtr(str5) {
+      return str5.replace(/~/g, "~0").replace(/\//g, "~1");
     }
   }
 });
@@ -16139,8 +16139,8 @@ var require_resolve = __commonJS({
       }
       return count2;
     }
-    function getFullPath(resolver, id = "", normalize) {
-      if (normalize !== false)
+    function getFullPath(resolver, id = "", normalize2) {
+      if (normalize2 !== false)
         id = normalizeId(id);
       const p = resolver.parse(id);
       return _getFullPath(resolver, p);
@@ -16400,17 +16400,17 @@ var require_validate = __commonJS({
     }
     function schemaKeywords(it, types, typeErrors, errsCount) {
       const { gen, schema, data, allErrors, opts, self: self2 } = it;
-      const { RULES } = self2;
-      if (schema.$ref && (opts.ignoreKeywordsWithRef || !(0, util_1.schemaHasRulesButRef)(schema, RULES))) {
-        gen.block(() => keywordCode(it, "$ref", RULES.all.$ref.definition));
+      const { RULES: RULES2 } = self2;
+      if (schema.$ref && (opts.ignoreKeywordsWithRef || !(0, util_1.schemaHasRulesButRef)(schema, RULES2))) {
+        gen.block(() => keywordCode(it, "$ref", RULES2.all.$ref.definition));
         return;
       }
       if (!opts.jtd)
         checkStrictTypes(it, types);
       gen.block(() => {
-        for (const group of RULES.rules)
+        for (const group of RULES2.rules)
           groupKeywords(group);
-        groupKeywords(RULES.post);
+        groupKeywords(RULES2.post);
       });
       function groupKeywords(group) {
         if (!(0, applicability_1.shouldUseGroup)(schema, group))
@@ -17158,10 +17158,10 @@ var require_utils = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str3, token) {
+    function findToken(str5, token) {
       let ind = 0;
-      for (let i = 0; i < str3.length; i++) {
-        if (str3[i] === token) ind++;
+      for (let i = 0; i < str5.length; i++) {
+        if (str5[i] === token) ind++;
       }
       return ind;
     }
@@ -17730,7 +17730,7 @@ var require_fast_uri = __commonJS({
       }
       return decodedScheme;
     }
-    function normalize(uri, options) {
+    function normalize2(uri, options) {
       if (typeof uri === "string") {
         uri = /** @type {T} */
         normalizeString(uri, options);
@@ -18101,7 +18101,7 @@ var require_fast_uri = __commonJS({
     }
     var fastUri = {
       SCHEMES,
-      normalize,
+      normalize: normalize2,
       resolve,
       resolveComponent,
       equal,
@@ -18164,7 +18164,7 @@ var require_core = __commonJS({
     var util_1 = require_util();
     var $dataRefSchema = require_data();
     var uri_1 = require_uri();
-    var defaultRegExp = (str3, flags) => new RegExp(str3, flags);
+    var defaultRegExp = (str5, flags) => new RegExp(str5, flags);
     defaultRegExp.code = "new RegExp";
     var META_IGNORE_OPTIONS = ["removeAdditional", "useDefaults", "coerceTypes"];
     var EXT_SCOPE_NAMES = /* @__PURE__ */ new Set([
@@ -18497,10 +18497,10 @@ var require_core = __commonJS({
       }
       // Remove keyword
       removeKeyword(keyword) {
-        const { RULES } = this;
-        delete RULES.keywords[keyword];
-        delete RULES.all[keyword];
-        for (const group of RULES.rules) {
+        const { RULES: RULES2 } = this;
+        delete RULES2.keywords[keyword];
+        delete RULES2.all[keyword];
+        for (const group of RULES2.rules) {
           const i = group.rules.findIndex((rule) => rule.keyword === keyword);
           if (i >= 0)
             group.rules.splice(i, 1);
@@ -18668,9 +18668,9 @@ var require_core = __commonJS({
     }
     var KEYWORD_NAME = /^[a-z_$][a-z0-9_$:-]*$/i;
     function checkKeyword(keyword, def) {
-      const { RULES } = this;
+      const { RULES: RULES2 } = this;
       (0, util_1.eachItem)(keyword, (kwd) => {
-        if (RULES.keywords[kwd])
+        if (RULES2.keywords[kwd])
           throw new Error(`Keyword ${kwd} is already defined`);
         if (!KEYWORD_NAME.test(kwd))
           throw new Error(`Keyword ${kwd} has invalid name`);
@@ -18686,13 +18686,13 @@ var require_core = __commonJS({
       const post = definition === null || definition === void 0 ? void 0 : definition.post;
       if (dataType && post)
         throw new Error('keyword with "post" flag cannot have "type"');
-      const { RULES } = this;
-      let ruleGroup = post ? RULES.post : RULES.rules.find(({ type: t }) => t === dataType);
+      const { RULES: RULES2 } = this;
+      let ruleGroup = post ? RULES2.post : RULES2.rules.find(({ type: t }) => t === dataType);
       if (!ruleGroup) {
         ruleGroup = { type: dataType, rules: [] };
-        RULES.rules.push(ruleGroup);
+        RULES2.rules.push(ruleGroup);
       }
-      RULES.keywords[keyword] = true;
+      RULES2.keywords[keyword] = true;
       if (!definition)
         return;
       const rule = {
@@ -18707,7 +18707,7 @@ var require_core = __commonJS({
         addBeforeRule.call(this, ruleGroup, rule, definition.before);
       else
         ruleGroup.rules.push(rule);
-      RULES.all[keyword] = rule;
+      RULES2.all[keyword] = rule;
       (_a = definition.implements) === null || _a === void 0 ? void 0 : _a.forEach((kwd) => this.addKeyword(kwd));
     }
     function addBeforeRule(ruleGroup, rule, before) {
@@ -18959,16 +18959,16 @@ var require_ucs2length = __commonJS({
   "node_modules/fastify/node_modules/ajv/dist/runtime/ucs2length.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    function ucs2length(str3) {
-      const len = str3.length;
+    function ucs2length(str5) {
+      const len = str5.length;
       let length = 0;
       let pos = 0;
       let value2;
       while (pos < len) {
         length++;
-        value2 = str3.charCodeAt(pos++);
+        value2 = str5.charCodeAt(pos++);
         if (value2 >= 55296 && value2 <= 56319 && pos < len) {
-          value2 = str3.charCodeAt(pos);
+          value2 = str5.charCodeAt(pos);
           if ((value2 & 64512) === 56320)
             pos++;
         }
@@ -20882,15 +20882,15 @@ var require_timestamp = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     var DT_SEPARATOR = /t|\s/i;
     var DATE = /^(\d\d\d\d)-(\d\d)-(\d\d)$/;
-    var TIME = /^(\d\d):(\d\d):(\d\d)(?:\.\d+)?(?:z|([+-]\d\d)(?::?(\d\d))?)$/i;
+    var TIME2 = /^(\d\d):(\d\d):(\d\d)(?:\.\d+)?(?:z|([+-]\d\d)(?::?(\d\d))?)$/i;
     var DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    function validTimestamp(str3, allowDate) {
-      const dt = str3.split(DT_SEPARATOR);
+    function validTimestamp(str5, allowDate) {
+      const dt = str5.split(DT_SEPARATOR);
       return dt.length === 2 && validDate(dt[0]) && validTime(dt[1]) || allowDate && dt.length === 1 && validDate(dt[0]);
     }
     exports.default = validTimestamp;
-    function validDate(str3) {
-      const matches = DATE.exec(str3);
+    function validDate(str5) {
+      const matches = DATE.exec(str5);
       if (!matches)
         return false;
       const y = +matches[1];
@@ -20899,8 +20899,8 @@ var require_timestamp = __commonJS({
       return m >= 1 && m <= 12 && d >= 1 && (d <= DAYS[m] || // leap year: https://tools.ietf.org/html/rfc3339#appendix-C
       m === 2 && d === 29 && (y % 100 === 0 ? y % 400 === 0 : y % 4 === 0));
     }
-    function validTime(str3) {
-      const matches = TIME.exec(str3);
+    function validTime(str5) {
+      const matches = TIME2.exec(str5);
       if (!matches)
         return false;
       const hr = +matches[1];
@@ -21963,7 +21963,7 @@ var require_parseJson = __commonJS({
     var CODE_A = "a".charCodeAt(0);
     var CODE_0 = "0".charCodeAt(0);
     function parseJsonString(s, pos) {
-      let str3 = "";
+      let str5 = "";
       let c;
       parseJsonString.message = void 0;
       while (true) {
@@ -21973,7 +21973,7 @@ var require_parseJson = __commonJS({
         if (c === "\\") {
           c = s[pos];
           if (c in escapedChars) {
-            str3 += escapedChars[c];
+            str5 += escapedChars[c];
             pos++;
           } else if (c === "u") {
             pos++;
@@ -21997,7 +21997,7 @@ var require_parseJson = __commonJS({
               }
               pos++;
             }
-            str3 += String.fromCharCode(code);
+            str5 += String.fromCharCode(code);
           } else {
             errorMessage(`unexpected token ${c}`);
             return void 0;
@@ -22007,7 +22007,7 @@ var require_parseJson = __commonJS({
           return void 0;
         } else {
           if (c.charCodeAt(0) >= 32) {
-            str3 += c;
+            str5 += c;
           } else {
             errorMessage(`unexpected token ${c}`);
             return void 0;
@@ -22015,7 +22015,7 @@ var require_parseJson = __commonJS({
         }
       }
       parseJsonString.position = pos;
-      return str3;
+      return str5;
       function errorMessage(msg) {
         parseJsonString.position = pos;
         parseJsonString.message = msg;
@@ -22315,10 +22315,10 @@ var require_parse = __commonJS({
       skipWhitespace(cxt);
       gen.if((0, codegen_1._)`"-0123456789".indexOf(${jsonSlice(1)}) < 0`, () => jsonSyntaxError(cxt), () => parseWith(cxt, parseJson_1.parseJsonNumber, maxDigits));
     }
-    function parseBooleanToken(bool, fail) {
+    function parseBooleanToken(bool2, fail) {
       return (cxt) => {
         const { gen, data } = cxt;
-        tryParseToken(cxt, `${bool}`, () => fail(cxt), () => gen.assign(data, bool));
+        tryParseToken(cxt, `${bool2}`, () => fail(cxt), () => gen.assign(data, bool2));
       };
     }
     function parseRef(cxt) {
@@ -22609,10 +22609,10 @@ var require_utils2 = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str3, token) {
+    function findToken(str5, token) {
       let ind = 0;
-      for (let i = 0; i < str3.length; i++) {
-        if (str3[i] === token) ind++;
+      for (let i = 0; i < str5.length; i++) {
+        if (str5[i] === token) ind++;
       }
       return ind;
     }
@@ -23192,14 +23192,14 @@ var require_schemes2 = __commonJS({
     var MAILTO_DOMAIN_LITERAL = /^\[[\x21-\x5A\x5E-\x7E]*\]$/u;
     var MAILTO_DOMAIN_ERROR = "URI mailto has an invalid recipient domain.";
     var HAS_SURROGATE = /[\uD800-\uDFFF]/u;
-    function decodeHex(str3) {
-      if (typeof str3 !== "string" || str3.indexOf("%") === -1) {
-        return str3;
+    function decodeHex(str5) {
+      if (typeof str5 !== "string" || str5.indexOf("%") === -1) {
+        return str5;
       }
       try {
-        return decodeURIComponent(str3);
+        return decodeURIComponent(str5);
       } catch {
-        return str3;
+        return str5;
       }
     }
     function replaceLoneSurrogates(input) {
@@ -23438,7 +23438,7 @@ var require_fast_uri2 = __commonJS({
       }
       return decodedScheme;
     }
-    function normalize(uri, options) {
+    function normalize2(uri, options) {
       if (typeof uri === "string") {
         uri = /** @type {T} */
         normalizeString(uri, options);
@@ -23813,7 +23813,7 @@ var require_fast_uri2 = __commonJS({
     }
     var fastUri = {
       SCHEMES,
-      normalize,
+      normalize: normalize2,
       resolve,
       resolveComponent,
       equal,
@@ -23921,8 +23921,8 @@ var require_formats = __commonJS({
     }
     var DATE = /^(\d\d\d\d)-(\d\d)-(\d\d)$/;
     var DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    function date(str3) {
-      const matches = DATE.exec(str3);
+    function date(str5) {
+      const matches = DATE.exec(str5);
       if (!matches)
         return false;
       const year = +matches[1];
@@ -23939,10 +23939,10 @@ var require_formats = __commonJS({
         return -1;
       return 0;
     }
-    var TIME = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)(z|([+-])(\d\d)(?::?(\d\d))?)?$/i;
+    var TIME2 = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)(z|([+-])(\d\d)(?::?(\d\d))?)?$/i;
     function getTime(strictTimeZone) {
-      return function time(str3) {
-        const matches = TIME.exec(str3);
+      return function time2(str5) {
+        const matches = TIME2.exec(str5);
         if (!matches)
           return false;
         const hr = +matches[1];
@@ -23973,8 +23973,8 @@ var require_formats = __commonJS({
     function compareIsoTime(t1, t2) {
       if (!(t1 && t2))
         return void 0;
-      const a1 = TIME.exec(t1);
-      const a2 = TIME.exec(t2);
+      const a1 = TIME2.exec(t1);
+      const a2 = TIME2.exec(t2);
       if (!(a1 && a2))
         return void 0;
       t1 = a1[1] + a1[2] + a1[3];
@@ -23987,10 +23987,10 @@ var require_formats = __commonJS({
     }
     var DATE_TIME_SEPARATOR = /t|\s/i;
     function getDateTime(strictTimeZone) {
-      const time = getTime(strictTimeZone);
-      return function date_time(str3) {
-        const dateTime = str3.split(DATE_TIME_SEPARATOR);
-        return dateTime.length === 2 && date(dateTime[0]) && time(dateTime[1]);
+      const time2 = getTime(strictTimeZone);
+      return function date_time(str5) {
+        const dateTime = str5.split(DATE_TIME_SEPARATOR);
+        return dateTime.length === 2 && date(dateTime[0]) && time2(dateTime[1]);
       };
     }
     function compareDateTime(dt1, dt2) {
@@ -24014,13 +24014,13 @@ var require_formats = __commonJS({
     }
     var NOT_URI_FRAGMENT = /\/|:/;
     var URI = /^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)(?:\?(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?$/i;
-    function uri(str3) {
-      return NOT_URI_FRAGMENT.test(str3) && URI.test(str3);
+    function uri(str5) {
+      return NOT_URI_FRAGMENT.test(str5) && URI.test(str5);
     }
     var BYTE = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/gm;
-    function byte(str3) {
+    function byte(str5) {
       BYTE.lastIndex = 0;
-      return BYTE.test(str3);
+      return BYTE.test(str5);
     }
     var MIN_INT32 = -(2 ** 31);
     var MAX_INT32 = 2 ** 31 - 1;
@@ -24034,11 +24034,11 @@ var require_formats = __commonJS({
       return true;
     }
     var Z_ANCHOR = /[^\\]\\Z/;
-    function regex(str3) {
-      if (Z_ANCHOR.test(str3))
+    function regex(str5) {
+      if (Z_ANCHOR.test(str5))
         return false;
       try {
-        new RegExp(str3);
+        new RegExp(str5);
         return true;
       } catch (e6) {
         return false;
@@ -24135,8 +24135,8 @@ var require_dist = __commonJS({
         return ajv;
       }
       const [formats, exportName] = opts.mode === "fast" ? [formats_1.fastFormats, fastName] : [formats_1.fullFormats, fullName];
-      const list5 = opts.formats || formats_1.formatNames;
-      addFormats(ajv, list5, formats, exportName);
+      const list6 = opts.formats || formats_1.formatNames;
+      addFormats(ajv, list6, formats, exportName);
       if (opts.keywords)
         (0, limit_1.default)(ajv);
       return ajv;
@@ -24148,11 +24148,11 @@ var require_dist = __commonJS({
         throw new Error(`Unknown format "${name}"`);
       return f;
     };
-    function addFormats(ajv, list5, fs, exportName) {
+    function addFormats(ajv, list6, fs, exportName) {
       var _a;
       var _b;
       (_a = (_b = ajv.opts.code).formats) !== null && _a !== void 0 ? _a : _b.formats = (0, codegen_1._)`require("ajv-formats/dist/formats").${exportName}`;
-      for (const f of list5)
+      for (const f of list6)
         ajv.addFormat(f, fs[f]);
     }
     module.exports = exports = formatsPlugin;
@@ -24775,8 +24775,8 @@ var require_serializer2 = __commonJS({
           return "" + num2;
         }
       }
-      asBoolean(bool) {
-        return bool && "true" || "false";
+      asBoolean(bool2) {
+        return bool2 && "true" || "false";
       }
       asDateTime(date) {
         if (date === null) return '""';
@@ -24808,8 +24808,8 @@ var require_serializer2 = __commonJS({
         }
         throw new Error(`The value "${date}" cannot be converted to a time.`);
       }
-      asString(str3) {
-        const len = str3.length;
+      asString(str5) {
+        const len = str5.length;
         if (len === 0) {
           return '""';
         } else if (len < 42) {
@@ -24817,25 +24817,25 @@ var require_serializer2 = __commonJS({
           let last = -1;
           let point = 255;
           for (let i = 0; i < len; i++) {
-            point = str3.charCodeAt(i);
+            point = str5.charCodeAt(i);
             if (point === 34 || // '"'
             point === 92) {
               last === -1 && (last = 0);
-              result += str3.slice(last, i) + "\\";
+              result += str5.slice(last, i) + "\\";
               last = i;
             } else if (point < 32 || point >= 55296 && point <= 57343) {
-              return JSON.stringify(str3);
+              return JSON.stringify(str5);
             }
           }
-          return last === -1 && '"' + str3 + '"' || '"' + result + str3.slice(last) + '"';
-        } else if (len < 5e3 && STR_ESCAPE.test(str3) === false) {
-          return '"' + str3 + '"';
+          return last === -1 && '"' + str5 + '"' || '"' + result + str5.slice(last) + '"';
+        } else if (len < 5e3 && STR_ESCAPE.test(str5) === false) {
+          return '"' + str5 + '"';
         } else {
-          return JSON.stringify(str3);
+          return JSON.stringify(str5);
         }
       }
-      asUnsafeString(str3) {
-        return '"' + str3 + '"';
+      asUnsafeString(str5) {
+        return '"' + str5 + '"';
       }
       getState() {
         return this._options;
@@ -24915,7 +24915,7 @@ var require_code3 = __commonJS({
     }
     exports._ = _;
     var plus = new _Code("+");
-    function str3(strs, ...args) {
+    function str5(strs, ...args) {
       const expr = [safeStringify(strs[0])];
       let i = 0;
       while (i < args.length) {
@@ -24926,7 +24926,7 @@ var require_code3 = __commonJS({
       optimize(expr);
       return new _Code(expr);
     }
-    exports.str = str3;
+    exports.str = str5;
     function addCodeArg(code, arg) {
       if (arg instanceof _Code)
         code.push(...arg._items);
@@ -24969,7 +24969,7 @@ var require_code3 = __commonJS({
       return;
     }
     function strConcat(c1, c2) {
-      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str3`${c1}${c2}`;
+      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str5`${c1}${c2}`;
     }
     exports.strConcat = strConcat;
     function interpolate(x) {
@@ -25912,11 +25912,11 @@ var require_util2 = __commonJS({
       return false;
     }
     exports.schemaHasRules = schemaHasRules;
-    function schemaHasRulesButRef(schema, RULES) {
+    function schemaHasRulesButRef(schema, RULES2) {
       if (typeof schema == "boolean")
         return !schema;
       for (const key in schema)
-        if (key !== "$ref" && RULES.all[key])
+        if (key !== "$ref" && RULES2.all[key])
           return true;
       return false;
     }
@@ -25931,22 +25931,22 @@ var require_util2 = __commonJS({
       return (0, codegen_1._)`${topSchemaRef}${schemaPath}${(0, codegen_1.getProperty)(keyword)}`;
     }
     exports.schemaRefOrVal = schemaRefOrVal;
-    function unescapeFragment(str3) {
-      return unescapeJsonPointer(decodeURIComponent(str3));
+    function unescapeFragment(str5) {
+      return unescapeJsonPointer(decodeURIComponent(str5));
     }
     exports.unescapeFragment = unescapeFragment;
-    function escapeFragment(str3) {
-      return encodeURIComponent(escapeJsonPointer(str3));
+    function escapeFragment(str5) {
+      return encodeURIComponent(escapeJsonPointer(str5));
     }
     exports.escapeFragment = escapeFragment;
-    function escapeJsonPointer(str3) {
-      if (typeof str3 == "number")
-        return `${str3}`;
-      return str3.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPointer(str5) {
+      if (typeof str5 == "number")
+        return `${str5}`;
+      return str5.replace(/~/g, "~0").replace(/\//g, "~1");
     }
     exports.escapeJsonPointer = escapeJsonPointer;
-    function unescapeJsonPointer(str3) {
-      return str3.replace(/~1/g, "/").replace(/~0/g, "~");
+    function unescapeJsonPointer(str5) {
+      return str5.replace(/~1/g, "/").replace(/~0/g, "~");
     }
     exports.unescapeJsonPointer = unescapeJsonPointer;
     function eachItem(xs, f) {
@@ -26936,8 +26936,8 @@ var require_json_schema_traverse2 = __commonJS({
         post(schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
       }
     }
-    function escapeJsonPtr(str3) {
-      return str3.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPtr(str5) {
+      return str5.replace(/~/g, "~0").replace(/\//g, "~1");
     }
   }
 });
@@ -27014,8 +27014,8 @@ var require_resolve2 = __commonJS({
       }
       return count2;
     }
-    function getFullPath(resolver, id = "", normalize) {
-      if (normalize !== false)
+    function getFullPath(resolver, id = "", normalize2) {
+      if (normalize2 !== false)
         id = normalizeId(id);
       const p = resolver.parse(id);
       return _getFullPath(resolver, p);
@@ -27275,17 +27275,17 @@ var require_validate2 = __commonJS({
     }
     function schemaKeywords(it, types, typeErrors, errsCount) {
       const { gen, schema, data, allErrors, opts, self: self2 } = it;
-      const { RULES } = self2;
-      if (schema.$ref && (opts.ignoreKeywordsWithRef || !(0, util_1.schemaHasRulesButRef)(schema, RULES))) {
-        gen.block(() => keywordCode(it, "$ref", RULES.all.$ref.definition));
+      const { RULES: RULES2 } = self2;
+      if (schema.$ref && (opts.ignoreKeywordsWithRef || !(0, util_1.schemaHasRulesButRef)(schema, RULES2))) {
+        gen.block(() => keywordCode(it, "$ref", RULES2.all.$ref.definition));
         return;
       }
       if (!opts.jtd)
         checkStrictTypes(it, types);
       gen.block(() => {
-        for (const group of RULES.rules)
+        for (const group of RULES2.rules)
           groupKeywords(group);
-        groupKeywords(RULES.post);
+        groupKeywords(RULES2.post);
       });
       function groupKeywords(group) {
         if (!(0, applicability_1.shouldUseGroup)(schema, group))
@@ -28033,10 +28033,10 @@ var require_utils3 = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str3, token) {
+    function findToken(str5, token) {
       let ind = 0;
-      for (let i = 0; i < str3.length; i++) {
-        if (str3[i] === token) ind++;
+      for (let i = 0; i < str5.length; i++) {
+        if (str5[i] === token) ind++;
       }
       return ind;
     }
@@ -28605,7 +28605,7 @@ var require_fast_uri3 = __commonJS({
       }
       return decodedScheme;
     }
-    function normalize(uri, options) {
+    function normalize2(uri, options) {
       if (typeof uri === "string") {
         uri = /** @type {T} */
         normalizeString(uri, options);
@@ -28976,7 +28976,7 @@ var require_fast_uri3 = __commonJS({
     }
     var fastUri = {
       SCHEMES,
-      normalize,
+      normalize: normalize2,
       resolve,
       resolveComponent,
       equal,
@@ -29039,7 +29039,7 @@ var require_core3 = __commonJS({
     var util_1 = require_util2();
     var $dataRefSchema = require_data2();
     var uri_1 = require_uri2();
-    var defaultRegExp = (str3, flags) => new RegExp(str3, flags);
+    var defaultRegExp = (str5, flags) => new RegExp(str5, flags);
     defaultRegExp.code = "new RegExp";
     var META_IGNORE_OPTIONS = ["removeAdditional", "useDefaults", "coerceTypes"];
     var EXT_SCOPE_NAMES = /* @__PURE__ */ new Set([
@@ -29372,10 +29372,10 @@ var require_core3 = __commonJS({
       }
       // Remove keyword
       removeKeyword(keyword) {
-        const { RULES } = this;
-        delete RULES.keywords[keyword];
-        delete RULES.all[keyword];
-        for (const group of RULES.rules) {
+        const { RULES: RULES2 } = this;
+        delete RULES2.keywords[keyword];
+        delete RULES2.all[keyword];
+        for (const group of RULES2.rules) {
           const i = group.rules.findIndex((rule) => rule.keyword === keyword);
           if (i >= 0)
             group.rules.splice(i, 1);
@@ -29543,9 +29543,9 @@ var require_core3 = __commonJS({
     }
     var KEYWORD_NAME = /^[a-z_$][a-z0-9_$:-]*$/i;
     function checkKeyword(keyword, def) {
-      const { RULES } = this;
+      const { RULES: RULES2 } = this;
       (0, util_1.eachItem)(keyword, (kwd) => {
-        if (RULES.keywords[kwd])
+        if (RULES2.keywords[kwd])
           throw new Error(`Keyword ${kwd} is already defined`);
         if (!KEYWORD_NAME.test(kwd))
           throw new Error(`Keyword ${kwd} has invalid name`);
@@ -29561,13 +29561,13 @@ var require_core3 = __commonJS({
       const post = definition === null || definition === void 0 ? void 0 : definition.post;
       if (dataType && post)
         throw new Error('keyword with "post" flag cannot have "type"');
-      const { RULES } = this;
-      let ruleGroup = post ? RULES.post : RULES.rules.find(({ type: t }) => t === dataType);
+      const { RULES: RULES2 } = this;
+      let ruleGroup = post ? RULES2.post : RULES2.rules.find(({ type: t }) => t === dataType);
       if (!ruleGroup) {
         ruleGroup = { type: dataType, rules: [] };
-        RULES.rules.push(ruleGroup);
+        RULES2.rules.push(ruleGroup);
       }
-      RULES.keywords[keyword] = true;
+      RULES2.keywords[keyword] = true;
       if (!definition)
         return;
       const rule = {
@@ -29582,7 +29582,7 @@ var require_core3 = __commonJS({
         addBeforeRule.call(this, ruleGroup, rule, definition.before);
       else
         ruleGroup.rules.push(rule);
-      RULES.all[keyword] = rule;
+      RULES2.all[keyword] = rule;
       (_a = definition.implements) === null || _a === void 0 ? void 0 : _a.forEach((kwd) => this.addKeyword(kwd));
     }
     function addBeforeRule(ruleGroup, rule, before) {
@@ -29834,16 +29834,16 @@ var require_ucs2length2 = __commonJS({
   "node_modules/@fastify/fast-json-stringify-compiler/node_modules/ajv/dist/runtime/ucs2length.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    function ucs2length(str3) {
-      const len = str3.length;
+    function ucs2length(str5) {
+      const len = str5.length;
       let length = 0;
       let pos = 0;
       let value2;
       while (pos < len) {
         length++;
-        value2 = str3.charCodeAt(pos++);
+        value2 = str5.charCodeAt(pos++);
         if (value2 >= 55296 && value2 <= 56319 && pos < len) {
-          value2 = str3.charCodeAt(pos);
+          value2 = str5.charCodeAt(pos);
           if ((value2 & 64512) === 56320)
             pos++;
         }
@@ -31789,10 +31789,10 @@ var require_utils4 = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str3, token) {
+    function findToken(str5, token) {
       let ind = 0;
-      for (let i = 0; i < str3.length; i++) {
-        if (str3[i] === token) ind++;
+      for (let i = 0; i < str5.length; i++) {
+        if (str5[i] === token) ind++;
       }
       return ind;
     }
@@ -32372,14 +32372,14 @@ var require_schemes4 = __commonJS({
     var MAILTO_DOMAIN_LITERAL = /^\[[\x21-\x5A\x5E-\x7E]*\]$/u;
     var MAILTO_DOMAIN_ERROR = "URI mailto has an invalid recipient domain.";
     var HAS_SURROGATE = /[\uD800-\uDFFF]/u;
-    function decodeHex(str3) {
-      if (typeof str3 !== "string" || str3.indexOf("%") === -1) {
-        return str3;
+    function decodeHex(str5) {
+      if (typeof str5 !== "string" || str5.indexOf("%") === -1) {
+        return str5;
       }
       try {
-        return decodeURIComponent(str3);
+        return decodeURIComponent(str5);
       } catch {
-        return str3;
+        return str5;
       }
     }
     function replaceLoneSurrogates(input) {
@@ -32618,7 +32618,7 @@ var require_fast_uri4 = __commonJS({
       }
       return decodedScheme;
     }
-    function normalize(uri, options) {
+    function normalize2(uri, options) {
       if (typeof uri === "string") {
         uri = /** @type {T} */
         normalizeString(uri, options);
@@ -32993,7 +32993,7 @@ var require_fast_uri4 = __commonJS({
     }
     var fastUri = {
       SCHEMES,
-      normalize,
+      normalize: normalize2,
       resolve,
       resolveComponent,
       equal,
@@ -33083,8 +33083,8 @@ var require_formats2 = __commonJS({
     }
     var DATE = /^(\d\d\d\d)-(\d\d)-(\d\d)$/;
     var DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    function date(str3) {
-      const matches = DATE.exec(str3);
+    function date(str5) {
+      const matches = DATE.exec(str5);
       if (!matches)
         return false;
       const year = +matches[1];
@@ -33101,10 +33101,10 @@ var require_formats2 = __commonJS({
         return -1;
       return 0;
     }
-    var TIME = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)(z|([+-])(\d\d)(?::?(\d\d))?)?$/i;
+    var TIME2 = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)(z|([+-])(\d\d)(?::?(\d\d))?)?$/i;
     function getTime(strictTimeZone) {
-      return function time(str3) {
-        const matches = TIME.exec(str3);
+      return function time2(str5) {
+        const matches = TIME2.exec(str5);
         if (!matches)
           return false;
         const hr = +matches[1];
@@ -33135,8 +33135,8 @@ var require_formats2 = __commonJS({
     function compareIsoTime(t1, t2) {
       if (!(t1 && t2))
         return void 0;
-      const a1 = TIME.exec(t1);
-      const a2 = TIME.exec(t2);
+      const a1 = TIME2.exec(t1);
+      const a2 = TIME2.exec(t2);
       if (!(a1 && a2))
         return void 0;
       t1 = a1[1] + a1[2] + a1[3];
@@ -33149,10 +33149,10 @@ var require_formats2 = __commonJS({
     }
     var DATE_TIME_SEPARATOR = /t|\s/i;
     function getDateTime(strictTimeZone) {
-      const time = getTime(strictTimeZone);
-      return function date_time(str3) {
-        const dateTime = str3.split(DATE_TIME_SEPARATOR);
-        return dateTime.length === 2 && date(dateTime[0]) && time(dateTime[1]);
+      const time2 = getTime(strictTimeZone);
+      return function date_time(str5) {
+        const dateTime = str5.split(DATE_TIME_SEPARATOR);
+        return dateTime.length === 2 && date(dateTime[0]) && time2(dateTime[1]);
       };
     }
     function compareDateTime(dt1, dt2) {
@@ -33176,13 +33176,13 @@ var require_formats2 = __commonJS({
     }
     var NOT_URI_FRAGMENT = /\/|:/;
     var URI = /^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)(?:\?(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?$/i;
-    function uri(str3) {
-      return NOT_URI_FRAGMENT.test(str3) && URI.test(str3);
+    function uri(str5) {
+      return NOT_URI_FRAGMENT.test(str5) && URI.test(str5);
     }
     var BYTE = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/gm;
-    function byte(str3) {
+    function byte(str5) {
       BYTE.lastIndex = 0;
-      return BYTE.test(str3);
+      return BYTE.test(str5);
     }
     var MIN_INT32 = -(2 ** 31);
     var MAX_INT32 = 2 ** 31 - 1;
@@ -33196,11 +33196,11 @@ var require_formats2 = __commonJS({
       return true;
     }
     var Z_ANCHOR = /[^\\]\\Z/;
-    function regex(str3) {
-      if (Z_ANCHOR.test(str3))
+    function regex(str5) {
+      if (Z_ANCHOR.test(str5))
         return false;
       try {
-        new RegExp(str3);
+        new RegExp(str5);
         return true;
       } catch (e6) {
         return false;
@@ -33297,8 +33297,8 @@ var require_dist3 = __commonJS({
         return ajv;
       }
       const [formats, exportName] = opts.mode === "fast" ? [formats_1.fastFormats, fastName] : [formats_1.fullFormats, fullName];
-      const list5 = opts.formats || formats_1.formatNames;
-      addFormats(ajv, list5, formats, exportName);
+      const list6 = opts.formats || formats_1.formatNames;
+      addFormats(ajv, list6, formats, exportName);
       if (opts.keywords)
         (0, limit_1.default)(ajv);
       return ajv;
@@ -33310,11 +33310,11 @@ var require_dist3 = __commonJS({
         throw new Error(`Unknown format "${name}"`);
       return f;
     };
-    function addFormats(ajv, list5, fs, exportName) {
+    function addFormats(ajv, list6, fs, exportName) {
       var _a;
       var _b;
       (_a = (_b = ajv.opts.code).formats) !== null && _a !== void 0 ? _a : _b.formats = (0, codegen_1._)`require("ajv-formats/dist/formats").${exportName}`;
-      for (const f of list5)
+      for (const f of list6)
         ajv.addFormat(f, fs[f]);
     }
     module.exports = exports = formatsPlugin;
@@ -36945,7 +36945,7 @@ var require_sort = __commonJS({
   "node_modules/fastify/node_modules/semver/functions/sort.js"(exports, module) {
     "use strict";
     var compareBuild = require_compare_build();
-    var sort = (list5, loose) => list5.sort((a, b) => compareBuild(a, b, loose));
+    var sort = (list6, loose) => list6.sort((a, b) => compareBuild(a, b, loose));
     module.exports = sort;
   }
 });
@@ -36955,7 +36955,7 @@ var require_rsort = __commonJS({
   "node_modules/fastify/node_modules/semver/functions/rsort.js"(exports, module) {
     "use strict";
     var compareBuild = require_compare_build();
-    var rsort = (list5, loose) => list5.sort((a, b) => compareBuild(b, a, loose));
+    var rsort = (list6, loose) => list6.sort((a, b) => compareBuild(b, a, loose));
     module.exports = rsort;
   }
 });
@@ -39128,24 +39128,24 @@ var require_querystring = __commonJS({
       0
       // 112 - 127
     ]);
-    function encodeString(str3) {
-      const len = str3.length;
+    function encodeString(str5) {
+      const len = str5.length;
       if (len === 0) return "";
       let out = "";
       let lastPos = 0;
       let i = 0;
       outer: for (; i < len; i++) {
-        let c = str3.charCodeAt(i);
+        let c = str5.charCodeAt(i);
         while (c < 128) {
           if (noEscape[c] !== 1) {
-            if (lastPos < i) out += str3.slice(lastPos, i);
+            if (lastPos < i) out += str5.slice(lastPos, i);
             lastPos = i + 1;
             out += hexTable[c];
           }
           if (++i === len) break outer;
-          c = str3.charCodeAt(i);
+          c = str5.charCodeAt(i);
         }
-        if (lastPos < i) out += str3.slice(lastPos, i);
+        if (lastPos < i) out += str5.slice(lastPos, i);
         if (c < 2048) {
           lastPos = i + 1;
           out += hexTable[192 | c >> 6] + hexTable[128 | c & 63];
@@ -39160,13 +39160,13 @@ var require_querystring = __commonJS({
         if (i >= len) {
           throw new Error("URI malformed");
         }
-        const c2 = str3.charCodeAt(i) & 1023;
+        const c2 = str5.charCodeAt(i) & 1023;
         lastPos = i + 1;
         c = 65536 + ((c & 1023) << 10 | c2);
         out += hexTable[240 | c >> 18] + hexTable[128 | c >> 12 & 63] + hexTable[128 | c >> 6 & 63] + hexTable[128 | c & 63];
       }
-      if (lastPos === 0) return str3;
-      if (lastPos < len) return out + str3.slice(lastPos);
+      if (lastPos === 0) return str5;
+      if (lastPos < len) return out + str5.slice(lastPos);
       return out;
     }
     module.exports = { encodeString };
@@ -39382,9 +39382,9 @@ var require_util3 = __commonJS({
     var types_1 = require_types5();
     var sets = __importStar(require_sets());
     var CTRL = "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^ ?";
-    exports.strToChars = (str3) => {
+    exports.strToChars = (str5) => {
       const charsRegex = /(\[\\b\])|(\\)?\\(?:u([A-F0-9]{4})|x([A-F0-9]{2})|c([@A-Z[\\\]^?])|([0tnvfr]))/g;
-      return str3.replace(charsRegex, (s, b, lbs, a16, b16, dctrl, eslsh) => {
+      return str5.replace(charsRegex, (s, b, lbs, a16, b16, dctrl, eslsh) => {
         if (lbs) {
           return s;
         }
@@ -39400,11 +39400,11 @@ var require_util3 = __commonJS({
         return /[[\]{}^$.|?*+()]/.test(c) ? `\\${c}` : c;
       });
     };
-    exports.tokenizeClass = (str3, regexpStr) => {
+    exports.tokenizeClass = (str5, regexpStr) => {
       var _a, _b, _c, _d, _e, _f, _g;
       let tokens = [], rs, c;
       const regexp = /\\(?:(w)|(d)|(s)|(W)|(D)|(S))|((?:(?:\\)(.)|([^\]\\]))-(((?:\\)])|(((?:\\)?([^\]])))))|(\])|(?:\\)?([^])/g;
-      while ((rs = regexp.exec(str3)) !== null) {
+      while ((rs = regexp.exec(str5)) !== null) {
         const p = (_g = (_f = (_e = (_d = (_c = (_b = (_a = rs[1] && sets.words()) !== null && _a !== void 0 ? _a : rs[2] && sets.ints()) !== null && _b !== void 0 ? _b : rs[3] && sets.whitespace()) !== null && _c !== void 0 ? _c : rs[4] && sets.notWords()) !== null && _d !== void 0 ? _d : rs[5] && sets.notInts()) !== null && _e !== void 0 ? _e : rs[6] && sets.notWhitespace()) !== null && _f !== void 0 ? _f : rs[7] && {
           type: types_1.types.RANGE,
           from: (rs[8] || rs[9]).charCodeAt(0),
@@ -39467,15 +39467,15 @@ var require_tokenizer = __commonJS({
       const repeatErr = (col) => {
         throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Nothing to repeat at column ${col - 1}`);
       };
-      let str3 = util2.strToChars(regexpStr);
-      while (i < str3.length) {
-        switch (c = str3[i++]) {
+      let str5 = util2.strToChars(regexpStr);
+      while (i < str5.length) {
+        switch (c = str5[i++]) {
           // Handle escaped characters, inclues a few sets.
           case "\\":
-            if (i === str3.length) {
+            if (i === str5.length) {
               throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: \\ at end of pattern`);
             }
-            switch (c = str3[i++]) {
+            switch (c = str5[i++]) {
               case "b":
                 last.push({ type: types_1.types.POSITION, value: "b" });
                 break;
@@ -39503,8 +39503,8 @@ var require_tokenizer = __commonJS({
               default:
                 if (digit.test(c)) {
                   let digits = c;
-                  while (i < str3.length && digit.test(str3[i])) {
-                    digits += str3[i++];
+                  while (i < str5.length && digit.test(str5[i])) {
+                    digits += str5[i++];
                   }
                   let value2 = parseInt(digits, 10);
                   const reference = { type: types_1.types.REFERENCE, value: value2 };
@@ -39525,13 +39525,13 @@ var require_tokenizer = __commonJS({
           // Handle custom sets.
           case "[": {
             let not;
-            if (str3[i] === "^") {
+            if (str5[i] === "^") {
               not = true;
               i++;
             } else {
               not = false;
             }
-            let classTokens = util2.tokenizeClass(str3.slice(i), regexpStr);
+            let classTokens = util2.tokenizeClass(str5.slice(i), regexpStr);
             i += classTokens[1];
             last.push({
               type: types_1.types.SET,
@@ -39551,8 +39551,8 @@ var require_tokenizer = __commonJS({
               stack: [],
               remember: true
             };
-            if (str3[i] === "?") {
-              c = str3[i + 1];
+            if (str5[i] === "?") {
+              c = str5[i + 1];
               i += 2;
               if (c === "=") {
                 group.followedBy = true;
@@ -39562,21 +39562,21 @@ var require_tokenizer = __commonJS({
                 group.remember = false;
               } else if (c === "<") {
                 let name = "";
-                if (captureGroupFirstChar.test(str3[i])) {
-                  name += str3[i];
+                if (captureGroupFirstChar.test(str5[i])) {
+                  name += str5[i];
                   i++;
                 } else {
-                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str3[i]}' after '<' at column ${i + 1}`);
+                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str5[i]}' after '<' at column ${i + 1}`);
                 }
-                while (i < str3.length && captureGroupChars.test(str3[i])) {
-                  name += str3[i];
+                while (i < str5.length && captureGroupChars.test(str5[i])) {
+                  name += str5[i];
                   i++;
                 }
                 if (!name) {
-                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str3[i]}' after '<' at column ${i + 1}`);
+                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str5[i]}' after '<' at column ${i + 1}`);
                 }
-                if (str3[i] !== ">") {
-                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Unclosed capture group name, expected '>', found '${str3[i]}' at column ${i + 1}`);
+                if (str5[i] !== ">") {
+                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Unclosed capture group name, expected '>', found '${str5[i]}' at column ${i + 1}`);
                 }
                 group.name = name;
                 i++;
@@ -39619,7 +39619,7 @@ var require_tokenizer = __commonJS({
           // This design is chosen because there could be more than
           // one repetition symbols in a regex i.e. `a?+{2,3}`.
           case "{": {
-            let rs = /^(\d+)(,(\d+)?)?\}/.exec(str3.slice(i)), min, max;
+            let rs = /^(\d+)(,(\d+)?)?\}/.exec(str5.slice(i)), min, max;
             if (rs !== null) {
               if (last.length === 0) {
                 repeatErr(i);
@@ -42564,25 +42564,25 @@ var require_dist5 = __commonJS({
       C.prototype = /* @__PURE__ */ Object.create(null);
       return C;
     })();
-    function parseCookie(str3, options) {
+    function parseCookie(str5, options) {
       const obj = new NullObject();
-      const len = str3.length;
+      const len = str5.length;
       if (len < 2)
         return obj;
       const dec = options?.decode || decode;
       let index = 0;
       do {
-        const eqIdx = eqIndex(str3, index, len);
+        const eqIdx = eqIndex(str5, index, len);
         if (eqIdx === -1)
           break;
-        const endIdx = endIndex(str3, index, len);
+        const endIdx = endIndex(str5, index, len);
         if (eqIdx > endIdx) {
-          index = str3.lastIndexOf(";", eqIdx - 1) + 1;
+          index = str5.lastIndexOf(";", eqIdx - 1) + 1;
           continue;
         }
-        const key = valueSlice(str3, index, eqIdx);
+        const key = valueSlice(str5, index, eqIdx);
         if (obj[key] === void 0) {
-          obj[key] = dec(valueSlice(str3, eqIdx + 1, endIdx));
+          obj[key] = dec(valueSlice(str5, eqIdx + 1, endIdx));
         }
         index = endIdx + 1;
       } while (index < len);
@@ -42617,51 +42617,51 @@ var require_dist5 = __commonJS({
       if (!cookieValueRegExp.test(value2)) {
         throw new TypeError(`argument val is invalid: ${cookie.value}`);
       }
-      let str3 = cookie.name + "=" + value2;
+      let str5 = cookie.name + "=" + value2;
       if (cookie.maxAge !== void 0) {
         if (!Number.isInteger(cookie.maxAge)) {
           throw new TypeError(`option maxAge is invalid: ${cookie.maxAge}`);
         }
-        str3 += "; Max-Age=" + cookie.maxAge;
+        str5 += "; Max-Age=" + cookie.maxAge;
       }
       if (cookie.domain) {
         if (!domainValueRegExp.test(cookie.domain)) {
           throw new TypeError(`option domain is invalid: ${cookie.domain}`);
         }
-        str3 += "; Domain=" + cookie.domain;
+        str5 += "; Domain=" + cookie.domain;
       }
       if (cookie.path) {
         if (!pathValueRegExp.test(cookie.path)) {
           throw new TypeError(`option path is invalid: ${cookie.path}`);
         }
-        str3 += "; Path=" + cookie.path;
+        str5 += "; Path=" + cookie.path;
       }
       if (cookie.expires) {
         if (!isDate(cookie.expires) || !Number.isFinite(cookie.expires.valueOf())) {
           throw new TypeError(`option expires is invalid: ${cookie.expires}`);
         }
-        str3 += "; Expires=" + cookie.expires.toUTCString();
+        str5 += "; Expires=" + cookie.expires.toUTCString();
       }
       if (cookie.httpOnly) {
-        str3 += "; HttpOnly";
+        str5 += "; HttpOnly";
       }
       if (cookie.secure) {
-        str3 += "; Secure";
+        str5 += "; Secure";
       }
       if (cookie.partitioned) {
-        str3 += "; Partitioned";
+        str5 += "; Partitioned";
       }
       if (cookie.priority) {
         const priority = typeof cookie.priority === "string" ? cookie.priority.toLowerCase() : void 0;
         switch (priority) {
           case "low":
-            str3 += "; Priority=Low";
+            str5 += "; Priority=Low";
             break;
           case "medium":
-            str3 += "; Priority=Medium";
+            str5 += "; Priority=Medium";
             break;
           case "high":
-            str3 += "; Priority=High";
+            str5 += "; Priority=High";
             break;
           default:
             throw new TypeError(`option priority is invalid: ${cookie.priority}`);
@@ -42672,35 +42672,35 @@ var require_dist5 = __commonJS({
         switch (sameSite) {
           case true:
           case "strict":
-            str3 += "; SameSite=Strict";
+            str5 += "; SameSite=Strict";
             break;
           case "lax":
-            str3 += "; SameSite=Lax";
+            str5 += "; SameSite=Lax";
             break;
           case "none":
-            str3 += "; SameSite=None";
+            str5 += "; SameSite=None";
             break;
           default:
             throw new TypeError(`option sameSite is invalid: ${cookie.sameSite}`);
         }
       }
-      return str3;
+      return str5;
     }
-    function parseSetCookie(str3, options) {
+    function parseSetCookie(str5, options) {
       const dec = options?.decode || decode;
-      const len = str3.length;
-      const endIdx = endIndex(str3, 0, len);
-      const eqIdx = eqIndex(str3, 0, endIdx);
-      const setCookie = eqIdx === -1 ? { name: "", value: dec(valueSlice(str3, 0, endIdx)) } : {
-        name: valueSlice(str3, 0, eqIdx),
-        value: dec(valueSlice(str3, eqIdx + 1, endIdx))
+      const len = str5.length;
+      const endIdx = endIndex(str5, 0, len);
+      const eqIdx = eqIndex(str5, 0, endIdx);
+      const setCookie = eqIdx === -1 ? { name: "", value: dec(valueSlice(str5, 0, endIdx)) } : {
+        name: valueSlice(str5, 0, eqIdx),
+        value: dec(valueSlice(str5, eqIdx + 1, endIdx))
       };
       let index = endIdx + 1;
       while (index < len) {
-        const endIdx2 = endIndex(str3, index, len);
-        const eqIdx2 = eqIndex(str3, index, endIdx2);
-        const attr = eqIdx2 === -1 ? valueSlice(str3, index, endIdx2) : valueSlice(str3, index, eqIdx2);
-        const val = eqIdx2 === -1 ? void 0 : valueSlice(str3, eqIdx2 + 1, endIdx2);
+        const endIdx2 = endIndex(str5, index, len);
+        const eqIdx2 = eqIndex(str5, index, endIdx2);
+        const attr = eqIdx2 === -1 ? valueSlice(str5, index, endIdx2) : valueSlice(str5, index, eqIdx2);
+        const val = eqIdx2 === -1 ? void 0 : valueSlice(str5, eqIdx2 + 1, endIdx2);
         switch (attr.toLowerCase()) {
           case "httponly":
             setCookie.httpOnly = true;
@@ -42749,37 +42749,37 @@ var require_dist5 = __commonJS({
       }
       return setCookie;
     }
-    function endIndex(str3, min, len) {
-      const index = str3.indexOf(";", min);
+    function endIndex(str5, min, len) {
+      const index = str5.indexOf(";", min);
       return index === -1 ? len : index;
     }
-    function eqIndex(str3, min, max) {
-      const index = str3.indexOf("=", min);
+    function eqIndex(str5, min, max) {
+      const index = str5.indexOf("=", min);
       return index < max ? index : -1;
     }
-    function valueSlice(str3, min, max) {
+    function valueSlice(str5, min, max) {
       let start = min;
       let end = max;
       do {
-        const code = str3.charCodeAt(start);
+        const code = str5.charCodeAt(start);
         if (code !== 32 && code !== 9)
           break;
       } while (++start < end);
       while (end > start) {
-        const code = str3.charCodeAt(end - 1);
+        const code = str5.charCodeAt(end - 1);
         if (code !== 32 && code !== 9)
           break;
         end--;
       }
-      return str3.slice(start, end);
+      return str5.slice(start, end);
     }
-    function decode(str3) {
-      if (str3.indexOf("%") === -1)
-        return str3;
+    function decode(str5) {
+      if (str5.indexOf("%") === -1)
+        return str5;
       try {
-        return decodeURIComponent(str3);
+        return decodeURIComponent(str5);
       } catch (e6) {
-        return str3;
+        return str5;
       }
     }
     function isDate(val) {
@@ -42899,7 +42899,7 @@ var require_form_data = __commonJS({
       const boundary = `----formdata-${randomUUID()}`;
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
-      const escape2 = (str3) => str3.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
+      const escape2 = (str5) => str5.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
       const normalizeLinefeeds = (value2) => value2.replace(/\r?\n|\r/g, "\r\n");
       const linebreak = new Uint8Array([13, 10]);
       async function* asyncIterator() {
@@ -43145,8 +43145,8 @@ var require_set_cookie = __commonJS({
     function createNullObj() {
       return /* @__PURE__ */ Object.create(null);
     }
-    function isNonEmptyString(str3) {
-      return typeof str3 === "string" && !!str3.trim();
+    function isNonEmptyString(str5) {
+      return typeof str5 === "string" && !!str5.trim();
     }
     function parseString(setCookieValue, options) {
       var parts = setCookieValue.split(";").filter(isNonEmptyString);
@@ -43237,13 +43237,13 @@ var require_set_cookie = __commonJS({
         input = [input];
       }
       if (!options.map) {
-        return input.filter(isNonEmptyString).map(function(str3) {
-          return parseString(str3, options);
+        return input.filter(isNonEmptyString).map(function(str5) {
+          return parseString(str5, options);
         }).filter(Boolean);
       } else {
         var cookies = createNullObj();
-        return input.filter(isNonEmptyString).reduce(function(cookies2, str3) {
-          var cookie = parseString(str3, options);
+        return input.filter(isNonEmptyString).reduce(function(cookies2, str5) {
+          var cookie = parseString(str5, options);
           if (cookie && !isForbiddenKey(cookie.name)) {
             cookies2[cookie.name] = cookie;
           }
@@ -46521,11 +46521,11 @@ var require_bn = __commonJS({
         }
         this.strip();
       };
-      function parseBase(str3, start, end, mul) {
+      function parseBase(str5, start, end, mul) {
         var r = 0;
-        var len = Math.min(str3.length, end);
+        var len = Math.min(str5.length, end);
         for (var i = start; i < len; i++) {
-          var c = str3.charCodeAt(i) - 48;
+          var c = str5.charCodeAt(i) - 48;
           r *= mul;
           if (c >= 49) {
             r += c - 49 + 10;
@@ -50005,11 +50005,11 @@ var require_node2 = __commonJS({
       else
         throw new Error("Unsupported tag: " + tag);
     };
-    Node.prototype._isNumstr = function isNumstr(str3) {
-      return /^[0-9 ]*$/.test(str3);
+    Node.prototype._isNumstr = function isNumstr(str5) {
+      return /^[0-9 ]*$/.test(str5);
     };
-    Node.prototype._isPrintstr = function isPrintstr(str3) {
-      return /^[A-Za-z0-9 '()+,-./:=?]*$/.test(str3);
+    Node.prototype._isPrintstr = function isPrintstr(str5) {
+      return /^[A-Za-z0-9 '()+,-./:=?]*$/.test(str5);
     };
   }
 });
@@ -50111,29 +50111,29 @@ var require_der2 = __commonJS({
         header[i] = j & 255;
       return this._createEncoderBuffer([header, content]);
     };
-    DERNode.prototype._encodeStr = function encodeStr(str3, tag) {
+    DERNode.prototype._encodeStr = function encodeStr(str5, tag) {
       if (tag === "bitstr") {
-        return this._createEncoderBuffer([str3.unused | 0, str3.data]);
+        return this._createEncoderBuffer([str5.unused | 0, str5.data]);
       } else if (tag === "bmpstr") {
-        const buf = Buffer2.alloc(str3.length * 2);
-        for (let i = 0; i < str3.length; i++) {
-          buf.writeUInt16BE(str3.charCodeAt(i), i * 2);
+        const buf = Buffer2.alloc(str5.length * 2);
+        for (let i = 0; i < str5.length; i++) {
+          buf.writeUInt16BE(str5.charCodeAt(i), i * 2);
         }
         return this._createEncoderBuffer(buf);
       } else if (tag === "numstr") {
-        if (!this._isNumstr(str3)) {
+        if (!this._isNumstr(str5)) {
           return this.reporter.error("Encoding of string type: numstr supports only digits and space");
         }
-        return this._createEncoderBuffer(str3);
+        return this._createEncoderBuffer(str5);
       } else if (tag === "printstr") {
-        if (!this._isPrintstr(str3)) {
+        if (!this._isPrintstr(str5)) {
           return this.reporter.error("Encoding of string type: printstr supports only latin upper and lower case letters, digits, space, apostrophe, left and rigth parenthesis, plus sign, comma, hyphen, dot, slash, colon, equal sign, question mark");
         }
-        return this._createEncoderBuffer(str3);
+        return this._createEncoderBuffer(str5);
       } else if (/str$/.test(tag)) {
-        return this._createEncoderBuffer(str3);
+        return this._createEncoderBuffer(str5);
       } else if (tag === "objDesc") {
-        return this._createEncoderBuffer(str3);
+        return this._createEncoderBuffer(str5);
       } else {
         return this.reporter.error("Encoding of string type: " + tag + " unsupported");
       }
@@ -50182,11 +50182,11 @@ var require_der2 = __commonJS({
       else
         return num2;
     }
-    DERNode.prototype._encodeTime = function encodeTime(time, tag) {
-      let str3;
-      const date = new Date(time);
+    DERNode.prototype._encodeTime = function encodeTime(time2, tag) {
+      let str5;
+      const date = new Date(time2);
       if (tag === "gentime") {
-        str3 = [
+        str5 = [
           two(date.getUTCFullYear()),
           two(date.getUTCMonth() + 1),
           two(date.getUTCDate()),
@@ -50196,7 +50196,7 @@ var require_der2 = __commonJS({
           "Z"
         ].join("");
       } else if (tag === "utctime") {
-        str3 = [
+        str5 = [
           two(date.getUTCFullYear() % 100),
           two(date.getUTCMonth() + 1),
           two(date.getUTCDate()),
@@ -50208,7 +50208,7 @@ var require_der2 = __commonJS({
       } else {
         this.reporter.error("Encoding " + tag + " time is not supported yet");
       }
-      return this._encodeStr(str3, "octstr");
+      return this._encodeStr(str5, "octstr");
     };
     DERNode.prototype._encodeNull = function encodeNull() {
       return this._createEncoderBuffer("");
@@ -50444,11 +50444,11 @@ var require_der3 = __commonJS({
         const raw = buffer.raw();
         if (raw.length % 2 === 1)
           return buffer.error("Decoding of string type: bmpstr length mismatch");
-        let str3 = "";
+        let str5 = "";
         for (let i = 0; i < raw.length / 2; i++) {
-          str3 += String.fromCharCode(raw.readUInt16BE(i * 2));
+          str5 += String.fromCharCode(raw.readUInt16BE(i * 2));
         }
-        return str3;
+        return str5;
       } else if (tag === "numstr") {
         const numstr = buffer.raw().toString("ascii");
         if (!this._isNumstr(numstr)) {
@@ -50503,7 +50503,7 @@ var require_der3 = __commonJS({
       return result;
     };
     DERNode.prototype._decodeTime = function decodeTime(buffer, tag) {
-      const str3 = buffer.raw().toString();
+      const str5 = buffer.raw().toString();
       let year;
       let mon;
       let day2;
@@ -50511,19 +50511,19 @@ var require_der3 = __commonJS({
       let min;
       let sec;
       if (tag === "gentime") {
-        year = str3.slice(0, 4) | 0;
-        mon = str3.slice(4, 6) | 0;
-        day2 = str3.slice(6, 8) | 0;
-        hour = str3.slice(8, 10) | 0;
-        min = str3.slice(10, 12) | 0;
-        sec = str3.slice(12, 14) | 0;
+        year = str5.slice(0, 4) | 0;
+        mon = str5.slice(4, 6) | 0;
+        day2 = str5.slice(6, 8) | 0;
+        hour = str5.slice(8, 10) | 0;
+        min = str5.slice(10, 12) | 0;
+        sec = str5.slice(12, 14) | 0;
       } else if (tag === "utctime") {
-        year = str3.slice(0, 2) | 0;
-        mon = str3.slice(2, 4) | 0;
-        day2 = str3.slice(4, 6) | 0;
-        hour = str3.slice(6, 8) | 0;
-        min = str3.slice(8, 10) | 0;
-        sec = str3.slice(10, 12) | 0;
+        year = str5.slice(0, 2) | 0;
+        mon = str5.slice(2, 4) | 0;
+        day2 = str5.slice(4, 6) | 0;
+        hour = str5.slice(6, 8) | 0;
+        min = str5.slice(8, 10) | 0;
+        sec = str5.slice(10, 12) | 0;
         if (year < 70)
           year = 2e3 + year;
         else
@@ -51893,9 +51893,9 @@ var require_dist6 = __commonJS({
         return num2;
       }
     }
-    function fmt(val, pfx, str3, long) {
+    function fmt(val, pfx, str5, long) {
       var num2 = (val | 0) === val ? val : ~~(val + 0.5);
-      return pfx + num2 + (long ? " " + str3 + (num2 != 1 ? "s" : "") : str3[0]);
+      return pfx + num2 + (long ? " " + str5 + (num2 != 1 ? "s" : "") : str5[0]);
     }
     function format(num2, long) {
       var pfx = num2 < 0 ? "-" : "", abs = num2 < 0 ? -num2 : num2;
@@ -52770,11 +52770,11 @@ var require_jwt = __commonJS({
         return cb(null, secret);
       };
     }
-    function convertToMs(time) {
-      if (typeof time === "number") {
-        return time * 1e3;
+    function convertToMs(time2) {
+      if (typeof time2 === "number") {
+        return time2 * 1e3;
       }
-      return parse(time);
+      return parse(time2);
     }
     function convertTemporalProps(options, isVerifyOptions) {
       if (!options || typeof options === "function") {
@@ -53765,11 +53765,11 @@ var require_bcrypt = __commonJS({
         return hash.substring(0, 29);
       };
       var nextTick = typeof process !== "undefined" && process && typeof process.nextTick === "function" ? typeof setImmediate === "function" ? setImmediate : process.nextTick : setTimeout;
-      function stringToBytes(str3) {
+      function stringToBytes(str5) {
         var out = [], i = 0;
         utfx.encodeUTF16toUTF8(function() {
-          if (i >= str3.length) return null;
-          return str3.charCodeAt(i++);
+          if (i >= str5.length) return null;
+          return str5.charCodeAt(i++);
         }, function(b) {
           out.push(b);
         });
@@ -61216,11 +61216,15 @@ var init_dist = __esm({
 });
 
 // packages/api/dist/interfaces/entry/page.js
+function sanitizeProfile(value2) {
+  return typeof value2 === "string" && ENTRY_PROFILES.some((p) => p.key === value2) ? value2 : null;
+}
 function escapeHtml(value2) {
   return value2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
-function buildLinks(number, code, ref) {
-  const text4 = `Hola AutoMantPro, quiero empezar. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
+function buildLinks(number, code, ref, profile = null) {
+  const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent;
+  const text4 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
   const encoded = encodeURIComponent(text4);
   return {
     text: text4,
@@ -61239,6 +61243,10 @@ function renderEntryPage(input) {
   const nonce = escapeHtml(input.nonce);
   const available = input.number !== null;
   const links = available ? buildLinks(input.number, input.code, input.ref) : null;
+  const refQuery = input.ref ? `&amp;ref=${escapeHtml(input.ref)}` : "";
+  const menu = links ? `<div class="menu">${ENTRY_PROFILES.map((profile) => `<a class="option" href="/?perfil=${escapeHtml(profile.key)}${refQuery}"><span aria-hidden="true">${profile.emoji}</span> ${escapeHtml(profile.label)}</a>`).join("")}</div>
+    <p class="small">Se abre WhatsApp con tu respuesta escrita. Escr\xEDbenos al <strong>${escapeHtml(formatNumber(input.number))}</strong>.</p>
+    <p class="small">Tu c\xF3digo de inicio: <strong>${escapeHtml(input.code)}</strong></p>` : "";
   const button = links ? `<button id="abrir" class="cta" type="button" data-app="${escapeHtml(links.app)}" data-wame="${escapeHtml(links.wame)}" data-web="${escapeHtml(links.web)}">Abrir WhatsApp</button>
     <p class="small">Escr\xEDbenos al <strong>${escapeHtml(formatNumber(input.number))}</strong> \xB7 <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> \xB7 <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a></p>
     <p class="small">Tu c\xF3digo de inicio: <strong>${escapeHtml(input.code)}</strong></p>` : `<button id="abrir" class="cta" type="button" disabled>Abrir WhatsApp</button>
@@ -61265,17 +61273,23 @@ function renderEntryPage(input) {
     <li>Plan de mantenimiento a tu medida</li>
     <li>Talleres y repuestos verificados cerca de ti</li>
   </ul>
-  ${button}
+  ${input.menu && links ? menu : button}
   <p class="legal">Al escribirnos aceptas los <a href="/terminos">t\xE9rminos y condiciones</a> y la <a href="/privacidad">pol\xEDtica de privacidad</a> (LOPDP).</p>
 </main>
 <script nonce="${nonce}">${SCRIPT}</script>
 </body>
 </html>`;
 }
-var STYLES, SCRIPT;
+var ENTRY_PROFILES, STYLES, SCRIPT;
 var init_page = __esm({
   "packages/api/dist/interfaces/entry/page.js"() {
     "use strict";
+    ENTRY_PROFILES = [
+      { key: "dueno", label: "Tengo un veh\xEDculo", emoji: "\u{1F697}", intent: "soy due\xF1o de un veh\xEDculo" },
+      { key: "taller", label: "Tengo un taller", emoji: "\u{1F527}", intent: "tengo un taller" },
+      { key: "almacen", label: "Tengo un almac\xE9n de repuestos", emoji: "\u{1F4E6}", intent: "tengo un almac\xE9n de repuestos" },
+      { key: "cuenta", label: "Ya tengo cuenta", emoji: "\u{1F511}", intent: "ya tengo cuenta" }
+    ];
     STYLES = `
 :root{--bg:#f5f8fa;--card:#ffffff;--text:#0f1b24;--muted:#51626f;--cyan:#00a8c6;--green:#16a34a;--ring:rgba(0,168,198,.35)}
 @media (prefers-color-scheme:dark){:root{--bg:#071116;--card:#0d1c24;--text:#e6f1f5;--muted:#9fb3bf;--cyan:#22d3ee;--green:#4ade80;--ring:rgba(34,211,238,.35)}}
@@ -61294,6 +61308,10 @@ li::before{content:"\u2713";position:absolute;left:4px;color:var(--green);font-w
 .small{margin-top:18px;font-size:14px;color:var(--muted)}
 .small a{color:var(--cyan)}
 .soon{margin-top:14px;font-weight:600}
+.menu{display:grid;gap:10px}
+.option{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 18px;border-radius:14px;background:var(--green);color:#fff;font-size:18px;font-weight:700;text-decoration:none}
+.option:nth-child(4){background:var(--cyan)}
+.option:focus-visible{outline:4px solid var(--ring);outline-offset:2px}
 .legal{margin-top:22px;font-size:12px;color:var(--muted)}
 `;
     SCRIPT = `
@@ -61376,15 +61394,24 @@ async function entryRoutes(app2, options = {}) {
     const query = request.query ?? {};
     const code = newVisitCode();
     const ref = sanitizeRef(query.ref);
+    const profile = sanitizeProfile(query.perfil);
     const bot = isPreviewBot(request.headers["user-agent"]);
     const number = await effectiveNumber(options);
     if (!bot && options.onVisit && allowVisit(request.ip)) {
-      Promise.resolve().then(() => options.onVisit?.(code, ref)).catch(() => void 0);
+      Promise.resolve().then(() => options.onVisit?.(code, ref, profile)).catch(() => void 0);
     }
-    if (number && !bot && !("pagina" in query)) {
-      return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number, code, ref).wame, 302);
+    let mode = "directo";
+    if (options.entryMode && !profile) {
+      try {
+        mode = await options.entryMode() === "menu" ? "menu" : "directo";
+      } catch {
+        mode = "directo";
+      }
     }
-    const html = renderEntryPage({ number, code, ref, nonce });
+    if (number && !bot && !("pagina" in query) && (mode === "directo" || profile)) {
+      return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number, code, ref, profile).wame, 302);
+    }
+    const html = renderEntryPage({ number, code, ref, nonce, menu: mode === "menu" });
     return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
   });
 }
@@ -61750,7 +61777,20 @@ var EXTRA_TABLES, APP_SETTING_TABLE_SQL, EXTRA_STATEMENTS;
 var init_statements_extra = __esm({
   "packages/api/dist/infrastructure/schema-setup/statements-extra.js"() {
     "use strict";
-    EXTRA_TABLES = ["AdminTotp", "AppSetting", "WorkOrder", "WorkOrderItem", "QuoteRequest", "Quote"];
+    EXTRA_TABLES = [
+      "AdminTotp",
+      "AppSetting",
+      "WorkOrder",
+      "WorkOrderItem",
+      "QuoteRequest",
+      "Quote",
+      "Relationship",
+      "RelationshipParty",
+      "RelationshipMessage",
+      "Dispute",
+      "Sanction",
+      "DataRequest"
+    ];
     APP_SETTING_TABLE_SQL = "CREATE TABLE IF NOT EXISTS `AppSetting` (\n    `name` VARCHAR(191) NOT NULL,\n    `value` TEXT NOT NULL,\n    `updatedBy` VARCHAR(191) NULL,\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    PRIMARY KEY (`name`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
     EXTRA_STATEMENTS = [
       {
@@ -61774,6 +61814,8 @@ var init_statements_extra = __esm({
       addColumn("User", "consentVersion", "VARCHAR(191) NULL"),
       addColumn("User", "source", "VARCHAR(191) NULL"),
       addColumn("User", "notes", "TEXT NULL"),
+      // Rol del equipo del panel; nulo en las cuentas creadas antes de los roles (administrador).
+      addColumn("User", "staffRole", "VARCHAR(20) NULL"),
       addColumn("Vehicle", "vehicleClass", "VARCHAR(191) NULL"),
       addColumn("Vehicle", "fuel", "VARCHAR(191) NULL"),
       addColumn("Vehicle", "plate", "VARCHAR(191) NULL"),
@@ -61853,6 +61895,64 @@ var init_statements_extra = __esm({
         kind: "addForeignKey",
         target: "Quote.Quote_storeId_fkey",
         sql: "ALTER TABLE `Quote` ADD CONSTRAINT `Quote_storeId_fkey` FOREIGN KEY (`storeId`) REFERENCES `Store`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE"
+      },
+      // Relaciones moderadas entre dueños, talleres y almacenes (docs/35 §5). Una relación no se
+      // borra nunca: se cierra o se bloquea, y toda intervención queda en la auditoría.
+      {
+        kind: "createTable",
+        target: "Relationship",
+        sql: "CREATE TABLE IF NOT EXISTS `Relationship` (\n    `id` VARCHAR(191) NOT NULL,\n    `number` INTEGER NOT NULL,\n    `kind` VARCHAR(20) NOT NULL,\n    `status` VARCHAR(20) NOT NULL DEFAULT 'activa',\n    `channel` VARCHAR(10) NOT NULL DEFAULT 'mediado',\n    `groupInviteUrl` VARCHAR(255) NULL,\n    `groupApprovedBy` VARCHAR(191) NULL,\n    `groupApprovedAt` DATETIME(3) NULL,\n    `originType` VARCHAR(20) NOT NULL DEFAULT 'manual',\n    `originId` VARCHAR(191) NULL,\n    `subject` VARCHAR(191) NULL,\n    `relayPaused` TINYINT(1) NOT NULL DEFAULT 0,\n    `lastMessageAt` DATETIME(3) NULL,\n    `waitingSince` DATETIME(3) NULL,\n    `createdBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `closedAt` DATETIME(3) NULL,\n    `closeReason` VARCHAR(191) NULL,\n\n    UNIQUE INDEX `Relationship_number_key`(`number`),\n    UNIQUE INDEX `Relationship_origin_key`(`originType`, `originId`),\n    INDEX `Relationship_status_lastMessageAt_idx`(`status`, `lastMessageAt`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      {
+        kind: "createTable",
+        target: "RelationshipParty",
+        sql: "CREATE TABLE IF NOT EXISTS `RelationshipParty` (\n    `id` VARCHAR(191) NOT NULL,\n    `relationshipId` VARCHAR(191) NOT NULL,\n    `userId` VARCHAR(191) NOT NULL,\n    `role` VARCHAR(20) NOT NULL,\n    `consentShareContact` TINYINT(1) NOT NULL DEFAULT 0,\n    `consentAt` DATETIME(3) NULL,\n    `mutedAt` DATETIME(3) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    UNIQUE INDEX `RelationshipParty_relationshipId_userId_key`(`relationshipId`, `userId`),\n    INDEX `RelationshipParty_userId_idx`(`userId`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      {
+        kind: "createTable",
+        target: "RelationshipMessage",
+        sql: "CREATE TABLE IF NOT EXISTS `RelationshipMessage` (\n    `id` VARCHAR(191) NOT NULL,\n    `relationshipId` VARCHAR(191) NOT NULL,\n    `fromUserId` VARCHAR(191) NULL,\n    `toUserId` VARCHAR(191) NULL,\n    `body` TEXT NOT NULL,\n    `kind` VARCHAR(20) NOT NULL DEFAULT 'reenvio',\n    `relayedAt` DATETIME(3) NULL,\n    `flagged` TINYINT(1) NOT NULL DEFAULT 0,\n    `flagReason` VARCHAR(191) NULL,\n    `createdBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    INDEX `RelationshipMessage_relationshipId_createdAt_idx`(`relationshipId`, `createdAt`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      {
+        kind: "createTable",
+        target: "Dispute",
+        sql: "CREATE TABLE IF NOT EXISTS `Dispute` (\n    `id` VARCHAR(191) NOT NULL,\n    `number` INTEGER NOT NULL,\n    `relationshipId` VARCHAR(191) NULL,\n    `openedBy` VARCHAR(191) NULL,\n    `againstUserId` VARCHAR(191) NULL,\n    `claimantUserId` VARCHAR(191) NULL,\n    `reason` TEXT NOT NULL,\n    `status` VARCHAR(20) NOT NULL DEFAULT 'abierta',\n    `resolution` TEXT NULL,\n    `resolvedBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `resolvedAt` DATETIME(3) NULL,\n\n    UNIQUE INDEX `Dispute_number_key`(`number`),\n    INDEX `Dispute_status_createdAt_idx`(`status`, `createdAt`),\n    INDEX `Dispute_relationshipId_idx`(`relationshipId`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      {
+        kind: "createTable",
+        target: "Sanction",
+        sql: "CREATE TABLE IF NOT EXISTS `Sanction` (\n    `id` VARCHAR(191) NOT NULL,\n    `userId` VARCHAR(191) NOT NULL,\n    `level` VARCHAR(30) NOT NULL,\n    `reason` VARCHAR(500) NOT NULL,\n    `relationshipId` VARCHAR(191) NULL,\n    `disputeId` VARCHAR(191) NULL,\n    `startsAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `endsAt` DATETIME(3) NULL,\n    `liftedAt` DATETIME(3) NULL,\n    `liftedBy` VARCHAR(191) NULL,\n    `liftReason` VARCHAR(191) NULL,\n    `createdBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    INDEX `Sanction_userId_startsAt_idx`(`userId`, `startsAt`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      // Solicitudes de la LOPDP (docs/35 A3): acceso, rectificación y eliminación.
+      {
+        kind: "createTable",
+        target: "DataRequest",
+        sql: "CREATE TABLE IF NOT EXISTS `DataRequest` (\n    `id` VARCHAR(191) NOT NULL,\n    `number` INTEGER NOT NULL,\n    `userId` VARCHAR(191) NOT NULL,\n    `kind` VARCHAR(20) NOT NULL,\n    `status` VARCHAR(20) NOT NULL DEFAULT 'recibida',\n    `channel` VARCHAR(30) NULL,\n    `detail` TEXT NULL,\n    `resolution` TEXT NULL,\n    `dueAt` DATETIME(3) NOT NULL,\n    `anonymizedAt` DATETIME(3) NULL,\n    `exportedAt` DATETIME(3) NULL,\n    `createdBy` VARCHAR(191) NULL,\n    `resolvedBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `resolvedAt` DATETIME(3) NULL,\n\n    UNIQUE INDEX `DataRequest_number_key`(`number`),\n    INDEX `DataRequest_status_dueAt_idx`(`status`, `dueAt`),\n    INDEX `DataRequest_userId_idx`(`userId`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      {
+        kind: "addForeignKey",
+        target: "DataRequest.DataRequest_userId_fkey",
+        sql: "ALTER TABLE `DataRequest` ADD CONSTRAINT `DataRequest_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE"
+      },
+      {
+        kind: "addForeignKey",
+        target: "RelationshipParty.RelationshipParty_relationshipId_fkey",
+        sql: "ALTER TABLE `RelationshipParty` ADD CONSTRAINT `RelationshipParty_relationshipId_fkey` FOREIGN KEY (`relationshipId`) REFERENCES `Relationship`(`id`) ON DELETE CASCADE ON UPDATE CASCADE"
+      },
+      {
+        kind: "addForeignKey",
+        target: "RelationshipParty.RelationshipParty_userId_fkey",
+        sql: "ALTER TABLE `RelationshipParty` ADD CONSTRAINT `RelationshipParty_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE"
+      },
+      {
+        kind: "addForeignKey",
+        target: "RelationshipMessage.RelationshipMessage_relationshipId_fkey",
+        sql: "ALTER TABLE `RelationshipMessage` ADD CONSTRAINT `RelationshipMessage_relationshipId_fkey` FOREIGN KEY (`relationshipId`) REFERENCES `Relationship`(`id`) ON DELETE CASCADE ON UPDATE CASCADE"
+      },
+      {
+        kind: "addForeignKey",
+        target: "Sanction.Sanction_userId_fkey",
+        sql: "ALTER TABLE `Sanction` ADD CONSTRAINT `Sanction_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE"
       },
       addColumn("Order", "quoteRequestId", "VARCHAR(191) NULL"),
       addColumn("Order", "quoteId", "VARCHAR(191) NULL"),
@@ -62166,10 +62266,10 @@ var require_lib2 = __commonJS({
         millisecond = date.getMilliseconds();
       } else {
         const timezoneOffsetMinutes = convertTimezone(timezone);
-        let time = date.getTime();
+        let time2 = date.getTime();
         if (timezoneOffsetMinutes !== false && timezoneOffsetMinutes !== 0)
-          time += timezoneOffsetMinutes * 6e4;
-        const adjustedDate = new Date(time);
+          time2 += timezoneOffsetMinutes * 6e4;
+        const adjustedDate = new Date(time2);
         year = adjustedDate.getUTCFullYear();
         month = adjustedDate.getUTCMonth() + 1;
         day2 = adjustedDate.getUTCDate();
@@ -63039,19 +63139,19 @@ var require_ring_queue = __commonJS({
         return items;
       }
       _grow() {
-        const list5 = this._list;
-        const capacity = list5.length;
+        const list6 = this._list;
+        const capacity = list6.length;
         if (this._head === 0) {
           this._tail = capacity;
-          list5.length = capacity << 1;
+          list6.length = capacity << 1;
         } else {
           const grown = new Array(capacity << 1);
           let count2 = 0;
           for (let slot = this._head; slot < capacity; slot++) {
-            grown[count2++] = list5[slot];
+            grown[count2++] = list6[slot];
           }
           for (let slot = 0; slot < this._tail; slot++) {
-            grown[count2++] = list5[slot];
+            grown[count2++] = list6[slot];
           }
           this._list = grown;
           this._head = 0;
@@ -67450,27 +67550,27 @@ var require_umd = __commonJS({
         }
         Long.fromBits = fromBits;
         var pow_dbl = Math.pow;
-        function fromString(str3, unsigned, radix) {
-          if (str3.length === 0) throw Error("empty string");
+        function fromString(str5, unsigned, radix) {
+          if (str5.length === 0) throw Error("empty string");
           if (typeof unsigned === "number") {
             radix = unsigned;
             unsigned = false;
           } else {
             unsigned = !!unsigned;
           }
-          if (str3 === "NaN" || str3 === "Infinity" || str3 === "+Infinity" || str3 === "-Infinity")
+          if (str5 === "NaN" || str5 === "Infinity" || str5 === "+Infinity" || str5 === "-Infinity")
             return unsigned ? UZERO : ZERO;
           radix = radix || 10;
           if (radix < 2 || 36 < radix) throw RangeError("radix");
           var p;
-          if ((p = str3.indexOf("-")) > 0) throw Error("interior hyphen");
+          if ((p = str5.indexOf("-")) > 0) throw Error("interior hyphen");
           else if (p === 0) {
-            return fromString(str3.substring(1), unsigned, radix).neg();
+            return fromString(str5.substring(1), unsigned, radix).neg();
           }
           var radixToPower = fromNumber(pow_dbl(radix, 8));
           var result = ZERO;
-          for (var i = 0; i < str3.length; i += 8) {
-            var size = Math.min(8, str3.length - i), value2 = parseInt(str3.substring(i, i + size), radix);
+          for (var i = 0; i < str5.length; i += 8) {
+            var size = Math.min(8, str5.length - i), value2 = parseInt(str5.substring(i, i + size), radix);
             if (size < 8) {
               var power = fromNumber(pow_dbl(radix, size));
               result = result.mul(power).add(fromNumber(value2));
@@ -68018,12 +68118,12 @@ var require_bom_handling = __commonJS({
       this.encoder = encoder;
       this.addBOM = true;
     }
-    PrependBOMWrapper.prototype.write = function(str3) {
+    PrependBOMWrapper.prototype.write = function(str5) {
       if (this.addBOM) {
-        str3 = BOMChar + str3;
+        str5 = BOMChar + str5;
         this.addBOM = false;
       }
-      return this.encoder.write(str3);
+      return this.encoder.write(str5);
     };
     PrependBOMWrapper.prototype.end = function() {
       return this.encoder.end();
@@ -68122,31 +68222,31 @@ var require_internal = __commonJS({
     function InternalEncoder(options, codec) {
       this.enc = codec.enc;
     }
-    InternalEncoder.prototype.write = function(str3) {
-      return Buffer2.from(str3, this.enc);
+    InternalEncoder.prototype.write = function(str5) {
+      return Buffer2.from(str5, this.enc);
     };
     InternalEncoder.prototype.end = function() {
     };
     function InternalEncoderBase64(options, codec) {
       this.prevStr = "";
     }
-    InternalEncoderBase64.prototype.write = function(str3) {
-      str3 = this.prevStr + str3;
-      var completeQuads = str3.length - str3.length % 4;
-      this.prevStr = str3.slice(completeQuads);
-      str3 = str3.slice(0, completeQuads);
-      return Buffer2.from(str3, "base64");
+    InternalEncoderBase64.prototype.write = function(str5) {
+      str5 = this.prevStr + str5;
+      var completeQuads = str5.length - str5.length % 4;
+      this.prevStr = str5.slice(completeQuads);
+      str5 = str5.slice(0, completeQuads);
+      return Buffer2.from(str5, "base64");
     };
     InternalEncoderBase64.prototype.end = function() {
       return Buffer2.from(this.prevStr, "base64");
     };
     function InternalEncoderCesu8(options, codec) {
     }
-    InternalEncoderCesu8.prototype.write = function(str3) {
-      var buf = Buffer2.alloc(str3.length * 3);
+    InternalEncoderCesu8.prototype.write = function(str5) {
+      var buf = Buffer2.alloc(str5.length * 3);
       var bufIdx = 0;
-      for (var i = 0; i < str3.length; i++) {
-        var charCode = str3.charCodeAt(i);
+      for (var i = 0; i < str5.length; i++) {
+        var charCode = str5.charCodeAt(i);
         if (charCode < 128) {
           buf[bufIdx++] = charCode;
         } else if (charCode < 2048) {
@@ -68227,25 +68327,25 @@ var require_internal = __commonJS({
     function InternalEncoderUtf8(options, codec) {
       this.highSurrogate = "";
     }
-    InternalEncoderUtf8.prototype.write = function(str3) {
+    InternalEncoderUtf8.prototype.write = function(str5) {
       if (this.highSurrogate) {
-        str3 = this.highSurrogate + str3;
+        str5 = this.highSurrogate + str5;
         this.highSurrogate = "";
       }
-      if (str3.length > 0) {
-        var charCode = str3.charCodeAt(str3.length - 1);
+      if (str5.length > 0) {
+        var charCode = str5.charCodeAt(str5.length - 1);
         if (charCode >= 55296 && charCode < 56320) {
-          this.highSurrogate = str3[str3.length - 1];
-          str3 = str3.slice(0, str3.length - 1);
+          this.highSurrogate = str5[str5.length - 1];
+          str5 = str5.slice(0, str5.length - 1);
         }
       }
-      return Buffer2.from(str3, this.enc);
+      return Buffer2.from(str5, this.enc);
     };
     InternalEncoderUtf8.prototype.end = function() {
       if (this.highSurrogate) {
-        var str3 = this.highSurrogate;
+        var str5 = this.highSurrogate;
         this.highSurrogate = "";
-        return Buffer2.from(str3, this.enc);
+        return Buffer2.from(str5, this.enc);
       }
     };
   }
@@ -68272,8 +68372,8 @@ var require_utf32 = __commonJS({
       this.isLE = codec.isLE;
       this.highSurrogate = 0;
     }
-    Utf32Encoder.prototype.write = function(str3) {
-      var src = Buffer2.from(str3, "ucs2");
+    Utf32Encoder.prototype.write = function(str5) {
+      var src = Buffer2.from(str5, "ucs2");
       var dst = Buffer2.alloc(src.length * 2 + 4);
       var write32 = this.isLE ? dst.writeUInt32LE : dst.writeUInt32BE;
       var offset2 = 0;
@@ -68398,8 +68498,8 @@ var require_utf32 = __commonJS({
       }
       this.encoder = codec.iconv.getEncoder(options.defaultEncoding || "utf-32le", options);
     }
-    Utf32AutoEncoder.prototype.write = function(str3) {
-      return this.encoder.write(str3);
+    Utf32AutoEncoder.prototype.write = function(str5) {
+      return this.encoder.write(str5);
     };
     Utf32AutoEncoder.prototype.end = function() {
       return this.encoder.end();
@@ -68499,8 +68599,8 @@ var require_utf16 = __commonJS({
     Utf16BECodec.prototype.bomAware = true;
     function Utf16BEEncoder() {
     }
-    Utf16BEEncoder.prototype.write = function(str3) {
-      var buf = Buffer2.from(str3, "ucs2");
+    Utf16BEEncoder.prototype.write = function(str5) {
+      var buf = Buffer2.from(str5, "ucs2");
       for (var i = 0; i < buf.length; i += 2) {
         var tmp = buf[i];
         buf[i] = buf[i + 1];
@@ -68549,8 +68649,8 @@ var require_utf16 = __commonJS({
       }
       this.encoder = codec.iconv.getEncoder("utf-16le", options);
     }
-    Utf16Encoder.prototype.write = function(str3) {
-      return this.encoder.write(str3);
+    Utf16Encoder.prototype.write = function(str5) {
+      return this.encoder.write(str5);
     };
     Utf16Encoder.prototype.end = function() {
       return this.encoder.end();
@@ -68646,8 +68746,8 @@ var require_utf7 = __commonJS({
     function Utf7Encoder(options, codec) {
       this.iconv = codec.iconv;
     }
-    Utf7Encoder.prototype.write = function(str3) {
-      return Buffer2.from(str3.replace(nonDirectChars, function(chunk) {
+    Utf7Encoder.prototype.write = function(str5) {
+      return Buffer2.from(str5.replace(nonDirectChars, function(chunk) {
         return "+" + (chunk === "+" ? "" : this.iconv.encode(chunk, "utf16-be").toString("base64").replace(/=+$/, "")) + "-";
       }.bind(this)));
     };
@@ -68731,14 +68831,14 @@ var require_utf7 = __commonJS({
       this.base64Accum = Buffer2.alloc(6);
       this.base64AccumIdx = 0;
     }
-    Utf7IMAPEncoder.prototype.write = function(str3) {
+    Utf7IMAPEncoder.prototype.write = function(str5) {
       var inBase64 = this.inBase64;
       var base64Accum = this.base64Accum;
       var base64AccumIdx = this.base64AccumIdx;
-      var buf = Buffer2.alloc(str3.length * 5 + 10);
+      var buf = Buffer2.alloc(str5.length * 5 + 10);
       var bufIdx = 0;
-      for (var i2 = 0; i2 < str3.length; i2++) {
-        var uChar = str3.charCodeAt(i2);
+      for (var i2 = 0; i2 < str5.length; i2++) {
+        var uChar = str5.charCodeAt(i2);
         if (uChar >= 32 && uChar <= 126) {
           if (inBase64) {
             if (base64AccumIdx > 0) {
@@ -68879,10 +68979,10 @@ var require_sbcs_codec = __commonJS({
     function SBCSEncoder(options, codec) {
       this.encodeBuf = codec.encodeBuf;
     }
-    SBCSEncoder.prototype.write = function(str3) {
-      var buf = Buffer2.alloc(str3.length);
-      for (var i = 0; i < str3.length; i++) {
-        buf[i] = this.encodeBuf[str3.charCodeAt(i)];
+    SBCSEncoder.prototype.write = function(str5) {
+      var buf = Buffer2.alloc(str5.length);
+      for (var i = 0; i < str5.length; i++) {
+        buf[i] = this.encodeBuf[str5.charCodeAt(i)];
       }
       return buf;
     };
@@ -69758,8 +69858,8 @@ var require_dbcs_codec = __commonJS({
       this.defaultCharSingleByte = codec.defCharSB;
       this.gb18030 = codec.gb18030;
     }
-    DBCSEncoder.prototype.write = function(str3) {
-      var newBuf = Buffer2.alloc(str3.length * (this.gb18030 ? 4 : 3));
+    DBCSEncoder.prototype.write = function(str5) {
+      var newBuf = Buffer2.alloc(str5.length * (this.gb18030 ? 4 : 3));
       var leadSurrogate = this.leadSurrogate;
       var seqObj = this.seqObj;
       var nextChar = -1;
@@ -69767,8 +69867,8 @@ var require_dbcs_codec = __commonJS({
       var j = 0;
       while (true) {
         if (nextChar === -1) {
-          if (i2 == str3.length) break;
-          var uCode = str3.charCodeAt(i2++);
+          if (i2 == str5.length) break;
+          var uCode = str5.charCodeAt(i2++);
         } else {
           var uCode = nextChar;
           nextChar = -1;
@@ -71606,10 +71706,10 @@ var require_lib4 = __commonJS({
     module.exports.encodings = null;
     module.exports.defaultCharUnicode = "\uFFFD";
     module.exports.defaultCharSingleByte = "?";
-    module.exports.encode = function encode(str3, encoding, options) {
-      str3 = "" + (str3 || "");
+    module.exports.encode = function encode(str5, encoding, options) {
+      str5 = "" + (str5 || "");
       var encoder = module.exports.getEncoder(encoding, options);
-      var res = encoder.write(str3);
+      var res = encoder.write(str5);
       var trail = encoder.end();
       return trail && trail.length > 0 ? Buffer2.concat([res, trail]) : res;
     };
@@ -71996,9 +72096,9 @@ var require_types6 = __commonJS({
 var require_helpers = __commonJS({
   "node_modules/mysql2/lib/helpers.js"(exports) {
     "use strict";
-    function srcEscape(str3) {
+    function srcEscape(str5) {
       return JSON.stringify({
-        [str3]: 1
+        [str5]: 1
       }).slice(1, -3);
     }
     exports.srcEscape = srcEscape;
@@ -72025,11 +72125,11 @@ ${msg}:
 `);
     }
     exports.printDebugWithCode = printDebugWithCode;
-    function typeMatch(type, list5, Types) {
-      if (Array.isArray(list5)) {
-        return list5.some((t) => type === Types[t]);
+    function typeMatch(type, list6, Types) {
+      if (Array.isArray(list6)) {
+        return list6.some((t) => type === Types[t]);
       }
-      return !!list5;
+      return !!list6;
     }
     exports.typeMatch = typeMatch;
     var privateObjectProps = /* @__PURE__ */ new Set([
@@ -72085,7 +72185,7 @@ var require_local_date = __commonJS({
       const dayOfEra = yearOfEra * 365 + (yearOfEra / 4 | 0) - (yearOfEra / 100 | 0) + dayOfYear;
       return era * 146097 + dayOfEra - 719468;
     }
-    function localTime(wallTime) {
+    function localTime2(wallTime) {
       const wall = new Date(wallTime);
       return new Date(
         wall.getUTCFullYear(),
@@ -72099,8 +72199,8 @@ var require_local_date = __commonJS({
     }
     function proveHourOffset(hour) {
       const start = hour * MS_PER_HOUR;
-      const offset2 = start - localTime(start);
-      if (offset2 !== start + MS_PER_HOUR / 2 - localTime(start + MS_PER_HOUR / 2) || offset2 !== start + MS_PER_HOUR - 1 - localTime(start + MS_PER_HOUR - 1) || Number.isNaN(offset2)) {
+      const offset2 = start - localTime2(start);
+      if (offset2 !== start + MS_PER_HOUR / 2 - localTime2(start + MS_PER_HOUR / 2) || offset2 !== start + MS_PER_HOUR - 1 - localTime2(start + MS_PER_HOUR - 1) || Number.isNaN(offset2)) {
         return null;
       }
       return offset2;
@@ -72425,14 +72525,14 @@ var require_packet = __commonJS({
           }
           return localDate(y, m, d, H, M, S, ms);
         }
-        let str3 = this.readDateTimeString(6, "T", null);
-        if (str3.startsWith(ZERO_DATE)) {
+        let str5 = this.readDateTimeString(6, "T", null);
+        if (str5.startsWith(ZERO_DATE)) {
           return /* @__PURE__ */ new Date(NaN);
         }
-        if (str3.length === 10) {
-          str3 += "T00:00:00";
+        if (str5.length === 10) {
+          str5 += "T00:00:00";
         }
-        return new Date(str3 + timezone);
+        return new Date(str5 + timezone);
       }
       readDateTimeString(decimals, timeSep, columnType) {
         const length = this.readInt8();
@@ -72443,37 +72543,37 @@ var require_packet = __commonJS({
         let M = 0;
         let S = 0;
         let ms = 0;
-        let str3 = ZERO_DATE;
+        let str5 = ZERO_DATE;
         if (length > 3) {
           y = this.readInt16();
           m = this.readInt8();
           d = this.readInt8();
-          str3 = [leftPad(4, y), leftPad(2, m), leftPad(2, d)].join("-");
+          str5 = [leftPad(4, y), leftPad(2, m), leftPad(2, d)].join("-");
         }
         if (length > 6) {
           H = this.readInt8();
           M = this.readInt8();
           S = this.readInt8();
-          str3 += `${timeSep || " "}${[
+          str5 += `${timeSep || " "}${[
             leftPad(2, H),
             leftPad(2, M),
             leftPad(2, S)
           ].join(":")}`;
         } else if (columnType === Types.DATETIME || columnType === Types.TIMESTAMP) {
-          str3 += " 00:00:00";
+          str5 += " 00:00:00";
         }
         if (length > 10) {
           ms = this.readInt32();
-          str3 += ".";
+          str5 += ".";
           if (decimals) {
             ms = leftPad(6, ms);
             if (ms.length > decimals) {
               ms = ms.substring(0, decimals);
             }
           }
-          str3 += ms;
+          str5 += ms;
         }
-        return str3;
+        return str5;
       }
       // TIME - value as a string, Can be negative
       readTimeString(convertTtoMs) {
@@ -72580,20 +72680,20 @@ var require_packet = __commonJS({
           this.offset++;
           sign = -1;
         }
-        let str3;
+        let str5;
         const numDigits = end - this.offset;
         if (supportBigNumbers) {
           if (numDigits >= 15) {
-            str3 = this.readString(end - this.offset, "binary");
-            result = parseInt(str3, 10);
+            str5 = this.readString(end - this.offset, "binary");
+            result = parseInt(str5, 10);
             if (Number.isSafeInteger(sign * result)) {
               return sign * result;
             }
-            return sign === -1 ? `-${str3}` : str3;
+            return sign === -1 ? `-${str5}` : str5;
           }
           if (numDigits > 16) {
-            str3 = this.readString(end - this.offset);
-            return sign === -1 ? `-${str3}` : str3;
+            str5 = this.readString(end - this.offset);
+            return sign === -1 ? `-${str5}` : str5;
           }
         }
         if (this.buffer[this.offset] === plus) {
@@ -72758,11 +72858,11 @@ var require_packet = __commonJS({
       // With supportBigNumbers, unsafe integers become exact strings,
       // mirroring the option's behaviour for BIGINT columns
       parseJson(encoding, supportBigNumbers) {
-        const str3 = this.readLengthCodedString(encoding);
-        if (supportBigNumbers && jsonSourceAccessSupported && str3 !== null && jsonBigNumeral.test(str3)) {
-          return JSON.parse(str3, jsonBigNumberReviver);
+        const str5 = this.readLengthCodedString(encoding);
+        if (supportBigNumbers && jsonSourceAccessSupported && str5 !== null && jsonBigNumeral.test(str5)) {
+          return JSON.parse(str5, jsonBigNumberReviver);
         }
-        return JSON.parse(str3);
+        return JSON.parse(str5);
       }
       parseDate(timezone) {
         const strLen = this.readLengthCodedNumber();
@@ -72803,9 +72903,9 @@ var require_packet = __commonJS({
             return /* @__PURE__ */ new Date(NaN);
           }
           if (y < 100) {
-            const str4 = StringParser.decode(b, "binary", s, s + len);
+            const str6 = StringParser.decode(b, "binary", s, s + len);
             this.offset += len;
-            return !timezone || timezone === "local" ? new Date(str4) : /* @__PURE__ */ new Date(`${str4}${timezone}`);
+            return !timezone || timezone === "local" ? new Date(str6) : /* @__PURE__ */ new Date(`${str6}${timezone}`);
           }
           const h = (b[s + 11] - 48) * 10 + (b[s + 12] - 48);
           const mi = (b[s + 14] - 48) * 10 + (b[s + 15] - 48);
@@ -72834,12 +72934,12 @@ var require_packet = __commonJS({
             `${StringParser.decode(b, "binary", s, s + len)}${timezone}`
           );
         }
-        const str3 = StringParser.decode(b, "binary", s, s + len);
+        const str5 = StringParser.decode(b, "binary", s, s + len);
         this.offset += len;
         if (!timezone || timezone === "local") {
-          return new Date(str3);
+          return new Date(str5);
         }
-        return /* @__PURE__ */ new Date(`${str3}${timezone}`);
+        return /* @__PURE__ */ new Date(`${str5}${timezone}`);
       }
       parseFloat(len) {
         if (len === null) {
@@ -72849,9 +72949,9 @@ var require_packet = __commonJS({
           return 0;
         }
         if (len > 17) {
-          const str3 = this.buffer.toString("utf8", this.offset, this.offset + len);
+          const str5 = this.buffer.toString("utf8", this.offset, this.offset + len);
           this.offset += len;
-          return Number.parseFloat(str3);
+          return Number.parseFloat(str5);
         }
         let result = 0;
         const end = this.offset + len;
@@ -72872,9 +72972,9 @@ var require_packet = __commonJS({
             this.offset++;
           } else if (charCode === exponent || charCode === exponentCapital) {
             const start = end - len;
-            const str3 = this.buffer.toString("utf8", start, end);
+            const str5 = this.buffer.toString("utf8", start, end);
             this.offset = end;
-            return Number.parseFloat(str3);
+            return Number.parseFloat(str5);
           } else {
             result *= 10;
             result += this.buffer[this.offset] - 48;
@@ -73112,8 +73212,8 @@ var require_packet = __commonJS({
         }
         return 9;
       }
-      static lengthCodedStringLength(str3, encoding) {
-        const buf = StringParser.encode(str3, encoding);
+      static lengthCodedStringLength(str5, encoding) {
+        const buf = StringParser.encode(str5, encoding);
         const slen = buf.length;
         return _Packet.lengthCodedNumberLength(slen) + slen;
       }
@@ -76251,8 +76351,8 @@ var require_mysql_native_password = __commonJS({
 var require_mysql_clear_password = __commonJS({
   "node_modules/mysql2/lib/auth_plugins/mysql_clear_password.js"(exports, module) {
     "use strict";
-    function bufferFromStr(str3) {
-      return Buffer.from(`${str3}\0`);
+    function bufferFromStr(str5) {
+      return Buffer.from(`${str5}\0`);
     }
     var create_mysql_clear_password_plugin = (pluginOptions) => function mysql_clear_password_plugin({ connection, command }) {
       const password = command.password || pluginOptions.password || connection.config.password;
@@ -77309,8 +77409,8 @@ var require_charsets = __commonJS({
 var require_is_property = __commonJS({
   "node_modules/is-property/is-property.js"(exports, module) {
     "use strict";
-    function isProperty(str3) {
-      return /^[$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc][$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc0-9\u0300-\u036f\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u064b-\u0669\u0670\u06d6-\u06dc\u06df-\u06e4\u06e7\u06e8\u06ea-\u06ed\u06f0-\u06f9\u0711\u0730-\u074a\u07a6-\u07b0\u07c0-\u07c9\u07eb-\u07f3\u0816-\u0819\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0859-\u085b\u08e4-\u08fe\u0900-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09cb-\u09cd\u09d7\u09e2\u09e3\u09e6-\u09ef\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b62\u0b63\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c01-\u0c03\u0c3e-\u0c44\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62\u0c63\u0c66-\u0c6f\u0c82\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2\u0ce3\u0ce6-\u0cef\u0d02\u0d03\u0d3e-\u0d44\u0d46-\u0d48\u0d4a-\u0d4d\u0d57\u0d62\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0df2\u0df3\u0e31\u0e34-\u0e3a\u0e47-\u0e4e\u0e50-\u0e59\u0eb1\u0eb4-\u0eb9\u0ebb\u0ebc\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f3e\u0f3f\u0f71-\u0f84\u0f86\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u102b-\u103e\u1040-\u1049\u1056-\u1059\u105e-\u1060\u1062-\u1064\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17b4-\u17d3\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u18a9\u1920-\u192b\u1930-\u193b\u1946-\u194f\u19b0-\u19c0\u19c8\u19c9\u19d0-\u19d9\u1a17-\u1a1b\u1a55-\u1a5e\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1b00-\u1b04\u1b34-\u1b44\u1b50-\u1b59\u1b6b-\u1b73\u1b80-\u1b82\u1ba1-\u1bad\u1bb0-\u1bb9\u1be6-\u1bf3\u1c24-\u1c37\u1c40-\u1c49\u1c50-\u1c59\u1cd0-\u1cd2\u1cd4-\u1ce8\u1ced\u1cf2-\u1cf4\u1dc0-\u1de6\u1dfc-\u1dff\u200c\u200d\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2cef-\u2cf1\u2d7f\u2de0-\u2dff\u302a-\u302f\u3099\u309a\ua620-\ua629\ua66f\ua674-\ua67d\ua69f\ua6f0\ua6f1\ua802\ua806\ua80b\ua823-\ua827\ua880\ua881\ua8b4-\ua8c4\ua8d0-\ua8d9\ua8e0-\ua8f1\ua900-\ua909\ua926-\ua92d\ua947-\ua953\ua980-\ua983\ua9b3-\ua9c0\ua9d0-\ua9d9\uaa29-\uaa36\uaa43\uaa4c\uaa4d\uaa50-\uaa59\uaa7b\uaab0\uaab2-\uaab4\uaab7\uaab8\uaabe\uaabf\uaac1\uaaeb-\uaaef\uaaf5\uaaf6\uabe3-\uabea\uabec\uabed\uabf0-\uabf9\ufb1e\ufe00-\ufe0f\ufe20-\ufe26\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f]*$/.test(str3);
+    function isProperty(str5) {
+      return /^[$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc][$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc0-9\u0300-\u036f\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u064b-\u0669\u0670\u06d6-\u06dc\u06df-\u06e4\u06e7\u06e8\u06ea-\u06ed\u06f0-\u06f9\u0711\u0730-\u074a\u07a6-\u07b0\u07c0-\u07c9\u07eb-\u07f3\u0816-\u0819\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0859-\u085b\u08e4-\u08fe\u0900-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09cb-\u09cd\u09d7\u09e2\u09e3\u09e6-\u09ef\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b62\u0b63\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c01-\u0c03\u0c3e-\u0c44\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62\u0c63\u0c66-\u0c6f\u0c82\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2\u0ce3\u0ce6-\u0cef\u0d02\u0d03\u0d3e-\u0d44\u0d46-\u0d48\u0d4a-\u0d4d\u0d57\u0d62\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0df2\u0df3\u0e31\u0e34-\u0e3a\u0e47-\u0e4e\u0e50-\u0e59\u0eb1\u0eb4-\u0eb9\u0ebb\u0ebc\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f3e\u0f3f\u0f71-\u0f84\u0f86\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u102b-\u103e\u1040-\u1049\u1056-\u1059\u105e-\u1060\u1062-\u1064\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17b4-\u17d3\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u18a9\u1920-\u192b\u1930-\u193b\u1946-\u194f\u19b0-\u19c0\u19c8\u19c9\u19d0-\u19d9\u1a17-\u1a1b\u1a55-\u1a5e\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1b00-\u1b04\u1b34-\u1b44\u1b50-\u1b59\u1b6b-\u1b73\u1b80-\u1b82\u1ba1-\u1bad\u1bb0-\u1bb9\u1be6-\u1bf3\u1c24-\u1c37\u1c40-\u1c49\u1c50-\u1c59\u1cd0-\u1cd2\u1cd4-\u1ce8\u1ced\u1cf2-\u1cf4\u1dc0-\u1de6\u1dfc-\u1dff\u200c\u200d\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2cef-\u2cf1\u2d7f\u2de0-\u2dff\u302a-\u302f\u3099\u309a\ua620-\ua629\ua66f\ua674-\ua67d\ua69f\ua6f0\ua6f1\ua802\ua806\ua80b\ua823-\ua827\ua880\ua881\ua8b4-\ua8c4\ua8d0-\ua8d9\ua8e0-\ua8f1\ua900-\ua909\ua926-\ua92d\ua947-\ua953\ua980-\ua983\ua9b3-\ua9c0\ua9d0-\ua9d9\uaa29-\uaa36\uaa43\uaa4c\uaa4d\uaa50-\uaa59\uaa7b\uaab0\uaab2-\uaab4\uaab7\uaab8\uaabe\uaabf\uaac1\uaaeb-\uaaef\uaaf5\uaaf6\uabe3-\uabea\uabec\uabed\uabf0-\uabf9\ufb1e\ufe00-\ufe0f\ufe20-\ufe26\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f]*$/.test(str5);
     }
     module.exports = isProperty;
   }
@@ -77398,10 +77498,10 @@ var require_generate_function = __commonJS({
       var lines = [];
       var indent = 0;
       var vars = {};
-      var push = function(str3) {
+      var push = function(str5) {
         var spaces = "";
         while (spaces.length < indent * 2) spaces += "  ";
-        lines.push(spaces + str3);
+        lines.push(spaces + str5);
       };
       var pushLine = function(line2) {
         if (INDENT_END.test(line2.trim()[0]) && INDENT_START.test(line2[line2.length - 1])) {
@@ -78471,21 +78571,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows7, fields;
+          let rows9, fields;
           if (this._resultIndex === 0) {
-            rows7 = this._rows[0];
+            rows9 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows7 = this._rows;
+            rows9 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows7, fields);
+              this.onResult(null, rows9, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows7);
+              this.onResult(null, rows9);
             });
           }
         }
@@ -81042,9 +81142,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows7, columns, binary = false) {
+      writeTextResult(rows9, columns, binary = false) {
         this.writeColumns(columns);
-        rows7.forEach((row) => {
+        rows9.forEach((row) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column) => {
             arrayRow.push(row[column.name]);
@@ -81154,12 +81254,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve, reject, stackHolder) {
-      return function(err, rows7, fields) {
+      return function(err, rows9, fields) {
         if (err) {
           applyCapturedStack(err, stackHolder);
           reject(err);
         } else {
-          resolve([rows7, fields]);
+          resolve([rows9, fields]);
         }
       };
     }
@@ -81767,9 +81867,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err2, rows7, fields) {
+              cmdQuery.onResult = function(err2, rows9, fields) {
                 queryError = err2 || null;
-                origOnResult(err2, rows7, fields);
+                origOnResult(err2, rows9, fields);
               };
             } else {
               cmdQuery.once("error", (err2) => {
@@ -81804,11 +81904,11 @@ var require_pool = __commonJS({
             return cb(err);
           }
           try {
-            conn.execute(sql, values, (err2, rows7, fields) => {
+            conn.execute(sql, values, (err2, rows9, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
-              cb(err2, rows7, fields);
+              cb(err2, rows9, fields);
             }).once("end", () => {
               conn.release();
             });
@@ -82634,8 +82734,8 @@ async function openConnection(env = process.env) {
   });
 }
 function firstRow(result) {
-  const rows7 = result[0];
-  return Array.isArray(rows7) ? rows7[0] : void 0;
+  const rows9 = result[0];
+  return Array.isArray(rows9) ? rows9[0] : void 0;
 }
 async function count(conn, sql, params) {
   const row = firstRow(await conn.query(sql, params));
@@ -82664,8 +82764,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows7] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows7) ? rows7.map((r) => String(r.name)) : [];
+  const [rows9] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows9) ? rows9.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -82794,8 +82894,8 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows7] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row = Array.isArray(rows7) ? rows7[0] : void 0;
+          const [rows9] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row = Array.isArray(rows9) ? rows9[0] : void 0;
           return row?.value === void 0 || row.value === null ? null : String(row.value);
         });
       }
@@ -82842,6 +82942,99 @@ var init_whatsapp_number = __esm({
   }
 });
 
+// packages/api/dist/application/settings/platform.js
+function emptyPlatformSettings() {
+  return { entryMode: "directo", cities: [], quietFrom: null, quietTo: null, welcomeIntro: null, features: { appointments: true, workorders: true, quotes: true } };
+}
+function parseEntryMode(input) {
+  return input === "menu" ? "menu" : "directo";
+}
+function parseCities(input) {
+  if (typeof input !== "string")
+    return [];
+  return [
+    ...new Set(input.split(/[,\n;]/).map((c) => c.trim().replace(/\s+/g, " ")).filter((c) => c.length >= 2 && c.length <= 60).map((c) => c.slice(0, 60)))
+  ].slice(0, 40);
+}
+function parseTime(input) {
+  return typeof input === "string" && TIME.test(input.trim()) ? input.trim() : null;
+}
+function cityAllowed(city, cities) {
+  if (cities.length === 0)
+    return true;
+  return cities.some((c) => normalize(c) === normalize(city));
+}
+function localTime(now = /* @__PURE__ */ new Date()) {
+  return new Intl.DateTimeFormat("es-EC", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "America/Guayaquil" }).format(now);
+}
+function inQuietHours(settings, now = /* @__PURE__ */ new Date()) {
+  const { quietFrom, quietTo } = settings;
+  if (!quietFrom || !quietTo || quietFrom === quietTo)
+    return false;
+  const current = localTime(now);
+  return quietFrom < quietTo ? current >= quietFrom && current < quietTo : current >= quietFrom || current < quietTo;
+}
+function quietNotice(settings, now = /* @__PURE__ */ new Date()) {
+  if (!inQuietHours(settings, now))
+    return null;
+  return `Horario silencioso (${settings.quietFrom} a ${settings.quietTo}): evita enviar mensajes salvo que el contacto haya escrito primero.`;
+}
+async function loadPlatformSettings(settings) {
+  const result = emptyPlatformSettings();
+  const [cities, quietFrom, quietTo, welcomeIntro, features, entryMode2] = await Promise.all([
+    settings.get(PLATFORM_KEYS.cities),
+    settings.get(PLATFORM_KEYS.quietFrom),
+    settings.get(PLATFORM_KEYS.quietTo),
+    settings.get(PLATFORM_KEYS.welcomeIntro),
+    settings.get(PLATFORM_KEYS.features),
+    settings.get(PLATFORM_KEYS.entryMode)
+  ]);
+  result.entryMode = parseEntryMode(entryMode2);
+  result.cities = parseCities(cities ?? "");
+  result.quietFrom = parseTime(quietFrom);
+  result.quietTo = parseTime(quietTo);
+  result.welcomeIntro = welcomeIntro?.trim() ? welcomeIntro.trim().slice(0, 300) : null;
+  if (features) {
+    const off = new Set(features.split(",").map((f) => f.trim()));
+    for (const feature of FEATURES)
+      result.features[feature.key] = !off.has(feature.key);
+  }
+  return result;
+}
+async function savePlatformSettings(settings, values, updatedBy) {
+  await settings.set(PLATFORM_KEYS.entryMode, values.entryMode, updatedBy);
+  await settings.set(PLATFORM_KEYS.cities, values.cities.join(", "), updatedBy);
+  await settings.set(PLATFORM_KEYS.quietFrom, values.quietFrom ?? "", updatedBy);
+  await settings.set(PLATFORM_KEYS.quietTo, values.quietTo ?? "", updatedBy);
+  await settings.set(PLATFORM_KEYS.welcomeIntro, values.welcomeIntro ?? "", updatedBy);
+  const off = FEATURES.filter((f) => !values.features[f.key]).map((f) => f.key);
+  await settings.set(PLATFORM_KEYS.features, off.join(","), updatedBy);
+}
+function featurePaused(settings, key) {
+  return settings.features[key] ? null : FEATURES.find((f) => f.key === key)?.pausedText ?? "Funci\xF3n pausada desde Ajustes.";
+}
+var PLATFORM_KEYS, FEATURES, TIME, normalize;
+var init_platform = __esm({
+  "packages/api/dist/application/settings/platform.js"() {
+    "use strict";
+    PLATFORM_KEYS = {
+      cities: "platform.cities",
+      quietFrom: "platform.quietFrom",
+      quietTo: "platform.quietTo",
+      welcomeIntro: "platform.welcomeIntro",
+      features: "platform.features",
+      entryMode: "platform.entryMode"
+    };
+    FEATURES = [
+      { key: "appointments", label: "Turnos con talleres", pausedText: "Los turnos est\xE1n pausados desde Ajustes." },
+      { key: "workorders", label: "\xD3rdenes de trabajo", pausedText: "Las \xF3rdenes de trabajo est\xE1n pausadas desde Ajustes." },
+      { key: "quotes", label: "Cotizaciones con almacenes", pausedText: "Las cotizaciones est\xE1n pausadas desde Ajustes." }
+    ];
+    TIME = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    normalize = (value2) => value2.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
+  }
+});
+
 // packages/api/dist/infrastructure/visits/visit-store.js
 var MAX_AGE_MS, MysqlVisitStore;
 var init_visit_store = __esm({
@@ -82861,15 +83054,15 @@ var init_visit_store = __esm({
           await conn.end().catch(() => void 0);
         }
       }
-      record(code, ref) {
+      record(code, ref, profile = null) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), 'entry.visit', NULL, NULL, 'Visit', ?, ?, CURRENT_TIMESTAMP(3))", [code, JSON.stringify({ ref })]);
+          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), 'entry.visit', NULL, NULL, 'Visit', ?, ?, CURRENT_TIMESTAMP(3))", [code, JSON.stringify({ ref, perfil: profile })]);
         });
       }
       find(code, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const [rows7] = await conn.query("SELECT payload, createdAt FROM `Event` WHERE type = 'entry.visit' AND entityType = 'Visit' AND entityId = ? AND createdAt >= ? ORDER BY createdAt DESC LIMIT 1", [code, new Date(now.getTime() - MAX_AGE_MS)]);
-          const row = Array.isArray(rows7) ? rows7[0] : void 0;
+          const [rows9] = await conn.query("SELECT payload, createdAt FROM `Event` WHERE type = 'entry.visit' AND entityType = 'Visit' AND entityId = ? AND createdAt >= ? ORDER BY createdAt DESC LIMIT 1", [code, new Date(now.getTime() - MAX_AGE_MS)]);
+          const row = Array.isArray(rows9) ? rows9[0] : void 0;
           if (!row)
             return null;
           let payload = row.payload;
@@ -82880,8 +83073,13 @@ var init_visit_store = __esm({
               payload = null;
             }
           }
-          const ref = payload && typeof payload === "object" && "ref" in payload ? payload.ref : null;
-          return { code, ref: typeof ref === "string" ? ref : null, createdAt: row.createdAt };
+          const data = payload && typeof payload === "object" ? payload : {};
+          return {
+            code,
+            ref: typeof data.ref === "string" ? data.ref : null,
+            profile: typeof data.perfil === "string" ? data.perfil : null,
+            createdAt: row.createdAt
+          };
         });
       }
     };
@@ -84322,9 +84520,9 @@ var init_maintenance_rules = __esm({
 function findSubservice(serviceId) {
   return SUBSERVICE_INDEX.get(serviceId);
 }
-function normalizeList(list5, allValues) {
+function normalizeList(list6, allValues) {
   const expanded = /* @__PURE__ */ new Set();
-  for (const value2 of list5) {
+  for (const value2 of list6) {
     if (value2 === "*") {
       for (const v of allValues)
         expanded.add(v);
@@ -84520,9 +84718,9 @@ function computeItem(input, serviceId) {
   const kmActive = effKm !== null;
   const monthsActive = effMonths !== null;
   const dueKm = kmActive ? baseKm + effKm : input.odometerKm;
-  const dueDate = monthsActive ? addMonths(baseDate, effMonths) : today;
+  const dueDate2 = monthsActive ? addMonths(baseDate, effMonths) : today;
   const remainingKm = kmActive ? dueKm - input.odometerKm : null;
-  const remainingDays = monthsActive ? daysBetween(today, dueDate) : null;
+  const remainingDays = monthsActive ? daysBetween(today, dueDate2) : null;
   const status = computeItemStatus(remainingKm, remainingDays);
   return {
     serviceId: ref.subservice.id,
@@ -84530,7 +84728,7 @@ function computeItem(input, serviceId) {
     categoryId: ref.category.id,
     categoryName: ref.category.name,
     dueKm,
-    dueDate,
+    dueDate: dueDate2,
     remainingKm,
     remainingDays,
     effKm,
@@ -84822,7 +85020,7 @@ var init_schemas2 = __esm({
     shopSchema = external_exports.object({
       ...commonFields,
       ...businessFields,
-      services: external_exports.preprocess((v) => v === void 0 || v === null ? [] : Array.isArray(v) ? v : [v], external_exports.array(external_exports.string())).refine((list5) => list5.length > 0, "Elige al menos un servicio que ofrece el taller").refine((list5) => list5.every((id) => categoryIds.includes(id)), "Servicio no v\xE1lido")
+      services: external_exports.preprocess((v) => v === void 0 || v === null ? [] : Array.isArray(v) ? v : [v], external_exports.array(external_exports.string())).refine((list6) => list6.length > 0, "Elige al menos un servicio que ofrece el taller").refine((list6) => list6.every((id) => categoryIds.includes(id)), "Servicio no v\xE1lido")
     });
     storeSchema = external_exports.object({
       ...commonFields,
@@ -85119,9 +85317,9 @@ async function scalar(conn, sql, params = []) {
   const row = rows(await conn.query(sql, params))[0];
   return Number(row?.n ?? 0);
 }
-function grouped(list5) {
+function grouped(list6) {
   const out = {};
-  for (const r of list5)
+  for (const r of list6)
     out[String(r.k)] = Number(r.n ?? 0);
   return out;
 }
@@ -85148,7 +85346,7 @@ var init_admin_store = __esm({
       }
       findAdminByEmail(email) {
         return this.run(async (conn) => {
-          const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
+          const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
           if (!row)
             return null;
           return {
@@ -85156,7 +85354,8 @@ var init_admin_store = __esm({
             email: String(row.email),
             name: String(row.name),
             passwordHash: String(row.passwordHash),
-            totpSecret: row.totpSecret ? String(row.totpSecret) : null
+            totpSecret: row.totpSecret ? String(row.totpSecret) : null,
+            staffRole: row.staffRole ? String(row.staffRole) : null
           };
         });
       }
@@ -85167,11 +85366,11 @@ var init_admin_store = __esm({
           let id;
           if (existing) {
             id = String(existing.id);
-            await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id]);
+            await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', staffRole = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id]);
           } else {
             const created = rows(await conn.query("SELECT UUID() AS id"))[0];
             id = String(created?.id);
-            await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, email, input.phone, input.passwordHash, input.name]);
+            await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, staffRole, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, email, input.phone, input.passwordHash, input.name]);
           }
           await conn.query("INSERT INTO `AdminTotp` (userId, secret, createdAt, updatedAt) VALUES (?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE secret = VALUES(secret), updatedAt = CURRENT_TIMESTAMP(3)", [id, input.totpSecret]);
           return id;
@@ -85179,7 +85378,7 @@ var init_admin_store = __esm({
       }
       findAdminById(id) {
         return this.run(async (conn) => {
-          const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id]))[0];
+          const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id]))[0];
           if (!row)
             return null;
           return {
@@ -85187,7 +85386,8 @@ var init_admin_store = __esm({
             email: String(row.email),
             name: String(row.name),
             passwordHash: String(row.passwordHash),
-            totpSecret: row.totpSecret ? String(row.totpSecret) : null
+            totpSecret: row.totpSecret ? String(row.totpSecret) : null,
+            staffRole: row.staffRole ? String(row.staffRole) : null
           };
         });
       }
@@ -85258,6 +85458,85 @@ var init_admin_store = __esm({
   }
 });
 
+// packages/api/dist/application/admin/permissions.js
+function normalizeRole(value2) {
+  if (value2 === null || value2 === void 0 || value2 === "")
+    return "admin";
+  const clean = String(value2).trim().toLowerCase();
+  return KNOWN.has(clean) ? clean : "lectura";
+}
+function roleLabel(role) {
+  return STAFF_ROLES.find((r) => r.key === role)?.label ?? role;
+}
+function capabilitiesOf(role) {
+  return ROLE_CAPABILITIES[role] ?? ROLE_CAPABILITIES.lectura;
+}
+function can(role, capability) {
+  return capabilitiesOf(normalizeRole(role)).includes(capability);
+}
+function requiredCapability(method, path) {
+  const clean = (path.split("?")[0] || "/").replace(/\/+$/, "") || "/";
+  if (EXEMPT.some((r) => r.test(clean)))
+    return null;
+  const verb = method.toUpperCase() === "POST" ? "POST" : "GET";
+  for (const rule of RULES) {
+    if (rule.method === verb && rule.pattern.test(clean))
+      return rule.capability;
+  }
+  return verb === "POST" ? "settings" : "read";
+}
+var STAFF_ROLES, ROLE_CAPABILITIES, KNOWN, EXEMPT, RULES;
+var init_permissions = __esm({
+  "packages/api/dist/application/admin/permissions.js"() {
+    "use strict";
+    STAFF_ROLES = [
+      { key: "admin", label: "Administrador", description: "Acceso total, incluidos ajustes y equipo." },
+      { key: "operador", label: "Operador", description: "Atiende por WhatsApp, registra, agenda, abre \xF3rdenes, cotiza y media las relaciones." },
+      { key: "verificador", label: "Verificador", description: "Revisa y aprueba talleres y almacenes, resuelve disputas y deja notas." },
+      { key: "soporte", label: "Soporte", description: "Atiende conversaciones, media relaciones y deja notas; no registra ni agenda." },
+      { key: "lectura", label: "Solo lectura", description: "Solo consulta; no puede cambiar nada." }
+    ];
+    ROLE_CAPABILITIES = {
+      admin: ["read", "attend", "registrations", "verifications", "appointments", "workorders", "quotes", "notes", "relations", "disputes", "sanctions", "exports", "lopdp", "settings", "team"],
+      operador: ["read", "attend", "registrations", "appointments", "workorders", "quotes", "notes", "relations"],
+      verificador: ["read", "verifications", "notes", "disputes"],
+      soporte: ["read", "attend", "notes", "relations"],
+      lectura: ["read"]
+    };
+    KNOWN = new Set(STAFF_ROLES.map((r) => r.key));
+    EXEMPT = [/^\/login(\/|$)/, /^\/logout$/, /^\/setup(\/|$)/, /^\/account(\/|$)/];
+    RULES = [
+      { method: "POST", pattern: /^\/attend(\/|$)/, capability: "attend" },
+      { method: "POST", pattern: /^\/users\/new(\/|$)/, capability: "registrations" },
+      { method: "GET", pattern: /^\/users\/new$/, capability: "registrations" },
+      { method: "POST", pattern: /^\/users\/[^/]+\/vehicles$/, capability: "registrations" },
+      { method: "POST", pattern: /^\/users\/[^/]+\/notes$/, capability: "notes" },
+      { method: "GET", pattern: /^\/users\/[^/]+\/schedule$/, capability: "appointments" },
+      { method: "POST", pattern: /^\/verifications(\/|$)/, capability: "verifications" },
+      { method: "POST", pattern: /^\/appointments(\/|$)/, capability: "appointments" },
+      { method: "GET", pattern: /^\/work-orders\/new$/, capability: "workorders" },
+      { method: "POST", pattern: /^\/work-orders(\/|$)/, capability: "workorders" },
+      { method: "GET", pattern: /^\/quotes\/new$/, capability: "quotes" },
+      { method: "POST", pattern: /^\/quotes(\/|$)/, capability: "quotes" },
+      { method: "POST", pattern: /^\/relations\/[^/]+\/dispute$/, capability: "disputes" },
+      { method: "POST", pattern: /^\/relations(\/|$)/, capability: "relations" },
+      { method: "POST", pattern: /^\/disputes(\/|$)/, capability: "disputes" },
+      { method: "POST", pattern: /^\/users\/[^/]+\/sanctions$/, capability: "sanctions" },
+      { method: "POST", pattern: /^\/sanctions(\/|$)/, capability: "sanctions" },
+      // La lista de sanciones es información sensible de moderación: solo el administrador.
+      { method: "GET", pattern: /^\/sanctions(\/|$)/, capability: "sanctions" },
+      // Respaldos y solicitudes de datos: salen datos personales del sistema, solo el administrador.
+      { method: "GET", pattern: /^\/exports(\/|$)/, capability: "exports" },
+      { method: "GET", pattern: /^\/data-requests(\/|$)/, capability: "lopdp" },
+      { method: "POST", pattern: /^\/data-requests(\/|$)/, capability: "lopdp" },
+      { method: "GET", pattern: /^\/settings(\/|$)/, capability: "settings" },
+      { method: "POST", pattern: /^\/settings(\/|$)/, capability: "settings" },
+      { method: "GET", pattern: /^\/team(\/|$)/, capability: "team" },
+      { method: "POST", pattern: /^\/team(\/|$)/, capability: "team" }
+    ];
+  }
+});
+
 // packages/api/dist/application/admin/security.js
 import { createHmac as createHmac2, randomBytes as randomBytes3, timingSafeEqual as timingSafeEqual2 } from "node:crypto";
 function getAdminSessionSecret() {
@@ -85276,6 +85555,7 @@ function createPendingSession(user) {
     id: randomBytes3(24).toString("base64url"),
     userId: user.id,
     email: user.email,
+    role: normalizeRole(user.role),
     twoFactorVerified: false,
     csrfToken: createCsrfToken(),
     createdAt: now,
@@ -85314,6 +85594,22 @@ function getSession(id) {
   }
   session.lastSeenAt = Date.now();
   return session;
+}
+function revokeSessionsForUser(userId) {
+  let closed = 0;
+  for (const [id, session] of sessions3) {
+    if (session.userId === userId) {
+      sessions3.delete(id);
+      closed += 1;
+    }
+  }
+  for (const [id, session] of pendingSessions) {
+    if (session.userId === userId) {
+      pendingSessions.delete(id);
+      closed += 1;
+    }
+  }
+  return closed;
 }
 function deleteSession(id) {
   if (!id)
@@ -85481,6 +85777,7 @@ var SESSION_COOKIE, SESSION_IDLE_MS, SESSION_ABSOLUTE_MS, TOTP_STEP_SECONDS, TOT
 var init_security = __esm({
   "packages/api/dist/application/admin/security.js"() {
     "use strict";
+    init_permissions();
     SESSION_COOKIE = "amp_admin_session";
     SESSION_IDLE_MS = 30 * 60 * 1e3;
     SESSION_ABSOLUTE_MS = 12 * 60 * 60 * 1e3;
@@ -85496,8 +85793,9 @@ var init_security = __esm({
 // packages/api/dist/interfaces/admin/views.js
 function layout(input) {
   const nonce = escapeHtml(input.nonce);
+  const links = NAV.filter((item) => item.capability === null || can(input.role, item.capability)).map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("");
   const header = input.nav ? `<header><div class="brand">Auto<span>Mant</span>Pro \xB7 Admin</div>
-  <nav><a href="/admin">Tablero</a><a href="/admin/attend">Atender</a><a href="/admin/users">Usuarios</a><a href="/admin/vehicles">Veh\xEDculos</a><a href="/admin/shops">Talleres</a><a href="/admin/verifications">Verificaciones</a><a href="/admin/appointments">Turnos</a><a href="/admin/work-orders">\xD3rdenes</a><a href="/admin/quotes">Cotizaciones</a><a href="/admin/audit">Auditor\xEDa</a><a href="/admin/settings">Ajustes</a><a href="/admin/account">Mi cuenta</a></nav>
+  <nav>${links}</nav>
   <form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(input.csrfToken ?? "")}"><button type="submit">Salir</button></form></header>` : "";
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>${escapeHtml(input.title)} \xB7 AutoMantPro Admin</title>
@@ -85563,11 +85861,12 @@ function tableView(title, base, page, columns) {
   const next = page.items.length === page.pageSize ? `<a href="${base}?page=${page.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>${escapeHtml(title)}</h1><div class="scroll"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div><div class="pager">${prev}${next}</div>`;
 }
-var STYLES3;
+var STYLES3, NAV;
 var init_views = __esm({
   "packages/api/dist/interfaces/admin/views.js"() {
     "use strict";
     init_page();
+    init_permissions();
     STYLES3 = `
 :root{--bg:#f5f8fa;--card:#fff;--text:#0f1b24;--muted:#51626f;--line:#e2e8ee;--cyan:#00a8c6;--green:#16a34a;--red:#dc2626}
 @media (prefers-color-scheme:dark){:root{--bg:#071116;--card:#0d1c24;--text:#e6f1f5;--muted:#9fb3bf;--line:#1e3440;--cyan:#22d3ee;--green:#4ade80;--red:#f87171}}
@@ -85602,6 +85901,26 @@ button.danger{background:var(--red)}
 input[type=radio]{width:auto;min-height:0;margin-top:4px}.choice{display:flex;gap:10px;align-items:flex-start;font-weight:400;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0}
 .card form{margin-bottom:8px}
 `;
+    NAV = [
+      { href: "/admin", label: "Tablero", capability: "read" },
+      { href: "/admin/attend", label: "Atender", capability: "attend" },
+      { href: "/admin/users", label: "Usuarios", capability: "read" },
+      { href: "/admin/vehicles", label: "Veh\xEDculos", capability: "read" },
+      { href: "/admin/shops", label: "Talleres", capability: "read" },
+      { href: "/admin/verifications", label: "Verificaciones", capability: "read" },
+      { href: "/admin/appointments", label: "Turnos", capability: "read" },
+      { href: "/admin/work-orders", label: "\xD3rdenes", capability: "read" },
+      { href: "/admin/quotes", label: "Cotizaciones", capability: "read" },
+      { href: "/admin/relations", label: "Relaciones", capability: "read" },
+      { href: "/admin/disputes", label: "Disputas", capability: "read" },
+      { href: "/admin/sanctions", label: "Sanciones", capability: "sanctions" },
+      { href: "/admin/data-requests", label: "Datos (LOPDP)", capability: "lopdp" },
+      { href: "/admin/exports", label: "Respaldos", capability: "exports" },
+      { href: "/admin/audit", label: "Auditor\xEDa", capability: "read" },
+      { href: "/admin/settings", label: "Ajustes", capability: "settings" },
+      { href: "/admin/team", label: "Equipo", capability: "team" },
+      { href: "/admin/account", label: "Mi cuenta", capability: null }
+    ];
   }
 });
 
@@ -86485,14 +86804,14 @@ var require_regex = __commonJS({
     var TEST_KANJI = new RegExp("^" + kanji + "$");
     var TEST_NUMERIC = new RegExp("^" + numeric + "$");
     var TEST_ALPHANUMERIC = new RegExp("^[A-Z0-9 $%*+\\-./:]+$");
-    exports.testKanji = function testKanji(str3) {
-      return TEST_KANJI.test(str3);
+    exports.testKanji = function testKanji(str5) {
+      return TEST_KANJI.test(str5);
     };
-    exports.testNumeric = function testNumeric(str3) {
-      return TEST_NUMERIC.test(str3);
+    exports.testNumeric = function testNumeric(str5) {
+      return TEST_NUMERIC.test(str5);
     };
-    exports.testAlphanumeric = function testAlphanumeric(str3) {
-      return TEST_ALPHANUMERIC.test(str3);
+    exports.testAlphanumeric = function testAlphanumeric(str5) {
+      return TEST_ALPHANUMERIC.test(str5);
     };
   }
 });
@@ -86986,13 +87305,13 @@ var require_segments = __commonJS({
     var Regex = require_regex();
     var Utils = require_utils6();
     var dijkstra = require_dijkstra();
-    function getStringByteLength(str3) {
-      return unescape(encodeURIComponent(str3)).length;
+    function getStringByteLength(str5) {
+      return unescape(encodeURIComponent(str5)).length;
     }
-    function getSegments(regex, mode, str3) {
+    function getSegments(regex, mode, str5) {
       const segments = [];
       let result;
-      while ((result = regex.exec(str3)) !== null) {
+      while ((result = regex.exec(str5)) !== null) {
         segments.push({
           data: result[0],
           index: result.index,
@@ -89818,13 +90137,13 @@ var require_svg_tag = __commonJS({
     var Utils = require_utils7();
     function getColorAttrib(color, attrib) {
       const alpha = color.a / 255;
-      const str3 = attrib + '="' + color.hex + '"';
-      return alpha < 1 ? str3 + " " + attrib + '-opacity="' + alpha.toFixed(2).slice(1) + '"' : str3;
+      const str5 = attrib + '="' + color.hex + '"';
+      return alpha < 1 ? str5 + " " + attrib + '-opacity="' + alpha.toFixed(2).slice(1) + '"' : str5;
     }
     function svgCmd(cmd, x, y) {
-      let str3 = cmd + x;
-      if (typeof y !== "undefined") str3 += " " + y;
-      return str3;
+      let str5 = cmd + x;
+      if (typeof y !== "undefined") str5 += " " + y;
+      return str5;
     }
     function qrToPath(data, size, margin) {
       let path = "";
@@ -90399,6 +90718,1965 @@ var init_setup_wizard = __esm({
   }
 });
 
+// packages/api/dist/interfaces/admin/views-team.js
+function roleOptions(selected) {
+  return STAFF_ROLES.map((r) => `<option value="${escapeHtml(r.key)}"${r.key === selected ? " selected" : ""}>${escapeHtml(r.label)}</option>`).join("");
+}
+function memberCard(member, csrf, self2, lastAdmin) {
+  const role = normalizeRole(member.staffRole);
+  const caps = capabilitiesOf(role).map((c) => CAPABILITY_LABELS[c] ?? c).join(", ");
+  const state = member.active ? member.hasTotp ? `<span class="ok">Activa</span>` : `<span class="muted">Activa \xB7 falta registrar el segundo factor en su primer ingreso</span>` : `<span class="error">Suspendida</span>`;
+  const locked = self2 || lastAdmin;
+  const note = self2 ? `<p class="muted">Es tu propia cuenta: otro administrador debe cambiarte el rol.</p>` : lastAdmin ? `<p class="muted">Es el \xFAltimo administrador activo: no se puede cambiar ni suspender.</p>` : "";
+  const actions = locked ? "" : `<form method="post" action="/admin/team/${escapeHtml(member.id)}/role" autocomplete="off">${csrf}
+      <label for="role-${escapeHtml(member.id)}">Rol</label>
+      <select id="role-${escapeHtml(member.id)}" name="staffRole">${roleOptions(role)}</select>
+      <label for="pw-role-${escapeHtml(member.id)}">Tu contrase\xF1a actual</label>
+      <input id="pw-role-${escapeHtml(member.id)}" name="current" type="password" required autocomplete="current-password">
+      <button type="submit">Guardar rol</button></form>
+      <form method="post" action="/admin/team/${escapeHtml(member.id)}/state" autocomplete="off">${csrf}
+      <input type="hidden" name="active" value="${member.active ? "0" : "1"}">
+      <label for="pw-state-${escapeHtml(member.id)}">Tu contrase\xF1a actual</label>
+      <input id="pw-state-${escapeHtml(member.id)}" name="current" type="password" required autocomplete="current-password">
+      <button class="${member.active ? "danger" : ""}" type="submit">${member.active ? "Suspender acceso" : "Reactivar acceso"}</button></form>`;
+  return `<div class="card"><h2>${escapeHtml(member.name || member.email)}</h2>
+    <div>${escapeHtml(member.email)}</div>
+    <div>Rol: <strong>${escapeHtml(roleLabel(role))}</strong> <span class="muted">(${escapeHtml(caps)})</span></div>
+    <div>Estado: ${state}</div>${note}${actions}</div>`;
+}
+function teamView(input) {
+  const csrf = `<input type="hidden" name="csrf" value="${escapeHtml(input.csrf)}">`;
+  const flash = input.flash ? `<p class="${input.flash.kind === "ok" ? "ok" : "error"}" role="status">${escapeHtml(input.flash.text)}</p>` : "";
+  if (input.members === null) {
+    return `<div class="stack"><h1>Equipo</h1>${flash}<div class="card"><p class="error">No se pudo consultar la base de datos.</p></div></div>`;
+  }
+  const activeAdmins = input.members.filter((m) => m.active && normalizeRole(m.staffRole) === "admin");
+  const cards = input.members.map((m) => memberCard(m, csrf, m.id === input.selfId, activeAdmins.length <= 1 && activeAdmins.some((a) => a.id === m.id))).join("");
+  const roles = STAFF_ROLES.map((r) => `<li><strong>${escapeHtml(r.label)}:</strong> ${escapeHtml(r.description)}</li>`).join("");
+  return `<div class="stack"><h1>Equipo</h1>${flash}
+  <div class="card"><h2>Agregar una persona</h2>
+    <form method="post" action="/admin/team" autocomplete="off">${csrf}
+    <label for="new-name">Nombre</label><input id="new-name" name="name" required maxlength="60">
+    <label for="new-email">Correo</label><input id="new-email" name="email" type="email" required maxlength="191">
+    <label for="new-role">Rol</label><select id="new-role" name="staffRole">${roleOptions("operador")}</select>
+    <label for="new-password">Contrase\xF1a temporal (12 caracteres o m\xE1s)</label>
+    <input id="new-password" name="password" type="password" required autocomplete="new-password">
+    <label for="new-confirm">Repite la contrase\xF1a temporal</label>
+    <input id="new-confirm" name="confirm" type="password" required autocomplete="new-password">
+    <label for="new-current">Tu contrase\xF1a actual</label>
+    <input id="new-current" name="current" type="password" required autocomplete="current-password">
+    <button class="full" type="submit">Crear cuenta</button></form></div>
+  ${cards}
+  <div class="card"><h2>Qu\xE9 puede hacer cada rol</h2><ul>${roles}</ul></div></div>`;
+}
+function enrollView(input) {
+  return `<form class="login" method="post" action="/admin/login/enroll" autocomplete="off">
+  <h1 class="brand">Auto<span>Mant</span>Pro</h1>
+  <p class="muted">Primer ingreso: registra tu segundo factor.</p>
+  ${input.error ? `<p class="error">${escapeHtml(input.error)}</p>` : ""}
+  <p>Escanea este c\xF3digo con Google Authenticator, Microsoft Authenticator o Authy.</p>
+  <div class="qr">${input.qrSvg}</div>
+  <p class="muted">Si no puedes escanear, escribe esta clave en la aplicaci\xF3n: <code>${escapeHtml(input.secret)}</code></p>
+  <label for="code">C\xF3digo de 6 d\xEDgitos</label>
+  <input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" required>
+  <button class="full" type="submit">Activar y entrar</button></form>`;
+}
+var CAPABILITY_LABELS;
+var init_views_team = __esm({
+  "packages/api/dist/interfaces/admin/views-team.js"() {
+    "use strict";
+    init_page();
+    init_permissions();
+    CAPABILITY_LABELS = {
+      read: "consultar",
+      attend: "atender",
+      registrations: "registrar",
+      verifications: "verificar",
+      appointments: "turnos",
+      workorders: "\xF3rdenes",
+      quotes: "cotizaciones",
+      notes: "notas",
+      settings: "ajustes",
+      team: "equipo"
+    };
+  }
+});
+
+// packages/api/dist/interfaces/admin/team.js
+function registerTeamRoutes(app2, deps) {
+  async function render(request, reply, session, flash, status = 200) {
+    let members = null;
+    try {
+      members = await deps.staff.list();
+    } catch {
+      members = null;
+    }
+    return deps.html(reply, request, "Equipo", teamView({ csrf: session.csrfToken, members, selfId: session.userId, flash }), session, status);
+  }
+  function checkCsrf(request, reply) {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return null;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf)) {
+      deps.html(reply, request, "Equipo", `<p class="error">Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.</p>`, session, 403);
+      return null;
+    }
+    return { session, body };
+  }
+  async function confirmPassword(request, reply, session, body) {
+    const account = await deps.store.findAdminById(session.userId);
+    if (!account) {
+      await render(request, reply, session, { kind: "error", text: "Cuenta no encontrada." }, 404);
+      return null;
+    }
+    if (!checkRateLimit(account.email, request.ip).allowed) {
+      await render(request, reply, session, { kind: "error", text: "Demasiados intentos. Espera unos minutos." }, 429);
+      return null;
+    }
+    const ok = await comparePassword(typeof body.current === "string" ? body.current : "", account.passwordHash);
+    if (!ok) {
+      recordLoginAttempt(account.email, request.ip, false);
+      await render(request, reply, session, { kind: "error", text: "La contrase\xF1a actual no es correcta." }, 400);
+      return null;
+    }
+    return { id: account.id, email: account.email };
+  }
+  async function guard(session, memberId, nextRole, nextActive) {
+    if (memberId === session.userId)
+      return "No puedes cambiar tu propio rol ni tu propio acceso: p\xEDdele a otro administrador que lo haga.";
+    const member = await deps.staff.find(memberId);
+    if (!member)
+      return "Esa cuenta no existe.";
+    const wasAdmin = member.active && normalizeRole(member.staffRole) === "admin";
+    const staysAdmin = nextActive === false ? false : nextRole === null ? wasAdmin : nextRole === "admin";
+    if (wasAdmin && !staysAdmin && await deps.staff.countActiveAdmins() <= 1) {
+      return "Es el \xFAltimo administrador activo: primero nombra a otro administrador.";
+    }
+    return null;
+  }
+  app2.get("/team", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    return render(request, reply, session);
+  });
+  app2.post("/team", async (request, reply) => {
+    const ctx = checkCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const parsed = memberInput.safeParse(body);
+    if (!parsed.success) {
+      return render(request, reply, session, { kind: "error", text: parsed.error.issues[0]?.message ?? "Datos inv\xE1lidos" }, 400);
+    }
+    const actor = await confirmPassword(request, reply, session, body);
+    if (!actor)
+      return reply;
+    const { email, name, staffRole, password } = parsed.data;
+    try {
+      if (await deps.staff.emailTaken(email)) {
+        return render(request, reply, session, { kind: "error", text: "Ya existe una cuenta con ese correo." }, 400);
+      }
+      const id = await deps.staff.create({
+        email,
+        name,
+        passwordHash: await hashPassword(password),
+        staffRole,
+        phone: `admin:${email}`
+      });
+      await deps.audit("admin.team.created", actor.id, `Alta de ${email} con rol ${staffRole}`);
+      void id;
+    } catch {
+      return render(request, reply, session, { kind: "error", text: "No se pudo crear la cuenta (base de datos no disponible)." }, 503);
+    }
+    return render(request, reply, session, {
+      kind: "ok",
+      text: `Cuenta creada para ${email} con rol ${roleLabel(staffRole)}. Entr\xE9gale la contrase\xF1a temporal en persona: en su primer ingreso registrar\xE1 su propio segundo factor y podr\xE1 cambiarla en \xABMi cuenta\xBB.`
+    });
+  });
+  app2.post("/team/:id/role", async (request, reply) => {
+    const ctx = checkCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const memberId = String(request.params.id ?? "");
+    const parsed = roleInput.safeParse(body);
+    if (!parsed.success)
+      return render(request, reply, session, { kind: "error", text: "Rol no v\xE1lido." }, 400);
+    const actor = await confirmPassword(request, reply, session, body);
+    if (!actor)
+      return reply;
+    try {
+      const problem = await guard(session, memberId, parsed.data.staffRole, null);
+      if (problem)
+        return render(request, reply, session, { kind: "error", text: problem }, 400);
+      await deps.staff.setRole(memberId, parsed.data.staffRole);
+    } catch {
+      return render(request, reply, session, { kind: "error", text: "No se pudo guardar el rol (base de datos no disponible)." }, 503);
+    }
+    revokeSessionsForUser(memberId);
+    await deps.audit("admin.team.role", actor.id, `Rol de la cuenta ${memberId} \u2192 ${parsed.data.staffRole}`);
+    return render(request, reply, session, { kind: "ok", text: `Rol actualizado a ${roleLabel(parsed.data.staffRole)}. Deber\xE1 volver a ingresar.` });
+  });
+  app2.post("/team/:id/state", async (request, reply) => {
+    const ctx = checkCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const memberId = String(request.params.id ?? "");
+    const active = body.active === "1";
+    const actor = await confirmPassword(request, reply, session, body);
+    if (!actor)
+      return reply;
+    try {
+      const problem = await guard(session, memberId, null, active);
+      if (problem)
+        return render(request, reply, session, { kind: "error", text: problem }, 400);
+      await deps.staff.setActive(memberId, active);
+    } catch {
+      return render(request, reply, session, { kind: "error", text: "No se pudo cambiar el acceso (base de datos no disponible)." }, 503);
+    }
+    if (!active)
+      revokeSessionsForUser(memberId);
+    await deps.audit("admin.team.state", actor.id, `Acceso de la cuenta ${memberId} \u2192 ${active ? "activo" : "suspendido"}`);
+    return render(request, reply, session, {
+      kind: "ok",
+      text: active ? "Acceso reactivado." : "Acceso suspendido: sus sesiones abiertas se cerraron."
+    });
+  });
+}
+var memberInput, roleInput;
+var init_team = __esm({
+  "packages/api/dist/interfaces/admin/team.js"() {
+    "use strict";
+    init_zod();
+    init_password();
+    init_security();
+    init_permissions();
+    init_views_team();
+    memberInput = external_exports.object({
+      email: external_exports.string().trim().toLowerCase().email("Correo no v\xE1lido").max(191, "Correo demasiado largo"),
+      name: external_exports.string().trim().min(3, "El nombre debe tener entre 3 y 60 caracteres").max(60, "El nombre debe tener entre 3 y 60 caracteres"),
+      staffRole: external_exports.enum(["admin", "operador", "verificador", "soporte", "lectura"]),
+      password: external_exports.string().min(12, "La contrase\xF1a temporal debe tener al menos 12 caracteres").max(200),
+      confirm: external_exports.string()
+    }).refine((d) => d.password === d.confirm, { message: "Las contrase\xF1as no coinciden" });
+    roleInput = external_exports.object({ staffRole: external_exports.enum(["admin", "operador", "verificador", "soporte", "lectura"]) });
+  }
+});
+
+// packages/api/dist/infrastructure/staff/staff-store.js
+function toMember(row) {
+  return {
+    id: String(row.id),
+    email: String(row.email),
+    name: String(row.name ?? ""),
+    staffRole: row.staffRole ? String(row.staffRole) : null,
+    active: row.deletedAt === null || row.deletedAt === void 0,
+    hasTotp: !!row.totpUserId,
+    createdAt: row.createdAt
+  };
+}
+function list5(result) {
+  const [rows9] = result;
+  return Array.isArray(rows9) ? rows9 : [];
+}
+var SELECT, MysqlStaffStore;
+var init_staff_store = __esm({
+  "packages/api/dist/infrastructure/staff/staff-store.js"() {
+    "use strict";
+    SELECT = "SELECT u.id, u.email, u.name, u.staffRole, u.deletedAt, u.createdAt, t.userId AS totpUserId FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.role = 'admin'";
+    MysqlStaffStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      list() {
+        return this.run(async (conn) => list5(await conn.query(`${SELECT} ORDER BY u.deletedAt IS NOT NULL, u.createdAt ASC LIMIT 200`)).map(toMember));
+      }
+      find(id) {
+        return this.run(async (conn) => {
+          const row = list5(await conn.query(`${SELECT} AND u.id = ? LIMIT 1`, [id]))[0];
+          return row ? toMember(row) : null;
+        });
+      }
+      emailTaken(email) {
+        return this.run(async (conn) => {
+          const row = list5(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email.toLowerCase()]))[0];
+          return !!row;
+        });
+      }
+      create(input) {
+        return this.run(async (conn) => {
+          const created = list5(await conn.query("SELECT UUID() AS id"))[0];
+          const id = String(created?.id);
+          await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, staffRole, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', ?, ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, input.email.toLowerCase(), input.phone, input.passwordHash, input.staffRole, input.name]);
+          return id;
+        });
+      }
+      setTotp(id, secret) {
+        return this.run(async (conn) => {
+          await conn.query("INSERT INTO `AdminTotp` (userId, secret, createdAt, updatedAt) VALUES (?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE secret = VALUES(secret), updatedAt = CURRENT_TIMESTAMP(3)", [id, secret]);
+        });
+      }
+      setRole(id, staffRole) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `User` SET staffRole = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role = 'admin'", [staffRole, id]);
+        });
+      }
+      setActive(id, active) {
+        return this.run(async (conn) => {
+          await conn.query(active ? "UPDATE `User` SET deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role = 'admin'" : "UPDATE `User` SET deletedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role = 'admin'", [id]);
+        });
+      }
+      countActiveAdmins() {
+        return this.run(async (conn) => {
+          const row = list5(await conn.query("SELECT COUNT(*) AS n FROM `User` u WHERE u.role = 'admin' AND u.deletedAt IS NULL AND (u.staffRole IS NULL OR u.staffRole = 'admin')"))[0];
+          return Number(row?.n ?? 0);
+        });
+      }
+    };
+  }
+});
+
+// packages/api/dist/application/relations/workflow.js
+function canTransition(from, to) {
+  return (RELATION_TRANSITIONS[from] ?? []).includes(to);
+}
+function sanctionLevel(level) {
+  return SANCTION_LEVELS.find((l) => l.key === level) ?? null;
+}
+function sanctionLabel(level) {
+  return sanctionLevel(level)?.label ?? level;
+}
+function isActive(sanction, now = /* @__PURE__ */ new Date()) {
+  if (sanction.liftedAt)
+    return false;
+  if (sanction.endsAt && time(sanction.endsAt) <= now.getTime())
+    return false;
+  return time(sanction.startsAt) <= now.getTime();
+}
+function nextSanctionLevel(history) {
+  const top = history.reduce((max, s) => Math.max(max, sanctionLevel(s.level)?.step ?? 0), 0);
+  const next = SANCTION_LEVELS.find((l) => l.step === Math.min(top + 1, 4));
+  return (next ?? SANCTION_LEVELS[0]).key;
+}
+function sanctionEnd(level, days, from = /* @__PURE__ */ new Date()) {
+  const config = sanctionLevel(level);
+  const effective = days ?? config?.defaultDays ?? null;
+  if (effective === null || effective <= 0)
+    return null;
+  return new Date(from.getTime() + effective * 24 * 60 * 60 * 1e3);
+}
+function relayHeader(input) {
+  const icon = input.fromRole === "taller" ? "\u{1F527}" : input.fromRole === "almacen" ? "\u{1F4E6}" : "\u{1F697}";
+  const subject = input.subject ? ` (${input.subject})` : "";
+  return `${icon} ${input.fromName} \xB7 ${input.code}${subject}`;
+}
+function relayMessage(input) {
+  return `${relayHeader(input)}
+"${input.body.trim()}"
+
+Responde aqu\xED y se lo hago llegar.`;
+}
+function groupAllowed(parties) {
+  return parties.length >= 2 && parties.every((p) => p.consentShareContact);
+}
+function waitingHours(waitingSince, now = /* @__PURE__ */ new Date()) {
+  if (!waitingSince)
+    return null;
+  return Math.max(0, Math.floor((now.getTime() - time(waitingSince)) / (60 * 60 * 1e3)));
+}
+function counterpart(parties, fromUserId) {
+  return parties.find((p) => p.userId !== fromUserId) ?? null;
+}
+var RELATION_KIND_LABELS, RELATION_STATUS_LABELS, PARTY_ROLE_LABELS, RELATION_TRANSITIONS, RELATION_OPEN_STATUSES, relationCode, disputeCode, SANCTION_LEVELS, time;
+var init_workflow = __esm({
+  "packages/api/dist/application/relations/workflow.js"() {
+    "use strict";
+    RELATION_KIND_LABELS = {
+      dueno_taller: "Due\xF1o \u2194 Taller",
+      taller_almacen: "Taller \u2194 Almac\xE9n",
+      dueno_almacen: "Due\xF1o \u2194 Almac\xE9n",
+      tripartita: "Due\xF1o \u2194 Taller \u2194 Almac\xE9n"
+    };
+    RELATION_STATUS_LABELS = {
+      propuesta: "Propuesta",
+      activa: "Activa",
+      en_disputa: "En disputa",
+      cerrada: "Cerrada",
+      bloqueada: "Bloqueada"
+    };
+    PARTY_ROLE_LABELS = {
+      dueno: "Due\xF1o",
+      taller: "Taller",
+      almacen: "Almac\xE9n"
+    };
+    RELATION_TRANSITIONS = {
+      propuesta: ["activa", "cerrada", "bloqueada"],
+      activa: ["en_disputa", "cerrada", "bloqueada"],
+      en_disputa: ["activa", "cerrada", "bloqueada"],
+      cerrada: ["activa"],
+      bloqueada: ["activa"]
+    };
+    RELATION_OPEN_STATUSES = ["propuesta", "activa", "en_disputa"];
+    relationCode = (number) => `VN-${String(number).padStart(5, "0")}`;
+    disputeCode = (number) => `DS-${String(number).padStart(4, "0")}`;
+    SANCTION_LEVELS = [
+      { key: "advertencia", label: "Advertencia", step: 1, defaultDays: null, blocksSearch: false, blocksService: false, description: "Queda el aviso y el motivo; no limita nada todav\xEDa." },
+      { key: "suspension_busquedas", label: "Suspensi\xF3n de b\xFAsquedas", step: 2, defaultDays: 15, blocksSearch: true, blocksService: false, description: "Deja de aparecer en las b\xFAsquedas de talleres o almacenes." },
+      { key: "suspension", label: "Suspensi\xF3n", step: 3, defaultDays: 30, blocksSearch: true, blocksService: true, description: "No aparece en b\xFAsquedas ni recibe turnos, \xF3rdenes ni cotizaciones nuevas." },
+      { key: "baja", label: "Baja", step: 4, defaultDays: null, blocksSearch: true, blocksService: true, description: "Sale de la red. Se conserva el historial." }
+    ];
+    time = (value2) => value2 instanceof Date ? value2.getTime() : new Date(value2).getTime();
+  }
+});
+
+// packages/api/dist/interfaces/admin/views-relations.js
+function when(value2) {
+  if (!value2)
+    return "\u2014";
+  const date = value2 instanceof Date ? value2 : new Date(value2);
+  return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeStyle: "short", timeZone: "America/Guayaquil" }).format(date);
+}
+function tabs(current, base, options) {
+  return `<div class="tabs">${options.map(([key, label2]) => `<a class="${key === current ? "active" : ""}" href="${base}?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("")}</div>`;
+}
+function relationsListView(input) {
+  const rows9 = input.page.items.map((r) => {
+    const waiting = waitingHours(r.waitingSince);
+    const late2 = waiting !== null && waiting >= input.waitingHours;
+    return `<tr><td><a href="/admin/relations/${escapeHtml(r.id)}">${escapeHtml(relationCode(r.number))}</a></td>
+      <td>${escapeHtml(RELATION_KIND_LABELS[r.kind] ?? r.kind)}</td>
+      <td>${escapeHtml(r.parties || "\u2014")}${r.subject ? `<br><span class="muted">${escapeHtml(r.subject)}</span>` : ""}</td>
+      <td>${escapeHtml(RELATION_STATUS_LABELS[r.status] ?? r.status)}${r.relayPaused ? ' <span class="muted">(reenv\xEDo en pausa)</span>' : ""}</td>
+      <td>${r.channel === "grupo" ? "Grupo" : "Mediada"}</td>
+      <td>${escapeHtml(when(r.lastMessageAt))}</td>
+      <td>${waiting === null ? "\u2014" : `<span class="${late2 ? "error" : "muted"}">${waiting} h</span>`}</td></tr>`;
+  }).join("");
+  const empty = input.page.items.length === 0 ? `<p class="muted">No hay relaciones con ese filtro.</p>` : "";
+  return `<div class="stack wide"><h1>Relaciones</h1>${flashHtml2(input.flash)}
+  ${tabs(input.filter, "/admin/relations", FILTERS)}
+  <p class="muted">Las partes hablan solo con AutoMantPro: aqu\xED registras lo que dice cada una y el texto listo para reenviar. El tel\xE9fono de una parte se muestra solo si autoriz\xF3 compartirlo.</p>
+  ${empty}
+  <div class="scroll"><table><thead><tr><th>V\xEDnculo</th><th>Tipo</th><th>Partes</th><th>Estado</th><th>Canal</th><th>\xDAltimo mensaje</th><th>Espera</th></tr></thead>
+  <tbody>${rows9}</tbody></table></div>
+  <div class="pager">${input.page.page > 1 ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page - 1}">\u2190 Anteriores</a>` : ""}
+  ${input.page.items.length === input.page.pageSize ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page + 1}">Siguientes \u2192</a>` : ""}</div></div>`;
+}
+function partyCard(detail, party, csrf, canSanction, sanctions) {
+  const phone = party.consentShareContact && party.phone ? party.phone : null;
+  const contact = phone ? `<div>${escapeHtml(formatWhatsappNumber(phone.replace(/\D/g, "")))} \xB7 <a href="https://wa.me/${escapeHtml(phone.replace(/\D/g, ""))}" target="_blank" rel="noopener">Abrir chat</a></div>` : `<div class="muted">Tel\xE9fono oculto: esta parte no autoriz\xF3 compartirlo.</div>`;
+  const active = sanctions.filter((s) => s.userId === party.userId && isActive(s));
+  const sanctionNote = active.length ? `<p class="error">Sanci\xF3n vigente: ${escapeHtml(active.map((s) => sanctionLabel(s.level)).join(", "))}</p>` : "";
+  const consent = `<form method="post" action="/admin/relations/${escapeHtml(detail.relation.id)}/consent">${csrfField2(csrf)}
+    <input type="hidden" name="userId" value="${escapeHtml(party.userId)}">
+    <input type="hidden" name="consent" value="${party.consentShareContact ? "0" : "1"}">
+    <button type="submit">${party.consentShareContact ? "Quitar el consentimiento" : "Registrar que autoriz\xF3 compartir su n\xFAmero"}</button></form>`;
+  const sanction = canSanction ? `<form method="post" action="/admin/users/${escapeHtml(party.userId)}/sanctions">${csrfField2(csrf)}
+      <input type="hidden" name="relationshipId" value="${escapeHtml(detail.relation.id)}">
+      <label for="level-${escapeHtml(party.userId)}">Sancionar a esta parte</label>
+      <select id="level-${escapeHtml(party.userId)}" name="level">${SANCTION_LEVELS.map((l) => `<option value="${escapeHtml(l.key)}">${escapeHtml(l.label)} \u2014 ${escapeHtml(l.description)}</option>`).join("")}</select>
+      <label for="days-${escapeHtml(party.userId)}">D\xEDas (vac\xEDo = el valor por defecto del paso)</label>
+      <input id="days-${escapeHtml(party.userId)}" name="days" inputmode="numeric" value="">
+      <label for="reason-${escapeHtml(party.userId)}">Motivo (se le comunica)</label>
+      <input id="reason-${escapeHtml(party.userId)}" name="reason" maxlength="500" required>
+      <button class="danger" type="submit">Aplicar sanci\xF3n</button></form>` : "";
+  return `<div class="card"><h2>${escapeHtml(PARTY_ROLE_LABELS[party.role] ?? party.role)}: ${escapeHtml(party.name)}</h2>
+    ${contact}${sanctionNote}<p><a href="/admin/users/${escapeHtml(party.userId)}">Ver ficha</a></p>${consent}${sanction}</div>`;
+}
+function relationDetailView(input) {
+  const { detail, csrf } = input;
+  const r = detail.relation;
+  const code = relationCode(r.number);
+  const parties = detail.parties;
+  const timeline = detail.messages.length ? `<ul>${detail.messages.map((m) => {
+    const who = m.kind === "nota" ? "Nota interna" : m.fromName ? `${escapeHtml(m.fromName)} \u2192 ${escapeHtml(m.toName ?? "\u2014")}` : `AutoMantPro \u2192 ${escapeHtml(m.toName ?? "\u2014")}`;
+    const state = m.kind === "nota" ? "" : m.relayedAt ? ` <span class="ok">reenviado</span>` : ` <span class="muted">sin reenviar</span>`;
+    return `<li><strong>${who}</strong>${state} <span class="muted">${escapeHtml(when(m.createdAt))}</span><br>${escapeHtml(m.body)}</li>`;
+  }).join("")}</ul>` : `<p class="muted">Todav\xEDa no hay mensajes en este v\xEDnculo.</p>`;
+  const transitions = (RELATION_TRANSITIONS[r.status] ?? []).map((next) => `<option value="${escapeHtml(next)}">${escapeHtml(RELATION_STATUS_LABELS[next])}</option>`).join("");
+  const statusForm = transitions ? `<form method="post" action="/admin/relations/${escapeHtml(r.id)}/status">${csrfField2(csrf)}
+      <label for="status">Cambiar el estado</label><select id="status" name="status">${transitions}</select>
+      <label for="status-reason">Motivo (obligatorio al cerrar o bloquear)</label><input id="status-reason" name="reason" maxlength="191">
+      <button type="submit">Guardar estado</button></form>` : `<p class="muted">Este v\xEDnculo no admite m\xE1s cambios de estado.</p>`;
+  const relayForm = `<form method="post" action="/admin/relations/${escapeHtml(r.id)}/message">${csrfField2(csrf)}
+    <label for="from">Qui\xE9n lo dijo</label>
+    <select id="from" name="fromUserId">
+      <option value="">AutoMantPro (mensaje propio del panel)</option>
+      ${parties.map((p) => `<option value="${escapeHtml(p.userId)}">${escapeHtml(p.name)} (${escapeHtml(PARTY_ROLE_LABELS[p.role] ?? p.role)})</option>`).join("")}
+    </select>
+    <label for="to">Para</label>
+    <select id="to" name="toUserId">
+      ${parties.map((p) => `<option value="${escapeHtml(p.userId)}">${escapeHtml(p.name)}</option>`).join("")}
+      <option value="">Solo registrar (nota interna, no se reenv\xEDa)</option>
+    </select>
+    <label for="body">Mensaje</label><textarea id="body" name="body" rows="4" maxlength="2000" required></textarea>
+    <button class="full" type="submit">Registrar y preparar el reenv\xEDo</button></form>`;
+  const relayBox = input.relay ? `<div class="card"><h2>Listo para enviar a ${escapeHtml(input.relay.to)}</h2>
+      <p class="muted">C\xF3pialo y env\xEDalo desde WhatsApp Business. Ya qued\xF3 registrado en el v\xEDnculo.</p>
+      <textarea readonly rows="7">${escapeHtml(input.relay.text)}</textarea></div>` : "";
+  const allowed = groupAllowed(parties);
+  const groupCard = `<div class="card"><h2>Grupo de WhatsApp (excepci\xF3n)</h2>
+    ${r.channel === "grupo" && r.groupInviteUrl ? `<p class="ok">Grupo aprobado.</p><p><a href="${escapeHtml(r.groupInviteUrl)}" target="_blank" rel="noopener">Abrir el grupo</a></p>
+         <form method="post" action="/admin/relations/${escapeHtml(r.id)}/group">${csrfField2(csrf)}<input type="hidden" name="remove" value="1">
+         <button class="danger" type="submit">Volver a conversaci\xF3n mediada</button></form>` : allowed ? `<p class="muted">Ambas partes autorizaron compartir su n\xFAmero. Crea el grupo en WhatsApp Business y pega aqu\xED el enlace de invitaci\xF3n.</p>
+           <form method="post" action="/admin/relations/${escapeHtml(r.id)}/group">${csrfField2(csrf)}
+           <label for="invite">Enlace de invitaci\xF3n</label><input id="invite" name="inviteUrl" placeholder="https://chat.whatsapp.com/..." required>
+           <button type="submit">Aprobar el grupo</button></form>` : `<p class="muted">Falta el consentimiento de alguna parte: mientras tanto, la conversaci\xF3n sigue mediada.</p>`}
+  </div>`;
+  const disputeForm = input.canDispute ? `<form method="post" action="/admin/relations/${escapeHtml(r.id)}/dispute">${csrfField2(csrf)}
+      <label for="claimant">Qui\xE9n reclama</label>
+      <select id="claimant" name="claimantUserId">${parties.map((p) => `<option value="${escapeHtml(p.userId)}">${escapeHtml(p.name)}</option>`).join("")}</select>
+      <label for="against">Contra</label>
+      <select id="against" name="againstUserId">${parties.map((p) => `<option value="${escapeHtml(p.userId)}">${escapeHtml(p.name)}</option>`).join("")}</select>
+      <label for="dispute-reason">Motivo del reclamo</label><textarea id="dispute-reason" name="reason" rows="3" maxlength="2000" required></textarea>
+      <button type="submit">Abrir disputa</button></form>` : `<p class="muted">Tu rol no abre disputas.</p>`;
+  const disputeList = detail.disputes.length ? `<ul>${detail.disputes.map((d) => `<li><a href="/admin/disputes?f=todas">${escapeHtml(disputeCode(d.number))}</a> \xB7 ${escapeHtml(d.status)} \xB7 ${escapeHtml(d.reason.slice(0, 120))}</li>`).join("")}</ul>` : "";
+  return `<div class="stack wide"><h1>${escapeHtml(code)} \xB7 ${escapeHtml(RELATION_KIND_LABELS[r.kind] ?? r.kind)}</h1>
+  ${flashHtml2(input.flash)}
+  <div class="card"><h2>Resumen</h2>
+    <div>Estado: <strong>${escapeHtml(RELATION_STATUS_LABELS[r.status] ?? r.status)}</strong>${r.closeReason ? ` <span class="muted">(${escapeHtml(r.closeReason)})</span>` : ""}</div>
+    <div>Canal: <strong>${r.channel === "grupo" ? "Grupo" : "Conversaci\xF3n mediada"}</strong>${r.relayPaused ? ' \xB7 <span class="error">reenv\xEDo en pausa</span>' : ""}</div>
+    <div>Origen: ${escapeHtml(r.originType)}${r.subject ? ` \xB7 ${escapeHtml(r.subject)}` : ""}</div>
+    <div>Creado: ${escapeHtml(when(r.createdAt))} \xB7 \xDAltimo mensaje: ${escapeHtml(when(r.lastMessageAt))}</div>
+    ${statusForm}
+    <form method="post" action="/admin/relations/${escapeHtml(r.id)}/relay">${csrfField2(csrf)}
+    <input type="hidden" name="paused" value="${r.relayPaused ? "0" : "1"}">
+    <button type="submit">${r.relayPaused ? "Reanudar el reenv\xEDo" : "Pausar el reenv\xEDo"}</button></form>
+  </div>
+  ${relayBox}
+  ${parties.map((p) => partyCard(detail, p, csrf, input.canSanction, input.sanctions)).join("")}
+  <div class="card"><h2>Conversaci\xF3n</h2>${timeline}${r.relayPaused ? `<p class="error">El reenv\xEDo est\xE1 en pausa: los mensajes quedan registrados pero no se env\xEDan.</p>` : ""}${relayForm}</div>
+  ${groupCard}
+  <div class="card"><h2>Disputas</h2>${disputeList}${disputeForm}</div>
+  </div>`;
+}
+function disputesListView(input) {
+  const rows9 = input.page.items.map((d) => {
+    const resolve = input.canResolve && (d.status === "abierta" || d.status === "en_revision") ? `<form method="post" action="/admin/disputes/${escapeHtml(d.id)}/resolve">${csrfField2(input.csrf)}
+            <label for="res-${escapeHtml(d.id)}">Resoluci\xF3n</label><textarea id="res-${escapeHtml(d.id)}" name="resolution" rows="2" maxlength="2000" required></textarea>
+            <select name="status"><option value="resuelta">Resuelta</option><option value="en_revision">En revisi\xF3n</option><option value="rechazada">Rechazada</option></select>
+            <button type="submit">Guardar</button></form>` : d.resolution ? `<span class="muted">${escapeHtml(d.resolution.slice(0, 160))}</span>` : "";
+    return `<tr><td>${escapeHtml(disputeCode(d.number))}</td>
+      <td>${d.relationshipId ? `<a href="/admin/relations/${escapeHtml(d.relationshipId)}">VN-${escapeHtml(String(d.relationNumber ?? "").padStart(5, "0"))}</a>` : "\u2014"}</td>
+      <td>${escapeHtml(d.claimantName ?? "\u2014")} \u2192 ${escapeHtml(d.againstName ?? "\u2014")}</td>
+      <td>${escapeHtml(d.reason.slice(0, 200))}</td>
+      <td>${escapeHtml(d.status)}<br><span class="muted">${escapeHtml(when(d.createdAt))}</span></td>
+      <td>${resolve}</td></tr>`;
+  }).join("");
+  return `<div class="stack wide"><h1>Disputas</h1>${flashHtml2(input.flash)}
+  ${tabs(input.filter, "/admin/disputes", DISPUTE_FILTERS)}
+  ${input.page.items.length === 0 ? `<p class="muted">No hay disputas con ese filtro.</p>` : ""}
+  <div class="scroll"><table><thead><tr><th>Caso</th><th>V\xEDnculo</th><th>Partes</th><th>Motivo</th><th>Estado</th><th>Resoluci\xF3n</th></tr></thead>
+  <tbody>${rows9}</tbody></table></div></div>`;
+}
+function sanctionsListView(input) {
+  const rows9 = input.page.items.map((s) => {
+    const state = s.liftedAt ? `<span class="muted">levantada ${escapeHtml(when(s.liftedAt))}</span>` : isActive(s) ? `<span class="error">vigente${s.endsAt ? ` hasta ${escapeHtml(when(s.endsAt))}` : ""}</span>` : `<span class="muted">vencida</span>`;
+    const lift = input.canLift && !s.liftedAt && isActive(s) ? `<form method="post" action="/admin/sanctions/${escapeHtml(s.id)}/lift">${csrfField2(input.csrf)}
+            <label for="lift-${escapeHtml(s.id)}">Motivo para levantarla</label><input id="lift-${escapeHtml(s.id)}" name="reason" maxlength="191" required>
+            <button type="submit">Levantar</button></form>` : s.liftReason ? `<span class="muted">${escapeHtml(s.liftReason)}</span>` : "";
+    return `<tr><td><a href="/admin/users/${escapeHtml(s.userId)}">${escapeHtml(s.userName ?? s.userId)}</a></td>
+      <td>${escapeHtml(sanctionLabel(s.level))}</td><td>${escapeHtml(s.reason.slice(0, 200))}</td>
+      <td>${escapeHtml(when(s.startsAt))}<br>${state}</td><td>${lift}</td></tr>`;
+  }).join("");
+  const ladder = SANCTION_LEVELS.map((l) => `<li><strong>${escapeHtml(l.label)}:</strong> ${escapeHtml(l.description)}${l.defaultDays ? ` (por defecto ${l.defaultDays} d\xEDas)` : ""}</li>`).join("");
+  return `<div class="stack wide"><h1>Sanciones</h1>${flashHtml2(input.flash)}
+  <div class="card"><h2>La escala</h2><ol>${ladder}</ol>
+  <p class="muted">Siempre con motivo, aviso a la entidad y registro en la auditor\xEDa. Se aplican desde el v\xEDnculo o desde la ficha de la persona.</p></div>
+  ${input.page.items.length === 0 ? `<p class="muted">Todav\xEDa no hay sanciones registradas.</p>` : ""}
+  <div class="scroll"><table><thead><tr><th>Entidad</th><th>Paso</th><th>Motivo</th><th>Vigencia</th><th>Levantar</th></tr></thead>
+  <tbody>${rows9}</tbody></table></div></div>`;
+}
+var FILTERS, DISPUTE_FILTERS, flashHtml2, csrfField2;
+var init_views_relations = __esm({
+  "packages/api/dist/interfaces/admin/views-relations.js"() {
+    "use strict";
+    init_page();
+    init_whatsapp_number();
+    init_workflow();
+    FILTERS = [
+      ["abiertas", "Abiertas"],
+      ["esperando", "Esperan respuesta"],
+      ["disputa", "En disputa"],
+      ["cerradas", "Cerradas"],
+      ["todas", "Todas"]
+    ];
+    DISPUTE_FILTERS = [
+      ["abierta", "Abiertas"],
+      ["en_revision", "En revisi\xF3n"],
+      ["resuelta", "Resueltas"],
+      ["rechazada", "Rechazadas"],
+      ["todas", "Todas"]
+    ];
+    flashHtml2 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${escapeHtml(flash.text)}</p>` : "";
+    csrfField2 = (csrf) => `<input type="hidden" name="csrf" value="${escapeHtml(csrf)}">`;
+  }
+});
+
+// packages/api/dist/interfaces/admin/relations.js
+function registerRelationRoutes(app2, deps) {
+  const { relations } = deps;
+  const lateAfter = deps.waitingHours ?? 24;
+  const errorPage = (request, reply, session, title, text4, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text4)}</p></div>`, session, status);
+  function dbError2(err) {
+    const code = err.code;
+    if (code === "ER_NO_SUCH_TABLE" || code === "ER_BAD_FIELD_ERROR") {
+      return { status: 503, text: "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." };
+    }
+    return { status: 502, text: `No se pudo completar la operaci\xF3n (${code ?? "base de datos no disponible"}).` };
+  }
+  function withCsrf(request, reply) {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return null;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf)) {
+      errorPage(request, reply, session, "Relaciones", "Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.", 403);
+      return null;
+    }
+    return { session, body };
+  }
+  const str5 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+  const uuidOf = (value2) => typeof value2 === "string" && UUID.test(value2) ? value2 : null;
+  async function renderDetail(request, reply, session, id, extra = {}) {
+    let detail;
+    let sanctions = [];
+    try {
+      detail = await relations.get(id);
+      if (detail) {
+        const lists = await Promise.all(detail.parties.map((p) => relations.sanctionsForUser(p.userId)));
+        sanctions = lists.flat();
+      }
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Relaci\xF3n", m.text, m.status);
+    }
+    if (!detail)
+      return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+    return deps.html(reply, request, relationCode(detail.relation.number), relationDetailView({
+      csrf: session.csrfToken,
+      detail,
+      sanctions,
+      canSanction: can(session.role, "sanctions"),
+      canDispute: can(session.role, "disputes"),
+      relay: extra.relay,
+      flash: extra.flash
+    }), session, extra.status ?? 200);
+  }
+  app2.get("/relations", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const query = request.query ?? {};
+    const filter = FILTERS2.includes(query.f) ? query.f : "abiertas";
+    const raw = Number(query.page ?? 1);
+    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    try {
+      const list6 = await relations.list(filter, page, lateAfter);
+      return deps.html(reply, request, "Relaciones", relationsListView({ filter, page: list6, waitingHours: lateAfter }), session);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Relaciones", m.text, m.status);
+    }
+  });
+  app2.get("/relations/:id", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+    return renderDetail(request, reply, session, id);
+  });
+  app2.post("/relations/:id/message", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+    const text4 = str5(body.body, 2e3);
+    if (text4.length < 2)
+      return renderDetail(request, reply, session, id, { flash: { kind: "error", text: "Escribe el mensaje." }, status: 400 });
+    let detail;
+    try {
+      detail = await relations.get(id);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Relaci\xF3n", m.text, m.status);
+    }
+    if (!detail)
+      return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+    const parties = detail.parties;
+    const fromUserId = uuidOf(body.fromUserId);
+    const toUserId = uuidOf(body.toUserId);
+    if (fromUserId && !parties.some((p) => p.userId === fromUserId)) {
+      return renderDetail(request, reply, session, id, { flash: { kind: "error", text: "Esa persona no es parte del v\xEDnculo." }, status: 400 });
+    }
+    if (toUserId && !parties.some((p) => p.userId === toUserId)) {
+      return renderDetail(request, reply, session, id, { flash: { kind: "error", text: "Esa persona no es parte del v\xEDnculo." }, status: 400 });
+    }
+    const target = toUserId ? parties.find((p) => p.userId === toUserId) : fromUserId ? counterpart(parties, fromUserId) : null;
+    const isNote = !toUserId;
+    const relayed = !!target && !isNote && !detail.relation.relayPaused;
+    try {
+      await relations.addMessage({
+        relationshipId: id,
+        fromUserId,
+        toUserId: isNote ? null : target?.userId ?? null,
+        body: text4,
+        kind: isNote ? "nota" : "reenvio",
+        relayed,
+        createdBy: session.userId
+      });
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Relaci\xF3n", m.text, m.status);
+    }
+    await deps.audit("admin.relation.message", session.userId, `${relationCode(detail.relation.number)}: ${isNote ? "nota interna" : relayed ? "mensaje reenviado" : "mensaje registrado sin reenviar"}`);
+    if (isNote || !target) {
+      return renderDetail(request, reply, session, id, { flash: { kind: "ok", text: "Nota interna guardada: no se reenv\xEDa a nadie." } });
+    }
+    const source = fromUserId ? parties.find((p) => p.userId === fromUserId) : null;
+    const relay = {
+      to: target.name,
+      text: relayMessage({
+        fromRole: source?.role ?? "amp",
+        fromName: source?.name ?? "AutoMantPro",
+        code: relationCode(detail.relation.number),
+        subject: detail.relation.subject,
+        body: text4
+      })
+    };
+    const flash = detail.relation.relayPaused ? { kind: "error", text: "El reenv\xEDo est\xE1 en pausa: el mensaje qued\xF3 registrado pero no lo env\xEDes todav\xEDa." } : { kind: "ok", text: "Mensaje registrado. Copia el texto y env\xEDalo por WhatsApp." };
+    return renderDetail(request, reply, session, id, { relay, flash });
+  });
+  app2.post("/relations/:id/status", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+    const next = str5(body.status, 20);
+    const reason = str5(body.reason, 191);
+    let detail;
+    try {
+      detail = await relations.get(id);
+      if (!detail)
+        return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+      if (!canTransition(detail.relation.status, next)) {
+        return renderDetail(request, reply, session, id, { flash: { kind: "error", text: "Ese cambio de estado no es posible." }, status: 400 });
+      }
+      if ((next === "cerrada" || next === "bloqueada") && reason.length < 5) {
+        return renderDetail(request, reply, session, id, { flash: { kind: "error", text: "Escribe el motivo: queda registrado y se le comunica a las partes." }, status: 400 });
+      }
+      const changed = await relations.setStatus(id, detail.relation.status, next, reason || null);
+      if (!changed) {
+        return renderDetail(request, reply, session, id, { flash: { kind: "error", text: "El v\xEDnculo cambi\xF3 mientras tanto: revisa su estado." }, status: 400 });
+      }
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Relaci\xF3n", m.text, m.status);
+    }
+    await deps.audit("admin.relation.status", session.userId, `${relationCode(detail.relation.number)}: ${detail.relation.status} \u2192 ${next}${reason ? ` (${reason})` : ""}`);
+    return renderDetail(request, reply, session, id, { flash: { kind: "ok", text: "Estado actualizado." } });
+  });
+  app2.post("/relations/:id/relay", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+    const paused = body.paused === "1";
+    try {
+      await relations.setRelayPaused(id, paused);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Relaci\xF3n", m.text, m.status);
+    }
+    await deps.audit("admin.relation.relay", session.userId, `V\xEDnculo ${id}: reenv\xEDo ${paused ? "en pausa" : "reanudado"}`);
+    return renderDetail(request, reply, session, id, {
+      flash: { kind: "ok", text: paused ? "Reenv\xEDo en pausa: los mensajes se registran pero no se env\xEDan." : "Reenv\xEDo reanudado." }
+    });
+  });
+  app2.post("/relations/:id/consent", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    const userId = uuidOf(body.userId);
+    if (!UUID.test(id) || !userId)
+      return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+    const consent = body.consent === "1";
+    try {
+      await relations.setConsent(id, userId, consent);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Relaci\xF3n", m.text, m.status);
+    }
+    await deps.audit("admin.relation.consent", session.userId, `V\xEDnculo ${id}: ${consent ? "consentimiento registrado" : "consentimiento retirado"} para compartir contacto`);
+    return renderDetail(request, reply, session, id, {
+      flash: {
+        kind: "ok",
+        text: consent ? "Consentimiento registrado: su n\xFAmero puede compartirse en este v\xEDnculo." : "Consentimiento retirado: su n\xFAmero vuelve a estar oculto."
+      }
+    });
+  });
+  app2.post("/relations/:id/group", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+    const remove = body.remove === "1";
+    const inviteUrl = str5(body.inviteUrl, 255);
+    let detail;
+    try {
+      detail = await relations.get(id);
+      if (!detail)
+        return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+      if (!remove) {
+        if (!groupAllowed(detail.parties)) {
+          return renderDetail(request, reply, session, id, {
+            flash: { kind: "error", text: "Falta el consentimiento de alguna parte: sin eso no se aprueba el grupo." },
+            status: 400
+          });
+        }
+        if (!/^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9]{10,}$/.test(inviteUrl)) {
+          return renderDetail(request, reply, session, id, {
+            flash: { kind: "error", text: "El enlace debe ser una invitaci\xF3n de WhatsApp (https://chat.whatsapp.com/...)." },
+            status: 400
+          });
+        }
+      }
+      await relations.approveGroup(id, remove ? null : inviteUrl, session.userId);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Relaci\xF3n", m.text, m.status);
+    }
+    await deps.audit("admin.relation.group", session.userId, `${relationCode(detail.relation.number)}: ${remove ? "grupo retirado" : "grupo aprobado con consentimiento de las partes"}`);
+    return renderDetail(request, reply, session, id, {
+      flash: { kind: "ok", text: remove ? "Volvi\xF3 a conversaci\xF3n mediada." : "Grupo aprobado y registrado en el v\xEDnculo." }
+    });
+  });
+  app2.post("/relations/:id/dispute", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
+    const reason = str5(body.reason, 2e3);
+    const claimantUserId = uuidOf(body.claimantUserId);
+    const againstUserId = uuidOf(body.againstUserId);
+    if (reason.length < 10) {
+      return renderDetail(request, reply, session, id, { flash: { kind: "error", text: "Describe el reclamo con m\xE1s detalle." }, status: 400 });
+    }
+    if (claimantUserId && againstUserId && claimantUserId === againstUserId) {
+      return renderDetail(request, reply, session, id, { flash: { kind: "error", text: "El reclamo debe ser contra la otra parte." }, status: 400 });
+    }
+    let disputeId;
+    try {
+      disputeId = await relations.openDispute({ relationshipId: id, claimantUserId, againstUserId, reason, openedBy: session.userId });
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Relaci\xF3n", m.text, m.status);
+    }
+    await deps.audit("admin.dispute.open", session.userId, `Disputa ${disputeId} abierta en el v\xEDnculo ${id}`);
+    return renderDetail(request, reply, session, id, { flash: { kind: "ok", text: "Disputa abierta: el v\xEDnculo queda en disputa hasta resolverla." } });
+  });
+  app2.get("/disputes", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const query = request.query ?? {};
+    const filter = DISPUTE_STATUSES.includes(String(query.f)) ? String(query.f) : "abierta";
+    const raw = Number(query.page ?? 1);
+    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    try {
+      const list6 = await relations.listDisputes(filter, page);
+      return deps.html(reply, request, "Disputas", disputesListView({ csrf: session.csrfToken, filter, page: list6, canResolve: can(session.role, "disputes") }), session);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Disputas", m.text, m.status);
+    }
+  });
+  app2.post("/disputes/:id/resolve", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Disputas", "Caso no encontrado.", 404);
+    const resolution = str5(body.resolution, 2e3);
+    const status = ["resuelta", "rechazada", "en_revision"].includes(String(body.status)) ? String(body.status) : "resuelta";
+    if (resolution.length < 10)
+      return errorPage(request, reply, session, "Disputas", "Escribe la resoluci\xF3n con m\xE1s detalle.", 400);
+    let dispute;
+    try {
+      dispute = await relations.getDispute(id);
+      if (!dispute)
+        return errorPage(request, reply, session, "Disputas", "Caso no encontrado.", 404);
+      const changed = await relations.resolveDispute(id, status, resolution, session.userId);
+      if (!changed)
+        return errorPage(request, reply, session, "Disputas", "El caso ya estaba resuelto.", 400);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Disputas", m.text, m.status);
+    }
+    await deps.audit("admin.dispute.resolve", session.userId, `${disputeCode(dispute.number)} \u2192 ${status}`);
+    return reply.redirect("/admin/disputes?f=todas", 302);
+  });
+  app2.get("/sanctions", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const raw = Number(request.query?.page ?? 1);
+    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    try {
+      const list6 = await relations.listSanctions(page);
+      return deps.html(reply, request, "Sanciones", sanctionsListView({ csrf: session.csrfToken, page: list6, canLift: can(session.role, "sanctions") }), session);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Sanciones", m.text, m.status);
+    }
+  });
+  app2.post("/users/:id/sanctions", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Sanciones", "Usuario no encontrado.", 404);
+    const level = sanctionLevel(str5(body.level, 30));
+    const reason = str5(body.reason, 500);
+    const relationshipId = uuidOf(body.relationshipId);
+    const back = relationshipId ? `/admin/relations/${relationshipId}` : `/admin/users/${id}`;
+    if (!level)
+      return errorPage(request, reply, session, "Sanciones", "Elige un paso de la escala.", 400);
+    if (reason.length < 5)
+      return errorPage(request, reply, session, "Sanciones", "Escribe el motivo: se le comunica a la entidad y queda registrado.", 400);
+    const rawDays = str5(body.days, 6);
+    const days = rawDays === "" ? null : Number.isFinite(Number(rawDays)) ? Math.max(0, Math.floor(Number(rawDays))) : null;
+    try {
+      const history = await relations.sanctionsForUser(id);
+      const suggested = nextSanctionLevel(history);
+      await relations.addSanction({
+        userId: id,
+        level: level.key,
+        reason,
+        relationshipId,
+        disputeId: null,
+        endsAt: sanctionEnd(level.key, days),
+        createdBy: session.userId
+      });
+      await deps.audit("admin.sanction.apply", session.userId, `Sanci\xF3n ${level.key} a ${id}: ${reason}${suggested !== level.key ? ` (el paso sugerido era ${suggested})` : ""}`);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Sanciones", m.text, m.status);
+    }
+    return reply.redirect(`${back}?ok=sancion`, 302);
+  });
+  app2.post("/sanctions/:id/lift", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID.test(id))
+      return errorPage(request, reply, session, "Sanciones", "Sanci\xF3n no encontrada.", 404);
+    const reason = str5(body.reason, 191);
+    if (reason.length < 5)
+      return errorPage(request, reply, session, "Sanciones", "Escribe el motivo para levantarla.", 400);
+    try {
+      const changed = await relations.liftSanction(id, reason, session.userId);
+      if (!changed)
+        return errorPage(request, reply, session, "Sanciones", "Esa sanci\xF3n ya no estaba vigente.", 400);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Sanciones", m.text, m.status);
+    }
+    await deps.audit("admin.sanction.lift", session.userId, `Sanci\xF3n ${id} levantada: ${reason}`);
+    return reply.redirect("/admin/sanctions?ok=levantada", 302);
+  });
+}
+var UUID, FILTERS2, DISPUTE_STATUSES;
+var init_relations = __esm({
+  "packages/api/dist/interfaces/admin/relations.js"() {
+    "use strict";
+    init_page();
+    init_security();
+    init_permissions();
+    init_workflow();
+    init_views_relations();
+    UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS2 = ["abiertas", "esperando", "disputa", "cerradas", "todas"];
+    DISPUTE_STATUSES = ["abierta", "en_revision", "resuelta", "rechazada", "todas"];
+  }
+});
+
+// packages/api/dist/application/data/csv.js
+function cell2(value2) {
+  if (value2 === null || value2 === void 0)
+    return "";
+  const text4 = value2 instanceof Date ? value2.toISOString() : String(value2);
+  const clean = text4.replace(/\r?\n/g, " ").replace(/\t/g, " ");
+  const safe = /^[=+\-@]/.test(clean) ? `'${clean}` : clean;
+  return `"${safe.replace(/"/g, '""')}"`;
+}
+function toCsv(columns, rows9) {
+  const head = columns.map(([, label2]) => cell2(label2)).join(SEPARATOR);
+  const body = rows9.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
+  return `\uFEFF${[head, ...body].join("\r\n")}\r
+`;
+}
+function csvFileName(dataset, now = /* @__PURE__ */ new Date()) {
+  const stamp = now.toISOString().slice(0, 10);
+  return `automantpro-${dataset}-${stamp}.csv`;
+}
+var SEPARATOR;
+var init_csv = __esm({
+  "packages/api/dist/application/data/csv.js"() {
+    "use strict";
+    SEPARATOR = ";";
+  }
+});
+
+// packages/api/dist/application/data/lopdp.js
+function dueDate(from = /* @__PURE__ */ new Date()) {
+  return new Date(from.getTime() + RESPONSE_DAYS * 24 * 60 * 60 * 1e3);
+}
+function daysLeft(dueAt, now = /* @__PURE__ */ new Date()) {
+  const due = dueAt instanceof Date ? dueAt : new Date(dueAt);
+  return Math.ceil((due.getTime() - now.getTime()) / (24 * 60 * 60 * 1e3));
+}
+function isOverdue(request, now = /* @__PURE__ */ new Date()) {
+  if (request.status === "atendida" || request.status === "rechazada")
+    return false;
+  return daysLeft(request.dueAt, now) < 0;
+}
+function kindLabel(kind) {
+  return REQUEST_KINDS.find((k) => k.key === kind)?.label ?? kind;
+}
+function anonymizedValues(userId) {
+  return { name: "Titular dado de baja", phone: `anon:${userId}`, email: null, notes: null };
+}
+var REQUEST_KINDS, REQUEST_STATUS_LABELS, RESPONSE_DAYS, dataRequestCode;
+var init_lopdp = __esm({
+  "packages/api/dist/application/data/lopdp.js"() {
+    "use strict";
+    REQUEST_KINDS = [
+      { key: "acceso", label: "Acceso", description: "Entregar copia de sus datos personales." },
+      { key: "rectificacion", label: "Rectificaci\xF3n", description: "Corregir datos equivocados." },
+      { key: "eliminacion", label: "Eliminaci\xF3n", description: "Anonimizar sus datos personales y conservar solo el historial." }
+    ];
+    REQUEST_STATUS_LABELS = {
+      recibida: "Recibida",
+      en_proceso: "En proceso",
+      atendida: "Atendida",
+      rechazada: "Rechazada"
+    };
+    RESPONSE_DAYS = 15;
+    dataRequestCode = (number) => `LP-${String(number).padStart(4, "0")}`;
+  }
+});
+
+// packages/api/dist/infrastructure/data/data-store.js
+function rows2(result) {
+  const [list6] = result;
+  return Array.isArray(list6) ? list6 : [];
+}
+function toRequest(row) {
+  return {
+    id: String(row.id),
+    number: Number(row.number ?? 0),
+    userId: String(row.userId),
+    userName: str(row.userName),
+    kind: String(row.kind),
+    status: String(row.status),
+    channel: str(row.channel),
+    detail: str(row.detail),
+    resolution: str(row.resolution),
+    dueAt: row.dueAt,
+    anonymizedAt: row.anonymizedAt ?? null,
+    exportedAt: row.exportedAt ?? null,
+    createdAt: row.createdAt,
+    resolvedAt: row.resolvedAt ?? null
+  };
+}
+var DATASETS, PAGE_SIZE2, MAX_ROWS, str, SELECT_REQUESTS, MysqlDataStore;
+var init_data_store = __esm({
+  "packages/api/dist/infrastructure/data/data-store.js"() {
+    "use strict";
+    init_lopdp();
+    DATASETS = [
+      {
+        key: "usuarios",
+        label: "Usuarios",
+        personal: true,
+        columns: [
+          ["id", "Id"],
+          ["role", "Perfil"],
+          ["name", "Nombre"],
+          ["phone", "Tel\xE9fono"],
+          ["email", "Correo"],
+          ["city", "Ciudad"],
+          ["consentAt", "Consentimiento"],
+          ["consentVersion", "Versi\xF3n"],
+          ["source", "C\xF3mo nos conoci\xF3"],
+          ["createdAt", "Alta"]
+        ],
+        sql: "SELECT id, role, name, phone, email, city, consentAt, consentVersion, source, createdAt FROM `User` WHERE role <> 'admin' ORDER BY createdAt DESC"
+      },
+      {
+        key: "vehiculos",
+        label: "Veh\xEDculos",
+        personal: true,
+        columns: [
+          ["id", "Id"],
+          ["ownerName", "Due\xF1o"],
+          ["make", "Marca"],
+          ["model", "Modelo"],
+          ["year", "A\xF1o"],
+          ["plate", "Placa"],
+          ["currentKm", "Km"],
+          ["vehicleClass", "Clase"],
+          ["fuel", "Combustible"],
+          ["createdAt", "Alta"]
+        ],
+        sql: "SELECT v.id, u.name AS ownerName, v.make, v.model, v.year, v.plate, v.currentKm, v.vehicleClass, v.fuel, v.createdAt FROM `Vehicle` v JOIN `User` u ON u.id = v.userId ORDER BY v.createdAt DESC"
+      },
+      {
+        key: "talleres",
+        label: "Talleres",
+        personal: true,
+        columns: [
+          ["id", "Id"],
+          ["name", "Nombre"],
+          ["ruc", "RUC"],
+          ["city", "Ciudad"],
+          ["zone", "Zona"],
+          ["contactName", "Contacto"],
+          ["email", "Correo"],
+          ["verificationStatus", "Verificaci\xF3n"],
+          ["ratingAvg", "Calificaci\xF3n"],
+          ["createdAt", "Alta"]
+        ],
+        sql: "SELECT id, name, ruc, city, zone, contactName, email, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC"
+      },
+      {
+        key: "almacenes",
+        label: "Almacenes",
+        personal: true,
+        columns: [
+          ["id", "Id"],
+          ["name", "Nombre"],
+          ["ruc", "RUC"],
+          ["city", "Ciudad"],
+          ["zone", "Zona"],
+          ["categories", "Categor\xEDas"],
+          ["delivery", "Entrega"],
+          ["verificationStatus", "Verificaci\xF3n"],
+          ["createdAt", "Alta"]
+        ],
+        sql: "SELECT id, name, ruc, city, zone, categories, delivery, verificationStatus, createdAt FROM `Store` ORDER BY createdAt DESC"
+      },
+      {
+        key: "turnos",
+        label: "Turnos",
+        personal: true,
+        columns: [
+          ["id", "Id"],
+          ["scheduledAt", "Fecha"],
+          ["status", "Estado"],
+          ["ownerName", "Due\xF1o"],
+          ["shopName", "Taller"],
+          ["summary", "Servicios"],
+          ["createdAt", "Creado"]
+        ],
+        sql: "SELECT a.id, a.scheduledAt, a.status, o.name AS ownerName, s.name AS shopName, a.summary, a.createdAt FROM `Appointment` a JOIN `User` o ON o.id = a.ownerId JOIN `Shop` s ON s.id = a.shopId ORDER BY a.scheduledAt DESC"
+      },
+      {
+        key: "ordenes",
+        label: "\xD3rdenes de trabajo",
+        personal: true,
+        columns: [
+          ["number", "N\xFAmero"],
+          ["status", "Estado"],
+          ["ownerName", "Due\xF1o"],
+          ["shopName", "Taller"],
+          ["intakeKm", "Km ingreso"],
+          ["exitKm", "Km salida"],
+          ["total", "Total"],
+          ["warrantyDays", "Garant\xEDa (d\xEDas)"],
+          ["createdAt", "Apertura"],
+          ["closedAt", "Cierre"]
+        ],
+        sql: "SELECT w.number, w.status, o.name AS ownerName, s.name AS shopName, w.intakeKm, w.exitKm, w.total, w.warrantyDays, w.createdAt, w.closedAt FROM `WorkOrder` w JOIN `User` o ON o.id = w.ownerId JOIN `Shop` s ON s.id = w.shopId ORDER BY w.number DESC"
+      },
+      {
+        key: "cotizaciones",
+        label: "Cotizaciones",
+        personal: true,
+        columns: [
+          ["number", "N\xFAmero"],
+          ["status", "Estado"],
+          ["requesterName", "Solicita"],
+          ["partName", "Repuesto"],
+          ["quantity", "Cantidad"],
+          ["city", "Ciudad"],
+          ["respuestas", "Respuestas"],
+          ["createdAt", "Creada"]
+        ],
+        sql: "SELECT q.number, q.status, u.name AS requesterName, q.partName, q.quantity, q.city, (SELECT COUNT(*) FROM `Quote` c WHERE c.requestId = q.id AND c.status = 'cotizado') AS respuestas, q.createdAt FROM `QuoteRequest` q JOIN `User` u ON u.id = q.requesterId ORDER BY q.number DESC"
+      },
+      {
+        key: "relaciones",
+        label: "Relaciones",
+        personal: false,
+        columns: [
+          ["number", "V\xEDnculo"],
+          ["kind", "Tipo"],
+          ["status", "Estado"],
+          ["channel", "Canal"],
+          ["originType", "Origen"],
+          ["mensajes", "Mensajes"],
+          ["createdAt", "Creado"],
+          ["closedAt", "Cierre"]
+        ],
+        sql: "SELECT r.number, r.kind, r.status, r.channel, r.originType, (SELECT COUNT(*) FROM `RelationshipMessage` m WHERE m.relationshipId = r.id) AS mensajes, r.createdAt, r.closedAt FROM `Relationship` r ORDER BY r.number DESC"
+      },
+      {
+        key: "sanciones",
+        label: "Sanciones",
+        personal: true,
+        columns: [
+          ["userName", "Entidad"],
+          ["level", "Paso"],
+          ["reason", "Motivo"],
+          ["startsAt", "Desde"],
+          ["endsAt", "Hasta"],
+          ["liftedAt", "Levantada"]
+        ],
+        sql: "SELECT u.name AS userName, s.level, s.reason, s.startsAt, s.endsAt, s.liftedAt FROM `Sanction` s JOIN `User` u ON u.id = s.userId ORDER BY s.createdAt DESC"
+      },
+      {
+        key: "auditoria",
+        label: "Auditor\xEDa",
+        personal: false,
+        columns: [
+          ["createdAt", "Fecha"],
+          ["eventType", "Evento"],
+          ["actorRole", "Rol"],
+          ["reason", "Detalle"]
+        ],
+        sql: "SELECT createdAt, eventType, actorRole, reason FROM `AuditLog` ORDER BY createdAt DESC"
+      }
+    ];
+    PAGE_SIZE2 = 25;
+    MAX_ROWS = 5e3;
+    str = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    SELECT_REQUESTS = "SELECT d.*, u.name AS userName FROM `DataRequest` d JOIN `User` u ON u.id = d.userId";
+    MysqlDataStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      exportRows(dataset, limit = MAX_ROWS) {
+        const found = DATASETS.find((d) => d.key === dataset);
+        if (!found)
+          return Promise.resolve([]);
+        const cap = Math.min(Math.max(1, Math.floor(limit)), MAX_ROWS);
+        return this.run(async (conn) => rows2(await conn.query(`${found.sql} LIMIT ${cap}`)));
+      }
+      createRequest(input) {
+        return this.run(async (conn) => {
+          const created = rows2(await conn.query("SELECT UUID() AS id"))[0];
+          const id = String(created?.id);
+          const next = rows2(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest`"))[0];
+          await conn.query("INSERT INTO `DataRequest` (id, `number`, userId, kind, status, channel, detail, dueAt, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'recibida', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, Number(next?.n ?? 1), input.userId, input.kind, input.channel, input.detail, dueDate(), input.createdBy]);
+          return id;
+        });
+      }
+      listRequests(status, page) {
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2;
+        return this.run(async (conn) => {
+          const where = status === "todas" ? "" : "WHERE d.status = ?";
+          const params = status === "todas" ? [] : [status];
+          const items = rows2(await conn.query(`${SELECT_REQUESTS} ${where} ORDER BY d.dueAt ASC LIMIT ${PAGE_SIZE2} OFFSET ${offset2}`, params)).map(toRequest);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE2 };
+        });
+      }
+      getRequest(id) {
+        return this.run(async (conn) => {
+          const row = rows2(await conn.query(`${SELECT_REQUESTS} WHERE d.id = ? LIMIT 1`, [id]))[0];
+          return row ? toRequest(row) : null;
+        });
+      }
+      requestsForUser(userId) {
+        return this.run(async (conn) => rows2(await conn.query(`${SELECT_REQUESTS} WHERE d.userId = ? ORDER BY d.createdAt DESC LIMIT 20`, [userId])).map(toRequest));
+      }
+      setStatus(id, status, resolution, resolvedBy) {
+        return this.run(async (conn) => {
+          const closing = status === "atendida" || status === "rechazada";
+          const [result] = await conn.query("UPDATE `DataRequest` SET status = ?, resolution = ?, resolvedBy = ?, resolvedAt = " + (closing ? "CURRENT_TIMESTAMP(3)" : "NULL") + ", updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status IN ('recibida', 'en_proceso')", [status, resolution, resolvedBy, id]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      markExported(id) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `DataRequest` SET exportedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [id]);
+        });
+      }
+      personalExport(userId) {
+        return this.run(async (conn) => {
+          const user = rows2(await conn.query("SELECT id, role, name, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? LIMIT 1", [userId]))[0];
+          if (!user)
+            return null;
+          const [vehicles, appointments, workOrders, quotes, relations, sanctions] = await Promise.all([
+            conn.query("SELECT make, model, year, plate, currentKm, vehicleClass, fuel, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL", [userId]).then(rows2),
+            conn.query("SELECT a.scheduledAt, a.status, a.summary, s.name AS shopName, a.createdAt FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId = ?", [userId]).then(rows2),
+            conn.query("SELECT w.number, w.status, w.intakeKm, w.exitKm, w.total, w.warrantyDays, s.name AS shopName, w.createdAt, w.closedAt FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.ownerId = ?", [userId]).then(rows2),
+            conn.query("SELECT `number`, status, partName, quantity, city, createdAt FROM `QuoteRequest` WHERE requesterId = ?", [userId]).then(rows2),
+            conn.query("SELECT r.`number`, r.kind, r.status, r.channel, r.createdAt FROM `Relationship` r JOIN `RelationshipParty` p ON p.relationshipId = r.id WHERE p.userId = ?", [userId]).then(rows2).catch(() => []),
+            conn.query("SELECT level, reason, startsAt, endsAt, liftedAt FROM `Sanction` WHERE userId = ?", [userId]).then(rows2).catch(() => [])
+          ]);
+          return { user, vehicles, appointments, workOrders, quotes, relations, sanctions };
+        });
+      }
+      anonymizeUser(userId, requestId) {
+        return this.run(async (conn) => {
+          const values = anonymizedValues(userId);
+          const [result] = await conn.query("UPDATE `User` SET name = ?, phone = ?, email = NULL, notes = NULL, deletedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role <> 'admin' AND deletedAt IS NULL", [values.name, values.phone, userId]);
+          const changed = Number(result.affectedRows ?? 0) > 0;
+          if (changed) {
+            await conn.query("UPDATE `Vehicle` SET plate = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ?", [userId]).catch(() => void 0);
+            if (requestId) {
+              await conn.query("UPDATE `DataRequest` SET anonymizedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [requestId]);
+            }
+          }
+          return changed;
+        });
+      }
+    };
+  }
+});
+
+// packages/api/dist/interfaces/admin/views-data.js
+function when2(value2) {
+  if (!value2)
+    return "\u2014";
+  const date = value2 instanceof Date ? value2 : new Date(value2);
+  return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeZone: "America/Guayaquil" }).format(date);
+}
+function exportsView(input) {
+  const rows9 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
+    <td>${input.counts ? String(input.counts[d.key] ?? 0) : "\u2014"}</td>
+    <td>${d.personal ? '<span class="error">datos personales</span>' : '<span class="muted">sin datos personales</span>'}</td>
+    <td><a href="/admin/exports/${escapeHtml(d.key)}.csv">Descargar CSV</a></td></tr>`).join("");
+  return `<div class="stack wide"><h1>Respaldos y exportaciones</h1>${flashHtml3(input.flash)}
+  <div class="card"><h2>C\xF3mo usarlo</h2>
+    <p class="muted">Cada archivo se abre en Excel o en Google Sheets. Guarda los respaldos en un lugar cifrado y b\xF3rralos cuando ya no los necesites: los archivos marcados contienen datos personales y su descarga queda en la auditor\xEDa.</p>
+    <p class="muted">La descarga trae hasta 5.000 filas por archivo, las m\xE1s recientes primero.</p></div>
+  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows9}</tbody></table></div></div>`;
+}
+function dataRequestsView(input) {
+  const tabs2 = STATUS_FILTERS.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/data-requests?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("");
+  const rows9 = input.items.map((r) => {
+    const left = daysLeft(r.dueAt);
+    const plazo = isOverdue(r) ? `<span class="error">vencido hace ${Math.abs(left)} d\xEDas</span>` : r.status === "atendida" || r.status === "rechazada" ? `<span class="muted">cerrado ${when2(r.resolvedAt)}</span>` : `<span class="${left <= 3 ? "error" : "muted"}">${left} d\xEDas</span>`;
+    const actions = r.status === "recibida" || r.status === "en_proceso" ? `<a href="/admin/data-requests/${escapeHtml(r.id)}/export.json">Descargar sus datos</a>
+            <form method="post" action="/admin/data-requests/${escapeHtml(r.id)}/resolve">${csrfField3(input.csrf)}
+            <label for="res-${escapeHtml(r.id)}">Qu\xE9 se hizo</label><textarea id="res-${escapeHtml(r.id)}" name="resolution" rows="2" maxlength="2000" required></textarea>
+            <select name="status"><option value="atendida">Atendida</option><option value="en_proceso">En proceso</option><option value="rechazada">Rechazada</option></select>
+            <button type="submit">Guardar</button></form>
+            ${r.kind === "eliminacion" && !r.anonymizedAt ? `<form method="post" action="/admin/data-requests/${escapeHtml(r.id)}/anonymize">${csrfField3(input.csrf)}
+                <label for="anon-${escapeHtml(r.id)}">Confirma escribiendo ANONIMIZAR</label><input id="anon-${escapeHtml(r.id)}" name="confirm" required>
+                <button class="danger" type="submit">Anonimizar sus datos</button></form>` : ""}` : `<span class="muted">${escapeHtml(r.resolution ?? "")}</span>`;
+    return `<tr><td>${escapeHtml(dataRequestCode(r.number))}</td>
+      <td><a href="/admin/users/${escapeHtml(r.userId)}">${escapeHtml(r.userName ?? r.userId)}</a></td>
+      <td>${escapeHtml(kindLabel(r.kind))}${r.anonymizedAt ? '<br><span class="ok">anonimizado</span>' : ""}</td>
+      <td>${escapeHtml(REQUEST_STATUS_LABELS[r.status] ?? r.status)}<br><span class="muted">${escapeHtml(when2(r.createdAt))}</span></td>
+      <td>${plazo}</td>
+      <td>${actions}</td></tr>`;
+  }).join("");
+  return `<div class="stack wide"><h1>Solicitudes de datos (LOPDP)</h1>${flashHtml3(input.flash)}
+  <div class="tabs">${tabs2}</div>
+  <div class="card"><h2>C\xF3mo funciona</h2>
+    <p class="muted">El plazo de respuesta es de ${RESPONSE_DAYS} d\xEDas. \xABAcceso\xBB entrega una copia de sus datos; \xABrectificaci\xF3n\xBB se corrige en su ficha; \xABeliminaci\xF3n\xBB anonimiza sus datos personales y conserva el historial t\xE9cnico, como exige la retenci\xF3n.</p>
+    <ul>${REQUEST_KINDS.map((k) => `<li><strong>${escapeHtml(k.label)}:</strong> ${escapeHtml(k.description)}</li>`).join("")}</ul>
+    <p class="muted">Las solicitudes se abren desde la ficha del titular.</p></div>
+  ${input.items.length === 0 ? `<p class="muted">No hay solicitudes con ese filtro.</p>` : ""}
+  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows9}</tbody></table></div></div>`;
+}
+function userDataRequestsCard(userId, items, csrf) {
+  const list6 = items.length ? `<ul>${items.map((r) => `<li>${escapeHtml(dataRequestCode(r.number))} \xB7 ${escapeHtml(kindLabel(r.kind))} \xB7 ${escapeHtml(REQUEST_STATUS_LABELS[r.status] ?? r.status)}${isOverdue(r) ? ' <span class="error">vencido</span>' : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin solicitudes de datos.</p>`;
+  return `<div class="card"><h2>Solicitudes de datos (LOPDP)</h2>${list6}
+    <form method="post" action="/admin/data-requests">${csrfField3(csrf)}
+    <input type="hidden" name="userId" value="${escapeHtml(userId)}">
+    <label for="dr-kind">Tipo de solicitud</label>
+    <select id="dr-kind" name="kind">${REQUEST_KINDS.map((k) => `<option value="${escapeHtml(k.key)}">${escapeHtml(k.label)} \u2014 ${escapeHtml(k.description)}</option>`).join("")}</select>
+    <label for="dr-channel">C\xF3mo la pidi\xF3</label><input id="dr-channel" name="channel" maxlength="30" placeholder="WhatsApp">
+    <label for="dr-detail">Qu\xE9 pide exactamente</label><textarea id="dr-detail" name="detail" rows="2" maxlength="1000"></textarea>
+    <button type="submit">Registrar solicitud</button></form>
+    <p class="muted">Queda con plazo de ${RESPONSE_DAYS} d\xEDas y se atiende en \xABSolicitudes de datos\xBB.</p></div>`;
+}
+var flashHtml3, csrfField3, STATUS_FILTERS;
+var init_views_data = __esm({
+  "packages/api/dist/interfaces/admin/views-data.js"() {
+    "use strict";
+    init_page();
+    init_data_store();
+    init_lopdp();
+    flashHtml3 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${escapeHtml(flash.text)}</p>` : "";
+    csrfField3 = (csrf) => `<input type="hidden" name="csrf" value="${escapeHtml(csrf)}">`;
+    STATUS_FILTERS = [
+      ["recibida", "Recibidas"],
+      ["en_proceso", "En proceso"],
+      ["atendida", "Atendidas"],
+      ["rechazada", "Rechazadas"],
+      ["todas", "Todas"]
+    ];
+  }
+});
+
+// packages/api/dist/interfaces/admin/data.js
+function registerDataRoutes(app2, deps) {
+  const { data } = deps;
+  const errorPage = (request, reply, session, title, text4, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text4)}</p></div>`, session, status);
+  function dbError2(err) {
+    const code = err.code;
+    if (code === "ER_NO_SUCH_TABLE" || code === "ER_BAD_FIELD_ERROR") {
+      return { status: 503, text: "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." };
+    }
+    return { status: 502, text: `No se pudo completar la operaci\xF3n (${code ?? "base de datos no disponible"}).` };
+  }
+  function withCsrf(request, reply) {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return null;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf)) {
+      errorPage(request, reply, session, "Datos", "Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.", 403);
+      return null;
+    }
+    return { session, body };
+  }
+  const str5 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+  async function renderRequests(request, reply, session, filter, flash, status = 200) {
+    try {
+      const list6 = await data.listRequests(filter, 1);
+      return deps.html(reply, request, "Solicitudes de datos", dataRequestsView({ csrf: session.csrfToken, filter, items: list6.items, flash }), session, status);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Solicitudes de datos", m.text, m.status);
+    }
+  }
+  app2.get("/exports", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    let counts = {};
+    try {
+      for (const dataset of DATASETS) {
+        counts[dataset.key] = (await data.exportRows(dataset.key)).length;
+      }
+    } catch {
+      counts = null;
+    }
+    return deps.html(reply, request, "Respaldos", exportsView({ counts }), session);
+  });
+  app2.get("/exports/:dataset.csv", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const raw = String(request.params.dataset ?? "");
+    const dataset = DATASETS.find((d) => d.key === raw);
+    if (!dataset)
+      return errorPage(request, reply, session, "Respaldos", "Ese conjunto no existe.", 404);
+    let rows9;
+    try {
+      rows9 = await data.exportRows(dataset.key);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Respaldos", m.text, m.status);
+    }
+    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows9.length} filas${dataset.personal ? ", con datos personales" : ""})`);
+    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows9));
+  });
+  app2.get("/data-requests", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const query = request.query ?? {};
+    const filter = STATUSES.includes(String(query.f)) ? String(query.f) : "recibida";
+    return renderRequests(request, reply, session, filter);
+  });
+  app2.post("/data-requests", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const userId = typeof body.userId === "string" && UUID2.test(body.userId) ? body.userId : null;
+    const kind = REQUEST_KINDS.find((k) => k.key === str5(body.kind, 20))?.key;
+    if (!userId)
+      return errorPage(request, reply, session, "Solicitudes de datos", "Titular no encontrado.", 404);
+    if (!kind)
+      return errorPage(request, reply, session, "Solicitudes de datos", "Elige el tipo de solicitud.", 400);
+    let id;
+    try {
+      id = await data.createRequest({ userId, kind, channel: str5(body.channel, 30) || null, detail: str5(body.detail, 1e3) || null, createdBy: session.userId });
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Solicitudes de datos", m.text, m.status);
+    }
+    await deps.audit("admin.lopdp.create", session.userId, `Solicitud de ${kindLabel(kind)} del titular ${userId} (${id})`);
+    return reply.redirect(`/admin/users/${userId}?ok=lopdp`, 302);
+  });
+  app2.get("/data-requests/:id/export.json", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const { id } = request.params;
+    if (!UUID2.test(id))
+      return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
+    let payload;
+    let requestRow;
+    try {
+      requestRow = await data.getRequest(id);
+      if (!requestRow)
+        return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
+      payload = await data.personalExport(requestRow.userId);
+      if (!payload)
+        return errorPage(request, reply, session, "Solicitudes de datos", "El titular ya no existe.", 404);
+      await data.markExported(id);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Solicitudes de datos", m.text, m.status);
+    }
+    await deps.audit("admin.lopdp.export", session.userId, `Copia de datos entregada en ${dataRequestCode(requestRow.number)}`);
+    return reply.header("Content-Type", "application/json; charset=utf-8").header("Content-Disposition", `attachment; filename="${dataRequestCode(requestRow.number)}.json"`).header("Cache-Control", "no-store").send(JSON.stringify({ caso: dataRequestCode(requestRow.number), tipo: requestRow.kind, entregado: (/* @__PURE__ */ new Date()).toISOString(), datos: payload }, null, 2));
+  });
+  app2.post("/data-requests/:id/resolve", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID2.test(id))
+      return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
+    const resolution = str5(body.resolution, 2e3);
+    const next = ["atendida", "en_proceso", "rechazada"].includes(String(body.status)) ? String(body.status) : "atendida";
+    if (resolution.length < 10)
+      return renderRequests(request, reply, session, "recibida", { kind: "error", text: "Escribe qu\xE9 se hizo con la solicitud." }, 400);
+    let requestRow;
+    try {
+      requestRow = await data.getRequest(id);
+      if (!requestRow)
+        return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
+      const changed = await data.setStatus(id, next, resolution, session.userId);
+      if (!changed)
+        return renderRequests(request, reply, session, "todas", { kind: "error", text: "Ese caso ya estaba cerrado." }, 400);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Solicitudes de datos", m.text, m.status);
+    }
+    await deps.audit("admin.lopdp.resolve", session.userId, `${dataRequestCode(requestRow.number)} \u2192 ${next}`);
+    return renderRequests(request, reply, session, "todas", { kind: "ok", text: "Solicitud actualizada." });
+  });
+  app2.post("/data-requests/:id/anonymize", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID2.test(id))
+      return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
+    if (str5(body.confirm, 20).toUpperCase() !== "ANONIMIZAR") {
+      return renderRequests(request, reply, session, "recibida", { kind: "error", text: "Para anonimizar hay que escribir ANONIMIZAR: es un cambio que no se deshace." }, 400);
+    }
+    let requestRow;
+    try {
+      requestRow = await data.getRequest(id);
+      if (!requestRow)
+        return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
+      if (requestRow.kind !== "eliminacion") {
+        return renderRequests(request, reply, session, "recibida", { kind: "error", text: "Solo se anonimiza en una solicitud de eliminaci\xF3n." }, 400);
+      }
+      const done = await data.anonymizeUser(requestRow.userId, id);
+      if (!done) {
+        return renderRequests(request, reply, session, "todas", { kind: "error", text: "No se pudo anonimizar: revisa si el titular ya estaba dado de baja." }, 400);
+      }
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, "Solicitudes de datos", m.text, m.status);
+    }
+    await deps.audit("admin.lopdp.anonymize", session.userId, `Datos personales anonimizados en ${dataRequestCode(requestRow.number)}`);
+    return renderRequests(request, reply, session, "todas", {
+      kind: "ok",
+      text: "Datos personales anonimizados. El historial t\xE9cnico se conserva sin identificar a la persona."
+    });
+  });
+}
+var UUID2, STATUSES;
+var init_data = __esm({
+  "packages/api/dist/interfaces/admin/data.js"() {
+    "use strict";
+    init_page();
+    init_security();
+    init_csv();
+    init_lopdp();
+    init_data_store();
+    init_views_data();
+    UUID2 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    STATUSES = ["recibida", "en_proceso", "atendida", "rechazada", "todas"];
+  }
+});
+
+// packages/api/dist/infrastructure/relations/relation-store.js
+function rows3(result) {
+  const [list6] = result;
+  return Array.isArray(list6) ? list6 : [];
+}
+function toRelation(row) {
+  return {
+    id: String(row.id),
+    number: Number(row.number ?? 0),
+    kind: String(row.kind),
+    status: String(row.status),
+    channel: String(row.channel),
+    groupInviteUrl: str2(row.groupInviteUrl),
+    originType: String(row.originType),
+    originId: str2(row.originId),
+    subject: str2(row.subject),
+    relayPaused: bool(row.relayPaused),
+    lastMessageAt: row.lastMessageAt ?? null,
+    waitingSince: row.waitingSince ?? null,
+    createdAt: row.createdAt,
+    closedAt: row.closedAt ?? null,
+    closeReason: str2(row.closeReason),
+    parties: str2(row.parties) ?? ""
+  };
+}
+function toDispute(row) {
+  return {
+    id: String(row.id),
+    number: Number(row.number ?? 0),
+    relationshipId: str2(row.relationshipId),
+    relationNumber: row.relationNumber === null || row.relationNumber === void 0 ? null : Number(row.relationNumber),
+    claimantUserId: str2(row.claimantUserId),
+    claimantName: str2(row.claimantName),
+    againstUserId: str2(row.againstUserId),
+    againstName: str2(row.againstName),
+    reason: String(row.reason ?? ""),
+    status: String(row.status),
+    resolution: str2(row.resolution),
+    createdAt: row.createdAt,
+    resolvedAt: row.resolvedAt ?? null
+  };
+}
+function toSanction(row) {
+  return {
+    id: String(row.id),
+    userId: String(row.userId),
+    userName: str2(row.userName),
+    level: String(row.level),
+    reason: String(row.reason ?? ""),
+    relationshipId: str2(row.relationshipId),
+    disputeId: str2(row.disputeId),
+    startsAt: row.startsAt,
+    endsAt: row.endsAt ?? null,
+    liftedAt: row.liftedAt ?? null,
+    liftReason: str2(row.liftReason),
+    createdAt: row.createdAt
+  };
+}
+var PAGE_SIZE3, OPEN, str2, bool, SELECT_RELATION, MysqlRelationStore;
+var init_relation_store = __esm({
+  "packages/api/dist/infrastructure/relations/relation-store.js"() {
+    "use strict";
+    init_workflow();
+    PAGE_SIZE3 = 25;
+    OPEN = RELATION_OPEN_STATUSES.map(() => "?").join(", ");
+    str2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    bool = (value2) => value2 === 1 || value2 === true || value2 === "1";
+    SELECT_RELATION = "SELECT r.*, (SELECT GROUP_CONCAT(u.name ORDER BY p.role SEPARATOR ' \u2194 ') FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = r.id) AS parties FROM `Relationship` r";
+    MysqlRelationStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      async nextNumber(conn, table) {
+        const row = rows3(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
+        return Number(row?.n ?? 1);
+      }
+      ensureForOrigin(input) {
+        return this.run(async (conn) => {
+          const existing = rows3(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
+          if (existing)
+            return String(existing.id);
+          const created = rows3(await conn.query("SELECT UUID() AS id"))[0];
+          const id = String(created?.id);
+          const number = await this.nextNumber(conn, "Relationship");
+          await conn.query("INSERT INTO `Relationship` (id, `number`, kind, status, channel, originType, originId, subject, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, 'activa', 'mediado', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, number, input.kind, input.originType, input.originId, input.subject, input.createdBy]);
+          for (const party of input.parties) {
+            await conn.query("INSERT INTO `RelationshipParty` (id, relationshipId, userId, role, createdAt) VALUES (UUID(), ?, ?, ?, CURRENT_TIMESTAMP(3))", [id, party.userId, party.role]);
+          }
+          return id;
+        });
+      }
+      list(filter, page, waitingHours2 = 24) {
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3;
+        return this.run(async (conn) => {
+          let where = "";
+          const params = [];
+          if (filter === "abiertas") {
+            where = `WHERE r.status IN (${OPEN})`;
+            params.push(...RELATION_OPEN_STATUSES);
+          } else if (filter === "esperando") {
+            where = `WHERE r.status IN (${OPEN}) AND r.waitingSince IS NOT NULL AND r.waitingSince <= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ? HOUR)`;
+            params.push(...RELATION_OPEN_STATUSES, Math.max(1, Math.floor(waitingHours2)));
+          } else if (filter === "disputa") {
+            where = "WHERE r.status = 'en_disputa'";
+          } else if (filter === "cerradas") {
+            where = "WHERE r.status IN ('cerrada', 'bloqueada')";
+          }
+          const items = rows3(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`, params)).map(toRelation);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE3 };
+        });
+      }
+      get(id) {
+        return this.run(async (conn) => {
+          const row = rows3(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id]))[0];
+          if (!row)
+            return null;
+          const parties = rows3(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id])).map((p) => ({
+            id: String(p.id),
+            userId: String(p.userId),
+            role: String(p.role),
+            name: String(p.name ?? ""),
+            phone: str2(p.phone),
+            consentShareContact: bool(p.consentShareContact),
+            consentAt: p.consentAt ?? null,
+            mutedAt: p.mutedAt ?? null
+          }));
+          const messages = rows3(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id])).map((m) => ({
+            id: String(m.id),
+            fromUserId: str2(m.fromUserId),
+            toUserId: str2(m.toUserId),
+            fromName: str2(m.fromName),
+            toName: str2(m.toName),
+            body: String(m.body ?? ""),
+            kind: String(m.kind),
+            relayedAt: m.relayedAt ?? null,
+            flagged: bool(m.flagged),
+            createdAt: m.createdAt
+          }));
+          const disputes = rows3(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id])).map(toDispute);
+          return { relation: toRelation(row), parties, messages, disputes };
+        });
+      }
+      forUser(userId) {
+        return this.run(async (conn) => rows3(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
+      }
+      addMessage(input) {
+        return this.run(async (conn) => {
+          const created = rows3(await conn.query("SELECT UUID() AS id"))[0];
+          const id = String(created?.id);
+          await conn.query(`INSERT INTO \`RelationshipMessage\` (id, relationshipId, fromUserId, toUserId, body, kind, relayedAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ${input.relayed ? "CURRENT_TIMESTAMP(3)" : "NULL"}, ?, CURRENT_TIMESTAMP(3))`, [id, input.relationshipId, input.fromUserId, input.toUserId, input.body, input.kind, input.createdBy]);
+          await conn.query("UPDATE `Relationship` SET lastMessageAt = CURRENT_TIMESTAMP(3), waitingSince = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.toUserId ? /* @__PURE__ */ new Date() : null, input.relationshipId]);
+          return id;
+        });
+      }
+      setStatus(id, from, to, reason) {
+        return this.run(async (conn) => {
+          const closing = to === "cerrada" || to === "bloqueada";
+          const [result] = await conn.query("UPDATE `Relationship` SET status = ?, closeReason = ?, closedAt = " + (closing ? "CURRENT_TIMESTAMP(3)" : "NULL") + ", waitingSince = " + (closing ? "NULL" : "waitingSince") + ", updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status = ?", [to, reason, id, from]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      setRelayPaused(id, paused) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `Relationship` SET relayPaused = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [paused ? 1 : 0, id]);
+        });
+      }
+      setConsent(relationshipId, userId, consent) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `RelationshipParty` SET consentShareContact = ?, consentAt = " + (consent ? "CURRENT_TIMESTAMP(3)" : "NULL") + " WHERE relationshipId = ? AND userId = ?", [consent ? 1 : 0, relationshipId, userId]);
+        });
+      }
+      approveGroup(id, inviteUrl, approvedBy) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `Relationship` SET channel = ?, groupInviteUrl = ?, groupApprovedBy = ?, groupApprovedAt = " + (inviteUrl ? "CURRENT_TIMESTAMP(3)" : "NULL") + ", updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [inviteUrl ? "grupo" : "mediado", inviteUrl, inviteUrl ? approvedBy : null, id]);
+        });
+      }
+      openDispute(input) {
+        return this.run(async (conn) => {
+          const created = rows3(await conn.query("SELECT UUID() AS id"))[0];
+          const id = String(created?.id);
+          const number = await this.nextNumber(conn, "Dispute");
+          await conn.query("INSERT INTO `Dispute` (id, `number`, relationshipId, openedBy, claimantUserId, againstUserId, reason, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, number, input.relationshipId, input.openedBy, input.claimantUserId, input.againstUserId, input.reason]);
+          if (input.relationshipId) {
+            await conn.query("UPDATE `Relationship` SET status = 'en_disputa', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status IN ('propuesta', 'activa')", [input.relationshipId]);
+          }
+          return id;
+        });
+      }
+      listDisputes(status, page) {
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3;
+        return this.run(async (conn) => {
+          const where = status === "todas" ? "" : "WHERE d.status = ?";
+          const params = status === "todas" ? [] : [status];
+          const items = rows3(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`, params)).map(toDispute);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE3 };
+        });
+      }
+      getDispute(id) {
+        return this.run(async (conn) => {
+          const row = rows3(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id]))[0];
+          return row ? toDispute(row) : null;
+        });
+      }
+      resolveDispute(id, status, resolution, resolvedBy) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `Dispute` SET status = ?, resolution = ?, resolvedBy = ?, resolvedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status IN ('abierta', 'en_revision')", [status, resolution, resolvedBy, id]);
+          const changed = Number(result.affectedRows ?? 0) > 0;
+          if (changed) {
+            await conn.query("UPDATE `Relationship` SET status = 'activa', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = (SELECT relationshipId FROM `Dispute` WHERE id = ?) AND status = 'en_disputa'", [id]);
+          }
+          return changed;
+        });
+      }
+      addSanction(input) {
+        return this.run(async (conn) => {
+          const created = rows3(await conn.query("SELECT UUID() AS id"))[0];
+          const id = String(created?.id);
+          await conn.query("INSERT INTO `Sanction` (id, userId, level, reason, relationshipId, disputeId, startsAt, endsAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3), ?, ?, CURRENT_TIMESTAMP(3))", [id, input.userId, input.level, input.reason, input.relationshipId, input.disputeId, input.endsAt, input.createdBy]);
+          return id;
+        });
+      }
+      listSanctions(page) {
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3;
+        return this.run(async (conn) => {
+          const items = rows3(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`)).map(toSanction);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE3 };
+        });
+      }
+      sanctionsForUser(userId) {
+        return this.run(async (conn) => rows3(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
+      }
+      liftSanction(id, reason, liftedBy) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `Sanction` SET liftedAt = CURRENT_TIMESTAMP(3), liftedBy = ?, liftReason = ? WHERE id = ? AND liftedAt IS NULL", [liftedBy, reason, id]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      searchBlockedUserIds() {
+        return this.run(async (conn) => rows3(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
+      }
+    };
+  }
+});
+
+// packages/api/dist/application/relations/linker.js
+function createRelationLinker(store) {
+  const quiet = async (work, fallback) => {
+    try {
+      return await work();
+    } catch {
+      return fallback;
+    }
+  };
+  return {
+    fromAppointment: (input) => quiet(() => store.ensureForOrigin({
+      kind: "dueno_taller",
+      originType: "appointment",
+      originId: input.appointmentId,
+      subject: input.subject,
+      parties: [
+        { userId: input.ownerId, role: "dueno" },
+        { userId: input.shopUserId, role: "taller" }
+      ],
+      createdBy: input.createdBy
+    }), null),
+    fromWorkOrder: (input) => quiet(() => store.ensureForOrigin({
+      kind: "dueno_taller",
+      originType: "workorder",
+      originId: input.workOrderId,
+      subject: input.subject,
+      parties: [
+        { userId: input.ownerId, role: "dueno" },
+        { userId: input.shopUserId, role: "taller" }
+      ],
+      createdBy: input.createdBy
+    }), null),
+    fromQuoteRequest: async (input) => {
+      const kind = input.requesterRole === "taller" ? "taller_almacen" : "dueno_almacen";
+      const role = input.requesterRole === "taller" ? "taller" : "dueno";
+      const ids = [];
+      for (const storeUserId of input.storeUserIds) {
+        const id = await quiet(() => store.ensureForOrigin({
+          kind,
+          originType: "quote",
+          originId: `${input.requestId}:${storeUserId}`,
+          subject: input.subject,
+          parties: [
+            { userId: input.requesterId, role },
+            { userId: storeUserId, role: "almacen" }
+          ],
+          createdBy: input.createdBy
+        }), null);
+        if (id)
+          ids.push(id);
+      }
+      return ids;
+    }
+  };
+}
+var init_linker = __esm({
+  "packages/api/dist/application/relations/linker.js"() {
+    "use strict";
+  }
+});
+
 // packages/api/dist/interfaces/admin/account.js
 function registerAccountRoutes(app2, deps) {
   const { store } = deps;
@@ -90560,10 +92838,37 @@ function settingsView(input) {
     <input id="current-settings" name="current" type="password" required autocomplete="current-password">
     <button class="full" type="submit" name="action" value="save">Guardar n\xFAmero</button>
     ${remove}</form></div>
+  ${platformCard(input.platform, csrf)}
   ${aiCard(input.ai, csrf)}
   ${legalCard(input.legal, csrf)}
   <div class="card"><h2>Base de datos</h2>${db}</div>
   </div>`;
+}
+function platformCard(platform, csrf) {
+  if (!platform)
+    return "";
+  const quiet = inQuietHours(platform) ? `<p class="error">Ahora mismo est\xE1s en horario silencioso.</p>` : platform.quietFrom && platform.quietTo ? `<p class="ok">Horario silencioso configurado de ${escapeHtml(platform.quietFrom)} a ${escapeHtml(platform.quietTo)}.</p>` : `<p class="muted">Sin horario silencioso: el panel no avisa a ninguna hora.</p>`;
+  const switches = FEATURES.map((f) => `<label><input type="checkbox" name="feature_${escapeHtml(f.key)}"${platform.features[f.key] ? " checked" : ""}> ${escapeHtml(f.label)}</label>`).join("");
+  const entry = `<p class="muted">C\xF3mo abre automantpro.app:</p>
+    <label class="choice"><input type="radio" name="entryMode" value="directo"${platform.entryMode === "menu" ? "" : " checked"}>
+      <span><strong>Directo al chat</strong><br>Un solo salto a WhatsApp. Mejor para tarjetas, QR y el n\xFAmero compartido.</span></label>
+    <label class="choice"><input type="radio" name="entryMode" value="menu"${platform.entryMode === "menu" ? " checked" : ""}>
+      <span><strong>Men\xFA de perfiles</strong><br>Muestra la p\xE1gina con \xABtengo un veh\xEDculo\xBB, \xABtengo un taller\xBB, \xABtengo un almac\xE9n\xBB y \xABya tengo cuenta\xBB; el chat arranca con esa respuesta escrita. Mejor para campa\xF1as.</span></label>`;
+  return `<div class="card"><h2>Operaci\xF3n</h2>${quiet}
+    <form method="post" action="/admin/settings/platform" autocomplete="off">${csrf}
+    ${entry}
+    <label for="cities">Ciudades activas (separadas por comas; vac\xEDo = todas)</label>
+    <input id="cities" name="cities" value="${escapeHtml(platform.cities.join(", "))}" placeholder="Quito, Guayaquil, Cuenca">
+    <label for="quietFrom">Horario silencioso desde</label>
+    <input id="quietFrom" name="quietFrom" placeholder="21:00" value="${escapeHtml(platform.quietFrom ?? "")}">
+    <label for="quietTo">Hasta</label>
+    <input id="quietTo" name="quietTo" placeholder="07:00" value="${escapeHtml(platform.quietTo ?? "")}">
+    <label for="welcomeIntro">L\xEDnea extra en la bienvenida (opcional)</label>
+    <input id="welcomeIntro" name="welcomeIntro" maxlength="300" value="${escapeHtml(platform.welcomeIntro ?? "")}" placeholder="Estamos en pruebas gratuitas hasta diciembre.">
+    <p class="muted">Funciones encendidas:</p><div class="checks">${switches}</div>
+    <label for="current-platform">Tu contrase\xF1a actual</label>
+    <input id="current-platform" name="current" type="password" required autocomplete="current-password">
+    <button class="full" type="submit">Guardar operaci\xF3n</button></form></div>`;
 }
 function legalCard(legal, csrf) {
   if (!legal)
@@ -90604,6 +92909,7 @@ var init_views_settings = __esm({
     init_page();
     init_whatsapp_number();
     init_documents();
+    init_platform();
   }
 });
 
@@ -90709,7 +93015,7 @@ function historyDescription(o, items) {
   return parts.join(" \xB7 ").slice(0, 2e3);
 }
 var WORK_ORDER_LABELS, WORK_ORDER_TRANSITIONS, EDITABLE_STATUSES, OPEN_STATUSES, IN_SHOP_STATUSES, ITEM_KINDS, DIAGNOSIS_OUTCOMES, workOrderCode, lineTotal, km, vehicleText;
-var init_workflow = __esm({
+var init_workflow2 = __esm({
   "packages/api/dist/application/work-orders/workflow.js"() {
     "use strict";
     WORK_ORDER_LABELS = {
@@ -90772,6 +93078,12 @@ function registerSettingsRoutes(app2, deps) {
     } catch {
     }
     const ai = deps.copilot ? await deps.copilot.status().catch(() => null) : null;
+    let platform;
+    try {
+      platform = await loadPlatformSettings(deps.settings);
+    } catch {
+      platform = void 0;
+    }
     try {
       stored = await deps.settings.get(WHATSAPP_NUMBER_KEY);
     } catch {
@@ -90782,7 +93094,7 @@ function registerSettingsRoutes(app2, deps) {
     } catch {
       db = null;
     }
-    return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, legal, ai, flash }), session, status);
+    return deps.html(reply, request, "Ajustes", settingsView({ csrf: session.csrfToken, whatsapp: { stored, env: deps.envNumber() }, db, legal, ai, platform, flash }), session, status);
   }
   function checkCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
@@ -90840,6 +93152,41 @@ function registerSettingsRoutes(app2, deps) {
       kind: "ok",
       text: `N\xFAmero actualizado a ${formatWhatsappNumber(number)}. La p\xE1gina de inicio ya lo usa.`
     });
+  });
+  app2.post("/settings/platform", async (request, reply) => {
+    const ctx = checkCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const account = await deps.store.findAdminById(session.userId);
+    if (!account)
+      return render(request, reply, session, { kind: "error", text: "Cuenta no encontrada." }, 404);
+    if (!checkRateLimit(account.email, request.ip).allowed) {
+      return render(request, reply, session, { kind: "error", text: "Demasiados intentos. Espera unos minutos." }, 429);
+    }
+    if (!await comparePassword(typeof body.current === "string" ? body.current : "", account.passwordHash)) {
+      recordLoginAttempt(account.email, request.ip, false);
+      return render(request, reply, session, { kind: "error", text: "La contrase\xF1a actual no es correcta." }, 400);
+    }
+    const cities = parseCities(body.cities);
+    const quietFrom = parseTime(body.quietFrom);
+    const quietTo = parseTime(body.quietTo);
+    if (typeof body.quietFrom === "string" && body.quietFrom.trim() !== "" && !quietFrom || typeof body.quietTo === "string" && body.quietTo.trim() !== "" && !quietTo) {
+      return render(request, reply, session, { kind: "error", text: "El horario silencioso usa el formato HH:MM (por ejemplo 21:00)." }, 400);
+    }
+    const features = {};
+    for (const feature of FEATURES)
+      features[feature.key] = body[`feature_${feature.key}`] === "on";
+    const welcomeIntro = typeof body.welcomeIntro === "string" ? body.welcomeIntro.trim().slice(0, 300) || null : null;
+    try {
+      await savePlatformSettings(deps.settings, { entryMode: parseEntryMode(body.entryMode), cities, quietFrom, quietTo, welcomeIntro, features }, account.id);
+    } catch {
+      return render(request, reply, session, { kind: "error", text: "Base de datos no disponible." }, 503);
+    }
+    deps.onChanged();
+    const off = FEATURES.filter((f) => !features[f.key]).map((f) => f.label);
+    await deps.audit("admin.settings.platform", account.id, `Operaci\xF3n: inicio ${parseEntryMode(body.entryMode)}, ${cities.length ? `${cities.length} ciudades` : "todas las ciudades"}, silencio ${quietFrom ?? "\u2014"}\u2013${quietTo ?? "\u2014"}${off.length ? `, pausadas: ${off.join(", ")}` : ""}`);
+    return render(request, reply, session, { kind: "ok", text: "Ajustes de operaci\xF3n guardados." });
   });
   app2.post("/settings/legal", async (request, reply) => {
     const ctx = checkCsrf(request, reply);
@@ -90932,7 +93279,8 @@ var init_settings = __esm({
     init_security();
     init_whatsapp_number();
     init_views_settings();
-    init_workflow();
+    init_workflow2();
+    init_platform();
     init_documents();
   }
 });
@@ -90970,11 +93318,11 @@ var init_plan_text = __esm({
 });
 
 // packages/api/dist/application/appointments/messages.js
-function parseEcDateTime(date, time) {
-  if (typeof date !== "string" || typeof time !== "string")
+function parseEcDateTime(date, time2) {
+  if (typeof date !== "string" || typeof time2 !== "string")
     return null;
   const d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date.trim());
-  const t = /^(\d{2}):(\d{2})$/.exec(time.trim());
+  const t = /^(\d{2}):(\d{2})$/.exec(time2.trim());
   if (!d || !t)
     return null;
   const [year, month, day2] = [Number(d[1]), Number(d[2]), Number(d[3])];
@@ -91042,13 +93390,13 @@ function servicesText(a) {
   return names.length > 0 ? names.join(", ") : a.summary ?? "\u2014";
 }
 function ownerMessage(a) {
-  const when = formatEcDateTime(a.scheduledAt);
+  const when3 = formatEcDateTime(a.scheduledAt);
   switch (a.status) {
     case "confirmed":
       return `\u2705 Tu turno est\xE1 confirmado
 \u{1F527} ${a.shopName}
 \u{1F4CD} ${a.shopAddress}, ${a.shopCity}
-\u{1F5D3}\uFE0F ${when}
+\u{1F5D3}\uFE0F ${when3}
 \u{1F697} ${vehicleText2(a)}
 \u{1F6E0}\uFE0F ${servicesText(a)}
 
@@ -91059,14 +93407,14 @@ Te lo recuerdo un d\xEDa antes. Si necesitas cambiarlo, escr\xEDbeme.`;
 
 \xBFC\xF3mo te fue? Califica del 1 al 5 y cu\xE9ntame si todo qued\xF3 bien.`;
     case "cancelled":
-      return `\u274C Tu turno en ${a.shopName} del ${when} fue cancelado${a.cancelReason ? `: ${a.cancelReason}` : ""}.
+      return `\u274C Tu turno en ${a.shopName} del ${when3} fue cancelado${a.cancelReason ? `: ${a.cancelReason}` : ""}.
 
 \xBFQuieres que te busque otro horario u otro taller?`;
     default:
       return `\u{1F4C5} Solicitud de turno enviada
 \u{1F527} ${a.shopName}
 \u{1F4CD} ${a.shopAddress}, ${a.shopCity}
-\u{1F5D3}\uFE0F ${when}
+\u{1F5D3}\uFE0F ${when3}
 \u{1F697} ${vehicleText2(a)}
 \u{1F6E0}\uFE0F ${servicesText(a)}
 
@@ -91115,16 +93463,16 @@ function chatLink(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e(digits)}" target="_blank" rel="noopener">${e(label2)} (${e(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox(id, label2, content, rows7 = 8) {
-  return `<label for="${id}">${e(label2)}</label><textarea id="${id}" readonly rows="${rows7}">${e(content)}</textarea>`;
+function copyBox(id, label2, content, rows9 = 8) {
+  return `<label for="${id}">${e(label2)}</label><textarea id="${id}" readonly rows="${rows9}">${e(content)}</textarea>`;
 }
 function appointmentsListView(input) {
-  const tabs = FILTERS.map(([id, label2]) => `<a href="/admin/appointments?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e(label2)}</a>`).join("");
+  const tabs2 = FILTERS3.map(([id, label2]) => `<a href="/admin/appointments?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e(label2)}</a>`).join("");
   const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin turnos</td></tr>` : input.page.items.map((a) => `<tr><td><a href="/admin/appointments/${e(a.id)}">${e(formatEcDateTime(a.scheduledAt))}</a></td><td>${e(STATUS_LABELS[a.status] ?? a.status)}</td>
             <td>${e(a.shopName)}</td><td><a href="/admin/users/${e(a.ownerId)}">${e(a.ownerName)}</a></td><td>${e(a.vehicleLabel)}</td><td>${e(servicesLabel(a))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
-  return `<h1>Turnos</h1>${flashHtml2(input.flash)}<div class="tabs">${tabs}</div>
+  return `<h1>Turnos</h1>${flashHtml4(input.flash)}<div class="tabs">${tabs2}</div>
   <p class="muted">Para agendar, abre la ficha de un due\xF1o y pulsa \xABAgendar turno\xBB en su veh\xEDculo.</p>
   <div class="scroll"><table><thead><tr><th>Fecha (hora de Ecuador)</th><th>Estado</th><th>Taller</th><th>Due\xF1o</th><th>Veh\xEDculo</th><th>Servicios</th></tr></thead><tbody>${body}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
@@ -91134,19 +93482,19 @@ function appointmentDetailView(input) {
   const transitions = ALLOWED_TRANSITIONS[a.status] ?? [];
   const actions = [];
   if (transitions.includes("confirmed")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField2(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField4(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
   }
   if (transitions.includes("completed")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField2(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField4(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
   }
   if (transitions.includes("cancelled")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField2(input.csrf)}<input type="hidden" name="status" value="cancelled">
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField4(input.csrf)}<input type="hidden" name="status" value="cancelled">
       <label for="reason">Motivo de la cancelaci\xF3n</label><input id="reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cancelar turno</button></form>`);
   }
   const shopMessage = a.status === "pending" ? copyBox("msg-shop", "Mensaje para el taller", shopRequestMessage(a)) : "";
   return `<div class="stack wide"><p><a href="/admin/appointments">\u2190 Turnos</a></p>
-  <h1>Turno \xB7 ${e(formatEcDateTime(a.scheduledAt))}</h1>${flashHtml2(input.flash)}
+  <h1>Turno \xB7 ${e(formatEcDateTime(a.scheduledAt))}</h1>${flashHtml4(input.flash)}
   <div class="card"><h2>Resumen</h2>
     <div>Estado: <strong>${e(STATUS_LABELS[a.status] ?? a.status)}</strong>${a.cancelReason ? ` \xB7 ${e(a.cancelReason)}` : ""}</div>
     <div>Taller: <strong>${e(a.shopName)}</strong> \xB7 ${e(a.shopAddress)}, ${e(a.shopCity)}</div>
@@ -91184,7 +93532,7 @@ function scheduleView(input) {
           <span><strong>${e(shop.name)}</strong> \xB7 ${e(shop.city)}${shop.zone ? ` (${e(shop.zone)})` : ""}<br><span class="muted">${shop.covered === shop.needed ? "Cubre todo" : `Cubre ${shop.covered} de ${shop.needed}`}${shop.hours ? ` \xB7 ${e(shop.hours)}` : ""}</span></span></label>`).join("");
       results = `<div class="card"><h2>Talleres</h2>${notice}${summary}
         ${copyBox("msg-shops", "Lista de talleres para el due\xF1o", shopListMessage(input.shops))}
-        <form method="post" action="/admin/appointments">${csrfField2(input.csrf)}
+        <form method="post" action="/admin/appointments">${csrfField4(input.csrf)}
         <input type="hidden" name="ownerId" value="${ownerId}"><input type="hidden" name="vehicleId" value="${vehicleId}">${hidden}
         ${options}
         <div class="row"><span><label for="date">D\xEDa</label><input id="date" name="date" type="date" value="${e(values.date)}" required></span>
@@ -91220,15 +93568,15 @@ function eventText(event) {
   }
 }
 function bitacoraSection(userId, events, csrf) {
-  const list5 = events.length === 0 ? `<p class="muted">Sin actividad registrada.</p>` : events.map((ev) => `<div><span class="muted">${e(formatEcDateTime(ev.createdAt))}</span> \xB7 ${e(eventText(ev))}</div>`).join("");
+  const list6 = events.length === 0 ? `<p class="muted">Sin actividad registrada.</p>` : events.map((ev) => `<div><span class="muted">${e(formatEcDateTime(ev.createdAt))}</span> \xB7 ${e(eventText(ev))}</div>`).join("");
   return `<div class="card"><h2>Bit\xE1cora</h2>
-    <form method="post" action="/admin/users/${e(userId)}/notes">${csrfField2(csrf)}
+    <form method="post" action="/admin/users/${e(userId)}/notes">${csrfField4(csrf)}
     <label for="note-text">Nueva nota (qu\xE9 se convers\xF3 o acord\xF3)</label><textarea id="note-text" name="text" maxlength="2000" rows="3" required></textarea>
     <label for="note-channel">Canal</label><select id="note-channel" name="channel"><option value="whatsapp">WhatsApp</option><option value="llamada">Llamada</option><option value="otro">Otro</option></select>
     <button type="submit">Agregar nota</button></form>
-    ${list5}</div>`;
+    ${list6}</div>`;
 }
-var e, csrfField2, flashHtml2, FILTERS, PLAN_STATUS, servicesLabel;
+var e, csrfField4, flashHtml4, FILTERS3, PLAN_STATUS, servicesLabel;
 var init_views_appointments = __esm({
   "packages/api/dist/interfaces/admin/views-appointments.js"() {
     "use strict";
@@ -91236,9 +93584,9 @@ var init_views_appointments = __esm({
     init_whatsapp_number();
     init_messages();
     e = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField2 = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
-    flashHtml2 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e(flash.text)}</p>` : "";
-    FILTERS = [
+    csrfField4 = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
+    flashHtml4 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e(flash.text)}</p>` : "";
+    FILTERS3 = [
       ["hoy", "Hoy"],
       ["proximos", "Pr\xF3ximos"],
       ["pendientes", "Por confirmar"],
@@ -91256,16 +93604,16 @@ function chatLink2(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e2(digits)}" target="_blank" rel="noopener">${e2(label2)} (${e2(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox2(id, label2, content, rows7 = 9) {
-  return `<label for="${id}">${e2(label2)}</label><textarea id="${id}" readonly rows="${rows7}">${e2(content)}</textarea>`;
+function copyBox2(id, label2, content, rows9 = 9) {
+  return `<label for="${id}">${e2(label2)}</label><textarea id="${id}" readonly rows="${rows9}">${e2(content)}</textarea>`;
 }
 function workOrdersListView(input) {
-  const tabs = FILTERS2.map(([id, label2]) => `<a href="/admin/work-orders?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e2(label2)}</a>`).join("");
+  const tabs2 = FILTERS4.map(([id, label2]) => `<a href="/admin/work-orders?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e2(label2)}</a>`).join("");
   const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin \xF3rdenes</td></tr>` : input.page.items.map((o) => `<tr><td><a href="/admin/work-orders/${e2(o.id)}">${e2(workOrderCode(o.number))}</a></td><td>${e2(WORK_ORDER_LABELS[o.status] ?? o.status)}</td>
             <td>${e2(o.shopName)}</td><td><a href="/admin/users/${e2(o.ownerId)}">${e2(o.ownerName)}</a></td><td>${e2(o.vehicleLabel)}</td><td>${e2(formatUsd(o.total))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
-  return `<h1>\xD3rdenes de trabajo</h1>${flashHtml3(input.flash)}<div class="tabs">${tabs}</div>
+  return `<h1>\xD3rdenes de trabajo</h1>${flashHtml5(input.flash)}<div class="tabs">${tabs2}</div>
   <p class="muted">Se abren desde un turno confirmado (\xABAbrir orden de trabajo\xBB) o desde la ficha del due\xF1o (\xABOrden de trabajo sin cita\xBB).</p>
   <div class="scroll"><table><thead><tr><th>Orden</th><th>Estado</th><th>Taller</th><th>Due\xF1o</th><th>Veh\xEDculo</th><th>Total</th></tr></thead><tbody>${body}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
@@ -91277,7 +93625,7 @@ function newWorkOrderView(input) {
        <input type="hidden" name="appointmentId" value="${e2(input.appointment.id)}">` : input.shops.length === 0 ? `<p class="error">No hay talleres verificados. Aprueba un taller en Verificaciones antes de abrir una orden.</p>` : `<label for="shopId">Taller</label><select id="shopId" name="shopId" required>${input.shops.map((s) => `<option value="${e2(s.id)}"${String(v.shopId ?? "") === s.id ? " selected" : ""}>${e2(s.name)} \xB7 ${e2(s.city)}</option>`).join("")}</select>`;
   return `<div class="stack wide"><p><a href="/admin/users/${e2(input.owner.id)}">\u2190 ${e2(input.owner.name)}</a></p>
   <h1>Nueva orden de trabajo</h1>${input.error ? `<p class="error" role="alert">${e2(input.error)}</p>` : ""}
-  <form method="post" action="/admin/work-orders" autocomplete="off">${csrfField3(input.csrf)}
+  <form method="post" action="/admin/work-orders" autocomplete="off">${csrfField5(input.csrf)}
   <input type="hidden" name="ownerId" value="${e2(input.owner.id)}"><input type="hidden" name="vehicleId" value="${e2(input.vehicle.id)}">
   <div class="card"><h2>Recepci\xF3n del veh\xEDculo</h2>
     <div>Due\xF1o: <strong>${e2(input.owner.name)}</strong></div>
@@ -91290,10 +93638,10 @@ function newWorkOrderView(input) {
   <button class="full" type="submit">Abrir orden de trabajo</button></form></div>`;
 }
 function statusButton(order, csrf, status, label2, danger = false) {
-  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField3(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e2(label2)}</button></form>`;
+  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField5(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e2(label2)}</button></form>`;
 }
 function reasonForm(order, csrf, status, label2, button) {
-  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField3(csrf)}<input type="hidden" name="status" value="${status}">
+  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField5(csrf)}<input type="hidden" name="status" value="${status}">
     <label for="reason-${status}">${e2(label2)}</label><input id="reason-${status}" name="reason" maxlength="191" required>
     <button class="danger" type="submit">${e2(button)}</button></form>`;
 }
@@ -91304,14 +93652,14 @@ function workOrderDetailView(input) {
   const transitions = WORK_ORDER_TRANSITIONS[order.status] ?? [];
   const itemRows = items.length === 0 ? `<tr><td colspan="${editable ? 7 : 6}" class="muted">A\xFAn no hay \xEDtems en el presupuesto.</td></tr>` : items.map((i) => `<tr><td>${i.kind === "mano_obra" ? "Mano de obra" : "Repuesto"}</td><td>${e2(i.description)}</td><td>${e2([i.brand, i.partCode].filter(Boolean).join(" \xB7 ") || "\u2014")}</td>
             <td>${e2(String(i.quantity).replace(".", ","))}</td><td>${e2(formatUsd(i.unitPrice))}</td><td>${e2(formatUsd(lineTotal(i)))}</td>
-            ${editable ? `<td><form method="post" action="/admin/work-orders/${e2(order.id)}/items/${e2(i.id)}/delete">${csrfField3(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
-  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/items" autocomplete="off">${csrfField3(csrf)}
+            ${editable ? `<td><form method="post" action="/admin/work-orders/${e2(order.id)}/items/${e2(i.id)}/delete">${csrfField5(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
+  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/items" autocomplete="off">${csrfField5(csrf)}
       <div class="row"><span><label for="kind">Tipo</label><select id="kind" name="kind">${ITEM_KINDS.map(([id, label2]) => `<option value="${id}">${label2}</option>`).join("")}</select></span>
       <span style="flex:2"><label for="description">Descripci\xF3n</label><input id="description" name="description" maxlength="191" required></span></div>
       <div class="row"><span><label for="brand">Marca (opcional)</label><input id="brand" name="brand" maxlength="60"></span><span><label for="partCode">C\xF3digo (opcional)</label><input id="partCode" name="partCode" maxlength="60"></span></div>
       <div class="row"><span><label for="quantity">Cantidad</label><input id="quantity" name="quantity" value="1" inputmode="decimal" required></span><span><label for="unitPrice">Precio unitario (USD)</label><input id="unitPrice" name="unitPrice" inputmode="decimal" placeholder="45,50" required></span></div>
       <button type="submit">Agregar al presupuesto</button></form>` : "";
-  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/diagnosis">${csrfField3(csrf)}
+  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/diagnosis">${csrfField5(csrf)}
       <label for="diag">Diagn\xF3stico del taller</label><textarea id="diag" name="diagnosis" maxlength="1000" rows="3">${e2(order.diagnosis)}</textarea>
       <button type="submit">Guardar diagn\xF3stico</button></form>` : `<p>${e2(order.diagnosis ?? "Sin diagn\xF3stico registrado.")}</p>`;
   const actions = [];
@@ -91327,7 +93675,7 @@ function workOrderDetailView(input) {
   if (transitions.includes("esperando_repuesto"))
     actions.push(statusButton(order, csrf, "esperando_repuesto", "Esperando repuesto"));
   if (transitions.includes("cerrada")) {
-    actions.push(`<form method="post" action="/admin/work-orders/${e2(order.id)}/close" autocomplete="off">${csrfField3(csrf)}
+    actions.push(`<form method="post" action="/admin/work-orders/${e2(order.id)}/close" autocomplete="off">${csrfField5(csrf)}
       <h2>Cerrar con evidencia</h2>
       <div class="row"><span><label for="exitKm">Kilometraje de salida</label><input id="exitKm" name="exitKm" inputmode="numeric" value="${e2(order.intakeKm ?? order.vehicleKm)}" required></span>
       <span><label for="warrantyDays">Garant\xEDa (d\xEDas)</label><input id="warrantyDays" name="warrantyDays" inputmode="numeric" value="30" required></span></div>
@@ -91340,7 +93688,7 @@ function workOrderDetailView(input) {
     actions.push(reasonForm(order, csrf, "cancelada", "Motivo de la cancelaci\xF3n", "Cancelar orden"));
   const shopMessage = shopWorkOrderMessage(order);
   return `<div class="stack wide"><p><a href="/admin/work-orders">\u2190 \xD3rdenes de trabajo</a></p>
-  <h1>${e2(code)} \xB7 ${e2(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml3(input.flash)}
+  <h1>${e2(code)} \xB7 ${e2(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml5(input.flash)}
   <div class="card"><h2>Resumen</h2>
     <div>Taller: <strong>${e2(order.shopName)}</strong></div>
     <div>Due\xF1o: <a href="/admin/users/${e2(order.ownerId)}">${e2(order.ownerName)}</a></div>
@@ -91379,19 +93727,19 @@ function historySection(history) {
     return "";
   return `<div class="card"><h2>Historial de servicios</h2>${history.map((h) => `<div><span class="muted">${e2(formatEcDateTime(h.createdAt))}</span> \xB7 <strong>${e2(h.vehicleLabel)}</strong> \xB7 ${e2(h.shopName)} \xB7 ${e2(h.description)}${h.cost !== null ? ` \xB7 ${e2(formatUsd(h.cost))}` : ""}</div>`).join("")}</div>`;
 }
-var e2, csrfField3, flashHtml3, km2, FILTERS2;
+var e2, csrfField5, flashHtml5, km2, FILTERS4;
 var init_views_work_orders = __esm({
   "packages/api/dist/interfaces/admin/views-work-orders.js"() {
     "use strict";
     init_page();
     init_whatsapp_number();
     init_messages();
-    init_workflow();
+    init_workflow2();
     e2 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField3 = (token) => `<input type="hidden" name="csrf" value="${e2(token)}">`;
-    flashHtml3 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e2(flash.text)}</p>` : "";
+    csrfField5 = (token) => `<input type="hidden" name="csrf" value="${e2(token)}">`;
+    flashHtml5 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e2(flash.text)}</p>` : "";
     km2 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
-    FILTERS2 = [
+    FILTERS4 = [
       ["abiertas", "Abiertas"],
       ["por_aprobar", "Por aprobar"],
       ["en_taller", "En el taller"],
@@ -91489,10 +93837,10 @@ function lostQuoteMessage(r) {
 \xBFNos cuentas qu\xE9 pes\xF3 m\xE1s: precio, tiempo de entrega o existencias? Nos ayuda a enviarte solicitudes que puedas ganar.`;
 }
 var REQUEST_LABELS, QUOTE_LABELS, ORDER_STAGE_LABELS, ORDER_STAGE_TRANSITIONS, ORDER_STATUS_FOR_STAGE, LOSS_REASONS, MAX_STORES_PER_REQUEST, quoteRequestCode, round, partText;
-var init_workflow2 = __esm({
+var init_workflow3 = __esm({
   "packages/api/dist/application/quotes/workflow.js"() {
     "use strict";
-    init_workflow();
+    init_workflow2();
     REQUEST_LABELS = {
       abierta: "Abierta",
       con_pedido: "Con pedido",
@@ -91546,16 +93894,16 @@ function chatLink3(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e3(digits)}" target="_blank" rel="noopener">${e3(label2)} (${e3(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox3(id, label2, content, rows7 = 8) {
-  return `<label for="${id}">${e3(label2)}</label><textarea id="${id}" readonly rows="${rows7}">${e3(content)}</textarea>`;
+function copyBox3(id, label2, content, rows9 = 8) {
+  return `<label for="${id}">${e3(label2)}</label><textarea id="${id}" readonly rows="${rows9}">${e3(content)}</textarea>`;
 }
 function quotesListView(input) {
-  const tabs = FILTERS3.map(([id, label2]) => `<a href="/admin/quotes?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e3(label2)}</a>`).join("");
+  const tabs2 = FILTERS5.map(([id, label2]) => `<a href="/admin/quotes?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e3(label2)}</a>`).join("");
   const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin solicitudes</td></tr>` : input.page.items.map((r) => `<tr><td><a href="/admin/quotes/${e3(r.id)}">${e3(quoteRequestCode(r.number))}</a></td><td>${e3(REQUEST_LABELS[r.status] ?? r.status)}</td>
             <td>${e3(r.partName)}${r.quantity > 1 ? ` x${e3(r.quantity)}` : ""}</td><td><a href="/admin/users/${e3(r.requesterId)}">${e3(r.requesterName)}</a></td><td>${e3(r.vehicleLabel ?? "\u2014")}</td><td>${e3(formatEcDateTime(r.createdAt))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/quotes?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/quotes?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
-  return `<h1>Cotizaciones de repuestos</h1>${flashHtml4(input.flash)}<div class="tabs">${tabs}</div>
+  return `<h1>Cotizaciones de repuestos</h1>${flashHtml6(input.flash)}<div class="tabs">${tabs2}</div>
   <p class="muted">Se piden desde el veh\xEDculo de un due\xF1o (\xABCotizar repuesto\xBB) o desde una orden de trabajo (\xABPedir repuestos a almacenes\xBB).</p>
   <div class="scroll"><table><thead><tr><th>Solicitud</th><th>Estado</th><th>Repuesto</th><th>Solicitante</th><th>Veh\xEDculo</th><th>Fecha</th></tr></thead><tbody>${body}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
@@ -91570,7 +93918,7 @@ function newQuoteView(input) {
   }).join("")}</div>`;
   return `<div class="stack wide"><p><a href="/admin/users/${e3(input.requester.id)}">\u2190 ${e3(input.requester.name)}</a></p>
   <h1>Nueva solicitud de cotizaci\xF3n</h1>${input.error ? `<p class="error" role="alert">${e3(input.error)}</p>` : ""}
-  <form method="post" action="/admin/quotes" autocomplete="off">${csrfField4(input.csrf)}
+  <form method="post" action="/admin/quotes" autocomplete="off">${csrfField6(input.csrf)}
   <input type="hidden" name="requesterId" value="${e3(input.requester.id)}">
   ${input.vehicle ? `<input type="hidden" name="vehicleId" value="${e3(input.vehicle.id)}">` : ""}
   ${input.workOrderId ? `<input type="hidden" name="workOrderId" value="${e3(input.workOrderId)}">` : ""}
@@ -91587,7 +93935,7 @@ function newQuoteView(input) {
 function responseForm(requestId, q, csrf) {
   const unit = q.unitPrice !== null ? String(q.unitPrice).replace(".", ",") : "";
   return `<details><summary>Registrar respuesta de ${e3(q.storeName)}</summary>
-    <form method="post" action="/admin/quotes/${e3(requestId)}/quotes/${e3(q.id)}" autocomplete="off">${csrfField4(csrf)}
+    <form method="post" action="/admin/quotes/${e3(requestId)}/quotes/${e3(q.id)}" autocomplete="off">${csrfField6(csrf)}
     <div class="row"><span><label>Precio unitario (USD)</label><input name="unitPrice" inputmode="decimal" value="${e3(unit)}" placeholder="45,50"></span>
     <span><label>Marca</label><input name="brand" maxlength="60" value="${e3(q.brand)}"></span></div>
     <div class="row"><span><label>Disponibilidad</label><input name="availability" maxlength="60" value="${e3(q.availability)}" placeholder="En stock"></span>
@@ -91607,19 +93955,19 @@ function quoteDetailView(input) {
       <td>${e3([q.brand, q.availability, q.deliveryTime ? `entrega ${q.deliveryTime}` : null, q.warrantyDays ? `garant\xEDa ${q.warrantyDays} d\xEDas` : null].filter(Boolean).join(" \xB7 ") || q.notes || "\u2014")}</td>
       <td>${chatLink3(q.storePhone, "Chat")}</td></tr>`).join("");
   const responses = open ? quotes.map((q) => responseForm(request.id, q, csrf)).join("") : "";
-  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e3(request.id)}/choose" class="row">${csrfField4(csrf)}<input type="hidden" name="quoteId" value="${e3(q.id)}">
+  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e3(request.id)}/choose" class="row">${csrfField6(csrf)}<input type="hidden" name="quoteId" value="${e3(q.id)}">
             <span>${i + 1}) <strong>${e3(q.storeName)}</strong> \xB7 ${e3(formatUsd(q.unitPrice ?? 0))} c/u</span><button type="submit">Eligi\xF3 esta</button></form>`).join("")}` : "";
-  const closeForm = open ? `<form method="post" action="/admin/quotes/${e3(request.id)}/close">${csrfField4(csrf)}
+  const closeForm = open ? `<form method="post" action="/admin/quotes/${e3(request.id)}/close">${csrfField6(csrf)}
       <label for="close-reason">Si el cliente no pidi\xF3 ninguna, \xBFpor qu\xE9?</label><input id="close-reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cerrar sin pedido</button></form>` : "";
-  const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e3(request.id)}/quotes/${e3(q.id)}/loss" class="row">${csrfField4(csrf)}
+  const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e3(request.id)}/quotes/${e3(q.id)}/loss" class="row">${csrfField6(csrf)}
           <span>${e3(q.storeName)}: motivo de p\xE9rdida</span><select name="reason">${LOSS_REASONS.map(([id, label2]) => `<option value="${id}"${q.lossReason === id ? " selected" : ""}>${label2}</option>`).join("")}</select>
           <button type="submit">Guardar</button></form>`).join("") : "";
   let orderCard = "";
   if (order) {
     const transitions = ORDER_STAGE_TRANSITIONS[order.stage] ?? [];
-    const buttons = transitions.filter((s) => s !== "cancelado").map((s) => `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField4(csrf)}<input type="hidden" name="stage" value="${s}"><button type="submit">${e3(ORDER_STAGE_LABELS[s])}</button></form>`).join("");
-    const cancel = transitions.includes("cancelado") ? `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField4(csrf)}<input type="hidden" name="stage" value="cancelado">
+    const buttons = transitions.filter((s) => s !== "cancelado").map((s) => `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField6(csrf)}<input type="hidden" name="stage" value="${s}"><button type="submit">${e3(ORDER_STAGE_LABELS[s])}</button></form>`).join("");
+    const cancel = transitions.includes("cancelado") ? `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField6(csrf)}<input type="hidden" name="stage" value="cancelado">
         <label for="order-cancel">Motivo de la cancelaci\xF3n</label><input id="order-cancel" name="reason" maxlength="191" required><button class="danger" type="submit">Cancelar pedido</button></form>` : "";
     orderCard = `<div class="card"><h2>Pedido \xB7 ${e3(ORDER_STAGE_LABELS[order.stage] ?? order.stage)}</h2>
       <div><strong>${e3(order.storeName)}</strong> \xB7 ${e3(order.partName)}${order.quantity > 1 ? ` x${e3(order.quantity)}` : ""} \xB7 total ${e3(formatUsd(order.total))}</div>
@@ -91630,7 +93978,7 @@ function quoteDetailView(input) {
       ${lost ? `<h2>Almacenes no elegidos</h2>${copyBox3("msg-lost", "Mensaje para los no elegidos", lostQuoteMessage(request), 4)}${lost}` : ""}</div>`;
   }
   return `<div class="stack wide"><p><a href="/admin/quotes">\u2190 Cotizaciones</a></p>
-  <h1>${e3(code)} \xB7 ${e3(REQUEST_LABELS[request.status] ?? request.status)}</h1>${flashHtml4(input.flash)}
+  <h1>${e3(code)} \xB7 ${e3(REQUEST_LABELS[request.status] ?? request.status)}</h1>${flashHtml6(input.flash)}
   <div class="card"><h2>Solicitud</h2>
     <div>Repuesto: <strong>${e3(request.partName)}</strong>${request.quantity > 1 ? ` x${e3(request.quantity)}` : ""}${request.partCode ? ` \xB7 c\xF3digo ${e3(request.partCode)}` : ""}</div>
     <div>Solicitante: <a href="/admin/users/${e3(request.requesterId)}">${e3(request.requesterName)}</a>${request.vehicleLabel ? ` \xB7 ${e3(request.vehicleLabel)}` : ""} \xB7 ${e3(request.city)}</div>
@@ -91661,19 +94009,19 @@ function userQuotesSection(data) {
   }
   return parts.length > 0 ? `<div class="card">${parts.join("")}</div>` : "";
 }
-var e3, csrfField4, flashHtml4, FILTERS3;
+var e3, csrfField6, flashHtml6, FILTERS5;
 var init_views_quotes = __esm({
   "packages/api/dist/interfaces/admin/views-quotes.js"() {
     "use strict";
     init_page();
     init_whatsapp_number();
     init_messages();
-    init_workflow();
     init_workflow2();
+    init_workflow3();
     e3 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField4 = (token) => `<input type="hidden" name="csrf" value="${e3(token)}">`;
-    flashHtml4 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
-    FILTERS3 = [
+    csrfField6 = (token) => `<input type="hidden" name="csrf" value="${e3(token)}">`;
+    flashHtml6 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
+    FILTERS5 = [
       ["abiertas", "Abiertas"],
       ["con_pedido", "Con pedido"],
       ["todas", "Todas"]
@@ -91731,7 +94079,7 @@ function usersListView(input) {
 }
 function newUserView(input) {
   const v = input.values;
-  const tabs = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e4(ROLE_LABELS[p])}</a>`).join("");
+  const tabs2 = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e4(ROLE_LABELS[p])}</a>`).join("");
   const common = `<div class="card"><h2>Datos b\xE1sicos</h2>
     ${input_phone(v)}
     ${field(v, "name", input.perfil === "dueno" ? "Nombre y apellido" : "Nombre del responsable", 'required minlength="3" maxlength="60"')}
@@ -91762,9 +94110,9 @@ function newUserView(input) {
         <p class="muted">Queda en verificaci\xF3n hasta que lo apruebes.</p></div>`;
     }
   }
-  return `<div class="stack wide"><h1>Nuevo registro</h1><div class="tabs">${tabs}</div>
+  return `<div class="stack wide"><h1>Nuevo registro</h1><div class="tabs">${tabs2}</div>
   ${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}
-  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField5(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">
+  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField7(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">
   ${common}${specific}
   <button class="full" type="submit">Guardar registro</button></form></div>`;
 }
@@ -91772,7 +94120,7 @@ function input_phone(values) {
   return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567"');
 }
 function verificationForm(kind, id, userId, csrf) {
-  return `<form method="post" action="/admin/verifications/${kind}/${e4(id)}">${csrfField5(csrf)}
+  return `<form method="post" action="/admin/verifications/${kind}/${e4(id)}">${csrfField7(csrf)}
     <input type="hidden" name="returnTo" value="${e4(userId)}">
     <label for="reason-${e4(id)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e4(id)}" name="reason" maxlength="500">
     <div class="row"><button type="submit" name="decision" value="verified">Aprobar</button><button class="danger" type="submit" name="decision" value="rejected">Rechazar</button></div></form>`;
@@ -91806,25 +94154,46 @@ function userDetailView(input) {
       ${plan ? `<label for="plan-${e4(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e4(v.id)}" readonly rows="12">${e4(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e4(user.id)}/schedule?vehicleId=${e4(v.id)}">Agendar turno</a> \xB7 <a href="/admin/work-orders/new?ownerId=${e4(user.id)}&amp;vehicleId=${e4(v.id)}">Orden de trabajo sin cita</a> \xB7 <a href="/admin/quotes/new?ownerId=${e4(user.id)}&amp;vehicleId=${e4(v.id)}">Cotizar repuesto</a></p>` : ""}</div>`;
   }).join("");
   const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}
-      <form method="post" action="/admin/users/${e4(user.id)}/vehicles" autocomplete="off">${csrfField5(input.csrf)}${vehicleFields2(input.values ?? {})}
+      <form method="post" action="/admin/users/${e4(user.id)}/vehicles" autocomplete="off">${csrfField7(input.csrf)}${vehicleFields2(input.values ?? {})}
       <button class="full" type="submit">Agregar veh\xEDculo</button></form></div>` : "";
-  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e4(user.name)}</h1>${flashHtml5(input.flash)}
-  ${datos}${shopCard}${storeCard}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
+  const moderation = moderationSection(String(user.id), input.relations ?? [], input.sanctions ?? [], input.csrf, !!input.canSanction);
+  const lopdp = input.canLopdp ? userDataRequestsCard(String(user.id), input.dataRequests ?? [], input.csrf) : "";
+  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e4(user.name)}</h1>${flashHtml7(input.flash)}
+  ${datos}${shopCard}${storeCard}${moderation}${lopdp}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
+}
+function moderationSection(userId, relations, sanctions, csrf, canSanction) {
+  if (relations.length === 0 && sanctions.length === 0 && !canSanction)
+    return "";
+  const links = relations.length ? `<ul>${relations.map((r) => `<li><a href="/admin/relations/${e4(r.id)}">${e4(relationCode(r.number))}</a> \xB7 ${e4(RELATION_KIND_LABELS[r.kind] ?? r.kind)} \xB7 ${e4(RELATION_STATUS_LABELS[r.status] ?? r.status)}${r.subject ? ` \xB7 ${e4(r.subject)}` : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin v\xEDnculos registrados.</p>`;
+  const active = sanctions.filter((s) => isActive(s));
+  const history = sanctions.length ? `<ul>${sanctions.map((s) => `<li>${e4(sanctionLabel(s.level))} \xB7 ${day(s.startsAt)}${s.endsAt ? ` \u2192 ${day(s.endsAt)}` : ""}${s.liftedAt ? " (levantada)" : isActive(s) ? ' <span class="error">vigente</span>' : " (vencida)"} \xB7 ${e4(s.reason.slice(0, 160))}</li>`).join("")}</ul>` : `<p class="muted">Sin sanciones.</p>`;
+  const form = canSanction ? `<form method="post" action="/admin/users/${e4(userId)}/sanctions">${csrfField7(csrf)}
+      <label for="sanction-level">Aplicar un paso de la escala</label>
+      <select id="sanction-level" name="level">${SANCTION_LEVELS.map((l) => `<option value="${e4(l.key)}">${e4(l.label)} \u2014 ${e4(l.description)}</option>`).join("")}</select>
+      <label for="sanction-days">D\xEDas (vac\xEDo = el valor por defecto del paso)</label><input id="sanction-days" name="days" inputmode="numeric">
+      <label for="sanction-reason">Motivo (se le comunica)</label><input id="sanction-reason" name="reason" maxlength="500" required>
+      <button class="danger" type="submit">Aplicar sanci\xF3n</button></form>` : "";
+  return `<div class="card"><h2>Moderaci\xF3n</h2>
+    ${active.length ? `<p class="error">Sanci\xF3n vigente: ${e4(active.map((s) => sanctionLabel(s.level)).join(", "))}</p>` : ""}
+    <h2>V\xEDnculos</h2>${links}
+    <h2>Sanciones</h2>${history}${form}</div>`;
 }
 function verificationsView(input) {
   const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e4(item.userId)}">${e4(item.name)}</a></td>
             <td>${e4(item.city)}</td><td>${e4(item.ruc ?? "\u2014")}</td><td>${day(item.createdAt)}</td></tr>`).join("");
-  return `<h1>Verificaciones pendientes</h1>${flashHtml5(input.flash)}
+  return `<h1>Verificaciones pendientes</h1>${flashHtml7(input.flash)}
   <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
-var ROLE_LABELS, STATUS_LABELS2, USAGE_OPTIONS, e4, csrfField5, flashHtml5, className, fuelName, categoryName;
+var ROLE_LABELS, STATUS_LABELS2, USAGE_OPTIONS, e4, csrfField7, flashHtml7, className, fuelName, categoryName;
 var init_views_registrations = __esm({
   "packages/api/dist/interfaces/admin/views-registrations.js"() {
     "use strict";
     init_page();
     init_whatsapp_number();
     init_maintenance();
+    init_views_data();
+    init_workflow();
     init_views_appointments();
     init_views_work_orders();
     init_views_quotes();
@@ -91841,8 +94210,8 @@ var init_views_registrations = __esm({
       ["severo", "Severo (Sierra, carga, lastre)"]
     ];
     e4 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField5 = (token) => `<input type="hidden" name="csrf" value="${e4(token)}">`;
-    flashHtml5 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
+    csrfField7 = (token) => `<input type="hidden" name="csrf" value="${e4(token)}">`;
+    flashHtml7 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
     className = (id) => vehicleClasses.classes.find((c) => c.id === id)?.name ?? String(id ?? "\u2014");
     fuelName = (id) => vehicleClasses.fuels.find((f) => f.id === id)?.name ?? String(id ?? "\u2014");
     categoryName = (id) => serviceTaxonomy.categories.find((c) => c.id === id)?.name ?? id;
@@ -91927,7 +94296,39 @@ function registerRegistrationRoutes(app2, deps) {
       } catch {
       }
     }
-    return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({ detail, csrf: session.csrfToken, plans, flash: extra.flash, error: extra.error, values: extra.values, appointments: appointmentsList, events, workOrders: workOrdersList, history, quotes: quotesData }), session, extra.status ?? 200);
+    let relationsList = [];
+    let sanctionsList = [];
+    let dataRequests = [];
+    if (deps.relations) {
+      try {
+        [relationsList, sanctionsList] = await Promise.all([deps.relations.forUser(id), deps.relations.sanctionsForUser(id)]);
+      } catch {
+      }
+    }
+    if (deps.data) {
+      try {
+        dataRequests = await deps.data.requestsForUser(id);
+      } catch {
+      }
+    }
+    return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({
+      detail,
+      csrf: session.csrfToken,
+      plans,
+      flash: extra.flash,
+      error: extra.error,
+      values: extra.values,
+      appointments: appointmentsList,
+      events,
+      workOrders: workOrdersList,
+      history,
+      quotes: quotesData,
+      relations: relationsList,
+      sanctions: sanctionsList,
+      canSanction: can(session.role, "sanctions"),
+      dataRequests,
+      canLopdp: can(session.role, "lopdp")
+    }), session, extra.status ?? 200);
   }
   app2.get("/users", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -91978,6 +94379,10 @@ function registerRegistrationRoutes(app2, deps) {
       // Las cuentas creadas por el operador no inician sesión con contraseña: se guarda una aleatoria.
       passwordHash: await hashPassword(randomBytes5(24).toString("hex"))
     });
+    const operation = deps.platform ? await deps.platform() : null;
+    if (operation && typeof body.city === "string" && body.city.trim() && !cityAllowed(body.city.trim(), operation.cities)) {
+      return invalid(`Todav\xEDa no operamos en esa ciudad. Ciudades activas: ${operation.cities.join(", ")}.`, 400);
+    }
     let userId;
     try {
       if (perfil === "dueno") {
@@ -92031,7 +94436,7 @@ function registerRegistrationRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID.test(id))
+    if (!UUID3.test(id))
       return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
     return renderDetail(request, reply, session, id, { flash: flashFrom(request) });
   });
@@ -92041,7 +94446,7 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID.test(id))
+    if (!UUID3.test(id))
       return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
     const parsed = vehicleSchema.safeParse(body);
     if (!parsed.success) {
@@ -92077,12 +94482,12 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { kind, id } = request.params;
-    if (kind !== "shop" && kind !== "store" || !UUID.test(id)) {
+    if (kind !== "shop" && kind !== "store" || !UUID3.test(id)) {
       return errorPage(request, reply, session, "Verificaciones", "Registro no encontrado.", 404);
     }
     const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "";
-    const returnTo = typeof body.returnTo === "string" && UUID.test(body.returnTo) ? body.returnTo : null;
+    const returnTo = typeof body.returnTo === "string" && UUID3.test(body.returnTo) ? body.returnTo : null;
     const fail = (text4, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text4 }, status }) : errorPage(request, reply, session, "Verificaciones", text4, status);
     if (!decision)
       return fail("Elige aprobar o rechazar.", 400);
@@ -92102,7 +94507,7 @@ function registerRegistrationRoutes(app2, deps) {
     return reply.redirect(returnTo ? `/admin/users/${returnTo}?ok=${ok}` : `/admin/verifications?ok=${ok}`, 302);
   });
 }
-var UUID, OK_MESSAGES;
+var UUID3, OK_MESSAGES;
 var init_registrations = __esm({
   "packages/api/dist/interfaces/admin/registrations.js"() {
     "use strict";
@@ -92112,14 +94517,18 @@ var init_registrations = __esm({
     init_schemas2();
     init_plan_text();
     init_whatsapp_number();
+    init_permissions();
+    init_platform();
     init_views_registrations();
-    UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    UUID3 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     OK_MESSAGES = {
       creado: "Registro creado.",
       vehiculo: "Veh\xEDculo agregado.",
       verificado: "Verificaci\xF3n aprobada.",
       rechazado: "Verificaci\xF3n rechazada.",
-      nota: "Nota agregada a la bit\xE1cora."
+      nota: "Nota agregada a la bit\xE1cora.",
+      sancion: "Sanci\xF3n registrada: queda el motivo y el aviso a la entidad.",
+      lopdp: "Solicitud de datos registrada con su plazo de respuesta."
     };
   }
 });
@@ -92204,7 +94613,7 @@ function registerAppointmentRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID2.test(id))
+    if (!UUID4.test(id))
       return errorPage(request, reply, session, "Agendar turno", "Usuario no encontrado.", 404);
     const query = request.query ?? {};
     const vehicleId = typeof query.vehicleId === "string" ? query.vehicleId : void 0;
@@ -92215,15 +94624,19 @@ function registerAppointmentRoutes(app2, deps) {
     if (!ctx)
       return reply;
     const { session, body } = ctx;
-    const ownerId = typeof body.ownerId === "string" && UUID2.test(body.ownerId) ? body.ownerId : null;
+    const ownerId = typeof body.ownerId === "string" && UUID4.test(body.ownerId) ? body.ownerId : null;
     if (!ownerId)
       return errorPage(request, reply, session, "Agendar turno", "Usuario no encontrado.", 404);
     const vehicleId = typeof body.vehicleId === "string" ? body.vehicleId : "";
     const services = validServices(asList(body.services));
-    const shopId = typeof body.shopId === "string" && UUID2.test(body.shopId) ? body.shopId : null;
+    const shopId = typeof body.shopId === "string" && UUID4.test(body.shopId) ? body.shopId : null;
     const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, 500) || null : null;
     const scheduledAt = parseEcDateTime(body.date, body.time);
     const fail = (error, status = 400) => renderSchedule(request, reply, session, ownerId, vehicleId, services, { error, values: body, status });
+    const operation = deps.platform ? await deps.platform() : null;
+    const paused = operation ? featurePaused(operation, "appointments") : null;
+    if (paused)
+      return fail(paused);
     if (services.length === 0)
       return fail("Elige al menos un servicio.");
     if (!shopId)
@@ -92259,6 +94672,15 @@ function registerAppointmentRoutes(app2, deps) {
       const created = await appointments.getAppointment(id);
       const payload = { appointmentId: id, scheduledAt: scheduledAt.toISOString(), shopName };
       const entities = [ownerId, created?.shopUserId].filter((v) => !!v);
+      if (created?.shopUserId) {
+        await deps.linker?.fromAppointment({
+          appointmentId: id,
+          ownerId,
+          shopUserId: created.shopUserId,
+          subject: serviceNames(services).join(", ").slice(0, 191) || null,
+          createdBy: session.userId
+        });
+      }
       for (const entityId of entities) {
         await appointments.recordEvent({ type: "appointment.created", actorUserId: session.userId, entityType: "User", entityId, payload });
       }
@@ -92274,7 +94696,7 @@ function registerAppointmentRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const filter = FILTERS4.includes(query.f) ? query.f : "proximos";
+    const filter = FILTERS6.includes(query.f) ? query.f : "proximos";
     const raw = Number(query.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
@@ -92302,7 +94724,7 @@ function registerAppointmentRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID2.test(id))
+    if (!UUID4.test(id))
       return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
     const ok = request.query?.ok;
     const flash = typeof ok === "string" && OK_MESSAGES2[ok] ? { kind: "ok", text: OK_MESSAGES2[ok] } : void 0;
@@ -92314,7 +94736,7 @@ function registerAppointmentRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID2.test(id))
+    if (!UUID4.test(id))
       return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
     const status = body.status;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 191) : "";
@@ -92346,7 +94768,7 @@ function registerAppointmentRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID2.test(id))
+    if (!UUID4.test(id))
       return errorPage(request, reply, session, "Bit\xE1cora", "Usuario no encontrado.", 404);
     const content = typeof body.text === "string" ? body.text.trim() : "";
     if (content.length < 2 || content.length > 2e3) {
@@ -92365,7 +94787,7 @@ function registerAppointmentRoutes(app2, deps) {
     return reply.redirect(`/admin/users/${id}?ok=nota`, 302);
   });
 }
-var UUID2, FILTERS4, MAX_AHEAD_MS, OK_MESSAGES2, asList, validServices;
+var UUID4, FILTERS6, MAX_AHEAD_MS, OK_MESSAGES2, asList, validServices;
 var init_appointments = __esm({
   "packages/api/dist/interfaces/admin/appointments.js"() {
     "use strict";
@@ -92375,9 +94797,10 @@ var init_appointments = __esm({
     init_matching();
     init_messages();
     init_plan_text();
+    init_platform();
     init_views_appointments();
-    UUID2 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    FILTERS4 = ["hoy", "proximos", "pendientes", "todos"];
+    UUID4 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS6 = ["hoy", "proximos", "pendientes", "todos"];
     MAX_AHEAD_MS = 180 * 24 * 60 * 60 * 1e3;
     OK_MESSAGES2 = {
       creado: "Turno solicitado. Env\xEDa los mensajes al taller y al due\xF1o.",
@@ -92484,9 +94907,12 @@ function pendingTasks(ctx) {
   }
   return tasks;
 }
-function welcomeMessage(ctx) {
+function welcomeMessage(ctx, options = {}) {
+  const intro = options.intro?.trim() ? `${options.intro.trim()}
+
+` : "";
   if (!ctx.detail)
-    return NEW_CONTACT_MESSAGE;
+    return `${intro}${NEW_CONTACT_MESSAGE}`;
   const role = String(ctx.detail.user.role);
   const name = firstName(ctx.detail.user.name);
   const pendings = pendingTasks(ctx).filter((t) => t.forCustomer).map((t) => t.text);
@@ -92494,7 +94920,19 @@ function welcomeMessage(ctx) {
   if (pendings.length > 0)
     parts.push(pendings.join("\n"));
   parts.push(MENUS[role] ?? "\xBFEn qu\xE9 te puedo ayudar hoy?");
-  return parts.join("\n\n");
+  return `${intro}${parts.join("\n\n")}`;
+}
+function detectProfileIntent(input) {
+  const text4 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text4))
+    return "cuenta";
+  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text4))
+    return "almacen";
+  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text4))
+    return "taller";
+  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text4))
+    return "dueno";
+  return null;
 }
 function parseContactInput(input) {
   const text4 = input.slice(0, 2e3);
@@ -92514,8 +94952,8 @@ var init_welcome = __esm({
     init_messages();
     init_plan_text();
     init_whatsapp_number();
+    init_workflow3();
     init_workflow2();
-    init_workflow();
     NEW_CONTACT_MESSAGE = "\xA1Hola! \u{1F44B} Bienvenido a AutoMantPro \u{1F697}\nTu veh\xEDculo, tu taller y tus repuestos, conectados en un solo chat.\n\n\xBFQui\xE9n eres?\n1) \u{1F697} Soy nuevo y tengo un veh\xEDculo\n2) \u{1F527} Soy nuevo y tengo un taller\n3) \u{1F4E6} Soy nuevo y tengo un almac\xE9n de repuestos\n4) \u{1F511} Ya tengo cuenta (te escribo desde otro n\xFAmero)\n\nResponde con el n\xFAmero.";
     MENUS = {
       dueno: "\xBFQu\xE9 necesitas hoy?\n1) \u{1F697} Mis veh\xEDculos y su plan\n2) \u{1F50D} Tengo un s\xEDntoma o ruido\n3) \u{1F4C5} Agendar en un taller\n4) \u{1F4E6} Cotizar un repuesto\n5) \u{1F64B} Hablar con una persona",
@@ -92544,12 +94982,15 @@ function resultCard(result, csrf) {
   const chat = `<a href="https://wa.me/${e5(digits)}" target="_blank" rel="noopener">Abrir chat</a>`;
   const message2 = `<label for="welcome">Mensaje para enviar</label><textarea id="welcome" readonly rows="10">${e5(result.message)}</textarea>`;
   if (!result.detail) {
+    const intent = result.intent ?? null;
+    const intentLine = intent ? `<p class="ok">${e5(INTENT_LABELS[intent] ?? intent)}.</p>` : "";
+    const option = (value2, label2) => `<option value="${value2}"${intent === value2 ? " selected" : ""}>${label2}</option>`;
     return `<div class="card"><h2>Contacto nuevo</h2>
-      <div><strong>${e5(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}
-      <p class="muted">No est\xE1 registrado. Env\xEDa la bienvenida y, cuando diga qui\xE9n es, reg\xEDstralo.</p>
+      <div><strong>${e5(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}${intentLine}
+      <p class="muted">${intent === "cuenta" ? "Dice que ya tiene cuenta: b\xFAscala por su n\xFAmero anterior antes de registrarlo de nuevo." : "No est\xE1 registrado. Env\xEDa la bienvenida y, cuando diga qui\xE9n es, reg\xEDstralo."}</p>
       ${message2}
-      <form method="post" action="/admin/users/new/start" class="row">${csrfField6(csrf)}<input type="hidden" name="phone" value="${e5(result.phone)}">
-      <select name="perfil" aria-label="Perfil"><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n</option></select>
+      <form method="post" action="/admin/users/new/start" class="row">${csrfField8(csrf)}<input type="hidden" name="phone" value="${e5(result.phone)}">
+      <select name="perfil" aria-label="Perfil">${option("dueno", "Due\xF1o de veh\xEDculo")}${option("taller", "Taller")}${option("almacen", "Almac\xE9n")}</select>
       <button type="submit">Registrar</button></form></div>`;
   }
   const { user, vehicles } = result.detail;
@@ -92567,7 +95008,7 @@ function copilotCard(input) {
   const hiddenQuery = `<input type="hidden" name="q" value="${e5(input.query)}">`;
   let draftBlock = "";
   if (draft?.ok) {
-    const feedback = draft.usageId ? `<form method="post" action="/admin/attend/feedback" class="row">${csrfField6(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e5(draft.usageId)}">
+    const feedback = draft.usageId ? `<form method="post" action="/admin/attend/feedback" class="row">${csrfField8(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e5(draft.usageId)}">
         <input name="reason" maxlength="191" placeholder="\xBFQu\xE9 le falt\xF3 o sobr\xF3? (opcional)">
         <button type="submit" name="score" value="good">\u{1F44D} \xDAtil</button><button class="danger" type="submit" name="score" value="bad">\u{1F44E} No sirvi\xF3</button></form>` : "";
     draftBlock = `<p class="muted">Borrador generado por IA: rev\xEDsalo y corr\xEDgelo antes de enviarlo. Costo estimado US$ ${e5(draft.costUsd.toFixed(4))}.</p>
@@ -92576,7 +95017,7 @@ function copilotCard(input) {
   } else if (draft) {
     draftBlock = `<p class="error" role="alert">${e5(draft.message)}</p><p class="muted">Usa el mensaje sugerido de arriba.</p>`;
   }
-  const form = copilot.available ? `<form method="post" action="/admin/attend/draft" autocomplete="off">${csrfField6(csrf)}${hiddenQuery}
+  const form = copilot.available ? `<form method="post" action="/admin/attend/draft" autocomplete="off">${csrfField8(csrf)}${hiddenQuery}
       <label for="customer-message">Mensaje del cliente</label><textarea id="customer-message" name="message" rows="4" maxlength="2000" required>${e5(input.customerText)}</textarea>
       <label for="instruction">Indicaci\xF3n para la IA (opcional)</label><input id="instruction" name="instruction" maxlength="300" value="${e5(input.instruction)}" placeholder="Ofr\xE9cele turno para el jueves en la ma\xF1ana">
       <button class="full" type="submit">Sugerir respuesta con IA</button></form>` : `<p class="muted">${e5(copilot.reason ?? "La IA no est\xE1 disponible.")} Rev\xEDsalo en <a href="/admin/settings">Ajustes</a>.</p>`;
@@ -92584,16 +95025,17 @@ function copilotCard(input) {
 }
 function attendView(input) {
   return `<div class="stack wide"><h1>Atender a un contacto</h1>
+  ${input.notice ? `<div class="card"><p class="error" role="status">${e5(input.notice)}</p></div>` : ""}
   <p class="muted">Pega el n\xFAmero o el primer mensaje que lleg\xF3 por WhatsApp. Te digo si es nuevo o registrado, su perfil, lo pendiente y el mensaje para responder.</p>
   ${input.error ? `<p class="error" role="alert">${e5(input.error)}</p>` : ""}
-  <form method="post" action="/admin/attend" autocomplete="off">${csrfField6(input.csrf)}
+  <form method="post" action="/admin/attend" autocomplete="off">${csrfField8(input.csrf)}
   <label for="q">N\xFAmero o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. C\xF3digo: AMP-XXXX \xB7 099 123 4567">${e5(input.query)}</textarea>
   <button class="full" type="submit">Identificar</button></form>
   ${input.flash ? `<p class="ok" role="status">${e5(input.flash)}</p>` : ""}
   ${input.result ? resultCard(input.result, input.csrf) : ""}
   ${input.result?.phone && input.copilot ? copilotCard({ csrf: input.csrf, query: input.query, copilot: input.copilot, draft: input.draft, customerText: input.customerText ?? input.query, instruction: input.instruction ?? "" }) : ""}</div>`;
 }
-var e5, csrfField6, phoneDigits;
+var e5, csrfField8, phoneDigits, INTENT_LABELS;
 var init_views_attend = __esm({
   "packages/api/dist/interfaces/admin/views-attend.js"() {
     "use strict";
@@ -92602,8 +95044,14 @@ var init_views_attend = __esm({
     init_messages();
     init_views_registrations();
     e5 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField6 = (token) => `<input type="hidden" name="csrf" value="${e5(token)}">`;
+    csrfField8 = (token) => `<input type="hidden" name="csrf" value="${e5(token)}">`;
     phoneDigits = (phone) => phone.replace(/\D/g, "");
+    INTENT_LABELS = {
+      dueno: "Dijo que tiene un veh\xEDculo",
+      taller: "Dijo que tiene un taller",
+      almacen: "Dijo que tiene un almac\xE9n de repuestos",
+      cuenta: "Dijo que ya tiene cuenta (escribe desde otro n\xFAmero)"
+    };
   }
 });
 
@@ -92632,7 +95080,10 @@ function registerAttendRoutes(app2, deps) {
     }
     return { session, body };
   }
-  async function resolve(query) {
+  async function operation() {
+    return deps.platform ? deps.platform().catch(() => null) : null;
+  }
+  async function resolve(query, intro) {
     const { phone, code } = parseContactInput(query);
     let detail = null;
     let appointments = [];
@@ -92666,7 +95117,11 @@ function registerAttendRoutes(app2, deps) {
       }
     }
     const ctx = { detail, appointments, events, workOrders, quotes };
-    return { ctx, result: { phone, code, visit, visitLookup, detail, tasks: pendingTasks(ctx), message: welcomeMessage(ctx) } };
+    const intent = detectProfileIntent(query) ?? visit?.profile ?? null;
+    return {
+      ctx,
+      result: { phone, code, visit, visitLookup, detail, intent, tasks: pendingTasks(ctx), message: welcomeMessage(ctx, { intro }) }
+    };
   }
   async function copilotStatus() {
     return deps.copilot ? deps.copilot.status().catch(() => null) : null;
@@ -92679,7 +95134,8 @@ function registerAttendRoutes(app2, deps) {
     const session = deps.requireSession(request, reply);
     if (!session)
       return reply;
-    return deps.html(reply, request, "Atender", attendView({ csrf: session.csrfToken, query: "" }), session);
+    const op = await operation();
+    return deps.html(reply, request, "Atender", attendView({ csrf: session.csrfToken, query: "", notice: op ? quietNotice(op) ?? void 0 : void 0 }), session);
   });
   app2.post("/attend", async (request, reply) => {
     const csrfCtx = withCsrf(request, reply);
@@ -92687,13 +95143,21 @@ function registerAttendRoutes(app2, deps) {
       return reply;
     const { session, body } = csrfCtx;
     const query = typeof body.q === "string" ? body.q.slice(0, 2e3) : "";
+    const op = await operation();
     let resolved;
     try {
-      resolved = await resolve(query);
+      resolved = await resolve(query, op?.welcomeIntro ?? null);
     } catch (err) {
       return databaseError(request, reply, session, query, err);
     }
-    return deps.html(reply, request, "Atender", attendView({ csrf: session.csrfToken, query, result: resolved.result, copilot: await copilotStatus(), customerText: query }), session);
+    return deps.html(reply, request, "Atender", attendView({
+      csrf: session.csrfToken,
+      query,
+      result: resolved.result,
+      copilot: await copilotStatus(),
+      customerText: query,
+      notice: op ? quietNotice(op) ?? void 0 : void 0
+    }), session);
   });
   app2.post("/attend/draft", async (request, reply) => {
     const csrfCtx = withCsrf(request, reply);
@@ -92703,9 +95167,10 @@ function registerAttendRoutes(app2, deps) {
     const query = typeof body.q === "string" ? body.q.slice(0, 2e3) : "";
     const customerText = typeof body.message === "string" ? body.message.trim().slice(0, 2e3) : "";
     const instruction = typeof body.instruction === "string" ? body.instruction.trim().slice(0, 300) || null : null;
+    const op = await operation();
     let resolved;
     try {
-      resolved = await resolve(query);
+      resolved = await resolve(query, op?.welcomeIntro ?? null);
     } catch (err) {
       return databaseError(request, reply, session, query, err);
     }
@@ -92731,7 +95196,8 @@ function registerAttendRoutes(app2, deps) {
       copilot: await copilotStatus(),
       draft,
       customerText,
-      instruction: instruction ?? ""
+      instruction: instruction ?? "",
+      notice: op ? quietNotice(op) ?? void 0 : void 0
     }), session);
   });
   app2.post("/attend/feedback", async (request, reply) => {
@@ -92740,7 +95206,7 @@ function registerAttendRoutes(app2, deps) {
       return reply;
     const { session, body } = csrfCtx;
     const query = typeof body.q === "string" ? body.q.slice(0, 2e3) : "";
-    const usageId = typeof body.usageId === "string" && UUID3.test(body.usageId) ? body.usageId : null;
+    const usageId = typeof body.usageId === "string" && UUID5.test(body.usageId) ? body.usageId : null;
     const good = body.score === "good";
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 191) || null : null;
     let resolved;
@@ -92761,7 +95227,7 @@ function registerAttendRoutes(app2, deps) {
     return deps.html(reply, request, "Atender", attendView({ csrf: session.csrfToken, query, result: resolved.result, copilot: await copilotStatus(), customerText: query, flash }), session);
   });
 }
-var UUID3, DRAFTS_PER_HOUR;
+var UUID5, DRAFTS_PER_HOUR;
 var init_attend = __esm({
   "packages/api/dist/interfaces/admin/attend.js"() {
     "use strict";
@@ -92769,7 +95235,8 @@ var init_attend = __esm({
     init_security();
     init_welcome();
     init_views_attend();
-    UUID3 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    init_platform();
+    UUID5 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     DRAFTS_PER_HOUR = 30;
   }
 });
@@ -92840,7 +95307,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const filter = FILTERS5.includes(query.f) ? query.f : "abiertas";
+    const filter = FILTERS7.includes(query.f) ? query.f : "abiertas";
     const raw = Number(query.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
@@ -92855,7 +95322,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const pick = (key) => typeof query[key] === "string" && UUID4.test(query[key]) ? query[key] : null;
+    const pick = (key) => typeof query[key] === "string" && UUID6.test(query[key]) ? query[key] : null;
     const appointmentId = pick("appointmentId");
     try {
       if (appointmentId) {
@@ -92877,7 +95344,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!ctxCsrf)
       return reply;
     const { session, body } = ctxCsrf;
-    const uuid = (key) => typeof body[key] === "string" && UUID4.test(body[key]) ? body[key] : null;
+    const uuid = (key) => typeof body[key] === "string" && UUID6.test(body[key]) ? body[key] : null;
     const appointmentId = uuid("appointmentId");
     let id;
     let order;
@@ -92901,6 +95368,10 @@ function registerWorkOrderRoutes(app2, deps) {
           return invalid("Elige un taller verificado.");
         shopId = chosen;
       }
+      const operation = deps.platform ? await deps.platform() : null;
+      const paused = operation ? featurePaused(operation, "workorders") : null;
+      if (paused)
+        return invalid(paused);
       const intakeKm = wholeNumber(body.intakeKm, 0, 2e6);
       if (intakeKm === null)
         return invalid("Kilometraje de ingreso no v\xE1lido.");
@@ -92920,6 +95391,15 @@ function registerWorkOrderRoutes(app2, deps) {
     }
     if (order)
       await record(session, "workorder.created", order, { status: "recepcion", shopName: order.shopName });
+    if (order) {
+      await deps.linker?.fromWorkOrder({
+        workOrderId: order.id,
+        ownerId: order.ownerId,
+        shopUserId: order.shopUserId,
+        subject: `${workOrderCode(order.number)} \xB7 ${order.vehicleLabel ?? ""}`.trim().slice(0, 191),
+        createdBy: session.userId
+      });
+    }
     await deps.audit("admin.workorder.create", session.userId, `Orden ${order ? workOrderCode(order.number) : id} abierta`);
     return reply.redirect(`/admin/work-orders/${id}?ok=creada`, 302);
   });
@@ -92928,7 +95408,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID6.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     const ok = request.query?.ok;
     return renderOrder(request, reply, session, id, typeof ok === "string" && OK_MESSAGES3[ok] ? { kind: "ok", text: OK_MESSAGES3[ok] } : void 0);
@@ -92951,13 +95431,13 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID6.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     try {
       if (!await loadForAction(request, reply, session, id, true))
         return reply;
       const kind = ITEM_KINDS.some(([k]) => k === body.kind) ? String(body.kind) : null;
-      const description = str(body.description, 191);
+      const description = str3(body.description, 191);
       const quantity = parseAmount(body.quantity);
       const unitPrice = parseAmount(body.unitPrice);
       const fail = (text4) => renderOrder(request, reply, session, id, { kind: "error", text: text4 }, 400);
@@ -92982,7 +95462,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session } = ctx;
     const { id, itemId } = request.params;
-    if (!UUID4.test(id) || !UUID4.test(itemId))
+    if (!UUID6.test(id) || !UUID6.test(itemId))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     try {
       if (!await loadForAction(request, reply, session, id, true))
@@ -93000,7 +95480,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID6.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     try {
       if (!await loadForAction(request, reply, session, id, true))
@@ -93018,10 +95498,10 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID6.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     const next = String(body.status ?? "");
-    const reason = str(body.reason, 191);
+    const reason = str3(body.reason, 191);
     let order;
     try {
       const found = await loadForAction(request, reply, session, id, false);
@@ -93055,7 +95535,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID6.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     let order;
     try {
@@ -93095,16 +95575,17 @@ function registerWorkOrderRoutes(app2, deps) {
     return reply.redirect(`/admin/work-orders/${id}?ok=cerrada`, 302);
   });
 }
-var UUID4, FILTERS5, OK_MESSAGES3, str, optional;
+var UUID6, FILTERS7, OK_MESSAGES3, str3, optional;
 var init_work_orders = __esm({
   "packages/api/dist/interfaces/admin/work-orders.js"() {
     "use strict";
     init_page();
     init_security();
-    init_workflow();
+    init_workflow2();
+    init_platform();
     init_views_work_orders();
-    UUID4 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    FILTERS5 = ["abiertas", "por_aprobar", "en_taller", "cerradas", "todas"];
+    UUID6 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS7 = ["abiertas", "por_aprobar", "en_taller", "cerradas", "todas"];
     OK_MESSAGES3 = {
       creada: "Orden abierta. Env\xEDa al due\xF1o el mensaje de recepci\xF3n.",
       item: "Presupuesto actualizado.",
@@ -93112,8 +95593,8 @@ var init_work_orders = __esm({
       estado: "Estado actualizado. Env\xEDa el mensaje al due\xF1o.",
       cerrada: "Orden cerrada y guardada en el historial del veh\xEDculo. Env\xEDa el resumen al due\xF1o."
     };
-    str = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
-    optional = (value2, max) => str(value2, max) || null;
+    str3 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+    optional = (value2, max) => str3(value2, max) || null;
   }
 });
 
@@ -93166,7 +95647,7 @@ function registerQuoteRoutes(app2, deps) {
     }
   }
   async function context(query) {
-    const pick = (key) => typeof query[key] === "string" && UUID5.test(query[key]) ? query[key] : null;
+    const pick = (key) => typeof query[key] === "string" && UUID7.test(query[key]) ? query[key] : null;
     const workOrderId = pick("workOrderId");
     let requesterId = pick("requesterId") ?? pick("ownerId");
     let vehicleId = pick("vehicleId");
@@ -93208,7 +95689,7 @@ function registerQuoteRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const filter = FILTERS6.includes(query.f) ? query.f : "abiertas";
+    const filter = FILTERS8.includes(query.f) ? query.f : "abiertas";
     const raw = Number(query.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
@@ -93240,12 +95721,18 @@ function registerQuoteRoutes(app2, deps) {
     let id;
     let requesterId;
     let storeUserIds = [];
+    let requesterRoleForRelation = "dueno";
+    let subjectForRelation = null;
     try {
       const ctx = await context(body);
       if (!ctx)
         return errorPage(request, reply, session, "Nueva cotizaci\xF3n", "Pide la cotizaci\xF3n desde el veh\xEDculo de un due\xF1o o desde una orden de trabajo.", 404);
       const invalid = (error) => deps.html(reply, request, "Nueva cotizaci\xF3n", newQuoteView({ csrf: session.csrfToken, ...ctx, values: body, error }), session, 400);
-      const partName = str2(body.partName, 191);
+      const operation = deps.platform ? await deps.platform() : null;
+      const paused = operation ? featurePaused(operation, "quotes") : null;
+      if (paused)
+        return invalid(paused);
+      const partName = str4(body.partName, 191);
       if (partName.length < 3)
         return invalid("Describe el repuesto que necesita.");
       const quantity = smallInt(body.quantity, 1, 999);
@@ -93260,6 +95747,8 @@ function registerQuoteRoutes(app2, deps) {
       if (!storeIds.every((s) => verified.some((v) => v.id === s)))
         return invalid("Solo se puede pedir a almacenes verificados.");
       requesterId = String(ctx.requester.id);
+      requesterRoleForRelation = String(ctx.requester.role ?? "dueno");
+      subjectForRelation = partName.slice(0, 191);
       id = await quotes.createRequest({
         requesterId,
         vehicleId: ctx.vehicle ? String(ctx.vehicle.id) : null,
@@ -93278,6 +95767,14 @@ function registerQuoteRoutes(app2, deps) {
       return errorPage(request, reply, session, "Nueva cotizaci\xF3n", m.text, m.status);
     }
     await record(session, "quote.requested", [requesterId, ...storeUserIds], { quoteRequestId: id });
+    await deps.linker?.fromQuoteRequest({
+      requestId: id,
+      requesterId,
+      requesterRole: requesterRoleForRelation,
+      storeUserIds,
+      subject: subjectForRelation,
+      createdBy: session.userId
+    });
     await deps.audit("admin.quote.create", session.userId, `Solicitud de cotizaci\xF3n ${id} para el usuario ${requesterId}`);
     return reply.redirect(`/admin/quotes/${id}?ok=creada`, 302);
   });
@@ -93286,7 +95783,7 @@ function registerQuoteRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID5.test(id))
+    if (!UUID7.test(id))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const ok = request.query?.ok;
     return renderRequest(request, reply, session, id, typeof ok === "string" && OK_MESSAGES4[ok] ? { kind: "ok", text: OK_MESSAGES4[ok] } : void 0);
@@ -93297,7 +95794,7 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id, quoteId } = request.params;
-    if (!UUID5.test(id) || !UUID5.test(quoteId))
+    if (!UUID7.test(id) || !UUID7.test(quoteId))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const fail = (text4) => renderRequest(request, reply, session, id, { kind: "error", text: text4 }, 400);
     const action = body.action === "sin_stock" ? "sin_stock" : "cotizado";
@@ -93339,8 +95836,8 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    const quoteId = typeof body.quoteId === "string" && UUID5.test(body.quoteId) ? body.quoteId : null;
-    if (!UUID5.test(id) || !quoteId)
+    const quoteId = typeof body.quoteId === "string" && UUID7.test(body.quoteId) ? body.quoteId : null;
+    if (!UUID7.test(id) || !quoteId)
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     let orderId;
     let users = [];
@@ -93364,9 +95861,9 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID5.test(id))
+    if (!UUID7.test(id))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
-    const reason = str2(body.reason, 191);
+    const reason = str4(body.reason, 191);
     if (reason.length < 5)
       return renderRequest(request, reply, session, id, { kind: "error", text: "Escribe por qu\xE9 se cierra sin pedido." }, 400);
     try {
@@ -93386,7 +95883,7 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id, quoteId } = request.params;
-    if (!UUID5.test(id) || !UUID5.test(quoteId))
+    if (!UUID7.test(id) || !UUID7.test(quoteId))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const reason = LOSS_REASONS.some(([k]) => k === body.reason) ? String(body.reason) : null;
     if (!reason)
@@ -93407,10 +95904,10 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID5.test(id))
+    if (!UUID7.test(id))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const next = String(body.stage ?? "");
-    const reason = str2(body.reason, 191);
+    const reason = str4(body.reason, 191);
     let order;
     try {
       const found = await quotes.getRequest(id);
@@ -93434,17 +95931,18 @@ function registerQuoteRoutes(app2, deps) {
     return reply.redirect(`/admin/quotes/${id}?ok=pedido`, 302);
   });
 }
-var UUID5, FILTERS6, OK_MESSAGES4, str2, optional2, asList2;
+var UUID7, FILTERS8, OK_MESSAGES4, str4, optional2, asList2;
 var init_quotes = __esm({
   "packages/api/dist/interfaces/admin/quotes.js"() {
     "use strict";
     init_page();
     init_security();
-    init_workflow();
     init_workflow2();
+    init_workflow3();
+    init_platform();
     init_views_quotes();
-    UUID5 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    FILTERS6 = ["abiertas", "con_pedido", "todas"];
+    UUID7 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS8 = ["abiertas", "con_pedido", "todas"];
     OK_MESSAGES4 = {
       creada: "Solicitud creada. Env\xEDa el mensaje a cada almac\xE9n.",
       respuesta: "Respuesta registrada. Actualiza la comparativa del cliente.",
@@ -93453,17 +95951,162 @@ var init_quotes = __esm({
       perdida: "Motivo de p\xE9rdida guardado.",
       pedido: "Pedido actualizado. Env\xEDa el aviso al cliente."
     };
-    str2 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
-    optional2 = (value2, max) => str2(value2, max) || null;
+    str4 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+    optional2 = (value2, max) => str4(value2, max) || null;
     asList2 = (value2) => value2 === void 0 || value2 === null ? [] : (Array.isArray(value2) ? value2 : [value2]).map(String);
   }
 });
 
-// packages/api/dist/infrastructure/quotes/quote-store.js
-function rows2(result) {
+// packages/api/dist/infrastructure/appointments/appointment-store.js
+function rows4(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
-function toRequest(r) {
+function jsonValue(raw) {
+  if (typeof raw !== "string")
+    return raw;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+function stringList(raw) {
+  const value2 = jsonValue(raw);
+  return Array.isArray(value2) ? value2.map(String) : [];
+}
+function toAppointment(r) {
+  return {
+    id: String(r.id),
+    scheduledAt: r.scheduledAt,
+    status: String(r.status),
+    summary: text(r.summary),
+    services: stringList(r.services),
+    notes: text(r.notes),
+    cancelReason: text(r.cancelReason),
+    createdAt: r.createdAt,
+    vehicleId: String(r.vehicleId),
+    vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
+    plate: text(r.plate),
+    ownerId: String(r.ownerId),
+    ownerName: String(r.ownerName),
+    ownerPhone: String(r.ownerPhone),
+    shopId: String(r.shopId),
+    shopName: String(r.shopName),
+    shopAddress: String(r.shopAddress),
+    shopCity: String(r.shopCity),
+    shopUserId: String(r.shopUserId),
+    shopPhone: String(r.shopPhone)
+  };
+}
+var PAGE_SIZE4, NOT_SANCTIONED, SELECT_APPOINTMENTS, LIST_TODAY, LIST_UPCOMING, LIST_PENDING, LIST_ALL, GET_ONE, FOR_USER, text, MysqlAppointmentStore;
+var init_appointment_store = __esm({
+  "packages/api/dist/infrastructure/appointments/appointment-store.js"() {
+    "use strict";
+    init_messages();
+    PAGE_SIZE4 = 25;
+    NOT_SANCTIONED = (alias) => "AND NOT EXISTS (SELECT 1 FROM `Sanction` sn WHERE sn.userId = " + alias + ".userId AND sn.liftedAt IS NULL AND sn.startsAt <= UTC_TIMESTAMP(3) AND (sn.endsAt IS NULL OR sn.endsAt > UTC_TIMESTAMP(3)) AND sn.level IN ('suspension_busquedas', 'suspension', 'baja')) ";
+    SELECT_APPOINTMENTS = "SELECT a.id, a.scheduledAt, a.status, a.summary, a.services, a.notes, a.cancelReason, a.createdAt, v.id AS vehicleId, v.make, v.model, v.year, v.plate, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, s.id AS shopId, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, su.id AS shopUserId, su.phone AS shopPhone FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` o ON o.id = a.ownerId JOIN `Shop` s ON s.id = a.shopId JOIN `User` su ON su.id = s.userId";
+    LIST_TODAY = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
+    LIST_UPCOMING = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.status IN ('pending', 'confirmed') ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
+    LIST_PENDING = `${SELECT_APPOINTMENTS} WHERE a.status = 'pending' ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
+    LIST_ALL = `${SELECT_APPOINTMENTS} ORDER BY a.scheduledAt DESC LIMIT ? OFFSET ?`;
+    GET_ONE = `${SELECT_APPOINTMENTS} WHERE a.id = ? LIMIT 1`;
+    FOR_USER = `${SELECT_APPOINTMENTS} WHERE a.ownerId = ? OR su.id = ? ORDER BY a.scheduledAt DESC LIMIT 20`;
+    text = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    MysqlAppointmentStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      verifiedShops(city) {
+        const base = "SELECT id, name, address, city, zone, hours, ratingAvg, specialties FROM `Shop` sh WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
+        const filter = NOT_SANCTIONED("sh");
+        return this.run(async (conn) => rows4(await conn.query(`${base}${filter}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+          if (err.code !== "ER_NO_SUCH_TABLE")
+            throw err;
+          return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
+        })).map((r) => ({
+          id: String(r.id),
+          name: String(r.name),
+          address: String(r.address),
+          city: String(r.city),
+          zone: text(r.zone),
+          hours: text(r.hours),
+          ratingAvg: Number(r.ratingAvg ?? 0),
+          services: stringList(r.specialties)
+        })));
+      }
+      createAppointment(input) {
+        return this.run(async (conn) => {
+          const id = String(rows4(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          await conn.query("INSERT INTO `Appointment` (id, vehicleId, shopId, ownerId, scheduledAt, status, summary, services, notes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, input.vehicleId, input.shopId, input.ownerId, input.scheduledAt, input.summary, JSON.stringify(input.services), input.notes]);
+          return id;
+        });
+      }
+      getAppointment(id) {
+        return this.run(async (conn) => {
+          const row = rows4(await conn.query(GET_ONE, [id]))[0];
+          return row ? toAppointment(row) : null;
+        });
+      }
+      listAppointments(filter, page, now = /* @__PURE__ */ new Date()) {
+        return this.run(async (conn) => {
+          const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE4;
+          let result;
+          if (filter === "hoy") {
+            const { start, end } = ecDayRange(now);
+            result = await conn.query(LIST_TODAY, [start, end, PAGE_SIZE4, offset2]);
+          } else if (filter === "proximos") {
+            result = await conn.query(LIST_UPCOMING, [now, PAGE_SIZE4, offset2]);
+          } else if (filter === "pendientes") {
+            result = await conn.query(LIST_PENDING, [PAGE_SIZE4, offset2]);
+          } else {
+            result = await conn.query(LIST_ALL, [PAGE_SIZE4, offset2]);
+          }
+          return { items: rows4(result).map(toAppointment), page, pageSize: PAGE_SIZE4 };
+        });
+      }
+      listForUser(userId) {
+        return this.run(async (conn) => rows4(await conn.query(FOR_USER, [userId, userId])).map(toAppointment));
+      }
+      setStatus(id, status, cancelReason) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `Appointment` SET status = ?, cancelReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [status, cancelReason, id]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      recordEvent(input) {
+        return this.run(async (conn) => {
+          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [input.type, input.actorUserId, input.entityType, input.entityId, JSON.stringify(input.payload)]);
+        });
+      }
+      userEvents(userId, limit) {
+        return this.run(async (conn) => rows4(await conn.query("SELECT type, payload, createdAt FROM `Event` WHERE entityType = 'User' AND entityId = ? ORDER BY createdAt DESC LIMIT ?", [userId, limit])).map((r) => {
+          const payload = jsonValue(r.payload);
+          return {
+            type: String(r.type),
+            payload: payload && typeof payload === "object" && !Array.isArray(payload) ? payload : {},
+            createdAt: r.createdAt
+          };
+        }));
+      }
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/quotes/quote-store.js
+function rows5(result) {
+  return Array.isArray(result[0]) ? result[0] : [];
+}
+function toRequest2(r) {
   return {
     id: String(r.id),
     number: Number(r.number),
@@ -93472,16 +96115,16 @@ function toRequest(r) {
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
     requesterRole: String(r.requesterRole),
-    vehicleId: text(r.vehicleId),
+    vehicleId: text2(r.vehicleId),
     vehicleLabel: label(r),
-    plate: text(r.plate),
-    workOrderId: text(r.workOrderId),
+    plate: text2(r.plate),
+    workOrderId: text2(r.workOrderId),
     partName: String(r.partName),
-    partCode: text(r.partCode),
+    partCode: text2(r.partCode),
     quantity: Number(r.quantity ?? 1),
     city: String(r.city),
-    notes: text(r.notes),
-    closeReason: text(r.closeReason),
+    notes: text2(r.notes),
+    closeReason: text2(r.closeReason),
     createdAt: r.createdAt
   };
 }
@@ -93496,13 +96139,13 @@ function toQuote(r) {
     storePhone: String(r.storePhone),
     status: String(r.status),
     unitPrice: num(r.unitPrice),
-    brand: text(r.brand),
-    availability: text(r.availability),
+    brand: text2(r.brand),
+    availability: text2(r.availability),
     warrantyDays: num(r.warrantyDays),
-    deliveryTime: text(r.deliveryTime),
+    deliveryTime: text2(r.deliveryTime),
     validDays: num(r.validDays),
-    notes: text(r.notes),
-    lossReason: text(r.lossReason),
+    notes: text2(r.notes),
+    lossReason: text2(r.lossReason),
     respondedAt: r.respondedAt ?? null
   };
 }
@@ -93512,10 +96155,10 @@ function toOrder(r) {
     stage: String(r.stage ?? "confirmado"),
     status: String(r.status),
     total: Number(r.total ?? 0),
-    cancelReason: text(r.cancelReason),
+    cancelReason: text2(r.cancelReason),
     createdAt: r.createdAt,
     quoteRequestId: String(r.quoteRequestId),
-    quoteId: text(r.quoteId),
+    quoteId: text2(r.quoteId),
     requestNumber: Number(r.requestNumber),
     partName: String(r.partName),
     quantity: Number(r.quantity ?? 1),
@@ -93527,23 +96170,24 @@ function toOrder(r) {
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
     unitPrice: num(r.unitPrice),
-    brand: text(r.brand),
-    deliveryTime: text(r.deliveryTime)
+    brand: text2(r.brand),
+    deliveryTime: text2(r.deliveryTime)
   };
 }
-var PAGE_SIZE2, SELECT_REQUESTS, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL, text, num, label, MysqlQuoteStore;
+var PAGE_SIZE5, SELECT_REQUESTS2, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text2, num, label, MysqlQuoteStore;
 var init_quote_store = __esm({
   "packages/api/dist/infrastructure/quotes/quote-store.js"() {
     "use strict";
-    init_workflow2();
-    PAGE_SIZE2 = 25;
-    SELECT_REQUESTS = "SELECT q.id, q.number, q.status, q.requesterId, u.name AS requesterName, u.phone AS requesterPhone, u.role AS requesterRole, q.vehicleId, v.make, v.model, v.year, v.plate, q.workOrderId, q.partName, q.partCode, q.quantity, q.city, q.notes, q.closeReason, q.createdAt FROM `QuoteRequest` q JOIN `User` u ON u.id = q.requesterId LEFT JOIN `Vehicle` v ON v.id = q.vehicleId";
+    init_appointment_store();
+    init_workflow3();
+    PAGE_SIZE5 = 25;
+    SELECT_REQUESTS2 = "SELECT q.id, q.number, q.status, q.requesterId, u.name AS requesterName, u.phone AS requesterPhone, u.role AS requesterRole, q.vehicleId, v.make, v.model, v.year, v.plate, q.workOrderId, q.partName, q.partCode, q.quantity, q.city, q.notes, q.closeReason, q.createdAt FROM `QuoteRequest` q JOIN `User` u ON u.id = q.requesterId LEFT JOIN `Vehicle` v ON v.id = q.vehicleId";
     SELECT_QUOTES = "SELECT qt.id, qt.requestId, qt.storeId, s.name AS storeName, s.city AS storeCity, s.userId AS storeUserId, su.phone AS storePhone, qt.status, qt.unitPrice, qt.brand, qt.availability, qt.warrantyDays, qt.deliveryTime, qt.validDays, qt.notes, qt.lossReason, qt.respondedAt FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId JOIN `User` su ON su.id = s.userId";
     SELECT_ORDERS = "SELECT o.id, o.stage, o.status, o.total, o.cancelReason, o.createdAt, o.quoteRequestId, o.quoteId, q.number AS requestNumber, q.partName, q.quantity, s.id AS storeId, s.name AS storeName, s.userId AS storeUserId, su.phone AS storePhone, u.id AS requesterId, u.name AS requesterName, u.phone AS requesterPhone, qt.unitPrice, qt.brand, qt.deliveryTime FROM `Order` o JOIN `QuoteRequest` q ON q.id = o.quoteRequestId JOIN `Store` s ON s.userId = o.toStoreId JOIN `User` su ON su.id = s.userId JOIN `User` u ON u.id = o.fromUserId LEFT JOIN `Quote` qt ON qt.id = o.quoteId";
-    LIST_OPEN = `${SELECT_REQUESTS} WHERE q.status = 'abierta' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
-    LIST_ORDERED = `${SELECT_REQUESTS} WHERE q.status = 'con_pedido' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
-    LIST_ALL = `${SELECT_REQUESTS} ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
-    text = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    LIST_OPEN = `${SELECT_REQUESTS2} WHERE q.status = 'abierta' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
+    LIST_ORDERED = `${SELECT_REQUESTS2} WHERE q.status = 'con_pedido' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
+    LIST_ALL2 = `${SELECT_REQUESTS2} ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
+    text2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     num = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     label = (r) => {
       const parts = [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "");
@@ -93576,19 +96220,24 @@ var init_quote_store = __esm({
         });
       }
       verifiedStores(city) {
-        return this.run(async (conn) => rows2(await conn.query("SELECT id, name, city, zone, categories, delivery FROM `Store` WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ORDER BY name LIMIT 200", [city.trim(), city.trim()])).map((r) => ({
+        const base = "SELECT id, name, city, zone, categories, delivery FROM `Store` st WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
+        return this.run(async (conn) => rows5(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+          if (err.code !== "ER_NO_SUCH_TABLE")
+            throw err;
+          return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
+        })).map((r) => ({
           id: String(r.id),
           name: String(r.name),
           city: String(r.city),
-          zone: text(r.zone),
-          categories: text(r.categories),
+          zone: text2(r.zone),
+          categories: text2(r.categories),
           delivery: !!Number(r.delivery ?? 0)
         })));
       }
       async createRequest(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id = String(rows2(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows2(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
+          const id = String(rows5(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows5(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `QuoteRequest` (id, number, requesterId, vehicleId, workOrderId, partName, partCode, quantity, city, notes, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, next, input.requesterId, input.vehicleId, input.workOrderId, input.partName, input.partCode, input.quantity, input.city, input.notes]);
           for (const storeId of input.storeIds) {
             await conn.query("INSERT INTO `Quote` (id, requestId, storeId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id, storeId]);
@@ -93605,26 +96254,26 @@ var init_quote_store = __esm({
       }
       getRequest(id) {
         return this.run(async (conn) => {
-          const row = rows2(await conn.query(`${SELECT_REQUESTS} WHERE q.id = ? LIMIT 1`, [id]))[0];
+          const row = rows5(await conn.query(`${SELECT_REQUESTS2} WHERE q.id = ? LIMIT 1`, [id]))[0];
           if (!row)
             return null;
-          const quotes = rows2(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id])).map(toQuote);
-          const order = rows2(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id]))[0];
-          return { request: toRequest(row), quotes, order: order ? toOrder(order) : null };
+          const quotes = rows5(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id])).map(toQuote);
+          const order = rows5(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id]))[0];
+          return { request: toRequest2(row), quotes, order: order ? toOrder(order) : null };
         });
       }
       listRequests(filter, page) {
         return this.run(async (conn) => {
-          const sql = filter === "abiertas" ? LIST_OPEN : filter === "con_pedido" ? LIST_ORDERED : LIST_ALL;
-          const items = rows2(await conn.query(sql, [PAGE_SIZE2, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2])).map(toRequest);
-          return { items, page, pageSize: PAGE_SIZE2 };
+          const sql = filter === "abiertas" ? LIST_OPEN : filter === "con_pedido" ? LIST_ORDERED : LIST_ALL2;
+          const items = rows5(await conn.query(sql, [PAGE_SIZE5, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5])).map(toRequest2);
+          return { items, page, pageSize: PAGE_SIZE5 };
         });
       }
       listForUser(userId) {
         return this.run(async (conn) => {
-          const requests = rows2(await conn.query(`${SELECT_REQUESTS} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest);
-          const storeQuotes = rows2(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
-          const orders = rows2(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
+          const requests = rows5(await conn.query(`${SELECT_REQUESTS2} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest2);
+          const storeQuotes = rows5(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
+          const orders = rows5(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
           return { requests, storeQuotes, orders };
         });
       }
@@ -93647,16 +96296,16 @@ var init_quote_store = __esm({
       }
       choose(requestId, quoteId) {
         return this.transaction(async (conn) => {
-          const request = rows2(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
+          const request = rows5(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
           if (!request || request.status !== "abierta")
             return null;
-          const quote = rows2(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
+          const quote = rows5(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
           if (!quote || quote.status !== "cotizado" || quote.unitPrice === null)
             return null;
           const quantity = Number(request.quantity ?? 1);
           const unitPrice = Number(quote.unitPrice);
           const total = Math.round(unitPrice * quantity * 100) / 100;
-          const orderId = String(rows2(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const orderId = String(rows5(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("UPDATE `Quote` SET status = 'elegida' WHERE id = ?", [quoteId]);
           await conn.query("UPDATE `Quote` SET status = 'descartada' WHERE requestId = ? AND id <> ? AND status IN ('invitado', 'cotizado')", [requestId, quoteId]);
           await conn.query("UPDATE `QuoteRequest` SET status = 'con_pedido', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [requestId]);
@@ -93806,8 +96455,8 @@ var init_prompt = __esm({
     init_maintenance();
     init_plan_text();
     init_messages();
-    init_workflow();
     init_workflow2();
+    init_workflow3();
     init_welcome();
     COPILOT_PROMPT_VERSION = "copiloto-2026-09-v1";
     COPILOT_SYSTEM_PROMPT = `Eres el copiloto de AutoMantPro, una plataforma ecuatoriana que conecta a due\xF1os de veh\xEDculos con talleres y almacenes de repuestos verificados por WhatsApp. Redactas UN borrador de respuesta que un operador humano revisar\xE1 antes de enviarlo.
@@ -94040,7 +96689,7 @@ var init_service = __esm({
 });
 
 // packages/api/dist/infrastructure/copilot/copilot-store.js
-function rows3(result) {
+function rows6(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 var MysqlCopilotStore;
@@ -94062,7 +96711,7 @@ var init_copilot_store = __esm({
       }
       recordUsage(usage) {
         return this.run(async (conn) => {
-          const id = String(rows3(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const id = String(rows6(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("INSERT INTO `LlmUsage` (id, agent, `function`, provider, model, promptVersion, inputTokens, outputTokens, cachedTokens, costUsd, latencyMs, outcome, createdAt) VALUES (?, 'copilot', 'draft_reply', ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [
             id,
             usage.provider,
@@ -94080,7 +96729,7 @@ var init_copilot_store = __esm({
       }
       spentBetween(start, end) {
         return this.run(async (conn) => {
-          const row = rows3(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
+          const row = rows6(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
           return Number(row?.n ?? 0);
         });
       }
@@ -94091,7 +96740,7 @@ var init_copilot_store = __esm({
       }
       feedbackSummary(since) {
         return this.run(async (conn) => {
-          const row = rows3(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS good, COALESCE(SUM(score <= 2), 0) AS bad FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
+          const row = rows6(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS good, COALESCE(SUM(score <= 2), 0) AS bad FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
           return { good: Number(row?.good ?? 0), bad: Number(row?.bad ?? 0) };
         });
       }
@@ -94100,7 +96749,7 @@ var init_copilot_store = __esm({
 });
 
 // packages/api/dist/infrastructure/work-orders/work-order-store.js
-function rows4(result) {
+function rows7(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toOrder2(r) {
@@ -94117,19 +96766,19 @@ function toOrder2(r) {
     ownerPhone: String(r.ownerPhone),
     vehicleId: String(r.vehicleId),
     vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
-    plate: text2(r.plate),
+    plate: text3(r.plate),
     vehicleKm: Number(r.currentKm ?? 0),
-    appointmentId: text2(r.appointmentId),
+    appointmentId: text3(r.appointmentId),
     intakeKm: int(r.intakeKm),
-    intakeNotes: text2(r.intakeNotes),
-    diagnosis: text2(r.diagnosis),
-    rejectionReason: text2(r.rejectionReason),
-    cancelReason: text2(r.cancelReason),
+    intakeNotes: text3(r.intakeNotes),
+    diagnosis: text3(r.diagnosis),
+    rejectionReason: text3(r.rejectionReason),
+    cancelReason: text3(r.cancelReason),
     exitKm: int(r.exitKm),
     warrantyDays: int(r.warrantyDays),
-    nextService: text2(r.nextService),
-    diagnosisOutcome: text2(r.diagnosisOutcome),
-    outcomeNote: text2(r.outcomeNote),
+    nextService: text3(r.nextService),
+    diagnosisOutcome: text3(r.diagnosisOutcome),
+    outcomeNote: text3(r.outcomeNote),
     total: Number(r.total ?? 0),
     createdAt: r.createdAt,
     closedAt: r.closedAt ?? null
@@ -94140,27 +96789,27 @@ function toItem(r) {
     id: String(r.id),
     kind: String(r.kind),
     description: String(r.description),
-    brand: text2(r.brand),
-    partCode: text2(r.partCode),
+    brand: text3(r.brand),
+    partCode: text3(r.partCode),
     quantity: Number(r.quantity),
     unitPrice: Number(r.unitPrice)
   };
 }
-var PAGE_SIZE3, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL2, GET_ONE, FOR_USER, RECALCULATE_TOTAL, text2, int, MysqlWorkOrderStore;
+var PAGE_SIZE6, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL, text3, int, MysqlWorkOrderStore;
 var init_work_order_store = __esm({
   "packages/api/dist/infrastructure/work-orders/work-order-store.js"() {
     "use strict";
-    PAGE_SIZE3 = 25;
+    PAGE_SIZE6 = 25;
     SELECT_ORDERS2 = "SELECT w.id, w.number, w.status, w.appointmentId, w.intakeKm, w.intakeNotes, w.diagnosis, w.rejectionReason, w.cancelReason, w.exitKm, w.warrantyDays, w.nextService, w.diagnosisOutcome, w.outcomeNote, w.total, w.createdAt, w.closedAt, s.id AS shopId, s.name AS shopName, su.id AS shopUserId, su.phone AS shopPhone, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, v.id AS vehicleId, v.make, v.model, v.year, v.plate, v.currentKm FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `User` su ON su.id = s.userId JOIN `User` o ON o.id = w.ownerId JOIN `Vehicle` v ON v.id = w.vehicleId";
     LIST_OPEN2 = `${SELECT_ORDERS2} WHERE w.status NOT IN ('cerrada', 'cancelada') ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_TO_APPROVE = `${SELECT_ORDERS2} WHERE w.status = 'presupuesto_enviado' ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_IN_SHOP = `${SELECT_ORDERS2} WHERE w.status IN ('aprobado', 'en_ejecucion', 'esperando_repuesto') ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_CLOSED = `${SELECT_ORDERS2} WHERE w.status = 'cerrada' ORDER BY w.closedAt DESC LIMIT ? OFFSET ?`;
-    LIST_ALL2 = `${SELECT_ORDERS2} ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
-    GET_ONE = `${SELECT_ORDERS2} WHERE w.id = ? LIMIT 1`;
-    FOR_USER = `${SELECT_ORDERS2} WHERE w.ownerId = ? OR su.id = ? ORDER BY w.createdAt DESC LIMIT 20`;
+    LIST_ALL3 = `${SELECT_ORDERS2} ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
+    GET_ONE2 = `${SELECT_ORDERS2} WHERE w.id = ? LIMIT 1`;
+    FOR_USER2 = `${SELECT_ORDERS2} WHERE w.ownerId = ? OR su.id = ? ORDER BY w.createdAt DESC LIMIT 20`;
     RECALCULATE_TOTAL = "UPDATE `WorkOrder` SET total = (SELECT COALESCE(SUM(ROUND(quantity * unitPrice, 2)), 0) FROM `WorkOrderItem` WHERE workOrderId = ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?";
-    text2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text3 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     int = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     MysqlWorkOrderStore = class {
       connect;
@@ -94190,8 +96839,8 @@ var init_work_order_store = __esm({
       }
       async create(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id = String(rows4(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows4(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
+          const id = String(rows7(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows7(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, diagnosis, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, next, input.shopId, input.ownerId, input.vehicleId, input.appointmentId, input.intakeKm, input.intakeNotes, input.diagnosis]);
           return id;
         });
@@ -94205,26 +96854,26 @@ var init_work_order_store = __esm({
       }
       get(id) {
         return this.run(async (conn) => {
-          const row = rows4(await conn.query(GET_ONE, [id]))[0];
+          const row = rows7(await conn.query(GET_ONE2, [id]))[0];
           if (!row)
             return null;
-          const items = rows4(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id])).map(toItem);
+          const items = rows7(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id])).map(toItem);
           return { order: toOrder2(row), items };
         });
       }
       list(filter, page) {
         return this.run(async (conn) => {
-          const params = [PAGE_SIZE3, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3];
-          const sql = filter === "abiertas" ? LIST_OPEN2 : filter === "por_aprobar" ? LIST_TO_APPROVE : filter === "en_taller" ? LIST_IN_SHOP : filter === "cerradas" ? LIST_CLOSED : LIST_ALL2;
-          return { items: rows4(await conn.query(sql, params)).map(toOrder2), page, pageSize: PAGE_SIZE3 };
+          const params = [PAGE_SIZE6, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE6];
+          const sql = filter === "abiertas" ? LIST_OPEN2 : filter === "por_aprobar" ? LIST_TO_APPROVE : filter === "en_taller" ? LIST_IN_SHOP : filter === "cerradas" ? LIST_CLOSED : LIST_ALL3;
+          return { items: rows7(await conn.query(sql, params)).map(toOrder2), page, pageSize: PAGE_SIZE6 };
         });
       }
       listForUser(userId) {
-        return this.run(async (conn) => rows4(await conn.query(FOR_USER, [userId, userId])).map(toOrder2));
+        return this.run(async (conn) => rows7(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
       }
       findByAppointment(appointmentId) {
         return this.run(async (conn) => {
-          const row = rows4(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
+          const row = rows7(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
           return row ? String(row.id) : null;
         });
       }
@@ -94253,7 +96902,7 @@ var init_work_order_store = __esm({
       }
       close(id, input) {
         return this.transaction(async (conn) => {
-          const order = rows4(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id]))[0];
+          const order = rows7(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id]))[0];
           if (!order)
             return false;
           await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', exitKm = ?, warrantyDays = ?, nextService = ?, diagnosisOutcome = ?, outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.exitKm, input.warrantyDays, input.nextService, input.diagnosisOutcome, input.outcomeNote, id]);
@@ -94266,7 +96915,7 @@ var init_work_order_store = __esm({
         });
       }
       historyForUser(userId) {
-        return this.run(async (conn) => rows4(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
+        return this.run(async (conn) => rows7(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
           createdAt: r.createdAt,
           shopName: String(r.shopName),
           vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
@@ -94278,146 +96927,8 @@ var init_work_order_store = __esm({
   }
 });
 
-// packages/api/dist/infrastructure/appointments/appointment-store.js
-function rows5(result) {
-  return Array.isArray(result[0]) ? result[0] : [];
-}
-function jsonValue(raw) {
-  if (typeof raw !== "string")
-    return raw;
-  try {
-    return JSON.parse(raw);
-  } catch {
-    return null;
-  }
-}
-function stringList(raw) {
-  const value2 = jsonValue(raw);
-  return Array.isArray(value2) ? value2.map(String) : [];
-}
-function toAppointment(r) {
-  return {
-    id: String(r.id),
-    scheduledAt: r.scheduledAt,
-    status: String(r.status),
-    summary: text3(r.summary),
-    services: stringList(r.services),
-    notes: text3(r.notes),
-    cancelReason: text3(r.cancelReason),
-    createdAt: r.createdAt,
-    vehicleId: String(r.vehicleId),
-    vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
-    plate: text3(r.plate),
-    ownerId: String(r.ownerId),
-    ownerName: String(r.ownerName),
-    ownerPhone: String(r.ownerPhone),
-    shopId: String(r.shopId),
-    shopName: String(r.shopName),
-    shopAddress: String(r.shopAddress),
-    shopCity: String(r.shopCity),
-    shopUserId: String(r.shopUserId),
-    shopPhone: String(r.shopPhone)
-  };
-}
-var PAGE_SIZE4, SELECT_APPOINTMENTS, LIST_TODAY, LIST_UPCOMING, LIST_PENDING, LIST_ALL3, GET_ONE2, FOR_USER2, text3, MysqlAppointmentStore;
-var init_appointment_store = __esm({
-  "packages/api/dist/infrastructure/appointments/appointment-store.js"() {
-    "use strict";
-    init_messages();
-    PAGE_SIZE4 = 25;
-    SELECT_APPOINTMENTS = "SELECT a.id, a.scheduledAt, a.status, a.summary, a.services, a.notes, a.cancelReason, a.createdAt, v.id AS vehicleId, v.make, v.model, v.year, v.plate, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, s.id AS shopId, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, su.id AS shopUserId, su.phone AS shopPhone FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` o ON o.id = a.ownerId JOIN `Shop` s ON s.id = a.shopId JOIN `User` su ON su.id = s.userId";
-    LIST_TODAY = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
-    LIST_UPCOMING = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.status IN ('pending', 'confirmed') ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
-    LIST_PENDING = `${SELECT_APPOINTMENTS} WHERE a.status = 'pending' ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
-    LIST_ALL3 = `${SELECT_APPOINTMENTS} ORDER BY a.scheduledAt DESC LIMIT ? OFFSET ?`;
-    GET_ONE2 = `${SELECT_APPOINTMENTS} WHERE a.id = ? LIMIT 1`;
-    FOR_USER2 = `${SELECT_APPOINTMENTS} WHERE a.ownerId = ? OR su.id = ? ORDER BY a.scheduledAt DESC LIMIT 20`;
-    text3 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
-    MysqlAppointmentStore = class {
-      connect;
-      constructor(connect) {
-        this.connect = connect;
-      }
-      async run(work) {
-        const conn = await this.connect();
-        try {
-          return await work(conn);
-        } finally {
-          await conn.end().catch(() => void 0);
-        }
-      }
-      verifiedShops(city) {
-        return this.run(async (conn) => rows5(await conn.query("SELECT id, name, address, city, zone, hours, ratingAvg, specialties FROM `Shop` WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ORDER BY name LIMIT 200", [city.trim(), city.trim()])).map((r) => ({
-          id: String(r.id),
-          name: String(r.name),
-          address: String(r.address),
-          city: String(r.city),
-          zone: text3(r.zone),
-          hours: text3(r.hours),
-          ratingAvg: Number(r.ratingAvg ?? 0),
-          services: stringList(r.specialties)
-        })));
-      }
-      createAppointment(input) {
-        return this.run(async (conn) => {
-          const id = String(rows5(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          await conn.query("INSERT INTO `Appointment` (id, vehicleId, shopId, ownerId, scheduledAt, status, summary, services, notes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, input.vehicleId, input.shopId, input.ownerId, input.scheduledAt, input.summary, JSON.stringify(input.services), input.notes]);
-          return id;
-        });
-      }
-      getAppointment(id) {
-        return this.run(async (conn) => {
-          const row = rows5(await conn.query(GET_ONE2, [id]))[0];
-          return row ? toAppointment(row) : null;
-        });
-      }
-      listAppointments(filter, page, now = /* @__PURE__ */ new Date()) {
-        return this.run(async (conn) => {
-          const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE4;
-          let result;
-          if (filter === "hoy") {
-            const { start, end } = ecDayRange(now);
-            result = await conn.query(LIST_TODAY, [start, end, PAGE_SIZE4, offset2]);
-          } else if (filter === "proximos") {
-            result = await conn.query(LIST_UPCOMING, [now, PAGE_SIZE4, offset2]);
-          } else if (filter === "pendientes") {
-            result = await conn.query(LIST_PENDING, [PAGE_SIZE4, offset2]);
-          } else {
-            result = await conn.query(LIST_ALL3, [PAGE_SIZE4, offset2]);
-          }
-          return { items: rows5(result).map(toAppointment), page, pageSize: PAGE_SIZE4 };
-        });
-      }
-      listForUser(userId) {
-        return this.run(async (conn) => rows5(await conn.query(FOR_USER2, [userId, userId])).map(toAppointment));
-      }
-      setStatus(id, status, cancelReason) {
-        return this.run(async (conn) => {
-          const [result] = await conn.query("UPDATE `Appointment` SET status = ?, cancelReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [status, cancelReason, id]);
-          return Number(result.affectedRows ?? 0) > 0;
-        });
-      }
-      recordEvent(input) {
-        return this.run(async (conn) => {
-          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [input.type, input.actorUserId, input.entityType, input.entityId, JSON.stringify(input.payload)]);
-        });
-      }
-      userEvents(userId, limit) {
-        return this.run(async (conn) => rows5(await conn.query("SELECT type, payload, createdAt FROM `Event` WHERE entityType = 'User' AND entityId = ? ORDER BY createdAt DESC LIMIT ?", [userId, limit])).map((r) => {
-          const payload = jsonValue(r.payload);
-          return {
-            type: String(r.type),
-            payload: payload && typeof payload === "object" && !Array.isArray(payload) ? payload : {},
-            createdAt: r.createdAt
-          };
-        }));
-      }
-    };
-  }
-});
-
 // packages/api/dist/infrastructure/registration/registration-store.js
-function rows6(result) {
+function rows8(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function parseServices(raw) {
@@ -94444,11 +96955,11 @@ function pendingItem(kind) {
     createdAt: r.createdAt
   });
 }
-var PAGE_SIZE5, MysqlRegistrationStore;
+var PAGE_SIZE7, MysqlRegistrationStore;
 var init_registration_store = __esm({
   "packages/api/dist/infrastructure/registration/registration-store.js"() {
     "use strict";
-    PAGE_SIZE5 = 25;
+    PAGE_SIZE7 = 25;
     MysqlRegistrationStore = class {
       connect;
       constructor(connect) {
@@ -94476,7 +96987,7 @@ var init_registration_store = __esm({
         });
       }
       async uuid(conn) {
-        return String(rows6(await conn.query("SELECT UUID() AS id"))[0]?.id);
+        return String(rows8(await conn.query("SELECT UUID() AS id"))[0]?.id);
       }
       async insertUser(conn, user, role) {
         const id = await this.uuid(conn);
@@ -94520,18 +97031,18 @@ var init_registration_store = __esm({
           const like = `%${q.replace(/[\\%_]/g, "\\$&")}%`;
           const digits = q.replace(/\D/g, "");
           const likePhone = digits ? `%${digits}%` : like;
-          const items = rows6(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE5, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5]));
-          return { items, page, pageSize: PAGE_SIZE5 };
+          const items = rows8(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE7, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE7]));
+          return { items, page, pageSize: PAGE_SIZE7 };
         });
       }
       getUserDetail(id) {
         return this.run(async (conn) => {
-          const user = rows6(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
+          const user = rows8(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
           if (!user)
             return null;
-          const vehicles = rows6(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
-          const shopRow = rows6(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
-          const store = rows6(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
+          const vehicles = rows8(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
+          const shopRow = rows8(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
+          const store = rows8(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
           return {
             user,
             vehicles,
@@ -94542,8 +97053,8 @@ var init_registration_store = __esm({
       }
       pendingVerifications() {
         return this.run(async (conn) => {
-          const shops = rows6(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
-          const stores = rows6(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
+          const shops = rows8(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
+          const stores = rows8(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
           return [...shops, ...stores].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
         });
       }
@@ -94554,12 +97065,12 @@ var init_registration_store = __esm({
         });
       }
       recentUsers(limit) {
-        return this.run(async (conn) => rows6(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
+        return this.run(async (conn) => rows8(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const shops = Number(rows6(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
-          const stores = Number(rows6(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const shops = Number(rows8(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const stores = Number(rows8(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
           return shops + stores;
         });
       }
@@ -94571,9 +97082,13 @@ var init_registration_store = __esm({
 var admin_exports = {};
 __export(admin_exports, {
   adminPanelRoutes: () => adminPanelRoutes,
-  default: () => admin_default
+  default: () => admin_default,
+  resetEnrollmentsForTests: () => resetEnrollmentsForTests
 });
 import { randomBytes as randomBytes6 } from "node:crypto";
+function resetEnrollmentsForTests() {
+  enrollments.clear();
+}
 async function adminPanelRoutes(app2, options = {}) {
   const connect = options.connect ?? (() => openConnection());
   const store = options.store ?? new MysqlAdminStore(connect);
@@ -94587,6 +97102,24 @@ async function adminPanelRoutes(app2, options = {}) {
   const detailQuotes = options.quotes || options.connect || missingDbEnv().length === 0 ? quotes : void 0;
   const copilot = options.copilot ?? new CopilotService({ settings, store: new MysqlCopilotStore(connect) });
   const detailCopilot = options.copilot || options.connect || missingDbEnv().length === 0 ? copilot : void 0;
+  const staff = options.staff ?? new MysqlStaffStore(connect);
+  const relations = options.relations ?? new MysqlRelationStore(connect);
+  const data = options.data ?? new MysqlDataStore(connect);
+  const detailData = options.data || options.connect || missingDbEnv().length === 0 ? data : void 0;
+  const detailRelations = options.relations || options.connect || missingDbEnv().length === 0 ? relations : void 0;
+  const linker = detailRelations ? createRelationLinker(detailRelations) : void 0;
+  let platformCache = null;
+  const platform = async () => {
+    if (platformCache && Date.now() - platformCache.at < 6e4)
+      return platformCache.value;
+    try {
+      const value2 = await loadPlatformSettings(settings);
+      platformCache = { value: value2, at: Date.now() };
+      return value2;
+    } catch {
+      return emptyPlatformSettings();
+    }
+  };
   const dashboardDb = () => !!options.connect || !!options.registrations || missingDbEnv().length === 0;
   const startedAt = Date.now();
   app2.decorateRequest("cspNonce", "");
@@ -94613,8 +97146,27 @@ async function adminPanelRoutes(app2, options = {}) {
       }));
     }
   });
+  app2.addHook("onRequest", async (request, reply) => {
+    const path = request.url.replace(/^\/admin/, "").split("?")[0] || "/";
+    const capability = requiredCapability(request.method, path);
+    if (!capability)
+      return;
+    const session = getSession(sessionFromCookie(request) ?? void 0);
+    if (!session || !session.twoFactorVerified)
+      return;
+    if (can(session.role, capability))
+      return;
+    return reply.code(403).type("text/html; charset=utf-8").send(layout({
+      title: "Sin permiso",
+      nonce: request.cspNonce,
+      role: session.role,
+      nav: true,
+      csrfToken: session.csrfToken,
+      body: messageView("Sin permiso", "Tu rol no incluye esta secci\xF3n. Si la necesitas, p\xEDdele a un administrador que te cambie el rol.")
+    }));
+  });
   function html(reply, request, title, body, session, status = 200) {
-    return reply.code(status).type("text/html; charset=utf-8").send(layout({ title, nonce: request.cspNonce, body, nav: !!session, csrfToken: session?.csrfToken }));
+    return reply.code(status).type("text/html; charset=utf-8").send(layout({ title, nonce: request.cspNonce, body, nav: !!session, csrfToken: session?.csrfToken, role: session?.role }));
   }
   function sessionFromCookie(request) {
     const secret = getAdminSessionSecret();
@@ -94635,10 +97187,10 @@ async function adminPanelRoutes(app2, options = {}) {
   }
   registerSetupWizard(app2, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
   registerAccountRoutes(app2, { store, requireSession, html, audit });
-  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, requireSession, html, audit });
-  registerAppointmentRoutes(app2, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit });
-  registerWorkOrderRoutes(app2, { workOrders, appointments, registrations, requireSession, html, audit });
-  registerQuoteRoutes(app2, { quotes, registrations, appointments, workOrders, requireSession, html, audit });
+  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, requireSession, html, audit, platform });
+  registerAppointmentRoutes(app2, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit, linker, platform });
+  registerWorkOrderRoutes(app2, { workOrders, appointments, registrations, requireSession, html, audit, linker, platform });
+  registerQuoteRoutes(app2, { quotes, registrations, appointments, workOrders, requireSession, html, audit, linker, platform });
   registerAttendRoutes(app2, {
     registrations,
     appointments: detailAppointments,
@@ -94647,6 +97199,7 @@ async function adminPanelRoutes(app2, options = {}) {
     copilot: detailCopilot,
     audit,
     visits: detailAppointments ? options.visits ?? new MysqlVisitStore(connect) : options.visits,
+    platform,
     requireSession,
     html
   });
@@ -94659,8 +97212,14 @@ async function adminPanelRoutes(app2, options = {}) {
     audit,
     envNumber: publicNumber,
     copilot: detailCopilot,
-    onChanged: () => options.onSettingsChanged?.()
+    onChanged: () => {
+      platformCache = null;
+      options.onSettingsChanged?.();
+    }
   });
+  registerTeamRoutes(app2, { store, staff, requireSession, html, audit });
+  registerRelationRoutes(app2, { relations, requireSession, html, audit });
+  registerDataRoutes(app2, { data, requireSession, html, audit });
   app2.get("/login", async (request, reply) => {
     if (await adminCount(store) === 0)
       return reply.redirect("/admin/setup", 302);
@@ -94684,14 +97243,62 @@ async function adminPanelRoutes(app2, options = {}) {
       return html(reply, request, "Ingresar", loginView("Base de datos no disponible."), void 0, 503);
     }
     const passwordOk = await comparePassword(password, account?.passwordHash ?? DUMMY_HASH);
-    if (!account || !passwordOk || !account.totpSecret) {
+    if (!account || !passwordOk) {
       recordLoginAttempt(email, request.ip, false);
       await audit("admin.login.failed", account?.id ?? null, `Intento fallido desde ${request.ip}`);
       return html(reply, request, "Ingresar", loginView(GENERIC_LOGIN_ERROR), void 0, 401);
     }
-    const pending = createPendingSession({ id: account.id, email: account.email });
+    const pending = createPendingSession({ id: account.id, email: account.email, role: account.staffRole });
     const secret = getAdminSessionSecret();
+    if (!account.totpSecret) {
+      enrollments.set(pending.id, { secret: generateTotpSecret(), userId: account.id, email: account.email, createdAt: Date.now() });
+      return reply.header("Set-Cookie", buildSessionSetCookie(signSessionCookie(pending.id, secret), 10 * 60)).redirect("/admin/login/enroll", 302);
+    }
     return reply.header("Set-Cookie", buildSessionSetCookie(signSessionCookie(pending.id, secret), 5 * 60)).redirect("/admin/login/2fa", 302);
+  });
+  app2.get("/login/enroll", async (request, reply) => {
+    const pendingId = sessionFromCookie(request);
+    const entry = pendingId ? enrollments.get(pendingId) : void 0;
+    if (!pendingId || !entry || Date.now() - entry.createdAt > ENROLL_TTL_MS) {
+      if (pendingId)
+        enrollments.delete(pendingId);
+      return reply.redirect("/admin/login", 302);
+    }
+    const uri = otpauthUri(entry.email, entry.secret);
+    return html(reply, request, "Segundo factor", enrollView({ qrSvg: await qrSvg(uri), secret: entry.secret }));
+  });
+  app2.post("/login/enroll", async (request, reply) => {
+    const pendingId = sessionFromCookie(request);
+    const entry = pendingId ? enrollments.get(pendingId) : void 0;
+    if (!pendingId || !entry || Date.now() - entry.createdAt > ENROLL_TTL_MS) {
+      if (pendingId)
+        enrollments.delete(pendingId);
+      return reply.redirect("/admin/login", 302);
+    }
+    const body = request.body ?? {};
+    const code = typeof body.code === "string" ? body.code.trim() : "";
+    if (!checkRateLimit(entry.email, request.ip).allowed) {
+      return html(reply, request, "Ingresar", loginView("Demasiados intentos. Espera unos minutos."), void 0, 429);
+    }
+    if (!verifyTotp(entry.secret, code)) {
+      recordLoginAttempt(entry.email, request.ip, false);
+      const uri = otpauthUri(entry.email, entry.secret);
+      return html(reply, request, "Segundo factor", enrollView({ qrSvg: await qrSvg(uri), secret: entry.secret, error: "C\xF3digo incorrecto. Revisa que la hora del tel\xE9fono sea autom\xE1tica." }), void 0, 401);
+    }
+    try {
+      await staff.setTotp(entry.userId, entry.secret);
+    } catch {
+      return html(reply, request, "Ingresar", loginView("Base de datos no disponible."), void 0, 503);
+    }
+    const pending = consumePendingSession(pendingId);
+    enrollments.delete(pendingId);
+    if (!pending)
+      return reply.redirect("/admin/login", 302);
+    recordLoginAttempt(entry.email, request.ip, true);
+    const active = promoteSession(pending);
+    await audit("admin.login.enroll", active.userId, `Segundo factor registrado desde ${request.ip}`);
+    const secret = getAdminSessionSecret();
+    return reply.header("Set-Cookie", buildSessionSetCookie(signSessionCookie(active.id, secret))).redirect("/admin", 302);
   });
   app2.get("/login/2fa", async (request, reply) => {
     if (!sessionFromCookie(request))
@@ -94738,10 +97345,10 @@ async function adminPanelRoutes(app2, options = {}) {
     const session = requireSession(request, reply);
     if (!session)
       return reply;
-    let data = null;
+    let data2 = null;
     let dbError2;
     try {
-      data = await store.dashboard();
+      data2 = await store.dashboard();
     } catch (err) {
       dbError2 = err.code ?? "Base de datos no conectada";
     }
@@ -94756,7 +97363,7 @@ async function adminPanelRoutes(app2, options = {}) {
       }
     }
     return html(reply, request, "Tablero", dashboardView({
-      data,
+      data: data2,
       recent,
       pendingVerifications: pending,
       version: process.env.APP_VERSION ?? "dev",
@@ -94769,22 +97376,22 @@ async function adminPanelRoutes(app2, options = {}) {
     { path: "/shops", title: "Talleres", load: (p) => store.listShops(p), columns: [["name", "Nombre"], ["city", "Ciudad"], ["verificationStatus", "Verificaci\xF3n"], ["ratingAvg", "Calificaci\xF3n"], ["createdAt", "Alta"]] },
     { path: "/audit", title: "Auditor\xEDa", load: (p) => store.listAudit(p), columns: [["createdAt", "Fecha"], ["eventType", "Evento"], ["actorRole", "Rol"], ["reason", "Detalle"]] }
   ];
-  for (const list5 of lists) {
-    app2.get(list5.path, async (request, reply) => {
+  for (const list6 of lists) {
+    app2.get(list6.path, async (request, reply) => {
       const session = requireSession(request, reply);
       if (!session)
         return reply;
       const raw = Number(request.query?.page ?? 1);
       const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
       try {
-        return html(reply, request, list5.title, tableView(list5.title, `/admin${list5.path}`, await list5.load(page), list5.columns), session);
+        return html(reply, request, list6.title, tableView(list6.title, `/admin${list6.path}`, await list6.load(page), list6.columns), session);
       } catch {
-        return html(reply, request, list5.title, messageView(list5.title, "Base de datos no conectada."), session, 503);
+        return html(reply, request, list6.title, messageView(list6.title, "Base de datos no conectada."), session, 503);
       }
     });
   }
 }
-var GENERIC_LOGIN_ERROR, DUMMY_HASH, admin_default;
+var GENERIC_LOGIN_ERROR, ENROLL_TTL_MS, enrollments, DUMMY_HASH, admin_default;
 var init_admin = __esm({
   "packages/api/dist/interfaces/admin/index.js"() {
     "use strict";
@@ -94792,8 +97399,18 @@ var init_admin = __esm({
     init_apply();
     init_password();
     init_security();
+    init_permissions();
     init_views();
     init_setup_wizard();
+    init_team();
+    init_views_team();
+    init_staff_store();
+    init_relations();
+    init_data();
+    init_data_store();
+    init_relation_store();
+    init_linker();
+    init_platform();
     init_account();
     init_settings();
     init_registrations();
@@ -94811,6 +97428,8 @@ var init_admin = __esm({
     init_settings_store();
     init_entry();
     GENERIC_LOGIN_ERROR = "Correo, contrase\xF1a o c\xF3digo incorrectos.";
+    ENROLL_TTL_MS = 10 * 60 * 1e3;
+    enrollments = /* @__PURE__ */ new Map();
     DUMMY_HASH = "$2b$12$C6UzMDM.H6dfI/f/IKcEeO7Ib6c/3QeM2vzU6ZL4t3Ai7GQWm3y3C";
     admin_default = adminPanelRoutes;
   }
@@ -96098,6 +98717,7 @@ init_entry();
 init_apply();
 init_settings_store();
 init_whatsapp_number();
+init_platform();
 init_visit_store();
 init_documents();
 
@@ -96225,6 +98845,7 @@ await app.register(agentRoutes, { prefix: apiPrefix });
 await app.register(registerWebhookRoutes, { prefix: "/wa/webhook" });
 var settingsStore = new MysqlSettingsStore(() => openConnection());
 var whatsappNumber = cachedSetting(settingsStore, WHATSAPP_NUMBER_KEY, 6e4);
+var entryMode = cachedSetting(settingsStore, PLATFORM_KEYS.entryMode, 6e4);
 var visitStore = new MysqlVisitStore(() => openConnection());
 var legalData = createLegalLoader(settingsStore);
 var { adminPanelRoutes: adminPanelRoutes2 } = await Promise.resolve().then(() => (init_admin(), admin_exports));
@@ -96234,13 +98855,16 @@ await app.register(adminPanelRoutes2, {
   visits: visitStore,
   onSettingsChanged: () => {
     whatsappNumber.invalidate();
+    entryMode.invalidate();
     legalData.invalidate();
   }
 });
-app.get("/health", async () => ({ status: "ok", jwt: jwtSecretSource }));
+var BUILD_STAMP = process.env.APP_VERSION ?? "2026-09-18-menu-inicio";
+app.get("/health", async () => ({ status: "ok", jwt: jwtSecretSource, build: BUILD_STAMP }));
 await app.register(entryRoutes, {
   resolveNumber: () => whatsappNumber.get(),
-  onVisit: missingDbEnv().length === 0 ? (code, ref) => visitStore.record(code, ref) : void 0
+  onVisit: missingDbEnv().length === 0 ? (code, ref, profile) => visitStore.record(code, ref, profile) : void 0,
+  entryMode: async () => parseEntryMode(await entryMode.get())
 });
 await app.register(legalRoutes, { load: () => legalData.get() });
 app.setErrorHandler((error, request, reply) => {
@@ -96287,6 +98911,9 @@ try {
   app.log.error(err);
   process.exit(1);
 }
+export {
+  BUILD_STAMP
+};
 /*! Bundled license information:
 
 toad-cache/dist/toad-cache.cjs:

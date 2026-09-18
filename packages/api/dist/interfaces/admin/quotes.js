@@ -2,6 +2,7 @@ import { escapeHtml } from "../entry/page.js";
 import { verifyCsrf } from "../../application/admin/security.js";
 import { parseAmount } from "../../application/work-orders/workflow.js";
 import { LOSS_REASONS, MAX_STORES_PER_REQUEST, ORDER_STAGE_TRANSITIONS, quoteRequestCode, } from "../../application/quotes/workflow.js";
+import { featurePaused } from "../../application/settings/platform.js";
 import { newQuoteView, quoteDetailView, quotesListView } from "./views-quotes.js";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const FILTERS = ["abiertas", "con_pedido", "todas"];
@@ -143,11 +144,17 @@ export function registerQuoteRoutes(app, deps) {
         let id;
         let requesterId;
         let storeUserIds = [];
+        let requesterRoleForRelation = "dueno";
+        let subjectForRelation = null;
         try {
             const ctx = await context(body);
             if (!ctx)
                 return errorPage(request, reply, session, "Nueva cotización", "Pide la cotización desde el vehículo de un dueño o desde una orden de trabajo.", 404);
             const invalid = (error) => deps.html(reply, request, "Nueva cotización", newQuoteView({ csrf: session.csrfToken, ...ctx, values: body, error }), session, 400);
+            const operation = deps.platform ? await deps.platform() : null;
+            const paused = operation ? featurePaused(operation, "quotes") : null;
+            if (paused)
+                return invalid(paused);
             const partName = str(body.partName, 191);
             if (partName.length < 3)
                 return invalid("Describe el repuesto que necesita.");
@@ -163,6 +170,8 @@ export function registerQuoteRoutes(app, deps) {
             if (!storeIds.every((s) => verified.some((v) => v.id === s)))
                 return invalid("Solo se puede pedir a almacenes verificados.");
             requesterId = String(ctx.requester.id);
+            requesterRoleForRelation = String(ctx.requester.role ?? "dueno");
+            subjectForRelation = partName.slice(0, 191);
             id = await quotes.createRequest({
                 requesterId,
                 vehicleId: ctx.vehicle ? String(ctx.vehicle.id) : null,
@@ -182,6 +191,14 @@ export function registerQuoteRoutes(app, deps) {
             return errorPage(request, reply, session, "Nueva cotización", m.text, m.status);
         }
         await record(session, "quote.requested", [requesterId, ...storeUserIds], { quoteRequestId: id });
+        await deps.linker?.fromQuoteRequest({
+            requestId: id,
+            requesterId,
+            requesterRole: requesterRoleForRelation,
+            storeUserIds,
+            subject: subjectForRelation,
+            createdBy: session.userId,
+        });
         await deps.audit("admin.quote.create", session.userId, `Solicitud de cotización ${id} para el usuario ${requesterId}`);
         return reply.redirect(`/admin/quotes/${id}?ok=creada`, 302);
     });

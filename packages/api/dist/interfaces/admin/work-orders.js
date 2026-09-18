@@ -1,6 +1,7 @@
 import { escapeHtml } from "../entry/page.js";
 import { verifyCsrf } from "../../application/admin/security.js";
 import { DIAGNOSIS_OUTCOMES, EDITABLE_STATUSES, ITEM_KINDS, WORK_ORDER_TRANSITIONS, historyDescription, parseAmount, workOrderCode, } from "../../application/work-orders/workflow.js";
+import { featurePaused } from "../../application/settings/platform.js";
 import { newWorkOrderView, workOrderDetailView, workOrdersListView } from "./views-work-orders.js";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const FILTERS = ["abiertas", "por_aprobar", "en_taller", "cerradas", "todas"];
@@ -144,6 +145,10 @@ export function registerWorkOrderRoutes(app, deps) {
                     return invalid("Elige un taller verificado.");
                 shopId = chosen;
             }
+            const operation = deps.platform ? await deps.platform() : null;
+            const paused = operation ? featurePaused(operation, "workorders") : null;
+            if (paused)
+                return invalid(paused);
             const intakeKm = wholeNumber(body.intakeKm, 0, 2_000_000);
             if (intakeKm === null)
                 return invalid("Kilometraje de ingreso no válido.");
@@ -164,6 +169,15 @@ export function registerWorkOrderRoutes(app, deps) {
         }
         if (order)
             await record(session, "workorder.created", order, { status: "recepcion", shopName: order.shopName });
+        if (order) {
+            await deps.linker?.fromWorkOrder({
+                workOrderId: order.id,
+                ownerId: order.ownerId,
+                shopUserId: order.shopUserId,
+                subject: `${workOrderCode(order.number)} · ${order.vehicleLabel ?? ""}`.trim().slice(0, 191),
+                createdBy: session.userId,
+            });
+        }
         await deps.audit("admin.workorder.create", session.userId, `Orden ${order ? workOrderCode(order.number) : id} abierta`);
         return reply.redirect(`/admin/work-orders/${id}?ok=creada`, 302);
     });

@@ -1,5 +1,5 @@
 import { randomBytes, randomInt } from "node:crypto";
-import { buildLinks, renderEntryPage } from "./page.js";
+import { buildLinks, renderEntryPage, sanitizeProfile } from "./page.js";
 // Página de entrada en la raíz (docs/33 §1). Los navegadores reciben la página que abre
 // WhatsApp; la plataforma (GoDaddy revisa GET / y HEAD /) y los clientes sin Accept HTML
 // siguen recibiendo el JSON de estado, para no romper el chequeo de salud.
@@ -69,20 +69,34 @@ export async function entryRoutes(app, options = {}) {
         const query = (request.query ?? {});
         const code = newVisitCode();
         const ref = sanitizeRef(query.ref);
+        const profile = sanitizeProfile(query.perfil);
         const bot = isPreviewBot(request.headers["user-agent"]);
         const number = await effectiveNumber(options);
         if (!bot && options.onVisit && allowVisit(request.ip)) {
             // En segundo plano: la página no espera a la base de datos y un fallo no la rompe.
             Promise.resolve()
-                .then(() => options.onVisit?.(code, ref))
+                .then(() => options.onVisit?.(code, ref, profile))
                 .catch(() => undefined);
         }
-        // Directo al chat (docs/33 §1): wa.me abre la app en el celular y ofrece app o WhatsApp Web en la
-        // computadora. La página queda para robots de vista previa, para ?pagina y si no hay número.
-        if (number && !bot && !("pagina" in query)) {
-            return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number, code, ref).wame, 302);
+        // Modo de inicio (docs/41): "directo" manda al chat en un salto; "menu" muestra las opciones de
+        // perfil, y cada opción vuelve aquí con ?perfil= para ir al chat con la intención escrita.
+        let mode = "directo";
+        if (options.entryMode && !profile) {
+            try {
+                mode = (await options.entryMode()) === "menu" ? "menu" : "directo";
+            }
+            catch {
+                mode = "directo";
+            }
         }
-        const html = renderEntryPage({ number, code, ref, nonce });
+        // La página queda para robots de vista previa, para ?pagina, para el menú y si no hay número.
+        if (number && !bot && !("pagina" in query) && (mode === "directo" || profile)) {
+            return reply
+                .header("Cache-Control", "no-store")
+                .header("Referrer-Policy", "no-referrer")
+                .redirect(buildLinks(number, code, ref, profile).wame, 302);
+        }
+        const html = renderEntryPage({ number, code, ref, nonce, menu: mode === "menu" });
         return reply
             .header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`)
             .header("X-Content-Type-Options", "nosniff")

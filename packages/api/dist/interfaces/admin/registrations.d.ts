@@ -4,8 +4,17 @@ import type { RegistrationStore } from "../../infrastructure/registration/regist
 import type { AppointmentStore } from "../../infrastructure/appointments/appointment-store.js";
 import type { WorkOrderStore } from "../../infrastructure/work-orders/work-order-store.js";
 import type { QuoteStore } from "../../infrastructure/quotes/quote-store.js";
+import type { RelationStore } from "../../infrastructure/relations/relation-store.js";
+import type { DataStore } from "../../infrastructure/data/data-store.js";
+import { type PlatformSettings } from "../../application/settings/platform.js";
 export interface RegistrationDeps {
     registrations: RegistrationStore;
+    /** Vínculos y sanciones de la entidad, para la tarjeta de moderación (docs/35). */
+    relations?: RelationStore;
+    /** Ajustes de operación: ciudades activas (docs/35 A2). */
+    platform?: () => Promise<PlatformSettings>;
+    /** Solicitudes de la LOPDP del titular (docs/35 A3). */
+    data?: DataStore;
     appointments?: AppointmentStore;
     workOrders?: WorkOrderStore;
     quotes?: QuoteStore;

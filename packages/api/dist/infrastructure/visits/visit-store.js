@@ -13,9 +13,9 @@ export class MysqlVisitStore {
             await conn.end().catch(() => undefined);
         }
     }
-    record(code, ref) {
+    record(code, ref, profile = null) {
         return this.run(async (conn) => {
-            await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), 'entry.visit', NULL, NULL, 'Visit', ?, ?, CURRENT_TIMESTAMP(3))", [code, JSON.stringify({ ref })]);
+            await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), 'entry.visit', NULL, NULL, 'Visit', ?, ?, CURRENT_TIMESTAMP(3))", [code, JSON.stringify({ ref, perfil: profile })]);
         });
     }
     find(code, now = new Date()) {
@@ -33,8 +33,13 @@ export class MysqlVisitStore {
                     payload = null;
                 }
             }
-            const ref = payload && typeof payload === "object" && "ref" in payload ? payload.ref : null;
-            return { code, ref: typeof ref === "string" ? ref : null, createdAt: row.createdAt };
+            const data = (payload && typeof payload === "object" ? payload : {});
+            return {
+                code,
+                ref: typeof data.ref === "string" ? data.ref : null,
+                profile: typeof data.perfil === "string" ? data.perfil : null,
+                createdAt: row.createdAt,
+            };
         });
     }
 }

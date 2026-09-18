@@ -31,7 +31,7 @@ export class MysqlAdminStore {
     }
     findAdminByEmail(email) {
         return this.run(async (conn) => {
-            const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
+            const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
             if (!row)
                 return null;
             return {
@@ -40,6 +40,7 @@ export class MysqlAdminStore {
                 name: String(row.name),
                 passwordHash: String(row.passwordHash),
                 totpSecret: row.totpSecret ? String(row.totpSecret) : null,
+                staffRole: row.staffRole ? String(row.staffRole) : null,
             };
         });
     }
@@ -50,12 +51,12 @@ export class MysqlAdminStore {
             let id;
             if (existing) {
                 id = String(existing.id);
-                await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id]);
+                await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', staffRole = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id]);
             }
             else {
                 const created = rows(await conn.query("SELECT UUID() AS id"))[0];
                 id = String(created?.id);
-                await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, email, input.phone, input.passwordHash, input.name]);
+                await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, staffRole, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, email, input.phone, input.passwordHash, input.name]);
             }
             await conn.query("INSERT INTO `AdminTotp` (userId, secret, createdAt, updatedAt) VALUES (?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE secret = VALUES(secret), updatedAt = CURRENT_TIMESTAMP(3)", [id, input.totpSecret]);
             return id;
@@ -63,7 +64,7 @@ export class MysqlAdminStore {
     }
     findAdminById(id) {
         return this.run(async (conn) => {
-            const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id]))[0];
+            const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id]))[0];
             if (!row)
                 return null;
             return {
@@ -72,6 +73,7 @@ export class MysqlAdminStore {
                 name: String(row.name),
                 passwordHash: String(row.passwordHash),
                 totpSecret: row.totpSecret ? String(row.totpSecret) : null,
+                staffRole: row.staffRole ? String(row.staffRole) : null,
             };
         });
     }

@@ -111,9 +111,11 @@ export function pendingTasks(ctx) {
     return tasks;
 }
 /** Mensaje de ingreso: bienvenida para un contacto nuevo; saludo, pendientes y menú para uno registrado. */
-export function welcomeMessage(ctx) {
+export function welcomeMessage(ctx, options = {}) {
+    // La línea extra se configura en Ajustes → Operación (docs/35 A2).
+    const intro = options.intro?.trim() ? `${options.intro.trim()}\n\n` : "";
     if (!ctx.detail)
-        return NEW_CONTACT_MESSAGE;
+        return `${intro}${NEW_CONTACT_MESSAGE}`;
     const role = String(ctx.detail.user.role);
     const name = firstName(ctx.detail.user.name);
     const pendings = pendingTasks(ctx)
@@ -123,7 +125,26 @@ export function welcomeMessage(ctx) {
     if (pendings.length > 0)
         parts.push(pendings.join("\n"));
     parts.push(MENUS[role] ?? "¿En qué te puedo ayudar hoy?");
-    return parts.join("\n\n");
+    return `${intro}${parts.join("\n\n")}`;
+}
+/**
+ * Detecta el perfil que declaró el contacto en su primer mensaje. Reconoce lo que escribe el menú
+ * de inicio ("soy dueño de un vehículo", "tengo un taller"…) y las variantes más comunes.
+ */
+export function detectProfileIntent(input) {
+    const text = input
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text))
+        return "cuenta";
+    if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text))
+        return "almacen";
+    if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text))
+        return "taller";
+    if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text))
+        return "dueno";
+    return null;
 }
 /** Extrae el celular y el código de visita de un número o de un mensaje pegado por el operador. */
 export function parseContactInput(input) {
