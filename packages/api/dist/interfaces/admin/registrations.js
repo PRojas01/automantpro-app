@@ -17,6 +17,7 @@ const OK_MESSAGES = {
     nota: "Nota agregada a la bitácora.",
     sancion: "Sanción registrada: queda el motivo y el aviso a la entidad.",
     lopdp: "Solicitud de datos registrada con su plazo de respuesta.",
+    plan: "Pago registrado: queda pendiente hasta que un administrador lo verifique.",
 };
 function dbError(err) {
     const code = err.code;
@@ -104,6 +105,8 @@ export function registerRegistrationRoutes(app, deps) {
         let relationsList = [];
         let sanctionsList = [];
         let dataRequests = [];
+        let subscriptions = [];
+        let usage = {};
         if (deps.relations) {
             try {
                 [relationsList, sanctionsList] = await Promise.all([deps.relations.forUser(id), deps.relations.sanctionsForUser(id)]);
@@ -118,6 +121,14 @@ export function registerRegistrationRoutes(app, deps) {
             }
             catch {
                 // sin solicitudes si la base no responde
+            }
+        }
+        if (deps.plans) {
+            try {
+                [subscriptions, usage] = await Promise.all([deps.plans.forUser(id), deps.plans.usageForUser(id)]);
+            }
+            catch {
+                // sin plan ni uso si la base no responde
             }
         }
         return deps.html(reply, request, String(detail.user.name ?? "Usuario"), userDetailView({
@@ -137,6 +148,9 @@ export function registerRegistrationRoutes(app, deps) {
             canSanction: can(session.role, "sanctions"),
             dataRequests,
             canLopdp: can(session.role, "lopdp"),
+            subscriptions,
+            usage,
+            canPayments: can(session.role, "payments"),
         }), session, extra.status ?? 200);
     }
     app.get("/users", async (request, reply) => {
@@ -169,7 +183,8 @@ export function registerRegistrationRoutes(app, deps) {
             return reply;
         const perfil = PERFILES.includes(ctx.body.perfil) ? ctx.body.perfil : "dueno";
         const digits = normalizeWhatsappNumber(ctx.body.phone);
-        return deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: ctx.session.csrfToken, values: { phone: digits ? `+${digits}` : "", consent: "", reminders: "on" } }), ctx.session);
+        const visitCode = typeof ctx.body.code === "string" ? ctx.body.code.trim().toUpperCase().slice(0, 16) : "";
+        return deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: ctx.session.csrfToken, values: { phone: digits ? `+${digits}` : "", code: visitCode, consent: "", reminders: "on" } }), ctx.session);
     });
     app.post("/users/new", async (request, reply) => {
         const ctx = withCsrf(request, reply);
@@ -240,6 +255,11 @@ export function registerRegistrationRoutes(app, deps) {
         catch (err) {
             const m = dbError(err);
             return invalid(m.text, m.status);
+        }
+        // El código de la visita queda ligado al usuario nuevo, para saber de dónde llegó.
+        const visitCode = typeof body.code === "string" ? body.code.trim().toUpperCase().slice(0, 16) : "";
+        if (visitCode && deps.visits && /^AMP-[A-Z2-9]{4,6}$/.test(visitCode)) {
+            await deps.visits.link(visitCode, userId).catch(() => undefined);
         }
         await deps.audit("admin.user.create", session.userId, `Alta de ${ROLE_LABELS[perfil]} ${userId} desde el panel`);
         return reply.redirect(`/admin/users/${userId}?ok=creado`, 302);

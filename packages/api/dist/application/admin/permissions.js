@@ -9,8 +9,8 @@ export const STAFF_ROLES = [
     { key: "lectura", label: "Solo lectura", description: "Solo consulta; no puede cambiar nada." },
 ];
 const ROLE_CAPABILITIES = {
-    admin: ["read", "attend", "registrations", "verifications", "appointments", "workorders", "quotes", "notes", "relations", "disputes", "sanctions", "exports", "lopdp", "settings", "team"],
-    operador: ["read", "attend", "registrations", "appointments", "workorders", "quotes", "notes", "relations"],
+    admin: ["read", "attend", "registrations", "verifications", "appointments", "workorders", "quotes", "notes", "relations", "disputes", "sanctions", "exports", "lopdp", "payments", "plans", "settings", "team"],
+    operador: ["read", "attend", "registrations", "appointments", "workorders", "quotes", "notes", "relations", "payments"],
     verificador: ["read", "verifications", "notes", "disputes"],
     soporte: ["read", "attend", "notes", "relations"],
     lectura: ["read"],
@@ -58,6 +58,10 @@ const RULES = [
     // La lista de sanciones es información sensible de moderación: solo el administrador.
     { method: "GET", pattern: /^\/sanctions(\/|$)/, capability: "sanctions" },
     // Respaldos y solicitudes de datos: salen datos personales del sistema, solo el administrador.
+    // Registrar un pago lo hace el operador; verificarlo o darlo de baja, solo el administrador.
+    { method: "POST", pattern: /^\/users\/[^/]+\/subscriptions$/, capability: "payments" },
+    { method: "GET", pattern: /^\/plans(\/|$)/, capability: "plans" },
+    { method: "POST", pattern: /^\/subscriptions(\/|$)/, capability: "plans" },
     { method: "GET", pattern: /^\/exports(\/|$)/, capability: "exports" },
     { method: "GET", pattern: /^\/data-requests(\/|$)/, capability: "lopdp" },
     { method: "POST", pattern: /^\/data-requests(\/|$)/, capability: "lopdp" },

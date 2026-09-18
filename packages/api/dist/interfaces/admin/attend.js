@@ -3,6 +3,7 @@ import { verifyCsrf } from "../../application/admin/security.js";
 import { detectProfileIntent, parseContactInput, pendingTasks, welcomeMessage } from "../../application/attend/welcome.js";
 import { attendView } from "./views-attend.js";
 import { quietNotice } from "../../application/settings/platform.js";
+import { effectivePlan, limitsFor, nearbyWorkshopsMessage } from "../../application/plans/plans.js";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const DRAFTS_PER_HOUR = 30;
 export function registerAttendRoutes(app, deps) {
@@ -62,17 +63,39 @@ export function registerAttendRoutes(app, deps) {
             try {
                 visit = await deps.visits.find(code);
                 visitLookup = true;
+                // El código se liga al teléfono desde el que escribieron y, si ya está registrado, a su
+                // ficha: así se puede seguir de dónde vino cada usuario (docs/43).
+                if (visit && phone)
+                    await deps.visits.claim(code, phone).catch(() => undefined);
+                if (visit && detail)
+                    await deps.visits.link(code, String(detail.user.id)).catch(() => undefined);
             }
             catch {
                 visitLookup = false;
             }
+        }
+        // Plan del contacto: decide si se le ofrecen talleres verificados o el enlace del mapa.
+        let plan = "gratis";
+        let limits = [];
+        let nearby = null;
+        if (detail && deps.plans) {
+            try {
+                const [subs, usage] = await Promise.all([deps.plans.forUser(String(detail.user.id)), deps.plans.usageForUser(String(detail.user.id))]);
+                plan = effectivePlan(subs);
+                limits = limitsFor(plan, String(detail.user.role ?? "dueno"), usage);
+            }
+            catch {
+                plan = "gratis";
+            }
+            if (plan === "gratis")
+                nearby = nearbyWorkshopsMessage(String(detail.user.city ?? ""), "");
         }
         const ctx = { detail, appointments, events, workOrders, quotes };
         // La intención sale del mensaje pegado o de la opción que eligió en el menú de inicio.
         const intent = detectProfileIntent(query) ?? visit?.profile ?? null;
         return {
             ctx,
-            result: { phone, code, visit, visitLookup, detail, intent, tasks: pendingTasks(ctx), message: welcomeMessage(ctx, { intro }) },
+            result: { phone, code, visit, visitLookup, detail, intent, plan, limits, nearby, tasks: pendingTasks(ctx), message: welcomeMessage(ctx, { intro }) },
         };
     }
     async function copilotStatus() {

@@ -2,6 +2,8 @@ import { escapeHtml } from "../entry/page.js";
 import { formatWhatsappNumber } from "../../application/settings/whatsapp-number.js";
 import { formatEcDateTime } from "../../application/appointments/messages.js";
 import { ROLE_LABELS } from "./views-registrations.js";
+import { upgradeMessage } from "../../application/plans/plans.js";
+import { planBadge } from "./views-plans.js";
 const e = (value) => escapeHtml(value === null || value === undefined ? "" : String(value));
 const csrfField = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
 const phoneDigits = (phone) => phone.replace(/\D/g, "");
@@ -34,7 +36,7 @@ function resultCard(result, csrf) {
       <div><strong>${e(formatWhatsappNumber(digits))}</strong> · ${chat}</div>${visitLine(result)}${intentLine}
       <p class="muted">${intent === "cuenta" ? "Dice que ya tiene cuenta: búscala por su número anterior antes de registrarlo de nuevo." : "No está registrado. Envía la bienvenida y, cuando diga quién es, regístralo."}</p>
       ${message}
-      <form method="post" action="/admin/users/new/start" class="row">${csrfField(csrf)}<input type="hidden" name="phone" value="${e(result.phone)}">
+      <form method="post" action="/admin/users/new/start" class="row">${csrfField(csrf)}<input type="hidden" name="phone" value="${e(result.phone)}">${result.code ? `<input type="hidden" name="code" value="${e(result.code)}">` : ""}
       <select name="perfil" aria-label="Perfil">${option("dueno", "Dueño de vehículo")}${option("taller", "Taller")}${option("almacen", "Almacén")}</select>
       <button type="submit">Registrar</button></form></div>`;
     }
@@ -46,7 +48,21 @@ function resultCard(result, csrf) {
     const schedule = role === "dueno" && vehicles[0]
         ? ` · <a href="/admin/users/${e(user.id)}/schedule?vehicleId=${e(vehicles[0].id)}">Agendar turno</a>`
         : "";
-    return `<div class="card"><h2>${e(ROLE_LABELS[role] ?? role)} registrado</h2>
+    const planCard = result.plan === undefined
+        ? ""
+        : `<div class="card"><h2>Plan</h2>
+        <p>${planBadge(result.plan)}</p>
+        ${(result.limits ?? []).length
+            ? `<ul>${(result.limits ?? [])
+                .map((l) => `<li>${e(String(l.used))} de ${e(String(l.limit))} ${e(l.label)}${l.reached ? ' <span class="error">(tope alcanzado)</span>' : ""}</li>`)
+                .join("")}</ul>`
+            : ""}
+        ${(result.limits ?? []).some((l) => l.reached)
+            ? `<label for="upgrade">Ofrécele el plan</label><textarea id="upgrade" readonly rows="3">${e(upgradeMessage(role, (result.limits ?? []).find((l) => l.reached)))}</textarea>`
+            : ""}
+        ${result.nearby ? `<label for="cercanos">Talleres cercanos (plan gratuito)</label><textarea id="cercanos" readonly rows="6">${e(result.nearby)}</textarea>` : ""}
+        <p class="muted"><a href="/admin/users/${e(user.id)}">Registrar un pago en su ficha</a></p></div>`;
+    return `${planCard}<div class="card"><h2>${e(ROLE_LABELS[role] ?? role)} registrado</h2>
     <div><strong>${e(user.name)}</strong> · ${e(formatWhatsappNumber(digits))} · ${chat}</div>${visitLine(result)}
     <div><a href="/admin/users/${e(user.id)}">Ver ficha</a>${schedule}</div>
     <h2>Pendientes del último chat</h2>${tasks}

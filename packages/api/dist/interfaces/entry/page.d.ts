@@ -14,6 +14,8 @@ export declare const ENTRY_PROFILES: Array<{
     key: string;
     label: string;
     emoji: string;
+    hint: string;
+    icon: string;
     intent: string | null;
 }>;
 export declare function sanitizeProfile(value: unknown): string | null;

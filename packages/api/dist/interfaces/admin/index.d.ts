@@ -2,6 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { type AdminStore } from "../../infrastructure/admin/admin-store.js";
 import { type SqlConnection } from "../../infrastructure/schema-setup/apply.js";
 import { type StaffStore } from "../../infrastructure/staff/staff-store.js";
+import { type PlanStore } from "../../infrastructure/plans/plan-store.js";
 import { type DataStore } from "../../infrastructure/data/data-store.js";
 import { type RelationStore } from "../../infrastructure/relations/relation-store.js";
 import { type QuoteStore } from "../../infrastructure/quotes/quote-store.js";
@@ -24,6 +25,7 @@ export interface AdminPanelOptions {
     staff?: StaffStore;
     relations?: RelationStore;
     data?: DataStore;
+    plans?: PlanStore;
     /** Se llama cuando cambia un ajuste, para refrescar cachés (por ejemplo, el número de la página de inicio). */
     onSettingsChanged?: () => void;
 }

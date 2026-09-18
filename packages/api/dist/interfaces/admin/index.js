@@ -11,6 +11,8 @@ import { enrollView } from "./views-team.js";
 import { MysqlStaffStore } from "../../infrastructure/staff/staff-store.js";
 import { registerRelationRoutes } from "./relations.js";
 import { registerDataRoutes } from "./data.js";
+import { registerPlanRoutes } from "./plans.js";
+import { MysqlPlanStore } from "../../infrastructure/plans/plan-store.js";
 import { MysqlDataStore } from "../../infrastructure/data/data-store.js";
 import { MysqlRelationStore } from "../../infrastructure/relations/relation-store.js";
 import { createRelationLinker } from "../../application/relations/linker.js";
@@ -27,6 +29,7 @@ import { CopilotService } from "../../application/copilot/service.js";
 import { MysqlCopilotStore } from "../../infrastructure/copilot/copilot-store.js";
 import { MysqlWorkOrderStore } from "../../infrastructure/work-orders/work-order-store.js";
 import { MysqlVisitStore } from "../../infrastructure/visits/visit-store.js";
+import { visitsView } from "./views-visits.js";
 import { MysqlAppointmentStore } from "../../infrastructure/appointments/appointment-store.js";
 import { MysqlRegistrationStore } from "../../infrastructure/registration/registration-store.js";
 import { MysqlSettingsStore } from "../../infrastructure/settings/settings-store.js";
@@ -55,8 +58,12 @@ export async function adminPanelRoutes(app, options = {}) {
     const copilot = options.copilot ?? new CopilotService({ settings, store: new MysqlCopilotStore(connect) });
     const detailCopilot = options.copilot || options.connect || missingDbEnv().length === 0 ? copilot : undefined;
     const staff = options.staff ?? new MysqlStaffStore(connect);
+    const visits = options.visits ?? new MysqlVisitStore(connect);
+    const detailVisits = options.visits || options.connect || missingDbEnv().length === 0 ? visits : undefined;
     const relations = options.relations ?? new MysqlRelationStore(connect);
     const data = options.data ?? new MysqlDataStore(connect);
+    const plans = options.plans ?? new MysqlPlanStore(connect);
+    const detailPlans = options.plans || options.connect || missingDbEnv().length === 0 ? plans : undefined;
     const detailData = options.data || options.connect || missingDbEnv().length === 0 ? data : undefined;
     // El enlazador crea el vínculo al agendar, abrir una orden o cotizar; sin base no se usa.
     const detailRelations = options.relations || options.connect || missingDbEnv().length === 0 ? relations : undefined;
@@ -161,7 +168,7 @@ export async function adminPanelRoutes(app, options = {}) {
     }
     registerSetupWizard(app, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
     registerAccountRoutes(app, { store, requireSession, html, audit });
-    registerRegistrationRoutes(app, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, requireSession, html, audit, platform });
+    registerRegistrationRoutes(app, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, plans: detailPlans, visits: detailVisits, requireSession, html, audit, platform });
     registerAppointmentRoutes(app, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit, linker, platform });
     registerWorkOrderRoutes(app, { workOrders, appointments, registrations, requireSession, html, audit, linker, platform });
     registerQuoteRoutes(app, { quotes, registrations, appointments, workOrders, requireSession, html, audit, linker, platform });
@@ -171,8 +178,9 @@ export async function adminPanelRoutes(app, options = {}) {
         workOrders: detailWorkOrders,
         quotes: detailQuotes,
         copilot: detailCopilot,
+        plans: detailPlans,
         audit,
-        visits: detailAppointments ? (options.visits ?? new MysqlVisitStore(connect)) : options.visits,
+        visits: detailVisits,
         platform,
         requireSession,
         html,
@@ -194,6 +202,27 @@ export async function adminPanelRoutes(app, options = {}) {
     registerTeamRoutes(app, { store, staff, requireSession, html, audit });
     registerRelationRoutes(app, { relations, requireSession, html, audit });
     registerDataRoutes(app, { data, requireSession, html, audit });
+    registerPlanRoutes(app, { plans, requireSession, html, audit });
+    /** Bandeja de origen: qué código llegó por dónde y en qué terminó (docs/43). */
+    app.get("/visits", async (request, reply) => {
+        const session = requireSession(request, reply);
+        if (!session)
+            return reply;
+        const raw = Number(request.query?.page ?? 1);
+        const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+        const days = 30;
+        try {
+            const [list, stats] = await Promise.all([visits.list(page), visits.stats(days)]);
+            return html(reply, request, "Origen", visitsView({ items: list.items, stats, days }), session);
+        }
+        catch (err) {
+            const code = err.code;
+            const text = code === "ER_NO_SUCH_TABLE"
+                ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa «Aplicar actualizaciones»."
+                : `No se pudo consultar el origen de los contactos (${code ?? "base de datos no disponible"}).`;
+            return html(reply, request, "Origen", messageView("Origen", text), session, 503);
+        }
+    });
     app.get("/login", async (request, reply) => {
         // Sin administradores todavía: se abre el asistente de puesta en marcha.
         if ((await adminCount(store)) === 0)

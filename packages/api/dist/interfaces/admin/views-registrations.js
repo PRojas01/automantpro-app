@@ -2,6 +2,7 @@ import { escapeHtml } from "../entry/page.js";
 import { formatWhatsappNumber } from "../../application/settings/whatsapp-number.js";
 import { serviceTaxonomy, vehicleClasses } from "../../domain/maintenance/index.js";
 import { userDataRequestsCard } from "./views-data.js";
+import { userPlanCard } from "./views-plans.js";
 import { RELATION_KIND_LABELS, RELATION_STATUS_LABELS, SANCTION_LEVELS, isActive as sanctionIsActive, relationCode, sanctionLabel, } from "../../application/relations/workflow.js";
 import { bitacoraSection, userAppointmentsSection } from "./views-appointments.js";
 import { historySection, userWorkOrdersSection } from "./views-work-orders.js";
@@ -117,9 +118,11 @@ export function newUserView(input) {
         <p class="muted">Queda en verificación hasta que lo apruebes.</p></div>`;
         }
     }
+    const visitCode = typeof input.values?.code === "string" ? input.values.code : "";
+    const codeField = visitCode ? `<input type="hidden" name="code" value="${e(visitCode)}">` : "";
     return `<div class="stack wide"><h1>Nuevo registro</h1><div class="tabs">${tabs}</div>
   ${input.error ? `<p class="error" role="alert">${e(input.error)}</p>` : ""}
-  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">
+  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">${codeField}
   ${common}${specific}
   <button class="full" type="submit">Guardar registro</button></form></div>`;
 }
@@ -175,8 +178,9 @@ export function userDetailView(input) {
         : "";
     const moderation = moderationSection(String(user.id), input.relations ?? [], input.sanctions ?? [], input.csrf, !!input.canSanction);
     const lopdp = input.canLopdp ? userDataRequestsCard(String(user.id), input.dataRequests ?? [], input.csrf) : "";
+    const planCard = userPlanCard(String(user.id), input.subscriptions ?? [], input.csrf, !!input.canPayments, String(user.role ?? "dueno"), input.usage ?? {});
     return `<div class="stack wide"><p><a href="/admin/users">← Usuarios</a></p><h1>${e(user.name)}</h1>${flashHtml(input.flash)}
-  ${datos}${shopCard}${storeCard}${moderation}${lopdp}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
+  ${datos}${planCard}${shopCard}${storeCard}${moderation}${lopdp}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
 }
 /** Vínculos y sanciones de esta entidad (docs/35 M1 y M5). */
 function moderationSection(userId, relations, sanctions, csrf, canSanction) {

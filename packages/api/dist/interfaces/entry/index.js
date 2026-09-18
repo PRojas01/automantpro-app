@@ -5,6 +5,7 @@ import { buildLinks, renderEntryPage, sanitizeProfile } from "./page.js";
 // siguen recibiendo el JSON de estado, para no romper el chequeo de salud.
 export const API_STATUS = { status: "ok", service: "AutoMantPro API" };
 const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const CODE_LENGTH = 5;
 export function wantsHtml(accept) {
     if (!accept)
         return false;
@@ -23,13 +24,36 @@ export function publicNumber() {
 }
 export function newVisitCode() {
     let code = "";
-    for (let i = 0; i < 4; i++)
+    for (let i = 0; i < CODE_LENGTH; i++)
         code += CODE_ALPHABET[randomInt(CODE_ALPHABET.length)];
     return `AMP-${code}`;
 }
+/**
+ * Código único: se reintenta si ya existe. Sin base disponible se usa el primero, que con
+ * 32^5 combinaciones ya es improbable que se repita.
+ */
+export async function uniqueVisitCode(taken) {
+    let code = newVisitCode();
+    if (!taken)
+        return code;
+    for (let attempt = 0; attempt < 5; attempt++) {
+        try {
+            if (!(await taken(code)))
+                return code;
+        }
+        catch {
+            return code; // la base no responde: no se bloquea la página por esto
+        }
+        code = newVisitCode();
+    }
+    return code;
+}
 const VISITS_PER_HOUR = 30;
-/** Robots que generan vistas previas de enlaces o indexan: reciben la página, no la redirección. */
-const PREVIEW_BOTS = /facebookexternalhit|facebot|whatsapp|twitterbot|slackbot|telegrambot|linkedinbot|discordbot|googlebot|bingbot|applebot|pinterest|skypeuripreview|redditbot|embedly/i;
+/**
+ * Robots que generan vistas previas, indexan o alimentan asistentes de IA: reciben la página
+ * completa, nunca la redirección, para que el contenido se pueda leer y citar (docs/44).
+ */
+const PREVIEW_BOTS = /facebookexternalhit|facebot|whatsapp|twitterbot|slackbot|telegrambot|linkedinbot|discordbot|googlebot|google-inspectiontool|storebot-google|google-extended|bingbot|bingpreview|applebot|yandex|duckduckbot|baiduspider|pinterest|skypeuripreview|redditbot|embedly|ahrefsbot|semrushbot|gptbot|oai-searchbot|chatgpt-user|claudebot|claude-web|anthropic-ai|perplexitybot|perplexity-user|ccbot|google-cloudvertexbot|bytespider|amazonbot|meta-externalagent|cohere-ai|youbot|diffbot/i;
 export function isPreviewBot(userAgent) {
     return typeof userAgent === "string" && PREVIEW_BOTS.test(userAgent);
 }
@@ -67,7 +91,7 @@ export async function entryRoutes(app, options = {}) {
         }
         const nonce = randomBytes(16).toString("base64");
         const query = (request.query ?? {});
-        const code = newVisitCode();
+        const code = await uniqueVisitCode(options.codeTaken);
         const ref = sanitizeRef(query.ref);
         const profile = sanitizeProfile(query.perfil);
         const bot = isPreviewBot(request.headers["user-agent"]);

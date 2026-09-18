@@ -1287,10 +1287,10 @@ var require_avvio = __commonJS({
     };
     Boot.prototype._trackPluginLoading = function(plugin) {
       const parentName = this._current[0]?.name || null;
-      plugin.once("start", (serverName, funcName, time2) => {
-        const nodeId = this.pluginTree.start(parentName || null, funcName, time2);
-        plugin.once("loaded", (serverName2, funcName2, time3) => {
-          this.pluginTree.stop(nodeId, time3);
+      plugin.once("start", (serverName, funcName, time3) => {
+        const nodeId = this.pluginTree.start(parentName || null, funcName, time3);
+        plugin.once("loaded", (serverName2, funcName2, time4) => {
+          this.pluginTree.stop(nodeId, time4);
         });
       });
     };
@@ -6792,10 +6792,10 @@ var require_redaction = __commonJS({
     var strict = false;
     function redaction(opts, serialize) {
       const { paths, censor, remove } = handle(opts);
-      const shape = paths.reduce((o, str5) => {
+      const shape = paths.reduce((o, str6) => {
         rx.lastIndex = 0;
-        const first = rx.exec(str5);
-        const next = rx.exec(str5);
+        const first = rx.exec(str6);
+        const next = rx.exec(str6);
         let ns = first[1] !== void 0 ? first[1].replace(/^(?:"|'|`)(.*)(?:"|'|`)$/, "$1") : first[0];
         if (ns === "*") {
           ns = wildcardFirstSym;
@@ -6808,7 +6808,7 @@ var require_redaction = __commonJS({
           return o;
         }
         const { index } = next;
-        const nextPath = `${str5.substr(index, str5.length - 1)}`;
+        const nextPath = `${str6.substr(index, str6.length - 1)}`;
         o[ns] = o[ns] || [];
         if (ns !== wildcardFirstSym && o[ns].length === 0) {
           o[ns].push(...o[wildcardFirstSym] || []);
@@ -6924,7 +6924,7 @@ var require_quick_format_unescaped = __commonJS({
       }
       var argLen = args.length;
       if (argLen === 0) return f;
-      var str5 = "";
+      var str6 = "";
       var a = 1 - offset2;
       var lastPos = -1;
       var flen = f && f.length || 0;
@@ -6939,8 +6939,8 @@ var require_quick_format_unescaped = __commonJS({
                 break;
               if (args[a] == null) break;
               if (lastPos < i)
-                str5 += f.slice(lastPos, i);
-              str5 += Number(args[a]);
+                str6 += f.slice(lastPos, i);
+              str6 += Number(args[a]);
               lastPos = i + 2;
               i++;
               break;
@@ -6949,8 +6949,8 @@ var require_quick_format_unescaped = __commonJS({
                 break;
               if (args[a] == null) break;
               if (lastPos < i)
-                str5 += f.slice(lastPos, i);
-              str5 += Math.floor(Number(args[a]));
+                str6 += f.slice(lastPos, i);
+              str6 += Math.floor(Number(args[a]));
               lastPos = i + 2;
               i++;
               break;
@@ -6963,21 +6963,21 @@ var require_quick_format_unescaped = __commonJS({
                 break;
               if (args[a] === void 0) break;
               if (lastPos < i)
-                str5 += f.slice(lastPos, i);
+                str6 += f.slice(lastPos, i);
               var type = typeof args[a];
               if (type === "string") {
-                str5 += "'" + args[a] + "'";
+                str6 += "'" + args[a] + "'";
                 lastPos = i + 2;
                 i++;
                 break;
               }
               if (type === "function") {
-                str5 += args[a].name || "<anonymous>";
+                str6 += args[a].name || "<anonymous>";
                 lastPos = i + 2;
                 i++;
                 break;
               }
-              str5 += ss(args[a]);
+              str6 += ss(args[a]);
               lastPos = i + 2;
               i++;
               break;
@@ -6985,15 +6985,15 @@ var require_quick_format_unescaped = __commonJS({
               if (a >= argLen)
                 break;
               if (lastPos < i)
-                str5 += f.slice(lastPos, i);
-              str5 += String(args[a]);
+                str6 += f.slice(lastPos, i);
+              str6 += String(args[a]);
               lastPos = i + 2;
               i++;
               break;
             case 37:
               if (lastPos < i)
-                str5 += f.slice(lastPos, i);
-              str5 += "%";
+                str6 += f.slice(lastPos, i);
+              str6 += "%";
               lastPos = i + 2;
               i++;
               a--;
@@ -7006,9 +7006,9 @@ var require_quick_format_unescaped = __commonJS({
       if (lastPos === -1)
         return f;
       else if (lastPos < flen) {
-        str5 += f.slice(lastPos);
+        str6 += f.slice(lastPos);
       }
-      return str5;
+      return str6;
     }
   }
 });
@@ -8632,7 +8632,7 @@ var require_tools = __commonJS({
     var transport = require_transport();
     var [nodeMajor] = process.versions.node.split(".").map((v) => Number(v));
     var asJsonChan = diagChan.tracingChannel("pino_asJson");
-    var asString = nodeMajor >= 25 ? (str5) => JSON.stringify(str5) : _asString;
+    var asString = nodeMajor >= 25 ? (str6) => JSON.stringify(str6) : _asString;
     function noop() {
     }
     function genLog(level, hook) {
@@ -8670,38 +8670,38 @@ var require_tools = __commonJS({
         }
       }
     }
-    function _asString(str5) {
+    function _asString(str6) {
       let result = "";
       let last = 0;
       let found = false;
       let point = 255;
-      const l = str5.length;
+      const l = str6.length;
       if (l > 100) {
-        return JSON.stringify(str5);
+        return JSON.stringify(str6);
       }
       for (var i = 0; i < l && point >= 32; i++) {
-        point = str5.charCodeAt(i);
+        point = str6.charCodeAt(i);
         if (point === 34 || point === 92) {
-          result += str5.slice(last, i) + "\\";
+          result += str6.slice(last, i) + "\\";
           last = i;
           found = true;
         }
       }
       if (!found) {
-        result = str5;
+        result = str6;
       } else {
-        result += str5.slice(last);
+        result += str6.slice(last);
       }
-      return point < 32 ? JSON.stringify(str5) : '"' + result + '"';
+      return point < 32 ? JSON.stringify(str6) : '"' + result + '"';
     }
-    function asJson(obj, msg, num2, time2) {
+    function asJson(obj, msg, num3, time3) {
       if (asJsonChan.hasSubscribers === false) {
-        return _asJson.call(this, obj, msg, num2, time2);
+        return _asJson.call(this, obj, msg, num3, time3);
       }
       const store = { instance: this, arguments };
-      return asJsonChan.traceSync(_asJson, store, this, obj, msg, num2, time2);
+      return asJsonChan.traceSync(_asJson, store, this, obj, msg, num3, time3);
     }
-    function _asJson(obj, msg, num2, time2) {
+    function _asJson(obj, msg, num3, time3) {
       const stringify2 = this[stringifySym];
       const stringifySafe = this[stringifySafeSym];
       const stringifiers = this[stringifiersSym];
@@ -8711,7 +8711,7 @@ var require_tools = __commonJS({
       const formatters = this[formattersSym];
       const messageKey = this[messageKeySym];
       const errorKey = this[errorKeySym];
-      let data = this[lsCacheSym][num2] + time2;
+      let data = this[lsCacheSym][num3] + time3;
       data = data + chindings;
       let value2;
       if (formatters.log) {
@@ -9336,7 +9336,7 @@ var require_proto = __commonJS({
     function defaultMixinMergeStrategy(mergeObject, mixinObject) {
       return Object.assign(mixinObject, mergeObject);
     }
-    function write(_obj, msg, num2) {
+    function write(_obj, msg, num3) {
       const t = this[timeSym]();
       const mixin = this[mixinSym];
       const errorKey = this[errorKeySym];
@@ -9358,12 +9358,12 @@ var require_proto = __commonJS({
         }
       }
       if (mixin) {
-        obj = mixinMergeStrategy(obj, mixin(obj, num2, this));
+        obj = mixinMergeStrategy(obj, mixin(obj, num3, this));
       }
-      const s = this[asJsonSym](obj, msg, num2, t);
+      const s = this[asJsonSym](obj, msg, num3, t);
       const stream = this[streamSym];
       if (stream[needsMetadataGsym] === true) {
-        stream.lastLevel = num2;
+        stream.lastLevel = num3;
         stream.lastObj = obj;
         stream.lastMsg = msg;
         stream.lastTime = t.slice(this[timeSliceIndexSym]);
@@ -9396,11 +9396,11 @@ var require_safe_stable_stringify = __commonJS({
     exports.configure = configure;
     module.exports = stringify;
     var strEscapeSequencesRegExp = /[\u0000-\u001f\u0022\u005c\ud800-\udfff]/;
-    function strEscape(str5) {
-      if (str5.length < 5e3 && !strEscapeSequencesRegExp.test(str5)) {
-        return `"${str5}"`;
+    function strEscape(str6) {
+      if (str6.length < 5e3 && !strEscapeSequencesRegExp.test(str6)) {
+        return `"${str6}"`;
       }
-      return JSON.stringify(str5);
+      return JSON.stringify(str6);
     }
     function sort(array, comparator) {
       if (array.length > 200 || comparator) {
@@ -10155,7 +10155,7 @@ var require_pino = __commonJS({
     var stdSerializers = require_pino_std_serializers();
     var caller = require_caller();
     var redaction = require_redaction();
-    var time2 = require_time();
+    var time3 = require_time();
     var proto = require_proto();
     var symbols = require_symbols3();
     var { configure } = require_safe_stable_stringify();
@@ -10196,7 +10196,7 @@ var require_pino = __commonJS({
       mixinMergeStrategySym,
       msgPrefixSym
     } = symbols;
-    var { epochTime, nullTime } = time2;
+    var { epochTime, nullTime } = time3;
     var { pid } = process;
     var hostname = os.hostname();
     var defaultErrorSerializer = stdSerializers.err;
@@ -10292,8 +10292,8 @@ var require_pino = __commonJS({
           chindings = coreChindings(Object.assign({}, base, { name }));
         }
       }
-      const time3 = timestamp instanceof Function ? timestamp : timestamp ? epochTime : nullTime;
-      const timeSliceIndex = time3().indexOf(":") + 1;
+      const time4 = timestamp instanceof Function ? timestamp : timestamp ? epochTime : nullTime;
+      const timeSliceIndex = time4().indexOf(":") + 1;
       if (useOnlyCustomLevels && !customLevels) throw Error("customLevels is required if useOnlyCustomLevels is set true");
       if (mixin && typeof mixin !== "function") throw Error(`Unknown mixin type "${typeof mixin}" - expected "function"`);
       if (msgPrefix && typeof msgPrefix !== "string") throw Error(`Unknown msgPrefix type "${typeof msgPrefix}" - expected "string"`);
@@ -10309,7 +10309,7 @@ var require_pino = __commonJS({
         [levelCompSym]: levelCompFunc,
         [useOnlyCustomLevelsSym]: useOnlyCustomLevels,
         [streamSym]: stream,
-        [timeSym]: time3,
+        [timeSym]: time4,
         [timeSliceIndexSym]: timeSliceIndex,
         [stringifySym]: stringify,
         [stringifySafeSym]: stringifySafe,
@@ -10349,7 +10349,7 @@ var require_pino = __commonJS({
     module.exports.multistream = require_multistream();
     module.exports.levels = mappings();
     module.exports.stdSerializers = serializers;
-    module.exports.stdTimeFunctions = Object.assign({}, time2);
+    module.exports.stdTimeFunctions = Object.assign({}, time3);
     module.exports.symbols = symbols;
     module.exports.version = version;
     module.exports.default = pino;
@@ -10725,13 +10725,13 @@ var require_serializer = __commonJS({
         return "" + integer;
       }
       asNumber(i) {
-        const num2 = Number(i);
-        if (num2 !== num2) {
+        const num3 = Number(i);
+        if (num3 !== num3) {
           throw new Error(`The value "${i}" cannot be converted to a number.`);
-        } else if (num2 === Infinity || num2 === -Infinity) {
+        } else if (num3 === Infinity || num3 === -Infinity) {
           return "null";
         } else {
-          return "" + num2;
+          return "" + num3;
         }
       }
       asBoolean(bool2) {
@@ -10767,8 +10767,8 @@ var require_serializer = __commonJS({
         }
         throw new Error(`The value "${date}" cannot be converted to a time.`);
       }
-      asString(str5) {
-        const len = str5.length;
+      asString(str6) {
+        const len = str6.length;
         if (len === 0) {
           return '""';
         } else if (len < 42) {
@@ -10776,25 +10776,25 @@ var require_serializer = __commonJS({
           let last = -1;
           let point = 255;
           for (let i = 0; i < len; i++) {
-            point = str5.charCodeAt(i);
+            point = str6.charCodeAt(i);
             if (point === 34 || // '"'
             point === 92) {
               last === -1 && (last = 0);
-              result += str5.slice(last, i) + "\\";
+              result += str6.slice(last, i) + "\\";
               last = i;
             } else if (point < 32 || point >= 55296 && point <= 57343) {
-              return JSON.stringify(str5);
+              return JSON.stringify(str6);
             }
           }
-          return last === -1 && '"' + str5 + '"' || '"' + result + str5.slice(last) + '"';
-        } else if (len < 5e3 && STR_ESCAPE.test(str5) === false) {
-          return '"' + str5 + '"';
+          return last === -1 && '"' + str6 + '"' || '"' + result + str6.slice(last) + '"';
+        } else if (len < 5e3 && STR_ESCAPE.test(str6) === false) {
+          return '"' + str6 + '"';
         } else {
-          return JSON.stringify(str5);
+          return JSON.stringify(str6);
         }
       }
-      asUnsafeString(str5) {
-        return '"' + str5 + '"';
+      asUnsafeString(str6) {
+        return '"' + str6 + '"';
       }
       getState() {
         return this._options;
@@ -12964,11 +12964,11 @@ var require_proxy_addr = __commonJS({
     }
     function parseipNotation(note) {
       const pos = note.lastIndexOf("/");
-      const str5 = pos !== -1 ? note.substring(0, pos) : note;
-      if (!isip(str5)) {
-        throw new TypeError("invalid IP address: " + str5);
+      const str6 = pos !== -1 ? note.substring(0, pos) : note;
+      if (!isip(str6)) {
+        throw new TypeError("invalid IP address: " + str6);
       }
-      let ip = parseip(str5);
+      let ip = parseip(str6);
       if (pos === -1 && ip.kind() === "ipv6" && ip.isIPv4MappedAddress()) {
         ip = ip.toIPv4Address();
       }
@@ -13472,13 +13472,13 @@ var require_context = __commonJS({
       this.server = server;
     }
     function defaultSchemaErrorFormatter(errors, dataVar) {
-      let text4 = "";
+      let text5 = "";
       const separator = ", ";
       for (let i = 0; i !== errors.length; ++i) {
         const e6 = errors[i];
-        text4 += dataVar + (e6.instancePath || "") + " " + e6.message + separator;
+        text5 += dataVar + (e6.instancePath || "") + " " + e6.message + separator;
       }
-      return new Error(text4.slice(0, -separator.length));
+      return new Error(text5.slice(0, -separator.length));
     }
     module.exports = Context;
   }
@@ -13491,20 +13491,20 @@ var require_secure_json_parse = __commonJS({
     var hasBuffer = typeof Buffer !== "undefined";
     var suspectProtoRx = /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
     var suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
-    function _parse(text4, reviver, options) {
+    function _parse(text5, reviver, options) {
       if (options == null) {
         if (reviver !== null && typeof reviver === "object") {
           options = reviver;
           reviver = void 0;
         }
       }
-      if (hasBuffer && Buffer.isBuffer(text4)) {
-        text4 = text4.toString();
+      if (hasBuffer && Buffer.isBuffer(text5)) {
+        text5 = text5.toString();
       }
-      if (text4 && text4.charCodeAt(0) === 65279) {
-        text4 = text4.slice(1);
+      if (text5 && text5.charCodeAt(0) === 65279) {
+        text5 = text5.slice(1);
       }
-      const obj = JSON.parse(text4, reviver);
+      const obj = JSON.parse(text5, reviver);
       if (obj === null || typeof obj !== "object") {
         return obj;
       }
@@ -13514,15 +13514,15 @@ var require_secure_json_parse = __commonJS({
         return obj;
       }
       if (protoAction !== "ignore" && constructorAction !== "ignore") {
-        if (suspectProtoRx.test(text4) === false && suspectConstructorRx.test(text4) === false) {
+        if (suspectProtoRx.test(text5) === false && suspectConstructorRx.test(text5) === false) {
           return obj;
         }
       } else if (protoAction !== "ignore" && constructorAction === "ignore") {
-        if (suspectProtoRx.test(text4) === false) {
+        if (suspectProtoRx.test(text5) === false) {
           return obj;
         }
       } else {
-        if (suspectConstructorRx.test(text4) === false) {
+        if (suspectConstructorRx.test(text5) === false) {
           return obj;
         }
       }
@@ -13560,20 +13560,20 @@ var require_secure_json_parse = __commonJS({
       }
       return obj;
     }
-    function parse(text4, reviver, options) {
+    function parse(text5, reviver, options) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text4, reviver, options);
+        return _parse(text5, reviver, options);
       } finally {
         Error.stackTraceLimit = stackTraceLimit;
       }
     }
-    function safeParse(text4, reviver) {
+    function safeParse(text5, reviver) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text4, reviver, { safe: true });
+        return _parse(text5, reviver, { safe: true });
       } catch {
         return void 0;
       } finally {
@@ -14005,7 +14005,7 @@ var require_code = __commonJS({
     }
     exports._ = _;
     var plus = new _Code("+");
-    function str5(strs, ...args) {
+    function str6(strs, ...args) {
       const expr = [safeStringify(strs[0])];
       let i = 0;
       while (i < args.length) {
@@ -14016,7 +14016,7 @@ var require_code = __commonJS({
       optimize(expr);
       return new _Code(expr);
     }
-    exports.str = str5;
+    exports.str = str6;
     function addCodeArg(code, arg) {
       if (arg instanceof _Code)
         code.push(...arg._items);
@@ -14059,7 +14059,7 @@ var require_code = __commonJS({
       return;
     }
     function strConcat(c1, c2) {
-      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str5`${c1}${c2}`;
+      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str6`${c1}${c2}`;
     }
     exports.strConcat = strConcat;
     function interpolate(x) {
@@ -15021,22 +15021,22 @@ var require_util = __commonJS({
       return (0, codegen_1._)`${topSchemaRef}${schemaPath}${(0, codegen_1.getProperty)(keyword)}`;
     }
     exports.schemaRefOrVal = schemaRefOrVal;
-    function unescapeFragment(str5) {
-      return unescapeJsonPointer(decodeURIComponent(str5));
+    function unescapeFragment(str6) {
+      return unescapeJsonPointer(decodeURIComponent(str6));
     }
     exports.unescapeFragment = unescapeFragment;
-    function escapeFragment(str5) {
-      return encodeURIComponent(escapeJsonPointer(str5));
+    function escapeFragment(str6) {
+      return encodeURIComponent(escapeJsonPointer(str6));
     }
     exports.escapeFragment = escapeFragment;
-    function escapeJsonPointer(str5) {
-      if (typeof str5 == "number")
-        return `${str5}`;
-      return str5.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPointer(str6) {
+      if (typeof str6 == "number")
+        return `${str6}`;
+      return str6.replace(/~/g, "~0").replace(/\//g, "~1");
     }
     exports.escapeJsonPointer = escapeJsonPointer;
-    function unescapeJsonPointer(str5) {
-      return str5.replace(/~1/g, "/").replace(/~0/g, "~");
+    function unescapeJsonPointer(str6) {
+      return str6.replace(/~1/g, "/").replace(/~0/g, "~");
     }
     exports.unescapeJsonPointer = unescapeJsonPointer;
     function eachItem(xs, f) {
@@ -16061,8 +16061,8 @@ var require_json_schema_traverse = __commonJS({
         post(schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
       }
     }
-    function escapeJsonPtr(str5) {
-      return str5.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPtr(str6) {
+      return str6.replace(/~/g, "~0").replace(/\//g, "~1");
     }
   }
 });
@@ -17158,10 +17158,10 @@ var require_utils = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str5, token) {
+    function findToken(str6, token) {
       let ind = 0;
-      for (let i = 0; i < str5.length; i++) {
-        if (str5[i] === token) ind++;
+      for (let i = 0; i < str6.length; i++) {
+        if (str6[i] === token) ind++;
       }
       return ind;
     }
@@ -18164,7 +18164,7 @@ var require_core = __commonJS({
     var util_1 = require_util();
     var $dataRefSchema = require_data();
     var uri_1 = require_uri();
-    var defaultRegExp = (str5, flags) => new RegExp(str5, flags);
+    var defaultRegExp = (str6, flags) => new RegExp(str6, flags);
     defaultRegExp.code = "new RegExp";
     var META_IGNORE_OPTIONS = ["removeAdditional", "useDefaults", "coerceTypes"];
     var EXT_SCOPE_NAMES = /* @__PURE__ */ new Set([
@@ -18517,7 +18517,7 @@ var require_core = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e6) => `${dataVar}${e6.instancePath} ${e6.message}`).reduce((text4, msg) => text4 + separator + msg);
+        return errors.map((e6) => `${dataVar}${e6.instancePath} ${e6.message}`).reduce((text5, msg) => text5 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -18959,16 +18959,16 @@ var require_ucs2length = __commonJS({
   "node_modules/fastify/node_modules/ajv/dist/runtime/ucs2length.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    function ucs2length(str5) {
-      const len = str5.length;
+    function ucs2length(str6) {
+      const len = str6.length;
       let length = 0;
       let pos = 0;
       let value2;
       while (pos < len) {
         length++;
-        value2 = str5.charCodeAt(pos++);
+        value2 = str6.charCodeAt(pos++);
         if (value2 >= 55296 && value2 <= 56319 && pos < len) {
-          value2 = str5.charCodeAt(pos);
+          value2 = str6.charCodeAt(pos);
           if ((value2 & 64512) === 56320)
             pos++;
         }
@@ -20884,13 +20884,13 @@ var require_timestamp = __commonJS({
     var DATE = /^(\d\d\d\d)-(\d\d)-(\d\d)$/;
     var TIME2 = /^(\d\d):(\d\d):(\d\d)(?:\.\d+)?(?:z|([+-]\d\d)(?::?(\d\d))?)$/i;
     var DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    function validTimestamp(str5, allowDate) {
-      const dt = str5.split(DT_SEPARATOR);
+    function validTimestamp(str6, allowDate) {
+      const dt = str6.split(DT_SEPARATOR);
       return dt.length === 2 && validDate(dt[0]) && validTime(dt[1]) || allowDate && dt.length === 1 && validDate(dt[0]);
     }
     exports.default = validTimestamp;
-    function validDate(str5) {
-      const matches = DATE.exec(str5);
+    function validDate(str6) {
+      const matches = DATE.exec(str6);
       if (!matches)
         return false;
       const y = +matches[1];
@@ -20899,8 +20899,8 @@ var require_timestamp = __commonJS({
       return m >= 1 && m <= 12 && d >= 1 && (d <= DAYS[m] || // leap year: https://tools.ietf.org/html/rfc3339#appendix-C
       m === 2 && d === 29 && (y % 100 === 0 ? y % 400 === 0 : y % 4 === 0));
     }
-    function validTime(str5) {
-      const matches = TIME2.exec(str5);
+    function validTime(str6) {
+      const matches = TIME2.exec(str6);
       if (!matches)
         return false;
       const hr = +matches[1];
@@ -21963,7 +21963,7 @@ var require_parseJson = __commonJS({
     var CODE_A = "a".charCodeAt(0);
     var CODE_0 = "0".charCodeAt(0);
     function parseJsonString(s, pos) {
-      let str5 = "";
+      let str6 = "";
       let c;
       parseJsonString.message = void 0;
       while (true) {
@@ -21973,7 +21973,7 @@ var require_parseJson = __commonJS({
         if (c === "\\") {
           c = s[pos];
           if (c in escapedChars) {
-            str5 += escapedChars[c];
+            str6 += escapedChars[c];
             pos++;
           } else if (c === "u") {
             pos++;
@@ -21997,7 +21997,7 @@ var require_parseJson = __commonJS({
               }
               pos++;
             }
-            str5 += String.fromCharCode(code);
+            str6 += String.fromCharCode(code);
           } else {
             errorMessage(`unexpected token ${c}`);
             return void 0;
@@ -22007,7 +22007,7 @@ var require_parseJson = __commonJS({
           return void 0;
         } else {
           if (c.charCodeAt(0) >= 32) {
-            str5 += c;
+            str6 += c;
           } else {
             errorMessage(`unexpected token ${c}`);
             return void 0;
@@ -22015,7 +22015,7 @@ var require_parseJson = __commonJS({
         }
       }
       parseJsonString.position = pos;
-      return str5;
+      return str6;
       function errorMessage(msg) {
         parseJsonString.position = pos;
         parseJsonString.message = msg;
@@ -22609,10 +22609,10 @@ var require_utils2 = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str5, token) {
+    function findToken(str6, token) {
       let ind = 0;
-      for (let i = 0; i < str5.length; i++) {
-        if (str5[i] === token) ind++;
+      for (let i = 0; i < str6.length; i++) {
+        if (str6[i] === token) ind++;
       }
       return ind;
     }
@@ -23192,14 +23192,14 @@ var require_schemes2 = __commonJS({
     var MAILTO_DOMAIN_LITERAL = /^\[[\x21-\x5A\x5E-\x7E]*\]$/u;
     var MAILTO_DOMAIN_ERROR = "URI mailto has an invalid recipient domain.";
     var HAS_SURROGATE = /[\uD800-\uDFFF]/u;
-    function decodeHex(str5) {
-      if (typeof str5 !== "string" || str5.indexOf("%") === -1) {
-        return str5;
+    function decodeHex(str6) {
+      if (typeof str6 !== "string" || str6.indexOf("%") === -1) {
+        return str6;
       }
       try {
-        return decodeURIComponent(str5);
+        return decodeURIComponent(str6);
       } catch {
-        return str5;
+        return str6;
       }
     }
     function replaceLoneSurrogates(input) {
@@ -23921,8 +23921,8 @@ var require_formats = __commonJS({
     }
     var DATE = /^(\d\d\d\d)-(\d\d)-(\d\d)$/;
     var DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    function date(str5) {
-      const matches = DATE.exec(str5);
+    function date(str6) {
+      const matches = DATE.exec(str6);
       if (!matches)
         return false;
       const year = +matches[1];
@@ -23941,8 +23941,8 @@ var require_formats = __commonJS({
     }
     var TIME2 = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)(z|([+-])(\d\d)(?::?(\d\d))?)?$/i;
     function getTime(strictTimeZone) {
-      return function time2(str5) {
-        const matches = TIME2.exec(str5);
+      return function time3(str6) {
+        const matches = TIME2.exec(str6);
         if (!matches)
           return false;
         const hr = +matches[1];
@@ -23987,10 +23987,10 @@ var require_formats = __commonJS({
     }
     var DATE_TIME_SEPARATOR = /t|\s/i;
     function getDateTime(strictTimeZone) {
-      const time2 = getTime(strictTimeZone);
-      return function date_time(str5) {
-        const dateTime = str5.split(DATE_TIME_SEPARATOR);
-        return dateTime.length === 2 && date(dateTime[0]) && time2(dateTime[1]);
+      const time3 = getTime(strictTimeZone);
+      return function date_time(str6) {
+        const dateTime = str6.split(DATE_TIME_SEPARATOR);
+        return dateTime.length === 2 && date(dateTime[0]) && time3(dateTime[1]);
       };
     }
     function compareDateTime(dt1, dt2) {
@@ -24014,13 +24014,13 @@ var require_formats = __commonJS({
     }
     var NOT_URI_FRAGMENT = /\/|:/;
     var URI = /^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)(?:\?(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?$/i;
-    function uri(str5) {
-      return NOT_URI_FRAGMENT.test(str5) && URI.test(str5);
+    function uri(str6) {
+      return NOT_URI_FRAGMENT.test(str6) && URI.test(str6);
     }
     var BYTE = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/gm;
-    function byte(str5) {
+    function byte(str6) {
       BYTE.lastIndex = 0;
-      return BYTE.test(str5);
+      return BYTE.test(str6);
     }
     var MIN_INT32 = -(2 ** 31);
     var MAX_INT32 = 2 ** 31 - 1;
@@ -24034,11 +24034,11 @@ var require_formats = __commonJS({
       return true;
     }
     var Z_ANCHOR = /[^\\]\\Z/;
-    function regex(str5) {
-      if (Z_ANCHOR.test(str5))
+    function regex(str6) {
+      if (Z_ANCHOR.test(str6))
         return false;
       try {
-        new RegExp(str5);
+        new RegExp(str6);
         return true;
       } catch (e6) {
         return false;
@@ -24766,13 +24766,13 @@ var require_serializer2 = __commonJS({
         return "" + integer;
       }
       asNumber(i) {
-        const num2 = Number(i);
-        if (num2 !== num2) {
+        const num3 = Number(i);
+        if (num3 !== num3) {
           throw new Error(`The value "${i}" cannot be converted to a number.`);
-        } else if (num2 === Infinity || num2 === -Infinity) {
+        } else if (num3 === Infinity || num3 === -Infinity) {
           return "null";
         } else {
-          return "" + num2;
+          return "" + num3;
         }
       }
       asBoolean(bool2) {
@@ -24808,8 +24808,8 @@ var require_serializer2 = __commonJS({
         }
         throw new Error(`The value "${date}" cannot be converted to a time.`);
       }
-      asString(str5) {
-        const len = str5.length;
+      asString(str6) {
+        const len = str6.length;
         if (len === 0) {
           return '""';
         } else if (len < 42) {
@@ -24817,25 +24817,25 @@ var require_serializer2 = __commonJS({
           let last = -1;
           let point = 255;
           for (let i = 0; i < len; i++) {
-            point = str5.charCodeAt(i);
+            point = str6.charCodeAt(i);
             if (point === 34 || // '"'
             point === 92) {
               last === -1 && (last = 0);
-              result += str5.slice(last, i) + "\\";
+              result += str6.slice(last, i) + "\\";
               last = i;
             } else if (point < 32 || point >= 55296 && point <= 57343) {
-              return JSON.stringify(str5);
+              return JSON.stringify(str6);
             }
           }
-          return last === -1 && '"' + str5 + '"' || '"' + result + str5.slice(last) + '"';
-        } else if (len < 5e3 && STR_ESCAPE.test(str5) === false) {
-          return '"' + str5 + '"';
+          return last === -1 && '"' + str6 + '"' || '"' + result + str6.slice(last) + '"';
+        } else if (len < 5e3 && STR_ESCAPE.test(str6) === false) {
+          return '"' + str6 + '"';
         } else {
-          return JSON.stringify(str5);
+          return JSON.stringify(str6);
         }
       }
-      asUnsafeString(str5) {
-        return '"' + str5 + '"';
+      asUnsafeString(str6) {
+        return '"' + str6 + '"';
       }
       getState() {
         return this._options;
@@ -24915,7 +24915,7 @@ var require_code3 = __commonJS({
     }
     exports._ = _;
     var plus = new _Code("+");
-    function str5(strs, ...args) {
+    function str6(strs, ...args) {
       const expr = [safeStringify(strs[0])];
       let i = 0;
       while (i < args.length) {
@@ -24926,7 +24926,7 @@ var require_code3 = __commonJS({
       optimize(expr);
       return new _Code(expr);
     }
-    exports.str = str5;
+    exports.str = str6;
     function addCodeArg(code, arg) {
       if (arg instanceof _Code)
         code.push(...arg._items);
@@ -24969,7 +24969,7 @@ var require_code3 = __commonJS({
       return;
     }
     function strConcat(c1, c2) {
-      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str5`${c1}${c2}`;
+      return c2.emptyStr() ? c1 : c1.emptyStr() ? c2 : str6`${c1}${c2}`;
     }
     exports.strConcat = strConcat;
     function interpolate(x) {
@@ -25931,22 +25931,22 @@ var require_util2 = __commonJS({
       return (0, codegen_1._)`${topSchemaRef}${schemaPath}${(0, codegen_1.getProperty)(keyword)}`;
     }
     exports.schemaRefOrVal = schemaRefOrVal;
-    function unescapeFragment(str5) {
-      return unescapeJsonPointer(decodeURIComponent(str5));
+    function unescapeFragment(str6) {
+      return unescapeJsonPointer(decodeURIComponent(str6));
     }
     exports.unescapeFragment = unescapeFragment;
-    function escapeFragment(str5) {
-      return encodeURIComponent(escapeJsonPointer(str5));
+    function escapeFragment(str6) {
+      return encodeURIComponent(escapeJsonPointer(str6));
     }
     exports.escapeFragment = escapeFragment;
-    function escapeJsonPointer(str5) {
-      if (typeof str5 == "number")
-        return `${str5}`;
-      return str5.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPointer(str6) {
+      if (typeof str6 == "number")
+        return `${str6}`;
+      return str6.replace(/~/g, "~0").replace(/\//g, "~1");
     }
     exports.escapeJsonPointer = escapeJsonPointer;
-    function unescapeJsonPointer(str5) {
-      return str5.replace(/~1/g, "/").replace(/~0/g, "~");
+    function unescapeJsonPointer(str6) {
+      return str6.replace(/~1/g, "/").replace(/~0/g, "~");
     }
     exports.unescapeJsonPointer = unescapeJsonPointer;
     function eachItem(xs, f) {
@@ -26936,8 +26936,8 @@ var require_json_schema_traverse2 = __commonJS({
         post(schema, jsonPtr, rootSchema, parentJsonPtr, parentKeyword, parentSchema, keyIndex);
       }
     }
-    function escapeJsonPtr(str5) {
-      return str5.replace(/~/g, "~0").replace(/\//g, "~1");
+    function escapeJsonPtr(str6) {
+      return str6.replace(/~/g, "~0").replace(/\//g, "~1");
     }
   }
 });
@@ -28033,10 +28033,10 @@ var require_utils3 = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str5, token) {
+    function findToken(str6, token) {
       let ind = 0;
-      for (let i = 0; i < str5.length; i++) {
-        if (str5[i] === token) ind++;
+      for (let i = 0; i < str6.length; i++) {
+        if (str6[i] === token) ind++;
       }
       return ind;
     }
@@ -29039,7 +29039,7 @@ var require_core3 = __commonJS({
     var util_1 = require_util2();
     var $dataRefSchema = require_data2();
     var uri_1 = require_uri2();
-    var defaultRegExp = (str5, flags) => new RegExp(str5, flags);
+    var defaultRegExp = (str6, flags) => new RegExp(str6, flags);
     defaultRegExp.code = "new RegExp";
     var META_IGNORE_OPTIONS = ["removeAdditional", "useDefaults", "coerceTypes"];
     var EXT_SCOPE_NAMES = /* @__PURE__ */ new Set([
@@ -29392,7 +29392,7 @@ var require_core3 = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e6) => `${dataVar}${e6.instancePath} ${e6.message}`).reduce((text4, msg) => text4 + separator + msg);
+        return errors.map((e6) => `${dataVar}${e6.instancePath} ${e6.message}`).reduce((text5, msg) => text5 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -29834,16 +29834,16 @@ var require_ucs2length2 = __commonJS({
   "node_modules/@fastify/fast-json-stringify-compiler/node_modules/ajv/dist/runtime/ucs2length.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    function ucs2length(str5) {
-      const len = str5.length;
+    function ucs2length(str6) {
+      const len = str6.length;
       let length = 0;
       let pos = 0;
       let value2;
       while (pos < len) {
         length++;
-        value2 = str5.charCodeAt(pos++);
+        value2 = str6.charCodeAt(pos++);
         if (value2 >= 55296 && value2 <= 56319 && pos < len) {
-          value2 = str5.charCodeAt(pos);
+          value2 = str6.charCodeAt(pos);
           if ((value2 & 64512) === 56320)
             pos++;
         }
@@ -31789,10 +31789,10 @@ var require_utils4 = __commonJS({
         isIPV6: true
       };
     }
-    function findToken(str5, token) {
+    function findToken(str6, token) {
       let ind = 0;
-      for (let i = 0; i < str5.length; i++) {
-        if (str5[i] === token) ind++;
+      for (let i = 0; i < str6.length; i++) {
+        if (str6[i] === token) ind++;
       }
       return ind;
     }
@@ -32372,14 +32372,14 @@ var require_schemes4 = __commonJS({
     var MAILTO_DOMAIN_LITERAL = /^\[[\x21-\x5A\x5E-\x7E]*\]$/u;
     var MAILTO_DOMAIN_ERROR = "URI mailto has an invalid recipient domain.";
     var HAS_SURROGATE = /[\uD800-\uDFFF]/u;
-    function decodeHex(str5) {
-      if (typeof str5 !== "string" || str5.indexOf("%") === -1) {
-        return str5;
+    function decodeHex(str6) {
+      if (typeof str6 !== "string" || str6.indexOf("%") === -1) {
+        return str6;
       }
       try {
-        return decodeURIComponent(str5);
+        return decodeURIComponent(str6);
       } catch {
-        return str5;
+        return str6;
       }
     }
     function replaceLoneSurrogates(input) {
@@ -33083,8 +33083,8 @@ var require_formats2 = __commonJS({
     }
     var DATE = /^(\d\d\d\d)-(\d\d)-(\d\d)$/;
     var DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    function date(str5) {
-      const matches = DATE.exec(str5);
+    function date(str6) {
+      const matches = DATE.exec(str6);
       if (!matches)
         return false;
       const year = +matches[1];
@@ -33103,8 +33103,8 @@ var require_formats2 = __commonJS({
     }
     var TIME2 = /^(\d\d):(\d\d):(\d\d(?:\.\d+)?)(z|([+-])(\d\d)(?::?(\d\d))?)?$/i;
     function getTime(strictTimeZone) {
-      return function time2(str5) {
-        const matches = TIME2.exec(str5);
+      return function time3(str6) {
+        const matches = TIME2.exec(str6);
         if (!matches)
           return false;
         const hr = +matches[1];
@@ -33149,10 +33149,10 @@ var require_formats2 = __commonJS({
     }
     var DATE_TIME_SEPARATOR = /t|\s/i;
     function getDateTime(strictTimeZone) {
-      const time2 = getTime(strictTimeZone);
-      return function date_time(str5) {
-        const dateTime = str5.split(DATE_TIME_SEPARATOR);
-        return dateTime.length === 2 && date(dateTime[0]) && time2(dateTime[1]);
+      const time3 = getTime(strictTimeZone);
+      return function date_time(str6) {
+        const dateTime = str6.split(DATE_TIME_SEPARATOR);
+        return dateTime.length === 2 && date(dateTime[0]) && time3(dateTime[1]);
       };
     }
     function compareDateTime(dt1, dt2) {
@@ -33176,13 +33176,13 @@ var require_formats2 = __commonJS({
     }
     var NOT_URI_FRAGMENT = /\/|:/;
     var URI = /^(?:[a-z][a-z0-9+\-.]*:)(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'()*+,;=:@]|%[0-9a-f]{2})*)*)(?:\?(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9a-f]{2})*)?$/i;
-    function uri(str5) {
-      return NOT_URI_FRAGMENT.test(str5) && URI.test(str5);
+    function uri(str6) {
+      return NOT_URI_FRAGMENT.test(str6) && URI.test(str6);
     }
     var BYTE = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/gm;
-    function byte(str5) {
+    function byte(str6) {
       BYTE.lastIndex = 0;
-      return BYTE.test(str5);
+      return BYTE.test(str6);
     }
     var MIN_INT32 = -(2 ** 31);
     var MAX_INT32 = 2 ** 31 - 1;
@@ -33196,11 +33196,11 @@ var require_formats2 = __commonJS({
       return true;
     }
     var Z_ANCHOR = /[^\\]\\Z/;
-    function regex(str5) {
-      if (Z_ANCHOR.test(str5))
+    function regex(str6) {
+      if (Z_ANCHOR.test(str6))
         return false;
       try {
-        new RegExp(str5);
+        new RegExp(str6);
         return true;
       } catch (e6) {
         return false;
@@ -36509,9 +36509,9 @@ var require_semver = __commonJS({
         } else {
           this.prerelease = m[4].split(".").map((id) => {
             if (/^[0-9]+$/.test(id)) {
-              const num2 = +id;
-              if (num2 >= 0 && num2 < MAX_SAFE_INTEGER) {
-                return num2;
+              const num3 = +id;
+              if (num3 >= 0 && num3 < MAX_SAFE_INTEGER) {
+                return num3;
               }
             }
             return id;
@@ -39128,24 +39128,24 @@ var require_querystring = __commonJS({
       0
       // 112 - 127
     ]);
-    function encodeString(str5) {
-      const len = str5.length;
+    function encodeString(str6) {
+      const len = str6.length;
       if (len === 0) return "";
       let out = "";
       let lastPos = 0;
       let i = 0;
       outer: for (; i < len; i++) {
-        let c = str5.charCodeAt(i);
+        let c = str6.charCodeAt(i);
         while (c < 128) {
           if (noEscape[c] !== 1) {
-            if (lastPos < i) out += str5.slice(lastPos, i);
+            if (lastPos < i) out += str6.slice(lastPos, i);
             lastPos = i + 1;
             out += hexTable[c];
           }
           if (++i === len) break outer;
-          c = str5.charCodeAt(i);
+          c = str6.charCodeAt(i);
         }
-        if (lastPos < i) out += str5.slice(lastPos, i);
+        if (lastPos < i) out += str6.slice(lastPos, i);
         if (c < 2048) {
           lastPos = i + 1;
           out += hexTable[192 | c >> 6] + hexTable[128 | c & 63];
@@ -39160,13 +39160,13 @@ var require_querystring = __commonJS({
         if (i >= len) {
           throw new Error("URI malformed");
         }
-        const c2 = str5.charCodeAt(i) & 1023;
+        const c2 = str6.charCodeAt(i) & 1023;
         lastPos = i + 1;
         c = 65536 + ((c & 1023) << 10 | c2);
         out += hexTable[240 | c >> 18] + hexTable[128 | c >> 12 & 63] + hexTable[128 | c >> 6 & 63] + hexTable[128 | c & 63];
       }
-      if (lastPos === 0) return str5;
-      if (lastPos < len) return out + str5.slice(lastPos);
+      if (lastPos === 0) return str6;
+      if (lastPos < len) return out + str6.slice(lastPos);
       return out;
     }
     module.exports = { encodeString };
@@ -39382,9 +39382,9 @@ var require_util3 = __commonJS({
     var types_1 = require_types5();
     var sets = __importStar(require_sets());
     var CTRL = "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^ ?";
-    exports.strToChars = (str5) => {
+    exports.strToChars = (str6) => {
       const charsRegex = /(\[\\b\])|(\\)?\\(?:u([A-F0-9]{4})|x([A-F0-9]{2})|c([@A-Z[\\\]^?])|([0tnvfr]))/g;
-      return str5.replace(charsRegex, (s, b, lbs, a16, b16, dctrl, eslsh) => {
+      return str6.replace(charsRegex, (s, b, lbs, a16, b16, dctrl, eslsh) => {
         if (lbs) {
           return s;
         }
@@ -39400,11 +39400,11 @@ var require_util3 = __commonJS({
         return /[[\]{}^$.|?*+()]/.test(c) ? `\\${c}` : c;
       });
     };
-    exports.tokenizeClass = (str5, regexpStr) => {
+    exports.tokenizeClass = (str6, regexpStr) => {
       var _a, _b, _c, _d, _e, _f, _g;
       let tokens = [], rs, c;
       const regexp = /\\(?:(w)|(d)|(s)|(W)|(D)|(S))|((?:(?:\\)(.)|([^\]\\]))-(((?:\\)])|(((?:\\)?([^\]])))))|(\])|(?:\\)?([^])/g;
-      while ((rs = regexp.exec(str5)) !== null) {
+      while ((rs = regexp.exec(str6)) !== null) {
         const p = (_g = (_f = (_e = (_d = (_c = (_b = (_a = rs[1] && sets.words()) !== null && _a !== void 0 ? _a : rs[2] && sets.ints()) !== null && _b !== void 0 ? _b : rs[3] && sets.whitespace()) !== null && _c !== void 0 ? _c : rs[4] && sets.notWords()) !== null && _d !== void 0 ? _d : rs[5] && sets.notInts()) !== null && _e !== void 0 ? _e : rs[6] && sets.notWhitespace()) !== null && _f !== void 0 ? _f : rs[7] && {
           type: types_1.types.RANGE,
           from: (rs[8] || rs[9]).charCodeAt(0),
@@ -39467,15 +39467,15 @@ var require_tokenizer = __commonJS({
       const repeatErr = (col) => {
         throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Nothing to repeat at column ${col - 1}`);
       };
-      let str5 = util2.strToChars(regexpStr);
-      while (i < str5.length) {
-        switch (c = str5[i++]) {
+      let str6 = util2.strToChars(regexpStr);
+      while (i < str6.length) {
+        switch (c = str6[i++]) {
           // Handle escaped characters, inclues a few sets.
           case "\\":
-            if (i === str5.length) {
+            if (i === str6.length) {
               throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: \\ at end of pattern`);
             }
-            switch (c = str5[i++]) {
+            switch (c = str6[i++]) {
               case "b":
                 last.push({ type: types_1.types.POSITION, value: "b" });
                 break;
@@ -39503,8 +39503,8 @@ var require_tokenizer = __commonJS({
               default:
                 if (digit.test(c)) {
                   let digits = c;
-                  while (i < str5.length && digit.test(str5[i])) {
-                    digits += str5[i++];
+                  while (i < str6.length && digit.test(str6[i])) {
+                    digits += str6[i++];
                   }
                   let value2 = parseInt(digits, 10);
                   const reference = { type: types_1.types.REFERENCE, value: value2 };
@@ -39525,13 +39525,13 @@ var require_tokenizer = __commonJS({
           // Handle custom sets.
           case "[": {
             let not;
-            if (str5[i] === "^") {
+            if (str6[i] === "^") {
               not = true;
               i++;
             } else {
               not = false;
             }
-            let classTokens = util2.tokenizeClass(str5.slice(i), regexpStr);
+            let classTokens = util2.tokenizeClass(str6.slice(i), regexpStr);
             i += classTokens[1];
             last.push({
               type: types_1.types.SET,
@@ -39551,8 +39551,8 @@ var require_tokenizer = __commonJS({
               stack: [],
               remember: true
             };
-            if (str5[i] === "?") {
-              c = str5[i + 1];
+            if (str6[i] === "?") {
+              c = str6[i + 1];
               i += 2;
               if (c === "=") {
                 group.followedBy = true;
@@ -39562,21 +39562,21 @@ var require_tokenizer = __commonJS({
                 group.remember = false;
               } else if (c === "<") {
                 let name = "";
-                if (captureGroupFirstChar.test(str5[i])) {
-                  name += str5[i];
+                if (captureGroupFirstChar.test(str6[i])) {
+                  name += str6[i];
                   i++;
                 } else {
-                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str5[i]}' after '<' at column ${i + 1}`);
+                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str6[i]}' after '<' at column ${i + 1}`);
                 }
-                while (i < str5.length && captureGroupChars.test(str5[i])) {
-                  name += str5[i];
+                while (i < str6.length && captureGroupChars.test(str6[i])) {
+                  name += str6[i];
                   i++;
                 }
                 if (!name) {
-                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str5[i]}' after '<' at column ${i + 1}`);
+                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Invalid capture group name, character '${str6[i]}' after '<' at column ${i + 1}`);
                 }
-                if (str5[i] !== ">") {
-                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Unclosed capture group name, expected '>', found '${str5[i]}' at column ${i + 1}`);
+                if (str6[i] !== ">") {
+                  throw new SyntaxError(`Invalid regular expression: /${regexpStr}/: Unclosed capture group name, expected '>', found '${str6[i]}' at column ${i + 1}`);
                 }
                 group.name = name;
                 i++;
@@ -39619,7 +39619,7 @@ var require_tokenizer = __commonJS({
           // This design is chosen because there could be more than
           // one repetition symbols in a regex i.e. `a?+{2,3}`.
           case "{": {
-            let rs = /^(\d+)(,(\d+)?)?\}/.exec(str5.slice(i)), min, max;
+            let rs = /^(\d+)(,(\d+)?)?\}/.exec(str6.slice(i)), min, max;
             if (rs !== null) {
               if (last.length === 0) {
                 repeatErr(i);
@@ -42564,25 +42564,25 @@ var require_dist5 = __commonJS({
       C.prototype = /* @__PURE__ */ Object.create(null);
       return C;
     })();
-    function parseCookie(str5, options) {
+    function parseCookie(str6, options) {
       const obj = new NullObject();
-      const len = str5.length;
+      const len = str6.length;
       if (len < 2)
         return obj;
       const dec = options?.decode || decode;
       let index = 0;
       do {
-        const eqIdx = eqIndex(str5, index, len);
+        const eqIdx = eqIndex(str6, index, len);
         if (eqIdx === -1)
           break;
-        const endIdx = endIndex(str5, index, len);
+        const endIdx = endIndex(str6, index, len);
         if (eqIdx > endIdx) {
-          index = str5.lastIndexOf(";", eqIdx - 1) + 1;
+          index = str6.lastIndexOf(";", eqIdx - 1) + 1;
           continue;
         }
-        const key = valueSlice(str5, index, eqIdx);
+        const key = valueSlice(str6, index, eqIdx);
         if (obj[key] === void 0) {
-          obj[key] = dec(valueSlice(str5, eqIdx + 1, endIdx));
+          obj[key] = dec(valueSlice(str6, eqIdx + 1, endIdx));
         }
         index = endIdx + 1;
       } while (index < len);
@@ -42617,51 +42617,51 @@ var require_dist5 = __commonJS({
       if (!cookieValueRegExp.test(value2)) {
         throw new TypeError(`argument val is invalid: ${cookie.value}`);
       }
-      let str5 = cookie.name + "=" + value2;
+      let str6 = cookie.name + "=" + value2;
       if (cookie.maxAge !== void 0) {
         if (!Number.isInteger(cookie.maxAge)) {
           throw new TypeError(`option maxAge is invalid: ${cookie.maxAge}`);
         }
-        str5 += "; Max-Age=" + cookie.maxAge;
+        str6 += "; Max-Age=" + cookie.maxAge;
       }
       if (cookie.domain) {
         if (!domainValueRegExp.test(cookie.domain)) {
           throw new TypeError(`option domain is invalid: ${cookie.domain}`);
         }
-        str5 += "; Domain=" + cookie.domain;
+        str6 += "; Domain=" + cookie.domain;
       }
       if (cookie.path) {
         if (!pathValueRegExp.test(cookie.path)) {
           throw new TypeError(`option path is invalid: ${cookie.path}`);
         }
-        str5 += "; Path=" + cookie.path;
+        str6 += "; Path=" + cookie.path;
       }
       if (cookie.expires) {
         if (!isDate(cookie.expires) || !Number.isFinite(cookie.expires.valueOf())) {
           throw new TypeError(`option expires is invalid: ${cookie.expires}`);
         }
-        str5 += "; Expires=" + cookie.expires.toUTCString();
+        str6 += "; Expires=" + cookie.expires.toUTCString();
       }
       if (cookie.httpOnly) {
-        str5 += "; HttpOnly";
+        str6 += "; HttpOnly";
       }
       if (cookie.secure) {
-        str5 += "; Secure";
+        str6 += "; Secure";
       }
       if (cookie.partitioned) {
-        str5 += "; Partitioned";
+        str6 += "; Partitioned";
       }
       if (cookie.priority) {
         const priority = typeof cookie.priority === "string" ? cookie.priority.toLowerCase() : void 0;
         switch (priority) {
           case "low":
-            str5 += "; Priority=Low";
+            str6 += "; Priority=Low";
             break;
           case "medium":
-            str5 += "; Priority=Medium";
+            str6 += "; Priority=Medium";
             break;
           case "high":
-            str5 += "; Priority=High";
+            str6 += "; Priority=High";
             break;
           default:
             throw new TypeError(`option priority is invalid: ${cookie.priority}`);
@@ -42672,35 +42672,35 @@ var require_dist5 = __commonJS({
         switch (sameSite) {
           case true:
           case "strict":
-            str5 += "; SameSite=Strict";
+            str6 += "; SameSite=Strict";
             break;
           case "lax":
-            str5 += "; SameSite=Lax";
+            str6 += "; SameSite=Lax";
             break;
           case "none":
-            str5 += "; SameSite=None";
+            str6 += "; SameSite=None";
             break;
           default:
             throw new TypeError(`option sameSite is invalid: ${cookie.sameSite}`);
         }
       }
-      return str5;
+      return str6;
     }
-    function parseSetCookie(str5, options) {
+    function parseSetCookie(str6, options) {
       const dec = options?.decode || decode;
-      const len = str5.length;
-      const endIdx = endIndex(str5, 0, len);
-      const eqIdx = eqIndex(str5, 0, endIdx);
-      const setCookie = eqIdx === -1 ? { name: "", value: dec(valueSlice(str5, 0, endIdx)) } : {
-        name: valueSlice(str5, 0, eqIdx),
-        value: dec(valueSlice(str5, eqIdx + 1, endIdx))
+      const len = str6.length;
+      const endIdx = endIndex(str6, 0, len);
+      const eqIdx = eqIndex(str6, 0, endIdx);
+      const setCookie = eqIdx === -1 ? { name: "", value: dec(valueSlice(str6, 0, endIdx)) } : {
+        name: valueSlice(str6, 0, eqIdx),
+        value: dec(valueSlice(str6, eqIdx + 1, endIdx))
       };
       let index = endIdx + 1;
       while (index < len) {
-        const endIdx2 = endIndex(str5, index, len);
-        const eqIdx2 = eqIndex(str5, index, endIdx2);
-        const attr = eqIdx2 === -1 ? valueSlice(str5, index, endIdx2) : valueSlice(str5, index, eqIdx2);
-        const val = eqIdx2 === -1 ? void 0 : valueSlice(str5, eqIdx2 + 1, endIdx2);
+        const endIdx2 = endIndex(str6, index, len);
+        const eqIdx2 = eqIndex(str6, index, endIdx2);
+        const attr = eqIdx2 === -1 ? valueSlice(str6, index, endIdx2) : valueSlice(str6, index, eqIdx2);
+        const val = eqIdx2 === -1 ? void 0 : valueSlice(str6, eqIdx2 + 1, endIdx2);
         switch (attr.toLowerCase()) {
           case "httponly":
             setCookie.httpOnly = true;
@@ -42749,37 +42749,37 @@ var require_dist5 = __commonJS({
       }
       return setCookie;
     }
-    function endIndex(str5, min, len) {
-      const index = str5.indexOf(";", min);
+    function endIndex(str6, min, len) {
+      const index = str6.indexOf(";", min);
       return index === -1 ? len : index;
     }
-    function eqIndex(str5, min, max) {
-      const index = str5.indexOf("=", min);
+    function eqIndex(str6, min, max) {
+      const index = str6.indexOf("=", min);
       return index < max ? index : -1;
     }
-    function valueSlice(str5, min, max) {
+    function valueSlice(str6, min, max) {
       let start = min;
       let end = max;
       do {
-        const code = str5.charCodeAt(start);
+        const code = str6.charCodeAt(start);
         if (code !== 32 && code !== 9)
           break;
       } while (++start < end);
       while (end > start) {
-        const code = str5.charCodeAt(end - 1);
+        const code = str6.charCodeAt(end - 1);
         if (code !== 32 && code !== 9)
           break;
         end--;
       }
-      return str5.slice(start, end);
+      return str6.slice(start, end);
     }
-    function decode(str5) {
-      if (str5.indexOf("%") === -1)
-        return str5;
+    function decode(str6) {
+      if (str6.indexOf("%") === -1)
+        return str6;
       try {
-        return decodeURIComponent(str5);
+        return decodeURIComponent(str6);
       } catch (e6) {
-        return str5;
+        return str6;
       }
     }
     function isDate(val) {
@@ -42899,7 +42899,7 @@ var require_form_data = __commonJS({
       const boundary = `----formdata-${randomUUID()}`;
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
-      const escape2 = (str5) => str5.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
+      const escape2 = (str6) => str6.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
       const normalizeLinefeeds = (value2) => value2.replace(/\r?\n|\r/g, "\r\n");
       const linebreak = new Uint8Array([13, 10]);
       async function* asyncIterator() {
@@ -43145,8 +43145,8 @@ var require_set_cookie = __commonJS({
     function createNullObj() {
       return /* @__PURE__ */ Object.create(null);
     }
-    function isNonEmptyString(str5) {
-      return typeof str5 === "string" && !!str5.trim();
+    function isNonEmptyString(str6) {
+      return typeof str6 === "string" && !!str6.trim();
     }
     function parseString(setCookieValue, options) {
       var parts = setCookieValue.split(";").filter(isNonEmptyString);
@@ -43237,13 +43237,13 @@ var require_set_cookie = __commonJS({
         input = [input];
       }
       if (!options.map) {
-        return input.filter(isNonEmptyString).map(function(str5) {
-          return parseString(str5, options);
+        return input.filter(isNonEmptyString).map(function(str6) {
+          return parseString(str6, options);
         }).filter(Boolean);
       } else {
         var cookies = createNullObj();
-        return input.filter(isNonEmptyString).reduce(function(cookies2, str5) {
-          var cookie = parseString(str5, options);
+        return input.filter(isNonEmptyString).reduce(function(cookies2, str6) {
+          var cookie = parseString(str6, options);
           if (cookie && !isForbiddenKey(cookie.name)) {
             cookies2[cookie.name] = cookie;
           }
@@ -46360,11 +46360,11 @@ var require_bn = __commonJS({
         }
       } catch (e6) {
       }
-      BN.isBN = function isBN(num2) {
-        if (num2 instanceof BN) {
+      BN.isBN = function isBN(num3) {
+        if (num3 instanceof BN) {
           return true;
         }
-        return num2 !== null && typeof num2 === "object" && num2.constructor.wordSize === BN.wordSize && Array.isArray(num2.words);
+        return num3 !== null && typeof num3 === "object" && num3.constructor.wordSize === BN.wordSize && Array.isArray(num3.words);
       };
       BN.max = function max(left, right) {
         if (left.cmp(right) > 0) return left;
@@ -46521,11 +46521,11 @@ var require_bn = __commonJS({
         }
         this.strip();
       };
-      function parseBase(str5, start, end, mul) {
+      function parseBase(str6, start, end, mul) {
         var r = 0;
-        var len = Math.min(str5.length, end);
+        var len = Math.min(str6.length, end);
         for (var i = start; i < len; i++) {
-          var c = str5.charCodeAt(i) - 48;
+          var c = str6.charCodeAt(i) - 48;
           r *= mul;
           if (c >= 49) {
             r += c - 49 + 10;
@@ -46885,12 +46885,12 @@ var require_bn = __commonJS({
         var hi = this._countBits(w);
         return (this.length - 1) * 26 + hi;
       };
-      function toBitArray(num2) {
-        var w = new Array(num2.bitLength());
+      function toBitArray(num3) {
+        var w = new Array(num3.bitLength());
         for (var bit = 0; bit < w.length; bit++) {
           var off = bit / 26 | 0;
           var wbit = bit % 26;
-          w[bit] = (num2.words[off] & 1 << wbit) >>> wbit;
+          w[bit] = (num3.words[off] & 1 << wbit) >>> wbit;
         }
         return w;
       }
@@ -46931,60 +46931,60 @@ var require_bn = __commonJS({
         }
         return this;
       };
-      BN.prototype.iuor = function iuor(num2) {
-        while (this.length < num2.length) {
+      BN.prototype.iuor = function iuor(num3) {
+        while (this.length < num3.length) {
           this.words[this.length++] = 0;
         }
-        for (var i = 0; i < num2.length; i++) {
-          this.words[i] = this.words[i] | num2.words[i];
+        for (var i = 0; i < num3.length; i++) {
+          this.words[i] = this.words[i] | num3.words[i];
         }
         return this.strip();
       };
-      BN.prototype.ior = function ior(num2) {
-        assert((this.negative | num2.negative) === 0);
-        return this.iuor(num2);
+      BN.prototype.ior = function ior(num3) {
+        assert((this.negative | num3.negative) === 0);
+        return this.iuor(num3);
       };
-      BN.prototype.or = function or(num2) {
-        if (this.length > num2.length) return this.clone().ior(num2);
-        return num2.clone().ior(this);
+      BN.prototype.or = function or(num3) {
+        if (this.length > num3.length) return this.clone().ior(num3);
+        return num3.clone().ior(this);
       };
-      BN.prototype.uor = function uor(num2) {
-        if (this.length > num2.length) return this.clone().iuor(num2);
-        return num2.clone().iuor(this);
+      BN.prototype.uor = function uor(num3) {
+        if (this.length > num3.length) return this.clone().iuor(num3);
+        return num3.clone().iuor(this);
       };
-      BN.prototype.iuand = function iuand(num2) {
+      BN.prototype.iuand = function iuand(num3) {
         var b;
-        if (this.length > num2.length) {
-          b = num2;
+        if (this.length > num3.length) {
+          b = num3;
         } else {
           b = this;
         }
         for (var i = 0; i < b.length; i++) {
-          this.words[i] = this.words[i] & num2.words[i];
+          this.words[i] = this.words[i] & num3.words[i];
         }
         this.length = b.length;
         return this.strip();
       };
-      BN.prototype.iand = function iand(num2) {
-        assert((this.negative | num2.negative) === 0);
-        return this.iuand(num2);
+      BN.prototype.iand = function iand(num3) {
+        assert((this.negative | num3.negative) === 0);
+        return this.iuand(num3);
       };
-      BN.prototype.and = function and(num2) {
-        if (this.length > num2.length) return this.clone().iand(num2);
-        return num2.clone().iand(this);
+      BN.prototype.and = function and(num3) {
+        if (this.length > num3.length) return this.clone().iand(num3);
+        return num3.clone().iand(this);
       };
-      BN.prototype.uand = function uand(num2) {
-        if (this.length > num2.length) return this.clone().iuand(num2);
-        return num2.clone().iuand(this);
+      BN.prototype.uand = function uand(num3) {
+        if (this.length > num3.length) return this.clone().iuand(num3);
+        return num3.clone().iuand(this);
       };
-      BN.prototype.iuxor = function iuxor(num2) {
+      BN.prototype.iuxor = function iuxor(num3) {
         var a;
         var b;
-        if (this.length > num2.length) {
+        if (this.length > num3.length) {
           a = this;
-          b = num2;
+          b = num3;
         } else {
-          a = num2;
+          a = num3;
           b = this;
         }
         for (var i = 0; i < b.length; i++) {
@@ -46998,17 +46998,17 @@ var require_bn = __commonJS({
         this.length = a.length;
         return this.strip();
       };
-      BN.prototype.ixor = function ixor(num2) {
-        assert((this.negative | num2.negative) === 0);
-        return this.iuxor(num2);
+      BN.prototype.ixor = function ixor(num3) {
+        assert((this.negative | num3.negative) === 0);
+        return this.iuxor(num3);
       };
-      BN.prototype.xor = function xor(num2) {
-        if (this.length > num2.length) return this.clone().ixor(num2);
-        return num2.clone().ixor(this);
+      BN.prototype.xor = function xor(num3) {
+        if (this.length > num3.length) return this.clone().ixor(num3);
+        return num3.clone().ixor(this);
       };
-      BN.prototype.uxor = function uxor(num2) {
-        if (this.length > num2.length) return this.clone().iuxor(num2);
-        return num2.clone().iuxor(this);
+      BN.prototype.uxor = function uxor(num3) {
+        if (this.length > num3.length) return this.clone().iuxor(num3);
+        return num3.clone().iuxor(this);
       };
       BN.prototype.inotn = function inotn(width) {
         assert(typeof width === "number" && width >= 0);
@@ -47045,25 +47045,25 @@ var require_bn = __commonJS({
         }
         return this.strip();
       };
-      BN.prototype.iadd = function iadd(num2) {
+      BN.prototype.iadd = function iadd(num3) {
         var r;
-        if (this.negative !== 0 && num2.negative === 0) {
+        if (this.negative !== 0 && num3.negative === 0) {
           this.negative = 0;
-          r = this.isub(num2);
+          r = this.isub(num3);
           this.negative ^= 1;
           return this._normSign();
-        } else if (this.negative === 0 && num2.negative !== 0) {
-          num2.negative = 0;
-          r = this.isub(num2);
-          num2.negative = 1;
+        } else if (this.negative === 0 && num3.negative !== 0) {
+          num3.negative = 0;
+          r = this.isub(num3);
+          num3.negative = 1;
           return r._normSign();
         }
         var a, b;
-        if (this.length > num2.length) {
+        if (this.length > num3.length) {
           a = this;
-          b = num2;
+          b = num3;
         } else {
-          a = num2;
+          a = num3;
           b = this;
         }
         var carry = 0;
@@ -47088,35 +47088,35 @@ var require_bn = __commonJS({
         }
         return this;
       };
-      BN.prototype.add = function add(num2) {
+      BN.prototype.add = function add(num3) {
         var res;
-        if (num2.negative !== 0 && this.negative === 0) {
-          num2.negative = 0;
-          res = this.sub(num2);
-          num2.negative ^= 1;
+        if (num3.negative !== 0 && this.negative === 0) {
+          num3.negative = 0;
+          res = this.sub(num3);
+          num3.negative ^= 1;
           return res;
-        } else if (num2.negative === 0 && this.negative !== 0) {
+        } else if (num3.negative === 0 && this.negative !== 0) {
           this.negative = 0;
-          res = num2.sub(this);
+          res = num3.sub(this);
           this.negative = 1;
           return res;
         }
-        if (this.length > num2.length) return this.clone().iadd(num2);
-        return num2.clone().iadd(this);
+        if (this.length > num3.length) return this.clone().iadd(num3);
+        return num3.clone().iadd(this);
       };
-      BN.prototype.isub = function isub(num2) {
-        if (num2.negative !== 0) {
-          num2.negative = 0;
-          var r = this.iadd(num2);
-          num2.negative = 1;
+      BN.prototype.isub = function isub(num3) {
+        if (num3.negative !== 0) {
+          num3.negative = 0;
+          var r = this.iadd(num3);
+          num3.negative = 1;
           return r._normSign();
         } else if (this.negative !== 0) {
           this.negative = 0;
-          this.iadd(num2);
+          this.iadd(num3);
           this.negative = 1;
           return this._normSign();
         }
-        var cmp = this.cmp(num2);
+        var cmp = this.cmp(num3);
         if (cmp === 0) {
           this.negative = 0;
           this.length = 1;
@@ -47126,9 +47126,9 @@ var require_bn = __commonJS({
         var a, b;
         if (cmp > 0) {
           a = this;
-          b = num2;
+          b = num3;
         } else {
-          a = num2;
+          a = num3;
           b = this;
         }
         var carry = 0;
@@ -47153,16 +47153,16 @@ var require_bn = __commonJS({
         }
         return this.strip();
       };
-      BN.prototype.sub = function sub(num2) {
-        return this.clone().isub(num2);
+      BN.prototype.sub = function sub(num3) {
+        return this.clone().isub(num3);
       };
-      function smallMulTo(self2, num2, out) {
-        out.negative = num2.negative ^ self2.negative;
-        var len = self2.length + num2.length | 0;
+      function smallMulTo(self2, num3, out) {
+        out.negative = num3.negative ^ self2.negative;
+        var len = self2.length + num3.length | 0;
         out.length = len;
         len = len - 1 | 0;
         var a = self2.words[0] | 0;
-        var b = num2.words[0] | 0;
+        var b = num3.words[0] | 0;
         var r = a * b;
         var lo = r & 67108863;
         var carry = r / 67108864 | 0;
@@ -47170,11 +47170,11 @@ var require_bn = __commonJS({
         for (var k = 1; k < len; k++) {
           var ncarry = carry >>> 26;
           var rword = carry & 67108863;
-          var maxJ = Math.min(k, num2.length - 1);
+          var maxJ = Math.min(k, num3.length - 1);
           for (var j = Math.max(0, k - self2.length + 1); j <= maxJ; j++) {
             var i = k - j | 0;
             a = self2.words[i] | 0;
-            b = num2.words[j] | 0;
+            b = num3.words[j] | 0;
             r = a * b + rword;
             ncarry += r / 67108864 | 0;
             rword = r & 67108863;
@@ -47189,9 +47189,9 @@ var require_bn = __commonJS({
         }
         return out.strip();
       }
-      var comb10MulTo = function comb10MulTo2(self2, num2, out) {
+      var comb10MulTo = function comb10MulTo2(self2, num3, out) {
         var a = self2.words;
-        var b = num2.words;
+        var b = num3.words;
         var o = out.words;
         var c = 0;
         var lo;
@@ -47257,7 +47257,7 @@ var require_bn = __commonJS({
         var b9 = b[9] | 0;
         var bl9 = b9 & 8191;
         var bh9 = b9 >>> 13;
-        out.negative = self2.negative ^ num2.negative;
+        out.negative = self2.negative ^ num3.negative;
         out.length = 19;
         lo = Math.imul(al0, bl0);
         mid = Math.imul(al0, bh0);
@@ -47744,20 +47744,20 @@ var require_bn = __commonJS({
       if (!Math.imul) {
         comb10MulTo = smallMulTo;
       }
-      function bigMulTo(self2, num2, out) {
-        out.negative = num2.negative ^ self2.negative;
-        out.length = self2.length + num2.length;
+      function bigMulTo(self2, num3, out) {
+        out.negative = num3.negative ^ self2.negative;
+        out.length = self2.length + num3.length;
         var carry = 0;
         var hncarry = 0;
         for (var k = 0; k < out.length - 1; k++) {
           var ncarry = hncarry;
           hncarry = 0;
           var rword = carry & 67108863;
-          var maxJ = Math.min(k, num2.length - 1);
+          var maxJ = Math.min(k, num3.length - 1);
           for (var j = Math.max(0, k - self2.length + 1); j <= maxJ; j++) {
             var i = k - j;
             var a = self2.words[i] | 0;
-            var b = num2.words[j] | 0;
+            var b = num3.words[j] | 0;
             var r = a * b;
             var lo = r & 67108863;
             ncarry = ncarry + (r / 67108864 | 0) | 0;
@@ -47778,21 +47778,21 @@ var require_bn = __commonJS({
         }
         return out.strip();
       }
-      function jumboMulTo(self2, num2, out) {
+      function jumboMulTo(self2, num3, out) {
         var fftm = new FFTM();
-        return fftm.mulp(self2, num2, out);
+        return fftm.mulp(self2, num3, out);
       }
-      BN.prototype.mulTo = function mulTo(num2, out) {
+      BN.prototype.mulTo = function mulTo(num3, out) {
         var res;
-        var len = this.length + num2.length;
-        if (this.length === 10 && num2.length === 10) {
-          res = comb10MulTo(this, num2, out);
+        var len = this.length + num3.length;
+        if (this.length === 10 && num3.length === 10) {
+          res = comb10MulTo(this, num3, out);
         } else if (len < 63) {
-          res = smallMulTo(this, num2, out);
+          res = smallMulTo(this, num3, out);
         } else if (len < 1024) {
-          res = bigMulTo(this, num2, out);
+          res = bigMulTo(this, num3, out);
         } else {
-          res = jumboMulTo(this, num2, out);
+          res = jumboMulTo(this, num3, out);
         }
         return res;
       };
@@ -47937,25 +47937,25 @@ var require_bn = __commonJS({
         out.length = x.length + y.length;
         return out.strip();
       };
-      BN.prototype.mul = function mul(num2) {
+      BN.prototype.mul = function mul(num3) {
         var out = new BN(null);
-        out.words = new Array(this.length + num2.length);
-        return this.mulTo(num2, out);
+        out.words = new Array(this.length + num3.length);
+        return this.mulTo(num3, out);
       };
-      BN.prototype.mulf = function mulf(num2) {
+      BN.prototype.mulf = function mulf(num3) {
         var out = new BN(null);
-        out.words = new Array(this.length + num2.length);
-        return jumboMulTo(this, num2, out);
+        out.words = new Array(this.length + num3.length);
+        return jumboMulTo(this, num3, out);
       };
-      BN.prototype.imul = function imul(num2) {
-        return this.clone().mulTo(num2, this);
+      BN.prototype.imul = function imul(num3) {
+        return this.clone().mulTo(num3, this);
       };
-      BN.prototype.imuln = function imuln(num2) {
-        assert(typeof num2 === "number");
-        assert(num2 < 67108864);
+      BN.prototype.imuln = function imuln(num3) {
+        assert(typeof num3 === "number");
+        assert(num3 < 67108864);
         var carry = 0;
         for (var i = 0; i < this.length; i++) {
-          var w = (this.words[i] | 0) * num2;
+          var w = (this.words[i] | 0) * num3;
           var lo = (w & 67108863) + (carry & 67108863);
           carry >>= 26;
           carry += w / 67108864 | 0;
@@ -47966,14 +47966,14 @@ var require_bn = __commonJS({
           this.words[i] = carry;
           this.length++;
         }
-        if (num2 === 0) {
+        if (num3 === 0) {
           this.length = 1;
           this._normSign();
         }
         return this;
       };
-      BN.prototype.muln = function muln(num2) {
-        return this.clone().imuln(num2);
+      BN.prototype.muln = function muln(num3) {
+        return this.clone().imuln(num3);
       };
       BN.prototype.sqr = function sqr() {
         return this.mul(this);
@@ -47981,8 +47981,8 @@ var require_bn = __commonJS({
       BN.prototype.isqr = function isqr() {
         return this.imul(this.clone());
       };
-      BN.prototype.pow = function pow(num2) {
-        var w = toBitArray(num2);
+      BN.prototype.pow = function pow(num3) {
+        var w = toBitArray(num3);
         if (w.length === 0) return new BN(1);
         var res = this;
         for (var i = 0; i < w.length; i++, res = res.sqr()) {
@@ -48125,25 +48125,25 @@ var require_bn = __commonJS({
       BN.prototype.maskn = function maskn(bits) {
         return this.clone().imaskn(bits);
       };
-      BN.prototype.iaddn = function iaddn(num2) {
-        assert(typeof num2 === "number");
-        assert(num2 < 67108864);
-        if (num2 < 0) return this.isubn(-num2);
+      BN.prototype.iaddn = function iaddn(num3) {
+        assert(typeof num3 === "number");
+        assert(num3 < 67108864);
+        if (num3 < 0) return this.isubn(-num3);
         if (this.negative !== 0) {
-          if (this.length === 1 && (this.words[0] | 0) < num2) {
-            this.words[0] = num2 - (this.words[0] | 0);
+          if (this.length === 1 && (this.words[0] | 0) < num3) {
+            this.words[0] = num3 - (this.words[0] | 0);
             this.negative = 0;
             return this;
           }
           this.negative = 0;
-          this.isubn(num2);
+          this.isubn(num3);
           this.negative = 1;
           return this;
         }
-        return this._iaddn(num2);
+        return this._iaddn(num3);
       };
-      BN.prototype._iaddn = function _iaddn(num2) {
-        this.words[0] += num2;
+      BN.prototype._iaddn = function _iaddn(num3) {
+        this.words[0] += num3;
         for (var i = 0; i < this.length && this.words[i] >= 67108864; i++) {
           this.words[i] -= 67108864;
           if (i === this.length - 1) {
@@ -48155,17 +48155,17 @@ var require_bn = __commonJS({
         this.length = Math.max(this.length, i + 1);
         return this;
       };
-      BN.prototype.isubn = function isubn(num2) {
-        assert(typeof num2 === "number");
-        assert(num2 < 67108864);
-        if (num2 < 0) return this.iaddn(-num2);
+      BN.prototype.isubn = function isubn(num3) {
+        assert(typeof num3 === "number");
+        assert(num3 < 67108864);
+        if (num3 < 0) return this.iaddn(-num3);
         if (this.negative !== 0) {
           this.negative = 0;
-          this.iaddn(num2);
+          this.iaddn(num3);
           this.negative = 1;
           return this;
         }
-        this.words[0] -= num2;
+        this.words[0] -= num3;
         if (this.length === 1 && this.words[0] < 0) {
           this.words[0] = -this.words[0];
           this.negative = 1;
@@ -48177,11 +48177,11 @@ var require_bn = __commonJS({
         }
         return this.strip();
       };
-      BN.prototype.addn = function addn(num2) {
-        return this.clone().iaddn(num2);
+      BN.prototype.addn = function addn(num3) {
+        return this.clone().iaddn(num3);
       };
-      BN.prototype.subn = function subn(num2) {
-        return this.clone().isubn(num2);
+      BN.prototype.subn = function subn(num3) {
+        return this.clone().isubn(num3);
       };
       BN.prototype.iabs = function iabs() {
         this.negative = 0;
@@ -48190,15 +48190,15 @@ var require_bn = __commonJS({
       BN.prototype.abs = function abs() {
         return this.clone().iabs();
       };
-      BN.prototype._ishlnsubmul = function _ishlnsubmul(num2, mul, shift) {
-        var len = num2.length + shift;
+      BN.prototype._ishlnsubmul = function _ishlnsubmul(num3, mul, shift) {
+        var len = num3.length + shift;
         var i;
         this._expand(len);
         var w;
         var carry = 0;
-        for (i = 0; i < num2.length; i++) {
+        for (i = 0; i < num3.length; i++) {
           w = (this.words[i + shift] | 0) + carry;
-          var right = (num2.words[i] | 0) * mul;
+          var right = (num3.words[i] | 0) * mul;
           w -= right & 67108863;
           carry = (w >> 26) - (right / 67108864 | 0);
           this.words[i + shift] = w & 67108863;
@@ -48219,10 +48219,10 @@ var require_bn = __commonJS({
         this.negative = 1;
         return this.strip();
       };
-      BN.prototype._wordDiv = function _wordDiv(num2, mode) {
-        var shift = this.length - num2.length;
+      BN.prototype._wordDiv = function _wordDiv(num3, mode) {
+        var shift = this.length - num3.length;
         var a = this.clone();
-        var b = num2;
+        var b = num3;
         var bhi = b.words[b.length - 1] | 0;
         var bhiBits = this._countBits(bhi);
         shift = 26 - bhiBits;
@@ -48276,8 +48276,8 @@ var require_bn = __commonJS({
           mod: a
         };
       };
-      BN.prototype.divmod = function divmod(num2, mode, positive2) {
-        assert(!num2.isZero());
+      BN.prototype.divmod = function divmod(num3, mode, positive2) {
+        assert(!num3.isZero());
         if (this.isZero()) {
           return {
             div: new BN(0),
@@ -48285,15 +48285,15 @@ var require_bn = __commonJS({
           };
         }
         var div, mod, res;
-        if (this.negative !== 0 && num2.negative === 0) {
-          res = this.neg().divmod(num2, mode);
+        if (this.negative !== 0 && num3.negative === 0) {
+          res = this.neg().divmod(num3, mode);
           if (mode !== "mod") {
             div = res.div.neg();
           }
           if (mode !== "div") {
             mod = res.mod.neg();
             if (positive2 && mod.negative !== 0) {
-              mod.iadd(num2);
+              mod.iadd(num3);
             }
           }
           return {
@@ -48301,8 +48301,8 @@ var require_bn = __commonJS({
             mod
           };
         }
-        if (this.negative === 0 && num2.negative !== 0) {
-          res = this.divmod(num2.neg(), mode);
+        if (this.negative === 0 && num3.negative !== 0) {
+          res = this.divmod(num3.neg(), mode);
           if (mode !== "mod") {
             div = res.div.neg();
           }
@@ -48311,12 +48311,12 @@ var require_bn = __commonJS({
             mod: res.mod
           };
         }
-        if ((this.negative & num2.negative) !== 0) {
-          res = this.neg().divmod(num2.neg(), mode);
+        if ((this.negative & num3.negative) !== 0) {
+          res = this.neg().divmod(num3.neg(), mode);
           if (mode !== "div") {
             mod = res.mod.neg();
             if (positive2 && mod.negative !== 0) {
-              mod.isub(num2);
+              mod.isub(num3);
             }
           }
           return {
@@ -48324,74 +48324,74 @@ var require_bn = __commonJS({
             mod
           };
         }
-        if (num2.length > this.length || this.cmp(num2) < 0) {
+        if (num3.length > this.length || this.cmp(num3) < 0) {
           return {
             div: new BN(0),
             mod: this
           };
         }
-        if (num2.length === 1) {
+        if (num3.length === 1) {
           if (mode === "div") {
             return {
-              div: this.divn(num2.words[0]),
+              div: this.divn(num3.words[0]),
               mod: null
             };
           }
           if (mode === "mod") {
             return {
               div: null,
-              mod: new BN(this.modn(num2.words[0]))
+              mod: new BN(this.modn(num3.words[0]))
             };
           }
           return {
-            div: this.divn(num2.words[0]),
-            mod: new BN(this.modn(num2.words[0]))
+            div: this.divn(num3.words[0]),
+            mod: new BN(this.modn(num3.words[0]))
           };
         }
-        return this._wordDiv(num2, mode);
+        return this._wordDiv(num3, mode);
       };
-      BN.prototype.div = function div(num2) {
-        return this.divmod(num2, "div", false).div;
+      BN.prototype.div = function div(num3) {
+        return this.divmod(num3, "div", false).div;
       };
-      BN.prototype.mod = function mod(num2) {
-        return this.divmod(num2, "mod", false).mod;
+      BN.prototype.mod = function mod(num3) {
+        return this.divmod(num3, "mod", false).mod;
       };
-      BN.prototype.umod = function umod(num2) {
-        return this.divmod(num2, "mod", true).mod;
+      BN.prototype.umod = function umod(num3) {
+        return this.divmod(num3, "mod", true).mod;
       };
-      BN.prototype.divRound = function divRound(num2) {
-        var dm = this.divmod(num2);
+      BN.prototype.divRound = function divRound(num3) {
+        var dm = this.divmod(num3);
         if (dm.mod.isZero()) return dm.div;
         var mod = dm.mod.abs();
-        var half = num2.abs().iushrn(1);
-        var r2 = num2.words[0] & 1;
+        var half = num3.abs().iushrn(1);
+        var r2 = num3.words[0] & 1;
         var cmp = mod.cmp(half);
         if (cmp < 0 || r2 === 1 && cmp === 0) return dm.div;
         var up = new BN(1);
-        up.negative = this.negative ^ num2.negative;
+        up.negative = this.negative ^ num3.negative;
         return dm.div.iadd(up);
       };
-      BN.prototype.modn = function modn(num2) {
-        assert(num2 <= 67108863);
-        var p = (1 << 26) % num2;
+      BN.prototype.modn = function modn(num3) {
+        assert(num3 <= 67108863);
+        var p = (1 << 26) % num3;
         var acc = 0;
         for (var i = this.length - 1; i >= 0; i--) {
-          acc = (p * acc + (this.words[i] | 0)) % num2;
+          acc = (p * acc + (this.words[i] | 0)) % num3;
         }
         return acc;
       };
-      BN.prototype.idivn = function idivn(num2) {
-        assert(num2 <= 67108863);
+      BN.prototype.idivn = function idivn(num3) {
+        assert(num3 <= 67108863);
         var carry = 0;
         for (var i = this.length - 1; i >= 0; i--) {
           var w = (this.words[i] | 0) + carry * 67108864;
-          this.words[i] = w / num2 | 0;
-          carry = w % num2;
+          this.words[i] = w / num3 | 0;
+          carry = w % num3;
         }
         return this.strip();
       };
-      BN.prototype.divn = function divn(num2) {
-        return this.clone().idivn(num2);
+      BN.prototype.divn = function divn(num3) {
+        return this.clone().idivn(num3);
       };
       BN.prototype.egcd = function egcd(p) {
         assert(p.negative === 0);
@@ -48509,11 +48509,11 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      BN.prototype.gcd = function gcd(num2) {
-        if (this.isZero()) return num2.abs();
-        if (num2.isZero()) return this.abs();
+      BN.prototype.gcd = function gcd(num3) {
+        if (this.isZero()) return num3.abs();
+        if (num3.isZero()) return this.abs();
         var a = this.clone();
-        var b = num2.clone();
+        var b = num3.clone();
         a.negative = 0;
         b.negative = 0;
         for (var shift = 0; a.isEven() && b.isEven(); shift++) {
@@ -48539,8 +48539,8 @@ var require_bn = __commonJS({
         } while (true);
         return b.iushln(shift);
       };
-      BN.prototype.invm = function invm(num2) {
-        return this.egcd(num2).a.umod(num2);
+      BN.prototype.invm = function invm(num3) {
+        return this.egcd(num3).a.umod(num3);
       };
       BN.prototype.isEven = function isEven() {
         return (this.words[0] & 1) === 0;
@@ -48548,8 +48548,8 @@ var require_bn = __commonJS({
       BN.prototype.isOdd = function isOdd() {
         return (this.words[0] & 1) === 1;
       };
-      BN.prototype.andln = function andln(num2) {
-        return this.words[0] & num2;
+      BN.prototype.andln = function andln(num3) {
+        return this.words[0] & num3;
       };
       BN.prototype.bincn = function bincn(bit) {
         assert(typeof bit === "number");
@@ -48578,8 +48578,8 @@ var require_bn = __commonJS({
       BN.prototype.isZero = function isZero() {
         return this.length === 1 && this.words[0] === 0;
       };
-      BN.prototype.cmpn = function cmpn(num2) {
-        var negative = num2 < 0;
+      BN.prototype.cmpn = function cmpn(num3) {
+        var negative = num3 < 0;
         if (this.negative !== 0 && !negative) return -1;
         if (this.negative === 0 && negative) return 1;
         this.strip();
@@ -48588,29 +48588,29 @@ var require_bn = __commonJS({
           res = 1;
         } else {
           if (negative) {
-            num2 = -num2;
+            num3 = -num3;
           }
-          assert(num2 <= 67108863, "Number is too big");
+          assert(num3 <= 67108863, "Number is too big");
           var w = this.words[0] | 0;
-          res = w === num2 ? 0 : w < num2 ? -1 : 1;
+          res = w === num3 ? 0 : w < num3 ? -1 : 1;
         }
         if (this.negative !== 0) return -res | 0;
         return res;
       };
-      BN.prototype.cmp = function cmp(num2) {
-        if (this.negative !== 0 && num2.negative === 0) return -1;
-        if (this.negative === 0 && num2.negative !== 0) return 1;
-        var res = this.ucmp(num2);
+      BN.prototype.cmp = function cmp(num3) {
+        if (this.negative !== 0 && num3.negative === 0) return -1;
+        if (this.negative === 0 && num3.negative !== 0) return 1;
+        var res = this.ucmp(num3);
         if (this.negative !== 0) return -res | 0;
         return res;
       };
-      BN.prototype.ucmp = function ucmp(num2) {
-        if (this.length > num2.length) return 1;
-        if (this.length < num2.length) return -1;
+      BN.prototype.ucmp = function ucmp(num3) {
+        if (this.length > num3.length) return 1;
+        if (this.length < num3.length) return -1;
         var res = 0;
         for (var i = this.length - 1; i >= 0; i--) {
           var a = this.words[i] | 0;
-          var b = num2.words[i] | 0;
+          var b = num3.words[i] | 0;
           if (a === b) continue;
           if (a < b) {
             res = -1;
@@ -48621,38 +48621,38 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      BN.prototype.gtn = function gtn(num2) {
-        return this.cmpn(num2) === 1;
+      BN.prototype.gtn = function gtn(num3) {
+        return this.cmpn(num3) === 1;
       };
-      BN.prototype.gt = function gt(num2) {
-        return this.cmp(num2) === 1;
+      BN.prototype.gt = function gt(num3) {
+        return this.cmp(num3) === 1;
       };
-      BN.prototype.gten = function gten(num2) {
-        return this.cmpn(num2) >= 0;
+      BN.prototype.gten = function gten(num3) {
+        return this.cmpn(num3) >= 0;
       };
-      BN.prototype.gte = function gte(num2) {
-        return this.cmp(num2) >= 0;
+      BN.prototype.gte = function gte(num3) {
+        return this.cmp(num3) >= 0;
       };
-      BN.prototype.ltn = function ltn(num2) {
-        return this.cmpn(num2) === -1;
+      BN.prototype.ltn = function ltn(num3) {
+        return this.cmpn(num3) === -1;
       };
-      BN.prototype.lt = function lt(num2) {
-        return this.cmp(num2) === -1;
+      BN.prototype.lt = function lt(num3) {
+        return this.cmp(num3) === -1;
       };
-      BN.prototype.lten = function lten(num2) {
-        return this.cmpn(num2) <= 0;
+      BN.prototype.lten = function lten(num3) {
+        return this.cmpn(num3) <= 0;
       };
-      BN.prototype.lte = function lte(num2) {
-        return this.cmp(num2) <= 0;
+      BN.prototype.lte = function lte(num3) {
+        return this.cmp(num3) <= 0;
       };
-      BN.prototype.eqn = function eqn(num2) {
-        return this.cmpn(num2) === 0;
+      BN.prototype.eqn = function eqn(num3) {
+        return this.cmpn(num3) === 0;
       };
-      BN.prototype.eq = function eq(num2) {
-        return this.cmp(num2) === 0;
+      BN.prototype.eq = function eq(num3) {
+        return this.cmp(num3) === 0;
       };
-      BN.red = function red(num2) {
-        return new Red(num2);
+      BN.red = function red(num3) {
+        return new Red(num3);
       };
       BN.prototype.toRed = function toRed(ctx) {
         assert(!this.red, "Already a number in reduction context");
@@ -48671,35 +48671,35 @@ var require_bn = __commonJS({
         assert(!this.red, "Already a number in reduction context");
         return this._forceRed(ctx);
       };
-      BN.prototype.redAdd = function redAdd(num2) {
+      BN.prototype.redAdd = function redAdd(num3) {
         assert(this.red, "redAdd works only with red numbers");
-        return this.red.add(this, num2);
+        return this.red.add(this, num3);
       };
-      BN.prototype.redIAdd = function redIAdd(num2) {
+      BN.prototype.redIAdd = function redIAdd(num3) {
         assert(this.red, "redIAdd works only with red numbers");
-        return this.red.iadd(this, num2);
+        return this.red.iadd(this, num3);
       };
-      BN.prototype.redSub = function redSub(num2) {
+      BN.prototype.redSub = function redSub(num3) {
         assert(this.red, "redSub works only with red numbers");
-        return this.red.sub(this, num2);
+        return this.red.sub(this, num3);
       };
-      BN.prototype.redISub = function redISub(num2) {
+      BN.prototype.redISub = function redISub(num3) {
         assert(this.red, "redISub works only with red numbers");
-        return this.red.isub(this, num2);
+        return this.red.isub(this, num3);
       };
-      BN.prototype.redShl = function redShl(num2) {
+      BN.prototype.redShl = function redShl(num3) {
         assert(this.red, "redShl works only with red numbers");
-        return this.red.shl(this, num2);
+        return this.red.shl(this, num3);
       };
-      BN.prototype.redMul = function redMul(num2) {
+      BN.prototype.redMul = function redMul(num3) {
         assert(this.red, "redMul works only with red numbers");
-        this.red._verify2(this, num2);
-        return this.red.mul(this, num2);
+        this.red._verify2(this, num3);
+        return this.red.mul(this, num3);
       };
-      BN.prototype.redIMul = function redIMul(num2) {
+      BN.prototype.redIMul = function redIMul(num3) {
         assert(this.red, "redMul works only with red numbers");
-        this.red._verify2(this, num2);
-        return this.red.imul(this, num2);
+        this.red._verify2(this, num3);
+        return this.red.imul(this, num3);
       };
       BN.prototype.redSqr = function redSqr() {
         assert(this.red, "redSqr works only with red numbers");
@@ -48726,10 +48726,10 @@ var require_bn = __commonJS({
         this.red._verify1(this);
         return this.red.neg(this);
       };
-      BN.prototype.redPow = function redPow(num2) {
-        assert(this.red && !num2.red, "redPow(normalNum)");
+      BN.prototype.redPow = function redPow(num3) {
+        assert(this.red && !num3.red, "redPow(normalNum)");
         this.red._verify1(this);
-        return this.red.pow(this, num2);
+        return this.red.pow(this, num3);
       };
       var primes = {
         k256: null,
@@ -48749,8 +48749,8 @@ var require_bn = __commonJS({
         tmp.words = new Array(Math.ceil(this.n / 13));
         return tmp;
       };
-      MPrime.prototype.ireduce = function ireduce(num2) {
-        var r = num2;
+      MPrime.prototype.ireduce = function ireduce(num3) {
+        var r = num3;
         var rlen;
         do {
           this.split(r, this.tmp);
@@ -48776,8 +48776,8 @@ var require_bn = __commonJS({
       MPrime.prototype.split = function split2(input, out) {
         input.iushrn(this.n, 0, out);
       };
-      MPrime.prototype.imulK = function imulK(num2) {
-        return num2.imul(this.k);
+      MPrime.prototype.imulK = function imulK(num3) {
+        return num3.imul(this.k);
       };
       function K256() {
         MPrime.call(
@@ -48814,24 +48814,24 @@ var require_bn = __commonJS({
           input.length -= 9;
         }
       };
-      K256.prototype.imulK = function imulK(num2) {
-        num2.words[num2.length] = 0;
-        num2.words[num2.length + 1] = 0;
-        num2.length += 2;
+      K256.prototype.imulK = function imulK(num3) {
+        num3.words[num3.length] = 0;
+        num3.words[num3.length + 1] = 0;
+        num3.length += 2;
         var lo = 0;
-        for (var i = 0; i < num2.length; i++) {
-          var w = num2.words[i] | 0;
+        for (var i = 0; i < num3.length; i++) {
+          var w = num3.words[i] | 0;
           lo += w * 977;
-          num2.words[i] = lo & 67108863;
+          num3.words[i] = lo & 67108863;
           lo = w * 64 + (lo / 67108864 | 0);
         }
-        if (num2.words[num2.length - 1] === 0) {
-          num2.length--;
-          if (num2.words[num2.length - 1] === 0) {
-            num2.length--;
+        if (num3.words[num3.length - 1] === 0) {
+          num3.length--;
+          if (num3.words[num3.length - 1] === 0) {
+            num3.length--;
           }
         }
-        return num2;
+        return num3;
       };
       function P224() {
         MPrime.call(
@@ -48857,19 +48857,19 @@ var require_bn = __commonJS({
         );
       }
       inherits(P25519, MPrime);
-      P25519.prototype.imulK = function imulK(num2) {
+      P25519.prototype.imulK = function imulK(num3) {
         var carry = 0;
-        for (var i = 0; i < num2.length; i++) {
-          var hi = (num2.words[i] | 0) * 19 + carry;
+        for (var i = 0; i < num3.length; i++) {
+          var hi = (num3.words[i] | 0) * 19 + carry;
           var lo = hi & 67108863;
           hi >>>= 26;
-          num2.words[i] = lo;
+          num3.words[i] = lo;
           carry = hi;
         }
         if (carry !== 0) {
-          num2.words[num2.length++] = carry;
+          num3.words[num3.length++] = carry;
         }
-        return num2;
+        return num3;
       };
       BN._prime = function prime(name) {
         if (primes[name]) return primes[name];
@@ -48952,9 +48952,9 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      Red.prototype.shl = function shl(a, num2) {
+      Red.prototype.shl = function shl(a, num3) {
         this._verify1(a);
-        return this.imod(a.ushln(num2));
+        return this.imod(a.ushln(num3));
       };
       Red.prototype.imul = function imul(a, b) {
         this._verify2(a, b);
@@ -49020,9 +49020,9 @@ var require_bn = __commonJS({
           return this.imod(inv);
         }
       };
-      Red.prototype.pow = function pow(a, num2) {
-        if (num2.isZero()) return new BN(1).toRed(this);
-        if (num2.cmpn(1) === 0) return a.clone();
+      Red.prototype.pow = function pow(a, num3) {
+        if (num3.isZero()) return new BN(1).toRed(this);
+        if (num3.cmpn(1) === 0) return a.clone();
         var windowSize = 4;
         var wnd = new Array(1 << windowSize);
         wnd[0] = new BN(1).toRed(this);
@@ -49033,12 +49033,12 @@ var require_bn = __commonJS({
         var res = wnd[0];
         var current = 0;
         var currentLen = 0;
-        var start = num2.bitLength() % 26;
+        var start = num3.bitLength() % 26;
         if (start === 0) {
           start = 26;
         }
-        for (i = num2.length - 1; i >= 0; i--) {
-          var word = num2.words[i];
+        for (i = num3.length - 1; i >= 0; i--) {
+          var word = num3.words[i];
           for (var j = start - 1; j >= 0; j--) {
             var bit = word >> j & 1;
             if (res !== wnd[0]) {
@@ -49060,17 +49060,17 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      Red.prototype.convertTo = function convertTo(num2) {
-        var r = num2.umod(this.m);
-        return r === num2 ? r.clone() : r;
+      Red.prototype.convertTo = function convertTo(num3) {
+        var r = num3.umod(this.m);
+        return r === num3 ? r.clone() : r;
       };
-      Red.prototype.convertFrom = function convertFrom(num2) {
-        var res = num2.clone();
+      Red.prototype.convertFrom = function convertFrom(num3) {
+        var res = num3.clone();
         res.red = null;
         return res;
       };
-      BN.mont = function mont(num2) {
-        return new Mont(num2);
+      BN.mont = function mont(num3) {
+        return new Mont(num3);
       };
       function Mont(m) {
         Red.call(this, m);
@@ -49086,11 +49086,11 @@ var require_bn = __commonJS({
         this.minv = this.r.sub(this.minv);
       }
       inherits(Mont, Red);
-      Mont.prototype.convertTo = function convertTo(num2) {
-        return this.imod(num2.ushln(this.shift));
+      Mont.prototype.convertTo = function convertTo(num3) {
+        return this.imod(num3.ushln(this.shift));
       };
-      Mont.prototype.convertFrom = function convertFrom(num2) {
-        var r = this.imod(num2.mul(this.rinv));
+      Mont.prototype.convertFrom = function convertFrom(num3) {
+        var r = this.imod(num3.mul(this.rinv));
         r.red = null;
         return r;
       };
@@ -49688,16 +49688,16 @@ var require_node2 = __commonJS({
       state.optional = true;
       return this;
     };
-    Node.prototype.explicit = function explicit(num2) {
+    Node.prototype.explicit = function explicit(num3) {
       const state = this._baseState;
       assert(state.explicit === null && state.implicit === null);
-      state.explicit = num2;
+      state.explicit = num3;
       return this;
     };
-    Node.prototype.implicit = function implicit(num2) {
+    Node.prototype.implicit = function implicit(num3) {
       const state = this._baseState;
       assert(state.explicit === null && state.implicit === null);
-      state.implicit = num2;
+      state.implicit = num3;
       return this;
     };
     Node.prototype.obj = function obj() {
@@ -50005,11 +50005,11 @@ var require_node2 = __commonJS({
       else
         throw new Error("Unsupported tag: " + tag);
     };
-    Node.prototype._isNumstr = function isNumstr(str5) {
-      return /^[0-9 ]*$/.test(str5);
+    Node.prototype._isNumstr = function isNumstr(str6) {
+      return /^[0-9 ]*$/.test(str6);
     };
-    Node.prototype._isPrintstr = function isPrintstr(str5) {
-      return /^[A-Za-z0-9 '()+,-./:=?]*$/.test(str5);
+    Node.prototype._isPrintstr = function isPrintstr(str6) {
+      return /^[A-Za-z0-9 '()+,-./:=?]*$/.test(str6);
     };
   }
 });
@@ -50111,29 +50111,29 @@ var require_der2 = __commonJS({
         header[i] = j & 255;
       return this._createEncoderBuffer([header, content]);
     };
-    DERNode.prototype._encodeStr = function encodeStr(str5, tag) {
+    DERNode.prototype._encodeStr = function encodeStr(str6, tag) {
       if (tag === "bitstr") {
-        return this._createEncoderBuffer([str5.unused | 0, str5.data]);
+        return this._createEncoderBuffer([str6.unused | 0, str6.data]);
       } else if (tag === "bmpstr") {
-        const buf = Buffer2.alloc(str5.length * 2);
-        for (let i = 0; i < str5.length; i++) {
-          buf.writeUInt16BE(str5.charCodeAt(i), i * 2);
+        const buf = Buffer2.alloc(str6.length * 2);
+        for (let i = 0; i < str6.length; i++) {
+          buf.writeUInt16BE(str6.charCodeAt(i), i * 2);
         }
         return this._createEncoderBuffer(buf);
       } else if (tag === "numstr") {
-        if (!this._isNumstr(str5)) {
+        if (!this._isNumstr(str6)) {
           return this.reporter.error("Encoding of string type: numstr supports only digits and space");
         }
-        return this._createEncoderBuffer(str5);
+        return this._createEncoderBuffer(str6);
       } else if (tag === "printstr") {
-        if (!this._isPrintstr(str5)) {
+        if (!this._isPrintstr(str6)) {
           return this.reporter.error("Encoding of string type: printstr supports only latin upper and lower case letters, digits, space, apostrophe, left and rigth parenthesis, plus sign, comma, hyphen, dot, slash, colon, equal sign, question mark");
         }
-        return this._createEncoderBuffer(str5);
+        return this._createEncoderBuffer(str6);
       } else if (/str$/.test(tag)) {
-        return this._createEncoderBuffer(str5);
+        return this._createEncoderBuffer(str6);
       } else if (tag === "objDesc") {
-        return this._createEncoderBuffer(str5);
+        return this._createEncoderBuffer(str6);
       } else {
         return this.reporter.error("Encoding of string type: " + tag + " unsupported");
       }
@@ -50176,17 +50176,17 @@ var require_der2 = __commonJS({
       }
       return this._createEncoderBuffer(objid);
     };
-    function two(num2) {
-      if (num2 < 10)
-        return "0" + num2;
+    function two(num3) {
+      if (num3 < 10)
+        return "0" + num3;
       else
-        return num2;
+        return num3;
     }
-    DERNode.prototype._encodeTime = function encodeTime(time2, tag) {
-      let str5;
-      const date = new Date(time2);
+    DERNode.prototype._encodeTime = function encodeTime(time3, tag) {
+      let str6;
+      const date = new Date(time3);
       if (tag === "gentime") {
-        str5 = [
+        str6 = [
           two(date.getUTCFullYear()),
           two(date.getUTCMonth() + 1),
           two(date.getUTCDate()),
@@ -50196,7 +50196,7 @@ var require_der2 = __commonJS({
           "Z"
         ].join("");
       } else if (tag === "utctime") {
-        str5 = [
+        str6 = [
           two(date.getUTCFullYear() % 100),
           two(date.getUTCMonth() + 1),
           two(date.getUTCDate()),
@@ -50208,48 +50208,48 @@ var require_der2 = __commonJS({
       } else {
         this.reporter.error("Encoding " + tag + " time is not supported yet");
       }
-      return this._encodeStr(str5, "octstr");
+      return this._encodeStr(str6, "octstr");
     };
     DERNode.prototype._encodeNull = function encodeNull() {
       return this._createEncoderBuffer("");
     };
-    DERNode.prototype._encodeInt = function encodeInt(num2, values) {
-      if (typeof num2 === "string") {
+    DERNode.prototype._encodeInt = function encodeInt(num3, values) {
+      if (typeof num3 === "string") {
         if (!values)
           return this.reporter.error("String int or enum given, but no values map");
-        if (!values.hasOwnProperty(num2)) {
-          return this.reporter.error("Values map doesn't contain: " + JSON.stringify(num2));
+        if (!values.hasOwnProperty(num3)) {
+          return this.reporter.error("Values map doesn't contain: " + JSON.stringify(num3));
         }
-        num2 = values[num2];
+        num3 = values[num3];
       }
-      if (typeof num2 !== "number" && !Buffer2.isBuffer(num2)) {
-        const numArray = num2.toArray();
-        if (!num2.sign && numArray[0] & 128) {
+      if (typeof num3 !== "number" && !Buffer2.isBuffer(num3)) {
+        const numArray = num3.toArray();
+        if (!num3.sign && numArray[0] & 128) {
           numArray.unshift(0);
         }
-        num2 = Buffer2.from(numArray);
+        num3 = Buffer2.from(numArray);
       }
-      if (Buffer2.isBuffer(num2)) {
-        let size2 = num2.length;
-        if (num2.length === 0)
+      if (Buffer2.isBuffer(num3)) {
+        let size2 = num3.length;
+        if (num3.length === 0)
           size2++;
         const out2 = Buffer2.alloc(size2);
-        num2.copy(out2);
-        if (num2.length === 0)
+        num3.copy(out2);
+        if (num3.length === 0)
           out2[0] = 0;
         return this._createEncoderBuffer(out2);
       }
-      if (num2 < 128)
-        return this._createEncoderBuffer(num2);
-      if (num2 < 256)
-        return this._createEncoderBuffer([0, num2]);
+      if (num3 < 128)
+        return this._createEncoderBuffer(num3);
+      if (num3 < 256)
+        return this._createEncoderBuffer([0, num3]);
       let size = 1;
-      for (let i = num2; i >= 256; i >>= 8)
+      for (let i = num3; i >= 256; i >>= 8)
         size++;
       const out = new Array(size);
       for (let i = out.length - 1; i >= 0; i--) {
-        out[i] = num2 & 255;
-        num2 >>= 8;
+        out[i] = num3 & 255;
+        num3 >>= 8;
       }
       if (out[0] & 128) {
         out.unshift(0);
@@ -50444,11 +50444,11 @@ var require_der3 = __commonJS({
         const raw = buffer.raw();
         if (raw.length % 2 === 1)
           return buffer.error("Decoding of string type: bmpstr length mismatch");
-        let str5 = "";
+        let str6 = "";
         for (let i = 0; i < raw.length / 2; i++) {
-          str5 += String.fromCharCode(raw.readUInt16BE(i * 2));
+          str6 += String.fromCharCode(raw.readUInt16BE(i * 2));
         }
-        return str5;
+        return str6;
       } else if (tag === "numstr") {
         const numstr = buffer.raw().toString("ascii");
         if (!this._isNumstr(numstr)) {
@@ -50503,7 +50503,7 @@ var require_der3 = __commonJS({
       return result;
     };
     DERNode.prototype._decodeTime = function decodeTime(buffer, tag) {
-      const str5 = buffer.raw().toString();
+      const str6 = buffer.raw().toString();
       let year;
       let mon;
       let day2;
@@ -50511,19 +50511,19 @@ var require_der3 = __commonJS({
       let min;
       let sec;
       if (tag === "gentime") {
-        year = str5.slice(0, 4) | 0;
-        mon = str5.slice(4, 6) | 0;
-        day2 = str5.slice(6, 8) | 0;
-        hour = str5.slice(8, 10) | 0;
-        min = str5.slice(10, 12) | 0;
-        sec = str5.slice(12, 14) | 0;
+        year = str6.slice(0, 4) | 0;
+        mon = str6.slice(4, 6) | 0;
+        day2 = str6.slice(6, 8) | 0;
+        hour = str6.slice(8, 10) | 0;
+        min = str6.slice(10, 12) | 0;
+        sec = str6.slice(12, 14) | 0;
       } else if (tag === "utctime") {
-        year = str5.slice(0, 2) | 0;
-        mon = str5.slice(2, 4) | 0;
-        day2 = str5.slice(4, 6) | 0;
-        hour = str5.slice(6, 8) | 0;
-        min = str5.slice(8, 10) | 0;
-        sec = str5.slice(10, 12) | 0;
+        year = str6.slice(0, 2) | 0;
+        mon = str6.slice(2, 4) | 0;
+        day2 = str6.slice(4, 6) | 0;
+        hour = str6.slice(6, 8) | 0;
+        min = str6.slice(8, 10) | 0;
+        sec = str6.slice(10, 12) | 0;
         if (year < 70)
           year = 2e3 + year;
         else
@@ -50591,11 +50591,11 @@ var require_der3 = __commonJS({
       if ((len & 128) === 0) {
         return len;
       }
-      const num2 = len & 127;
-      if (num2 > 4)
+      const num3 = len & 127;
+      if (num3 > 4)
         return buf.error("length octect is too long");
       len = 0;
-      for (let i = 0; i < num2; i++) {
+      for (let i = 0; i < num3; i++) {
         len <<= 8;
         const j = buf.readUInt8(fail);
         if (buf.isError(j))
@@ -51882,24 +51882,24 @@ var require_dist6 = __commonJS({
     var DAY = HOUR * 24;
     var YEAR = DAY * 365.25;
     function parse(val) {
-      var num2, arr = val.toLowerCase().match(RGX);
-      if (arr != null && (num2 = parseFloat(arr[1]))) {
-        if (arr[3] != null) return num2 * SEC;
-        if (arr[4] != null) return num2 * MIN;
-        if (arr[5] != null) return num2 * HOUR;
-        if (arr[6] != null) return num2 * DAY;
-        if (arr[7] != null) return num2 * DAY * 7;
-        if (arr[8] != null) return num2 * YEAR;
-        return num2;
+      var num3, arr = val.toLowerCase().match(RGX);
+      if (arr != null && (num3 = parseFloat(arr[1]))) {
+        if (arr[3] != null) return num3 * SEC;
+        if (arr[4] != null) return num3 * MIN;
+        if (arr[5] != null) return num3 * HOUR;
+        if (arr[6] != null) return num3 * DAY;
+        if (arr[7] != null) return num3 * DAY * 7;
+        if (arr[8] != null) return num3 * YEAR;
+        return num3;
       }
     }
-    function fmt(val, pfx, str5, long) {
-      var num2 = (val | 0) === val ? val : ~~(val + 0.5);
-      return pfx + num2 + (long ? " " + str5 + (num2 != 1 ? "s" : "") : str5[0]);
+    function fmt(val, pfx, str6, long) {
+      var num3 = (val | 0) === val ? val : ~~(val + 0.5);
+      return pfx + num3 + (long ? " " + str6 + (num3 != 1 ? "s" : "") : str6[0]);
     }
-    function format(num2, long) {
-      var pfx = num2 < 0 ? "-" : "", abs = num2 < 0 ? -num2 : num2;
-      if (abs < SEC) return num2 + (long ? " ms" : "ms");
+    function format(num3, long) {
+      var pfx = num3 < 0 ? "-" : "", abs = num3 < 0 ? -num3 : num3;
+      if (abs < SEC) return num3 + (long ? " ms" : "ms");
       if (abs < MIN) return fmt(abs / SEC, pfx, "second", long);
       if (abs < HOUR) return fmt(abs / MIN, pfx, "minute", long);
       if (abs < DAY) return fmt(abs / HOUR, pfx, "hour", long);
@@ -52770,11 +52770,11 @@ var require_jwt = __commonJS({
         return cb(null, secret);
       };
     }
-    function convertToMs(time2) {
-      if (typeof time2 === "number") {
-        return time2 * 1e3;
+    function convertToMs(time3) {
+      if (typeof time3 === "number") {
+        return time3 * 1e3;
       }
-      return parse(time2);
+      return parse(time3);
     }
     function convertTemporalProps(options, isVerifyOptions) {
       if (!options || typeof options === "function") {
@@ -53765,11 +53765,11 @@ var require_bcrypt = __commonJS({
         return hash.substring(0, 29);
       };
       var nextTick = typeof process !== "undefined" && process && typeof process.nextTick === "function" ? typeof setImmediate === "function" ? setImmediate : process.nextTick : setTimeout;
-      function stringToBytes(str5) {
+      function stringToBytes(str6) {
         var out = [], i = 0;
         utfx.encodeUTF16toUTF8(function() {
-          if (i >= str5.length) return null;
-          return str5.charCodeAt(i++);
+          if (i >= str6.length) return null;
+          return str6.charCodeAt(i++);
         }, function(b) {
           out.push(b);
         });
@@ -59586,14 +59586,14 @@ function mapUsage(usage) {
     cachedTokens: usage?.prompt_tokens_details?.cached_tokens
   };
 }
-function classifyHttpError(status, text4) {
+function classifyHttpError(status, text5) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text4}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text5}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text4}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text5}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text4}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text4}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text5}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text5}`, "other", status);
 }
 function message(err) {
   return err instanceof Error ? err.message : String(err);
@@ -59670,8 +59670,8 @@ var init_openai = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
         }
         if (!res.ok) {
-          const text4 = await res.text().catch(() => "");
-          throw classifyHttpError(res.status, text4);
+          const text5 = await res.text().catch(() => "");
+          throw classifyHttpError(res.status, text5);
         }
         const data = await res.json();
         return { content: data.text ?? null };
@@ -59709,8 +59709,8 @@ var init_openai = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
         }
         if (!res.ok) {
-          const text4 = await res.text().catch(() => "");
-          throw classifyHttpError(res.status, text4);
+          const text5 = await res.text().catch(() => "");
+          throw classifyHttpError(res.status, text5);
         }
         const data = await res.json();
         const choice = data.choices?.[0];
@@ -59764,14 +59764,14 @@ function parseArgs(raw) {
     return { _raw: raw };
   }
 }
-function classifyHttpError2(status, text4) {
+function classifyHttpError2(status, text5) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text4}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text5}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text4}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text5}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text4}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text4}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text5}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text5}`, "other", status);
 }
 var ANTHROPIC_VERSION, AnthropicAdapter;
 var init_anthropic = __esm({
@@ -59830,8 +59830,8 @@ var init_anthropic = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${err instanceof Error ? err.message : String(err)}`, "network");
         }
         if (!res.ok) {
-          const text4 = await res.text().catch(() => "");
-          throw classifyHttpError2(res.status, text4);
+          const text5 = await res.text().catch(() => "");
+          throw classifyHttpError2(res.status, text5);
         }
         const data = await res.json();
         const blocks = data.content ?? [];
@@ -60069,8 +60069,8 @@ var init_fallback = __esm({
 });
 
 // packages/agent/dist/llm-gateway/redact.js
-function redactPii(text4) {
-  return text4.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
+function redactPii(text5) {
+  return text5.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
 }
 function redactValue(value2, key) {
   if (typeof value2 === "string") {
@@ -61062,7 +61062,7 @@ function verifyWebhookSignature(body, signatureHeader) {
     return false;
   }
 }
-async function sendWhatsAppMessage(to, text4) {
+async function sendWhatsAppMessage(to, text5) {
   const config = getConfig();
   if (!config.token || !config.phoneNumberId) {
     return { success: false, error: "WHATSAPP_TOKEN or WHATSAPP_PHONE_ID not configured" };
@@ -61079,7 +61079,7 @@ async function sendWhatsAppMessage(to, text4) {
         messaging_product: "whatsapp",
         to,
         type: "text",
-        text: { body: text4 }
+        text: { body: text5 }
       })
     });
     if (!response.ok) {
@@ -61224,10 +61224,10 @@ function escapeHtml(value2) {
 }
 function buildLinks(number, code, ref, profile = null) {
   const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent ?? null;
-  const text4 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
-  const encoded = encodeURIComponent(text4);
+  const text5 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
+  const encoded = encodeURIComponent(text5);
   return {
-    text: text4,
+    text: text5,
     app: `whatsapp://send?phone=${number}&text=${encoded}`,
     wame: `https://wa.me/${number}?text=${encoded}`,
     web: `https://web.whatsapp.com/send?phone=${number}&text=${encoded}`
@@ -61239,84 +61239,358 @@ function formatNumber(number) {
   }
   return `+${number}`;
 }
+function structuredData(input) {
+  const site = "https://automantpro.app";
+  const telefono = input.number ? `+${input.number}` : void 0;
+  const datos = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${site}/#organizacion`,
+        name: "AutoMantPro",
+        url: site,
+        description: "Mantenimiento automotor por WhatsApp en Ecuador: plan por veh\xEDculo, talleres verificados y repuestos.",
+        areaServed: { "@type": "Country", name: "Ecuador" },
+        ...telefono ? { telephone: telefono, contactPoint: { "@type": "ContactPoint", telephone: telefono, contactType: "customer service", availableLanguage: "es" } } : {}
+      },
+      {
+        "@type": "Service",
+        name: "Mantenimiento y reparaci\xF3n de veh\xEDculos por WhatsApp",
+        serviceType: "Mantenimiento automotor, diagn\xF3stico, talleres mec\xE1nicos y repuestos",
+        provider: { "@id": `${site}/#organizacion` },
+        areaServed: { "@type": "Country", name: "Ecuador" },
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "USD",
+          description: "Plan gratuito con mantenimiento y talleres cercanos; plan Premium con talleres verificados, cotizaciones y garant\xEDa."
+        }
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: FAQ.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a }
+        }))
+      }
+    ]
+  };
+  return JSON.stringify(datos);
+}
 function renderEntryPage(input) {
   const nonce = escapeHtml(input.nonce);
   const available = input.number !== null;
   const links = available ? buildLinks(input.number, input.code, input.ref) : null;
+  const number = available ? escapeHtml(formatNumber(input.number)) : "";
   const refQuery = input.ref ? `&amp;ref=${escapeHtml(input.ref)}` : "";
-  const menu = links ? `<div class="menu">${ENTRY_PROFILES.map((profile) => `<a class="option" href="/?perfil=${escapeHtml(profile.key)}${refQuery}"><span aria-hidden="true">${profile.emoji}</span> ${escapeHtml(profile.label)}</a>`).join("")}</div>
-    <p class="small">Se abre WhatsApp con tu respuesta escrita. Escr\xEDbenos al <a href="${escapeHtml(links.wame)}" rel="noopener"><strong>${escapeHtml(formatNumber(input.number))}</strong></a>.</p>
-    <p class="small">Tu c\xF3digo de inicio: <strong>${escapeHtml(input.code)}</strong></p>` : "";
+  const logo = `<a class="logo" href="/?pagina=1">
+    <span class="mark">${icon("taller", "")}</span>
+    <span class="brand">Auto<span>Mant</span>Pro<small>Tu taller de confianza, en WhatsApp</small></span>
+  </a>`;
+  const trust = `<ul class="trust">
+    <li><b>0</b><span>apps</span></li>
+    <li><b>90</b><span>d\xEDas gratis</span></li>
+    <li><b>100%</b><span>verificados</span></li>
+  </ul>`;
+  const faq = `<details class="card"><summary>Preguntas frecuentes</summary>
+    ${FAQ.map((item) => `<h3 class="pregunta">${escapeHtml(item.q)}</h3><p class="respuesta">${escapeHtml(item.a)}</p>`).join("")}
+    </details>`;
+  const steps = `<details class="card"><summary>C\xF3mo funciona</summary><ol class="steps">
+    <li>Nos escribes por WhatsApp y nos cuentas qu\xE9 necesitas.</li>
+    <li>Te respondemos con tu plan, el diagn\xF3stico o el precio.</li>
+    <li>Agendas en un taller verificado o cotizas el repuesto, en el mismo chat.</li>
+  </ol></details>`;
+  const contact = links ? `<p class="small linea"><a href="${escapeHtml(links.wame)}" rel="noopener">${number}</a> \xB7 <span class="code">${escapeHtml(input.code)}</span> <em class="nota">identifica tu visita en el chat</em></p>` : "";
+  const menu = links ? `<p class="section">\xBFCon qu\xE9 empezamos?</p>
+    <div class="menu">${ENTRY_PROFILES.map((profile) => `<a class="option${profile.intent === null ? " ghost" : ""}" href="/?perfil=${escapeHtml(profile.key)}${refQuery}">
+        <span class="badge">${icon(profile.icon)}</span>
+        <span><b>${escapeHtml(profile.label)}</b><i>${escapeHtml(profile.hint)}</i></span>
+        <span class="go" aria-hidden="true">\u203A</span>
+      </a>`).join("")}</div>
+    ${contact}` : "";
   const button = links ? `<button id="abrir" class="cta" type="button" data-app="${escapeHtml(links.app)}" data-wame="${escapeHtml(links.wame)}" data-web="${escapeHtml(links.web)}">Abrir WhatsApp</button>
-    <p class="small">Escr\xEDbenos al <strong>${escapeHtml(formatNumber(input.number))}</strong> \xB7 <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> \xB7 <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a></p>
-    <p class="small">Tu c\xF3digo de inicio: <strong>${escapeHtml(input.code)}</strong></p>` : `<button id="abrir" class="cta" type="button" disabled>Abrir WhatsApp</button>
+    <p class="small spaced">Escr\xEDbenos al <strong>${number}</strong> \xB7 <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> \xB7 <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a> \xB7 <a href="${escapeHtml(links.web)}" rel="noopener">WhatsApp Web</a></p>
+    <p class="small"><span class="code">${escapeHtml(input.code)}</span> <em class="nota">identifica tu visita en el chat</em></p>` : `<button id="abrir" class="cta" type="button" disabled>Abrir WhatsApp</button>
     <p class="soon">Muy pronto disponible por WhatsApp</p>`;
   return `<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AutoMantPro \xB7 Tu mec\xE1nico de confianza en WhatsApp</title>
-<meta name="description" content="Diagn\xF3stico con IA, plan de mantenimiento y talleres verificados, todo por WhatsApp.">
+<meta name="theme-color" content="#0092ad">
+<title>AutoMantPro \xB7 Mantenimiento, talleres y repuestos por WhatsApp en Ecuador</title>
+<meta name="description" content="Mantenimiento y reparaci\xF3n de tu veh\xEDculo por WhatsApp en Ecuador: plan de mantenimiento a la medida, diagn\xF3stico con IA, talleres mec\xE1nicos verificados y cotizaci\xF3n de repuestos. Sin instalar nada.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://automantpro.app/">
 <meta property="og:title" content="AutoMantPro \xB7 Tu mec\xE1nico de confianza en WhatsApp">
 <meta property="og:description" content="Plan de mantenimiento, talleres verificados y repuestos, todo por WhatsApp.">
+<meta property="og:site_name" content="AutoMantPro">
+<meta property="og:locale" content="es_EC">
+<meta name="twitter:card" content="summary">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="author" content="AutoMantPro">
+<link rel="canonical" href="https://automantpro.app/">
+<script type="application/ld+json" nonce="${nonce}">${structuredData(input)}</script>
 <style nonce="${nonce}">${STYLES}</style>
+<script nonce="${nonce}">${THEME_BOOT}</script>
 </head>
 <body>
 <main>
-  <h1 class="brand">Auto<span>Mant</span>Pro</h1>
-  <p class="lead">Tu mec\xE1nico de confianza, en WhatsApp</p>
-  <ul>
-    <li>Diagn\xF3stico de tu veh\xEDculo con IA</li>
-    <li>Plan de mantenimiento a tu medida</li>
-    <li>Talleres y repuestos verificados cerca de ti</li>
-  </ul>
+  <header>${logo}
+    <span class="acciones">
+      <span class="pill">90 d\xEDas gratis</span>
+      <button id="tema" class="tema" type="button" aria-label="Cambiar de tema">${icon("sol", "sol")}${icon("luna", "luna")}</button>
+    </span>
+  </header>
+  <section class="hero">
+    <svg class="silueta" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS.auto_hero}</svg>
+    <h1>Tu veh\xEDculo, tu taller y tus repuestos en <em>un solo chat</em></h1>
+    <p class="lead">Mantenimiento, diagn\xF3stico con IA y talleres verificados. Todo por WhatsApp.</p>
+  </section>
+  ${trust}
   ${input.menu && links ? menu : button}
-  <p class="legal">Al escribirnos aceptas los <a href="/terminos">t\xE9rminos y condiciones</a> y la <a href="/privacidad">pol\xEDtica de privacidad</a> (LOPDP).</p>
+  ${steps}
+  ${faq}
+  <p class="legal">Aceptas los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP).</p>
 </main>
 <script nonce="${nonce}">${SCRIPT}</script>
 </body>
 </html>`;
 }
-var ENTRY_PROFILES, STYLES, SCRIPT;
+var ENTRY_PROFILES, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, FAQ;
 var init_page = __esm({
   "packages/api/dist/interfaces/entry/page.js"() {
     "use strict";
     ENTRY_PROFILES = [
-      { key: "dueno", label: "Tengo un veh\xEDculo", emoji: "\u{1F697}", intent: "soy due\xF1o de un veh\xEDculo" },
-      { key: "taller", label: "Tengo un taller", emoji: "\u{1F527}", intent: "tengo un taller" },
-      { key: "almacen", label: "Tengo un almac\xE9n de repuestos", emoji: "\u{1F4E6}", intent: "tengo un almac\xE9n de repuestos" },
-      { key: "cuenta", label: "Ya tengo cuenta", emoji: "\u{1F511}", intent: "ya tengo cuenta" },
+      {
+        key: "dueno",
+        label: "Tengo un veh\xEDculo",
+        emoji: "\u{1F697}",
+        hint: "Plan, s\xEDntomas y turnos",
+        icon: "auto",
+        intent: "soy due\xF1o de un veh\xEDculo"
+      },
+      {
+        key: "taller",
+        label: "Tengo un taller",
+        emoji: "\u{1F527}",
+        hint: "Clientes, agenda y \xF3rdenes",
+        icon: "taller",
+        intent: "tengo un taller"
+      },
+      {
+        key: "almacen",
+        label: "Tengo un almac\xE9n de repuestos",
+        emoji: "\u{1F4E6}",
+        hint: "Cotizaciones y pedidos",
+        icon: "caja",
+        intent: "tengo un almac\xE9n de repuestos"
+      },
+      {
+        key: "cuenta",
+        label: "Ya tengo cuenta",
+        emoji: "\u{1F511}",
+        hint: "Retoma tu conversaci\xF3n",
+        icon: "llave",
+        intent: "ya tengo cuenta"
+      },
       // Sin intención: abre el chat con el mensaje general, para quien solo quiere escribir.
-      { key: "chat", label: "Solo quiero escribir", emoji: "\u{1F4AC}", intent: null }
+      {
+        key: "chat",
+        label: "Solo quiero escribir",
+        emoji: "\u{1F4AC}",
+        hint: "Cu\xE9ntanos con tus palabras",
+        icon: "chat",
+        intent: null
+      }
     ];
+    ICONS = {
+      auto: '<path d="M4 15h16M6 15l1.6-5.2A2 2 0 0 1 9.5 8.4h5a2 2 0 0 1 1.9 1.4L18 15M4 15v3h3v-3M17 15v3h3v-3"/><circle cx="8" cy="15" r="1.4"/><circle cx="16" cy="15" r="1.4"/>',
+      taller: '<path d="M14.5 5.5a3.5 3.5 0 0 0 4.6 4.6L21 12l-9 9-3-3 9-9-2.1-1.9a3.5 3.5 0 0 1-1.4-1.6z"/><path d="M7 4l2.5 2.5L7.5 8.5 5 6z"/>',
+      caja: '<path d="M3.5 8.5 12 4l8.5 4.5v7L12 20l-8.5-4.5z"/><path d="M3.5 8.5 12 13l8.5-4.5M12 13v7"/>',
+      llave: '<circle cx="8" cy="8" r="3.5"/><path d="M10.5 10.5 20 20M16 16l2-2M13.5 13.5l2-2"/>',
+      sol: '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>',
+      luna: '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>',
+      chat: '<path d="M4.5 6.5h15v9h-9l-4 3.5v-3.5h-2z"/>',
+      auto_hero: '<path d="M6 34h52M12 34l4.5-13a6 6 0 0 1 5.7-4.1h19.6a6 6 0 0 1 5.7 4.1L52 34M12 34v7h6v-7M46 34v7h6v-7M22 21h20"/><circle cx="19" cy="34" r="3.4"/><circle cx="45" cy="34" r="3.4"/>',
+      escudo: '<path d="M12 3.5 5.5 6v6c0 3.6 2.7 6.9 6.5 8.5 3.8-1.6 6.5-4.9 6.5-8.5V6z"/><path d="m9 12 2.2 2.2L15.5 10"/>',
+      rayo: '<path d="M13 3.5 6.5 13.5h4L10 20.5 17.5 10h-4z"/>',
+      persona: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 20c.9-3.4 3.5-5 6.5-5s5.6 1.6 6.5 5"/>'
+    };
+    icon = (name, cls = "ico") => `<svg class="${cls}" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] ?? ICONS.chat}</svg>`;
     STYLES = `
-:root{--bg:#f5f8fa;--card:#ffffff;--text:#0f1b24;--muted:#51626f;--cyan:#00a8c6;--green:#16a34a;--ring:rgba(0,168,198,.35)}
-@media (prefers-color-scheme:dark){:root{--bg:#071116;--card:#0d1c24;--text:#e6f1f5;--muted:#9fb3bf;--cyan:#22d3ee;--green:#4ade80;--ring:rgba(34,211,238,.35)}}
+:root{
+  --bg:#05090e;--panel:rgba(255,255,255,.045);--text:#e8f6fb;--muted:#9bb3c2;
+  --line:rgba(120,200,225,.18);--cyan:#22d3ee;--cyan-deep:#0891b2;--lime:#a3e635;--amber:#fbbf24;
+  --grid:rgba(34,211,238,.07);--halo:rgba(34,211,238,.20);--glow:0 0 0 1px rgba(34,211,238,.25),0 12px 40px rgba(8,145,178,.22);
+  --cta-text:#04141a;color-scheme:dark
+}
+/* Tema claro: por preferencia del tel\xE9fono o por el bot\xF3n del encabezado. */
+@media (prefers-color-scheme:light){
+  :root:not([data-tema="oscuro"]){
+    --bg:#f4f8fb;--panel:rgba(255,255,255,.85);--text:#08171f;--muted:#516676;
+    --line:rgba(8,116,140,.18);--cyan:#0e7f96;--cyan-deep:#0b6377;--lime:#3f7a15;--amber:#a45f05;
+    --grid:rgba(14,127,150,.09);--halo:rgba(14,127,150,.14);--glow:0 0 0 1px rgba(14,127,150,.2),0 12px 30px rgba(8,116,140,.14);
+    --cta-text:#ffffff;color-scheme:light
+  }
+}
+:root[data-tema="claro"]{
+  --bg:#f4f8fb;--panel:rgba(255,255,255,.85);--text:#08171f;--muted:#516676;
+  --line:rgba(8,116,140,.18);--cyan:#0e7f96;--cyan-deep:#0b6377;--lime:#3f7a15;--amber:#a45f05;
+  --grid:rgba(14,127,150,.09);--halo:rgba(14,127,150,.14);--glow:0 0 0 1px rgba(14,127,150,.2),0 12px 30px rgba(8,116,140,.14);
+  --cta-text:#ffffff;color-scheme:light
+}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;padding:24px}
-main{width:100%;max-width:460px;background:var(--card);border-radius:20px;padding:32px 24px;box-shadow:0 10px 40px rgba(0,0,0,.08);text-align:center}
-.brand{font-weight:800;font-size:28px;letter-spacing:-.5px;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;min-height:100vh;color:var(--text);background:var(--bg);
+  font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;
+  display:flex;flex-direction:column;align-items:center;position:relative;overflow-x:hidden;
+  -webkit-tap-highlight-color:rgba(34,211,238,.18);
+  padding:calc(12px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left))
+}
+/* Ret\xEDcula tenue y resplandor: el "HUD" del tablero, sin im\xE1genes ni archivos externos. */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(75% 55% at 50% 0%,#000 25%,transparent 100%);
+  mask-image:radial-gradient(75% 55% at 50% 0%,#000 25%,transparent 100%)
+}
+body::after{
+  content:"";position:fixed;left:50%;top:-220px;width:760px;height:420px;transform:translateX(-50%);pointer-events:none;z-index:0;
+  background:radial-gradient(closest-side,var(--halo),transparent 75%);filter:blur(4px)
+}
+main{width:100%;max-width:540px;position:relative;z-index:1}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:2px 0 18px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit}
+.mark{
+  width:42px;height:42px;flex:none;display:grid;place-items:center;color:#041016;
+  background:linear-gradient(145deg,var(--cyan),var(--cyan-deep));
+  clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);
+  box-shadow:0 0 22px rgba(34,211,238,.45)
+}
+.mark svg{width:23px;height:23px;stroke-width:1.9}
+.brand{font-weight:800;font-size:19px;letter-spacing:.2px;margin:0;line-height:1.1;text-transform:uppercase}
 .brand span{color:var(--cyan)}
-.lead{font-size:20px;margin:8px 0 20px}
-ul{list-style:none;padding:0;margin:0 0 28px;text-align:left;display:grid;gap:10px}
-li{padding-left:28px;position:relative;color:var(--muted)}
-li::before{content:"\u2713";position:absolute;left:4px;color:var(--green);font-weight:700}
-.cta{display:block;width:100%;min-height:56px;border:0;border-radius:14px;background:var(--green);color:#fff;font-size:19px;font-weight:700;cursor:pointer}
-.cta:focus-visible{outline:4px solid var(--ring);outline-offset:2px}
-.cta:disabled{background:var(--muted);cursor:not-allowed}
-.small{margin-top:18px;font-size:14px;color:var(--muted)}
-.small a{color:var(--cyan)}
-.soon{margin-top:14px;font-weight:600}
-.menu{display:grid;gap:10px}
-.option{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 18px;border-radius:14px;background:var(--green);color:#fff;font-size:18px;font-weight:700;text-decoration:none}
-.option:nth-child(4),.option:nth-child(5){background:var(--cyan)}
-.option:focus-visible{outline:4px solid var(--ring);outline-offset:2px}
-.legal{margin-top:22px;font-size:12px;color:var(--muted)}
+.brand small{display:block;font:500 11px/1.35 system-ui,-apple-system,sans-serif;color:var(--muted);letter-spacing:.2px;text-transform:none;margin-top:3px;max-width:22ch}
+.acciones{display:flex;align-items:center;gap:8px;margin-left:auto}
+.tema{
+  width:38px;height:38px;flex:none;display:grid;place-items:center;cursor:pointer;color:var(--cyan);
+  background:var(--panel);border:1px solid var(--line);border-radius:11px;font:inherit
+}
+.tema:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.tema svg{width:19px;height:19px}
+.tema .sol{display:none}
+:root[data-tema="claro"] .tema .sol,:root:not([data-tema="oscuro"]) .tema .sol{display:block}
+:root[data-tema="claro"] .tema .luna,:root:not([data-tema="oscuro"]) .tema .luna{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) .tema .sol{display:none}:root:not([data-tema="claro"]) .tema .luna{display:block}}
+:root[data-tema="oscuro"] .tema .sol{display:none}
+:root[data-tema="oscuro"] .tema .luna{display:block}
+.pill{
+  font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.8px;text-transform:uppercase;white-space:nowrap;
+  color:var(--lime);background:rgba(163,230,53,.10);border:1px solid rgba(163,230,53,.35);padding:7px 10px;border-radius:999px
+}
+h1{font-size:25px;line-height:1.16;letter-spacing:-.4px;margin:0 0 8px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--cyan);text-shadow:0 0 18px rgba(34,211,238,.45)}
+.lead{font-size:14px;color:var(--muted);margin:0;max-width:46ch}
+.hero{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 14px 12px;margin:0 0 9px;backdrop-filter:blur(6px)}
+.hero::before{content:"";position:absolute;left:16px;right:16px;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.8}
+.hero .silueta{position:absolute;right:-18px;bottom:-16px;width:180px;color:var(--cyan);opacity:.11;pointer-events:none}
+.hero h1{position:relative}
+.hero .lead{position:relative}
+.trust{display:flex;justify-content:space-between;gap:8px;margin:0 0 10px;padding:8px 12px;list-style:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(6px)}
+.trust li{display:flex;align-items:baseline;gap:5px}
+.trust b{font:800 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--cyan);letter-spacing:-.4px}
+.trust span{font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+.consola{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(34,211,238,.06);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 16px;font-size:14px;color:var(--muted)}
+.consola .punto{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);flex:none}
+.section{font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin:0 0 9px;display:flex;align-items:center;gap:10px}
+.section em{font:500 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.4px;text-transform:none;color:var(--muted);font-style:normal}
+.section::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.menu{display:grid;gap:7px;margin:0 0 8px}
+.option{
+  position:relative;display:flex;align-items:center;gap:12px;min-height:56px;padding:9px 14px;text-decoration:none;color:inherit;
+  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:14px;
+  overflow:hidden;transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease
+}
+.option::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--cyan),transparent);opacity:.7}
+.option:hover{transform:translateY(-1px);border-color:rgba(34,211,238,.55);box-shadow:var(--glow)}
+.option:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.badge{
+  width:40px;height:40px;flex:none;display:grid;place-items:center;color:var(--cyan);
+  background:rgba(34,211,238,.10);border:1px solid rgba(34,211,238,.28);
+  clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%)
+}
+.option .ico{width:23px;height:23px}
+.option b{display:block;font-size:15px;line-height:1.25;letter-spacing:-.2px}
+.option i{display:block;font-style:normal;font-size:12.5px;color:var(--muted);margin-top:2px}
+.option .go{margin-left:auto;flex:none;color:var(--cyan);font-size:20px;line-height:1;opacity:.75}
+.option.ghost{background:transparent;border-style:dashed;min-height:52px}
+.option.ghost::before{background:linear-gradient(180deg,var(--muted),transparent);opacity:.4}
+.option.ghost .badge{background:transparent;border-color:var(--line);color:var(--muted)}
+.cta{
+  display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:60px;border:0;border-radius:14px;cursor:pointer;
+  background:linear-gradient(135deg,var(--cyan),var(--cyan-deep));color:#04141a;font:800 18px/1 inherit;font-family:inherit;
+  letter-spacing:.3px;box-shadow:0 10px 30px rgba(34,211,238,.3)
+}
+.cta:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.cta:disabled{background:rgba(255,255,255,.08);color:var(--muted);box-shadow:none;cursor:not-allowed}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 12px;backdrop-filter:blur(6px)}
+.card>summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:2px;text-transform:uppercase;color:var(--cyan)
+}
+.card>summary::-webkit-details-marker{display:none}
+.card>summary::after{content:"+";font-size:16px;line-height:1;color:var(--muted)}
+.card[open]>summary::after{content:"\u2212"}
+.card[open]>summary{margin-bottom:11px}
+.card>summary:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:12px}
+.steps li{counter-increment:s;display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted)}
+.pregunta{font-size:14px;margin:12px 0 4px;line-height:1.3}
+.respuesta{font-size:13.5px;color:var(--muted);margin:0}
+.steps li::before{
+  content:"0" counter(s);flex:none;font:800 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--cyan);
+  background:rgba(34,211,238,.10);border:1px solid rgba(34,211,238,.3);border-radius:6px;padding:6px 7px
+}
+.small{font-size:13px;color:var(--muted);margin:0 0 8px}
+.small.linea{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+.nota{font:500 11px/1.2 system-ui,-apple-system,sans-serif;font-style:normal;color:var(--muted);opacity:.9}
+.small.spaced{margin-top:16px}
+.small a{color:var(--cyan);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(34,211,238,.35)}
+.code{font:700 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(34,211,238,.10);border:1px solid rgba(34,211,238,.3);color:var(--cyan);padding:5px 9px;border-radius:7px;letter-spacing:1.2px}
+.soon{margin-top:14px;font-weight:600;text-align:center;color:var(--amber)}
+.legal{font-size:11.5px;color:var(--muted);margin:6px 0 0;text-align:center;opacity:.85}
+.legal a{color:var(--cyan)}
+@media (prefers-reduced-motion:reduce){.option{transition:none}}
+@media (max-width:360px){h1{font-size:23px}.option i{display:none}}
+/* Pantallas bajas: se recorta lo accesorio para que todo quepa sin desplazar. */
+@media (max-height:700px){
+  h1{font-size:22px}.lead{display:none}.trust{margin-bottom:10px}
+  .option{min-height:58px}.option i{display:none}.hero{padding:12px 14px}
+}
+`;
+    THEME_BOOT = `
+(function(){try{var t=localStorage.getItem('amp-tema');if(t==='claro'||t==='oscuro'){document.documentElement.setAttribute('data-tema',t);}}catch(e){}})();
 `;
     SCRIPT = `
+(function(){
+  var boton=document.getElementById('tema');
+  if(boton){
+    var raiz=document.documentElement;
+    var oscuroDelSistema=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var actual=function(){return raiz.getAttribute('data-tema')||(oscuroDelSistema?'oscuro':'claro');};
+    var aplicar=function(t){
+      raiz.setAttribute('data-tema',t);
+      boton.setAttribute('aria-label',t==='oscuro'?'Cambiar a tema claro':'Cambiar a tema oscuro');
+      try{localStorage.setItem('amp-tema',t);}catch(e){}
+    };
+    boton.setAttribute('aria-label',actual()==='oscuro'?'Cambiar a tema claro':'Cambiar a tema oscuro');
+    boton.addEventListener('click',function(){aplicar(actual()==='oscuro'?'claro':'oscuro');});
+  }
+})();
 (function(){
   var b=document.getElementById('abrir');
   if(!b||b.disabled)return;
@@ -61335,6 +61609,28 @@ li::before{content:"\u2713";position:absolute;left:4px;color:var(--green);font-w
   });
 })();
 `;
+    FAQ = [
+      {
+        q: "\xBFC\xF3mo pido mantenimiento para mi carro en Ecuador?",
+        a: "Escribes por WhatsApp a AutoMantPro con la marca, el modelo y el kilometraje, y recibes el plan de mantenimiento que le toca a tu veh\xEDculo y el turno en un taller cercano."
+      },
+      {
+        q: "\xBFC\xF3mo encuentro un taller mec\xE1nico de confianza cerca de m\xED?",
+        a: "AutoMantPro busca talleres cercanos y, con el plan Premium, te conecta con talleres verificados: precio acordado antes de entrar, orden de trabajo y garant\xEDa respaldada."
+      },
+      {
+        q: "\xBFPuedo cotizar repuestos sin recorrer almacenes?",
+        a: "S\xED. Se pide el repuesto una vez y varios almacenes responden con precio, marca, garant\xEDa y tiempo de entrega para comparar en el mismo chat."
+      },
+      {
+        q: "\xBFNecesito instalar una aplicaci\xF3n?",
+        a: "No. Todo ocurre dentro de WhatsApp: no hay que instalar nada ni crear contrase\xF1as."
+      },
+      {
+        q: "\xBFCu\xE1nto cuesta?",
+        a: "Hay un plan gratuito con el plan de mantenimiento, recordatorios y b\xFAsqueda de talleres cercanos. El plan Premium agrega talleres verificados, cotizaciones a varios almacenes, garant\xEDa respaldada e historial exportable."
+      }
+    ];
   }
 });
 
@@ -61356,9 +61652,24 @@ function publicNumber() {
 }
 function newVisitCode() {
   let code = "";
-  for (let i = 0; i < 4; i++)
+  for (let i = 0; i < CODE_LENGTH; i++)
     code += CODE_ALPHABET[randomInt(CODE_ALPHABET.length)];
   return `AMP-${code}`;
+}
+async function uniqueVisitCode(taken) {
+  let code = newVisitCode();
+  if (!taken)
+    return code;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      if (!await taken(code))
+        return code;
+    } catch {
+      return code;
+    }
+    code = newVisitCode();
+  }
+  return code;
 }
 function isPreviewBot(userAgent) {
   return typeof userAgent === "string" && PREVIEW_BOTS.test(userAgent);
@@ -61394,7 +61705,7 @@ async function entryRoutes(app2, options = {}) {
     }
     const nonce = randomBytes(16).toString("base64");
     const query = request.query ?? {};
-    const code = newVisitCode();
+    const code = await uniqueVisitCode(options.codeTaken);
     const ref = sanitizeRef(query.ref);
     const profile = sanitizeProfile(query.perfil);
     const bot = isPreviewBot(request.headers["user-agent"]);
@@ -61417,15 +61728,16 @@ async function entryRoutes(app2, options = {}) {
     return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
   });
 }
-var API_STATUS, CODE_ALPHABET, VISITS_PER_HOUR, PREVIEW_BOTS;
+var API_STATUS, CODE_ALPHABET, CODE_LENGTH, VISITS_PER_HOUR, PREVIEW_BOTS;
 var init_entry = __esm({
   "packages/api/dist/interfaces/entry/index.js"() {
     "use strict";
     init_page();
     API_STATUS = { status: "ok", service: "AutoMantPro API" };
     CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    CODE_LENGTH = 5;
     VISITS_PER_HOUR = 30;
-    PREVIEW_BOTS = /facebookexternalhit|facebot|whatsapp|twitterbot|slackbot|telegrambot|linkedinbot|discordbot|googlebot|bingbot|applebot|pinterest|skypeuripreview|redditbot|embedly/i;
+    PREVIEW_BOTS = /facebookexternalhit|facebot|whatsapp|twitterbot|slackbot|telegrambot|linkedinbot|discordbot|googlebot|google-inspectiontool|storebot-google|google-extended|bingbot|bingpreview|applebot|yandex|duckduckbot|baiduspider|pinterest|skypeuripreview|redditbot|embedly|ahrefsbot|semrushbot|gptbot|oai-searchbot|chatgpt-user|claudebot|claude-web|anthropic-ai|perplexitybot|perplexity-user|ccbot|google-cloudvertexbot|bytespider|amazonbot|meta-externalagent|cohere-ai|youbot|diffbot/i;
   }
 });
 
@@ -61791,7 +62103,8 @@ var init_statements_extra = __esm({
       "RelationshipMessage",
       "Dispute",
       "Sanction",
-      "DataRequest"
+      "DataRequest",
+      "Visit"
     ];
     APP_SETTING_TABLE_SQL = "CREATE TABLE IF NOT EXISTS `AppSetting` (\n    `name` VARCHAR(191) NOT NULL,\n    `value` TEXT NOT NULL,\n    `updatedBy` VARCHAR(191) NULL,\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    PRIMARY KEY (`name`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
     EXTRA_STATEMENTS = [
@@ -61924,6 +62237,41 @@ var init_statements_extra = __esm({
         kind: "createTable",
         target: "Sanction",
         sql: "CREATE TABLE IF NOT EXISTS `Sanction` (\n    `id` VARCHAR(191) NOT NULL,\n    `userId` VARCHAR(191) NOT NULL,\n    `level` VARCHAR(30) NOT NULL,\n    `reason` VARCHAR(500) NOT NULL,\n    `relationshipId` VARCHAR(191) NULL,\n    `disputeId` VARCHAR(191) NULL,\n    `startsAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `endsAt` DATETIME(3) NULL,\n    `liftedAt` DATETIME(3) NULL,\n    `liftedBy` VARCHAR(191) NULL,\n    `liftReason` VARCHAR(191) NULL,\n    `createdBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    INDEX `Sanction_userId_startsAt_idx`(`userId`, `startsAt`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      // Visitas a la página de inicio (docs/43): el código AMP-XXXXX es único, se liga al teléfono
+      // cuando la persona escribe y al usuario cuando se registra. Sin datos personales hasta que
+      // alguien escribe.
+      {
+        kind: "createTable",
+        target: "Visit",
+        sql: "CREATE TABLE IF NOT EXISTS `Visit` (\n    `code` VARCHAR(16) NOT NULL,\n    `ref` VARCHAR(32) NULL,\n    `profile` VARCHAR(20) NULL,\n    `phone` VARCHAR(20) NULL,\n    `userId` VARCHAR(191) NULL,\n    `claimedAt` DATETIME(3) NULL,\n    `linkedAt` DATETIME(3) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    INDEX `Visit_createdAt_idx`(`createdAt`),\n    INDEX `Visit_phone_idx`(`phone`),\n    INDEX `Visit_userId_idx`(`userId`),\n    PRIMARY KEY (`code`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      // Suscripciones y verificación de pagos (docs/42). La tabla Subscription ya existe en el
+      // esquema generado: aquí solo se amplía con lo que necesita el cobro manual. El pago queda
+      // pendiente hasta que un administrador lo verifica.
+      addColumn("Subscription", "number", "INTEGER NULL"),
+      addColumn("Subscription", "status", "VARCHAR(20) NOT NULL DEFAULT 'activa'"),
+      addColumn("Subscription", "months", "INTEGER NULL"),
+      addColumn("Subscription", "amountUsd", "DECIMAL(10, 2) NULL"),
+      addColumn("Subscription", "method", "VARCHAR(20) NULL"),
+      addColumn("Subscription", "reference", "VARCHAR(191) NULL"),
+      addColumn("Subscription", "notes", "TEXT NULL"),
+      addColumn("Subscription", "verifiedBy", "VARCHAR(191) NULL"),
+      addColumn("Subscription", "verifiedAt", "DATETIME(3) NULL"),
+      addColumn("Subscription", "decisionReason", "VARCHAR(191) NULL"),
+      addColumn("Subscription", "createdBy", "VARCHAR(191) NULL"),
+      addColumn("Subscription", "createdAt", "DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)"),
+      addColumn("Subscription", "updatedAt", "DATETIME(3) NULL"),
+      {
+        // Un plan sin vencimiento (una cortesía, por ejemplo) necesita que la fecha admita nulo.
+        kind: "modifyColumn",
+        target: "Subscription.expiresAt",
+        sql: "ALTER TABLE `Subscription` MODIFY COLUMN `expiresAt` DATETIME(3) NULL"
+      },
+      {
+        kind: "createIndex",
+        target: "Subscription.Subscription_status_createdAt_idx",
+        sql: "CREATE INDEX `Subscription_status_createdAt_idx` ON `Subscription`(`status`, `createdAt`)"
       },
       // Solicitudes de la LOPDP (docs/35 A3): acceso, rectificación y eliminación.
       {
@@ -62268,10 +62616,10 @@ var require_lib2 = __commonJS({
         millisecond = date.getMilliseconds();
       } else {
         const timezoneOffsetMinutes = convertTimezone(timezone);
-        let time2 = date.getTime();
+        let time3 = date.getTime();
         if (timezoneOffsetMinutes !== false && timezoneOffsetMinutes !== 0)
-          time2 += timezoneOffsetMinutes * 6e4;
-        const adjustedDate = new Date(time2);
+          time3 += timezoneOffsetMinutes * 6e4;
+        const adjustedDate = new Date(time3);
         year = adjustedDate.getUTCFullYear();
         month = adjustedDate.getUTCMonth() + 1;
         day2 = adjustedDate.getUTCDate();
@@ -67552,27 +67900,27 @@ var require_umd = __commonJS({
         }
         Long.fromBits = fromBits;
         var pow_dbl = Math.pow;
-        function fromString(str5, unsigned, radix) {
-          if (str5.length === 0) throw Error("empty string");
+        function fromString(str6, unsigned, radix) {
+          if (str6.length === 0) throw Error("empty string");
           if (typeof unsigned === "number") {
             radix = unsigned;
             unsigned = false;
           } else {
             unsigned = !!unsigned;
           }
-          if (str5 === "NaN" || str5 === "Infinity" || str5 === "+Infinity" || str5 === "-Infinity")
+          if (str6 === "NaN" || str6 === "Infinity" || str6 === "+Infinity" || str6 === "-Infinity")
             return unsigned ? UZERO : ZERO;
           radix = radix || 10;
           if (radix < 2 || 36 < radix) throw RangeError("radix");
           var p;
-          if ((p = str5.indexOf("-")) > 0) throw Error("interior hyphen");
+          if ((p = str6.indexOf("-")) > 0) throw Error("interior hyphen");
           else if (p === 0) {
-            return fromString(str5.substring(1), unsigned, radix).neg();
+            return fromString(str6.substring(1), unsigned, radix).neg();
           }
           var radixToPower = fromNumber(pow_dbl(radix, 8));
           var result = ZERO;
-          for (var i = 0; i < str5.length; i += 8) {
-            var size = Math.min(8, str5.length - i), value2 = parseInt(str5.substring(i, i + size), radix);
+          for (var i = 0; i < str6.length; i += 8) {
+            var size = Math.min(8, str6.length - i), value2 = parseInt(str6.substring(i, i + size), radix);
             if (size < 8) {
               var power = fromNumber(pow_dbl(radix, size));
               result = result.mul(power).add(fromNumber(value2));
@@ -68120,12 +68468,12 @@ var require_bom_handling = __commonJS({
       this.encoder = encoder;
       this.addBOM = true;
     }
-    PrependBOMWrapper.prototype.write = function(str5) {
+    PrependBOMWrapper.prototype.write = function(str6) {
       if (this.addBOM) {
-        str5 = BOMChar + str5;
+        str6 = BOMChar + str6;
         this.addBOM = false;
       }
-      return this.encoder.write(str5);
+      return this.encoder.write(str6);
     };
     PrependBOMWrapper.prototype.end = function() {
       return this.encoder.end();
@@ -68224,31 +68572,31 @@ var require_internal = __commonJS({
     function InternalEncoder(options, codec) {
       this.enc = codec.enc;
     }
-    InternalEncoder.prototype.write = function(str5) {
-      return Buffer2.from(str5, this.enc);
+    InternalEncoder.prototype.write = function(str6) {
+      return Buffer2.from(str6, this.enc);
     };
     InternalEncoder.prototype.end = function() {
     };
     function InternalEncoderBase64(options, codec) {
       this.prevStr = "";
     }
-    InternalEncoderBase64.prototype.write = function(str5) {
-      str5 = this.prevStr + str5;
-      var completeQuads = str5.length - str5.length % 4;
-      this.prevStr = str5.slice(completeQuads);
-      str5 = str5.slice(0, completeQuads);
-      return Buffer2.from(str5, "base64");
+    InternalEncoderBase64.prototype.write = function(str6) {
+      str6 = this.prevStr + str6;
+      var completeQuads = str6.length - str6.length % 4;
+      this.prevStr = str6.slice(completeQuads);
+      str6 = str6.slice(0, completeQuads);
+      return Buffer2.from(str6, "base64");
     };
     InternalEncoderBase64.prototype.end = function() {
       return Buffer2.from(this.prevStr, "base64");
     };
     function InternalEncoderCesu8(options, codec) {
     }
-    InternalEncoderCesu8.prototype.write = function(str5) {
-      var buf = Buffer2.alloc(str5.length * 3);
+    InternalEncoderCesu8.prototype.write = function(str6) {
+      var buf = Buffer2.alloc(str6.length * 3);
       var bufIdx = 0;
-      for (var i = 0; i < str5.length; i++) {
-        var charCode = str5.charCodeAt(i);
+      for (var i = 0; i < str6.length; i++) {
+        var charCode = str6.charCodeAt(i);
         if (charCode < 128) {
           buf[bufIdx++] = charCode;
         } else if (charCode < 2048) {
@@ -68329,25 +68677,25 @@ var require_internal = __commonJS({
     function InternalEncoderUtf8(options, codec) {
       this.highSurrogate = "";
     }
-    InternalEncoderUtf8.prototype.write = function(str5) {
+    InternalEncoderUtf8.prototype.write = function(str6) {
       if (this.highSurrogate) {
-        str5 = this.highSurrogate + str5;
+        str6 = this.highSurrogate + str6;
         this.highSurrogate = "";
       }
-      if (str5.length > 0) {
-        var charCode = str5.charCodeAt(str5.length - 1);
+      if (str6.length > 0) {
+        var charCode = str6.charCodeAt(str6.length - 1);
         if (charCode >= 55296 && charCode < 56320) {
-          this.highSurrogate = str5[str5.length - 1];
-          str5 = str5.slice(0, str5.length - 1);
+          this.highSurrogate = str6[str6.length - 1];
+          str6 = str6.slice(0, str6.length - 1);
         }
       }
-      return Buffer2.from(str5, this.enc);
+      return Buffer2.from(str6, this.enc);
     };
     InternalEncoderUtf8.prototype.end = function() {
       if (this.highSurrogate) {
-        var str5 = this.highSurrogate;
+        var str6 = this.highSurrogate;
         this.highSurrogate = "";
-        return Buffer2.from(str5, this.enc);
+        return Buffer2.from(str6, this.enc);
       }
     };
   }
@@ -68374,8 +68722,8 @@ var require_utf32 = __commonJS({
       this.isLE = codec.isLE;
       this.highSurrogate = 0;
     }
-    Utf32Encoder.prototype.write = function(str5) {
-      var src = Buffer2.from(str5, "ucs2");
+    Utf32Encoder.prototype.write = function(str6) {
+      var src = Buffer2.from(str6, "ucs2");
       var dst = Buffer2.alloc(src.length * 2 + 4);
       var write32 = this.isLE ? dst.writeUInt32LE : dst.writeUInt32BE;
       var offset2 = 0;
@@ -68500,8 +68848,8 @@ var require_utf32 = __commonJS({
       }
       this.encoder = codec.iconv.getEncoder(options.defaultEncoding || "utf-32le", options);
     }
-    Utf32AutoEncoder.prototype.write = function(str5) {
-      return this.encoder.write(str5);
+    Utf32AutoEncoder.prototype.write = function(str6) {
+      return this.encoder.write(str6);
     };
     Utf32AutoEncoder.prototype.end = function() {
       return this.encoder.end();
@@ -68601,8 +68949,8 @@ var require_utf16 = __commonJS({
     Utf16BECodec.prototype.bomAware = true;
     function Utf16BEEncoder() {
     }
-    Utf16BEEncoder.prototype.write = function(str5) {
-      var buf = Buffer2.from(str5, "ucs2");
+    Utf16BEEncoder.prototype.write = function(str6) {
+      var buf = Buffer2.from(str6, "ucs2");
       for (var i = 0; i < buf.length; i += 2) {
         var tmp = buf[i];
         buf[i] = buf[i + 1];
@@ -68651,8 +68999,8 @@ var require_utf16 = __commonJS({
       }
       this.encoder = codec.iconv.getEncoder("utf-16le", options);
     }
-    Utf16Encoder.prototype.write = function(str5) {
-      return this.encoder.write(str5);
+    Utf16Encoder.prototype.write = function(str6) {
+      return this.encoder.write(str6);
     };
     Utf16Encoder.prototype.end = function() {
       return this.encoder.end();
@@ -68748,8 +69096,8 @@ var require_utf7 = __commonJS({
     function Utf7Encoder(options, codec) {
       this.iconv = codec.iconv;
     }
-    Utf7Encoder.prototype.write = function(str5) {
-      return Buffer2.from(str5.replace(nonDirectChars, function(chunk) {
+    Utf7Encoder.prototype.write = function(str6) {
+      return Buffer2.from(str6.replace(nonDirectChars, function(chunk) {
         return "+" + (chunk === "+" ? "" : this.iconv.encode(chunk, "utf16-be").toString("base64").replace(/=+$/, "")) + "-";
       }.bind(this)));
     };
@@ -68833,14 +69181,14 @@ var require_utf7 = __commonJS({
       this.base64Accum = Buffer2.alloc(6);
       this.base64AccumIdx = 0;
     }
-    Utf7IMAPEncoder.prototype.write = function(str5) {
+    Utf7IMAPEncoder.prototype.write = function(str6) {
       var inBase64 = this.inBase64;
       var base64Accum = this.base64Accum;
       var base64AccumIdx = this.base64AccumIdx;
-      var buf = Buffer2.alloc(str5.length * 5 + 10);
+      var buf = Buffer2.alloc(str6.length * 5 + 10);
       var bufIdx = 0;
-      for (var i2 = 0; i2 < str5.length; i2++) {
-        var uChar = str5.charCodeAt(i2);
+      for (var i2 = 0; i2 < str6.length; i2++) {
+        var uChar = str6.charCodeAt(i2);
         if (uChar >= 32 && uChar <= 126) {
           if (inBase64) {
             if (base64AccumIdx > 0) {
@@ -68981,10 +69329,10 @@ var require_sbcs_codec = __commonJS({
     function SBCSEncoder(options, codec) {
       this.encodeBuf = codec.encodeBuf;
     }
-    SBCSEncoder.prototype.write = function(str5) {
-      var buf = Buffer2.alloc(str5.length);
-      for (var i = 0; i < str5.length; i++) {
-        buf[i] = this.encodeBuf[str5.charCodeAt(i)];
+    SBCSEncoder.prototype.write = function(str6) {
+      var buf = Buffer2.alloc(str6.length);
+      for (var i = 0; i < str6.length; i++) {
+        buf[i] = this.encodeBuf[str6.charCodeAt(i)];
       }
       return buf;
     };
@@ -69860,8 +70208,8 @@ var require_dbcs_codec = __commonJS({
       this.defaultCharSingleByte = codec.defCharSB;
       this.gb18030 = codec.gb18030;
     }
-    DBCSEncoder.prototype.write = function(str5) {
-      var newBuf = Buffer2.alloc(str5.length * (this.gb18030 ? 4 : 3));
+    DBCSEncoder.prototype.write = function(str6) {
+      var newBuf = Buffer2.alloc(str6.length * (this.gb18030 ? 4 : 3));
       var leadSurrogate = this.leadSurrogate;
       var seqObj = this.seqObj;
       var nextChar = -1;
@@ -69869,8 +70217,8 @@ var require_dbcs_codec = __commonJS({
       var j = 0;
       while (true) {
         if (nextChar === -1) {
-          if (i2 == str5.length) break;
-          var uCode = str5.charCodeAt(i2++);
+          if (i2 == str6.length) break;
+          var uCode = str6.charCodeAt(i2++);
         } else {
           var uCode = nextChar;
           nextChar = -1;
@@ -71708,10 +72056,10 @@ var require_lib4 = __commonJS({
     module.exports.encodings = null;
     module.exports.defaultCharUnicode = "\uFFFD";
     module.exports.defaultCharSingleByte = "?";
-    module.exports.encode = function encode(str5, encoding, options) {
-      str5 = "" + (str5 || "");
+    module.exports.encode = function encode(str6, encoding, options) {
+      str6 = "" + (str6 || "");
       var encoder = module.exports.getEncoder(encoding, options);
-      var res = encoder.write(str5);
+      var res = encoder.write(str6);
       var trail = encoder.end();
       return trail && trail.length > 0 ? Buffer2.concat([res, trail]) : res;
     };
@@ -72098,9 +72446,9 @@ var require_types6 = __commonJS({
 var require_helpers = __commonJS({
   "node_modules/mysql2/lib/helpers.js"(exports) {
     "use strict";
-    function srcEscape(str5) {
+    function srcEscape(str6) {
       return JSON.stringify({
-        [str5]: 1
+        [str6]: 1
       }).slice(1, -3);
     }
     exports.srcEscape = srcEscape;
@@ -72110,12 +72458,12 @@ var require_helpers = __commonJS({
       const REQUIRE_TERMINATOR = "";
       highlightFn = __require(`cardinal${REQUIRE_TERMINATOR}`).highlight;
     } catch {
-      highlightFn = (text4) => {
+      highlightFn = (text5) => {
         if (!cardinalRecommended) {
           console.log("For nicer debug output consider install cardinal@^2.0.0");
           cardinalRecommended = true;
         }
-        return text4;
+        return text5;
       };
     }
     function printDebugWithCode(msg, code) {
@@ -72281,12 +72629,12 @@ var require_packet = __commonJS({
     var Types = require_types6();
     var ZERO_DATE = "0000-00-00";
     var pad = "000000000000";
-    function leftPad(num2, value2) {
+    function leftPad(num3, value2) {
       const s = value2.toString();
-      if (s.length >= num2) {
+      if (s.length >= num3) {
         return s;
       }
-      return (pad + s).slice(-num2);
+      return (pad + s).slice(-num3);
     }
     var minus = "-".charCodeAt(0);
     var plus = "+".charCodeAt(0);
@@ -72356,8 +72704,8 @@ var require_packet = __commonJS({
       haveMoreData() {
         return this.end > this.offset;
       }
-      skip(num2) {
-        this.offset += num2;
+      skip(num3) {
+        this.offset += num3;
       }
       readInt8() {
         return this.buffer[this.offset++];
@@ -72527,14 +72875,14 @@ var require_packet = __commonJS({
           }
           return localDate(y, m, d, H, M, S, ms);
         }
-        let str5 = this.readDateTimeString(6, "T", null);
-        if (str5.startsWith(ZERO_DATE)) {
+        let str6 = this.readDateTimeString(6, "T", null);
+        if (str6.startsWith(ZERO_DATE)) {
           return /* @__PURE__ */ new Date(NaN);
         }
-        if (str5.length === 10) {
-          str5 += "T00:00:00";
+        if (str6.length === 10) {
+          str6 += "T00:00:00";
         }
-        return new Date(str5 + timezone);
+        return new Date(str6 + timezone);
       }
       readDateTimeString(decimals, timeSep, columnType) {
         const length = this.readInt8();
@@ -72545,37 +72893,37 @@ var require_packet = __commonJS({
         let M = 0;
         let S = 0;
         let ms = 0;
-        let str5 = ZERO_DATE;
+        let str6 = ZERO_DATE;
         if (length > 3) {
           y = this.readInt16();
           m = this.readInt8();
           d = this.readInt8();
-          str5 = [leftPad(4, y), leftPad(2, m), leftPad(2, d)].join("-");
+          str6 = [leftPad(4, y), leftPad(2, m), leftPad(2, d)].join("-");
         }
         if (length > 6) {
           H = this.readInt8();
           M = this.readInt8();
           S = this.readInt8();
-          str5 += `${timeSep || " "}${[
+          str6 += `${timeSep || " "}${[
             leftPad(2, H),
             leftPad(2, M),
             leftPad(2, S)
           ].join(":")}`;
         } else if (columnType === Types.DATETIME || columnType === Types.TIMESTAMP) {
-          str5 += " 00:00:00";
+          str6 += " 00:00:00";
         }
         if (length > 10) {
           ms = this.readInt32();
-          str5 += ".";
+          str6 += ".";
           if (decimals) {
             ms = leftPad(6, ms);
             if (ms.length > decimals) {
               ms = ms.substring(0, decimals);
             }
           }
-          str5 += ms;
+          str6 += ms;
         }
-        return str5;
+        return str6;
       }
       // TIME - value as a string, Can be negative
       readTimeString(convertTtoMs) {
@@ -72682,20 +73030,20 @@ var require_packet = __commonJS({
           this.offset++;
           sign = -1;
         }
-        let str5;
+        let str6;
         const numDigits = end - this.offset;
         if (supportBigNumbers) {
           if (numDigits >= 15) {
-            str5 = this.readString(end - this.offset, "binary");
-            result = parseInt(str5, 10);
+            str6 = this.readString(end - this.offset, "binary");
+            result = parseInt(str6, 10);
             if (Number.isSafeInteger(sign * result)) {
               return sign * result;
             }
-            return sign === -1 ? `-${str5}` : str5;
+            return sign === -1 ? `-${str6}` : str6;
           }
           if (numDigits > 16) {
-            str5 = this.readString(end - this.offset);
-            return sign === -1 ? `-${str5}` : str5;
+            str6 = this.readString(end - this.offset);
+            return sign === -1 ? `-${str6}` : str6;
           }
         }
         if (this.buffer[this.offset] === plus) {
@@ -72706,12 +73054,12 @@ var require_packet = __commonJS({
           result += this.buffer[this.offset] - 48;
           this.offset++;
         }
-        const num2 = result * sign;
+        const num3 = result * sign;
         if (!supportBigNumbers) {
-          return num2;
+          return num3;
         }
-        if (Number.isSafeInteger(num2)) {
-          return num2;
+        if (Number.isSafeInteger(num3)) {
+          return num3;
         }
         return this.buffer.toString("ascii", start, end);
       }
@@ -72752,7 +73100,7 @@ var require_packet = __commonJS({
         }
         const bufferLength = buffer.length;
         function parseGeometry() {
-          let x, y, i, j, numPoints, numRings, num2, line;
+          let x, y, i, j, numPoints, numRings, num3, line;
           let result = null;
           if (offset2 + 5 > bufferLength) {
             return null;
@@ -72833,13 +73181,13 @@ var require_packet = __commonJS({
               if (offset2 + 4 > bufferLength) {
                 return null;
               }
-              num2 = byteOrder ? buffer.readUInt32LE(offset2) : buffer.readUInt32BE(offset2);
+              num3 = byteOrder ? buffer.readUInt32LE(offset2) : buffer.readUInt32BE(offset2);
               offset2 += 4;
-              if (num2 > (bufferLength - offset2) / 9) {
+              if (num3 > (bufferLength - offset2) / 9) {
                 return null;
               }
               result = [];
-              for (i = num2; i > 0; i--) {
+              for (i = num3; i > 0; i--) {
                 result.push(parseGeometry());
               }
               break;
@@ -72860,11 +73208,11 @@ var require_packet = __commonJS({
       // With supportBigNumbers, unsafe integers become exact strings,
       // mirroring the option's behaviour for BIGINT columns
       parseJson(encoding, supportBigNumbers) {
-        const str5 = this.readLengthCodedString(encoding);
-        if (supportBigNumbers && jsonSourceAccessSupported && str5 !== null && jsonBigNumeral.test(str5)) {
-          return JSON.parse(str5, jsonBigNumberReviver);
+        const str6 = this.readLengthCodedString(encoding);
+        if (supportBigNumbers && jsonSourceAccessSupported && str6 !== null && jsonBigNumeral.test(str6)) {
+          return JSON.parse(str6, jsonBigNumberReviver);
         }
-        return JSON.parse(str5);
+        return JSON.parse(str6);
       }
       parseDate(timezone) {
         const strLen = this.readLengthCodedNumber();
@@ -72905,9 +73253,9 @@ var require_packet = __commonJS({
             return /* @__PURE__ */ new Date(NaN);
           }
           if (y < 100) {
-            const str6 = StringParser.decode(b, "binary", s, s + len);
+            const str7 = StringParser.decode(b, "binary", s, s + len);
             this.offset += len;
-            return !timezone || timezone === "local" ? new Date(str6) : /* @__PURE__ */ new Date(`${str6}${timezone}`);
+            return !timezone || timezone === "local" ? new Date(str7) : /* @__PURE__ */ new Date(`${str7}${timezone}`);
           }
           const h = (b[s + 11] - 48) * 10 + (b[s + 12] - 48);
           const mi = (b[s + 14] - 48) * 10 + (b[s + 15] - 48);
@@ -72936,12 +73284,12 @@ var require_packet = __commonJS({
             `${StringParser.decode(b, "binary", s, s + len)}${timezone}`
           );
         }
-        const str5 = StringParser.decode(b, "binary", s, s + len);
+        const str6 = StringParser.decode(b, "binary", s, s + len);
         this.offset += len;
         if (!timezone || timezone === "local") {
-          return new Date(str5);
+          return new Date(str6);
         }
-        return /* @__PURE__ */ new Date(`${str5}${timezone}`);
+        return /* @__PURE__ */ new Date(`${str6}${timezone}`);
       }
       parseFloat(len) {
         if (len === null) {
@@ -72951,9 +73299,9 @@ var require_packet = __commonJS({
           return 0;
         }
         if (len > 17) {
-          const str5 = this.buffer.toString("utf8", this.offset, this.offset + len);
+          const str6 = this.buffer.toString("utf8", this.offset, this.offset + len);
           this.offset += len;
-          return Number.parseFloat(str5);
+          return Number.parseFloat(str6);
         }
         let result = 0;
         const end = this.offset + len;
@@ -72974,9 +73322,9 @@ var require_packet = __commonJS({
             this.offset++;
           } else if (charCode === exponent || charCode === exponentCapital) {
             const start = end - len;
-            const str5 = this.buffer.toString("utf8", start, end);
+            const str6 = this.buffer.toString("utf8", start, end);
             this.offset = end;
-            return Number.parseFloat(str5);
+            return Number.parseFloat(str6);
           } else {
             result *= 10;
             result += this.buffer[this.offset] - 48;
@@ -73214,8 +73562,8 @@ var require_packet = __commonJS({
         }
         return 9;
       }
-      static lengthCodedStringLength(str5, encoding) {
-        const buf = StringParser.encode(str5, encoding);
+      static lengthCodedStringLength(str6, encoding) {
+        const buf = StringParser.encode(str6, encoding);
         const slen = buf.length;
         return _Packet.lengthCodedNumberLength(slen) + slen;
       }
@@ -76353,8 +76701,8 @@ var require_mysql_native_password = __commonJS({
 var require_mysql_clear_password = __commonJS({
   "node_modules/mysql2/lib/auth_plugins/mysql_clear_password.js"(exports, module) {
     "use strict";
-    function bufferFromStr(str5) {
-      return Buffer.from(`${str5}\0`);
+    function bufferFromStr(str6) {
+      return Buffer.from(`${str6}\0`);
     }
     var create_mysql_clear_password_plugin = (pluginOptions) => function mysql_clear_password_plugin({ connection, command }) {
       const password = command.password || pluginOptions.password || connection.config.password;
@@ -77411,8 +77759,8 @@ var require_charsets = __commonJS({
 var require_is_property = __commonJS({
   "node_modules/is-property/is-property.js"(exports, module) {
     "use strict";
-    function isProperty(str5) {
-      return /^[$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc][$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc0-9\u0300-\u036f\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u064b-\u0669\u0670\u06d6-\u06dc\u06df-\u06e4\u06e7\u06e8\u06ea-\u06ed\u06f0-\u06f9\u0711\u0730-\u074a\u07a6-\u07b0\u07c0-\u07c9\u07eb-\u07f3\u0816-\u0819\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0859-\u085b\u08e4-\u08fe\u0900-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09cb-\u09cd\u09d7\u09e2\u09e3\u09e6-\u09ef\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b62\u0b63\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c01-\u0c03\u0c3e-\u0c44\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62\u0c63\u0c66-\u0c6f\u0c82\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2\u0ce3\u0ce6-\u0cef\u0d02\u0d03\u0d3e-\u0d44\u0d46-\u0d48\u0d4a-\u0d4d\u0d57\u0d62\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0df2\u0df3\u0e31\u0e34-\u0e3a\u0e47-\u0e4e\u0e50-\u0e59\u0eb1\u0eb4-\u0eb9\u0ebb\u0ebc\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f3e\u0f3f\u0f71-\u0f84\u0f86\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u102b-\u103e\u1040-\u1049\u1056-\u1059\u105e-\u1060\u1062-\u1064\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17b4-\u17d3\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u18a9\u1920-\u192b\u1930-\u193b\u1946-\u194f\u19b0-\u19c0\u19c8\u19c9\u19d0-\u19d9\u1a17-\u1a1b\u1a55-\u1a5e\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1b00-\u1b04\u1b34-\u1b44\u1b50-\u1b59\u1b6b-\u1b73\u1b80-\u1b82\u1ba1-\u1bad\u1bb0-\u1bb9\u1be6-\u1bf3\u1c24-\u1c37\u1c40-\u1c49\u1c50-\u1c59\u1cd0-\u1cd2\u1cd4-\u1ce8\u1ced\u1cf2-\u1cf4\u1dc0-\u1de6\u1dfc-\u1dff\u200c\u200d\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2cef-\u2cf1\u2d7f\u2de0-\u2dff\u302a-\u302f\u3099\u309a\ua620-\ua629\ua66f\ua674-\ua67d\ua69f\ua6f0\ua6f1\ua802\ua806\ua80b\ua823-\ua827\ua880\ua881\ua8b4-\ua8c4\ua8d0-\ua8d9\ua8e0-\ua8f1\ua900-\ua909\ua926-\ua92d\ua947-\ua953\ua980-\ua983\ua9b3-\ua9c0\ua9d0-\ua9d9\uaa29-\uaa36\uaa43\uaa4c\uaa4d\uaa50-\uaa59\uaa7b\uaab0\uaab2-\uaab4\uaab7\uaab8\uaabe\uaabf\uaac1\uaaeb-\uaaef\uaaf5\uaaf6\uabe3-\uabea\uabec\uabed\uabf0-\uabf9\ufb1e\ufe00-\ufe0f\ufe20-\ufe26\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f]*$/.test(str5);
+    function isProperty(str6) {
+      return /^[$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc][$A-Z\_a-z\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc0-9\u0300-\u036f\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u064b-\u0669\u0670\u06d6-\u06dc\u06df-\u06e4\u06e7\u06e8\u06ea-\u06ed\u06f0-\u06f9\u0711\u0730-\u074a\u07a6-\u07b0\u07c0-\u07c9\u07eb-\u07f3\u0816-\u0819\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0859-\u085b\u08e4-\u08fe\u0900-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09cb-\u09cd\u09d7\u09e2\u09e3\u09e6-\u09ef\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b62\u0b63\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c01-\u0c03\u0c3e-\u0c44\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62\u0c63\u0c66-\u0c6f\u0c82\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2\u0ce3\u0ce6-\u0cef\u0d02\u0d03\u0d3e-\u0d44\u0d46-\u0d48\u0d4a-\u0d4d\u0d57\u0d62\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0df2\u0df3\u0e31\u0e34-\u0e3a\u0e47-\u0e4e\u0e50-\u0e59\u0eb1\u0eb4-\u0eb9\u0ebb\u0ebc\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f3e\u0f3f\u0f71-\u0f84\u0f86\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u102b-\u103e\u1040-\u1049\u1056-\u1059\u105e-\u1060\u1062-\u1064\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17b4-\u17d3\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u18a9\u1920-\u192b\u1930-\u193b\u1946-\u194f\u19b0-\u19c0\u19c8\u19c9\u19d0-\u19d9\u1a17-\u1a1b\u1a55-\u1a5e\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1b00-\u1b04\u1b34-\u1b44\u1b50-\u1b59\u1b6b-\u1b73\u1b80-\u1b82\u1ba1-\u1bad\u1bb0-\u1bb9\u1be6-\u1bf3\u1c24-\u1c37\u1c40-\u1c49\u1c50-\u1c59\u1cd0-\u1cd2\u1cd4-\u1ce8\u1ced\u1cf2-\u1cf4\u1dc0-\u1de6\u1dfc-\u1dff\u200c\u200d\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2cef-\u2cf1\u2d7f\u2de0-\u2dff\u302a-\u302f\u3099\u309a\ua620-\ua629\ua66f\ua674-\ua67d\ua69f\ua6f0\ua6f1\ua802\ua806\ua80b\ua823-\ua827\ua880\ua881\ua8b4-\ua8c4\ua8d0-\ua8d9\ua8e0-\ua8f1\ua900-\ua909\ua926-\ua92d\ua947-\ua953\ua980-\ua983\ua9b3-\ua9c0\ua9d0-\ua9d9\uaa29-\uaa36\uaa43\uaa4c\uaa4d\uaa50-\uaa59\uaa7b\uaab0\uaab2-\uaab4\uaab7\uaab8\uaabe\uaabf\uaac1\uaaeb-\uaaef\uaaf5\uaaf6\uabe3-\uabea\uabec\uabed\uabf0-\uabf9\ufb1e\ufe00-\ufe0f\ufe20-\ufe26\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f]*$/.test(str6);
     }
     module.exports = isProperty;
   }
@@ -77500,10 +77848,10 @@ var require_generate_function = __commonJS({
       var lines = [];
       var indent = 0;
       var vars = {};
-      var push = function(str5) {
+      var push = function(str6) {
         var spaces = "";
         while (spaces.length < indent * 2) spaces += "  ";
-        lines.push(spaces + str5);
+        lines.push(spaces + str6);
       };
       var pushLine = function(line2) {
         if (INDENT_END.test(line2.trim()[0]) && INDENT_START.test(line2[line2.length - 1])) {
@@ -78455,11 +78803,11 @@ var require_connection_config = __commonJS({
         return defaultFlags;
       }
       static getCharsetNumber(charset) {
-        const num2 = Charsets[charset.toUpperCase()];
-        if (num2 === void 0) {
+        const num3 = Charsets[charset.toUpperCase()];
+        if (num3 === void 0) {
           throw new TypeError(`Unknown charset '${charset}'`);
         }
-        return num2;
+        return num3;
       }
       static getSSLProfile(name) {
         if (!SSLProfiles) {
@@ -78573,21 +78921,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows9, fields;
+          let rows11, fields;
           if (this._resultIndex === 0) {
-            rows9 = this._rows[0];
+            rows11 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows9 = this._rows;
+            rows11 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows9, fields);
+              this.onResult(null, rows11, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows9);
+              this.onResult(null, rows11);
             });
           }
         }
@@ -81144,9 +81492,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows9, columns, binary = false) {
+      writeTextResult(rows11, columns, binary = false) {
         this.writeColumns(columns);
-        rows9.forEach((row) => {
+        rows11.forEach((row) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column) => {
             arrayRow.push(row[column.name]);
@@ -81256,12 +81604,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve, reject, stackHolder) {
-      return function(err, rows9, fields) {
+      return function(err, rows11, fields) {
         if (err) {
           applyCapturedStack(err, stackHolder);
           reject(err);
         } else {
-          resolve([rows9, fields]);
+          resolve([rows11, fields]);
         }
       };
     }
@@ -81869,9 +82217,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err2, rows9, fields) {
+              cmdQuery.onResult = function(err2, rows11, fields) {
                 queryError = err2 || null;
-                origOnResult(err2, rows9, fields);
+                origOnResult(err2, rows11, fields);
               };
             } else {
               cmdQuery.once("error", (err2) => {
@@ -81906,11 +82254,11 @@ var require_pool = __commonJS({
             return cb(err);
           }
           try {
-            conn.execute(sql, values, (err2, rows9, fields) => {
+            conn.execute(sql, values, (err2, rows11, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
-              cb(err2, rows9, fields);
+              cb(err2, rows11, fields);
             }).once("end", () => {
               conn.release();
             });
@@ -82736,8 +83084,8 @@ async function openConnection(env = process.env) {
   });
 }
 function firstRow(result) {
-  const rows9 = result[0];
-  return Array.isArray(rows9) ? rows9[0] : void 0;
+  const rows11 = result[0];
+  return Array.isArray(rows11) ? rows11[0] : void 0;
 }
 async function count(conn, sql, params) {
   const row = firstRow(await conn.query(sql, params));
@@ -82766,8 +83114,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows9] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows9) ? rows9.map((r) => String(r.name)) : [];
+  const [rows11] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows11) ? rows11.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -82896,8 +83244,8 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows9] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row = Array.isArray(rows9) ? rows9[0] : void 0;
+          const [rows11] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row = Array.isArray(rows11) ? rows11[0] : void 0;
           return row?.value === void 0 || row.value === null ? null : String(row.value);
         });
       }
@@ -83038,11 +83386,17 @@ var init_platform = __esm({
 });
 
 // packages/api/dist/infrastructure/visits/visit-store.js
-var MAX_AGE_MS, MysqlVisitStore;
+function rows(result) {
+  const [list6] = result;
+  return Array.isArray(list6) ? list6 : [];
+}
+var MAX_AGE_MS, PAGE_SIZE, text, MysqlVisitStore;
 var init_visit_store = __esm({
   "packages/api/dist/infrastructure/visits/visit-store.js"() {
     "use strict";
     MAX_AGE_MS = 7 * 24 * 60 * 60 * 1e3;
+    PAGE_SIZE = 50;
+    text = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     MysqlVisitStore = class {
       connect;
       constructor(connect) {
@@ -83058,31 +83412,70 @@ var init_visit_store = __esm({
       }
       record(code, ref, profile = null) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), 'entry.visit', NULL, NULL, 'Visit', ?, ?, CURRENT_TIMESTAMP(3))", [code, JSON.stringify({ ref, perfil: profile })]);
+          await conn.query("INSERT INTO `Visit` (code, ref, profile, createdAt) VALUES (?, ?, ?, CURRENT_TIMESTAMP(3))", [code, ref, profile]);
+          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), 'entry.visit', NULL, NULL, 'Visit', ?, ?, CURRENT_TIMESTAMP(3))", [code, JSON.stringify({ ref, perfil: profile })]).catch(() => void 0);
+        });
+      }
+      exists(code) {
+        return this.run(async (conn) => {
+          const row = rows(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code]))[0];
+          return !!row;
         });
       }
       find(code, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const [rows9] = await conn.query("SELECT payload, createdAt FROM `Event` WHERE type = 'entry.visit' AND entityType = 'Visit' AND entityId = ? AND createdAt >= ? ORDER BY createdAt DESC LIMIT 1", [code, new Date(now.getTime() - MAX_AGE_MS)]);
-          const row = Array.isArray(rows9) ? rows9[0] : void 0;
+          const row = rows(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code, new Date(now.getTime() - MAX_AGE_MS)]))[0];
           if (!row)
             return null;
-          let payload = row.payload;
-          if (typeof payload === "string") {
-            try {
-              payload = JSON.parse(payload);
-            } catch {
-              payload = null;
-            }
-          }
-          const data = payload && typeof payload === "object" ? payload : {};
           return {
-            code,
-            ref: typeof data.ref === "string" ? data.ref : null,
-            profile: typeof data.perfil === "string" ? data.perfil : null,
+            code: String(row.code),
+            ref: text(row.ref),
+            profile: text(row.profile),
+            phone: text(row.phone),
+            userId: text(row.userId),
+            userName: text(row.userName),
+            claimedAt: row.claimedAt ?? null,
+            linkedAt: row.linkedAt ?? null,
             createdAt: row.createdAt
           };
         });
+      }
+      claim(code, phone) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `Visit` SET phone = ?, claimedAt = CURRENT_TIMESTAMP(3) WHERE code = ? AND (phone IS NULL OR phone = ?)", [phone, code, phone]);
+        });
+      }
+      link(code, userId) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `Visit` SET userId = ?, linkedAt = CURRENT_TIMESTAMP(3) WHERE code = ? AND userId IS NULL", [userId, code]);
+        });
+      }
+      list(page) {
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE;
+        return this.run(async (conn) => {
+          const items = rows(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE} OFFSET ${offset2}`)).map((row) => ({
+            code: String(row.code),
+            ref: text(row.ref),
+            profile: text(row.profile),
+            phone: text(row.phone),
+            userId: text(row.userId),
+            userName: text(row.userName),
+            claimedAt: row.claimedAt ?? null,
+            linkedAt: row.linkedAt ?? null,
+            createdAt: row.createdAt
+          }));
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE };
+        });
+      }
+      stats(days) {
+        const window2 = Math.max(1, Math.floor(days));
+        return this.run(async (conn) => rows(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window2} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row) => ({
+          ref: text(row.ref),
+          profile: text(row.profile),
+          visitas: Number(row.visitas ?? 0),
+          escribieron: Number(row.escribieron ?? 0),
+          registrados: Number(row.registrados ?? 0)
+        })));
       }
     };
   }
@@ -85312,11 +85705,11 @@ var init_documents = __esm({
 });
 
 // packages/api/dist/infrastructure/admin/admin-store.js
-function rows(result) {
+function rows2(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 async function scalar(conn, sql, params = []) {
-  const row = rows(await conn.query(sql, params))[0];
+  const row = rows2(await conn.query(sql, params))[0];
   return Number(row?.n ?? 0);
 }
 function grouped(list6) {
@@ -85326,13 +85719,13 @@ function grouped(list6) {
   return out;
 }
 function offset(page) {
-  return (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE;
+  return (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2;
 }
-var PAGE_SIZE, MysqlAdminStore;
+var PAGE_SIZE2, MysqlAdminStore;
 var init_admin_store = __esm({
   "packages/api/dist/infrastructure/admin/admin-store.js"() {
     "use strict";
-    PAGE_SIZE = 25;
+    PAGE_SIZE2 = 25;
     MysqlAdminStore = class {
       connect;
       constructor(connect) {
@@ -85348,7 +85741,7 @@ var init_admin_store = __esm({
       }
       findAdminByEmail(email) {
         return this.run(async (conn) => {
-          const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
+          const row = rows2(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
           if (!row)
             return null;
           return {
@@ -85364,13 +85757,13 @@ var init_admin_store = __esm({
       upsertAdmin(input) {
         return this.run(async (conn) => {
           const email = input.email.toLowerCase();
-          const existing = rows(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
+          const existing = rows2(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
           let id;
           if (existing) {
             id = String(existing.id);
             await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', staffRole = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id]);
           } else {
-            const created = rows(await conn.query("SELECT UUID() AS id"))[0];
+            const created = rows2(await conn.query("SELECT UUID() AS id"))[0];
             id = String(created?.id);
             await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, staffRole, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, email, input.phone, input.passwordHash, input.name]);
           }
@@ -85380,7 +85773,7 @@ var init_admin_store = __esm({
       }
       findAdminById(id) {
         return this.run(async (conn) => {
-          const row = rows(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id]))[0];
+          const row = rows2(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id]))[0];
           if (!row)
             return null;
           return {
@@ -85418,9 +85811,9 @@ var init_admin_store = __esm({
       }
       dashboard() {
         return this.run(async (conn) => ({
-          usersByRole: grouped(rows(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
+          usersByRole: grouped(rows2(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
           vehicles: await scalar(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE deletedAt IS NULL"),
-          shopsByStatus: grouped(rows(await conn.query("SELECT verificationStatus AS k, COUNT(*) AS n FROM `Shop` GROUP BY verificationStatus"))),
+          shopsByStatus: grouped(rows2(await conn.query("SELECT verificationStatus AS k, COUNT(*) AS n FROM `Shop` GROUP BY verificationStatus"))),
           stores: await scalar(conn, "SELECT COUNT(*) AS n FROM `Store`"),
           appointmentsToday: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE scheduledAt >= CURDATE() AND scheduledAt < CURDATE() + INTERVAL 1 DAY"),
           appointmentsPending: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE status = 'pending'"),
@@ -85430,30 +85823,30 @@ var init_admin_store = __esm({
       }
       listUsers(page) {
         return this.run(async (conn) => ({
-          items: rows(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE, offset(page)])),
+          items: rows2(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE2, offset(page)])),
           page,
-          pageSize: PAGE_SIZE
+          pageSize: PAGE_SIZE2
         }));
       }
       listVehicles(page) {
         return this.run(async (conn) => ({
-          items: rows(await conn.query("SELECT id, make, model, year, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE, offset(page)])),
+          items: rows2(await conn.query("SELECT id, make, model, year, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE2, offset(page)])),
           page,
-          pageSize: PAGE_SIZE
+          pageSize: PAGE_SIZE2
         }));
       }
       listShops(page) {
         return this.run(async (conn) => ({
-          items: rows(await conn.query("SELECT id, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE, offset(page)])),
+          items: rows2(await conn.query("SELECT id, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE2, offset(page)])),
           page,
-          pageSize: PAGE_SIZE
+          pageSize: PAGE_SIZE2
         }));
       }
       listAudit(page) {
         return this.run(async (conn) => ({
-          items: rows(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE, offset(page)])),
+          items: rows2(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE2, offset(page)])),
           page,
-          pageSize: PAGE_SIZE
+          pageSize: PAGE_SIZE2
         }));
       }
     };
@@ -85499,8 +85892,8 @@ var init_permissions = __esm({
       { key: "lectura", label: "Solo lectura", description: "Solo consulta; no puede cambiar nada." }
     ];
     ROLE_CAPABILITIES = {
-      admin: ["read", "attend", "registrations", "verifications", "appointments", "workorders", "quotes", "notes", "relations", "disputes", "sanctions", "exports", "lopdp", "settings", "team"],
-      operador: ["read", "attend", "registrations", "appointments", "workorders", "quotes", "notes", "relations"],
+      admin: ["read", "attend", "registrations", "verifications", "appointments", "workorders", "quotes", "notes", "relations", "disputes", "sanctions", "exports", "lopdp", "payments", "plans", "settings", "team"],
+      operador: ["read", "attend", "registrations", "appointments", "workorders", "quotes", "notes", "relations", "payments"],
       verificador: ["read", "verifications", "notes", "disputes"],
       soporte: ["read", "attend", "notes", "relations"],
       lectura: ["read"]
@@ -85528,6 +85921,10 @@ var init_permissions = __esm({
       // La lista de sanciones es información sensible de moderación: solo el administrador.
       { method: "GET", pattern: /^\/sanctions(\/|$)/, capability: "sanctions" },
       // Respaldos y solicitudes de datos: salen datos personales del sistema, solo el administrador.
+      // Registrar un pago lo hace el operador; verificarlo o darlo de baja, solo el administrador.
+      { method: "POST", pattern: /^\/users\/[^/]+\/subscriptions$/, capability: "payments" },
+      { method: "GET", pattern: /^\/plans(\/|$)/, capability: "plans" },
+      { method: "POST", pattern: /^\/subscriptions(\/|$)/, capability: "plans" },
       { method: "GET", pattern: /^\/exports(\/|$)/, capability: "exports" },
       { method: "GET", pattern: /^\/data-requests(\/|$)/, capability: "lopdp" },
       { method: "POST", pattern: /^\/data-requests(\/|$)/, capability: "lopdp" },
@@ -85818,8 +86215,8 @@ function twoFactorView(error) {
   <label for="code">C\xF3digo</label><input id="code" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="one-time-code">
   <button class="full" type="submit">Entrar</button></form>`;
 }
-function messageView(title, text4) {
-  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text4)}</p></div>`;
+function messageView(title, text5) {
+  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text5)}</p></div>`;
 }
 function kv(record) {
   const entries = Object.entries(record);
@@ -85915,9 +86312,11 @@ input[type=radio]{width:auto;min-height:0;margin-top:4px}.choice{display:flex;ga
       { href: "/admin/quotes", label: "Cotizaciones", capability: "read" },
       { href: "/admin/relations", label: "Relaciones", capability: "read" },
       { href: "/admin/disputes", label: "Disputas", capability: "read" },
+      { href: "/admin/plans", label: "Planes", capability: "plans" },
       { href: "/admin/sanctions", label: "Sanciones", capability: "sanctions" },
       { href: "/admin/data-requests", label: "Datos (LOPDP)", capability: "lopdp" },
       { href: "/admin/exports", label: "Respaldos", capability: "exports" },
+      { href: "/admin/visits", label: "Origen", capability: "read" },
       { href: "/admin/audit", label: "Auditor\xEDa", capability: "read" },
       { href: "/admin/settings", label: "Ajustes", capability: "settings" },
       { href: "/admin/team", label: "Equipo", capability: "team" },
@@ -86071,9 +86470,9 @@ var require_bit_buffer = __commonJS({
         const bufIndex = Math.floor(index / 8);
         return (this.buffer[bufIndex] >>> 7 - index % 8 & 1) === 1;
       },
-      put: function(num2, length) {
+      put: function(num3, length) {
         for (let i = 0; i < length; i++) {
-          this.putBit((num2 >>> length - i - 1 & 1) === 1);
+          this.putBit((num3 >>> length - i - 1 & 1) === 1);
         }
       },
       getLengthInBits: function() {
@@ -86806,14 +87205,14 @@ var require_regex = __commonJS({
     var TEST_KANJI = new RegExp("^" + kanji + "$");
     var TEST_NUMERIC = new RegExp("^" + numeric + "$");
     var TEST_ALPHANUMERIC = new RegExp("^[A-Z0-9 $%*+\\-./:]+$");
-    exports.testKanji = function testKanji(str5) {
-      return TEST_KANJI.test(str5);
+    exports.testKanji = function testKanji(str6) {
+      return TEST_KANJI.test(str6);
     };
-    exports.testNumeric = function testNumeric(str5) {
-      return TEST_NUMERIC.test(str5);
+    exports.testNumeric = function testNumeric(str6) {
+      return TEST_NUMERIC.test(str6);
     };
-    exports.testAlphanumeric = function testAlphanumeric(str5) {
-      return TEST_ALPHANUMERIC.test(str5);
+    exports.testAlphanumeric = function testAlphanumeric(str6) {
+      return TEST_ALPHANUMERIC.test(str6);
     };
   }
 });
@@ -87307,13 +87706,13 @@ var require_segments = __commonJS({
     var Regex = require_regex();
     var Utils = require_utils6();
     var dijkstra = require_dijkstra();
-    function getStringByteLength(str5) {
-      return unescape(encodeURIComponent(str5)).length;
+    function getStringByteLength(str6) {
+      return unescape(encodeURIComponent(str6)).length;
     }
-    function getSegments(regex, mode, str5) {
+    function getSegments(regex, mode, str6) {
       const segments = [];
       let result;
-      while ((result = regex.exec(str5)) !== null) {
+      while ((result = regex.exec(str6)) !== null) {
         segments.push({
           data: result[0],
           index: result.index,
@@ -90139,13 +90538,13 @@ var require_svg_tag = __commonJS({
     var Utils = require_utils7();
     function getColorAttrib(color, attrib) {
       const alpha = color.a / 255;
-      const str5 = attrib + '="' + color.hex + '"';
-      return alpha < 1 ? str5 + " " + attrib + '-opacity="' + alpha.toFixed(2).slice(1) + '"' : str5;
+      const str6 = attrib + '="' + color.hex + '"';
+      return alpha < 1 ? str6 + " " + attrib + '-opacity="' + alpha.toFixed(2).slice(1) + '"' : str6;
     }
     function svgCmd(cmd, x, y) {
-      let str5 = cmd + x;
-      if (typeof y !== "undefined") str5 += " " + y;
-      return str5;
+      let str6 = cmd + x;
+      if (typeof y !== "undefined") str6 += " " + y;
+      return str6;
     }
     function qrToPath(data, size, margin) {
       let path = "";
@@ -90269,7 +90668,7 @@ var require_browser = __commonJS({
     var QRCode2 = require_qrcode();
     var CanvasRenderer = require_canvas();
     var SvgRenderer = require_svg_tag();
-    function renderCanvas(renderFunc, canvas, text4, opts, cb) {
+    function renderCanvas(renderFunc, canvas, text5, opts, cb) {
       const args = [].slice.call(arguments, 1);
       const argsNum = args.length;
       const isLastArgCb = typeof args[argsNum - 1] === "function";
@@ -90281,8 +90680,8 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 2) {
-          cb = text4;
-          text4 = canvas;
+          cb = text5;
+          text5 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 3) {
           if (canvas.getContext && typeof cb === "undefined") {
@@ -90290,8 +90689,8 @@ var require_browser = __commonJS({
             opts = void 0;
           } else {
             cb = opts;
-            opts = text4;
-            text4 = canvas;
+            opts = text5;
+            text5 = canvas;
             canvas = void 0;
           }
         }
@@ -90300,16 +90699,16 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 1) {
-          text4 = canvas;
+          text5 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 2 && !canvas.getContext) {
-          opts = text4;
-          text4 = canvas;
+          opts = text5;
+          text5 = canvas;
           canvas = void 0;
         }
         return new Promise(function(resolve, reject) {
           try {
-            const data = QRCode2.create(text4, opts);
+            const data = QRCode2.create(text5, opts);
             resolve(renderFunc(data, canvas, opts));
           } catch (e6) {
             reject(e6);
@@ -90317,7 +90716,7 @@ var require_browser = __commonJS({
         });
       }
       try {
-        const data = QRCode2.create(text4, opts);
+        const data = QRCode2.create(text5, opts);
         cb(null, renderFunc(data, canvas, opts));
       } catch (e6) {
         cb(e6);
@@ -90341,8 +90740,8 @@ var require_server2 = __commonJS({
     var Utf8Renderer = require_utf8();
     var TerminalRenderer = require_terminal2();
     var SvgRenderer = require_svg();
-    function checkParams(text4, opts, cb) {
-      if (typeof text4 === "undefined") {
+    function checkParams(text5, opts, cb) {
+      if (typeof text5 === "undefined") {
         throw new Error("String required as first argument");
       }
       if (typeof cb === "undefined") {
@@ -90389,11 +90788,11 @@ var require_server2 = __commonJS({
           return Utf8Renderer;
       }
     }
-    function render(renderFunc, text4, params) {
+    function render(renderFunc, text5, params) {
       if (!params.cb) {
         return new Promise(function(resolve, reject) {
           try {
-            const data = QRCode2.create(text4, params.opts);
+            const data = QRCode2.create(text5, params.opts);
             return renderFunc(data, params.opts, function(err, data2) {
               return err ? reject(err) : resolve(data2);
             });
@@ -90403,7 +90802,7 @@ var require_server2 = __commonJS({
         });
       }
       try {
-        const data = QRCode2.create(text4, params.opts);
+        const data = QRCode2.create(text5, params.opts);
         return renderFunc(data, params.opts, params.cb);
       } catch (e6) {
         params.cb(e6);
@@ -90411,43 +90810,43 @@ var require_server2 = __commonJS({
     }
     exports.create = QRCode2.create;
     exports.toCanvas = require_browser().toCanvas;
-    exports.toString = function toString2(text4, opts, cb) {
-      const params = checkParams(text4, opts, cb);
+    exports.toString = function toString2(text5, opts, cb) {
+      const params = checkParams(text5, opts, cb);
       const type = params.opts ? params.opts.type : void 0;
       const renderer = getStringRendererFromType(type);
-      return render(renderer.render, text4, params);
+      return render(renderer.render, text5, params);
     };
-    exports.toDataURL = function toDataURL(text4, opts, cb) {
-      const params = checkParams(text4, opts, cb);
+    exports.toDataURL = function toDataURL(text5, opts, cb) {
+      const params = checkParams(text5, opts, cb);
       const renderer = getRendererFromType(params.opts.type);
-      return render(renderer.renderToDataURL, text4, params);
+      return render(renderer.renderToDataURL, text5, params);
     };
-    exports.toBuffer = function toBuffer(text4, opts, cb) {
-      const params = checkParams(text4, opts, cb);
+    exports.toBuffer = function toBuffer(text5, opts, cb) {
+      const params = checkParams(text5, opts, cb);
       const renderer = getRendererFromType(params.opts.type);
-      return render(renderer.renderToBuffer, text4, params);
+      return render(renderer.renderToBuffer, text5, params);
     };
-    exports.toFile = function toFile(path, text4, opts, cb) {
-      if (typeof path !== "string" || !(typeof text4 === "string" || typeof text4 === "object")) {
+    exports.toFile = function toFile(path, text5, opts, cb) {
+      if (typeof path !== "string" || !(typeof text5 === "string" || typeof text5 === "object")) {
         throw new Error("Invalid argument");
       }
       if (arguments.length < 3 && !canPromise()) {
         throw new Error("Too few arguments provided");
       }
-      const params = checkParams(text4, opts, cb);
+      const params = checkParams(text5, opts, cb);
       const type = params.opts.type || getTypeFromFilename(path);
       const renderer = getRendererFromType(type);
       const renderToFile = renderer.renderToFile.bind(null, path);
-      return render(renderToFile, text4, params);
+      return render(renderToFile, text5, params);
     };
-    exports.toFileStream = function toFileStream(stream, text4, opts) {
+    exports.toFileStream = function toFileStream(stream, text5, opts) {
       if (arguments.length < 2) {
         throw new Error("Too few arguments provided");
       }
-      const params = checkParams(text4, opts, stream.emit.bind(stream, "error"));
+      const params = checkParams(text5, opts, stream.emit.bind(stream, "error"));
       const renderer = getRendererFromType("png");
       const renderToFileStream = renderer.renderToFileStream.bind(null, stream);
-      render(renderToFileStream, text4, params);
+      render(renderToFileStream, text5, params);
     };
   }
 });
@@ -90537,8 +90936,8 @@ var init_views_setup = __esm({
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
 import { randomBytes as randomBytes4 } from "node:crypto";
-function qrSvg(text4) {
-  return QRCode.toString(text4, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
+function qrSvg(text5) {
+  return QRCode.toString(text5, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
 async function adminCount(store) {
   try {
@@ -90981,8 +91380,8 @@ function toMember(row) {
   };
 }
 function list5(result) {
-  const [rows9] = result;
-  return Array.isArray(rows9) ? rows9 : [];
+  const [rows11] = result;
+  return Array.isArray(rows11) ? rows11 : [];
 }
 var SELECT, MysqlStaffStore;
 var init_staff_store = __esm({
@@ -91080,9 +91479,9 @@ function sanctionEnd(level, days, from = /* @__PURE__ */ new Date()) {
   return new Date(from.getTime() + effective * 24 * 60 * 60 * 1e3);
 }
 function relayHeader(input) {
-  const icon = input.fromRole === "taller" ? "\u{1F527}" : input.fromRole === "almacen" ? "\u{1F4E6}" : "\u{1F697}";
+  const icon2 = input.fromRole === "taller" ? "\u{1F527}" : input.fromRole === "almacen" ? "\u{1F4E6}" : "\u{1F697}";
   const subject = input.subject ? ` (${input.subject})` : "";
-  return `${icon} ${input.fromName} \xB7 ${input.code}${subject}`;
+  return `${icon2} ${input.fromName} \xB7 ${input.code}${subject}`;
 }
 function relayMessage(input) {
   return `${relayHeader(input)}
@@ -91154,7 +91553,7 @@ function tabs(current, base, options) {
   return `<div class="tabs">${options.map(([key, label2]) => `<a class="${key === current ? "active" : ""}" href="${base}?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("")}</div>`;
 }
 function relationsListView(input) {
-  const rows9 = input.page.items.map((r) => {
+  const rows11 = input.page.items.map((r) => {
     const waiting = waitingHours(r.waitingSince);
     const late2 = waiting !== null && waiting >= input.waitingHours;
     return `<tr><td><a href="/admin/relations/${escapeHtml(r.id)}">${escapeHtml(relationCode(r.number))}</a></td>
@@ -91171,7 +91570,7 @@ function relationsListView(input) {
   <p class="muted">Las partes hablan solo con AutoMantPro: aqu\xED registras lo que dice cada una y el texto listo para reenviar. El tel\xE9fono de una parte se muestra solo si autoriz\xF3 compartirlo.</p>
   ${empty}
   <div class="scroll"><table><thead><tr><th>V\xEDnculo</th><th>Tipo</th><th>Partes</th><th>Estado</th><th>Canal</th><th>\xDAltimo mensaje</th><th>Espera</th></tr></thead>
-  <tbody>${rows9}</tbody></table></div>
+  <tbody>${rows11}</tbody></table></div>
   <div class="pager">${input.page.page > 1 ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page - 1}">\u2190 Anteriores</a>` : ""}
   ${input.page.items.length === input.page.pageSize ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page + 1}">Siguientes \u2192</a>` : ""}</div></div>`;
 }
@@ -91264,7 +91663,7 @@ function relationDetailView(input) {
   </div>`;
 }
 function disputesListView(input) {
-  const rows9 = input.page.items.map((d) => {
+  const rows11 = input.page.items.map((d) => {
     const resolve = input.canResolve && (d.status === "abierta" || d.status === "en_revision") ? `<form method="post" action="/admin/disputes/${escapeHtml(d.id)}/resolve">${csrfField2(input.csrf)}
             <label for="res-${escapeHtml(d.id)}">Resoluci\xF3n</label><textarea id="res-${escapeHtml(d.id)}" name="resolution" rows="2" maxlength="2000" required></textarea>
             <select name="status"><option value="resuelta">Resuelta</option><option value="en_revision">En revisi\xF3n</option><option value="rechazada">Rechazada</option></select>
@@ -91280,10 +91679,10 @@ function disputesListView(input) {
   ${tabs(input.filter, "/admin/disputes", DISPUTE_FILTERS)}
   ${input.page.items.length === 0 ? `<p class="muted">No hay disputas con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Caso</th><th>V\xEDnculo</th><th>Partes</th><th>Motivo</th><th>Estado</th><th>Resoluci\xF3n</th></tr></thead>
-  <tbody>${rows9}</tbody></table></div></div>`;
+  <tbody>${rows11}</tbody></table></div></div>`;
 }
 function sanctionsListView(input) {
-  const rows9 = input.page.items.map((s) => {
+  const rows11 = input.page.items.map((s) => {
     const state = s.liftedAt ? `<span class="muted">levantada ${escapeHtml(when(s.liftedAt))}</span>` : isActive(s) ? `<span class="error">vigente${s.endsAt ? ` hasta ${escapeHtml(when(s.endsAt))}` : ""}</span>` : `<span class="muted">vencida</span>`;
     const lift = input.canLift && !s.liftedAt && isActive(s) ? `<form method="post" action="/admin/sanctions/${escapeHtml(s.id)}/lift">${csrfField2(input.csrf)}
             <label for="lift-${escapeHtml(s.id)}">Motivo para levantarla</label><input id="lift-${escapeHtml(s.id)}" name="reason" maxlength="191" required>
@@ -91298,7 +91697,7 @@ function sanctionsListView(input) {
   <p class="muted">Siempre con motivo, aviso a la entidad y registro en la auditor\xEDa. Se aplican desde el v\xEDnculo o desde la ficha de la persona.</p></div>
   ${input.page.items.length === 0 ? `<p class="muted">Todav\xEDa no hay sanciones registradas.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Entidad</th><th>Paso</th><th>Motivo</th><th>Vigencia</th><th>Levantar</th></tr></thead>
-  <tbody>${rows9}</tbody></table></div></div>`;
+  <tbody>${rows11}</tbody></table></div></div>`;
 }
 var FILTERS, DISPUTE_FILTERS, flashHtml2, csrfField2;
 var init_views_relations = __esm({
@@ -91330,7 +91729,7 @@ var init_views_relations = __esm({
 function registerRelationRoutes(app2, deps) {
   const { relations } = deps;
   const lateAfter = deps.waitingHours ?? 24;
-  const errorPage = (request, reply, session, title, text4, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text4)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
   function dbError2(err) {
     const code = err.code;
     if (code === "ER_NO_SUCH_TABLE" || code === "ER_BAD_FIELD_ERROR") {
@@ -91349,7 +91748,7 @@ function registerRelationRoutes(app2, deps) {
     }
     return { session, body };
   }
-  const str5 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+  const str6 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
   const uuidOf = (value2) => typeof value2 === "string" && UUID.test(value2) ? value2 : null;
   async function renderDetail(request, reply, session, id, extra = {}) {
     let detail;
@@ -91409,8 +91808,8 @@ function registerRelationRoutes(app2, deps) {
     const { id } = request.params;
     if (!UUID.test(id))
       return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
-    const text4 = str5(body.body, 2e3);
-    if (text4.length < 2)
+    const text5 = str6(body.body, 2e3);
+    if (text5.length < 2)
       return renderDetail(request, reply, session, id, { flash: { kind: "error", text: "Escribe el mensaje." }, status: 400 });
     let detail;
     try {
@@ -91438,7 +91837,7 @@ function registerRelationRoutes(app2, deps) {
         relationshipId: id,
         fromUserId,
         toUserId: isNote ? null : target?.userId ?? null,
-        body: text4,
+        body: text5,
         kind: isNote ? "nota" : "reenvio",
         relayed,
         createdBy: session.userId
@@ -91459,7 +91858,7 @@ function registerRelationRoutes(app2, deps) {
         fromName: source?.name ?? "AutoMantPro",
         code: relationCode(detail.relation.number),
         subject: detail.relation.subject,
-        body: text4
+        body: text5
       })
     };
     const flash = detail.relation.relayPaused ? { kind: "error", text: "El reenv\xEDo est\xE1 en pausa: el mensaje qued\xF3 registrado pero no lo env\xEDes todav\xEDa." } : { kind: "ok", text: "Mensaje registrado. Copia el texto y env\xEDalo por WhatsApp." };
@@ -91473,8 +91872,8 @@ function registerRelationRoutes(app2, deps) {
     const { id } = request.params;
     if (!UUID.test(id))
       return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
-    const next = str5(body.status, 20);
-    const reason = str5(body.reason, 191);
+    const next = str6(body.status, 20);
+    const reason = str6(body.reason, 191);
     let detail;
     try {
       detail = await relations.get(id);
@@ -91550,7 +91949,7 @@ function registerRelationRoutes(app2, deps) {
     if (!UUID.test(id))
       return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
     const remove = body.remove === "1";
-    const inviteUrl = str5(body.inviteUrl, 255);
+    const inviteUrl = str6(body.inviteUrl, 255);
     let detail;
     try {
       detail = await relations.get(id);
@@ -91588,7 +91987,7 @@ function registerRelationRoutes(app2, deps) {
     const { id } = request.params;
     if (!UUID.test(id))
       return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
-    const reason = str5(body.reason, 2e3);
+    const reason = str6(body.reason, 2e3);
     const claimantUserId = uuidOf(body.claimantUserId);
     const againstUserId = uuidOf(body.againstUserId);
     if (reason.length < 10) {
@@ -91631,7 +92030,7 @@ function registerRelationRoutes(app2, deps) {
     const { id } = request.params;
     if (!UUID.test(id))
       return errorPage(request, reply, session, "Disputas", "Caso no encontrado.", 404);
-    const resolution = str5(body.resolution, 2e3);
+    const resolution = str6(body.resolution, 2e3);
     const status = ["resuelta", "rechazada", "en_revision"].includes(String(body.status)) ? String(body.status) : "resuelta";
     if (resolution.length < 10)
       return errorPage(request, reply, session, "Disputas", "Escribe la resoluci\xF3n con m\xE1s detalle.", 400);
@@ -91672,15 +92071,15 @@ function registerRelationRoutes(app2, deps) {
     const { id } = request.params;
     if (!UUID.test(id))
       return errorPage(request, reply, session, "Sanciones", "Usuario no encontrado.", 404);
-    const level = sanctionLevel(str5(body.level, 30));
-    const reason = str5(body.reason, 500);
+    const level = sanctionLevel(str6(body.level, 30));
+    const reason = str6(body.reason, 500);
     const relationshipId = uuidOf(body.relationshipId);
     const back = relationshipId ? `/admin/relations/${relationshipId}` : `/admin/users/${id}`;
     if (!level)
       return errorPage(request, reply, session, "Sanciones", "Elige un paso de la escala.", 400);
     if (reason.length < 5)
       return errorPage(request, reply, session, "Sanciones", "Escribe el motivo: se le comunica a la entidad y queda registrado.", 400);
-    const rawDays = str5(body.days, 6);
+    const rawDays = str6(body.days, 6);
     const days = rawDays === "" ? null : Number.isFinite(Number(rawDays)) ? Math.max(0, Math.floor(Number(rawDays))) : null;
     try {
       const history = await relations.sanctionsForUser(id);
@@ -91709,7 +92108,7 @@ function registerRelationRoutes(app2, deps) {
     const { id } = request.params;
     if (!UUID.test(id))
       return errorPage(request, reply, session, "Sanciones", "Sanci\xF3n no encontrada.", 404);
-    const reason = str5(body.reason, 191);
+    const reason = str6(body.reason, 191);
     if (reason.length < 5)
       return errorPage(request, reply, session, "Sanciones", "Escribe el motivo para levantarla.", 400);
     try {
@@ -91743,14 +92142,14 @@ var init_relations = __esm({
 function cell2(value2) {
   if (value2 === null || value2 === void 0)
     return "";
-  const text4 = value2 instanceof Date ? value2.toISOString() : String(value2);
-  const clean = text4.replace(/\r?\n/g, " ").replace(/\t/g, " ");
+  const text5 = value2 instanceof Date ? value2.toISOString() : String(value2);
+  const clean = text5.replace(/\r?\n/g, " ").replace(/\t/g, " ");
   const safe = /^[=+\-@]/.test(clean) ? `'${clean}` : clean;
   return `"${safe.replace(/"/g, '""')}"`;
 }
-function toCsv(columns, rows9) {
+function toCsv(columns, rows11) {
   const head = columns.map(([, label2]) => cell2(label2)).join(SEPARATOR);
-  const body = rows9.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
+  const body = rows11.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
   return `\uFEFF${[head, ...body].join("\r\n")}\r
 `;
 }
@@ -91806,7 +92205,7 @@ var init_lopdp = __esm({
 });
 
 // packages/api/dist/infrastructure/data/data-store.js
-function rows2(result) {
+function rows3(result) {
   const [list6] = result;
   return Array.isArray(list6) ? list6 : [];
 }
@@ -91828,7 +92227,7 @@ function toRequest(row) {
     resolvedAt: row.resolvedAt ?? null
   };
 }
-var DATASETS, PAGE_SIZE2, MAX_ROWS, str, SELECT_REQUESTS, MysqlDataStore;
+var DATASETS, PAGE_SIZE3, MAX_ROWS, str, SELECT_REQUESTS, MysqlDataStore;
 var init_data_store = __esm({
   "packages/api/dist/infrastructure/data/data-store.js"() {
     "use strict";
@@ -91997,7 +92396,7 @@ var init_data_store = __esm({
         sql: "SELECT createdAt, eventType, actorRole, reason FROM `AuditLog` ORDER BY createdAt DESC"
       }
     ];
-    PAGE_SIZE2 = 25;
+    PAGE_SIZE3 = 25;
     MAX_ROWS = 5e3;
     str = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     SELECT_REQUESTS = "SELECT d.*, u.name AS userName FROM `DataRequest` d JOIN `User` u ON u.id = d.userId";
@@ -92019,34 +92418,34 @@ var init_data_store = __esm({
         if (!found)
           return Promise.resolve([]);
         const cap = Math.min(Math.max(1, Math.floor(limit)), MAX_ROWS);
-        return this.run(async (conn) => rows2(await conn.query(`${found.sql} LIMIT ${cap}`)));
+        return this.run(async (conn) => rows3(await conn.query(`${found.sql} LIMIT ${cap}`)));
       }
       createRequest(input) {
         return this.run(async (conn) => {
-          const created = rows2(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows3(await conn.query("SELECT UUID() AS id"))[0];
           const id = String(created?.id);
-          const next = rows2(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest`"))[0];
+          const next = rows3(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest`"))[0];
           await conn.query("INSERT INTO `DataRequest` (id, `number`, userId, kind, status, channel, detail, dueAt, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'recibida', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, Number(next?.n ?? 1), input.userId, input.kind, input.channel, input.detail, dueDate(), input.createdBy]);
           return id;
         });
       }
       listRequests(status, page) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2;
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3;
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params = status === "todas" ? [] : [status];
-          const items = rows2(await conn.query(`${SELECT_REQUESTS} ${where} ORDER BY d.dueAt ASC LIMIT ${PAGE_SIZE2} OFFSET ${offset2}`, params)).map(toRequest);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE2 };
+          const items = rows3(await conn.query(`${SELECT_REQUESTS} ${where} ORDER BY d.dueAt ASC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`, params)).map(toRequest);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE3 };
         });
       }
       getRequest(id) {
         return this.run(async (conn) => {
-          const row = rows2(await conn.query(`${SELECT_REQUESTS} WHERE d.id = ? LIMIT 1`, [id]))[0];
+          const row = rows3(await conn.query(`${SELECT_REQUESTS} WHERE d.id = ? LIMIT 1`, [id]))[0];
           return row ? toRequest(row) : null;
         });
       }
       requestsForUser(userId) {
-        return this.run(async (conn) => rows2(await conn.query(`${SELECT_REQUESTS} WHERE d.userId = ? ORDER BY d.createdAt DESC LIMIT 20`, [userId])).map(toRequest));
+        return this.run(async (conn) => rows3(await conn.query(`${SELECT_REQUESTS} WHERE d.userId = ? ORDER BY d.createdAt DESC LIMIT 20`, [userId])).map(toRequest));
       }
       setStatus(id, status, resolution, resolvedBy) {
         return this.run(async (conn) => {
@@ -92062,16 +92461,16 @@ var init_data_store = __esm({
       }
       personalExport(userId) {
         return this.run(async (conn) => {
-          const user = rows2(await conn.query("SELECT id, role, name, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? LIMIT 1", [userId]))[0];
+          const user = rows3(await conn.query("SELECT id, role, name, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? LIMIT 1", [userId]))[0];
           if (!user)
             return null;
           const [vehicles, appointments, workOrders, quotes, relations, sanctions] = await Promise.all([
-            conn.query("SELECT make, model, year, plate, currentKm, vehicleClass, fuel, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL", [userId]).then(rows2),
-            conn.query("SELECT a.scheduledAt, a.status, a.summary, s.name AS shopName, a.createdAt FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId = ?", [userId]).then(rows2),
-            conn.query("SELECT w.number, w.status, w.intakeKm, w.exitKm, w.total, w.warrantyDays, s.name AS shopName, w.createdAt, w.closedAt FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.ownerId = ?", [userId]).then(rows2),
-            conn.query("SELECT `number`, status, partName, quantity, city, createdAt FROM `QuoteRequest` WHERE requesterId = ?", [userId]).then(rows2),
-            conn.query("SELECT r.`number`, r.kind, r.status, r.channel, r.createdAt FROM `Relationship` r JOIN `RelationshipParty` p ON p.relationshipId = r.id WHERE p.userId = ?", [userId]).then(rows2).catch(() => []),
-            conn.query("SELECT level, reason, startsAt, endsAt, liftedAt FROM `Sanction` WHERE userId = ?", [userId]).then(rows2).catch(() => [])
+            conn.query("SELECT make, model, year, plate, currentKm, vehicleClass, fuel, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL", [userId]).then(rows3),
+            conn.query("SELECT a.scheduledAt, a.status, a.summary, s.name AS shopName, a.createdAt FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId = ?", [userId]).then(rows3),
+            conn.query("SELECT w.number, w.status, w.intakeKm, w.exitKm, w.total, w.warrantyDays, s.name AS shopName, w.createdAt, w.closedAt FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.ownerId = ?", [userId]).then(rows3),
+            conn.query("SELECT `number`, status, partName, quantity, city, createdAt FROM `QuoteRequest` WHERE requesterId = ?", [userId]).then(rows3),
+            conn.query("SELECT r.`number`, r.kind, r.status, r.channel, r.createdAt FROM `Relationship` r JOIN `RelationshipParty` p ON p.relationshipId = r.id WHERE p.userId = ?", [userId]).then(rows3).catch(() => []),
+            conn.query("SELECT level, reason, startsAt, endsAt, liftedAt FROM `Sanction` WHERE userId = ?", [userId]).then(rows3).catch(() => [])
           ]);
           return { user, vehicles, appointments, workOrders, quotes, relations, sanctions };
         });
@@ -92102,7 +92501,7 @@ function when2(value2) {
   return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeZone: "America/Guayaquil" }).format(date);
 }
 function exportsView(input) {
-  const rows9 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
+  const rows11 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
     <td>${input.counts ? String(input.counts[d.key] ?? 0) : "\u2014"}</td>
     <td>${d.personal ? '<span class="error">datos personales</span>' : '<span class="muted">sin datos personales</span>'}</td>
     <td><a href="/admin/exports/${escapeHtml(d.key)}.csv">Descargar CSV</a></td></tr>`).join("");
@@ -92110,11 +92509,11 @@ function exportsView(input) {
   <div class="card"><h2>C\xF3mo usarlo</h2>
     <p class="muted">Cada archivo se abre en Excel o en Google Sheets. Guarda los respaldos en un lugar cifrado y b\xF3rralos cuando ya no los necesites: los archivos marcados contienen datos personales y su descarga queda en la auditor\xEDa.</p>
     <p class="muted">La descarga trae hasta 5.000 filas por archivo, las m\xE1s recientes primero.</p></div>
-  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows9}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows11}</tbody></table></div></div>`;
 }
 function dataRequestsView(input) {
   const tabs2 = STATUS_FILTERS.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/data-requests?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("");
-  const rows9 = input.items.map((r) => {
+  const rows11 = input.items.map((r) => {
     const left = daysLeft(r.dueAt);
     const plazo = isOverdue(r) ? `<span class="error">vencido hace ${Math.abs(left)} d\xEDas</span>` : r.status === "atendida" || r.status === "rechazada" ? `<span class="muted">cerrado ${when2(r.resolvedAt)}</span>` : `<span class="${left <= 3 ? "error" : "muted"}">${left} d\xEDas</span>`;
     const actions = r.status === "recibida" || r.status === "en_proceso" ? `<a href="/admin/data-requests/${escapeHtml(r.id)}/export.json">Descargar sus datos</a>
@@ -92139,7 +92538,7 @@ function dataRequestsView(input) {
     <ul>${REQUEST_KINDS.map((k) => `<li><strong>${escapeHtml(k.label)}:</strong> ${escapeHtml(k.description)}</li>`).join("")}</ul>
     <p class="muted">Las solicitudes se abren desde la ficha del titular.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay solicitudes con ese filtro.</p>` : ""}
-  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows9}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows11}</tbody></table></div></div>`;
 }
 function userDataRequestsCard(userId, items, csrf) {
   const list6 = items.length ? `<ul>${items.map((r) => `<li>${escapeHtml(dataRequestCode(r.number))} \xB7 ${escapeHtml(kindLabel(r.kind))} \xB7 ${escapeHtml(REQUEST_STATUS_LABELS[r.status] ?? r.status)}${isOverdue(r) ? ' <span class="error">vencido</span>' : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin solicitudes de datos.</p>`;
@@ -92175,7 +92574,7 @@ var init_views_data = __esm({
 // packages/api/dist/interfaces/admin/data.js
 function registerDataRoutes(app2, deps) {
   const { data } = deps;
-  const errorPage = (request, reply, session, title, text4, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text4)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
   function dbError2(err) {
     const code = err.code;
     if (code === "ER_NO_SUCH_TABLE" || code === "ER_BAD_FIELD_ERROR") {
@@ -92194,7 +92593,7 @@ function registerDataRoutes(app2, deps) {
     }
     return { session, body };
   }
-  const str5 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+  const str6 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
   async function renderRequests(request, reply, session, filter, flash, status = 200) {
     try {
       const list6 = await data.listRequests(filter, 1);
@@ -92226,15 +92625,15 @@ function registerDataRoutes(app2, deps) {
     const dataset = DATASETS.find((d) => d.key === raw);
     if (!dataset)
       return errorPage(request, reply, session, "Respaldos", "Ese conjunto no existe.", 404);
-    let rows9;
+    let rows11;
     try {
-      rows9 = await data.exportRows(dataset.key);
+      rows11 = await data.exportRows(dataset.key);
     } catch (err) {
       const m = dbError2(err);
       return errorPage(request, reply, session, "Respaldos", m.text, m.status);
     }
-    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows9.length} filas${dataset.personal ? ", con datos personales" : ""})`);
-    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows9));
+    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows11.length} filas${dataset.personal ? ", con datos personales" : ""})`);
+    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows11));
   });
   app2.get("/data-requests", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -92250,14 +92649,14 @@ function registerDataRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const userId = typeof body.userId === "string" && UUID2.test(body.userId) ? body.userId : null;
-    const kind = REQUEST_KINDS.find((k) => k.key === str5(body.kind, 20))?.key;
+    const kind = REQUEST_KINDS.find((k) => k.key === str6(body.kind, 20))?.key;
     if (!userId)
       return errorPage(request, reply, session, "Solicitudes de datos", "Titular no encontrado.", 404);
     if (!kind)
       return errorPage(request, reply, session, "Solicitudes de datos", "Elige el tipo de solicitud.", 400);
     let id;
     try {
-      id = await data.createRequest({ userId, kind, channel: str5(body.channel, 30) || null, detail: str5(body.detail, 1e3) || null, createdBy: session.userId });
+      id = await data.createRequest({ userId, kind, channel: str6(body.channel, 30) || null, detail: str6(body.detail, 1e3) || null, createdBy: session.userId });
     } catch (err) {
       const m = dbError2(err);
       return errorPage(request, reply, session, "Solicitudes de datos", m.text, m.status);
@@ -92297,7 +92696,7 @@ function registerDataRoutes(app2, deps) {
     const { id } = request.params;
     if (!UUID2.test(id))
       return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
-    const resolution = str5(body.resolution, 2e3);
+    const resolution = str6(body.resolution, 2e3);
     const next = ["atendida", "en_proceso", "rechazada"].includes(String(body.status)) ? String(body.status) : "atendida";
     if (resolution.length < 10)
       return renderRequests(request, reply, session, "recibida", { kind: "error", text: "Escribe qu\xE9 se hizo con la solicitud." }, 400);
@@ -92324,7 +92723,7 @@ function registerDataRoutes(app2, deps) {
     const { id } = request.params;
     if (!UUID2.test(id))
       return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
-    if (str5(body.confirm, 20).toUpperCase() !== "ANONIMIZAR") {
+    if (str6(body.confirm, 20).toUpperCase() !== "ANONIMIZAR") {
       return renderRequests(request, reply, session, "recibida", { kind: "error", text: "Para anonimizar hay que escribir ANONIMIZAR: es un cambio que no se deshace." }, 400);
     }
     let requestRow;
@@ -92365,8 +92764,540 @@ var init_data = __esm({
   }
 });
 
+// packages/api/dist/application/plans/plans.js
+function limitsFor(plan, role, usage) {
+  if (plan !== "gratis")
+    return [];
+  const limits = FREE_LIMITS[role] ?? {};
+  const states2 = [];
+  for (const [key, limit] of Object.entries(limits)) {
+    const used = usage[key] ?? 0;
+    states2.push({ key, label: LIMIT_LABELS[key], used, limit, reached: used >= limit });
+  }
+  return states2;
+}
+function upgradeMessage(role, limit) {
+  const queDa = role === "taller" ? "aparecer como taller verificado, recibir m\xE1s clientes y llevar todas tus \xF3rdenes" : role === "almacen" ? "responder todas las cotizaciones que quieras y aparecer primero en las b\xFAsquedas" : "talleres verificados con precio acordado, cotizaciones a varios almacenes y garant\xEDa respaldada";
+  return `Llegaste al l\xEDmite del plan gratuito (${limit.limit} ${limit.label}). Con Premium tienes ${queDa}. \xBFTe cuento c\xF3mo?`;
+}
+function isRunning(sub, now = /* @__PURE__ */ new Date()) {
+  if (sub.status !== "activa")
+    return false;
+  if (time2(sub.startsAt) > now.getTime())
+    return false;
+  return sub.endsAt === null || time2(sub.endsAt) > now.getTime();
+}
+function effectivePlan(subs, now = /* @__PURE__ */ new Date()) {
+  let plan = "gratis";
+  for (const sub of subs) {
+    if (!isRunning(sub, now))
+      continue;
+    if (sub.plan === "premium")
+      return "premium";
+    if (sub.plan === "prueba")
+      plan = "prueba";
+  }
+  return plan;
+}
+function currentSubscription(subs, now = /* @__PURE__ */ new Date()) {
+  const running = subs.filter((s) => isRunning(s, now));
+  const premium = running.find((s) => s.plan === "premium");
+  return premium ?? running.find((s) => s.plan === "prueba") ?? null;
+}
+function daysLeft2(endsAt, now = /* @__PURE__ */ new Date()) {
+  if (!endsAt)
+    return null;
+  return Math.ceil((time2(endsAt) - now.getTime()) / (24 * 60 * 60 * 1e3));
+}
+function parseAmount(input) {
+  if (typeof input !== "string")
+    return null;
+  const value2 = input.trim().replace(/[\s$]/g, "").replace(",", ".");
+  if (!value2)
+    return null;
+  if (!/^\d{1,6}(\.\d{1,2})?$/.test(value2))
+    return null;
+  return Number(value2);
+}
+function nearbyWorkshopsLink(city, reference = "") {
+  const query = ["talleres mec\xE1nicos", reference.trim(), city.trim()].filter(Boolean).join(" ");
+  return `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+}
+function nearbyWorkshopsMessage(city, reference = "") {
+  const link = nearbyWorkshopsLink(city, reference);
+  return [
+    "\u{1F5FA}\uFE0F Estos son los talleres que aparecen cerca de ti en el mapa:",
+    link,
+    "",
+    "Ojo: esos no los hemos verificado nosotros.",
+    "Con el plan Premium te consigo talleres verificados, con precio acordado antes de entrar y garant\xEDa respaldada. \xBFTe cuento c\xF3mo?"
+  ].join("\n");
+}
+var PLAN_LABELS, STATUS_LABELS, PAYMENT_METHODS, FEATURE_LABELS, FREE_LIMITS, LIMIT_LABELS, time2, subscriptionCode;
+var init_plans = __esm({
+  "packages/api/dist/application/plans/plans.js"() {
+    "use strict";
+    PLAN_LABELS = {
+      gratis: "Gratis",
+      prueba: "Prueba",
+      premium: "Premium"
+    };
+    STATUS_LABELS = {
+      pendiente: "Pendiente de verificar",
+      activa: "Activa",
+      rechazada: "Rechazada",
+      vencida: "Vencida",
+      cancelada: "Cancelada"
+    };
+    PAYMENT_METHODS = [
+      ["transferencia", "Transferencia bancaria"],
+      ["deposito", "Dep\xF3sito"],
+      ["efectivo", "Efectivo"],
+      ["cortesia", "Cortes\xEDa (sin cobro)"],
+      ["otro", "Otro"]
+    ];
+    FEATURE_LABELS = {
+      plan_mantenimiento: "Plan de mantenimiento y recordatorios",
+      talleres_cercanos: "Talleres cercanos (enlace de mapa)",
+      talleres_verificados: "Talleres verificados y cita coordinada",
+      cotizaciones: "Cotizaciones a varios almacenes",
+      garantia: "Garant\xEDa respaldada y mediaci\xF3n",
+      historial_export: "Historial completo exportable"
+    };
+    FREE_LIMITS = {
+      dueno: { vehicles: 2, appointmentsPerMonth: 2, quotesPerMonth: 2 },
+      taller: { workOrdersPerMonth: 10, quotesPerMonth: 5 },
+      almacen: { quotesPerMonth: 15 }
+    };
+    LIMIT_LABELS = {
+      vehicles: "veh\xEDculos registrados",
+      appointmentsPerMonth: "turnos al mes",
+      workOrdersPerMonth: "\xF3rdenes al mes",
+      quotesPerMonth: "cotizaciones al mes"
+    };
+    time2 = (value2) => value2 instanceof Date ? value2.getTime() : new Date(value2).getTime();
+    subscriptionCode = (number) => `SB-${String(number).padStart(4, "0")}`;
+  }
+});
+
+// packages/api/dist/interfaces/admin/views-plans.js
+function when3(value2) {
+  if (!value2)
+    return "\u2014";
+  const date = value2 instanceof Date ? value2 : new Date(value2);
+  return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeZone: "America/Guayaquil" }).format(date);
+}
+function planBadge(plan, endsAt) {
+  const left = daysLeft2(endsAt ?? null);
+  const detalle = plan === "gratis" ? "" : left === null ? "" : left >= 0 ? ` \xB7 ${left} d\xEDas` : " \xB7 vencido";
+  const clase = plan === "premium" ? "ok" : plan === "prueba" ? "" : "muted";
+  return `<span class="${clase}"><strong>${escapeHtml(PLAN_LABELS[plan])}</strong>${escapeHtml(detalle)}</span>`;
+}
+function plansListView(input) {
+  const tabs2 = FILTERS3.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/plans?f=${escapeHtml(key)}">${escapeHtml(label2)}${key === "pendiente" && input.pending > 0 ? ` (${input.pending})` : ""}</a>`).join("");
+  const rows11 = input.items.map((s) => {
+    const left = daysLeft2(s.endsAt);
+    const vigencia = s.status === "activa" ? s.endsAt ? `${when3(s.startsAt)} \u2192 ${when3(s.endsAt)}<br><span class="${left !== null && left <= 7 ? "error" : "muted"}">${left} d\xEDas</span>` : `desde ${when3(s.startsAt)}<br><span class="muted">sin vencimiento</span>` : `<span class="muted">${when3(s.createdAt)}</span>`;
+    const acciones = input.canDecide && s.status === "pendiente" ? `<form method="post" action="/admin/subscriptions/${escapeHtml(s.id)}/verify">${csrfField4(input.csrf)}
+            <label for="m-${escapeHtml(s.id)}">Meses pagados</label><input id="m-${escapeHtml(s.id)}" name="months" inputmode="numeric" value="${escapeHtml(String(s.months ?? 1))}">
+            <button type="submit">Verificar el pago y activar</button></form>
+            <form method="post" action="/admin/subscriptions/${escapeHtml(s.id)}/reject">${csrfField4(input.csrf)}
+            <label for="r-${escapeHtml(s.id)}">Motivo del rechazo</label><input id="r-${escapeHtml(s.id)}" name="reason" maxlength="191" required>
+            <button class="danger" type="submit">Rechazar</button></form>` : input.canDecide && s.status === "activa" ? `<form method="post" action="/admin/subscriptions/${escapeHtml(s.id)}/cancel">${csrfField4(input.csrf)}
+              <label for="c-${escapeHtml(s.id)}">Motivo de la baja</label><input id="c-${escapeHtml(s.id)}" name="reason" maxlength="191" required>
+              <button class="danger" type="submit">Dar de baja</button></form>` : s.decisionReason ? `<span class="muted">${escapeHtml(s.decisionReason)}</span>` : "";
+    return `<tr><td>${escapeHtml(subscriptionCode(s.number))}</td>
+      <td><a href="/admin/users/${escapeHtml(s.userId)}">${escapeHtml(s.userName ?? s.userId)}</a><br><span class="muted">${escapeHtml(s.userRole ?? "")}</span></td>
+      <td>${escapeHtml(PLAN_LABELS[s.plan] ?? s.plan)}<br><span class="muted">${escapeHtml(STATUS_LABELS[s.status] ?? s.status)}</span></td>
+      <td>${escapeHtml(money(s.amountUsd))}<br><span class="muted">${escapeHtml(s.method ?? "\u2014")}${s.reference ? ` \xB7 ${escapeHtml(s.reference)}` : ""}</span></td>
+      <td>${vigencia}</td>
+      <td>${acciones}</td></tr>`;
+  }).join("");
+  return `<div class="stack wide"><h1>Planes y pagos</h1>${flashHtml4(input.flash)}
+  <div class="tabs">${tabs2}</div>
+  <div class="card"><h2>C\xF3mo se cobra hoy</h2>
+    <p class="muted">El cliente transfiere y el operador registra el pago desde su ficha. La suscripci\xF3n queda <strong>pendiente</strong> hasta que un administrador verifica que el dinero lleg\xF3: reci\xE9n ah\xED se activa el plan.</p>
+    <p class="muted">Premium habilita: ${Object.values(FEATURE_LABELS).slice(2).map((f) => escapeHtml(f)).join(" \xB7 ")}.</p></div>
+  ${input.items.length === 0 ? `<p class="muted">No hay suscripciones con ese filtro.</p>` : ""}
+  <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Titular</th><th>Plan</th><th>Pago</th><th>Vigencia</th><th>Acciones</th></tr></thead>
+  <tbody>${rows11}</tbody></table></div></div>`;
+}
+function userPlanCard(userId, subs, csrf, canRegister, role = "dueno", usage = {}) {
+  const plan = effectivePlan(subs);
+  const current = currentSubscription(subs);
+  const pendiente = subs.find((s) => s.status === "pendiente");
+  const historial = subs.length ? `<ul>${subs.map((s) => `<li>${escapeHtml(subscriptionCode(s.number))} \xB7 ${escapeHtml(PLAN_LABELS[s.plan] ?? s.plan)} \xB7 ${escapeHtml(STATUS_LABELS[s.status] ?? s.status)} \xB7 ${escapeHtml(money(s.amountUsd))}${isRunning(s) && s.endsAt ? ` \xB7 vence ${when3(s.endsAt)}` : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin suscripciones registradas.</p>`;
+  const alta = canRegister ? `<form method="post" action="/admin/users/${escapeHtml(userId)}/subscriptions" autocomplete="off">${csrfField4(csrf)}
+      <label for="plan">Plan</label>
+      <select id="plan" name="plan"><option value="premium">Premium</option><option value="prueba">Prueba</option></select>
+      <label for="months">Meses pagados (vac\xEDo = sin vencimiento)</label><input id="months" name="months" inputmode="numeric" value="1">
+      <label for="amount">Monto recibido (US$)</label><input id="amount" name="amount" inputmode="decimal" placeholder="9,99">
+      <label for="method">Forma de pago</label>
+      <select id="method" name="method">${PAYMENT_METHODS.map(([key, label2]) => `<option value="${escapeHtml(key)}">${escapeHtml(label2)}</option>`).join("")}</select>
+      <label for="reference">Referencia o comprobante</label><input id="reference" name="reference" maxlength="191" placeholder="N\xBA de transferencia">
+      <label for="notes">Notas</label><input id="notes" name="notes" maxlength="500">
+      <button class="full" type="submit">Registrar el pago (queda por verificar)</button></form>` : "";
+  const limites = limitsFor(plan, role, usage);
+  const limitesHtml = limites.length ? `<ul>${limites.map((l) => `<li>${escapeHtml(String(l.used))} de ${escapeHtml(String(l.limit))} ${escapeHtml(l.label)}${l.reached ? ' <span class="error">(lleg\xF3 al tope)</span>' : ""}</li>`).join("")}</ul>
+      ${limites.some((l) => l.reached) ? `<label for="upgrade">Mensaje para ofrecerle el plan</label><textarea id="upgrade" readonly rows="3">${escapeHtml(upgradeMessage(role, limites.find((l) => l.reached)))}</textarea>` : ""}` : "";
+  return `<div class="card"><h2>Plan</h2>
+    <p>Plan vigente: ${planBadge(plan, current?.endsAt ?? null)}</p>
+    ${limitesHtml}
+    ${pendiente ? `<p class="error">Tiene un pago pendiente de verificaci\xF3n (${escapeHtml(subscriptionCode(pendiente.number))}).</p>` : ""}
+    ${historial}${alta}
+    <p class="muted">El plan se activa solo cuando un administrador verifica el pago en \xABPlanes y pagos\xBB.</p></div>`;
+}
+var flashHtml4, csrfField4, money, FILTERS3;
+var init_views_plans = __esm({
+  "packages/api/dist/interfaces/admin/views-plans.js"() {
+    "use strict";
+    init_page();
+    init_plans();
+    flashHtml4 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${escapeHtml(flash.text)}</p>` : "";
+    csrfField4 = (csrf) => `<input type="hidden" name="csrf" value="${escapeHtml(csrf)}">`;
+    money = (value2) => value2 === null ? "\u2014" : `US$ ${value2.toFixed(2)}`;
+    FILTERS3 = [
+      ["pendiente", "Por verificar"],
+      ["activa", "Activas"],
+      ["por_vencer", "Por vencer"],
+      ["vencida", "Vencidas"],
+      ["todas", "Todas"]
+    ];
+  }
+});
+
+// packages/api/dist/interfaces/admin/plans.js
+function registerPlanRoutes(app2, deps) {
+  const { plans } = deps;
+  const errorPage = (request, reply, session, text5, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
+  function dbError2(err) {
+    const code = err.code;
+    if (code === "ER_NO_SUCH_TABLE" || code === "ER_BAD_FIELD_ERROR") {
+      return { status: 503, text: "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." };
+    }
+    return { status: 502, text: `No se pudo completar la operaci\xF3n (${code ?? "base de datos no disponible"}).` };
+  }
+  function withCsrf(request, reply) {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return null;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf)) {
+      errorPage(request, reply, session, "Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.", 403);
+      return null;
+    }
+    return { session, body };
+  }
+  const str6 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+  const whole = (value2, max) => {
+    const text5 = str6(value2, 6);
+    if (!text5)
+      return null;
+    const n = Number(text5);
+    return Number.isFinite(n) && n >= 1 && n <= max ? Math.floor(n) : null;
+  };
+  async function render(request, reply, session, filter, flash, status = 200) {
+    try {
+      await plans.expireDue().catch(() => 0);
+      const [list6, pending] = await Promise.all([plans.list(filter, 1), plans.pendingCount().catch(() => 0)]);
+      return deps.html(reply, request, "Planes y pagos", plansListView({ csrf: session.csrfToken, filter, items: list6.items, canDecide: can(session.role, "plans"), pending, flash }), session, status);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+  }
+  app2.get("/plans", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const query = request.query ?? {};
+    const filter = FILTERS4.includes(String(query.f)) ? String(query.f) : "pendiente";
+    return render(request, reply, session, filter);
+  });
+  app2.post("/users/:id/subscriptions", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID3.test(id))
+      return errorPage(request, reply, session, "Usuario no encontrado.", 404);
+    const plan = PLANS.includes(str6(body.plan, 20)) ? str6(body.plan, 20) : null;
+    if (!plan)
+      return errorPage(request, reply, session, "Elige el plan.", 400);
+    const months = whole(body.months, 36);
+    const rawAmount = str6(body.amount, 12);
+    const amount = rawAmount ? parseAmount(rawAmount) : null;
+    if (rawAmount && amount === null)
+      return errorPage(request, reply, session, "Monto no v\xE1lido: escribe por ejemplo 9,99.", 400);
+    try {
+      const subId = await plans.create({
+        userId: id,
+        plan,
+        months,
+        amountUsd: amount,
+        method: str6(body.method, 20) || null,
+        reference: str6(body.reference, 191) || null,
+        notes: str6(body.notes, 500) || null,
+        createdBy: session.userId
+      });
+      await deps.audit("admin.plan.registered", session.userId, `Pago registrado para ${id}: ${plan}${amount === null ? "" : ` US$ ${amount.toFixed(2)}`} (${subId})`);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+    return reply.redirect(`/admin/users/${id}?ok=plan`, 302);
+  });
+  app2.post("/subscriptions/:id/verify", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID3.test(id))
+      return errorPage(request, reply, session, "Suscripci\xF3n no encontrada.", 404);
+    let sub;
+    try {
+      sub = await plans.get(id);
+      if (!sub)
+        return errorPage(request, reply, session, "Suscripci\xF3n no encontrada.", 404);
+      const months = whole(body.months, 36) ?? sub.months;
+      const changed = await plans.verify(id, months, session.userId);
+      if (!changed)
+        return render(request, reply, session, "todas", { kind: "error", text: "Ese pago ya estaba verificado o rechazado." }, 400);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+    await deps.audit("admin.plan.verified", session.userId, `${subscriptionCode(sub.number)} verificada: ${PLAN_LABELS[sub.plan] ?? sub.plan} para ${sub.userId}`);
+    return render(request, reply, session, "activa", { kind: "ok", text: "Pago verificado: el plan qued\xF3 activo." });
+  });
+  app2.post("/subscriptions/:id/reject", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID3.test(id))
+      return errorPage(request, reply, session, "Suscripci\xF3n no encontrada.", 404);
+    const reason = str6(body.reason, 191);
+    if (reason.length < 5)
+      return render(request, reply, session, "pendiente", { kind: "error", text: "Escribe el motivo del rechazo: se le comunica al titular." }, 400);
+    let sub;
+    try {
+      sub = await plans.get(id);
+      if (!sub)
+        return errorPage(request, reply, session, "Suscripci\xF3n no encontrada.", 404);
+      const changed = await plans.reject(id, reason, session.userId);
+      if (!changed)
+        return render(request, reply, session, "todas", { kind: "error", text: "Ese pago ya estaba decidido." }, 400);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+    await deps.audit("admin.plan.rejected", session.userId, `${subscriptionCode(sub.number)} rechazada: ${reason}`);
+    return render(request, reply, session, "pendiente", { kind: "ok", text: "Pago rechazado. Av\xEDsale al titular con el motivo." });
+  });
+  app2.post("/subscriptions/:id/cancel", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID3.test(id))
+      return errorPage(request, reply, session, "Suscripci\xF3n no encontrada.", 404);
+    const reason = str6(body.reason, 191);
+    if (reason.length < 5)
+      return render(request, reply, session, "activa", { kind: "error", text: "Escribe el motivo de la baja." }, 400);
+    let sub;
+    try {
+      sub = await plans.get(id);
+      if (!sub)
+        return errorPage(request, reply, session, "Suscripci\xF3n no encontrada.", 404);
+      const changed = await plans.cancel(id, reason, session.userId);
+      if (!changed)
+        return render(request, reply, session, "todas", { kind: "error", text: "Esa suscripci\xF3n ya no estaba activa." }, 400);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+    await deps.audit("admin.plan.cancelled", session.userId, `${subscriptionCode(sub.number)} dada de baja: ${reason}`);
+    return render(request, reply, session, "activa", { kind: "ok", text: "Suscripci\xF3n dada de baja." });
+  });
+}
+var UUID3, FILTERS4, PLANS;
+var init_plans2 = __esm({
+  "packages/api/dist/interfaces/admin/plans.js"() {
+    "use strict";
+    init_page();
+    init_security();
+    init_permissions();
+    init_plans();
+    init_views_plans();
+    UUID3 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS4 = ["pendiente", "activa", "por_vencer", "vencida", "todas"];
+    PLANS = ["premium", "prueba"];
+  }
+});
+
+// packages/api/dist/infrastructure/plans/plan-store.js
+function rows4(result) {
+  const [list6] = result;
+  return Array.isArray(list6) ? list6 : [];
+}
+function toRow(row) {
+  return {
+    id: String(row.id),
+    number: Number(row.number ?? 0),
+    userId: String(row.userId),
+    userName: str2(row.userName),
+    userRole: str2(row.userRole),
+    plan: String(row.plan),
+    status: String(row.status),
+    months: num(row.months),
+    amountUsd: num(row.amountUsd),
+    method: str2(row.method),
+    reference: str2(row.reference),
+    notes: str2(row.notes),
+    startsAt: row.startsAt,
+    endsAt: row.endsAt ?? null,
+    verifiedAt: row.verifiedAt ?? null,
+    decisionReason: str2(row.decisionReason),
+    createdAt: row.createdAt
+  };
+}
+var PAGE_SIZE4, str2, num, SELECT2, MysqlPlanStore;
+var init_plan_store = __esm({
+  "packages/api/dist/infrastructure/plans/plan-store.js"() {
+    "use strict";
+    init_plans();
+    PAGE_SIZE4 = 25;
+    str2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    num = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
+    SELECT2 = "SELECT s.*, s.expiresAt AS endsAt, u.name AS userName, u.role AS userRole FROM `Subscription` s JOIN `User` u ON u.id = s.userId";
+    MysqlPlanStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      create(input) {
+        return this.run(async (conn) => {
+          const created = rows4(await conn.query("SELECT UUID() AS id"))[0];
+          const id = String(created?.id);
+          const next = rows4(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
+          await conn.query(
+            // `active` se mantiene en falso mientras el pago no esté verificado, para que cualquier
+            // lectura antigua de esa columna vea lo mismo que el estado nuevo.
+            "INSERT INTO `Subscription` (id, `number`, userId, plan, status, active, months, amountUsd, method, reference, notes, startsAt, expiresAt, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'pendiente', 0, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3), NULL, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))",
+            [id, Number(next?.n ?? 1), input.userId, input.plan, input.months, input.amountUsd, input.method, input.reference, input.notes, input.createdBy]
+          );
+          return id;
+        });
+      }
+      list(filter, page, soonDays = 7) {
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE4;
+        return this.run(async (conn) => {
+          let where = "";
+          const params = [];
+          if (filter === "pendiente")
+            where = "WHERE s.status = 'pendiente'";
+          else if (filter === "activa")
+            where = "WHERE s.status = 'activa' AND (s.expiresAt IS NULL OR s.expiresAt > UTC_TIMESTAMP(3))";
+          else if (filter === "por_vencer") {
+            where = "WHERE s.status = 'activa' AND s.expiresAt IS NOT NULL AND s.expiresAt > UTC_TIMESTAMP(3) AND s.expiresAt <= DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? DAY)";
+            params.push(Math.max(1, Math.floor(soonDays)));
+          } else if (filter === "vencida")
+            where = "WHERE s.status = 'vencida' OR (s.status = 'activa' AND s.expiresAt IS NOT NULL AND s.expiresAt <= UTC_TIMESTAMP(3))";
+          const items = rows4(await conn.query(`${SELECT2} ${where} ORDER BY s.status = 'pendiente' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE4} OFFSET ${offset2}`, params)).map(toRow);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE4 };
+        });
+      }
+      get(id) {
+        return this.run(async (conn) => {
+          const row = rows4(await conn.query(`${SELECT2} WHERE s.id = ? LIMIT 1`, [id]))[0];
+          return row ? toRow(row) : null;
+        });
+      }
+      forUser(userId) {
+        return this.run(async (conn) => rows4(await conn.query(`${SELECT2} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow));
+      }
+      verify(id, months, verifiedBy) {
+        return this.run(async (conn) => {
+          const vence = months === null ? "NULL" : "DATE_ADD(CURRENT_TIMESTAMP(3), INTERVAL ? MONTH)";
+          const params = months === null ? [verifiedBy, id] : [Math.floor(months), verifiedBy, id];
+          const [result] = await conn.query(`UPDATE \`Subscription\` SET status = 'activa', active = 1, expiresAt = ${vence}, verifiedBy = ?, verifiedAt = CURRENT_TIMESTAMP(3), startsAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status = 'pendiente'`, params);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      reject(id, reason, verifiedBy) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `Subscription` SET status = 'rechazada', active = 0, decisionReason = ?, verifiedBy = ?, verifiedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status = 'pendiente'", [reason, verifiedBy, id]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      cancel(id, reason, verifiedBy) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `Subscription` SET status = 'cancelada', active = 0, decisionReason = ?, verifiedBy = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status = 'activa'", [reason, verifiedBy, id]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      expireDue() {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `Subscription` SET status = 'vencida', active = 0, updatedAt = CURRENT_TIMESTAMP(3) WHERE status = 'activa' AND expiresAt IS NOT NULL AND expiresAt <= UTC_TIMESTAMP(3)");
+          return Number(result.affectedRows ?? 0);
+        });
+      }
+      pendingCount() {
+        return this.run(async (conn) => {
+          const row = rows4(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status = 'pendiente'"))[0];
+          return Number(row?.n ?? 0);
+        });
+      }
+      usageForUser(userId) {
+        return this.run(async (conn) => {
+          const cuenta = async (sql, params) => {
+            try {
+              const row = rows4(await conn.query(sql, params))[0];
+              return Number(row?.n ?? 0);
+            } catch {
+              return 0;
+            }
+          };
+          const desde = "DATE_FORMAT(UTC_TIMESTAMP(3), '%Y-%m-01')";
+          const [vehicles, appointmentsPerMonth, workOrdersPerMonth, quotesPerMonth] = await Promise.all([
+            cuenta("SELECT COUNT(*) AS n FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL", [userId]),
+            cuenta(`SELECT COUNT(*) AS n FROM \`Appointment\` WHERE ownerId = ? AND createdAt >= ${desde}`, [userId]),
+            cuenta(`SELECT COUNT(*) AS n FROM \`WorkOrder\` w JOIN \`Shop\` s ON s.id = w.shopId WHERE (w.ownerId = ? OR s.userId = ?) AND w.createdAt >= ${desde}`, [userId, userId]),
+            cuenta(`SELECT COUNT(*) AS n FROM \`QuoteRequest\` q WHERE q.requesterId = ? AND q.createdAt >= ${desde}`, [userId])
+          ]);
+          return { vehicles, appointmentsPerMonth, workOrdersPerMonth, quotesPerMonth };
+        });
+      }
+      planForUser(userId) {
+        return this.run(async (conn) => {
+          const list6 = rows4(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
+            plan: String(r.plan),
+            status: String(r.status),
+            startsAt: r.startsAt,
+            endsAt: r.endsAt ?? null
+          }));
+          return effectivePlan(list6);
+        });
+      }
+    };
+  }
+});
+
 // packages/api/dist/infrastructure/relations/relation-store.js
-function rows3(result) {
+function rows5(result) {
   const [list6] = result;
   return Array.isArray(list6) ? list6 : [];
 }
@@ -92377,32 +93308,32 @@ function toRelation(row) {
     kind: String(row.kind),
     status: String(row.status),
     channel: String(row.channel),
-    groupInviteUrl: str2(row.groupInviteUrl),
+    groupInviteUrl: str3(row.groupInviteUrl),
     originType: String(row.originType),
-    originId: str2(row.originId),
-    subject: str2(row.subject),
+    originId: str3(row.originId),
+    subject: str3(row.subject),
     relayPaused: bool(row.relayPaused),
     lastMessageAt: row.lastMessageAt ?? null,
     waitingSince: row.waitingSince ?? null,
     createdAt: row.createdAt,
     closedAt: row.closedAt ?? null,
-    closeReason: str2(row.closeReason),
-    parties: str2(row.parties) ?? ""
+    closeReason: str3(row.closeReason),
+    parties: str3(row.parties) ?? ""
   };
 }
 function toDispute(row) {
   return {
     id: String(row.id),
     number: Number(row.number ?? 0),
-    relationshipId: str2(row.relationshipId),
+    relationshipId: str3(row.relationshipId),
     relationNumber: row.relationNumber === null || row.relationNumber === void 0 ? null : Number(row.relationNumber),
-    claimantUserId: str2(row.claimantUserId),
-    claimantName: str2(row.claimantName),
-    againstUserId: str2(row.againstUserId),
-    againstName: str2(row.againstName),
+    claimantUserId: str3(row.claimantUserId),
+    claimantName: str3(row.claimantName),
+    againstUserId: str3(row.againstUserId),
+    againstName: str3(row.againstName),
     reason: String(row.reason ?? ""),
     status: String(row.status),
-    resolution: str2(row.resolution),
+    resolution: str3(row.resolution),
     createdAt: row.createdAt,
     resolvedAt: row.resolvedAt ?? null
   };
@@ -92411,26 +93342,26 @@ function toSanction(row) {
   return {
     id: String(row.id),
     userId: String(row.userId),
-    userName: str2(row.userName),
+    userName: str3(row.userName),
     level: String(row.level),
     reason: String(row.reason ?? ""),
-    relationshipId: str2(row.relationshipId),
-    disputeId: str2(row.disputeId),
+    relationshipId: str3(row.relationshipId),
+    disputeId: str3(row.disputeId),
     startsAt: row.startsAt,
     endsAt: row.endsAt ?? null,
     liftedAt: row.liftedAt ?? null,
-    liftReason: str2(row.liftReason),
+    liftReason: str3(row.liftReason),
     createdAt: row.createdAt
   };
 }
-var PAGE_SIZE3, OPEN, str2, bool, SELECT_RELATION, MysqlRelationStore;
+var PAGE_SIZE5, OPEN, str3, bool, SELECT_RELATION, MysqlRelationStore;
 var init_relation_store = __esm({
   "packages/api/dist/infrastructure/relations/relation-store.js"() {
     "use strict";
     init_workflow();
-    PAGE_SIZE3 = 25;
+    PAGE_SIZE5 = 25;
     OPEN = RELATION_OPEN_STATUSES.map(() => "?").join(", ");
-    str2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    str3 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     bool = (value2) => value2 === 1 || value2 === true || value2 === "1";
     SELECT_RELATION = "SELECT r.*, (SELECT GROUP_CONCAT(u.name ORDER BY p.role SEPARATOR ' \u2194 ') FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = r.id) AS parties FROM `Relationship` r";
     MysqlRelationStore = class {
@@ -92447,15 +93378,15 @@ var init_relation_store = __esm({
         }
       }
       async nextNumber(conn, table) {
-        const row = rows3(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
+        const row = rows5(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
         return Number(row?.n ?? 1);
       }
       ensureForOrigin(input) {
         return this.run(async (conn) => {
-          const existing = rows3(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
+          const existing = rows5(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
           if (existing)
             return String(existing.id);
-          const created = rows3(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows5(await conn.query("SELECT UUID() AS id"))[0];
           const id = String(created?.id);
           const number = await this.nextNumber(conn, "Relationship");
           await conn.query("INSERT INTO `Relationship` (id, `number`, kind, status, channel, originType, originId, subject, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, 'activa', 'mediado', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, number, input.kind, input.originType, input.originId, input.subject, input.createdBy]);
@@ -92466,7 +93397,7 @@ var init_relation_store = __esm({
         });
       }
       list(filter, page, waitingHours2 = 24) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3;
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5;
         return this.run(async (conn) => {
           let where = "";
           const params = [];
@@ -92481,47 +93412,47 @@ var init_relation_store = __esm({
           } else if (filter === "cerradas") {
             where = "WHERE r.status IN ('cerrada', 'bloqueada')";
           }
-          const items = rows3(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`, params)).map(toRelation);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE3 };
+          const items = rows5(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params)).map(toRelation);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE5 };
         });
       }
       get(id) {
         return this.run(async (conn) => {
-          const row = rows3(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id]))[0];
+          const row = rows5(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id]))[0];
           if (!row)
             return null;
-          const parties = rows3(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id])).map((p) => ({
+          const parties = rows5(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id])).map((p) => ({
             id: String(p.id),
             userId: String(p.userId),
             role: String(p.role),
             name: String(p.name ?? ""),
-            phone: str2(p.phone),
+            phone: str3(p.phone),
             consentShareContact: bool(p.consentShareContact),
             consentAt: p.consentAt ?? null,
             mutedAt: p.mutedAt ?? null
           }));
-          const messages = rows3(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id])).map((m) => ({
+          const messages = rows5(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id])).map((m) => ({
             id: String(m.id),
-            fromUserId: str2(m.fromUserId),
-            toUserId: str2(m.toUserId),
-            fromName: str2(m.fromName),
-            toName: str2(m.toName),
+            fromUserId: str3(m.fromUserId),
+            toUserId: str3(m.toUserId),
+            fromName: str3(m.fromName),
+            toName: str3(m.toName),
             body: String(m.body ?? ""),
             kind: String(m.kind),
             relayedAt: m.relayedAt ?? null,
             flagged: bool(m.flagged),
             createdAt: m.createdAt
           }));
-          const disputes = rows3(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id])).map(toDispute);
+          const disputes = rows5(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id])).map(toDispute);
           return { relation: toRelation(row), parties, messages, disputes };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows3(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
+        return this.run(async (conn) => rows5(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
       }
       addMessage(input) {
         return this.run(async (conn) => {
-          const created = rows3(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows5(await conn.query("SELECT UUID() AS id"))[0];
           const id = String(created?.id);
           await conn.query(`INSERT INTO \`RelationshipMessage\` (id, relationshipId, fromUserId, toUserId, body, kind, relayedAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ${input.relayed ? "CURRENT_TIMESTAMP(3)" : "NULL"}, ?, CURRENT_TIMESTAMP(3))`, [id, input.relationshipId, input.fromUserId, input.toUserId, input.body, input.kind, input.createdBy]);
           await conn.query("UPDATE `Relationship` SET lastMessageAt = CURRENT_TIMESTAMP(3), waitingSince = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.toUserId ? /* @__PURE__ */ new Date() : null, input.relationshipId]);
@@ -92552,7 +93483,7 @@ var init_relation_store = __esm({
       }
       openDispute(input) {
         return this.run(async (conn) => {
-          const created = rows3(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows5(await conn.query("SELECT UUID() AS id"))[0];
           const id = String(created?.id);
           const number = await this.nextNumber(conn, "Dispute");
           await conn.query("INSERT INTO `Dispute` (id, `number`, relationshipId, openedBy, claimantUserId, againstUserId, reason, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, number, input.relationshipId, input.openedBy, input.claimantUserId, input.againstUserId, input.reason]);
@@ -92563,17 +93494,17 @@ var init_relation_store = __esm({
         });
       }
       listDisputes(status, page) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3;
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5;
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params = status === "todas" ? [] : [status];
-          const items = rows3(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`, params)).map(toDispute);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE3 };
+          const items = rows5(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params)).map(toDispute);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE5 };
         });
       }
       getDispute(id) {
         return this.run(async (conn) => {
-          const row = rows3(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id]))[0];
+          const row = rows5(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id]))[0];
           return row ? toDispute(row) : null;
         });
       }
@@ -92589,21 +93520,21 @@ var init_relation_store = __esm({
       }
       addSanction(input) {
         return this.run(async (conn) => {
-          const created = rows3(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows5(await conn.query("SELECT UUID() AS id"))[0];
           const id = String(created?.id);
           await conn.query("INSERT INTO `Sanction` (id, userId, level, reason, relationshipId, disputeId, startsAt, endsAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3), ?, ?, CURRENT_TIMESTAMP(3))", [id, input.userId, input.level, input.reason, input.relationshipId, input.disputeId, input.endsAt, input.createdBy]);
           return id;
         });
       }
       listSanctions(page) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3;
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5;
         return this.run(async (conn) => {
-          const items = rows3(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`)).map(toSanction);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE3 };
+          const items = rows5(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`)).map(toSanction);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE5 };
         });
       }
       sanctionsForUser(userId) {
-        return this.run(async (conn) => rows3(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
+        return this.run(async (conn) => rows5(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
       }
       liftSanction(id, reason, liftedBy) {
         return this.run(async (conn) => {
@@ -92612,7 +93543,7 @@ var init_relation_store = __esm({
         });
       }
       searchBlockedUserIds() {
-        return this.run(async (conn) => rows3(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
+        return this.run(async (conn) => rows5(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
       }
     };
   }
@@ -92916,7 +93847,7 @@ var init_views_settings = __esm({
 });
 
 // packages/api/dist/application/work-orders/workflow.js
-function parseAmount(input) {
+function parseAmount2(input) {
   if (typeof input !== "string")
     return null;
   let value2 = input.trim().replace(/[\s$]/g, "");
@@ -93243,7 +94174,7 @@ function registerSettingsRoutes(app2, deps) {
       recordLoginAttempt(account.email, request.ip, false);
       return render(request, reply, session, { kind: "error", text: "La contrase\xF1a actual no es correcta." }, 400);
     }
-    const budget = parseAmount(body.budget);
+    const budget = parseAmount2(body.budget);
     if (budget === null || budget > 100)
       return render(request, reply, session, { kind: "error", text: "Tope diario no v\xE1lido: entre 0 y 100 d\xF3lares." }, 400);
     const enabled = body.enabled === "on";
@@ -93320,11 +94251,11 @@ var init_plan_text = __esm({
 });
 
 // packages/api/dist/application/appointments/messages.js
-function parseEcDateTime(date, time2) {
-  if (typeof date !== "string" || typeof time2 !== "string")
+function parseEcDateTime(date, time3) {
+  if (typeof date !== "string" || typeof time3 !== "string")
     return null;
   const d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date.trim());
-  const t = /^(\d{2}):(\d{2})$/.exec(time2.trim());
+  const t = /^(\d{2}):(\d{2})$/.exec(time3.trim());
   if (!d || !t)
     return null;
   const [year, month, day2] = [Number(d[1]), Number(d[2]), Number(d[3])];
@@ -93392,13 +94323,13 @@ function servicesText(a) {
   return names.length > 0 ? names.join(", ") : a.summary ?? "\u2014";
 }
 function ownerMessage(a) {
-  const when3 = formatEcDateTime(a.scheduledAt);
+  const when5 = formatEcDateTime(a.scheduledAt);
   switch (a.status) {
     case "confirmed":
       return `\u2705 Tu turno est\xE1 confirmado
 \u{1F527} ${a.shopName}
 \u{1F4CD} ${a.shopAddress}, ${a.shopCity}
-\u{1F5D3}\uFE0F ${when3}
+\u{1F5D3}\uFE0F ${when5}
 \u{1F697} ${vehicleText2(a)}
 \u{1F6E0}\uFE0F ${servicesText(a)}
 
@@ -93409,14 +94340,14 @@ Te lo recuerdo un d\xEDa antes. Si necesitas cambiarlo, escr\xEDbeme.`;
 
 \xBFC\xF3mo te fue? Califica del 1 al 5 y cu\xE9ntame si todo qued\xF3 bien.`;
     case "cancelled":
-      return `\u274C Tu turno en ${a.shopName} del ${when3} fue cancelado${a.cancelReason ? `: ${a.cancelReason}` : ""}.
+      return `\u274C Tu turno en ${a.shopName} del ${when5} fue cancelado${a.cancelReason ? `: ${a.cancelReason}` : ""}.
 
 \xBFQuieres que te busque otro horario u otro taller?`;
     default:
       return `\u{1F4C5} Solicitud de turno enviada
 \u{1F527} ${a.shopName}
 \u{1F4CD} ${a.shopAddress}, ${a.shopCity}
-\u{1F5D3}\uFE0F ${when3}
+\u{1F5D3}\uFE0F ${when5}
 \u{1F697} ${vehicleText2(a)}
 \u{1F6E0}\uFE0F ${servicesText(a)}
 
@@ -93432,7 +94363,7 @@ function shopRequestMessage(a) {
 
 Responde: 1) Aceptar \xB7 2) Proponer otro horario \xB7 3) Rechazar`;
 }
-var TIME_ZONE, OFFSET_MS, DAY_MS, STATUS_LABELS, ALLOWED_TRANSITIONS, usd, vehicleText2;
+var TIME_ZONE, OFFSET_MS, DAY_MS, STATUS_LABELS2, ALLOWED_TRANSITIONS, usd, vehicleText2;
 var init_messages = __esm({
   "packages/api/dist/application/appointments/messages.js"() {
     "use strict";
@@ -93440,7 +94371,7 @@ var init_messages = __esm({
     TIME_ZONE = "America/Guayaquil";
     OFFSET_MS = 5 * 60 * 60 * 1e3;
     DAY_MS = 24 * 60 * 60 * 1e3;
-    STATUS_LABELS = {
+    STATUS_LABELS2 = {
       pending: "Solicitado",
       confirmed: "Confirmado",
       completed: "Completado",
@@ -93465,16 +94396,16 @@ function chatLink(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e(digits)}" target="_blank" rel="noopener">${e(label2)} (${e(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox(id, label2, content, rows9 = 8) {
-  return `<label for="${id}">${e(label2)}</label><textarea id="${id}" readonly rows="${rows9}">${e(content)}</textarea>`;
+function copyBox(id, label2, content, rows11 = 8) {
+  return `<label for="${id}">${e(label2)}</label><textarea id="${id}" readonly rows="${rows11}">${e(content)}</textarea>`;
 }
 function appointmentsListView(input) {
-  const tabs2 = FILTERS3.map(([id, label2]) => `<a href="/admin/appointments?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e(label2)}</a>`).join("");
-  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin turnos</td></tr>` : input.page.items.map((a) => `<tr><td><a href="/admin/appointments/${e(a.id)}">${e(formatEcDateTime(a.scheduledAt))}</a></td><td>${e(STATUS_LABELS[a.status] ?? a.status)}</td>
+  const tabs2 = FILTERS5.map(([id, label2]) => `<a href="/admin/appointments?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e(label2)}</a>`).join("");
+  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin turnos</td></tr>` : input.page.items.map((a) => `<tr><td><a href="/admin/appointments/${e(a.id)}">${e(formatEcDateTime(a.scheduledAt))}</a></td><td>${e(STATUS_LABELS2[a.status] ?? a.status)}</td>
             <td>${e(a.shopName)}</td><td><a href="/admin/users/${e(a.ownerId)}">${e(a.ownerName)}</a></td><td>${e(a.vehicleLabel)}</td><td>${e(servicesLabel(a))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
-  return `<h1>Turnos</h1>${flashHtml4(input.flash)}<div class="tabs">${tabs2}</div>
+  return `<h1>Turnos</h1>${flashHtml5(input.flash)}<div class="tabs">${tabs2}</div>
   <p class="muted">Para agendar, abre la ficha de un due\xF1o y pulsa \xABAgendar turno\xBB en su veh\xEDculo.</p>
   <div class="scroll"><table><thead><tr><th>Fecha (hora de Ecuador)</th><th>Estado</th><th>Taller</th><th>Due\xF1o</th><th>Veh\xEDculo</th><th>Servicios</th></tr></thead><tbody>${body}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
@@ -93484,21 +94415,21 @@ function appointmentDetailView(input) {
   const transitions = ALLOWED_TRANSITIONS[a.status] ?? [];
   const actions = [];
   if (transitions.includes("confirmed")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField4(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField5(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
   }
   if (transitions.includes("completed")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField4(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField5(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
   }
   if (transitions.includes("cancelled")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField4(input.csrf)}<input type="hidden" name="status" value="cancelled">
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField5(input.csrf)}<input type="hidden" name="status" value="cancelled">
       <label for="reason">Motivo de la cancelaci\xF3n</label><input id="reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cancelar turno</button></form>`);
   }
   const shopMessage = a.status === "pending" ? copyBox("msg-shop", "Mensaje para el taller", shopRequestMessage(a)) : "";
   return `<div class="stack wide"><p><a href="/admin/appointments">\u2190 Turnos</a></p>
-  <h1>Turno \xB7 ${e(formatEcDateTime(a.scheduledAt))}</h1>${flashHtml4(input.flash)}
+  <h1>Turno \xB7 ${e(formatEcDateTime(a.scheduledAt))}</h1>${flashHtml5(input.flash)}
   <div class="card"><h2>Resumen</h2>
-    <div>Estado: <strong>${e(STATUS_LABELS[a.status] ?? a.status)}</strong>${a.cancelReason ? ` \xB7 ${e(a.cancelReason)}` : ""}</div>
+    <div>Estado: <strong>${e(STATUS_LABELS2[a.status] ?? a.status)}</strong>${a.cancelReason ? ` \xB7 ${e(a.cancelReason)}` : ""}</div>
     <div>Taller: <strong>${e(a.shopName)}</strong> \xB7 ${e(a.shopAddress)}, ${e(a.shopCity)}</div>
     <div>Due\xF1o: <a href="/admin/users/${e(a.ownerId)}">${e(a.ownerName)}</a></div>
     <div>Veh\xEDculo: ${e(a.vehicleLabel)}${a.plate ? ` \xB7 ${e(a.plate)}` : ""}</div>
@@ -93534,7 +94465,7 @@ function scheduleView(input) {
           <span><strong>${e(shop.name)}</strong> \xB7 ${e(shop.city)}${shop.zone ? ` (${e(shop.zone)})` : ""}<br><span class="muted">${shop.covered === shop.needed ? "Cubre todo" : `Cubre ${shop.covered} de ${shop.needed}`}${shop.hours ? ` \xB7 ${e(shop.hours)}` : ""}</span></span></label>`).join("");
       results = `<div class="card"><h2>Talleres</h2>${notice}${summary}
         ${copyBox("msg-shops", "Lista de talleres para el due\xF1o", shopListMessage(input.shops))}
-        <form method="post" action="/admin/appointments">${csrfField4(input.csrf)}
+        <form method="post" action="/admin/appointments">${csrfField5(input.csrf)}
         <input type="hidden" name="ownerId" value="${ownerId}"><input type="hidden" name="vehicleId" value="${vehicleId}">${hidden}
         ${options}
         <div class="row"><span><label for="date">D\xEDa</label><input id="date" name="date" type="date" value="${e(values.date)}" required></span>
@@ -93553,7 +94484,7 @@ function scheduleView(input) {
 function userAppointmentsSection(appointments) {
   if (appointments.length === 0)
     return "";
-  const items = appointments.map((a) => `<div><a href="/admin/appointments/${e(a.id)}">${e(formatEcDateTime(a.scheduledAt))}</a> \xB7 ${e(STATUS_LABELS[a.status] ?? a.status)} \xB7 ${e(a.shopName)} \xB7 ${e(a.vehicleLabel)}</div>`).join("");
+  const items = appointments.map((a) => `<div><a href="/admin/appointments/${e(a.id)}">${e(formatEcDateTime(a.scheduledAt))}</a> \xB7 ${e(STATUS_LABELS2[a.status] ?? a.status)} \xB7 ${e(a.shopName)} \xB7 ${e(a.vehicleLabel)}</div>`).join("");
   return `<div class="card"><h2>Turnos</h2>${items}</div>`;
 }
 function eventText(event) {
@@ -93564,7 +94495,7 @@ function eventText(event) {
     case "appointment.created":
       return `\u{1F4C5} Turno solicitado en ${String(p.shopName ?? "un taller")} para ${formatEcDateTime(p.scheduledAt)}`;
     case "appointment.status":
-      return `\u{1F504} Turno ${String(STATUS_LABELS[String(p.status)] ?? p.status).toLowerCase()}${p.reason ? `: ${String(p.reason)}` : ""}`;
+      return `\u{1F504} Turno ${String(STATUS_LABELS2[String(p.status)] ?? p.status).toLowerCase()}${p.reason ? `: ${String(p.reason)}` : ""}`;
     default:
       return event.type;
   }
@@ -93572,13 +94503,13 @@ function eventText(event) {
 function bitacoraSection(userId, events, csrf) {
   const list6 = events.length === 0 ? `<p class="muted">Sin actividad registrada.</p>` : events.map((ev) => `<div><span class="muted">${e(formatEcDateTime(ev.createdAt))}</span> \xB7 ${e(eventText(ev))}</div>`).join("");
   return `<div class="card"><h2>Bit\xE1cora</h2>
-    <form method="post" action="/admin/users/${e(userId)}/notes">${csrfField4(csrf)}
+    <form method="post" action="/admin/users/${e(userId)}/notes">${csrfField5(csrf)}
     <label for="note-text">Nueva nota (qu\xE9 se convers\xF3 o acord\xF3)</label><textarea id="note-text" name="text" maxlength="2000" rows="3" required></textarea>
     <label for="note-channel">Canal</label><select id="note-channel" name="channel"><option value="whatsapp">WhatsApp</option><option value="llamada">Llamada</option><option value="otro">Otro</option></select>
     <button type="submit">Agregar nota</button></form>
     ${list6}</div>`;
 }
-var e, csrfField4, flashHtml4, FILTERS3, PLAN_STATUS, servicesLabel;
+var e, csrfField5, flashHtml5, FILTERS5, PLAN_STATUS, servicesLabel;
 var init_views_appointments = __esm({
   "packages/api/dist/interfaces/admin/views-appointments.js"() {
     "use strict";
@@ -93586,9 +94517,9 @@ var init_views_appointments = __esm({
     init_whatsapp_number();
     init_messages();
     e = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField4 = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
-    flashHtml4 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e(flash.text)}</p>` : "";
-    FILTERS3 = [
+    csrfField5 = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
+    flashHtml5 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e(flash.text)}</p>` : "";
+    FILTERS5 = [
       ["hoy", "Hoy"],
       ["proximos", "Pr\xF3ximos"],
       ["pendientes", "Por confirmar"],
@@ -93606,16 +94537,16 @@ function chatLink2(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e2(digits)}" target="_blank" rel="noopener">${e2(label2)} (${e2(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox2(id, label2, content, rows9 = 9) {
-  return `<label for="${id}">${e2(label2)}</label><textarea id="${id}" readonly rows="${rows9}">${e2(content)}</textarea>`;
+function copyBox2(id, label2, content, rows11 = 9) {
+  return `<label for="${id}">${e2(label2)}</label><textarea id="${id}" readonly rows="${rows11}">${e2(content)}</textarea>`;
 }
 function workOrdersListView(input) {
-  const tabs2 = FILTERS4.map(([id, label2]) => `<a href="/admin/work-orders?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e2(label2)}</a>`).join("");
+  const tabs2 = FILTERS6.map(([id, label2]) => `<a href="/admin/work-orders?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e2(label2)}</a>`).join("");
   const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin \xF3rdenes</td></tr>` : input.page.items.map((o) => `<tr><td><a href="/admin/work-orders/${e2(o.id)}">${e2(workOrderCode(o.number))}</a></td><td>${e2(WORK_ORDER_LABELS[o.status] ?? o.status)}</td>
             <td>${e2(o.shopName)}</td><td><a href="/admin/users/${e2(o.ownerId)}">${e2(o.ownerName)}</a></td><td>${e2(o.vehicleLabel)}</td><td>${e2(formatUsd(o.total))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
-  return `<h1>\xD3rdenes de trabajo</h1>${flashHtml5(input.flash)}<div class="tabs">${tabs2}</div>
+  return `<h1>\xD3rdenes de trabajo</h1>${flashHtml6(input.flash)}<div class="tabs">${tabs2}</div>
   <p class="muted">Se abren desde un turno confirmado (\xABAbrir orden de trabajo\xBB) o desde la ficha del due\xF1o (\xABOrden de trabajo sin cita\xBB).</p>
   <div class="scroll"><table><thead><tr><th>Orden</th><th>Estado</th><th>Taller</th><th>Due\xF1o</th><th>Veh\xEDculo</th><th>Total</th></tr></thead><tbody>${body}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
@@ -93627,7 +94558,7 @@ function newWorkOrderView(input) {
        <input type="hidden" name="appointmentId" value="${e2(input.appointment.id)}">` : input.shops.length === 0 ? `<p class="error">No hay talleres verificados. Aprueba un taller en Verificaciones antes de abrir una orden.</p>` : `<label for="shopId">Taller</label><select id="shopId" name="shopId" required>${input.shops.map((s) => `<option value="${e2(s.id)}"${String(v.shopId ?? "") === s.id ? " selected" : ""}>${e2(s.name)} \xB7 ${e2(s.city)}</option>`).join("")}</select>`;
   return `<div class="stack wide"><p><a href="/admin/users/${e2(input.owner.id)}">\u2190 ${e2(input.owner.name)}</a></p>
   <h1>Nueva orden de trabajo</h1>${input.error ? `<p class="error" role="alert">${e2(input.error)}</p>` : ""}
-  <form method="post" action="/admin/work-orders" autocomplete="off">${csrfField5(input.csrf)}
+  <form method="post" action="/admin/work-orders" autocomplete="off">${csrfField6(input.csrf)}
   <input type="hidden" name="ownerId" value="${e2(input.owner.id)}"><input type="hidden" name="vehicleId" value="${e2(input.vehicle.id)}">
   <div class="card"><h2>Recepci\xF3n del veh\xEDculo</h2>
     <div>Due\xF1o: <strong>${e2(input.owner.name)}</strong></div>
@@ -93640,10 +94571,10 @@ function newWorkOrderView(input) {
   <button class="full" type="submit">Abrir orden de trabajo</button></form></div>`;
 }
 function statusButton(order, csrf, status, label2, danger = false) {
-  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField5(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e2(label2)}</button></form>`;
+  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField6(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e2(label2)}</button></form>`;
 }
 function reasonForm(order, csrf, status, label2, button) {
-  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField5(csrf)}<input type="hidden" name="status" value="${status}">
+  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField6(csrf)}<input type="hidden" name="status" value="${status}">
     <label for="reason-${status}">${e2(label2)}</label><input id="reason-${status}" name="reason" maxlength="191" required>
     <button class="danger" type="submit">${e2(button)}</button></form>`;
 }
@@ -93654,14 +94585,14 @@ function workOrderDetailView(input) {
   const transitions = WORK_ORDER_TRANSITIONS[order.status] ?? [];
   const itemRows = items.length === 0 ? `<tr><td colspan="${editable ? 7 : 6}" class="muted">A\xFAn no hay \xEDtems en el presupuesto.</td></tr>` : items.map((i) => `<tr><td>${i.kind === "mano_obra" ? "Mano de obra" : "Repuesto"}</td><td>${e2(i.description)}</td><td>${e2([i.brand, i.partCode].filter(Boolean).join(" \xB7 ") || "\u2014")}</td>
             <td>${e2(String(i.quantity).replace(".", ","))}</td><td>${e2(formatUsd(i.unitPrice))}</td><td>${e2(formatUsd(lineTotal(i)))}</td>
-            ${editable ? `<td><form method="post" action="/admin/work-orders/${e2(order.id)}/items/${e2(i.id)}/delete">${csrfField5(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
-  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/items" autocomplete="off">${csrfField5(csrf)}
+            ${editable ? `<td><form method="post" action="/admin/work-orders/${e2(order.id)}/items/${e2(i.id)}/delete">${csrfField6(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
+  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/items" autocomplete="off">${csrfField6(csrf)}
       <div class="row"><span><label for="kind">Tipo</label><select id="kind" name="kind">${ITEM_KINDS.map(([id, label2]) => `<option value="${id}">${label2}</option>`).join("")}</select></span>
       <span style="flex:2"><label for="description">Descripci\xF3n</label><input id="description" name="description" maxlength="191" required></span></div>
       <div class="row"><span><label for="brand">Marca (opcional)</label><input id="brand" name="brand" maxlength="60"></span><span><label for="partCode">C\xF3digo (opcional)</label><input id="partCode" name="partCode" maxlength="60"></span></div>
       <div class="row"><span><label for="quantity">Cantidad</label><input id="quantity" name="quantity" value="1" inputmode="decimal" required></span><span><label for="unitPrice">Precio unitario (USD)</label><input id="unitPrice" name="unitPrice" inputmode="decimal" placeholder="45,50" required></span></div>
       <button type="submit">Agregar al presupuesto</button></form>` : "";
-  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/diagnosis">${csrfField5(csrf)}
+  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/diagnosis">${csrfField6(csrf)}
       <label for="diag">Diagn\xF3stico del taller</label><textarea id="diag" name="diagnosis" maxlength="1000" rows="3">${e2(order.diagnosis)}</textarea>
       <button type="submit">Guardar diagn\xF3stico</button></form>` : `<p>${e2(order.diagnosis ?? "Sin diagn\xF3stico registrado.")}</p>`;
   const actions = [];
@@ -93677,7 +94608,7 @@ function workOrderDetailView(input) {
   if (transitions.includes("esperando_repuesto"))
     actions.push(statusButton(order, csrf, "esperando_repuesto", "Esperando repuesto"));
   if (transitions.includes("cerrada")) {
-    actions.push(`<form method="post" action="/admin/work-orders/${e2(order.id)}/close" autocomplete="off">${csrfField5(csrf)}
+    actions.push(`<form method="post" action="/admin/work-orders/${e2(order.id)}/close" autocomplete="off">${csrfField6(csrf)}
       <h2>Cerrar con evidencia</h2>
       <div class="row"><span><label for="exitKm">Kilometraje de salida</label><input id="exitKm" name="exitKm" inputmode="numeric" value="${e2(order.intakeKm ?? order.vehicleKm)}" required></span>
       <span><label for="warrantyDays">Garant\xEDa (d\xEDas)</label><input id="warrantyDays" name="warrantyDays" inputmode="numeric" value="30" required></span></div>
@@ -93690,7 +94621,7 @@ function workOrderDetailView(input) {
     actions.push(reasonForm(order, csrf, "cancelada", "Motivo de la cancelaci\xF3n", "Cancelar orden"));
   const shopMessage = shopWorkOrderMessage(order);
   return `<div class="stack wide"><p><a href="/admin/work-orders">\u2190 \xD3rdenes de trabajo</a></p>
-  <h1>${e2(code)} \xB7 ${e2(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml5(input.flash)}
+  <h1>${e2(code)} \xB7 ${e2(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml6(input.flash)}
   <div class="card"><h2>Resumen</h2>
     <div>Taller: <strong>${e2(order.shopName)}</strong></div>
     <div>Due\xF1o: <a href="/admin/users/${e2(order.ownerId)}">${e2(order.ownerName)}</a></div>
@@ -93729,7 +94660,7 @@ function historySection(history) {
     return "";
   return `<div class="card"><h2>Historial de servicios</h2>${history.map((h) => `<div><span class="muted">${e2(formatEcDateTime(h.createdAt))}</span> \xB7 <strong>${e2(h.vehicleLabel)}</strong> \xB7 ${e2(h.shopName)} \xB7 ${e2(h.description)}${h.cost !== null ? ` \xB7 ${e2(formatUsd(h.cost))}` : ""}</div>`).join("")}</div>`;
 }
-var e2, csrfField5, flashHtml5, km2, FILTERS4;
+var e2, csrfField6, flashHtml6, km2, FILTERS6;
 var init_views_work_orders = __esm({
   "packages/api/dist/interfaces/admin/views-work-orders.js"() {
     "use strict";
@@ -93738,10 +94669,10 @@ var init_views_work_orders = __esm({
     init_messages();
     init_workflow2();
     e2 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField5 = (token) => `<input type="hidden" name="csrf" value="${e2(token)}">`;
-    flashHtml5 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e2(flash.text)}</p>` : "";
+    csrfField6 = (token) => `<input type="hidden" name="csrf" value="${e2(token)}">`;
+    flashHtml6 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e2(flash.text)}</p>` : "";
     km2 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
-    FILTERS4 = [
+    FILTERS6 = [
       ["abiertas", "Abiertas"],
       ["por_aprobar", "Por aprobar"],
       ["en_taller", "En el taller"],
@@ -93896,16 +94827,16 @@ function chatLink3(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e3(digits)}" target="_blank" rel="noopener">${e3(label2)} (${e3(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox3(id, label2, content, rows9 = 8) {
-  return `<label for="${id}">${e3(label2)}</label><textarea id="${id}" readonly rows="${rows9}">${e3(content)}</textarea>`;
+function copyBox3(id, label2, content, rows11 = 8) {
+  return `<label for="${id}">${e3(label2)}</label><textarea id="${id}" readonly rows="${rows11}">${e3(content)}</textarea>`;
 }
 function quotesListView(input) {
-  const tabs2 = FILTERS5.map(([id, label2]) => `<a href="/admin/quotes?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e3(label2)}</a>`).join("");
+  const tabs2 = FILTERS7.map(([id, label2]) => `<a href="/admin/quotes?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e3(label2)}</a>`).join("");
   const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin solicitudes</td></tr>` : input.page.items.map((r) => `<tr><td><a href="/admin/quotes/${e3(r.id)}">${e3(quoteRequestCode(r.number))}</a></td><td>${e3(REQUEST_LABELS[r.status] ?? r.status)}</td>
             <td>${e3(r.partName)}${r.quantity > 1 ? ` x${e3(r.quantity)}` : ""}</td><td><a href="/admin/users/${e3(r.requesterId)}">${e3(r.requesterName)}</a></td><td>${e3(r.vehicleLabel ?? "\u2014")}</td><td>${e3(formatEcDateTime(r.createdAt))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/quotes?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/quotes?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
-  return `<h1>Cotizaciones de repuestos</h1>${flashHtml6(input.flash)}<div class="tabs">${tabs2}</div>
+  return `<h1>Cotizaciones de repuestos</h1>${flashHtml7(input.flash)}<div class="tabs">${tabs2}</div>
   <p class="muted">Se piden desde el veh\xEDculo de un due\xF1o (\xABCotizar repuesto\xBB) o desde una orden de trabajo (\xABPedir repuestos a almacenes\xBB).</p>
   <div class="scroll"><table><thead><tr><th>Solicitud</th><th>Estado</th><th>Repuesto</th><th>Solicitante</th><th>Veh\xEDculo</th><th>Fecha</th></tr></thead><tbody>${body}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
@@ -93920,7 +94851,7 @@ function newQuoteView(input) {
   }).join("")}</div>`;
   return `<div class="stack wide"><p><a href="/admin/users/${e3(input.requester.id)}">\u2190 ${e3(input.requester.name)}</a></p>
   <h1>Nueva solicitud de cotizaci\xF3n</h1>${input.error ? `<p class="error" role="alert">${e3(input.error)}</p>` : ""}
-  <form method="post" action="/admin/quotes" autocomplete="off">${csrfField6(input.csrf)}
+  <form method="post" action="/admin/quotes" autocomplete="off">${csrfField7(input.csrf)}
   <input type="hidden" name="requesterId" value="${e3(input.requester.id)}">
   ${input.vehicle ? `<input type="hidden" name="vehicleId" value="${e3(input.vehicle.id)}">` : ""}
   ${input.workOrderId ? `<input type="hidden" name="workOrderId" value="${e3(input.workOrderId)}">` : ""}
@@ -93937,7 +94868,7 @@ function newQuoteView(input) {
 function responseForm(requestId, q, csrf) {
   const unit = q.unitPrice !== null ? String(q.unitPrice).replace(".", ",") : "";
   return `<details><summary>Registrar respuesta de ${e3(q.storeName)}</summary>
-    <form method="post" action="/admin/quotes/${e3(requestId)}/quotes/${e3(q.id)}" autocomplete="off">${csrfField6(csrf)}
+    <form method="post" action="/admin/quotes/${e3(requestId)}/quotes/${e3(q.id)}" autocomplete="off">${csrfField7(csrf)}
     <div class="row"><span><label>Precio unitario (USD)</label><input name="unitPrice" inputmode="decimal" value="${e3(unit)}" placeholder="45,50"></span>
     <span><label>Marca</label><input name="brand" maxlength="60" value="${e3(q.brand)}"></span></div>
     <div class="row"><span><label>Disponibilidad</label><input name="availability" maxlength="60" value="${e3(q.availability)}" placeholder="En stock"></span>
@@ -93957,19 +94888,19 @@ function quoteDetailView(input) {
       <td>${e3([q.brand, q.availability, q.deliveryTime ? `entrega ${q.deliveryTime}` : null, q.warrantyDays ? `garant\xEDa ${q.warrantyDays} d\xEDas` : null].filter(Boolean).join(" \xB7 ") || q.notes || "\u2014")}</td>
       <td>${chatLink3(q.storePhone, "Chat")}</td></tr>`).join("");
   const responses = open ? quotes.map((q) => responseForm(request.id, q, csrf)).join("") : "";
-  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e3(request.id)}/choose" class="row">${csrfField6(csrf)}<input type="hidden" name="quoteId" value="${e3(q.id)}">
+  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e3(request.id)}/choose" class="row">${csrfField7(csrf)}<input type="hidden" name="quoteId" value="${e3(q.id)}">
             <span>${i + 1}) <strong>${e3(q.storeName)}</strong> \xB7 ${e3(formatUsd(q.unitPrice ?? 0))} c/u</span><button type="submit">Eligi\xF3 esta</button></form>`).join("")}` : "";
-  const closeForm = open ? `<form method="post" action="/admin/quotes/${e3(request.id)}/close">${csrfField6(csrf)}
+  const closeForm = open ? `<form method="post" action="/admin/quotes/${e3(request.id)}/close">${csrfField7(csrf)}
       <label for="close-reason">Si el cliente no pidi\xF3 ninguna, \xBFpor qu\xE9?</label><input id="close-reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cerrar sin pedido</button></form>` : "";
-  const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e3(request.id)}/quotes/${e3(q.id)}/loss" class="row">${csrfField6(csrf)}
+  const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e3(request.id)}/quotes/${e3(q.id)}/loss" class="row">${csrfField7(csrf)}
           <span>${e3(q.storeName)}: motivo de p\xE9rdida</span><select name="reason">${LOSS_REASONS.map(([id, label2]) => `<option value="${id}"${q.lossReason === id ? " selected" : ""}>${label2}</option>`).join("")}</select>
           <button type="submit">Guardar</button></form>`).join("") : "";
   let orderCard = "";
   if (order) {
     const transitions = ORDER_STAGE_TRANSITIONS[order.stage] ?? [];
-    const buttons = transitions.filter((s) => s !== "cancelado").map((s) => `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField6(csrf)}<input type="hidden" name="stage" value="${s}"><button type="submit">${e3(ORDER_STAGE_LABELS[s])}</button></form>`).join("");
-    const cancel = transitions.includes("cancelado") ? `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField6(csrf)}<input type="hidden" name="stage" value="cancelado">
+    const buttons = transitions.filter((s) => s !== "cancelado").map((s) => `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField7(csrf)}<input type="hidden" name="stage" value="${s}"><button type="submit">${e3(ORDER_STAGE_LABELS[s])}</button></form>`).join("");
+    const cancel = transitions.includes("cancelado") ? `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField7(csrf)}<input type="hidden" name="stage" value="cancelado">
         <label for="order-cancel">Motivo de la cancelaci\xF3n</label><input id="order-cancel" name="reason" maxlength="191" required><button class="danger" type="submit">Cancelar pedido</button></form>` : "";
     orderCard = `<div class="card"><h2>Pedido \xB7 ${e3(ORDER_STAGE_LABELS[order.stage] ?? order.stage)}</h2>
       <div><strong>${e3(order.storeName)}</strong> \xB7 ${e3(order.partName)}${order.quantity > 1 ? ` x${e3(order.quantity)}` : ""} \xB7 total ${e3(formatUsd(order.total))}</div>
@@ -93980,7 +94911,7 @@ function quoteDetailView(input) {
       ${lost ? `<h2>Almacenes no elegidos</h2>${copyBox3("msg-lost", "Mensaje para los no elegidos", lostQuoteMessage(request), 4)}${lost}` : ""}</div>`;
   }
   return `<div class="stack wide"><p><a href="/admin/quotes">\u2190 Cotizaciones</a></p>
-  <h1>${e3(code)} \xB7 ${e3(REQUEST_LABELS[request.status] ?? request.status)}</h1>${flashHtml6(input.flash)}
+  <h1>${e3(code)} \xB7 ${e3(REQUEST_LABELS[request.status] ?? request.status)}</h1>${flashHtml7(input.flash)}
   <div class="card"><h2>Solicitud</h2>
     <div>Repuesto: <strong>${e3(request.partName)}</strong>${request.quantity > 1 ? ` x${e3(request.quantity)}` : ""}${request.partCode ? ` \xB7 c\xF3digo ${e3(request.partCode)}` : ""}</div>
     <div>Solicitante: <a href="/admin/users/${e3(request.requesterId)}">${e3(request.requesterName)}</a>${request.vehicleLabel ? ` \xB7 ${e3(request.vehicleLabel)}` : ""} \xB7 ${e3(request.city)}</div>
@@ -94011,7 +94942,7 @@ function userQuotesSection(data) {
   }
   return parts.length > 0 ? `<div class="card">${parts.join("")}</div>` : "";
 }
-var e3, csrfField6, flashHtml6, FILTERS5;
+var e3, csrfField7, flashHtml7, FILTERS7;
 var init_views_quotes = __esm({
   "packages/api/dist/interfaces/admin/views-quotes.js"() {
     "use strict";
@@ -94021,9 +94952,9 @@ var init_views_quotes = __esm({
     init_workflow2();
     init_workflow3();
     e3 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField6 = (token) => `<input type="hidden" name="csrf" value="${e3(token)}">`;
-    flashHtml6 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
-    FILTERS5 = [
+    csrfField7 = (token) => `<input type="hidden" name="csrf" value="${e3(token)}">`;
+    flashHtml7 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
+    FILTERS7 = [
       ["abiertas", "Abiertas"],
       ["con_pedido", "Con pedido"],
       ["todas", "Todas"]
@@ -94037,9 +94968,9 @@ function day(value2) {
   return date && !Number.isNaN(date.getTime()) ? date.toISOString().slice(0, 10) : "\u2014";
 }
 function phoneLabel(value2) {
-  const text4 = String(value2 ?? "");
-  const digits = text4.replace(/\D/g, "");
-  return text4.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text4;
+  const text5 = String(value2 ?? "");
+  const digits = text5.replace(/\D/g, "");
+  return text5.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text5;
 }
 function value(values, key) {
   const v = values[key];
@@ -94050,7 +94981,7 @@ function field(values, name, label2, attrs = "") {
 }
 function select(values, name, label2, options, placeholder) {
   const selected = String(values[name] ?? "");
-  const opts = options.map(([id, text4]) => `<option value="${e4(id)}"${id === selected ? " selected" : ""}>${e4(text4)}</option>`).join("");
+  const opts = options.map(([id, text5]) => `<option value="${e4(id)}"${id === selected ? " selected" : ""}>${e4(text5)}</option>`).join("");
   const empty = placeholder ? `<option value="">${e4(placeholder)}</option>` : "";
   return `<label for="f-${name}">${e4(label2)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
 }
@@ -94112,9 +95043,11 @@ function newUserView(input) {
         <p class="muted">Queda en verificaci\xF3n hasta que lo apruebes.</p></div>`;
     }
   }
+  const visitCode = typeof input.values?.code === "string" ? input.values.code : "";
+  const codeField = visitCode ? `<input type="hidden" name="code" value="${e4(visitCode)}">` : "";
   return `<div class="stack wide"><h1>Nuevo registro</h1><div class="tabs">${tabs2}</div>
   ${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}
-  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField7(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">
+  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField8(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">${codeField}
   ${common}${specific}
   <button class="full" type="submit">Guardar registro</button></form></div>`;
 }
@@ -94122,7 +95055,7 @@ function input_phone(values) {
   return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567"');
 }
 function verificationForm(kind, id, userId, csrf) {
-  return `<form method="post" action="/admin/verifications/${kind}/${e4(id)}">${csrfField7(csrf)}
+  return `<form method="post" action="/admin/verifications/${kind}/${e4(id)}">${csrfField8(csrf)}
     <input type="hidden" name="returnTo" value="${e4(userId)}">
     <label for="reason-${e4(id)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e4(id)}" name="reason" maxlength="500">
     <div class="row"><button type="submit" name="decision" value="verified">Aprobar</button><button class="danger" type="submit" name="decision" value="rejected">Rechazar</button></div></form>`;
@@ -94144,7 +95077,7 @@ function userDetailView(input) {
     <div><strong>${e4(b.name)}</strong> \xB7 RUC ${e4(b.ruc ?? "\u2014")}</div>
     <div>${e4(b.address)}, ${e4(b.city)}${b.zone ? ` (${e4(b.zone)})` : ""}</div>
     <div>Horario: ${e4(b.hours ?? "\u2014")}</div>${extra}
-    <div>Estado: <strong>${e4(STATUS_LABELS2[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
+    <div>Estado: <strong>${e4(STATUS_LABELS3[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
     ${verificationForm(kind, b.id, user.id, input.csrf)}</div>`;
   const shopCard = shop ? business("Taller", shop, `<div>Servicios: ${e4(shop.services.map(categoryName).join(", ") || "\u2014")}</div>`, "shop") : "";
   const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e4(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
@@ -94156,12 +95089,13 @@ function userDetailView(input) {
       ${plan ? `<label for="plan-${e4(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e4(v.id)}" readonly rows="12">${e4(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e4(user.id)}/schedule?vehicleId=${e4(v.id)}">Agendar turno</a> \xB7 <a href="/admin/work-orders/new?ownerId=${e4(user.id)}&amp;vehicleId=${e4(v.id)}">Orden de trabajo sin cita</a> \xB7 <a href="/admin/quotes/new?ownerId=${e4(user.id)}&amp;vehicleId=${e4(v.id)}">Cotizar repuesto</a></p>` : ""}</div>`;
   }).join("");
   const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}
-      <form method="post" action="/admin/users/${e4(user.id)}/vehicles" autocomplete="off">${csrfField7(input.csrf)}${vehicleFields2(input.values ?? {})}
+      <form method="post" action="/admin/users/${e4(user.id)}/vehicles" autocomplete="off">${csrfField8(input.csrf)}${vehicleFields2(input.values ?? {})}
       <button class="full" type="submit">Agregar veh\xEDculo</button></form></div>` : "";
   const moderation = moderationSection(String(user.id), input.relations ?? [], input.sanctions ?? [], input.csrf, !!input.canSanction);
   const lopdp = input.canLopdp ? userDataRequestsCard(String(user.id), input.dataRequests ?? [], input.csrf) : "";
-  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e4(user.name)}</h1>${flashHtml7(input.flash)}
-  ${datos}${shopCard}${storeCard}${moderation}${lopdp}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
+  const planCard = userPlanCard(String(user.id), input.subscriptions ?? [], input.csrf, !!input.canPayments, String(user.role ?? "dueno"), input.usage ?? {});
+  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e4(user.name)}</h1>${flashHtml8(input.flash)}
+  ${datos}${planCard}${shopCard}${storeCard}${moderation}${lopdp}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
 }
 function moderationSection(userId, relations, sanctions, csrf, canSanction) {
   if (relations.length === 0 && sanctions.length === 0 && !canSanction)
@@ -94169,7 +95103,7 @@ function moderationSection(userId, relations, sanctions, csrf, canSanction) {
   const links = relations.length ? `<ul>${relations.map((r) => `<li><a href="/admin/relations/${e4(r.id)}">${e4(relationCode(r.number))}</a> \xB7 ${e4(RELATION_KIND_LABELS[r.kind] ?? r.kind)} \xB7 ${e4(RELATION_STATUS_LABELS[r.status] ?? r.status)}${r.subject ? ` \xB7 ${e4(r.subject)}` : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin v\xEDnculos registrados.</p>`;
   const active = sanctions.filter((s) => isActive(s));
   const history = sanctions.length ? `<ul>${sanctions.map((s) => `<li>${e4(sanctionLabel(s.level))} \xB7 ${day(s.startsAt)}${s.endsAt ? ` \u2192 ${day(s.endsAt)}` : ""}${s.liftedAt ? " (levantada)" : isActive(s) ? ' <span class="error">vigente</span>' : " (vencida)"} \xB7 ${e4(s.reason.slice(0, 160))}</li>`).join("")}</ul>` : `<p class="muted">Sin sanciones.</p>`;
-  const form = canSanction ? `<form method="post" action="/admin/users/${e4(userId)}/sanctions">${csrfField7(csrf)}
+  const form = canSanction ? `<form method="post" action="/admin/users/${e4(userId)}/sanctions">${csrfField8(csrf)}
       <label for="sanction-level">Aplicar un paso de la escala</label>
       <select id="sanction-level" name="level">${SANCTION_LEVELS.map((l) => `<option value="${e4(l.key)}">${e4(l.label)} \u2014 ${e4(l.description)}</option>`).join("")}</select>
       <label for="sanction-days">D\xEDas (vac\xEDo = el valor por defecto del paso)</label><input id="sanction-days" name="days" inputmode="numeric">
@@ -94183,11 +95117,11 @@ function moderationSection(userId, relations, sanctions, csrf, canSanction) {
 function verificationsView(input) {
   const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e4(item.userId)}">${e4(item.name)}</a></td>
             <td>${e4(item.city)}</td><td>${e4(item.ruc ?? "\u2014")}</td><td>${day(item.createdAt)}</td></tr>`).join("");
-  return `<h1>Verificaciones pendientes</h1>${flashHtml7(input.flash)}
+  return `<h1>Verificaciones pendientes</h1>${flashHtml8(input.flash)}
   <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
-var ROLE_LABELS, STATUS_LABELS2, USAGE_OPTIONS, e4, csrfField7, flashHtml7, className, fuelName, categoryName;
+var ROLE_LABELS, STATUS_LABELS3, USAGE_OPTIONS, e4, csrfField8, flashHtml8, className, fuelName, categoryName;
 var init_views_registrations = __esm({
   "packages/api/dist/interfaces/admin/views-registrations.js"() {
     "use strict";
@@ -94195,6 +95129,7 @@ var init_views_registrations = __esm({
     init_whatsapp_number();
     init_maintenance();
     init_views_data();
+    init_views_plans();
     init_workflow();
     init_views_appointments();
     init_views_work_orders();
@@ -94205,15 +95140,15 @@ var init_views_registrations = __esm({
       almacen: "Almac\xE9n",
       admin: "Administrador"
     };
-    STATUS_LABELS2 = { pending: "En verificaci\xF3n", verified: "Verificado", rejected: "Rechazado" };
+    STATUS_LABELS3 = { pending: "En verificaci\xF3n", verified: "Verificado", rejected: "Rechazado" };
     USAGE_OPTIONS = [
       ["urbano", "Urbano"],
       ["carretera", "Carretera"],
       ["severo", "Severo (Sierra, carga, lastre)"]
     ];
     e4 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField7 = (token) => `<input type="hidden" name="csrf" value="${e4(token)}">`;
-    flashHtml7 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
+    csrfField8 = (token) => `<input type="hidden" name="csrf" value="${e4(token)}">`;
+    flashHtml8 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
     className = (id) => vehicleClasses.classes.find((c) => c.id === id)?.name ?? String(id ?? "\u2014");
     fuelName = (id) => vehicleClasses.fuels.find((f) => f.id === id)?.name ?? String(id ?? "\u2014");
     categoryName = (id) => serviceTaxonomy.categories.find((c) => c.id === id)?.name ?? id;
@@ -94250,7 +95185,7 @@ function flashFrom(request) {
 }
 function registerRegistrationRoutes(app2, deps) {
   const { registrations } = deps;
-  const errorPage = (request, reply, session, title, text4, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text4)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -94301,6 +95236,8 @@ function registerRegistrationRoutes(app2, deps) {
     let relationsList = [];
     let sanctionsList = [];
     let dataRequests = [];
+    let subscriptions = [];
+    let usage = {};
     if (deps.relations) {
       try {
         [relationsList, sanctionsList] = await Promise.all([deps.relations.forUser(id), deps.relations.sanctionsForUser(id)]);
@@ -94310,6 +95247,12 @@ function registerRegistrationRoutes(app2, deps) {
     if (deps.data) {
       try {
         dataRequests = await deps.data.requestsForUser(id);
+      } catch {
+      }
+    }
+    if (deps.plans) {
+      try {
+        [subscriptions, usage] = await Promise.all([deps.plans.forUser(id), deps.plans.usageForUser(id)]);
       } catch {
       }
     }
@@ -94329,7 +95272,10 @@ function registerRegistrationRoutes(app2, deps) {
       sanctions: sanctionsList,
       canSanction: can(session.role, "sanctions"),
       dataRequests,
-      canLopdp: can(session.role, "lopdp")
+      canLopdp: can(session.role, "lopdp"),
+      subscriptions,
+      usage,
+      canPayments: can(session.role, "payments")
     }), session, extra.status ?? 200);
   }
   app2.get("/users", async (request, reply) => {
@@ -94361,7 +95307,8 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const perfil = PERFILES.includes(ctx.body.perfil) ? ctx.body.perfil : "dueno";
     const digits = normalizeWhatsappNumber(ctx.body.phone);
-    return deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: ctx.session.csrfToken, values: { phone: digits ? `+${digits}` : "", consent: "", reminders: "on" } }), ctx.session);
+    const visitCode = typeof ctx.body.code === "string" ? ctx.body.code.trim().toUpperCase().slice(0, 16) : "";
+    return deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: ctx.session.csrfToken, values: { phone: digits ? `+${digits}` : "", code: visitCode, consent: "", reminders: "on" } }), ctx.session);
   });
   app2.post("/users/new", async (request, reply) => {
     const ctx = withCsrf(request, reply);
@@ -94369,7 +95316,7 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const perfil = PERFILES.includes(body.perfil) ? body.perfil : "dueno";
-    const invalid = (text4, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text4 }), session, status);
+    const invalid = (text5, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text5 }), session, status);
     const userFrom = async (data, keepEmail) => ({
       phone: data.phone,
       name: data.name,
@@ -94430,6 +95377,10 @@ function registerRegistrationRoutes(app2, deps) {
       const m = dbError(err);
       return invalid(m.text, m.status);
     }
+    const visitCode = typeof body.code === "string" ? body.code.trim().toUpperCase().slice(0, 16) : "";
+    if (visitCode && deps.visits && /^AMP-[A-Z2-9]{4,6}$/.test(visitCode)) {
+      await deps.visits.link(visitCode, userId).catch(() => void 0);
+    }
     await deps.audit("admin.user.create", session.userId, `Alta de ${ROLE_LABELS[perfil]} ${userId} desde el panel`);
     return reply.redirect(`/admin/users/${userId}?ok=creado`, 302);
   });
@@ -94438,7 +95389,7 @@ function registerRegistrationRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID3.test(id))
+    if (!UUID4.test(id))
       return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
     return renderDetail(request, reply, session, id, { flash: flashFrom(request) });
   });
@@ -94448,7 +95399,7 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID3.test(id))
+    if (!UUID4.test(id))
       return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
     const parsed = vehicleSchema.safeParse(body);
     if (!parsed.success) {
@@ -94484,13 +95435,13 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { kind, id } = request.params;
-    if (kind !== "shop" && kind !== "store" || !UUID3.test(id)) {
+    if (kind !== "shop" && kind !== "store" || !UUID4.test(id)) {
       return errorPage(request, reply, session, "Verificaciones", "Registro no encontrado.", 404);
     }
     const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "";
-    const returnTo = typeof body.returnTo === "string" && UUID3.test(body.returnTo) ? body.returnTo : null;
-    const fail = (text4, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text4 }, status }) : errorPage(request, reply, session, "Verificaciones", text4, status);
+    const returnTo = typeof body.returnTo === "string" && UUID4.test(body.returnTo) ? body.returnTo : null;
+    const fail = (text5, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text5 }, status }) : errorPage(request, reply, session, "Verificaciones", text5, status);
     if (!decision)
       return fail("Elige aprobar o rechazar.", 400);
     if (decision === "rejected" && reason.length < 5)
@@ -94509,7 +95460,7 @@ function registerRegistrationRoutes(app2, deps) {
     return reply.redirect(returnTo ? `/admin/users/${returnTo}?ok=${ok}` : `/admin/verifications?ok=${ok}`, 302);
   });
 }
-var UUID3, OK_MESSAGES;
+var UUID4, OK_MESSAGES;
 var init_registrations = __esm({
   "packages/api/dist/interfaces/admin/registrations.js"() {
     "use strict";
@@ -94522,7 +95473,7 @@ var init_registrations = __esm({
     init_permissions();
     init_platform();
     init_views_registrations();
-    UUID3 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    UUID4 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     OK_MESSAGES = {
       creado: "Registro creado.",
       vehiculo: "Veh\xEDculo agregado.",
@@ -94530,7 +95481,8 @@ var init_registrations = __esm({
       rechazado: "Verificaci\xF3n rechazada.",
       nota: "Nota agregada a la bit\xE1cora.",
       sancion: "Sanci\xF3n registrada: queda el motivo y el aviso a la entidad.",
-      lopdp: "Solicitud de datos registrada con su plazo de respuesta."
+      lopdp: "Solicitud de datos registrada con su plazo de respuesta.",
+      plan: "Pago registrado: queda pendiente hasta que un administrador lo verifique."
     };
   }
 });
@@ -94556,7 +95508,7 @@ function dbErrorText(err) {
 }
 function registerAppointmentRoutes(app2, deps) {
   const { appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text4, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text4)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -94615,7 +95567,7 @@ function registerAppointmentRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID5.test(id))
       return errorPage(request, reply, session, "Agendar turno", "Usuario no encontrado.", 404);
     const query = request.query ?? {};
     const vehicleId = typeof query.vehicleId === "string" ? query.vehicleId : void 0;
@@ -94626,12 +95578,12 @@ function registerAppointmentRoutes(app2, deps) {
     if (!ctx)
       return reply;
     const { session, body } = ctx;
-    const ownerId = typeof body.ownerId === "string" && UUID4.test(body.ownerId) ? body.ownerId : null;
+    const ownerId = typeof body.ownerId === "string" && UUID5.test(body.ownerId) ? body.ownerId : null;
     if (!ownerId)
       return errorPage(request, reply, session, "Agendar turno", "Usuario no encontrado.", 404);
     const vehicleId = typeof body.vehicleId === "string" ? body.vehicleId : "";
     const services = validServices(asList(body.services));
-    const shopId = typeof body.shopId === "string" && UUID4.test(body.shopId) ? body.shopId : null;
+    const shopId = typeof body.shopId === "string" && UUID5.test(body.shopId) ? body.shopId : null;
     const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, 500) || null : null;
     const scheduledAt = parseEcDateTime(body.date, body.time);
     const fail = (error, status = 400) => renderSchedule(request, reply, session, ownerId, vehicleId, services, { error, values: body, status });
@@ -94698,7 +95650,7 @@ function registerAppointmentRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const filter = FILTERS6.includes(query.f) ? query.f : "proximos";
+    const filter = FILTERS8.includes(query.f) ? query.f : "proximos";
     const raw = Number(query.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
@@ -94726,7 +95678,7 @@ function registerAppointmentRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID5.test(id))
       return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
     const ok = request.query?.ok;
     const flash = typeof ok === "string" && OK_MESSAGES2[ok] ? { kind: "ok", text: OK_MESSAGES2[ok] } : void 0;
@@ -94738,7 +95690,7 @@ function registerAppointmentRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID5.test(id))
       return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
     const status = body.status;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 191) : "";
@@ -94770,7 +95722,7 @@ function registerAppointmentRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID5.test(id))
       return errorPage(request, reply, session, "Bit\xE1cora", "Usuario no encontrado.", 404);
     const content = typeof body.text === "string" ? body.text.trim() : "";
     if (content.length < 2 || content.length > 2e3) {
@@ -94789,7 +95741,7 @@ function registerAppointmentRoutes(app2, deps) {
     return reply.redirect(`/admin/users/${id}?ok=nota`, 302);
   });
 }
-var UUID4, FILTERS6, MAX_AHEAD_MS, OK_MESSAGES2, asList, validServices;
+var UUID5, FILTERS8, MAX_AHEAD_MS, OK_MESSAGES2, asList, validServices;
 var init_appointments = __esm({
   "packages/api/dist/interfaces/admin/appointments.js"() {
     "use strict";
@@ -94801,8 +95753,8 @@ var init_appointments = __esm({
     init_plan_text();
     init_platform();
     init_views_appointments();
-    UUID4 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    FILTERS6 = ["hoy", "proximos", "pendientes", "todos"];
+    UUID5 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS8 = ["hoy", "proximos", "pendientes", "todos"];
     MAX_AHEAD_MS = 180 * 24 * 60 * 60 * 1e3;
     OK_MESSAGES2 = {
       creado: "Turno solicitado. Env\xEDa los mensajes al taller y al due\xF1o.",
@@ -94925,21 +95877,21 @@ function welcomeMessage(ctx, options = {}) {
   return `${intro}${parts.join("\n\n")}`;
 }
 function detectProfileIntent(input) {
-  const text4 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text4))
+  const text5 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text5))
     return "cuenta";
-  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text4))
+  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text5))
     return "almacen";
-  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text4))
+  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text5))
     return "taller";
-  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text4))
+  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text5))
     return "dueno";
   return null;
 }
 function parseContactInput(input) {
-  const text4 = input.slice(0, 2e3);
-  const code = /\bAMP-[A-HJ-NP-Z2-9]{4}\b/i.exec(text4)?.[0]?.toUpperCase() ?? null;
-  const rest = code ? text4.split(new RegExp(code, "i")).join(" ") : text4;
+  const text5 = input.slice(0, 2e3);
+  const code = /\bAMP-[A-HJ-NP-Z2-9]{4,6}\b/i.exec(text5)?.[0]?.toUpperCase() ?? null;
+  const rest = code ? text5.split(new RegExp(code, "i")).join(" ") : text5;
   for (const candidate of rest.match(/\+?\d[\d\s().-]{6,}\d/g) ?? []) {
     const digits = normalizeWhatsappNumber(candidate);
     if (digits)
@@ -94991,7 +95943,7 @@ function resultCard(result, csrf) {
       <div><strong>${e5(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}${intentLine}
       <p class="muted">${intent === "cuenta" ? "Dice que ya tiene cuenta: b\xFAscala por su n\xFAmero anterior antes de registrarlo de nuevo." : "No est\xE1 registrado. Env\xEDa la bienvenida y, cuando diga qui\xE9n es, reg\xEDstralo."}</p>
       ${message2}
-      <form method="post" action="/admin/users/new/start" class="row">${csrfField8(csrf)}<input type="hidden" name="phone" value="${e5(result.phone)}">
+      <form method="post" action="/admin/users/new/start" class="row">${csrfField9(csrf)}<input type="hidden" name="phone" value="${e5(result.phone)}">${result.code ? `<input type="hidden" name="code" value="${e5(result.code)}">` : ""}
       <select name="perfil" aria-label="Perfil">${option("dueno", "Due\xF1o de veh\xEDculo")}${option("taller", "Taller")}${option("almacen", "Almac\xE9n")}</select>
       <button type="submit">Registrar</button></form></div>`;
   }
@@ -94999,7 +95951,13 @@ function resultCard(result, csrf) {
   const role = String(user.role);
   const tasks = result.tasks.length === 0 ? `<p class="muted">Sin pendientes.</p>` : `<ul>${result.tasks.map((t) => `<li>${e5(t.text)}${t.forCustomer ? "" : ' <span class="muted">(solo para ti)</span>'}</li>`).join("")}</ul>`;
   const schedule = role === "dueno" && vehicles[0] ? ` \xB7 <a href="/admin/users/${e5(user.id)}/schedule?vehicleId=${e5(vehicles[0].id)}">Agendar turno</a>` : "";
-  return `<div class="card"><h2>${e5(ROLE_LABELS[role] ?? role)} registrado</h2>
+  const planCard = result.plan === void 0 ? "" : `<div class="card"><h2>Plan</h2>
+        <p>${planBadge(result.plan)}</p>
+        ${(result.limits ?? []).length ? `<ul>${(result.limits ?? []).map((l) => `<li>${e5(String(l.used))} de ${e5(String(l.limit))} ${e5(l.label)}${l.reached ? ' <span class="error">(tope alcanzado)</span>' : ""}</li>`).join("")}</ul>` : ""}
+        ${(result.limits ?? []).some((l) => l.reached) ? `<label for="upgrade">Ofr\xE9cele el plan</label><textarea id="upgrade" readonly rows="3">${e5(upgradeMessage(role, (result.limits ?? []).find((l) => l.reached)))}</textarea>` : ""}
+        ${result.nearby ? `<label for="cercanos">Talleres cercanos (plan gratuito)</label><textarea id="cercanos" readonly rows="6">${e5(result.nearby)}</textarea>` : ""}
+        <p class="muted"><a href="/admin/users/${e5(user.id)}">Registrar un pago en su ficha</a></p></div>`;
+  return `${planCard}<div class="card"><h2>${e5(ROLE_LABELS[role] ?? role)} registrado</h2>
     <div><strong>${e5(user.name)}</strong> \xB7 ${e5(formatWhatsappNumber(digits))} \xB7 ${chat}</div>${visitLine(result)}
     <div><a href="/admin/users/${e5(user.id)}">Ver ficha</a>${schedule}</div>
     <h2>Pendientes del \xFAltimo chat</h2>${tasks}
@@ -95010,7 +95968,7 @@ function copilotCard(input) {
   const hiddenQuery = `<input type="hidden" name="q" value="${e5(input.query)}">`;
   let draftBlock = "";
   if (draft?.ok) {
-    const feedback = draft.usageId ? `<form method="post" action="/admin/attend/feedback" class="row">${csrfField8(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e5(draft.usageId)}">
+    const feedback = draft.usageId ? `<form method="post" action="/admin/attend/feedback" class="row">${csrfField9(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e5(draft.usageId)}">
         <input name="reason" maxlength="191" placeholder="\xBFQu\xE9 le falt\xF3 o sobr\xF3? (opcional)">
         <button type="submit" name="score" value="good">\u{1F44D} \xDAtil</button><button class="danger" type="submit" name="score" value="bad">\u{1F44E} No sirvi\xF3</button></form>` : "";
     draftBlock = `<p class="muted">Borrador generado por IA: rev\xEDsalo y corr\xEDgelo antes de enviarlo. Costo estimado US$ ${e5(draft.costUsd.toFixed(4))}.</p>
@@ -95019,7 +95977,7 @@ function copilotCard(input) {
   } else if (draft) {
     draftBlock = `<p class="error" role="alert">${e5(draft.message)}</p><p class="muted">Usa el mensaje sugerido de arriba.</p>`;
   }
-  const form = copilot.available ? `<form method="post" action="/admin/attend/draft" autocomplete="off">${csrfField8(csrf)}${hiddenQuery}
+  const form = copilot.available ? `<form method="post" action="/admin/attend/draft" autocomplete="off">${csrfField9(csrf)}${hiddenQuery}
       <label for="customer-message">Mensaje del cliente</label><textarea id="customer-message" name="message" rows="4" maxlength="2000" required>${e5(input.customerText)}</textarea>
       <label for="instruction">Indicaci\xF3n para la IA (opcional)</label><input id="instruction" name="instruction" maxlength="300" value="${e5(input.instruction)}" placeholder="Ofr\xE9cele turno para el jueves en la ma\xF1ana">
       <button class="full" type="submit">Sugerir respuesta con IA</button></form>` : `<p class="muted">${e5(copilot.reason ?? "La IA no est\xE1 disponible.")} Rev\xEDsalo en <a href="/admin/settings">Ajustes</a>.</p>`;
@@ -95030,14 +95988,14 @@ function attendView(input) {
   ${input.notice ? `<div class="card"><p class="error" role="status">${e5(input.notice)}</p></div>` : ""}
   <p class="muted">Pega el n\xFAmero o el primer mensaje que lleg\xF3 por WhatsApp. Te digo si es nuevo o registrado, su perfil, lo pendiente y el mensaje para responder.</p>
   ${input.error ? `<p class="error" role="alert">${e5(input.error)}</p>` : ""}
-  <form method="post" action="/admin/attend" autocomplete="off">${csrfField8(input.csrf)}
+  <form method="post" action="/admin/attend" autocomplete="off">${csrfField9(input.csrf)}
   <label for="q">N\xFAmero o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. C\xF3digo: AMP-XXXX \xB7 099 123 4567">${e5(input.query)}</textarea>
   <button class="full" type="submit">Identificar</button></form>
   ${input.flash ? `<p class="ok" role="status">${e5(input.flash)}</p>` : ""}
   ${input.result ? resultCard(input.result, input.csrf) : ""}
   ${input.result?.phone && input.copilot ? copilotCard({ csrf: input.csrf, query: input.query, copilot: input.copilot, draft: input.draft, customerText: input.customerText ?? input.query, instruction: input.instruction ?? "" }) : ""}</div>`;
 }
-var e5, csrfField8, phoneDigits, INTENT_LABELS;
+var e5, csrfField9, phoneDigits, INTENT_LABELS;
 var init_views_attend = __esm({
   "packages/api/dist/interfaces/admin/views-attend.js"() {
     "use strict";
@@ -95045,8 +96003,10 @@ var init_views_attend = __esm({
     init_whatsapp_number();
     init_messages();
     init_views_registrations();
+    init_plans();
+    init_views_plans();
     e5 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField8 = (token) => `<input type="hidden" name="csrf" value="${e5(token)}">`;
+    csrfField9 = (token) => `<input type="hidden" name="csrf" value="${e5(token)}">`;
     phoneDigits = (phone) => phone.replace(/\D/g, "");
     INTENT_LABELS = {
       dueno: "Dijo que tiene un veh\xEDculo",
@@ -95114,15 +96074,33 @@ function registerAttendRoutes(app2, deps) {
       try {
         visit = await deps.visits.find(code);
         visitLookup = true;
+        if (visit && phone)
+          await deps.visits.claim(code, phone).catch(() => void 0);
+        if (visit && detail)
+          await deps.visits.link(code, String(detail.user.id)).catch(() => void 0);
       } catch {
         visitLookup = false;
       }
+    }
+    let plan = "gratis";
+    let limits = [];
+    let nearby = null;
+    if (detail && deps.plans) {
+      try {
+        const [subs, usage] = await Promise.all([deps.plans.forUser(String(detail.user.id)), deps.plans.usageForUser(String(detail.user.id))]);
+        plan = effectivePlan(subs);
+        limits = limitsFor(plan, String(detail.user.role ?? "dueno"), usage);
+      } catch {
+        plan = "gratis";
+      }
+      if (plan === "gratis")
+        nearby = nearbyWorkshopsMessage(String(detail.user.city ?? ""), "");
     }
     const ctx = { detail, appointments, events, workOrders, quotes };
     const intent = detectProfileIntent(query) ?? visit?.profile ?? null;
     return {
       ctx,
-      result: { phone, code, visit, visitLookup, detail, intent, tasks: pendingTasks(ctx), message: welcomeMessage(ctx, { intro }) }
+      result: { phone, code, visit, visitLookup, detail, intent, plan, limits, nearby, tasks: pendingTasks(ctx), message: welcomeMessage(ctx, { intro }) }
     };
   }
   async function copilotStatus() {
@@ -95208,7 +96186,7 @@ function registerAttendRoutes(app2, deps) {
       return reply;
     const { session, body } = csrfCtx;
     const query = typeof body.q === "string" ? body.q.slice(0, 2e3) : "";
-    const usageId = typeof body.usageId === "string" && UUID5.test(body.usageId) ? body.usageId : null;
+    const usageId = typeof body.usageId === "string" && UUID6.test(body.usageId) ? body.usageId : null;
     const good = body.score === "good";
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 191) || null : null;
     let resolved;
@@ -95229,7 +96207,7 @@ function registerAttendRoutes(app2, deps) {
     return deps.html(reply, request, "Atender", attendView({ csrf: session.csrfToken, query, result: resolved.result, copilot: await copilotStatus(), customerText: query, flash }), session);
   });
 }
-var UUID5, DRAFTS_PER_HOUR;
+var UUID6, DRAFTS_PER_HOUR;
 var init_attend = __esm({
   "packages/api/dist/interfaces/admin/attend.js"() {
     "use strict";
@@ -95238,7 +96216,8 @@ var init_attend = __esm({
     init_welcome();
     init_views_attend();
     init_platform();
-    UUID5 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    init_plans();
+    UUID6 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     DRAFTS_PER_HOUR = 30;
   }
 });
@@ -95260,7 +96239,7 @@ function dbErrorText2(err) {
 }
 function registerWorkOrderRoutes(app2, deps) {
   const { workOrders, appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text4, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text4)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -95309,7 +96288,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const filter = FILTERS7.includes(query.f) ? query.f : "abiertas";
+    const filter = FILTERS9.includes(query.f) ? query.f : "abiertas";
     const raw = Number(query.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
@@ -95324,7 +96303,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const pick = (key) => typeof query[key] === "string" && UUID6.test(query[key]) ? query[key] : null;
+    const pick = (key) => typeof query[key] === "string" && UUID7.test(query[key]) ? query[key] : null;
     const appointmentId = pick("appointmentId");
     try {
       if (appointmentId) {
@@ -95346,7 +96325,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!ctxCsrf)
       return reply;
     const { session, body } = ctxCsrf;
-    const uuid = (key) => typeof body[key] === "string" && UUID6.test(body[key]) ? body[key] : null;
+    const uuid = (key) => typeof body[key] === "string" && UUID7.test(body[key]) ? body[key] : null;
     const appointmentId = uuid("appointmentId");
     let id;
     let order;
@@ -95410,7 +96389,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID6.test(id))
+    if (!UUID7.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     const ok = request.query?.ok;
     return renderOrder(request, reply, session, id, typeof ok === "string" && OK_MESSAGES3[ok] ? { kind: "ok", text: OK_MESSAGES3[ok] } : void 0);
@@ -95433,16 +96412,16 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID6.test(id))
+    if (!UUID7.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     try {
       if (!await loadForAction(request, reply, session, id, true))
         return reply;
       const kind = ITEM_KINDS.some(([k]) => k === body.kind) ? String(body.kind) : null;
-      const description = str3(body.description, 191);
-      const quantity = parseAmount(body.quantity);
-      const unitPrice = parseAmount(body.unitPrice);
-      const fail = (text4) => renderOrder(request, reply, session, id, { kind: "error", text: text4 }, 400);
+      const description = str4(body.description, 191);
+      const quantity = parseAmount2(body.quantity);
+      const unitPrice = parseAmount2(body.unitPrice);
+      const fail = (text5) => renderOrder(request, reply, session, id, { kind: "error", text: text5 }, 400);
       if (!kind)
         return fail("Elige si es repuesto o mano de obra.");
       if (description.length < 2)
@@ -95464,7 +96443,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session } = ctx;
     const { id, itemId } = request.params;
-    if (!UUID6.test(id) || !UUID6.test(itemId))
+    if (!UUID7.test(id) || !UUID7.test(itemId))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     try {
       if (!await loadForAction(request, reply, session, id, true))
@@ -95482,7 +96461,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID6.test(id))
+    if (!UUID7.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     try {
       if (!await loadForAction(request, reply, session, id, true))
@@ -95500,17 +96479,17 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID6.test(id))
+    if (!UUID7.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     const next = String(body.status ?? "");
-    const reason = str3(body.reason, 191);
+    const reason = str4(body.reason, 191);
     let order;
     try {
       const found = await loadForAction(request, reply, session, id, false);
       if (!found)
         return reply;
       order = found.order;
-      const fail = (text4) => renderOrder(request, reply, session, id, { kind: "error", text: text4 }, 400);
+      const fail = (text5) => renderOrder(request, reply, session, id, { kind: "error", text: text5 }, 400);
       if (next === "cerrada" || !(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes(next))
         return fail("Ese cambio de estado no es posible.");
       if (next === "presupuesto_enviado" && found.items.length === 0)
@@ -95537,7 +96516,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID6.test(id))
+    if (!UUID7.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     let order;
     try {
@@ -95545,7 +96524,7 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail = (text4) => renderOrder(request, reply, session, id, { kind: "error", text: text4 }, 400);
+      const fail = (text5) => renderOrder(request, reply, session, id, { kind: "error", text: text5 }, 400);
       if (!(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes("cerrada"))
         return fail("Solo se cierra una orden en ejecuci\xF3n o esperando repuesto.");
       const exitKm = wholeNumber(body.exitKm, 0, 2e6);
@@ -95577,7 +96556,7 @@ function registerWorkOrderRoutes(app2, deps) {
     return reply.redirect(`/admin/work-orders/${id}?ok=cerrada`, 302);
   });
 }
-var UUID6, FILTERS7, OK_MESSAGES3, str3, optional;
+var UUID7, FILTERS9, OK_MESSAGES3, str4, optional;
 var init_work_orders = __esm({
   "packages/api/dist/interfaces/admin/work-orders.js"() {
     "use strict";
@@ -95586,8 +96565,8 @@ var init_work_orders = __esm({
     init_workflow2();
     init_platform();
     init_views_work_orders();
-    UUID6 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    FILTERS7 = ["abiertas", "por_aprobar", "en_taller", "cerradas", "todas"];
+    UUID7 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS9 = ["abiertas", "por_aprobar", "en_taller", "cerradas", "todas"];
     OK_MESSAGES3 = {
       creada: "Orden abierta. Env\xEDa al due\xF1o el mensaje de recepci\xF3n.",
       item: "Presupuesto actualizado.",
@@ -95595,8 +96574,8 @@ var init_work_orders = __esm({
       estado: "Estado actualizado. Env\xEDa el mensaje al due\xF1o.",
       cerrada: "Orden cerrada y guardada en el historial del veh\xEDculo. Env\xEDa el resumen al due\xF1o."
     };
-    str3 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
-    optional = (value2, max) => str3(value2, max) || null;
+    str4 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+    optional = (value2, max) => str4(value2, max) || null;
   }
 });
 
@@ -95619,7 +96598,7 @@ function dbErrorText3(err) {
 }
 function registerQuoteRoutes(app2, deps) {
   const { quotes, registrations, appointments } = deps;
-  const errorPage = (request, reply, session, title, text4, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text4)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -95649,7 +96628,7 @@ function registerQuoteRoutes(app2, deps) {
     }
   }
   async function context(query) {
-    const pick = (key) => typeof query[key] === "string" && UUID7.test(query[key]) ? query[key] : null;
+    const pick = (key) => typeof query[key] === "string" && UUID8.test(query[key]) ? query[key] : null;
     const workOrderId = pick("workOrderId");
     let requesterId = pick("requesterId") ?? pick("ownerId");
     let vehicleId = pick("vehicleId");
@@ -95691,7 +96670,7 @@ function registerQuoteRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const filter = FILTERS8.includes(query.f) ? query.f : "abiertas";
+    const filter = FILTERS10.includes(query.f) ? query.f : "abiertas";
     const raw = Number(query.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
@@ -95734,7 +96713,7 @@ function registerQuoteRoutes(app2, deps) {
       const paused = operation ? featurePaused(operation, "quotes") : null;
       if (paused)
         return invalid(paused);
-      const partName = str4(body.partName, 191);
+      const partName = str5(body.partName, 191);
       if (partName.length < 3)
         return invalid("Describe el repuesto que necesita.");
       const quantity = smallInt(body.quantity, 1, 999);
@@ -95785,7 +96764,7 @@ function registerQuoteRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID7.test(id))
+    if (!UUID8.test(id))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const ok = request.query?.ok;
     return renderRequest(request, reply, session, id, typeof ok === "string" && OK_MESSAGES4[ok] ? { kind: "ok", text: OK_MESSAGES4[ok] } : void 0);
@@ -95796,13 +96775,13 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id, quoteId } = request.params;
-    if (!UUID7.test(id) || !UUID7.test(quoteId))
+    if (!UUID8.test(id) || !UUID8.test(quoteId))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
-    const fail = (text4) => renderRequest(request, reply, session, id, { kind: "error", text: text4 }, 400);
+    const fail = (text5) => renderRequest(request, reply, session, id, { kind: "error", text: text5 }, 400);
     const action = body.action === "sin_stock" ? "sin_stock" : "cotizado";
     let unitPrice = null;
     if (action === "cotizado") {
-      unitPrice = parseAmount(body.unitPrice);
+      unitPrice = parseAmount2(body.unitPrice);
       if (unitPrice === null || unitPrice <= 0 || unitPrice > 1e5)
         return fail("Escribe un precio unitario v\xE1lido.");
     }
@@ -95838,8 +96817,8 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    const quoteId = typeof body.quoteId === "string" && UUID7.test(body.quoteId) ? body.quoteId : null;
-    if (!UUID7.test(id) || !quoteId)
+    const quoteId = typeof body.quoteId === "string" && UUID8.test(body.quoteId) ? body.quoteId : null;
+    if (!UUID8.test(id) || !quoteId)
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     let orderId;
     let users = [];
@@ -95863,9 +96842,9 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID7.test(id))
+    if (!UUID8.test(id))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
-    const reason = str4(body.reason, 191);
+    const reason = str5(body.reason, 191);
     if (reason.length < 5)
       return renderRequest(request, reply, session, id, { kind: "error", text: "Escribe por qu\xE9 se cierra sin pedido." }, 400);
     try {
@@ -95885,7 +96864,7 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id, quoteId } = request.params;
-    if (!UUID7.test(id) || !UUID7.test(quoteId))
+    if (!UUID8.test(id) || !UUID8.test(quoteId))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const reason = LOSS_REASONS.some(([k]) => k === body.reason) ? String(body.reason) : null;
     if (!reason)
@@ -95906,10 +96885,10 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID7.test(id))
+    if (!UUID8.test(id))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const next = String(body.stage ?? "");
-    const reason = str4(body.reason, 191);
+    const reason = str5(body.reason, 191);
     let order;
     try {
       const found = await quotes.getRequest(id);
@@ -95933,7 +96912,7 @@ function registerQuoteRoutes(app2, deps) {
     return reply.redirect(`/admin/quotes/${id}?ok=pedido`, 302);
   });
 }
-var UUID7, FILTERS8, OK_MESSAGES4, str4, optional2, asList2;
+var UUID8, FILTERS10, OK_MESSAGES4, str5, optional2, asList2;
 var init_quotes = __esm({
   "packages/api/dist/interfaces/admin/quotes.js"() {
     "use strict";
@@ -95943,8 +96922,8 @@ var init_quotes = __esm({
     init_workflow3();
     init_platform();
     init_views_quotes();
-    UUID7 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    FILTERS8 = ["abiertas", "con_pedido", "todas"];
+    UUID8 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS10 = ["abiertas", "con_pedido", "todas"];
     OK_MESSAGES4 = {
       creada: "Solicitud creada. Env\xEDa el mensaje a cada almac\xE9n.",
       respuesta: "Respuesta registrada. Actualiza la comparativa del cliente.",
@@ -95953,14 +96932,14 @@ var init_quotes = __esm({
       perdida: "Motivo de p\xE9rdida guardado.",
       pedido: "Pedido actualizado. Env\xEDa el aviso al cliente."
     };
-    str4 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
-    optional2 = (value2, max) => str4(value2, max) || null;
+    str5 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+    optional2 = (value2, max) => str5(value2, max) || null;
     asList2 = (value2) => value2 === void 0 || value2 === null ? [] : (Array.isArray(value2) ? value2 : [value2]).map(String);
   }
 });
 
 // packages/api/dist/infrastructure/appointments/appointment-store.js
-function rows4(result) {
+function rows6(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function jsonValue(raw) {
@@ -95981,14 +96960,14 @@ function toAppointment(r) {
     id: String(r.id),
     scheduledAt: r.scheduledAt,
     status: String(r.status),
-    summary: text(r.summary),
+    summary: text2(r.summary),
     services: stringList(r.services),
-    notes: text(r.notes),
-    cancelReason: text(r.cancelReason),
+    notes: text2(r.notes),
+    cancelReason: text2(r.cancelReason),
     createdAt: r.createdAt,
     vehicleId: String(r.vehicleId),
     vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
-    plate: text(r.plate),
+    plate: text2(r.plate),
     ownerId: String(r.ownerId),
     ownerName: String(r.ownerName),
     ownerPhone: String(r.ownerPhone),
@@ -96000,12 +96979,12 @@ function toAppointment(r) {
     shopPhone: String(r.shopPhone)
   };
 }
-var PAGE_SIZE4, NOT_SANCTIONED, SELECT_APPOINTMENTS, LIST_TODAY, LIST_UPCOMING, LIST_PENDING, LIST_ALL, GET_ONE, FOR_USER, text, MysqlAppointmentStore;
+var PAGE_SIZE6, NOT_SANCTIONED, SELECT_APPOINTMENTS, LIST_TODAY, LIST_UPCOMING, LIST_PENDING, LIST_ALL, GET_ONE, FOR_USER, text2, MysqlAppointmentStore;
 var init_appointment_store = __esm({
   "packages/api/dist/infrastructure/appointments/appointment-store.js"() {
     "use strict";
     init_messages();
-    PAGE_SIZE4 = 25;
+    PAGE_SIZE6 = 25;
     NOT_SANCTIONED = (alias) => "AND NOT EXISTS (SELECT 1 FROM `Sanction` sn WHERE sn.userId = " + alias + ".userId AND sn.liftedAt IS NULL AND sn.startsAt <= UTC_TIMESTAMP(3) AND (sn.endsAt IS NULL OR sn.endsAt > UTC_TIMESTAMP(3)) AND sn.level IN ('suspension_busquedas', 'suspension', 'baja')) ";
     SELECT_APPOINTMENTS = "SELECT a.id, a.scheduledAt, a.status, a.summary, a.services, a.notes, a.cancelReason, a.createdAt, v.id AS vehicleId, v.make, v.model, v.year, v.plate, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, s.id AS shopId, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, su.id AS shopUserId, su.phone AS shopPhone FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` o ON o.id = a.ownerId JOIN `Shop` s ON s.id = a.shopId JOIN `User` su ON su.id = s.userId";
     LIST_TODAY = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
@@ -96014,7 +96993,7 @@ var init_appointment_store = __esm({
     LIST_ALL = `${SELECT_APPOINTMENTS} ORDER BY a.scheduledAt DESC LIMIT ? OFFSET ?`;
     GET_ONE = `${SELECT_APPOINTMENTS} WHERE a.id = ? LIMIT 1`;
     FOR_USER = `${SELECT_APPOINTMENTS} WHERE a.ownerId = ? OR su.id = ? ORDER BY a.scheduledAt DESC LIMIT 20`;
-    text = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     MysqlAppointmentStore = class {
       connect;
       constructor(connect) {
@@ -96031,7 +97010,7 @@ var init_appointment_store = __esm({
       verifiedShops(city) {
         const base = "SELECT id, name, address, city, zone, hours, ratingAvg, specialties FROM `Shop` sh WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
         const filter = NOT_SANCTIONED("sh");
-        return this.run(async (conn) => rows4(await conn.query(`${base}${filter}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows6(await conn.query(`${base}${filter}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
@@ -96040,44 +97019,44 @@ var init_appointment_store = __esm({
           name: String(r.name),
           address: String(r.address),
           city: String(r.city),
-          zone: text(r.zone),
-          hours: text(r.hours),
+          zone: text2(r.zone),
+          hours: text2(r.hours),
           ratingAvg: Number(r.ratingAvg ?? 0),
           services: stringList(r.specialties)
         })));
       }
       createAppointment(input) {
         return this.run(async (conn) => {
-          const id = String(rows4(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const id = String(rows6(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("INSERT INTO `Appointment` (id, vehicleId, shopId, ownerId, scheduledAt, status, summary, services, notes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, input.vehicleId, input.shopId, input.ownerId, input.scheduledAt, input.summary, JSON.stringify(input.services), input.notes]);
           return id;
         });
       }
       getAppointment(id) {
         return this.run(async (conn) => {
-          const row = rows4(await conn.query(GET_ONE, [id]))[0];
+          const row = rows6(await conn.query(GET_ONE, [id]))[0];
           return row ? toAppointment(row) : null;
         });
       }
       listAppointments(filter, page, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE4;
+          const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE6;
           let result;
           if (filter === "hoy") {
             const { start, end } = ecDayRange(now);
-            result = await conn.query(LIST_TODAY, [start, end, PAGE_SIZE4, offset2]);
+            result = await conn.query(LIST_TODAY, [start, end, PAGE_SIZE6, offset2]);
           } else if (filter === "proximos") {
-            result = await conn.query(LIST_UPCOMING, [now, PAGE_SIZE4, offset2]);
+            result = await conn.query(LIST_UPCOMING, [now, PAGE_SIZE6, offset2]);
           } else if (filter === "pendientes") {
-            result = await conn.query(LIST_PENDING, [PAGE_SIZE4, offset2]);
+            result = await conn.query(LIST_PENDING, [PAGE_SIZE6, offset2]);
           } else {
-            result = await conn.query(LIST_ALL, [PAGE_SIZE4, offset2]);
+            result = await conn.query(LIST_ALL, [PAGE_SIZE6, offset2]);
           }
-          return { items: rows4(result).map(toAppointment), page, pageSize: PAGE_SIZE4 };
+          return { items: rows6(result).map(toAppointment), page, pageSize: PAGE_SIZE6 };
         });
       }
       listForUser(userId) {
-        return this.run(async (conn) => rows4(await conn.query(FOR_USER, [userId, userId])).map(toAppointment));
+        return this.run(async (conn) => rows6(await conn.query(FOR_USER, [userId, userId])).map(toAppointment));
       }
       setStatus(id, status, cancelReason) {
         return this.run(async (conn) => {
@@ -96091,7 +97070,7 @@ var init_appointment_store = __esm({
         });
       }
       userEvents(userId, limit) {
-        return this.run(async (conn) => rows4(await conn.query("SELECT type, payload, createdAt FROM `Event` WHERE entityType = 'User' AND entityId = ? ORDER BY createdAt DESC LIMIT ?", [userId, limit])).map((r) => {
+        return this.run(async (conn) => rows6(await conn.query("SELECT type, payload, createdAt FROM `Event` WHERE entityType = 'User' AND entityId = ? ORDER BY createdAt DESC LIMIT ?", [userId, limit])).map((r) => {
           const payload = jsonValue(r.payload);
           return {
             type: String(r.type),
@@ -96105,7 +97084,7 @@ var init_appointment_store = __esm({
 });
 
 // packages/api/dist/infrastructure/quotes/quote-store.js
-function rows5(result) {
+function rows7(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toRequest2(r) {
@@ -96117,16 +97096,16 @@ function toRequest2(r) {
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
     requesterRole: String(r.requesterRole),
-    vehicleId: text2(r.vehicleId),
+    vehicleId: text3(r.vehicleId),
     vehicleLabel: label(r),
-    plate: text2(r.plate),
-    workOrderId: text2(r.workOrderId),
+    plate: text3(r.plate),
+    workOrderId: text3(r.workOrderId),
     partName: String(r.partName),
-    partCode: text2(r.partCode),
+    partCode: text3(r.partCode),
     quantity: Number(r.quantity ?? 1),
     city: String(r.city),
-    notes: text2(r.notes),
-    closeReason: text2(r.closeReason),
+    notes: text3(r.notes),
+    closeReason: text3(r.closeReason),
     createdAt: r.createdAt
   };
 }
@@ -96140,14 +97119,14 @@ function toQuote(r) {
     storeUserId: String(r.storeUserId),
     storePhone: String(r.storePhone),
     status: String(r.status),
-    unitPrice: num(r.unitPrice),
-    brand: text2(r.brand),
-    availability: text2(r.availability),
-    warrantyDays: num(r.warrantyDays),
-    deliveryTime: text2(r.deliveryTime),
-    validDays: num(r.validDays),
-    notes: text2(r.notes),
-    lossReason: text2(r.lossReason),
+    unitPrice: num2(r.unitPrice),
+    brand: text3(r.brand),
+    availability: text3(r.availability),
+    warrantyDays: num2(r.warrantyDays),
+    deliveryTime: text3(r.deliveryTime),
+    validDays: num2(r.validDays),
+    notes: text3(r.notes),
+    lossReason: text3(r.lossReason),
     respondedAt: r.respondedAt ?? null
   };
 }
@@ -96157,10 +97136,10 @@ function toOrder(r) {
     stage: String(r.stage ?? "confirmado"),
     status: String(r.status),
     total: Number(r.total ?? 0),
-    cancelReason: text2(r.cancelReason),
+    cancelReason: text3(r.cancelReason),
     createdAt: r.createdAt,
     quoteRequestId: String(r.quoteRequestId),
-    quoteId: text2(r.quoteId),
+    quoteId: text3(r.quoteId),
     requestNumber: Number(r.requestNumber),
     partName: String(r.partName),
     quantity: Number(r.quantity ?? 1),
@@ -96171,26 +97150,26 @@ function toOrder(r) {
     requesterId: String(r.requesterId),
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
-    unitPrice: num(r.unitPrice),
-    brand: text2(r.brand),
-    deliveryTime: text2(r.deliveryTime)
+    unitPrice: num2(r.unitPrice),
+    brand: text3(r.brand),
+    deliveryTime: text3(r.deliveryTime)
   };
 }
-var PAGE_SIZE5, SELECT_REQUESTS2, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text2, num, label, MysqlQuoteStore;
+var PAGE_SIZE7, SELECT_REQUESTS2, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text3, num2, label, MysqlQuoteStore;
 var init_quote_store = __esm({
   "packages/api/dist/infrastructure/quotes/quote-store.js"() {
     "use strict";
     init_appointment_store();
     init_workflow3();
-    PAGE_SIZE5 = 25;
+    PAGE_SIZE7 = 25;
     SELECT_REQUESTS2 = "SELECT q.id, q.number, q.status, q.requesterId, u.name AS requesterName, u.phone AS requesterPhone, u.role AS requesterRole, q.vehicleId, v.make, v.model, v.year, v.plate, q.workOrderId, q.partName, q.partCode, q.quantity, q.city, q.notes, q.closeReason, q.createdAt FROM `QuoteRequest` q JOIN `User` u ON u.id = q.requesterId LEFT JOIN `Vehicle` v ON v.id = q.vehicleId";
     SELECT_QUOTES = "SELECT qt.id, qt.requestId, qt.storeId, s.name AS storeName, s.city AS storeCity, s.userId AS storeUserId, su.phone AS storePhone, qt.status, qt.unitPrice, qt.brand, qt.availability, qt.warrantyDays, qt.deliveryTime, qt.validDays, qt.notes, qt.lossReason, qt.respondedAt FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId JOIN `User` su ON su.id = s.userId";
     SELECT_ORDERS = "SELECT o.id, o.stage, o.status, o.total, o.cancelReason, o.createdAt, o.quoteRequestId, o.quoteId, q.number AS requestNumber, q.partName, q.quantity, s.id AS storeId, s.name AS storeName, s.userId AS storeUserId, su.phone AS storePhone, u.id AS requesterId, u.name AS requesterName, u.phone AS requesterPhone, qt.unitPrice, qt.brand, qt.deliveryTime FROM `Order` o JOIN `QuoteRequest` q ON q.id = o.quoteRequestId JOIN `Store` s ON s.userId = o.toStoreId JOIN `User` su ON su.id = s.userId JOIN `User` u ON u.id = o.fromUserId LEFT JOIN `Quote` qt ON qt.id = o.quoteId";
     LIST_OPEN = `${SELECT_REQUESTS2} WHERE q.status = 'abierta' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_ORDERED = `${SELECT_REQUESTS2} WHERE q.status = 'con_pedido' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_ALL2 = `${SELECT_REQUESTS2} ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
-    text2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
-    num = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
+    text3 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    num2 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     label = (r) => {
       const parts = [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "");
       return parts.length > 0 ? parts.join(" ") : null;
@@ -96223,7 +97202,7 @@ var init_quote_store = __esm({
       }
       verifiedStores(city) {
         const base = "SELECT id, name, city, zone, categories, delivery FROM `Store` st WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows5(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows7(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
@@ -96231,15 +97210,15 @@ var init_quote_store = __esm({
           id: String(r.id),
           name: String(r.name),
           city: String(r.city),
-          zone: text2(r.zone),
-          categories: text2(r.categories),
+          zone: text3(r.zone),
+          categories: text3(r.categories),
           delivery: !!Number(r.delivery ?? 0)
         })));
       }
       async createRequest(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id = String(rows5(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows5(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
+          const id = String(rows7(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows7(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `QuoteRequest` (id, number, requesterId, vehicleId, workOrderId, partName, partCode, quantity, city, notes, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, next, input.requesterId, input.vehicleId, input.workOrderId, input.partName, input.partCode, input.quantity, input.city, input.notes]);
           for (const storeId of input.storeIds) {
             await conn.query("INSERT INTO `Quote` (id, requestId, storeId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id, storeId]);
@@ -96256,26 +97235,26 @@ var init_quote_store = __esm({
       }
       getRequest(id) {
         return this.run(async (conn) => {
-          const row = rows5(await conn.query(`${SELECT_REQUESTS2} WHERE q.id = ? LIMIT 1`, [id]))[0];
+          const row = rows7(await conn.query(`${SELECT_REQUESTS2} WHERE q.id = ? LIMIT 1`, [id]))[0];
           if (!row)
             return null;
-          const quotes = rows5(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id])).map(toQuote);
-          const order = rows5(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id]))[0];
+          const quotes = rows7(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id])).map(toQuote);
+          const order = rows7(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id]))[0];
           return { request: toRequest2(row), quotes, order: order ? toOrder(order) : null };
         });
       }
       listRequests(filter, page) {
         return this.run(async (conn) => {
           const sql = filter === "abiertas" ? LIST_OPEN : filter === "con_pedido" ? LIST_ORDERED : LIST_ALL2;
-          const items = rows5(await conn.query(sql, [PAGE_SIZE5, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5])).map(toRequest2);
-          return { items, page, pageSize: PAGE_SIZE5 };
+          const items = rows7(await conn.query(sql, [PAGE_SIZE7, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE7])).map(toRequest2);
+          return { items, page, pageSize: PAGE_SIZE7 };
         });
       }
       listForUser(userId) {
         return this.run(async (conn) => {
-          const requests = rows5(await conn.query(`${SELECT_REQUESTS2} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest2);
-          const storeQuotes = rows5(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
-          const orders = rows5(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
+          const requests = rows7(await conn.query(`${SELECT_REQUESTS2} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest2);
+          const storeQuotes = rows7(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
+          const orders = rows7(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
           return { requests, storeQuotes, orders };
         });
       }
@@ -96298,16 +97277,16 @@ var init_quote_store = __esm({
       }
       choose(requestId, quoteId) {
         return this.transaction(async (conn) => {
-          const request = rows5(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
+          const request = rows7(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
           if (!request || request.status !== "abierta")
             return null;
-          const quote = rows5(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
+          const quote = rows7(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
           if (!quote || quote.status !== "cotizado" || quote.unitPrice === null)
             return null;
           const quantity = Number(request.quantity ?? 1);
           const unitPrice = Number(quote.unitPrice);
           const total = Math.round(unitPrice * quantity * 100) / 100;
-          const orderId = String(rows5(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const orderId = String(rows7(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("UPDATE `Quote` SET status = 'elegida' WHERE id = ?", [quoteId]);
           await conn.query("UPDATE `Quote` SET status = 'descartada' WHERE requestId = ? AND id <> ? AND status IN ('invitado', 'cotizado')", [requestId, quoteId]);
           await conn.query("UPDATE `QuoteRequest` SET status = 'con_pedido', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [requestId]);
@@ -96392,7 +97371,7 @@ function buildContactSheet(ctx) {
   if (appointments.length > 0) {
     lines.push("TURNOS:");
     for (const a of appointments)
-      lines.push(`- ${formatEcDateTime(a.scheduledAt)} \xB7 ${STATUS_LABELS[a.status] ?? a.status} \xB7 ${a.shopName} \xB7 ${a.vehicleLabel}`);
+      lines.push(`- ${formatEcDateTime(a.scheduledAt)} \xB7 ${STATUS_LABELS2[a.status] ?? a.status} \xB7 ${a.shopName} \xB7 ${a.vehicleLabel}`);
   }
   const orders = (ctx.workOrders ?? []).slice(0, 5);
   if (orders.length > 0) {
@@ -96435,8 +97414,8 @@ ${redactPii(customerText).slice(0, 2e3)}`];
 ${redactPii(instruction).slice(0, 300)}`);
   return parts.join("\n\n");
 }
-function parseDraft(text4) {
-  const clean = text4.trim();
+function parseDraft(text5) {
+  const clean = text5.trim();
   const match = /RESPUESTA:\s*([\s\S]*?)(?:\n\s*NOTA PARA EL OPERADOR:\s*([\s\S]*))?$/i.exec(clean);
   if (!match)
     return { reply: clean.slice(0, 1500), note: null };
@@ -96691,7 +97670,7 @@ var init_service = __esm({
 });
 
 // packages/api/dist/infrastructure/copilot/copilot-store.js
-function rows6(result) {
+function rows8(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 var MysqlCopilotStore;
@@ -96713,7 +97692,7 @@ var init_copilot_store = __esm({
       }
       recordUsage(usage) {
         return this.run(async (conn) => {
-          const id = String(rows6(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const id = String(rows8(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("INSERT INTO `LlmUsage` (id, agent, `function`, provider, model, promptVersion, inputTokens, outputTokens, cachedTokens, costUsd, latencyMs, outcome, createdAt) VALUES (?, 'copilot', 'draft_reply', ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [
             id,
             usage.provider,
@@ -96731,7 +97710,7 @@ var init_copilot_store = __esm({
       }
       spentBetween(start, end) {
         return this.run(async (conn) => {
-          const row = rows6(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
+          const row = rows8(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
           return Number(row?.n ?? 0);
         });
       }
@@ -96742,7 +97721,7 @@ var init_copilot_store = __esm({
       }
       feedbackSummary(since) {
         return this.run(async (conn) => {
-          const row = rows6(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS good, COALESCE(SUM(score <= 2), 0) AS bad FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
+          const row = rows8(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS good, COALESCE(SUM(score <= 2), 0) AS bad FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
           return { good: Number(row?.good ?? 0), bad: Number(row?.bad ?? 0) };
         });
       }
@@ -96751,7 +97730,7 @@ var init_copilot_store = __esm({
 });
 
 // packages/api/dist/infrastructure/work-orders/work-order-store.js
-function rows7(result) {
+function rows9(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toOrder2(r) {
@@ -96768,19 +97747,19 @@ function toOrder2(r) {
     ownerPhone: String(r.ownerPhone),
     vehicleId: String(r.vehicleId),
     vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
-    plate: text3(r.plate),
+    plate: text4(r.plate),
     vehicleKm: Number(r.currentKm ?? 0),
-    appointmentId: text3(r.appointmentId),
+    appointmentId: text4(r.appointmentId),
     intakeKm: int(r.intakeKm),
-    intakeNotes: text3(r.intakeNotes),
-    diagnosis: text3(r.diagnosis),
-    rejectionReason: text3(r.rejectionReason),
-    cancelReason: text3(r.cancelReason),
+    intakeNotes: text4(r.intakeNotes),
+    diagnosis: text4(r.diagnosis),
+    rejectionReason: text4(r.rejectionReason),
+    cancelReason: text4(r.cancelReason),
     exitKm: int(r.exitKm),
     warrantyDays: int(r.warrantyDays),
-    nextService: text3(r.nextService),
-    diagnosisOutcome: text3(r.diagnosisOutcome),
-    outcomeNote: text3(r.outcomeNote),
+    nextService: text4(r.nextService),
+    diagnosisOutcome: text4(r.diagnosisOutcome),
+    outcomeNote: text4(r.outcomeNote),
     total: Number(r.total ?? 0),
     createdAt: r.createdAt,
     closedAt: r.closedAt ?? null
@@ -96791,17 +97770,17 @@ function toItem(r) {
     id: String(r.id),
     kind: String(r.kind),
     description: String(r.description),
-    brand: text3(r.brand),
-    partCode: text3(r.partCode),
+    brand: text4(r.brand),
+    partCode: text4(r.partCode),
     quantity: Number(r.quantity),
     unitPrice: Number(r.unitPrice)
   };
 }
-var PAGE_SIZE6, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL, text3, int, MysqlWorkOrderStore;
+var PAGE_SIZE8, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL, text4, int, MysqlWorkOrderStore;
 var init_work_order_store = __esm({
   "packages/api/dist/infrastructure/work-orders/work-order-store.js"() {
     "use strict";
-    PAGE_SIZE6 = 25;
+    PAGE_SIZE8 = 25;
     SELECT_ORDERS2 = "SELECT w.id, w.number, w.status, w.appointmentId, w.intakeKm, w.intakeNotes, w.diagnosis, w.rejectionReason, w.cancelReason, w.exitKm, w.warrantyDays, w.nextService, w.diagnosisOutcome, w.outcomeNote, w.total, w.createdAt, w.closedAt, s.id AS shopId, s.name AS shopName, su.id AS shopUserId, su.phone AS shopPhone, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, v.id AS vehicleId, v.make, v.model, v.year, v.plate, v.currentKm FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `User` su ON su.id = s.userId JOIN `User` o ON o.id = w.ownerId JOIN `Vehicle` v ON v.id = w.vehicleId";
     LIST_OPEN2 = `${SELECT_ORDERS2} WHERE w.status NOT IN ('cerrada', 'cancelada') ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_TO_APPROVE = `${SELECT_ORDERS2} WHERE w.status = 'presupuesto_enviado' ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
@@ -96811,7 +97790,7 @@ var init_work_order_store = __esm({
     GET_ONE2 = `${SELECT_ORDERS2} WHERE w.id = ? LIMIT 1`;
     FOR_USER2 = `${SELECT_ORDERS2} WHERE w.ownerId = ? OR su.id = ? ORDER BY w.createdAt DESC LIMIT 20`;
     RECALCULATE_TOTAL = "UPDATE `WorkOrder` SET total = (SELECT COALESCE(SUM(ROUND(quantity * unitPrice, 2)), 0) FROM `WorkOrderItem` WHERE workOrderId = ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?";
-    text3 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text4 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     int = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     MysqlWorkOrderStore = class {
       connect;
@@ -96841,8 +97820,8 @@ var init_work_order_store = __esm({
       }
       async create(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id = String(rows7(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows7(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
+          const id = String(rows9(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows9(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, diagnosis, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, next, input.shopId, input.ownerId, input.vehicleId, input.appointmentId, input.intakeKm, input.intakeNotes, input.diagnosis]);
           return id;
         });
@@ -96856,26 +97835,26 @@ var init_work_order_store = __esm({
       }
       get(id) {
         return this.run(async (conn) => {
-          const row = rows7(await conn.query(GET_ONE2, [id]))[0];
+          const row = rows9(await conn.query(GET_ONE2, [id]))[0];
           if (!row)
             return null;
-          const items = rows7(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id])).map(toItem);
+          const items = rows9(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id])).map(toItem);
           return { order: toOrder2(row), items };
         });
       }
       list(filter, page) {
         return this.run(async (conn) => {
-          const params = [PAGE_SIZE6, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE6];
+          const params = [PAGE_SIZE8, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE8];
           const sql = filter === "abiertas" ? LIST_OPEN2 : filter === "por_aprobar" ? LIST_TO_APPROVE : filter === "en_taller" ? LIST_IN_SHOP : filter === "cerradas" ? LIST_CLOSED : LIST_ALL3;
-          return { items: rows7(await conn.query(sql, params)).map(toOrder2), page, pageSize: PAGE_SIZE6 };
+          return { items: rows9(await conn.query(sql, params)).map(toOrder2), page, pageSize: PAGE_SIZE8 };
         });
       }
       listForUser(userId) {
-        return this.run(async (conn) => rows7(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
+        return this.run(async (conn) => rows9(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
       }
       findByAppointment(appointmentId) {
         return this.run(async (conn) => {
-          const row = rows7(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
+          const row = rows9(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
           return row ? String(row.id) : null;
         });
       }
@@ -96904,7 +97883,7 @@ var init_work_order_store = __esm({
       }
       close(id, input) {
         return this.transaction(async (conn) => {
-          const order = rows7(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id]))[0];
+          const order = rows9(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id]))[0];
           if (!order)
             return false;
           await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', exitKm = ?, warrantyDays = ?, nextService = ?, diagnosisOutcome = ?, outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.exitKm, input.warrantyDays, input.nextService, input.diagnosisOutcome, input.outcomeNote, id]);
@@ -96917,7 +97896,7 @@ var init_work_order_store = __esm({
         });
       }
       historyForUser(userId) {
-        return this.run(async (conn) => rows7(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
+        return this.run(async (conn) => rows9(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
           createdAt: r.createdAt,
           shopName: String(r.shopName),
           vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
@@ -96929,8 +97908,57 @@ var init_work_order_store = __esm({
   }
 });
 
+// packages/api/dist/interfaces/admin/views-visits.js
+function when4(value2) {
+  if (!value2)
+    return "\u2014";
+  const date = value2 instanceof Date ? value2 : new Date(value2);
+  return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeStyle: "short", timeZone: "America/Guayaquil" }).format(date);
+}
+function phoneCell(visit) {
+  if (!visit.phone)
+    return `<span class="muted">todav\xEDa no escribe</span>`;
+  const digits = visit.phone.replace(/\D/g, "");
+  if (visit.userId)
+    return escapeHtml(formatWhatsappNumber(digits));
+  return `<span class="muted">\xB7\xB7\xB7${escapeHtml(digits.slice(-4))}</span>`;
+}
+function visitsView(input) {
+  const filas = input.items.map((v) => `<tr><td><code>${escapeHtml(v.code)}</code></td>
+      <td>${escapeHtml(v.ref ?? "\u2014")}</td>
+      <td>${escapeHtml(v.profile ? PROFILE_LABELS[v.profile] ?? v.profile : "\u2014")}</td>
+      <td>${phoneCell(v)}</td>
+      <td>${v.userId ? `<a href="/admin/users/${escapeHtml(v.userId)}">${escapeHtml(v.userName ?? "ver ficha")}</a>` : `<span class="muted">sin registrar</span>`}</td>
+      <td>${escapeHtml(when4(v.createdAt))}</td></tr>`).join("");
+  const resumen = input.stats.map((s) => {
+    const conv = s.visitas > 0 ? Math.round(s.registrados / s.visitas * 100) : 0;
+    return `<tr><td>${escapeHtml(s.ref ?? "directo")}</td>
+      <td>${escapeHtml(s.profile ? PROFILE_LABELS[s.profile] ?? s.profile : "sin elegir")}</td>
+      <td>${s.visitas}</td><td>${s.escribieron}</td><td>${s.registrados}</td><td>${conv}%</td></tr>`;
+  }).join("");
+  return `<div class="stack wide"><h1>Origen de los contactos</h1>
+  <div class="card"><h2>Qu\xE9 es el c\xF3digo</h2>
+    <p class="muted">Cada visita a automantpro.app recibe un c\xF3digo <code>AMP-XXXXX</code> \xFAnico que viaja en el primer mensaje de WhatsApp. Cuando la persona escribe, el c\xF3digo queda ligado a su n\xFAmero; cuando se registra, queda ligado a su ficha. As\xED se sabe de d\xF3nde lleg\xF3 cada usuario sin pedirle nada.</p></div>
+  <div class="card"><h2>Resumen de los \xFAltimos ${input.days} d\xEDas</h2>
+    ${input.stats.length === 0 ? `<p class="muted">Todav\xEDa no hay visitas registradas.</p>` : ""}
+    <div class="scroll"><table><thead><tr><th>Origen</th><th>Opci\xF3n elegida</th><th>Visitas</th><th>Escribieron</th><th>Se registraron</th><th>Conversi\xF3n</th></tr></thead>
+    <tbody>${resumen}</tbody></table></div></div>
+  <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Origen</th><th>Opci\xF3n</th><th>Tel\xE9fono</th><th>Usuario</th><th>Visita</th></tr></thead>
+  <tbody>${filas}</tbody></table></div></div>`;
+}
+var PROFILE_LABELS;
+var init_views_visits = __esm({
+  "packages/api/dist/interfaces/admin/views-visits.js"() {
+    "use strict";
+    init_page();
+    init_whatsapp_number();
+    init_page();
+    PROFILE_LABELS = Object.fromEntries(ENTRY_PROFILES.map((p) => [p.key, p.label]));
+  }
+});
+
 // packages/api/dist/infrastructure/registration/registration-store.js
-function rows8(result) {
+function rows10(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function parseServices(raw) {
@@ -96957,11 +97985,11 @@ function pendingItem(kind) {
     createdAt: r.createdAt
   });
 }
-var PAGE_SIZE7, MysqlRegistrationStore;
+var PAGE_SIZE9, MysqlRegistrationStore;
 var init_registration_store = __esm({
   "packages/api/dist/infrastructure/registration/registration-store.js"() {
     "use strict";
-    PAGE_SIZE7 = 25;
+    PAGE_SIZE9 = 25;
     MysqlRegistrationStore = class {
       connect;
       constructor(connect) {
@@ -96989,7 +98017,7 @@ var init_registration_store = __esm({
         });
       }
       async uuid(conn) {
-        return String(rows8(await conn.query("SELECT UUID() AS id"))[0]?.id);
+        return String(rows10(await conn.query("SELECT UUID() AS id"))[0]?.id);
       }
       async insertUser(conn, user, role) {
         const id = await this.uuid(conn);
@@ -97033,18 +98061,18 @@ var init_registration_store = __esm({
           const like = `%${q.replace(/[\\%_]/g, "\\$&")}%`;
           const digits = q.replace(/\D/g, "");
           const likePhone = digits ? `%${digits}%` : like;
-          const items = rows8(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE7, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE7]));
-          return { items, page, pageSize: PAGE_SIZE7 };
+          const items = rows10(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE9, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE9]));
+          return { items, page, pageSize: PAGE_SIZE9 };
         });
       }
       getUserDetail(id) {
         return this.run(async (conn) => {
-          const user = rows8(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
+          const user = rows10(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
           if (!user)
             return null;
-          const vehicles = rows8(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
-          const shopRow = rows8(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
-          const store = rows8(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
+          const vehicles = rows10(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
+          const shopRow = rows10(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
+          const store = rows10(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
           return {
             user,
             vehicles,
@@ -97055,8 +98083,8 @@ var init_registration_store = __esm({
       }
       pendingVerifications() {
         return this.run(async (conn) => {
-          const shops = rows8(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
-          const stores = rows8(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
+          const shops = rows10(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
+          const stores = rows10(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
           return [...shops, ...stores].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
         });
       }
@@ -97067,12 +98095,12 @@ var init_registration_store = __esm({
         });
       }
       recentUsers(limit) {
-        return this.run(async (conn) => rows8(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
+        return this.run(async (conn) => rows10(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const shops = Number(rows8(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
-          const stores = Number(rows8(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const shops = Number(rows10(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const stores = Number(rows10(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
           return shops + stores;
         });
       }
@@ -97105,8 +98133,12 @@ async function adminPanelRoutes(app2, options = {}) {
   const copilot = options.copilot ?? new CopilotService({ settings, store: new MysqlCopilotStore(connect) });
   const detailCopilot = options.copilot || options.connect || missingDbEnv().length === 0 ? copilot : void 0;
   const staff = options.staff ?? new MysqlStaffStore(connect);
+  const visits = options.visits ?? new MysqlVisitStore(connect);
+  const detailVisits = options.visits || options.connect || missingDbEnv().length === 0 ? visits : void 0;
   const relations = options.relations ?? new MysqlRelationStore(connect);
   const data = options.data ?? new MysqlDataStore(connect);
+  const plans = options.plans ?? new MysqlPlanStore(connect);
+  const detailPlans = options.plans || options.connect || missingDbEnv().length === 0 ? plans : void 0;
   const detailData = options.data || options.connect || missingDbEnv().length === 0 ? data : void 0;
   const detailRelations = options.relations || options.connect || missingDbEnv().length === 0 ? relations : void 0;
   const linker = detailRelations ? createRelationLinker(detailRelations) : void 0;
@@ -97189,7 +98221,7 @@ async function adminPanelRoutes(app2, options = {}) {
   }
   registerSetupWizard(app2, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
   registerAccountRoutes(app2, { store, requireSession, html, audit });
-  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, requireSession, html, audit, platform });
+  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, plans: detailPlans, visits: detailVisits, requireSession, html, audit, platform });
   registerAppointmentRoutes(app2, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit, linker, platform });
   registerWorkOrderRoutes(app2, { workOrders, appointments, registrations, requireSession, html, audit, linker, platform });
   registerQuoteRoutes(app2, { quotes, registrations, appointments, workOrders, requireSession, html, audit, linker, platform });
@@ -97199,8 +98231,9 @@ async function adminPanelRoutes(app2, options = {}) {
     workOrders: detailWorkOrders,
     quotes: detailQuotes,
     copilot: detailCopilot,
+    plans: detailPlans,
     audit,
-    visits: detailAppointments ? options.visits ?? new MysqlVisitStore(connect) : options.visits,
+    visits: detailVisits,
     platform,
     requireSession,
     html
@@ -97222,6 +98255,23 @@ async function adminPanelRoutes(app2, options = {}) {
   registerTeamRoutes(app2, { store, staff, requireSession, html, audit });
   registerRelationRoutes(app2, { relations, requireSession, html, audit });
   registerDataRoutes(app2, { data, requireSession, html, audit });
+  registerPlanRoutes(app2, { plans, requireSession, html, audit });
+  app2.get("/visits", async (request, reply) => {
+    const session = requireSession(request, reply);
+    if (!session)
+      return reply;
+    const raw = Number(request.query?.page ?? 1);
+    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    const days = 30;
+    try {
+      const [list6, stats] = await Promise.all([visits.list(page), visits.stats(days)]);
+      return html(reply, request, "Origen", visitsView({ items: list6.items, stats, days }), session);
+    } catch (err) {
+      const code = err.code;
+      const text5 = code === "ER_NO_SUCH_TABLE" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : `No se pudo consultar el origen de los contactos (${code ?? "base de datos no disponible"}).`;
+      return html(reply, request, "Origen", messageView("Origen", text5), session, 503);
+    }
+  });
   app2.get("/login", async (request, reply) => {
     if (await adminCount(store) === 0)
       return reply.redirect("/admin/setup", 302);
@@ -97409,6 +98459,8 @@ var init_admin = __esm({
     init_staff_store();
     init_relations();
     init_data();
+    init_plans2();
+    init_plan_store();
     init_data_store();
     init_relation_store();
     init_linker();
@@ -97425,6 +98477,7 @@ var init_admin = __esm({
     init_copilot_store();
     init_work_order_store();
     init_visit_store();
+    init_views_visits();
     init_appointment_store();
     init_registration_store();
     init_settings_store();
@@ -98716,6 +99769,110 @@ async function agentRoutes(app2) {
 
 // packages/api/dist/server.js
 init_entry();
+
+// packages/api/dist/interfaces/seo/index.js
+var DEFAULT_SITE = "https://automantpro.app";
+var AI_AGENTS = [
+  "GPTBot",
+  "OAI-SearchBot",
+  "ChatGPT-User",
+  "ClaudeBot",
+  "Claude-Web",
+  "anthropic-ai",
+  "PerplexityBot",
+  "Perplexity-User",
+  "Google-Extended",
+  "Applebot-Extended",
+  "CCBot",
+  "cohere-ai",
+  "Meta-ExternalAgent",
+  "Amazonbot",
+  "YouBot"
+];
+function robotsTxt(site) {
+  const permitidos = AI_AGENTS.map((agent) => `User-agent: ${agent}
+Allow: /`).join("\n\n");
+  return `# AutoMantPro \xB7 mantenimiento automotor por WhatsApp en Ecuador
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /wa/
+
+${permitidos}
+
+Sitemap: ${site}/sitemap.xml
+`;
+}
+function sitemapXml(site, now = /* @__PURE__ */ new Date()) {
+  const fecha = now.toISOString().slice(0, 10);
+  const paginas = [
+    ["/", "1.0"],
+    ["/?pagina=1", "0.8"],
+    ["/terminos", "0.3"],
+    ["/privacidad", "0.3"]
+  ];
+  const urls = paginas.map(([path, priority]) => `  <url>
+    <loc>${site}${path.replace(/&/g, "&amp;")}</loc>
+    <lastmod>${fecha}</lastmod>
+    <priority>${priority}</priority>
+  </url>`).join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls}
+</urlset>
+`;
+}
+function llmsTxt(site, phone) {
+  const contacto = phone ? `https://wa.me/${phone}` : `${site}`;
+  return `# AutoMantPro
+
+> Mantenimiento automotor por WhatsApp en Ecuador: plan de mantenimiento por veh\xEDculo,
+> diagn\xF3stico asistido por IA, talleres verificados y cotizaci\xF3n de repuestos, sin instalar apps.
+
+## Qu\xE9 resuelve
+- Plan de mantenimiento a la medida del veh\xEDculo (clase, combustible, uso y kilometraje).
+- Diagn\xF3stico orientativo de s\xEDntomas y ruidos, con aviso cuando es riesgoso seguir conduciendo.
+- Turnos en talleres verificados, con el precio acordado antes de entrar.
+- Cotizaci\xF3n del mismo repuesto en varios almacenes, para comparar precio, garant\xEDa y entrega.
+- Historial de servicios del veh\xEDculo, \xFAtil al revenderlo.
+
+## Para qui\xE9n
+- Due\xF1os de veh\xEDculos en Ecuador (autos, camionetas, motos y comerciales livianos).
+- Talleres mec\xE1nicos que quieren recibir clientes y llevar sus \xF3rdenes de trabajo.
+- Almacenes de repuestos que quieren responder cotizaciones y despachar pedidos.
+
+## C\xF3mo se usa
+Se escribe por WhatsApp: ${contacto}
+No hay que instalar ninguna aplicaci\xF3n ni crear contrase\xF1as.
+
+## Planes
+- Gratis: plan de mantenimiento, recordatorios y b\xFAsqueda de talleres cercanos.
+- Premium: talleres verificados con cita coordinada, cotizaciones a varios almacenes,
+  garant\xEDa respaldada y historial exportable.
+
+## Enlaces
+- Inicio: ${site}/
+- T\xE9rminos y condiciones: ${site}/terminos
+- Pol\xEDtica de privacidad (LOPDP): ${site}/privacidad
+`;
+}
+async function seoRoutes(app2, options = {}) {
+  const site = (options.site ?? process.env.PUBLIC_SITE_URL ?? DEFAULT_SITE).replace(/\/+$/, "");
+  app2.get("/robots.txt", async (_request, reply) => reply.type("text/plain; charset=utf-8").header("Cache-Control", "public, max-age=3600").send(robotsTxt(site)));
+  app2.get("/sitemap.xml", async (_request, reply) => reply.type("application/xml; charset=utf-8").header("Cache-Control", "public, max-age=3600").send(sitemapXml(site)));
+  app2.get("/llms.txt", async (_request, reply) => {
+    let phone = null;
+    try {
+      phone = await options.resolveNumber?.() ?? null;
+    } catch {
+      phone = null;
+    }
+    const digits = (phone ?? process.env.WA_PUBLIC_NUMBER ?? "").replace(/\D/g, "");
+    return reply.type("text/plain; charset=utf-8").header("Cache-Control", "public, max-age=3600").send(llmsTxt(site, digits.length >= 8 ? digits : null));
+  });
+}
+
+// packages/api/dist/server.js
 init_apply();
 init_settings_store();
 init_whatsapp_number();
@@ -98861,13 +100018,15 @@ await app.register(adminPanelRoutes2, {
     legalData.invalidate();
   }
 });
-var BUILD_STAMP = process.env.APP_VERSION ?? "2026-09-18-menu-por-defecto";
+var BUILD_STAMP = process.env.APP_VERSION ?? "2026-09-18-inicio-tecnologico";
 app.get("/health", async () => ({ status: "ok", jwt: jwtSecretSource, build: BUILD_STAMP }));
 await app.register(entryRoutes, {
   resolveNumber: () => whatsappNumber.get(),
   onVisit: missingDbEnv().length === 0 ? (code, ref, profile) => visitStore.record(code, ref, profile) : void 0,
+  codeTaken: missingDbEnv().length === 0 ? (code) => visitStore.exists(code) : void 0,
   entryMode: async () => parseEntryMode(await entryMode.get())
 });
+await app.register(seoRoutes, { resolveNumber: () => whatsappNumber.get() });
 await app.register(legalRoutes, { load: () => legalData.get() });
 app.setErrorHandler((error, request, reply) => {
   const statusCode = error.statusCode ?? 500;

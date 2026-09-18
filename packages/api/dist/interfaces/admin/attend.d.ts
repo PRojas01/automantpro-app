@@ -7,6 +7,7 @@ import type { VisitStore } from "../../infrastructure/visits/visit-store.js";
 import type { WorkOrderStore } from "../../infrastructure/work-orders/work-order-store.js";
 import type { QuoteStore } from "../../infrastructure/quotes/quote-store.js";
 import { type PlatformSettings } from "../../application/settings/platform.js";
+import type { PlanStore } from "../../infrastructure/plans/plan-store.js";
 export interface AttendDeps {
     registrations: RegistrationStore;
     appointments?: AppointmentStore;
@@ -16,6 +17,8 @@ export interface AttendDeps {
     copilot?: CopilotService;
     /** Ajustes de operación: horario silencioso y línea extra de bienvenida (docs/35 A2). */
     platform?: () => Promise<PlatformSettings>;
+    /** Plan del contacto y uso del mes, para saber qué ofrecerle (docs/42). */
+    plans?: PlanStore;
     audit?(eventType: string, actorUserId: string | null, reason: string): Promise<void>;
     requireSession(request: FastifyRequest, reply: FastifyReply): AdminSession | null;
     html(reply: FastifyReply, request: FastifyRequest, title: string, body: string, session?: AdminSession, status?: number): FastifyReply;

@@ -6,6 +6,8 @@ import type { WorkOrderStore } from "../../infrastructure/work-orders/work-order
 import type { QuoteStore } from "../../infrastructure/quotes/quote-store.js";
 import type { RelationStore } from "../../infrastructure/relations/relation-store.js";
 import type { DataStore } from "../../infrastructure/data/data-store.js";
+import type { PlanStore } from "../../infrastructure/plans/plan-store.js";
+import type { VisitStore } from "../../infrastructure/visits/visit-store.js";
 import { type PlatformSettings } from "../../application/settings/platform.js";
 export interface RegistrationDeps {
     registrations: RegistrationStore;
@@ -15,6 +17,10 @@ export interface RegistrationDeps {
     platform?: () => Promise<PlatformSettings>;
     /** Solicitudes de la LOPDP del titular (docs/35 A3). */
     data?: DataStore;
+    /** Plan del titular, sus pagos y el uso del mes (docs/42). */
+    plans?: PlanStore;
+    /** Visitas: liga el código de inicio con el usuario que se registra (docs/43). */
+    visits?: VisitStore;
     appointments?: AppointmentStore;
     workOrders?: WorkOrderStore;
     quotes?: QuoteStore;

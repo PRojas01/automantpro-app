@@ -13,6 +13,7 @@ export const EXTRA_TABLES = [
     "Dispute",
     "Sanction",
     "DataRequest",
+    "Visit",
 ];
 /** Ajustes editables desde el panel (por ejemplo, el número público de WhatsApp). */
 export const APP_SETTING_TABLE_SQL = "CREATE TABLE IF NOT EXISTS `AppSetting` (\n    `name` VARCHAR(191) NOT NULL,\n    `value` TEXT NOT NULL,\n    `updatedBy` VARCHAR(191) NULL,\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    PRIMARY KEY (`name`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
@@ -149,6 +150,41 @@ export const EXTRA_STATEMENTS = [
         kind: "createTable",
         target: "Sanction",
         sql: "CREATE TABLE IF NOT EXISTS `Sanction` (\n    `id` VARCHAR(191) NOT NULL,\n    `userId` VARCHAR(191) NOT NULL,\n    `level` VARCHAR(30) NOT NULL,\n    `reason` VARCHAR(500) NOT NULL,\n    `relationshipId` VARCHAR(191) NULL,\n    `disputeId` VARCHAR(191) NULL,\n    `startsAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `endsAt` DATETIME(3) NULL,\n    `liftedAt` DATETIME(3) NULL,\n    `liftedBy` VARCHAR(191) NULL,\n    `liftReason` VARCHAR(191) NULL,\n    `createdBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    INDEX `Sanction_userId_startsAt_idx`(`userId`, `startsAt`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+    },
+    // Visitas a la página de inicio (docs/43): el código AMP-XXXXX es único, se liga al teléfono
+    // cuando la persona escribe y al usuario cuando se registra. Sin datos personales hasta que
+    // alguien escribe.
+    {
+        kind: "createTable",
+        target: "Visit",
+        sql: "CREATE TABLE IF NOT EXISTS `Visit` (\n    `code` VARCHAR(16) NOT NULL,\n    `ref` VARCHAR(32) NULL,\n    `profile` VARCHAR(20) NULL,\n    `phone` VARCHAR(20) NULL,\n    `userId` VARCHAR(191) NULL,\n    `claimedAt` DATETIME(3) NULL,\n    `linkedAt` DATETIME(3) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    INDEX `Visit_createdAt_idx`(`createdAt`),\n    INDEX `Visit_phone_idx`(`phone`),\n    INDEX `Visit_userId_idx`(`userId`),\n    PRIMARY KEY (`code`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+    },
+    // Suscripciones y verificación de pagos (docs/42). La tabla Subscription ya existe en el
+    // esquema generado: aquí solo se amplía con lo que necesita el cobro manual. El pago queda
+    // pendiente hasta que un administrador lo verifica.
+    addColumn("Subscription", "number", "INTEGER NULL"),
+    addColumn("Subscription", "status", "VARCHAR(20) NOT NULL DEFAULT 'activa'"),
+    addColumn("Subscription", "months", "INTEGER NULL"),
+    addColumn("Subscription", "amountUsd", "DECIMAL(10, 2) NULL"),
+    addColumn("Subscription", "method", "VARCHAR(20) NULL"),
+    addColumn("Subscription", "reference", "VARCHAR(191) NULL"),
+    addColumn("Subscription", "notes", "TEXT NULL"),
+    addColumn("Subscription", "verifiedBy", "VARCHAR(191) NULL"),
+    addColumn("Subscription", "verifiedAt", "DATETIME(3) NULL"),
+    addColumn("Subscription", "decisionReason", "VARCHAR(191) NULL"),
+    addColumn("Subscription", "createdBy", "VARCHAR(191) NULL"),
+    addColumn("Subscription", "createdAt", "DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)"),
+    addColumn("Subscription", "updatedAt", "DATETIME(3) NULL"),
+    {
+        // Un plan sin vencimiento (una cortesía, por ejemplo) necesita que la fecha admita nulo.
+        kind: "modifyColumn",
+        target: "Subscription.expiresAt",
+        sql: "ALTER TABLE `Subscription` MODIFY COLUMN `expiresAt` DATETIME(3) NULL",
+    },
+    {
+        kind: "createIndex",
+        target: "Subscription.Subscription_status_createdAt_idx",
+        sql: "CREATE INDEX `Subscription_status_createdAt_idx` ON `Subscription`(`status`, `createdAt`)",
     },
     // Solicitudes de la LOPDP (docs/35 A3): acceso, rectificación y eliminación.
     {

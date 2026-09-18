@@ -1,5 +1,5 @@
 export type StaffRole = "admin" | "operador" | "verificador" | "soporte" | "lectura";
-export type Capability = "read" | "attend" | "registrations" | "verifications" | "appointments" | "workorders" | "quotes" | "notes" | "relations" | "disputes" | "sanctions" | "exports" | "lopdp" | "settings" | "team";
+export type Capability = "read" | "attend" | "registrations" | "verifications" | "appointments" | "workorders" | "quotes" | "notes" | "relations" | "disputes" | "sanctions" | "exports" | "lopdp" | "payments" | "plans" | "settings" | "team";
 export declare const STAFF_ROLES: Array<{
     key: StaffRole;
     label: string;

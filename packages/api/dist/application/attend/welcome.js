@@ -149,7 +149,7 @@ export function detectProfileIntent(input) {
 /** Extrae el celular y el código de visita de un número o de un mensaje pegado por el operador. */
 export function parseContactInput(input) {
     const text = input.slice(0, 2000);
-    const code = /\bAMP-[A-HJ-NP-Z2-9]{4}\b/i.exec(text)?.[0]?.toUpperCase() ?? null;
+    const code = /\bAMP-[A-HJ-NP-Z2-9]{4,6}\b/i.exec(text)?.[0]?.toUpperCase() ?? null;
     const rest = code ? text.split(new RegExp(code, "i")).join(" ") : text;
     for (const candidate of rest.match(/\+?\d[\d\s().-]{6,}\d/g) ?? []) {
         const digits = normalizeWhatsappNumber(candidate);
