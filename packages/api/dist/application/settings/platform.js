@@ -14,11 +14,11 @@ export const FEATURES = [
     { key: "quotes", label: "Cotizaciones con almacenes", pausedText: "Las cotizaciones están pausadas desde Ajustes." },
 ];
 export function emptyPlatformSettings() {
-    return { entryMode: "directo", cities: [], quietFrom: null, quietTo: null, welcomeIntro: null, features: { appointments: true, workorders: true, quotes: true } };
+    return { entryMode: "menu", cities: [], quietFrom: null, quietTo: null, welcomeIntro: null, features: { appointments: true, workorders: true, quotes: true } };
 }
 const TIME = /^([01]\d|2[0-3]):([0-5]\d)$/;
 export function parseEntryMode(input) {
-    return input === "menu" ? "menu" : "directo";
+    return input === "directo" ? "directo" : "menu";
 }
 export function parseCities(input) {
     if (typeof input !== "string")

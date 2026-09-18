@@ -9,6 +9,8 @@ export const ENTRY_PROFILES = [
     { key: "taller", label: "Tengo un taller", emoji: "🔧", intent: "tengo un taller" },
     { key: "almacen", label: "Tengo un almacén de repuestos", emoji: "📦", intent: "tengo un almacén de repuestos" },
     { key: "cuenta", label: "Ya tengo cuenta", emoji: "🔑", intent: "ya tengo cuenta" },
+    // Sin intención: abre el chat con el mensaje general, para quien solo quiere escribir.
+    { key: "chat", label: "Solo quiero escribir", emoji: "💬", intent: null },
 ];
 export function sanitizeProfile(value) {
     return typeof value === "string" && ENTRY_PROFILES.some((p) => p.key === value) ? value : null;
@@ -22,7 +24,7 @@ export function escapeHtml(value) {
         .replace(/'/g, "&#39;");
 }
 export function buildLinks(number, code, ref, profile = null) {
-    const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent;
+    const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent ?? null;
     const text = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. Código: ${code}${ref ? ` (ref: ${ref})` : ""}`;
     const encoded = encodeURIComponent(text);
     return {
@@ -59,7 +61,7 @@ li::before{content:"✓";position:absolute;left:4px;color:var(--green);font-weig
 .soon{margin-top:14px;font-weight:600}
 .menu{display:grid;gap:10px}
 .option{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 18px;border-radius:14px;background:var(--green);color:#fff;font-size:18px;font-weight:700;text-decoration:none}
-.option:nth-child(4){background:var(--cyan)}
+.option:nth-child(4),.option:nth-child(5){background:var(--cyan)}
 .option:focus-visible{outline:4px solid var(--ring);outline-offset:2px}
 .legal{margin-top:22px;font-size:12px;color:var(--muted)}
 `;
@@ -89,7 +91,7 @@ export function renderEntryPage(input) {
     const refQuery = input.ref ? `&amp;ref=${escapeHtml(input.ref)}` : "";
     const menu = links
         ? `<div class="menu">${ENTRY_PROFILES.map((profile) => `<a class="option" href="/?perfil=${escapeHtml(profile.key)}${refQuery}"><span aria-hidden="true">${profile.emoji}</span> ${escapeHtml(profile.label)}</a>`).join("")}</div>
-    <p class="small">Se abre WhatsApp con tu respuesta escrita. Escríbenos al <strong>${escapeHtml(formatNumber(input.number))}</strong>.</p>
+    <p class="small">Se abre WhatsApp con tu respuesta escrita. Escríbenos al <a href="${escapeHtml(links.wame)}" rel="noopener"><strong>${escapeHtml(formatNumber(input.number))}</strong></a>.</p>
     <p class="small">Tu código de inicio: <strong>${escapeHtml(input.code)}</strong></p>`
         : "";
     const button = links

@@ -15,7 +15,7 @@ export declare const FEATURES: Array<{
 }>;
 export type EntryMode = "directo" | "menu";
 export interface PlatformSettings {
-    /** Cómo abre automantpro.app: directo al chat (por defecto) o con el menú de perfiles. */
+    /** Cómo abre automantpro.app: con el menú de perfiles (por defecto) o directo al chat. */
     entryMode: EntryMode;
     /** Ciudades donde se opera; vacío significa «todas». */
     cities: string[];

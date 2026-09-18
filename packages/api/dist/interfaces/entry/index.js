@@ -78,15 +78,16 @@ export async function entryRoutes(app, options = {}) {
                 .then(() => options.onVisit?.(code, ref, profile))
                 .catch(() => undefined);
         }
-        // Modo de inicio (docs/41): "directo" manda al chat en un salto; "menu" muestra las opciones de
-        // perfil, y cada opción vuelve aquí con ?perfil= para ir al chat con la intención escrita.
-        let mode = "directo";
+        // Modo de inicio (docs/41): por defecto se muestra el menú de perfiles y cada opción vuelve
+        // aquí con ?perfil= para abrir el chat con esa respuesta escrita. En modo "directo" se salta
+        // el menú. Un ?perfil= explícito siempre va al chat, en cualquiera de los dos modos.
+        let mode = "menu";
         if (options.entryMode && !profile) {
             try {
-                mode = (await options.entryMode()) === "menu" ? "menu" : "directo";
+                mode = (await options.entryMode()) === "directo" ? "directo" : "menu";
             }
             catch {
-                mode = "directo";
+                mode = "menu";
             }
         }
         // La página queda para robots de vista previa, para ?pagina, para el menú y si no hay número.

@@ -54,10 +54,10 @@ function platformCard(platform, csrf) {
             : `<p class="muted">Sin horario silencioso: el panel no avisa a ninguna hora.</p>`;
     const switches = FEATURES.map((f) => `<label><input type="checkbox" name="feature_${escapeHtml(f.key)}"${platform.features[f.key] ? " checked" : ""}> ${escapeHtml(f.label)}</label>`).join("");
     const entry = `<p class="muted">Cómo abre automantpro.app:</p>
-    <label class="choice"><input type="radio" name="entryMode" value="directo"${platform.entryMode === "menu" ? "" : " checked"}>
-      <span><strong>Directo al chat</strong><br>Un solo salto a WhatsApp. Mejor para tarjetas, QR y el número compartido.</span></label>
-    <label class="choice"><input type="radio" name="entryMode" value="menu"${platform.entryMode === "menu" ? " checked" : ""}>
-      <span><strong>Menú de perfiles</strong><br>Muestra la página con «tengo un vehículo», «tengo un taller», «tengo un almacén» y «ya tengo cuenta»; el chat arranca con esa respuesta escrita. Mejor para campañas.</span></label>`;
+    <label class="choice"><input type="radio" name="entryMode" value="menu"${platform.entryMode === "directo" ? "" : " checked"}>
+      <span><strong>Menú de perfiles</strong> (recomendado)<br>Muestra la página con «tengo un vehículo», «tengo un taller», «tengo un almacén», «ya tengo cuenta» y «solo quiero escribir»; el chat arranca con esa respuesta escrita.</span></label>
+    <label class="choice"><input type="radio" name="entryMode" value="directo"${platform.entryMode === "directo" ? " checked" : ""}>
+      <span><strong>Directo al chat</strong><br>Salta el menú: un solo salto a WhatsApp con el mensaje general.</span></label>`;
     return `<div class="card"><h2>Operación</h2>${quiet}
     <form method="post" action="/admin/settings/platform" autocomplete="off">${csrf}
     ${entry}

@@ -61223,7 +61223,7 @@ function escapeHtml(value2) {
   return value2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 function buildLinks(number, code, ref, profile = null) {
-  const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent;
+  const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent ?? null;
   const text4 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
   const encoded = encodeURIComponent(text4);
   return {
@@ -61245,7 +61245,7 @@ function renderEntryPage(input) {
   const links = available ? buildLinks(input.number, input.code, input.ref) : null;
   const refQuery = input.ref ? `&amp;ref=${escapeHtml(input.ref)}` : "";
   const menu = links ? `<div class="menu">${ENTRY_PROFILES.map((profile) => `<a class="option" href="/?perfil=${escapeHtml(profile.key)}${refQuery}"><span aria-hidden="true">${profile.emoji}</span> ${escapeHtml(profile.label)}</a>`).join("")}</div>
-    <p class="small">Se abre WhatsApp con tu respuesta escrita. Escr\xEDbenos al <strong>${escapeHtml(formatNumber(input.number))}</strong>.</p>
+    <p class="small">Se abre WhatsApp con tu respuesta escrita. Escr\xEDbenos al <a href="${escapeHtml(links.wame)}" rel="noopener"><strong>${escapeHtml(formatNumber(input.number))}</strong></a>.</p>
     <p class="small">Tu c\xF3digo de inicio: <strong>${escapeHtml(input.code)}</strong></p>` : "";
   const button = links ? `<button id="abrir" class="cta" type="button" data-app="${escapeHtml(links.app)}" data-wame="${escapeHtml(links.wame)}" data-web="${escapeHtml(links.web)}">Abrir WhatsApp</button>
     <p class="small">Escr\xEDbenos al <strong>${escapeHtml(formatNumber(input.number))}</strong> \xB7 <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> \xB7 <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a></p>
@@ -61288,7 +61288,9 @@ var init_page = __esm({
       { key: "dueno", label: "Tengo un veh\xEDculo", emoji: "\u{1F697}", intent: "soy due\xF1o de un veh\xEDculo" },
       { key: "taller", label: "Tengo un taller", emoji: "\u{1F527}", intent: "tengo un taller" },
       { key: "almacen", label: "Tengo un almac\xE9n de repuestos", emoji: "\u{1F4E6}", intent: "tengo un almac\xE9n de repuestos" },
-      { key: "cuenta", label: "Ya tengo cuenta", emoji: "\u{1F511}", intent: "ya tengo cuenta" }
+      { key: "cuenta", label: "Ya tengo cuenta", emoji: "\u{1F511}", intent: "ya tengo cuenta" },
+      // Sin intención: abre el chat con el mensaje general, para quien solo quiere escribir.
+      { key: "chat", label: "Solo quiero escribir", emoji: "\u{1F4AC}", intent: null }
     ];
     STYLES = `
 :root{--bg:#f5f8fa;--card:#ffffff;--text:#0f1b24;--muted:#51626f;--cyan:#00a8c6;--green:#16a34a;--ring:rgba(0,168,198,.35)}
@@ -61310,7 +61312,7 @@ li::before{content:"\u2713";position:absolute;left:4px;color:var(--green);font-w
 .soon{margin-top:14px;font-weight:600}
 .menu{display:grid;gap:10px}
 .option{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 18px;border-radius:14px;background:var(--green);color:#fff;font-size:18px;font-weight:700;text-decoration:none}
-.option:nth-child(4){background:var(--cyan)}
+.option:nth-child(4),.option:nth-child(5){background:var(--cyan)}
 .option:focus-visible{outline:4px solid var(--ring);outline-offset:2px}
 .legal{margin-top:22px;font-size:12px;color:var(--muted)}
 `;
@@ -61400,12 +61402,12 @@ async function entryRoutes(app2, options = {}) {
     if (!bot && options.onVisit && allowVisit(request.ip)) {
       Promise.resolve().then(() => options.onVisit?.(code, ref, profile)).catch(() => void 0);
     }
-    let mode = "directo";
+    let mode = "menu";
     if (options.entryMode && !profile) {
       try {
-        mode = await options.entryMode() === "menu" ? "menu" : "directo";
+        mode = await options.entryMode() === "directo" ? "directo" : "menu";
       } catch {
-        mode = "directo";
+        mode = "menu";
       }
     }
     if (number && !bot && !("pagina" in query) && (mode === "directo" || profile)) {
@@ -82944,10 +82946,10 @@ var init_whatsapp_number = __esm({
 
 // packages/api/dist/application/settings/platform.js
 function emptyPlatformSettings() {
-  return { entryMode: "directo", cities: [], quietFrom: null, quietTo: null, welcomeIntro: null, features: { appointments: true, workorders: true, quotes: true } };
+  return { entryMode: "menu", cities: [], quietFrom: null, quietTo: null, welcomeIntro: null, features: { appointments: true, workorders: true, quotes: true } };
 }
 function parseEntryMode(input) {
-  return input === "menu" ? "menu" : "directo";
+  return input === "directo" ? "directo" : "menu";
 }
 function parseCities(input) {
   if (typeof input !== "string")
@@ -92850,10 +92852,10 @@ function platformCard(platform, csrf) {
   const quiet = inQuietHours(platform) ? `<p class="error">Ahora mismo est\xE1s en horario silencioso.</p>` : platform.quietFrom && platform.quietTo ? `<p class="ok">Horario silencioso configurado de ${escapeHtml(platform.quietFrom)} a ${escapeHtml(platform.quietTo)}.</p>` : `<p class="muted">Sin horario silencioso: el panel no avisa a ninguna hora.</p>`;
   const switches = FEATURES.map((f) => `<label><input type="checkbox" name="feature_${escapeHtml(f.key)}"${platform.features[f.key] ? " checked" : ""}> ${escapeHtml(f.label)}</label>`).join("");
   const entry = `<p class="muted">C\xF3mo abre automantpro.app:</p>
-    <label class="choice"><input type="radio" name="entryMode" value="directo"${platform.entryMode === "menu" ? "" : " checked"}>
-      <span><strong>Directo al chat</strong><br>Un solo salto a WhatsApp. Mejor para tarjetas, QR y el n\xFAmero compartido.</span></label>
-    <label class="choice"><input type="radio" name="entryMode" value="menu"${platform.entryMode === "menu" ? " checked" : ""}>
-      <span><strong>Men\xFA de perfiles</strong><br>Muestra la p\xE1gina con \xABtengo un veh\xEDculo\xBB, \xABtengo un taller\xBB, \xABtengo un almac\xE9n\xBB y \xABya tengo cuenta\xBB; el chat arranca con esa respuesta escrita. Mejor para campa\xF1as.</span></label>`;
+    <label class="choice"><input type="radio" name="entryMode" value="menu"${platform.entryMode === "directo" ? "" : " checked"}>
+      <span><strong>Men\xFA de perfiles</strong> (recomendado)<br>Muestra la p\xE1gina con \xABtengo un veh\xEDculo\xBB, \xABtengo un taller\xBB, \xABtengo un almac\xE9n\xBB, \xABya tengo cuenta\xBB y \xABsolo quiero escribir\xBB; el chat arranca con esa respuesta escrita.</span></label>
+    <label class="choice"><input type="radio" name="entryMode" value="directo"${platform.entryMode === "directo" ? " checked" : ""}>
+      <span><strong>Directo al chat</strong><br>Salta el men\xFA: un solo salto a WhatsApp con el mensaje general.</span></label>`;
   return `<div class="card"><h2>Operaci\xF3n</h2>${quiet}
     <form method="post" action="/admin/settings/platform" autocomplete="off">${csrf}
     ${entry}
@@ -98859,7 +98861,7 @@ await app.register(adminPanelRoutes2, {
     legalData.invalidate();
   }
 });
-var BUILD_STAMP = process.env.APP_VERSION ?? "2026-09-18-menu-inicio";
+var BUILD_STAMP = process.env.APP_VERSION ?? "2026-09-18-menu-por-defecto";
 app.get("/health", async () => ({ status: "ok", jwt: jwtSecretSource, build: BUILD_STAMP }));
 await app.register(entryRoutes, {
   resolveNumber: () => whatsappNumber.get(),

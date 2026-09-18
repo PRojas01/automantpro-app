@@ -13,7 +13,7 @@ export interface EntryRoutesOptions {
     resolveNumber?: () => Promise<string | null>;
     /** Registra la visita (código, origen y perfil elegido) sin datos personales; no bloquea la página. */
     onVisit?: (code: string, ref: string | null, profile: string | null) => Promise<void> | void;
-    /** "directo" (por defecto) manda al chat en un salto; "menu" muestra las opciones de perfil. */
+    /** "menu" (por defecto) muestra las opciones de perfil; "directo" manda al chat en un salto. */
     entryMode?: () => Promise<EntryMode>;
 }
 export declare function isPreviewBot(userAgent: unknown): boolean;
