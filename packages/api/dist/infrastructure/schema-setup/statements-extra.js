@@ -14,6 +14,8 @@ export const EXTRA_TABLES = [
     "Sanction",
     "DataRequest",
     "Visit",
+    "ServiceRequest",
+    "ServiceOffer",
 ];
 /** Ajustes editables desde el panel (por ejemplo, el número público de WhatsApp). */
 export const APP_SETTING_TABLE_SQL = "CREATE TABLE IF NOT EXISTS `AppSetting` (\n    `name` VARCHAR(191) NOT NULL,\n    `value` TEXT NOT NULL,\n    `updatedBy` VARCHAR(191) NULL,\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    PRIMARY KEY (`name`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
@@ -150,6 +152,56 @@ export const EXTRA_STATEMENTS = [
         kind: "createTable",
         target: "Sanction",
         sql: "CREATE TABLE IF NOT EXISTS `Sanction` (\n    `id` VARCHAR(191) NOT NULL,\n    `userId` VARCHAR(191) NOT NULL,\n    `level` VARCHAR(30) NOT NULL,\n    `reason` VARCHAR(500) NOT NULL,\n    `relationshipId` VARCHAR(191) NULL,\n    `disputeId` VARCHAR(191) NULL,\n    `startsAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `endsAt` DATETIME(3) NULL,\n    `liftedAt` DATETIME(3) NULL,\n    `liftedBy` VARCHAR(191) NULL,\n    `liftReason` VARCHAR(191) NULL,\n    `createdBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    INDEX `Sanction_userId_startsAt_idx`(`userId`, `startsAt`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+    },
+    // Calificaciones del taller y del almacén (docs/46). La tabla Rating ya existe en el esquema
+    // generado: se amplía para saber de qué trabajo salió cada calificación y para poder ocultar
+    // una reseña con motivo, sin borrarla.
+    addColumn("Rating", "kind", "VARCHAR(20) NULL"),
+    addColumn("Rating", "workOrderId", "VARCHAR(191) NULL"),
+    addColumn("Rating", "quoteRequestId", "VARCHAR(191) NULL"),
+    addColumn("Rating", "hiddenAt", "DATETIME(3) NULL"),
+    addColumn("Rating", "hiddenBy", "VARCHAR(191) NULL"),
+    addColumn("Rating", "hiddenReason", "VARCHAR(191) NULL"),
+    {
+        kind: "createIndex",
+        target: "Rating.Rating_toId_createdAt_idx",
+        sql: "CREATE INDEX `Rating_toId_createdAt_idx` ON `Rating`(`toId`, `createdAt`)",
+    },
+    {
+        kind: "createIndex",
+        target: "Rating.Rating_workOrderId_idx",
+        sql: "CREATE INDEX `Rating_workOrderId_idx` ON `Rating`(`workOrderId`)",
+    },
+    addColumn("Shop", "ratingCount", "INTEGER NOT NULL DEFAULT 0"),
+    addColumn("Store", "ratingAvg", "DOUBLE NOT NULL DEFAULT 0"),
+    addColumn("Store", "ratingCount", "INTEGER NOT NULL DEFAULT 0"),
+    // Solicitudes de especialista (docs/45): el dueño describe lo que necesita y la solicitud llega
+    // a los talleres verificados que coinciden por especialidad y ciudad. Cada taller responde con
+    // precio y disponibilidad; el dueño elige uno.
+    {
+        kind: "createTable",
+        target: "ServiceRequest",
+        sql: "CREATE TABLE IF NOT EXISTS `ServiceRequest` (\n    `id` VARCHAR(191) NOT NULL,\n    `number` INTEGER NOT NULL,\n    `ownerId` VARCHAR(191) NOT NULL,\n    `vehicleId` VARCHAR(191) NULL,\n    `category` VARCHAR(40) NOT NULL,\n    `description` TEXT NOT NULL,\n    `city` VARCHAR(191) NULL,\n    `zone` VARCHAR(120) NULL,\n    `status` VARCHAR(20) NOT NULL DEFAULT 'abierta',\n    `chosenOfferId` VARCHAR(191) NULL,\n    `closeReason` VARCHAR(191) NULL,\n    `createdBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    UNIQUE INDEX `ServiceRequest_number_key`(`number`),\n    INDEX `ServiceRequest_status_createdAt_idx`(`status`, `createdAt`),\n    INDEX `ServiceRequest_ownerId_idx`(`ownerId`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+    },
+    {
+        kind: "createTable",
+        target: "ServiceOffer",
+        sql: "CREATE TABLE IF NOT EXISTS `ServiceOffer` (\n    `id` VARCHAR(191) NOT NULL,\n    `requestId` VARCHAR(191) NOT NULL,\n    `shopId` VARCHAR(191) NOT NULL,\n    `status` VARCHAR(20) NOT NULL DEFAULT 'invitado',\n    `priceUsd` DECIMAL(10, 2) NULL,\n    `durationMin` INTEGER NULL,\n    `availability` VARCHAR(191) NULL,\n    `warrantyDays` INTEGER NULL,\n    `notes` VARCHAR(191) NULL,\n    `respondedAt` DATETIME(3) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    UNIQUE INDEX `ServiceOffer_requestId_shopId_key`(`requestId`, `shopId`),\n    INDEX `ServiceOffer_shopId_status_idx`(`shopId`, `status`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+    },
+    {
+        kind: "addForeignKey",
+        target: "ServiceRequest.ServiceRequest_ownerId_fkey",
+        sql: "ALTER TABLE `ServiceRequest` ADD CONSTRAINT `ServiceRequest_ownerId_fkey` FOREIGN KEY (`ownerId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE",
+    },
+    {
+        kind: "addForeignKey",
+        target: "ServiceOffer.ServiceOffer_requestId_fkey",
+        sql: "ALTER TABLE `ServiceOffer` ADD CONSTRAINT `ServiceOffer_requestId_fkey` FOREIGN KEY (`requestId`) REFERENCES `ServiceRequest`(`id`) ON DELETE CASCADE ON UPDATE CASCADE",
+    },
+    {
+        kind: "addForeignKey",
+        target: "ServiceOffer.ServiceOffer_shopId_fkey",
+        sql: "ALTER TABLE `ServiceOffer` ADD CONSTRAINT `ServiceOffer_shopId_fkey` FOREIGN KEY (`shopId`) REFERENCES `Shop`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE",
     },
     // Visitas a la página de inicio (docs/43): el código AMP-XXXXX es único, se liga al teléfono
     // cuando la persona escribe y al usuario cuando se registra. Sin datos personales hasta que

@@ -91,7 +91,7 @@ function formatNumber(number) {
     }
     return `+${number}`;
 }
-const STYLES = `
+export const STYLES = `
 :root{
   --bg:#05090e;--panel:rgba(255,255,255,.045);--text:#e8f6fb;--muted:#9bb3c2;
   --line:rgba(120,200,225,.18);--cyan:#22d3ee;--cyan-deep:#0891b2;--lime:#a3e635;--amber:#fbbf24;
@@ -325,6 +325,39 @@ function structuredData(input) {
     };
     return JSON.stringify(datos);
 }
+/** Cómo funciona para cada tipo de usuario: lo primero que la gente quiere saber de sí misma. */
+const COMO_FUNCIONA = [
+    {
+        key: "dueno",
+        titulo: "Si tienes un vehículo",
+        pasos: [
+            "Nos dices marca, modelo, año y kilometraje.",
+            "Recibes el plan de mantenimiento de tu vehículo y te avisamos cuando toca cada cosa.",
+            "Cuando algo falla, lo cuentas por el chat: orientamos el diagnóstico y te coordinamos el taller.",
+        ],
+        cierre: "Gratis: tu plan, los recordatorios y talleres cercanos. Premium: talleres verificados con precio acordado, cotización de repuestos y garantía respaldada.",
+    },
+    {
+        key: "taller",
+        titulo: "Si tienes un taller",
+        pasos: [
+            "Registras tu taller, tus servicios y tus horarios; verificamos RUC y dirección.",
+            "Recibes clientes con el problema ya explicado y el turno coordinado.",
+            "Llevas la orden de trabajo en el chat: presupuesto, aprobación del dueño, cierre y garantía.",
+        ],
+        cierre: "Gratis puedes atender y llevar tus órdenes con un tope mensual. Verificado y visible en las búsquedas, con el plan pagado.",
+    },
+    {
+        key: "almacen",
+        titulo: "Si vendes repuestos",
+        pasos: [
+            "Registras tu almacén, tus categorías y si haces entregas.",
+            "Te llegan solicitudes de repuesto con el vehículo y la pieza ya identificados.",
+            "Respondes precio, marca, garantía y tiempo de entrega; si te eligen, sigues el pedido hasta entregarlo.",
+        ],
+        cierre: "Gratis respondes hasta 15 cotizaciones al mes. Con el plan pagado, sin tope y con mejor posición.",
+    },
+];
 /** Preguntas frecuentes: sirven al visitante y son lo que citan los buscadores y las IA. */
 const FAQ = [
     {
@@ -356,21 +389,22 @@ export function renderEntryPage(input) {
     const refQuery = input.ref ? `&amp;ref=${escapeHtml(input.ref)}` : "";
     const logo = `<a class="logo" href="/?pagina=1">
     <span class="mark">${icon("taller", "")}</span>
-    <span class="brand">Auto<span>Mant</span>Pro<small>Tu taller de confianza, en WhatsApp</small></span>
+    <span class="brand">Auto<span>Mant</span>Pro<small>Tu asistente inteligente de mantenimiento automotriz</small></span>
   </a>`;
     const trust = `<ul class="trust">
     <li><b>0</b><span>apps</span></li>
     <li><b>90</b><span>días gratis</span></li>
     <li><b>100%</b><span>verificados</span></li>
   </ul>`;
+    const comoFunciona = COMO_FUNCIONA.map((bloque) => `<details class="card"><summary>${escapeHtml(bloque.titulo)}</summary>
+      <ol class="steps">${bloque.pasos.map((paso) => `<li>${escapeHtml(paso)}</li>`).join("")}</ol>
+      <p class="respuesta">${escapeHtml(bloque.cierre)}</p></details>`).join("");
+    const enlaces = `<details class="card"><summary>Servicios y ciudades</summary>
+    <p class="respuesta">Precios referenciales y qué incluye cada trabajo en <a href="/servicios">servicios de mantenimiento</a>, y talleres por ciudad en <a href="/talleres">talleres mecánicos en Ecuador</a>.</p></details>`;
     const faq = `<details class="card"><summary>Preguntas frecuentes</summary>
     ${FAQ.map((item) => `<h3 class="pregunta">${escapeHtml(item.q)}</h3><p class="respuesta">${escapeHtml(item.a)}</p>`).join("")}
     </details>`;
-    const steps = `<details class="card"><summary>Cómo funciona</summary><ol class="steps">
-    <li>Nos escribes por WhatsApp y nos cuentas qué necesitas.</li>
-    <li>Te respondemos con tu plan, el diagnóstico o el precio.</li>
-    <li>Agendas en un taller verificado o cotizas el repuesto, en el mismo chat.</li>
-  </ol></details>`;
+    const steps = "";
     const contact = links
         ? `<p class="small linea"><a href="${escapeHtml(links.wame)}" rel="noopener">${number}</a> · <span class="code">${escapeHtml(input.code)}</span> <em class="nota">identifica tu visita en el chat</em></p>`
         : "";
@@ -427,7 +461,9 @@ export function renderEntryPage(input) {
   ${trust}
   ${input.menu && links ? menu : button}
   ${steps}
+  ${comoFunciona}
   ${faq}
+  ${enlaces}
   <p class="legal">Aceptas los <a href="/terminos">términos</a> y la <a href="/privacidad">privacidad</a> (LOPDP).</p>
 </main>
 <script nonce="${nonce}">${SCRIPT}</script>

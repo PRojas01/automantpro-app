@@ -10232,11 +10232,11 @@ var require_pino = __commonJS({
       depthLimit: 5,
       edgeLimit: 100
     };
-    var normalize2 = createArgsNormalizer(defaultOptions);
+    var normalize3 = createArgsNormalizer(defaultOptions);
     var serializers = Object.assign(/* @__PURE__ */ Object.create(null), stdSerializers);
     function pino(...args) {
       const instance = {};
-      const { opts, stream } = normalize2(instance, caller(), ...args);
+      const { opts, stream } = normalize3(instance, caller(), ...args);
       if (opts.level && typeof opts.level === "string" && DEFAULT_LEVELS[opts.level.toLowerCase()] !== void 0) opts.level = opts.level.toLowerCase();
       const {
         redact,
@@ -13472,13 +13472,13 @@ var require_context = __commonJS({
       this.server = server;
     }
     function defaultSchemaErrorFormatter(errors, dataVar) {
-      let text5 = "";
+      let text7 = "";
       const separator = ", ";
       for (let i = 0; i !== errors.length; ++i) {
         const e6 = errors[i];
-        text5 += dataVar + (e6.instancePath || "") + " " + e6.message + separator;
+        text7 += dataVar + (e6.instancePath || "") + " " + e6.message + separator;
       }
-      return new Error(text5.slice(0, -separator.length));
+      return new Error(text7.slice(0, -separator.length));
     }
     module.exports = Context;
   }
@@ -13491,20 +13491,20 @@ var require_secure_json_parse = __commonJS({
     var hasBuffer = typeof Buffer !== "undefined";
     var suspectProtoRx = /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
     var suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
-    function _parse(text5, reviver, options) {
+    function _parse(text7, reviver, options) {
       if (options == null) {
         if (reviver !== null && typeof reviver === "object") {
           options = reviver;
           reviver = void 0;
         }
       }
-      if (hasBuffer && Buffer.isBuffer(text5)) {
-        text5 = text5.toString();
+      if (hasBuffer && Buffer.isBuffer(text7)) {
+        text7 = text7.toString();
       }
-      if (text5 && text5.charCodeAt(0) === 65279) {
-        text5 = text5.slice(1);
+      if (text7 && text7.charCodeAt(0) === 65279) {
+        text7 = text7.slice(1);
       }
-      const obj = JSON.parse(text5, reviver);
+      const obj = JSON.parse(text7, reviver);
       if (obj === null || typeof obj !== "object") {
         return obj;
       }
@@ -13514,15 +13514,15 @@ var require_secure_json_parse = __commonJS({
         return obj;
       }
       if (protoAction !== "ignore" && constructorAction !== "ignore") {
-        if (suspectProtoRx.test(text5) === false && suspectConstructorRx.test(text5) === false) {
+        if (suspectProtoRx.test(text7) === false && suspectConstructorRx.test(text7) === false) {
           return obj;
         }
       } else if (protoAction !== "ignore" && constructorAction === "ignore") {
-        if (suspectProtoRx.test(text5) === false) {
+        if (suspectProtoRx.test(text7) === false) {
           return obj;
         }
       } else {
-        if (suspectConstructorRx.test(text5) === false) {
+        if (suspectConstructorRx.test(text7) === false) {
           return obj;
         }
       }
@@ -13560,20 +13560,20 @@ var require_secure_json_parse = __commonJS({
       }
       return obj;
     }
-    function parse(text5, reviver, options) {
+    function parse(text7, reviver, options) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text5, reviver, options);
+        return _parse(text7, reviver, options);
       } finally {
         Error.stackTraceLimit = stackTraceLimit;
       }
     }
-    function safeParse(text5, reviver) {
+    function safeParse(text7, reviver) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text5, reviver, { safe: true });
+        return _parse(text7, reviver, { safe: true });
       } catch {
         return void 0;
       } finally {
@@ -16139,8 +16139,8 @@ var require_resolve = __commonJS({
       }
       return count2;
     }
-    function getFullPath(resolver, id = "", normalize2) {
-      if (normalize2 !== false)
+    function getFullPath(resolver, id = "", normalize3) {
+      if (normalize3 !== false)
         id = normalizeId(id);
       const p = resolver.parse(id);
       return _getFullPath(resolver, p);
@@ -17730,7 +17730,7 @@ var require_fast_uri = __commonJS({
       }
       return decodedScheme;
     }
-    function normalize2(uri, options) {
+    function normalize3(uri, options) {
       if (typeof uri === "string") {
         uri = /** @type {T} */
         normalizeString(uri, options);
@@ -18101,7 +18101,7 @@ var require_fast_uri = __commonJS({
     }
     var fastUri = {
       SCHEMES,
-      normalize: normalize2,
+      normalize: normalize3,
       resolve,
       resolveComponent,
       equal,
@@ -18517,7 +18517,7 @@ var require_core = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e6) => `${dataVar}${e6.instancePath} ${e6.message}`).reduce((text5, msg) => text5 + separator + msg);
+        return errors.map((e6) => `${dataVar}${e6.instancePath} ${e6.message}`).reduce((text7, msg) => text7 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -23438,7 +23438,7 @@ var require_fast_uri2 = __commonJS({
       }
       return decodedScheme;
     }
-    function normalize2(uri, options) {
+    function normalize3(uri, options) {
       if (typeof uri === "string") {
         uri = /** @type {T} */
         normalizeString(uri, options);
@@ -23813,7 +23813,7 @@ var require_fast_uri2 = __commonJS({
     }
     var fastUri = {
       SCHEMES,
-      normalize: normalize2,
+      normalize: normalize3,
       resolve,
       resolveComponent,
       equal,
@@ -27014,8 +27014,8 @@ var require_resolve2 = __commonJS({
       }
       return count2;
     }
-    function getFullPath(resolver, id = "", normalize2) {
-      if (normalize2 !== false)
+    function getFullPath(resolver, id = "", normalize3) {
+      if (normalize3 !== false)
         id = normalizeId(id);
       const p = resolver.parse(id);
       return _getFullPath(resolver, p);
@@ -28605,7 +28605,7 @@ var require_fast_uri3 = __commonJS({
       }
       return decodedScheme;
     }
-    function normalize2(uri, options) {
+    function normalize3(uri, options) {
       if (typeof uri === "string") {
         uri = /** @type {T} */
         normalizeString(uri, options);
@@ -28976,7 +28976,7 @@ var require_fast_uri3 = __commonJS({
     }
     var fastUri = {
       SCHEMES,
-      normalize: normalize2,
+      normalize: normalize3,
       resolve,
       resolveComponent,
       equal,
@@ -29392,7 +29392,7 @@ var require_core3 = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e6) => `${dataVar}${e6.instancePath} ${e6.message}`).reduce((text5, msg) => text5 + separator + msg);
+        return errors.map((e6) => `${dataVar}${e6.instancePath} ${e6.message}`).reduce((text7, msg) => text7 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -32618,7 +32618,7 @@ var require_fast_uri4 = __commonJS({
       }
       return decodedScheme;
     }
-    function normalize2(uri, options) {
+    function normalize3(uri, options) {
       if (typeof uri === "string") {
         uri = /** @type {T} */
         normalizeString(uri, options);
@@ -32993,7 +32993,7 @@ var require_fast_uri4 = __commonJS({
     }
     var fastUri = {
       SCHEMES,
-      normalize: normalize2,
+      normalize: normalize3,
       resolve,
       resolveComponent,
       equal,
@@ -59586,14 +59586,14 @@ function mapUsage(usage) {
     cachedTokens: usage?.prompt_tokens_details?.cached_tokens
   };
 }
-function classifyHttpError(status, text5) {
+function classifyHttpError(status, text7) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text5}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text7}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text5}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text7}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text5}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text5}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text7}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text7}`, "other", status);
 }
 function message(err) {
   return err instanceof Error ? err.message : String(err);
@@ -59670,8 +59670,8 @@ var init_openai = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
         }
         if (!res.ok) {
-          const text5 = await res.text().catch(() => "");
-          throw classifyHttpError(res.status, text5);
+          const text7 = await res.text().catch(() => "");
+          throw classifyHttpError(res.status, text7);
         }
         const data = await res.json();
         return { content: data.text ?? null };
@@ -59709,8 +59709,8 @@ var init_openai = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
         }
         if (!res.ok) {
-          const text5 = await res.text().catch(() => "");
-          throw classifyHttpError(res.status, text5);
+          const text7 = await res.text().catch(() => "");
+          throw classifyHttpError(res.status, text7);
         }
         const data = await res.json();
         const choice = data.choices?.[0];
@@ -59764,14 +59764,14 @@ function parseArgs(raw) {
     return { _raw: raw };
   }
 }
-function classifyHttpError2(status, text5) {
+function classifyHttpError2(status, text7) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text5}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text7}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text5}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text7}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text5}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text5}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text7}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text7}`, "other", status);
 }
 var ANTHROPIC_VERSION, AnthropicAdapter;
 var init_anthropic = __esm({
@@ -59830,8 +59830,8 @@ var init_anthropic = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${err instanceof Error ? err.message : String(err)}`, "network");
         }
         if (!res.ok) {
-          const text5 = await res.text().catch(() => "");
-          throw classifyHttpError2(res.status, text5);
+          const text7 = await res.text().catch(() => "");
+          throw classifyHttpError2(res.status, text7);
         }
         const data = await res.json();
         const blocks = data.content ?? [];
@@ -60069,8 +60069,8 @@ var init_fallback = __esm({
 });
 
 // packages/agent/dist/llm-gateway/redact.js
-function redactPii(text5) {
-  return text5.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
+function redactPii(text7) {
+  return text7.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
 }
 function redactValue(value2, key) {
   if (typeof value2 === "string") {
@@ -61062,7 +61062,7 @@ function verifyWebhookSignature(body, signatureHeader) {
     return false;
   }
 }
-async function sendWhatsAppMessage(to, text5) {
+async function sendWhatsAppMessage(to, text7) {
   const config = getConfig();
   if (!config.token || !config.phoneNumberId) {
     return { success: false, error: "WHATSAPP_TOKEN or WHATSAPP_PHONE_ID not configured" };
@@ -61079,7 +61079,7 @@ async function sendWhatsAppMessage(to, text5) {
         messaging_product: "whatsapp",
         to,
         type: "text",
-        text: { body: text5 }
+        text: { body: text7 }
       })
     });
     if (!response.ok) {
@@ -61224,10 +61224,10 @@ function escapeHtml(value2) {
 }
 function buildLinks(number, code, ref, profile = null) {
   const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent ?? null;
-  const text5 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
-  const encoded = encodeURIComponent(text5);
+  const text7 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code}${ref ? ` (ref: ${ref})` : ""}`;
+  const encoded = encodeURIComponent(text7);
   return {
-    text: text5,
+    text: text7,
     app: `whatsapp://send?phone=${number}&text=${encoded}`,
     wame: `https://wa.me/${number}?text=${encoded}`,
     web: `https://web.whatsapp.com/send?phone=${number}&text=${encoded}`
@@ -61286,21 +61286,22 @@ function renderEntryPage(input) {
   const refQuery = input.ref ? `&amp;ref=${escapeHtml(input.ref)}` : "";
   const logo = `<a class="logo" href="/?pagina=1">
     <span class="mark">${icon("taller", "")}</span>
-    <span class="brand">Auto<span>Mant</span>Pro<small>Tu taller de confianza, en WhatsApp</small></span>
+    <span class="brand">Auto<span>Mant</span>Pro<small>Tu asistente inteligente de mantenimiento automotriz</small></span>
   </a>`;
   const trust = `<ul class="trust">
     <li><b>0</b><span>apps</span></li>
     <li><b>90</b><span>d\xEDas gratis</span></li>
     <li><b>100%</b><span>verificados</span></li>
   </ul>`;
+  const comoFunciona = COMO_FUNCIONA.map((bloque) => `<details class="card"><summary>${escapeHtml(bloque.titulo)}</summary>
+      <ol class="steps">${bloque.pasos.map((paso) => `<li>${escapeHtml(paso)}</li>`).join("")}</ol>
+      <p class="respuesta">${escapeHtml(bloque.cierre)}</p></details>`).join("");
+  const enlaces = `<details class="card"><summary>Servicios y ciudades</summary>
+    <p class="respuesta">Precios referenciales y qu\xE9 incluye cada trabajo en <a href="/servicios">servicios de mantenimiento</a>, y talleres por ciudad en <a href="/talleres">talleres mec\xE1nicos en Ecuador</a>.</p></details>`;
   const faq = `<details class="card"><summary>Preguntas frecuentes</summary>
     ${FAQ.map((item) => `<h3 class="pregunta">${escapeHtml(item.q)}</h3><p class="respuesta">${escapeHtml(item.a)}</p>`).join("")}
     </details>`;
-  const steps = `<details class="card"><summary>C\xF3mo funciona</summary><ol class="steps">
-    <li>Nos escribes por WhatsApp y nos cuentas qu\xE9 necesitas.</li>
-    <li>Te respondemos con tu plan, el diagn\xF3stico o el precio.</li>
-    <li>Agendas en un taller verificado o cotizas el repuesto, en el mismo chat.</li>
-  </ol></details>`;
+  const steps = "";
   const contact = links ? `<p class="small linea"><a href="${escapeHtml(links.wame)}" rel="noopener">${number}</a> \xB7 <span class="code">${escapeHtml(input.code)}</span> <em class="nota">identifica tu visita en el chat</em></p>` : "";
   const menu = links ? `<p class="section">\xBFCon qu\xE9 empezamos?</p>
     <div class="menu">${ENTRY_PROFILES.map((profile) => `<a class="option${profile.intent === null ? " ghost" : ""}" href="/?perfil=${escapeHtml(profile.key)}${refQuery}">
@@ -61351,14 +61352,16 @@ function renderEntryPage(input) {
   ${trust}
   ${input.menu && links ? menu : button}
   ${steps}
+  ${comoFunciona}
   ${faq}
+  ${enlaces}
   <p class="legal">Aceptas los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP).</p>
 </main>
 <script nonce="${nonce}">${SCRIPT}</script>
 </body>
 </html>`;
 }
-var ENTRY_PROFILES, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, FAQ;
+var ENTRY_PROFILES, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, COMO_FUNCIONA, FAQ;
 var init_page = __esm({
   "packages/api/dist/interfaces/entry/page.js"() {
     "use strict";
@@ -61609,6 +61612,38 @@ h1 em{font-style:normal;color:var(--cyan);text-shadow:0 0 18px rgba(34,211,238,.
   });
 })();
 `;
+    COMO_FUNCIONA = [
+      {
+        key: "dueno",
+        titulo: "Si tienes un veh\xEDculo",
+        pasos: [
+          "Nos dices marca, modelo, a\xF1o y kilometraje.",
+          "Recibes el plan de mantenimiento de tu veh\xEDculo y te avisamos cuando toca cada cosa.",
+          "Cuando algo falla, lo cuentas por el chat: orientamos el diagn\xF3stico y te coordinamos el taller."
+        ],
+        cierre: "Gratis: tu plan, los recordatorios y talleres cercanos. Premium: talleres verificados con precio acordado, cotizaci\xF3n de repuestos y garant\xEDa respaldada."
+      },
+      {
+        key: "taller",
+        titulo: "Si tienes un taller",
+        pasos: [
+          "Registras tu taller, tus servicios y tus horarios; verificamos RUC y direcci\xF3n.",
+          "Recibes clientes con el problema ya explicado y el turno coordinado.",
+          "Llevas la orden de trabajo en el chat: presupuesto, aprobaci\xF3n del due\xF1o, cierre y garant\xEDa."
+        ],
+        cierre: "Gratis puedes atender y llevar tus \xF3rdenes con un tope mensual. Verificado y visible en las b\xFAsquedas, con el plan pagado."
+      },
+      {
+        key: "almacen",
+        titulo: "Si vendes repuestos",
+        pasos: [
+          "Registras tu almac\xE9n, tus categor\xEDas y si haces entregas.",
+          "Te llegan solicitudes de repuesto con el veh\xEDculo y la pieza ya identificados.",
+          "Respondes precio, marca, garant\xEDa y tiempo de entrega; si te eligen, sigues el pedido hasta entregarlo."
+        ],
+        cierre: "Gratis respondes hasta 15 cotizaciones al mes. Con el plan pagado, sin tope y con mejor posici\xF3n."
+      }
+    ];
     FAQ = [
       {
         q: "\xBFC\xF3mo pido mantenimiento para mi carro en Ecuador?",
@@ -61738,6 +61773,1866 @@ var init_entry = __esm({
     CODE_LENGTH = 5;
     VISITS_PER_HOUR = 30;
     PREVIEW_BOTS = /facebookexternalhit|facebot|whatsapp|twitterbot|slackbot|telegrambot|linkedinbot|discordbot|googlebot|google-inspectiontool|storebot-google|google-extended|bingbot|bingpreview|applebot|yandex|duckduckbot|baiduspider|pinterest|skypeuripreview|redditbot|embedly|ahrefsbot|semrushbot|gptbot|oai-searchbot|chatgpt-user|claudebot|claude-web|anthropic-ai|perplexitybot|perplexity-user|ccbot|google-cloudvertexbot|bytespider|amazonbot|meta-externalagent|cohere-ai|youbot|diffbot/i;
+  }
+});
+
+// packages/api/dist/domain/maintenance/types.js
+var init_types3 = __esm({
+  "packages/api/dist/domain/maintenance/types.js"() {
+    "use strict";
+  }
+});
+
+// packages/api/dist/domain/maintenance/schemas.js
+var vehicleClassSchema, fuelSchema, vehicleClassesSchema, appliesToSchema, subserviceSchema, categorySchema, serviceTaxonomySchema, maintenanceRuleSchema, maintenanceRulesSchema;
+var init_schemas = __esm({
+  "packages/api/dist/domain/maintenance/schemas.js"() {
+    "use strict";
+    init_zod();
+    vehicleClassSchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1),
+      subtypes: external_exports.array(external_exports.string()).default([])
+    });
+    fuelSchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1)
+    });
+    vehicleClassesSchema = external_exports.object({
+      version: external_exports.string(),
+      source: external_exports.string(),
+      generatedAt: external_exports.string().optional(),
+      note: external_exports.string().optional(),
+      classes: external_exports.array(vehicleClassSchema).min(1),
+      fuels: external_exports.array(fuelSchema).min(1)
+    });
+    appliesToSchema = external_exports.object({
+      classes: external_exports.array(external_exports.string()).min(1),
+      fuels: external_exports.array(external_exports.string()).min(1)
+    });
+    subserviceSchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1),
+      detail: external_exports.string().optional(),
+      periodic: external_exports.boolean().default(false),
+      appliesTo: appliesToSchema,
+      durationMin: external_exports.number().int().min(1),
+      costRefUsd: external_exports.number().min(0),
+      costNote: external_exports.string().optional()
+    });
+    categorySchema = external_exports.object({
+      id: external_exports.string().min(1),
+      name: external_exports.string().min(1),
+      order: external_exports.number().int().min(1),
+      subservices: external_exports.array(subserviceSchema).min(1)
+    });
+    serviceTaxonomySchema = external_exports.object({
+      version: external_exports.string(),
+      source: external_exports.string(),
+      generatedAt: external_exports.string().optional(),
+      note: external_exports.string().optional(),
+      categories: external_exports.array(categorySchema)
+    });
+    maintenanceRuleSchema = external_exports.object({
+      serviceId: external_exports.string().min(1),
+      classId: external_exports.array(external_exports.string()).min(1),
+      fuelId: external_exports.array(external_exports.string()).min(1),
+      intervalKm: external_exports.number().int().positive().nullable(),
+      intervalMonths: external_exports.number().int().positive().nullable(),
+      severeFactor: external_exports.number().min(0.5).max(0.8),
+      note: external_exports.string().optional()
+    });
+    maintenanceRulesSchema = external_exports.object({
+      version: external_exports.string(),
+      source: external_exports.string(),
+      generatedAt: external_exports.string().optional(),
+      note: external_exports.string().optional(),
+      rules: external_exports.array(maintenanceRuleSchema)
+    });
+  }
+});
+
+// packages/api/dist/domain/maintenance/vehicle-classes.json
+var vehicle_classes_default;
+var init_vehicle_classes = __esm({
+  "packages/api/dist/domain/maintenance/vehicle-classes.json"() {
+    vehicle_classes_default = {
+      version: "1.0.0",
+      source: "docs/25-diseno-producto-whatsapp-30dias.md \xA71.3 \u2014 clases y combustibles",
+      generatedAt: "2026-09-11",
+      note: "Cat\xE1logo maestro de clases de veh\xEDculo y combustibles. Las clases son las 8 de la cobertura global; 'liviano' agrupa sed\xE1n, hatchback, SUV y pickup (misma l\xF3gica de mantenimiento).",
+      classes: [
+        {
+          id: "motocicleta",
+          name: "Motocicleta / Scooter",
+          subtypes: ["moto", "scooter", "motocicleta", "vespa", "cielo"]
+        },
+        {
+          id: "cuadron",
+          name: "Cuadr\xF3n / ATV",
+          subtypes: ["cuadron", "atv", "cuatrimoto", "quad", "cuv"]
+        },
+        {
+          id: "liviano",
+          name: "Liviano (sed\xE1n, hatchback, SUV, pickup)",
+          subtypes: ["sedan", "sed\xE1n", "hatchback", "suv", "camioneta", "pickup", "auto", "carro", "vehiculo"]
+        },
+        {
+          id: "van",
+          name: "Van / Furgoneta",
+          subtypes: ["van", "furgoneta", "furgon", "panel"]
+        },
+        {
+          id: "comercial_liviano",
+          name: "Comercial liviano",
+          subtypes: ["comercial_liviano", "comercial", "reparto", "furgon"]
+        },
+        {
+          id: "camion",
+          name: "Cami\xF3n mediano / pesado",
+          subtypes: ["camion", "camin", "truck", "cabezal", "volqueta", "carguero"]
+        },
+        {
+          id: "bus",
+          name: "Bus / Buseta",
+          subtypes: ["bus", "buseta", "cooperativa", "colectivo", "transporte_publico"]
+        },
+        {
+          id: "maquinaria_liviana",
+          name: "Maquinaria liviana",
+          subtypes: ["maquinaria", "maquinaria_liviana", "tractor", "retroexcavadora", "montacarga"]
+        }
+      ],
+      fuels: [
+        {
+          id: "gasolina",
+          name: "Gasolina"
+        },
+        {
+          id: "diesel",
+          name: "Di\xE9sel"
+        },
+        {
+          id: "hev",
+          name: "H\xEDbrido (HEV)"
+        },
+        {
+          id: "phev",
+          name: "H\xEDbrido enchufable (PHEV)"
+        },
+        {
+          id: "bev",
+          name: "El\xE9ctrico (BEV)"
+        },
+        {
+          id: "glp_gnv",
+          name: "GLP / GNV (gas)"
+        }
+      ]
+    };
+  }
+});
+
+// packages/api/dist/domain/maintenance/service-taxonomy.json
+var service_taxonomy_default;
+var init_service_taxonomy = __esm({
+  "packages/api/dist/domain/maintenance/service-taxonomy.json"() {
+    service_taxonomy_default = {
+      version: "1.0.0",
+      source: "docs/25-diseno-producto-whatsapp-30dias.md \xA71.3 \u2014 taxonom\xEDa de servicios (22 categor\xEDas)",
+      generatedAt: "2026-09-11",
+      note: "Cat\xE1logo maestro de servicios. 'periodic' indica si el servicio entra en el plan de mantenimiento (tiene intervalo en maintenance-rules.json); los no peri\xF3dicos (carrocer\xEDa, detailing, gr\xFAa\u2026) se solicitan bajo demanda. appliesTo: clases y combustibles a los que aplica ('*' = todas). durationMin y costRefUsd son valores REFERENCIALES conservadores del mercado ecuatoriano (USD), orientativos para el plan; no son presupuesto.",
+      categories: [
+        {
+          id: "prevencion",
+          name: "Mantenimiento preventivo por km",
+          order: 1,
+          subservices: [
+            {
+              id: "prep_inspeccion",
+              name: "Inspecci\xF3n multipunto preventiva",
+              detail: "Revisi\xF3n visual y funcional de los principales sistemas del veh\xEDculo.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 25,
+              costNote: "Referencial; checklist b\xE1sico de 25\u201335 USD seg\xFAn taller."
+            }
+          ]
+        },
+        {
+          id: "lubricacion",
+          name: "Lubricaci\xF3n / aceite",
+          order: 2,
+          subservices: [
+            {
+              id: "aceite_motor",
+              name: "Cambio de aceite y filtro de motor",
+              detail: "Aceite seg\xFAn especificaci\xF3n del fabricante y filtro nuevo.",
+              periodic: true,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 45,
+              costNote: "Referencial; 30\u201370 USD seg\xFAn gama y tipo de aceite. NO aplica a BEV (sin motor de combusti\xF3n)."
+            }
+          ]
+        },
+        {
+          id: "motor",
+          name: "Motor",
+          order: 3,
+          subservices: [
+            {
+              id: "motor_bujias",
+              name: "Cambio de buj\xEDas / kit de encendido",
+              detail: "Buj\xEDas nuevas y prueba del sistema de encendido (no aplica a di\xE9sel ni a BEV).",
+              periodic: true,
+              appliesTo: {
+                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano"],
+                fuels: ["gasolina", "glp_gnv", "hev", "phev"]
+              },
+              durationMin: 90,
+              costRefUsd: 80,
+              costNote: "Referencial por juego; 50\u2013120 USD seg\xFAn motor y n\xFAmero de cilindros."
+            },
+            {
+              id: "motor_filtro_aire",
+              name: "Cambio de filtro de aire",
+              detail: "Reemplazo del elemento filtrante de admisi\xF3n de aire.",
+              periodic: true,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 30,
+              costRefUsd: 18,
+              costNote: "Referencial; 12\u201335 USD seg\xFAn marca. NO aplica a BEV."
+            },
+            {
+              id: "motor_correa",
+              name: "Revisi\xF3n / cambio de correas",
+              detail: "Inspecci\xF3n y cambio de correa(s) de distribuci\xF3n o de accesorios seg\xFAn especificaci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 180,
+              costRefUsd: 250,
+              costNote: "Referencial; 150\u2013400 USD seg\xFAn motor. Cat\xE1logo conservador de manuales t\xEDpicos."
+            }
+          ]
+        },
+        {
+          id: "inyeccion",
+          name: "Inyecci\xF3n / combustible",
+          order: 4,
+          subservices: [
+            {
+              id: "iny_filtro_combustible",
+              name: "Cambio de filtro de combustible",
+              detail: "Reemplazo del filtro de combustible del sistema de inyecci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201360 USD. Los de di\xE9sel suelen cambiarse con mayor frecuencia. NO aplica a BEV."
+            },
+            {
+              id: "iny_limpieza",
+              name: "Limpieza de inyectores / sistema",
+              detail: "Limpieza del sistema de inyecci\xF3n (banco o aditivo de limpieza).",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 90,
+              costRefUsd: 80,
+              costNote: "Referencial; 50\u2013120 USD. NO aplica a BEV."
+            }
+          ]
+        },
+        {
+          id: "refrigeracion",
+          name: "Refrigeraci\xF3n",
+          order: 5,
+          subservices: [
+            {
+              id: "ref_antifreeze",
+              name: "Cambio de refrigerante / anticongelante",
+              detail: "Reemplazo del l\xEDquido refrigerante y revisi\xF3n de fugas.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 45,
+              costNote: "Referencial; 35\u201370 USD. Aplica tambi\xE9n a BEV (refrigeraci\xF3n de bater\xEDa y electr\xF3nica)."
+            },
+            {
+              id: "ref_radiador",
+              name: "Lavado de radiador / sistema",
+              detail: "Lavado del circuito de refrigeraci\xF3n y revisi\xF3n de mangueras.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["*"]
+              },
+              durationMin: 90,
+              costRefUsd: 60,
+              costNote: "Referencial; 40\u201390 USD."
+            }
+          ]
+        },
+        {
+          id: "frenos",
+          name: "Frenos",
+          order: 6,
+          subservices: [
+            {
+              id: "freno_liquido",
+              name: "Cambio de l\xEDquido de frenos",
+              detail: "Sangr\xEDa y reemplazo del l\xEDquido de frenos (car\xE1cter higrosc\xF3pico).",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201355 USD."
+            },
+            {
+              id: "freno_pastillas",
+              name: "Inspecci\xF3n / cambio de pastillas y discos",
+              detail: "Inspecci\xF3n de espesor de pastillas y discos; reposici\xF3n seg\xFAn desgaste.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 90,
+              costNote: "Referencial (juego delantero); 60\u2013160 USD seg\xFAn veh\xEDculo."
+            },
+            {
+              id: "freno_regulacion",
+              name: "Regulaci\xF3n de frenos (moto)",
+              detail: "Ajuste y revisi\xF3n del sistema de frenos de motocicleta / cuadr\xF3n.",
+              periodic: true,
+              appliesTo: { classes: ["motocicleta", "cuadron"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 20,
+              costNote: "Referencial; 15\u201330 USD."
+            }
+          ]
+        },
+        {
+          id: "suspension",
+          name: "Suspensi\xF3n y direcci\xF3n",
+          order: 7,
+          subservices: [
+            {
+              id: "susp_amortiguadores",
+              name: "Revisi\xF3n / cambio de amortiguadores",
+              detail: "Prueba y sustituci\xF3n de amortiguadores y bujes seg\xFAn desgaste.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 90,
+              costRefUsd: 150,
+              costNote: "Referencial por eje; 100\u2013250 USD."
+            },
+            {
+              id: "susp_direccion",
+              name: "Inspecci\xF3n de suspensi\xF3n y direcci\xF3n",
+              detail: "Inspecci\xF3n de terminales, r\xF3tulas, barra y juego de direcci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 45,
+              costRefUsd: 25,
+              costNote: "Referencial; 20\u201340 USD."
+            }
+          ]
+        },
+        {
+          id: "transmision",
+          name: "Transmisi\xF3n / embrague",
+          order: 8,
+          subservices: [
+            {
+              id: "trans_aceite_caja",
+              name: "Cambio de aceite de caja / diferencial",
+              detail: "Reemplazo del lubricante de la caja de cambios y diferencial.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 65,
+              costNote: "Referencial; 45\u2013110 USD. En BEV aplica al lubricante de la transmisi\xF3n de reducci\xF3n."
+            },
+            {
+              id: "trans_filtro_caja",
+              name: "Cambio de filtro de caja autom\xE1tica",
+              detail: "Reemplazo del filtro y servicio de la caja autom\xE1tica.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 120,
+              costRefUsd: 90,
+              costNote: "Referencial; 70\u2013150 USD."
+            },
+            {
+              id: "trans_embrague",
+              name: "Revisi\xF3n de embrague",
+              detail: "Inspecci\xF3n del desgaste del embrague y ajuste seg\xFAn el caso.",
+              periodic: true,
+              appliesTo: {
+                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 40,
+              costNote: "Referencial (revisi\xF3n); 30\u201360 USD. El kit de embrague se cotiza aparte."
+            },
+            {
+              id: "trans_cadena",
+              name: "Ajuste y lubricaci\xF3n de cadena (moto)",
+              detail: "Limpieza, ajuste y lubricaci\xF3n de la cadena de transmisi\xF3n.",
+              periodic: true,
+              appliesTo: { classes: ["motocicleta", "cuadron"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 15,
+              costNote: "Referencial; 10\u201325 USD."
+            }
+          ]
+        },
+        {
+          id: "neumaticos",
+          name: "Neum\xE1ticos / alineaci\xF3n / balanceo",
+          order: 9,
+          subservices: [
+            {
+              id: "llanta_rotacion",
+              name: "Rotaci\xF3n de neum\xE1ticos",
+              detail: "Rotaci\xF3n cruzada de neum\xE1ticos para desgaste parejo.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 45,
+              costRefUsd: 12,
+              costNote: "Referencial; 8\u201320 USD."
+            },
+            {
+              id: "llanta_alineacion",
+              name: "Alineaci\xF3n y balanceo",
+              detail: "Alineaci\xF3n de direcci\xF3n y balanceo de las ruedas.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 60,
+              costRefUsd: 30,
+              costNote: "Referencial; 20\u201345 USD."
+            },
+            {
+              id: "llanta_presion",
+              name: "Revisi\xF3n de presi\xF3n y desgaste",
+              detail: "Control de presi\xF3n de inflado y profundidad del dibujo.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 10,
+              costNote: "Referencial; 5\u201315 USD."
+            },
+            {
+              id: "llanta_cambio",
+              name: "Cambio de neum\xE1ticos",
+              detail: "Sustituci\xF3n de llantas por vida \xFAtil o desgaste.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 150,
+              costNote: "Referencial por juego de 2; el precio var\xEDa por marca y perfil."
+            }
+          ]
+        },
+        {
+          id: "electrico",
+          name: "El\xE9ctrico / bater\xEDa",
+          order: 10,
+          subservices: [
+            {
+              id: "elec_bateria",
+              name: "Prueba y mantenimiento de bater\xEDa",
+              detail: "Prueba de carga, estado de los bornes y mantenimiento de la bater\xEDa de 12 V.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 10,
+              costNote: "Referencial; 5\u201315 USD. Aplica a todos, incluido BEV (bater\xEDa de servicios)."
+            },
+            {
+              id: "elec_alternador",
+              name: "Revisi\xF3n de alternador / sistema de carga",
+              detail: "Comprobaci\xF3n del sistema de carga del veh\xEDculo.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 25,
+              costNote: "Referencial; 20\u201340 USD."
+            },
+            {
+              id: "elec_luces",
+              name: "Revisi\xF3n de luces y se\xF1alizaci\xF3n",
+              detail: "Verificaci\xF3n de luces exteriores, interiores y se\xF1alizaci\xF3n del tablero.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 30,
+              costRefUsd: 8,
+              costNote: "Referencial; 5\u201312 USD."
+            }
+          ]
+        },
+        {
+          id: "electronica",
+          name: "Electr\xF3nica / esc\xE1ner",
+          order: 11,
+          subservices: [
+            {
+              id: "escaner_diagnostico",
+              name: "Escaneo electr\xF3nico de c\xF3digos",
+              detail: "Lectura de c\xF3digos de falla y prueba de m\xF3dulos electr\xF3nicos.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 25,
+              costNote: "Referencial; 20\u201340 USD."
+            }
+          ]
+        },
+        {
+          id: "climatizacion",
+          name: "Climatizaci\xF3n",
+          order: 12,
+          subservices: [
+            {
+              id: "clima_filtro_cabina",
+              name: "Cambio de filtro de cabina",
+              detail: "Reemplazo del filtro de habit\xE1culo del aire acondicionado.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 30,
+              costRefUsd: 25,
+              costNote: "Referencial; 18\u201340 USD."
+            },
+            {
+              id: "clima_recarga",
+              name: "Recarga y mantenimiento de A/C",
+              detail: "Recarga de gas refrigerante y revisi\xF3n del circuito de climatizaci\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 90,
+              costRefUsd: 80,
+              costNote: "Referencial; 60\u2013120 USD."
+            },
+            {
+              id: "clima_desinfeccion",
+              name: "Desinfecci\xF3n del sistema de climatizaci\xF3n",
+              detail: "Limpieza y desinfecci\xF3n de ductos y evaporador (control de olores).",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 30,
+              costRefUsd: 20,
+              costNote: "Referencial; 15\u201335 USD."
+            }
+          ]
+        },
+        {
+          id: "escape",
+          name: "Escape / emisiones",
+          order: 13,
+          subservices: [
+            {
+              id: "escape_gases",
+              name: "Revisi\xF3n de escape y emisiones",
+              detail: "Inspecci\xF3n del sistema de escape y control de emisiones.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 30,
+              costRefUsd: 15,
+              costNote: "Referencial; 10\u201325 USD. NO aplica a BEV (sin escape)."
+            },
+            {
+              id: "escape_mofle",
+              name: "Cambio de mofle / silenciador",
+              detail: "Sustituci\xF3n del silenciador o tramos del sistema de escape.",
+              periodic: false,
+              appliesTo: {
+                classes: ["*"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 90,
+              costRefUsd: 120,
+              costNote: "Referencial; 80\u2013200 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "carroceria",
+          name: "Carrocer\xEDa / pintura",
+          order: 14,
+          subservices: [
+            {
+              id: "carro_enderezada",
+              name: "Enderezada y pintura",
+              detail: "Reparaci\xF3n de abolladuras y pintura de paneles.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 240,
+              costRefUsd: 250,
+              costNote: "Referencial por panel; depende de da\xF1o. Bajo demanda."
+            },
+            {
+              id: "carro_anticorrosiva",
+              name: "Protecci\xF3n anticorrosiva",
+              detail: "Tratamiento anticorrosivo de bajos y cavidades.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 60,
+              costNote: "Referencial; 45\u201390 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "vidrios",
+          name: "Vidrios",
+          order: 15,
+          subservices: [
+            {
+              id: "vidrio_parabrisas",
+              name: "Cambio / reparaci\xF3n de parabrisas",
+              detail: "Reparaci\xF3n de fisuras o sustituci\xF3n del parabrisas.",
+              periodic: false,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 60,
+              costRefUsd: 120,
+              costNote: "Referencial; 90\u2013250 USD seg\xFAn veh\xEDculo. Bajo demanda."
+            },
+            {
+              id: "vidrio_limpiadores",
+              name: "Cambio de escobillas / plumillas",
+              detail: "Sustituci\xF3n de las escobillas de limpiaparabrisas.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["*"]
+              },
+              durationMin: 15,
+              costRefUsd: 12,
+              costNote: "Referencial; juega por juego de 2."
+            }
+          ]
+        },
+        {
+          id: "interior",
+          name: "Interior / tapicer\xEDa",
+          order: 16,
+          subservices: [
+            {
+              id: "interior_limpieza",
+              name: "Limpieza de tapicer\xEDa y tablero",
+              detail: "Limpieza profunda de asientos, alfombras y tablero.",
+              periodic: false,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["*"]
+              },
+              durationMin: 120,
+              costRefUsd: 45,
+              costNote: "Referencial; 35\u201370 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "lavado",
+          name: "Lavado / detailing",
+          order: 17,
+          subservices: [
+            {
+              id: "lavado_exterior",
+              name: "Lavado exterior con sellador",
+              detail: "Lavado completo y sellador protector de pintura.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 45,
+              costRefUsd: 15,
+              costNote: "Referencial; 10\u201325 USD. Bajo demanda."
+            },
+            {
+              id: "lavado_detailing",
+              name: "Detailing completo",
+              detail: "Lavado, pulido, descontaminaci\xF3n y acabado profesional.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 180,
+              costRefUsd: 80,
+              costNote: "Referencial; 60\u2013140 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "diesel",
+          name: "Di\xE9sel / turbo",
+          order: 18,
+          subservices: [
+            {
+              id: "die_turbo",
+              name: "Revisi\xF3n de turbo / admisi\xF3n",
+              detail: "Inspecci\xF3n del turbocompresor y del sistema de admisi\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["comercial_liviano", "camion", "bus"],
+                fuels: ["diesel"]
+              },
+              durationMin: 90,
+              costRefUsd: 90,
+              costNote: "Referencial (revisi\xF3n); 60\u2013140 USD."
+            },
+            {
+              id: "die_inyectores",
+              name: "Prueba de inyectores di\xE9sel",
+              detail: "Prueba en banco y ajuste / reemplazo de inyectores di\xE9sel.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                fuels: ["diesel"]
+              },
+              durationMin: 120,
+              costRefUsd: 110,
+              costNote: "Referencial; 80\u2013180 USD."
+            },
+            {
+              id: "die_dpf",
+              name: "Limpieza de filtro de part\xEDculas (DPF)",
+              detail: "Limpieza / regeneraci\xF3n del filtro de part\xEDculas di\xE9sel.",
+              periodic: true,
+              appliesTo: {
+                classes: ["comercial_liviano", "camion", "bus"],
+                fuels: ["diesel"]
+              },
+              durationMin: 120,
+              costRefUsd: 130,
+              costNote: "Referencial; 90\u2013200 USD."
+            }
+          ]
+        },
+        {
+          id: "alto_voltaje",
+          name: "Alto voltaje (EV/HEV)",
+          order: 19,
+          subservices: [
+            {
+              id: "hv_inspeccion",
+              name: "Inspecci\xF3n del sistema de alto voltaje",
+              detail: "Revisi\xF3n de cables, conectores y aislamiento del sistema de alto voltaje.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["hev", "phev", "bev"]
+              },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201355 USD. SOLO h\xEDbridos y el\xE9ctricos."
+            },
+            {
+              id: "hv_bateria_traccion",
+              name: "Prueba de bater\xEDa de tracci\xF3n",
+              detail: "Prueba de capacidad y estado de la bater\xEDa de alta tensi\xF3n.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["hev", "phev", "bev"]
+              },
+              durationMin: 90,
+              costRefUsd: 50,
+              costNote: "Referencial; 35\u201380 USD. SOLO h\xEDbridos y el\xE9ctricos."
+            }
+          ]
+        },
+        {
+          id: "glp_gnv",
+          name: "GLP/GNV",
+          order: 20,
+          subservices: [
+            {
+              id: "glp_inspeccion",
+              name: "Inspecci\xF3n peri\xF3dica del sistema de gas",
+              detail: "Inspecci\xF3n reglamentaria del sistema GLP/GNV (comprobaci\xF3n de fugas y v\xE1lvulas).",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 45,
+              costNote: "Referencial; 30\u201360 USD. Solo veh\xEDculos con sistema de gas."
+            },
+            {
+              id: "glp_filtro",
+              name: "Cambio de filtro de gas",
+              detail: "Reemplazo del filtro del sistema de gas licuado / natural vehicular.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano"],
+                fuels: ["glp_gnv"]
+              },
+              durationMin: 60,
+              costRefUsd: 40,
+              costNote: "Referencial; 30\u201355 USD."
+            }
+          ]
+        },
+        {
+          id: "grua",
+          name: "Gr\xFAa / asistencia",
+          order: 21,
+          subservices: [
+            {
+              id: "grua_remolque",
+              name: "Servicio de gr\xFAa / remolque",
+              detail: "Traslado del veh\xEDculo con gr\xFAa o asistencia en carretera.",
+              periodic: false,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 120,
+              costRefUsd: 60,
+              costNote: "Referencial por carrera corta; 40\u201390 USD. Bajo demanda."
+            }
+          ]
+        },
+        {
+          id: "rtv",
+          name: "Pre-revisi\xF3n t\xE9cnica vehicular (RTV)",
+          order: 22,
+          subservices: [
+            {
+              id: "rtv_pretest",
+              name: "Pre-chequeo para RTV",
+              detail: "Chequeo previo de los puntos que revisa la Revisi\xF3n T\xE9cnica Vehicular.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 60,
+              costRefUsd: 35,
+              costNote: "Referencial; 25\u201350 USD. Per\xEDodo anual."
+            }
+          ]
+        }
+      ]
+    };
+  }
+});
+
+// packages/api/dist/domain/maintenance/maintenance-rules.json
+var maintenance_rules_default;
+var init_maintenance_rules = __esm({
+  "packages/api/dist/domain/maintenance/maintenance-rules.json"() {
+    maintenance_rules_default = {
+      version: "1.0.0",
+      source: "Motor de reglas de mantenimiento \u2014 referencial",
+      generatedAt: "2026-09-11",
+      note: "Valores conservadores basados en manuales de mantenimiento T\xCDPICOS y pr\xE1cticas del mercado ecuatoriano (referencial, sin datos de una marca concreta). intervalKm e intervalMonths son los intervalos base; severeFactor (0,5\u20130,8) se aplica cuando el uso es SEVERO (Sierra: altitud y pendientes; uso por defecto en Quito). Las combinaciones (clase, combustible) por servicio coinciden EXACTAMENTE con appliesTo de service-taxonomy.json; si un servicio o combinaci\xF3n no aparece aqu\xED, no entra en el plan.",
+      rules: [
+        {
+          serviceId: "prep_inspeccion",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 5e3,
+          intervalMonths: 6,
+          severeFactor: 0.7,
+          note: "Inspecci\xF3n multipunto preventiva cada 5.000 km / 6 meses."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["motocicleta"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e3,
+          intervalMonths: 3,
+          severeFactor: 0.7,
+          note: "Motos: cambio de aceite frecuente."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["cuadron"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 3e3,
+          intervalMonths: 4,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 5e3,
+          intervalMonths: 6,
+          severeFactor: 0.7,
+          note: "Livianos gasolina/GLP: 5.000 km / 6 meses (conservador para uso con GLP)."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "H\xEDbridos: el motor de combusti\xF3n trabaja menos, intervalo mayor."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["diesel"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 1e4,
+          intervalMonths: 6,
+          severeFactor: 0.7,
+          note: "Veh\xEDculos pesados di\xE9sel con intervalos de aceite m\xE1s largos."
+        },
+        {
+          serviceId: "aceite_motor",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e3,
+          intervalMonths: 4,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_bujias",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 8e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_bujias",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_bujias",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev"],
+          intervalKm: 4e4,
+          intervalMonths: 36,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_filtro_aire",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 1e4,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev", "diesel"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "motor_correa",
+          classId: ["camion", "bus"],
+          fuelId: ["hev", "phev", "diesel"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["diesel"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "Di\xE9sel: filtro de combustible con servicio m\xE1s frecuente."
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["camion", "bus"],
+          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_filtro_combustible",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "iny_limpieza",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_antifreeze",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_antifreeze",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 4e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_antifreeze",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "ref_radiador",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 36,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "freno_liquido",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 4e4,
+          intervalMonths: 24,
+          severeFactor: 0.7,
+          note: "El l\xEDquido de frenos se degrada por humedad aunque no se recorra."
+        },
+        {
+          serviceId: "freno_pastillas",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7,
+          note: "Inspecci\xF3n; la reposici\xF3n depende del desgaste real."
+        },
+        {
+          serviceId: "freno_regulacion",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 5e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "susp_amortiguadores",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "susp_direccion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 6e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["bev"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.7,
+          note: "BEV: lubricante de la transmisi\xF3n de reducci\xF3n."
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_aceite_caja",
+          classId: ["maquinaria_liviana"],
+          fuelId: ["*"],
+          intervalKm: 4e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_filtro_caja",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 6e4,
+          intervalMonths: 36,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "trans_embrague",
+          classId: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 5e4,
+          intervalMonths: 36,
+          severeFactor: 0.7,
+          note: "Revisi\xF3n de embrague; el reemplazo se cotiza seg\xFAn desgaste."
+        },
+        {
+          serviceId: "trans_cadena",
+          classId: ["motocicleta", "cuadron"],
+          fuelId: ["*"],
+          intervalKm: 2e3,
+          intervalMonths: 2,
+          severeFactor: 0.7,
+          note: "Cadena de moto: ajuste y lubricaci\xF3n cada 2.000 km / 2 meses."
+        },
+        {
+          serviceId: "llanta_rotacion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "llanta_alineacion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 1e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "llanta_presion",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 5e3,
+          intervalMonths: 3,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "llanta_cambio",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 5e4,
+          intervalMonths: 48,
+          severeFactor: 0.7,
+          note: "Referencial por vida \xFAtil de llanta; depende del desgaste del dibujo."
+        },
+        {
+          serviceId: "elec_bateria",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "elec_alternador",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "elec_luces",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "escaner_diagnostico",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "clima_filtro_cabina",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 15e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "clima_recarga",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 24e3,
+          intervalMonths: 24,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "clima_desinfeccion",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 12e3,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "escape_gases",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "vidrio_limpiadores",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["*"],
+          intervalKm: 12e3,
+          intervalMonths: 6,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "die_turbo",
+          classId: ["comercial_liviano", "camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 6e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "die_inyectores",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+          fuelId: ["diesel"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "die_dpf",
+          classId: ["comercial_liviano", "camion", "bus"],
+          fuelId: ["diesel"],
+          intervalKm: 8e4,
+          intervalMonths: 48,
+          severeFactor: 0.8
+        },
+        {
+          serviceId: "hv_inspeccion",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev", "bev"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "SOLO h\xEDbridos y el\xE9ctricos: sistema de alto voltaje."
+        },
+        {
+          serviceId: "hv_bateria_traccion",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["hev", "phev", "bev"],
+          intervalKm: 3e4,
+          intervalMonths: 24,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "glp_inspeccion",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7,
+          note: "Inspecci\xF3n reglamentaria del sistema de gas."
+        },
+        {
+          serviceId: "glp_filtro",
+          classId: ["liviano", "van", "comercial_liviano"],
+          fuelId: ["glp_gnv"],
+          intervalKm: 2e4,
+          intervalMonths: 12,
+          severeFactor: 0.7
+        },
+        {
+          serviceId: "rtv_pretest",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: null,
+          intervalMonths: 12,
+          severeFactor: 0.8,
+          note: "Pre-chequeo para Revisi\xF3n T\xE9cnica Vehicular: por tiempo (anual)."
+        }
+      ]
+    };
+  }
+});
+
+// packages/api/dist/domain/maintenance/catalogs.js
+function findSubservice(serviceId) {
+  return SUBSERVICE_INDEX.get(serviceId);
+}
+function normalizeList(list6, allValues) {
+  const expanded = /* @__PURE__ */ new Set();
+  for (const value2 of list6) {
+    if (value2 === "*") {
+      for (const v of allValues)
+        expanded.add(v);
+    } else {
+      expanded.add(value2);
+    }
+  }
+  return [...expanded].sort();
+}
+function expandRules() {
+  const expanded = [];
+  for (const rule of maintenanceRules.rules) {
+    const classes = normalizeList(rule.classId, classIds);
+    const fuels = normalizeList(rule.fuelId, fuelIds);
+    for (const classId of classes) {
+      for (const fuelId of fuels) {
+        expanded.push({
+          serviceId: rule.serviceId,
+          classId,
+          fuelId,
+          intervalKm: rule.intervalKm,
+          intervalMonths: rule.intervalMonths,
+          severeFactor: rule.severeFactor,
+          note: rule.note
+        });
+      }
+    }
+  }
+  return expanded;
+}
+function resolveRules(classId, fuelId) {
+  return expandRules().filter((r) => r.classId === classId && r.fuelId === fuelId);
+}
+function isServiceApplicable(serviceId, classId, fuelId) {
+  const ref = findSubservice(serviceId);
+  if (!ref)
+    return false;
+  const classes = new Set(normalizeList(ref.subservice.appliesTo.classes, classIds));
+  const fuels = new Set(normalizeList(ref.subservice.appliesTo.fuels, fuelIds));
+  return classes.has(classId) && fuels.has(fuelId);
+}
+var vehicleClasses, serviceTaxonomy, maintenanceRules, classIds, fuelIds, SUBSERVICE_INDEX;
+var init_catalogs = __esm({
+  "packages/api/dist/domain/maintenance/catalogs.js"() {
+    "use strict";
+    init_vehicle_classes();
+    init_service_taxonomy();
+    init_maintenance_rules();
+    init_schemas();
+    vehicleClasses = vehicleClassesSchema.parse(vehicle_classes_default);
+    serviceTaxonomy = serviceTaxonomySchema.parse(service_taxonomy_default);
+    maintenanceRules = maintenanceRulesSchema.parse(maintenance_rules_default);
+    classIds = vehicleClasses.classes.map((c) => c.id);
+    fuelIds = vehicleClasses.fuels.map((f) => f.id);
+    SUBSERVICE_INDEX = /* @__PURE__ */ new Map();
+    for (const category of serviceTaxonomy.categories) {
+      for (const sub of category.subservices) {
+        if (SUBSERVICE_INDEX.has(sub.id)) {
+          throw new Error(`Duplicated subservice id '${sub.id}' in service-taxonomy.json`);
+        }
+        SUBSERVICE_INDEX.set(sub.id, { category, subservice: sub });
+      }
+    }
+  }
+});
+
+// packages/api/dist/domain/maintenance/plan-engine.js
+function toDate(input) {
+  return input instanceof Date ? new Date(input.getTime()) : new Date(input);
+}
+function daysBetween(a, b) {
+  const aDate = toDate(a);
+  const bDate = toDate(b);
+  const aUtc = Date.UTC(aDate.getFullYear(), aDate.getMonth(), aDate.getDate());
+  const bUtc = Date.UTC(bDate.getFullYear(), bDate.getMonth(), bDate.getDate());
+  return Math.round((bUtc - aUtc) / MS_PER_DAY);
+}
+function addMonths(date, months) {
+  const base = toDate(date);
+  return new Date(base.getTime() + months * DAYS_PER_MONTH * MS_PER_DAY);
+}
+function estimateKmPerDay(input) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const readings = [...input.odometerReadings ?? []].filter((r) => toDate(r.date).getTime() <= today.getTime()).sort((a, b) => toDate(a.date).getTime() - toDate(b.date).getTime());
+  for (let i = readings.length - 1; i >= 0; i -= 1) {
+    const reading = readings[i];
+    const days = daysBetween(reading.date, today);
+    if (days >= 1 && input.odometerKm > reading.km) {
+      const kmPerDay = (input.odometerKm - reading.km) / days;
+      return Math.round(kmPerDay * 10) / 10;
+    }
+  }
+  return DEFAULT_KM_PER_DAY[usageProfileOf(input)];
+}
+function usageProfileOf(input) {
+  return input.usageProfile ?? "urbano";
+}
+function lastReadingDaysAgo(input) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const readings = (input.odometerReadings ?? []).filter((r) => toDate(r.date).getTime() <= today.getTime());
+  if (readings.length === 0)
+    return null;
+  const latest = readings.reduce((a, b) => toDate(a.date).getTime() > toDate(b.date).getTime() ? a : b);
+  return Math.max(0, daysBetween(latest.date, today));
+}
+function computeItemStatus(remainingKm, remainingDays) {
+  const dueByKm = remainingKm !== null && remainingKm <= 0;
+  const dueByTime = remainingDays !== null && remainingDays <= 0;
+  if (dueByKm || dueByTime)
+    return "vencido";
+  const soonByKm = remainingKm !== null && remainingKm <= NEXT_WINDOW_KM;
+  const soonByTime = remainingDays !== null && remainingDays <= NEXT_WINDOW_DAYS;
+  if (soonByKm || soonByTime)
+    return "proximo";
+  return "al_dia";
+}
+function priorityFor(status) {
+  switch (status) {
+    case "vencido":
+      return "alta";
+    case "proximo":
+      return "media";
+    default:
+      return "baja";
+  }
+}
+function formatVencido(km4, days) {
+  const parts = [];
+  if (km4 !== null && km4 <= 0)
+    parts.push(`hace ${Math.abs(km4)} km`);
+  if (days !== null && days <= 0) {
+    const months = Math.max(1, Math.abs(Math.round(days / DAYS_PER_MONTH)));
+    parts.push(`hace ${months} ${months === 1 ? "mes" : "meses"}`);
+  }
+  return parts.length > 0 ? `Vencido ${parts.join(" y ")}` : "Vencido";
+}
+function formatProximo(km4, days) {
+  if (km4 !== null && km4 <= NEXT_WINDOW_KM) {
+    return `En ${Math.max(0, km4)} km`;
+  }
+  if (days !== null && days <= NEXT_WINDOW_DAYS) {
+    if (days >= 7) {
+      const weeks = Math.round(days / 7);
+      return `En ${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
+    }
+    return `En ${Math.max(0, Math.round(days))} ${Math.max(0, Math.round(days)) === 1 ? "d\xEDa" : "d\xEDas"}`;
+  }
+  return "Pr\xF3ximo";
+}
+function buildReason(status, remainingKm, remainingDays, effKm, effMonths) {
+  switch (status) {
+    case "vencido":
+      return formatVencido(remainingKm, remainingDays);
+    case "proximo":
+      return formatProximo(remainingKm, remainingDays);
+    default: {
+      const km4 = effKm === null ? "\u2014" : String(effKm);
+      const months = effMonths === null ? "\u2014" : String(effMonths);
+      return `Al d\xEDa (cada ${km4} km / ${months} meses)`;
+    }
+  }
+}
+function latestLastService(lastServices, serviceId) {
+  const matches = lastServices.filter((s) => s.serviceId === serviceId).sort((a, b) => {
+    const aKm = a.km ?? 0;
+    const bKm = b.km ?? 0;
+    if (aKm !== bKm)
+      return bKm - aKm;
+    const aDate = a.date ? toDate(a.date).getTime() : 0;
+    const bDate = b.date ? toDate(b.date).getTime() : 0;
+    return bDate - aDate;
+  });
+  return matches[0];
+}
+function computeItem(input, serviceId) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const { classId, fuelId } = input.vehicle;
+  if (!isServiceApplicable(serviceId, classId, fuelId))
+    return null;
+  const ref = findSubservice(serviceId);
+  if (!ref || !ref.subservice.periodic)
+    return null;
+  const rule = resolveRules(classId, fuelId).find((r) => r.serviceId === serviceId);
+  if (!rule)
+    return null;
+  const severe = (input.usageProfile ?? "urbano") === "severo";
+  const factor = severe ? rule.severeFactor : 1;
+  const effKm = rule.intervalKm === null ? null : Math.round(rule.intervalKm * factor);
+  const effMonths = rule.intervalMonths === null ? null : rule.intervalMonths * factor;
+  const last = latestLastService(input.lastServices ?? [], serviceId);
+  const baseKm = last?.km ?? input.odometerKm;
+  const baseDate = last?.date ? toDate(last.date) : today;
+  const kmActive = effKm !== null;
+  const monthsActive = effMonths !== null;
+  const dueKm = kmActive ? baseKm + effKm : input.odometerKm;
+  const dueDate2 = monthsActive ? addMonths(baseDate, effMonths) : today;
+  const remainingKm = kmActive ? dueKm - input.odometerKm : null;
+  const remainingDays = monthsActive ? daysBetween(today, dueDate2) : null;
+  const status = computeItemStatus(remainingKm, remainingDays);
+  return {
+    serviceId: ref.subservice.id,
+    serviceName: ref.subservice.name,
+    categoryId: ref.category.id,
+    categoryName: ref.category.name,
+    dueKm,
+    dueDate: dueDate2,
+    remainingKm,
+    remainingDays,
+    effKm,
+    effMonths,
+    status
+  };
+}
+function buildPlan(input) {
+  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
+  const usageProfile = usageProfileOf(input);
+  const computed = [];
+  for (const category of serviceTaxonomy.categories) {
+    for (const subservice of category.subservices) {
+      if (!subservice.periodic)
+        continue;
+      const computation = computeItem(input, subservice.id);
+      if (!computation)
+        continue;
+      computed.push({
+        computation,
+        item: {
+          categoryId: computation.categoryId,
+          categoryName: computation.categoryName,
+          serviceId: computation.serviceId,
+          serviceName: computation.serviceName,
+          dueKm: computation.dueKm,
+          dueDate: computation.dueDate,
+          status: computation.status,
+          priority: priorityFor(computation.status),
+          costRefUsd: subservice.costRefUsd,
+          durationMin: subservice.durationMin,
+          remainingKm: computation.remainingKm ?? 0,
+          remainingDays: computation.remainingDays ?? 0,
+          reason: buildReason(computation.status, computation.remainingKm, computation.remainingDays, computation.effKm, computation.effMonths)
+        }
+      });
+    }
+  }
+  const urgency = (c) => {
+    const { remainingKm, remainingDays, effKm } = c.computation;
+    const kmUrgency = effKm !== null ? remainingKm ?? 0 : Number.MAX_SAFE_INTEGER;
+    const timeUrgency = c.computation.effMonths !== null ? remainingDays ?? 0 : Number.MAX_SAFE_INTEGER;
+    return Math.min(kmUrgency, timeUrgency);
+  };
+  computed.sort((a, b) => {
+    if (STATUS_ORDER[a.item.status] !== STATUS_ORDER[b.item.status]) {
+      return STATUS_ORDER[a.item.status] - STATUS_ORDER[b.item.status];
+    }
+    const aUrgency = urgency(a);
+    const bUrgency = urgency(b);
+    if (aUrgency !== bUrgency)
+      return aUrgency - bUrgency;
+    return a.item.serviceId.localeCompare(b.item.serviceId);
+  });
+  const items = computed.map((c) => c.item);
+  return {
+    generatedAt: today,
+    vehicle: input.vehicle,
+    odometerKm: input.odometerKm,
+    kmPerDay: estimateKmPerDay(input),
+    lastReadingDaysAgo: lastReadingDaysAgo(input),
+    usageProfile,
+    items
+  };
+}
+var MS_PER_DAY, DAYS_PER_MONTH, DEFAULT_KM_PER_DAY, NEXT_WINDOW_KM, NEXT_WINDOW_DAYS, STATUS_ORDER;
+var init_plan_engine = __esm({
+  "packages/api/dist/domain/maintenance/plan-engine.js"() {
+    "use strict";
+    init_catalogs();
+    init_catalogs();
+    MS_PER_DAY = 864e5;
+    DAYS_PER_MONTH = 30.44;
+    DEFAULT_KM_PER_DAY = {
+      urbano: 25,
+      carretera: 60,
+      severo: 40
+    };
+    NEXT_WINDOW_KM = 1e3;
+    NEXT_WINDOW_DAYS = 30;
+    STATUS_ORDER = { vencido: 0, proximo: 1, al_dia: 2 };
+  }
+});
+
+// packages/api/dist/domain/maintenance/plan-formatter.js
+function formatKm(value2) {
+  const rounded = String(Math.round(value2));
+  return rounded.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+function formatDuration(totalMin) {
+  const hours = Math.floor(totalMin / 60);
+  const minutes = totalMin % 60;
+  if (hours === 0)
+    return `${minutes} min`;
+  if (minutes === 0)
+    return `${hours} h`;
+  return `${hours} h ${minutes} min`;
+}
+function formatCost(costRefUsd) {
+  const rounded = Math.round(costRefUsd);
+  return `~$${rounded}`;
+}
+function fits(pageLines, newLine, maxLength) {
+  const joined = pageLines.length > 0 ? pageLines.join("\n") : "";
+  return joined.length === 0 ? newLine.length <= maxLength : joined.length + 1 + newLine.length <= maxLength;
+}
+function paginateText(headerLines, blocks, footerLines, maxLength = DEFAULT_MAX_LENGTH) {
+  let current = [...headerLines];
+  const pages = [];
+  const flush = () => {
+    pages.push(current);
+    current = [...headerLines];
+  };
+  for (let i = 0; i < blocks.length; i += 1) {
+    const block = blocks[i];
+    if (!fits(current, block, maxLength))
+      flush();
+    current.push(block);
+  }
+  for (const footerLine of footerLines) {
+    if (!fits(current, footerLine, maxLength))
+      flush();
+    current.push(footerLine);
+  }
+  if (current.length > 0 || pages.length === 0) {
+    pages.push(current);
+  }
+  return pages.map((page) => page.join("\n"));
+}
+function alDiaLine(items, budget) {
+  if (items.length === 0) {
+    return "\u{1F7E2} Al d\xEDa: ninguno pendiente";
+  }
+  const names = items.map((i) => i.serviceName);
+  const candidate = (shownCount) => {
+    const shown = names.slice(0, shownCount).join(", ");
+    const extra = names.length - shownCount;
+    const suffix = extra > 0 ? ` y ${extra} m\xE1s` : "";
+    return `\u{1F7E2} Al d\xEDa: ${shown}${suffix}`;
+  };
+  if (budget !== void 0) {
+    for (let shown = names.length; shown >= 1; shown -= 1) {
+      const line = candidate(shown);
+      if (line.length <= budget)
+        return line;
+    }
+  }
+  return candidate(5);
+}
+function formatPlanWhatsApp(ctx) {
+  const maxLength = ctx.maxLength ?? DEFAULT_MAX_LENGTH;
+  const { plan } = ctx;
+  let readingSuffix = "";
+  if (plan.lastReadingDaysAgo !== null) {
+    readingSuffix = plan.lastReadingDaysAgo === 0 ? " (actualizado hoy)" : ` (actualizado hace ${plan.lastReadingDaysAgo} d\xEDas)`;
+  }
+  const header = `${ctx.label} \xB7 ${formatKm(plan.odometerKm)} km${readingSuffix}`;
+  const vencidos = plan.items.filter((i) => i.status === "vencido");
+  const proximos = plan.items.filter((i) => i.status === "proximo");
+  const alDia = plan.items.filter((i) => i.status === "al_dia");
+  const numbered = [...vencidos, ...proximos];
+  const blocks = [];
+  const pushGroup = (title, group) => {
+    blocks.push(title);
+    if (group.length === 0) {
+      blocks.push("\xB7 ninguno");
+      return;
+    }
+    for (const item of group) {
+      const cost = formatCost(item.costRefUsd);
+      blocks.push(`${numbered.indexOf(item) + 1}) ${item.serviceName} \xB7 ${item.reason} \xB7 ${cost}`);
+    }
+  };
+  pushGroup("\u{1F534} Vencidos", vencidos);
+  pushGroup("\u{1F7E1} Pr\xF3ximos", proximos);
+  blocks.push(alDiaLine(alDia, maxLength - header.length - 1));
+  const firstOption = numbered.length + 1;
+  const footer = [
+    "",
+    "Responde con los n\xFAmeros que quieres atender (ej.: 1,3)",
+    `${firstOption}) Ver el plan completo   ${firstOption + 1}) Actualizar kilometraje   0) Men\xFA`
+  ];
+  return paginateText([header], blocks, footer, maxLength);
+}
+var DEFAULT_MAX_LENGTH;
+var init_plan_formatter = __esm({
+  "packages/api/dist/domain/maintenance/plan-formatter.js"() {
+    "use strict";
+    DEFAULT_MAX_LENGTH = 1024;
+  }
+});
+
+// packages/api/dist/domain/maintenance/validation.js
+var ALL_CLASSES, ALL_FUELS;
+var init_validation = __esm({
+  "packages/api/dist/domain/maintenance/validation.js"() {
+    "use strict";
+    init_catalogs();
+    ALL_CLASSES = new Set(classIds);
+    ALL_FUELS = new Set(fuelIds);
+  }
+});
+
+// packages/api/dist/domain/maintenance/index.js
+var init_maintenance = __esm({
+  "packages/api/dist/domain/maintenance/index.js"() {
+    "use strict";
+    init_types3();
+    init_schemas();
+    init_catalogs();
+    init_plan_engine();
+    init_plan_formatter();
+    init_validation();
+    init_catalogs();
   }
 });
 
@@ -62104,7 +63999,9 @@ var init_statements_extra = __esm({
       "Dispute",
       "Sanction",
       "DataRequest",
-      "Visit"
+      "Visit",
+      "ServiceRequest",
+      "ServiceOffer"
     ];
     APP_SETTING_TABLE_SQL = "CREATE TABLE IF NOT EXISTS `AppSetting` (\n    `name` VARCHAR(191) NOT NULL,\n    `value` TEXT NOT NULL,\n    `updatedBy` VARCHAR(191) NULL,\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    PRIMARY KEY (`name`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
     EXTRA_STATEMENTS = [
@@ -62237,6 +64134,56 @@ var init_statements_extra = __esm({
         kind: "createTable",
         target: "Sanction",
         sql: "CREATE TABLE IF NOT EXISTS `Sanction` (\n    `id` VARCHAR(191) NOT NULL,\n    `userId` VARCHAR(191) NOT NULL,\n    `level` VARCHAR(30) NOT NULL,\n    `reason` VARCHAR(500) NOT NULL,\n    `relationshipId` VARCHAR(191) NULL,\n    `disputeId` VARCHAR(191) NULL,\n    `startsAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `endsAt` DATETIME(3) NULL,\n    `liftedAt` DATETIME(3) NULL,\n    `liftedBy` VARCHAR(191) NULL,\n    `liftReason` VARCHAR(191) NULL,\n    `createdBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    INDEX `Sanction_userId_startsAt_idx`(`userId`, `startsAt`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      // Calificaciones del taller y del almacén (docs/46). La tabla Rating ya existe en el esquema
+      // generado: se amplía para saber de qué trabajo salió cada calificación y para poder ocultar
+      // una reseña con motivo, sin borrarla.
+      addColumn("Rating", "kind", "VARCHAR(20) NULL"),
+      addColumn("Rating", "workOrderId", "VARCHAR(191) NULL"),
+      addColumn("Rating", "quoteRequestId", "VARCHAR(191) NULL"),
+      addColumn("Rating", "hiddenAt", "DATETIME(3) NULL"),
+      addColumn("Rating", "hiddenBy", "VARCHAR(191) NULL"),
+      addColumn("Rating", "hiddenReason", "VARCHAR(191) NULL"),
+      {
+        kind: "createIndex",
+        target: "Rating.Rating_toId_createdAt_idx",
+        sql: "CREATE INDEX `Rating_toId_createdAt_idx` ON `Rating`(`toId`, `createdAt`)"
+      },
+      {
+        kind: "createIndex",
+        target: "Rating.Rating_workOrderId_idx",
+        sql: "CREATE INDEX `Rating_workOrderId_idx` ON `Rating`(`workOrderId`)"
+      },
+      addColumn("Shop", "ratingCount", "INTEGER NOT NULL DEFAULT 0"),
+      addColumn("Store", "ratingAvg", "DOUBLE NOT NULL DEFAULT 0"),
+      addColumn("Store", "ratingCount", "INTEGER NOT NULL DEFAULT 0"),
+      // Solicitudes de especialista (docs/45): el dueño describe lo que necesita y la solicitud llega
+      // a los talleres verificados que coinciden por especialidad y ciudad. Cada taller responde con
+      // precio y disponibilidad; el dueño elige uno.
+      {
+        kind: "createTable",
+        target: "ServiceRequest",
+        sql: "CREATE TABLE IF NOT EXISTS `ServiceRequest` (\n    `id` VARCHAR(191) NOT NULL,\n    `number` INTEGER NOT NULL,\n    `ownerId` VARCHAR(191) NOT NULL,\n    `vehicleId` VARCHAR(191) NULL,\n    `category` VARCHAR(40) NOT NULL,\n    `description` TEXT NOT NULL,\n    `city` VARCHAR(191) NULL,\n    `zone` VARCHAR(120) NULL,\n    `status` VARCHAR(20) NOT NULL DEFAULT 'abierta',\n    `chosenOfferId` VARCHAR(191) NULL,\n    `closeReason` VARCHAR(191) NULL,\n    `createdBy` VARCHAR(191) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    UNIQUE INDEX `ServiceRequest_number_key`(`number`),\n    INDEX `ServiceRequest_status_createdAt_idx`(`status`, `createdAt`),\n    INDEX `ServiceRequest_ownerId_idx`(`ownerId`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      {
+        kind: "createTable",
+        target: "ServiceOffer",
+        sql: "CREATE TABLE IF NOT EXISTS `ServiceOffer` (\n    `id` VARCHAR(191) NOT NULL,\n    `requestId` VARCHAR(191) NOT NULL,\n    `shopId` VARCHAR(191) NOT NULL,\n    `status` VARCHAR(20) NOT NULL DEFAULT 'invitado',\n    `priceUsd` DECIMAL(10, 2) NULL,\n    `durationMin` INTEGER NULL,\n    `availability` VARCHAR(191) NULL,\n    `warrantyDays` INTEGER NULL,\n    `notes` VARCHAR(191) NULL,\n    `respondedAt` DATETIME(3) NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    UNIQUE INDEX `ServiceOffer_requestId_shopId_key`(`requestId`, `shopId`),\n    INDEX `ServiceOffer_shopId_status_idx`(`shopId`, `status`),\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+      },
+      {
+        kind: "addForeignKey",
+        target: "ServiceRequest.ServiceRequest_ownerId_fkey",
+        sql: "ALTER TABLE `ServiceRequest` ADD CONSTRAINT `ServiceRequest_ownerId_fkey` FOREIGN KEY (`ownerId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE"
+      },
+      {
+        kind: "addForeignKey",
+        target: "ServiceOffer.ServiceOffer_requestId_fkey",
+        sql: "ALTER TABLE `ServiceOffer` ADD CONSTRAINT `ServiceOffer_requestId_fkey` FOREIGN KEY (`requestId`) REFERENCES `ServiceRequest`(`id`) ON DELETE CASCADE ON UPDATE CASCADE"
+      },
+      {
+        kind: "addForeignKey",
+        target: "ServiceOffer.ServiceOffer_shopId_fkey",
+        sql: "ALTER TABLE `ServiceOffer` ADD CONSTRAINT `ServiceOffer_shopId_fkey` FOREIGN KEY (`shopId`) REFERENCES `Shop`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE"
       },
       // Visitas a la página de inicio (docs/43): el código AMP-XXXXX es único, se liga al teléfono
       // cuando la persona escribe y al usuario cuando se registra. Sin datos personales hasta que
@@ -72458,12 +74405,12 @@ var require_helpers = __commonJS({
       const REQUIRE_TERMINATOR = "";
       highlightFn = __require(`cardinal${REQUIRE_TERMINATOR}`).highlight;
     } catch {
-      highlightFn = (text5) => {
+      highlightFn = (text7) => {
         if (!cardinalRecommended) {
           console.log("For nicer debug output consider install cardinal@^2.0.0");
           cardinalRecommended = true;
         }
-        return text5;
+        return text7;
       };
     }
     function printDebugWithCode(msg, code) {
@@ -78921,21 +80868,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows11, fields;
+          let rows13, fields;
           if (this._resultIndex === 0) {
-            rows11 = this._rows[0];
+            rows13 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows11 = this._rows;
+            rows13 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows11, fields);
+              this.onResult(null, rows13, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows11);
+              this.onResult(null, rows13);
             });
           }
         }
@@ -81492,9 +83439,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows11, columns, binary = false) {
+      writeTextResult(rows13, columns, binary = false) {
         this.writeColumns(columns);
-        rows11.forEach((row) => {
+        rows13.forEach((row) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column) => {
             arrayRow.push(row[column.name]);
@@ -81604,12 +83551,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve, reject, stackHolder) {
-      return function(err, rows11, fields) {
+      return function(err, rows13, fields) {
         if (err) {
           applyCapturedStack(err, stackHolder);
           reject(err);
         } else {
-          resolve([rows11, fields]);
+          resolve([rows13, fields]);
         }
       };
     }
@@ -82217,9 +84164,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err2, rows11, fields) {
+              cmdQuery.onResult = function(err2, rows13, fields) {
                 queryError = err2 || null;
-                origOnResult(err2, rows11, fields);
+                origOnResult(err2, rows13, fields);
               };
             } else {
               cmdQuery.once("error", (err2) => {
@@ -82254,11 +84201,11 @@ var require_pool = __commonJS({
             return cb(err);
           }
           try {
-            conn.execute(sql, values, (err2, rows11, fields) => {
+            conn.execute(sql, values, (err2, rows13, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
-              cb(err2, rows11, fields);
+              cb(err2, rows13, fields);
             }).once("end", () => {
               conn.release();
             });
@@ -83084,8 +85031,8 @@ async function openConnection(env = process.env) {
   });
 }
 function firstRow(result) {
-  const rows11 = result[0];
-  return Array.isArray(rows11) ? rows11[0] : void 0;
+  const rows13 = result[0];
+  return Array.isArray(rows13) ? rows13[0] : void 0;
 }
 async function count(conn, sql, params) {
   const row = firstRow(await conn.query(sql, params));
@@ -83114,8 +85061,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows11] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows11) ? rows11.map((r) => String(r.name)) : [];
+  const [rows13] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows13) ? rows13.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -83244,8 +85191,8 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows11] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row = Array.isArray(rows11) ? rows11[0] : void 0;
+          const [rows13] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row = Array.isArray(rows13) ? rows13[0] : void 0;
           return row?.value === void 0 || row.value === null ? null : String(row.value);
         });
       }
@@ -83478,1866 +85425,6 @@ var init_visit_store = __esm({
         })));
       }
     };
-  }
-});
-
-// packages/api/dist/domain/maintenance/types.js
-var init_types3 = __esm({
-  "packages/api/dist/domain/maintenance/types.js"() {
-    "use strict";
-  }
-});
-
-// packages/api/dist/domain/maintenance/schemas.js
-var vehicleClassSchema, fuelSchema, vehicleClassesSchema, appliesToSchema, subserviceSchema, categorySchema, serviceTaxonomySchema, maintenanceRuleSchema, maintenanceRulesSchema;
-var init_schemas = __esm({
-  "packages/api/dist/domain/maintenance/schemas.js"() {
-    "use strict";
-    init_zod();
-    vehicleClassSchema = external_exports.object({
-      id: external_exports.string().min(1),
-      name: external_exports.string().min(1),
-      subtypes: external_exports.array(external_exports.string()).default([])
-    });
-    fuelSchema = external_exports.object({
-      id: external_exports.string().min(1),
-      name: external_exports.string().min(1)
-    });
-    vehicleClassesSchema = external_exports.object({
-      version: external_exports.string(),
-      source: external_exports.string(),
-      generatedAt: external_exports.string().optional(),
-      note: external_exports.string().optional(),
-      classes: external_exports.array(vehicleClassSchema).min(1),
-      fuels: external_exports.array(fuelSchema).min(1)
-    });
-    appliesToSchema = external_exports.object({
-      classes: external_exports.array(external_exports.string()).min(1),
-      fuels: external_exports.array(external_exports.string()).min(1)
-    });
-    subserviceSchema = external_exports.object({
-      id: external_exports.string().min(1),
-      name: external_exports.string().min(1),
-      detail: external_exports.string().optional(),
-      periodic: external_exports.boolean().default(false),
-      appliesTo: appliesToSchema,
-      durationMin: external_exports.number().int().min(1),
-      costRefUsd: external_exports.number().min(0),
-      costNote: external_exports.string().optional()
-    });
-    categorySchema = external_exports.object({
-      id: external_exports.string().min(1),
-      name: external_exports.string().min(1),
-      order: external_exports.number().int().min(1),
-      subservices: external_exports.array(subserviceSchema).min(1)
-    });
-    serviceTaxonomySchema = external_exports.object({
-      version: external_exports.string(),
-      source: external_exports.string(),
-      generatedAt: external_exports.string().optional(),
-      note: external_exports.string().optional(),
-      categories: external_exports.array(categorySchema)
-    });
-    maintenanceRuleSchema = external_exports.object({
-      serviceId: external_exports.string().min(1),
-      classId: external_exports.array(external_exports.string()).min(1),
-      fuelId: external_exports.array(external_exports.string()).min(1),
-      intervalKm: external_exports.number().int().positive().nullable(),
-      intervalMonths: external_exports.number().int().positive().nullable(),
-      severeFactor: external_exports.number().min(0.5).max(0.8),
-      note: external_exports.string().optional()
-    });
-    maintenanceRulesSchema = external_exports.object({
-      version: external_exports.string(),
-      source: external_exports.string(),
-      generatedAt: external_exports.string().optional(),
-      note: external_exports.string().optional(),
-      rules: external_exports.array(maintenanceRuleSchema)
-    });
-  }
-});
-
-// packages/api/dist/domain/maintenance/vehicle-classes.json
-var vehicle_classes_default;
-var init_vehicle_classes = __esm({
-  "packages/api/dist/domain/maintenance/vehicle-classes.json"() {
-    vehicle_classes_default = {
-      version: "1.0.0",
-      source: "docs/25-diseno-producto-whatsapp-30dias.md \xA71.3 \u2014 clases y combustibles",
-      generatedAt: "2026-09-11",
-      note: "Cat\xE1logo maestro de clases de veh\xEDculo y combustibles. Las clases son las 8 de la cobertura global; 'liviano' agrupa sed\xE1n, hatchback, SUV y pickup (misma l\xF3gica de mantenimiento).",
-      classes: [
-        {
-          id: "motocicleta",
-          name: "Motocicleta / Scooter",
-          subtypes: ["moto", "scooter", "motocicleta", "vespa", "cielo"]
-        },
-        {
-          id: "cuadron",
-          name: "Cuadr\xF3n / ATV",
-          subtypes: ["cuadron", "atv", "cuatrimoto", "quad", "cuv"]
-        },
-        {
-          id: "liviano",
-          name: "Liviano (sed\xE1n, hatchback, SUV, pickup)",
-          subtypes: ["sedan", "sed\xE1n", "hatchback", "suv", "camioneta", "pickup", "auto", "carro", "vehiculo"]
-        },
-        {
-          id: "van",
-          name: "Van / Furgoneta",
-          subtypes: ["van", "furgoneta", "furgon", "panel"]
-        },
-        {
-          id: "comercial_liviano",
-          name: "Comercial liviano",
-          subtypes: ["comercial_liviano", "comercial", "reparto", "furgon"]
-        },
-        {
-          id: "camion",
-          name: "Cami\xF3n mediano / pesado",
-          subtypes: ["camion", "camin", "truck", "cabezal", "volqueta", "carguero"]
-        },
-        {
-          id: "bus",
-          name: "Bus / Buseta",
-          subtypes: ["bus", "buseta", "cooperativa", "colectivo", "transporte_publico"]
-        },
-        {
-          id: "maquinaria_liviana",
-          name: "Maquinaria liviana",
-          subtypes: ["maquinaria", "maquinaria_liviana", "tractor", "retroexcavadora", "montacarga"]
-        }
-      ],
-      fuels: [
-        {
-          id: "gasolina",
-          name: "Gasolina"
-        },
-        {
-          id: "diesel",
-          name: "Di\xE9sel"
-        },
-        {
-          id: "hev",
-          name: "H\xEDbrido (HEV)"
-        },
-        {
-          id: "phev",
-          name: "H\xEDbrido enchufable (PHEV)"
-        },
-        {
-          id: "bev",
-          name: "El\xE9ctrico (BEV)"
-        },
-        {
-          id: "glp_gnv",
-          name: "GLP / GNV (gas)"
-        }
-      ]
-    };
-  }
-});
-
-// packages/api/dist/domain/maintenance/service-taxonomy.json
-var service_taxonomy_default;
-var init_service_taxonomy = __esm({
-  "packages/api/dist/domain/maintenance/service-taxonomy.json"() {
-    service_taxonomy_default = {
-      version: "1.0.0",
-      source: "docs/25-diseno-producto-whatsapp-30dias.md \xA71.3 \u2014 taxonom\xEDa de servicios (22 categor\xEDas)",
-      generatedAt: "2026-09-11",
-      note: "Cat\xE1logo maestro de servicios. 'periodic' indica si el servicio entra en el plan de mantenimiento (tiene intervalo en maintenance-rules.json); los no peri\xF3dicos (carrocer\xEDa, detailing, gr\xFAa\u2026) se solicitan bajo demanda. appliesTo: clases y combustibles a los que aplica ('*' = todas). durationMin y costRefUsd son valores REFERENCIALES conservadores del mercado ecuatoriano (USD), orientativos para el plan; no son presupuesto.",
-      categories: [
-        {
-          id: "prevencion",
-          name: "Mantenimiento preventivo por km",
-          order: 1,
-          subservices: [
-            {
-              id: "prep_inspeccion",
-              name: "Inspecci\xF3n multipunto preventiva",
-              detail: "Revisi\xF3n visual y funcional de los principales sistemas del veh\xEDculo.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 60,
-              costRefUsd: 25,
-              costNote: "Referencial; checklist b\xE1sico de 25\u201335 USD seg\xFAn taller."
-            }
-          ]
-        },
-        {
-          id: "lubricacion",
-          name: "Lubricaci\xF3n / aceite",
-          order: 2,
-          subservices: [
-            {
-              id: "aceite_motor",
-              name: "Cambio de aceite y filtro de motor",
-              detail: "Aceite seg\xFAn especificaci\xF3n del fabricante y filtro nuevo.",
-              periodic: true,
-              appliesTo: {
-                classes: ["*"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 60,
-              costRefUsd: 45,
-              costNote: "Referencial; 30\u201370 USD seg\xFAn gama y tipo de aceite. NO aplica a BEV (sin motor de combusti\xF3n)."
-            }
-          ]
-        },
-        {
-          id: "motor",
-          name: "Motor",
-          order: 3,
-          subservices: [
-            {
-              id: "motor_bujias",
-              name: "Cambio de buj\xEDas / kit de encendido",
-              detail: "Buj\xEDas nuevas y prueba del sistema de encendido (no aplica a di\xE9sel ni a BEV).",
-              periodic: true,
-              appliesTo: {
-                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano"],
-                fuels: ["gasolina", "glp_gnv", "hev", "phev"]
-              },
-              durationMin: 90,
-              costRefUsd: 80,
-              costNote: "Referencial por juego; 50\u2013120 USD seg\xFAn motor y n\xFAmero de cilindros."
-            },
-            {
-              id: "motor_filtro_aire",
-              name: "Cambio de filtro de aire",
-              detail: "Reemplazo del elemento filtrante de admisi\xF3n de aire.",
-              periodic: true,
-              appliesTo: {
-                classes: ["*"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 30,
-              costRefUsd: 18,
-              costNote: "Referencial; 12\u201335 USD seg\xFAn marca. NO aplica a BEV."
-            },
-            {
-              id: "motor_correa",
-              name: "Revisi\xF3n / cambio de correas",
-              detail: "Inspecci\xF3n y cambio de correa(s) de distribuci\xF3n o de accesorios seg\xFAn especificaci\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 180,
-              costRefUsd: 250,
-              costNote: "Referencial; 150\u2013400 USD seg\xFAn motor. Cat\xE1logo conservador de manuales t\xEDpicos."
-            }
-          ]
-        },
-        {
-          id: "inyeccion",
-          name: "Inyecci\xF3n / combustible",
-          order: 4,
-          subservices: [
-            {
-              id: "iny_filtro_combustible",
-              name: "Cambio de filtro de combustible",
-              detail: "Reemplazo del filtro de combustible del sistema de inyecci\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["*"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 60,
-              costRefUsd: 35,
-              costNote: "Referencial; 25\u201360 USD. Los de di\xE9sel suelen cambiarse con mayor frecuencia. NO aplica a BEV."
-            },
-            {
-              id: "iny_limpieza",
-              name: "Limpieza de inyectores / sistema",
-              detail: "Limpieza del sistema de inyecci\xF3n (banco o aditivo de limpieza).",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 90,
-              costRefUsd: 80,
-              costNote: "Referencial; 50\u2013120 USD. NO aplica a BEV."
-            }
-          ]
-        },
-        {
-          id: "refrigeracion",
-          name: "Refrigeraci\xF3n",
-          order: 5,
-          subservices: [
-            {
-              id: "ref_antifreeze",
-              name: "Cambio de refrigerante / anticongelante",
-              detail: "Reemplazo del l\xEDquido refrigerante y revisi\xF3n de fugas.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 60,
-              costRefUsd: 45,
-              costNote: "Referencial; 35\u201370 USD. Aplica tambi\xE9n a BEV (refrigeraci\xF3n de bater\xEDa y electr\xF3nica)."
-            },
-            {
-              id: "ref_radiador",
-              name: "Lavado de radiador / sistema",
-              detail: "Lavado del circuito de refrigeraci\xF3n y revisi\xF3n de mangueras.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-                fuels: ["*"]
-              },
-              durationMin: 90,
-              costRefUsd: 60,
-              costNote: "Referencial; 40\u201390 USD."
-            }
-          ]
-        },
-        {
-          id: "frenos",
-          name: "Frenos",
-          order: 6,
-          subservices: [
-            {
-              id: "freno_liquido",
-              name: "Cambio de l\xEDquido de frenos",
-              detail: "Sangr\xEDa y reemplazo del l\xEDquido de frenos (car\xE1cter higrosc\xF3pico).",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 60,
-              costRefUsd: 35,
-              costNote: "Referencial; 25\u201355 USD."
-            },
-            {
-              id: "freno_pastillas",
-              name: "Inspecci\xF3n / cambio de pastillas y discos",
-              detail: "Inspecci\xF3n de espesor de pastillas y discos; reposici\xF3n seg\xFAn desgaste.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 90,
-              costRefUsd: 90,
-              costNote: "Referencial (juego delantero); 60\u2013160 USD seg\xFAn veh\xEDculo."
-            },
-            {
-              id: "freno_regulacion",
-              name: "Regulaci\xF3n de frenos (moto)",
-              detail: "Ajuste y revisi\xF3n del sistema de frenos de motocicleta / cuadr\xF3n.",
-              periodic: true,
-              appliesTo: { classes: ["motocicleta", "cuadron"], fuels: ["*"] },
-              durationMin: 45,
-              costRefUsd: 20,
-              costNote: "Referencial; 15\u201330 USD."
-            }
-          ]
-        },
-        {
-          id: "suspension",
-          name: "Suspensi\xF3n y direcci\xF3n",
-          order: 7,
-          subservices: [
-            {
-              id: "susp_amortiguadores",
-              name: "Revisi\xF3n / cambio de amortiguadores",
-              detail: "Prueba y sustituci\xF3n de amortiguadores y bujes seg\xFAn desgaste.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 90,
-              costRefUsd: 150,
-              costNote: "Referencial por eje; 100\u2013250 USD."
-            },
-            {
-              id: "susp_direccion",
-              name: "Inspecci\xF3n de suspensi\xF3n y direcci\xF3n",
-              detail: "Inspecci\xF3n de terminales, r\xF3tulas, barra y juego de direcci\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 45,
-              costRefUsd: 25,
-              costNote: "Referencial; 20\u201340 USD."
-            }
-          ]
-        },
-        {
-          id: "transmision",
-          name: "Transmisi\xF3n / embrague",
-          order: 8,
-          subservices: [
-            {
-              id: "trans_aceite_caja",
-              name: "Cambio de aceite de caja / diferencial",
-              detail: "Reemplazo del lubricante de la caja de cambios y diferencial.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 90,
-              costRefUsd: 65,
-              costNote: "Referencial; 45\u2013110 USD. En BEV aplica al lubricante de la transmisi\xF3n de reducci\xF3n."
-            },
-            {
-              id: "trans_filtro_caja",
-              name: "Cambio de filtro de caja autom\xE1tica",
-              detail: "Reemplazo del filtro y servicio de la caja autom\xE1tica.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 120,
-              costRefUsd: 90,
-              costNote: "Referencial; 70\u2013150 USD."
-            },
-            {
-              id: "trans_embrague",
-              name: "Revisi\xF3n de embrague",
-              detail: "Inspecci\xF3n del desgaste del embrague y ajuste seg\xFAn el caso.",
-              periodic: true,
-              appliesTo: {
-                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 60,
-              costRefUsd: 40,
-              costNote: "Referencial (revisi\xF3n); 30\u201360 USD. El kit de embrague se cotiza aparte."
-            },
-            {
-              id: "trans_cadena",
-              name: "Ajuste y lubricaci\xF3n de cadena (moto)",
-              detail: "Limpieza, ajuste y lubricaci\xF3n de la cadena de transmisi\xF3n.",
-              periodic: true,
-              appliesTo: { classes: ["motocicleta", "cuadron"], fuels: ["*"] },
-              durationMin: 30,
-              costRefUsd: 15,
-              costNote: "Referencial; 10\u201325 USD."
-            }
-          ]
-        },
-        {
-          id: "neumaticos",
-          name: "Neum\xE1ticos / alineaci\xF3n / balanceo",
-          order: 9,
-          subservices: [
-            {
-              id: "llanta_rotacion",
-              name: "Rotaci\xF3n de neum\xE1ticos",
-              detail: "Rotaci\xF3n cruzada de neum\xE1ticos para desgaste parejo.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 45,
-              costRefUsd: 12,
-              costNote: "Referencial; 8\u201320 USD."
-            },
-            {
-              id: "llanta_alineacion",
-              name: "Alineaci\xF3n y balanceo",
-              detail: "Alineaci\xF3n de direcci\xF3n y balanceo de las ruedas.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 60,
-              costRefUsd: 30,
-              costNote: "Referencial; 20\u201345 USD."
-            },
-            {
-              id: "llanta_presion",
-              name: "Revisi\xF3n de presi\xF3n y desgaste",
-              detail: "Control de presi\xF3n de inflado y profundidad del dibujo.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 30,
-              costRefUsd: 10,
-              costNote: "Referencial; 5\u201315 USD."
-            },
-            {
-              id: "llanta_cambio",
-              name: "Cambio de neum\xE1ticos",
-              detail: "Sustituci\xF3n de llantas por vida \xFAtil o desgaste.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 90,
-              costRefUsd: 150,
-              costNote: "Referencial por juego de 2; el precio var\xEDa por marca y perfil."
-            }
-          ]
-        },
-        {
-          id: "electrico",
-          name: "El\xE9ctrico / bater\xEDa",
-          order: 10,
-          subservices: [
-            {
-              id: "elec_bateria",
-              name: "Prueba y mantenimiento de bater\xEDa",
-              detail: "Prueba de carga, estado de los bornes y mantenimiento de la bater\xEDa de 12 V.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 30,
-              costRefUsd: 10,
-              costNote: "Referencial; 5\u201315 USD. Aplica a todos, incluido BEV (bater\xEDa de servicios)."
-            },
-            {
-              id: "elec_alternador",
-              name: "Revisi\xF3n de alternador / sistema de carga",
-              detail: "Comprobaci\xF3n del sistema de carga del veh\xEDculo.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 45,
-              costRefUsd: 25,
-              costNote: "Referencial; 20\u201340 USD."
-            },
-            {
-              id: "elec_luces",
-              name: "Revisi\xF3n de luces y se\xF1alizaci\xF3n",
-              detail: "Verificaci\xF3n de luces exteriores, interiores y se\xF1alizaci\xF3n del tablero.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 30,
-              costRefUsd: 8,
-              costNote: "Referencial; 5\u201312 USD."
-            }
-          ]
-        },
-        {
-          id: "electronica",
-          name: "Electr\xF3nica / esc\xE1ner",
-          order: 11,
-          subservices: [
-            {
-              id: "escaner_diagnostico",
-              name: "Escaneo electr\xF3nico de c\xF3digos",
-              detail: "Lectura de c\xF3digos de falla y prueba de m\xF3dulos electr\xF3nicos.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 45,
-              costRefUsd: 25,
-              costNote: "Referencial; 20\u201340 USD."
-            }
-          ]
-        },
-        {
-          id: "climatizacion",
-          name: "Climatizaci\xF3n",
-          order: 12,
-          subservices: [
-            {
-              id: "clima_filtro_cabina",
-              name: "Cambio de filtro de cabina",
-              detail: "Reemplazo del filtro de habit\xE1culo del aire acondicionado.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 30,
-              costRefUsd: 25,
-              costNote: "Referencial; 18\u201340 USD."
-            },
-            {
-              id: "clima_recarga",
-              name: "Recarga y mantenimiento de A/C",
-              detail: "Recarga de gas refrigerante y revisi\xF3n del circuito de climatizaci\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 90,
-              costRefUsd: 80,
-              costNote: "Referencial; 60\u2013120 USD."
-            },
-            {
-              id: "clima_desinfeccion",
-              name: "Desinfecci\xF3n del sistema de climatizaci\xF3n",
-              detail: "Limpieza y desinfecci\xF3n de ductos y evaporador (control de olores).",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 30,
-              costRefUsd: 20,
-              costNote: "Referencial; 15\u201335 USD."
-            }
-          ]
-        },
-        {
-          id: "escape",
-          name: "Escape / emisiones",
-          order: 13,
-          subservices: [
-            {
-              id: "escape_gases",
-              name: "Revisi\xF3n de escape y emisiones",
-              detail: "Inspecci\xF3n del sistema de escape y control de emisiones.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 30,
-              costRefUsd: 15,
-              costNote: "Referencial; 10\u201325 USD. NO aplica a BEV (sin escape)."
-            },
-            {
-              id: "escape_mofle",
-              name: "Cambio de mofle / silenciador",
-              detail: "Sustituci\xF3n del silenciador o tramos del sistema de escape.",
-              periodic: false,
-              appliesTo: {
-                classes: ["*"],
-                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
-              },
-              durationMin: 90,
-              costRefUsd: 120,
-              costNote: "Referencial; 80\u2013200 USD. Bajo demanda."
-            }
-          ]
-        },
-        {
-          id: "carroceria",
-          name: "Carrocer\xEDa / pintura",
-          order: 14,
-          subservices: [
-            {
-              id: "carro_enderezada",
-              name: "Enderezada y pintura",
-              detail: "Reparaci\xF3n de abolladuras y pintura de paneles.",
-              periodic: false,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 240,
-              costRefUsd: 250,
-              costNote: "Referencial por panel; depende de da\xF1o. Bajo demanda."
-            },
-            {
-              id: "carro_anticorrosiva",
-              name: "Protecci\xF3n anticorrosiva",
-              detail: "Tratamiento anticorrosivo de bajos y cavidades.",
-              periodic: false,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 90,
-              costRefUsd: 60,
-              costNote: "Referencial; 45\u201390 USD. Bajo demanda."
-            }
-          ]
-        },
-        {
-          id: "vidrios",
-          name: "Vidrios",
-          order: 15,
-          subservices: [
-            {
-              id: "vidrio_parabrisas",
-              name: "Cambio / reparaci\xF3n de parabrisas",
-              detail: "Reparaci\xF3n de fisuras o sustituci\xF3n del parabrisas.",
-              periodic: false,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 60,
-              costRefUsd: 120,
-              costNote: "Referencial; 90\u2013250 USD seg\xFAn veh\xEDculo. Bajo demanda."
-            },
-            {
-              id: "vidrio_limpiadores",
-              name: "Cambio de escobillas / plumillas",
-              detail: "Sustituci\xF3n de las escobillas de limpiaparabrisas.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-                fuels: ["*"]
-              },
-              durationMin: 15,
-              costRefUsd: 12,
-              costNote: "Referencial; juega por juego de 2."
-            }
-          ]
-        },
-        {
-          id: "interior",
-          name: "Interior / tapicer\xEDa",
-          order: 16,
-          subservices: [
-            {
-              id: "interior_limpieza",
-              name: "Limpieza de tapicer\xEDa y tablero",
-              detail: "Limpieza profunda de asientos, alfombras y tablero.",
-              periodic: false,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-                fuels: ["*"]
-              },
-              durationMin: 120,
-              costRefUsd: 45,
-              costNote: "Referencial; 35\u201370 USD. Bajo demanda."
-            }
-          ]
-        },
-        {
-          id: "lavado",
-          name: "Lavado / detailing",
-          order: 17,
-          subservices: [
-            {
-              id: "lavado_exterior",
-              name: "Lavado exterior con sellador",
-              detail: "Lavado completo y sellador protector de pintura.",
-              periodic: false,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 45,
-              costRefUsd: 15,
-              costNote: "Referencial; 10\u201325 USD. Bajo demanda."
-            },
-            {
-              id: "lavado_detailing",
-              name: "Detailing completo",
-              detail: "Lavado, pulido, descontaminaci\xF3n y acabado profesional.",
-              periodic: false,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 180,
-              costRefUsd: 80,
-              costNote: "Referencial; 60\u2013140 USD. Bajo demanda."
-            }
-          ]
-        },
-        {
-          id: "diesel",
-          name: "Di\xE9sel / turbo",
-          order: 18,
-          subservices: [
-            {
-              id: "die_turbo",
-              name: "Revisi\xF3n de turbo / admisi\xF3n",
-              detail: "Inspecci\xF3n del turbocompresor y del sistema de admisi\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["comercial_liviano", "camion", "bus"],
-                fuels: ["diesel"]
-              },
-              durationMin: 90,
-              costRefUsd: 90,
-              costNote: "Referencial (revisi\xF3n); 60\u2013140 USD."
-            },
-            {
-              id: "die_inyectores",
-              name: "Prueba de inyectores di\xE9sel",
-              detail: "Prueba en banco y ajuste / reemplazo de inyectores di\xE9sel.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-                fuels: ["diesel"]
-              },
-              durationMin: 120,
-              costRefUsd: 110,
-              costNote: "Referencial; 80\u2013180 USD."
-            },
-            {
-              id: "die_dpf",
-              name: "Limpieza de filtro de part\xEDculas (DPF)",
-              detail: "Limpieza / regeneraci\xF3n del filtro de part\xEDculas di\xE9sel.",
-              periodic: true,
-              appliesTo: {
-                classes: ["comercial_liviano", "camion", "bus"],
-                fuels: ["diesel"]
-              },
-              durationMin: 120,
-              costRefUsd: 130,
-              costNote: "Referencial; 90\u2013200 USD."
-            }
-          ]
-        },
-        {
-          id: "alto_voltaje",
-          name: "Alto voltaje (EV/HEV)",
-          order: 19,
-          subservices: [
-            {
-              id: "hv_inspeccion",
-              name: "Inspecci\xF3n del sistema de alto voltaje",
-              detail: "Revisi\xF3n de cables, conectores y aislamiento del sistema de alto voltaje.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["hev", "phev", "bev"]
-              },
-              durationMin: 60,
-              costRefUsd: 35,
-              costNote: "Referencial; 25\u201355 USD. SOLO h\xEDbridos y el\xE9ctricos."
-            },
-            {
-              id: "hv_bateria_traccion",
-              name: "Prueba de bater\xEDa de tracci\xF3n",
-              detail: "Prueba de capacidad y estado de la bater\xEDa de alta tensi\xF3n.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["hev", "phev", "bev"]
-              },
-              durationMin: 90,
-              costRefUsd: 50,
-              costNote: "Referencial; 35\u201380 USD. SOLO h\xEDbridos y el\xE9ctricos."
-            }
-          ]
-        },
-        {
-          id: "glp_gnv",
-          name: "GLP/GNV",
-          order: 20,
-          subservices: [
-            {
-              id: "glp_inspeccion",
-              name: "Inspecci\xF3n peri\xF3dica del sistema de gas",
-              detail: "Inspecci\xF3n reglamentaria del sistema GLP/GNV (comprobaci\xF3n de fugas y v\xE1lvulas).",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["glp_gnv"]
-              },
-              durationMin: 60,
-              costRefUsd: 45,
-              costNote: "Referencial; 30\u201360 USD. Solo veh\xEDculos con sistema de gas."
-            },
-            {
-              id: "glp_filtro",
-              name: "Cambio de filtro de gas",
-              detail: "Reemplazo del filtro del sistema de gas licuado / natural vehicular.",
-              periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["glp_gnv"]
-              },
-              durationMin: 60,
-              costRefUsd: 40,
-              costNote: "Referencial; 30\u201355 USD."
-            }
-          ]
-        },
-        {
-          id: "grua",
-          name: "Gr\xFAa / asistencia",
-          order: 21,
-          subservices: [
-            {
-              id: "grua_remolque",
-              name: "Servicio de gr\xFAa / remolque",
-              detail: "Traslado del veh\xEDculo con gr\xFAa o asistencia en carretera.",
-              periodic: false,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 120,
-              costRefUsd: 60,
-              costNote: "Referencial por carrera corta; 40\u201390 USD. Bajo demanda."
-            }
-          ]
-        },
-        {
-          id: "rtv",
-          name: "Pre-revisi\xF3n t\xE9cnica vehicular (RTV)",
-          order: 22,
-          subservices: [
-            {
-              id: "rtv_pretest",
-              name: "Pre-chequeo para RTV",
-              detail: "Chequeo previo de los puntos que revisa la Revisi\xF3n T\xE9cnica Vehicular.",
-              periodic: true,
-              appliesTo: { classes: ["*"], fuels: ["*"] },
-              durationMin: 60,
-              costRefUsd: 35,
-              costNote: "Referencial; 25\u201350 USD. Per\xEDodo anual."
-            }
-          ]
-        }
-      ]
-    };
-  }
-});
-
-// packages/api/dist/domain/maintenance/maintenance-rules.json
-var maintenance_rules_default;
-var init_maintenance_rules = __esm({
-  "packages/api/dist/domain/maintenance/maintenance-rules.json"() {
-    maintenance_rules_default = {
-      version: "1.0.0",
-      source: "Motor de reglas de mantenimiento \u2014 referencial",
-      generatedAt: "2026-09-11",
-      note: "Valores conservadores basados en manuales de mantenimiento T\xCDPICOS y pr\xE1cticas del mercado ecuatoriano (referencial, sin datos de una marca concreta). intervalKm e intervalMonths son los intervalos base; severeFactor (0,5\u20130,8) se aplica cuando el uso es SEVERO (Sierra: altitud y pendientes; uso por defecto en Quito). Las combinaciones (clase, combustible) por servicio coinciden EXACTAMENTE con appliesTo de service-taxonomy.json; si un servicio o combinaci\xF3n no aparece aqu\xED, no entra en el plan.",
-      rules: [
-        {
-          serviceId: "prep_inspeccion",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 5e3,
-          intervalMonths: 6,
-          severeFactor: 0.7,
-          note: "Inspecci\xF3n multipunto preventiva cada 5.000 km / 6 meses."
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["motocicleta"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 2e3,
-          intervalMonths: 3,
-          severeFactor: 0.7,
-          note: "Motos: cambio de aceite frecuente."
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["cuadron"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 3e3,
-          intervalMonths: 4,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "glp_gnv"],
-          intervalKm: 5e3,
-          intervalMonths: 6,
-          severeFactor: 0.7,
-          note: "Livianos gasolina/GLP: 5.000 km / 6 meses (conservador para uso con GLP)."
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["hev", "phev"],
-          intervalKm: 1e4,
-          intervalMonths: 12,
-          severeFactor: 0.7,
-          note: "H\xEDbridos: el motor de combusti\xF3n trabaja menos, intervalo mayor."
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["diesel"],
-          intervalKm: 6e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["camion", "bus"],
-          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
-          intervalKm: 6e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["camion", "bus"],
-          fuelId: ["diesel"],
-          intervalKm: 1e4,
-          intervalMonths: 6,
-          severeFactor: 0.7,
-          note: "Veh\xEDculos pesados di\xE9sel con intervalos de aceite m\xE1s largos."
-        },
-        {
-          serviceId: "aceite_motor",
-          classId: ["maquinaria_liviana"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 2e3,
-          intervalMonths: 4,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_bujias",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
-          intervalKm: 8e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_bujias",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "glp_gnv"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_bujias",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["hev", "phev"],
-          intervalKm: 4e4,
-          intervalMonths: 36,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_filtro_aire",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 6e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_filtro_aire",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 15e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_filtro_aire",
-          classId: ["camion", "bus"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_filtro_aire",
-          classId: ["maquinaria_liviana"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 1e4,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "motor_correa",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "glp_gnv"],
-          intervalKm: 6e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "motor_correa",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["hev", "phev", "diesel"],
-          intervalKm: 8e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "motor_correa",
-          classId: ["camion", "bus"],
-          fuelId: ["gasolina", "glp_gnv"],
-          intervalKm: 6e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "motor_correa",
-          classId: ["camion", "bus"],
-          fuelId: ["hev", "phev", "diesel"],
-          intervalKm: 8e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 1e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["diesel"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7,
-          note: "Di\xE9sel: filtro de combustible con servicio m\xE1s frecuente."
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["camion", "bus"],
-          fuelId: ["gasolina", "glp_gnv", "hev", "phev"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["camion", "bus"],
-          fuelId: ["diesel"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "iny_filtro_combustible",
-          classId: ["maquinaria_liviana"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 15e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "iny_limpieza",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "ref_antifreeze",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["*"],
-          intervalKm: 2e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "ref_antifreeze",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 4e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "ref_antifreeze",
-          classId: ["maquinaria_liviana"],
-          fuelId: ["*"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "ref_radiador",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-          fuelId: ["*"],
-          intervalKm: 6e4,
-          intervalMonths: 36,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "freno_liquido",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 4e4,
-          intervalMonths: 24,
-          severeFactor: 0.7,
-          note: "El l\xEDquido de frenos se degrada por humedad aunque no se recorra."
-        },
-        {
-          serviceId: "freno_pastillas",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7,
-          note: "Inspecci\xF3n; la reposici\xF3n depende del desgaste real."
-        },
-        {
-          serviceId: "freno_regulacion",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["*"],
-          intervalKm: 5e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "susp_amortiguadores",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 6e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "susp_direccion",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_aceite_caja",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["*"],
-          intervalKm: 6e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_aceite_caja",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 6e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_aceite_caja",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["bev"],
-          intervalKm: 8e4,
-          intervalMonths: 48,
-          severeFactor: 0.7,
-          note: "BEV: lubricante de la transmisi\xF3n de reducci\xF3n."
-        },
-        {
-          serviceId: "trans_aceite_caja",
-          classId: ["camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 6e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_aceite_caja",
-          classId: ["maquinaria_liviana"],
-          fuelId: ["*"],
-          intervalKm: 4e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_filtro_caja",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 6e4,
-          intervalMonths: 36,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "trans_embrague",
-          classId: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 5e4,
-          intervalMonths: 36,
-          severeFactor: 0.7,
-          note: "Revisi\xF3n de embrague; el reemplazo se cotiza seg\xFAn desgaste."
-        },
-        {
-          serviceId: "trans_cadena",
-          classId: ["motocicleta", "cuadron"],
-          fuelId: ["*"],
-          intervalKm: 2e3,
-          intervalMonths: 2,
-          severeFactor: 0.7,
-          note: "Cadena de moto: ajuste y lubricaci\xF3n cada 2.000 km / 2 meses."
-        },
-        {
-          serviceId: "llanta_rotacion",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 1e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "llanta_alineacion",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 1e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "llanta_presion",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 5e3,
-          intervalMonths: 3,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "llanta_cambio",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 5e4,
-          intervalMonths: 48,
-          severeFactor: 0.7,
-          note: "Referencial por vida \xFAtil de llanta; depende del desgaste del dibujo."
-        },
-        {
-          serviceId: "elec_bateria",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "elec_alternador",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 6e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "elec_luces",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 15e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "escaner_diagnostico",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "clima_filtro_cabina",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 15e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "clima_recarga",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 24e3,
-          intervalMonths: 24,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "clima_desinfeccion",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 12e3,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "escape_gases",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "vidrio_limpiadores",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
-          fuelId: ["*"],
-          intervalKm: 12e3,
-          intervalMonths: 6,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "die_turbo",
-          classId: ["comercial_liviano", "camion", "bus"],
-          fuelId: ["diesel"],
-          intervalKm: 6e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "die_inyectores",
-          classId: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
-          fuelId: ["diesel"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "die_dpf",
-          classId: ["comercial_liviano", "camion", "bus"],
-          fuelId: ["diesel"],
-          intervalKm: 8e4,
-          intervalMonths: 48,
-          severeFactor: 0.8
-        },
-        {
-          serviceId: "hv_inspeccion",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["hev", "phev", "bev"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7,
-          note: "SOLO h\xEDbridos y el\xE9ctricos: sistema de alto voltaje."
-        },
-        {
-          serviceId: "hv_bateria_traccion",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["hev", "phev", "bev"],
-          intervalKm: 3e4,
-          intervalMonths: 24,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "glp_inspeccion",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["glp_gnv"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7,
-          note: "Inspecci\xF3n reglamentaria del sistema de gas."
-        },
-        {
-          serviceId: "glp_filtro",
-          classId: ["liviano", "van", "comercial_liviano"],
-          fuelId: ["glp_gnv"],
-          intervalKm: 2e4,
-          intervalMonths: 12,
-          severeFactor: 0.7
-        },
-        {
-          serviceId: "rtv_pretest",
-          classId: ["*"],
-          fuelId: ["*"],
-          intervalKm: null,
-          intervalMonths: 12,
-          severeFactor: 0.8,
-          note: "Pre-chequeo para Revisi\xF3n T\xE9cnica Vehicular: por tiempo (anual)."
-        }
-      ]
-    };
-  }
-});
-
-// packages/api/dist/domain/maintenance/catalogs.js
-function findSubservice(serviceId) {
-  return SUBSERVICE_INDEX.get(serviceId);
-}
-function normalizeList(list6, allValues) {
-  const expanded = /* @__PURE__ */ new Set();
-  for (const value2 of list6) {
-    if (value2 === "*") {
-      for (const v of allValues)
-        expanded.add(v);
-    } else {
-      expanded.add(value2);
-    }
-  }
-  return [...expanded].sort();
-}
-function expandRules() {
-  const expanded = [];
-  for (const rule of maintenanceRules.rules) {
-    const classes = normalizeList(rule.classId, classIds);
-    const fuels = normalizeList(rule.fuelId, fuelIds);
-    for (const classId of classes) {
-      for (const fuelId of fuels) {
-        expanded.push({
-          serviceId: rule.serviceId,
-          classId,
-          fuelId,
-          intervalKm: rule.intervalKm,
-          intervalMonths: rule.intervalMonths,
-          severeFactor: rule.severeFactor,
-          note: rule.note
-        });
-      }
-    }
-  }
-  return expanded;
-}
-function resolveRules(classId, fuelId) {
-  return expandRules().filter((r) => r.classId === classId && r.fuelId === fuelId);
-}
-function isServiceApplicable(serviceId, classId, fuelId) {
-  const ref = findSubservice(serviceId);
-  if (!ref)
-    return false;
-  const classes = new Set(normalizeList(ref.subservice.appliesTo.classes, classIds));
-  const fuels = new Set(normalizeList(ref.subservice.appliesTo.fuels, fuelIds));
-  return classes.has(classId) && fuels.has(fuelId);
-}
-var vehicleClasses, serviceTaxonomy, maintenanceRules, classIds, fuelIds, SUBSERVICE_INDEX;
-var init_catalogs = __esm({
-  "packages/api/dist/domain/maintenance/catalogs.js"() {
-    "use strict";
-    init_vehicle_classes();
-    init_service_taxonomy();
-    init_maintenance_rules();
-    init_schemas();
-    vehicleClasses = vehicleClassesSchema.parse(vehicle_classes_default);
-    serviceTaxonomy = serviceTaxonomySchema.parse(service_taxonomy_default);
-    maintenanceRules = maintenanceRulesSchema.parse(maintenance_rules_default);
-    classIds = vehicleClasses.classes.map((c) => c.id);
-    fuelIds = vehicleClasses.fuels.map((f) => f.id);
-    SUBSERVICE_INDEX = /* @__PURE__ */ new Map();
-    for (const category of serviceTaxonomy.categories) {
-      for (const sub of category.subservices) {
-        if (SUBSERVICE_INDEX.has(sub.id)) {
-          throw new Error(`Duplicated subservice id '${sub.id}' in service-taxonomy.json`);
-        }
-        SUBSERVICE_INDEX.set(sub.id, { category, subservice: sub });
-      }
-    }
-  }
-});
-
-// packages/api/dist/domain/maintenance/plan-engine.js
-function toDate(input) {
-  return input instanceof Date ? new Date(input.getTime()) : new Date(input);
-}
-function daysBetween(a, b) {
-  const aDate = toDate(a);
-  const bDate = toDate(b);
-  const aUtc = Date.UTC(aDate.getFullYear(), aDate.getMonth(), aDate.getDate());
-  const bUtc = Date.UTC(bDate.getFullYear(), bDate.getMonth(), bDate.getDate());
-  return Math.round((bUtc - aUtc) / MS_PER_DAY);
-}
-function addMonths(date, months) {
-  const base = toDate(date);
-  return new Date(base.getTime() + months * DAYS_PER_MONTH * MS_PER_DAY);
-}
-function estimateKmPerDay(input) {
-  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
-  const readings = [...input.odometerReadings ?? []].filter((r) => toDate(r.date).getTime() <= today.getTime()).sort((a, b) => toDate(a.date).getTime() - toDate(b.date).getTime());
-  for (let i = readings.length - 1; i >= 0; i -= 1) {
-    const reading = readings[i];
-    const days = daysBetween(reading.date, today);
-    if (days >= 1 && input.odometerKm > reading.km) {
-      const kmPerDay = (input.odometerKm - reading.km) / days;
-      return Math.round(kmPerDay * 10) / 10;
-    }
-  }
-  return DEFAULT_KM_PER_DAY[usageProfileOf(input)];
-}
-function usageProfileOf(input) {
-  return input.usageProfile ?? "urbano";
-}
-function lastReadingDaysAgo(input) {
-  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
-  const readings = (input.odometerReadings ?? []).filter((r) => toDate(r.date).getTime() <= today.getTime());
-  if (readings.length === 0)
-    return null;
-  const latest = readings.reduce((a, b) => toDate(a.date).getTime() > toDate(b.date).getTime() ? a : b);
-  return Math.max(0, daysBetween(latest.date, today));
-}
-function computeItemStatus(remainingKm, remainingDays) {
-  const dueByKm = remainingKm !== null && remainingKm <= 0;
-  const dueByTime = remainingDays !== null && remainingDays <= 0;
-  if (dueByKm || dueByTime)
-    return "vencido";
-  const soonByKm = remainingKm !== null && remainingKm <= NEXT_WINDOW_KM;
-  const soonByTime = remainingDays !== null && remainingDays <= NEXT_WINDOW_DAYS;
-  if (soonByKm || soonByTime)
-    return "proximo";
-  return "al_dia";
-}
-function priorityFor(status) {
-  switch (status) {
-    case "vencido":
-      return "alta";
-    case "proximo":
-      return "media";
-    default:
-      return "baja";
-  }
-}
-function formatVencido(km4, days) {
-  const parts = [];
-  if (km4 !== null && km4 <= 0)
-    parts.push(`hace ${Math.abs(km4)} km`);
-  if (days !== null && days <= 0) {
-    const months = Math.max(1, Math.abs(Math.round(days / DAYS_PER_MONTH)));
-    parts.push(`hace ${months} ${months === 1 ? "mes" : "meses"}`);
-  }
-  return parts.length > 0 ? `Vencido ${parts.join(" y ")}` : "Vencido";
-}
-function formatProximo(km4, days) {
-  if (km4 !== null && km4 <= NEXT_WINDOW_KM) {
-    return `En ${Math.max(0, km4)} km`;
-  }
-  if (days !== null && days <= NEXT_WINDOW_DAYS) {
-    if (days >= 7) {
-      const weeks = Math.round(days / 7);
-      return `En ${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
-    }
-    return `En ${Math.max(0, Math.round(days))} ${Math.max(0, Math.round(days)) === 1 ? "d\xEDa" : "d\xEDas"}`;
-  }
-  return "Pr\xF3ximo";
-}
-function buildReason(status, remainingKm, remainingDays, effKm, effMonths) {
-  switch (status) {
-    case "vencido":
-      return formatVencido(remainingKm, remainingDays);
-    case "proximo":
-      return formatProximo(remainingKm, remainingDays);
-    default: {
-      const km4 = effKm === null ? "\u2014" : String(effKm);
-      const months = effMonths === null ? "\u2014" : String(effMonths);
-      return `Al d\xEDa (cada ${km4} km / ${months} meses)`;
-    }
-  }
-}
-function latestLastService(lastServices, serviceId) {
-  const matches = lastServices.filter((s) => s.serviceId === serviceId).sort((a, b) => {
-    const aKm = a.km ?? 0;
-    const bKm = b.km ?? 0;
-    if (aKm !== bKm)
-      return bKm - aKm;
-    const aDate = a.date ? toDate(a.date).getTime() : 0;
-    const bDate = b.date ? toDate(b.date).getTime() : 0;
-    return bDate - aDate;
-  });
-  return matches[0];
-}
-function computeItem(input, serviceId) {
-  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
-  const { classId, fuelId } = input.vehicle;
-  if (!isServiceApplicable(serviceId, classId, fuelId))
-    return null;
-  const ref = findSubservice(serviceId);
-  if (!ref || !ref.subservice.periodic)
-    return null;
-  const rule = resolveRules(classId, fuelId).find((r) => r.serviceId === serviceId);
-  if (!rule)
-    return null;
-  const severe = (input.usageProfile ?? "urbano") === "severo";
-  const factor = severe ? rule.severeFactor : 1;
-  const effKm = rule.intervalKm === null ? null : Math.round(rule.intervalKm * factor);
-  const effMonths = rule.intervalMonths === null ? null : rule.intervalMonths * factor;
-  const last = latestLastService(input.lastServices ?? [], serviceId);
-  const baseKm = last?.km ?? input.odometerKm;
-  const baseDate = last?.date ? toDate(last.date) : today;
-  const kmActive = effKm !== null;
-  const monthsActive = effMonths !== null;
-  const dueKm = kmActive ? baseKm + effKm : input.odometerKm;
-  const dueDate2 = monthsActive ? addMonths(baseDate, effMonths) : today;
-  const remainingKm = kmActive ? dueKm - input.odometerKm : null;
-  const remainingDays = monthsActive ? daysBetween(today, dueDate2) : null;
-  const status = computeItemStatus(remainingKm, remainingDays);
-  return {
-    serviceId: ref.subservice.id,
-    serviceName: ref.subservice.name,
-    categoryId: ref.category.id,
-    categoryName: ref.category.name,
-    dueKm,
-    dueDate: dueDate2,
-    remainingKm,
-    remainingDays,
-    effKm,
-    effMonths,
-    status
-  };
-}
-function buildPlan(input) {
-  const today = toDate(input.today ?? /* @__PURE__ */ new Date());
-  const usageProfile = usageProfileOf(input);
-  const computed = [];
-  for (const category of serviceTaxonomy.categories) {
-    for (const subservice of category.subservices) {
-      if (!subservice.periodic)
-        continue;
-      const computation = computeItem(input, subservice.id);
-      if (!computation)
-        continue;
-      computed.push({
-        computation,
-        item: {
-          categoryId: computation.categoryId,
-          categoryName: computation.categoryName,
-          serviceId: computation.serviceId,
-          serviceName: computation.serviceName,
-          dueKm: computation.dueKm,
-          dueDate: computation.dueDate,
-          status: computation.status,
-          priority: priorityFor(computation.status),
-          costRefUsd: subservice.costRefUsd,
-          durationMin: subservice.durationMin,
-          remainingKm: computation.remainingKm ?? 0,
-          remainingDays: computation.remainingDays ?? 0,
-          reason: buildReason(computation.status, computation.remainingKm, computation.remainingDays, computation.effKm, computation.effMonths)
-        }
-      });
-    }
-  }
-  const urgency = (c) => {
-    const { remainingKm, remainingDays, effKm } = c.computation;
-    const kmUrgency = effKm !== null ? remainingKm ?? 0 : Number.MAX_SAFE_INTEGER;
-    const timeUrgency = c.computation.effMonths !== null ? remainingDays ?? 0 : Number.MAX_SAFE_INTEGER;
-    return Math.min(kmUrgency, timeUrgency);
-  };
-  computed.sort((a, b) => {
-    if (STATUS_ORDER[a.item.status] !== STATUS_ORDER[b.item.status]) {
-      return STATUS_ORDER[a.item.status] - STATUS_ORDER[b.item.status];
-    }
-    const aUrgency = urgency(a);
-    const bUrgency = urgency(b);
-    if (aUrgency !== bUrgency)
-      return aUrgency - bUrgency;
-    return a.item.serviceId.localeCompare(b.item.serviceId);
-  });
-  const items = computed.map((c) => c.item);
-  return {
-    generatedAt: today,
-    vehicle: input.vehicle,
-    odometerKm: input.odometerKm,
-    kmPerDay: estimateKmPerDay(input),
-    lastReadingDaysAgo: lastReadingDaysAgo(input),
-    usageProfile,
-    items
-  };
-}
-var MS_PER_DAY, DAYS_PER_MONTH, DEFAULT_KM_PER_DAY, NEXT_WINDOW_KM, NEXT_WINDOW_DAYS, STATUS_ORDER;
-var init_plan_engine = __esm({
-  "packages/api/dist/domain/maintenance/plan-engine.js"() {
-    "use strict";
-    init_catalogs();
-    init_catalogs();
-    MS_PER_DAY = 864e5;
-    DAYS_PER_MONTH = 30.44;
-    DEFAULT_KM_PER_DAY = {
-      urbano: 25,
-      carretera: 60,
-      severo: 40
-    };
-    NEXT_WINDOW_KM = 1e3;
-    NEXT_WINDOW_DAYS = 30;
-    STATUS_ORDER = { vencido: 0, proximo: 1, al_dia: 2 };
-  }
-});
-
-// packages/api/dist/domain/maintenance/plan-formatter.js
-function formatKm(value2) {
-  const rounded = String(Math.round(value2));
-  return rounded.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
-function formatDuration(totalMin) {
-  const hours = Math.floor(totalMin / 60);
-  const minutes = totalMin % 60;
-  if (hours === 0)
-    return `${minutes} min`;
-  if (minutes === 0)
-    return `${hours} h`;
-  return `${hours} h ${minutes} min`;
-}
-function formatCost(costRefUsd) {
-  const rounded = Math.round(costRefUsd);
-  return `~$${rounded}`;
-}
-function fits(pageLines, newLine, maxLength) {
-  const joined = pageLines.length > 0 ? pageLines.join("\n") : "";
-  return joined.length === 0 ? newLine.length <= maxLength : joined.length + 1 + newLine.length <= maxLength;
-}
-function paginateText(headerLines, blocks, footerLines, maxLength = DEFAULT_MAX_LENGTH) {
-  let current = [...headerLines];
-  const pages = [];
-  const flush = () => {
-    pages.push(current);
-    current = [...headerLines];
-  };
-  for (let i = 0; i < blocks.length; i += 1) {
-    const block = blocks[i];
-    if (!fits(current, block, maxLength))
-      flush();
-    current.push(block);
-  }
-  for (const footerLine of footerLines) {
-    if (!fits(current, footerLine, maxLength))
-      flush();
-    current.push(footerLine);
-  }
-  if (current.length > 0 || pages.length === 0) {
-    pages.push(current);
-  }
-  return pages.map((page) => page.join("\n"));
-}
-function alDiaLine(items, budget) {
-  if (items.length === 0) {
-    return "\u{1F7E2} Al d\xEDa: ninguno pendiente";
-  }
-  const names = items.map((i) => i.serviceName);
-  const candidate = (shownCount) => {
-    const shown = names.slice(0, shownCount).join(", ");
-    const extra = names.length - shownCount;
-    const suffix = extra > 0 ? ` y ${extra} m\xE1s` : "";
-    return `\u{1F7E2} Al d\xEDa: ${shown}${suffix}`;
-  };
-  if (budget !== void 0) {
-    for (let shown = names.length; shown >= 1; shown -= 1) {
-      const line = candidate(shown);
-      if (line.length <= budget)
-        return line;
-    }
-  }
-  return candidate(5);
-}
-function formatPlanWhatsApp(ctx) {
-  const maxLength = ctx.maxLength ?? DEFAULT_MAX_LENGTH;
-  const { plan } = ctx;
-  let readingSuffix = "";
-  if (plan.lastReadingDaysAgo !== null) {
-    readingSuffix = plan.lastReadingDaysAgo === 0 ? " (actualizado hoy)" : ` (actualizado hace ${plan.lastReadingDaysAgo} d\xEDas)`;
-  }
-  const header = `${ctx.label} \xB7 ${formatKm(plan.odometerKm)} km${readingSuffix}`;
-  const vencidos = plan.items.filter((i) => i.status === "vencido");
-  const proximos = plan.items.filter((i) => i.status === "proximo");
-  const alDia = plan.items.filter((i) => i.status === "al_dia");
-  const numbered = [...vencidos, ...proximos];
-  const blocks = [];
-  const pushGroup = (title, group) => {
-    blocks.push(title);
-    if (group.length === 0) {
-      blocks.push("\xB7 ninguno");
-      return;
-    }
-    for (const item of group) {
-      const cost = formatCost(item.costRefUsd);
-      blocks.push(`${numbered.indexOf(item) + 1}) ${item.serviceName} \xB7 ${item.reason} \xB7 ${cost}`);
-    }
-  };
-  pushGroup("\u{1F534} Vencidos", vencidos);
-  pushGroup("\u{1F7E1} Pr\xF3ximos", proximos);
-  blocks.push(alDiaLine(alDia, maxLength - header.length - 1));
-  const firstOption = numbered.length + 1;
-  const footer = [
-    "",
-    "Responde con los n\xFAmeros que quieres atender (ej.: 1,3)",
-    `${firstOption}) Ver el plan completo   ${firstOption + 1}) Actualizar kilometraje   0) Men\xFA`
-  ];
-  return paginateText([header], blocks, footer, maxLength);
-}
-var DEFAULT_MAX_LENGTH;
-var init_plan_formatter = __esm({
-  "packages/api/dist/domain/maintenance/plan-formatter.js"() {
-    "use strict";
-    DEFAULT_MAX_LENGTH = 1024;
-  }
-});
-
-// packages/api/dist/domain/maintenance/validation.js
-var ALL_CLASSES, ALL_FUELS;
-var init_validation = __esm({
-  "packages/api/dist/domain/maintenance/validation.js"() {
-    "use strict";
-    init_catalogs();
-    ALL_CLASSES = new Set(classIds);
-    ALL_FUELS = new Set(fuelIds);
-  }
-});
-
-// packages/api/dist/domain/maintenance/index.js
-var init_maintenance = __esm({
-  "packages/api/dist/domain/maintenance/index.js"() {
-    "use strict";
-    init_types3();
-    init_schemas();
-    init_catalogs();
-    init_plan_engine();
-    init_plan_formatter();
-    init_validation();
-    init_catalogs();
   }
 });
 
@@ -85911,11 +85998,14 @@ var init_permissions = __esm({
       { method: "POST", pattern: /^\/appointments(\/|$)/, capability: "appointments" },
       { method: "GET", pattern: /^\/work-orders\/new$/, capability: "workorders" },
       { method: "POST", pattern: /^\/work-orders(\/|$)/, capability: "workorders" },
+      { method: "GET", pattern: /^\/service-requests\/new$/, capability: "appointments" },
+      { method: "POST", pattern: /^\/service-requests(\/|$)/, capability: "appointments" },
       { method: "GET", pattern: /^\/quotes\/new$/, capability: "quotes" },
       { method: "POST", pattern: /^\/quotes(\/|$)/, capability: "quotes" },
       { method: "POST", pattern: /^\/relations\/[^/]+\/dispute$/, capability: "disputes" },
       { method: "POST", pattern: /^\/relations(\/|$)/, capability: "relations" },
       { method: "POST", pattern: /^\/disputes(\/|$)/, capability: "disputes" },
+      { method: "POST", pattern: /^\/ratings(\/|$)/, capability: "disputes" },
       { method: "POST", pattern: /^\/users\/[^/]+\/sanctions$/, capability: "sanctions" },
       { method: "POST", pattern: /^\/sanctions(\/|$)/, capability: "sanctions" },
       // La lista de sanciones es información sensible de moderación: solo el administrador.
@@ -85937,7 +86027,7 @@ var init_permissions = __esm({
 });
 
 // packages/api/dist/application/admin/security.js
-import { createHmac as createHmac2, randomBytes as randomBytes3, timingSafeEqual as timingSafeEqual2 } from "node:crypto";
+import { createHmac as createHmac2, randomBytes as randomBytes4, timingSafeEqual as timingSafeEqual2 } from "node:crypto";
 function getAdminSessionSecret() {
   const secret = process.env.ADMIN_SESSION_SECRET?.trim();
   return secret && secret.length >= 32 ? secret : null;
@@ -85946,12 +86036,12 @@ function allowInsecureAdminCookies() {
   return process.env.NODE_ENV !== "production" && process.env.ADMIN_INSECURE_COOKIES === "1";
 }
 function createCsrfToken() {
-  return randomBytes3(24).toString("base64url");
+  return randomBytes4(24).toString("base64url");
 }
 function createPendingSession(user) {
   const now = Date.now();
   const session = {
-    id: randomBytes3(24).toString("base64url"),
+    id: randomBytes4(24).toString("base64url"),
     userId: user.id,
     email: user.email,
     role: normalizeRole(user.role),
@@ -86102,7 +86192,7 @@ function safeEqual(a, b) {
   return left.length === right.length && timingSafeEqual2(left, right);
 }
 function generateTotpSecret(bytes = 20) {
-  return base32Encode(randomBytes3(bytes));
+  return base32Encode(randomBytes4(bytes));
 }
 function verifyTotp(secret, code, timestampMs = Date.now()) {
   if (!/^\d{6}$/.test(code))
@@ -86215,8 +86305,8 @@ function twoFactorView(error) {
   <label for="code">C\xF3digo</label><input id="code" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="one-time-code">
   <button class="full" type="submit">Entrar</button></form>`;
 }
-function messageView(title, text5) {
-  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text5)}</p></div>`;
+function messageView(title, text7) {
+  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text7)}</p></div>`;
 }
 function kv(record) {
   const entries = Object.entries(record);
@@ -86309,6 +86399,7 @@ input[type=radio]{width:auto;min-height:0;margin-top:4px}.choice{display:flex;ga
       { href: "/admin/verifications", label: "Verificaciones", capability: "read" },
       { href: "/admin/appointments", label: "Turnos", capability: "read" },
       { href: "/admin/work-orders", label: "\xD3rdenes", capability: "read" },
+      { href: "/admin/service-requests", label: "Especialistas", capability: "read" },
       { href: "/admin/quotes", label: "Cotizaciones", capability: "read" },
       { href: "/admin/relations", label: "Relaciones", capability: "read" },
       { href: "/admin/disputes", label: "Disputas", capability: "read" },
@@ -90668,7 +90759,7 @@ var require_browser = __commonJS({
     var QRCode2 = require_qrcode();
     var CanvasRenderer = require_canvas();
     var SvgRenderer = require_svg_tag();
-    function renderCanvas(renderFunc, canvas, text5, opts, cb) {
+    function renderCanvas(renderFunc, canvas, text7, opts, cb) {
       const args = [].slice.call(arguments, 1);
       const argsNum = args.length;
       const isLastArgCb = typeof args[argsNum - 1] === "function";
@@ -90680,8 +90771,8 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 2) {
-          cb = text5;
-          text5 = canvas;
+          cb = text7;
+          text7 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 3) {
           if (canvas.getContext && typeof cb === "undefined") {
@@ -90689,8 +90780,8 @@ var require_browser = __commonJS({
             opts = void 0;
           } else {
             cb = opts;
-            opts = text5;
-            text5 = canvas;
+            opts = text7;
+            text7 = canvas;
             canvas = void 0;
           }
         }
@@ -90699,16 +90790,16 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 1) {
-          text5 = canvas;
+          text7 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 2 && !canvas.getContext) {
-          opts = text5;
-          text5 = canvas;
+          opts = text7;
+          text7 = canvas;
           canvas = void 0;
         }
         return new Promise(function(resolve, reject) {
           try {
-            const data = QRCode2.create(text5, opts);
+            const data = QRCode2.create(text7, opts);
             resolve(renderFunc(data, canvas, opts));
           } catch (e6) {
             reject(e6);
@@ -90716,7 +90807,7 @@ var require_browser = __commonJS({
         });
       }
       try {
-        const data = QRCode2.create(text5, opts);
+        const data = QRCode2.create(text7, opts);
         cb(null, renderFunc(data, canvas, opts));
       } catch (e6) {
         cb(e6);
@@ -90740,8 +90831,8 @@ var require_server2 = __commonJS({
     var Utf8Renderer = require_utf8();
     var TerminalRenderer = require_terminal2();
     var SvgRenderer = require_svg();
-    function checkParams(text5, opts, cb) {
-      if (typeof text5 === "undefined") {
+    function checkParams(text7, opts, cb) {
+      if (typeof text7 === "undefined") {
         throw new Error("String required as first argument");
       }
       if (typeof cb === "undefined") {
@@ -90788,11 +90879,11 @@ var require_server2 = __commonJS({
           return Utf8Renderer;
       }
     }
-    function render(renderFunc, text5, params) {
+    function render(renderFunc, text7, params) {
       if (!params.cb) {
         return new Promise(function(resolve, reject) {
           try {
-            const data = QRCode2.create(text5, params.opts);
+            const data = QRCode2.create(text7, params.opts);
             return renderFunc(data, params.opts, function(err, data2) {
               return err ? reject(err) : resolve(data2);
             });
@@ -90802,7 +90893,7 @@ var require_server2 = __commonJS({
         });
       }
       try {
-        const data = QRCode2.create(text5, params.opts);
+        const data = QRCode2.create(text7, params.opts);
         return renderFunc(data, params.opts, params.cb);
       } catch (e6) {
         params.cb(e6);
@@ -90810,43 +90901,43 @@ var require_server2 = __commonJS({
     }
     exports.create = QRCode2.create;
     exports.toCanvas = require_browser().toCanvas;
-    exports.toString = function toString2(text5, opts, cb) {
-      const params = checkParams(text5, opts, cb);
+    exports.toString = function toString2(text7, opts, cb) {
+      const params = checkParams(text7, opts, cb);
       const type = params.opts ? params.opts.type : void 0;
       const renderer = getStringRendererFromType(type);
-      return render(renderer.render, text5, params);
+      return render(renderer.render, text7, params);
     };
-    exports.toDataURL = function toDataURL(text5, opts, cb) {
-      const params = checkParams(text5, opts, cb);
+    exports.toDataURL = function toDataURL(text7, opts, cb) {
+      const params = checkParams(text7, opts, cb);
       const renderer = getRendererFromType(params.opts.type);
-      return render(renderer.renderToDataURL, text5, params);
+      return render(renderer.renderToDataURL, text7, params);
     };
-    exports.toBuffer = function toBuffer(text5, opts, cb) {
-      const params = checkParams(text5, opts, cb);
+    exports.toBuffer = function toBuffer(text7, opts, cb) {
+      const params = checkParams(text7, opts, cb);
       const renderer = getRendererFromType(params.opts.type);
-      return render(renderer.renderToBuffer, text5, params);
+      return render(renderer.renderToBuffer, text7, params);
     };
-    exports.toFile = function toFile(path, text5, opts, cb) {
-      if (typeof path !== "string" || !(typeof text5 === "string" || typeof text5 === "object")) {
+    exports.toFile = function toFile(path, text7, opts, cb) {
+      if (typeof path !== "string" || !(typeof text7 === "string" || typeof text7 === "object")) {
         throw new Error("Invalid argument");
       }
       if (arguments.length < 3 && !canPromise()) {
         throw new Error("Too few arguments provided");
       }
-      const params = checkParams(text5, opts, cb);
+      const params = checkParams(text7, opts, cb);
       const type = params.opts.type || getTypeFromFilename(path);
       const renderer = getRendererFromType(type);
       const renderToFile = renderer.renderToFile.bind(null, path);
-      return render(renderToFile, text5, params);
+      return render(renderToFile, text7, params);
     };
-    exports.toFileStream = function toFileStream(stream, text5, opts) {
+    exports.toFileStream = function toFileStream(stream, text7, opts) {
       if (arguments.length < 2) {
         throw new Error("Too few arguments provided");
       }
-      const params = checkParams(text5, opts, stream.emit.bind(stream, "error"));
+      const params = checkParams(text7, opts, stream.emit.bind(stream, "error"));
       const renderer = getRendererFromType("png");
       const renderToFileStream = renderer.renderToFileStream.bind(null, stream);
-      render(renderToFileStream, text5, params);
+      render(renderToFileStream, text7, params);
     };
   }
 });
@@ -90935,9 +91026,9 @@ var init_views_setup = __esm({
 });
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
-import { randomBytes as randomBytes4 } from "node:crypto";
-function qrSvg(text5) {
-  return QRCode.toString(text5, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
+import { randomBytes as randomBytes5 } from "node:crypto";
+function qrSvg(text7) {
+  return QRCode.toString(text7, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
 async function adminCount(store) {
   try {
@@ -90967,7 +91058,7 @@ function registerSetupWizard(app2, deps) {
     return state;
   }
   function newState(reply) {
-    const state = { id: randomBytes4(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
+    const state = { id: randomBytes5(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
     states.set(state.id, state);
     reply.header("Set-Cookie", setupCookie(signSessionCookie(state.id, getAdminSessionSecret()), STATE_TTL_MS / 1e3));
     return state;
@@ -91380,8 +91471,8 @@ function toMember(row) {
   };
 }
 function list5(result) {
-  const [rows11] = result;
-  return Array.isArray(rows11) ? rows11 : [];
+  const [rows13] = result;
+  return Array.isArray(rows13) ? rows13 : [];
 }
 var SELECT, MysqlStaffStore;
 var init_staff_store = __esm({
@@ -91553,7 +91644,7 @@ function tabs(current, base, options) {
   return `<div class="tabs">${options.map(([key, label2]) => `<a class="${key === current ? "active" : ""}" href="${base}?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("")}</div>`;
 }
 function relationsListView(input) {
-  const rows11 = input.page.items.map((r) => {
+  const rows13 = input.page.items.map((r) => {
     const waiting = waitingHours(r.waitingSince);
     const late2 = waiting !== null && waiting >= input.waitingHours;
     return `<tr><td><a href="/admin/relations/${escapeHtml(r.id)}">${escapeHtml(relationCode(r.number))}</a></td>
@@ -91570,7 +91661,7 @@ function relationsListView(input) {
   <p class="muted">Las partes hablan solo con AutoMantPro: aqu\xED registras lo que dice cada una y el texto listo para reenviar. El tel\xE9fono de una parte se muestra solo si autoriz\xF3 compartirlo.</p>
   ${empty}
   <div class="scroll"><table><thead><tr><th>V\xEDnculo</th><th>Tipo</th><th>Partes</th><th>Estado</th><th>Canal</th><th>\xDAltimo mensaje</th><th>Espera</th></tr></thead>
-  <tbody>${rows11}</tbody></table></div>
+  <tbody>${rows13}</tbody></table></div>
   <div class="pager">${input.page.page > 1 ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page - 1}">\u2190 Anteriores</a>` : ""}
   ${input.page.items.length === input.page.pageSize ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page + 1}">Siguientes \u2192</a>` : ""}</div></div>`;
 }
@@ -91663,7 +91754,7 @@ function relationDetailView(input) {
   </div>`;
 }
 function disputesListView(input) {
-  const rows11 = input.page.items.map((d) => {
+  const rows13 = input.page.items.map((d) => {
     const resolve = input.canResolve && (d.status === "abierta" || d.status === "en_revision") ? `<form method="post" action="/admin/disputes/${escapeHtml(d.id)}/resolve">${csrfField2(input.csrf)}
             <label for="res-${escapeHtml(d.id)}">Resoluci\xF3n</label><textarea id="res-${escapeHtml(d.id)}" name="resolution" rows="2" maxlength="2000" required></textarea>
             <select name="status"><option value="resuelta">Resuelta</option><option value="en_revision">En revisi\xF3n</option><option value="rechazada">Rechazada</option></select>
@@ -91679,10 +91770,10 @@ function disputesListView(input) {
   ${tabs(input.filter, "/admin/disputes", DISPUTE_FILTERS)}
   ${input.page.items.length === 0 ? `<p class="muted">No hay disputas con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Caso</th><th>V\xEDnculo</th><th>Partes</th><th>Motivo</th><th>Estado</th><th>Resoluci\xF3n</th></tr></thead>
-  <tbody>${rows11}</tbody></table></div></div>`;
+  <tbody>${rows13}</tbody></table></div></div>`;
 }
 function sanctionsListView(input) {
-  const rows11 = input.page.items.map((s) => {
+  const rows13 = input.page.items.map((s) => {
     const state = s.liftedAt ? `<span class="muted">levantada ${escapeHtml(when(s.liftedAt))}</span>` : isActive(s) ? `<span class="error">vigente${s.endsAt ? ` hasta ${escapeHtml(when(s.endsAt))}` : ""}</span>` : `<span class="muted">vencida</span>`;
     const lift = input.canLift && !s.liftedAt && isActive(s) ? `<form method="post" action="/admin/sanctions/${escapeHtml(s.id)}/lift">${csrfField2(input.csrf)}
             <label for="lift-${escapeHtml(s.id)}">Motivo para levantarla</label><input id="lift-${escapeHtml(s.id)}" name="reason" maxlength="191" required>
@@ -91697,7 +91788,7 @@ function sanctionsListView(input) {
   <p class="muted">Siempre con motivo, aviso a la entidad y registro en la auditor\xEDa. Se aplican desde el v\xEDnculo o desde la ficha de la persona.</p></div>
   ${input.page.items.length === 0 ? `<p class="muted">Todav\xEDa no hay sanciones registradas.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Entidad</th><th>Paso</th><th>Motivo</th><th>Vigencia</th><th>Levantar</th></tr></thead>
-  <tbody>${rows11}</tbody></table></div></div>`;
+  <tbody>${rows13}</tbody></table></div></div>`;
 }
 var FILTERS, DISPUTE_FILTERS, flashHtml2, csrfField2;
 var init_views_relations = __esm({
@@ -91729,7 +91820,7 @@ var init_views_relations = __esm({
 function registerRelationRoutes(app2, deps) {
   const { relations } = deps;
   const lateAfter = deps.waitingHours ?? 24;
-  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text7, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text7)}</p></div>`, session, status);
   function dbError2(err) {
     const code = err.code;
     if (code === "ER_NO_SUCH_TABLE" || code === "ER_BAD_FIELD_ERROR") {
@@ -91808,8 +91899,8 @@ function registerRelationRoutes(app2, deps) {
     const { id } = request.params;
     if (!UUID.test(id))
       return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
-    const text5 = str6(body.body, 2e3);
-    if (text5.length < 2)
+    const text7 = str6(body.body, 2e3);
+    if (text7.length < 2)
       return renderDetail(request, reply, session, id, { flash: { kind: "error", text: "Escribe el mensaje." }, status: 400 });
     let detail;
     try {
@@ -91837,7 +91928,7 @@ function registerRelationRoutes(app2, deps) {
         relationshipId: id,
         fromUserId,
         toUserId: isNote ? null : target?.userId ?? null,
-        body: text5,
+        body: text7,
         kind: isNote ? "nota" : "reenvio",
         relayed,
         createdBy: session.userId
@@ -91858,7 +91949,7 @@ function registerRelationRoutes(app2, deps) {
         fromName: source?.name ?? "AutoMantPro",
         code: relationCode(detail.relation.number),
         subject: detail.relation.subject,
-        body: text5
+        body: text7
       })
     };
     const flash = detail.relation.relayPaused ? { kind: "error", text: "El reenv\xEDo est\xE1 en pausa: el mensaje qued\xF3 registrado pero no lo env\xEDes todav\xEDa." } : { kind: "ok", text: "Mensaje registrado. Copia el texto y env\xEDalo por WhatsApp." };
@@ -92142,14 +92233,14 @@ var init_relations = __esm({
 function cell2(value2) {
   if (value2 === null || value2 === void 0)
     return "";
-  const text5 = value2 instanceof Date ? value2.toISOString() : String(value2);
-  const clean = text5.replace(/\r?\n/g, " ").replace(/\t/g, " ");
+  const text7 = value2 instanceof Date ? value2.toISOString() : String(value2);
+  const clean = text7.replace(/\r?\n/g, " ").replace(/\t/g, " ");
   const safe = /^[=+\-@]/.test(clean) ? `'${clean}` : clean;
   return `"${safe.replace(/"/g, '""')}"`;
 }
-function toCsv(columns, rows11) {
+function toCsv(columns, rows13) {
   const head = columns.map(([, label2]) => cell2(label2)).join(SEPARATOR);
-  const body = rows11.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
+  const body = rows13.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
   return `\uFEFF${[head, ...body].join("\r\n")}\r
 `;
 }
@@ -92501,7 +92592,7 @@ function when2(value2) {
   return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeZone: "America/Guayaquil" }).format(date);
 }
 function exportsView(input) {
-  const rows11 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
+  const rows13 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
     <td>${input.counts ? String(input.counts[d.key] ?? 0) : "\u2014"}</td>
     <td>${d.personal ? '<span class="error">datos personales</span>' : '<span class="muted">sin datos personales</span>'}</td>
     <td><a href="/admin/exports/${escapeHtml(d.key)}.csv">Descargar CSV</a></td></tr>`).join("");
@@ -92509,11 +92600,11 @@ function exportsView(input) {
   <div class="card"><h2>C\xF3mo usarlo</h2>
     <p class="muted">Cada archivo se abre en Excel o en Google Sheets. Guarda los respaldos en un lugar cifrado y b\xF3rralos cuando ya no los necesites: los archivos marcados contienen datos personales y su descarga queda en la auditor\xEDa.</p>
     <p class="muted">La descarga trae hasta 5.000 filas por archivo, las m\xE1s recientes primero.</p></div>
-  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows11}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows13}</tbody></table></div></div>`;
 }
 function dataRequestsView(input) {
   const tabs2 = STATUS_FILTERS.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/data-requests?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("");
-  const rows11 = input.items.map((r) => {
+  const rows13 = input.items.map((r) => {
     const left = daysLeft(r.dueAt);
     const plazo = isOverdue(r) ? `<span class="error">vencido hace ${Math.abs(left)} d\xEDas</span>` : r.status === "atendida" || r.status === "rechazada" ? `<span class="muted">cerrado ${when2(r.resolvedAt)}</span>` : `<span class="${left <= 3 ? "error" : "muted"}">${left} d\xEDas</span>`;
     const actions = r.status === "recibida" || r.status === "en_proceso" ? `<a href="/admin/data-requests/${escapeHtml(r.id)}/export.json">Descargar sus datos</a>
@@ -92538,7 +92629,7 @@ function dataRequestsView(input) {
     <ul>${REQUEST_KINDS.map((k) => `<li><strong>${escapeHtml(k.label)}:</strong> ${escapeHtml(k.description)}</li>`).join("")}</ul>
     <p class="muted">Las solicitudes se abren desde la ficha del titular.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay solicitudes con ese filtro.</p>` : ""}
-  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows11}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows13}</tbody></table></div></div>`;
 }
 function userDataRequestsCard(userId, items, csrf) {
   const list6 = items.length ? `<ul>${items.map((r) => `<li>${escapeHtml(dataRequestCode(r.number))} \xB7 ${escapeHtml(kindLabel(r.kind))} \xB7 ${escapeHtml(REQUEST_STATUS_LABELS[r.status] ?? r.status)}${isOverdue(r) ? ' <span class="error">vencido</span>' : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin solicitudes de datos.</p>`;
@@ -92574,7 +92665,7 @@ var init_views_data = __esm({
 // packages/api/dist/interfaces/admin/data.js
 function registerDataRoutes(app2, deps) {
   const { data } = deps;
-  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text7, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text7)}</p></div>`, session, status);
   function dbError2(err) {
     const code = err.code;
     if (code === "ER_NO_SUCH_TABLE" || code === "ER_BAD_FIELD_ERROR") {
@@ -92625,15 +92716,15 @@ function registerDataRoutes(app2, deps) {
     const dataset = DATASETS.find((d) => d.key === raw);
     if (!dataset)
       return errorPage(request, reply, session, "Respaldos", "Ese conjunto no existe.", 404);
-    let rows11;
+    let rows13;
     try {
-      rows11 = await data.exportRows(dataset.key);
+      rows13 = await data.exportRows(dataset.key);
     } catch (err) {
       const m = dbError2(err);
       return errorPage(request, reply, session, "Respaldos", m.text, m.status);
     }
-    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows11.length} filas${dataset.personal ? ", con datos personales" : ""})`);
-    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows11));
+    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows13.length} filas${dataset.personal ? ", con datos personales" : ""})`);
+    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows13));
   });
   app2.get("/data-requests", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -92895,7 +92986,7 @@ function planBadge(plan, endsAt) {
 }
 function plansListView(input) {
   const tabs2 = FILTERS3.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/plans?f=${escapeHtml(key)}">${escapeHtml(label2)}${key === "pendiente" && input.pending > 0 ? ` (${input.pending})` : ""}</a>`).join("");
-  const rows11 = input.items.map((s) => {
+  const rows13 = input.items.map((s) => {
     const left = daysLeft2(s.endsAt);
     const vigencia = s.status === "activa" ? s.endsAt ? `${when3(s.startsAt)} \u2192 ${when3(s.endsAt)}<br><span class="${left !== null && left <= 7 ? "error" : "muted"}">${left} d\xEDas</span>` : `desde ${when3(s.startsAt)}<br><span class="muted">sin vencimiento</span>` : `<span class="muted">${when3(s.createdAt)}</span>`;
     const acciones = input.canDecide && s.status === "pendiente" ? `<form method="post" action="/admin/subscriptions/${escapeHtml(s.id)}/verify">${csrfField4(input.csrf)}
@@ -92909,7 +93000,7 @@ function plansListView(input) {
     return `<tr><td>${escapeHtml(subscriptionCode(s.number))}</td>
       <td><a href="/admin/users/${escapeHtml(s.userId)}">${escapeHtml(s.userName ?? s.userId)}</a><br><span class="muted">${escapeHtml(s.userRole ?? "")}</span></td>
       <td>${escapeHtml(PLAN_LABELS[s.plan] ?? s.plan)}<br><span class="muted">${escapeHtml(STATUS_LABELS[s.status] ?? s.status)}</span></td>
-      <td>${escapeHtml(money(s.amountUsd))}<br><span class="muted">${escapeHtml(s.method ?? "\u2014")}${s.reference ? ` \xB7 ${escapeHtml(s.reference)}` : ""}</span></td>
+      <td>${escapeHtml(money2(s.amountUsd))}<br><span class="muted">${escapeHtml(s.method ?? "\u2014")}${s.reference ? ` \xB7 ${escapeHtml(s.reference)}` : ""}</span></td>
       <td>${vigencia}</td>
       <td>${acciones}</td></tr>`;
   }).join("");
@@ -92920,13 +93011,13 @@ function plansListView(input) {
     <p class="muted">Premium habilita: ${Object.values(FEATURE_LABELS).slice(2).map((f) => escapeHtml(f)).join(" \xB7 ")}.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay suscripciones con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Titular</th><th>Plan</th><th>Pago</th><th>Vigencia</th><th>Acciones</th></tr></thead>
-  <tbody>${rows11}</tbody></table></div></div>`;
+  <tbody>${rows13}</tbody></table></div></div>`;
 }
 function userPlanCard(userId, subs, csrf, canRegister, role = "dueno", usage = {}) {
   const plan = effectivePlan(subs);
   const current = currentSubscription(subs);
   const pendiente = subs.find((s) => s.status === "pendiente");
-  const historial = subs.length ? `<ul>${subs.map((s) => `<li>${escapeHtml(subscriptionCode(s.number))} \xB7 ${escapeHtml(PLAN_LABELS[s.plan] ?? s.plan)} \xB7 ${escapeHtml(STATUS_LABELS[s.status] ?? s.status)} \xB7 ${escapeHtml(money(s.amountUsd))}${isRunning(s) && s.endsAt ? ` \xB7 vence ${when3(s.endsAt)}` : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin suscripciones registradas.</p>`;
+  const historial = subs.length ? `<ul>${subs.map((s) => `<li>${escapeHtml(subscriptionCode(s.number))} \xB7 ${escapeHtml(PLAN_LABELS[s.plan] ?? s.plan)} \xB7 ${escapeHtml(STATUS_LABELS[s.status] ?? s.status)} \xB7 ${escapeHtml(money2(s.amountUsd))}${isRunning(s) && s.endsAt ? ` \xB7 vence ${when3(s.endsAt)}` : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin suscripciones registradas.</p>`;
   const alta = canRegister ? `<form method="post" action="/admin/users/${escapeHtml(userId)}/subscriptions" autocomplete="off">${csrfField4(csrf)}
       <label for="plan">Plan</label>
       <select id="plan" name="plan"><option value="premium">Premium</option><option value="prueba">Prueba</option></select>
@@ -92947,7 +93038,7 @@ function userPlanCard(userId, subs, csrf, canRegister, role = "dueno", usage = {
     ${historial}${alta}
     <p class="muted">El plan se activa solo cuando un administrador verifica el pago en \xABPlanes y pagos\xBB.</p></div>`;
 }
-var flashHtml4, csrfField4, money, FILTERS3;
+var flashHtml4, csrfField4, money2, FILTERS3;
 var init_views_plans = __esm({
   "packages/api/dist/interfaces/admin/views-plans.js"() {
     "use strict";
@@ -92955,7 +93046,7 @@ var init_views_plans = __esm({
     init_plans();
     flashHtml4 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${escapeHtml(flash.text)}</p>` : "";
     csrfField4 = (csrf) => `<input type="hidden" name="csrf" value="${escapeHtml(csrf)}">`;
-    money = (value2) => value2 === null ? "\u2014" : `US$ ${value2.toFixed(2)}`;
+    money2 = (value2) => value2 === null ? "\u2014" : `US$ ${value2.toFixed(2)}`;
     FILTERS3 = [
       ["pendiente", "Por verificar"],
       ["activa", "Activas"],
@@ -92969,7 +93060,7 @@ var init_views_plans = __esm({
 // packages/api/dist/interfaces/admin/plans.js
 function registerPlanRoutes(app2, deps) {
   const { plans } = deps;
-  const errorPage = (request, reply, session, text5, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text7, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text7)}</p></div>`, session, status);
   function dbError2(err) {
     const code = err.code;
     if (code === "ER_NO_SUCH_TABLE" || code === "ER_BAD_FIELD_ERROR") {
@@ -92990,10 +93081,10 @@ function registerPlanRoutes(app2, deps) {
   }
   const str6 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
   const whole = (value2, max) => {
-    const text5 = str6(value2, 6);
-    if (!text5)
+    const text7 = str6(value2, 6);
+    if (!text7)
       return null;
-    const n = Number(text5);
+    const n = Number(text7);
     return Number.isFinite(n) && n >= 1 && n <= max ? Math.floor(n) : null;
   };
   async function render(request, reply, session, filter, flash, status = 200) {
@@ -93140,12 +93231,1009 @@ var init_plans2 = __esm({
   }
 });
 
-// packages/api/dist/infrastructure/plans/plan-store.js
+// packages/api/dist/application/service-requests/workflow.js
+function categoryName(id) {
+  return CATEGORIES.find((c) => c.id === id)?.name ?? id;
+}
+function rankShopsFor(candidates, category, zone) {
+  const zona = zone ? normalize2(zone) : null;
+  return candidates.map((shop) => {
+    const specialist = shop.services.includes(category);
+    const sameZone = !!zona && !!shop.zone && normalize2(shop.zone) === zona;
+    const score = (specialist ? 100 : 0) + (sameZone ? 25 : 0) + Math.min(10, shop.ratingAvg * 2);
+    return { ...shop, specialist, sameZone, score };
+  }).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+}
+function shopsToInvite(ranked, max = MAX_SHOPS_PER_REQUEST) {
+  const especialistas = ranked.filter((s) => s.specialist);
+  if (especialistas.length >= max)
+    return especialistas.slice(0, max);
+  return [...especialistas, ...ranked.filter((s) => !s.specialist)].slice(0, max);
+}
+function invitationMessage(request) {
+  const donde = [request.zone, request.city].filter(Boolean).join(", ");
+  return [
+    `\u{1F527} Solicitud ${serviceRequestCode(request.number)} \xB7 ${categoryName(request.category)}`,
+    request.vehicle ? `Veh\xEDculo: ${request.vehicle}` : null,
+    donde ? `Zona: ${donde}` : null,
+    "",
+    `"${request.description.trim()}"`,
+    "",
+    "\xBFPuedes atenderlo? Resp\xF3ndeme con precio estimado, cu\xE1nto demora y cu\xE1ndo tendr\xEDas espacio."
+  ].filter((line) => line !== null).join("\n");
+}
+function comparisonMessage(request, offers) {
+  if (offers.length === 0) {
+    return `Todav\xEDa no tengo respuestas para tu solicitud ${serviceRequestCode(request.number)}. Apenas conteste un taller te aviso.`;
+  }
+  const ordenadas = [...offers].sort((a, b) => (a.priceUsd ?? Number.MAX_SAFE_INTEGER) - (b.priceUsd ?? Number.MAX_SAFE_INTEGER));
+  const lineas = ordenadas.map((offer, index) => {
+    const partes = [
+      offer.priceUsd === null ? "precio a confirmar" : `US$ ${offer.priceUsd.toFixed(2)}`,
+      offer.durationMin ? `${offer.durationMin} min` : null,
+      offer.availability,
+      offer.warrantyDays ? `garant\xEDa ${offer.warrantyDays} d\xEDas` : null
+    ].filter(Boolean);
+    return `${index + 1}) ${offer.shopName} \xB7 ${partes.join(" \xB7 ")}`;
+  });
+  return [
+    `\u{1F527} Respuestas para ${serviceRequestCode(request.number)} (${categoryName(request.category)}):`,
+    ...lineas,
+    "",
+    "Responde con el n\xFAmero del taller que prefieras y te agendo el turno."
+  ].join("\n");
+}
+function parsePrice(input) {
+  if (typeof input !== "string")
+    return null;
+  const value2 = input.trim().replace(/[\s$]/g, "").replace(",", ".");
+  if (!value2)
+    return null;
+  return /^\d{1,6}(\.\d{1,2})?$/.test(value2) ? Number(value2) : null;
+}
+var REQUEST_STATUS_LABELS2, OFFER_STATUS_LABELS, MAX_SHOPS_PER_REQUEST, serviceRequestCode, CATEGORIES, normalize2;
+var init_workflow2 = __esm({
+  "packages/api/dist/application/service-requests/workflow.js"() {
+    "use strict";
+    init_maintenance();
+    REQUEST_STATUS_LABELS2 = {
+      abierta: "Abierta",
+      cerrada: "Cerrada",
+      cancelada: "Cancelada"
+    };
+    OFFER_STATUS_LABELS = {
+      invitado: "Invitado",
+      ofertado: "Respondi\xF3",
+      sin_disponibilidad: "Sin disponibilidad",
+      elegido: "Elegido",
+      descartado: "No elegido"
+    };
+    MAX_SHOPS_PER_REQUEST = 5;
+    serviceRequestCode = (number) => `SS-${String(number).padStart(4, "0")}`;
+    CATEGORIES = serviceTaxonomy.categories.map((c) => ({ id: c.id, name: c.name }));
+    normalize2 = (value2) => value2.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
+  }
+});
+
+// packages/api/dist/interfaces/admin/views-service-requests.js
+function when4(value2) {
+  if (!value2)
+    return "\u2014";
+  const date = value2 instanceof Date ? value2 : new Date(value2);
+  return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeStyle: "short", timeZone: "America/Guayaquil" }).format(date);
+}
+function serviceRequestsListView(input) {
+  const tabs2 = FILTERS5.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/service-requests?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("");
+  const filas = input.items.map((r) => `<tr><td><a href="/admin/service-requests/${escapeHtml(r.id)}">${escapeHtml(serviceRequestCode(r.number))}</a></td>
+      <td>${escapeHtml(categoryName(r.category))}<br><span class="muted">${escapeHtml(r.description.slice(0, 80))}</span></td>
+      <td>${escapeHtml(r.ownerName)}${r.vehicleLabel ? `<br><span class="muted">${escapeHtml(r.vehicleLabel)}</span>` : ""}</td>
+      <td>${escapeHtml([r.zone, r.city].filter(Boolean).join(", ") || "\u2014")}</td>
+      <td>${escapeHtml(REQUEST_STATUS_LABELS2[r.status] ?? r.status)}<br><span class="muted">${r.respuestas ?? 0} respuestas</span></td>
+      <td>${escapeHtml(when4(r.createdAt))}</td></tr>`).join("");
+  return `<div class="stack wide"><h1>Solicitudes de especialista</h1>${flashHtml5(input.flash)}
+  <div class="tabs">${tabs2}</div>
+  <div class="card"><h2>Para qu\xE9 sirve</h2>
+    <p class="muted">Cuando alguien necesita un especialista \u2014electromec\xE1nica, caja, aire acondicionado\u2014 la solicitud llega a los talleres verificados que atienden esa especialidad en su ciudad. Cada taller responde con precio, tiempo y disponibilidad, y el due\xF1o elige.</p></div>
+  ${input.items.length === 0 ? `<p class="muted">No hay solicitudes con ese filtro.</p>` : ""}
+  <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Necesita</th><th>Due\xF1o</th><th>Zona</th><th>Estado</th><th>Creada</th></tr></thead>
+  <tbody>${filas}</tbody></table></div></div>`;
+}
+function newServiceRequestView(input) {
+  const valor = (name) => {
+    const raw = input.values?.[name];
+    return typeof raw === "string" ? escapeHtml(raw) : "";
+  };
+  const opciones = CATEGORIES.map((c) => `<option value="${escapeHtml(c.id)}"${valor("category") === c.id ? " selected" : ""}>${escapeHtml(c.name)}</option>`).join("");
+  const vehiculos = input.vehicles.map((v) => `<option value="${escapeHtml(v.id)}">${escapeHtml(v.label)}</option>`).join("");
+  const talleres = input.shops.length ? input.shops.map((shop) => `<label class="choice"><input type="checkbox" name="shopIds" value="${escapeHtml(shop.id)}"${shop.specialist ? " checked" : ""}>
+        <span><strong>${escapeHtml(shop.name)}</strong>${shop.specialist ? ' <span class="ok">atiende esa especialidad</span>' : ""}${shop.sameZone ? ' <span class="muted">\xB7 misma zona</span>' : ""}
+        <br><span class="muted">${escapeHtml([shop.zone, shop.city].filter(Boolean).join(", "))}</span></span></label>`).join("") : `<p class="error">No hay talleres verificados en esa ciudad todav\xEDa.</p>`;
+  return `<div class="stack wide"><h1>Nueva solicitud de especialista</h1>
+  ${input.error ? `<p class="error" role="alert">${escapeHtml(input.error)}</p>` : ""}
+  <div class="card"><p>Para <strong>${escapeHtml(input.owner.name)}</strong>${input.owner.city ? ` \xB7 ${escapeHtml(input.owner.city)}` : ""}</p>
+  <form method="post" action="/admin/service-requests" autocomplete="off">${csrfField5(input.csrf)}
+  <input type="hidden" name="ownerId" value="${escapeHtml(input.owner.id)}">
+  <label for="category">\xBFQu\xE9 especialidad necesita?</label><select id="category" name="category">${opciones}</select>
+  ${vehiculos ? `<label for="vehicleId">Veh\xEDculo</label><select id="vehicleId" name="vehicleId">${vehiculos}</select>` : ""}
+  <label for="description">Qu\xE9 necesita, en sus palabras</label>
+  <textarea id="description" name="description" rows="3" maxlength="1000" required placeholder="Busca un experto en electromec\xE1nica: el alternador no carga">${valor("description")}</textarea>
+  <label for="zone">Zona (opcional)</label><input id="zone" name="zone" maxlength="120" value="${valor("zone")}" placeholder="Norte">
+  <p class="muted">Talleres a los que se env\xEDa la solicitud:</p>
+  ${talleres}
+  <button class="full" type="submit">Crear la solicitud y preparar los mensajes</button></form></div></div>`;
+}
+function serviceRequestDetailView(input) {
+  const { request, offers, csrf } = input;
+  const resumen = {
+    number: request.number,
+    category: request.category,
+    description: request.description,
+    vehicle: request.vehicleLabel,
+    city: request.city,
+    zone: request.zone
+  };
+  const invitacion = invitationMessage(resumen);
+  const respuestas = offers.filter((o) => o.status === "ofertado");
+  const comparacion = comparisonMessage(resumen, respuestas.map((o) => ({
+    shopName: o.shopName,
+    priceUsd: o.priceUsd,
+    durationMin: o.durationMin,
+    availability: o.availability,
+    warrantyDays: o.warrantyDays
+  })));
+  const abierta = request.status === "abierta";
+  const tarjetas = offers.map((offer) => {
+    const digits = offer.shopId ? "" : "";
+    void digits;
+    const responder = abierta ? `<form method="post" action="/admin/service-requests/${escapeHtml(request.id)}/offers/${escapeHtml(offer.id)}" autocomplete="off">${csrfField5(csrf)}
+          <label for="price-${escapeHtml(offer.id)}">Precio estimado (US$)</label><input id="price-${escapeHtml(offer.id)}" name="price" inputmode="decimal" value="${offer.priceUsd === null ? "" : escapeHtml(offer.priceUsd.toFixed(2))}">
+          <label for="dur-${escapeHtml(offer.id)}">Duraci\xF3n (minutos)</label><input id="dur-${escapeHtml(offer.id)}" name="duration" inputmode="numeric" value="${offer.durationMin === null ? "" : escapeHtml(String(offer.durationMin))}">
+          <label for="av-${escapeHtml(offer.id)}">Disponibilidad</label><input id="av-${escapeHtml(offer.id)}" name="availability" maxlength="191" value="${escapeHtml(offer.availability ?? "")}" placeholder="Ma\xF1ana desde las 9:00">
+          <label for="war-${escapeHtml(offer.id)}">Garant\xEDa (d\xEDas)</label><input id="war-${escapeHtml(offer.id)}" name="warranty" inputmode="numeric" value="${offer.warrantyDays === null ? "" : escapeHtml(String(offer.warrantyDays))}">
+          <label for="notes-${escapeHtml(offer.id)}">Notas</label><input id="notes-${escapeHtml(offer.id)}" name="notes" maxlength="191" value="${escapeHtml(offer.notes ?? "")}">
+          <button type="submit" name="action" value="ofertado">Guardar respuesta</button>
+          <button class="danger" type="submit" name="action" value="sin_disponibilidad">Sin disponibilidad</button></form>
+          ${offer.status === "ofertado" ? `<form method="post" action="/admin/service-requests/${escapeHtml(request.id)}/choose">${csrfField5(csrf)}<input type="hidden" name="offerId" value="${escapeHtml(offer.id)}"><button type="submit">Elegir este taller</button></form>` : ""}` : "";
+    return `<div class="card"><h2>${escapeHtml(offer.shopName)}</h2>
+        <div class="muted">${escapeHtml([offer.shopZone, offer.shopCity].filter(Boolean).join(", "))}</div>
+        <div>Estado: <strong>${escapeHtml(OFFER_STATUS_LABELS[offer.status] ?? offer.status)}</strong></div>
+        <div>${escapeHtml(money3(offer.priceUsd))}${offer.durationMin ? ` \xB7 ${offer.durationMin} min` : ""}${offer.availability ? ` \xB7 ${escapeHtml(offer.availability)}` : ""}${offer.warrantyDays ? ` \xB7 garant\xEDa ${offer.warrantyDays} d\xEDas` : ""}</div>
+        ${offer.notes ? `<div class="muted">${escapeHtml(offer.notes)}</div>` : ""}
+        ${responder}</div>`;
+  }).join("");
+  return `<div class="stack wide"><p><a href="/admin/service-requests">\u2190 Solicitudes</a></p>
+  <h1>${escapeHtml(serviceRequestCode(request.number))} \xB7 ${escapeHtml(categoryName(request.category))}</h1>${flashHtml5(input.flash)}
+  <div class="card"><h2>La solicitud</h2>
+    <div>${escapeHtml(request.ownerName)} \xB7 ${escapeHtml(formatWhatsappNumber(request.ownerPhone.replace(/\\D/g, "")))}${request.vehicleLabel ? ` \xB7 ${escapeHtml(request.vehicleLabel)}` : ""}</div>
+    <div class="muted">${escapeHtml([request.zone, request.city].filter(Boolean).join(", ") || "sin zona")}</div>
+    <p>${escapeHtml(request.description)}</p>
+    <div>Estado: <strong>${escapeHtml(REQUEST_STATUS_LABELS2[request.status] ?? request.status)}</strong>${request.closeReason ? ` <span class="muted">(${escapeHtml(request.closeReason)})</span>` : ""}</div>
+    <label for="invitacion">Mensaje para los talleres</label><textarea id="invitacion" readonly rows="8">${escapeHtml(invitacion)}</textarea>
+    <label for="comparacion">Mensaje para el due\xF1o</label><textarea id="comparacion" readonly rows="7">${escapeHtml(comparacion)}</textarea>
+    ${abierta ? `<form method="post" action="/admin/service-requests/${escapeHtml(request.id)}/close">${csrfField5(csrf)}
+        <label for="cierre">Motivo para cancelar</label><input id="cierre" name="reason" maxlength="191" required>
+        <button class="danger" type="submit">Cancelar la solicitud</button></form>` : ""}
+  </div>
+  ${tarjetas}</div>`;
+}
+var flashHtml5, csrfField5, money3, FILTERS5;
+var init_views_service_requests = __esm({
+  "packages/api/dist/interfaces/admin/views-service-requests.js"() {
+    "use strict";
+    init_page();
+    init_whatsapp_number();
+    init_workflow2();
+    flashHtml5 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${escapeHtml(flash.text)}</p>` : "";
+    csrfField5 = (csrf) => `<input type="hidden" name="csrf" value="${escapeHtml(csrf)}">`;
+    money3 = (value2) => value2 === null ? "\u2014" : `US$ ${value2.toFixed(2)}`;
+    FILTERS5 = [
+      ["abiertas", "Abiertas"],
+      ["sin_respuesta", "Sin respuesta"],
+      ["cerradas", "Cerradas"],
+      ["todas", "Todas"]
+    ];
+  }
+});
+
+// packages/api/dist/interfaces/admin/service-requests.js
+function registerServiceRequestRoutes(app2, deps) {
+  const store = deps.serviceRequests;
+  const errorPage = (request, reply, session, text7, status) => deps.html(reply, request, "Solicitudes", `<div class="card"><p class="error">${escapeHtml(text7)}</p></div>`, session, status);
+  function dbError2(err) {
+    const code = err.code;
+    if (code === "ER_NO_SUCH_TABLE" || code === "ER_BAD_FIELD_ERROR") {
+      return { status: 503, text: "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." };
+    }
+    return { status: 502, text: `No se pudo completar la operaci\xF3n (${code ?? "base de datos no disponible"}).` };
+  }
+  function withCsrf(request, reply) {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return null;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf)) {
+      errorPage(request, reply, session, "Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.", 403);
+      return null;
+    }
+    return { session, body };
+  }
+  const str6 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+  const list6 = (value2) => Array.isArray(value2) ? value2.map(String) : typeof value2 === "string" && value2 ? [value2] : [];
+  const whole = (value2, max) => {
+    const text7 = str6(value2, 6);
+    if (!text7)
+      return null;
+    const n = Number(text7);
+    return Number.isFinite(n) && n >= 0 && n <= max ? Math.floor(n) : null;
+  };
+  async function renderDetail(request, reply, session, id, flash, status = 200) {
+    let detail;
+    try {
+      detail = await store.get(id);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+    if (!detail)
+      return errorPage(request, reply, session, "Solicitud no encontrada.", 404);
+    return deps.html(reply, request, serviceRequestCode(detail.request.number), serviceRequestDetailView({ csrf: session.csrfToken, request: detail.request, offers: detail.offers, flash }), session, status);
+  }
+  app2.get("/service-requests", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const query = request.query ?? {};
+    const filter = FILTERS6.includes(String(query.f)) ? String(query.f) : "abiertas";
+    const raw = Number(query.page ?? 1);
+    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    try {
+      const listado = await store.list(filter, page);
+      return deps.html(reply, request, "Solicitudes de especialista", serviceRequestsListView({ filter, items: listado.items }), session);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+  });
+  app2.get("/service-requests/new", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const query = request.query ?? {};
+    const ownerId = typeof query.ownerId === "string" && UUID4.test(query.ownerId) ? query.ownerId : null;
+    if (!ownerId)
+      return errorPage(request, reply, session, "Abre la solicitud desde la ficha de un due\xF1o registrado.", 404);
+    try {
+      const detail = await deps.registrations.getUserDetail(ownerId);
+      if (!detail || String(detail.user.role) !== "dueno") {
+        return errorPage(request, reply, session, "Solo se piden especialistas para due\xF1os de veh\xEDculo registrados.", 404);
+      }
+      const city = String(detail.user.city ?? "");
+      const category = str6(query.category, 40) || CATEGORIES[0]?.id || "";
+      let candidatos = await store.candidates(city);
+      if (candidatos.length === 0)
+        candidatos = await store.candidates("");
+      const ranked = shopsToInvite(rankShopsFor(candidatos, category, str6(query.zone, 120) || null));
+      return deps.html(reply, request, "Nueva solicitud", newServiceRequestView({
+        csrf: session.csrfToken,
+        owner: { id: ownerId, name: String(detail.user.name ?? ""), city },
+        vehicles: detail.vehicles.map((v) => ({ id: String(v.id), label: `${String(v.make)} ${String(v.model)} ${String(v.year)}` })),
+        shops: ranked,
+        values: { category }
+      }), session);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+  });
+  app2.post("/service-requests", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const ownerId = typeof body.ownerId === "string" && UUID4.test(body.ownerId) ? body.ownerId : null;
+    if (!ownerId)
+      return errorPage(request, reply, session, "Usuario no encontrado.", 404);
+    const category = CATEGORIES.some((c) => c.id === str6(body.category, 40)) ? str6(body.category, 40) : null;
+    const description = str6(body.description, 1e3);
+    const zone = str6(body.zone, 120) || null;
+    const vehicleId = typeof body.vehicleId === "string" && UUID4.test(body.vehicleId) ? body.vehicleId : null;
+    const shopIds = [...new Set(list6(body.shopIds).filter((id2) => UUID4.test(id2)))].slice(0, MAX_SHOPS_PER_REQUEST);
+    let id;
+    let detail = null;
+    try {
+      detail = await deps.registrations.getUserDetail(ownerId);
+      if (!detail || String(detail.user.role) !== "dueno")
+        return errorPage(request, reply, session, "Solo se piden especialistas para due\xF1os registrados.", 404);
+      const city = String(detail.user.city ?? "");
+      const candidatos = await store.candidates(city);
+      const ranked = shopsToInvite(rankShopsFor(candidatos, category ?? "", zone));
+      const invalid = (error) => deps.html(reply, request, "Nueva solicitud", newServiceRequestView({
+        csrf: session.csrfToken,
+        owner: { id: ownerId, name: String(detail?.user.name ?? ""), city },
+        vehicles: (detail?.vehicles ?? []).map((v) => ({ id: String(v.id), label: `${String(v.make)} ${String(v.model)} ${String(v.year)}` })),
+        shops: ranked,
+        values: body,
+        error
+      }), session, 400);
+      if (!category)
+        return invalid("Elige la especialidad que necesita.");
+      if (description.length < 10)
+        return invalid("Describe con m\xE1s detalle qu\xE9 necesita.");
+      if (shopIds.length === 0)
+        return invalid("Elige al menos un taller al que enviar la solicitud.");
+      if (!shopIds.every((shopId) => candidatos.some((c) => c.id === shopId)))
+        return invalid("Solo se puede invitar a talleres verificados.");
+      id = await store.create({ ownerId, vehicleId, category, description, city: city || null, zone, shopIds, createdBy: session.userId });
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+    await deps.audit("admin.servicerequest.create", session.userId, `Solicitud ${id} de ${category} para el usuario ${ownerId} a ${shopIds.length} talleres`);
+    return reply.redirect(`/admin/service-requests/${id}?ok=creada`, 302);
+  });
+  app2.get("/service-requests/:id", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const { id } = request.params;
+    if (!UUID4.test(id))
+      return errorPage(request, reply, session, "Solicitud no encontrada.", 404);
+    const ok = request.query?.ok;
+    const flash = ok === "creada" ? { kind: "ok", text: "Solicitud creada: copia el mensaje y env\xEDalo a cada taller." } : void 0;
+    return renderDetail(request, reply, session, id, flash);
+  });
+  app2.post("/service-requests/:id/offers/:offerId", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id, offerId } = request.params;
+    if (!UUID4.test(id) || !UUID4.test(offerId))
+      return errorPage(request, reply, session, "Solicitud no encontrada.", 404);
+    const sinDisponibilidad = body.action === "sin_disponibilidad";
+    const price = sinDisponibilidad ? null : parsePrice(str6(body.price, 12));
+    if (!sinDisponibilidad && str6(body.price, 12) && price === null) {
+      return renderDetail(request, reply, session, id, { kind: "error", text: "Precio no v\xE1lido: escribe por ejemplo 45,50." }, 400);
+    }
+    try {
+      const saved = await store.saveOffer(id, offerId, {
+        status: sinDisponibilidad ? "sin_disponibilidad" : "ofertado",
+        priceUsd: price,
+        durationMin: sinDisponibilidad ? null : whole(body.duration, 2e3),
+        availability: sinDisponibilidad ? null : str6(body.availability, 191) || null,
+        warrantyDays: sinDisponibilidad ? null : whole(body.warranty, 3650),
+        notes: str6(body.notes, 191) || null
+      });
+      if (!saved)
+        return renderDetail(request, reply, session, id, { kind: "error", text: "La solicitud ya no est\xE1 abierta." }, 400);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+    await deps.audit("admin.servicerequest.offer", session.userId, `Respuesta registrada en la solicitud ${id}`);
+    return renderDetail(request, reply, session, id, {
+      kind: "ok",
+      text: sinDisponibilidad ? "Anotado: ese taller no tiene disponibilidad." : "Respuesta guardada. Copia la comparaci\xF3n y env\xEDasela al due\xF1o."
+    });
+  });
+  app2.post("/service-requests/:id/choose", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    const offerId = typeof body.offerId === "string" && UUID4.test(body.offerId) ? body.offerId : null;
+    if (!UUID4.test(id) || !offerId)
+      return errorPage(request, reply, session, "Solicitud no encontrada.", 404);
+    let detail;
+    try {
+      detail = await store.get(id);
+      if (!detail)
+        return errorPage(request, reply, session, "Solicitud no encontrada.", 404);
+      const offer = detail.offers.find((o) => o.id === offerId);
+      if (!offer || offer.status !== "ofertado") {
+        return renderDetail(request, reply, session, id, { kind: "error", text: "Ese taller todav\xEDa no respondi\xF3." }, 400);
+      }
+      const chosen = await store.choose(id, offerId);
+      if (!chosen)
+        return renderDetail(request, reply, session, id, { kind: "error", text: "La solicitud ya estaba cerrada." }, 400);
+      await deps.linker?.fromServiceRequest({
+        requestId: id,
+        ownerId: detail.request.ownerId,
+        shopUserId: offer.shopUserId,
+        subject: `${serviceRequestCode(detail.request.number)} \xB7 ${detail.request.description.slice(0, 120)}`,
+        createdBy: session.userId
+      });
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+    await deps.audit("admin.servicerequest.choose", session.userId, `${serviceRequestCode(detail.request.number)}: taller elegido`);
+    return renderDetail(request, reply, session, id, { kind: "ok", text: "Taller elegido. Agenda el turno desde la ficha del due\xF1o." });
+  });
+  app2.post("/service-requests/:id/close", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID4.test(id))
+      return errorPage(request, reply, session, "Solicitud no encontrada.", 404);
+    const reason = str6(body.reason, 191);
+    if (reason.length < 5)
+      return renderDetail(request, reply, session, id, { kind: "error", text: "Escribe el motivo." }, 400);
+    try {
+      const closed = await store.close(id, reason);
+      if (!closed)
+        return renderDetail(request, reply, session, id, { kind: "error", text: "La solicitud ya estaba cerrada." }, 400);
+    } catch (err) {
+      const m = dbError2(err);
+      return errorPage(request, reply, session, m.text, m.status);
+    }
+    await deps.audit("admin.servicerequest.close", session.userId, `Solicitud ${id} cancelada: ${reason}`);
+    return renderDetail(request, reply, session, id, { kind: "ok", text: "Solicitud cancelada." });
+  });
+}
+var UUID4, FILTERS6;
+var init_service_requests = __esm({
+  "packages/api/dist/interfaces/admin/service-requests.js"() {
+    "use strict";
+    init_page();
+    init_security();
+    init_workflow2();
+    init_views_service_requests();
+    UUID4 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS6 = ["abiertas", "sin_respuesta", "cerradas", "todas"];
+  }
+});
+
+// packages/api/dist/application/appointments/messages.js
+function parseEcDateTime(date, time3) {
+  if (typeof date !== "string" || typeof time3 !== "string")
+    return null;
+  const d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date.trim());
+  const t = /^(\d{2}):(\d{2})$/.exec(time3.trim());
+  if (!d || !t)
+    return null;
+  const [year, month, day2] = [Number(d[1]), Number(d[2]), Number(d[3])];
+  const [hour, minute] = [Number(t[1]), Number(t[2])];
+  if (hour > 23 || minute > 59)
+    return null;
+  const base = new Date(Date.UTC(year, month - 1, day2));
+  if (base.getUTCFullYear() !== year || base.getUTCMonth() !== month - 1 || base.getUTCDate() !== day2)
+    return null;
+  return new Date(base.getTime() + OFFSET_MS + (hour * 60 + minute) * 60 * 1e3);
+}
+function ecDayRange(now = /* @__PURE__ */ new Date()) {
+  const local = new Date(now.getTime() - OFFSET_MS);
+  const start = new Date(Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate()) + OFFSET_MS);
+  return { start, end: new Date(start.getTime() + DAY_MS) };
+}
+function formatEcDateTime(value2) {
+  const date = value2 instanceof Date ? value2 : new Date(String(value2));
+  if (Number.isNaN(date.getTime()))
+    return "\u2014";
+  return new Intl.DateTimeFormat("es-EC", {
+    timeZone: TIME_ZONE,
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  }).format(date);
+}
+function serviceNames(ids) {
+  return ids.map((id) => findSubservice(id)?.subservice.name ?? id);
+}
+function categoriesFor(ids) {
+  return [...new Set(ids.map((id) => findSubservice(id)?.category.id).filter((c) => !!c))];
+}
+function selectionSummary(ids) {
+  let cost = 0;
+  let minutes = 0;
+  const lines = ["Servicios elegidos:"];
+  for (const id of ids) {
+    const ref = findSubservice(id);
+    if (!ref)
+      continue;
+    cost += ref.subservice.costRefUsd;
+    minutes += ref.subservice.durationMin;
+    lines.push(`\u2022 ${ref.subservice.name} (\u2248 ${usd(ref.subservice.costRefUsd)})`);
+  }
+  lines.push(`Total referencial: \u2248 ${usd(cost)} \xB7 ${formatDuration(minutes)} aprox.`);
+  return lines.join("\n");
+}
+function shopListMessage(shops) {
+  const lines = ["Estos talleres verificados cubren lo que necesitas:", ""];
+  shops.slice(0, 8).forEach((shop, i) => {
+    const zone = shop.zone ? ` \xB7 ${shop.zone}` : "";
+    const rating = shop.ratingAvg > 0 ? ` \xB7 \u2B50 ${shop.ratingAvg.toFixed(1)}` : "";
+    const coverage = shop.covered === shop.needed ? "cubre todo" : `cubre ${shop.covered} de ${shop.needed}`;
+    lines.push(`${i + 1}) ${shop.name}${zone}${rating} \xB7 ${coverage}`);
+  });
+  lines.push("", "Responde con el n\xFAmero del taller y el d\xEDa y la hora que prefieres.");
+  return lines.join("\n");
+}
+function servicesText(a) {
+  const names = serviceNames(a.services);
+  return names.length > 0 ? names.join(", ") : a.summary ?? "\u2014";
+}
+function ownerMessage(a) {
+  const when6 = formatEcDateTime(a.scheduledAt);
+  switch (a.status) {
+    case "confirmed":
+      return `\u2705 Tu turno est\xE1 confirmado
+\u{1F527} ${a.shopName}
+\u{1F4CD} ${a.shopAddress}, ${a.shopCity}
+\u{1F5D3}\uFE0F ${when6}
+\u{1F697} ${vehicleText(a)}
+\u{1F6E0}\uFE0F ${servicesText(a)}
+
+Te lo recuerdo un d\xEDa antes. Si necesitas cambiarlo, escr\xEDbeme.`;
+    case "completed":
+      return `\u{1F3C1} Tu servicio en ${a.shopName} qued\xF3 registrado como completado.
+\u{1F697} ${vehicleText(a)}
+
+\xBFC\xF3mo te fue? Califica del 1 al 5 y cu\xE9ntame si todo qued\xF3 bien.`;
+    case "cancelled":
+      return `\u274C Tu turno en ${a.shopName} del ${when6} fue cancelado${a.cancelReason ? `: ${a.cancelReason}` : ""}.
+
+\xBFQuieres que te busque otro horario u otro taller?`;
+    default:
+      return `\u{1F4C5} Solicitud de turno enviada
+\u{1F527} ${a.shopName}
+\u{1F4CD} ${a.shopAddress}, ${a.shopCity}
+\u{1F5D3}\uFE0F ${when6}
+\u{1F697} ${vehicleText(a)}
+\u{1F6E0}\uFE0F ${servicesText(a)}
+
+Te confirmo apenas el taller responda.`;
+  }
+}
+function shopRequestMessage(a) {
+  return `\u{1F514} Nueva solicitud de turno \u2014 AutoMantPro
+\u{1F5D3}\uFE0F ${formatEcDateTime(a.scheduledAt)}
+\u{1F697} ${vehicleText(a)}
+\u{1F6E0}\uFE0F ${servicesText(a)}${a.notes ? `
+\u{1F4DD} ${a.notes}` : ""}
+
+Responde: 1) Aceptar \xB7 2) Proponer otro horario \xB7 3) Rechazar`;
+}
+var TIME_ZONE, OFFSET_MS, DAY_MS, STATUS_LABELS2, ALLOWED_TRANSITIONS, usd, vehicleText;
+var init_messages = __esm({
+  "packages/api/dist/application/appointments/messages.js"() {
+    "use strict";
+    init_maintenance();
+    TIME_ZONE = "America/Guayaquil";
+    OFFSET_MS = 5 * 60 * 60 * 1e3;
+    DAY_MS = 24 * 60 * 60 * 1e3;
+    STATUS_LABELS2 = {
+      pending: "Solicitado",
+      confirmed: "Confirmado",
+      completed: "Completado",
+      cancelled: "Cancelado"
+    };
+    ALLOWED_TRANSITIONS = {
+      pending: ["confirmed", "cancelled"],
+      confirmed: ["completed", "cancelled"],
+      completed: [],
+      cancelled: []
+    };
+    usd = (value2) => `$${Math.round(value2)}`;
+    vehicleText = (a) => `${a.vehicleLabel}${a.plate ? ` \xB7 ${a.plate}` : ""}`;
+  }
+});
+
+// packages/api/dist/infrastructure/appointments/appointment-store.js
 function rows4(result) {
+  return Array.isArray(result[0]) ? result[0] : [];
+}
+function jsonValue(raw) {
+  if (typeof raw !== "string")
+    return raw;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+function stringList(raw) {
+  const value2 = jsonValue(raw);
+  return Array.isArray(value2) ? value2.map(String) : [];
+}
+function toAppointment(r) {
+  return {
+    id: String(r.id),
+    scheduledAt: r.scheduledAt,
+    status: String(r.status),
+    summary: text2(r.summary),
+    services: stringList(r.services),
+    notes: text2(r.notes),
+    cancelReason: text2(r.cancelReason),
+    createdAt: r.createdAt,
+    vehicleId: String(r.vehicleId),
+    vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
+    plate: text2(r.plate),
+    ownerId: String(r.ownerId),
+    ownerName: String(r.ownerName),
+    ownerPhone: String(r.ownerPhone),
+    shopId: String(r.shopId),
+    shopName: String(r.shopName),
+    shopAddress: String(r.shopAddress),
+    shopCity: String(r.shopCity),
+    shopUserId: String(r.shopUserId),
+    shopPhone: String(r.shopPhone)
+  };
+}
+var PAGE_SIZE4, NOT_SANCTIONED, SELECT_APPOINTMENTS, LIST_TODAY, LIST_UPCOMING, LIST_PENDING, LIST_ALL, GET_ONE, FOR_USER, text2, MysqlAppointmentStore;
+var init_appointment_store = __esm({
+  "packages/api/dist/infrastructure/appointments/appointment-store.js"() {
+    "use strict";
+    init_messages();
+    PAGE_SIZE4 = 25;
+    NOT_SANCTIONED = (alias) => "AND NOT EXISTS (SELECT 1 FROM `Sanction` sn WHERE sn.userId = " + alias + ".userId AND sn.liftedAt IS NULL AND sn.startsAt <= UTC_TIMESTAMP(3) AND (sn.endsAt IS NULL OR sn.endsAt > UTC_TIMESTAMP(3)) AND sn.level IN ('suspension_busquedas', 'suspension', 'baja')) ";
+    SELECT_APPOINTMENTS = "SELECT a.id, a.scheduledAt, a.status, a.summary, a.services, a.notes, a.cancelReason, a.createdAt, v.id AS vehicleId, v.make, v.model, v.year, v.plate, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, s.id AS shopId, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, su.id AS shopUserId, su.phone AS shopPhone FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` o ON o.id = a.ownerId JOIN `Shop` s ON s.id = a.shopId JOIN `User` su ON su.id = s.userId";
+    LIST_TODAY = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
+    LIST_UPCOMING = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.status IN ('pending', 'confirmed') ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
+    LIST_PENDING = `${SELECT_APPOINTMENTS} WHERE a.status = 'pending' ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
+    LIST_ALL = `${SELECT_APPOINTMENTS} ORDER BY a.scheduledAt DESC LIMIT ? OFFSET ?`;
+    GET_ONE = `${SELECT_APPOINTMENTS} WHERE a.id = ? LIMIT 1`;
+    FOR_USER = `${SELECT_APPOINTMENTS} WHERE a.ownerId = ? OR su.id = ? ORDER BY a.scheduledAt DESC LIMIT 20`;
+    text2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    MysqlAppointmentStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      verifiedShops(city) {
+        const base = "SELECT id, name, address, city, zone, hours, ratingAvg, specialties FROM `Shop` sh WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
+        const filter = NOT_SANCTIONED("sh");
+        return this.run(async (conn) => rows4(await conn.query(`${base}${filter}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+          if (err.code !== "ER_NO_SUCH_TABLE")
+            throw err;
+          return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
+        })).map((r) => ({
+          id: String(r.id),
+          name: String(r.name),
+          address: String(r.address),
+          city: String(r.city),
+          zone: text2(r.zone),
+          hours: text2(r.hours),
+          ratingAvg: Number(r.ratingAvg ?? 0),
+          services: stringList(r.specialties)
+        })));
+      }
+      createAppointment(input) {
+        return this.run(async (conn) => {
+          const id = String(rows4(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          await conn.query("INSERT INTO `Appointment` (id, vehicleId, shopId, ownerId, scheduledAt, status, summary, services, notes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, input.vehicleId, input.shopId, input.ownerId, input.scheduledAt, input.summary, JSON.stringify(input.services), input.notes]);
+          return id;
+        });
+      }
+      getAppointment(id) {
+        return this.run(async (conn) => {
+          const row = rows4(await conn.query(GET_ONE, [id]))[0];
+          return row ? toAppointment(row) : null;
+        });
+      }
+      listAppointments(filter, page, now = /* @__PURE__ */ new Date()) {
+        return this.run(async (conn) => {
+          const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE4;
+          let result;
+          if (filter === "hoy") {
+            const { start, end } = ecDayRange(now);
+            result = await conn.query(LIST_TODAY, [start, end, PAGE_SIZE4, offset2]);
+          } else if (filter === "proximos") {
+            result = await conn.query(LIST_UPCOMING, [now, PAGE_SIZE4, offset2]);
+          } else if (filter === "pendientes") {
+            result = await conn.query(LIST_PENDING, [PAGE_SIZE4, offset2]);
+          } else {
+            result = await conn.query(LIST_ALL, [PAGE_SIZE4, offset2]);
+          }
+          return { items: rows4(result).map(toAppointment), page, pageSize: PAGE_SIZE4 };
+        });
+      }
+      listForUser(userId) {
+        return this.run(async (conn) => rows4(await conn.query(FOR_USER, [userId, userId])).map(toAppointment));
+      }
+      setStatus(id, status, cancelReason) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `Appointment` SET status = ?, cancelReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [status, cancelReason, id]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      recordEvent(input) {
+        return this.run(async (conn) => {
+          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [input.type, input.actorUserId, input.entityType, input.entityId, JSON.stringify(input.payload)]);
+        });
+      }
+      userEvents(userId, limit) {
+        return this.run(async (conn) => rows4(await conn.query("SELECT type, payload, createdAt FROM `Event` WHERE entityType = 'User' AND entityId = ? ORDER BY createdAt DESC LIMIT ?", [userId, limit])).map((r) => {
+          const payload = jsonValue(r.payload);
+          return {
+            type: String(r.type),
+            payload: payload && typeof payload === "object" && !Array.isArray(payload) ? payload : {},
+            createdAt: r.createdAt
+          };
+        }));
+      }
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/service-requests/service-request-store.js
+function rows5(result) {
+  const [list6] = result;
+  return Array.isArray(list6) ? list6 : [];
+}
+function stringList2(value2) {
+  if (Array.isArray(value2))
+    return value2.map(String);
+  if (typeof value2 === "string" && value2.trim()) {
+    try {
+      const parsed = JSON.parse(value2);
+      if (Array.isArray(parsed))
+        return parsed.map(String);
+    } catch {
+      return value2.split(",").map((v) => v.trim()).filter(Boolean);
+    }
+  }
+  return [];
+}
+function toRequest2(row) {
+  const label2 = row.make ? `${String(row.make)} ${String(row.model ?? "")} ${String(row.year ?? "")}`.trim() : null;
+  return {
+    id: String(row.id),
+    number: Number(row.number ?? 0),
+    ownerId: String(row.ownerId),
+    ownerName: String(row.ownerName ?? ""),
+    ownerPhone: String(row.ownerPhone ?? ""),
+    vehicleId: text3(row.vehicleId),
+    vehicleLabel: label2,
+    category: String(row.category),
+    description: String(row.description ?? ""),
+    city: text3(row.city),
+    zone: text3(row.zone),
+    status: String(row.status),
+    chosenOfferId: text3(row.chosenOfferId),
+    closeReason: text3(row.closeReason),
+    createdAt: row.createdAt,
+    respuestas: Number(row.respuestas ?? 0)
+  };
+}
+function toOffer(row) {
+  return {
+    id: String(row.id),
+    requestId: String(row.requestId),
+    shopId: String(row.shopId),
+    shopName: String(row.shopName ?? ""),
+    shopUserId: String(row.shopUserId ?? ""),
+    shopCity: String(row.shopCity ?? ""),
+    shopZone: text3(row.shopZone),
+    status: String(row.status),
+    priceUsd: numberOrNull(row.priceUsd),
+    durationMin: numberOrNull(row.durationMin),
+    availability: text3(row.availability),
+    warrantyDays: numberOrNull(row.warrantyDays),
+    notes: text3(row.notes),
+    respondedAt: row.respondedAt ?? null
+  };
+}
+var PAGE_SIZE5, text3, numberOrNull, SELECT_REQUESTS2, MysqlServiceRequestStore;
+var init_service_request_store = __esm({
+  "packages/api/dist/infrastructure/service-requests/service-request-store.js"() {
+    "use strict";
+    init_appointment_store();
+    PAGE_SIZE5 = 25;
+    text3 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    numberOrNull = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
+    SELECT_REQUESTS2 = "SELECT r.*, u.name AS ownerName, u.phone AS ownerPhone, v.make, v.model, v.year, (SELECT COUNT(*) FROM `ServiceOffer` o WHERE o.requestId = r.id AND o.status = 'ofertado') AS respuestas FROM `ServiceRequest` r JOIN `User` u ON u.id = r.ownerId LEFT JOIN `Vehicle` v ON v.id = r.vehicleId";
+    MysqlServiceRequestStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      candidates(city) {
+        const base = "SELECT sh.id, sh.name, sh.city, sh.zone, sh.specialties, sh.ratingAvg FROM `Shop` sh WHERE sh.verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(sh.city)) = LOWER(TRIM(?))) ";
+        return this.run(async (conn) => rows5(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err) => {
+          if (err.code !== "ER_NO_SUCH_TABLE")
+            throw err;
+          return conn.query(`${base}ORDER BY sh.name LIMIT 100`, [city.trim(), city.trim()]);
+        })).map((row) => ({
+          id: String(row.id),
+          name: String(row.name),
+          city: String(row.city),
+          zone: text3(row.zone),
+          services: stringList2(row.specialties),
+          ratingAvg: Number(row.ratingAvg ?? 0)
+        })));
+      }
+      create(input) {
+        return this.run(async (conn) => {
+          const created = rows5(await conn.query("SELECT UUID() AS id"))[0];
+          const id = String(created?.id);
+          const next = rows5(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
+          await conn.query("INSERT INTO `ServiceRequest` (id, `number`, ownerId, vehicleId, category, description, city, zone, status, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'abierta', ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, Number(next?.n ?? 1), input.ownerId, input.vehicleId, input.category, input.description, input.city, input.zone, input.createdBy]);
+          for (const shopId of input.shopIds) {
+            await conn.query("INSERT INTO `ServiceOffer` (id, requestId, shopId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id, shopId]);
+          }
+          return id;
+        });
+      }
+      list(filter, page) {
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5;
+        return this.run(async (conn) => {
+          let where = "";
+          if (filter === "abiertas")
+            where = "WHERE r.status = 'abierta'";
+          else if (filter === "sin_respuesta")
+            where = "WHERE r.status = 'abierta' AND (SELECT COUNT(*) FROM `ServiceOffer` o WHERE o.requestId = r.id AND o.status = 'ofertado') = 0";
+          else if (filter === "cerradas")
+            where = "WHERE r.status IN ('cerrada', 'cancelada')";
+          const items = rows5(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`)).map(toRequest2);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE5 };
+        });
+      }
+      get(id) {
+        return this.run(async (conn) => {
+          const row = rows5(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id]))[0];
+          if (!row)
+            return null;
+          const offers = rows5(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id])).map(toOffer);
+          return { request: toRequest2(row), offers };
+        });
+      }
+      forUser(userId) {
+        return this.run(async (conn) => rows5(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
+      }
+      saveOffer(requestId, offerId, response) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `ServiceOffer` o JOIN `ServiceRequest` r ON r.id = o.requestId SET o.status = ?, o.priceUsd = ?, o.durationMin = ?, o.availability = ?, o.warrantyDays = ?, o.notes = ?, o.respondedAt = CURRENT_TIMESTAMP(3) WHERE o.id = ? AND o.requestId = ? AND r.status = 'abierta' AND o.status IN ('invitado', 'ofertado', 'sin_disponibilidad')", [response.status, response.priceUsd, response.durationMin, response.availability, response.warrantyDays, response.notes, offerId, requestId]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+      choose(requestId, offerId) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `ServiceRequest` SET status = 'cerrada', chosenOfferId = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status = 'abierta'", [offerId, requestId]);
+          const changed = Number(result.affectedRows ?? 0) > 0;
+          if (!changed)
+            return false;
+          await conn.query("UPDATE `ServiceOffer` SET status = 'elegido' WHERE id = ? AND requestId = ?", [offerId, requestId]);
+          await conn.query("UPDATE `ServiceOffer` SET status = 'descartado' WHERE requestId = ? AND id <> ? AND status <> 'sin_disponibilidad'", [requestId, offerId]);
+          return true;
+        });
+      }
+      close(requestId, reason) {
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `ServiceRequest` SET status = 'cancelada', closeReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status = 'abierta'", [reason, requestId]);
+          return Number(result.affectedRows ?? 0) > 0;
+        });
+      }
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/ratings/rating-store.js
+function rows6(result) {
   const [list6] = result;
   return Array.isArray(list6) ? list6 : [];
 }
 function toRow(row) {
+  return {
+    id: String(row.id),
+    fromId: String(row.fromId),
+    fromName: text4(row.fromName),
+    toId: String(row.toId),
+    score: Number(row.score ?? 0),
+    comment: text4(row.comment),
+    kind: text4(row.kind),
+    workOrderId: text4(row.workOrderId),
+    hiddenAt: row.hiddenAt ?? null,
+    hiddenReason: text4(row.hiddenReason),
+    createdAt: row.createdAt
+  };
+}
+var text4, SELECT2, MysqlRatingStore;
+var init_rating_store = __esm({
+  "packages/api/dist/infrastructure/ratings/rating-store.js"() {
+    "use strict";
+    text4 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    SELECT2 = "SELECT r.*, u.name AS fromName FROM `Rating` r LEFT JOIN `User` u ON u.id = r.fromId";
+    MysqlRatingStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      /** Recalcula promedio y cantidad de quien recibe, sobre las reseñas visibles. */
+      async refresh(conn, toId) {
+        for (const tabla of ["Shop", "Store"]) {
+          await conn.query(`UPDATE \`${tabla}\` t SET t.ratingAvg = COALESCE((SELECT ROUND(AVG(r.score), 1) FROM \`Rating\` r WHERE r.toId = ? AND r.hiddenAt IS NULL), 0), t.ratingCount = (SELECT COUNT(*) FROM \`Rating\` r WHERE r.toId = ? AND r.hiddenAt IS NULL) WHERE t.userId = ?`, [toId, toId, toId]).catch(() => void 0);
+        }
+      }
+      add(input) {
+        return this.run(async (conn) => {
+          const created = rows6(await conn.query("SELECT UUID() AS id"))[0];
+          const id = String(created?.id);
+          await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [id, input.fromId, input.toId, input.score, input.comment, input.kind, input.workOrderId, input.quoteRequestId]);
+          await this.refresh(conn, input.toId);
+          return id;
+        });
+      }
+      forUser(userId, limit = 20) {
+        const cap = Math.min(Math.max(1, Math.floor(limit)), 100);
+        return this.run(async (conn) => rows6(await conn.query(`${SELECT2} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow));
+      }
+      forWorkOrder(workOrderId) {
+        return this.run(async (conn) => {
+          const row = rows6(await conn.query(`${SELECT2} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
+          return row ? toRow(row) : null;
+        });
+      }
+      get(id) {
+        return this.run(async (conn) => {
+          const row = rows6(await conn.query(`${SELECT2} WHERE r.id = ? LIMIT 1`, [id]))[0];
+          return row ? toRow(row) : null;
+        });
+      }
+      hide(id, reason, hiddenBy) {
+        return this.run(async (conn) => {
+          const row = rows6(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id]))[0];
+          if (!row)
+            return false;
+          const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = CURRENT_TIMESTAMP(3), hiddenBy = ?, hiddenReason = ? WHERE id = ? AND hiddenAt IS NULL", [hiddenBy, reason, id]);
+          const changed = Number(result.affectedRows ?? 0) > 0;
+          if (changed)
+            await this.refresh(conn, String(row.toId));
+          return changed;
+        });
+      }
+      show(id) {
+        return this.run(async (conn) => {
+          const row = rows6(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id]))[0];
+          if (!row)
+            return false;
+          const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = NULL, hiddenBy = NULL, hiddenReason = NULL WHERE id = ? AND hiddenAt IS NOT NULL", [id]);
+          const changed = Number(result.affectedRows ?? 0) > 0;
+          if (changed)
+            await this.refresh(conn, String(row.toId));
+          return changed;
+        });
+      }
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/plans/plan-store.js
+function rows7(result) {
+  const [list6] = result;
+  return Array.isArray(list6) ? list6 : [];
+}
+function toRow2(row) {
   return {
     id: String(row.id),
     number: Number(row.number ?? 0),
@@ -93166,15 +94254,15 @@ function toRow(row) {
     createdAt: row.createdAt
   };
 }
-var PAGE_SIZE4, str2, num, SELECT2, MysqlPlanStore;
+var PAGE_SIZE6, str2, num, SELECT3, MysqlPlanStore;
 var init_plan_store = __esm({
   "packages/api/dist/infrastructure/plans/plan-store.js"() {
     "use strict";
     init_plans();
-    PAGE_SIZE4 = 25;
+    PAGE_SIZE6 = 25;
     str2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     num = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
-    SELECT2 = "SELECT s.*, s.expiresAt AS endsAt, u.name AS userName, u.role AS userRole FROM `Subscription` s JOIN `User` u ON u.id = s.userId";
+    SELECT3 = "SELECT s.*, s.expiresAt AS endsAt, u.name AS userName, u.role AS userRole FROM `Subscription` s JOIN `User` u ON u.id = s.userId";
     MysqlPlanStore = class {
       connect;
       constructor(connect) {
@@ -93190,9 +94278,9 @@ var init_plan_store = __esm({
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows4(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows7(await conn.query("SELECT UUID() AS id"))[0];
           const id = String(created?.id);
-          const next = rows4(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
+          const next = rows7(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
           await conn.query(
             // `active` se mantiene en falso mientras el pago no esté verificado, para que cualquier
             // lectura antigua de esa columna vea lo mismo que el estado nuevo.
@@ -93203,7 +94291,7 @@ var init_plan_store = __esm({
         });
       }
       list(filter, page, soonDays = 7) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE4;
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE6;
         return this.run(async (conn) => {
           let where = "";
           const params = [];
@@ -93216,18 +94304,18 @@ var init_plan_store = __esm({
             params.push(Math.max(1, Math.floor(soonDays)));
           } else if (filter === "vencida")
             where = "WHERE s.status = 'vencida' OR (s.status = 'activa' AND s.expiresAt IS NOT NULL AND s.expiresAt <= UTC_TIMESTAMP(3))";
-          const items = rows4(await conn.query(`${SELECT2} ${where} ORDER BY s.status = 'pendiente' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE4} OFFSET ${offset2}`, params)).map(toRow);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE4 };
+          const items = rows7(await conn.query(`${SELECT3} ${where} ORDER BY s.status = 'pendiente' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`, params)).map(toRow2);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE6 };
         });
       }
       get(id) {
         return this.run(async (conn) => {
-          const row = rows4(await conn.query(`${SELECT2} WHERE s.id = ? LIMIT 1`, [id]))[0];
-          return row ? toRow(row) : null;
+          const row = rows7(await conn.query(`${SELECT3} WHERE s.id = ? LIMIT 1`, [id]))[0];
+          return row ? toRow2(row) : null;
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows4(await conn.query(`${SELECT2} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow));
+        return this.run(async (conn) => rows7(await conn.query(`${SELECT3} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
       }
       verify(id, months, verifiedBy) {
         return this.run(async (conn) => {
@@ -93257,7 +94345,7 @@ var init_plan_store = __esm({
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const row = rows4(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status = 'pendiente'"))[0];
+          const row = rows7(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status = 'pendiente'"))[0];
           return Number(row?.n ?? 0);
         });
       }
@@ -93265,7 +94353,7 @@ var init_plan_store = __esm({
         return this.run(async (conn) => {
           const cuenta = async (sql, params) => {
             try {
-              const row = rows4(await conn.query(sql, params))[0];
+              const row = rows7(await conn.query(sql, params))[0];
               return Number(row?.n ?? 0);
             } catch {
               return 0;
@@ -93283,7 +94371,7 @@ var init_plan_store = __esm({
       }
       planForUser(userId) {
         return this.run(async (conn) => {
-          const list6 = rows4(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
+          const list6 = rows7(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
             plan: String(r.plan),
             status: String(r.status),
             startsAt: r.startsAt,
@@ -93297,7 +94385,7 @@ var init_plan_store = __esm({
 });
 
 // packages/api/dist/infrastructure/relations/relation-store.js
-function rows5(result) {
+function rows8(result) {
   const [list6] = result;
   return Array.isArray(list6) ? list6 : [];
 }
@@ -93354,12 +94442,12 @@ function toSanction(row) {
     createdAt: row.createdAt
   };
 }
-var PAGE_SIZE5, OPEN, str3, bool, SELECT_RELATION, MysqlRelationStore;
+var PAGE_SIZE7, OPEN, str3, bool, SELECT_RELATION, MysqlRelationStore;
 var init_relation_store = __esm({
   "packages/api/dist/infrastructure/relations/relation-store.js"() {
     "use strict";
     init_workflow();
-    PAGE_SIZE5 = 25;
+    PAGE_SIZE7 = 25;
     OPEN = RELATION_OPEN_STATUSES.map(() => "?").join(", ");
     str3 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     bool = (value2) => value2 === 1 || value2 === true || value2 === "1";
@@ -93378,15 +94466,15 @@ var init_relation_store = __esm({
         }
       }
       async nextNumber(conn, table) {
-        const row = rows5(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
+        const row = rows8(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
         return Number(row?.n ?? 1);
       }
       ensureForOrigin(input) {
         return this.run(async (conn) => {
-          const existing = rows5(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
+          const existing = rows8(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
           if (existing)
             return String(existing.id);
-          const created = rows5(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows8(await conn.query("SELECT UUID() AS id"))[0];
           const id = String(created?.id);
           const number = await this.nextNumber(conn, "Relationship");
           await conn.query("INSERT INTO `Relationship` (id, `number`, kind, status, channel, originType, originId, subject, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, 'activa', 'mediado', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, number, input.kind, input.originType, input.originId, input.subject, input.createdBy]);
@@ -93397,7 +94485,7 @@ var init_relation_store = __esm({
         });
       }
       list(filter, page, waitingHours2 = 24) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5;
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE7;
         return this.run(async (conn) => {
           let where = "";
           const params = [];
@@ -93412,16 +94500,16 @@ var init_relation_store = __esm({
           } else if (filter === "cerradas") {
             where = "WHERE r.status IN ('cerrada', 'bloqueada')";
           }
-          const items = rows5(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params)).map(toRelation);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE5 };
+          const items = rows8(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`, params)).map(toRelation);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE7 };
         });
       }
       get(id) {
         return this.run(async (conn) => {
-          const row = rows5(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id]))[0];
+          const row = rows8(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id]))[0];
           if (!row)
             return null;
-          const parties = rows5(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id])).map((p) => ({
+          const parties = rows8(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id])).map((p) => ({
             id: String(p.id),
             userId: String(p.userId),
             role: String(p.role),
@@ -93431,7 +94519,7 @@ var init_relation_store = __esm({
             consentAt: p.consentAt ?? null,
             mutedAt: p.mutedAt ?? null
           }));
-          const messages = rows5(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id])).map((m) => ({
+          const messages = rows8(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id])).map((m) => ({
             id: String(m.id),
             fromUserId: str3(m.fromUserId),
             toUserId: str3(m.toUserId),
@@ -93443,16 +94531,16 @@ var init_relation_store = __esm({
             flagged: bool(m.flagged),
             createdAt: m.createdAt
           }));
-          const disputes = rows5(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id])).map(toDispute);
+          const disputes = rows8(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id])).map(toDispute);
           return { relation: toRelation(row), parties, messages, disputes };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows5(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
+        return this.run(async (conn) => rows8(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
       }
       addMessage(input) {
         return this.run(async (conn) => {
-          const created = rows5(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows8(await conn.query("SELECT UUID() AS id"))[0];
           const id = String(created?.id);
           await conn.query(`INSERT INTO \`RelationshipMessage\` (id, relationshipId, fromUserId, toUserId, body, kind, relayedAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ${input.relayed ? "CURRENT_TIMESTAMP(3)" : "NULL"}, ?, CURRENT_TIMESTAMP(3))`, [id, input.relationshipId, input.fromUserId, input.toUserId, input.body, input.kind, input.createdBy]);
           await conn.query("UPDATE `Relationship` SET lastMessageAt = CURRENT_TIMESTAMP(3), waitingSince = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.toUserId ? /* @__PURE__ */ new Date() : null, input.relationshipId]);
@@ -93483,7 +94571,7 @@ var init_relation_store = __esm({
       }
       openDispute(input) {
         return this.run(async (conn) => {
-          const created = rows5(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows8(await conn.query("SELECT UUID() AS id"))[0];
           const id = String(created?.id);
           const number = await this.nextNumber(conn, "Dispute");
           await conn.query("INSERT INTO `Dispute` (id, `number`, relationshipId, openedBy, claimantUserId, againstUserId, reason, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, number, input.relationshipId, input.openedBy, input.claimantUserId, input.againstUserId, input.reason]);
@@ -93494,17 +94582,17 @@ var init_relation_store = __esm({
         });
       }
       listDisputes(status, page) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5;
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE7;
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params = status === "todas" ? [] : [status];
-          const items = rows5(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params)).map(toDispute);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE5 };
+          const items = rows8(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`, params)).map(toDispute);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE7 };
         });
       }
       getDispute(id) {
         return this.run(async (conn) => {
-          const row = rows5(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id]))[0];
+          const row = rows8(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id]))[0];
           return row ? toDispute(row) : null;
         });
       }
@@ -93520,21 +94608,21 @@ var init_relation_store = __esm({
       }
       addSanction(input) {
         return this.run(async (conn) => {
-          const created = rows5(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows8(await conn.query("SELECT UUID() AS id"))[0];
           const id = String(created?.id);
           await conn.query("INSERT INTO `Sanction` (id, userId, level, reason, relationshipId, disputeId, startsAt, endsAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3), ?, ?, CURRENT_TIMESTAMP(3))", [id, input.userId, input.level, input.reason, input.relationshipId, input.disputeId, input.endsAt, input.createdBy]);
           return id;
         });
       }
       listSanctions(page) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5;
+        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE7;
         return this.run(async (conn) => {
-          const items = rows5(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`)).map(toSanction);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE5 };
+          const items = rows8(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`)).map(toSanction);
+          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE7 };
         });
       }
       sanctionsForUser(userId) {
-        return this.run(async (conn) => rows5(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
+        return this.run(async (conn) => rows8(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
       }
       liftSanction(id, reason, liftedBy) {
         return this.run(async (conn) => {
@@ -93543,7 +94631,7 @@ var init_relation_store = __esm({
         });
       }
       searchBlockedUserIds() {
-        return this.run(async (conn) => rows5(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
+        return this.run(async (conn) => rows8(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
       }
     };
   }
@@ -93574,6 +94662,17 @@ function createRelationLinker(store) {
       kind: "dueno_taller",
       originType: "workorder",
       originId: input.workOrderId,
+      subject: input.subject,
+      parties: [
+        { userId: input.ownerId, role: "dueno" },
+        { userId: input.shopUserId, role: "taller" }
+      ],
+      createdBy: input.createdBy
+    }), null),
+    fromServiceRequest: (input) => quiet(() => store.ensureForOrigin({
+      kind: "dueno_taller",
+      originType: "servicerequest",
+      originId: input.requestId,
       subject: input.subject,
       parties: [
         { userId: input.ownerId, role: "dueno" },
@@ -93878,7 +94977,7 @@ function quoteMessage(o, items) {
   const diagnosis = o.diagnosis ? `
 \u{1F50E} Diagn\xF3stico: ${o.diagnosis}` : "";
   return `\u{1F9FE} Presupuesto ${workOrderCode(o.number)} \u2014 ${o.shopName}
-\u{1F697} ${vehicleText(o)}${diagnosis}
+\u{1F697} ${vehicleText2(o)}${diagnosis}
 
 ${itemLines(items)}
 
@@ -93909,7 +95008,7 @@ El taller ${o.shopName} empieza el trabajo en tu ${o.vehicleLabel}.`;
       const lines = [
         `\u{1F3C1} Trabajo terminado \u2014 ${code}`,
         `\u{1F527} ${o.shopName}`,
-        `\u{1F697} ${vehicleText(o)}${o.exitKm !== null ? ` \xB7 ${km(o.exitKm)}` : ""}`,
+        `\u{1F697} ${vehicleText2(o)}${o.exitKm !== null ? ` \xB7 ${km(o.exitKm)}` : ""}`,
         "",
         itemLines(items),
         "",
@@ -93947,8 +95046,8 @@ function historyDescription(o, items) {
     parts.push(`Pr\xF3ximo: ${o.nextService}`);
   return parts.join(" \xB7 ").slice(0, 2e3);
 }
-var WORK_ORDER_LABELS, WORK_ORDER_TRANSITIONS, EDITABLE_STATUSES, OPEN_STATUSES, IN_SHOP_STATUSES, ITEM_KINDS, DIAGNOSIS_OUTCOMES, workOrderCode, lineTotal, km, vehicleText;
-var init_workflow2 = __esm({
+var WORK_ORDER_LABELS, WORK_ORDER_TRANSITIONS, EDITABLE_STATUSES, OPEN_STATUSES, IN_SHOP_STATUSES, ITEM_KINDS, DIAGNOSIS_OUTCOMES, workOrderCode, lineTotal, km, vehicleText2;
+var init_workflow3 = __esm({
   "packages/api/dist/application/work-orders/workflow.js"() {
     "use strict";
     WORK_ORDER_LABELS = {
@@ -93987,7 +95086,7 @@ var init_workflow2 = __esm({
     workOrderCode = (number) => `OT-${String(number).padStart(5, "0")}`;
     lineTotal = (item) => Math.round(item.quantity * item.unitPrice * 100) / 100;
     km = (value2) => `${Number(value2).toLocaleString("es-EC")} km`;
-    vehicleText = (o) => `${o.vehicleLabel}${o.plate ? ` \xB7 ${o.plate}` : ""}`;
+    vehicleText2 = (o) => `${o.vehicleLabel}${o.plate ? ` \xB7 ${o.plate}` : ""}`;
   }
 });
 
@@ -94212,7 +95311,7 @@ var init_settings = __esm({
     init_security();
     init_whatsapp_number();
     init_views_settings();
-    init_workflow2();
+    init_workflow3();
     init_platform();
     init_documents();
   }
@@ -94250,144 +95349,6 @@ var init_plan_text = __esm({
   }
 });
 
-// packages/api/dist/application/appointments/messages.js
-function parseEcDateTime(date, time3) {
-  if (typeof date !== "string" || typeof time3 !== "string")
-    return null;
-  const d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date.trim());
-  const t = /^(\d{2}):(\d{2})$/.exec(time3.trim());
-  if (!d || !t)
-    return null;
-  const [year, month, day2] = [Number(d[1]), Number(d[2]), Number(d[3])];
-  const [hour, minute] = [Number(t[1]), Number(t[2])];
-  if (hour > 23 || minute > 59)
-    return null;
-  const base = new Date(Date.UTC(year, month - 1, day2));
-  if (base.getUTCFullYear() !== year || base.getUTCMonth() !== month - 1 || base.getUTCDate() !== day2)
-    return null;
-  return new Date(base.getTime() + OFFSET_MS + (hour * 60 + minute) * 60 * 1e3);
-}
-function ecDayRange(now = /* @__PURE__ */ new Date()) {
-  const local = new Date(now.getTime() - OFFSET_MS);
-  const start = new Date(Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate()) + OFFSET_MS);
-  return { start, end: new Date(start.getTime() + DAY_MS) };
-}
-function formatEcDateTime(value2) {
-  const date = value2 instanceof Date ? value2 : new Date(String(value2));
-  if (Number.isNaN(date.getTime()))
-    return "\u2014";
-  return new Intl.DateTimeFormat("es-EC", {
-    timeZone: TIME_ZONE,
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false
-  }).format(date);
-}
-function serviceNames(ids) {
-  return ids.map((id) => findSubservice(id)?.subservice.name ?? id);
-}
-function categoriesFor(ids) {
-  return [...new Set(ids.map((id) => findSubservice(id)?.category.id).filter((c) => !!c))];
-}
-function selectionSummary(ids) {
-  let cost = 0;
-  let minutes = 0;
-  const lines = ["Servicios elegidos:"];
-  for (const id of ids) {
-    const ref = findSubservice(id);
-    if (!ref)
-      continue;
-    cost += ref.subservice.costRefUsd;
-    minutes += ref.subservice.durationMin;
-    lines.push(`\u2022 ${ref.subservice.name} (\u2248 ${usd(ref.subservice.costRefUsd)})`);
-  }
-  lines.push(`Total referencial: \u2248 ${usd(cost)} \xB7 ${formatDuration(minutes)} aprox.`);
-  return lines.join("\n");
-}
-function shopListMessage(shops) {
-  const lines = ["Estos talleres verificados cubren lo que necesitas:", ""];
-  shops.slice(0, 8).forEach((shop, i) => {
-    const zone = shop.zone ? ` \xB7 ${shop.zone}` : "";
-    const rating = shop.ratingAvg > 0 ? ` \xB7 \u2B50 ${shop.ratingAvg.toFixed(1)}` : "";
-    const coverage = shop.covered === shop.needed ? "cubre todo" : `cubre ${shop.covered} de ${shop.needed}`;
-    lines.push(`${i + 1}) ${shop.name}${zone}${rating} \xB7 ${coverage}`);
-  });
-  lines.push("", "Responde con el n\xFAmero del taller y el d\xEDa y la hora que prefieres.");
-  return lines.join("\n");
-}
-function servicesText(a) {
-  const names = serviceNames(a.services);
-  return names.length > 0 ? names.join(", ") : a.summary ?? "\u2014";
-}
-function ownerMessage(a) {
-  const when5 = formatEcDateTime(a.scheduledAt);
-  switch (a.status) {
-    case "confirmed":
-      return `\u2705 Tu turno est\xE1 confirmado
-\u{1F527} ${a.shopName}
-\u{1F4CD} ${a.shopAddress}, ${a.shopCity}
-\u{1F5D3}\uFE0F ${when5}
-\u{1F697} ${vehicleText2(a)}
-\u{1F6E0}\uFE0F ${servicesText(a)}
-
-Te lo recuerdo un d\xEDa antes. Si necesitas cambiarlo, escr\xEDbeme.`;
-    case "completed":
-      return `\u{1F3C1} Tu servicio en ${a.shopName} qued\xF3 registrado como completado.
-\u{1F697} ${vehicleText2(a)}
-
-\xBFC\xF3mo te fue? Califica del 1 al 5 y cu\xE9ntame si todo qued\xF3 bien.`;
-    case "cancelled":
-      return `\u274C Tu turno en ${a.shopName} del ${when5} fue cancelado${a.cancelReason ? `: ${a.cancelReason}` : ""}.
-
-\xBFQuieres que te busque otro horario u otro taller?`;
-    default:
-      return `\u{1F4C5} Solicitud de turno enviada
-\u{1F527} ${a.shopName}
-\u{1F4CD} ${a.shopAddress}, ${a.shopCity}
-\u{1F5D3}\uFE0F ${when5}
-\u{1F697} ${vehicleText2(a)}
-\u{1F6E0}\uFE0F ${servicesText(a)}
-
-Te confirmo apenas el taller responda.`;
-  }
-}
-function shopRequestMessage(a) {
-  return `\u{1F514} Nueva solicitud de turno \u2014 AutoMantPro
-\u{1F5D3}\uFE0F ${formatEcDateTime(a.scheduledAt)}
-\u{1F697} ${vehicleText2(a)}
-\u{1F6E0}\uFE0F ${servicesText(a)}${a.notes ? `
-\u{1F4DD} ${a.notes}` : ""}
-
-Responde: 1) Aceptar \xB7 2) Proponer otro horario \xB7 3) Rechazar`;
-}
-var TIME_ZONE, OFFSET_MS, DAY_MS, STATUS_LABELS2, ALLOWED_TRANSITIONS, usd, vehicleText2;
-var init_messages = __esm({
-  "packages/api/dist/application/appointments/messages.js"() {
-    "use strict";
-    init_maintenance();
-    TIME_ZONE = "America/Guayaquil";
-    OFFSET_MS = 5 * 60 * 60 * 1e3;
-    DAY_MS = 24 * 60 * 60 * 1e3;
-    STATUS_LABELS2 = {
-      pending: "Solicitado",
-      confirmed: "Confirmado",
-      completed: "Completado",
-      cancelled: "Cancelado"
-    };
-    ALLOWED_TRANSITIONS = {
-      pending: ["confirmed", "cancelled"],
-      confirmed: ["completed", "cancelled"],
-      completed: [],
-      cancelled: []
-    };
-    usd = (value2) => `$${Math.round(value2)}`;
-    vehicleText2 = (a) => `${a.vehicleLabel}${a.plate ? ` \xB7 ${a.plate}` : ""}`;
-  }
-});
-
 // packages/api/dist/interfaces/admin/views-appointments.js
 function chatLink(phone, label2) {
   const raw = String(phone ?? "");
@@ -94396,16 +95357,16 @@ function chatLink(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e(digits)}" target="_blank" rel="noopener">${e(label2)} (${e(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox(id, label2, content, rows11 = 8) {
-  return `<label for="${id}">${e(label2)}</label><textarea id="${id}" readonly rows="${rows11}">${e(content)}</textarea>`;
+function copyBox(id, label2, content, rows13 = 8) {
+  return `<label for="${id}">${e(label2)}</label><textarea id="${id}" readonly rows="${rows13}">${e(content)}</textarea>`;
 }
 function appointmentsListView(input) {
-  const tabs2 = FILTERS5.map(([id, label2]) => `<a href="/admin/appointments?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e(label2)}</a>`).join("");
+  const tabs2 = FILTERS7.map(([id, label2]) => `<a href="/admin/appointments?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e(label2)}</a>`).join("");
   const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin turnos</td></tr>` : input.page.items.map((a) => `<tr><td><a href="/admin/appointments/${e(a.id)}">${e(formatEcDateTime(a.scheduledAt))}</a></td><td>${e(STATUS_LABELS2[a.status] ?? a.status)}</td>
             <td>${e(a.shopName)}</td><td><a href="/admin/users/${e(a.ownerId)}">${e(a.ownerName)}</a></td><td>${e(a.vehicleLabel)}</td><td>${e(servicesLabel(a))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
-  return `<h1>Turnos</h1>${flashHtml5(input.flash)}<div class="tabs">${tabs2}</div>
+  return `<h1>Turnos</h1>${flashHtml6(input.flash)}<div class="tabs">${tabs2}</div>
   <p class="muted">Para agendar, abre la ficha de un due\xF1o y pulsa \xABAgendar turno\xBB en su veh\xEDculo.</p>
   <div class="scroll"><table><thead><tr><th>Fecha (hora de Ecuador)</th><th>Estado</th><th>Taller</th><th>Due\xF1o</th><th>Veh\xEDculo</th><th>Servicios</th></tr></thead><tbody>${body}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
@@ -94415,19 +95376,19 @@ function appointmentDetailView(input) {
   const transitions = ALLOWED_TRANSITIONS[a.status] ?? [];
   const actions = [];
   if (transitions.includes("confirmed")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField5(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField6(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
   }
   if (transitions.includes("completed")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField5(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField6(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
   }
   if (transitions.includes("cancelled")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField5(input.csrf)}<input type="hidden" name="status" value="cancelled">
+    actions.push(`<form method="post" action="/admin/appointments/${e(a.id)}/status">${csrfField6(input.csrf)}<input type="hidden" name="status" value="cancelled">
       <label for="reason">Motivo de la cancelaci\xF3n</label><input id="reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cancelar turno</button></form>`);
   }
   const shopMessage = a.status === "pending" ? copyBox("msg-shop", "Mensaje para el taller", shopRequestMessage(a)) : "";
   return `<div class="stack wide"><p><a href="/admin/appointments">\u2190 Turnos</a></p>
-  <h1>Turno \xB7 ${e(formatEcDateTime(a.scheduledAt))}</h1>${flashHtml5(input.flash)}
+  <h1>Turno \xB7 ${e(formatEcDateTime(a.scheduledAt))}</h1>${flashHtml6(input.flash)}
   <div class="card"><h2>Resumen</h2>
     <div>Estado: <strong>${e(STATUS_LABELS2[a.status] ?? a.status)}</strong>${a.cancelReason ? ` \xB7 ${e(a.cancelReason)}` : ""}</div>
     <div>Taller: <strong>${e(a.shopName)}</strong> \xB7 ${e(a.shopAddress)}, ${e(a.shopCity)}</div>
@@ -94465,7 +95426,7 @@ function scheduleView(input) {
           <span><strong>${e(shop.name)}</strong> \xB7 ${e(shop.city)}${shop.zone ? ` (${e(shop.zone)})` : ""}<br><span class="muted">${shop.covered === shop.needed ? "Cubre todo" : `Cubre ${shop.covered} de ${shop.needed}`}${shop.hours ? ` \xB7 ${e(shop.hours)}` : ""}</span></span></label>`).join("");
       results = `<div class="card"><h2>Talleres</h2>${notice}${summary}
         ${copyBox("msg-shops", "Lista de talleres para el due\xF1o", shopListMessage(input.shops))}
-        <form method="post" action="/admin/appointments">${csrfField5(input.csrf)}
+        <form method="post" action="/admin/appointments">${csrfField6(input.csrf)}
         <input type="hidden" name="ownerId" value="${ownerId}"><input type="hidden" name="vehicleId" value="${vehicleId}">${hidden}
         ${options}
         <div class="row"><span><label for="date">D\xEDa</label><input id="date" name="date" type="date" value="${e(values.date)}" required></span>
@@ -94503,13 +95464,13 @@ function eventText(event) {
 function bitacoraSection(userId, events, csrf) {
   const list6 = events.length === 0 ? `<p class="muted">Sin actividad registrada.</p>` : events.map((ev) => `<div><span class="muted">${e(formatEcDateTime(ev.createdAt))}</span> \xB7 ${e(eventText(ev))}</div>`).join("");
   return `<div class="card"><h2>Bit\xE1cora</h2>
-    <form method="post" action="/admin/users/${e(userId)}/notes">${csrfField5(csrf)}
+    <form method="post" action="/admin/users/${e(userId)}/notes">${csrfField6(csrf)}
     <label for="note-text">Nueva nota (qu\xE9 se convers\xF3 o acord\xF3)</label><textarea id="note-text" name="text" maxlength="2000" rows="3" required></textarea>
     <label for="note-channel">Canal</label><select id="note-channel" name="channel"><option value="whatsapp">WhatsApp</option><option value="llamada">Llamada</option><option value="otro">Otro</option></select>
     <button type="submit">Agregar nota</button></form>
     ${list6}</div>`;
 }
-var e, csrfField5, flashHtml5, FILTERS5, PLAN_STATUS, servicesLabel;
+var e, csrfField6, flashHtml6, FILTERS7, PLAN_STATUS, servicesLabel;
 var init_views_appointments = __esm({
   "packages/api/dist/interfaces/admin/views-appointments.js"() {
     "use strict";
@@ -94517,9 +95478,9 @@ var init_views_appointments = __esm({
     init_whatsapp_number();
     init_messages();
     e = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField5 = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
-    flashHtml5 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e(flash.text)}</p>` : "";
-    FILTERS5 = [
+    csrfField6 = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
+    flashHtml6 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e(flash.text)}</p>` : "";
+    FILTERS7 = [
       ["hoy", "Hoy"],
       ["proximos", "Pr\xF3ximos"],
       ["pendientes", "Por confirmar"],
@@ -94530,6 +95491,51 @@ var init_views_appointments = __esm({
   }
 });
 
+// packages/api/dist/application/ratings/workflow.js
+function parseScore(input) {
+  const value2 = typeof input === "string" ? Number(input.trim()) : typeof input === "number" ? input : NaN;
+  return Number.isInteger(value2) && value2 >= 1 && value2 <= 5 ? value2 : null;
+}
+function needsReview(score) {
+  return score <= DISPUTE_THRESHOLD;
+}
+function stars(score) {
+  const llenas = Math.round(score);
+  return `${"\u2605".repeat(Math.max(0, Math.min(5, llenas)))}${"\u2606".repeat(Math.max(0, 5 - llenas))}`;
+}
+function askMessage(input) {
+  return [
+    `Listo, tu veh\xEDculo sali\xF3 de ${input.shopName} (${input.code}).`,
+    "",
+    "\xBFC\xF3mo te fue? Resp\xF3ndeme con un n\xFAmero del 1 al 5:",
+    "5) Excelente \xB7 4) Bien \xB7 3) Aceptable \xB7 2) Mal \xB7 1) Muy mal",
+    "",
+    "Si quieres, agrega en una l\xEDnea qu\xE9 estuvo bien o qu\xE9 fall\xF3."
+  ].join("\n");
+}
+function thanksMessage(score) {
+  if (needsReview(score)) {
+    return "Gracias por dec\xEDrmelo. Voy a revisar el caso con el taller y te escribo con una respuesta; si quieres, abrimos un reclamo formal.";
+  }
+  if (score === 3)
+    return "Gracias por la calificaci\xF3n. Cu\xE9ntame qu\xE9 habr\xEDa hecho la diferencia y se lo hacemos saber al taller.";
+  return "\xA1Gracias! Se lo hago saber al taller. Tu calificaci\xF3n ayuda a que otros elijan mejor.";
+}
+var SCORES, DISPUTE_THRESHOLD;
+var init_workflow4 = __esm({
+  "packages/api/dist/application/ratings/workflow.js"() {
+    "use strict";
+    SCORES = [
+      { value: 5, label: "5 \xB7 Excelente" },
+      { value: 4, label: "4 \xB7 Bien" },
+      { value: 3, label: "3 \xB7 Aceptable" },
+      { value: 2, label: "2 \xB7 Mal" },
+      { value: 1, label: "1 \xB7 Muy mal" }
+    ];
+    DISPUTE_THRESHOLD = 2;
+  }
+});
+
 // packages/api/dist/interfaces/admin/views-work-orders.js
 function chatLink2(phone, label2) {
   const digits = phone.replace(/\D/g, "");
@@ -94537,16 +95543,16 @@ function chatLink2(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e2(digits)}" target="_blank" rel="noopener">${e2(label2)} (${e2(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox2(id, label2, content, rows11 = 9) {
-  return `<label for="${id}">${e2(label2)}</label><textarea id="${id}" readonly rows="${rows11}">${e2(content)}</textarea>`;
+function copyBox2(id, label2, content, rows13 = 9) {
+  return `<label for="${id}">${e2(label2)}</label><textarea id="${id}" readonly rows="${rows13}">${e2(content)}</textarea>`;
 }
 function workOrdersListView(input) {
-  const tabs2 = FILTERS6.map(([id, label2]) => `<a href="/admin/work-orders?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e2(label2)}</a>`).join("");
+  const tabs2 = FILTERS8.map(([id, label2]) => `<a href="/admin/work-orders?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e2(label2)}</a>`).join("");
   const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin \xF3rdenes</td></tr>` : input.page.items.map((o) => `<tr><td><a href="/admin/work-orders/${e2(o.id)}">${e2(workOrderCode(o.number))}</a></td><td>${e2(WORK_ORDER_LABELS[o.status] ?? o.status)}</td>
             <td>${e2(o.shopName)}</td><td><a href="/admin/users/${e2(o.ownerId)}">${e2(o.ownerName)}</a></td><td>${e2(o.vehicleLabel)}</td><td>${e2(formatUsd(o.total))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
-  return `<h1>\xD3rdenes de trabajo</h1>${flashHtml6(input.flash)}<div class="tabs">${tabs2}</div>
+  return `<h1>\xD3rdenes de trabajo</h1>${flashHtml7(input.flash)}<div class="tabs">${tabs2}</div>
   <p class="muted">Se abren desde un turno confirmado (\xABAbrir orden de trabajo\xBB) o desde la ficha del due\xF1o (\xABOrden de trabajo sin cita\xBB).</p>
   <div class="scroll"><table><thead><tr><th>Orden</th><th>Estado</th><th>Taller</th><th>Due\xF1o</th><th>Veh\xEDculo</th><th>Total</th></tr></thead><tbody>${body}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
@@ -94558,7 +95564,7 @@ function newWorkOrderView(input) {
        <input type="hidden" name="appointmentId" value="${e2(input.appointment.id)}">` : input.shops.length === 0 ? `<p class="error">No hay talleres verificados. Aprueba un taller en Verificaciones antes de abrir una orden.</p>` : `<label for="shopId">Taller</label><select id="shopId" name="shopId" required>${input.shops.map((s) => `<option value="${e2(s.id)}"${String(v.shopId ?? "") === s.id ? " selected" : ""}>${e2(s.name)} \xB7 ${e2(s.city)}</option>`).join("")}</select>`;
   return `<div class="stack wide"><p><a href="/admin/users/${e2(input.owner.id)}">\u2190 ${e2(input.owner.name)}</a></p>
   <h1>Nueva orden de trabajo</h1>${input.error ? `<p class="error" role="alert">${e2(input.error)}</p>` : ""}
-  <form method="post" action="/admin/work-orders" autocomplete="off">${csrfField6(input.csrf)}
+  <form method="post" action="/admin/work-orders" autocomplete="off">${csrfField7(input.csrf)}
   <input type="hidden" name="ownerId" value="${e2(input.owner.id)}"><input type="hidden" name="vehicleId" value="${e2(input.vehicle.id)}">
   <div class="card"><h2>Recepci\xF3n del veh\xEDculo</h2>
     <div>Due\xF1o: <strong>${e2(input.owner.name)}</strong></div>
@@ -94571,10 +95577,10 @@ function newWorkOrderView(input) {
   <button class="full" type="submit">Abrir orden de trabajo</button></form></div>`;
 }
 function statusButton(order, csrf, status, label2, danger = false) {
-  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField6(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e2(label2)}</button></form>`;
+  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField7(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e2(label2)}</button></form>`;
 }
 function reasonForm(order, csrf, status, label2, button) {
-  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField6(csrf)}<input type="hidden" name="status" value="${status}">
+  return `<form method="post" action="/admin/work-orders/${e2(order.id)}/status">${csrfField7(csrf)}<input type="hidden" name="status" value="${status}">
     <label for="reason-${status}">${e2(label2)}</label><input id="reason-${status}" name="reason" maxlength="191" required>
     <button class="danger" type="submit">${e2(button)}</button></form>`;
 }
@@ -94585,14 +95591,14 @@ function workOrderDetailView(input) {
   const transitions = WORK_ORDER_TRANSITIONS[order.status] ?? [];
   const itemRows = items.length === 0 ? `<tr><td colspan="${editable ? 7 : 6}" class="muted">A\xFAn no hay \xEDtems en el presupuesto.</td></tr>` : items.map((i) => `<tr><td>${i.kind === "mano_obra" ? "Mano de obra" : "Repuesto"}</td><td>${e2(i.description)}</td><td>${e2([i.brand, i.partCode].filter(Boolean).join(" \xB7 ") || "\u2014")}</td>
             <td>${e2(String(i.quantity).replace(".", ","))}</td><td>${e2(formatUsd(i.unitPrice))}</td><td>${e2(formatUsd(lineTotal(i)))}</td>
-            ${editable ? `<td><form method="post" action="/admin/work-orders/${e2(order.id)}/items/${e2(i.id)}/delete">${csrfField6(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
-  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/items" autocomplete="off">${csrfField6(csrf)}
+            ${editable ? `<td><form method="post" action="/admin/work-orders/${e2(order.id)}/items/${e2(i.id)}/delete">${csrfField7(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
+  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/items" autocomplete="off">${csrfField7(csrf)}
       <div class="row"><span><label for="kind">Tipo</label><select id="kind" name="kind">${ITEM_KINDS.map(([id, label2]) => `<option value="${id}">${label2}</option>`).join("")}</select></span>
       <span style="flex:2"><label for="description">Descripci\xF3n</label><input id="description" name="description" maxlength="191" required></span></div>
       <div class="row"><span><label for="brand">Marca (opcional)</label><input id="brand" name="brand" maxlength="60"></span><span><label for="partCode">C\xF3digo (opcional)</label><input id="partCode" name="partCode" maxlength="60"></span></div>
       <div class="row"><span><label for="quantity">Cantidad</label><input id="quantity" name="quantity" value="1" inputmode="decimal" required></span><span><label for="unitPrice">Precio unitario (USD)</label><input id="unitPrice" name="unitPrice" inputmode="decimal" placeholder="45,50" required></span></div>
       <button type="submit">Agregar al presupuesto</button></form>` : "";
-  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/diagnosis">${csrfField6(csrf)}
+  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e2(order.id)}/diagnosis">${csrfField7(csrf)}
       <label for="diag">Diagn\xF3stico del taller</label><textarea id="diag" name="diagnosis" maxlength="1000" rows="3">${e2(order.diagnosis)}</textarea>
       <button type="submit">Guardar diagn\xF3stico</button></form>` : `<p>${e2(order.diagnosis ?? "Sin diagn\xF3stico registrado.")}</p>`;
   const actions = [];
@@ -94608,7 +95614,7 @@ function workOrderDetailView(input) {
   if (transitions.includes("esperando_repuesto"))
     actions.push(statusButton(order, csrf, "esperando_repuesto", "Esperando repuesto"));
   if (transitions.includes("cerrada")) {
-    actions.push(`<form method="post" action="/admin/work-orders/${e2(order.id)}/close" autocomplete="off">${csrfField6(csrf)}
+    actions.push(`<form method="post" action="/admin/work-orders/${e2(order.id)}/close" autocomplete="off">${csrfField7(csrf)}
       <h2>Cerrar con evidencia</h2>
       <div class="row"><span><label for="exitKm">Kilometraje de salida</label><input id="exitKm" name="exitKm" inputmode="numeric" value="${e2(order.intakeKm ?? order.vehicleKm)}" required></span>
       <span><label for="warrantyDays">Garant\xEDa (d\xEDas)</label><input id="warrantyDays" name="warrantyDays" inputmode="numeric" value="30" required></span></div>
@@ -94619,9 +95625,28 @@ function workOrderDetailView(input) {
   }
   if (transitions.includes("cancelada"))
     actions.push(reasonForm(order, csrf, "cancelada", "Motivo de la cancelaci\xF3n", "Cancelar orden"));
+  const code2 = workOrderCode(order.number);
+  const rating = input.rating ?? null;
+  const ratingCard = order.status !== "cerrada" ? "" : rating ? `<div class="card"><h2>Calificaci\xF3n del due\xF1o</h2>
+          <p><strong>${e2(stars(rating.score))} ${rating.score} de 5</strong>${rating.hiddenAt ? ' \xB7 <span class="muted">rese\xF1a oculta</span>' : ""}</p>
+          ${rating.comment ? `<p>${e2(rating.comment)}</p>` : ""}
+          ${needsReview(rating.score) ? `<p class="error">Calificaci\xF3n baja: conviene revisar el caso con el taller.</p>` : ""}
+          ${copyBox2("msg-gracias", "Respuesta para el due\xF1o", thanksMessage(rating.score))}
+          ${input.canModerate && !rating.hiddenAt ? `<form method="post" action="/admin/ratings/${e2(rating.id)}/hide">${csrfField7(csrf)}
+              <label for="ocultar">Motivo para ocultar la rese\xF1a</label><input id="ocultar" name="reason" maxlength="191" required>
+              <button class="danger" type="submit">Ocultar rese\xF1a</button></form>` : ""}
+          ${input.canModerate && rating.hiddenAt ? `<p class="muted">Oculta: ${e2(rating.hiddenReason ?? "")}</p>
+              <form method="post" action="/admin/ratings/${e2(rating.id)}/show">${csrfField7(csrf)}<button type="submit">Volver a mostrarla</button></form>` : ""}</div>` : `<div class="card"><h2>Calificaci\xF3n del due\xF1o</h2>
+          <p class="muted">P\xEDdele la calificaci\xF3n ahora, que es cuando la recuerda. Alimenta el orden de las b\xFAsquedas y la confianza de la red.</p>
+          ${copyBox2("msg-calificar", "Mensaje para pedirla", askMessage({ shopName: order.shopName, code: code2 }))}
+          <form method="post" action="/admin/work-orders/${e2(order.id)}/rating" autocomplete="off">${csrfField7(csrf)}
+          <label for="score">Qu\xE9 respondi\xF3</label>
+          <select id="score" name="score">${SCORES.map((s) => `<option value="${s.value}">${e2(s.label)}</option>`).join("")}</select>
+          <label for="comment">Comentario (opcional)</label><input id="comment" name="comment" maxlength="191">
+          <button class="full" type="submit">Guardar la calificaci\xF3n</button></form></div>`;
   const shopMessage = shopWorkOrderMessage(order);
   return `<div class="stack wide"><p><a href="/admin/work-orders">\u2190 \xD3rdenes de trabajo</a></p>
-  <h1>${e2(code)} \xB7 ${e2(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml6(input.flash)}
+  <h1>${e2(code)} \xB7 ${e2(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml7(input.flash)}
   <div class="card"><h2>Resumen</h2>
     <div>Taller: <strong>${e2(order.shopName)}</strong></div>
     <div>Due\xF1o: <a href="/admin/users/${e2(order.ownerId)}">${e2(order.ownerName)}</a></div>
@@ -94633,6 +95658,7 @@ function workOrderDetailView(input) {
     ${order.cancelReason ? `<div>Motivo de la cancelaci\xF3n: ${e2(order.cancelReason)}</div>` : ""}
     ${order.status === "cerrada" ? `<div>Salida: ${e2(km2(order.exitKm))} \xB7 garant\xEDa ${e2(order.warrantyDays)} d\xEDas${order.nextService ? ` \xB7 pr\xF3ximo: ${e2(order.nextService)}` : ""}</div>` : ""}
   </div>
+  ${ratingCard}
   <div class="card"><h2>Diagn\xF3stico</h2>${diagnosis}</div>
   ${order.status !== "cerrada" && order.status !== "cancelada" ? `<div class="card"><h2>Repuestos</h2><p class="muted">Si el taller necesita comprar repuestos, pide cotizaciones a los almacenes verificados.</p><a class="button" href="/admin/quotes/new?workOrderId=${e2(order.id)}">Pedir repuestos a almacenes</a></div>` : ""}
   <div class="card"><h2>Presupuesto</h2>
@@ -94660,19 +95686,20 @@ function historySection(history) {
     return "";
   return `<div class="card"><h2>Historial de servicios</h2>${history.map((h) => `<div><span class="muted">${e2(formatEcDateTime(h.createdAt))}</span> \xB7 <strong>${e2(h.vehicleLabel)}</strong> \xB7 ${e2(h.shopName)} \xB7 ${e2(h.description)}${h.cost !== null ? ` \xB7 ${e2(formatUsd(h.cost))}` : ""}</div>`).join("")}</div>`;
 }
-var e2, csrfField6, flashHtml6, km2, FILTERS6;
+var e2, csrfField7, flashHtml7, km2, FILTERS8;
 var init_views_work_orders = __esm({
   "packages/api/dist/interfaces/admin/views-work-orders.js"() {
     "use strict";
     init_page();
     init_whatsapp_number();
     init_messages();
-    init_workflow2();
+    init_workflow3();
+    init_workflow4();
     e2 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField6 = (token) => `<input type="hidden" name="csrf" value="${e2(token)}">`;
-    flashHtml6 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e2(flash.text)}</p>` : "";
+    csrfField7 = (token) => `<input type="hidden" name="csrf" value="${e2(token)}">`;
+    flashHtml7 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e2(flash.text)}</p>` : "";
     km2 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
-    FILTERS6 = [
+    FILTERS8 = [
       ["abiertas", "Abiertas"],
       ["por_aprobar", "Por aprobar"],
       ["en_taller", "En el taller"],
@@ -94713,7 +95740,7 @@ function storeRequestMessage(r) {
   lines.push("", "Por favor responde con: precio unitario, marca, disponibilidad, garant\xEDa y tiempo de entrega.", "Si no lo tienes, responde \xABNo tengo\xBB.");
   return lines.join("\n");
 }
-function comparisonMessage(r, quotes) {
+function comparisonMessage2(r, quotes) {
   const ranked = rankQuotes(quotes);
   const without = quotes.filter((q) => q.status === "sin_stock").map((q) => q.storeName);
   const waiting = quotes.filter((q) => q.status === "invitado").length;
@@ -94770,10 +95797,10 @@ function lostQuoteMessage(r) {
 \xBFNos cuentas qu\xE9 pes\xF3 m\xE1s: precio, tiempo de entrega o existencias? Nos ayuda a enviarte solicitudes que puedas ganar.`;
 }
 var REQUEST_LABELS, QUOTE_LABELS, ORDER_STAGE_LABELS, ORDER_STAGE_TRANSITIONS, ORDER_STATUS_FOR_STAGE, LOSS_REASONS, MAX_STORES_PER_REQUEST, quoteRequestCode, round, partText;
-var init_workflow3 = __esm({
+var init_workflow5 = __esm({
   "packages/api/dist/application/quotes/workflow.js"() {
     "use strict";
-    init_workflow2();
+    init_workflow3();
     REQUEST_LABELS = {
       abierta: "Abierta",
       con_pedido: "Con pedido",
@@ -94827,16 +95854,16 @@ function chatLink3(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e3(digits)}" target="_blank" rel="noopener">${e3(label2)} (${e3(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox3(id, label2, content, rows11 = 8) {
-  return `<label for="${id}">${e3(label2)}</label><textarea id="${id}" readonly rows="${rows11}">${e3(content)}</textarea>`;
+function copyBox3(id, label2, content, rows13 = 8) {
+  return `<label for="${id}">${e3(label2)}</label><textarea id="${id}" readonly rows="${rows13}">${e3(content)}</textarea>`;
 }
 function quotesListView(input) {
-  const tabs2 = FILTERS7.map(([id, label2]) => `<a href="/admin/quotes?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e3(label2)}</a>`).join("");
+  const tabs2 = FILTERS9.map(([id, label2]) => `<a href="/admin/quotes?f=${id}"${id === input.filter ? ' class="active"' : ""}>${e3(label2)}</a>`).join("");
   const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin solicitudes</td></tr>` : input.page.items.map((r) => `<tr><td><a href="/admin/quotes/${e3(r.id)}">${e3(quoteRequestCode(r.number))}</a></td><td>${e3(REQUEST_LABELS[r.status] ?? r.status)}</td>
             <td>${e3(r.partName)}${r.quantity > 1 ? ` x${e3(r.quantity)}` : ""}</td><td><a href="/admin/users/${e3(r.requesterId)}">${e3(r.requesterName)}</a></td><td>${e3(r.vehicleLabel ?? "\u2014")}</td><td>${e3(formatEcDateTime(r.createdAt))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/quotes?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/quotes?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
-  return `<h1>Cotizaciones de repuestos</h1>${flashHtml7(input.flash)}<div class="tabs">${tabs2}</div>
+  return `<h1>Cotizaciones de repuestos</h1>${flashHtml8(input.flash)}<div class="tabs">${tabs2}</div>
   <p class="muted">Se piden desde el veh\xEDculo de un due\xF1o (\xABCotizar repuesto\xBB) o desde una orden de trabajo (\xABPedir repuestos a almacenes\xBB).</p>
   <div class="scroll"><table><thead><tr><th>Solicitud</th><th>Estado</th><th>Repuesto</th><th>Solicitante</th><th>Veh\xEDculo</th><th>Fecha</th></tr></thead><tbody>${body}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
@@ -94851,7 +95878,7 @@ function newQuoteView(input) {
   }).join("")}</div>`;
   return `<div class="stack wide"><p><a href="/admin/users/${e3(input.requester.id)}">\u2190 ${e3(input.requester.name)}</a></p>
   <h1>Nueva solicitud de cotizaci\xF3n</h1>${input.error ? `<p class="error" role="alert">${e3(input.error)}</p>` : ""}
-  <form method="post" action="/admin/quotes" autocomplete="off">${csrfField7(input.csrf)}
+  <form method="post" action="/admin/quotes" autocomplete="off">${csrfField8(input.csrf)}
   <input type="hidden" name="requesterId" value="${e3(input.requester.id)}">
   ${input.vehicle ? `<input type="hidden" name="vehicleId" value="${e3(input.vehicle.id)}">` : ""}
   ${input.workOrderId ? `<input type="hidden" name="workOrderId" value="${e3(input.workOrderId)}">` : ""}
@@ -94868,7 +95895,7 @@ function newQuoteView(input) {
 function responseForm(requestId, q, csrf) {
   const unit = q.unitPrice !== null ? String(q.unitPrice).replace(".", ",") : "";
   return `<details><summary>Registrar respuesta de ${e3(q.storeName)}</summary>
-    <form method="post" action="/admin/quotes/${e3(requestId)}/quotes/${e3(q.id)}" autocomplete="off">${csrfField7(csrf)}
+    <form method="post" action="/admin/quotes/${e3(requestId)}/quotes/${e3(q.id)}" autocomplete="off">${csrfField8(csrf)}
     <div class="row"><span><label>Precio unitario (USD)</label><input name="unitPrice" inputmode="decimal" value="${e3(unit)}" placeholder="45,50"></span>
     <span><label>Marca</label><input name="brand" maxlength="60" value="${e3(q.brand)}"></span></div>
     <div class="row"><span><label>Disponibilidad</label><input name="availability" maxlength="60" value="${e3(q.availability)}" placeholder="En stock"></span>
@@ -94888,19 +95915,19 @@ function quoteDetailView(input) {
       <td>${e3([q.brand, q.availability, q.deliveryTime ? `entrega ${q.deliveryTime}` : null, q.warrantyDays ? `garant\xEDa ${q.warrantyDays} d\xEDas` : null].filter(Boolean).join(" \xB7 ") || q.notes || "\u2014")}</td>
       <td>${chatLink3(q.storePhone, "Chat")}</td></tr>`).join("");
   const responses = open ? quotes.map((q) => responseForm(request.id, q, csrf)).join("") : "";
-  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e3(request.id)}/choose" class="row">${csrfField7(csrf)}<input type="hidden" name="quoteId" value="${e3(q.id)}">
+  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e3(request.id)}/choose" class="row">${csrfField8(csrf)}<input type="hidden" name="quoteId" value="${e3(q.id)}">
             <span>${i + 1}) <strong>${e3(q.storeName)}</strong> \xB7 ${e3(formatUsd(q.unitPrice ?? 0))} c/u</span><button type="submit">Eligi\xF3 esta</button></form>`).join("")}` : "";
-  const closeForm = open ? `<form method="post" action="/admin/quotes/${e3(request.id)}/close">${csrfField7(csrf)}
+  const closeForm = open ? `<form method="post" action="/admin/quotes/${e3(request.id)}/close">${csrfField8(csrf)}
       <label for="close-reason">Si el cliente no pidi\xF3 ninguna, \xBFpor qu\xE9?</label><input id="close-reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cerrar sin pedido</button></form>` : "";
-  const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e3(request.id)}/quotes/${e3(q.id)}/loss" class="row">${csrfField7(csrf)}
+  const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e3(request.id)}/quotes/${e3(q.id)}/loss" class="row">${csrfField8(csrf)}
           <span>${e3(q.storeName)}: motivo de p\xE9rdida</span><select name="reason">${LOSS_REASONS.map(([id, label2]) => `<option value="${id}"${q.lossReason === id ? " selected" : ""}>${label2}</option>`).join("")}</select>
           <button type="submit">Guardar</button></form>`).join("") : "";
   let orderCard = "";
   if (order) {
     const transitions = ORDER_STAGE_TRANSITIONS[order.stage] ?? [];
-    const buttons = transitions.filter((s) => s !== "cancelado").map((s) => `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField7(csrf)}<input type="hidden" name="stage" value="${s}"><button type="submit">${e3(ORDER_STAGE_LABELS[s])}</button></form>`).join("");
-    const cancel = transitions.includes("cancelado") ? `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField7(csrf)}<input type="hidden" name="stage" value="cancelado">
+    const buttons = transitions.filter((s) => s !== "cancelado").map((s) => `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField8(csrf)}<input type="hidden" name="stage" value="${s}"><button type="submit">${e3(ORDER_STAGE_LABELS[s])}</button></form>`).join("");
+    const cancel = transitions.includes("cancelado") ? `<form method="post" action="/admin/quotes/${e3(request.id)}/order/stage">${csrfField8(csrf)}<input type="hidden" name="stage" value="cancelado">
         <label for="order-cancel">Motivo de la cancelaci\xF3n</label><input id="order-cancel" name="reason" maxlength="191" required><button class="danger" type="submit">Cancelar pedido</button></form>` : "";
     orderCard = `<div class="card"><h2>Pedido \xB7 ${e3(ORDER_STAGE_LABELS[order.stage] ?? order.stage)}</h2>
       <div><strong>${e3(order.storeName)}</strong> \xB7 ${e3(order.partName)}${order.quantity > 1 ? ` x${e3(order.quantity)}` : ""} \xB7 total ${e3(formatUsd(order.total))}</div>
@@ -94911,7 +95938,7 @@ function quoteDetailView(input) {
       ${lost ? `<h2>Almacenes no elegidos</h2>${copyBox3("msg-lost", "Mensaje para los no elegidos", lostQuoteMessage(request), 4)}${lost}` : ""}</div>`;
   }
   return `<div class="stack wide"><p><a href="/admin/quotes">\u2190 Cotizaciones</a></p>
-  <h1>${e3(code)} \xB7 ${e3(REQUEST_LABELS[request.status] ?? request.status)}</h1>${flashHtml7(input.flash)}
+  <h1>${e3(code)} \xB7 ${e3(REQUEST_LABELS[request.status] ?? request.status)}</h1>${flashHtml8(input.flash)}
   <div class="card"><h2>Solicitud</h2>
     <div>Repuesto: <strong>${e3(request.partName)}</strong>${request.quantity > 1 ? ` x${e3(request.quantity)}` : ""}${request.partCode ? ` \xB7 c\xF3digo ${e3(request.partCode)}` : ""}</div>
     <div>Solicitante: <a href="/admin/users/${e3(request.requesterId)}">${e3(request.requesterName)}</a>${request.vehicleLabel ? ` \xB7 ${e3(request.vehicleLabel)}` : ""} \xB7 ${e3(request.city)}</div>
@@ -94923,7 +95950,7 @@ function quoteDetailView(input) {
   <div class="card"><h2>${open ? "2. Respuestas de los almacenes" : "Respuestas"}</h2>
     <div class="scroll"><table><thead><tr><th>Almac\xE9n</th><th>Estado</th><th>Precio c/u</th><th>Detalle</th><th></th></tr></thead><tbody>${invited}</tbody></table></div>
     ${responses}</div>
-  ${open ? `<div class="card"><h2>3. Comparativa para el cliente</h2>${copyBox3("msg-compare", "Mensaje con la comparativa", comparisonMessage(request, quotes), 9)}<p>${chatLink3(request.requesterPhone, "Abrir chat del solicitante")}</p>${chooseForms}${closeForm}</div>` : ""}
+  ${open ? `<div class="card"><h2>3. Comparativa para el cliente</h2>${copyBox3("msg-compare", "Mensaje con la comparativa", comparisonMessage2(request, quotes), 9)}<p>${chatLink3(request.requesterPhone, "Abrir chat del solicitante")}</p>${chooseForms}${closeForm}</div>` : ""}
   ${orderCard}
   </div>`;
 }
@@ -94942,19 +95969,19 @@ function userQuotesSection(data) {
   }
   return parts.length > 0 ? `<div class="card">${parts.join("")}</div>` : "";
 }
-var e3, csrfField7, flashHtml7, FILTERS7;
+var e3, csrfField8, flashHtml8, FILTERS9;
 var init_views_quotes = __esm({
   "packages/api/dist/interfaces/admin/views-quotes.js"() {
     "use strict";
     init_page();
     init_whatsapp_number();
     init_messages();
-    init_workflow2();
     init_workflow3();
+    init_workflow5();
     e3 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField7 = (token) => `<input type="hidden" name="csrf" value="${e3(token)}">`;
-    flashHtml7 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
-    FILTERS7 = [
+    csrfField8 = (token) => `<input type="hidden" name="csrf" value="${e3(token)}">`;
+    flashHtml8 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
+    FILTERS9 = [
       ["abiertas", "Abiertas"],
       ["con_pedido", "Con pedido"],
       ["todas", "Todas"]
@@ -94968,9 +95995,9 @@ function day(value2) {
   return date && !Number.isNaN(date.getTime()) ? date.toISOString().slice(0, 10) : "\u2014";
 }
 function phoneLabel(value2) {
-  const text5 = String(value2 ?? "");
-  const digits = text5.replace(/\D/g, "");
-  return text5.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text5;
+  const text7 = String(value2 ?? "");
+  const digits = text7.replace(/\D/g, "");
+  return text7.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text7;
 }
 function value(values, key) {
   const v = values[key];
@@ -94981,7 +96008,7 @@ function field(values, name, label2, attrs = "") {
 }
 function select(values, name, label2, options, placeholder) {
   const selected = String(values[name] ?? "");
-  const opts = options.map(([id, text5]) => `<option value="${e4(id)}"${id === selected ? " selected" : ""}>${e4(text5)}</option>`).join("");
+  const opts = options.map(([id, text7]) => `<option value="${e4(id)}"${id === selected ? " selected" : ""}>${e4(text7)}</option>`).join("");
   const empty = placeholder ? `<option value="">${e4(placeholder)}</option>` : "";
   return `<label for="f-${name}">${e4(label2)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
 }
@@ -95047,7 +96074,7 @@ function newUserView(input) {
   const codeField = visitCode ? `<input type="hidden" name="code" value="${e4(visitCode)}">` : "";
   return `<div class="stack wide"><h1>Nuevo registro</h1><div class="tabs">${tabs2}</div>
   ${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}
-  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField8(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">${codeField}
+  <form method="post" action="/admin/users/new" autocomplete="off">${csrfField9(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">${codeField}
   ${common}${specific}
   <button class="full" type="submit">Guardar registro</button></form></div>`;
 }
@@ -95055,7 +96082,7 @@ function input_phone(values) {
   return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567"');
 }
 function verificationForm(kind, id, userId, csrf) {
-  return `<form method="post" action="/admin/verifications/${kind}/${e4(id)}">${csrfField8(csrf)}
+  return `<form method="post" action="/admin/verifications/${kind}/${e4(id)}">${csrfField9(csrf)}
     <input type="hidden" name="returnTo" value="${e4(userId)}">
     <label for="reason-${e4(id)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e4(id)}" name="reason" maxlength="500">
     <div class="row"><button type="submit" name="decision" value="verified">Aprobar</button><button class="danger" type="submit" name="decision" value="rejected">Rechazar</button></div></form>`;
@@ -95079,22 +96106,22 @@ function userDetailView(input) {
     <div>Horario: ${e4(b.hours ?? "\u2014")}</div>${extra}
     <div>Estado: <strong>${e4(STATUS_LABELS3[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
     ${verificationForm(kind, b.id, user.id, input.csrf)}</div>`;
-  const shopCard = shop ? business("Taller", shop, `<div>Servicios: ${e4(shop.services.map(categoryName).join(", ") || "\u2014")}</div>`, "shop") : "";
+  const shopCard = shop ? business("Taller", shop, `<div>Servicios: ${e4(shop.services.map(categoryName2).join(", ") || "\u2014")}</div>`, "shop") : "";
   const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e4(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
   const vehicleCards = vehicles.map((v) => {
     const plan = input.plans[String(v.id)];
     return `<div class="card"><h2>${e4(v.make)} ${e4(v.model)} ${e4(v.year)}</h2>
       <div>${e4(Number(v.currentKm).toLocaleString("es-EC"))} km \xB7 ${e4(className(v.vehicleClass))} \xB7 ${e4(fuelName(v.fuel))}${v.plate ? ` \xB7 ${e4(v.plate)}` : ""}</div>
       <div class="muted">Uso ${e4(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
-      ${plan ? `<label for="plan-${e4(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e4(v.id)}" readonly rows="12">${e4(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e4(user.id)}/schedule?vehicleId=${e4(v.id)}">Agendar turno</a> \xB7 <a href="/admin/work-orders/new?ownerId=${e4(user.id)}&amp;vehicleId=${e4(v.id)}">Orden de trabajo sin cita</a> \xB7 <a href="/admin/quotes/new?ownerId=${e4(user.id)}&amp;vehicleId=${e4(v.id)}">Cotizar repuesto</a></p>` : ""}</div>`;
+      ${plan ? `<label for="plan-${e4(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e4(v.id)}" readonly rows="12">${e4(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e4(user.id)}/schedule?vehicleId=${e4(v.id)}">Agendar turno</a> \xB7 <a href="/admin/work-orders/new?ownerId=${e4(user.id)}&amp;vehicleId=${e4(v.id)}">Orden de trabajo sin cita</a> \xB7 <a href="/admin/quotes/new?ownerId=${e4(user.id)}&amp;vehicleId=${e4(v.id)}">Cotizar repuesto</a> \xB7 <a href="/admin/service-requests/new?ownerId=${e4(user.id)}">Buscar especialista</a></p>` : ""}</div>`;
   }).join("");
   const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}
-      <form method="post" action="/admin/users/${e4(user.id)}/vehicles" autocomplete="off">${csrfField8(input.csrf)}${vehicleFields2(input.values ?? {})}
+      <form method="post" action="/admin/users/${e4(user.id)}/vehicles" autocomplete="off">${csrfField9(input.csrf)}${vehicleFields2(input.values ?? {})}
       <button class="full" type="submit">Agregar veh\xEDculo</button></form></div>` : "";
   const moderation = moderationSection(String(user.id), input.relations ?? [], input.sanctions ?? [], input.csrf, !!input.canSanction);
   const lopdp = input.canLopdp ? userDataRequestsCard(String(user.id), input.dataRequests ?? [], input.csrf) : "";
   const planCard = userPlanCard(String(user.id), input.subscriptions ?? [], input.csrf, !!input.canPayments, String(user.role ?? "dueno"), input.usage ?? {});
-  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e4(user.name)}</h1>${flashHtml8(input.flash)}
+  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e4(user.name)}</h1>${flashHtml9(input.flash)}
   ${datos}${planCard}${shopCard}${storeCard}${moderation}${lopdp}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
 }
 function moderationSection(userId, relations, sanctions, csrf, canSanction) {
@@ -95103,7 +96130,7 @@ function moderationSection(userId, relations, sanctions, csrf, canSanction) {
   const links = relations.length ? `<ul>${relations.map((r) => `<li><a href="/admin/relations/${e4(r.id)}">${e4(relationCode(r.number))}</a> \xB7 ${e4(RELATION_KIND_LABELS[r.kind] ?? r.kind)} \xB7 ${e4(RELATION_STATUS_LABELS[r.status] ?? r.status)}${r.subject ? ` \xB7 ${e4(r.subject)}` : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin v\xEDnculos registrados.</p>`;
   const active = sanctions.filter((s) => isActive(s));
   const history = sanctions.length ? `<ul>${sanctions.map((s) => `<li>${e4(sanctionLabel(s.level))} \xB7 ${day(s.startsAt)}${s.endsAt ? ` \u2192 ${day(s.endsAt)}` : ""}${s.liftedAt ? " (levantada)" : isActive(s) ? ' <span class="error">vigente</span>' : " (vencida)"} \xB7 ${e4(s.reason.slice(0, 160))}</li>`).join("")}</ul>` : `<p class="muted">Sin sanciones.</p>`;
-  const form = canSanction ? `<form method="post" action="/admin/users/${e4(userId)}/sanctions">${csrfField8(csrf)}
+  const form = canSanction ? `<form method="post" action="/admin/users/${e4(userId)}/sanctions">${csrfField9(csrf)}
       <label for="sanction-level">Aplicar un paso de la escala</label>
       <select id="sanction-level" name="level">${SANCTION_LEVELS.map((l) => `<option value="${e4(l.key)}">${e4(l.label)} \u2014 ${e4(l.description)}</option>`).join("")}</select>
       <label for="sanction-days">D\xEDas (vac\xEDo = el valor por defecto del paso)</label><input id="sanction-days" name="days" inputmode="numeric">
@@ -95117,11 +96144,11 @@ function moderationSection(userId, relations, sanctions, csrf, canSanction) {
 function verificationsView(input) {
   const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e4(item.userId)}">${e4(item.name)}</a></td>
             <td>${e4(item.city)}</td><td>${e4(item.ruc ?? "\u2014")}</td><td>${day(item.createdAt)}</td></tr>`).join("");
-  return `<h1>Verificaciones pendientes</h1>${flashHtml8(input.flash)}
+  return `<h1>Verificaciones pendientes</h1>${flashHtml9(input.flash)}
   <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
-var ROLE_LABELS, STATUS_LABELS3, USAGE_OPTIONS, e4, csrfField8, flashHtml8, className, fuelName, categoryName;
+var ROLE_LABELS, STATUS_LABELS3, USAGE_OPTIONS, e4, csrfField9, flashHtml9, className, fuelName, categoryName2;
 var init_views_registrations = __esm({
   "packages/api/dist/interfaces/admin/views-registrations.js"() {
     "use strict";
@@ -95147,16 +96174,16 @@ var init_views_registrations = __esm({
       ["severo", "Severo (Sierra, carga, lastre)"]
     ];
     e4 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField8 = (token) => `<input type="hidden" name="csrf" value="${e4(token)}">`;
-    flashHtml8 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
+    csrfField9 = (token) => `<input type="hidden" name="csrf" value="${e4(token)}">`;
+    flashHtml9 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
     className = (id) => vehicleClasses.classes.find((c) => c.id === id)?.name ?? String(id ?? "\u2014");
     fuelName = (id) => vehicleClasses.fuels.find((f) => f.id === id)?.name ?? String(id ?? "\u2014");
-    categoryName = (id) => serviceTaxonomy.categories.find((c) => c.id === id)?.name ?? id;
+    categoryName2 = (id) => serviceTaxonomy.categories.find((c) => c.id === id)?.name ?? id;
   }
 });
 
 // packages/api/dist/interfaces/admin/registrations.js
-import { randomBytes as randomBytes5 } from "node:crypto";
+import { randomBytes as randomBytes6 } from "node:crypto";
 function dbError(err) {
   const code = err.code;
   if (code === "ER_DUP_ENTRY")
@@ -95185,7 +96212,7 @@ function flashFrom(request) {
 }
 function registerRegistrationRoutes(app2, deps) {
   const { registrations } = deps;
-  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text7, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text7)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -95316,7 +96343,7 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const perfil = PERFILES.includes(body.perfil) ? body.perfil : "dueno";
-    const invalid = (text5, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text5 }), session, status);
+    const invalid = (text7, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text7 }), session, status);
     const userFrom = async (data, keepEmail) => ({
       phone: data.phone,
       name: data.name,
@@ -95326,7 +96353,7 @@ function registerRegistrationRoutes(app2, deps) {
       notes: data.notes,
       consentVersion: CONSENT_VERSION,
       // Las cuentas creadas por el operador no inician sesión con contraseña: se guarda una aleatoria.
-      passwordHash: await hashPassword(randomBytes5(24).toString("hex"))
+      passwordHash: await hashPassword(randomBytes6(24).toString("hex"))
     });
     const operation = deps.platform ? await deps.platform() : null;
     if (operation && typeof body.city === "string" && body.city.trim() && !cityAllowed(body.city.trim(), operation.cities)) {
@@ -95389,7 +96416,7 @@ function registerRegistrationRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID5.test(id))
       return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
     return renderDetail(request, reply, session, id, { flash: flashFrom(request) });
   });
@@ -95399,7 +96426,7 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID4.test(id))
+    if (!UUID5.test(id))
       return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
     const parsed = vehicleSchema.safeParse(body);
     if (!parsed.success) {
@@ -95435,13 +96462,13 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { kind, id } = request.params;
-    if (kind !== "shop" && kind !== "store" || !UUID4.test(id)) {
+    if (kind !== "shop" && kind !== "store" || !UUID5.test(id)) {
       return errorPage(request, reply, session, "Verificaciones", "Registro no encontrado.", 404);
     }
     const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "";
-    const returnTo = typeof body.returnTo === "string" && UUID4.test(body.returnTo) ? body.returnTo : null;
-    const fail = (text5, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text5 }, status }) : errorPage(request, reply, session, "Verificaciones", text5, status);
+    const returnTo = typeof body.returnTo === "string" && UUID5.test(body.returnTo) ? body.returnTo : null;
+    const fail = (text7, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text7 }, status }) : errorPage(request, reply, session, "Verificaciones", text7, status);
     if (!decision)
       return fail("Elige aprobar o rechazar.", 400);
     if (decision === "rejected" && reason.length < 5)
@@ -95460,7 +96487,7 @@ function registerRegistrationRoutes(app2, deps) {
     return reply.redirect(returnTo ? `/admin/users/${returnTo}?ok=${ok}` : `/admin/verifications?ok=${ok}`, 302);
   });
 }
-var UUID4, OK_MESSAGES;
+var UUID5, OK_MESSAGES;
 var init_registrations = __esm({
   "packages/api/dist/interfaces/admin/registrations.js"() {
     "use strict";
@@ -95473,7 +96500,7 @@ var init_registrations = __esm({
     init_permissions();
     init_platform();
     init_views_registrations();
-    UUID4 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    UUID5 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     OK_MESSAGES = {
       creado: "Registro creado.",
       vehiculo: "Veh\xEDculo agregado.",
@@ -95508,7 +96535,7 @@ function dbErrorText(err) {
 }
 function registerAppointmentRoutes(app2, deps) {
   const { appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text7, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text7)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -95567,7 +96594,7 @@ function registerAppointmentRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID5.test(id))
+    if (!UUID6.test(id))
       return errorPage(request, reply, session, "Agendar turno", "Usuario no encontrado.", 404);
     const query = request.query ?? {};
     const vehicleId = typeof query.vehicleId === "string" ? query.vehicleId : void 0;
@@ -95578,12 +96605,12 @@ function registerAppointmentRoutes(app2, deps) {
     if (!ctx)
       return reply;
     const { session, body } = ctx;
-    const ownerId = typeof body.ownerId === "string" && UUID5.test(body.ownerId) ? body.ownerId : null;
+    const ownerId = typeof body.ownerId === "string" && UUID6.test(body.ownerId) ? body.ownerId : null;
     if (!ownerId)
       return errorPage(request, reply, session, "Agendar turno", "Usuario no encontrado.", 404);
     const vehicleId = typeof body.vehicleId === "string" ? body.vehicleId : "";
     const services = validServices(asList(body.services));
-    const shopId = typeof body.shopId === "string" && UUID5.test(body.shopId) ? body.shopId : null;
+    const shopId = typeof body.shopId === "string" && UUID6.test(body.shopId) ? body.shopId : null;
     const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, 500) || null : null;
     const scheduledAt = parseEcDateTime(body.date, body.time);
     const fail = (error, status = 400) => renderSchedule(request, reply, session, ownerId, vehicleId, services, { error, values: body, status });
@@ -95650,7 +96677,7 @@ function registerAppointmentRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const filter = FILTERS8.includes(query.f) ? query.f : "proximos";
+    const filter = FILTERS10.includes(query.f) ? query.f : "proximos";
     const raw = Number(query.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
@@ -95678,7 +96705,7 @@ function registerAppointmentRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID5.test(id))
+    if (!UUID6.test(id))
       return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
     const ok = request.query?.ok;
     const flash = typeof ok === "string" && OK_MESSAGES2[ok] ? { kind: "ok", text: OK_MESSAGES2[ok] } : void 0;
@@ -95690,7 +96717,7 @@ function registerAppointmentRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID5.test(id))
+    if (!UUID6.test(id))
       return errorPage(request, reply, session, "Turno", "Turno no encontrado.", 404);
     const status = body.status;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 191) : "";
@@ -95722,7 +96749,7 @@ function registerAppointmentRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID5.test(id))
+    if (!UUID6.test(id))
       return errorPage(request, reply, session, "Bit\xE1cora", "Usuario no encontrado.", 404);
     const content = typeof body.text === "string" ? body.text.trim() : "";
     if (content.length < 2 || content.length > 2e3) {
@@ -95741,7 +96768,7 @@ function registerAppointmentRoutes(app2, deps) {
     return reply.redirect(`/admin/users/${id}?ok=nota`, 302);
   });
 }
-var UUID5, FILTERS8, MAX_AHEAD_MS, OK_MESSAGES2, asList, validServices;
+var UUID6, FILTERS10, MAX_AHEAD_MS, OK_MESSAGES2, asList, validServices;
 var init_appointments = __esm({
   "packages/api/dist/interfaces/admin/appointments.js"() {
     "use strict";
@@ -95753,8 +96780,8 @@ var init_appointments = __esm({
     init_plan_text();
     init_platform();
     init_views_appointments();
-    UUID5 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    FILTERS8 = ["hoy", "proximos", "pendientes", "todos"];
+    UUID6 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS10 = ["hoy", "proximos", "pendientes", "todos"];
     MAX_AHEAD_MS = 180 * 24 * 60 * 60 * 1e3;
     OK_MESSAGES2 = {
       creado: "Turno solicitado. Env\xEDa los mensajes al taller y al due\xF1o.",
@@ -95877,21 +96904,21 @@ function welcomeMessage(ctx, options = {}) {
   return `${intro}${parts.join("\n\n")}`;
 }
 function detectProfileIntent(input) {
-  const text5 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text5))
+  const text7 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text7))
     return "cuenta";
-  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text5))
+  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text7))
     return "almacen";
-  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text5))
+  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text7))
     return "taller";
-  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text5))
+  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text7))
     return "dueno";
   return null;
 }
 function parseContactInput(input) {
-  const text5 = input.slice(0, 2e3);
-  const code = /\bAMP-[A-HJ-NP-Z2-9]{4,6}\b/i.exec(text5)?.[0]?.toUpperCase() ?? null;
-  const rest = code ? text5.split(new RegExp(code, "i")).join(" ") : text5;
+  const text7 = input.slice(0, 2e3);
+  const code = /\bAMP-[A-HJ-NP-Z2-9]{4,6}\b/i.exec(text7)?.[0]?.toUpperCase() ?? null;
+  const rest = code ? text7.split(new RegExp(code, "i")).join(" ") : text7;
   for (const candidate of rest.match(/\+?\d[\d\s().-]{6,}\d/g) ?? []) {
     const digits = normalizeWhatsappNumber(candidate);
     if (digits)
@@ -95906,8 +96933,8 @@ var init_welcome = __esm({
     init_messages();
     init_plan_text();
     init_whatsapp_number();
+    init_workflow5();
     init_workflow3();
-    init_workflow2();
     NEW_CONTACT_MESSAGE = "\xA1Hola! \u{1F44B} Bienvenido a AutoMantPro \u{1F697}\nTu veh\xEDculo, tu taller y tus repuestos, conectados en un solo chat.\n\n\xBFQui\xE9n eres?\n1) \u{1F697} Soy nuevo y tengo un veh\xEDculo\n2) \u{1F527} Soy nuevo y tengo un taller\n3) \u{1F4E6} Soy nuevo y tengo un almac\xE9n de repuestos\n4) \u{1F511} Ya tengo cuenta (te escribo desde otro n\xFAmero)\n\nResponde con el n\xFAmero.";
     MENUS = {
       dueno: "\xBFQu\xE9 necesitas hoy?\n1) \u{1F697} Mis veh\xEDculos y su plan\n2) \u{1F50D} Tengo un s\xEDntoma o ruido\n3) \u{1F4C5} Agendar en un taller\n4) \u{1F4E6} Cotizar un repuesto\n5) \u{1F64B} Hablar con una persona",
@@ -95943,7 +96970,7 @@ function resultCard(result, csrf) {
       <div><strong>${e5(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}${intentLine}
       <p class="muted">${intent === "cuenta" ? "Dice que ya tiene cuenta: b\xFAscala por su n\xFAmero anterior antes de registrarlo de nuevo." : "No est\xE1 registrado. Env\xEDa la bienvenida y, cuando diga qui\xE9n es, reg\xEDstralo."}</p>
       ${message2}
-      <form method="post" action="/admin/users/new/start" class="row">${csrfField9(csrf)}<input type="hidden" name="phone" value="${e5(result.phone)}">${result.code ? `<input type="hidden" name="code" value="${e5(result.code)}">` : ""}
+      <form method="post" action="/admin/users/new/start" class="row">${csrfField10(csrf)}<input type="hidden" name="phone" value="${e5(result.phone)}">${result.code ? `<input type="hidden" name="code" value="${e5(result.code)}">` : ""}
       <select name="perfil" aria-label="Perfil">${option("dueno", "Due\xF1o de veh\xEDculo")}${option("taller", "Taller")}${option("almacen", "Almac\xE9n")}</select>
       <button type="submit">Registrar</button></form></div>`;
   }
@@ -95968,7 +96995,7 @@ function copilotCard(input) {
   const hiddenQuery = `<input type="hidden" name="q" value="${e5(input.query)}">`;
   let draftBlock = "";
   if (draft?.ok) {
-    const feedback = draft.usageId ? `<form method="post" action="/admin/attend/feedback" class="row">${csrfField9(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e5(draft.usageId)}">
+    const feedback = draft.usageId ? `<form method="post" action="/admin/attend/feedback" class="row">${csrfField10(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e5(draft.usageId)}">
         <input name="reason" maxlength="191" placeholder="\xBFQu\xE9 le falt\xF3 o sobr\xF3? (opcional)">
         <button type="submit" name="score" value="good">\u{1F44D} \xDAtil</button><button class="danger" type="submit" name="score" value="bad">\u{1F44E} No sirvi\xF3</button></form>` : "";
     draftBlock = `<p class="muted">Borrador generado por IA: rev\xEDsalo y corr\xEDgelo antes de enviarlo. Costo estimado US$ ${e5(draft.costUsd.toFixed(4))}.</p>
@@ -95977,7 +97004,7 @@ function copilotCard(input) {
   } else if (draft) {
     draftBlock = `<p class="error" role="alert">${e5(draft.message)}</p><p class="muted">Usa el mensaje sugerido de arriba.</p>`;
   }
-  const form = copilot.available ? `<form method="post" action="/admin/attend/draft" autocomplete="off">${csrfField9(csrf)}${hiddenQuery}
+  const form = copilot.available ? `<form method="post" action="/admin/attend/draft" autocomplete="off">${csrfField10(csrf)}${hiddenQuery}
       <label for="customer-message">Mensaje del cliente</label><textarea id="customer-message" name="message" rows="4" maxlength="2000" required>${e5(input.customerText)}</textarea>
       <label for="instruction">Indicaci\xF3n para la IA (opcional)</label><input id="instruction" name="instruction" maxlength="300" value="${e5(input.instruction)}" placeholder="Ofr\xE9cele turno para el jueves en la ma\xF1ana">
       <button class="full" type="submit">Sugerir respuesta con IA</button></form>` : `<p class="muted">${e5(copilot.reason ?? "La IA no est\xE1 disponible.")} Rev\xEDsalo en <a href="/admin/settings">Ajustes</a>.</p>`;
@@ -95988,14 +97015,14 @@ function attendView(input) {
   ${input.notice ? `<div class="card"><p class="error" role="status">${e5(input.notice)}</p></div>` : ""}
   <p class="muted">Pega el n\xFAmero o el primer mensaje que lleg\xF3 por WhatsApp. Te digo si es nuevo o registrado, su perfil, lo pendiente y el mensaje para responder.</p>
   ${input.error ? `<p class="error" role="alert">${e5(input.error)}</p>` : ""}
-  <form method="post" action="/admin/attend" autocomplete="off">${csrfField9(input.csrf)}
+  <form method="post" action="/admin/attend" autocomplete="off">${csrfField10(input.csrf)}
   <label for="q">N\xFAmero o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. C\xF3digo: AMP-XXXX \xB7 099 123 4567">${e5(input.query)}</textarea>
   <button class="full" type="submit">Identificar</button></form>
   ${input.flash ? `<p class="ok" role="status">${e5(input.flash)}</p>` : ""}
   ${input.result ? resultCard(input.result, input.csrf) : ""}
   ${input.result?.phone && input.copilot ? copilotCard({ csrf: input.csrf, query: input.query, copilot: input.copilot, draft: input.draft, customerText: input.customerText ?? input.query, instruction: input.instruction ?? "" }) : ""}</div>`;
 }
-var e5, csrfField9, phoneDigits, INTENT_LABELS;
+var e5, csrfField10, phoneDigits, INTENT_LABELS;
 var init_views_attend = __esm({
   "packages/api/dist/interfaces/admin/views-attend.js"() {
     "use strict";
@@ -96006,7 +97033,7 @@ var init_views_attend = __esm({
     init_plans();
     init_views_plans();
     e5 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField9 = (token) => `<input type="hidden" name="csrf" value="${e5(token)}">`;
+    csrfField10 = (token) => `<input type="hidden" name="csrf" value="${e5(token)}">`;
     phoneDigits = (phone) => phone.replace(/\D/g, "");
     INTENT_LABELS = {
       dueno: "Dijo que tiene un veh\xEDculo",
@@ -96186,7 +97213,7 @@ function registerAttendRoutes(app2, deps) {
       return reply;
     const { session, body } = csrfCtx;
     const query = typeof body.q === "string" ? body.q.slice(0, 2e3) : "";
-    const usageId = typeof body.usageId === "string" && UUID6.test(body.usageId) ? body.usageId : null;
+    const usageId = typeof body.usageId === "string" && UUID7.test(body.usageId) ? body.usageId : null;
     const good = body.score === "good";
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 191) || null : null;
     let resolved;
@@ -96207,7 +97234,7 @@ function registerAttendRoutes(app2, deps) {
     return deps.html(reply, request, "Atender", attendView({ csrf: session.csrfToken, query, result: resolved.result, copilot: await copilotStatus(), customerText: query, flash }), session);
   });
 }
-var UUID6, DRAFTS_PER_HOUR;
+var UUID7, DRAFTS_PER_HOUR;
 var init_attend = __esm({
   "packages/api/dist/interfaces/admin/attend.js"() {
     "use strict";
@@ -96217,7 +97244,7 @@ var init_attend = __esm({
     init_views_attend();
     init_platform();
     init_plans();
-    UUID6 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    UUID7 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     DRAFTS_PER_HOUR = 30;
   }
 });
@@ -96239,7 +97266,7 @@ function dbErrorText2(err) {
 }
 function registerWorkOrderRoutes(app2, deps) {
   const { workOrders, appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text7, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text7)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -96261,7 +97288,8 @@ function registerWorkOrderRoutes(app2, deps) {
     }
     if (!found)
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
-    return deps.html(reply, request, workOrderCode(found.order.number), workOrderDetailView({ ...found, csrf: session.csrfToken, flash }), session, status);
+    const rating = deps.ratings ? await deps.ratings.forWorkOrder(id).catch(() => null) : null;
+    return deps.html(reply, request, workOrderCode(found.order.number), workOrderDetailView({ ...found, csrf: session.csrfToken, flash, rating, canModerate: can(session.role, "disputes") }), session, status);
   }
   async function record(session, type, order, extra = {}) {
     const payload = { workOrderId: order.id, code: workOrderCode(order.number), ...extra };
@@ -96288,7 +97316,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const filter = FILTERS9.includes(query.f) ? query.f : "abiertas";
+    const filter = FILTERS11.includes(query.f) ? query.f : "abiertas";
     const raw = Number(query.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
@@ -96303,7 +97331,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const pick = (key) => typeof query[key] === "string" && UUID7.test(query[key]) ? query[key] : null;
+    const pick = (key) => typeof query[key] === "string" && UUID8.test(query[key]) ? query[key] : null;
     const appointmentId = pick("appointmentId");
     try {
       if (appointmentId) {
@@ -96325,7 +97353,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!ctxCsrf)
       return reply;
     const { session, body } = ctxCsrf;
-    const uuid = (key) => typeof body[key] === "string" && UUID7.test(body[key]) ? body[key] : null;
+    const uuid = (key) => typeof body[key] === "string" && UUID8.test(body[key]) ? body[key] : null;
     const appointmentId = uuid("appointmentId");
     let id;
     let order;
@@ -96389,7 +97417,7 @@ function registerWorkOrderRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID7.test(id))
+    if (!UUID8.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     const ok = request.query?.ok;
     return renderOrder(request, reply, session, id, typeof ok === "string" && OK_MESSAGES3[ok] ? { kind: "ok", text: OK_MESSAGES3[ok] } : void 0);
@@ -96412,7 +97440,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID7.test(id))
+    if (!UUID8.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     try {
       if (!await loadForAction(request, reply, session, id, true))
@@ -96421,7 +97449,7 @@ function registerWorkOrderRoutes(app2, deps) {
       const description = str4(body.description, 191);
       const quantity = parseAmount2(body.quantity);
       const unitPrice = parseAmount2(body.unitPrice);
-      const fail = (text5) => renderOrder(request, reply, session, id, { kind: "error", text: text5 }, 400);
+      const fail = (text7) => renderOrder(request, reply, session, id, { kind: "error", text: text7 }, 400);
       if (!kind)
         return fail("Elige si es repuesto o mano de obra.");
       if (description.length < 2)
@@ -96443,7 +97471,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session } = ctx;
     const { id, itemId } = request.params;
-    if (!UUID7.test(id) || !UUID7.test(itemId))
+    if (!UUID8.test(id) || !UUID8.test(itemId))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     try {
       if (!await loadForAction(request, reply, session, id, true))
@@ -96461,7 +97489,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID7.test(id))
+    if (!UUID8.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     try {
       if (!await loadForAction(request, reply, session, id, true))
@@ -96479,7 +97507,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID7.test(id))
+    if (!UUID8.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     const next = String(body.status ?? "");
     const reason = str4(body.reason, 191);
@@ -96489,7 +97517,7 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail = (text5) => renderOrder(request, reply, session, id, { kind: "error", text: text5 }, 400);
+      const fail = (text7) => renderOrder(request, reply, session, id, { kind: "error", text: text7 }, 400);
       if (next === "cerrada" || !(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes(next))
         return fail("Ese cambio de estado no es posible.");
       if (next === "presupuesto_enviado" && found.items.length === 0)
@@ -96510,13 +97538,58 @@ function registerWorkOrderRoutes(app2, deps) {
     await deps.audit(`admin.workorder.${next}`, session.userId, `${workOrderCode(order.number)}${reason ? `: ${reason}` : ""}`);
     return reply.redirect(`/admin/work-orders/${id}?ok=estado`, 302);
   });
+  app2.post("/work-orders/:id/rating", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id } = request.params;
+    if (!UUID8.test(id))
+      return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+    if (!deps.ratings)
+      return errorPage(request, reply, session, "Orden de trabajo", "Las calificaciones no est\xE1n disponibles.", 503);
+    const score = parseScore(body.score);
+    if (score === null)
+      return renderOrder(request, reply, session, id, { kind: "error", text: "Elige una calificaci\xF3n del 1 al 5." }, 400);
+    let order;
+    try {
+      const found = await workOrders.get(id);
+      if (!found)
+        return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+      order = found.order;
+      if (order.status !== "cerrada") {
+        return renderOrder(request, reply, session, id, { kind: "error", text: "La calificaci\xF3n se pide cuando la orden ya est\xE1 cerrada." }, 400);
+      }
+      if (await deps.ratings.forWorkOrder(id)) {
+        return renderOrder(request, reply, session, id, { kind: "error", text: "Ese trabajo ya tiene calificaci\xF3n." }, 400);
+      }
+      await deps.ratings.add({
+        fromId: order.ownerId,
+        toId: order.shopUserId,
+        score,
+        comment: str4(body.comment, 191) || null,
+        kind: "taller",
+        workOrderId: id,
+        quoteRequestId: null
+      });
+    } catch (err) {
+      const m = dbErrorText2(err);
+      return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
+    }
+    await record(session, "workorder.rated", order, { score });
+    await deps.audit("admin.rating.create", session.userId, `${workOrderCode(order.number)}: ${score} de 5 para el taller ${order.shopName}`);
+    return renderOrder(request, reply, session, id, {
+      kind: needsReview(score) ? "error" : "ok",
+      text: needsReview(score) ? "Calificaci\xF3n guardada. Es baja: revisa el caso con el taller y ofrece abrir un reclamo." : "Calificaci\xF3n guardada: ya cuenta en el promedio del taller."
+    });
+  });
   app2.post("/work-orders/:id/close", async (request, reply) => {
     const ctx = withCsrf(request, reply);
     if (!ctx)
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID7.test(id))
+    if (!UUID8.test(id))
       return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
     let order;
     try {
@@ -96524,7 +97597,7 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail = (text5) => renderOrder(request, reply, session, id, { kind: "error", text: text5 }, 400);
+      const fail = (text7) => renderOrder(request, reply, session, id, { kind: "error", text: text7 }, 400);
       if (!(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes("cerrada"))
         return fail("Solo se cierra una orden en ejecuci\xF3n o esperando repuesto.");
       const exitKm = wholeNumber(body.exitKm, 0, 2e6);
@@ -96556,17 +97629,19 @@ function registerWorkOrderRoutes(app2, deps) {
     return reply.redirect(`/admin/work-orders/${id}?ok=cerrada`, 302);
   });
 }
-var UUID7, FILTERS9, OK_MESSAGES3, str4, optional;
+var UUID8, FILTERS11, OK_MESSAGES3, str4, optional;
 var init_work_orders = __esm({
   "packages/api/dist/interfaces/admin/work-orders.js"() {
     "use strict";
     init_page();
     init_security();
-    init_workflow2();
+    init_workflow3();
     init_platform();
+    init_workflow4();
+    init_permissions();
     init_views_work_orders();
-    UUID7 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    FILTERS9 = ["abiertas", "por_aprobar", "en_taller", "cerradas", "todas"];
+    UUID8 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS11 = ["abiertas", "por_aprobar", "en_taller", "cerradas", "todas"];
     OK_MESSAGES3 = {
       creada: "Orden abierta. Env\xEDa al due\xF1o el mensaje de recepci\xF3n.",
       item: "Presupuesto actualizado.",
@@ -96598,7 +97673,7 @@ function dbErrorText3(err) {
 }
 function registerQuoteRoutes(app2, deps) {
   const { quotes, registrations, appointments } = deps;
-  const errorPage = (request, reply, session, title, text5, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text5)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text7, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text7)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -96628,7 +97703,7 @@ function registerQuoteRoutes(app2, deps) {
     }
   }
   async function context(query) {
-    const pick = (key) => typeof query[key] === "string" && UUID8.test(query[key]) ? query[key] : null;
+    const pick = (key) => typeof query[key] === "string" && UUID9.test(query[key]) ? query[key] : null;
     const workOrderId = pick("workOrderId");
     let requesterId = pick("requesterId") ?? pick("ownerId");
     let vehicleId = pick("vehicleId");
@@ -96670,7 +97745,7 @@ function registerQuoteRoutes(app2, deps) {
     if (!session)
       return reply;
     const query = request.query ?? {};
-    const filter = FILTERS10.includes(query.f) ? query.f : "abiertas";
+    const filter = FILTERS12.includes(query.f) ? query.f : "abiertas";
     const raw = Number(query.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
@@ -96764,7 +97839,7 @@ function registerQuoteRoutes(app2, deps) {
     if (!session)
       return reply;
     const { id } = request.params;
-    if (!UUID8.test(id))
+    if (!UUID9.test(id))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const ok = request.query?.ok;
     return renderRequest(request, reply, session, id, typeof ok === "string" && OK_MESSAGES4[ok] ? { kind: "ok", text: OK_MESSAGES4[ok] } : void 0);
@@ -96775,9 +97850,9 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id, quoteId } = request.params;
-    if (!UUID8.test(id) || !UUID8.test(quoteId))
+    if (!UUID9.test(id) || !UUID9.test(quoteId))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
-    const fail = (text5) => renderRequest(request, reply, session, id, { kind: "error", text: text5 }, 400);
+    const fail = (text7) => renderRequest(request, reply, session, id, { kind: "error", text: text7 }, 400);
     const action = body.action === "sin_stock" ? "sin_stock" : "cotizado";
     let unitPrice = null;
     if (action === "cotizado") {
@@ -96817,8 +97892,8 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    const quoteId = typeof body.quoteId === "string" && UUID8.test(body.quoteId) ? body.quoteId : null;
-    if (!UUID8.test(id) || !quoteId)
+    const quoteId = typeof body.quoteId === "string" && UUID9.test(body.quoteId) ? body.quoteId : null;
+    if (!UUID9.test(id) || !quoteId)
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     let orderId;
     let users = [];
@@ -96842,7 +97917,7 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID8.test(id))
+    if (!UUID9.test(id))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const reason = str5(body.reason, 191);
     if (reason.length < 5)
@@ -96864,7 +97939,7 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id, quoteId } = request.params;
-    if (!UUID8.test(id) || !UUID8.test(quoteId))
+    if (!UUID9.test(id) || !UUID9.test(quoteId))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const reason = LOSS_REASONS.some(([k]) => k === body.reason) ? String(body.reason) : null;
     if (!reason)
@@ -96885,7 +97960,7 @@ function registerQuoteRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const { id } = request.params;
-    if (!UUID8.test(id))
+    if (!UUID9.test(id))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
     const next = String(body.stage ?? "");
     const reason = str5(body.reason, 191);
@@ -96912,18 +97987,18 @@ function registerQuoteRoutes(app2, deps) {
     return reply.redirect(`/admin/quotes/${id}?ok=pedido`, 302);
   });
 }
-var UUID8, FILTERS10, OK_MESSAGES4, str5, optional2, asList2;
+var UUID9, FILTERS12, OK_MESSAGES4, str5, optional2, asList2;
 var init_quotes = __esm({
   "packages/api/dist/interfaces/admin/quotes.js"() {
     "use strict";
     init_page();
     init_security();
-    init_workflow2();
     init_workflow3();
+    init_workflow5();
     init_platform();
     init_views_quotes();
-    UUID8 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    FILTERS10 = ["abiertas", "con_pedido", "todas"];
+    UUID9 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    FILTERS12 = ["abiertas", "con_pedido", "todas"];
     OK_MESSAGES4 = {
       creada: "Solicitud creada. Env\xEDa el mensaje a cada almac\xE9n.",
       respuesta: "Respuesta registrada. Actualiza la comparativa del cliente.",
@@ -96938,156 +98013,11 @@ var init_quotes = __esm({
   }
 });
 
-// packages/api/dist/infrastructure/appointments/appointment-store.js
-function rows6(result) {
-  return Array.isArray(result[0]) ? result[0] : [];
-}
-function jsonValue(raw) {
-  if (typeof raw !== "string")
-    return raw;
-  try {
-    return JSON.parse(raw);
-  } catch {
-    return null;
-  }
-}
-function stringList(raw) {
-  const value2 = jsonValue(raw);
-  return Array.isArray(value2) ? value2.map(String) : [];
-}
-function toAppointment(r) {
-  return {
-    id: String(r.id),
-    scheduledAt: r.scheduledAt,
-    status: String(r.status),
-    summary: text2(r.summary),
-    services: stringList(r.services),
-    notes: text2(r.notes),
-    cancelReason: text2(r.cancelReason),
-    createdAt: r.createdAt,
-    vehicleId: String(r.vehicleId),
-    vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
-    plate: text2(r.plate),
-    ownerId: String(r.ownerId),
-    ownerName: String(r.ownerName),
-    ownerPhone: String(r.ownerPhone),
-    shopId: String(r.shopId),
-    shopName: String(r.shopName),
-    shopAddress: String(r.shopAddress),
-    shopCity: String(r.shopCity),
-    shopUserId: String(r.shopUserId),
-    shopPhone: String(r.shopPhone)
-  };
-}
-var PAGE_SIZE6, NOT_SANCTIONED, SELECT_APPOINTMENTS, LIST_TODAY, LIST_UPCOMING, LIST_PENDING, LIST_ALL, GET_ONE, FOR_USER, text2, MysqlAppointmentStore;
-var init_appointment_store = __esm({
-  "packages/api/dist/infrastructure/appointments/appointment-store.js"() {
-    "use strict";
-    init_messages();
-    PAGE_SIZE6 = 25;
-    NOT_SANCTIONED = (alias) => "AND NOT EXISTS (SELECT 1 FROM `Sanction` sn WHERE sn.userId = " + alias + ".userId AND sn.liftedAt IS NULL AND sn.startsAt <= UTC_TIMESTAMP(3) AND (sn.endsAt IS NULL OR sn.endsAt > UTC_TIMESTAMP(3)) AND sn.level IN ('suspension_busquedas', 'suspension', 'baja')) ";
-    SELECT_APPOINTMENTS = "SELECT a.id, a.scheduledAt, a.status, a.summary, a.services, a.notes, a.cancelReason, a.createdAt, v.id AS vehicleId, v.make, v.model, v.year, v.plate, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, s.id AS shopId, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, su.id AS shopUserId, su.phone AS shopPhone FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` o ON o.id = a.ownerId JOIN `Shop` s ON s.id = a.shopId JOIN `User` su ON su.id = s.userId";
-    LIST_TODAY = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
-    LIST_UPCOMING = `${SELECT_APPOINTMENTS} WHERE a.scheduledAt >= ? AND a.status IN ('pending', 'confirmed') ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
-    LIST_PENDING = `${SELECT_APPOINTMENTS} WHERE a.status = 'pending' ORDER BY a.scheduledAt ASC LIMIT ? OFFSET ?`;
-    LIST_ALL = `${SELECT_APPOINTMENTS} ORDER BY a.scheduledAt DESC LIMIT ? OFFSET ?`;
-    GET_ONE = `${SELECT_APPOINTMENTS} WHERE a.id = ? LIMIT 1`;
-    FOR_USER = `${SELECT_APPOINTMENTS} WHERE a.ownerId = ? OR su.id = ? ORDER BY a.scheduledAt DESC LIMIT 20`;
-    text2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
-    MysqlAppointmentStore = class {
-      connect;
-      constructor(connect) {
-        this.connect = connect;
-      }
-      async run(work) {
-        const conn = await this.connect();
-        try {
-          return await work(conn);
-        } finally {
-          await conn.end().catch(() => void 0);
-        }
-      }
-      verifiedShops(city) {
-        const base = "SELECT id, name, address, city, zone, hours, ratingAvg, specialties FROM `Shop` sh WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
-        const filter = NOT_SANCTIONED("sh");
-        return this.run(async (conn) => rows6(await conn.query(`${base}${filter}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
-          if (err.code !== "ER_NO_SUCH_TABLE")
-            throw err;
-          return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
-        })).map((r) => ({
-          id: String(r.id),
-          name: String(r.name),
-          address: String(r.address),
-          city: String(r.city),
-          zone: text2(r.zone),
-          hours: text2(r.hours),
-          ratingAvg: Number(r.ratingAvg ?? 0),
-          services: stringList(r.specialties)
-        })));
-      }
-      createAppointment(input) {
-        return this.run(async (conn) => {
-          const id = String(rows6(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          await conn.query("INSERT INTO `Appointment` (id, vehicleId, shopId, ownerId, scheduledAt, status, summary, services, notes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, input.vehicleId, input.shopId, input.ownerId, input.scheduledAt, input.summary, JSON.stringify(input.services), input.notes]);
-          return id;
-        });
-      }
-      getAppointment(id) {
-        return this.run(async (conn) => {
-          const row = rows6(await conn.query(GET_ONE, [id]))[0];
-          return row ? toAppointment(row) : null;
-        });
-      }
-      listAppointments(filter, page, now = /* @__PURE__ */ new Date()) {
-        return this.run(async (conn) => {
-          const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE6;
-          let result;
-          if (filter === "hoy") {
-            const { start, end } = ecDayRange(now);
-            result = await conn.query(LIST_TODAY, [start, end, PAGE_SIZE6, offset2]);
-          } else if (filter === "proximos") {
-            result = await conn.query(LIST_UPCOMING, [now, PAGE_SIZE6, offset2]);
-          } else if (filter === "pendientes") {
-            result = await conn.query(LIST_PENDING, [PAGE_SIZE6, offset2]);
-          } else {
-            result = await conn.query(LIST_ALL, [PAGE_SIZE6, offset2]);
-          }
-          return { items: rows6(result).map(toAppointment), page, pageSize: PAGE_SIZE6 };
-        });
-      }
-      listForUser(userId) {
-        return this.run(async (conn) => rows6(await conn.query(FOR_USER, [userId, userId])).map(toAppointment));
-      }
-      setStatus(id, status, cancelReason) {
-        return this.run(async (conn) => {
-          const [result] = await conn.query("UPDATE `Appointment` SET status = ?, cancelReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [status, cancelReason, id]);
-          return Number(result.affectedRows ?? 0) > 0;
-        });
-      }
-      recordEvent(input) {
-        return this.run(async (conn) => {
-          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [input.type, input.actorUserId, input.entityType, input.entityId, JSON.stringify(input.payload)]);
-        });
-      }
-      userEvents(userId, limit) {
-        return this.run(async (conn) => rows6(await conn.query("SELECT type, payload, createdAt FROM `Event` WHERE entityType = 'User' AND entityId = ? ORDER BY createdAt DESC LIMIT ?", [userId, limit])).map((r) => {
-          const payload = jsonValue(r.payload);
-          return {
-            type: String(r.type),
-            payload: payload && typeof payload === "object" && !Array.isArray(payload) ? payload : {},
-            createdAt: r.createdAt
-          };
-        }));
-      }
-    };
-  }
-});
-
 // packages/api/dist/infrastructure/quotes/quote-store.js
-function rows7(result) {
+function rows9(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
-function toRequest2(r) {
+function toRequest3(r) {
   return {
     id: String(r.id),
     number: Number(r.number),
@@ -97096,16 +98026,16 @@ function toRequest2(r) {
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
     requesterRole: String(r.requesterRole),
-    vehicleId: text3(r.vehicleId),
+    vehicleId: text5(r.vehicleId),
     vehicleLabel: label(r),
-    plate: text3(r.plate),
-    workOrderId: text3(r.workOrderId),
+    plate: text5(r.plate),
+    workOrderId: text5(r.workOrderId),
     partName: String(r.partName),
-    partCode: text3(r.partCode),
+    partCode: text5(r.partCode),
     quantity: Number(r.quantity ?? 1),
     city: String(r.city),
-    notes: text3(r.notes),
-    closeReason: text3(r.closeReason),
+    notes: text5(r.notes),
+    closeReason: text5(r.closeReason),
     createdAt: r.createdAt
   };
 }
@@ -97120,13 +98050,13 @@ function toQuote(r) {
     storePhone: String(r.storePhone),
     status: String(r.status),
     unitPrice: num2(r.unitPrice),
-    brand: text3(r.brand),
-    availability: text3(r.availability),
+    brand: text5(r.brand),
+    availability: text5(r.availability),
     warrantyDays: num2(r.warrantyDays),
-    deliveryTime: text3(r.deliveryTime),
+    deliveryTime: text5(r.deliveryTime),
     validDays: num2(r.validDays),
-    notes: text3(r.notes),
-    lossReason: text3(r.lossReason),
+    notes: text5(r.notes),
+    lossReason: text5(r.lossReason),
     respondedAt: r.respondedAt ?? null
   };
 }
@@ -97136,10 +98066,10 @@ function toOrder(r) {
     stage: String(r.stage ?? "confirmado"),
     status: String(r.status),
     total: Number(r.total ?? 0),
-    cancelReason: text3(r.cancelReason),
+    cancelReason: text5(r.cancelReason),
     createdAt: r.createdAt,
     quoteRequestId: String(r.quoteRequestId),
-    quoteId: text3(r.quoteId),
+    quoteId: text5(r.quoteId),
     requestNumber: Number(r.requestNumber),
     partName: String(r.partName),
     quantity: Number(r.quantity ?? 1),
@@ -97151,24 +98081,24 @@ function toOrder(r) {
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
     unitPrice: num2(r.unitPrice),
-    brand: text3(r.brand),
-    deliveryTime: text3(r.deliveryTime)
+    brand: text5(r.brand),
+    deliveryTime: text5(r.deliveryTime)
   };
 }
-var PAGE_SIZE7, SELECT_REQUESTS2, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text3, num2, label, MysqlQuoteStore;
+var PAGE_SIZE8, SELECT_REQUESTS3, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text5, num2, label, MysqlQuoteStore;
 var init_quote_store = __esm({
   "packages/api/dist/infrastructure/quotes/quote-store.js"() {
     "use strict";
     init_appointment_store();
-    init_workflow3();
-    PAGE_SIZE7 = 25;
-    SELECT_REQUESTS2 = "SELECT q.id, q.number, q.status, q.requesterId, u.name AS requesterName, u.phone AS requesterPhone, u.role AS requesterRole, q.vehicleId, v.make, v.model, v.year, v.plate, q.workOrderId, q.partName, q.partCode, q.quantity, q.city, q.notes, q.closeReason, q.createdAt FROM `QuoteRequest` q JOIN `User` u ON u.id = q.requesterId LEFT JOIN `Vehicle` v ON v.id = q.vehicleId";
+    init_workflow5();
+    PAGE_SIZE8 = 25;
+    SELECT_REQUESTS3 = "SELECT q.id, q.number, q.status, q.requesterId, u.name AS requesterName, u.phone AS requesterPhone, u.role AS requesterRole, q.vehicleId, v.make, v.model, v.year, v.plate, q.workOrderId, q.partName, q.partCode, q.quantity, q.city, q.notes, q.closeReason, q.createdAt FROM `QuoteRequest` q JOIN `User` u ON u.id = q.requesterId LEFT JOIN `Vehicle` v ON v.id = q.vehicleId";
     SELECT_QUOTES = "SELECT qt.id, qt.requestId, qt.storeId, s.name AS storeName, s.city AS storeCity, s.userId AS storeUserId, su.phone AS storePhone, qt.status, qt.unitPrice, qt.brand, qt.availability, qt.warrantyDays, qt.deliveryTime, qt.validDays, qt.notes, qt.lossReason, qt.respondedAt FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId JOIN `User` su ON su.id = s.userId";
     SELECT_ORDERS = "SELECT o.id, o.stage, o.status, o.total, o.cancelReason, o.createdAt, o.quoteRequestId, o.quoteId, q.number AS requestNumber, q.partName, q.quantity, s.id AS storeId, s.name AS storeName, s.userId AS storeUserId, su.phone AS storePhone, u.id AS requesterId, u.name AS requesterName, u.phone AS requesterPhone, qt.unitPrice, qt.brand, qt.deliveryTime FROM `Order` o JOIN `QuoteRequest` q ON q.id = o.quoteRequestId JOIN `Store` s ON s.userId = o.toStoreId JOIN `User` su ON su.id = s.userId JOIN `User` u ON u.id = o.fromUserId LEFT JOIN `Quote` qt ON qt.id = o.quoteId";
-    LIST_OPEN = `${SELECT_REQUESTS2} WHERE q.status = 'abierta' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
-    LIST_ORDERED = `${SELECT_REQUESTS2} WHERE q.status = 'con_pedido' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
-    LIST_ALL2 = `${SELECT_REQUESTS2} ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
-    text3 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    LIST_OPEN = `${SELECT_REQUESTS3} WHERE q.status = 'abierta' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
+    LIST_ORDERED = `${SELECT_REQUESTS3} WHERE q.status = 'con_pedido' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
+    LIST_ALL2 = `${SELECT_REQUESTS3} ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
+    text5 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     num2 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     label = (r) => {
       const parts = [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "");
@@ -97202,7 +98132,7 @@ var init_quote_store = __esm({
       }
       verifiedStores(city) {
         const base = "SELECT id, name, city, zone, categories, delivery FROM `Store` st WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows7(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows9(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
@@ -97210,15 +98140,15 @@ var init_quote_store = __esm({
           id: String(r.id),
           name: String(r.name),
           city: String(r.city),
-          zone: text3(r.zone),
-          categories: text3(r.categories),
+          zone: text5(r.zone),
+          categories: text5(r.categories),
           delivery: !!Number(r.delivery ?? 0)
         })));
       }
       async createRequest(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id = String(rows7(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows7(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
+          const id = String(rows9(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows9(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `QuoteRequest` (id, number, requesterId, vehicleId, workOrderId, partName, partCode, quantity, city, notes, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, next, input.requesterId, input.vehicleId, input.workOrderId, input.partName, input.partCode, input.quantity, input.city, input.notes]);
           for (const storeId of input.storeIds) {
             await conn.query("INSERT INTO `Quote` (id, requestId, storeId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id, storeId]);
@@ -97235,26 +98165,26 @@ var init_quote_store = __esm({
       }
       getRequest(id) {
         return this.run(async (conn) => {
-          const row = rows7(await conn.query(`${SELECT_REQUESTS2} WHERE q.id = ? LIMIT 1`, [id]))[0];
+          const row = rows9(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id]))[0];
           if (!row)
             return null;
-          const quotes = rows7(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id])).map(toQuote);
-          const order = rows7(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id]))[0];
-          return { request: toRequest2(row), quotes, order: order ? toOrder(order) : null };
+          const quotes = rows9(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id])).map(toQuote);
+          const order = rows9(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id]))[0];
+          return { request: toRequest3(row), quotes, order: order ? toOrder(order) : null };
         });
       }
       listRequests(filter, page) {
         return this.run(async (conn) => {
           const sql = filter === "abiertas" ? LIST_OPEN : filter === "con_pedido" ? LIST_ORDERED : LIST_ALL2;
-          const items = rows7(await conn.query(sql, [PAGE_SIZE7, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE7])).map(toRequest2);
-          return { items, page, pageSize: PAGE_SIZE7 };
+          const items = rows9(await conn.query(sql, [PAGE_SIZE8, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE8])).map(toRequest3);
+          return { items, page, pageSize: PAGE_SIZE8 };
         });
       }
       listForUser(userId) {
         return this.run(async (conn) => {
-          const requests = rows7(await conn.query(`${SELECT_REQUESTS2} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest2);
-          const storeQuotes = rows7(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
-          const orders = rows7(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
+          const requests = rows9(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
+          const storeQuotes = rows9(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
+          const orders = rows9(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
           return { requests, storeQuotes, orders };
         });
       }
@@ -97277,16 +98207,16 @@ var init_quote_store = __esm({
       }
       choose(requestId, quoteId) {
         return this.transaction(async (conn) => {
-          const request = rows7(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
+          const request = rows9(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
           if (!request || request.status !== "abierta")
             return null;
-          const quote = rows7(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
+          const quote = rows9(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
           if (!quote || quote.status !== "cotizado" || quote.unitPrice === null)
             return null;
           const quantity = Number(request.quantity ?? 1);
           const unitPrice = Number(quote.unitPrice);
           const total = Math.round(unitPrice * quantity * 100) / 100;
-          const orderId = String(rows7(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const orderId = String(rows9(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("UPDATE `Quote` SET status = 'elegida' WHERE id = ?", [quoteId]);
           await conn.query("UPDATE `Quote` SET status = 'descartada' WHERE requestId = ? AND id <> ? AND status IN ('invitado', 'cotizado')", [requestId, quoteId]);
           await conn.query("UPDATE `QuoteRequest` SET status = 'con_pedido', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [requestId]);
@@ -97365,7 +98295,7 @@ function buildContactSheet(ctx) {
   if (business) {
     lines.push(`NEGOCIO: ${String(business.name)} en ${String(business.city)} \xB7 verificaci\xF3n ${String(business.verificationStatus)}`);
     if (detail.shop?.services?.length)
-      lines.push(`SERVICIOS DEL TALLER: ${detail.shop.services.map(categoryName2).join(", ")}`);
+      lines.push(`SERVICIOS DEL TALLER: ${detail.shop.services.map(categoryName3).join(", ")}`);
   }
   const appointments = ctx.appointments.slice(0, 5);
   if (appointments.length > 0) {
@@ -97414,8 +98344,8 @@ ${redactPii(customerText).slice(0, 2e3)}`];
 ${redactPii(instruction).slice(0, 300)}`);
   return parts.join("\n\n");
 }
-function parseDraft(text5) {
-  const clean = text5.trim();
+function parseDraft(text7) {
+  const clean = text7.trim();
   const match = /RESPUESTA:\s*([\s\S]*?)(?:\n\s*NOTA PARA EL OPERADOR:\s*([\s\S]*))?$/i.exec(clean);
   if (!match)
     return { reply: clean.slice(0, 1500), note: null };
@@ -97428,7 +98358,7 @@ function applyName(reply, firstName2) {
     return reply.replace(/\{nombre\}/g, firstName2);
   return reply.replace(/[ ,]*\{nombre\}/g, "").replace(/¡Hola\s*!/g, "\xA1Hola!");
 }
-var COPILOT_PROMPT_VERSION, COPILOT_SYSTEM_PROMPT, ROLE_NAMES, className2, fuelName2, categoryName2, km3;
+var COPILOT_PROMPT_VERSION, COPILOT_SYSTEM_PROMPT, ROLE_NAMES, className2, fuelName2, categoryName3, km3;
 var init_prompt = __esm({
   "packages/api/dist/application/copilot/prompt.js"() {
     "use strict";
@@ -97436,8 +98366,8 @@ var init_prompt = __esm({
     init_maintenance();
     init_plan_text();
     init_messages();
-    init_workflow2();
     init_workflow3();
+    init_workflow5();
     init_welcome();
     COPILOT_PROMPT_VERSION = "copiloto-2026-09-v1";
     COPILOT_SYSTEM_PROMPT = `Eres el copiloto de AutoMantPro, una plataforma ecuatoriana que conecta a due\xF1os de veh\xEDculos con talleres y almacenes de repuestos verificados por WhatsApp. Redactas UN borrador de respuesta que un operador humano revisar\xE1 antes de enviarlo.
@@ -97463,7 +98393,7 @@ NOTA PARA EL OPERADOR:
     ROLE_NAMES = { dueno: "Due\xF1o de veh\xEDculo", taller: "Taller", almacen: "Almac\xE9n de repuestos", admin: "Administrador" };
     className2 = (id) => vehicleClasses.classes.find((c) => c.id === id)?.name ?? "clase no registrada";
     fuelName2 = (id) => vehicleClasses.fuels.find((f) => f.id === id)?.name ?? "combustible no registrado";
-    categoryName2 = (id) => serviceTaxonomy.categories.find((c) => c.id === id)?.name ?? id;
+    categoryName3 = (id) => serviceTaxonomy.categories.find((c) => c.id === id)?.name ?? id;
     km3 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
   }
 });
@@ -97670,7 +98600,7 @@ var init_service = __esm({
 });
 
 // packages/api/dist/infrastructure/copilot/copilot-store.js
-function rows8(result) {
+function rows10(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 var MysqlCopilotStore;
@@ -97692,7 +98622,7 @@ var init_copilot_store = __esm({
       }
       recordUsage(usage) {
         return this.run(async (conn) => {
-          const id = String(rows8(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const id = String(rows10(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("INSERT INTO `LlmUsage` (id, agent, `function`, provider, model, promptVersion, inputTokens, outputTokens, cachedTokens, costUsd, latencyMs, outcome, createdAt) VALUES (?, 'copilot', 'draft_reply', ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [
             id,
             usage.provider,
@@ -97710,7 +98640,7 @@ var init_copilot_store = __esm({
       }
       spentBetween(start, end) {
         return this.run(async (conn) => {
-          const row = rows8(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
+          const row = rows10(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
           return Number(row?.n ?? 0);
         });
       }
@@ -97721,7 +98651,7 @@ var init_copilot_store = __esm({
       }
       feedbackSummary(since) {
         return this.run(async (conn) => {
-          const row = rows8(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS good, COALESCE(SUM(score <= 2), 0) AS bad FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
+          const row = rows10(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS good, COALESCE(SUM(score <= 2), 0) AS bad FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
           return { good: Number(row?.good ?? 0), bad: Number(row?.bad ?? 0) };
         });
       }
@@ -97730,7 +98660,7 @@ var init_copilot_store = __esm({
 });
 
 // packages/api/dist/infrastructure/work-orders/work-order-store.js
-function rows9(result) {
+function rows11(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toOrder2(r) {
@@ -97747,19 +98677,19 @@ function toOrder2(r) {
     ownerPhone: String(r.ownerPhone),
     vehicleId: String(r.vehicleId),
     vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
-    plate: text4(r.plate),
+    plate: text6(r.plate),
     vehicleKm: Number(r.currentKm ?? 0),
-    appointmentId: text4(r.appointmentId),
+    appointmentId: text6(r.appointmentId),
     intakeKm: int(r.intakeKm),
-    intakeNotes: text4(r.intakeNotes),
-    diagnosis: text4(r.diagnosis),
-    rejectionReason: text4(r.rejectionReason),
-    cancelReason: text4(r.cancelReason),
+    intakeNotes: text6(r.intakeNotes),
+    diagnosis: text6(r.diagnosis),
+    rejectionReason: text6(r.rejectionReason),
+    cancelReason: text6(r.cancelReason),
     exitKm: int(r.exitKm),
     warrantyDays: int(r.warrantyDays),
-    nextService: text4(r.nextService),
-    diagnosisOutcome: text4(r.diagnosisOutcome),
-    outcomeNote: text4(r.outcomeNote),
+    nextService: text6(r.nextService),
+    diagnosisOutcome: text6(r.diagnosisOutcome),
+    outcomeNote: text6(r.outcomeNote),
     total: Number(r.total ?? 0),
     createdAt: r.createdAt,
     closedAt: r.closedAt ?? null
@@ -97770,17 +98700,17 @@ function toItem(r) {
     id: String(r.id),
     kind: String(r.kind),
     description: String(r.description),
-    brand: text4(r.brand),
-    partCode: text4(r.partCode),
+    brand: text6(r.brand),
+    partCode: text6(r.partCode),
     quantity: Number(r.quantity),
     unitPrice: Number(r.unitPrice)
   };
 }
-var PAGE_SIZE8, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL, text4, int, MysqlWorkOrderStore;
+var PAGE_SIZE9, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL, text6, int, MysqlWorkOrderStore;
 var init_work_order_store = __esm({
   "packages/api/dist/infrastructure/work-orders/work-order-store.js"() {
     "use strict";
-    PAGE_SIZE8 = 25;
+    PAGE_SIZE9 = 25;
     SELECT_ORDERS2 = "SELECT w.id, w.number, w.status, w.appointmentId, w.intakeKm, w.intakeNotes, w.diagnosis, w.rejectionReason, w.cancelReason, w.exitKm, w.warrantyDays, w.nextService, w.diagnosisOutcome, w.outcomeNote, w.total, w.createdAt, w.closedAt, s.id AS shopId, s.name AS shopName, su.id AS shopUserId, su.phone AS shopPhone, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, v.id AS vehicleId, v.make, v.model, v.year, v.plate, v.currentKm FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `User` su ON su.id = s.userId JOIN `User` o ON o.id = w.ownerId JOIN `Vehicle` v ON v.id = w.vehicleId";
     LIST_OPEN2 = `${SELECT_ORDERS2} WHERE w.status NOT IN ('cerrada', 'cancelada') ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_TO_APPROVE = `${SELECT_ORDERS2} WHERE w.status = 'presupuesto_enviado' ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
@@ -97790,7 +98720,7 @@ var init_work_order_store = __esm({
     GET_ONE2 = `${SELECT_ORDERS2} WHERE w.id = ? LIMIT 1`;
     FOR_USER2 = `${SELECT_ORDERS2} WHERE w.ownerId = ? OR su.id = ? ORDER BY w.createdAt DESC LIMIT 20`;
     RECALCULATE_TOTAL = "UPDATE `WorkOrder` SET total = (SELECT COALESCE(SUM(ROUND(quantity * unitPrice, 2)), 0) FROM `WorkOrderItem` WHERE workOrderId = ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?";
-    text4 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text6 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     int = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     MysqlWorkOrderStore = class {
       connect;
@@ -97820,8 +98750,8 @@ var init_work_order_store = __esm({
       }
       async create(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id = String(rows9(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows9(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
+          const id = String(rows11(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows11(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, diagnosis, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id, next, input.shopId, input.ownerId, input.vehicleId, input.appointmentId, input.intakeKm, input.intakeNotes, input.diagnosis]);
           return id;
         });
@@ -97835,26 +98765,26 @@ var init_work_order_store = __esm({
       }
       get(id) {
         return this.run(async (conn) => {
-          const row = rows9(await conn.query(GET_ONE2, [id]))[0];
+          const row = rows11(await conn.query(GET_ONE2, [id]))[0];
           if (!row)
             return null;
-          const items = rows9(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id])).map(toItem);
+          const items = rows11(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id])).map(toItem);
           return { order: toOrder2(row), items };
         });
       }
       list(filter, page) {
         return this.run(async (conn) => {
-          const params = [PAGE_SIZE8, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE8];
+          const params = [PAGE_SIZE9, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE9];
           const sql = filter === "abiertas" ? LIST_OPEN2 : filter === "por_aprobar" ? LIST_TO_APPROVE : filter === "en_taller" ? LIST_IN_SHOP : filter === "cerradas" ? LIST_CLOSED : LIST_ALL3;
-          return { items: rows9(await conn.query(sql, params)).map(toOrder2), page, pageSize: PAGE_SIZE8 };
+          return { items: rows11(await conn.query(sql, params)).map(toOrder2), page, pageSize: PAGE_SIZE9 };
         });
       }
       listForUser(userId) {
-        return this.run(async (conn) => rows9(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
+        return this.run(async (conn) => rows11(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
       }
       findByAppointment(appointmentId) {
         return this.run(async (conn) => {
-          const row = rows9(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
+          const row = rows11(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
           return row ? String(row.id) : null;
         });
       }
@@ -97883,7 +98813,7 @@ var init_work_order_store = __esm({
       }
       close(id, input) {
         return this.transaction(async (conn) => {
-          const order = rows9(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id]))[0];
+          const order = rows11(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id]))[0];
           if (!order)
             return false;
           await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', exitKm = ?, warrantyDays = ?, nextService = ?, diagnosisOutcome = ?, outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.exitKm, input.warrantyDays, input.nextService, input.diagnosisOutcome, input.outcomeNote, id]);
@@ -97896,7 +98826,7 @@ var init_work_order_store = __esm({
         });
       }
       historyForUser(userId) {
-        return this.run(async (conn) => rows9(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
+        return this.run(async (conn) => rows11(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
           createdAt: r.createdAt,
           shopName: String(r.shopName),
           vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
@@ -97909,7 +98839,7 @@ var init_work_order_store = __esm({
 });
 
 // packages/api/dist/interfaces/admin/views-visits.js
-function when4(value2) {
+function when5(value2) {
   if (!value2)
     return "\u2014";
   const date = value2 instanceof Date ? value2 : new Date(value2);
@@ -97929,7 +98859,7 @@ function visitsView(input) {
       <td>${escapeHtml(v.profile ? PROFILE_LABELS[v.profile] ?? v.profile : "\u2014")}</td>
       <td>${phoneCell(v)}</td>
       <td>${v.userId ? `<a href="/admin/users/${escapeHtml(v.userId)}">${escapeHtml(v.userName ?? "ver ficha")}</a>` : `<span class="muted">sin registrar</span>`}</td>
-      <td>${escapeHtml(when4(v.createdAt))}</td></tr>`).join("");
+      <td>${escapeHtml(when5(v.createdAt))}</td></tr>`).join("");
   const resumen = input.stats.map((s) => {
     const conv = s.visitas > 0 ? Math.round(s.registrados / s.visitas * 100) : 0;
     return `<tr><td>${escapeHtml(s.ref ?? "directo")}</td>
@@ -97958,7 +98888,7 @@ var init_views_visits = __esm({
 });
 
 // packages/api/dist/infrastructure/registration/registration-store.js
-function rows10(result) {
+function rows12(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function parseServices(raw) {
@@ -97985,11 +98915,11 @@ function pendingItem(kind) {
     createdAt: r.createdAt
   });
 }
-var PAGE_SIZE9, MysqlRegistrationStore;
+var PAGE_SIZE10, MysqlRegistrationStore;
 var init_registration_store = __esm({
   "packages/api/dist/infrastructure/registration/registration-store.js"() {
     "use strict";
-    PAGE_SIZE9 = 25;
+    PAGE_SIZE10 = 25;
     MysqlRegistrationStore = class {
       connect;
       constructor(connect) {
@@ -98017,7 +98947,7 @@ var init_registration_store = __esm({
         });
       }
       async uuid(conn) {
-        return String(rows10(await conn.query("SELECT UUID() AS id"))[0]?.id);
+        return String(rows12(await conn.query("SELECT UUID() AS id"))[0]?.id);
       }
       async insertUser(conn, user, role) {
         const id = await this.uuid(conn);
@@ -98061,18 +98991,18 @@ var init_registration_store = __esm({
           const like = `%${q.replace(/[\\%_]/g, "\\$&")}%`;
           const digits = q.replace(/\D/g, "");
           const likePhone = digits ? `%${digits}%` : like;
-          const items = rows10(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE9, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE9]));
-          return { items, page, pageSize: PAGE_SIZE9 };
+          const items = rows12(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE10, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE10]));
+          return { items, page, pageSize: PAGE_SIZE10 };
         });
       }
       getUserDetail(id) {
         return this.run(async (conn) => {
-          const user = rows10(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
+          const user = rows12(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id]))[0];
           if (!user)
             return null;
-          const vehicles = rows10(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
-          const shopRow = rows10(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
-          const store = rows10(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
+          const vehicles = rows12(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id]));
+          const shopRow = rows12(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id]))[0];
+          const store = rows12(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id]))[0];
           return {
             user,
             vehicles,
@@ -98083,8 +99013,8 @@ var init_registration_store = __esm({
       }
       pendingVerifications() {
         return this.run(async (conn) => {
-          const shops = rows10(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
-          const stores = rows10(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
+          const shops = rows12(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
+          const stores = rows12(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
           return [...shops, ...stores].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
         });
       }
@@ -98095,12 +99025,12 @@ var init_registration_store = __esm({
         });
       }
       recentUsers(limit) {
-        return this.run(async (conn) => rows10(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
+        return this.run(async (conn) => rows12(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const shops = Number(rows10(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
-          const stores = Number(rows10(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const shops = Number(rows12(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const stores = Number(rows12(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
           return shops + stores;
         });
       }
@@ -98115,7 +99045,7 @@ __export(admin_exports, {
   default: () => admin_default,
   resetEnrollmentsForTests: () => resetEnrollmentsForTests
 });
-import { randomBytes as randomBytes6 } from "node:crypto";
+import { randomBytes as randomBytes7 } from "node:crypto";
 function resetEnrollmentsForTests() {
   enrollments.clear();
 }
@@ -98138,6 +99068,9 @@ async function adminPanelRoutes(app2, options = {}) {
   const relations = options.relations ?? new MysqlRelationStore(connect);
   const data = options.data ?? new MysqlDataStore(connect);
   const plans = options.plans ?? new MysqlPlanStore(connect);
+  const serviceRequests = options.serviceRequests ?? new MysqlServiceRequestStore(connect);
+  const ratings = options.ratings ?? new MysqlRatingStore(connect);
+  const detailRatings = options.ratings || options.connect || missingDbEnv().length === 0 ? ratings : void 0;
   const detailPlans = options.plans || options.connect || missingDbEnv().length === 0 ? plans : void 0;
   const detailData = options.data || options.connect || missingDbEnv().length === 0 ? data : void 0;
   const detailRelations = options.relations || options.connect || missingDbEnv().length === 0 ? relations : void 0;
@@ -98170,7 +99103,7 @@ async function adminPanelRoutes(app2, options = {}) {
     }
   });
   app2.addHook("onRequest", async (request, reply) => {
-    request.cspNonce = randomBytes6(16).toString("base64");
+    request.cspNonce = randomBytes7(16).toString("base64");
     reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${request.cspNonce}'; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`).header("X-Frame-Options", "DENY").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("Cache-Control", "no-store");
     if (!getAdminSessionSecret()) {
       return reply.code(503).type("text/html; charset=utf-8").send(layout({
@@ -98223,7 +99156,7 @@ async function adminPanelRoutes(app2, options = {}) {
   registerAccountRoutes(app2, { store, requireSession, html, audit });
   registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, plans: detailPlans, visits: detailVisits, requireSession, html, audit, platform });
   registerAppointmentRoutes(app2, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit, linker, platform });
-  registerWorkOrderRoutes(app2, { workOrders, appointments, registrations, requireSession, html, audit, linker, platform });
+  registerWorkOrderRoutes(app2, { workOrders, appointments, registrations, requireSession, html, audit, linker, platform, ratings: detailRatings });
   registerQuoteRoutes(app2, { quotes, registrations, appointments, workOrders, requireSession, html, audit, linker, platform });
   registerAttendRoutes(app2, {
     registrations,
@@ -98256,6 +99189,38 @@ async function adminPanelRoutes(app2, options = {}) {
   registerRelationRoutes(app2, { relations, requireSession, html, audit });
   registerDataRoutes(app2, { data, requireSession, html, audit });
   registerPlanRoutes(app2, { plans, requireSession, html, audit });
+  registerServiceRequestRoutes(app2, { serviceRequests, registrations, linker, requireSession, html, audit });
+  app2.post("/ratings/:id/hide", async (request, reply) => {
+    const session = requireSession(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return html(reply, request, "Rese\xF1as", messageView("Rese\xF1as", "Solicitud inv\xE1lida."), session, 403);
+    const { id } = request.params;
+    const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 191) : "";
+    if (reason.length < 5)
+      return html(reply, request, "Rese\xF1as", messageView("Rese\xF1as", "Escribe el motivo para ocultarla."), session, 400);
+    const rating = await ratings.get(id).catch(() => null);
+    const hidden = rating ? await ratings.hide(id, reason, session.userId).catch(() => false) : false;
+    if (hidden)
+      await audit("admin.rating.hide", session.userId, `Rese\xF1a ${id} oculta: ${reason}`);
+    return reply.redirect(rating?.workOrderId ? `/admin/work-orders/${rating.workOrderId}` : "/admin", 302);
+  });
+  app2.post("/ratings/:id/show", async (request, reply) => {
+    const session = requireSession(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return html(reply, request, "Rese\xF1as", messageView("Rese\xF1as", "Solicitud inv\xE1lida."), session, 403);
+    const { id } = request.params;
+    const rating = await ratings.get(id).catch(() => null);
+    const shown = rating ? await ratings.show(id).catch(() => false) : false;
+    if (shown)
+      await audit("admin.rating.show", session.userId, `Rese\xF1a ${id} visible otra vez`);
+    return reply.redirect(rating?.workOrderId ? `/admin/work-orders/${rating.workOrderId}` : "/admin", 302);
+  });
   app2.get("/visits", async (request, reply) => {
     const session = requireSession(request, reply);
     if (!session)
@@ -98268,8 +99233,8 @@ async function adminPanelRoutes(app2, options = {}) {
       return html(reply, request, "Origen", visitsView({ items: list6.items, stats, days }), session);
     } catch (err) {
       const code = err.code;
-      const text5 = code === "ER_NO_SUCH_TABLE" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : `No se pudo consultar el origen de los contactos (${code ?? "base de datos no disponible"}).`;
-      return html(reply, request, "Origen", messageView("Origen", text5), session, 503);
+      const text7 = code === "ER_NO_SUCH_TABLE" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : `No se pudo consultar el origen de los contactos (${code ?? "base de datos no disponible"}).`;
+      return html(reply, request, "Origen", messageView("Origen", text7), session, 503);
     }
   });
   app2.get("/login", async (request, reply) => {
@@ -98460,6 +99425,9 @@ var init_admin = __esm({
     init_relations();
     init_data();
     init_plans2();
+    init_service_requests();
+    init_service_request_store();
+    init_rating_store();
     init_plan_store();
     init_data_store();
     init_relation_store();
@@ -99770,6 +100738,99 @@ async function agentRoutes(app2) {
 // packages/api/dist/server.js
 init_entry();
 
+// packages/api/dist/application/content/catalog.js
+init_maintenance();
+function slugify(text7) {
+  return text7.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+var money = (value2) => `US$ ${value2.toFixed(0)}`;
+function buildServicePages() {
+  return serviceTaxonomy.categories.map((category) => {
+    const items = category.subservices.map((sub) => ({
+      name: sub.name,
+      detail: sub.detail ?? "",
+      durationMin: typeof sub.durationMin === "number" ? sub.durationMin : null,
+      costRefUsd: typeof sub.costRefUsd === "number" ? sub.costRefUsd : null,
+      costNote: sub.costNote ?? null
+    }));
+    const precios = items.map((i) => i.costRefUsd).filter((v) => typeof v === "number");
+    const priceFrom = precios.length ? Math.min(...precios) : null;
+    const priceTo = precios.length ? Math.max(...precios) : null;
+    const rango = priceFrom === null ? "" : priceFrom === priceTo ? ` Precio referencial: ${money(priceFrom)}.` : ` Precios referenciales desde ${money(priceFrom)} hasta ${money(priceTo)}.`;
+    return {
+      slug: slugify(category.name),
+      id: category.id,
+      name: category.name,
+      title: `${category.name} para tu veh\xEDculo en Ecuador \xB7 precios y talleres`,
+      description: `${category.name}: qu\xE9 incluye, cu\xE1nto demora y cu\xE1nto cuesta en Ecuador.${rango} Agenda en un taller verificado por WhatsApp, sin instalar nada.`,
+      items,
+      priceFrom,
+      priceTo
+    };
+  });
+}
+var SERVICE_PAGES = buildServicePages();
+var CITY_PAGES = [
+  { slug: "quito", name: "Quito", province: "Pichincha", zones: ["Norte", "Centro", "Sur", "Valle de los Chillos", "Cumbay\xE1"] },
+  { slug: "guayaquil", name: "Guayaquil", province: "Guayas", zones: ["Norte", "Centro", "Sur", "V\xEDa a la Costa", "Samborond\xF3n"] },
+  { slug: "cuenca", name: "Cuenca", province: "Azuay", zones: ["Centro", "El Ejido", "Totoracocha", "Ricaurte"] },
+  { slug: "ambato", name: "Ambato", province: "Tungurahua", zones: ["Centro", "Ficoa", "Huachi", "Izamba"] },
+  { slug: "manta", name: "Manta", province: "Manab\xED", zones: ["Centro", "Tarqui", "Los Esteros"] },
+  { slug: "santo-domingo", name: "Santo Domingo", province: "Santo Domingo de los Ts\xE1chilas", zones: ["Centro", "V\xEDa Quevedo", "V\xEDa Quinind\xE9"] },
+  { slug: "machala", name: "Machala", province: "El Oro", zones: ["Centro", "Puerto Bol\xEDvar", "V\xEDa Pasaje"] },
+  { slug: "loja", name: "Loja", province: "Loja", zones: ["Centro", "Norte", "Sur"] },
+  { slug: "ibarra", name: "Ibarra", province: "Imbabura", zones: ["Centro", "Caranqui", "Alpachaca"] },
+  { slug: "riobamba", name: "Riobamba", province: "Chimborazo", zones: ["Centro", "Norte", "Sur"] }
+].map((city) => ({
+  ...city,
+  title: `Talleres mec\xE1nicos en ${city.name} \xB7 turnos y precios por WhatsApp`,
+  description: `Encuentra taller mec\xE1nico en ${city.name} (${city.province}) sin dar vueltas: cuentas el problema por WhatsApp y te coordinamos el turno con precio acordado antes de entrar.`
+}));
+var findService = (slug) => SERVICE_PAGES.find((p) => p.slug === slug) ?? null;
+var findCity = (slug) => CITY_PAGES.find((p) => p.slug === slug) ?? null;
+function serviceFaq(page) {
+  const principal = page.items[0];
+  const faq = [
+    {
+      q: `\xBFCu\xE1nto cuesta ${page.name.toLowerCase()} en Ecuador?`,
+      a: page.priceFrom === null ? `El precio depende del veh\xEDculo y del trabajo. Escribi\xE9ndonos por WhatsApp con la marca, el modelo y el a\xF1o te damos el precio antes de entrar al taller.` : `Como referencia, entre ${money(page.priceFrom)} y ${money(page.priceTo)} seg\xFAn el veh\xEDculo y el taller. El precio exacto se acuerda antes de entrar.`
+    },
+    {
+      q: `\xBFCu\xE1nto demora?`,
+      a: principal?.durationMin ? `${principal.name} toma alrededor de ${principal.durationMin} minutos en un taller con turno reservado.` : `Depende del trabajo; al agendar te decimos cu\xE1nto tiempo va a estar el veh\xEDculo en el taller.`
+    },
+    {
+      q: `\xBFC\xF3mo consigo un taller de confianza para esto?`,
+      a: `Nos escribes por WhatsApp, nos cuentas qu\xE9 necesitas y te coordinamos el turno en un taller verificado, con orden de trabajo y garant\xEDa respaldada.`
+    },
+    {
+      q: `\xBFNecesito instalar una aplicaci\xF3n?`,
+      a: `No. Todo ocurre en WhatsApp: no hay que instalar nada ni crear contrase\xF1as.`
+    }
+  ];
+  return faq;
+}
+function cityFaq(city) {
+  return [
+    {
+      q: `\xBFC\xF3mo encuentro un taller mec\xE1nico en ${city.name}?`,
+      a: `Escribes por WhatsApp qu\xE9 le pasa a tu veh\xEDculo y en qu\xE9 zona de ${city.name} est\xE1s (${city.zones.slice(0, 3).join(", ")}\u2026) y te proponemos talleres cercanos; con el plan Premium, talleres verificados con el precio acordado antes de entrar.`
+    },
+    {
+      q: `\xBFQu\xE9 significa que un taller est\xE9 verificado?`,
+      a: `Que revisamos su RUC, su direcci\xF3n y los servicios que ofrece antes de recomendarlo, y que respondemos si algo sale mal: hay orden de trabajo, garant\xEDa y un caso de disputa si hiciera falta.`
+    },
+    {
+      q: `\xBFAtienden mi marca en ${city.name}?`,
+      a: `Trabajamos con talleres multimarca y especializados para autos, camionetas, motos y comerciales livianos. Si ninguno cubre tu caso, te lo decimos de frente.`
+    },
+    {
+      q: `\xBFCu\xE1nto cuesta usar AutoMantPro?`,
+      a: `El plan gratuito incluye tu plan de mantenimiento, recordatorios y b\xFAsqueda de talleres cercanos. El plan Premium agrega talleres verificados, cotizaci\xF3n de repuestos en varios almacenes y garant\xEDa respaldada.`
+    }
+  ];
+}
+
 // packages/api/dist/interfaces/seo/index.js
 var DEFAULT_SITE = "https://automantpro.app";
 var AI_AGENTS = [
@@ -99807,7 +100868,10 @@ function sitemapXml(site, now = /* @__PURE__ */ new Date()) {
   const fecha = now.toISOString().slice(0, 10);
   const paginas = [
     ["/", "1.0"],
-    ["/?pagina=1", "0.8"],
+    ["/servicios", "0.9"],
+    ["/talleres", "0.9"],
+    ...SERVICE_PAGES.map((page) => [`/servicios/${page.slug}`, "0.8"]),
+    ...CITY_PAGES.map((city) => [`/talleres/${city.slug}`, "0.8"]),
     ["/terminos", "0.3"],
     ["/privacidad", "0.3"]
   ];
@@ -99850,6 +100914,10 @@ No hay que instalar ninguna aplicaci\xF3n ni crear contrase\xF1as.
 - Premium: talleres verificados con cita coordinada, cotizaciones a varios almacenes,
   garant\xEDa respaldada y historial exportable.
 
+## P\xE1ginas
+- Servicios con precios referenciales: ${site}/servicios
+- Talleres por ciudad: ${site}/talleres
+
 ## Enlaces
 - Inicio: ${site}/
 - T\xE9rminos y condiciones: ${site}/terminos
@@ -99872,6 +100940,290 @@ async function seoRoutes(app2, options = {}) {
   });
 }
 
+// packages/api/dist/interfaces/content/index.js
+import { randomBytes as randomBytes2 } from "node:crypto";
+
+// packages/api/dist/interfaces/content/page.js
+init_page();
+var SITE = "https://automantpro.app";
+function structuredData2(input) {
+  const datos = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: input.breadcrumb.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.label,
+          item: `${SITE}${item.href}`
+        }))
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: input.faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } }))
+      }
+    ]
+  };
+  return JSON.stringify(datos);
+}
+function renderContentPage(input) {
+  const nonce = escapeHtml(input.nonce);
+  const links = input.number ? buildLinks(input.number, input.code, null) : null;
+  const wame = links ? `${links.wame.split("?text=")[0]}?text=${encodeURIComponent(`${input.chatText} C\xF3digo: ${input.code}`)}` : null;
+  const cta = wame ? `<a class="cta" href="${escapeHtml(wame)}" rel="noopener">Escribir por WhatsApp</a>
+       <p class="small linea"><span class="code">${escapeHtml(input.code)}</span> <em class="nota">identifica tu visita en el chat</em></p>` : `<p class="soon">Muy pronto disponible por WhatsApp</p>`;
+  const bloques = input.blocks.map((b) => `<section class="card"><h2 class="titulo">${escapeHtml(b.title)}</h2>${b.html}</section>`).join("");
+  const faq = input.faq.length ? `<section class="card"><h2 class="titulo">Preguntas frecuentes</h2>
+      ${input.faq.map((item) => `<h3 class="pregunta">${escapeHtml(item.q)}</h3><p class="respuesta">${escapeHtml(item.a)}</p>`).join("")}</section>` : "";
+  const related = input.related.length ? `<section class="card"><h2 class="titulo">Tambi\xE9n te puede servir</h2>
+      <ul class="enlaces">${input.related.map((r) => `<li><a href="${escapeHtml(r.href)}">${escapeHtml(r.label)}</a></li>`).join("")}</ul></section>` : "";
+  const migas = `<nav class="migas">${input.breadcrumb.map((item, index) => index === input.breadcrumb.length - 1 ? `<span>${escapeHtml(item.label)}</span>` : `<a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a> \u203A`).join(" ")}</nav>`;
+  return `<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0092ad">
+<title>${escapeHtml(input.title)}</title>
+<meta name="description" content="${escapeHtml(input.description)}">
+<meta name="robots" content="index,follow,max-snippet:-1">
+<link rel="canonical" href="${SITE}${escapeHtml(input.path)}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="${SITE}${escapeHtml(input.path)}">
+<meta property="og:title" content="${escapeHtml(input.title)}">
+<meta property="og:description" content="${escapeHtml(input.description)}">
+<meta property="og:site_name" content="AutoMantPro">
+<meta property="og:locale" content="es_EC">
+<style nonce="${nonce}">${STYLES}${EXTRA}</style>
+<script type="application/ld+json" nonce="${nonce}">${structuredData2(input)}</script>
+</head>
+<body>
+<main>
+  <header><a class="logo" href="/"><span class="mark"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5a3.5 3.5 0 0 0 4.6 4.6L21 12l-9 9-3-3 9-9-2.1-1.9a3.5 3.5 0 0 1-1.4-1.6z"/><path d="M7 4l2.5 2.5L7.5 8.5 5 6z"/></svg></span>
+  <span class="brand">Auto<span>Mant</span>Pro<small>Tu asistente inteligente de mantenimiento automotriz</small></span></a></header>
+  ${migas}
+  <h1>${escapeHtml(input.h1)}</h1>
+  <p class="lead">${escapeHtml(input.intro)}</p>
+  ${cta}
+  ${bloques}
+  ${faq}
+  ${related}
+  <p class="legal">Al escribirnos aceptas los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP).</p>
+</main>
+</body>
+</html>`;
+}
+var EXTRA = `
+main{max-width:640px}
+h1{font-size:26px;margin:10px 0 8px}
+.migas{font:600 11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.6px;color:var(--muted);margin:0 0 6px}
+.migas a{color:var(--cyan);text-decoration:none}
+.lead{margin:0 0 16px}
+.titulo{font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin:0 0 12px}
+.cta{display:flex;text-decoration:none;margin-bottom:10px}
+.servicio{border-top:1px solid var(--line);padding:12px 0 0;margin:12px 0 0}
+.servicio:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.servicio h3{font-size:15px;margin:0 0 4px}
+.servicio p{font-size:13.5px;color:var(--muted);margin:0 0 6px}
+.datos{display:flex;gap:8px;flex-wrap:wrap;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.4px}
+.datos span{background:rgba(34,211,238,.10);border:1px solid rgba(34,211,238,.28);color:var(--cyan);padding:5px 8px;border-radius:7px}
+.enlaces{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.enlaces a{color:var(--cyan);text-decoration:none;font-weight:600}
+.zonas{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0}
+.zonas span{font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);border:1px solid var(--line);padding:5px 8px;border-radius:7px}
+`;
+function serviceBlocks(page) {
+  const items = page.items.map((item) => `<article class="servicio"><h3>${escapeHtml(item.name)}</h3>
+      ${item.detail ? `<p>${escapeHtml(item.detail)}</p>` : ""}
+      <div class="datos">
+        ${item.durationMin ? `<span>${item.durationMin} min</span>` : ""}
+        ${item.costRefUsd !== null ? `<span>desde US$ ${item.costRefUsd.toFixed(0)}</span>` : ""}
+      </div>
+      ${item.costNote ? `<p>${escapeHtml(item.costNote)}</p>` : ""}</article>`).join("");
+  return [
+    { title: "Qu\xE9 incluye", html: items },
+    {
+      title: "C\xF3mo se agenda",
+      html: `<ol class="steps"><li>Nos escribes por WhatsApp con la marca, el modelo, el a\xF1o y el kilometraje.</li>
+      <li>Te decimos qu\xE9 corresponde, cu\xE1nto demora y el precio antes de entrar al taller.</li>
+      <li>Coordinamos el turno y, al terminar, el trabajo queda en el historial de tu veh\xEDculo.</li></ol>`
+    }
+  ];
+}
+function cityBlocks(city) {
+  return [
+    {
+      title: `C\xF3mo funciona en ${city.name}`,
+      html: `<ol class="steps"><li>Cuentas por WhatsApp qu\xE9 le pasa a tu veh\xEDculo y en qu\xE9 zona est\xE1s.</li>
+      <li>Te proponemos talleres cercanos; con Premium, talleres verificados con precio acordado.</li>
+      <li>Agendas el turno y el trabajo queda con orden, garant\xEDa e historial.</li></ol>
+      <div class="zonas">${city.zones.map((z) => `<span>${escapeHtml(z)}</span>`).join("")}</div>`
+    },
+    {
+      title: "Qu\xE9 revisamos antes de recomendar un taller",
+      html: `<ul class="enlaces"><li>RUC y direcci\xF3n verificados</li><li>Servicios que realmente atiende</li>
+      <li>Orden de trabajo con presupuesto aprobado por el due\xF1o</li><li>Garant\xEDa y respuesta si algo sale mal</li></ul>`
+    }
+  ];
+}
+
+// packages/api/dist/interfaces/content/index.js
+init_entry();
+var HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "no-referrer",
+  "Cache-Control": "public, max-age=600"
+};
+async function contentRoutes(app2, options = {}) {
+  async function number() {
+    try {
+      const digits = (await options.resolveNumber?.() ?? "").replace(/\D/g, "");
+      if (digits.length >= 8 && digits.length <= 15)
+        return digits;
+    } catch {
+    }
+    return publicNumber();
+  }
+  async function visitCode(ref) {
+    const code = await uniqueVisitCode(options.codeTaken);
+    if (options.onVisit) {
+      Promise.resolve().then(() => options.onVisit?.(code, ref.slice(0, 32), null)).catch(() => void 0);
+    }
+    return code;
+  }
+  const send = (reply, html) => {
+    for (const [name, value2] of Object.entries(HEADERS))
+      reply.header(name, value2);
+    return reply.type("text/html; charset=utf-8").send(html);
+  };
+  app2.get("/servicios", async (request, reply) => {
+    if (!wantsHtml(request.headers.accept))
+      return reply.callNotFound();
+    const code = await visitCode("servicios");
+    const lista = SERVICE_PAGES.map((page) => `<li><a href="/servicios/${page.slug}">${page.name}</a>${page.priceFrom === null ? "" : ` \u2014 desde US$ ${page.priceFrom.toFixed(0)}`}</li>`).join("");
+    return send(reply, renderContentPage({
+      number: await number(),
+      code,
+      nonce: randomBytes2(16).toString("base64"),
+      path: "/servicios",
+      title: "Servicios de mantenimiento y reparaci\xF3n en Ecuador \xB7 precios referenciales",
+      description: "Qu\xE9 incluye cada servicio del veh\xEDculo, cu\xE1nto demora y cu\xE1nto cuesta en Ecuador: frenos, aceite, motor, suspensi\xF3n, neum\xE1ticos, aire acondicionado y m\xE1s. Agenda por WhatsApp.",
+      h1: "Servicios de mantenimiento y reparaci\xF3n",
+      intro: "Estos son los trabajos que coordinamos con talleres verificados, con su duraci\xF3n y su precio referencial en Ecuador. El precio exacto se acuerda antes de entrar al taller.",
+      blocks: [{ title: "Todos los servicios", html: `<ul class="enlaces">${lista}</ul>` }],
+      faq: [
+        {
+          q: "\xBFLos precios son fijos?",
+          a: "No: son referenciales para que sepas en qu\xE9 rango moverte. El precio final lo acuerdas con el taller antes de entrar, y queda escrito en la orden de trabajo."
+        },
+        {
+          q: "\xBFC\xF3mo s\xE9 qu\xE9 le toca a mi veh\xEDculo?",
+          a: "Con la marca, el modelo, el a\xF1o y el kilometraje armamos el plan de mantenimiento de tu veh\xEDculo y te decimos qu\xE9 corresponde ahora y qu\xE9 puede esperar."
+        }
+      ],
+      related: CITY_PAGES.slice(0, 5).map((city) => ({ href: `/talleres/${city.slug}`, label: `Talleres en ${city.name}` })),
+      breadcrumb: [
+        { href: "/", label: "Inicio" },
+        { href: "/servicios", label: "Servicios" }
+      ],
+      chatText: "Hola AutoMantPro, quiero saber qu\xE9 mantenimiento le toca a mi veh\xEDculo."
+    }));
+  });
+  app2.get("/servicios/:slug", async (request, reply) => {
+    if (!wantsHtml(request.headers.accept))
+      return reply.callNotFound();
+    const { slug } = request.params;
+    const page = findService(slug);
+    if (!page)
+      return reply.callNotFound();
+    const code = await visitCode(`servicio:${page.id}`);
+    const otros = SERVICE_PAGES.filter((p) => p.slug !== page.slug).slice(0, 5);
+    return send(reply, renderContentPage({
+      number: await number(),
+      code,
+      nonce: randomBytes2(16).toString("base64"),
+      path: `/servicios/${page.slug}`,
+      title: page.title,
+      description: page.description,
+      h1: `${page.name} para tu veh\xEDculo`,
+      intro: page.description,
+      blocks: serviceBlocks(page),
+      faq: serviceFaq(page),
+      related: [
+        ...otros.map((p) => ({ href: `/servicios/${p.slug}`, label: p.name })),
+        { href: "/servicios", label: "Ver todos los servicios" }
+      ],
+      breadcrumb: [
+        { href: "/", label: "Inicio" },
+        { href: "/servicios", label: "Servicios" },
+        { href: `/servicios/${page.slug}`, label: page.name }
+      ],
+      chatText: `Hola AutoMantPro, necesito ${page.name.toLowerCase()} para mi veh\xEDculo.`
+    }));
+  });
+  app2.get("/talleres", async (request, reply) => {
+    if (!wantsHtml(request.headers.accept))
+      return reply.callNotFound();
+    const code = await visitCode("talleres");
+    const lista = CITY_PAGES.map((city) => `<li><a href="/talleres/${city.slug}">Talleres mec\xE1nicos en ${city.name}</a> \u2014 ${city.province}</li>`).join("");
+    return send(reply, renderContentPage({
+      number: await number(),
+      code,
+      nonce: randomBytes2(16).toString("base64"),
+      path: "/talleres",
+      title: "Talleres mec\xE1nicos verificados en Ecuador \xB7 turnos por WhatsApp",
+      description: "Talleres mec\xE1nicos en Quito, Guayaquil, Cuenca y m\xE1s ciudades del Ecuador: turno coordinado por WhatsApp, precio acordado antes de entrar y garant\xEDa respaldada.",
+      h1: "Talleres mec\xE1nicos en Ecuador",
+      intro: "Elige tu ciudad: te coordinamos el turno por WhatsApp, con el precio acordado antes de entrar y el trabajo registrado en el historial de tu veh\xEDculo.",
+      blocks: [{ title: "Ciudades", html: `<ul class="enlaces">${lista}</ul>` }],
+      faq: [
+        {
+          q: "\xBFQu\xE9 pasa si mi ciudad no est\xE1 en la lista?",
+          a: "Igual escr\xEDbenos: te buscamos talleres cercanos en el mapa y te avisamos cuando tengamos talleres verificados en tu zona."
+        }
+      ],
+      related: SERVICE_PAGES.slice(0, 5).map((p) => ({ href: `/servicios/${p.slug}`, label: p.name })),
+      breadcrumb: [
+        { href: "/", label: "Inicio" },
+        { href: "/talleres", label: "Talleres" }
+      ],
+      chatText: "Hola AutoMantPro, busco un taller mec\xE1nico de confianza."
+    }));
+  });
+  app2.get("/talleres/:slug", async (request, reply) => {
+    if (!wantsHtml(request.headers.accept))
+      return reply.callNotFound();
+    const { slug } = request.params;
+    const city = findCity(slug);
+    if (!city)
+      return reply.callNotFound();
+    const code = await visitCode(`ciudad:${city.slug}`);
+    return send(reply, renderContentPage({
+      number: await number(),
+      code,
+      nonce: randomBytes2(16).toString("base64"),
+      path: `/talleres/${city.slug}`,
+      title: city.title,
+      description: city.description,
+      h1: `Talleres mec\xE1nicos en ${city.name}`,
+      intro: city.description,
+      blocks: cityBlocks(city),
+      faq: cityFaq(city),
+      related: [
+        ...SERVICE_PAGES.slice(0, 4).map((p) => ({ href: `/servicios/${p.slug}`, label: `${p.name} en ${city.name}` })),
+        { href: "/talleres", label: "Talleres en otras ciudades" }
+      ],
+      breadcrumb: [
+        { href: "/", label: "Inicio" },
+        { href: "/talleres", label: "Talleres" },
+        { href: `/talleres/${city.slug}`, label: city.name }
+      ],
+      chatText: `Hola AutoMantPro, busco un taller mec\xE1nico en ${city.name}.`
+    }));
+  });
+}
+
 // packages/api/dist/server.js
 init_apply();
 init_settings_store();
@@ -99883,7 +101235,7 @@ init_documents();
 // packages/api/dist/interfaces/legal/index.js
 init_page();
 init_documents();
-import { randomBytes as randomBytes2 } from "node:crypto";
+import { randomBytes as randomBytes3 } from "node:crypto";
 var STYLES2 = `
 :root{--bg:#f5f8fa;--card:#ffffff;--text:#0f1b24;--muted:#51626f;--cyan:#00a8c6;--amber:#b45309;--line:#e2e8ee}
 @media (prefers-color-scheme:dark){:root{--bg:#071116;--card:#0d1c24;--text:#e6f1f5;--muted:#9fb3bf;--cyan:#22d3ee;--amber:#fbbf24;--line:#1e3440}}
@@ -99941,7 +101293,7 @@ async function legalRoutes(app2, options = {}) {
       } catch {
         data = emptyLegalData();
       }
-      const nonce = randomBytes2(16).toString("base64");
+      const nonce = randomBytes3(16).toString("base64");
       return reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-cache").type("text/html; charset=utf-8").send(renderLegalPage({ title: page.title, sections: page.sections(data), complete: isLegalComplete(data), nonce }));
     });
   }
@@ -99949,7 +101301,7 @@ async function legalRoutes(app2, options = {}) {
 
 // packages/api/dist/server.js
 init_dist();
-import { randomBytes as randomBytes7 } from "node:crypto";
+import { randomBytes as randomBytes8 } from "node:crypto";
 import_dotenv.default.config();
 var PORT = Number(process.env.PORT) || 3e3;
 var HOST = process.env.LISTEN_HOST || "0.0.0.0";
@@ -99971,7 +101323,7 @@ if (secretIsStrong) {
   jwtSecret = configuredSecret;
   jwtSecretSource = "env";
 } else if (isProduction) {
-  jwtSecret = randomBytes7(48).toString("hex");
+  jwtSecret = randomBytes8(48).toString("hex");
   jwtSecretSource = "ephemeral";
   app.log.warn({ jwtSecretPresent: !!configuredSecret }, "JWT_SECRET ausente o d\xE9bil: se usa un secreto ef\xEDmero aleatorio; configure JWT_SECRET (>= 32 caracteres) en la plataforma");
 } else {
@@ -100018,13 +101370,18 @@ await app.register(adminPanelRoutes2, {
     legalData.invalidate();
   }
 });
-var BUILD_STAMP = process.env.APP_VERSION ?? "2026-09-18-inicio-tecnologico";
+var BUILD_STAMP = process.env.APP_VERSION ?? "2026-09-22-calificaciones";
 app.get("/health", async () => ({ status: "ok", jwt: jwtSecretSource, build: BUILD_STAMP }));
 await app.register(entryRoutes, {
   resolveNumber: () => whatsappNumber.get(),
   onVisit: missingDbEnv().length === 0 ? (code, ref, profile) => visitStore.record(code, ref, profile) : void 0,
   codeTaken: missingDbEnv().length === 0 ? (code) => visitStore.exists(code) : void 0,
   entryMode: async () => parseEntryMode(await entryMode.get())
+});
+await app.register(contentRoutes, {
+  resolveNumber: () => whatsappNumber.get(),
+  onVisit: missingDbEnv().length === 0 ? (code, ref, profile) => visitStore.record(code, ref, profile) : void 0,
+  codeTaken: missingDbEnv().length === 0 ? (code) => visitStore.exists(code) : void 0
 });
 await app.register(seoRoutes, { resolveNumber: () => whatsappNumber.get() });
 await app.register(legalRoutes, { load: () => legalData.get() });

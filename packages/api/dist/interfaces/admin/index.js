@@ -12,6 +12,9 @@ import { MysqlStaffStore } from "../../infrastructure/staff/staff-store.js";
 import { registerRelationRoutes } from "./relations.js";
 import { registerDataRoutes } from "./data.js";
 import { registerPlanRoutes } from "./plans.js";
+import { registerServiceRequestRoutes } from "./service-requests.js";
+import { MysqlServiceRequestStore } from "../../infrastructure/service-requests/service-request-store.js";
+import { MysqlRatingStore } from "../../infrastructure/ratings/rating-store.js";
 import { MysqlPlanStore } from "../../infrastructure/plans/plan-store.js";
 import { MysqlDataStore } from "../../infrastructure/data/data-store.js";
 import { MysqlRelationStore } from "../../infrastructure/relations/relation-store.js";
@@ -63,6 +66,9 @@ export async function adminPanelRoutes(app, options = {}) {
     const relations = options.relations ?? new MysqlRelationStore(connect);
     const data = options.data ?? new MysqlDataStore(connect);
     const plans = options.plans ?? new MysqlPlanStore(connect);
+    const serviceRequests = options.serviceRequests ?? new MysqlServiceRequestStore(connect);
+    const ratings = options.ratings ?? new MysqlRatingStore(connect);
+    const detailRatings = options.ratings || options.connect || missingDbEnv().length === 0 ? ratings : undefined;
     const detailPlans = options.plans || options.connect || missingDbEnv().length === 0 ? plans : undefined;
     const detailData = options.data || options.connect || missingDbEnv().length === 0 ? data : undefined;
     // El enlazador crea el vínculo al agendar, abrir una orden o cotizar; sin base no se usa.
@@ -170,7 +176,7 @@ export async function adminPanelRoutes(app, options = {}) {
     registerAccountRoutes(app, { store, requireSession, html, audit });
     registerRegistrationRoutes(app, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, plans: detailPlans, visits: detailVisits, requireSession, html, audit, platform });
     registerAppointmentRoutes(app, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit, linker, platform });
-    registerWorkOrderRoutes(app, { workOrders, appointments, registrations, requireSession, html, audit, linker, platform });
+    registerWorkOrderRoutes(app, { workOrders, appointments, registrations, requireSession, html, audit, linker, platform, ratings: detailRatings });
     registerQuoteRoutes(app, { quotes, registrations, appointments, workOrders, requireSession, html, audit, linker, platform });
     registerAttendRoutes(app, {
         registrations,
@@ -203,6 +209,39 @@ export async function adminPanelRoutes(app, options = {}) {
     registerRelationRoutes(app, { relations, requireSession, html, audit });
     registerDataRoutes(app, { data, requireSession, html, audit });
     registerPlanRoutes(app, { plans, requireSession, html, audit });
+    registerServiceRequestRoutes(app, { serviceRequests, registrations, linker, requireSession, html, audit });
+    /** Moderación de reseñas (docs/46): ocultar con motivo, nunca borrar. */
+    app.post("/ratings/:id/hide", async (request, reply) => {
+        const session = requireSession(request, reply);
+        if (!session)
+            return reply;
+        const body = (request.body ?? {});
+        if (!verifyCsrf(session, body.csrf))
+            return html(reply, request, "Reseñas", messageView("Reseñas", "Solicitud inválida."), session, 403);
+        const { id } = request.params;
+        const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 191) : "";
+        if (reason.length < 5)
+            return html(reply, request, "Reseñas", messageView("Reseñas", "Escribe el motivo para ocultarla."), session, 400);
+        const rating = await ratings.get(id).catch(() => null);
+        const hidden = rating ? await ratings.hide(id, reason, session.userId).catch(() => false) : false;
+        if (hidden)
+            await audit("admin.rating.hide", session.userId, `Reseña ${id} oculta: ${reason}`);
+        return reply.redirect(rating?.workOrderId ? `/admin/work-orders/${rating.workOrderId}` : "/admin", 302);
+    });
+    app.post("/ratings/:id/show", async (request, reply) => {
+        const session = requireSession(request, reply);
+        if (!session)
+            return reply;
+        const body = (request.body ?? {});
+        if (!verifyCsrf(session, body.csrf))
+            return html(reply, request, "Reseñas", messageView("Reseñas", "Solicitud inválida."), session, 403);
+        const { id } = request.params;
+        const rating = await ratings.get(id).catch(() => null);
+        const shown = rating ? await ratings.show(id).catch(() => false) : false;
+        if (shown)
+            await audit("admin.rating.show", session.userId, `Reseña ${id} visible otra vez`);
+        return reply.redirect(rating?.workOrderId ? `/admin/work-orders/${rating.workOrderId}` : "/admin", 302);
+    });
     /** Bandeja de origen: qué código llegó por dónde y en qué terminó (docs/43). */
     app.get("/visits", async (request, reply) => {
         const session = requireSession(request, reply);

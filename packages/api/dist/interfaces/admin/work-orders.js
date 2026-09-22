@@ -2,6 +2,8 @@ import { escapeHtml } from "../entry/page.js";
 import { verifyCsrf } from "../../application/admin/security.js";
 import { DIAGNOSIS_OUTCOMES, EDITABLE_STATUSES, ITEM_KINDS, WORK_ORDER_TRANSITIONS, historyDescription, parseAmount, workOrderCode, } from "../../application/work-orders/workflow.js";
 import { featurePaused } from "../../application/settings/platform.js";
+import { needsReview, parseScore } from "../../application/ratings/workflow.js";
+import { can } from "../../application/admin/permissions.js";
 import { newWorkOrderView, workOrderDetailView, workOrdersListView } from "./views-work-orders.js";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const FILTERS = ["abiertas", "por_aprobar", "en_taller", "cerradas", "todas"];
@@ -53,7 +55,8 @@ export function registerWorkOrderRoutes(app, deps) {
         }
         if (!found)
             return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
-        return deps.html(reply, request, workOrderCode(found.order.number), workOrderDetailView({ ...found, csrf: session.csrfToken, flash }), session, status);
+        const rating = deps.ratings ? await deps.ratings.forWorkOrder(id).catch(() => null) : null;
+        return deps.html(reply, request, workOrderCode(found.order.number), workOrderDetailView({ ...found, csrf: session.csrfToken, flash, rating, canModerate: can(session.role, "disputes") }), session, status);
     }
     async function record(session, type, order, extra = {}) {
         const payload = { workOrderId: order.id, code: workOrderCode(order.number), ...extra };
@@ -311,6 +314,55 @@ export function registerWorkOrderRoutes(app, deps) {
         await record(session, "workorder.status", order, { status: next, reason: reason || null });
         await deps.audit(`admin.workorder.${next}`, session.userId, `${workOrderCode(order.number)}${reason ? `: ${reason}` : ""}`);
         return reply.redirect(`/admin/work-orders/${id}?ok=estado`, 302);
+    });
+    /** Calificación del dueño sobre el taller, al cerrar el trabajo (docs/46). */
+    app.post("/work-orders/:id/rating", async (request, reply) => {
+        const ctx = withCsrf(request, reply);
+        if (!ctx)
+            return reply;
+        const { session, body } = ctx;
+        const { id } = request.params;
+        if (!UUID.test(id))
+            return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+        if (!deps.ratings)
+            return errorPage(request, reply, session, "Orden de trabajo", "Las calificaciones no están disponibles.", 503);
+        const score = parseScore(body.score);
+        if (score === null)
+            return renderOrder(request, reply, session, id, { kind: "error", text: "Elige una calificación del 1 al 5." }, 400);
+        let order;
+        try {
+            const found = await workOrders.get(id);
+            if (!found)
+                return errorPage(request, reply, session, "Orden de trabajo", "Orden no encontrada.", 404);
+            order = found.order;
+            if (order.status !== "cerrada") {
+                return renderOrder(request, reply, session, id, { kind: "error", text: "La calificación se pide cuando la orden ya está cerrada." }, 400);
+            }
+            if (await deps.ratings.forWorkOrder(id)) {
+                return renderOrder(request, reply, session, id, { kind: "error", text: "Ese trabajo ya tiene calificación." }, 400);
+            }
+            await deps.ratings.add({
+                fromId: order.ownerId,
+                toId: order.shopUserId,
+                score,
+                comment: str(body.comment, 191) || null,
+                kind: "taller",
+                workOrderId: id,
+                quoteRequestId: null,
+            });
+        }
+        catch (err) {
+            const m = dbErrorText(err);
+            return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
+        }
+        await record(session, "workorder.rated", order, { score });
+        await deps.audit("admin.rating.create", session.userId, `${workOrderCode(order.number)}: ${score} de 5 para el taller ${order.shopName}`);
+        return renderOrder(request, reply, session, id, {
+            kind: needsReview(score) ? "error" : "ok",
+            text: needsReview(score)
+                ? "Calificación guardada. Es baja: revisa el caso con el taller y ofrece abrir un reclamo."
+                : "Calificación guardada: ya cuenta en el promedio del taller.",
+        });
     });
     app.post("/work-orders/:id/close", async (request, reply) => {
         const ctx = withCsrf(request, reply);

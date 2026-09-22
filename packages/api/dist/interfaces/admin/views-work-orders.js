@@ -2,6 +2,7 @@ import { escapeHtml } from "../entry/page.js";
 import { formatWhatsappNumber } from "../../application/settings/whatsapp-number.js";
 import { formatEcDateTime } from "../../application/appointments/messages.js";
 import { DIAGNOSIS_OUTCOMES, EDITABLE_STATUSES, ITEM_KINDS, WORK_ORDER_LABELS, WORK_ORDER_TRANSITIONS, formatUsd, lineTotal, ownerWorkOrderMessage, shopWorkOrderMessage, workOrderCode, } from "../../application/work-orders/workflow.js";
+import { SCORES, askMessage, needsReview, stars, thanksMessage } from "../../application/ratings/workflow.js";
 const e = (value) => escapeHtml(value === null || value === undefined ? "" : String(value));
 const csrfField = (token) => `<input type="hidden" name="csrf" value="${e(token)}">`;
 const flashHtml = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e(flash.text)}</p>` : "";
@@ -121,6 +122,33 @@ export function workOrderDetailView(input) {
     }
     if (transitions.includes("cancelada"))
         actions.push(reasonForm(order, csrf, "cancelada", "Motivo de la cancelación", "Cancelar orden"));
+    const code2 = workOrderCode(order.number);
+    const rating = input.rating ?? null;
+    const ratingCard = order.status !== "cerrada"
+        ? ""
+        : rating
+            ? `<div class="card"><h2>Calificación del dueño</h2>
+          <p><strong>${e(stars(rating.score))} ${rating.score} de 5</strong>${rating.hiddenAt ? ' · <span class="muted">reseña oculta</span>' : ""}</p>
+          ${rating.comment ? `<p>${e(rating.comment)}</p>` : ""}
+          ${needsReview(rating.score) ? `<p class="error">Calificación baja: conviene revisar el caso con el taller.</p>` : ""}
+          ${copyBox("msg-gracias", "Respuesta para el dueño", thanksMessage(rating.score))}
+          ${input.canModerate && !rating.hiddenAt
+                ? `<form method="post" action="/admin/ratings/${e(rating.id)}/hide">${csrfField(csrf)}
+              <label for="ocultar">Motivo para ocultar la reseña</label><input id="ocultar" name="reason" maxlength="191" required>
+              <button class="danger" type="submit">Ocultar reseña</button></form>`
+                : ""}
+          ${input.canModerate && rating.hiddenAt
+                ? `<p class="muted">Oculta: ${e(rating.hiddenReason ?? "")}</p>
+              <form method="post" action="/admin/ratings/${e(rating.id)}/show">${csrfField(csrf)}<button type="submit">Volver a mostrarla</button></form>`
+                : ""}</div>`
+            : `<div class="card"><h2>Calificación del dueño</h2>
+          <p class="muted">Pídele la calificación ahora, que es cuando la recuerda. Alimenta el orden de las búsquedas y la confianza de la red.</p>
+          ${copyBox("msg-calificar", "Mensaje para pedirla", askMessage({ shopName: order.shopName, code: code2 }))}
+          <form method="post" action="/admin/work-orders/${e(order.id)}/rating" autocomplete="off">${csrfField(csrf)}
+          <label for="score">Qué respondió</label>
+          <select id="score" name="score">${SCORES.map((s) => `<option value="${s.value}">${e(s.label)}</option>`).join("")}</select>
+          <label for="comment">Comentario (opcional)</label><input id="comment" name="comment" maxlength="191">
+          <button class="full" type="submit">Guardar la calificación</button></form></div>`;
     const shopMessage = shopWorkOrderMessage(order);
     return `<div class="stack wide"><p><a href="/admin/work-orders">← Órdenes de trabajo</a></p>
   <h1>${e(code)} · ${e(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml(input.flash)}
@@ -135,6 +163,7 @@ export function workOrderDetailView(input) {
     ${order.cancelReason ? `<div>Motivo de la cancelación: ${e(order.cancelReason)}</div>` : ""}
     ${order.status === "cerrada" ? `<div>Salida: ${e(km(order.exitKm))} · garantía ${e(order.warrantyDays)} días${order.nextService ? ` · próximo: ${e(order.nextService)}` : ""}</div>` : ""}
   </div>
+  ${ratingCard}
   <div class="card"><h2>Diagnóstico</h2>${diagnosis}</div>
   ${order.status !== "cerrada" && order.status !== "cancelada" ? `<div class="card"><h2>Repuestos</h2><p class="muted">Si el taller necesita comprar repuestos, pide cotizaciones a los almacenes verificados.</p><a class="button" href="/admin/quotes/new?workOrderId=${e(order.id)}">Pedir repuestos a almacenes</a></div>` : ""}
   <div class="card"><h2>Presupuesto</h2>

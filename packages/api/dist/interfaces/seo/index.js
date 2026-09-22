@@ -1,3 +1,4 @@
+import { CITY_PAGES, SERVICE_PAGES } from "../../application/content/catalog.js";
 const DEFAULT_SITE = "https://automantpro.app";
 /** Rastreadores de IA que se permiten expresamente, para poder aparecer en sus respuestas. */
 const AI_AGENTS = [
@@ -34,7 +35,10 @@ export function sitemapXml(site, now = new Date()) {
     const fecha = now.toISOString().slice(0, 10);
     const paginas = [
         ["/", "1.0"],
-        ["/?pagina=1", "0.8"],
+        ["/servicios", "0.9"],
+        ["/talleres", "0.9"],
+        ...SERVICE_PAGES.map((page) => [`/servicios/${page.slug}`, "0.8"]),
+        ...CITY_PAGES.map((city) => [`/talleres/${city.slug}`, "0.8"]),
         ["/terminos", "0.3"],
         ["/privacidad", "0.3"],
     ];
@@ -74,6 +78,10 @@ No hay que instalar ninguna aplicación ni crear contraseñas.
 - Gratis: plan de mantenimiento, recordatorios y búsqueda de talleres cercanos.
 - Premium: talleres verificados con cita coordinada, cotizaciones a varios almacenes,
   garantía respaldada y historial exportable.
+
+## Páginas
+- Servicios con precios referenciales: ${site}/servicios
+- Talleres por ciudad: ${site}/talleres
 
 ## Enlaces
 - Inicio: ${site}/

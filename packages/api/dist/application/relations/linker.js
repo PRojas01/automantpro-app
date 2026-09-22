@@ -30,6 +30,17 @@ export function createRelationLinker(store) {
             ],
             createdBy: input.createdBy,
         }), null),
+        fromServiceRequest: (input) => quiet(() => store.ensureForOrigin({
+            kind: "dueno_taller",
+            originType: "servicerequest",
+            originId: input.requestId,
+            subject: input.subject,
+            parties: [
+                { userId: input.ownerId, role: "dueno" },
+                { userId: input.shopUserId, role: "taller" },
+            ],
+            createdBy: input.createdBy,
+        }), null),
         fromQuoteRequest: async (input) => {
             const kind = input.requesterRole === "taller" ? "taller_almacen" : "dueno_almacen";
             const role = input.requesterRole === "taller" ? "taller" : "dueno";

@@ -3,6 +3,7 @@ import type { Page } from "../../infrastructure/admin/admin-store.js";
 import type { AppointmentRow } from "../../infrastructure/appointments/appointment-store.js";
 import type { ServiceHistoryRow, WorkOrderFilter, WorkOrderItemRow, WorkOrderRow } from "../../infrastructure/work-orders/work-order-store.js";
 import type { Flash } from "./views-setup.js";
+import type { RatingRow } from "../../infrastructure/ratings/rating-store.js";
 type Row = Record<string, unknown>;
 export declare function workOrdersListView(input: {
     filter: WorkOrderFilter;
@@ -23,6 +24,8 @@ export declare function workOrderDetailView(input: {
     items: WorkOrderItemRow[];
     csrf: string;
     flash?: Flash;
+    rating?: RatingRow | null;
+    canModerate?: boolean;
 }): string;
 export declare function userWorkOrdersSection(orders: WorkOrderRow[]): string;
 export declare function historySection(history: ServiceHistoryRow[]): string;

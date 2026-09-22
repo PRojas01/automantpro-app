@@ -14,6 +14,13 @@ export interface RelationLinker {
         subject: string | null;
         createdBy: string | null;
     }): Promise<string | null>;
+    fromServiceRequest(input: {
+        requestId: string;
+        ownerId: string;
+        shopUserId: string;
+        subject: string | null;
+        createdBy: string | null;
+    }): Promise<string | null>;
     fromQuoteRequest(input: {
         requestId: string;
         requesterId: string;

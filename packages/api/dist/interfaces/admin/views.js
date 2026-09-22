@@ -46,6 +46,7 @@ const NAV = [
     { href: "/admin/verifications", label: "Verificaciones", capability: "read" },
     { href: "/admin/appointments", label: "Turnos", capability: "read" },
     { href: "/admin/work-orders", label: "Órdenes", capability: "read" },
+    { href: "/admin/service-requests", label: "Especialistas", capability: "read" },
     { href: "/admin/quotes", label: "Cotizaciones", capability: "read" },
     { href: "/admin/relations", label: "Relaciones", capability: "read" },
     { href: "/admin/disputes", label: "Disputas", capability: "read" },

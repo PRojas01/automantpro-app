@@ -168,7 +168,7 @@ export function userDetailView(input) {
       <div class="muted">Uso ${e(v.usageProfile ?? "urbano")} · Recordatorios: ${v.remindersOptIn ? "sí" : "no"}</div>
       ${plan
             ? `<label for="plan-${e(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e(v.id)}" readonly rows="12">${e(plan)}</textarea>`
-            : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinación.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e(user.id)}/schedule?vehicleId=${e(v.id)}">Agendar turno</a> · <a href="/admin/work-orders/new?ownerId=${e(user.id)}&amp;vehicleId=${e(v.id)}">Orden de trabajo sin cita</a> · <a href="/admin/quotes/new?ownerId=${e(user.id)}&amp;vehicleId=${e(v.id)}">Cotizar repuesto</a></p>` : ""}</div>`;
+            : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinación.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e(user.id)}/schedule?vehicleId=${e(v.id)}">Agendar turno</a> · <a href="/admin/work-orders/new?ownerId=${e(user.id)}&amp;vehicleId=${e(v.id)}">Orden de trabajo sin cita</a> · <a href="/admin/quotes/new?ownerId=${e(user.id)}&amp;vehicleId=${e(v.id)}">Cotizar repuesto</a> · <a href="/admin/service-requests/new?ownerId=${e(user.id)}">Buscar especialista</a></p>` : ""}</div>`;
     })
         .join("");
     const addVehicle = String(user.role) === "dueno"
