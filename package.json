@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "postinstall": "prisma generate --schema=packages/api/prisma/schema.prisma",
-    "build": "node -e \"console.log('Precompiled AutoMantPro release')\"",
+    "postinstall": "node release-check.mjs install && prisma generate --schema=packages/api/prisma/schema.prisma",
+    "build": "node release-check.mjs build",
+    "diagnose": "node release-check.mjs start",
     "start": "node server.mjs",
     "dev": "node server.mjs",
     "serve": "node server.mjs",
