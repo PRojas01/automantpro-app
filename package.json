@@ -4,11 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "postinstall": "prisma generate --schema=packages/api/prisma/schema.prisma || true",
-    "build": "echo prebuilt",
+    "postinstall": "prisma generate --schema=packages/api/prisma/schema.prisma",
+    "build": "node -e \"console.log('Precompiled AutoMantPro release')\"",
     "start": "node server.mjs",
     "dev": "node server.mjs",
-    "serve": "node server.mjs"
+    "serve": "node server.mjs",
+    "db:deploy": "node schema.mjs",
+    "db:backup": "node packages/api/scripts/backup-mysql.mjs",
+    "db:backup:github": "node packages/api/scripts/backup-github.mjs",
+    "db:restore:github": "node packages/api/scripts/restore-github-backup.mjs"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
@@ -19,5 +23,8 @@
   "workspaces": [
     "packages/api",
     "packages/agent"
-  ]
+  ],
+  "engines": {
+    "node": ">=22 <23"
+  }
 }

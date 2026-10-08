@@ -17,14 +17,17 @@ export declare class AgentOrchestrator {
     private readonly toolCallStore;
     private readonly quota;
     private cycle;
+    private contextSheet;
     private adapterOverride;
     private configOverride;
     constructor(provider?: ProviderKind);
+    setContextSheet(context: string): void;
     setConfig(config: GatewayConfig): void;
     setLLMProvider(provider: LLMProvider): void;
     registerTool(name: string, handler: ToolHandler): void;
     getRegisteredTools(): string[];
     handleIncoming(sessionId: string, userMessage: string): Promise<string>;
+    restoreSession(sessionId: string, messages: SystemMessage[]): void;
     getSessionMessages(sessionId: string): SystemMessage[];
     clearSession(sessionId: string): void;
     getUsage(): ReturnType<InMemoryUsageStore["list"]>;

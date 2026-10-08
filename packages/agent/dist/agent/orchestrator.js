@@ -14,12 +14,29 @@ export class AgentOrchestrator {
     toolCallStore = new InMemoryToolCallStore();
     quota = new InMemoryQuotaStore();
     cycle = null;
+    contextSheet;
     adapterOverride = null;
     configOverride = null;
     constructor(provider = "mock") {
         this.providerKind = provider;
-        this.registerDefaultTools();
+        if (process.env.NODE_ENV === "production") {
+            if (provider === "mock")
+                throw new Error("Mock agent is disabled in production");
+            // Real handlers must be registered explicitly by the application.
+            for (const tool of AGENT_TOOLS) {
+                this.toolHandlers.set(tool.name, async () => ({
+                    toolName: tool.name,
+                    success: false,
+                    data: null,
+                    error: "Servicio todavía no disponible. Solicita atención de un operador; no se ha realizado ninguna operación.",
+                }));
+            }
+        }
+        else {
+            this.registerDefaultTools();
+        }
     }
+    setContextSheet(context) { this.contextSheet = context; }
     setConfig(config) {
         this.configOverride = config;
         this.cycle = null;
@@ -40,6 +57,8 @@ export class AgentOrchestrator {
             session = { messages: [], firstMessage: true };
             this.sessions.set(sessionId, session);
         }
+        // Bound provider context and retained conversation memory.
+        session.messages = session.messages.slice(-20);
         const priorTurns = [...session.messages];
         if (session.firstMessage) {
             session.firstMessage = false;
@@ -57,6 +76,10 @@ export class AgentOrchestrator {
         const reply = result.content ?? "¿En qué puedo ayudarte?";
         session.messages.push({ role: "assistant", content: reply });
         return reply;
+    }
+    restoreSession(sessionId, messages) {
+        const recent = messages.slice(-20).map(({ role, content }) => ({ role, content }));
+        this.sessions.set(sessionId, { messages: recent, firstMessage: recent.length === 0 });
     }
     getSessionMessages(sessionId) {
         return this.sessions.get(sessionId)?.messages ?? [];
@@ -97,6 +120,7 @@ export class AgentOrchestrator {
             turns: priorTurns,
             userMessage,
             tools: AGENT_TOOLS,
+            contextSheet: this.contextSheet,
         };
         return cycle.run(params);
     }

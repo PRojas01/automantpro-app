@@ -583,3 +583,115 @@ model Quote {
   @@unique([requestId, storeId])
   @@index([storeId, status])
 }
+
+// Durable API turns and user-confirmed agent proposals. Identity is checked against User
+// in the application transaction; history is retained independently of account deletion.
+model AgentTurn {
+  id          String   @id
+  userId      String
+  fingerprint String   @db.VarChar(64)
+  response    Json?
+  createdAt   DateTime @default(now())
+  @@index([userId, createdAt])
+}
+
+model AgentAction {
+  id        String   @id
+  userId    String
+  turnId    String
+  kind      String   @db.VarChar(30)
+  args      Json
+  result    Json?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  @@index([userId, expiresAt])
+  @@index([turnId])
+}
+
+// Provider ingress; lease token fences stale workers after recovery.
+model InboundWebhook {
+  wamid String @id @db.VarChar(191)
+  phone String @db.VarChar(32)
+  payload Json
+  status String @default("queued") @db.VarChar(20)
+  attempts Int @default(0)
+  nextAttemptAt DateTime @default(now()) @db.DateTime(3)
+  leaseToken String? @db.VarChar(36)
+  lockedAt DateTime? @db.DateTime(3)
+  completedAt DateTime? @db.DateTime(3)
+  lastError String? @db.VarChar(191)
+  createdAt DateTime @default(now()) @db.DateTime(3)
+  updatedAt DateTime @default(now()) @db.DateTime(3)
+  @@index([status, nextAttemptAt], map: "InboundWebhook_queue_idx")
+}
+
+model LocalRequest {
+ id String @id @db.VarChar(191)
+ ownerId String @db.VarChar(191)
+ vehicleId String @db.VarChar(191)
+ kind String @db.VarChar(20)
+ category String @db.VarChar(120)
+ description String @db.Text
+ city String @db.VarChar(120)
+ zone String @db.VarChar(120)
+ status String @default("open") @db.VarChar(20)
+ chosenOfferId String? @db.VarChar(191)
+ expiresAt DateTime @db.DateTime(3)
+ createdAt DateTime @default(now()) @db.DateTime(3)
+ @@index([ownerId, status], map: "LocalRequest_owner_idx")
+}
+model LocalOffer {
+ id String @id @db.VarChar(191)
+ requestId String @db.VarChar(191)
+ businessId String @db.VarChar(191)
+ businessUserId String @db.VarChar(191)
+ businessName String @db.VarChar(191)
+ status String @default("invited") @db.VarChar(20)
+ priceUsd Decimal? @db.Decimal(10,2)
+ durationMin Int?
+ proposedAt DateTime? @db.DateTime(3)
+ notes String? @db.VarChar(300)
+ createdAt DateTime @default(now()) @db.DateTime(3)
+ @@unique([requestId,businessId], map: "LocalOffer_request_business_key")
+ @@index([businessUserId,status], map: "LocalOffer_business_idx")
+}
+model NotificationOutbox {
+ id String @id @db.VarChar(191)
+ dedupKey String @unique @db.VarChar(191)
+ recipientUserId String @db.VarChar(191)
+ kind String @db.VarChar(40)
+ payload Json
+ status String @default("pending") @db.VarChar(20)
+ createdAt DateTime @default(now()) @db.DateTime(3)
+ @@index([status,createdAt], map: "NotificationOutbox_status_idx")
+}
+model LocalCommandReceipt {
+ id String @id @db.VarChar(191)
+ userId String @db.VarChar(191)
+ fingerprint String @db.VarChar(64)
+ response Json
+ createdAt DateTime @default(now()) @db.DateTime(3)
+}
+
+model LocalAgentReply {
+ wamid String @id @db.VarChar(191)
+ userId String @db.VarChar(191)
+ leaseToken String @db.VarChar(36)
+ message String @db.Text
+ channel String @db.VarChar(20)
+ executedCommand Boolean @default(false)
+ createdAt DateTime @default(now()) @db.DateTime(3)
+ @@index([userId,createdAt], map: "LocalAgentReply_user_idx")
+}
+model WhatsAppIdentity {
+ userId String @id @db.VarChar(191)
+ phone String @unique @db.VarChar(32)
+ confirmedAt DateTime @default(now()) @db.DateTime(3)
+}
+model WhatsAppLinkCode {
+ codeHash String @id @db.VarChar(64)
+ userId String @db.VarChar(191)
+ expiresAt DateTime @db.DateTime(3)
+ usedAt DateTime? @db.DateTime(3)
+ @@index([userId], map: "WhatsAppLinkCode_user_idx")
+}

@@ -1,7 +1,7 @@
 export const AGENT_TOOLS = [
     {
         name: "register_vehicle",
-        description: "Registra un vehículo nuevo en el sistema con marca, modelo, año y kilometraje. Retorna un ID de vehículo.",
+        description: "Prepara una propuesta para registrar un vehículo. No lo guarda: el usuario debe revisar los datos y confirmar por el control de la aplicación. Nunca afirmes que ya está registrado.",
         parameters: {
             type: "object",
             properties: {
@@ -10,8 +10,11 @@ export const AGENT_TOOLS = [
                 year: { type: "number", description: "Año del vehículo" },
                 mileage: { type: "number", description: "Kilometraje actual en km" },
                 plate: { type: "string", description: "Placa del vehículo (opcional)" },
+                vehicleClass: { type: "string", description: "Identificador de clase del catálogo de vehículos" },
+                fuel: { type: "string", description: "Identificador de combustible del catálogo" },
+                usageProfile: { type: "string", enum: ["urbano", "carretera", "severo"] },
             },
-            required: ["brand", "model", "year", "mileage"],
+            required: ["brand", "model", "year", "mileage", "vehicleClass", "fuel", "usageProfile"],
         },
     },
     {
@@ -32,7 +35,7 @@ export const AGENT_TOOLS = [
     },
     {
         name: "get_maintenance_plan",
-        description: "Genera un plan de mantenimiento personalizado según kilometraje y recomendaciones del fabricante.",
+        description: "Consulta el plan del catálogo de mantenimiento para un vehículo registrado del usuario. No equivale a un manual específico del fabricante.",
         parameters: {
             type: "object",
             properties: {
@@ -42,7 +45,7 @@ export const AGENT_TOOLS = [
                 year: { type: "number" },
                 mileage: { type: "number" },
             },
-            required: ["brand", "model", "year", "mileage"],
+            required: ["vehicleId"],
         },
     },
     {

@@ -1,11 +1,8 @@
 {
   "name": "@automantpro/api",
   "version": "0.1.0",
-  "type": "module",
   "private": true,
-  "scripts": {
-    "postinstall": "prisma generate --schema=prisma/schema.prisma"
-  },
+  "type": "module",
   "dependencies": {
     "@automantpro/agent": "0.1.0",
     "@fastify/cors": "^11.0.1",
