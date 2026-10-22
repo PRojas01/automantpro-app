@@ -97,6 +97,8 @@ export interface CycleResult {
     pendingConfirmation: PendingToolCall[];
     usage: LlmUsageRecord[];
     fallbackReason?: FallbackReason;
+    /** Señales de seguridad (intento de manipulación en la entrada, fuga o enlace externo en la salida). */
+    securitySignals?: string[];
 }
 export interface CircuitBreaker {
     isOpen(): boolean;

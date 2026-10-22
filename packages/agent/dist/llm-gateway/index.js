@@ -4,6 +4,7 @@ export { OpenAIAdapter } from "./adapters/openai.js";
 export { AnthropicAdapter } from "./adapters/anthropic.js";
 export { MockLLMAdapter, fromLegacyProvider } from "./adapters/mock.js";
 export { redactPii, redactJsonArgs } from "./redact.js";
+export { sanitizeUntrusted, detectInjection, guardOutput, sanitizeToolData, INJECTION_NOTICE, SAFE_REFUSAL } from "./guard.js";
 export { CallCycle, ProviderCircuitBreaker } from "./call-cycle.js";
 export { buildFallbackResponse } from "./fallback.js";
 export { isToolAllowedForAgent, AGENT_TOOL_WHITELIST } from "./authorization.js";

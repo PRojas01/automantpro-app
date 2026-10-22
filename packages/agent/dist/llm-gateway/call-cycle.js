@@ -3,6 +3,7 @@ import { buildConfig } from "./config.js";
 import { buildFallbackResponse } from "./fallback.js";
 import { redactPii, redactJsonArgs } from "./redact.js";
 import { isToolAllowedForAgent } from "./authorization.js";
+import { detectInjection, guardOutput, INJECTION_NOTICE, sanitizeToolData, sanitizeUntrusted } from "./guard.js";
 const INPUT_USD_PER_M = 2;
 const OUTPUT_USD_PER_M = 6;
 const REPAIR_INSTRUCTION = "Tu respuesta anterior no fue un JSON válido para el esquema esperado. Corrige y devuelve únicamente el JSON válido que cumpla el esquema, sin texto adicional.";
@@ -75,6 +76,7 @@ export class CallCycle {
     async buildMessages(params) {
         const prompt = await this.deps.promptStore.getPrompt(params.agent);
         const sections = [prompt];
+        const inputSignals = params.userMessage ? detectInjection(params.userMessage).signals : [];
         if (params.contextSheet)
             sections.push(`Ficha de contexto:\n${params.contextSheet}`);
         if (params.summary)
@@ -82,16 +84,18 @@ export class CallCycle {
         if (params.schema) {
             sections.push("Devuelve únicamente un JSON válido que cumpla el esquema solicitado, sin texto adicional.");
         }
+        if (inputSignals.length > 0)
+            sections.push(INJECTION_NOTICE);
         const systemContent = sections.join("\n\n");
         const messages = [{ role: "system", content: systemContent }];
         for (const turn of params.turns ?? []) {
-            const content = turn.role === "user" ? redactPii(turn.content) : turn.content;
+            const content = turn.role === "user" ? redactPii(sanitizeUntrusted(turn.content)) : turn.content;
             messages.push({ role: turn.role, content, tool_call_id: turn.tool_call_id });
         }
         if (params.userMessage) {
-            messages.push({ role: "user", content: redactPii(params.userMessage) });
+            messages.push({ role: "user", content: redactPii(sanitizeUntrusted(params.userMessage)) });
         }
-        return messages;
+        return { messages, prompt, inputSignals };
     }
     toGatewayParams(params, messages) {
         return {
@@ -254,7 +258,8 @@ export class CallCycle {
                 serialized: JSON.stringify({
                     name,
                     success: result.success,
-                    data: result.data,
+                    // Los resultados traen textos que escriben usuarios (nombres de talleres, notas): se limpian.
+                    data: sanitizeToolData(result.data),
                     error: result.error ?? null,
                 }),
             });
@@ -282,7 +287,7 @@ export class CallCycle {
         }
         if (this.circuit.isOpen())
             return emptyResult("fallback", "circuit_open");
-        const messages = await this.buildMessages(params);
+        const { messages, prompt, inputSignals } = await this.buildMessages(params);
         const defs = new Map((params.tools ?? []).map((t) => [t.name, t]));
         const usages = [];
         const toolCallOutcomes = [];
@@ -339,6 +344,12 @@ export class CallCycle {
             }
             break;
         }
+        const securitySignals = [...inputSignals];
+        if (content && !params.schema) {
+            const checked = guardOutput(content, { systemPrompt: prompt });
+            content = checked.text;
+            securitySignals.push(...checked.signals);
+        }
         return {
             outcome: "ok",
             content,
@@ -346,6 +357,7 @@ export class CallCycle {
             toolCallOutcomes,
             pendingConfirmation,
             usage: usages,
+            ...(securitySignals.length ? { securitySignals } : {}),
         };
     }
 }

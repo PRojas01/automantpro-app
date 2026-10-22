@@ -21996,9 +21996,33 @@ var FLEET_STATEMENTS = [
   { kind: "addForeignKey", target: "VehicleExpense.VehicleExpense_vehicleId_fkey", sql: "ALTER TABLE `VehicleExpense` ADD CONSTRAINT `VehicleExpense_vehicleId_fkey` FOREIGN KEY (`vehicleId`) REFERENCES `Vehicle` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" }
 ];
 
+// packages/api/src/infrastructure/schema-setup/billing-statements.ts
+var T2 = "CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+var addColumn2 = (table, column, definition) => ({
+  kind: "addColumn",
+  target: `${table}.${column}`,
+  sql: `ALTER TABLE \`${table}\` ADD COLUMN \`${column}\` ${definition}`
+});
+var BILLING_TABLES = ["PlanOffer", "PaymentAccount"];
+var BILLING_STATEMENTS = [
+  { kind: "createTable", target: "PlanOffer", sql: `CREATE TABLE IF NOT EXISTS \`PlanOffer\` (\`key\` VARCHAR(40) PRIMARY KEY, data JSON NOT NULL, updatedBy VARCHAR(191) NULL, updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)) ${T2}` },
+  { kind: "createTable", target: "PaymentAccount", sql: `CREATE TABLE IF NOT EXISTS \`PaymentAccount\` (id VARCHAR(191) PRIMARY KEY, bank VARCHAR(80) NOT NULL, accountType VARCHAR(20) NOT NULL, number VARCHAR(30) NOT NULL, holder VARCHAR(120) NOT NULL, holderId VARCHAR(13) NOT NULL, active BOOLEAN NOT NULL DEFAULT TRUE, createdBy VARCHAR(191) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)) ${T2}` },
+  addColumn2("Subscription", "period", "VARCHAR(10) NULL"),
+  addColumn2("Subscription", "units", "INTEGER NULL"),
+  addColumn2("Subscription", "subtotalUsd", "DECIMAL(10, 2) NULL"),
+  addColumn2("Subscription", "ivaUsd", "DECIMAL(10, 2) NULL"),
+  addColumn2("Subscription", "invoiceNumber", "VARCHAR(40) NULL"),
+  addColumn2("Subscription", "source", "VARCHAR(20) NULL"),
+  addColumn2("Subscription", "reportedAt", "DATETIME(3) NULL"),
+  addColumn2("Subscription", "renewalNoticeAt", "DATETIME(3) NULL"),
+  addColumn2("Subscription", "expiryNoticeAt", "DATETIME(3) NULL"),
+  { kind: "createIndex", target: "Subscription.Subscription_number_idx", sql: "CREATE INDEX `Subscription_number_idx` ON `Subscription`(`number`)" },
+  { kind: "createIndex", target: "Subscription.Subscription_status_expiresAt_idx", sql: "CREATE INDEX `Subscription_status_expiresAt_idx` ON `Subscription`(`status`, `expiresAt`)" }
+];
+
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS];
-var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS];
+var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));
   if (env.DATABASE_URL?.trim()) {
