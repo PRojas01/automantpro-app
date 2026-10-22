@@ -22020,9 +22020,17 @@ var BILLING_STATEMENTS = [
   { kind: "createIndex", target: "Subscription.Subscription_status_expiresAt_idx", sql: "CREATE INDEX `Subscription_status_expiresAt_idx` ON `Subscription`(`status`, `expiresAt`)" }
 ];
 
+// packages/api/src/infrastructure/schema-setup/map-statements.ts
+var MAP_TABLES = [];
+var MAP_STATEMENTS = [
+  { kind: "addColumn", target: "Shop.mapListed", sql: "ALTER TABLE `Shop` ADD COLUMN `mapListed` BOOLEAN NOT NULL DEFAULT FALSE" },
+  { kind: "addColumn", target: "Shop.mapConsentAt", sql: "ALTER TABLE `Shop` ADD COLUMN `mapConsentAt` DATETIME(3) NULL" },
+  { kind: "addColumn", target: "Shop.mapPrecision", sql: "ALTER TABLE `Shop` ADD COLUMN `mapPrecision` VARCHAR(10) NOT NULL DEFAULT 'exacta'" }
+];
+
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS];
-var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS];
+var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));
   if (env.DATABASE_URL?.trim()) {

@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='1754a71b54fa61dc0a431682d771baa78deb7d24'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='1a74e3c03427af95893003ab0174b4e7923166d8'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -15,15 +15,15 @@ var __esm = (fn, res, err) => function __init() {
   if (err) throw err[0];
   try {
     return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
-  } catch (e7) {
-    throw err = [e7], e7;
+  } catch (e8) {
+    throw err = [e8], e8;
   }
 };
 var __commonJS = (cb, mod) => function __require2() {
   try {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-  } catch (e7) {
-    throw mod = 0, e7;
+  } catch (e8) {
+    throw mod = 0, e8;
   }
 };
 var __export = (target, all) => {
@@ -810,7 +810,7 @@ var require_plugin = __commonJS({
         debug("exec: resolving promise", name);
         maybePromiseLike.then(
           () => process.nextTick(done),
-          (e7) => process.nextTick(done, e7)
+          (e8) => process.nextTick(done, e8)
         );
       } else if (func.length < 3) {
         done();
@@ -1420,7 +1420,7 @@ var require_avvio = __commonJS({
           debug("resolving close/onClose promise");
           promise.then(
             () => process.nextTick(cb),
-            (e7) => process.nextTick(cb, e7)
+            (e8) => process.nextTick(cb, e8)
           );
         } else {
           process.nextTick(cb);
@@ -2454,8 +2454,8 @@ var require_hooks = __commonJS({
         if (fn.length === 1) {
           try {
             fn.call(server2, done);
-          } catch (e7) {
-            done(e7);
+          } catch (e8) {
+            done(e8);
           }
           return;
         }
@@ -5680,7 +5680,7 @@ var require_initial_config_validation = __commonJS({
     function validateInitialConfig(options) {
       const opts = deepClone(options);
       if (!validate(opts)) {
-        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e7) => e7.message)));
+        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e8) => e8.message)));
         error.errors = validate.errors;
         throw error;
       }
@@ -6910,7 +6910,7 @@ var require_quick_format_unescaped = __commonJS({
     function tryStringify(o) {
       try {
         return JSON.stringify(o);
-      } catch (e7) {
+      } catch (e8) {
         return '"[Circular]"';
       }
     }
@@ -7684,18 +7684,18 @@ var require_on_exit_leak_free = __commonJS({
       callRefs("beforeExit");
     }
     function callRefs(event) {
-      for (const ref3 of refs[event]) {
-        const obj = ref3.deref();
-        const fn = ref3.fn;
+      for (const ref4 of refs[event]) {
+        const obj = ref4.deref();
+        const fn = ref4.fn;
         if (obj !== void 0) {
           fn(obj, event);
         }
       }
       refs[event] = [];
     }
-    function clear(ref3) {
+    function clear(ref4) {
       for (const event of ["exit", "beforeExit"]) {
-        const index = refs[event].indexOf(ref3);
+        const index = refs[event].indexOf(ref4);
         refs[event].splice(index, index + 1);
         uninstall(event);
       }
@@ -7705,11 +7705,11 @@ var require_on_exit_leak_free = __commonJS({
         throw new Error("the object can't be undefined");
       }
       install(event);
-      const ref3 = new WeakRef(obj);
-      ref3.fn = fn;
+      const ref4 = new WeakRef(obj);
+      ref4.fn = fn;
       ensureRegistry();
-      registry.register(obj, ref3);
-      refs[event].push(ref3);
+      registry.register(obj, ref4);
+      refs[event].push(ref4);
     }
     function register2(obj, fn) {
       _register("exit", obj, fn);
@@ -7723,8 +7723,8 @@ var require_on_exit_leak_free = __commonJS({
       }
       registry.unregister(obj);
       for (const event of ["exit", "beforeExit"]) {
-        refs[event] = refs[event].filter((ref3) => {
-          const _obj = ref3.deref();
+        refs[event] = refs[event].filter((ref4) => {
+          const _obj = ref4.deref();
           return _obj && _obj !== obj;
         });
         uninstall(event);
@@ -8703,14 +8703,14 @@ var require_tools = __commonJS({
       }
       return point < 32 ? JSON.stringify(str8) : '"' + result + '"';
     }
-    function asJson(obj, msg, num4, time3) {
+    function asJson(obj, msg, num5, time3) {
       if (asJsonChan.hasSubscribers === false) {
-        return _asJson.call(this, obj, msg, num4, time3);
+        return _asJson.call(this, obj, msg, num5, time3);
       }
       const store = { instance: this, arguments };
-      return asJsonChan.traceSync(_asJson, store, this, obj, msg, num4, time3);
+      return asJsonChan.traceSync(_asJson, store, this, obj, msg, num5, time3);
     }
-    function _asJson(obj, msg, num4, time3) {
+    function _asJson(obj, msg, num5, time3) {
       const stringify2 = this[stringifySym];
       const stringifySafe = this[stringifySafeSym];
       const stringifiers = this[stringifiersSym];
@@ -8720,7 +8720,7 @@ var require_tools = __commonJS({
       const formatters = this[formattersSym];
       const messageKey = this[messageKeySym];
       const errorKey = this[errorKeySym];
-      let data2 = this[lsCacheSym][num4] + time3;
+      let data2 = this[lsCacheSym][num5] + time3;
       data2 = data2 + chindings;
       let value2;
       if (formatters.log) {
@@ -8985,7 +8985,7 @@ var require_levels = __commonJS({
           if (typeof stream.flushSync === "function") {
             try {
               stream.flushSync();
-            } catch (e7) {
+            } catch (e8) {
             }
           }
         };
@@ -9345,7 +9345,7 @@ var require_proto = __commonJS({
     function defaultMixinMergeStrategy(mergeObject, mixinObject) {
       return Object.assign(mixinObject, mergeObject);
     }
-    function write(_obj, msg, num4) {
+    function write(_obj, msg, num5) {
       const t = this[timeSym]();
       const mixin = this[mixinSym];
       const errorKey = this[errorKeySym];
@@ -9367,12 +9367,12 @@ var require_proto = __commonJS({
         }
       }
       if (mixin) {
-        obj = mixinMergeStrategy(obj, mixin(obj, num4, this));
+        obj = mixinMergeStrategy(obj, mixin(obj, num5, this));
       }
-      const s = this[asJsonSym](obj, msg, num4, t);
+      const s = this[asJsonSym](obj, msg, num5, t);
       const stream = this[streamSym];
       if (stream[needsMetadataGsym] === true) {
-        stream.lastLevel = num4;
+        stream.lastLevel = num5;
         stream.lastObj = obj;
         stream.lastMsg = msg;
         stream.lastTime = t.slice(this[timeSliceIndexSym]);
@@ -10734,13 +10734,13 @@ var require_serializer = __commonJS({
         return "" + integer;
       }
       asNumber(i) {
-        const num4 = Number(i);
-        if (num4 !== num4) {
+        const num5 = Number(i);
+        if (num5 !== num5) {
           throw new Error(`The value "${i}" cannot be converted to a number.`);
-        } else if (num4 === Infinity || num4 === -Infinity) {
+        } else if (num5 === Infinity || num5 === -Infinity) {
           return "null";
         } else {
-          return "" + num4;
+          return "" + num5;
         }
       }
       asBoolean(bool2) {
@@ -11634,9 +11634,9 @@ var require_reply = __commonJS({
         } else {
           payload = serialize(reply[kRouteContext], payload, reply.raw.statusCode, reply[kReplyHeaders]["content-type"]);
         }
-      } catch (e7) {
-        wrapSerializationError(e7, reply);
-        onErrorHook(reply, e7);
+      } catch (e8) {
+        wrapSerializationError(e8, reply);
+        onErrorHook(reply, e8);
         return;
       }
       onSendHook(reply, payload);
@@ -12152,10 +12152,10 @@ var require_ipaddr = __commonJS({
           string = string.slice(0, -1);
         }
         parts = (function() {
-          const ref3 = string.split(":");
+          const ref4 = string.split(":");
           const results = [];
-          for (let i = 0; i < ref3.length; i++) {
-            results.push(ref3[i].length > 4 ? NaN : parseInt(ref3[i], 16));
+          for (let i = 0; i < ref4.length; i++) {
+            results.push(ref4[i].length > 4 ? NaN : parseInt(ref4[i], 16));
           }
           return results;
         })();
@@ -12257,11 +12257,11 @@ var require_ipaddr = __commonJS({
           return "ipv4";
         };
         IPv4.prototype.match = function(other, cidrRange) {
-          let ref3;
+          let ref4;
           if (cidrRange === void 0) {
-            ref3 = other;
-            other = ref3[0];
-            cidrRange = ref3[1];
+            ref4 = other;
+            other = ref4[0];
+            cidrRange = ref4[1];
           }
           if (other.kind() !== "ipv4") {
             throw new Error("ipaddr: cannot match ipv4 address with non-ipv4 one");
@@ -12329,8 +12329,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e7) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e7 });
+        } catch (e8) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e8 });
         }
       };
       ipaddr.IPv4.isIPv4 = function(string) {
@@ -12379,8 +12379,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e7) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e7 });
+        } catch (e8) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e8 });
         }
       };
       ipaddr.IPv4.parse = function(string) {
@@ -12410,10 +12410,10 @@ var require_ipaddr = __commonJS({
         let match, part, value2;
         if (match = string.match(ipv4Regexes.fourOctet)) {
           return (function() {
-            const ref3 = match.slice(1, 6);
+            const ref4 = match.slice(1, 6);
             const results = [];
-            for (let i = 0; i < ref3.length; i++) {
-              part = ref3[i];
+            for (let i = 0; i < ref4.length; i++) {
+              part = ref4[i];
               results.push(parseIntAuto(part));
             }
             return results;
@@ -12433,13 +12433,13 @@ var require_ipaddr = __commonJS({
           })().reverse();
         } else if (match = string.match(ipv4Regexes.twoOctet)) {
           return (function() {
-            const ref3 = match.slice(1, 4);
+            const ref4 = match.slice(1, 4);
             const results = [];
-            value2 = parseIntAuto(ref3[1]);
+            value2 = parseIntAuto(ref4[1]);
             if (value2 > 16777215 || value2 < 0) {
               throw new Error("ipaddr: address outside defined range");
             }
-            results.push(parseIntAuto(ref3[0]));
+            results.push(parseIntAuto(ref4[0]));
             results.push(value2 >> 16 & 255);
             results.push(value2 >> 8 & 255);
             results.push(value2 & 255);
@@ -12447,14 +12447,14 @@ var require_ipaddr = __commonJS({
           })();
         } else if (match = string.match(ipv4Regexes.threeOctet)) {
           return (function() {
-            const ref3 = match.slice(1, 5);
+            const ref4 = match.slice(1, 5);
             const results = [];
-            value2 = parseIntAuto(ref3[2]);
+            value2 = parseIntAuto(ref4[2]);
             if (value2 > 65535 || value2 < 0) {
               throw new Error("ipaddr: address outside defined range");
             }
-            results.push(parseIntAuto(ref3[0]));
-            results.push(parseIntAuto(ref3[1]));
+            results.push(parseIntAuto(ref4[0]));
+            results.push(parseIntAuto(ref4[1]));
             results.push(value2 >> 8 & 255);
             results.push(value2 & 255);
             return results;
@@ -12561,11 +12561,11 @@ var require_ipaddr = __commonJS({
           return "ipv6";
         };
         IPv6.prototype.match = function(other, cidrRange) {
-          let ref3;
+          let ref4;
           if (cidrRange === void 0) {
-            ref3 = other;
-            other = ref3[0];
-            cidrRange = ref3[1];
+            ref4 = other;
+            other = ref4[0];
+            cidrRange = ref4[1];
           }
           if (other.kind() !== "ipv6") {
             throw new Error("ipaddr: cannot match ipv6 address with non-ipv6 one");
@@ -12618,9 +12618,9 @@ var require_ipaddr = __commonJS({
         IPv6.prototype.toByteArray = function() {
           let part;
           const bytes = [];
-          const ref3 = this.parts;
-          for (let i = 0; i < ref3.length; i++) {
-            part = ref3[i];
+          const ref4 = this.parts;
+          for (let i = 0; i < ref4.length; i++) {
+            part = ref4[i];
             bytes.push(part >> 8);
             bytes.push(part & 255);
           }
@@ -12644,9 +12644,9 @@ var require_ipaddr = __commonJS({
           if (!this.isIPv4MappedAddress()) {
             throw new Error("ipaddr: trying to convert a generic ipv6 address to ipv4");
           }
-          const ref3 = this.parts.slice(-2);
-          const high = ref3[0];
-          const low = ref3[1];
+          const ref4 = this.parts.slice(-2);
+          const high = ref4[0];
+          const low = ref4[1];
           return new ipaddr.IPv4([high >> 8, high & 255, low >> 8, low & 255]);
         };
         IPv6.prototype.toNormalizedString = function() {
@@ -12705,8 +12705,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e7) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e7 });
+        } catch (e8) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e8 });
         }
       };
       ipaddr.IPv6.isIPv6 = function(string) {
@@ -12748,8 +12748,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e7) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e7 });
+        } catch (e8) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e8 });
         }
       };
       ipaddr.IPv6.parse = function(string) {
@@ -12861,8 +12861,8 @@ var require_ipaddr = __commonJS({
         } catch {
           try {
             return ipaddr.IPv4.parseCIDR(string);
-          } catch (e7) {
-            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e7 });
+          } catch (e8) {
+            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e8 });
           }
         }
       };
@@ -13481,13 +13481,13 @@ var require_context = __commonJS({
       this.server = server;
     }
     function defaultSchemaErrorFormatter(errors, dataVar) {
-      let text8 = "";
+      let text9 = "";
       const separator = ", ";
       for (let i = 0; i !== errors.length; ++i) {
-        const e7 = errors[i];
-        text8 += dataVar + (e7.instancePath || "") + " " + e7.message + separator;
+        const e8 = errors[i];
+        text9 += dataVar + (e8.instancePath || "") + " " + e8.message + separator;
       }
-      return new Error(text8.slice(0, -separator.length));
+      return new Error(text9.slice(0, -separator.length));
     }
     module.exports = Context;
   }
@@ -13500,20 +13500,20 @@ var require_secure_json_parse = __commonJS({
     var hasBuffer = typeof Buffer !== "undefined";
     var suspectProtoRx = /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
     var suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
-    function _parse(text8, reviver, options) {
+    function _parse(text9, reviver, options) {
       if (options == null) {
         if (reviver !== null && typeof reviver === "object") {
           options = reviver;
           reviver = void 0;
         }
       }
-      if (hasBuffer && Buffer.isBuffer(text8)) {
-        text8 = text8.toString();
+      if (hasBuffer && Buffer.isBuffer(text9)) {
+        text9 = text9.toString();
       }
-      if (text8 && text8.charCodeAt(0) === 65279) {
-        text8 = text8.slice(1);
+      if (text9 && text9.charCodeAt(0) === 65279) {
+        text9 = text9.slice(1);
       }
-      const obj = JSON.parse(text8, reviver);
+      const obj = JSON.parse(text9, reviver);
       if (obj === null || typeof obj !== "object") {
         return obj;
       }
@@ -13523,15 +13523,15 @@ var require_secure_json_parse = __commonJS({
         return obj;
       }
       if (protoAction !== "ignore" && constructorAction !== "ignore") {
-        if (suspectProtoRx.test(text8) === false && suspectConstructorRx.test(text8) === false) {
+        if (suspectProtoRx.test(text9) === false && suspectConstructorRx.test(text9) === false) {
           return obj;
         }
       } else if (protoAction !== "ignore" && constructorAction === "ignore") {
-        if (suspectProtoRx.test(text8) === false) {
+        if (suspectProtoRx.test(text9) === false) {
           return obj;
         }
       } else {
-        if (suspectConstructorRx.test(text8) === false) {
+        if (suspectConstructorRx.test(text9) === false) {
           return obj;
         }
       }
@@ -13569,20 +13569,20 @@ var require_secure_json_parse = __commonJS({
       }
       return obj;
     }
-    function parse(text8, reviver, options) {
+    function parse(text9, reviver, options) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text8, reviver, options);
+        return _parse(text9, reviver, options);
       } finally {
         Error.stackTraceLimit = stackTraceLimit;
       }
     }
-    function safeParse(text8, reviver) {
+    function safeParse(text9, reviver) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text8, reviver, { safe: true });
+        return _parse(text9, reviver, { safe: true });
       } catch {
         return void 0;
       } finally {
@@ -14480,17 +14480,17 @@ var require_codegen = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e7 = this.else;
-        if (e7) {
-          const ns = e7.optimizeNodes();
-          e7 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e8 = this.else;
+        if (e8) {
+          const ns = e8.optimizeNodes();
+          e8 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e7) {
+        if (e8) {
           if (cond === false)
-            return e7 instanceof _If ? e7 : e7.nodes;
+            return e8 instanceof _If ? e8 : e8.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e7 instanceof _If ? [e7] : e7.nodes);
+          return new _If(not(cond), e8 instanceof _If ? [e8] : e8.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -14934,8 +14934,8 @@ var require_codegen = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e7) {
-        return e7 instanceof code_1._Code && e7._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e8) {
+        return e8 instanceof code_1._Code && e8._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -15803,7 +15803,7 @@ var require_keyword = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e7) => gen.assign(valid, false).if((0, codegen_1._)`${e7} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e7}.errors`), () => gen.throw(e7)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e8) => gen.assign(valid, false).if((0, codegen_1._)`${e8} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e8}.errors`), () => gen.throw(e8)));
         return ruleErrs;
       }
       function validateSync() {
@@ -16190,26 +16190,26 @@ var require_resolve = __commonJS({
         addAnchor.call(this, sch.$anchor);
         addAnchor.call(this, sch.$dynamicAnchor);
         baseIds[jsonPtr] = innerBaseId;
-        function addRef(ref3) {
+        function addRef(ref4) {
           const _resolve = this.opts.uriResolver.resolve;
-          ref3 = normalizeId(innerBaseId ? _resolve(innerBaseId, ref3) : ref3);
-          if (schemaRefs.has(ref3))
-            throw ambiguos(ref3);
-          schemaRefs.add(ref3);
-          let schOrRef = this.refs[ref3];
+          ref4 = normalizeId(innerBaseId ? _resolve(innerBaseId, ref4) : ref4);
+          if (schemaRefs.has(ref4))
+            throw ambiguos(ref4);
+          schemaRefs.add(ref4);
+          let schOrRef = this.refs[ref4];
           if (typeof schOrRef == "string")
             schOrRef = this.refs[schOrRef];
           if (typeof schOrRef == "object") {
-            checkAmbiguosRef(sch, schOrRef.schema, ref3);
-          } else if (ref3 !== normalizeId(fullPath)) {
-            if (ref3[0] === "#") {
-              checkAmbiguosRef(sch, localRefs[ref3], ref3);
-              localRefs[ref3] = sch;
+            checkAmbiguosRef(sch, schOrRef.schema, ref4);
+          } else if (ref4 !== normalizeId(fullPath)) {
+            if (ref4[0] === "#") {
+              checkAmbiguosRef(sch, localRefs[ref4], ref4);
+              localRefs[ref4] = sch;
             } else {
-              this.refs[ref3] = fullPath;
+              this.refs[ref4] = fullPath;
             }
           }
-          return ref3;
+          return ref4;
         }
         function addAnchor(anchor) {
           if (typeof anchor == "string") {
@@ -16220,12 +16220,12 @@ var require_resolve = __commonJS({
         }
       });
       return localRefs;
-      function checkAmbiguosRef(sch1, sch2, ref3) {
+      function checkAmbiguosRef(sch1, sch2, ref4) {
         if (sch2 !== void 0 && !equal(sch1, sch2))
-          throw ambiguos(ref3);
+          throw ambiguos(ref4);
       }
-      function ambiguos(ref3) {
-        return new Error(`reference "${ref3}" resolves to more than one schema`);
+      function ambiguos(ref4) {
+        return new Error(`reference "${ref4}" resolves to more than one schema`);
       }
     }
     exports.getSchemaRefs = getSchemaRefs;
@@ -16763,9 +16763,9 @@ var require_ref_error = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     var resolve_1 = require_resolve();
     var MissingRefError = class extends Error {
-      constructor(resolver, baseId, ref3, msg) {
-        super(msg || `can't resolve reference ${ref3} from id ${baseId}`);
-        this.missingRef = (0, resolve_1.resolveUrl)(resolver, baseId, ref3);
+      constructor(resolver, baseId, ref4, msg) {
+        super(msg || `can't resolve reference ${ref4} from id ${baseId}`);
+        this.missingRef = (0, resolve_1.resolveUrl)(resolver, baseId, ref4);
         this.missingSchema = (0, resolve_1.normalizeId)((0, resolve_1.getFullPath)(resolver, this.missingRef));
       }
     };
@@ -16880,33 +16880,33 @@ var require_compile = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e7) {
+      } catch (e8) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e7;
+        throw e8;
       } finally {
         this._compilations.delete(sch);
       }
     }
     exports.compileSchema = compileSchema;
-    function resolveRef(root, baseId, ref3) {
+    function resolveRef(root, baseId, ref4) {
       var _a;
-      ref3 = (0, resolve_1.resolveUrl)(this.opts.uriResolver, baseId, ref3);
-      const schOrFunc = root.refs[ref3];
+      ref4 = (0, resolve_1.resolveUrl)(this.opts.uriResolver, baseId, ref4);
+      const schOrFunc = root.refs[ref4];
       if (schOrFunc)
         return schOrFunc;
-      let _sch = resolve2.call(this, root, ref3);
+      let _sch = resolve2.call(this, root, ref4);
       if (_sch === void 0) {
-        const schema = (_a = root.localRefs) === null || _a === void 0 ? void 0 : _a[ref3];
+        const schema = (_a = root.localRefs) === null || _a === void 0 ? void 0 : _a[ref4];
         const { schemaId } = this.opts;
         if (schema)
           _sch = new SchemaEnv({ schema, schemaId, root, baseId });
       }
       if (_sch === void 0)
         return;
-      return root.refs[ref3] = inlineOrCompile.call(this, _sch);
+      return root.refs[ref4] = inlineOrCompile.call(this, _sch);
     }
     exports.resolveRef = resolveRef;
     function inlineOrCompile(sch) {
@@ -16924,14 +16924,14 @@ var require_compile = __commonJS({
     function sameSchemaEnv(s1, s2) {
       return s1.schema === s2.schema && s1.root === s2.root && s1.baseId === s2.baseId;
     }
-    function resolve2(root, ref3) {
+    function resolve2(root, ref4) {
       let sch;
-      while (typeof (sch = this.refs[ref3]) == "string")
-        ref3 = sch;
-      return sch || this.schemas[ref3] || resolveSchema.call(this, root, ref3);
+      while (typeof (sch = this.refs[ref4]) == "string")
+        ref4 = sch;
+      return sch || this.schemas[ref4] || resolveSchema.call(this, root, ref4);
     }
-    function resolveSchema(root, ref3) {
-      const p = this.opts.uriResolver.parse(ref3);
+    function resolveSchema(root, ref4) {
+      const p = this.opts.uriResolver.parse(ref4);
       const refPath = (0, resolve_1._getFullPath)(this.opts.uriResolver, p);
       let baseId = (0, resolve_1.getFullPath)(this.opts.uriResolver, root.baseId, void 0);
       if (Object.keys(root.schema).length > 0 && refPath === baseId) {
@@ -16949,7 +16949,7 @@ var require_compile = __commonJS({
         return;
       if (!schOrRef.validate)
         compileSchema.call(this, schOrRef);
-      if (id2 === (0, resolve_1.normalizeId)(ref3)) {
+      if (id2 === (0, resolve_1.normalizeId)(ref4)) {
         const { schema } = schOrRef;
         const { schemaId } = this.opts;
         const schId = schema[schemaId];
@@ -17939,8 +17939,8 @@ var require_fast_uri = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e7) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e7;
+        } catch (e8) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e8;
           return true;
         }
       }
@@ -18326,34 +18326,34 @@ var require_core = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e7) {
-            if (!(e7 instanceof ref_error_1.default))
-              throw e7;
-            checkLoaded.call(this, e7);
-            await loadMissingSchema.call(this, e7.missingSchema);
+          } catch (e8) {
+            if (!(e8 instanceof ref_error_1.default))
+              throw e8;
+            checkLoaded.call(this, e8);
+            await loadMissingSchema.call(this, e8.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
-        function checkLoaded({ missingSchema: ref3, missingRef }) {
-          if (this.refs[ref3]) {
-            throw new Error(`AnySchema ${ref3} is loaded but ${missingRef} cannot be resolved`);
+        function checkLoaded({ missingSchema: ref4, missingRef }) {
+          if (this.refs[ref4]) {
+            throw new Error(`AnySchema ${ref4} is loaded but ${missingRef} cannot be resolved`);
           }
         }
-        async function loadMissingSchema(ref3) {
-          const _schema = await _loadSchema.call(this, ref3);
-          if (!this.refs[ref3])
+        async function loadMissingSchema(ref4) {
+          const _schema = await _loadSchema.call(this, ref4);
+          if (!this.refs[ref4])
             await loadMetaSchema.call(this, _schema.$schema);
-          if (!this.refs[ref3])
-            this.addSchema(_schema, ref3, meta);
+          if (!this.refs[ref4])
+            this.addSchema(_schema, ref4, meta);
         }
-        async function _loadSchema(ref3) {
-          const p = this._loading[ref3];
+        async function _loadSchema(ref4) {
+          const p = this._loading[ref4];
           if (p)
             return p;
           try {
-            return await (this._loading[ref3] = loadSchema(ref3));
+            return await (this._loading[ref4] = loadSchema(ref4));
           } finally {
-            delete this._loading[ref3];
+            delete this._loading[ref4];
           }
         }
       }
@@ -18526,7 +18526,7 @@ var require_core = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e7) => `${dataVar}${e7.instancePath} ${e7.message}`).reduce((text8, msg) => text8 + separator + msg);
+        return errors.map((e8) => `${dataVar}${e8.instancePath} ${e8.message}`).reduce((text9, msg) => text9 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -18834,9 +18834,9 @@ var require_ref = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e7) => {
-          gen.if((0, codegen_1._)`!(${e7} instanceof ${it.ValidationError})`, () => gen.throw(e7));
-          addErrorsFrom(e7);
+        }, (e8) => {
+          gen.if((0, codegen_1._)`!(${e8} instanceof ${it.ValidationError})`, () => gen.throw(e8));
+          addErrorsFrom(e8);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -20512,12 +20512,12 @@ var require_discriminator = __commonJS({
           for (let i = 0; i < oneOf.length; i++) {
             let sch = oneOf[i];
             if ((sch === null || sch === void 0 ? void 0 : sch.$ref) && !(0, util_1.schemaHasRulesButRef)(sch, it.self.RULES)) {
-              const ref3 = sch.$ref;
-              sch = compile_1.resolveRef.call(it.self, it.schemaEnv.root, it.baseId, ref3);
+              const ref4 = sch.$ref;
+              sch = compile_1.resolveRef.call(it.self, it.schemaEnv.root, it.baseId, ref4);
               if (sch instanceof compile_1.SchemaEnv)
                 sch = sch.schema;
               if (sch === void 0)
-                throw new ref_error_1.default(it.opts.uriResolver, it.baseId, ref3);
+                throw new ref_error_1.default(it.opts.uriResolver, it.baseId, ref4);
             }
             const propSch = (_a = sch === null || sch === void 0 ? void 0 : sch.properties) === null || _a === void 0 ? void 0 : _a[tagName];
             if (typeof propSch != "object") {
@@ -20830,7 +20830,7 @@ var require_ref2 = __commonJS({
       schemaType: "string",
       code(cxt) {
         (0, metadata_1.checkMetadata)(cxt);
-        const { gen, data: data2, schema: ref3, parentSchema, it } = cxt;
+        const { gen, data: data2, schema: ref4, parentSchema, it } = cxt;
         const { schemaEnv: { root } } = it;
         const valid = gen.name("valid");
         if (parentSchema.nullable) {
@@ -20843,9 +20843,9 @@ var require_ref2 = __commonJS({
         cxt.ok(valid);
         function validateJtdRef() {
           var _a;
-          const refSchema = (_a = root.schema.definitions) === null || _a === void 0 ? void 0 : _a[ref3];
+          const refSchema = (_a = root.schema.definitions) === null || _a === void 0 ? void 0 : _a[ref4];
           if (!refSchema) {
-            throw new ref_error_1.default(it.opts.uriResolver, "", ref3, `No definition ${ref3}`);
+            throw new ref_error_1.default(it.opts.uriResolver, "", ref4, `No definition ${ref4}`);
           }
           if (hasRef(refSchema) || !it.opts.inlineRefs)
             callValidate(refSchema);
@@ -20853,7 +20853,7 @@ var require_ref2 = __commonJS({
             inlineRefSchema(refSchema);
         }
         function callValidate(schema) {
-          const sch = compile_1.compileSchema.call(it.self, new compile_1.SchemaEnv({ schema, root, schemaPath: `/definitions/${ref3}` }));
+          const sch = compile_1.compileSchema.call(it.self, new compile_1.SchemaEnv({ schema, root, schemaPath: `/definitions/${ref4}` }));
           const v = (0, ref_1.getValidate)(cxt, sch);
           const errsCount = gen.const("_errs", names_1.default.errors);
           (0, ref_1.callRef)(cxt, v, sch, sch.$async);
@@ -20866,7 +20866,7 @@ var require_ref2 = __commonJS({
             dataTypes: [],
             schemaPath: codegen_1.nil,
             topSchemaRef: schName,
-            errSchemaPath: `/definitions/${ref3}`
+            errSchemaPath: `/definitions/${ref4}`
           }, valid);
         }
       }
@@ -21682,12 +21682,12 @@ var require_serialize = __commonJS({
         const serialize = makeSerialize(this.scope.get());
         this.scope.value(serializeName, { ref: serialize });
         sch.serialize = serialize;
-      } catch (e7) {
+      } catch (e8) {
         if (sourceCode)
           this.logger.error("Error compiling serializer, function code:", sourceCode);
         delete sch.serialize;
         delete sch.serializeName;
-        throw e7;
+        throw e8;
       } finally {
         this._compilations.delete(sch);
       }
@@ -21834,10 +21834,10 @@ var require_serialize = __commonJS({
     }
     function serializeRef(cxt) {
       const { gen, self: self2, data: data2, definitions, schema, schemaEnv } = cxt;
-      const { ref: ref3 } = schema;
-      const refSchema = definitions[ref3];
+      const { ref: ref4 } = schema;
+      const refSchema = definitions[ref4];
       if (!refSchema)
-        throw new ref_error_1.default(self2.opts.uriResolver, "", ref3, `No definition ${ref3}`);
+        throw new ref_error_1.default(self2.opts.uriResolver, "", ref4, `No definition ${ref4}`);
       if (!(0, ref_1.hasRef)(refSchema))
         return serializeCode({ ...cxt, schema: refSchema });
       const { root } = schemaEnv;
@@ -21876,8 +21876,8 @@ var require_parseJson = __commonJS({
       try {
         parseJson.position = pos + s.length;
         return JSON.parse(s);
-      } catch (e7) {
-        matches = rxParseJson.exec(e7.message);
+      } catch (e8) {
+        matches = rxParseJson.exec(e8.message);
         if (!matches) {
           parseJson.message = "unexpected end";
           return void 0;
@@ -22093,12 +22093,12 @@ var require_parse = __commonJS({
         const parse = makeParse(this.scope.get());
         this.scope.value(parseName, { ref: parse });
         sch.parse = parse;
-      } catch (e7) {
+      } catch (e8) {
         if (sourceCode)
           this.logger.error("Error compiling parser, function code:", sourceCode);
         delete sch.parse;
         delete sch.parseName;
-        throw e7;
+        throw e8;
       } finally {
         this._compilations.delete(sch);
       }
@@ -22332,10 +22332,10 @@ var require_parse = __commonJS({
     }
     function parseRef(cxt) {
       const { gen, self: self2, definitions, schema, schemaEnv } = cxt;
-      const { ref: ref3 } = schema;
-      const refSchema = definitions[ref3];
+      const { ref: ref4 } = schema;
+      const refSchema = definitions[ref4];
       if (!refSchema)
-        throw new ref_error_1.default(self2.opts.uriResolver, "", ref3, `No definition ${ref3}`);
+        throw new ref_error_1.default(self2.opts.uriResolver, "", ref4, `No definition ${ref4}`);
       if (!(0, ref_1.hasRef)(refSchema))
         return parseCode({ ...cxt, schema: refSchema });
       const { root } = schemaEnv;
@@ -23651,8 +23651,8 @@ var require_fast_uri2 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e7) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e7;
+        } catch (e8) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e8;
           return true;
         }
       }
@@ -24049,7 +24049,7 @@ var require_formats = __commonJS({
       try {
         new RegExp(str8);
         return true;
-      } catch (e7) {
+      } catch (e8) {
         return false;
       }
     }
@@ -24534,9 +24534,9 @@ var require_json_schema_ref_resolver = __commonJS({
             rootSchemaId = schemaId;
           }
         }
-        const ref3 = schema.$ref;
-        if (ref3 !== void 0 && typeof ref3 === "string") {
-          const { refSchemaId, refJsonPointer } = this.#parseSchemaRef(ref3, rootSchemaId);
+        const ref4 = schema.$ref;
+        if (ref4 !== void 0 && typeof ref4 === "string") {
+          const { refSchemaId, refJsonPointer } = this.#parseSchemaRef(ref4, rootSchemaId);
           this.#schemas[rootSchemaId].refs.push({
             schemaId: refSchemaId,
             jsonPointer: refJsonPointer
@@ -24572,8 +24572,8 @@ var require_json_schema_ref_resolver = __commonJS({
       }
       getSchemaDependencies(schemaId, dependencies = {}) {
         const schema = this.#schemas[schemaId];
-        for (const ref3 of schema.refs) {
-          const dependencySchemaId = ref3.schemaId;
+        for (const ref4 of schema.refs) {
+          const dependencySchemaId = ref4.schemaId;
           if (dependencySchemaId === schemaId || dependencies[dependencySchemaId] !== void 0) continue;
           dependencies[dependencySchemaId] = this.getSchema(dependencySchemaId);
           this.getSchemaDependencies(dependencySchemaId, dependencies);
@@ -24599,22 +24599,22 @@ var require_json_schema_ref_resolver = __commonJS({
           const schema2 = dependencies[schemaId2];
           this.#addDerefSchema(schema2, schemaId2, true, refs);
         }
-        for (const ref3 of refs) {
+        for (const ref4 of refs) {
           const {
             refSchemaId,
             refJsonPointer
-          } = this.#parseSchemaRef(ref3.ref, ref3.sourceSchemaId);
+          } = this.#parseSchemaRef(ref4.ref, ref4.sourceSchemaId);
           const targetSchema = this.getDerefSchema(refSchemaId, refJsonPointer);
           if (targetSchema === null) {
             throw new Error(
-              `Cannot resolve ref "${ref3.ref}". Ref "${refJsonPointer}" is not found in schema "${refSchemaId}".`
+              `Cannot resolve ref "${ref4.ref}". Ref "${refJsonPointer}" is not found in schema "${refSchemaId}".`
             );
           }
-          ref3.targetSchema = targetSchema;
-          ref3.targetSchemaId = refSchemaId;
+          ref4.targetSchema = targetSchema;
+          ref4.targetSchemaId = refSchemaId;
         }
-        for (const ref3 of refs) {
-          this.#resolveRef(ref3, refs);
+        for (const ref4 of refs) {
+          this.#resolveRef(ref4, refs);
         }
       }
       getDerefSchema(schemaId, jsonPointer = "#") {
@@ -24628,17 +24628,17 @@ var require_json_schema_ref_resolver = __commonJS({
         }
         return getDataByJSONPointer(derefSchema.schema, jsonPointer);
       }
-      #parseSchemaRef(ref3, schemaId) {
-        const sharpIndex = ref3.indexOf("#");
+      #parseSchemaRef(ref4, schemaId) {
+        const sharpIndex = ref4.indexOf("#");
         if (sharpIndex === -1) {
-          return { refSchemaId: ref3, refJsonPointer: "#" };
+          return { refSchemaId: ref4, refJsonPointer: "#" };
         }
         if (sharpIndex === 0) {
-          return { refSchemaId: schemaId, refJsonPointer: ref3 };
+          return { refSchemaId: schemaId, refJsonPointer: ref4 };
         }
         return {
-          refSchemaId: ref3.slice(0, sharpIndex),
-          refJsonPointer: ref3.slice(sharpIndex)
+          refSchemaId: ref4.slice(0, sharpIndex),
+          refJsonPointer: ref4.slice(sharpIndex)
         };
       }
       #addDerefSchema(schema, rootSchemaId, isRootSchema, refs = []) {
@@ -24674,15 +24674,15 @@ var require_json_schema_ref_resolver = __commonJS({
         }
         return derefSchema;
       }
-      #resolveRef(ref3, refs) {
-        const { sourceSchema, targetSchema } = ref3;
+      #resolveRef(ref4, refs) {
+        const { sourceSchema, targetSchema } = ref4;
         if (!sourceSchema.$ref) return;
         if (this.#insertRefSymbol) {
           sourceSchema[jsonSchemaRefSymbol] = sourceSchema.$ref;
         }
         delete sourceSchema.$ref;
         if (targetSchema.$ref) {
-          const targetSchemaRef = refs.find((ref4) => ref4.sourceSchema === targetSchema);
+          const targetSchemaRef = refs.find((ref5) => ref5.sourceSchema === targetSchema);
           this.#resolveRef(targetSchemaRef, refs);
         }
         for (const key in targetSchema) {
@@ -24690,12 +24690,12 @@ var require_json_schema_ref_resolver = __commonJS({
           if (sourceSchema[key] !== void 0) {
             if (deepEqual(sourceSchema[key], targetSchema[key])) continue;
             throw new Error(
-              `Cannot resolve ref "${ref3.ref}". Property "${key}" already exists in schema "${ref3.sourceSchemaId}".`
+              `Cannot resolve ref "${ref4.ref}". Property "${key}" already exists in schema "${ref4.sourceSchemaId}".`
             );
           }
           sourceSchema[key] = targetSchema[key];
         }
-        ref3.isResolved = true;
+        ref4.isResolved = true;
       }
       #insertSchemaBySchemaId(schema, schemaId) {
         const foundSchema = this.#schemas[schemaId];
@@ -24775,13 +24775,13 @@ var require_serializer2 = __commonJS({
         return "" + integer;
       }
       asNumber(i) {
-        const num4 = Number(i);
-        if (num4 !== num4) {
+        const num5 = Number(i);
+        if (num5 !== num5) {
           throw new Error(`The value "${i}" cannot be converted to a number.`);
-        } else if (num4 === Infinity || num4 === -Infinity) {
+        } else if (num5 === Infinity || num5 === -Infinity) {
           return "null";
         } else {
-          return "" + num4;
+          return "" + num5;
         }
       }
       asBoolean(bool2) {
@@ -25390,17 +25390,17 @@ var require_codegen2 = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e7 = this.else;
-        if (e7) {
-          const ns = e7.optimizeNodes();
-          e7 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e8 = this.else;
+        if (e8) {
+          const ns = e8.optimizeNodes();
+          e8 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e7) {
+        if (e8) {
           if (cond === false)
-            return e7 instanceof _If ? e7 : e7.nodes;
+            return e8 instanceof _If ? e8 : e8.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e7 instanceof _If ? [e7] : e7.nodes);
+          return new _If(not(cond), e8 instanceof _If ? [e8] : e8.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -25844,8 +25844,8 @@ var require_codegen2 = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e7) {
-        return e7 instanceof code_1._Code && e7._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e8) {
+        return e8 instanceof code_1._Code && e8._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -26713,7 +26713,7 @@ var require_keyword2 = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e7) => gen.assign(valid, false).if((0, codegen_1._)`${e7} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e7}.errors`), () => gen.throw(e7)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e8) => gen.assign(valid, false).if((0, codegen_1._)`${e8} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e8}.errors`), () => gen.throw(e8)));
         return ruleErrs;
       }
       function validateSync() {
@@ -27065,26 +27065,26 @@ var require_resolve2 = __commonJS({
         addAnchor.call(this, sch.$anchor);
         addAnchor.call(this, sch.$dynamicAnchor);
         baseIds[jsonPtr] = innerBaseId;
-        function addRef(ref3) {
+        function addRef(ref4) {
           const _resolve = this.opts.uriResolver.resolve;
-          ref3 = normalizeId(innerBaseId ? _resolve(innerBaseId, ref3) : ref3);
-          if (schemaRefs.has(ref3))
-            throw ambiguos(ref3);
-          schemaRefs.add(ref3);
-          let schOrRef = this.refs[ref3];
+          ref4 = normalizeId(innerBaseId ? _resolve(innerBaseId, ref4) : ref4);
+          if (schemaRefs.has(ref4))
+            throw ambiguos(ref4);
+          schemaRefs.add(ref4);
+          let schOrRef = this.refs[ref4];
           if (typeof schOrRef == "string")
             schOrRef = this.refs[schOrRef];
           if (typeof schOrRef == "object") {
-            checkAmbiguosRef(sch, schOrRef.schema, ref3);
-          } else if (ref3 !== normalizeId(fullPath)) {
-            if (ref3[0] === "#") {
-              checkAmbiguosRef(sch, localRefs[ref3], ref3);
-              localRefs[ref3] = sch;
+            checkAmbiguosRef(sch, schOrRef.schema, ref4);
+          } else if (ref4 !== normalizeId(fullPath)) {
+            if (ref4[0] === "#") {
+              checkAmbiguosRef(sch, localRefs[ref4], ref4);
+              localRefs[ref4] = sch;
             } else {
-              this.refs[ref3] = fullPath;
+              this.refs[ref4] = fullPath;
             }
           }
-          return ref3;
+          return ref4;
         }
         function addAnchor(anchor) {
           if (typeof anchor == "string") {
@@ -27095,12 +27095,12 @@ var require_resolve2 = __commonJS({
         }
       });
       return localRefs;
-      function checkAmbiguosRef(sch1, sch2, ref3) {
+      function checkAmbiguosRef(sch1, sch2, ref4) {
         if (sch2 !== void 0 && !equal(sch1, sch2))
-          throw ambiguos(ref3);
+          throw ambiguos(ref4);
       }
-      function ambiguos(ref3) {
-        return new Error(`reference "${ref3}" resolves to more than one schema`);
+      function ambiguos(ref4) {
+        return new Error(`reference "${ref4}" resolves to more than one schema`);
       }
     }
     exports.getSchemaRefs = getSchemaRefs;
@@ -27638,9 +27638,9 @@ var require_ref_error2 = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     var resolve_1 = require_resolve2();
     var MissingRefError = class extends Error {
-      constructor(resolver, baseId, ref3, msg) {
-        super(msg || `can't resolve reference ${ref3} from id ${baseId}`);
-        this.missingRef = (0, resolve_1.resolveUrl)(resolver, baseId, ref3);
+      constructor(resolver, baseId, ref4, msg) {
+        super(msg || `can't resolve reference ${ref4} from id ${baseId}`);
+        this.missingRef = (0, resolve_1.resolveUrl)(resolver, baseId, ref4);
         this.missingSchema = (0, resolve_1.normalizeId)((0, resolve_1.getFullPath)(resolver, this.missingRef));
       }
     };
@@ -27755,33 +27755,33 @@ var require_compile2 = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e7) {
+      } catch (e8) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e7;
+        throw e8;
       } finally {
         this._compilations.delete(sch);
       }
     }
     exports.compileSchema = compileSchema;
-    function resolveRef(root, baseId, ref3) {
+    function resolveRef(root, baseId, ref4) {
       var _a;
-      ref3 = (0, resolve_1.resolveUrl)(this.opts.uriResolver, baseId, ref3);
-      const schOrFunc = root.refs[ref3];
+      ref4 = (0, resolve_1.resolveUrl)(this.opts.uriResolver, baseId, ref4);
+      const schOrFunc = root.refs[ref4];
       if (schOrFunc)
         return schOrFunc;
-      let _sch = resolve2.call(this, root, ref3);
+      let _sch = resolve2.call(this, root, ref4);
       if (_sch === void 0) {
-        const schema = (_a = root.localRefs) === null || _a === void 0 ? void 0 : _a[ref3];
+        const schema = (_a = root.localRefs) === null || _a === void 0 ? void 0 : _a[ref4];
         const { schemaId } = this.opts;
         if (schema)
           _sch = new SchemaEnv({ schema, schemaId, root, baseId });
       }
       if (_sch === void 0)
         return;
-      return root.refs[ref3] = inlineOrCompile.call(this, _sch);
+      return root.refs[ref4] = inlineOrCompile.call(this, _sch);
     }
     exports.resolveRef = resolveRef;
     function inlineOrCompile(sch) {
@@ -27799,14 +27799,14 @@ var require_compile2 = __commonJS({
     function sameSchemaEnv(s1, s2) {
       return s1.schema === s2.schema && s1.root === s2.root && s1.baseId === s2.baseId;
     }
-    function resolve2(root, ref3) {
+    function resolve2(root, ref4) {
       let sch;
-      while (typeof (sch = this.refs[ref3]) == "string")
-        ref3 = sch;
-      return sch || this.schemas[ref3] || resolveSchema.call(this, root, ref3);
+      while (typeof (sch = this.refs[ref4]) == "string")
+        ref4 = sch;
+      return sch || this.schemas[ref4] || resolveSchema.call(this, root, ref4);
     }
-    function resolveSchema(root, ref3) {
-      const p = this.opts.uriResolver.parse(ref3);
+    function resolveSchema(root, ref4) {
+      const p = this.opts.uriResolver.parse(ref4);
       const refPath = (0, resolve_1._getFullPath)(this.opts.uriResolver, p);
       let baseId = (0, resolve_1.getFullPath)(this.opts.uriResolver, root.baseId, void 0);
       if (Object.keys(root.schema).length > 0 && refPath === baseId) {
@@ -27824,7 +27824,7 @@ var require_compile2 = __commonJS({
         return;
       if (!schOrRef.validate)
         compileSchema.call(this, schOrRef);
-      if (id2 === (0, resolve_1.normalizeId)(ref3)) {
+      if (id2 === (0, resolve_1.normalizeId)(ref4)) {
         const { schema } = schOrRef;
         const { schemaId } = this.opts;
         const schId = schema[schemaId];
@@ -28814,8 +28814,8 @@ var require_fast_uri3 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e7) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e7;
+        } catch (e8) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e8;
           return true;
         }
       }
@@ -29201,34 +29201,34 @@ var require_core3 = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e7) {
-            if (!(e7 instanceof ref_error_1.default))
-              throw e7;
-            checkLoaded.call(this, e7);
-            await loadMissingSchema.call(this, e7.missingSchema);
+          } catch (e8) {
+            if (!(e8 instanceof ref_error_1.default))
+              throw e8;
+            checkLoaded.call(this, e8);
+            await loadMissingSchema.call(this, e8.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
-        function checkLoaded({ missingSchema: ref3, missingRef }) {
-          if (this.refs[ref3]) {
-            throw new Error(`AnySchema ${ref3} is loaded but ${missingRef} cannot be resolved`);
+        function checkLoaded({ missingSchema: ref4, missingRef }) {
+          if (this.refs[ref4]) {
+            throw new Error(`AnySchema ${ref4} is loaded but ${missingRef} cannot be resolved`);
           }
         }
-        async function loadMissingSchema(ref3) {
-          const _schema = await _loadSchema.call(this, ref3);
-          if (!this.refs[ref3])
+        async function loadMissingSchema(ref4) {
+          const _schema = await _loadSchema.call(this, ref4);
+          if (!this.refs[ref4])
             await loadMetaSchema.call(this, _schema.$schema);
-          if (!this.refs[ref3])
-            this.addSchema(_schema, ref3, meta);
+          if (!this.refs[ref4])
+            this.addSchema(_schema, ref4, meta);
         }
-        async function _loadSchema(ref3) {
-          const p = this._loading[ref3];
+        async function _loadSchema(ref4) {
+          const p = this._loading[ref4];
           if (p)
             return p;
           try {
-            return await (this._loading[ref3] = loadSchema(ref3));
+            return await (this._loading[ref4] = loadSchema(ref4));
           } finally {
-            delete this._loading[ref3];
+            delete this._loading[ref4];
           }
         }
       }
@@ -29401,7 +29401,7 @@ var require_core3 = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e7) => `${dataVar}${e7.instancePath} ${e7.message}`).reduce((text8, msg) => text8 + separator + msg);
+        return errors.map((e8) => `${dataVar}${e8.instancePath} ${e8.message}`).reduce((text9, msg) => text9 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -29709,9 +29709,9 @@ var require_ref3 = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e7) => {
-          gen.if((0, codegen_1._)`!(${e7} instanceof ${it.ValidationError})`, () => gen.throw(e7));
-          addErrorsFrom(e7);
+        }, (e8) => {
+          gen.if((0, codegen_1._)`!(${e8} instanceof ${it.ValidationError})`, () => gen.throw(e8));
+          addErrorsFrom(e8);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -31387,12 +31387,12 @@ var require_discriminator3 = __commonJS({
           for (let i = 0; i < oneOf.length; i++) {
             let sch = oneOf[i];
             if ((sch === null || sch === void 0 ? void 0 : sch.$ref) && !(0, util_1.schemaHasRulesButRef)(sch, it.self.RULES)) {
-              const ref3 = sch.$ref;
-              sch = compile_1.resolveRef.call(it.self, it.schemaEnv.root, it.baseId, ref3);
+              const ref4 = sch.$ref;
+              sch = compile_1.resolveRef.call(it.self, it.schemaEnv.root, it.baseId, ref4);
               if (sch instanceof compile_1.SchemaEnv)
                 sch = sch.schema;
               if (sch === void 0)
-                throw new ref_error_1.default(it.opts.uriResolver, it.baseId, ref3);
+                throw new ref_error_1.default(it.opts.uriResolver, it.baseId, ref4);
             }
             const propSch = (_a = sch === null || sch === void 0 ? void 0 : sch.properties) === null || _a === void 0 ? void 0 : _a[tagName];
             if (typeof propSch != "object") {
@@ -32831,8 +32831,8 @@ var require_fast_uri4 = __commonJS({
       if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport) && parsed.host && parsed.host[0] !== "[" && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
         try {
           parsed.host = new URL("http://" + parsed.host).hostname;
-        } catch (e7) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e7;
+        } catch (e8) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e8;
           return true;
         }
       }
@@ -33211,7 +33211,7 @@ var require_formats2 = __commonJS({
       try {
         new RegExp(str8);
         return true;
-      } catch (e7) {
+      } catch (e8) {
         return false;
       }
     }
@@ -35045,16 +35045,16 @@ const asInteger = serializer.asInteger.bind(serializer)
       }
     }
     function resolveRef(context, location) {
-      const ref3 = location.schema.$ref;
-      let hashIndex = ref3.indexOf("#");
+      const ref4 = location.schema.$ref;
+      let hashIndex = ref4.indexOf("#");
       if (hashIndex === -1) {
-        hashIndex = ref3.length;
+        hashIndex = ref4.length;
       }
-      const schemaId = ref3.slice(0, hashIndex) || location.schemaId;
-      const jsonPointer = ref3.slice(hashIndex) || "#";
+      const schemaId = ref4.slice(0, hashIndex) || location.schemaId;
+      const jsonPointer = ref4.slice(hashIndex) || "#";
       const schema = context.refResolver.getSchema(schemaId, jsonPointer);
       if (schema === null) {
-        throw new Error(`Cannot find reference "${ref3}"`);
+        throw new Error(`Cannot find reference "${ref4}"`);
       }
       const newLocation = new Location(schema, schemaId, jsonPointer);
       if (schema.$ref !== void 0) {
@@ -36183,13 +36183,13 @@ var require_schema_controller = __commonJS({
         const SerializerSelector = require_fast_json_stringify_compiler();
         compilersFactory.buildSerializer = SerializerSelector();
       }
-      const option = {
+      const option2 = {
         bucket: opts && opts.bucket || buildSchemas,
         compilersFactory,
         isCustomValidatorCompiler: typeof opts?.compilersFactory?.buildValidator === "function",
         isCustomSerializerCompiler: typeof opts?.compilersFactory?.buildSerializer === "function"
       };
-      return new SchemaController(void 0, option);
+      return new SchemaController(void 0, option2);
     }
     var SchemaController = class {
       constructor(parent, options) {
@@ -36518,9 +36518,9 @@ var require_semver = __commonJS({
         } else {
           this.prerelease = m[4].split(".").map((id2) => {
             if (/^[0-9]+$/.test(id2)) {
-              const num4 = +id2;
-              if (num4 >= 0 && num4 < MAX_SAFE_INTEGER) {
-                return num4;
+              const num5 = +id2;
+              if (num5 >= 0 && num5 < MAX_SAFE_INTEGER) {
+                return num5;
               }
             }
             return id2;
@@ -42787,7 +42787,7 @@ var require_dist5 = __commonJS({
         return str8;
       try {
         return decodeURIComponent(str8);
-      } catch (e7) {
+      } catch (e8) {
         return str8;
       }
     }
@@ -42897,7 +42897,7 @@ var require_parse_url = __commonJS({
 var require_form_data = __commonJS({
   "node_modules/light-my-request/lib/form-data.js"(exports, module) {
     "use strict";
-    var { randomUUID: randomUUID15 } = __require("node:crypto");
+    var { randomUUID: randomUUID16 } = __require("node:crypto");
     var { Readable } = __require("node:stream");
     var textEncoder;
     function isFormDataLike(payload) {
@@ -42905,7 +42905,7 @@ var require_form_data = __commonJS({
     }
     function formDataToStream(formdata) {
       textEncoder = textEncoder ?? new TextEncoder();
-      const boundary = `----formdata-${randomUUID15()}`;
+      const boundary = `----formdata-${randomUUID16()}`;
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
       const escape2 = (str8) => str8.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
@@ -43169,10 +43169,10 @@ var require_set_cookie = __commonJS({
       }
       try {
         value2 = options.decodeValues ? decodeURIComponent(value2) : value2;
-      } catch (e7) {
+      } catch (e8) {
         console.error(
           "set-cookie-parser: failed to decode cookie value. Set options.decodeValues=false to disable decoding.",
-          e7
+          e8
         );
       }
       var cookie = createNullObj();
@@ -44394,7 +44394,7 @@ var require_light_my_request = __commonJS({
         assert(typeof dispatchFunc === "function", "dispatchFunc should be a function");
         const isOptionValid = optsValidator(options);
         if (!isOptionValid) {
-          throw new Error(optsValidator.errors.map((e7) => e7.message));
+          throw new Error(optsValidator.errors.map((e8) => e8.message));
         }
       }
       const server = options.server || {};
@@ -44415,11 +44415,11 @@ var require_light_my_request = __commonJS({
         });
       }
     }
-    function Chain(dispatch, option) {
-      if (typeof option === "string") {
-        this.option = { url: option };
+    function Chain(dispatch, option2) {
+      if (typeof option2 === "string") {
+        this.option = { url: option2 };
       } else {
-        this.option = Object.assign({}, option);
+        this.option = Object.assign({}, option2);
       }
       this.dispatch = dispatch;
       this._hasInvoked = false;
@@ -45350,9 +45350,9 @@ var require_getPluginName = __commonJS({
       Error.stackTraceLimit = 10;
       try {
         throw new Error("anonymous function");
-      } catch (e7) {
+      } catch (e8) {
         Error.stackTraceLimit = stackTraceLimit;
-        return extractPluginName(e7.stack);
+        return extractPluginName(e8.stack);
       }
     };
     function extractPluginName(stack) {
@@ -45868,9 +45868,9 @@ var require_decoder = __commonJS({
           throw new TokenError(TokenError.codes.invalidPayload, "The payload must be an object", { payload });
         }
         return complete ? { header, payload, signature: signatureSegment, input: token2.slice(0, lastSeparator) } : payload;
-      } catch (e7) {
+      } catch (e8) {
         throw TokenError.wrap(
-          e7,
+          e8,
           TokenError.codes.malformed,
           `The token ${validHeader ? "payload" : "header"} is not a valid base64url serialized JSON.`
         );
@@ -46367,13 +46367,13 @@ var require_bn = __commonJS({
         } else {
           Buffer2 = __require("buffer").Buffer;
         }
-      } catch (e7) {
+      } catch (e8) {
       }
-      BN.isBN = function isBN(num4) {
-        if (num4 instanceof BN) {
+      BN.isBN = function isBN(num5) {
+        if (num5 instanceof BN) {
           return true;
         }
-        return num4 !== null && typeof num4 === "object" && num4.constructor.wordSize === BN.wordSize && Array.isArray(num4.words);
+        return num5 !== null && typeof num5 === "object" && num5.constructor.wordSize === BN.wordSize && Array.isArray(num5.words);
       };
       BN.max = function max(left, right) {
         if (left.cmp(right) > 0) return left;
@@ -46894,12 +46894,12 @@ var require_bn = __commonJS({
         var hi = this._countBits(w);
         return (this.length - 1) * 26 + hi;
       };
-      function toBitArray(num4) {
-        var w = new Array(num4.bitLength());
+      function toBitArray(num5) {
+        var w = new Array(num5.bitLength());
         for (var bit = 0; bit < w.length; bit++) {
           var off = bit / 26 | 0;
           var wbit = bit % 26;
-          w[bit] = (num4.words[off] & 1 << wbit) >>> wbit;
+          w[bit] = (num5.words[off] & 1 << wbit) >>> wbit;
         }
         return w;
       }
@@ -46940,60 +46940,60 @@ var require_bn = __commonJS({
         }
         return this;
       };
-      BN.prototype.iuor = function iuor(num4) {
-        while (this.length < num4.length) {
+      BN.prototype.iuor = function iuor(num5) {
+        while (this.length < num5.length) {
           this.words[this.length++] = 0;
         }
-        for (var i = 0; i < num4.length; i++) {
-          this.words[i] = this.words[i] | num4.words[i];
+        for (var i = 0; i < num5.length; i++) {
+          this.words[i] = this.words[i] | num5.words[i];
         }
         return this.strip();
       };
-      BN.prototype.ior = function ior(num4) {
-        assert((this.negative | num4.negative) === 0);
-        return this.iuor(num4);
+      BN.prototype.ior = function ior(num5) {
+        assert((this.negative | num5.negative) === 0);
+        return this.iuor(num5);
       };
-      BN.prototype.or = function or(num4) {
-        if (this.length > num4.length) return this.clone().ior(num4);
-        return num4.clone().ior(this);
+      BN.prototype.or = function or(num5) {
+        if (this.length > num5.length) return this.clone().ior(num5);
+        return num5.clone().ior(this);
       };
-      BN.prototype.uor = function uor(num4) {
-        if (this.length > num4.length) return this.clone().iuor(num4);
-        return num4.clone().iuor(this);
+      BN.prototype.uor = function uor(num5) {
+        if (this.length > num5.length) return this.clone().iuor(num5);
+        return num5.clone().iuor(this);
       };
-      BN.prototype.iuand = function iuand(num4) {
+      BN.prototype.iuand = function iuand(num5) {
         var b;
-        if (this.length > num4.length) {
-          b = num4;
+        if (this.length > num5.length) {
+          b = num5;
         } else {
           b = this;
         }
         for (var i = 0; i < b.length; i++) {
-          this.words[i] = this.words[i] & num4.words[i];
+          this.words[i] = this.words[i] & num5.words[i];
         }
         this.length = b.length;
         return this.strip();
       };
-      BN.prototype.iand = function iand(num4) {
-        assert((this.negative | num4.negative) === 0);
-        return this.iuand(num4);
+      BN.prototype.iand = function iand(num5) {
+        assert((this.negative | num5.negative) === 0);
+        return this.iuand(num5);
       };
-      BN.prototype.and = function and(num4) {
-        if (this.length > num4.length) return this.clone().iand(num4);
-        return num4.clone().iand(this);
+      BN.prototype.and = function and(num5) {
+        if (this.length > num5.length) return this.clone().iand(num5);
+        return num5.clone().iand(this);
       };
-      BN.prototype.uand = function uand(num4) {
-        if (this.length > num4.length) return this.clone().iuand(num4);
-        return num4.clone().iuand(this);
+      BN.prototype.uand = function uand(num5) {
+        if (this.length > num5.length) return this.clone().iuand(num5);
+        return num5.clone().iuand(this);
       };
-      BN.prototype.iuxor = function iuxor(num4) {
+      BN.prototype.iuxor = function iuxor(num5) {
         var a;
         var b;
-        if (this.length > num4.length) {
+        if (this.length > num5.length) {
           a = this;
-          b = num4;
+          b = num5;
         } else {
-          a = num4;
+          a = num5;
           b = this;
         }
         for (var i = 0; i < b.length; i++) {
@@ -47007,17 +47007,17 @@ var require_bn = __commonJS({
         this.length = a.length;
         return this.strip();
       };
-      BN.prototype.ixor = function ixor(num4) {
-        assert((this.negative | num4.negative) === 0);
-        return this.iuxor(num4);
+      BN.prototype.ixor = function ixor(num5) {
+        assert((this.negative | num5.negative) === 0);
+        return this.iuxor(num5);
       };
-      BN.prototype.xor = function xor(num4) {
-        if (this.length > num4.length) return this.clone().ixor(num4);
-        return num4.clone().ixor(this);
+      BN.prototype.xor = function xor(num5) {
+        if (this.length > num5.length) return this.clone().ixor(num5);
+        return num5.clone().ixor(this);
       };
-      BN.prototype.uxor = function uxor(num4) {
-        if (this.length > num4.length) return this.clone().iuxor(num4);
-        return num4.clone().iuxor(this);
+      BN.prototype.uxor = function uxor(num5) {
+        if (this.length > num5.length) return this.clone().iuxor(num5);
+        return num5.clone().iuxor(this);
       };
       BN.prototype.inotn = function inotn(width) {
         assert(typeof width === "number" && width >= 0);
@@ -47054,25 +47054,25 @@ var require_bn = __commonJS({
         }
         return this.strip();
       };
-      BN.prototype.iadd = function iadd(num4) {
+      BN.prototype.iadd = function iadd(num5) {
         var r;
-        if (this.negative !== 0 && num4.negative === 0) {
+        if (this.negative !== 0 && num5.negative === 0) {
           this.negative = 0;
-          r = this.isub(num4);
+          r = this.isub(num5);
           this.negative ^= 1;
           return this._normSign();
-        } else if (this.negative === 0 && num4.negative !== 0) {
-          num4.negative = 0;
-          r = this.isub(num4);
-          num4.negative = 1;
+        } else if (this.negative === 0 && num5.negative !== 0) {
+          num5.negative = 0;
+          r = this.isub(num5);
+          num5.negative = 1;
           return r._normSign();
         }
         var a, b;
-        if (this.length > num4.length) {
+        if (this.length > num5.length) {
           a = this;
-          b = num4;
+          b = num5;
         } else {
-          a = num4;
+          a = num5;
           b = this;
         }
         var carry = 0;
@@ -47097,35 +47097,35 @@ var require_bn = __commonJS({
         }
         return this;
       };
-      BN.prototype.add = function add(num4) {
+      BN.prototype.add = function add(num5) {
         var res;
-        if (num4.negative !== 0 && this.negative === 0) {
-          num4.negative = 0;
-          res = this.sub(num4);
-          num4.negative ^= 1;
+        if (num5.negative !== 0 && this.negative === 0) {
+          num5.negative = 0;
+          res = this.sub(num5);
+          num5.negative ^= 1;
           return res;
-        } else if (num4.negative === 0 && this.negative !== 0) {
+        } else if (num5.negative === 0 && this.negative !== 0) {
           this.negative = 0;
-          res = num4.sub(this);
+          res = num5.sub(this);
           this.negative = 1;
           return res;
         }
-        if (this.length > num4.length) return this.clone().iadd(num4);
-        return num4.clone().iadd(this);
+        if (this.length > num5.length) return this.clone().iadd(num5);
+        return num5.clone().iadd(this);
       };
-      BN.prototype.isub = function isub(num4) {
-        if (num4.negative !== 0) {
-          num4.negative = 0;
-          var r = this.iadd(num4);
-          num4.negative = 1;
+      BN.prototype.isub = function isub(num5) {
+        if (num5.negative !== 0) {
+          num5.negative = 0;
+          var r = this.iadd(num5);
+          num5.negative = 1;
           return r._normSign();
         } else if (this.negative !== 0) {
           this.negative = 0;
-          this.iadd(num4);
+          this.iadd(num5);
           this.negative = 1;
           return this._normSign();
         }
-        var cmp = this.cmp(num4);
+        var cmp = this.cmp(num5);
         if (cmp === 0) {
           this.negative = 0;
           this.length = 1;
@@ -47135,9 +47135,9 @@ var require_bn = __commonJS({
         var a, b;
         if (cmp > 0) {
           a = this;
-          b = num4;
+          b = num5;
         } else {
-          a = num4;
+          a = num5;
           b = this;
         }
         var carry = 0;
@@ -47162,16 +47162,16 @@ var require_bn = __commonJS({
         }
         return this.strip();
       };
-      BN.prototype.sub = function sub(num4) {
-        return this.clone().isub(num4);
+      BN.prototype.sub = function sub(num5) {
+        return this.clone().isub(num5);
       };
-      function smallMulTo(self2, num4, out) {
-        out.negative = num4.negative ^ self2.negative;
-        var len = self2.length + num4.length | 0;
+      function smallMulTo(self2, num5, out) {
+        out.negative = num5.negative ^ self2.negative;
+        var len = self2.length + num5.length | 0;
         out.length = len;
         len = len - 1 | 0;
         var a = self2.words[0] | 0;
-        var b = num4.words[0] | 0;
+        var b = num5.words[0] | 0;
         var r = a * b;
         var lo = r & 67108863;
         var carry = r / 67108864 | 0;
@@ -47179,11 +47179,11 @@ var require_bn = __commonJS({
         for (var k = 1; k < len; k++) {
           var ncarry = carry >>> 26;
           var rword = carry & 67108863;
-          var maxJ = Math.min(k, num4.length - 1);
+          var maxJ = Math.min(k, num5.length - 1);
           for (var j = Math.max(0, k - self2.length + 1); j <= maxJ; j++) {
             var i = k - j | 0;
             a = self2.words[i] | 0;
-            b = num4.words[j] | 0;
+            b = num5.words[j] | 0;
             r = a * b + rword;
             ncarry += r / 67108864 | 0;
             rword = r & 67108863;
@@ -47198,9 +47198,9 @@ var require_bn = __commonJS({
         }
         return out.strip();
       }
-      var comb10MulTo = function comb10MulTo2(self2, num4, out) {
+      var comb10MulTo = function comb10MulTo2(self2, num5, out) {
         var a = self2.words;
-        var b = num4.words;
+        var b = num5.words;
         var o = out.words;
         var c = 0;
         var lo;
@@ -47266,7 +47266,7 @@ var require_bn = __commonJS({
         var b9 = b[9] | 0;
         var bl9 = b9 & 8191;
         var bh9 = b9 >>> 13;
-        out.negative = self2.negative ^ num4.negative;
+        out.negative = self2.negative ^ num5.negative;
         out.length = 19;
         lo = Math.imul(al0, bl0);
         mid = Math.imul(al0, bh0);
@@ -47753,20 +47753,20 @@ var require_bn = __commonJS({
       if (!Math.imul) {
         comb10MulTo = smallMulTo;
       }
-      function bigMulTo(self2, num4, out) {
-        out.negative = num4.negative ^ self2.negative;
-        out.length = self2.length + num4.length;
+      function bigMulTo(self2, num5, out) {
+        out.negative = num5.negative ^ self2.negative;
+        out.length = self2.length + num5.length;
         var carry = 0;
         var hncarry = 0;
         for (var k = 0; k < out.length - 1; k++) {
           var ncarry = hncarry;
           hncarry = 0;
           var rword = carry & 67108863;
-          var maxJ = Math.min(k, num4.length - 1);
+          var maxJ = Math.min(k, num5.length - 1);
           for (var j = Math.max(0, k - self2.length + 1); j <= maxJ; j++) {
             var i = k - j;
             var a = self2.words[i] | 0;
-            var b = num4.words[j] | 0;
+            var b = num5.words[j] | 0;
             var r = a * b;
             var lo = r & 67108863;
             ncarry = ncarry + (r / 67108864 | 0) | 0;
@@ -47787,21 +47787,21 @@ var require_bn = __commonJS({
         }
         return out.strip();
       }
-      function jumboMulTo(self2, num4, out) {
+      function jumboMulTo(self2, num5, out) {
         var fftm = new FFTM();
-        return fftm.mulp(self2, num4, out);
+        return fftm.mulp(self2, num5, out);
       }
-      BN.prototype.mulTo = function mulTo(num4, out) {
+      BN.prototype.mulTo = function mulTo(num5, out) {
         var res;
-        var len = this.length + num4.length;
-        if (this.length === 10 && num4.length === 10) {
-          res = comb10MulTo(this, num4, out);
+        var len = this.length + num5.length;
+        if (this.length === 10 && num5.length === 10) {
+          res = comb10MulTo(this, num5, out);
         } else if (len < 63) {
-          res = smallMulTo(this, num4, out);
+          res = smallMulTo(this, num5, out);
         } else if (len < 1024) {
-          res = bigMulTo(this, num4, out);
+          res = bigMulTo(this, num5, out);
         } else {
-          res = jumboMulTo(this, num4, out);
+          res = jumboMulTo(this, num5, out);
         }
         return res;
       };
@@ -47946,25 +47946,25 @@ var require_bn = __commonJS({
         out.length = x.length + y.length;
         return out.strip();
       };
-      BN.prototype.mul = function mul(num4) {
+      BN.prototype.mul = function mul(num5) {
         var out = new BN(null);
-        out.words = new Array(this.length + num4.length);
-        return this.mulTo(num4, out);
+        out.words = new Array(this.length + num5.length);
+        return this.mulTo(num5, out);
       };
-      BN.prototype.mulf = function mulf(num4) {
+      BN.prototype.mulf = function mulf(num5) {
         var out = new BN(null);
-        out.words = new Array(this.length + num4.length);
-        return jumboMulTo(this, num4, out);
+        out.words = new Array(this.length + num5.length);
+        return jumboMulTo(this, num5, out);
       };
-      BN.prototype.imul = function imul(num4) {
-        return this.clone().mulTo(num4, this);
+      BN.prototype.imul = function imul(num5) {
+        return this.clone().mulTo(num5, this);
       };
-      BN.prototype.imuln = function imuln(num4) {
-        assert(typeof num4 === "number");
-        assert(num4 < 67108864);
+      BN.prototype.imuln = function imuln(num5) {
+        assert(typeof num5 === "number");
+        assert(num5 < 67108864);
         var carry = 0;
         for (var i = 0; i < this.length; i++) {
-          var w = (this.words[i] | 0) * num4;
+          var w = (this.words[i] | 0) * num5;
           var lo = (w & 67108863) + (carry & 67108863);
           carry >>= 26;
           carry += w / 67108864 | 0;
@@ -47975,14 +47975,14 @@ var require_bn = __commonJS({
           this.words[i] = carry;
           this.length++;
         }
-        if (num4 === 0) {
+        if (num5 === 0) {
           this.length = 1;
           this._normSign();
         }
         return this;
       };
-      BN.prototype.muln = function muln(num4) {
-        return this.clone().imuln(num4);
+      BN.prototype.muln = function muln(num5) {
+        return this.clone().imuln(num5);
       };
       BN.prototype.sqr = function sqr() {
         return this.mul(this);
@@ -47990,8 +47990,8 @@ var require_bn = __commonJS({
       BN.prototype.isqr = function isqr() {
         return this.imul(this.clone());
       };
-      BN.prototype.pow = function pow(num4) {
-        var w = toBitArray(num4);
+      BN.prototype.pow = function pow(num5) {
+        var w = toBitArray(num5);
         if (w.length === 0) return new BN(1);
         var res = this;
         for (var i = 0; i < w.length; i++, res = res.sqr()) {
@@ -48134,25 +48134,25 @@ var require_bn = __commonJS({
       BN.prototype.maskn = function maskn(bits) {
         return this.clone().imaskn(bits);
       };
-      BN.prototype.iaddn = function iaddn(num4) {
-        assert(typeof num4 === "number");
-        assert(num4 < 67108864);
-        if (num4 < 0) return this.isubn(-num4);
+      BN.prototype.iaddn = function iaddn(num5) {
+        assert(typeof num5 === "number");
+        assert(num5 < 67108864);
+        if (num5 < 0) return this.isubn(-num5);
         if (this.negative !== 0) {
-          if (this.length === 1 && (this.words[0] | 0) < num4) {
-            this.words[0] = num4 - (this.words[0] | 0);
+          if (this.length === 1 && (this.words[0] | 0) < num5) {
+            this.words[0] = num5 - (this.words[0] | 0);
             this.negative = 0;
             return this;
           }
           this.negative = 0;
-          this.isubn(num4);
+          this.isubn(num5);
           this.negative = 1;
           return this;
         }
-        return this._iaddn(num4);
+        return this._iaddn(num5);
       };
-      BN.prototype._iaddn = function _iaddn(num4) {
-        this.words[0] += num4;
+      BN.prototype._iaddn = function _iaddn(num5) {
+        this.words[0] += num5;
         for (var i = 0; i < this.length && this.words[i] >= 67108864; i++) {
           this.words[i] -= 67108864;
           if (i === this.length - 1) {
@@ -48164,17 +48164,17 @@ var require_bn = __commonJS({
         this.length = Math.max(this.length, i + 1);
         return this;
       };
-      BN.prototype.isubn = function isubn(num4) {
-        assert(typeof num4 === "number");
-        assert(num4 < 67108864);
-        if (num4 < 0) return this.iaddn(-num4);
+      BN.prototype.isubn = function isubn(num5) {
+        assert(typeof num5 === "number");
+        assert(num5 < 67108864);
+        if (num5 < 0) return this.iaddn(-num5);
         if (this.negative !== 0) {
           this.negative = 0;
-          this.iaddn(num4);
+          this.iaddn(num5);
           this.negative = 1;
           return this;
         }
-        this.words[0] -= num4;
+        this.words[0] -= num5;
         if (this.length === 1 && this.words[0] < 0) {
           this.words[0] = -this.words[0];
           this.negative = 1;
@@ -48186,11 +48186,11 @@ var require_bn = __commonJS({
         }
         return this.strip();
       };
-      BN.prototype.addn = function addn(num4) {
-        return this.clone().iaddn(num4);
+      BN.prototype.addn = function addn(num5) {
+        return this.clone().iaddn(num5);
       };
-      BN.prototype.subn = function subn(num4) {
-        return this.clone().isubn(num4);
+      BN.prototype.subn = function subn(num5) {
+        return this.clone().isubn(num5);
       };
       BN.prototype.iabs = function iabs() {
         this.negative = 0;
@@ -48199,15 +48199,15 @@ var require_bn = __commonJS({
       BN.prototype.abs = function abs() {
         return this.clone().iabs();
       };
-      BN.prototype._ishlnsubmul = function _ishlnsubmul(num4, mul, shift) {
-        var len = num4.length + shift;
+      BN.prototype._ishlnsubmul = function _ishlnsubmul(num5, mul, shift) {
+        var len = num5.length + shift;
         var i;
         this._expand(len);
         var w;
         var carry = 0;
-        for (i = 0; i < num4.length; i++) {
+        for (i = 0; i < num5.length; i++) {
           w = (this.words[i + shift] | 0) + carry;
-          var right = (num4.words[i] | 0) * mul;
+          var right = (num5.words[i] | 0) * mul;
           w -= right & 67108863;
           carry = (w >> 26) - (right / 67108864 | 0);
           this.words[i + shift] = w & 67108863;
@@ -48228,10 +48228,10 @@ var require_bn = __commonJS({
         this.negative = 1;
         return this.strip();
       };
-      BN.prototype._wordDiv = function _wordDiv(num4, mode) {
-        var shift = this.length - num4.length;
+      BN.prototype._wordDiv = function _wordDiv(num5, mode) {
+        var shift = this.length - num5.length;
         var a = this.clone();
-        var b = num4;
+        var b = num5;
         var bhi = b.words[b.length - 1] | 0;
         var bhiBits = this._countBits(bhi);
         shift = 26 - bhiBits;
@@ -48285,8 +48285,8 @@ var require_bn = __commonJS({
           mod: a
         };
       };
-      BN.prototype.divmod = function divmod(num4, mode, positive2) {
-        assert(!num4.isZero());
+      BN.prototype.divmod = function divmod(num5, mode, positive2) {
+        assert(!num5.isZero());
         if (this.isZero()) {
           return {
             div: new BN(0),
@@ -48294,15 +48294,15 @@ var require_bn = __commonJS({
           };
         }
         var div, mod, res;
-        if (this.negative !== 0 && num4.negative === 0) {
-          res = this.neg().divmod(num4, mode);
+        if (this.negative !== 0 && num5.negative === 0) {
+          res = this.neg().divmod(num5, mode);
           if (mode !== "mod") {
             div = res.div.neg();
           }
           if (mode !== "div") {
             mod = res.mod.neg();
             if (positive2 && mod.negative !== 0) {
-              mod.iadd(num4);
+              mod.iadd(num5);
             }
           }
           return {
@@ -48310,8 +48310,8 @@ var require_bn = __commonJS({
             mod
           };
         }
-        if (this.negative === 0 && num4.negative !== 0) {
-          res = this.divmod(num4.neg(), mode);
+        if (this.negative === 0 && num5.negative !== 0) {
+          res = this.divmod(num5.neg(), mode);
           if (mode !== "mod") {
             div = res.div.neg();
           }
@@ -48320,12 +48320,12 @@ var require_bn = __commonJS({
             mod: res.mod
           };
         }
-        if ((this.negative & num4.negative) !== 0) {
-          res = this.neg().divmod(num4.neg(), mode);
+        if ((this.negative & num5.negative) !== 0) {
+          res = this.neg().divmod(num5.neg(), mode);
           if (mode !== "div") {
             mod = res.mod.neg();
             if (positive2 && mod.negative !== 0) {
-              mod.isub(num4);
+              mod.isub(num5);
             }
           }
           return {
@@ -48333,74 +48333,74 @@ var require_bn = __commonJS({
             mod
           };
         }
-        if (num4.length > this.length || this.cmp(num4) < 0) {
+        if (num5.length > this.length || this.cmp(num5) < 0) {
           return {
             div: new BN(0),
             mod: this
           };
         }
-        if (num4.length === 1) {
+        if (num5.length === 1) {
           if (mode === "div") {
             return {
-              div: this.divn(num4.words[0]),
+              div: this.divn(num5.words[0]),
               mod: null
             };
           }
           if (mode === "mod") {
             return {
               div: null,
-              mod: new BN(this.modn(num4.words[0]))
+              mod: new BN(this.modn(num5.words[0]))
             };
           }
           return {
-            div: this.divn(num4.words[0]),
-            mod: new BN(this.modn(num4.words[0]))
+            div: this.divn(num5.words[0]),
+            mod: new BN(this.modn(num5.words[0]))
           };
         }
-        return this._wordDiv(num4, mode);
+        return this._wordDiv(num5, mode);
       };
-      BN.prototype.div = function div(num4) {
-        return this.divmod(num4, "div", false).div;
+      BN.prototype.div = function div(num5) {
+        return this.divmod(num5, "div", false).div;
       };
-      BN.prototype.mod = function mod(num4) {
-        return this.divmod(num4, "mod", false).mod;
+      BN.prototype.mod = function mod(num5) {
+        return this.divmod(num5, "mod", false).mod;
       };
-      BN.prototype.umod = function umod(num4) {
-        return this.divmod(num4, "mod", true).mod;
+      BN.prototype.umod = function umod(num5) {
+        return this.divmod(num5, "mod", true).mod;
       };
-      BN.prototype.divRound = function divRound(num4) {
-        var dm = this.divmod(num4);
+      BN.prototype.divRound = function divRound(num5) {
+        var dm = this.divmod(num5);
         if (dm.mod.isZero()) return dm.div;
         var mod = dm.mod.abs();
-        var half = num4.abs().iushrn(1);
-        var r2 = num4.words[0] & 1;
+        var half = num5.abs().iushrn(1);
+        var r2 = num5.words[0] & 1;
         var cmp = mod.cmp(half);
         if (cmp < 0 || r2 === 1 && cmp === 0) return dm.div;
         var up = new BN(1);
-        up.negative = this.negative ^ num4.negative;
+        up.negative = this.negative ^ num5.negative;
         return dm.div.iadd(up);
       };
-      BN.prototype.modn = function modn(num4) {
-        assert(num4 <= 67108863);
-        var p = (1 << 26) % num4;
+      BN.prototype.modn = function modn(num5) {
+        assert(num5 <= 67108863);
+        var p = (1 << 26) % num5;
         var acc = 0;
         for (var i = this.length - 1; i >= 0; i--) {
-          acc = (p * acc + (this.words[i] | 0)) % num4;
+          acc = (p * acc + (this.words[i] | 0)) % num5;
         }
         return acc;
       };
-      BN.prototype.idivn = function idivn(num4) {
-        assert(num4 <= 67108863);
+      BN.prototype.idivn = function idivn(num5) {
+        assert(num5 <= 67108863);
         var carry = 0;
         for (var i = this.length - 1; i >= 0; i--) {
           var w = (this.words[i] | 0) + carry * 67108864;
-          this.words[i] = w / num4 | 0;
-          carry = w % num4;
+          this.words[i] = w / num5 | 0;
+          carry = w % num5;
         }
         return this.strip();
       };
-      BN.prototype.divn = function divn(num4) {
-        return this.clone().idivn(num4);
+      BN.prototype.divn = function divn(num5) {
+        return this.clone().idivn(num5);
       };
       BN.prototype.egcd = function egcd(p) {
         assert(p.negative === 0);
@@ -48518,11 +48518,11 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      BN.prototype.gcd = function gcd(num4) {
-        if (this.isZero()) return num4.abs();
-        if (num4.isZero()) return this.abs();
+      BN.prototype.gcd = function gcd(num5) {
+        if (this.isZero()) return num5.abs();
+        if (num5.isZero()) return this.abs();
         var a = this.clone();
-        var b = num4.clone();
+        var b = num5.clone();
         a.negative = 0;
         b.negative = 0;
         for (var shift = 0; a.isEven() && b.isEven(); shift++) {
@@ -48548,8 +48548,8 @@ var require_bn = __commonJS({
         } while (true);
         return b.iushln(shift);
       };
-      BN.prototype.invm = function invm(num4) {
-        return this.egcd(num4).a.umod(num4);
+      BN.prototype.invm = function invm(num5) {
+        return this.egcd(num5).a.umod(num5);
       };
       BN.prototype.isEven = function isEven() {
         return (this.words[0] & 1) === 0;
@@ -48557,8 +48557,8 @@ var require_bn = __commonJS({
       BN.prototype.isOdd = function isOdd() {
         return (this.words[0] & 1) === 1;
       };
-      BN.prototype.andln = function andln(num4) {
-        return this.words[0] & num4;
+      BN.prototype.andln = function andln(num5) {
+        return this.words[0] & num5;
       };
       BN.prototype.bincn = function bincn(bit) {
         assert(typeof bit === "number");
@@ -48587,8 +48587,8 @@ var require_bn = __commonJS({
       BN.prototype.isZero = function isZero() {
         return this.length === 1 && this.words[0] === 0;
       };
-      BN.prototype.cmpn = function cmpn(num4) {
-        var negative = num4 < 0;
+      BN.prototype.cmpn = function cmpn(num5) {
+        var negative = num5 < 0;
         if (this.negative !== 0 && !negative) return -1;
         if (this.negative === 0 && negative) return 1;
         this.strip();
@@ -48597,29 +48597,29 @@ var require_bn = __commonJS({
           res = 1;
         } else {
           if (negative) {
-            num4 = -num4;
+            num5 = -num5;
           }
-          assert(num4 <= 67108863, "Number is too big");
+          assert(num5 <= 67108863, "Number is too big");
           var w = this.words[0] | 0;
-          res = w === num4 ? 0 : w < num4 ? -1 : 1;
+          res = w === num5 ? 0 : w < num5 ? -1 : 1;
         }
         if (this.negative !== 0) return -res | 0;
         return res;
       };
-      BN.prototype.cmp = function cmp(num4) {
-        if (this.negative !== 0 && num4.negative === 0) return -1;
-        if (this.negative === 0 && num4.negative !== 0) return 1;
-        var res = this.ucmp(num4);
+      BN.prototype.cmp = function cmp(num5) {
+        if (this.negative !== 0 && num5.negative === 0) return -1;
+        if (this.negative === 0 && num5.negative !== 0) return 1;
+        var res = this.ucmp(num5);
         if (this.negative !== 0) return -res | 0;
         return res;
       };
-      BN.prototype.ucmp = function ucmp(num4) {
-        if (this.length > num4.length) return 1;
-        if (this.length < num4.length) return -1;
+      BN.prototype.ucmp = function ucmp(num5) {
+        if (this.length > num5.length) return 1;
+        if (this.length < num5.length) return -1;
         var res = 0;
         for (var i = this.length - 1; i >= 0; i--) {
           var a = this.words[i] | 0;
-          var b = num4.words[i] | 0;
+          var b = num5.words[i] | 0;
           if (a === b) continue;
           if (a < b) {
             res = -1;
@@ -48630,38 +48630,38 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      BN.prototype.gtn = function gtn(num4) {
-        return this.cmpn(num4) === 1;
+      BN.prototype.gtn = function gtn(num5) {
+        return this.cmpn(num5) === 1;
       };
-      BN.prototype.gt = function gt(num4) {
-        return this.cmp(num4) === 1;
+      BN.prototype.gt = function gt(num5) {
+        return this.cmp(num5) === 1;
       };
-      BN.prototype.gten = function gten(num4) {
-        return this.cmpn(num4) >= 0;
+      BN.prototype.gten = function gten(num5) {
+        return this.cmpn(num5) >= 0;
       };
-      BN.prototype.gte = function gte(num4) {
-        return this.cmp(num4) >= 0;
+      BN.prototype.gte = function gte(num5) {
+        return this.cmp(num5) >= 0;
       };
-      BN.prototype.ltn = function ltn(num4) {
-        return this.cmpn(num4) === -1;
+      BN.prototype.ltn = function ltn(num5) {
+        return this.cmpn(num5) === -1;
       };
-      BN.prototype.lt = function lt(num4) {
-        return this.cmp(num4) === -1;
+      BN.prototype.lt = function lt(num5) {
+        return this.cmp(num5) === -1;
       };
-      BN.prototype.lten = function lten(num4) {
-        return this.cmpn(num4) <= 0;
+      BN.prototype.lten = function lten(num5) {
+        return this.cmpn(num5) <= 0;
       };
-      BN.prototype.lte = function lte(num4) {
-        return this.cmp(num4) <= 0;
+      BN.prototype.lte = function lte(num5) {
+        return this.cmp(num5) <= 0;
       };
-      BN.prototype.eqn = function eqn(num4) {
-        return this.cmpn(num4) === 0;
+      BN.prototype.eqn = function eqn(num5) {
+        return this.cmpn(num5) === 0;
       };
-      BN.prototype.eq = function eq(num4) {
-        return this.cmp(num4) === 0;
+      BN.prototype.eq = function eq(num5) {
+        return this.cmp(num5) === 0;
       };
-      BN.red = function red(num4) {
-        return new Red(num4);
+      BN.red = function red(num5) {
+        return new Red(num5);
       };
       BN.prototype.toRed = function toRed(ctx) {
         assert(!this.red, "Already a number in reduction context");
@@ -48680,35 +48680,35 @@ var require_bn = __commonJS({
         assert(!this.red, "Already a number in reduction context");
         return this._forceRed(ctx);
       };
-      BN.prototype.redAdd = function redAdd(num4) {
+      BN.prototype.redAdd = function redAdd(num5) {
         assert(this.red, "redAdd works only with red numbers");
-        return this.red.add(this, num4);
+        return this.red.add(this, num5);
       };
-      BN.prototype.redIAdd = function redIAdd(num4) {
+      BN.prototype.redIAdd = function redIAdd(num5) {
         assert(this.red, "redIAdd works only with red numbers");
-        return this.red.iadd(this, num4);
+        return this.red.iadd(this, num5);
       };
-      BN.prototype.redSub = function redSub(num4) {
+      BN.prototype.redSub = function redSub(num5) {
         assert(this.red, "redSub works only with red numbers");
-        return this.red.sub(this, num4);
+        return this.red.sub(this, num5);
       };
-      BN.prototype.redISub = function redISub(num4) {
+      BN.prototype.redISub = function redISub(num5) {
         assert(this.red, "redISub works only with red numbers");
-        return this.red.isub(this, num4);
+        return this.red.isub(this, num5);
       };
-      BN.prototype.redShl = function redShl(num4) {
+      BN.prototype.redShl = function redShl(num5) {
         assert(this.red, "redShl works only with red numbers");
-        return this.red.shl(this, num4);
+        return this.red.shl(this, num5);
       };
-      BN.prototype.redMul = function redMul(num4) {
+      BN.prototype.redMul = function redMul(num5) {
         assert(this.red, "redMul works only with red numbers");
-        this.red._verify2(this, num4);
-        return this.red.mul(this, num4);
+        this.red._verify2(this, num5);
+        return this.red.mul(this, num5);
       };
-      BN.prototype.redIMul = function redIMul(num4) {
+      BN.prototype.redIMul = function redIMul(num5) {
         assert(this.red, "redMul works only with red numbers");
-        this.red._verify2(this, num4);
-        return this.red.imul(this, num4);
+        this.red._verify2(this, num5);
+        return this.red.imul(this, num5);
       };
       BN.prototype.redSqr = function redSqr() {
         assert(this.red, "redSqr works only with red numbers");
@@ -48735,10 +48735,10 @@ var require_bn = __commonJS({
         this.red._verify1(this);
         return this.red.neg(this);
       };
-      BN.prototype.redPow = function redPow(num4) {
-        assert(this.red && !num4.red, "redPow(normalNum)");
+      BN.prototype.redPow = function redPow(num5) {
+        assert(this.red && !num5.red, "redPow(normalNum)");
         this.red._verify1(this);
-        return this.red.pow(this, num4);
+        return this.red.pow(this, num5);
       };
       var primes = {
         k256: null,
@@ -48758,8 +48758,8 @@ var require_bn = __commonJS({
         tmp.words = new Array(Math.ceil(this.n / 13));
         return tmp;
       };
-      MPrime.prototype.ireduce = function ireduce(num4) {
-        var r = num4;
+      MPrime.prototype.ireduce = function ireduce(num5) {
+        var r = num5;
         var rlen;
         do {
           this.split(r, this.tmp);
@@ -48785,8 +48785,8 @@ var require_bn = __commonJS({
       MPrime.prototype.split = function split2(input, out) {
         input.iushrn(this.n, 0, out);
       };
-      MPrime.prototype.imulK = function imulK(num4) {
-        return num4.imul(this.k);
+      MPrime.prototype.imulK = function imulK(num5) {
+        return num5.imul(this.k);
       };
       function K256() {
         MPrime.call(
@@ -48823,24 +48823,24 @@ var require_bn = __commonJS({
           input.length -= 9;
         }
       };
-      K256.prototype.imulK = function imulK(num4) {
-        num4.words[num4.length] = 0;
-        num4.words[num4.length + 1] = 0;
-        num4.length += 2;
+      K256.prototype.imulK = function imulK(num5) {
+        num5.words[num5.length] = 0;
+        num5.words[num5.length + 1] = 0;
+        num5.length += 2;
         var lo = 0;
-        for (var i = 0; i < num4.length; i++) {
-          var w = num4.words[i] | 0;
+        for (var i = 0; i < num5.length; i++) {
+          var w = num5.words[i] | 0;
           lo += w * 977;
-          num4.words[i] = lo & 67108863;
+          num5.words[i] = lo & 67108863;
           lo = w * 64 + (lo / 67108864 | 0);
         }
-        if (num4.words[num4.length - 1] === 0) {
-          num4.length--;
-          if (num4.words[num4.length - 1] === 0) {
-            num4.length--;
+        if (num5.words[num5.length - 1] === 0) {
+          num5.length--;
+          if (num5.words[num5.length - 1] === 0) {
+            num5.length--;
           }
         }
-        return num4;
+        return num5;
       };
       function P224() {
         MPrime.call(
@@ -48866,19 +48866,19 @@ var require_bn = __commonJS({
         );
       }
       inherits(P25519, MPrime);
-      P25519.prototype.imulK = function imulK(num4) {
+      P25519.prototype.imulK = function imulK(num5) {
         var carry = 0;
-        for (var i = 0; i < num4.length; i++) {
-          var hi = (num4.words[i] | 0) * 19 + carry;
+        for (var i = 0; i < num5.length; i++) {
+          var hi = (num5.words[i] | 0) * 19 + carry;
           var lo = hi & 67108863;
           hi >>>= 26;
-          num4.words[i] = lo;
+          num5.words[i] = lo;
           carry = hi;
         }
         if (carry !== 0) {
-          num4.words[num4.length++] = carry;
+          num5.words[num5.length++] = carry;
         }
-        return num4;
+        return num5;
       };
       BN._prime = function prime(name) {
         if (primes[name]) return primes[name];
@@ -48961,9 +48961,9 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      Red.prototype.shl = function shl(a, num4) {
+      Red.prototype.shl = function shl(a, num5) {
         this._verify1(a);
-        return this.imod(a.ushln(num4));
+        return this.imod(a.ushln(num5));
       };
       Red.prototype.imul = function imul(a, b) {
         this._verify2(a, b);
@@ -49029,9 +49029,9 @@ var require_bn = __commonJS({
           return this.imod(inv);
         }
       };
-      Red.prototype.pow = function pow(a, num4) {
-        if (num4.isZero()) return new BN(1).toRed(this);
-        if (num4.cmpn(1) === 0) return a.clone();
+      Red.prototype.pow = function pow(a, num5) {
+        if (num5.isZero()) return new BN(1).toRed(this);
+        if (num5.cmpn(1) === 0) return a.clone();
         var windowSize = 4;
         var wnd = new Array(1 << windowSize);
         wnd[0] = new BN(1).toRed(this);
@@ -49042,12 +49042,12 @@ var require_bn = __commonJS({
         var res = wnd[0];
         var current = 0;
         var currentLen = 0;
-        var start = num4.bitLength() % 26;
+        var start = num5.bitLength() % 26;
         if (start === 0) {
           start = 26;
         }
-        for (i = num4.length - 1; i >= 0; i--) {
-          var word = num4.words[i];
+        for (i = num5.length - 1; i >= 0; i--) {
+          var word = num5.words[i];
           for (var j = start - 1; j >= 0; j--) {
             var bit = word >> j & 1;
             if (res !== wnd[0]) {
@@ -49069,17 +49069,17 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      Red.prototype.convertTo = function convertTo(num4) {
-        var r = num4.umod(this.m);
-        return r === num4 ? r.clone() : r;
+      Red.prototype.convertTo = function convertTo(num5) {
+        var r = num5.umod(this.m);
+        return r === num5 ? r.clone() : r;
       };
-      Red.prototype.convertFrom = function convertFrom(num4) {
-        var res = num4.clone();
+      Red.prototype.convertFrom = function convertFrom(num5) {
+        var res = num5.clone();
         res.red = null;
         return res;
       };
-      BN.mont = function mont(num4) {
-        return new Mont(num4);
+      BN.mont = function mont(num5) {
+        return new Mont(num5);
       };
       function Mont(m) {
         Red.call(this, m);
@@ -49095,11 +49095,11 @@ var require_bn = __commonJS({
         this.minv = this.r.sub(this.minv);
       }
       inherits(Mont, Red);
-      Mont.prototype.convertTo = function convertTo(num4) {
-        return this.imod(num4.ushln(this.shift));
+      Mont.prototype.convertTo = function convertTo(num5) {
+        return this.imod(num5.ushln(this.shift));
       };
-      Mont.prototype.convertFrom = function convertFrom(num4) {
-        var r = this.imod(num4.mul(this.rinv));
+      Mont.prototype.convertFrom = function convertFrom(num5) {
+        var r = this.imod(num5.mul(this.rinv));
         r.red = null;
         return r;
       };
@@ -49180,7 +49180,7 @@ var require_inherits = __commonJS({
       util2 = __require("util");
       if (typeof util2.inherits !== "function") throw "";
       module.exports = util2.inherits;
-    } catch (e7) {
+    } catch (e8) {
       module.exports = require_inherits_browser();
     }
     var util2;
@@ -49240,7 +49240,7 @@ var require_safer = __commonJS({
     if (!safer.kStringMaxLength) {
       try {
         safer.kStringMaxLength = process.binding("buffer").kStringMaxLength;
-      } catch (e7) {
+      } catch (e8) {
       }
     }
     if (!safer.constants) {
@@ -49347,8 +49347,8 @@ var require_reporter = __commonJS({
       if (!this.stack) {
         try {
           throw new Error(this.message);
-        } catch (e7) {
-          this.stack = e7.stack;
+        } catch (e8) {
+          this.stack = e8.stack;
         }
       }
       return this;
@@ -49697,16 +49697,16 @@ var require_node2 = __commonJS({
       state.optional = true;
       return this;
     };
-    Node.prototype.explicit = function explicit(num4) {
+    Node.prototype.explicit = function explicit(num5) {
       const state = this._baseState;
       assert(state.explicit === null && state.implicit === null);
-      state.explicit = num4;
+      state.explicit = num5;
       return this;
     };
-    Node.prototype.implicit = function implicit(num4) {
+    Node.prototype.implicit = function implicit(num5) {
       const state = this._baseState;
       assert(state.explicit === null && state.implicit === null);
-      state.implicit = num4;
+      state.implicit = num5;
       return this;
     };
     Node.prototype.obj = function obj() {
@@ -49768,7 +49768,7 @@ var require_node2 = __commonJS({
             else
               this._decodeChoice(input, options);
             present = true;
-          } catch (e7) {
+          } catch (e8) {
             present = false;
           }
           input.restore(save);
@@ -49887,7 +49887,7 @@ var require_node2 = __commonJS({
             return false;
           result = { type: key, value: value2 };
           match = true;
-        } catch (e7) {
+        } catch (e8) {
           input.restore(save);
           return false;
         }
@@ -50185,11 +50185,11 @@ var require_der2 = __commonJS({
       }
       return this._createEncoderBuffer(objid);
     };
-    function two(num4) {
-      if (num4 < 10)
-        return "0" + num4;
+    function two(num5) {
+      if (num5 < 10)
+        return "0" + num5;
       else
-        return num4;
+        return num5;
     }
     DERNode.prototype._encodeTime = function encodeTime(time3, tag) {
       let str8;
@@ -50222,43 +50222,43 @@ var require_der2 = __commonJS({
     DERNode.prototype._encodeNull = function encodeNull() {
       return this._createEncoderBuffer("");
     };
-    DERNode.prototype._encodeInt = function encodeInt(num4, values) {
-      if (typeof num4 === "string") {
+    DERNode.prototype._encodeInt = function encodeInt(num5, values) {
+      if (typeof num5 === "string") {
         if (!values)
           return this.reporter.error("String int or enum given, but no values map");
-        if (!values.hasOwnProperty(num4)) {
-          return this.reporter.error("Values map doesn't contain: " + JSON.stringify(num4));
+        if (!values.hasOwnProperty(num5)) {
+          return this.reporter.error("Values map doesn't contain: " + JSON.stringify(num5));
         }
-        num4 = values[num4];
+        num5 = values[num5];
       }
-      if (typeof num4 !== "number" && !Buffer2.isBuffer(num4)) {
-        const numArray = num4.toArray();
-        if (!num4.sign && numArray[0] & 128) {
+      if (typeof num5 !== "number" && !Buffer2.isBuffer(num5)) {
+        const numArray = num5.toArray();
+        if (!num5.sign && numArray[0] & 128) {
           numArray.unshift(0);
         }
-        num4 = Buffer2.from(numArray);
+        num5 = Buffer2.from(numArray);
       }
-      if (Buffer2.isBuffer(num4)) {
-        let size2 = num4.length;
-        if (num4.length === 0)
+      if (Buffer2.isBuffer(num5)) {
+        let size2 = num5.length;
+        if (num5.length === 0)
           size2++;
         const out2 = Buffer2.alloc(size2);
-        num4.copy(out2);
-        if (num4.length === 0)
+        num5.copy(out2);
+        if (num5.length === 0)
           out2[0] = 0;
         return this._createEncoderBuffer(out2);
       }
-      if (num4 < 128)
-        return this._createEncoderBuffer(num4);
-      if (num4 < 256)
-        return this._createEncoderBuffer([0, num4]);
+      if (num5 < 128)
+        return this._createEncoderBuffer(num5);
+      if (num5 < 256)
+        return this._createEncoderBuffer([0, num5]);
       let size = 1;
-      for (let i = num4; i >= 256; i >>= 8)
+      for (let i = num5; i >= 256; i >>= 8)
         size++;
       const out = new Array(size);
       for (let i = out.length - 1; i >= 0; i--) {
-        out[i] = num4 & 255;
-        num4 >>= 8;
+        out[i] = num5 & 255;
+        num5 >>= 8;
       }
       if (out[0] & 128) {
         out.unshift(0);
@@ -50600,11 +50600,11 @@ var require_der3 = __commonJS({
       if ((len & 128) === 0) {
         return len;
       }
-      const num4 = len & 127;
-      if (num4 > 4)
+      const num5 = len & 127;
+      if (num5 > 4)
         return buf.error("length octect is too long");
       len = 0;
-      for (let i = 0; i < num4; i++) {
+      for (let i = 0; i < num5; i++) {
         len <<= 8;
         const j = buf.readUInt8(fail10);
         if (buf.isError(j))
@@ -51195,12 +51195,12 @@ var require_crypto = __commonJS({
           return cacheSet(privateKeysCache, key, providedAlgorithm);
         }
         return cacheSet(privateKeysCache, key, detectedAlgorithm);
-      } catch (e7) {
+      } catch (e8) {
         throw cacheSet(
           privateKeysCache,
           key,
           null,
-          TokenError.wrap(e7, TokenError.codes.invalidKey, "Unsupported PEM private key.")
+          TokenError.wrap(e8, TokenError.codes.invalidKey, "Unsupported PEM private key.")
         );
       }
     }
@@ -51224,12 +51224,12 @@ var require_crypto = __commonJS({
           throw new TokenError(TokenError.codes.invalidKey, "The public key must be a string or a buffer.");
         }
         return cacheSet(publicKeysCache, key, performDetectPublicKeyAlgorithms(key));
-      } catch (e7) {
+      } catch (e8) {
         throw cacheSet(
           publicKeysCache,
           key,
           null,
-          TokenError.wrap(e7, TokenError.codes.invalidKey, "Unsupported PEM public key.")
+          TokenError.wrap(e8, TokenError.codes.invalidKey, "Unsupported PEM public key.")
         );
       }
     }
@@ -51263,8 +51263,8 @@ var require_crypto = __commonJS({
             raw = directSign(void 0, Buffer.from(input, "utf-8"), key).toString("base64");
         }
         return raw.replace(base64UrlMatcher, base64UrlReplacer);
-      } catch (e7) {
-        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e7 });
+      } catch (e8) {
+        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e8 });
       }
     }
     function verifySignature(algorithm, key, input, signature) {
@@ -51293,8 +51293,8 @@ var require_crypto = __commonJS({
           signature = joseToDer(signature, algorithm);
         }
         return createVerify("RSA-" + alg).update(input).verify(options, signature);
-      } catch (e7) {
-        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e7 });
+      } catch (e8) {
+        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e8 });
       }
     }
     module.exports = {
@@ -51647,12 +51647,12 @@ var require_verifier = __commonJS({
       let decoded;
       try {
         decoded = decode(token2);
-      } catch (e7) {
+      } catch (e8) {
         if (callback) {
-          callback(e7);
+          callback(e8);
           return promise;
         }
-        throw e7;
+        throw e8;
       }
       const { header, payload, signature, input } = decoded;
       const cacheContext = {
@@ -51681,8 +51681,8 @@ var require_verifier = __commonJS({
         try {
           verifyToken(key, decoded, validationContext);
           return cacheSet(cacheContext, complete ? { header, payload, signature, input } : payload);
-        } catch (e7) {
-          throw cacheSet(cacheContext, e7);
+        } catch (e8) {
+          throw cacheSet(cacheContext, e8);
         }
       }
       getAsyncKey(key, { header, payload, signature }, (err, currentKey) => {
@@ -51713,8 +51713,8 @@ var require_verifier = __commonJS({
           }
           currentKey = prepareKeyOrSecret(currentKey, availableAlgorithms[0] === hsAlgorithms[0]);
           verifyToken(currentKey, decoded, validationContext);
-        } catch (e7) {
-          return callback(cacheSet(cacheContext, e7));
+        } catch (e8) {
+          return callback(cacheSet(cacheContext, e8));
         }
         callback(null, cacheSet(cacheContext, complete ? { header, payload, signature, input: token2 } : payload));
       });
@@ -51891,24 +51891,24 @@ var require_dist6 = __commonJS({
     var DAY = HOUR * 24;
     var YEAR = DAY * 365.25;
     function parse(val) {
-      var num4, arr = val.toLowerCase().match(RGX);
-      if (arr != null && (num4 = parseFloat(arr[1]))) {
-        if (arr[3] != null) return num4 * SEC;
-        if (arr[4] != null) return num4 * MIN;
-        if (arr[5] != null) return num4 * HOUR;
-        if (arr[6] != null) return num4 * DAY;
-        if (arr[7] != null) return num4 * DAY * 7;
-        if (arr[8] != null) return num4 * YEAR;
-        return num4;
+      var num5, arr = val.toLowerCase().match(RGX);
+      if (arr != null && (num5 = parseFloat(arr[1]))) {
+        if (arr[3] != null) return num5 * SEC;
+        if (arr[4] != null) return num5 * MIN;
+        if (arr[5] != null) return num5 * HOUR;
+        if (arr[6] != null) return num5 * DAY;
+        if (arr[7] != null) return num5 * DAY * 7;
+        if (arr[8] != null) return num5 * YEAR;
+        return num5;
       }
     }
     function fmt(val, pfx, str8, long) {
-      var num4 = (val | 0) === val ? val : ~~(val + 0.5);
-      return pfx + num4 + (long ? " " + str8 + (num4 != 1 ? "s" : "") : str8[0]);
+      var num5 = (val | 0) === val ? val : ~~(val + 0.5);
+      return pfx + num5 + (long ? " " + str8 + (num5 != 1 ? "s" : "") : str8[0]);
     }
-    function format(num4, long) {
-      var pfx = num4 < 0 ? "-" : "", abs = num4 < 0 ? -num4 : num4;
-      if (abs < SEC) return num4 + (long ? " ms" : "ms");
+    function format(num5, long) {
+      var pfx = num5 < 0 ? "-" : "", abs = num5 < 0 ? -num5 : num5;
+      if (abs < SEC) return num5 + (long ? " ms" : "ms");
       if (abs < MIN) return fmt(abs / SEC, pfx, "second", long);
       if (abs < HOUR) return fmt(abs / MIN, pfx, "minute", long);
       if (abs < DAY) return fmt(abs / HOUR, pfx, "hour", long);
@@ -52032,8 +52032,8 @@ var require_signer = __commonJS({
           const encodedHeader = Buffer.from(JSON.stringify(header), "utf-8").toString("base64").replace(base64UrlMatcher, base64UrlReplacer);
           const input = encodedHeader + "." + encodedPayload;
           token2 = input + "." + createSignature(algorithm, currentKey, input);
-        } catch (e7) {
-          return callback(e7);
+        } catch (e8) {
+          return callback(e8);
         }
         callback(null, token2);
       });
@@ -52818,8 +52818,8 @@ var require_jwt = __commonJS({
     function fastifyJwt(fastify, options, next) {
       try {
         validateOptions(options);
-      } catch (e7) {
-        return next(e7);
+      } catch (e8) {
+        return next(e8);
       }
       const {
         cookie,
@@ -53468,11 +53468,11 @@ var require_main = __commonJS({
         try {
           const parsed = DotenvModule.parse(fs.readFileSync(path2, { encoding }));
           DotenvModule.populate(parsedAll, parsed, options);
-        } catch (e7) {
+        } catch (e8) {
           if (debug) {
-            _debug(`Failed to load ${path2} ${e7.message}`);
+            _debug(`Failed to load ${path2} ${e8.message}`);
           }
-          lastError = e7;
+          lastError = e8;
         }
       }
       let processEnv = process.env;
@@ -53487,11 +53487,11 @@ var require_main = __commonJS({
           try {
             const relative = path.relative(process.cwd(), filePath);
             shortPaths.push(relative);
-          } catch (e7) {
+          } catch (e8) {
             if (debug) {
-              _debug(`Failed to load ${filePath} ${e7.message}`);
+              _debug(`Failed to load ${filePath} ${e8.message}`);
             }
-            lastError = e7;
+            lastError = e8;
           }
         }
         _log(`injecting env (${keysCount}) from ${shortPaths.join(",")}`);
@@ -53603,13 +53603,13 @@ var require_bcrypt = __commonJS({
         if (typeof module !== "undefined" && module && module["exports"])
           try {
             return __require("crypto")["randomBytes"](len);
-          } catch (e7) {
+          } catch (e8) {
           }
         try {
           var a;
           (self["crypto"] || self["msCrypto"])["getRandomValues"](a = new Uint32Array(len));
           return Array.prototype.slice.call(a);
-        } catch (e7) {
+        } catch (e8) {
         }
         if (!randomFallback)
           throw Error("Neither WebCryptoAPI nor a crypto module is available. Use bcrypt.setRandomFallback to set an alternative");
@@ -53619,7 +53619,7 @@ var require_bcrypt = __commonJS({
       try {
         random(1);
         randomAvailable = true;
-      } catch (e7) {
+      } catch (e8) {
       }
       randomFallback = null;
       bcrypt2.setRandomFallback = function(random2) {
@@ -55449,8 +55449,8 @@ var init_util = __esm({
         return util2.objectValues(filtered);
       };
       util2.objectValues = (obj) => {
-        return util2.objectKeys(obj).map(function(e7) {
-          return obj[e7];
+        return util2.objectKeys(obj).map(function(e8) {
+          return obj[e8];
         });
       };
       util2.objectKeys = typeof Object.keys === "function" ? (obj) => Object.keys(obj) : (object) => {
@@ -56401,8 +56401,8 @@ var init_types = __esm({
       promise() {
         return ZodPromise.create(this, this._def);
       }
-      or(option) {
-        return ZodUnion.create([this, option], this._def);
+      or(option2) {
+        return ZodUnion.create([this, option2], this._def);
       }
       and(incoming) {
         return ZodIntersection.create(this, incoming, this._def);
@@ -58155,7 +58155,7 @@ var init_types = __esm({
           return INVALID;
         }
         if (ctx.common.async) {
-          return Promise.all(options.map(async (option) => {
+          return Promise.all(options.map(async (option2) => {
             const childCtx = {
               ...ctx,
               common: {
@@ -58165,7 +58165,7 @@ var init_types = __esm({
               parent: null
             };
             return {
-              result: await option._parseAsync({
+              result: await option2._parseAsync({
                 data: ctx.data,
                 path: ctx.path,
                 parent: childCtx
@@ -58176,7 +58176,7 @@ var init_types = __esm({
         } else {
           let dirty = void 0;
           const issues = [];
-          for (const option of options) {
+          for (const option2 of options) {
             const childCtx = {
               ...ctx,
               common: {
@@ -58185,7 +58185,7 @@ var init_types = __esm({
               },
               parent: null
             };
-            const result = option._parseSync({
+            const result = option2._parseSync({
               data: ctx.data,
               path: ctx.path,
               parent: childCtx
@@ -58266,8 +58266,8 @@ var init_types = __esm({
         }
         const discriminator = this.discriminator;
         const discriminatorValue = ctx.data[discriminator];
-        const option = this.optionsMap.get(discriminatorValue);
-        if (!option) {
+        const option2 = this.optionsMap.get(discriminatorValue);
+        if (!option2) {
           addIssueToContext(ctx, {
             code: ZodIssueCode.invalid_union_discriminator,
             options: Array.from(this.optionsMap.keys()),
@@ -58276,13 +58276,13 @@ var init_types = __esm({
           return INVALID;
         }
         if (ctx.common.async) {
-          return option._parseAsync({
+          return option2._parseAsync({
             data: ctx.data,
             path: ctx.path,
             parent: ctx
           });
         } else {
-          return option._parseSync({
+          return option2._parseSync({
             data: ctx.data,
             path: ctx.path,
             parent: ctx
@@ -58696,13 +58696,13 @@ var init_types = __esm({
           const me = this;
           return OK(async function(...args) {
             const error = new ZodError([]);
-            const parsedArgs = await me._def.args.parseAsync(args, params2).catch((e7) => {
-              error.addIssue(makeArgsIssue(args, e7));
+            const parsedArgs = await me._def.args.parseAsync(args, params2).catch((e8) => {
+              error.addIssue(makeArgsIssue(args, e8));
               throw error;
             });
             const result = await Reflect.apply(fn, this, parsedArgs);
-            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params2).catch((e7) => {
-              error.addIssue(makeReturnsIssue(result, e7));
+            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params2).catch((e8) => {
+              error.addIssue(makeReturnsIssue(result, e8));
               throw error;
             });
             return parsedReturns;
@@ -60996,11 +60996,11 @@ function resolveRules(classId, fuelId) {
   return expandRules().filter((r) => r.classId === classId && r.fuelId === fuelId);
 }
 function isServiceApplicable(serviceId, classId, fuelId) {
-  const ref3 = findSubservice(serviceId);
-  if (!ref3)
+  const ref4 = findSubservice(serviceId);
+  if (!ref4)
     return false;
-  const classes = new Set(normalizeList(ref3.subservice.appliesTo.classes, classIds));
-  const fuels = new Set(normalizeList(ref3.subservice.appliesTo.fuels, fuelIds));
+  const classes = new Set(normalizeList(ref4.subservice.appliesTo.classes, classIds));
+  const fuels = new Set(normalizeList(ref4.subservice.appliesTo.fuels, fuelIds));
   return classes.has(classId) && fuels.has(fuelId);
 }
 var vehicleClasses, serviceTaxonomy, maintenanceRules, classIds, fuelIds, SUBSERVICE_INDEX;
@@ -61048,9 +61048,9 @@ function estimateKmPerDay(input) {
   const readings = [...input.odometerReadings ?? []].filter((r) => toDate(r.date).getTime() <= today.getTime()).sort((a, b) => toDate(a.date).getTime() - toDate(b.date).getTime());
   for (let i = readings.length - 1; i >= 0; i -= 1) {
     const reading = readings[i];
-    const days = daysBetween(reading.date, today);
-    if (days >= 1 && input.odometerKm > reading.km) {
-      const kmPerDay = (input.odometerKm - reading.km) / days;
+    const days2 = daysBetween(reading.date, today);
+    if (days2 >= 1 && input.odometerKm > reading.km) {
+      const kmPerDay = (input.odometerKm - reading.km) / days2;
       return Math.round(kmPerDay * 10) / 10;
     }
   }
@@ -61089,43 +61089,43 @@ function priorityFor(status) {
       return "baja";
   }
 }
-function formatVencido(km7, days) {
+function formatVencido(km8, days2) {
   const parts = [];
-  if (km7 !== null && km7 <= 0)
-    parts.push(`hace ${Math.abs(km7)} km`);
-  if (days !== null && days <= 0) {
-    const months = Math.max(1, Math.abs(Math.round(days / DAYS_PER_MONTH)));
+  if (km8 !== null && km8 <= 0)
+    parts.push(`hace ${Math.abs(km8)} km`);
+  if (days2 !== null && days2 <= 0) {
+    const months = Math.max(1, Math.abs(Math.round(days2 / DAYS_PER_MONTH)));
     parts.push(`hace ${months} ${months === 1 ? "mes" : "meses"}`);
   }
   return parts.length > 0 ? `Vencido ${parts.join(" y ")}` : "Vencido";
 }
-function formatProximo(km7, days) {
-  if (km7 !== null && km7 <= NEXT_WINDOW_KM) {
-    return `En ${Math.max(0, km7)} km`;
+function formatProximo(km8, days2) {
+  if (km8 !== null && km8 <= NEXT_WINDOW_KM) {
+    return `En ${Math.max(0, km8)} km`;
   }
-  if (days !== null && days <= NEXT_WINDOW_DAYS) {
-    if (days >= 7) {
-      const weeks = Math.round(days / 7);
+  if (days2 !== null && days2 <= NEXT_WINDOW_DAYS) {
+    if (days2 >= 7) {
+      const weeks = Math.round(days2 / 7);
       return `En ${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
     }
-    return `En ${Math.max(0, Math.round(days))} ${Math.max(0, Math.round(days)) === 1 ? "d\xEDa" : "d\xEDas"}`;
+    return `En ${Math.max(0, Math.round(days2))} ${Math.max(0, Math.round(days2)) === 1 ? "d\xEDa" : "d\xEDas"}`;
   }
   return "Pr\xF3ximo";
 }
 function buildReason(status, remainingKm, remainingDays, effKm, effMonths) {
   switch (status) {
     case "sin_registro": {
-      const every = [effKm === null ? null : `${effKm} km`, effMonths === null ? null : `${effMonths} meses`].filter(Boolean).join(" / ");
-      return `Sin registro: verificar si se hizo${every ? ` (cada ${every})` : ""}`;
+      const every2 = [effKm === null ? null : `${effKm} km`, effMonths === null ? null : `${effMonths} meses`].filter(Boolean).join(" / ");
+      return `Sin registro: verificar si se hizo${every2 ? ` (cada ${every2})` : ""}`;
     }
     case "vencido":
       return formatVencido(remainingKm, remainingDays);
     case "proximo":
       return formatProximo(remainingKm, remainingDays);
     default: {
-      const km7 = effKm === null ? "\u2014" : String(effKm);
+      const km8 = effKm === null ? "\u2014" : String(effKm);
       const months = effMonths === null ? "\u2014" : String(effMonths);
-      return `Al d\xEDa (cada ${km7} km / ${months} meses)`;
+      return `Al d\xEDa (cada ${km8} km / ${months} meses)`;
     }
   }
 }
@@ -61146,8 +61146,8 @@ function computeItem(input, serviceId) {
   const { classId, fuelId } = input.vehicle;
   if (!isServiceApplicable(serviceId, classId, fuelId))
     return null;
-  const ref3 = findSubservice(serviceId);
-  if (!ref3 || !ref3.subservice.periodic)
+  const ref4 = findSubservice(serviceId);
+  if (!ref4 || !ref4.subservice.periodic)
     return null;
   const rule = resolveRules(classId, fuelId).find((r) => r.serviceId === serviceId);
   if (!rule)
@@ -61192,10 +61192,10 @@ function computeItem(input, serviceId) {
     status = passed ? "sin_registro" : computeItemStatus(remainingKm, monthsActive && !kmActive ? 0 : null);
   }
   return {
-    serviceId: ref3.subservice.id,
-    serviceName: ref3.subservice.name,
-    categoryId: ref3.category.id,
-    categoryName: ref3.category.name,
+    serviceId: ref4.subservice.id,
+    serviceName: ref4.subservice.name,
+    categoryId: ref4.category.id,
+    categoryName: ref4.category.name,
     dueKm,
     dueDate: dueDate2,
     remainingKm,
@@ -61231,6 +61231,8 @@ function buildPlan(input) {
           durationMin: subservice.durationMin,
           remainingKm: computation.remainingKm ?? 0,
           remainingDays: computation.remainingDays ?? 0,
+          intervalKm: computation.effKm,
+          intervalMonths: computation.effMonths,
           reason: buildReason(computation.status, computation.remainingKm, computation.remainingDays, computation.effKm, computation.effMonths)
         }
       });
@@ -61406,9 +61408,9 @@ function formatPlanSummary(ctx) {
   if (sinRegistro.length)
     lines.push(`\u{1F7E0} Verificar primero: ${sinRegistro.slice(0, 4).map((i) => i.serviceName).join("; ")}${sinRegistro.length > 4 ? ` y ${sinRegistro.length - 4} m\xE1s sin registro` : ""}`);
   const milestones = [...new Set(ahead.map((i) => i.dueKm))].slice(0, 2);
-  for (const km7 of milestones) {
-    const names = ahead.filter((i) => i.dueKm === km7).map((i) => i.serviceName);
-    lines.push(`\u{1F4C5} A los ${formatKm(km7)} km: ${names.slice(0, 4).join(", ")}${names.length > 4 ? ` y ${names.length - 4} m\xE1s` : ""}`);
+  for (const km8 of milestones) {
+    const names = ahead.filter((i) => i.dueKm === km8).map((i) => i.serviceName);
+    lines.push(`\u{1F4C5} A los ${formatKm(km8)} km: ${names.slice(0, 4).join(", ")}${names.length > 4 ? ` y ${names.length - 4} m\xE1s` : ""}`);
   }
   lines.push(ctx.source ? `Fuente: ${ctx.source}` : "Plan referencial: a\xFAn no tenemos la ficha del fabricante para este modelo.");
   lines.push("Plan completo \xB7 \xDAltimo servicio | servicio | km | AAAA-MM \xB7 Kilometraje | km");
@@ -62496,6 +62498,20 @@ var init_billing_statements = __esm({
       addColumn2("Subscription", "expiryNoticeAt", "DATETIME(3) NULL"),
       { kind: "createIndex", target: "Subscription.Subscription_number_idx", sql: "CREATE INDEX `Subscription_number_idx` ON `Subscription`(`number`)" },
       { kind: "createIndex", target: "Subscription.Subscription_status_expiresAt_idx", sql: "CREATE INDEX `Subscription_status_expiresAt_idx` ON `Subscription`(`status`, `expiresAt`)" }
+    ];
+  }
+});
+
+// packages/api/dist/infrastructure/schema-setup/map-statements.js
+var MAP_TABLES, MAP_STATEMENTS;
+var init_map_statements = __esm({
+  "packages/api/dist/infrastructure/schema-setup/map-statements.js"() {
+    "use strict";
+    MAP_TABLES = [];
+    MAP_STATEMENTS = [
+      { kind: "addColumn", target: "Shop.mapListed", sql: "ALTER TABLE `Shop` ADD COLUMN `mapListed` BOOLEAN NOT NULL DEFAULT FALSE" },
+      { kind: "addColumn", target: "Shop.mapConsentAt", sql: "ALTER TABLE `Shop` ADD COLUMN `mapConsentAt` DATETIME(3) NULL" },
+      { kind: "addColumn", target: "Shop.mapPrecision", sql: "ALTER TABLE `Shop` ADD COLUMN `mapPrecision` VARCHAR(10) NOT NULL DEFAULT 'exacta'" }
     ];
   }
 });
@@ -72159,8 +72175,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res);
           done();
-        } catch (e7) {
-          done(e7);
+        } catch (e8) {
+          done(e8);
         }
       };
       IconvLiteEncoderStream.prototype._flush = function(done) {
@@ -72168,8 +72184,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res);
           done();
-        } catch (e7) {
-          done(e7);
+        } catch (e8) {
+          done(e8);
         }
       };
       IconvLiteEncoderStream.prototype.collect = function(cb) {
@@ -72200,8 +72216,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e7) {
-          done(e7);
+        } catch (e8) {
+          done(e8);
         }
       };
       IconvLiteDecoderStream.prototype._flush = function(done) {
@@ -72209,8 +72225,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e7) {
-          done(e7);
+        } catch (e8) {
+          done(e8);
         }
       };
       IconvLiteDecoderStream.prototype.collect = function(cb) {
@@ -72266,7 +72282,7 @@ var require_lib4 = __commonJS({
       try {
         module.exports.getCodec(enc);
         return true;
-      } catch (e7) {
+      } catch (e8) {
         return false;
       }
     };
@@ -72349,7 +72365,7 @@ var require_lib4 = __commonJS({
     var streamModule;
     try {
       streamModule = __require("stream");
-    } catch (e7) {
+    } catch (e8) {
     }
     if (streamModule && streamModule.Transform) {
       module.exports.enableStreamingAPI(streamModule);
@@ -72644,12 +72660,12 @@ var require_helpers = __commonJS({
       const REQUIRE_TERMINATOR = "";
       highlightFn = __require(`cardinal${REQUIRE_TERMINATOR}`).highlight;
     } catch {
-      highlightFn = (text8) => {
+      highlightFn = (text9) => {
         if (!cardinalRecommended) {
           console.log("For nicer debug output consider install cardinal@^2.0.0");
           cardinalRecommended = true;
         }
-        return text8;
+        return text9;
       };
     }
     function printDebugWithCode(msg, code3) {
@@ -72815,12 +72831,12 @@ var require_packet = __commonJS({
     var Types = require_types6();
     var ZERO_DATE = "0000-00-00";
     var pad = "000000000000";
-    function leftPad(num4, value2) {
+    function leftPad(num5, value2) {
       const s = value2.toString();
-      if (s.length >= num4) {
+      if (s.length >= num5) {
         return s;
       }
-      return (pad + s).slice(-num4);
+      return (pad + s).slice(-num5);
     }
     var minus = "-".charCodeAt(0);
     var plus = "+".charCodeAt(0);
@@ -72890,8 +72906,8 @@ var require_packet = __commonJS({
       haveMoreData() {
         return this.end > this.offset;
       }
-      skip(num4) {
-        this.offset += num4;
+      skip(num5) {
+        this.offset += num5;
       }
       readInt8() {
         return this.buffer[this.offset++];
@@ -73240,12 +73256,12 @@ var require_packet = __commonJS({
           result += this.buffer[this.offset] - 48;
           this.offset++;
         }
-        const num4 = result * sign;
+        const num5 = result * sign;
         if (!supportBigNumbers) {
-          return num4;
+          return num5;
         }
-        if (Number.isSafeInteger(num4)) {
-          return num4;
+        if (Number.isSafeInteger(num5)) {
+          return num5;
         }
         return this.buffer.toString("ascii", start, end);
       }
@@ -73286,7 +73302,7 @@ var require_packet = __commonJS({
         }
         const bufferLength = buffer.length;
         function parseGeometry() {
-          let x, y, i, j, numPoints, numRings, num4, line;
+          let x, y, i, j, numPoints, numRings, num5, line;
           let result = null;
           if (offset2 + 5 > bufferLength) {
             return null;
@@ -73367,13 +73383,13 @@ var require_packet = __commonJS({
               if (offset2 + 4 > bufferLength) {
                 return null;
               }
-              num4 = byteOrder ? buffer.readUInt32LE(offset2) : buffer.readUInt32BE(offset2);
+              num5 = byteOrder ? buffer.readUInt32LE(offset2) : buffer.readUInt32BE(offset2);
               offset2 += 4;
-              if (num4 > (bufferLength - offset2) / 9) {
+              if (num5 > (bufferLength - offset2) / 9) {
                 return null;
               }
               result = [];
-              for (i = num4; i > 0; i--) {
+              for (i = num5; i > 0; i--) {
                 result.push(parseGeometry());
               }
               break;
@@ -73595,20 +73611,20 @@ var require_packet = __commonJS({
         this.offset += bytes;
       }
       // must match writeTime's choice of encoding byte for byte
-      static timeLength({ days, hours, minutes, seconds, microseconds }) {
-        if (!days && !hours && !minutes && !seconds && !microseconds) {
+      static timeLength({ days: days2, hours, minutes, seconds, microseconds }) {
+        if (!days2 && !hours && !minutes && !seconds && !microseconds) {
           return 1;
         }
         return microseconds ? 13 : 9;
       }
-      writeTime({ negative, days, hours, minutes, seconds, microseconds }) {
-        if (!days && !hours && !minutes && !seconds && !microseconds) {
+      writeTime({ negative, days: days2, hours, minutes, seconds, microseconds }) {
+        if (!days2 && !hours && !minutes && !seconds && !microseconds) {
           this.writeInt8(0);
           return;
         }
         this.writeInt8(microseconds ? 12 : 8);
         this.writeInt8(negative ? 1 : 0);
-        this.writeInt32(days);
+        this.writeInt32(days2);
         this.writeInt8(hours);
         this.writeInt8(minutes);
         this.writeInt8(seconds);
@@ -77351,9 +77367,9 @@ var require_client_handshake = __commonJS({
         }
       }
       handshakeInit(helloPacket, connection) {
-        this.on("error", (e7) => {
-          connection._fatalError = e7;
-          connection._protocolError = e7;
+        this.on("error", (e8) => {
+          connection._fatalError = e8;
+          connection._protocolError = e8;
         });
         this.handshake = Packets.Handshake.fromPacket(helloPacket);
         if (connection.config.debug) {
@@ -78989,11 +79005,11 @@ var require_connection_config = __commonJS({
         return defaultFlags;
       }
       static getCharsetNumber(charset) {
-        const num4 = Charsets[charset.toUpperCase()];
-        if (num4 === void 0) {
+        const num5 = Charsets[charset.toUpperCase()];
+        if (num5 === void 0) {
           throw new TypeError(`Unknown charset '${charset}'`);
         }
-        return num4;
+        return num5;
       }
       static getSSLProfile(name) {
         if (!SSLProfiles) {
@@ -79107,21 +79123,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows25, fields;
+          let rows27, fields;
           if (this._resultIndex === 0) {
-            rows25 = this._rows[0];
+            rows27 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows25 = this._rows;
+            rows27 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows25, fields);
+              this.onResult(null, rows27, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows25);
+              this.onResult(null, rows27);
             });
           }
         }
@@ -81678,9 +81694,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows25, columns, binary = false) {
+      writeTextResult(rows27, columns, binary = false) {
         this.writeColumns(columns);
-        rows25.forEach((row) => {
+        rows27.forEach((row) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column) => {
             arrayRow.push(row[column.name]);
@@ -81790,12 +81806,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve2, reject, stackHolder) {
-      return function(err, rows25, fields) {
+      return function(err, rows27, fields) {
         if (err) {
           applyCapturedStack(err, stackHolder);
           reject(err);
         } else {
-          resolve2([rows25, fields]);
+          resolve2([rows27, fields]);
         }
       };
     }
@@ -82403,9 +82419,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err2, rows25, fields) {
+              cmdQuery.onResult = function(err2, rows27, fields) {
                 queryError = err2 || null;
-                origOnResult(err2, rows25, fields);
+                origOnResult(err2, rows27, fields);
               };
             } else {
               cmdQuery.once("error", (err2) => {
@@ -82419,12 +82435,12 @@ var require_pool = __commonJS({
                 conn.release();
               }
             });
-          } catch (e7) {
+          } catch (e8) {
             conn.release();
             if (typeof cmdQuery.onResult === "function") {
-              cmdQuery.onResult(e7);
+              cmdQuery.onResult(e8);
             } else {
-              cmdQuery.emit("error", e7);
+              cmdQuery.emit("error", e8);
             }
           }
         });
@@ -82440,17 +82456,17 @@ var require_pool = __commonJS({
             return cb(err);
           }
           try {
-            conn.execute(sql, values, (err2, rows25, fields) => {
+            conn.execute(sql, values, (err2, rows27, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
-              cb(err2, rows25, fields);
+              cb(err2, rows27, fields);
             }).once("end", () => {
               conn.release();
             });
-          } catch (e7) {
+          } catch (e8) {
             conn.release();
-            return cb(e7);
+            return cb(e8);
           }
         });
       }
@@ -82736,9 +82752,9 @@ var require_pool_cluster = __commonJS({
             conn.query(query).once("end", () => {
               conn.release();
             });
-          } catch (e7) {
+          } catch (e8) {
             conn.release();
-            throw e7;
+            throw e8;
           }
         });
         return query;
@@ -82762,9 +82778,9 @@ var require_pool_cluster = __commonJS({
             conn.execute(sql, values, cb).once("end", () => {
               conn.release();
             });
-          } catch (e7) {
+          } catch (e8) {
             conn.release();
-            throw e7;
+            throw e8;
           }
         });
       }
@@ -83270,8 +83286,8 @@ async function openConnection(env = process.env) {
   });
 }
 function firstRow(result) {
-  const rows25 = result[0];
-  return Array.isArray(rows25) ? rows25[0] : void 0;
+  const rows27 = result[0];
+  return Array.isArray(rows27) ? rows27[0] : void 0;
 }
 async function count(conn, sql, params2) {
   const row = firstRow(await conn.query(sql, params2));
@@ -83300,8 +83316,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows25] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows25) ? rows25.map((r) => String(r.name)) : [];
+  const [rows27] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows27) ? rows27.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -83339,15 +83355,15 @@ async function applySchemaNow(conn, statements = ALL_STATEMENTS) {
       await conn.query(statement.sql);
       results.push({ ...base, status: "applied" });
     } catch (err) {
-      const e7 = err;
-      if (e7.code && ALREADY_APPLIED.has(e7.code)) {
+      const e8 = err;
+      if (e8.code && ALREADY_APPLIED.has(e8.code)) {
         results.push({ ...base, status: "skipped" });
         continue;
       }
       results.push({
         ...base,
         status: "failed",
-        error: { code: e7.code ?? "UNKNOWN", message: e7.sqlMessage ?? e7.message ?? "Error desconocido" }
+        error: { code: e8.code ?? "UNKNOWN", message: e8.sqlMessage ?? e8.message ?? "Error desconocido" }
       });
       break;
     }
@@ -83375,8 +83391,9 @@ var init_apply = __esm({
     init_vehicle_care_statements();
     init_fleet_statements();
     init_billing_statements();
-    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS];
-    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES];
+    init_map_statements();
+    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS];
+    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES];
     DB_ENV = ["DB_HOST", "DB_PORT", "DB_NAME", "DB_USER", "DB_PASSWORD"];
     tableExists = (conn, table) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?", [table]);
     columnExists = (conn, table, column) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ?", [table, column]);
@@ -83436,8 +83453,8 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows25] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row = Array.isArray(rows25) ? rows25[0] : void 0;
+          const [rows27] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row = Array.isArray(rows27) ? rows27[0] : void 0;
           return row?.value === void 0 || row.value === null ? null : String(row.value);
         });
       }
@@ -83568,7 +83585,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 @media (max-width:400px){.logo-img{height:40px;padding:3px 8px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;transform:none!important}}
 `;
-    PILL_BUTTON = "border-radius:var(--c-pill);text-transform:uppercase;letter-spacing:.08em;font-weight:700;font-size:14px";
+    PILL_BUTTON = "border-radius:10px;text-transform:none;letter-spacing:0;font-weight:600;font-size:15px";
     THEME_ENTRY_LAYER = `${BASE}
 .logo{gap:10px;align-items:center}
 .lema{display:block;max-width:20ch;font:400 13px/1.35 var(--c-font);color:var(--c-muted)}
@@ -83576,7 +83593,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .brand{font-family:var(--c-display);font-weight:800;letter-spacing:-.02em}
 .brand span{color:var(--c-brand-ink);background:var(--c-brand-bg)}
 .brand small{font-size:13px}
-.pill{font:700 12px/1 var(--c-font);text-transform:uppercase;letter-spacing:.1em;padding:9px 14px}
+.pill{font:600 13px/1 var(--c-font);padding:8px 12px}
 .tema{border-radius:var(--c-pill)}
 .hero{background:var(--c-hero);color:var(--c-hero-ink);border:1px solid var(--c-hero-line);padding:22px 18px 20px}
 .hero .lead{color:var(--c-hero-muted)}
@@ -83587,11 +83604,11 @@ h1{font-family:var(--c-display);font-weight:800;font-size:clamp(26px,7.4vw,32px)
 .trust{border:1px solid var(--c-line);padding:14px 16px}
 .trust li{flex-direction:column;align-items:flex-start;gap:4px}
 .trust b{font:800 clamp(22px,6.4vw,26px)/1 var(--c-display);letter-spacing:-.03em}
-.trust span{font:600 12px/1.2 var(--c-font);text-transform:uppercase;letter-spacing:.08em}
-.section{font:700 12px/1.2 var(--c-font);text-transform:uppercase;letter-spacing:.14em;color:var(--c-muted);margin:14px 0 12px}
+.trust span{font:500 13px/1.25 var(--c-font)}
+.section{font:600 14px/1.3 var(--c-font);color:var(--c-muted);margin:14px 0 12px}
 .menu{gap:12px}
-.option{border:1px solid var(--c-line);padding:16px;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
-.option:hover{transform:translateY(-3px);border-color:var(--c-accent);box-shadow:var(--c-shadow),var(--c-glow)}
+.option{border:1px solid var(--c-line);padding:16px;transition:border-color .2s ease}
+.option:hover{border-color:var(--c-accent)}
 .option:focus-visible,.tema:focus-visible,.cta:focus-visible,.card>summary:focus-visible{outline-color:var(--c-focus)}
 .badge{border-radius:50%;background:var(--c-promo);color:var(--c-on-promo);width:44px;height:44px}
 .option b{font-family:var(--c-display);font-weight:700;font-size:16.5px;letter-spacing:-.015em}
@@ -83599,9 +83616,9 @@ h1{font-family:var(--c-display);font-weight:800;font-size:clamp(26px,7.4vw,32px)
 .option.ghost{border-color:var(--c-line)}
 .option.ghost .badge{background:transparent;color:var(--c-muted)}
 .option.ghost:hover{transform:none;box-shadow:none}
-.cta{${PILL_BUTTON};font-family:var(--c-display);font-size:15px;letter-spacing:.12em;min-height:58px;transition:background .3s ease,transform .3s ease}
-.cta:hover{background:var(--c-cta-hover);transform:translateY(-2px)}
-.cta:disabled:hover{background:var(--c-sunk);transform:none}
+.cta{${PILL_BUTTON};font-size:16px;min-height:56px;transition:background .2s ease}
+.cta:hover{background:var(--c-cta-hover)}
+.cta:disabled:hover{background:var(--c-sunk)}
 .card{border:1px solid var(--c-line);margin-bottom:12px}
 .card>summary{font-family:var(--c-display);font-weight:700;letter-spacing:-.01em;min-height:56px}
 .steps li{font-size:15.5px;line-height:1.5}
@@ -83610,16 +83627,16 @@ h1{font-family:var(--c-display);font-weight:800;font-size:clamp(26px,7.4vw,32px)
 .respuesta{font-size:15px;line-height:1.55}
 .small,.nota,.legal{font-size:13.5px}
 .small a,.legal a,.respuesta a{color:var(--c-link);text-decoration-color:var(--c-link-line);text-decoration-thickness:2px;text-underline-offset:3px}
-.code{border-radius:var(--c-pill);padding:6px 11px}
+.code{border-radius:6px;padding:5px 9px;font-family:var(--c-mono)}
 @media (max-width:360px){.trust{padding:12px}.option{padding:14px}}
 @media (max-height:700px){h1{font-size:24px}}
 /* P\xE1ginas de contenido */
-.migas{text-transform:uppercase;letter-spacing:.08em;font-size:12px;font-weight:600}
+.migas{font-size:13px;font-weight:500}
 .migas a,.enlaces a{color:var(--c-link);text-decoration-color:var(--c-link-line);text-decoration-thickness:2px;text-underline-offset:3px}
 .titulo{font-family:var(--c-display);font-weight:800;font-size:20px;letter-spacing:-.02em}
 .servicio h3{font-family:var(--c-display);font-weight:700;font-size:16.5px}
 .servicio p{font-size:15px;line-height:1.55}
-.datos span,.zonas span{border-radius:var(--c-pill);padding:7px 12px}
+.datos span,.zonas span{border-radius:6px;padding:6px 10px}
 .enlaces a{display:inline-block;padding:6px 0}
 `;
     THEME_ADMIN_LAYER = `${BASE}
@@ -83627,15 +83644,14 @@ header{border-bottom:1px solid var(--c-head-line)}
 .brand{font-family:var(--c-display);font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
 header .logo-img{height:36px;padding:3px 8px}
 form.login .logo-img,.brand .logo-img{flex:none}
-nav a{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;min-height:40px}
+nav a{font-size:14px;font-weight:500;padding:9px 12px;min-height:40px;border-radius:8px}
 main{padding:20px 16px 40px}
 h1{font-family:var(--c-display);font-weight:800;font-size:clamp(24px,6.4vw,32px);line-height:1.08;letter-spacing:-.03em}
 h2,h3{font-family:var(--c-display);letter-spacing:-.01em}
 .grid{gap:14px}
-.card{border:1px solid var(--c-line);padding:20px;transition:transform .3s ease,box-shadow .3s ease}
-.card:hover{transform:translateY(-2px);box-shadow:var(--c-shadow),var(--c-glow)}
-.card h2{font-family:var(--c-font);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em}
-.big{font-family:var(--c-display);font-weight:800;font-size:clamp(34px,9vw,44px);letter-spacing:-.04em;color:var(--c-accent)}
+.card{border:1px solid var(--c-line);padding:20px;box-shadow:none}
+.card h2{font-family:var(--c-font);font-size:14px;font-weight:600}
+.big{font-family:var(--c-display);font-weight:700;font-size:clamp(30px,8vw,38px);letter-spacing:-.03em;color:var(--c-ink)}
 button,a.button{${PILL_BUTTON};padding:10px 22px}
 header button{text-transform:none;letter-spacing:0;font-size:14px}
 input,select,textarea,.choice{border-radius:var(--c-r-sm)}
@@ -83643,9 +83659,9 @@ form.login{border:1px solid var(--c-line)}
 a{color:var(--c-link);text-decoration-color:var(--c-link-line)}
 a.button{color:var(--c-on-accent)}
 table{border:1px solid var(--c-line)}
-th{text-transform:uppercase;letter-spacing:.08em;font-size:12px}
+th{font-size:13px;font-weight:600}
 td{font-size:14.5px}
-.tabs a{text-transform:uppercase;letter-spacing:.08em;font-size:12px;font-weight:700;min-height:40px;display:inline-flex;align-items:center}
+.tabs a{font-size:14px;font-weight:500;min-height:40px;display:inline-flex;align-items:center;border-radius:8px}
 @media (max-width:560px){main{padding:16px 12px 32px}.card{padding:16px}th,td{padding:10px}}
 `;
     THEME_PILOT_LAYER = `${BASE}
@@ -83653,7 +83669,7 @@ main>.logo-img{margin:4px 0 8px}
 h1{font-family:var(--c-display);font-weight:800;font-size:clamp(26px,7vw,34px);line-height:1.06;letter-spacing:-.03em}
 h2,h3{font-family:var(--c-display);letter-spacing:-.015em}
 main>p{font-size:15.5px;max-width:65ch}
-section,details{border:1px solid var(--c-line);border-radius:var(--c-r)}
+section,details{border:1px solid var(--c-line);border-radius:12px;box-shadow:none}
 input,textarea,select{border-radius:var(--c-r-sm)}
 button{${PILL_BUTTON};padding:12px 22px}
 a{color:var(--c-link);text-decoration-color:var(--c-link-line);text-decoration-thickness:2px;text-underline-offset:3px}
@@ -83667,7 +83683,7 @@ header .logo-img{height:36px;padding:3px 8px;margin-bottom:8px}
 header h1{font-family:var(--c-display);font-weight:800;letter-spacing:-.03em;line-height:1.08}
 .tiles{gap:12px}
 .tile,.card{border:1px solid var(--c-line);border-radius:var(--c-r)}
-.tile{font-size:13px;color:var(--c-muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.tile{font-size:13px;color:var(--c-muted);font-weight:500}
 .tile b{font-family:var(--c-display);font-weight:800;letter-spacing:-.03em;color:var(--c-ink);text-transform:none}
 .card h2{font-family:var(--c-display);font-weight:800;letter-spacing:-.015em}
 th{font-size:12px}
@@ -83872,12 +83888,12 @@ function selectionSummary(ids) {
   let minutes = 0;
   const lines = ["Servicios elegidos:"];
   for (const id2 of ids) {
-    const ref3 = findSubservice(id2);
-    if (!ref3)
+    const ref4 = findSubservice(id2);
+    if (!ref4)
       continue;
-    cost += ref3.subservice.costRefUsd;
-    minutes += ref3.subservice.durationMin;
-    lines.push(`\u2022 ${ref3.subservice.name} (\u2248 ${usd(ref3.subservice.costRefUsd)})`);
+    cost += ref4.subservice.costRefUsd;
+    minutes += ref4.subservice.durationMin;
+    lines.push(`\u2022 ${ref4.subservice.name} (\u2248 ${usd(ref4.subservice.costRefUsd)})`);
   }
   lines.push(`Total referencial: \u2248 ${usd(cost)} \xB7 ${formatDuration(minutes)} aprox.`);
   return lines.join("\n");
@@ -84290,11 +84306,11 @@ function planTextFor(vehicle, level) {
     return null;
   const label2 = [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" ");
   const corrective = Array.isArray(vehicle.corrective) ? vehicle.corrective : [];
-  const text8 = formatPlanWhatsApp({ label: label2, plan, maxLength: 3300, source: sourceLine(vehicle, plan), corrective })[0] ?? null;
+  const text9 = formatPlanWhatsApp({ label: label2, plan, maxLength: 3300, source: sourceLine(vehicle, plan), corrective })[0] ?? null;
   const note = levelNote(vehicle, level);
-  return text8 && note ? `${text8}
+  return text9 && note ? `${text9}
 
-${note}` : text8;
+${note}` : text9;
 }
 function planSummaryFor(vehicle, level) {
   const plan = atLevel(planFor(vehicle), level);
@@ -84302,11 +84318,11 @@ function planSummaryFor(vehicle, level) {
     return null;
   const label2 = [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" ");
   const corrective = Array.isArray(vehicle.corrective) ? vehicle.corrective : [];
-  const text8 = formatPlanSummary({ label: label2, plan, source: sourceLine(vehicle, plan), corrective });
+  const text9 = formatPlanSummary({ label: label2, plan, source: sourceLine(vehicle, plan), corrective });
   const note = levelNote(vehicle, level);
-  return text8 && note ? `${text8}
+  return text9 && note ? `${text9}
 
-${note}` : text8;
+${note}` : text9;
 }
 var USAGE;
 var init_plan_text = __esm({
@@ -84316,6 +84332,209 @@ var init_plan_text = __esm({
     init_levels();
     init_vehicle_specs2();
     USAGE = ["urbano", "carretera", "severo"];
+  }
+});
+
+// packages/api/dist/application/panel/recommendations.js
+function formatKm2(km8) {
+  return `${Math.round(Math.abs(km8)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\xA0")}\xA0km`;
+}
+function formatMonth(date2) {
+  const ec = new Date(date2.getTime() - 5 * 36e5);
+  return `${MONTHS[ec.getUTCMonth()]} ${ec.getUTCFullYear()}`;
+}
+function days(n) {
+  const d = Math.max(0, Math.round(n));
+  if (d >= 60) {
+    const m = Math.round(d / 30.44);
+    return `${m} meses`;
+  }
+  return `${d} ${d === 1 ? "d\xEDa" : "d\xEDas"}`;
+}
+function every(item) {
+  const km8 = item.intervalKm ?? null;
+  const months = item.intervalMonths ?? null;
+  const parts = [km8 !== null ? formatKm2(km8) : null, months !== null ? `${months} ${months === 1 ? "mes" : "meses"}` : null].filter(Boolean);
+  return parts.length ? `Cada ${parts.join(" o ")}.` : "";
+}
+function usesKm(item) {
+  if ((item.intervalKm ?? null) === null)
+    return false;
+  if ((item.intervalMonths ?? null) === null)
+    return true;
+  return item.remainingKm / item.intervalKm <= item.remainingDays / (item.intervalMonths * 30.44);
+}
+function labelOf(item, state) {
+  if (state === "sin_dato")
+    return "Sin registro";
+  if (state === "al_dia")
+    return "Al d\xEDa";
+  const byKm = usesKm(item);
+  if (state === "urgente") {
+    if (byKm && item.remainingKm < 0)
+      return `Vencido hace ${formatKm2(item.remainingKm)}`;
+    if (!byKm && item.remainingDays < 0)
+      return `Vencido hace ${days(-item.remainingDays)}`;
+    return "Vencido";
+  }
+  return byKm ? `Faltan ${formatKm2(item.remainingKm)}` : `En ${days(item.remainingDays)}`;
+}
+function progressOf(item, state) {
+  if (state === "sin_dato")
+    return { progress: null, scale: null };
+  const km8 = item.intervalKm ?? null;
+  if (usesKm(item) && km8 && km8 > 0) {
+    const done = 1 - item.remainingKm / km8;
+    return { progress: Math.min(1, Math.max(0, done)), scale: [formatKm2(item.dueKm - km8), formatKm2(item.dueKm)] };
+  }
+  const months = item.intervalMonths ?? null;
+  if (months && months > 0) {
+    const total = months * 30.44;
+    const done = 1 - item.remainingDays / total;
+    const start = new Date(new Date(item.dueDate).getTime() - total * 864e5);
+    return { progress: Math.min(1, Math.max(0, done)), scale: [formatMonth(start), formatMonth(new Date(item.dueDate))] };
+  }
+  return { progress: null, scale: null };
+}
+function detailOf(item, state) {
+  const rule = every(item);
+  if (state === "sin_dato")
+    return `${rule} No sabemos cu\xE1ndo se hizo por \xFAltima vez. Reg\xEDstralo para poder recordarte.`.trim();
+  const when9 = (item.intervalKm ?? null) !== null ? `a los ${formatKm2(item.dueKm)}` : `en ${formatMonth(new Date(item.dueDate))}`;
+  const verb = state === "urgente" ? "Tocaba" : state === "pronto" ? "Toca" : "Pr\xF3ximo";
+  return `${rule} ${verb} ${when9}.`.trim();
+}
+function headlineOf(first) {
+  if (!first)
+    return "Todav\xEDa no hay plan para este veh\xEDculo. Completa clase y combustible para calcularlo.";
+  const name = first.serviceName.toLowerCase();
+  switch (first.state) {
+    case "urgente":
+      return `Agenda ${name} esta semana. ${first.label}.`;
+    case "pronto":
+      return `Pronto toca ${name}. ${first.label}.`;
+    case "sin_dato":
+      return `Registra cu\xE1ndo hiciste ${name} para poder recordarte a tiempo.`;
+    default:
+      return "Tu veh\xEDculo est\xE1 al d\xEDa. Te avisamos cuando se acerque el pr\xF3ximo servicio.";
+  }
+}
+function buildRecommendations(items) {
+  const list7 = items.map((item) => {
+    const state = STATE[item.status];
+    return {
+      serviceId: item.serviceId,
+      serviceName: item.serviceName,
+      categoryName: item.categoryName,
+      state,
+      label: labelOf(item, state),
+      detail: detailOf(item, state),
+      ...progressOf(item, state),
+      costRefUsd: item.costRefUsd
+    };
+  });
+  const sorted = list7.map((r, i) => ({ r, i })).sort((a, b) => ORDER[a.r.state] - ORDER[b.r.state] || a.i - b.i).map((x) => x.r);
+  const counts = { urgente: 0, pronto: 0, al_dia: 0, sin_dato: 0 };
+  for (const r of sorted)
+    counts[r.state]++;
+  const first = sorted[0];
+  const actionable = sorted.find((r) => r.state === "urgente" || r.state === "pronto");
+  return {
+    headline: headlineOf(first),
+    counts,
+    next: actionable ? { serviceId: actionable.serviceId, serviceName: actionable.serviceName, categoryName: actionable.categoryName } : null,
+    items: sorted
+  };
+}
+var STATE, ORDER, MONTHS;
+var init_recommendations = __esm({
+  "packages/api/dist/application/panel/recommendations.js"() {
+    "use strict";
+    STATE = { vencido: "urgente", proximo: "pronto", al_dia: "al_dia", sin_registro: "sin_dato" };
+    ORDER = { urgente: 0, pronto: 1, sin_dato: 2, al_dia: 3 };
+    MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  }
+});
+
+// packages/api/dist/application/panel/vehicle-status-text.js
+function vehicleStatusText(vehicleLabel2, summary) {
+  const head = `\u{1F6A6} Estado de tu ${vehicleLabel2}`;
+  if (!summary || summary.items.length === 0) {
+    return `${head}
+${ICON.sin_dato} Sin dato: todav\xEDa no tenemos la ficha de mantenimiento de este veh\xEDculo. Una persona del equipo te ayudar\xE1.`;
+  }
+  const lines = [];
+  for (const state of ["urgente", "pronto", "sin_dato", "al_dia"]) {
+    const items = summary.items.filter((r) => r.state === state);
+    if (!items.length)
+      continue;
+    if (state === "al_dia") {
+      lines.push(`${ICON.al_dia} ${TITLE.al_dia}: ${items.length} ${items.length === 1 ? "servicio" : "servicios"}`);
+      continue;
+    }
+    const shown = items.slice(0, SHOWN).map((r) => state === "sin_dato" ? r.serviceName : `${r.serviceName} (${r.label.toLowerCase()})`);
+    const more = items.length > SHOWN ? ` y ${items.length - SHOWN} m\xE1s` : "";
+    lines.push(`${ICON[state]} ${TITLE[state]}: ${shown.join(", ")}${more}`);
+  }
+  return `${head}
+${lines.join("\n")}
+${summary.headline}
+Detalle: Plan completo`;
+}
+var ICON, TITLE, SHOWN;
+var init_vehicle_status_text = __esm({
+  "packages/api/dist/application/panel/vehicle-status-text.js"() {
+    "use strict";
+    ICON = { urgente: "\u{1F534}", pronto: "\u{1F7E1}", al_dia: "\u{1F7E2}", sin_dato: "\u26AA" };
+    TITLE = { urgente: "Urgente", pronto: "Pronto", al_dia: "Al d\xEDa", sin_dato: "Sin dato" };
+    SHOWN = 3;
+  }
+});
+
+// packages/api/dist/application/panel/reminder-done.js
+function dueItems(items) {
+  return items.filter((i) => i.status === "proximo" || i.status === "vencido");
+}
+function reminderLine(item) {
+  if (item.status === "vencido")
+    return `\u2022 ${item.serviceName}: vencido (${item.reason.replace(/^Vencido /, "")})`;
+  const byKm = (item.intervalKm ?? null) !== null;
+  return `\u2022 ${item.serviceName}: ${byKm ? `a los ${km(item.dueKm)}` : `en ${formatMonth(new Date(item.dueDate))}`}`;
+}
+function doneHint(items) {
+  if (items.length <= 1)
+    return "Responde Hecho cuando lo hagas.";
+  return `Responde Hecho cuando lo hagas, con el servicio si es uno solo (por ejemplo: Hecho ${items[0].serviceName.toLowerCase()}).`;
+}
+function pickDone(open, query, matchedId = null) {
+  if (!open.length)
+    return { kind: "none" };
+  const q = query ? fold2(query) : "";
+  if (!q)
+    return open.length === 1 ? { kind: "one", item: open[0] } : { kind: "choose", items: [...open] };
+  const found = open.filter((i) => i.serviceId === matchedId || fold2(i.serviceName) === q || q.length >= 4 && fold2(i.serviceName).includes(q));
+  if (found.length === 1)
+    return { kind: "one", item: found[0] };
+  if (found.length > 1)
+    return { kind: "choose", items: found };
+  return { kind: "unknown", items: [...open] };
+}
+function chooseDoneText(items, unknown = false) {
+  const options = items.slice(0, 5).map((i) => `Hecho ${i.serviceName.toLowerCase()}`);
+  return `${unknown ? "No encontr\xE9 ese servicio entre tus recordatorios. " : ""}\xBFCu\xE1l hiciste? Responde: ${options.join(" \xB7 ")}`;
+}
+function nextMilestone(item) {
+  const byKm = (item.intervalKm ?? null) !== null ? `a los ${km(item.dueKm)}` : null;
+  const byDate = (item.intervalMonths ?? null) !== null ? `en ${formatMonth(new Date(item.dueDate))}` : null;
+  return [byKm, byDate].filter(Boolean).join(" o ") || "sin fecha calculada";
+}
+var km, fold2;
+var init_reminder_done = __esm({
+  "packages/api/dist/application/panel/reminder-done.js"() {
+    "use strict";
+    init_recommendations();
+    km = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
+    fold2 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
   }
 });
 
@@ -84369,13 +84588,13 @@ function offersFor(profile, catalog, includeHidden = false) {
 function findOfferByKey(key, catalog) {
   return catalog.find((o) => o.key === key) ?? null;
 }
-function findOfferByName(text8, catalog, profile) {
-  const wanted = fold2(text8).replace(/^plan /, "");
+function findOfferByName(text9, catalog, profile) {
+  const wanted = fold3(text9).replace(/^plan /, "");
   if (!wanted)
     return null;
   const paid = catalog.filter((o) => !isFreeOffer(o) && o.visible);
-  const exact = (list7) => list7.filter((o) => fold2(o.name) === wanted || fold2(o.key.replace("_", " ")) === wanted);
-  const loose = (list7) => list7.filter((o) => fold2(o.name).split(" ").includes(wanted) || fold2(o.name).endsWith(wanted));
+  const exact = (list7) => list7.filter((o) => fold3(o.name) === wanted || fold3(o.key.replace("_", " ")) === wanted);
+  const loose = (list7) => list7.filter((o) => fold3(o.name).split(" ").includes(wanted) || fold3(o.name).endsWith(wanted));
   const mine = profile ? paid.filter((o) => o.profile === profile) : [];
   for (const finder of [exact, loose]) {
     const inProfile = finder(mine);
@@ -84440,7 +84659,7 @@ function plansChatMessage(profile, catalog, current) {
     "Detalle completo: https://automantpro.app/planes"
   ].join("\n");
 }
-var IVA_RATE, TRIAL_DAYS, RENEWAL_NOTICE_DAYS, PROFILE_LABELS, PERIOD_LABELS, GARANTIA, DEFAULT_OFFERS, round2, isFreeOffer, money, count2, fold2;
+var IVA_RATE, TRIAL_DAYS, RENEWAL_NOTICE_DAYS, PROFILE_LABELS, PERIOD_LABELS, GARANTIA, DEFAULT_OFFERS, round2, isFreeOffer, money, count2, fold3;
 var init_catalog = __esm({
   "packages/api/dist/application/plans/catalog.js"() {
     "use strict";
@@ -84600,7 +84819,165 @@ var init_catalog = __esm({
     isFreeOffer = (offer) => offer.priceMonthly === 0 && offer.priceYearly === 0;
     money = (v) => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= 99999 ? round2(v) : void 0;
     count2 = (v) => typeof v === "number" && Number.isInteger(v) && v >= 0 && v <= 1e5 ? v : void 0;
-    fold2 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    fold3 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+  }
+});
+
+// packages/api/dist/application/map/workshop-map.js
+function categoryOfService(serviceId) {
+  return serviceTaxonomy.categories.find((c) => c.id === serviceId || c.subservices.some((s) => s.id === serviceId))?.id ?? null;
+}
+function categoryName(id2) {
+  return CATEGORIES.find((c) => c.id === id2)?.name ?? id2;
+}
+function fold4(text9) {
+  return text9.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+function placeLabel(text9) {
+  const clean = text9.replace(/\s+/g, " ").trim();
+  if (!clean)
+    return "";
+  return clean.toLowerCase().split(" ").map((w, i) => i > 0 && ["de", "del", "la", "las", "los", "el", "y", "a"].includes(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+}
+function categoriesOf(services) {
+  const found = /* @__PURE__ */ new Set();
+  for (const raw of services) {
+    const value2 = fold4(String(raw));
+    if (!value2)
+      continue;
+    const byId = CATEGORIES.find((c) => c.id === value2 || fold4(c.name) === value2);
+    if (byId) {
+      found.add(byId.id);
+      continue;
+    }
+    const words = ` ${value2.replace(/[^a-z0-9/ ]/g, " ")} `;
+    for (const [id2, keys] of Object.entries(KEYWORDS)) {
+      if (keys.some((k) => k.length <= 3 ? words.includes(` ${k} `) : words.includes(k)))
+        found.add(id2);
+    }
+  }
+  return CATEGORIES.map((c) => c.id).filter((id2) => found.has(id2));
+}
+function insideEcuador(lat, lng) {
+  return Number.isFinite(lat) && Number.isFinite(lng) && lat >= ECUADOR.minLat && lat <= ECUADOR.maxLat && lng >= ECUADOR.minLng && lng <= ECUADOR.maxLng;
+}
+function parsePoint(text9) {
+  const numbers = String(text9).match(/-?\d+(?:[.,]\d+)?/g) ?? [];
+  if (numbers.length !== 2)
+    return null;
+  const [lat, lng] = numbers.map((s) => Math.round(Number(s.replace(",", ".")) * 1e6) / 1e6);
+  return insideEcuador(lat, lng) ? { lat, lng } : null;
+}
+function distanceKm(a, b) {
+  const rad = (d) => d * Math.PI / 180;
+  const dLat = rad(b.lat - a.lat);
+  const dLng = rad(b.lng - a.lng);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+function googleMapsSearchUrl(parts) {
+  const service = parts.service ? categoryName(parts.service).split("/")[0].trim().toLowerCase() : "";
+  const words = parts.name ? [parts.name, parts.zone, parts.city] : ["taller", service, parts.zone, parts.city];
+  const query = words.map((w) => (w ?? "").trim()).filter(Boolean).join(" ");
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query || "taller mec\xE1nico Ecuador")}`;
+}
+function placesOf(shops) {
+  const byCity = /* @__PURE__ */ new Map();
+  for (const shop of shops) {
+    const key = fold4(shop.city);
+    if (!key)
+      continue;
+    const entry = byCity.get(key) ?? { city: placeLabel(shop.city), zones: /* @__PURE__ */ new Map() };
+    if (shop.zone && fold4(shop.zone))
+      entry.zones.set(fold4(shop.zone), placeLabel(shop.zone));
+    byCity.set(key, entry);
+  }
+  return [...byCity.values()].map((e8) => ({ city: e8.city, zones: [...e8.zones.values()].sort((a, b) => a.localeCompare(b, "es")) })).sort((a, b) => a.city.localeCompare(b.city, "es"));
+}
+function searchShops(records, query) {
+  const city = fold4(query.city ?? "");
+  const zone = fold4(query.zone ?? "");
+  const service = query.service && CATEGORIES.some((c) => c.id === query.service) ? query.service : "";
+  const origin = query.origin && insideEcuador(query.origin.lat, query.origin.lng) ? query.origin : null;
+  const scored = records.filter((r) => !city || fold4(r.city) === city).map((r) => {
+    const categories = categoriesOf(r.services);
+    const point = r.precision === "exacta" && r.lat !== null && r.lng !== null && insideEcuador(r.lat, r.lng) ? { lat: r.lat, lng: r.lng } : null;
+    const offers = !service || categories.includes(service);
+    const inZone = !!zone && fold4(r.zone ?? "") === zone;
+    const distance = origin && point ? Math.round(distanceKm(origin, point) * 10) / 10 : null;
+    const rating = r.ratingCount >= MIN_RATINGS ? { avg: Math.round(r.ratingAvg * 10) / 10, count: r.ratingCount } : null;
+    const reasons = [];
+    if (service && offers)
+      reasons.push(`Hace ${categoryName(service).toLowerCase()}`);
+    if (inZone)
+      reasons.push(`Est\xE1 en ${placeLabel(r.zone ?? "")}`);
+    if (distance !== null)
+      reasons.push(`A ${distance.toLocaleString("es-EC")} km de ti`);
+    reasons.push("Verificado por AutoMantPro");
+    if (rating)
+      reasons.push(`${rating.avg.toLocaleString("es-EC")} de 5 en ${rating.count} trabajos calificados`);
+    const shop = {
+      id: r.id,
+      name: r.name,
+      address: r.precision === "exacta" ? r.address : null,
+      city: placeLabel(r.city),
+      zone: r.zone ? placeLabel(r.zone) : null,
+      hours: r.hours,
+      point,
+      categories,
+      rating,
+      distanceKm: distance,
+      reasons,
+      googleMapsUrl: googleMapsSearchUrl({ name: r.name, zone: r.zone ?? "", city: r.city })
+    };
+    return { shop, offers, inZone };
+  }).filter((s) => s.offers && (!zone || s.inZone || origin !== null));
+  return scored.sort((a, b) => Number(b.inZone) - Number(a.inZone) || (a.shop.distanceKm ?? Infinity) - (b.shop.distanceKm ?? Infinity) || (b.shop.rating?.avg ?? 0) - (a.shop.rating?.avg ?? 0) || a.shop.name.localeCompare(b.shop.name, "es")).map((s) => s.shop);
+}
+function mapUrl(base, parts) {
+  const params2 = new URLSearchParams();
+  if (parts.city?.trim())
+    params2.set("ciudad", parts.city.trim());
+  if (parts.zone?.trim())
+    params2.set("sector", parts.zone.trim());
+  if (parts.service?.trim())
+    params2.set("servicio", parts.service.trim());
+  const qs = params2.toString();
+  return `${base.replace(/\/$/, "")}/mapa${qs ? `?${qs}` : ""}`;
+}
+var SITE_URL, MIN_RATINGS, ECUADOR, CATEGORIES, KEYWORDS;
+var init_workshop_map = __esm({
+  "packages/api/dist/application/map/workshop-map.js"() {
+    "use strict";
+    init_maintenance();
+    SITE_URL = "https://automantpro.app";
+    MIN_RATINGS = 3;
+    ECUADOR = { minLat: -5.1, maxLat: 1.7, minLng: -92.2, maxLng: -75.1 };
+    CATEGORIES = serviceTaxonomy.categories.map((c) => ({ id: c.id, name: c.name }));
+    KEYWORDS = {
+      prevencion: ["mantenimiento", "preventivo", "mecanica general", "revision", "chequeo", "inspeccion"],
+      lubricacion: ["aceite", "lubricacion", "lubricadora", "engrase", "cambio de aceite"],
+      motor: ["motor", "bujia", "afinamiento", "abc", "correa", "distribucion", "reparacion de motor"],
+      inyeccion: ["inyeccion", "inyectores", "combustible", "gasolina", "limpieza de inyectores"],
+      refrigeracion: ["refrigeracion", "radiador", "refrigerante", "anticongelante", "recalentamiento"],
+      frenos: ["freno", "pastillas", "zapatas", "discos", "abs"],
+      suspension: ["suspension", "amortiguador", "direccion", "terminales", "rotulas", "mesas"],
+      transmision: ["transmision", "embrague", "caja", "clutch", "cadena"],
+      neumaticos: ["neumatico", "llanta", "alineacion", "balanceo", "vulcanizadora", "vulcanizacion", "enllantaje"],
+      electrico: ["electric", "bateria", "alternador", "arranque", "luces", "autoelectrico"],
+      electronica: ["electronic", "escaner", "scanner", "diagnostico", "computadora", "check engine"],
+      climatizacion: ["climatizacion", "aire acondicionado", "a/c"],
+      escape: ["escape", "mofle", "silenciador", "emisiones", "catalizador"],
+      carroceria: ["carroceria", "pintura", "enderezada", "latoneria", "chaperia", "choque"],
+      vidrios: ["vidrio", "parabrisas", "plumas", "limpiaparabrisas"],
+      interior: ["tapiceria", "interior", "tapizado"],
+      lavado: ["lavado", "detailing", "pulido", "lavadora"],
+      diesel: ["diesel", "turbo", "dpf", "bomba de inyeccion"],
+      alto_voltaje: ["hibrido", "alto voltaje", "ev", "hev"],
+      glp_gnv: ["glp", "gnv", "gas licuado", "gas natural"],
+      grua: ["grua", "remolque", "auxilio", "asistencia"],
+      rtv: ["rtv", "revision tecnica", "matriculacion", "pre revision"]
+    };
   }
 });
 
@@ -84671,6 +85048,7 @@ function nearbyWorkshopsMessage(city, reference = "") {
     link,
     "",
     "Ojo: esos no los hemos verificado nosotros.",
+    `Los talleres verificados por AutoMantPro en tu ciudad est\xE1n en este mapa: ${mapUrl(SITE_URL, { city })}`,
     "Con el plan Premium te consigo talleres verificados, con precio acordado antes de entrar y garant\xEDa anotada en la orden de trabajo. Escribe Planes para ver precios."
   ].join("\n");
 }
@@ -84690,6 +85068,7 @@ var init_plans = __esm({
   "packages/api/dist/application/plans/plans.js"() {
     "use strict";
     init_catalog();
+    init_workshop_map();
     PLAN_LABELS = {
       gratis: "Gratis",
       prueba: "Prueba",
@@ -84942,7 +85321,7 @@ El taller ${o.shopName} empieza el trabajo en tu ${o.vehicleLabel}.`;
       const lines = [
         `\u{1F3C1} Trabajo terminado \u2014 ${code3}`,
         `\u{1F527} ${o.shopName}`,
-        `\u{1F697} ${vehicleText2(o)}${o.exitKm !== null ? ` \xB7 ${km(o.exitKm)}` : ""}`,
+        `\u{1F697} ${vehicleText2(o)}${o.exitKm !== null ? ` \xB7 ${km2(o.exitKm)}` : ""}`,
         "",
         itemLines(items),
         "",
@@ -84958,7 +85337,7 @@ El taller ${o.shopName} empieza el trabajo en tu ${o.vehicleLabel}.`;
     case "cancelada":
       return `La orden ${code3} en ${o.shopName} fue cancelada${o.cancelReason ? `: ${o.cancelReason}` : ""}.`;
     default:
-      return `\u{1F4CB} Recibimos tu ${o.vehicleLabel} en ${o.shopName}${o.intakeKm !== null ? ` con ${km(o.intakeKm)}` : ""} (${code3}).
+      return `\u{1F4CB} Recibimos tu ${o.vehicleLabel} en ${o.shopName}${o.intakeKm !== null ? ` con ${km2(o.intakeKm)}` : ""} (${code3}).
 Te enviaremos el presupuesto antes de hacer cualquier trabajo.`;
   }
 }
@@ -84980,7 +85359,7 @@ function historyDescription(o, items) {
     parts.push(`Pr\xF3ximo: ${o.nextService}`);
   return parts.join(" \xB7 ").slice(0, 2e3);
 }
-var WORK_ORDER_LABELS, WORK_ORDER_TRANSITIONS, EDITABLE_STATUSES, OPEN_STATUSES, IN_SHOP_STATUSES, ITEM_KINDS, DIAGNOSIS_OUTCOMES, workOrderCode, lineTotal, km, vehicleText2;
+var WORK_ORDER_LABELS, WORK_ORDER_TRANSITIONS, EDITABLE_STATUSES, OPEN_STATUSES, IN_SHOP_STATUSES, ITEM_KINDS, DIAGNOSIS_OUTCOMES, workOrderCode, lineTotal, km2, vehicleText2;
 var init_workflow = __esm({
   "packages/api/dist/application/work-orders/workflow.js"() {
     "use strict";
@@ -85019,7 +85398,7 @@ var init_workflow = __esm({
     ];
     workOrderCode = (number) => `OT-${String(number).padStart(5, "0")}`;
     lineTotal = (item) => Math.round(item.quantity * item.unitPrice * 100) / 100;
-    km = (value2) => `${Number(value2).toLocaleString("es-EC")} km`;
+    km2 = (value2) => `${Number(value2).toLocaleString("es-EC")} km`;
     vehicleText2 = (o) => `${o.vehicleLabel}${o.plate ? ` \xB7 ${o.plate}` : ""}`;
   }
 });
@@ -85091,8 +85470,8 @@ async function vehicleDriver(conn, vehicleId) {
   const [row] = await rows3(conn, "SELECT m.userId FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId WHERE a.vehicleId = ? AND a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL LIMIT 1", [vehicleId]);
   return row ? String(row.userId) : null;
 }
-async function logOdometer(conn, vehicleId, km7, source, createdBy) {
-  await conn.query("INSERT INTO `VehicleOdometerReading` (id, vehicleId, km, source, createdBy) VALUES (?, ?, ?, ?, ?)", [randomUUID2(), vehicleId, km7, source.slice(0, 20), createdBy]);
+async function logOdometer(conn, vehicleId, km8, source, createdBy) {
+  await conn.query("INSERT INTO `VehicleOdometerReading` (id, vehicleId, km, source, createdBy) VALUES (?, ?, ?, ?, ?)", [randomUUID2(), vehicleId, km8, source.slice(0, 20), createdBy]);
 }
 var rows3, FleetAccessError, fail, PLATE_SQL, plateKey;
 var init_fleet_access = __esm({
@@ -85116,15 +85495,15 @@ var init_fleet_access = __esm({
 
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
 import { createHash as createHash2, randomUUID as randomUUID3 } from "node:crypto";
-function matchService(text8) {
-  const f = fold3(text8);
-  const exact = SERVICES.find((s) => s.id === f || fold3(s.name) === f);
+function matchService(text9) {
+  const f = fold5(text9);
+  const exact = SERVICES.find((s) => s.id === f || fold5(s.name) === f);
   if (exact)
     return exact.id;
   for (const [pattern, id2] of SYNONYMS)
     if (pattern.test(f))
       return id2;
-  return SERVICES.find((s) => fold3(s.name).includes(f) && f.length >= 5)?.id ?? null;
+  return SERVICES.find((s) => fold5(s.name).includes(f) && f.length >= 5)?.id ?? null;
 }
 async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ new Date()) {
   const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 5));
@@ -85152,6 +85531,9 @@ async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ 
     `\u2B50 Calificaci\xF3n del periodo: ${rating.avg ? `${rating.avg}/5 (${Number(rating.n)})` : "sin calificaciones"}`
   ].join("\n");
 }
+function repairNoticeText(code3, shopName) {
+  return `\u{1F527} Tu orden ${code3} est\xE1 en reparaci\xF3n en ${shopName}. Te avisamos cuando est\xE9 lista.`;
+}
 async function activeVehicle(conn, userId, includeAssigned = false) {
   const list7 = [...await myVehicles(conn, userId, includeAssigned)].sort((a, b) => {
     const at = a.selectedAt ? new Date(a.selectedAt).getTime() : null;
@@ -85170,11 +85552,14 @@ async function activeVehicle(conn, userId, includeAssigned = false) {
     fail2("VEHICLE_REQUIRED");
   return list7[0];
 }
-var rows4, VehicleCareError, fail2, fold3, createHashLike, short2, prefixOf, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES, serviceName, ORDER_STATUS, VehicleCareStore;
+var rows4, VehicleCareError, fail2, fold5, createHashLike, short2, prefixOf, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES, serviceName, ORDER_STATUS, repairNoticeKey, VehicleCareStore;
 var init_vehicle_care_store = __esm({
   "packages/api/dist/infrastructure/messaging/vehicle-care-store.js"() {
     "use strict";
     init_plan_text();
+    init_recommendations();
+    init_vehicle_status_text();
+    init_reminder_done();
     init_entitlements();
     init_diagnosis();
     init_catalogs();
@@ -85192,8 +85577,8 @@ var init_vehicle_care_store = __esm({
     fail2 = (code3) => {
       throw new VehicleCareError(code3);
     };
-    fold3 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
-    createHashLike = (text8) => createHash2("sha256").update(text8).digest("hex").slice(0, 12);
+    fold5 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    createHashLike = (text9) => createHash2("sha256").update(text9).digest("hex").slice(0, 12);
     short2 = (prefix, id2) => `${prefix}-${id2.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf = (code3) => `${code3.slice(2).toLowerCase()}%`;
     CARD_ACTIONS = ["createCard", "cardPreview", "claimCard", "declineCard", "listCards", "cancelCard", "revokeShop"];
@@ -85234,6 +85619,7 @@ var init_vehicle_care_store = __esm({
       cerrada: "entregado y cerrado",
       cancelada: "cancelada"
     };
+    repairNoticeKey = (orderId) => `repair:${orderId}`;
     VehicleCareStore = class {
       async execute(conn, userId, role, command, publicNumber2) {
         switch (command.action) {
@@ -85273,6 +85659,10 @@ var init_vehicle_care_store = __esm({
             return this.vehicles(conn, userId, role, command.action === "selectVehicle" ? command.position : null);
           case "orderStatus":
             return this.orderStatus(conn, userId, role, command.orderNumber);
+          case "vehicleStatus":
+            return this.vehicleStatus(conn, userId, role, command.plate);
+          case "reminderDone":
+            return this.reminderDone(conn, userId, role, command.service);
           case "checkInAnswer":
             return this.checkInAnswer(conn, userId, role, command.orderNumber, command.confirm, command.note);
           case "reschedule":
@@ -85327,8 +85717,17 @@ ${lines.join("\n")}${list7.length > 1 ? "\nPara elegir con cu\xE1l trabajar: Usa
           fail2("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
         const orders = await rows4(conn, `SELECT w.id, w.number, w.status, w.total, w.updatedAt, v.make, v.model, v.year, s.name AS shopName FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId JOIN \`Shop\` s ON s.id = w.shopId WHERE w.ownerId IN (?) AND ${number === null ? "w.status NOT IN ('cerrada','cancelada')" : "w.number = ?"} ORDER BY w.number DESC LIMIT ${number === null ? 10 : 5}`, number === null ? [scope.ownerIds] : [scope.ownerIds, number]);
-        if (!orders.length)
-          return { userId, message: number === null ? "No tienes veh\xEDculos en un taller ahora mismo." : "No encontramos esa orden en tu cuenta." };
+        if (!orders.length && number !== null)
+          return { userId, message: "No encontramos esa orden en tu cuenta." };
+        if (!orders.length) {
+          try {
+            return await this.vehicleStatus(conn, userId, role);
+          } catch (error) {
+            if (error instanceof VehicleCareError && error.code === "VEHICLE_NOT_FOUND_OR_PLATE_REQUIRED")
+              return { userId, message: "No tienes veh\xEDculos en un taller ahora mismo." };
+            throw error;
+          }
+        }
         const out = [];
         for (const o of orders) {
           const code3 = workOrderCode(Number(o.number));
@@ -85343,6 +85742,28 @@ Espera tu respuesta: ${waiting.join(" \xB7 ")}` : ""}`);
         }
         return { userId, message: `${out.join("\n\n")}
 El taller no informa la hora de entrega por este medio; si la necesitas, p\xEDdela respondiendo aqu\xED.` };
+      }
+      /** Traffic light of the active vehicle (or the one with that plate). With several and none chosen, asks which one. */
+      async vehicleStatus(conn, userId, role, plate2) {
+        if (role !== "dueno")
+          fail2("FORBIDDEN");
+        let vehicle;
+        try {
+          vehicle = await this.ownerVehicle(conn, userId, role, plate2, "read");
+        } catch (error) {
+          if (!(error instanceof VehicleCareError) || error.code !== "VEHICLE_REQUIRED")
+            throw error;
+          const list7 = await myVehicles(conn, userId, true);
+          const lines = list7.map((v, i) => `${i + 1}. ${v.make} ${v.model} ${v.year}${v.plate ? ` (${v.plate})` : ""}`);
+          const example = list7.find((v) => v.plate)?.plate;
+          return { userId, message: `Tienes ${list7.length} veh\xEDculos. \xBFDe cu\xE1l quieres el estado?
+${lines.join("\n")}
+Responde: Usar veh\xEDculo 2${example ? ` \xB7 Estado ${String(example)}` : ""}` };
+        }
+        const planned = await this.planVehicle(conn, vehicle);
+        const items = planItemsFor(planned, await vehicleLevel(conn, planned));
+        const label2 = `${vehicle.make} ${vehicle.model} ${vehicle.year}${vehicle.plate ? ` (${vehicle.plate})` : ""}`;
+        return { userId, message: vehicleStatusText(label2, items.length ? buildRecommendations(items) : null) };
       }
       /** The owner confirms the reception form, or says what does not match; the workshop is told either way. */
       async checkInAnswer(conn, userId, role, number, confirm, note) {
@@ -85404,8 +85825,25 @@ Observaci\xF3n del due\xF1o: ${note}`, order.id]);
       async ownerPlan(conn, userId, role, full, plate2) {
         const vehicle = await this.planVehicle(conn, await this.ownerVehicle(conn, userId, role, plate2, "read"));
         const level = await vehicleLevel(conn, vehicle);
-        const text8 = full ? planTextFor(vehicle, level) : planSummaryFor(vehicle, level);
-        return { userId, message: text8 ?? "Todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo; una persona del equipo te ayudar\xE1." };
+        const text9 = full ? planTextFor(vehicle, level) : planSummaryFor(vehicle, level);
+        return { userId, message: text9 ?? "Todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo; una persona del equipo te ayudar\xE1." };
+      }
+      /** "Hecho": records the reminded service today at the current km; the plan then moves to the next milestone. */
+      async reminderDone(conn, userId, role, service) {
+        const vehicle = await this.ownerVehicle(conn, userId, role, void 0, "report");
+        const label2 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
+        const planned = await this.planVehicle(conn, vehicle);
+        const level = await vehicleLevel(conn, planned);
+        const pick = pickDone(dueItems(planItemsFor(planned, level)), service, service ? matchService(service) : null);
+        if (pick.kind === "none")
+          return { userId, message: `Tu ${label2} no tiene recordatorios abiertos. Para anotar otro servicio: \xDAltimo servicio | servicio | km` };
+        if (pick.kind !== "one")
+          return { userId, message: chooseDoneText(pick.items, pick.kind === "unknown") };
+        const currentKm = Number(vehicle.currentKm) || 0;
+        await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID3(), vehicle.id, pick.item.serviceId, currentKm, /* @__PURE__ */ new Date(), userId]);
+        const next = planItemsFor(await this.planVehicle(conn, vehicle), level).find((i) => i.serviceId === pick.item.serviceId);
+        return { userId, message: `Anotado: ${pick.item.serviceName} hecho hoy, a los ${currentKm.toLocaleString("es-EC")} km.${next ? ` Pr\xF3ximo: ${nextMilestone(next)}.` : ""} Ya no te recordaremos este.
+Si tu kilometraje cambi\xF3, actual\xEDzalo con: Kilometraje | km` };
       }
       async ownerUpdate(conn, userId, role, command) {
         const plate2 = "plate" in command ? command.plate : void 0;
@@ -85450,7 +85888,7 @@ Lo agregu\xE9 a la atenci\xF3n de ${label2} y avisamos a los responsables de ${S
           }
           return { userId, message: `${diagnosis.message}
 
-Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revise: Buscar servicio | ${fold3(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
+Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revise: Buscar servicio | ${fold5(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
         }
         if (command.action === "reminders") {
           await conn.query("UPDATE `Vehicle` SET remindersOptIn = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [command.on, userId]);
@@ -85465,16 +85903,16 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revi
           fail2("INVALID_ALERT_DATE");
         await conn.query("INSERT INTO `Alert` (id, vehicleId, label, dueKm, dueAt, source, createdBy, shopId, createdAt) VALUES (?, ?, ?, ?, ?, 'manual', ?, ?, UTC_TIMESTAMP(3))", [randomUUID3(), vehicleId, label2, dueKm, at, createdBy, shopId]);
       }
-      async visitAnswer(conn, userId, role, ref3, accept) {
+      async visitAnswer(conn, userId, role, ref4, accept) {
         if (role !== "dueno")
           fail2("FORBIDDEN");
-        const [visit] = await rows4(conn, "SELECT a.id, a.scheduledAt, s.userId AS shopUserId, s.name AS shopName FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId IN (?) AND a.status = 'pending' AND a.summary LIKE 'Visita propuesta por el taller%' AND REPLACE(a.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [(await decisionScope(conn, userId)).ownerIds, prefixOf(ref3)]);
+        const [visit] = await rows4(conn, "SELECT a.id, a.scheduledAt, s.userId AS shopUserId, s.name AS shopName FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId IN (?) AND a.status = 'pending' AND a.summary LIKE 'Visita propuesta por el taller%' AND REPLACE(a.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [(await decisionScope(conn, userId)).ownerIds, prefixOf(ref4)]);
         if (!visit)
           fail2("NOT_FOUND");
         await conn.query(accept ? "UPDATE `Appointment` SET status = 'confirmed', updatedAt = UTC_TIMESTAMP(3) WHERE id = ?" : "UPDATE `Appointment` SET status = 'cancelled', cancelReason = 'Rechazada por el due\xF1o', updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [visit.id]);
         const when9 = formatEcDateTime(visit.scheduledAt);
-        await this.notify(conn, String(visit.shopUserId), `visit:${String(visit.id)}:${accept}`, "care.visit", accept ? `El cliente confirm\xF3 la visita ${ref3} para ${when9}.` : `El cliente no puede asistir a la visita ${ref3} del ${when9}.`);
-        return { userId, message: accept ? `Visita ${ref3} confirmada con ${visit.shopName} para ${when9}.` : `Listo, avisamos a ${visit.shopName} que no puedes asistir.` };
+        await this.notify(conn, String(visit.shopUserId), `visit:${String(visit.id)}:${accept}`, "care.visit", accept ? `El cliente confirm\xF3 la visita ${ref4} para ${when9}.` : `El cliente no puede asistir a la visita ${ref4} del ${when9}.`);
+        return { userId, message: accept ? `Visita ${ref4} confirmada con ${visit.shopName} para ${when9}.` : `Listo, avisamos a ${visit.shopName} que no puedes asistir.` };
       }
       async budgetAnswer(conn, userId, role, number, approve, reason) {
         if (role !== "dueno")
@@ -85508,8 +85946,8 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revi
           fail2("FORBIDDEN");
         return { id: String(member.id), name: String(member.name), ownerUserId: String(member.userId), isOwner: false, isAdmin: member.role === "admin", actor: `${member.memberName} (${member.name})` };
       }
-      async shopVehicle(conn, shopId, ref3) {
-        const [found] = await rows4(conn, "SELECT a.id AS appointmentId, a.ownerId, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND REPLACE(a.id, '-', '') LIKE ? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) LIMIT 2", [shopId, prefixOf(ref3)]);
+      async shopVehicle(conn, shopId, ref4) {
+        const [found] = await rows4(conn, "SELECT a.id AS appointmentId, a.ownerId, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND REPLACE(a.id, '-', '') LIKE ? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) LIMIT 2", [shopId, prefixOf(ref4)]);
         if (!found)
           fail2("NOT_FOUND");
         return found;
@@ -85522,8 +85960,8 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revi
         const label2 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
         const owner = String(vehicle.ownerId);
         if (command.action === "shopPlan") {
-          const text8 = planSummaryFor(await this.planVehicle(conn, vehicle));
-          return { userId, message: text8 ?? `${label2}: todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo.` };
+          const text9 = planSummaryFor(await this.planVehicle(conn, vehicle));
+          return { userId, message: text9 ?? `${label2}: todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo.` };
         }
         if (command.action === "checkIn") {
           if (command.km < Number(vehicle.currentKm))
@@ -85574,7 +86012,7 @@ ${summary ?? ""}`.trim());
           return { userId, message: `Propuesta enviada al due\xF1o: visita ${code3} para ${formatEcDateTime(at)}. Te avisaremos cuando responda.` };
         }
         await this.insertAlert(conn, String(vehicle.id), command.label, command.dueAt, command.dueKm, userId, shop.id);
-        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold3(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label2}: "${command.label}" ${command.dueAt ? `el ${command.dueAt}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
+        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold5(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label2}: "${command.label}" ${command.dueAt ? `el ${command.dueAt}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
         return { userId, message: `Alerta creada para el ${label2}. El due\xF1o y tu taller la recibir\xE1n por WhatsApp cuando llegue el momento.` };
       }
       async budget(conn, userId, shop, command) {
@@ -85662,7 +86100,7 @@ Revisa el veh\xEDculo al recibirlo y responde: Acepto entrega ${code3} \xB7 Rech
         const lines = command.lines.map((l) => this.lineText(l));
         const total = Math.round(lines.reduce((a, l) => a + l.subtotal, 0) * 100) / 100;
         const id2 = randomUUID3();
-        const ref3 = short2("N", id2);
+        const ref4 = short2("N", id2);
         await conn.query("INSERT INTO `WorkOrderChange` (id, workOrderId, kind, description, payload, total, createdBy) VALUES (?, ?, 'novedad', ?, ?, ?, ?)", [id2, order.id, command.description, JSON.stringify({ lines: command.lines }), total, userId]);
         await this.audit(conn, userId, "care.finding.sent", "WorkOrder", String(order.id), { change: id2, total, by: shop.actor });
         const notNew = command.lines.some((l) => l.kind === "repuesto" && l.quality && !["nuevo", "original"].includes(l.quality));
@@ -85670,14 +86108,14 @@ Revisa el veh\xEDculo al recibirlo y responde: Acepto entrega ${code3} \xB7 Rech
 Trabajo adicional propuesto:
 ${lines.map((l) => l.text).join("\n")}
 Total adicional: ${formatUsd2(total)}${notNew ? "\nIncluye repuestos que no son nuevos: al aprobar, aceptas esa calidad." : ""}
-No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref3} \xB7 Rechazar novedad ${ref3} | motivo`);
-        return { userId, message: `Novedad ${ref3} enviada al due\xF1o por ${formatUsd2(total)}. No ejecutes ese trabajo hasta que la apruebe.` };
+No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref4} \xB7 Rechazar novedad ${ref4} | motivo`);
+        return { userId, message: `Novedad ${ref4} enviada al due\xF1o por ${formatUsd2(total)}. No ejecutes ese trabajo hasta que la apruebe.` };
       }
-      async changeAnswer(conn, userId, role, ref3, approve, reason) {
+      async changeAnswer(conn, userId, role, ref4, approve, reason) {
         if (role !== "dueno")
           fail2("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [change] = await rows4(conn, "SELECT c.id, c.workOrderId, c.payload, c.total, w.number, w.ownerId, w.total AS orderTotal, w.status AS orderStatus, s.userId AS shopUserId FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND w.ownerId IN (?) AND REPLACE(c.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [scope.ownerIds, prefixOf(ref3)]);
+        const [change] = await rows4(conn, "SELECT c.id, c.workOrderId, c.payload, c.total, w.number, w.ownerId, w.total AS orderTotal, w.status AS orderStatus, s.userId AS shopUserId FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND w.ownerId IN (?) AND REPLACE(c.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [scope.ownerIds, prefixOf(ref4)]);
         if (!change)
           fail2("NOT_FOUND");
         if (approve)
@@ -85693,8 +86131,8 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref3} \xB7 Recha
         }
         await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.finding.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID3(), userId, change.workOrderId, JSON.stringify({ change: change.id, approved: approve }), reason]);
         const code3 = workOrderCode(Number(change.number));
-        await this.notify(conn, String(change.shopUserId), `findingdecision:${String(change.id)}`, "care.finding", approve ? `\u2705 El cliente aprob\xF3 la novedad ${ref3} de ${code3} por ${formatUsd2(Number(change.total))}. Puedes ejecutarla.` : `\u274C El cliente no aprob\xF3 la novedad ${ref3} de ${code3}: ${reason}. No la ejecutes.`);
-        return { userId, message: approve ? `Aprobaste la novedad ${ref3} por ${formatUsd2(Number(change.total))}; se sum\xF3 a la orden ${code3}.` : `Registramos que no apruebas la novedad ${ref3}. El taller no la har\xE1.` };
+        await this.notify(conn, String(change.shopUserId), `findingdecision:${String(change.id)}`, "care.finding", approve ? `\u2705 El cliente aprob\xF3 la novedad ${ref4} de ${code3} por ${formatUsd2(Number(change.total))}. Puedes ejecutarla.` : `\u274C El cliente no aprob\xF3 la novedad ${ref4} de ${code3}: ${reason}. No la ejecutes.`);
+        return { userId, message: approve ? `Aprobaste la novedad ${ref4} por ${formatUsd2(Number(change.total))}; se sum\xF3 a la orden ${code3}.` : `Registramos que no apruebas la novedad ${ref4}. El taller no la har\xE1.` };
       }
       async deliveryAnswer(conn, userId, role, number, accept, reason) {
         if (role !== "dueno")
@@ -85736,16 +86174,16 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref3} \xB7 Recha
         return { userId, message: [`Entrega ${code3} ${reason ? "recibida con tu observaci\xF3n (abrimos un reclamo para darle seguimiento)" : "aceptada"}: ${formatUsd2(Number(order.total))}, garant\xEDa de ${payload.warrantyDays} d\xEDas. Actualizamos tu historial y tu plan.`, summary ?? "", rateAsk].filter(Boolean).join("\n\n") };
       }
       /** The owner asks the workshop to call before deciding on a finding; the work still waits. */
-      async changeCall(conn, userId, role, ref3) {
+      async changeCall(conn, userId, role, ref4) {
         if (role !== "dueno")
           fail2("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [change] = await rows4(conn, "SELECT c.id, w.number, s.userId AS shopUserId FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND w.ownerId IN (?) AND REPLACE(c.id, '-', '') LIKE ? LIMIT 1", [scope.ownerIds, prefixOf(ref3)]);
+        const [change] = await rows4(conn, "SELECT c.id, w.number, s.userId AS shopUserId FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND w.ownerId IN (?) AND REPLACE(c.id, '-', '') LIKE ? LIMIT 1", [scope.ownerIds, prefixOf(ref4)]);
         if (!change)
           fail2("NOT_FOUND");
         const [owner] = await rows4(conn, "SELECT name, phone FROM `User` WHERE id = ?", [userId]);
-        await this.notify(conn, String(change.shopUserId), `findingcall:${String(change.id)}`, "care.finding", `\u{1F4DE} El cliente pide que lo llames antes de decidir la novedad ${ref3} de ${workOrderCode(Number(change.number))}: ${String(owner?.name ?? "").split(/\s+/)[0]}, ${String(owner?.phone ?? "")}. No ejecutes ese trabajo hasta que la apruebe.`);
-        return { userId, message: `Le pedimos al taller que te llame por la novedad ${ref3}. Ese trabajo no se har\xE1 hasta que lo apruebes.` };
+        await this.notify(conn, String(change.shopUserId), `findingcall:${String(change.id)}`, "care.finding", `\u{1F4DE} El cliente pide que lo llames antes de decidir la novedad ${ref4} de ${workOrderCode(Number(change.number))}: ${String(owner?.name ?? "").split(/\s+/)[0]}, ${String(owner?.phone ?? "")}. No ejecutes ese trabajo hasta que la apruebe.`);
+        return { userId, message: `Le pedimos al taller que te llame por la novedad ${ref4}. Ese trabajo no se har\xE1 hasta que lo apruebes.` };
       }
       /** One rating per work order or part purchase, only by whoever received the service. */
       async rate(conn, userId, role, command) {
@@ -85828,18 +86266,18 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref3} \xB7 Recha
         const code3 = short2("T", id2);
         await conn.query("INSERT INTO `ShopMember` (id, shopId, name, status, invitedBy, role) VALUES (?, ?, ?, 'invited', ?, ?)", [id2, shop.id, command.name, userId, command.role]);
         await this.audit(conn, userId, "care.technician.invited", "ShopMember", id2, { shopId: shop.id });
-        const text8 = encodeURIComponent(`T\xE9cnico ${code3} | ${command.name} | ACEPTO`);
-        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${text8}` : null;
+        const text9 = encodeURIComponent(`T\xE9cnico ${code3} | ${command.name} | ACEPTO`);
+        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${text9}` : null;
         return { userId, message: `Listo. Comparte este enlace con ${command.name} para que se una a ${shop.name} como ${command.role === "admin" ? "administrador (recibir\xE1 el reporte diario)" : "t\xE9cnico"} desde su propio WhatsApp:
 ${link ?? `escribe al WhatsApp de AutoMantPro: T\xE9cnico ${code3} | ${command.name} | ACEPTO`}
 Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Para quitarlo despu\xE9s: Quitar t\xE9cnico ${code3}` };
       }
-      async referral(conn, userId, role, ref3) {
+      async referral(conn, userId, role, ref4) {
         const businessTable = role === "taller" ? "Shop" : role === "almacen" ? "Store" : fail2("FORBIDDEN");
         const [business] = await rows4(conn, `SELECT id, name FROM \`${businessTable}\` WHERE userId = ? LIMIT 1`, [userId]);
         if (!business)
           fail2("FORBIDDEN");
-        const [request] = await rows4(conn, "SELECT id, kind, category, zone, city, description FROM `LocalRequest` WHERE status = 'open' AND expiresAt > UTC_TIMESTAMP(3) AND REPLACE(id, '-', '') LIKE ? LIMIT 2 FOR UPDATE", [prefixOf(ref3)]);
+        const [request] = await rows4(conn, "SELECT id, kind, category, zone, city, description FROM `LocalRequest` WHERE status = 'open' AND expiresAt > UTC_TIMESTAMP(3) AND REPLACE(id, '-', '') LIKE ? LIMIT 2 FOR UPDATE", [prefixOf(ref4)]);
         if (!request)
           fail2("REQUEST_CLOSED_OR_EXPIRED");
         if (request.kind === "servicio" !== (role === "taller"))
@@ -85851,9 +86289,16 @@ Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Para quitarlo desp
             fail2("INVITATION_LIMIT");
           await conn.query("INSERT INTO `LocalOffer` (id, requestId, businessId, businessUserId, businessName, referred) VALUES (?, ?, ?, ?, ?, TRUE)", [randomUUID3(), request.id, business.id, userId, business.name]);
         }
-        return { userId, message: `Te invitaron a la solicitud ${ref3}: ${request.kind}, ${request.category}, sector ${request.zone}, ${request.city}. Necesidad: ${String(request.description).slice(0, 200)}.
-Puedes ofertar aunque tu registro siga en revisi\xF3n: Ofertar ${ref3} | precio USD | minutos | AAAA-MM-DD | HH:mm | notas
+        return { userId, message: `Te invitaron a la solicitud ${ref4}: ${request.kind}, ${request.category}, sector ${request.zone}, ${request.city}. Necesidad: ${String(request.description).slice(0, 200)}.
+Puedes ofertar aunque tu registro siga en revisi\xF3n: Ofertar ${ref4} | precio USD | minutos | AAAA-MM-DD | HH:mm | notas
 La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente en AutoMantPro es gratis.` };
+      }
+      /** Avisa una sola vez al dueño que la orden entró a reparación (clave repair:<orderId>). */
+      async repairStarted(conn, orderId) {
+        const [order] = await rows4(conn, "SELECT w.id, w.number, w.ownerId, w.vehicleId, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.id = ? LIMIT 1", [orderId]);
+        if (!order)
+          return;
+        await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), repairNoticeKey(orderId), "care.repair", repairNoticeText(workOrderCode(Number(order.number)), String(order.shopName)));
       }
       async notify(conn, recipient, dedup, kind, message2) {
         await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID3(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
@@ -86045,10 +86490,10 @@ Para confirmar: Confirmar C-XXXXXX` : "No tienes citas de solicitudes del piloto
         }
       }
       /** Finds one of the sender's own requests by short code, or the latest one. */
-      async ownRequest(conn, userId, role, ref3, onlyOpen) {
+      async ownRequest(conn, userId, role, ref4, onlyOpen) {
         if (role !== "dueno")
           fail3("FORBIDDEN");
-        const found = ref3 ? await rows5(conn, "SELECT id FROM `LocalRequest` WHERE ownerId = ? AND REPLACE(id, '-', '') LIKE ? LIMIT 2", [userId, `${codePrefix(ref3)}%`]) : await rows5(conn, `SELECT id FROM \`LocalRequest\` WHERE ownerId = ? ${onlyOpen ? "AND status = 'open' AND expiresAt > UTC_TIMESTAMP(3)" : ""} ORDER BY createdAt DESC, id DESC LIMIT 1`, [userId]);
+        const found = ref4 ? await rows5(conn, "SELECT id FROM `LocalRequest` WHERE ownerId = ? AND REPLACE(id, '-', '') LIKE ? LIMIT 2", [userId, `${codePrefix(ref4)}%`]) : await rows5(conn, `SELECT id FROM \`LocalRequest\` WHERE ownerId = ? ${onlyOpen ? "AND status = 'open' AND expiresAt > UTC_TIMESTAMP(3)" : ""} ORDER BY createdAt DESC, id DESC LIMIT 1`, [userId]);
         if (!found.length)
           fail3("NOT_FOUND");
         if (found.length > 1)
@@ -86153,45 +86598,45 @@ ${lines.join("\n")}${hint}` : `Todav\xEDa no hay ofertas para ${code3}.` };
             await this.notify(conn, String(o.businessUserId), `cancel:${command.requestId}:${o.id}`, "local.cancelled", `Solicitud ${shortCode("S", command.requestId)} cancelada por el due\xF1o.`);
           return { requestId: command.requestId, message: `Solicitud ${shortCode("S", command.requestId)} cancelada.` };
         }
-        const selected = offers.find((o) => o.id === command.offerId && o.status === "offered");
-        if (!selected)
+        const selected2 = offers.find((o) => o.id === command.offerId && o.status === "offered");
+        if (!selected2)
           fail3("OFFER_NOT_AVAILABLE");
-        if (new Date(selected.proposedAt).getTime() <= Date.now())
+        if (new Date(selected2.proposedAt).getTime() <= Date.now())
           fail3("PROPOSED_DATE_PASSED");
         const table = request.kind === "servicio" ? "Shop" : "Store";
-        const valid = await rows5(conn, `SELECT b.id FROM \`${table}\` b JOIN \`User\` u ON u.id = b.userId WHERE b.id = ? AND b.verificationStatus = 'verified' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ${NOT_SANCTIONED("b")} FOR UPDATE`, [selected.businessId]);
+        const valid = await rows5(conn, `SELECT b.id FROM \`${table}\` b JOIN \`User\` u ON u.id = b.userId WHERE b.id = ? AND b.verificationStatus = 'verified' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ${NOT_SANCTIONED("b")} FOR UPDATE`, [selected2.businessId]);
         if (!valid.length) {
-          const pending = await rows5(conn, `SELECT id FROM \`${table}\` WHERE id = ? AND verificationStatus = 'pending'`, [selected.businessId]);
+          const pending = await rows5(conn, `SELECT id FROM \`${table}\` WHERE id = ? AND verificationStatus = 'pending'`, [selected2.businessId]);
           fail3(pending.length ? "BUSINESS_PENDING_VERIFICATION" : "BUSINESS_UNAVAILABLE");
         }
-        await conn.query("UPDATE `LocalRequest` SET status = 'accepted', chosenOfferId = ? WHERE id = ?", [selected.id, command.requestId]);
-        await conn.query("UPDATE `LocalOffer` SET status = IF(id = ?, 'chosen', 'discarded') WHERE requestId = ?", [selected.id, command.requestId]);
+        await conn.query("UPDATE `LocalRequest` SET status = 'accepted', chosenOfferId = ? WHERE id = ?", [selected2.id, command.requestId]);
+        await conn.query("UPDATE `LocalOffer` SET status = IF(id = ?, 'chosen', 'discarded') WHERE requestId = ?", [selected2.id, command.requestId]);
         let appointmentId = null;
         if (request.kind === "servicio") {
           const vehicle = await rows5(conn, "SELECT id FROM `Vehicle` WHERE id = ? AND userId = ? AND deletedAt IS NULL", [request.vehicleId, userId]);
           if (!vehicle.length)
             fail3("VEHICLE_NOT_FOUND");
           appointmentId = randomUUID4();
-          await conn.query("DELETE FROM `VehicleShopBlock` WHERE vehicleId = ? AND shopId = ?", [request.vehicleId, selected.businessId]).catch((err) => {
+          await conn.query("DELETE FROM `VehicleShopBlock` WHERE vehicleId = ? AND shopId = ?", [request.vehicleId, selected2.businessId]).catch((err) => {
             if (err.code !== "ER_NO_SUCH_TABLE")
               throw err;
           });
-          await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, createdAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, UTC_TIMESTAMP(3))", [appointmentId, userId, request.vehicleId, selected.businessId, selected.proposedAt, `Solicitud ${command.requestId}: ${request.category}`]);
+          await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, createdAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, UTC_TIMESTAMP(3))", [appointmentId, userId, request.vehicleId, selected2.businessId, selected2.proposedAt, `Solicitud ${command.requestId}: ${request.category}`]);
         }
-        const chosenText = `oferta ${positions(offers).get(String(selected.id))} de ${selected.businessName}: USD ${selected.priceUsd}, ${formatEcDateTime(selected.proposedAt)}`;
+        const chosenText = `oferta ${positions(offers).get(String(selected2.id))} de ${selected2.businessName}: USD ${selected2.priceUsd}, ${formatEcDateTime(selected2.proposedAt)}`;
         const message2 = request.kind === "servicio" ? `Aceptaste la ${chosenText}. Cita ${shortCode("C", appointmentId)} (${appointmentId}) solicitada; falta la confirmaci\xF3n del taller.` : `Aceptaste la ${chosenText}. El almac\xE9n debe confirmar stock y entrega.`;
         for (const o of offers)
-          await this.notify(conn, String(o.businessUserId), `decision:${command.requestId}:${o.id}`, "local.decision", o.id === selected.id ? `Tu oferta ${o.id} para ${shortCode("S", command.requestId)} fue aceptada. ${request.kind === "servicio" ? `Confirma la cita respondiendo: Confirmar ${shortCode("C", appointmentId)} (cita ${appointmentId})` : "Confirma stock y entrega con el due\xF1o"}.` : `La solicitud ${shortCode("S", command.requestId)} eligi\xF3 otra oferta.`);
+          await this.notify(conn, String(o.businessUserId), `decision:${command.requestId}:${o.id}`, "local.decision", o.id === selected2.id ? `Tu oferta ${o.id} para ${shortCode("S", command.requestId)} fue aceptada. ${request.kind === "servicio" ? `Confirma la cita respondiendo: Confirmar ${shortCode("C", appointmentId)} (cita ${appointmentId})` : "Confirma stock y entrega con el due\xF1o"}.` : `La solicitud ${shortCode("S", command.requestId)} eligi\xF3 otra oferta.`);
         await this.notify(conn, userId, `accepted:${command.requestId}`, "local.accepted", message2);
-        return { requestId: command.requestId, offerId: selected.id, appointmentId, message: message2 };
+        return { requestId: command.requestId, offerId: selected2.id, appointmentId, message: message2 };
       }
     };
   }
 });
 
 // packages/api/dist/application/local-marketplace/chat.js
-function parseLocalChat(text8) {
-  const parts = text8.split("|").map((s) => s.trim());
+function parseLocalChat(text9) {
+  const parts = text9.split("|").map((s) => s.trim());
   const verb = parts[0]?.toLowerCase();
   let command;
   if ((verb === "buscar servicio" || verb === "buscar repuesto") && parts.length === 6)
@@ -86206,14 +86651,14 @@ function parseLocalChat(text8) {
   else if (verb === "confirmar cita" && parts.length === 3)
     command = { action: "confirm", requestId: parts[1], appointmentId: parts[2] };
   if (command === void 0)
-    command = parseShort(text8);
+    command = parseShort(text9);
   const result = localCommandSchema.safeParse(command);
   if (!result.success)
     throw new LocalMarketplaceError("INVALID_CHAT_COMMAND");
   return result.data;
 }
-function parseShort(text8) {
-  const normalized2 = text8.trim().replace(/\s+/g, " ");
+function parseShort(text9) {
+  const normalized2 = text9.trim().replace(/\s+/g, " ");
   const parts = normalized2.split("|").map((s) => s.trim());
   const words = (parts[0] ?? "").split(" ");
   const verb = words[0]?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -86276,12 +86721,12 @@ var init_chat = __esm({
 function budgetLines(value2) {
   return value2.split(";").map((chunk) => chunk.trim()).filter(Boolean).map((chunk) => {
     const [head = "", ...rest] = chunk.split(":");
-    const kind = fold4(head) === "repuesto" ? "repuesto" : fold4(head) === "mano de obra" ? "mano_obra" : head;
+    const kind = fold6(head) === "repuesto" ? "repuesto" : fold6(head) === "mano de obra" ? "mano_obra" : head;
     const f = rest.join(":").split(/,\s+/).map((x) => x.trim());
     const price = (x) => Number(String(x ?? "").replace(/[$\s]/g, "").replace(/\.(?=\d{3}\b)/g, "").replace(",", "."));
     if (kind === "mano_obra")
       return { kind, description: f[0], brand: null, quantity: Number(f[1]), unitPrice: price(f[2]), quality: null };
-    return { kind, description: f[0], brand: f[1] || null, quantity: Number(f[2]), unitPrice: price(f[3]), quality: f[4] ? fold4(f[4]) : "nuevo" };
+    return { kind, description: f[0], brand: f[1] || null, quantity: Number(f[2]), unitPrice: price(f[3]), quality: f[4] ? fold6(f[4]) : "nuevo" };
   });
 }
 function normalizePlate2(value2) {
@@ -86292,7 +86737,7 @@ function normalizePlate2(value2) {
 function parseAccountCommand(raw) {
   const message2 = raw.replace(VISIT_SUFFIX, "");
   const parts = message2.split("|").map((s) => s.trim());
-  const verb = fold4(parts[0] ?? "");
+  const verb = fold6(parts[0] ?? "");
   let command = null;
   if (verb === "registrarme" && parts.length === 4 && accepted(parts[3]))
     command = { action: "registerOwner", name: parts[1], city: parts[2] };
@@ -86301,7 +86746,7 @@ function parseAccountCommand(raw) {
   else if (verb === "registrar almacen" && parts.length === 8 && accepted(parts[7]))
     command = { action: "registerStore", name: parts[1], ruc: parts[2], city: parts[3], zone: parts[4], address: parts[5], categories: parts[6] };
   else if (verb === "vehiculo" && parts.length === 7)
-    command = { action: "addVehicle", vehicleClass: fold4(parts[1] ?? "").replace(/\s+/g, "_"), fuel: fold4(parts[2] ?? "").replace(/\s+/g, "_"), make: parts[3], model: parts[4], year: Number(parts[5]), currentKm: Number((parts[6] ?? "").replace(/[.\s,]/g, "")) };
+    command = { action: "addVehicle", vehicleClass: fold6(parts[1] ?? "").replace(/\s+/g, "_"), fuel: fold6(parts[2] ?? "").replace(/\s+/g, "_"), make: parts[3], model: parts[4], year: Number(parts[5]), currentKm: Number((parts[6] ?? "").replace(/[.\s,]/g, "")) };
   else if ((withPlate(verb, "plan") || withPlate(verb, "plan completo")) && parts.length === 1)
     command = { action: "plan", full: verb.startsWith("plan completo"), ...withPlate(verb, "plan") ?? withPlate(verb, "plan completo") };
   else if ((verb === "mi vehiculo" || verb === "mi vehiculo asignado") && parts.length === 1)
@@ -86321,13 +86766,13 @@ function parseAccountCommand(raw) {
   else if (/^plan [cC]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 1)
     command = { action: "shopPlan", appointmentRef: ref2(verb) };
   else if (/^ingreso [cC]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 6)
-    command = { action: "checkIn", appointmentRef: ref2(verb), km: kmOf(parts[1]), fuel: fold4(parts[2] ?? ""), condition: parts[3], inventory: parts[4], requested: parts[5] };
+    command = { action: "checkIn", appointmentRef: ref2(verb), km: kmOf(parts[1]), fuel: fold6(parts[2] ?? ""), condition: parts[3], inventory: parts[4], requested: parts[5] };
   else if (/^presupuesto ot-\d{1,7}$/.test(verb) && parts.length === 2)
     command = { action: "budget", orderNumber: orderOf(verb), lines: budgetLines(parts[1] ?? "") };
   else if (/^calificar ot-\d{1,7}$/.test(verb) && (parts.length === 5 || parts.length === 6))
     command = { action: "rateShop", orderNumber: orderOf(verb), quality: Number(parts[1]), service: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), comment: parts[5] ?? "" };
   else if (/^calificar s-[0-9a-f]{6}$/.test(verb) && (parts.length === 6 || parts.length === 7))
-    command = { action: "rateStore", requestRef: ref2(verb), rightPart: fold4(parts[1] ?? "") === "si", quality: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), service: Number(parts[5]), comment: parts[6] ?? "" };
+    command = { action: "rateStore", requestRef: ref2(verb), rightPart: fold6(parts[1] ?? "") === "si", quality: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), service: Number(parts[5]), comment: parts[6] ?? "" };
   else if ((verb === "mi calificacion" || verb === "mi valoracion" || verb === "reporte de calificacion") && parts.length === 1)
     command = { action: "myRating" };
   else if (/^novedad ot-\d{1,7}$/.test(verb) && parts.length === 3)
@@ -86364,6 +86809,12 @@ function parseAccountCommand(raw) {
     command = { action: "selectVehicle", position: Number(verb.slice(-1)) };
   else if ((verb === "estado" || /^estado ot-\d{1,7}$/.test(verb)) && parts.length === 1)
     command = { action: "orderStatus", orderNumber: verb === "estado" ? null : orderOf(verb) };
+  else if (["estado auto", "estado vehiculo", "estado mi vehiculo", "estado de mi vehiculo"].includes(verb) && parts.length === 1)
+    command = { action: "vehicleStatus" };
+  else if (plateAfter(verb, "estado") && parts.length === 1)
+    command = { action: "vehicleStatus", plate: plateAfter(verb, "estado") };
+  else if (/^hecho( .{3,80})?$/.test(verb) && parts.length === 1)
+    command = { action: "reminderDone", service: verb === "hecho" ? null : message2.split("|")[0].trim().replace(/^\S+\s+/, "") };
   else if (/^(confirmo|observo) ingreso ot-\d{1,7}$/.test(verb) && parts.length <= 2)
     command = { action: "checkInAnswer", orderNumber: orderOf(verb), confirm: verb.startsWith("confirmo"), note: parts[1] ? parts[1] : null };
   else if (/^reprogramar (cita )?c-[0-9a-f]{6}$/.test(verb) && parts.length === 3)
@@ -86371,12 +86822,12 @@ function parseAccountCommand(raw) {
   else if (/^rechazar cita c-[0-9a-f]{6}$/.test(verb) && parts.length === 2)
     command = { action: "declineAppointment", appointmentRef: ref2(verb), reason: parts[1] };
   else if (verb === "ficha" && (parts.length === 8 || parts.length === 9))
-    command = { action: "createCard", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold4(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold4(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), services: (parts[8] ?? "").split(",").map((x) => x.trim()).filter(Boolean) };
+    command = { action: "createCard", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold6(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold6(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), services: (parts[8] ?? "").split(",").map((x) => x.trim()).filter(Boolean) };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 1)
     command = { action: "cardPreview", cardCode: secretOf(verb) };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 2 && accepted(parts[1]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: null, city: null, intoFleet: false };
-  else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 3 && fold4(parts[1] ?? "") === "flota" && accepted(parts[2]))
+  else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 3 && fold6(parts[1] ?? "") === "flota" && accepted(parts[2]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: null, city: null, intoFleet: true };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 4 && accepted(parts[3]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: parts[1], city: parts[2], intoFleet: false };
@@ -86391,7 +86842,7 @@ function parseAccountCommand(raw) {
   else if (verb === "registrar flota" && parts.length === 6 && accepted(parts[5]))
     command = { action: "registerFleet", name: parts[1], ruc: parts[2], city: parts[3], person: parts[4] };
   else if (verb === "vehiculo flota" && (parts.length === 8 || parts.length === 9))
-    command = { action: "fleetVehicle", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold4(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold4(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), unitCode: parts[8] ? parts[8] : null };
+    command = { action: "fleetVehicle", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold6(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold6(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), unitCode: parts[8] ? parts[8] : null };
   else if (plateAfter(verb, "retirar") && parts.length === 1)
     command = { action: "retireVehicle", plate: plateAfter(verb, "retirar") };
   else if (["agregar conductor", "agregar chofer", "agregar supervisor", "agregar administrador de flota"].includes(verb) && parts.length === 2)
@@ -86434,12 +86885,21 @@ function parseAccountCommand(raw) {
     command = { action: "leaveFleet" };
   else if (verb === "panel flota" && parts.length === 1)
     command = { action: "panelLink" };
+  else if (verb === "mapa" && (parts.length === 3 || parts.length === 4) && accepted(parts[parts.length - 1])) {
+    const sector = parts.length === 4 && fold6(parts[1] ?? "") === "sector";
+    const point = parsePoint(parts[sector ? 2 : 1] ?? "");
+    if ((parts.length === 3 || sector) && point)
+      command = { action: "shopMap", lat: point.lat, lng: point.lng, precision: sector ? "sector" : "exacta" };
+    else
+      return { invalid: true };
+  } else if (["salir del mapa", "quitar del mapa"].includes(verb) && parts.length === 1)
+    command = { action: "shopMapLeave" };
   else if (["planes", "precios", "ver planes", "planes y precios"].includes(verb) && parts.length === 1)
     command = { action: "planList" };
   else if (["mi suscripcion", "suscripcion", "mi plan pagado"].includes(verb) && parts.length === 1)
     command = { action: "mySubscription" };
   else if (/^(quiero|contratar) (el )?plan .{2,40}$/.test(verb) && parts.length <= 3) {
-    const extras = parts.slice(1).map((p) => fold4(p));
+    const extras = parts.slice(1).map((p) => fold6(p));
     const period = extras.includes("anual") ? "anual" : "mensual";
     const unitsText = extras.find((p) => /^\d{1,3}( vehiculos?)?$/.test(p));
     if (extras.every((p) => p === "anual" || p === "mensual" || p === unitsText))
@@ -86460,12 +86920,13 @@ function parseAccountCommand(raw) {
 function isInvalidAccountCommand(value2) {
   return !!value2 && "invalid" in value2;
 }
-var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref6, plate, vehicleClass, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold4, accepted, orderOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, money2, VISIT_SUFFIX;
+var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref6, plate, vehicleClass, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold6, accepted, orderOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, money2, VISIT_SUFFIX;
 var init_commands = __esm({
   "packages/api/dist/application/chat-account/commands.js"() {
     "use strict";
     init_zod();
     init_maintenance();
+    init_workshop_map();
     text2 = (min, max) => external_exports.string().trim().min(min).max(max);
     score = external_exports.number().int().min(1).max(5);
     budgetLine = external_exports.object({ kind: external_exports.enum(["repuesto", "mano_obra"]), description: text2(2, 120), brand: external_exports.string().trim().max(60).nullable(), quantity: external_exports.number().positive().max(999), unitPrice: external_exports.number().min(0).max(99999), quality: external_exports.enum(["nuevo", "original", "alterno", "reconstruido", "usado"]).nullable() }).strict();
@@ -86527,6 +86988,10 @@ var init_commands = __esm({
       external_exports.object({ action: external_exports.literal("selectVehicle"), position: external_exports.number().int().min(1).max(5) }).strict(),
       // Owner: where their vehicle is (open work orders), and their answer to the reception form.
       external_exports.object({ action: external_exports.literal("orderStatus"), orderNumber: external_exports.number().int().min(1).nullable() }).strict(),
+      // Owner: maintenance traffic light of the active vehicle (or the one with that plate).
+      external_exports.object({ action: external_exports.literal("vehicleStatus"), plate: plate.optional() }).strict(),
+      // Owner: "Hecho" closes a plan reminder (records the service today at the current km).
+      external_exports.object({ action: external_exports.literal("reminderDone"), service: external_exports.string().trim().min(3).max(80).nullable() }).strict(),
       external_exports.object({ action: external_exports.literal("checkInAnswer"), orderNumber: external_exports.number().int().min(1), confirm: external_exports.boolean(), note: external_exports.string().trim().max(300).nullable() }).strict(),
       // Workshop: propose another time for a pending appointment, or decline it with a reason.
       external_exports.object({ action: external_exports.literal("reschedule"), appointmentRef: code2("C"), date: external_exports.string().regex(/^\d{4}-\d{2}-\d{2}$/), time: external_exports.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/) }).strict(),
@@ -86566,28 +87031,32 @@ var init_commands = __esm({
       external_exports.object({ action: external_exports.literal("mySubscription") }).strict(),
       external_exports.object({ action: external_exports.literal("requestPlan"), name: text2(2, 40), period: external_exports.enum(["mensual", "anual"]), units: external_exports.number().int().min(1).max(500).nullable() }).strict(),
       external_exports.object({ action: external_exports.literal("reportPayment"), number: external_exports.number().int().min(1).max(999999), reference: text2(3, 60), note: external_exports.string().trim().max(120).nullable() }).strict(),
-      external_exports.object({ action: external_exports.literal("renewPlan"), number: external_exports.number().int().min(1).max(999999) }).strict()
+      external_exports.object({ action: external_exports.literal("renewPlan"), number: external_exports.number().int().min(1).max(999999) }).strict(),
+      // Mapa de talleres: el taller comparte su ubicación y acepta aparecer, o sale del mapa.
+      external_exports.object({ action: external_exports.literal("shopMap"), lat: external_exports.number().min(-5.1).max(1.7), lng: external_exports.number().min(-92.2).max(-75.1), precision: external_exports.enum(["exacta", "sector"]) }).strict(),
+      external_exports.object({ action: external_exports.literal("shopMapLeave") }).strict()
     ]);
     ACCOUNT_CHAT_HELP = [
       "Registrarme | nombre y apellido | ciudad | ACEPTO",
       "Registrar taller | nombre comercial | RUC | ciudad | sector | direcci\xF3n | servicios separados por coma | ACEPTO",
       "Registrar almac\xE9n | nombre comercial | RUC | ciudad | sector | direcci\xF3n | categor\xEDas | ACEPTO",
       `Veh\xEDculo | clase (${classIds.join(", ")}) | combustible (${fuelIds.join(", ")}) | marca | modelo | a\xF1o | kilometraje`,
-      "Plan (resumen) \xB7 Plan completo \xB7 Mis veh\xEDculos \xB7 Usar veh\xEDculo 2 \xB7 Estado \xB7 Estado OT-00012 \xB7 Confirmo ingreso OT-00012 \xB7 Observo ingreso OT-00012 | qu\xE9 no coincide",
+      "Plan (resumen) \xB7 Plan completo \xB7 Mis veh\xEDculos \xB7 Usar veh\xEDculo 2 \xB7 Hecho \xB7 Hecho cambio de aceite \xB7 Estado \xB7 Estado auto \xB7 Estado ABC-1234 \xB7 Estado OT-00012 \xB7 Confirmo ingreso OT-00012 \xB7 Observo ingreso OT-00012 | qu\xE9 no coincide",
       "\xDAltimo servicio | servicio | km | AAAA-MM \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n",
       "Alerta | texto | AAAA-MM-DD o km \xB7 Alertas s\xED \xB7 Alertas no \xB7 Aceptar visita C-XXXXXX \xB7 Rechazar visita C-XXXXXX",
       "Aprobar OT-00012 \xB7 Rechazar OT-00012 | motivo \xB7 Aprobar novedad N-XXXXXX \xB7 Rechazar novedad N-XXXXXX | motivo \xB7 Llamar novedad N-XXXXXX \xB7 Acepto entrega OT-00012 (| observaci\xF3n) \xB7 Rechazo entrega OT-00012 | motivo",
       "Calificar OT-00012 | calidad 1-5 | atenci\xF3n 1-5 | plazo 1-5 | costo 1-5 | comentario \xB7 Calificar S-XXXXXX | pieza correcta s\xED/no | calidad | plazo | precio | atenci\xF3n | comentario \xB7 Taller o almac\xE9n: Mi calificaci\xF3n",
       "Taller: Novedad OT-00012 | qu\xE9 se encontr\xF3 | repuesto: \u2026; mano de obra: \u2026 \xB7 Entrega OT-00012 | km de salida | trabajos realizados | d\xEDas de garant\xEDa",
       "Taller y t\xE9cnicos: Plan C-XXXXXX \xB7 Ingreso C-XXXXXX | km | combustible (reserva, 1/4, 1/2, 3/4, lleno) | estado y da\xF1os | inventario | servicios a realizar \xB7 Presupuesto OT-00012 | repuesto: descripci\xF3n, marca, cantidad, precio unitario, calidad; mano de obra: descripci\xF3n, cantidad, precio \xB7 Servicio C-XXXXXX | servicios | km | detalle \xB7 Pr\xF3xima visita C-XXXXXX | AAAA-MM-DD | HH:mm \xB7 Alerta C-XXXXXX | texto | AAAA-MM-DD o km \xB7 Reprogramar cita C-XXXXXX | AAAA-MM-DD | HH:mm \xB7 Rechazar cita C-XXXXXX | motivo",
+      "Mapa de talleres: Mapa | ubicaci\xF3n (comparte tu ubicaci\xF3n o escribe -0.18065, -78.46784) | ACEPTO \xB7 Mapa | sector | ubicaci\xF3n | ACEPTO (muestra solo tu sector) \xB7 Salir del mapa",
       "Due\xF1o del taller: Agregar t\xE9cnico | nombre \xB7 Agregar administrador | nombre \xB7 Resumen hoy \xB7 Resumen semana \xB7 Quitar t\xE9cnico T-XXXXXX \xB7 T\xE9cnico: T\xE9cnico T-XXXXXX | nombre | ACEPTO",
       "Ficha creada por el taller: Ficha | placa | clase | combustible | marca | modelo | a\xF1o | km (| servicios de hoy separados por coma) \xB7 Mis fichas \xB7 Anular ficha F-XXXXXXXX \xB7 Due\xF1o: Ficha F-XXXXXXXX (ver) \xB7 Ficha F-XXXXXXXX | ACEPTO \xB7 Ficha F-XXXXXXXX | nombre y apellido | ciudad | ACEPTO \xB7 Ficha F-XXXXXXXX | flota | ACEPTO \xB7 No es m\xEDo F-XXXXXXXX \xB7 Quitar taller F-XXXXXXXX",
       "Flota: Registrar flota | raz\xF3n social | RUC | ciudad | tu nombre y apellido | ACEPTO \xB7 Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km (| c\xF3digo interno) \xB7 Retirar PCD-4521 \xB7 Agregar conductor | nombre \xB7 Agregar supervisor | nombre \xB7 Conductores \xB7 Quitar D-XXXXXX \xB7 Asignar PCD-4521 | D-XXXXXX \xB7 Liberar PCD-4521 \xB7 Flota \xB7 Vencidos \xB7 Plan PCD-4521 \xB7 Kilometraje PCD-4521 | km \xB7 Gasto PCD-4521 | concepto | USD (| AAAA-MM-DD) \xB7 Costos mes \xB7 Costos PCD-4521 \xB7 Convenio | RUC del taller \xB7 Convenios \xB7 Terminar convenio K-XXXXXX \xB7 Agendar PCD-4521 | K-XXXXXX | AAAA-MM-DD | HH:mm | motivo \xB7 Aprobaci\xF3n autom\xE1tica | USD \xB7 L\xEDmite supervisor | USD \xB7 Panel flota",
       "Planes: Planes \xB7 Mi suscripci\xF3n \xB7 Quiero plan Premium (| anual) \xB7 Quiero plan Flota | 12 veh\xEDculos \xB7 Pago SB-0042 | n\xFAmero de comprobante (| banco) \xB7 Renovar SB-0042",
       "Conductor: Unirme flota J-XXXXXXXX | nombre | ACEPTO \xB7 Mi veh\xEDculo \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n \xB7 Salir de flota \xB7 Taller: Mis flotas \xB7 Aceptar convenio K-XXXXXX \xB7 Rechazar convenio K-XXXXXX"
     ].join("\n");
-    fold4 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
-    accepted = (value2) => fold4(value2 ?? "") === "acepto";
+    fold6 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+    accepted = (value2) => fold6(value2 ?? "") === "acepto";
     orderOf = (verb) => Number(verb.match(/ot-(\d+)$/)?.[1]);
     kmOf = (value2) => Number(String(value2 ?? "").replace(/km/i, "").replace(/[.\s,]/g, ""));
     ref2 = (verb) => (verb.match(/[a-z]-[0-9a-f]{6}$/i)?.[0] ?? "").toUpperCase();
@@ -86866,13 +87335,13 @@ var init_vehicle_card_store = __esm({
         await this.audit(conn, userId, "taller", "card.created", "VehicleCard", id2, { shopId: shop.id, by: shop.actor, services: services.length });
         const [verified] = await rows7(conn, "SELECT verificationStatus FROM `Shop` WHERE id = ?", [shop.id]);
         const label2 = `${command.make} ${command.model} ${command.year} (${command.plate})`;
-        const text8 = `Ficha ${code3}`;
-        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${encodeURIComponent(text8)}` : null;
+        const text9 = `Ficha ${code3}`;
+        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${encodeURIComponent(text9)}` : null;
         const until = new Date(Date.now() + CARD_DAYS * 864e5);
         return { userId, message: [
           `Ficha ${code3} creada para ${label2}${services.length ? ` con ${services.map(serviceName2).join(", ")} a los ${command.currentKm.toLocaleString("es-EC")} km` : ""}.`,
           `Reenv\xEDa este enlace al due\xF1o desde tu WhatsApp:
-${link ?? `que escriba al WhatsApp de AutoMantPro: ${text8}`}`,
+${link ?? `que escriba al WhatsApp de AutoMantPro: ${text9}`}`,
           `Al abrirlo ver\xE1 el veh\xEDculo y qu\xE9 acepta. Vence el ${formatEcDateTime(until).split(",")[0]}; si no la acepta, se borra.${verified?.verificationStatus === "verified" ? "" : " Tu taller sigue en verificaci\xF3n: se lo diremos al due\xF1o."}`,
           `Cuando la acepte te enviaremos el c\xF3digo de cita para registrar el ingreso. Para ver tus fichas: Mis fichas`
         ].join("\n") };
@@ -87035,12 +87504,12 @@ async function kmSince(conn, vehicleId, currentKm, since) {
   return first ? Math.max(0, currentKm - Number(first.km)) : 0;
 }
 async function fleetSnapshot(conn, fleetId, now = /* @__PURE__ */ new Date()) {
-  const care = new VehicleCareStore();
+  const care2 = new VehicleCareStore();
   const since = ecMonthStart(now);
   const vehicles = await rows8(conn, "SELECT v.* FROM `Vehicle` v WHERE v.fleetId = ? AND v.deletedAt IS NULL ORDER BY COALESCE(v.unitCode, v.plate), v.id", [fleetId]);
   const out = [];
   for (const v of vehicles) {
-    const items = planItemsFor(await care.planVehicle(conn, v), await vehicleLevel(conn, v));
+    const items = planItemsFor(await care2.planVehicle(conn, v), await vehicleLevel(conn, v));
     const [order] = await rows8(conn, "SELECT w.number, s.name FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.vehicleId = ? AND w.status NOT IN ('cerrada','cancelada','rechazado') ORDER BY w.number DESC LIMIT 1", [v.id]);
     const [driver] = await rows8(conn, "SELECT m.name FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId WHERE a.vehicleId = ? AND a.endsAt IS NULL AND m.status = 'active' LIMIT 1", [v.id]);
     const [cost] = await rows8(conn, "SELECT COALESCE(SUM(amountUsd), 0) AS total FROM `VehicleExpense` WHERE vehicleId = ? AND spentAt >= ?", [v.id, since]);
@@ -87072,11 +87541,11 @@ async function fleetSummaryText(conn, fleetId, fleetName, now = /* @__PURE__ */ 
     `\u{1F69A} ${fleetName} \xB7 ${list7.length} veh\xEDculo${list7.length === 1 ? "" : "s"}`,
     `\u2705 Al d\xEDa: ${ok} \xB7 \u23F3 Por vencer: ${soon.length} \xB7 \u26A0\uFE0F Vencidos: ${overdue.length} \xB7 \u{1F527} En taller: ${inShop.length}`,
     ...lines.length ? ["Vencidos:", ...lines, ...overdue.length > 5 ? [`y ${overdue.length - 5} m\xE1s: Vencidos`] : []] : [],
-    `\u{1F4B5} Costo de ${month}: ${formatUsd2(cost)}${kms > 0 ? ` \xB7 ${formatUsd2(cost / kms)}/km en ${km2(kms)}` : ""}`,
+    `\u{1F4B5} Costo de ${month}: ${formatUsd2(cost)}${kms > 0 ? ` \xB7 ${formatUsd2(cost / kms)}/km en ${km3(kms)}` : ""}`,
     "Detalle: Vencidos \xB7 Costos mes \xB7 Conductores \xB7 Plan PLACA \xB7 Panel flota"
   ].join("\n");
 }
-var rows8, fail6, short4, prefixOf2, km2, MEMBER_LIMIT, PANEL_MINUTES, ROLE_NAME, unitLabel, FleetStore;
+var rows8, fail6, short4, prefixOf2, km3, MEMBER_LIMIT, PANEL_MINUTES, ROLE_NAME, unitLabel, FleetStore;
 var init_fleet_store = __esm({
   "packages/api/dist/infrastructure/messaging/fleet-store.js"() {
     "use strict";
@@ -87094,7 +87563,7 @@ var init_fleet_store = __esm({
     };
     short4 = (prefix, id2) => `${prefix}-${id2.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf2 = (code3) => `${code3.slice(2).toLowerCase()}%`;
-    km2 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
+    km3 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
     MEMBER_LIMIT = 200;
     PANEL_MINUTES = 60;
     ROLE_NAME = { owner: "titular", admin: "administrador", supervisor: "supervisor", conductor: "conductor" };
@@ -87230,13 +87699,13 @@ Para asignarlo a un conductor: Asignar ${command.plate} | D-XXXXXX` };
         const code3 = newSecretCode("J");
         await conn.query("INSERT INTO `FleetMember` (id, fleetId, userId, name, role, status, inviteHash, invitedBy) VALUES (?, ?, NULL, ?, ?, 'invited', ?, ?)", [id2, fleet.fleetId, command.name, command.role, secretHash(code3), userId]);
         await this.audit(conn, userId, "fleet.member.invited", "FleetMember", id2, { fleetId: fleet.fleetId, role: command.role });
-        const text8 = `Unirme flota ${code3} | ${command.name} | ACEPTO`;
-        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${encodeURIComponent(text8)}` : null;
-        const ref3 = short4("D", id2);
+        const text9 = `Unirme flota ${code3} | ${command.name} | ACEPTO`;
+        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${encodeURIComponent(text9)}` : null;
+        const ref4 = short4("D", id2);
         const what = command.role === "conductor" ? "conductor (reportar\xE1 kilometraje y novedades del veh\xEDculo que le asignes)" : command.role === "supervisor" ? "supervisor (ver\xE1 la flota y aprobar\xE1 gastos hasta el l\xEDmite que fijes)" : "administrador de la flota";
         return { userId, message: `Listo. Comparte este enlace con ${command.name} para que se una a ${fleet.name} como ${what} desde su propio WhatsApp:
-${link ?? `que escriba al WhatsApp de AutoMantPro: ${text8}`}
-Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Su c\xF3digo en tu flota es ${ref3}${command.role === "conductor" ? `; para asignarle un veh\xEDculo: Asignar PLACA | ${ref3}` : ""}. Para quitarlo: Quitar ${ref3}` };
+${link ?? `que escriba al WhatsApp de AutoMantPro: ${text9}`}
+Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Su c\xF3digo en tu flota es ${ref4}${command.role === "conductor" ? `; para asignarle un veh\xEDculo: Asignar PLACA | ${ref4}` : ""}. Para quitarlo: Quitar ${ref4}` };
       }
       async join(conn, userId, role, command, createOwner) {
         const [member] = await rows8(conn, "SELECT m.id, m.role, m.fleetId, m.invitedBy, f.name AS fleetName, f.city, f.ownerUserId FROM `FleetMember` m JOIN `Fleet` f ON f.id = m.fleetId WHERE m.inviteHash = ? AND m.status = 'invited' AND f.status = 'activa' FOR UPDATE", [secretHash(command.inviteCode)]);
@@ -87258,12 +87727,12 @@ Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Su c\xF3digo en tu
 Cuando te asignen un veh\xEDculo: Mi veh\xEDculo \xB7 Kilometraje | km \xB7 S\xEDntoma | qu\xE9 notas. Para dejar la flota: Salir de flota` : "Comandos: Flota \xB7 Vencidos \xB7 Costos mes \xB7 Conductores \xB7 Asignar PLACA | D-XXXXXX \xB7 Agendar PLACA | K-XXXXXX | AAAA-MM-DD | HH:mm | motivo \xB7 Panel flota"
         ].join("\n") };
       }
-      async memberByRef(conn, fleet, ref3) {
-        const [member] = await rows8(conn, "SELECT id, userId, name, role, status FROM `FleetMember` WHERE fleetId = ? AND status <> 'removed' AND REPLACE(id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [fleet.fleetId, prefixOf2(ref3)]);
+      async memberByRef(conn, fleet, ref4) {
+        const [member] = await rows8(conn, "SELECT id, userId, name, role, status FROM `FleetMember` WHERE fleetId = ? AND status <> 'removed' AND REPLACE(id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [fleet.fleetId, prefixOf2(ref4)]);
         return member ?? fail6("NOT_FOUND");
       }
-      async removeMember(conn, userId, fleet, ref3) {
-        const member = await this.memberByRef(conn, fleet, ref3);
+      async removeMember(conn, userId, fleet, ref4) {
+        const member = await this.memberByRef(conn, fleet, ref4);
         if (fleet.role === "supervisor" && member.role !== "conductor")
           fail6("FORBIDDEN");
         await conn.query("UPDATE `FleetMember` SET status = 'removed', inviteHash = NULL WHERE id = ?", [member.id]);
@@ -87289,16 +87758,16 @@ Cuando te asignen un veh\xEDculo: Mi veh\xEDculo \xB7 Kilometraje | km \xB7 S\xE
         const [vehicle] = await rows8(conn, `SELECT v.* FROM \`Vehicle\` v WHERE v.fleetId = ? AND v.deletedAt IS NULL AND ${PLATE_SQL} = ? LIMIT 1 FOR UPDATE`, [fleet.fleetId, plateKey(plate2)]);
         return vehicle ?? fail6("VEHICLE_NOT_FOUND");
       }
-      async assign(conn, userId, fleet, plate2, ref3) {
+      async assign(conn, userId, fleet, plate2, ref4) {
         const vehicle = await this.fleetVehicle(conn, fleet, plate2);
-        const member = await this.memberByRef(conn, fleet, ref3);
+        const member = await this.memberByRef(conn, fleet, ref4);
         if (member.status !== "active")
           fail6("MEMBER_NOT_ACTIVE");
         await conn.query("UPDATE `FleetAssignment` SET endsAt = UTC_TIMESTAMP(3) WHERE vehicleId = ? AND endsAt IS NULL", [vehicle.id]);
         await conn.query("INSERT INTO `FleetAssignment` (id, fleetId, vehicleId, memberId, createdBy) VALUES (?, ?, ?, ?, ?)", [randomUUID7(), fleet.fleetId, vehicle.id, member.id, userId]);
         await this.audit(conn, userId, "fleet.vehicle.assigned", "Vehicle", String(vehicle.id), { memberId: member.id });
         const label2 = `${unitLabel(vehicle)} ${vehicle.make} ${vehicle.model}`;
-        await this.notify(conn, String(member.userId), `fleetassigned:${String(vehicle.id)}:${String(member.id)}:${Date.now()}`, "fleet.assignment", `\u{1F69A} ${fleet.name} te asign\xF3 ${label2} (${km2(Number(vehicle.currentKm))}). Reporta el kilometraje cada semana: Kilometraje | km \xB7 Si notas algo: S\xEDntoma | qu\xE9 notas \xB7 Su plan: Mi veh\xEDculo`);
+        await this.notify(conn, String(member.userId), `fleetassigned:${String(vehicle.id)}:${String(member.id)}:${Date.now()}`, "fleet.assignment", `\u{1F69A} ${fleet.name} te asign\xF3 ${label2} (${km3(Number(vehicle.currentKm))}). Reporta el kilometraje cada semana: Kilometraje | km \xB7 Si notas algo: S\xEDntoma | qu\xE9 notas \xB7 Su plan: Mi veh\xEDculo`);
         return { userId, message: `${label2} asignado a ${member.name}. Le avisamos por WhatsApp.` };
       }
       async unassign(conn, userId, fleet, plate2) {
@@ -87321,8 +87790,8 @@ Asignar: Asignar PLACA | D-XXXXXX \xB7 Quitar: Quitar D-XXXXXX` };
         const list7 = (await fleetSnapshot(conn, fleet.fleetId)).filter((v) => v.overdue.length || v.soon.length);
         if (!list7.length)
           return { userId, message: `\u2705 Ning\xFAn veh\xEDculo de ${fleet.name} tiene servicios vencidos ni por vencer.` };
-        const lines = list7.slice(0, 20).map((v) => `\u2022 ${unitLabel(v)} ${v.make} ${v.model} (${km2(Number(v.currentKm))})${v.driver ? ` \xB7 ${v.driver}` : ""}${v.inShop ? ` \xB7 en taller ${v.inShop}` : ""}
-  ${[...v.overdue.map((o) => `\u26A0\uFE0F ${o.serviceName}: ${o.reason.replace(/^Vencido /, "vencido ")}`), ...v.soon.map((s) => `\u23F3 ${s.serviceName} a los ${km2(s.dueKm)}`)].slice(0, 4).join(" \xB7 ")}`);
+        const lines = list7.slice(0, 20).map((v) => `\u2022 ${unitLabel(v)} ${v.make} ${v.model} (${km3(Number(v.currentKm))})${v.driver ? ` \xB7 ${v.driver}` : ""}${v.inShop ? ` \xB7 en taller ${v.inShop}` : ""}
+  ${[...v.overdue.map((o) => `\u26A0\uFE0F ${o.serviceName}: ${o.reason.replace(/^Vencido /, "vencido ")}`), ...v.soon.map((s) => `\u23F3 ${s.serviceName} a los ${km3(s.dueKm)}`)].slice(0, 4).join(" \xB7 ")}`);
         return { userId, message: `\u{1F527} ${fleet.name}: servicios vencidos y por vencer
 ${lines.join("\n")}${list7.length > 20 ? `
 y ${list7.length - 20} veh\xEDculos m\xE1s en el panel: Panel flota` : ""}
@@ -87346,13 +87815,13 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
           const last = await rows8(conn, "SELECT description, amountUsd, spentAt FROM `VehicleExpense` WHERE vehicleId = ? ORDER BY spentAt DESC LIMIT 5", [vehicle.id]);
           if (!months.length)
             return { userId, message: `${unitLabel(vehicle)} no tiene gastos en los \xFAltimos 6 meses. Para anotar uno: Gasto ${vehicle.plate} | concepto | USD` };
-          return { userId, message: [`\u{1F4B5} ${unitLabel(vehicle)} ${vehicle.make} ${vehicle.model}: \xFAltimos 6 meses`, ...months.map((m) => `\u2022 ${m.month}: ${formatUsd2(Number(m.total))} (${Number(m.n)} gastos)`), "\xDAltimos gastos:", ...last.map((e7) => `\u2022 ${formatEcDateTime(e7.spentAt).split(",")[0]} ${e7.description}: ${formatUsd2(Number(e7.amountUsd))}`)].join("\n") };
+          return { userId, message: [`\u{1F4B5} ${unitLabel(vehicle)} ${vehicle.make} ${vehicle.model}: \xFAltimos 6 meses`, ...months.map((m) => `\u2022 ${m.month}: ${formatUsd2(Number(m.total))} (${Number(m.n)} gastos)`), "\xDAltimos gastos:", ...last.map((e8) => `\u2022 ${formatEcDateTime(e8.spentAt).split(",")[0]} ${e8.description}: ${formatUsd2(Number(e8.amountUsd))}`)].join("\n") };
         }
         const list7 = (await fleetSnapshot(conn, fleet.fleetId)).sort((a, b) => b.monthCost - a.monthCost);
         const total = list7.reduce((a, v) => a + v.monthCost, 0);
         const kms = list7.reduce((a, v) => a + v.monthKm, 0);
-        const lines = list7.filter((v) => v.monthCost > 0).slice(0, 10).map((v) => `\u2022 ${unitLabel(v)} ${v.make} ${v.model}: ${formatUsd2(v.monthCost)}${v.monthKm > 0 ? ` \xB7 ${km2(v.monthKm)} \xB7 ${formatUsd2(v.monthCost / v.monthKm)}/km` : ""}`);
-        return { userId, message: [`\u{1F4B5} ${fleet.name}: costos de este mes`, `Total: ${formatUsd2(total)}${kms > 0 ? ` \xB7 ${km2(kms)} recorridos \xB7 ${formatUsd2(total / kms)}/km` : ""}`, ...lines.length ? lines : ["Sin gastos registrados este mes."], "Incluye \xF3rdenes cerradas en AutoMantPro y gastos anotados con: Gasto PLACA | concepto | USD"].join("\n") };
+        const lines = list7.filter((v) => v.monthCost > 0).slice(0, 10).map((v) => `\u2022 ${unitLabel(v)} ${v.make} ${v.model}: ${formatUsd2(v.monthCost)}${v.monthKm > 0 ? ` \xB7 ${km3(v.monthKm)} \xB7 ${formatUsd2(v.monthCost / v.monthKm)}/km` : ""}`);
+        return { userId, message: [`\u{1F4B5} ${fleet.name}: costos de este mes`, `Total: ${formatUsd2(total)}${kms > 0 ? ` \xB7 ${km3(kms)} recorridos \xB7 ${formatUsd2(total / kms)}/km` : ""}`, ...lines.length ? lines : ["Sin gastos registrados este mes."], "Incluye \xF3rdenes cerradas en AutoMantPro y gastos anotados con: Gasto PLACA | concepto | USD"].join("\n") };
       }
       // ---------- workshops ----------
       async propose(conn, userId, fleet, ruc2) {
@@ -87367,42 +87836,42 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
           await conn.query("UPDATE `FleetShop` SET status = 'propuesto', createdBy = ?, decidedBy = NULL, decidedAt = NULL WHERE id = ?", [userId, id2]);
         else
           await conn.query("INSERT INTO `FleetShop` (id, fleetId, shopId, status, createdBy) VALUES (?, ?, ?, 'propuesto', ?)", [id2, fleet.fleetId, shop.id, userId]);
-        const ref3 = short4("K", id2);
+        const ref4 = short4("K", id2);
         const [vehicles] = await rows8(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE fleetId = ? AND deletedAt IS NULL", [fleet.fleetId]);
         await this.audit(conn, userId, "fleet.agreement.proposed", "FleetShop", id2, { shopId: shop.id });
-        await this.notify(conn, String(shop.userId), `agreement:${id2}:${Date.now()}`, "fleet.agreement", `\u{1F91D} La flota ${fleet.name} (${Number(vehicles?.n ?? 0)} veh\xEDculos) propone un convenio con ${shop.name}: te enviar\xE1 sus veh\xEDculos para mantenimiento y podr\xE1 aprobar por adelantado presupuestos peque\xF1os. Responde: Aceptar convenio ${ref3} \xB7 Rechazar convenio ${ref3}`);
-        return { userId, message: `Propuesta de convenio ${ref3} enviada a ${shop.name}${shop.verificationStatus === "verified" ? "" : " (taller en verificaci\xF3n)"}. Te avisaremos cuando responda.` };
+        await this.notify(conn, String(shop.userId), `agreement:${id2}:${Date.now()}`, "fleet.agreement", `\u{1F91D} La flota ${fleet.name} (${Number(vehicles?.n ?? 0)} veh\xEDculos) propone un convenio con ${shop.name}: te enviar\xE1 sus veh\xEDculos para mantenimiento y podr\xE1 aprobar por adelantado presupuestos peque\xF1os. Responde: Aceptar convenio ${ref4} \xB7 Rechazar convenio ${ref4}`);
+        return { userId, message: `Propuesta de convenio ${ref4} enviada a ${shop.name}${shop.verificationStatus === "verified" ? "" : " (taller en verificaci\xF3n)"}. Te avisaremos cuando responda.` };
       }
-      async agreementAnswer(conn, userId, role, ref3, accept) {
+      async agreementAnswer(conn, userId, role, ref4, accept) {
         const shop = await this.care.actingShop(conn, userId, role);
         if (!shop.isOwner)
           fail6("FORBIDDEN");
-        const [agreement] = await rows8(conn, "SELECT fs.id, f.id AS fleetId, f.name, f.ownerUserId FROM `FleetShop` fs JOIN `Fleet` f ON f.id = fs.fleetId WHERE fs.shopId = ? AND fs.status = 'propuesto' AND REPLACE(fs.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf2(ref3)]);
+        const [agreement] = await rows8(conn, "SELECT fs.id, f.id AS fleetId, f.name, f.ownerUserId FROM `FleetShop` fs JOIN `Fleet` f ON f.id = fs.fleetId WHERE fs.shopId = ? AND fs.status = 'propuesto' AND REPLACE(fs.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf2(ref4)]);
         if (!agreement)
           fail6("NOT_FOUND");
         await conn.query("UPDATE `FleetShop` SET status = ?, decidedBy = ?, decidedAt = UTC_TIMESTAMP(3) WHERE id = ?", [accept ? "activo" : "rechazado", userId, agreement.id]);
         await this.audit(conn, userId, accept ? "fleet.agreement.accepted" : "fleet.agreement.rejected", "FleetShop", String(agreement.id), {});
         const admins = await rows8(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [agreement.fleetId]);
         for (const recipient of /* @__PURE__ */ new Set([String(agreement.ownerUserId), ...admins.map((a) => String(a.userId))]))
-          await this.notify(conn, recipient, `agreementanswer:${String(agreement.id)}:${accept}:${recipient}`, "fleet.agreement", accept ? `\u{1F91D} ${shop.name} acept\xF3 el convenio ${ref3}. Para enviarle un veh\xEDculo: Agendar PLACA | ${ref3} | AAAA-MM-DD | HH:mm | motivo` : `${shop.name} no acept\xF3 el convenio ${ref3}.`);
-        return { userId, message: accept ? `Convenio ${ref3} con ${agreement.name} activo. Recibir\xE1s sus visitas con c\xF3digo C- para registrar el ingreso como siempre.` : `Rechazaste el convenio ${ref3}. Avisamos a ${agreement.name}.` };
+          await this.notify(conn, recipient, `agreementanswer:${String(agreement.id)}:${accept}:${recipient}`, "fleet.agreement", accept ? `\u{1F91D} ${shop.name} acept\xF3 el convenio ${ref4}. Para enviarle un veh\xEDculo: Agendar PLACA | ${ref4} | AAAA-MM-DD | HH:mm | motivo` : `${shop.name} no acept\xF3 el convenio ${ref4}.`);
+        return { userId, message: accept ? `Convenio ${ref4} con ${agreement.name} activo. Recibir\xE1s sus visitas con c\xF3digo C- para registrar el ingreso como siempre.` : `Rechazaste el convenio ${ref4}. Avisamos a ${agreement.name}.` };
       }
-      async endAgreement(conn, userId, role, ref3, fleet) {
+      async endAgreement(conn, userId, role, ref4, fleet) {
         let agreement;
         if (fleet)
-          [agreement] = await rows8(conn, "SELECT fs.id, fs.shopId, s.name, s.userId AS notifyUserId FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status IN ('activo','propuesto') AND REPLACE(fs.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [fleet.fleetId, prefixOf2(ref3)]);
+          [agreement] = await rows8(conn, "SELECT fs.id, fs.shopId, s.name, s.userId AS notifyUserId FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status IN ('activo','propuesto') AND REPLACE(fs.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [fleet.fleetId, prefixOf2(ref4)]);
         else {
           const shop = await this.care.actingShop(conn, userId, role);
           if (!shop.isOwner)
             fail6("FORBIDDEN");
-          [agreement] = await rows8(conn, "SELECT fs.id, fs.shopId, f.name, f.ownerUserId AS notifyUserId FROM `FleetShop` fs JOIN `Fleet` f ON f.id = fs.fleetId WHERE fs.shopId = ? AND fs.status IN ('activo','propuesto') AND REPLACE(fs.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf2(ref3)]);
+          [agreement] = await rows8(conn, "SELECT fs.id, fs.shopId, f.name, f.ownerUserId AS notifyUserId FROM `FleetShop` fs JOIN `Fleet` f ON f.id = fs.fleetId WHERE fs.shopId = ? AND fs.status IN ('activo','propuesto') AND REPLACE(fs.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf2(ref4)]);
         }
         if (!agreement)
           fail6("NOT_FOUND");
         await conn.query("UPDATE `FleetShop` SET status = 'terminado', decidedBy = ?, decidedAt = UTC_TIMESTAMP(3) WHERE id = ?", [userId, agreement.id]);
         await this.audit(conn, userId, "fleet.agreement.ended", "FleetShop", String(agreement.id), {});
-        await this.notify(conn, String(agreement.notifyUserId), `agreementend:${String(agreement.id)}:${Date.now()}`, "fleet.agreement", `El convenio ${ref3} termin\xF3. Las visitas ya agendadas siguen en pie; la aprobaci\xF3n autom\xE1tica ya no aplica.`);
-        return { userId, message: `Convenio ${ref3} con ${agreement.name} terminado.` };
+        await this.notify(conn, String(agreement.notifyUserId), `agreementend:${String(agreement.id)}:${Date.now()}`, "fleet.agreement", `El convenio ${ref4} termin\xF3. Las visitas ya agendadas siguen en pie; la aprobaci\xF3n autom\xE1tica ya no aplica.`);
+        return { userId, message: `Convenio ${ref4} con ${agreement.name} terminado.` };
       }
       async fleetAgreements(conn, userId, fleet) {
         const list7 = await rows8(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status IN ('activo','propuesto') ORDER BY fs.status, s.name", [fleet.fleetId]);
@@ -87438,7 +87907,7 @@ ${list7.map((c) => `\u2022 ${short4("K", String(c.id))} ${c.name} \xB7 ${Number(
         await this.audit(conn, userId, "fleet.visit.scheduled", "Appointment", id2, { fleetId: fleet.fleetId });
         const label2 = `${unitLabel(vehicle)} ${vehicle.make} ${vehicle.model} ${vehicle.year}`;
         const when9 = formatEcDateTime(at);
-        await this.notify(conn, String(agreement.shopUserId), `fleetvisit:${id2}`, "fleet.visit", `\u{1F4C5} La flota ${fleet.name} agend\xF3 ${label2} (${km2(Number(vehicle.currentKm))}) para ${when9}: ${command.reason}. Cita ${code3}.
+        await this.notify(conn, String(agreement.shopUserId), `fleetvisit:${id2}`, "fleet.visit", `\u{1F4C5} La flota ${fleet.name} agend\xF3 ${label2} (${km3(Number(vehicle.currentKm))}) para ${when9}: ${command.reason}. Cita ${code3}.
 Al recibirlo: Ingreso ${code3} | km | combustible | estado y da\xF1os | inventario | servicios a realizar
 Si no puedes: Reprogramar cita ${code3} | AAAA-MM-DD | HH:mm \xB7 Rechazar cita ${code3} | motivo`);
         const [driver] = await rows8(conn, "SELECT m.userId FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId WHERE a.vehicleId = ? AND a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL LIMIT 1", [vehicle.id]);
@@ -87473,9 +87942,128 @@ ${site}/flota/${token2}` };
   }
 });
 
+// packages/api/dist/infrastructure/map/workshop-map-store.js
+import { randomUUID as randomUUID8 } from "node:crypto";
+function stringList2(value2) {
+  let parsed = value2;
+  if (typeof value2 === "string") {
+    try {
+      parsed = JSON.parse(value2);
+    } catch {
+      parsed = value2.split(",");
+    }
+  }
+  return Array.isArray(parsed) ? parsed.map((v) => String(v).trim()).filter(Boolean) : [];
+}
+function toRecord(r) {
+  return {
+    id: String(r.id),
+    name: String(r.name),
+    address: String(r.address ?? ""),
+    city: String(r.city ?? ""),
+    zone: text3(r.zone),
+    hours: text3(r.hours),
+    lat: num(r.lat),
+    lng: num(r.lng),
+    precision: r.mapPrecision === "sector" ? "sector" : "exacta",
+    services: stringList2(r.specialties),
+    ratingAvg: Number(r.ratingAvg ?? 0),
+    ratingCount: Number(r.ratingCount ?? 0)
+  };
+}
+async function executeShopMapCommand(conn, userId, role, command, fail10) {
+  if (role !== "taller")
+    fail10("FORBIDDEN");
+  const [shop] = rows9(await conn.query("SELECT id, name, verificationStatus, city, zone FROM `Shop` WHERE userId = ? LIMIT 1 FOR UPDATE", [userId]));
+  if (!shop)
+    return fail10("NOT_FOUND");
+  if (command.action === "shopMapLeave") {
+    await conn.query("UPDATE `Shop` SET mapListed = FALSE, mapConsentAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [shop.id]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.leave', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID8(), userId, shop.id, JSON.stringify({ source: "whatsapp" })]);
+    return `Listo: ${String(shop.name)} ya no aparece en el mapa de AutoMantPro. Para volver: Mapa | ubicaci\xF3n | ACEPTO`;
+  }
+  await conn.query("UPDATE `Shop` SET lat = ?, lng = ?, mapPrecision = ?, mapListed = TRUE, mapConsentAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [command.lat, command.lng, command.precision, shop.id]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.location', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID8(), userId, shop.id, JSON.stringify({ listed: true, precision: command.precision, hasPoint: true, source: "whatsapp" })]);
+  const where = command.precision === "sector" ? "Se ver\xE1 solo tu sector, sin el punto exacto." : "Se ver\xE1 el punto exacto de tu taller.";
+  const pending = shop.verificationStatus === "verified" ? `Ya puedes verte en ${mapUrl(SITE_URL, { city: String(shop.city ?? "") })}` : "Aparecer\xE1s cuando terminemos de verificar tu taller.";
+  return `Ubicaci\xF3n guardada para ${String(shop.name)}. ${where} ${pending}
+Para salir del mapa cuando quieras: Salir del mapa`;
+}
+var rows9, text3, num, missingColumn, LISTED_SQL, MysqlWorkshopMapStore;
+var init_workshop_map_store = __esm({
+  "packages/api/dist/infrastructure/map/workshop-map-store.js"() {
+    "use strict";
+    init_appointment_store();
+    init_workshop_map();
+    rows9 = (result) => result[0];
+    text3 = (v) => v === null || v === void 0 || String(v).trim() === "" ? null : String(v);
+    num = (v) => v === null || v === void 0 || v === "" ? null : Number(v);
+    missingColumn = (err) => ["ER_BAD_FIELD_ERROR", "ER_NO_SUCH_TABLE"].includes(String(err.code));
+    LISTED_SQL = "SELECT sh.id, sh.name, sh.address, sh.city, sh.zone, sh.hours, sh.lat, sh.lng, sh.mapPrecision, sh.specialties, sh.ratingAvg, sh.ratingCount FROM `Shop` sh JOIN `User` u ON u.id = sh.userId AND u.deletedAt IS NULL WHERE sh.verificationStatus = 'verified' AND sh.mapListed = TRUE AND sh.mapConsentAt IS NOT NULL ";
+    MysqlWorkshopMapStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      listed() {
+        return this.run(async (conn) => {
+          try {
+            const result = await conn.query(`${LISTED_SQL}${NOT_SANCTIONED("sh")}ORDER BY sh.city, sh.name LIMIT 2000`).catch((err) => {
+              if (err.code !== "ER_NO_SUCH_TABLE")
+                throw err;
+              return conn.query(`${LISTED_SQL}ORDER BY sh.city, sh.name LIMIT 2000`);
+            });
+            return rows9(result).map(toRecord);
+          } catch (err) {
+            if (missingColumn(err))
+              return [];
+            throw err;
+          }
+        });
+      }
+      locationOf(shopId) {
+        return this.run(async (conn) => {
+          try {
+            const [r] = rows9(await conn.query("SELECT lat, lng, mapListed, mapPrecision, mapConsentAt FROM `Shop` WHERE id = ? LIMIT 1", [shopId]));
+            if (!r)
+              return null;
+            return { lat: num(r.lat), lng: num(r.lng), listed: Boolean(Number(r.mapListed)), precision: r.mapPrecision === "sector" ? "sector" : "exacta", consentAt: r.mapConsentAt ?? null };
+          } catch (err) {
+            if (missingColumn(err))
+              return null;
+            throw err;
+          }
+        });
+      }
+      async setLocation(shopId, input, actorUserId) {
+        if (input.lat === null !== (input.lng === null))
+          throw new Error("INVALID_POINT");
+        if (input.lat !== null && !insideEcuador(input.lat, input.lng))
+          throw new Error("INVALID_POINT");
+        return this.run(async (conn) => {
+          const [result] = await conn.query("UPDATE `Shop` SET lat = ?, lng = ?, mapPrecision = ?, mapListed = ?, mapConsentAt = CASE WHEN ? THEN COALESCE(mapConsentAt, CURRENT_TIMESTAMP(3)) ELSE NULL END, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.lat, input.lng, input.precision, input.listed, input.listed, shopId]);
+          const changed = Number(result?.affectedRows ?? 0) > 0;
+          if (changed) {
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.location', ?, 'admin', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID8(), actorUserId, shopId, JSON.stringify({ listed: input.listed, precision: input.precision, hasPoint: input.lat !== null, source: "admin" })]);
+          }
+          return changed;
+        });
+      }
+    };
+  }
+});
+
 // packages/api/dist/infrastructure/messaging/chat-account-store.js
-import { randomBytes as randomBytes4, randomUUID as randomUUID8 } from "node:crypto";
-var rows9, ChatAccountError, fail7, ChatAccountStore;
+import { randomBytes as randomBytes4, randomUUID as randomUUID9 } from "node:crypto";
+var rows10, ChatAccountError, fail7, ChatAccountStore;
 var init_chat_account_store = __esm({
   "packages/api/dist/infrastructure/messaging/chat-account-store.js"() {
     "use strict";
@@ -87488,7 +88076,8 @@ var init_chat_account_store = __esm({
     init_vehicle_card_store();
     init_fleet_store();
     init_whatsapp_number();
-    rows9 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    init_workshop_map_store();
+    rows10 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     ChatAccountError = class extends Error {
       code;
       constructor(code3) {
@@ -87511,53 +88100,53 @@ var init_chat_account_store = __esm({
       async createOwnerAccount(conn, phone, name, city, source) {
         if (!/^\d{8,15}$/.test(phone))
           fail7("INVALID_PHONE");
-        const taken = await rows9(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [`+${phone}`, phone]);
+        const taken = await rows10(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [`+${phone}`, phone]);
         if (taken.length)
           fail7("PHONE_REGISTERED");
-        if ((await rows9(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone])).length)
+        if ((await rows10(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone])).length)
           fail7("ALREADY_REGISTERED");
-        const id2 = randomUUID8();
+        const id2 = randomUUID9();
         const passwordHash = await hashPassword(randomBytes4(24).toString("hex"));
         await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'dueno', ?, 'es', ?, CURRENT_TIMESTAMP(3), ?, 'whatsapp', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, `+${phone}`, passwordHash, name, city, CONSENT_VERSION]);
         await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id2, phone]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, 'dueno', 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID8(), id2, id2, JSON.stringify({ role: "dueno", source: "whatsapp", via: source, consentVersion: CONSENT_VERSION })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, 'dueno', 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID9(), id2, id2, JSON.stringify({ role: "dueno", source: "whatsapp", via: source, consentVersion: CONSENT_VERSION })]);
         return id2;
       }
       /** AutoMantPro's public WhatsApp number, for the links people share. */
       async publicNumber(conn) {
-        const [setting] = await rows9(conn, "SELECT value FROM `AppSetting` WHERE name = ?", [WHATSAPP_NUMBER_KEY]);
+        const [setting] = await rows10(conn, "SELECT value FROM `AppSetting` WHERE name = ?", [WHATSAPP_NUMBER_KEY]);
         return normalizeWhatsappNumber(String(setting?.value ?? process.env.WA_PUBLIC_NUMBER ?? ""));
       }
       /** A technician joins a workshop with the code the workshop owner shared, from their own phone. */
-      async joinTechnician(conn, phone, userId, ref3, name) {
+      async joinTechnician(conn, phone, userId, ref4, name) {
         if (userId)
           fail7("ALREADY_REGISTERED");
         if (!/^\d{8,15}$/.test(phone))
           fail7("INVALID_PHONE");
-        const [member] = await rows9(conn, "SELECT m.id, s.name AS shopName, s.userId AS ownerUserId FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.status = 'invited' AND REPLACE(m.id, '-', '') LIKE ? LIMIT 2 FOR UPDATE", [`${ref3.slice(2).toLowerCase()}%`]);
+        const [member] = await rows10(conn, "SELECT m.id, s.name AS shopName, s.userId AS ownerUserId FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.status = 'invited' AND REPLACE(m.id, '-', '') LIKE ? LIMIT 2 FOR UPDATE", [`${ref4.slice(2).toLowerCase()}%`]);
         if (!member)
           fail7("NOT_FOUND");
-        const taken = await rows9(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [`+${phone}`, phone]);
+        const taken = await rows10(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [`+${phone}`, phone]);
         if (taken.length)
           fail7("PHONE_REGISTERED");
-        const id2 = randomUUID8();
+        const id2 = randomUUID9();
         const passwordHash = await hashPassword(randomBytes4(24).toString("hex"));
         await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'taller', ?, 'es', NULL, CURRENT_TIMESTAMP(3), ?, 'whatsapp', 'T\xE9cnico de taller', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, `+${phone}`, passwordHash, name, CONSENT_VERSION]);
         await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id2, phone]);
         await conn.query("UPDATE `ShopMember` SET status = 'active', userId = ?, name = ? WHERE id = ?", [id2, name, member.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.technician.joined', ?, 'taller', 'ShopMember', ?, ?, UTC_TIMESTAMP(3))", [randomUUID8(), id2, member.id, JSON.stringify({ consentVersion: CONSENT_VERSION })]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'care.technician', ?)", [randomUUID8(), `techjoined:${String(member.id)}`, member.ownerUserId, JSON.stringify({ message: `${name} se uni\xF3 a ${member.shopName} como t\xE9cnico.` })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.technician.joined', ?, 'taller', 'ShopMember', ?, ?, UTC_TIMESTAMP(3))", [randomUUID9(), id2, member.id, JSON.stringify({ consentVersion: CONSENT_VERSION })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'care.technician', ?)", [randomUUID9(), `techjoined:${String(member.id)}`, member.ownerUserId, JSON.stringify({ message: `${name} se uni\xF3 a ${member.shopName} como t\xE9cnico.` })]);
         return { userId: id2, message: `Bienvenido, ${name.split(/\s+/)[0]}: ya eres t\xE9cnico de ${member.shopName} en AutoMantPro y aceptaste el tratamiento de datos (versi\xF3n ${CONSENT_VERSION}). Comandos: Plan C-XXXXXX \xB7 Ingreso C-XXXXXX | \u2026 \xB7 Servicio C-XXXXXX | \u2026 \xB7 Pr\xF3xima visita C-XXXXXX | \u2026` };
       }
       /** A business without an account that arrives through an owner's link sees the case, never the owner. */
-      async referralPreview(conn, ref3) {
-        const [request] = await rows9(conn, "SELECT kind, category, zone, city FROM `LocalRequest` WHERE status = 'open' AND expiresAt > UTC_TIMESTAMP(3) AND REPLACE(id, '-', '') LIKE ? LIMIT 1", [`${ref3.slice(2).toLowerCase()}%`]);
+      async referralPreview(conn, ref4) {
+        const [request] = await rows10(conn, "SELECT kind, category, zone, city FROM `LocalRequest` WHERE status = 'open' AND expiresAt > UTC_TIMESTAMP(3) AND REPLACE(id, '-', '') LIKE ? LIMIT 1", [`${ref4.slice(2).toLowerCase()}%`]);
         if (!request)
           fail7("REQUEST_CLOSED_OR_EXPIRED");
         const kind = request.kind === "servicio" ? "taller" : "almac\xE9n";
         return { userId: "", message: `Un cliente de AutoMantPro busca ${request.kind === "servicio" ? "un taller" : "un repuesto"}: ${request.category}, sector ${request.zone}, ${request.city}. Para recibir su solicitud y ofertar, reg\xEDstrate gratis (tu primer cliente no tiene costo):
 Registrar ${kind} | nombre comercial | RUC | ciudad | sector | direcci\xF3n | ${kind === "taller" ? "servicios separados por coma" : "categor\xEDas"} | ACEPTO
-Luego escribe de nuevo: ${kind === "taller" ? "Taller" : "Almac\xE9n"} ${ref3}` };
+Luego escribe de nuevo: ${kind === "taller" ? "Taller" : "Almac\xE9n"} ${ref4}` };
       }
       async execute(conn, phone, userId, role, command) {
         if (command.action === "registerOwner" || command.action === "registerShop" || command.action === "registerStore") {
@@ -87566,23 +88155,23 @@ Luego escribe de nuevo: ${kind === "taller" ? "Taller" : "Almac\xE9n"} ${ref3}` 
           if (!/^\d{8,15}$/.test(phone))
             fail7("INVALID_PHONE");
           const stored = `+${phone}`;
-          const taken = await rows9(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [stored, phone]);
+          const taken = await rows10(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [stored, phone]);
           if (taken.length)
             fail7("PHONE_REGISTERED");
-          const linked = await rows9(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone]);
+          const linked = await rows10(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone]);
           if (linked.length)
             fail7("ALREADY_REGISTERED");
-          const id2 = randomUUID8();
+          const id2 = randomUUID9();
           const newRole = command.action === "registerOwner" ? "dueno" : command.action === "registerShop" ? "taller" : "almacen";
           const passwordHash = await hashPassword(randomBytes4(24).toString("hex"));
           await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, ?, ?, 'es', ?, CURRENT_TIMESTAMP(3), ?, 'whatsapp', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, stored, passwordHash, newRole, command.name, command.city, CONSENT_VERSION]);
           if (command.action === "registerShop") {
-            await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID8(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, JSON.stringify(command.services)]);
+            await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID9(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, JSON.stringify(command.services)]);
           } else if (command.action === "registerStore") {
-            await conn.query("INSERT INTO `Store` (id, userId, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, FALSE, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID8(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, command.categories]);
+            await conn.query("INSERT INTO `Store` (id, userId, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, FALSE, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID9(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, command.categories]);
           }
           await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id2, phone]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, ?, 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID8(), id2, newRole, id2, JSON.stringify({ role: newRole, source: "whatsapp", consentVersion: CONSENT_VERSION })]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, ?, 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID9(), id2, newRole, id2, JSON.stringify({ role: newRole, source: "whatsapp", consentVersion: CONSENT_VERSION })]);
           const message2 = newRole === "dueno" ? `Listo, ${command.name.split(/\s+/)[0]}: tu cuenta de AutoMantPro qued\xF3 creada y aceptaste el tratamiento de datos (versi\xF3n ${CONSENT_VERSION}). Ahora registra tu veh\xEDculo: Veh\xEDculo | clase | combustible | marca | modelo | a\xF1o | kilometraje` : `Listo: registramos ${command.name}. Queda en verificaci\xF3n; revisaremos el RUC y la direcci\xF3n y te avisaremos por aqu\xED. Aceptaste el tratamiento de datos (versi\xF3n ${CONSENT_VERSION}).`;
           return { message: message2, userId: id2 };
         }
@@ -87601,21 +88190,23 @@ Luego escribe de nuevo: ${kind === "taller" ? "Taller" : "Almac\xE9n"} ${ref3}` 
           return this.referralPreview(conn, command.requestRef);
         if (!userId)
           return fail7("ACCOUNT_REQUIRED");
+        if (command.action === "shopMap" || command.action === "shopMapLeave")
+          return { userId, message: await executeShopMapCommand(conn, userId, role ?? "", command, fail7) };
         if (command.action !== "addVehicle")
           return this.care.execute(conn, userId, role ?? "", command, await this.publicNumber(conn));
         if (role !== "dueno")
           fail7("FORBIDDEN");
         {
-          const count3 = await rows9(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [userId]);
+          const count3 = await rows10(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [userId]);
           if (Number(count3[0]?.n) >= 5)
             fail7("VEHICLE_LIMIT");
           const plan = await ownerEntitlement(conn, userId);
           if (Number(count3[0]?.n) >= plan.maxVehicles) {
             return { userId, message: `Tu plan ${plan.tier === "gratis" ? "Gratis" : "actual"} permite ${plan.maxVehicles} veh\xEDculo${plan.maxVehicles === 1 ? "" : "s"} y ya ${plan.maxVehicles === 1 ? "lo tienes registrado" : "los tienes registrados"}. Con Premium registras hasta 3 y ves el plan de mantenimiento Avanzado. Escribe Planes para ver precios.` };
           }
-          const id2 = randomUUID8();
+          const id2 = randomUUID9();
           await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, selectedAt, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL, 'urbano', FALSE, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, userId, command.make, command.model, command.year, command.currentKm, command.vehicleClass, command.fuel]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.vehicle.created', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID8(), userId, id2, JSON.stringify({ source: "whatsapp" })]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.vehicle.created', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID9(), userId, id2, JSON.stringify({ source: "whatsapp" })]);
           const summary = planSummaryFor({ make: command.make, model: command.model, year: command.year, currentKm: command.currentKm, vehicleClass: command.vehicleClass, fuel: command.fuel, usageProfile: "urbano" }, plan.level);
           const others = Number(count3[0]?.n) > 0 ? " Ahora es tu veh\xEDculo activo; para cambiar escribe Mis veh\xEDculos." : "";
           return { userId, message: summary ? `Veh\xEDculo registrado.${others} Este es tu plan de mantenimiento:
@@ -87659,7 +88250,7 @@ var init_local_agent_broker = __esm({
       "\xA1Hola! Recibimos tu mensaje en AutoMantPro. A\xFAn no tienes cuenta con este n\xFAmero; en breve alguien del equipo te escribe para registrarte y pedir tu autorizaci\xF3n de datos. Ante una emergencia en la v\xEDa, llama al 911.",
       "Hola, soy AutoMantPro. Tu n\xFAmero todav\xEDa no est\xE1 registrado con nosotros. Una persona del equipo te contactar\xE1 por este chat para crear tu cuenta y pedirte el consentimiento de datos. Si est\xE1s en una emergencia en la v\xEDa, llama al 911.",
       "Gracias por contactar a AutoMantPro. Este n\xFAmero a\xFAn no tiene cuenta. Alguien del equipo te escribir\xE1 aqu\xED para registrarte y pedir tu consentimiento sobre tus datos. En caso de emergencia en la v\xEDa, llama al 911."
-    ].map((text8) => `${text8}
+    ].map((text9) => `${text9}
 Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrarme | nombre y apellido | ciudad | ACEPTO (ACEPTO confirma que aceptas los t\xE9rminos y el tratamiento de tus datos).`);
     MysqlLocalAgentBroker = class {
       connect;
@@ -88009,7 +88600,7 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
 });
 
 // packages/api/dist/infrastructure/messaging/outbox-delivery-store.js
-import { randomUUID as randomUUID9 } from "node:crypto";
+import { randomUUID as randomUUID10 } from "node:crypto";
 function whatsappDelivery(env = process.env) {
   const value2 = env.WHATSAPP_DELIVERY?.trim();
   return value2 === "bridge" || value2 === "cloud" ? value2 : "off";
@@ -88050,7 +88641,7 @@ var init_outbox_delivery_store = __esm({
               await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'EMPTY_MESSAGE' WHERE id = ? AND status = 'pending'", [id2]);
               continue;
             }
-            const leaseToken = randomUUID9();
+            const leaseToken = randomUUID10();
             const changed = await conn.query("UPDATE `NotificationOutbox` SET status = 'sending', attempts = attempts + 1, leaseToken = ?, lockedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status = 'pending' AND attempts < ?", [leaseToken, id2, MAX_ATTEMPTS2]);
             if (affected2(changed) !== 1)
               continue;
@@ -88158,14 +88749,14 @@ function mapUsage(usage) {
     cachedTokens: usage?.prompt_tokens_details?.cached_tokens
   };
 }
-function classifyHttpError(status, text8) {
+function classifyHttpError(status, text9) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text8}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text9}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text8}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text9}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text8}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text8}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text9}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text9}`, "other", status);
 }
 function message(err) {
   return err instanceof Error ? err.message : String(err);
@@ -88242,8 +88833,8 @@ var init_openai = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
         }
         if (!res.ok) {
-          const text8 = await res.text().catch(() => "");
-          throw classifyHttpError(res.status, text8);
+          const text9 = await res.text().catch(() => "");
+          throw classifyHttpError(res.status, text9);
         }
         const data2 = await res.json();
         return { content: data2.text ?? null };
@@ -88281,8 +88872,8 @@ var init_openai = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
         }
         if (!res.ok) {
-          const text8 = await res.text().catch(() => "");
-          throw classifyHttpError(res.status, text8);
+          const text9 = await res.text().catch(() => "");
+          throw classifyHttpError(res.status, text9);
         }
         const data2 = await res.json();
         const choice = data2.choices?.[0];
@@ -88336,14 +88927,14 @@ function parseArgs(raw) {
     return { _raw: raw };
   }
 }
-function classifyHttpError2(status, text8) {
+function classifyHttpError2(status, text9) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text8}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text9}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text8}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text9}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text8}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text8}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text9}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text9}`, "other", status);
 }
 var ANTHROPIC_VERSION, AnthropicAdapter;
 var init_anthropic = __esm({
@@ -88402,8 +88993,8 @@ var init_anthropic = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${err instanceof Error ? err.message : String(err)}`, "network");
         }
         if (!res.ok) {
-          const text8 = await res.text().catch(() => "");
-          throw classifyHttpError2(res.status, text8);
+          const text9 = await res.text().catch(() => "");
+          throw classifyHttpError2(res.status, text9);
         }
         const data2 = await res.json();
         const blocks = data2.content ?? [];
@@ -88641,8 +89232,8 @@ var init_fallback = __esm({
 });
 
 // packages/agent/dist/llm-gateway/redact.js
-function redactPii(text8) {
-  return text8.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
+function redactPii(text9) {
+  return text9.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
 }
 function redactValue(value2, key) {
   if (typeof value2 === "string") {
@@ -88746,23 +89337,23 @@ var init_authorization = __esm({
 });
 
 // packages/agent/dist/llm-gateway/guard.js
-function sanitizeUntrusted(text8, maxLength = 4e3) {
-  return String(text8 ?? "").normalize("NFKC").replace(INVISIBLE, "").replace(ROLE_MARKERS, " ").replace(/\r\n?/g, "\n").replace(/\n{4,}/g, "\n\n\n").slice(0, maxLength);
+function sanitizeUntrusted(text9, maxLength = 4e3) {
+  return String(text9 ?? "").normalize("NFKC").replace(INVISIBLE, "").replace(ROLE_MARKERS, " ").replace(/\r\n?/g, "\n").replace(/\n{4,}/g, "\n\n\n").slice(0, maxLength);
 }
-function detectInjection(text8) {
-  const raw = String(text8 ?? "");
+function detectInjection(text9) {
+  const raw = String(text9 ?? "");
   const clean = raw.normalize("NFKC").replace(INVISIBLE, "");
   const signals = INJECTION_PATTERNS.filter(([, re]) => re.test(clean)).map(([name]) => name);
   if (raw.length - clean.length >= 5)
     signals.push("caracteres-ocultos");
   return { suspicious: signals.length > 0, signals };
 }
-function normalizeForLeak(text8) {
-  return text8.toLowerCase().replace(/\s+/g, " ").trim();
+function normalizeForLeak(text9) {
+  return text9.toLowerCase().replace(/\s+/g, " ").trim();
 }
-function guardOutput(text8, options = {}) {
+function guardOutput(text9, options = {}) {
   const signals = [];
-  let out = String(text8 ?? "").replace(INVISIBLE, "");
+  let out = String(text9 ?? "").replace(INVISIBLE, "");
   if (options.systemPrompt) {
     const prompt = normalizeForLeak(options.systemPrompt);
     const answer = normalizeForLeak(out);
@@ -89786,7 +90377,7 @@ var init_user_lock = __esm({
 function seoHead(input) {
   const url = `${SITE}${input.path}`;
   return `<meta name="description" content="${e(input.description)}">
-<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="robots" content="${input.noindex ? "noindex,follow" : "index,follow,max-snippet:-1,max-image-preview:large"}">
 <link rel="canonical" href="${e(url)}">
 <link rel="alternate" hreflang="es-EC" href="${e(url)}">
 <link rel="alternate" hreflang="x-default" href="${e(url)}">
@@ -89821,6 +90412,66 @@ var init_head = __esm({
   }
 });
 
+// packages/api/dist/interfaces/seo/marketing.js
+function marketingSite(value2 = process.env.MARKETING_SITE_URL) {
+  if (!value2)
+    return null;
+  try {
+    const url = new URL(value2.trim());
+    if (url.protocol !== "https:" || url.username || url.password || url.search || url.hash)
+      return null;
+    if (url.pathname !== "/" && url.pathname !== "")
+      return null;
+    return url.origin;
+  } catch {
+    return null;
+  }
+}
+function marketingUrl(site, path) {
+  return `${site}${path.startsWith("/") ? path : `/${path}`}`;
+}
+function siteLinks(site) {
+  if (site) {
+    return [
+      { href: marketingUrl(site, MARKETING_PATHS.inicio), label: "Qu\xE9 es AutoMantPro" },
+      { href: marketingUrl(site, MARKETING_PATHS.planes), label: "Planes" },
+      { href: marketingUrl(site, MARKETING_PATHS.servicios), label: "Servicios" },
+      { href: marketingUrl(site, MARKETING_PATHS.ciudades), label: "Talleres por ciudad" },
+      { href: marketingUrl(site, MARKETING_PATHS.preguntas), label: "Preguntas frecuentes" }
+    ];
+  }
+  return [
+    { href: "/planes", label: "Planes" },
+    { href: "/servicios", label: "Servicios" },
+    { href: "/talleres", label: "Talleres por ciudad" }
+  ];
+}
+function siteLinksNav(site) {
+  return `<nav class="sitio" aria-label="M\xE1s sobre AutoMantPro">${siteLinks(site).map((l) => `<a href="${e2(l.href)}"${l.href.startsWith("http") ? ' rel="noopener"' : ""}>${e2(l.label)}</a>`).join("")}</nav>`;
+}
+var MARKETING_PATHS, e2, SITE_LINKS_STYLES;
+var init_marketing = __esm({
+  "packages/api/dist/interfaces/seo/marketing.js"() {
+    "use strict";
+    MARKETING_PATHS = {
+      inicio: "/",
+      duenos: "/para-duenos",
+      talleres: "/para-talleres",
+      almacenes: "/para-almacenes",
+      planes: "/planes",
+      preguntas: "/preguntas-frecuentes",
+      servicios: "/servicios",
+      ciudades: "/talleres"
+    };
+    e2 = (value2) => value2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    SITE_LINKS_STYLES = `
+.sitio{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin:16px 0 4px;font:600 13.5px/1.3 var(--c-font)}
+.sitio a{color:var(--c-accent);text-decoration:underline;text-underline-offset:2px}
+.panel{display:block;text-align:center;margin:10px 0 0;font:600 14px/1.3 var(--c-font);color:var(--c-ink)}
+`;
+  }
+});
+
 // packages/api/dist/interfaces/entry/page.js
 function sanitizeProfile(value2) {
   return typeof value2 === "string" && ENTRY_PROFILES.some((p) => p.key === value2) ? value2 : null;
@@ -89828,12 +90479,12 @@ function sanitizeProfile(value2) {
 function escapeHtml(value2) {
   return value2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
-function buildLinks(number, code3, ref3, profile = null) {
+function buildLinks(number, code3, ref4, profile = null) {
   const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent ?? null;
-  const text8 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code3}${ref3 ? ` (ref: ${ref3})` : ""}`;
-  const encoded = encodeURIComponent(text8);
+  const text9 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code3}${ref4 ? ` (ref: ${ref4})` : ""}`;
+  const encoded = encodeURIComponent(text9);
   return {
-    text: text8,
+    text: text9,
     app: `whatsapp://send?phone=${number}&text=${encoded}`,
     wame: `https://wa.me/${number}?text=${encoded}`,
     web: `https://web.whatsapp.com/send?phone=${number}&text=${encoded}`
@@ -89860,6 +90511,7 @@ function structuredData(input) {
         image: `${site}${OG_IMAGE.path}`,
         description: "Asistente de gesti\xF3n de mantenimiento automotriz por WhatsApp en Ecuador: plan por veh\xEDculo, talleres y almacenes de repuestos conectados.",
         areaServed: { "@type": "Country", name: "Ecuador" },
+        sameAs: [...input.marketing ? [`${input.marketing}/`] : [], ...SOCIAL_LINKS.map((s) => s.url)],
         ...telefono ? { telephone: telefono, contactPoint: { "@type": "ContactPoint", telephone: telefono, contactType: "customer service", availableLanguage: "es" } } : {}
       },
       {
@@ -89869,27 +90521,6 @@ function structuredData(input) {
         name: "AutoMantPro",
         inLanguage: "es-EC",
         publisher: { "@id": `${site}/#organizacion` }
-      },
-      {
-        "@type": "Service",
-        name: "Mantenimiento y reparaci\xF3n de veh\xEDculos por WhatsApp",
-        serviceType: "Mantenimiento automotor, diagn\xF3stico, talleres mec\xE1nicos y repuestos",
-        provider: { "@id": `${site}/#organizacion` },
-        areaServed: { "@type": "Country", name: "Ecuador" },
-        offers: {
-          "@type": "Offer",
-          priceCurrency: "USD",
-          url: `${site}/planes`,
-          description: `90 d\xEDas de prueba; plan Gratis con 1 veh\xEDculo; Premium desde ${PREMIUM_PRICE} al mes con IVA, con talleres verificados y cotizaciones.`
-        }
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: FAQ.map((item) => ({
-          "@type": "Question",
-          name: item.q,
-          acceptedAnswer: { "@type": "Answer", text: item.a }
-        }))
       }
     ]
   };
@@ -89905,26 +90536,6 @@ function renderEntryPage(input) {
     ${logoImg()}
     <small class="lema">Asistente de gesti\xF3n de mantenimiento automotriz</small>
   </a>`;
-  const red = `<ul class="red" aria-label="Conecta a">
-      <li>${icon("auto")}Due\xF1os</li><li class="enlace" aria-hidden="true">\u21C4</li>
-      <li>${icon("taller")}Talleres</li><li class="enlace" aria-hidden="true">\u21C4</li>
-      <li>${icon("caja")}Almacenes</li>
-    </ul>`;
-  const beneficios = `<p class="section">Lo que ganas</p>
-    <ul class="beneficios">${BENEFICIOS.map((b) => `<li><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span></li>`).join("")}</ul>`;
-  const comoFunciona = COMO_FUNCIONA.map((bloque) => `<details class="card"><summary>${escapeHtml(bloque.titulo)}</summary>
-      <ul class="ganas">${bloque.beneficios.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
-      <p class="subtitulo">C\xF3mo funciona</p>
-      <ol class="steps">${bloque.pasos.map((paso) => `<li>${escapeHtml(paso)}</li>`).join("")}</ol>
-      <p class="respuesta spaced">${escapeHtml(bloque.cierre)}</p></details>`).join("");
-  const enlaces = `<details class="card"><summary>Servicios y ciudades</summary>
-    <p class="respuesta">Precios referenciales y qu\xE9 incluye cada trabajo en <a href="/servicios">servicios de mantenimiento</a>, y talleres por ciudad en <a href="/talleres">talleres mec\xE1nicos en Ecuador</a>.</p></details>`;
-  const planes = `<details class="card"><summary>Planes y precios</summary>
-    <p class="respuesta">Plan gratis para empezar y planes pagados para due\xF1os, talleres, almacenes y flotas, con IVA incluido y pago por transferencia: <a href="/planes">ver planes y precios</a>. En el chat escribe \xABPlanes\xBB.</p></details>`;
-  const faq = `<details class="card"><summary>Preguntas frecuentes</summary>
-    ${FAQ.map((item) => `<h3 class="pregunta">${escapeHtml(item.q)}</h3><p class="respuesta">${escapeHtml(item.a)}</p>`).join("")}
-    </details>`;
-  const steps = "";
   const contact = links ? `<p class="small linea"><a href="${escapeHtml(links.wame)}" rel="noopener">${number}</a> \xB7 <span class="code">${escapeHtml(input.code)}</span> <em class="nota">identifica tu visita en el chat</em></p>` : "";
   const menu = links ? `<p class="section">\xBFQu\xE9 quieres gestionar?</p>
     <div class="menu">${ENTRY_PROFILES.map((profile) => `<a class="option${profile.intent === null ? " ghost" : ""}" href="/?perfil=${escapeHtml(profile.key)}${refQuery}">
@@ -89951,7 +90562,7 @@ ${seoHead({
   })}
 <meta name="author" content="AutoMantPro">
 <script type="application/ld+json" nonce="${nonce}">${structuredData(input)}</script>
-<style nonce="${nonce}">${STYLES}${THEME_ENTRY_LAYER}</style>
+<style nonce="${nonce}">${STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}</style>
 <script nonce="${nonce}">${THEME_BOOT}</script>
 </head>
 <body>
@@ -89965,17 +90576,10 @@ ${seoHead({
   <section class="hero">
     <svg class="silueta" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS.auto_hero}</svg>
     <h1>Tu asistente de <em>mantenimiento automotriz</em></h1>
-    <p class="lead">Organiza el mantenimiento y conecta a due\xF1os de veh\xEDculos, talleres y almacenes de repuestos en un solo chat de WhatsApp.</p>
-    ${red}
   </section>
   ${input.menu && links ? menu : button}
-  ${beneficios}
-  ${steps}
-  <p class="section">Beneficios y c\xF3mo funciona</p>
-  ${comoFunciona}
-  ${planes}
-  ${faq}
-  ${enlaces}
+  <a class="panel" href="/admin/login">Ingresar al panel web</a>
+  ${siteLinksNav(input.marketing ?? null)}
   ${socialLinks()}
   <p class="legal">Aceptas los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP).</p>
 </main>
@@ -89983,7 +90587,7 @@ ${seoHead({
 </body>
 </html>`;
 }
-var ENTRY_PROFILES, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, HOME_TITLE, HOME_DESCRIPTION, BENEFICIOS, COMO_FUNCIONA, PREMIUM_PRICE, FAQ;
+var ENTRY_PROFILES, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, HOME_TITLE, HOME_DESCRIPTION;
 var init_page = __esm({
   "packages/api/dist/interfaces/entry/page.js"() {
     "use strict";
@@ -89991,7 +90595,7 @@ var init_page = __esm({
     init_theme_layers();
     init_head();
     init_brand();
-    init_catalog();
+    init_marketing();
     ENTRY_PROFILES = [
       {
         key: "dueno",
@@ -90195,86 +90799,6 @@ h1 em{font-style:normal;color:var(--c-accent)}
 `;
     HOME_TITLE = "AutoMantPro \xB7 Mantenimiento, talleres y repuestos por WhatsApp en Ecuador";
     HOME_DESCRIPTION = "Mantenimiento de tu veh\xEDculo por WhatsApp en Ecuador: plan de mantenimiento por kilometraje, diagn\xF3stico con IA, talleres mec\xE1nicos verificados y cotizaci\xF3n de repuestos. Sin instalar nada.";
-    BENEFICIOS = [
-      { icono: "alerta", titulo: "Evita fallas", texto: "Avisos de mantenimiento seg\xFAn el kilometraje de cada veh\xEDculo." },
-      { icono: "ahorro", titulo: "Reduce costos", texto: "Mantenimiento preventivo y precios comparados antes de pagar." },
-      { icono: "agenda", titulo: "Clientes y citas en orden", texto: "Turnos coordinados y el historial de cada veh\xEDculo a mano." },
-      { icono: "recursos", titulo: "Optimiza recursos", texto: "Menos llamadas y viajes: cada pedido llega claro desde el inicio." }
-    ];
-    COMO_FUNCIONA = [
-      {
-        key: "dueno",
-        titulo: "Mi plan de mantenimiento",
-        beneficios: [
-          "Evitas fallas por un mantenimiento atrasado: te avisamos cu\xE1ndo toca cada cosa.",
-          "Comparas precios de talleres y repuestos antes de pagar.",
-          "Tienes el historial de tu veh\xEDculo en un solo lugar."
-        ],
-        pasos: [
-          "Nos dices marca, modelo, a\xF1o y kilometraje.",
-          "Recibes el plan de mantenimiento de tu veh\xEDculo y te avisamos cuando toca cada cosa.",
-          "Cuando algo falla, lo cuentas por el chat: orientamos el diagn\xF3stico y te coordinamos el taller."
-        ],
-        cierre: "Gratis: tu plan, los recordatorios y talleres cercanos. Premium: talleres verificados con precio acordado, cotizaci\xF3n de repuestos y garant\xEDa anotada en la orden de trabajo."
-      },
-      {
-        key: "taller",
-        titulo: "Gestionar mi taller",
-        beneficios: [
-          "Citas y agenda ordenadas, sin perder mensajes entre chats.",
-          "Clientes que llegan con el problema ya explicado.",
-          "Presupuestos aprobados por el due\xF1o antes de empezar el trabajo."
-        ],
-        pasos: [
-          "Registras tu taller, tus servicios y tus horarios; verificamos RUC y direcci\xF3n.",
-          "Recibes clientes con el problema ya explicado y el turno coordinado.",
-          "Llevas la orden de trabajo en el chat: presupuesto, aprobaci\xF3n del due\xF1o, cierre y garant\xEDa."
-        ],
-        cierre: "Gratis puedes atender y llevar tus \xF3rdenes con un tope mensual. Verificado y visible en las b\xFAsquedas, con el plan pagado."
-      },
-      {
-        key: "almacen",
-        titulo: "Mi almac\xE9n de repuestos",
-        beneficios: [
-          "Pedidos con el veh\xEDculo y la pieza ya identificados: menos idas y vueltas.",
-          "Respondes cotizaciones desde WhatsApp, sin llamadas.",
-          "Sigues cada pedido hasta la entrega."
-        ],
-        pasos: [
-          "Registras tu almac\xE9n, tus categor\xEDas y si haces entregas.",
-          "Te llegan solicitudes de repuesto con el veh\xEDculo y la pieza ya identificados.",
-          "Respondes precio, marca, garant\xEDa y tiempo de entrega; si te eligen, sigues el pedido hasta entregarlo."
-        ],
-        cierre: "Gratis respondes hasta 15 cotizaciones al mes. Con el plan pagado, sin tope y con mejor posici\xF3n."
-      }
-    ];
-    PREMIUM_PRICE = formatUsd(withIva(DEFAULT_OFFERS.find((o) => o.key === "dueno_premium")?.priceMonthly ?? 2.99));
-    FAQ = [
-      {
-        q: "\xBFQu\xE9 es AutoMantPro?",
-        a: "Un asistente de gesti\xF3n de mantenimiento automotriz que funciona por WhatsApp. Lleva el plan de mantenimiento de cada veh\xEDculo y conecta a due\xF1os, talleres y almacenes de repuestos."
-      },
-      {
-        q: "\xBFC\xF3mo pido mantenimiento para mi carro en Ecuador?",
-        a: "Escribes por WhatsApp a AutoMantPro con la marca, el modelo y el kilometraje, y recibes el plan de mantenimiento que le toca a tu veh\xEDculo y el turno en un taller cercano."
-      },
-      {
-        q: "\xBFC\xF3mo encuentro un taller mec\xE1nico de confianza cerca de m\xED?",
-        a: "AutoMantPro busca talleres cercanos y, con el plan Premium, te conecta con talleres verificados: precio acordado antes de entrar, orden de trabajo y garant\xEDa anotada en la orden de trabajo."
-      },
-      {
-        q: "\xBFPuedo cotizar repuestos sin recorrer almacenes?",
-        a: "S\xED. Se pide el repuesto una vez y varios almacenes responden con precio, marca, garant\xEDa y tiempo de entrega para comparar en el mismo chat."
-      },
-      {
-        q: "\xBFNecesito instalar una aplicaci\xF3n?",
-        a: "No. Todo ocurre dentro de WhatsApp: no hay que instalar nada ni crear contrase\xF1as."
-      },
-      {
-        q: "\xBFCu\xE1nto cuesta?",
-        a: `Los primeros 90 d\xEDas son gratis. Despu\xE9s, el plan Gratis del due\xF1o cubre 1 veh\xEDculo con el plan de mantenimiento Funcional, recordatorios y talleres cercanos. Premium cuesta ${PREMIUM_PRICE} al mes con IVA y agrega hasta 3 veh\xEDculos, talleres verificados, cotizaciones a varios almacenes, garant\xEDa anotada en la orden e historial exportable. Todos los planes est\xE1n en automantpro.app/planes.`
-      }
-    ];
   }
 });
 
@@ -90285,10 +90809,10 @@ function wantsHtml(accept) {
     return false;
   return accept.split(",").some((part) => part.trim().toLowerCase().startsWith("text/html"));
 }
-function sanitizeRef(ref3) {
-  if (typeof ref3 !== "string")
+function sanitizeRef(ref4) {
+  if (typeof ref4 !== "string")
     return null;
-  return /^[A-Za-z0-9_-]{1,32}$/.test(ref3) ? ref3 : null;
+  return /^[A-Za-z0-9_-]{1,32}$/.test(ref4) ? ref4 : null;
 }
 function publicNumber() {
   const digits = (process.env.WA_PUBLIC_NUMBER ?? "").replace(/\D/g, "");
@@ -90330,6 +90854,7 @@ async function effectiveNumber(options) {
   return publicNumber();
 }
 async function entryRoutes(app2, options = {}) {
+  const marketing = options.marketingSite === void 0 ? marketingSite() : options.marketingSite;
   const visitWindows = /* @__PURE__ */ new Map();
   const allowVisit = (ip) => {
     const now = Date.now();
@@ -90352,11 +90877,11 @@ async function entryRoutes(app2, options = {}) {
     const nonce = randomBytes6(16).toString("base64");
     const query = request.query ?? {};
     const code3 = await uniqueVisitCode(options.codeTaken);
-    const ref3 = sanitizeRef(query.ref);
+    const ref4 = sanitizeRef(query.ref);
     const profile = sanitizeProfile(query.perfil);
     const number = await effectiveNumber(options);
     if (!bot && options.onVisit && allowVisit(request.ip)) {
-      Promise.resolve().then(() => options.onVisit?.(code3, ref3, profile)).catch(() => void 0);
+      Promise.resolve().then(() => options.onVisit?.(code3, ref4, profile)).catch(() => void 0);
     }
     let mode = "menu";
     if (options.entryMode && !profile) {
@@ -90367,9 +90892,9 @@ async function entryRoutes(app2, options = {}) {
       }
     }
     if (number && !bot && !("pagina" in query) && (mode === "directo" || profile)) {
-      return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number, code3, ref3, profile).wame, 302);
+      return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number, code3, ref4, profile).wame, 302);
     }
-    const html = renderEntryPage({ number, code: code3, ref: ref3, nonce, menu: mode === "menu" });
+    const html = renderEntryPage({ number, code: code3, ref: ref4, nonce, menu: mode === "menu", marketing });
     return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
   });
 }
@@ -90378,6 +90903,7 @@ var init_entry = __esm({
   "packages/api/dist/interfaces/entry/index.js"() {
     "use strict";
     init_page();
+    init_marketing();
     API_STATUS = { status: "ok", service: "AutoMantPro API" };
     CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     CODE_LENGTH = 5;
@@ -90480,17 +91006,17 @@ var init_platform = __esm({
 });
 
 // packages/api/dist/infrastructure/visits/visit-store.js
-function rows11(result) {
+function rows13(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
-var MAX_AGE_MS, PAGE_SIZE2, text3, MysqlVisitStore;
+var MAX_AGE_MS, PAGE_SIZE2, text4, MysqlVisitStore;
 var init_visit_store = __esm({
   "packages/api/dist/infrastructure/visits/visit-store.js"() {
     "use strict";
     MAX_AGE_MS = 7 * 24 * 60 * 60 * 1e3;
     PAGE_SIZE2 = 50;
-    text3 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text4 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     MysqlVisitStore = class {
       connect;
       constructor(connect) {
@@ -90504,30 +91030,30 @@ var init_visit_store = __esm({
           await conn.end().catch(() => void 0);
         }
       }
-      record(code3, ref3, profile = null) {
+      record(code3, ref4, profile = null) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `Visit` (code, ref, profile, createdAt) VALUES (?, ?, ?, CURRENT_TIMESTAMP(3))", [code3, ref3, profile]);
-          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), 'entry.visit', NULL, NULL, 'Visit', ?, ?, CURRENT_TIMESTAMP(3))", [code3, JSON.stringify({ ref: ref3, perfil: profile })]).catch(() => void 0);
+          await conn.query("INSERT INTO `Visit` (code, ref, profile, createdAt) VALUES (?, ?, ?, CURRENT_TIMESTAMP(3))", [code3, ref4, profile]);
+          await conn.query("INSERT INTO `Event` (id, type, actorUserId, actorRole, entityType, entityId, payload, createdAt) VALUES (UUID(), 'entry.visit', NULL, NULL, 'Visit', ?, ?, CURRENT_TIMESTAMP(3))", [code3, JSON.stringify({ ref: ref4, perfil: profile })]).catch(() => void 0);
         });
       }
       exists(code3) {
         return this.run(async (conn) => {
-          const row = rows11(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code3]))[0];
+          const row = rows13(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code3]))[0];
           return !!row;
         });
       }
       find(code3, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const row = rows11(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code3, new Date(now.getTime() - MAX_AGE_MS)]))[0];
+          const row = rows13(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code3, new Date(now.getTime() - MAX_AGE_MS)]))[0];
           if (!row)
             return null;
           return {
             code: String(row.code),
-            ref: text3(row.ref),
-            profile: text3(row.profile),
-            phone: text3(row.phone),
-            userId: text3(row.userId),
-            userName: text3(row.userName),
+            ref: text4(row.ref),
+            profile: text4(row.profile),
+            phone: text4(row.phone),
+            userId: text4(row.userId),
+            userName: text4(row.userName),
             claimedAt: row.claimedAt ?? null,
             linkedAt: row.linkedAt ?? null,
             createdAt: row.createdAt
@@ -90547,13 +91073,13 @@ var init_visit_store = __esm({
       list(page) {
         const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2;
         return this.run(async (conn) => {
-          const items = rows11(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE2} OFFSET ${offset2}`)).map((row) => ({
+          const items = rows13(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE2} OFFSET ${offset2}`)).map((row) => ({
             code: String(row.code),
-            ref: text3(row.ref),
-            profile: text3(row.profile),
-            phone: text3(row.phone),
-            userId: text3(row.userId),
-            userName: text3(row.userName),
+            ref: text4(row.ref),
+            profile: text4(row.profile),
+            phone: text4(row.phone),
+            userId: text4(row.userId),
+            userName: text4(row.userName),
             claimedAt: row.claimedAt ?? null,
             linkedAt: row.linkedAt ?? null,
             createdAt: row.createdAt
@@ -90561,11 +91087,11 @@ var init_visit_store = __esm({
           return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE2 };
         });
       }
-      stats(days) {
-        const window2 = Math.max(1, Math.floor(days));
-        return this.run(async (conn) => rows11(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window2} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row) => ({
-          ref: text3(row.ref),
-          profile: text3(row.profile),
+      stats(days2) {
+        const window2 = Math.max(1, Math.floor(days2));
+        return this.run(async (conn) => rows13(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window2} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row) => ({
+          ref: text4(row.ref),
+          profile: text4(row.profile),
           visitas: Number(row.visitas ?? 0),
           escribieron: Number(row.escribieron ?? 0),
           registrados: Number(row.registrados ?? 0)
@@ -90854,11 +91380,11 @@ var init_documents = __esm({
 });
 
 // packages/api/dist/infrastructure/admin/admin-store.js
-function rows15(result) {
+function rows17(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 async function scalar(conn, sql, params2 = []) {
-  const row = rows15(await conn.query(sql, params2))[0];
+  const row = rows17(await conn.query(sql, params2))[0];
   return Number(row?.n ?? 0);
 }
 function grouped(list7) {
@@ -90890,7 +91416,7 @@ var init_admin_store = __esm({
       }
       findAdminByEmail(email) {
         return this.run(async (conn) => {
-          const row = rows15(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
+          const row = rows17(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
           if (!row)
             return null;
           return {
@@ -90906,13 +91432,13 @@ var init_admin_store = __esm({
       upsertAdmin(input) {
         return this.run(async (conn) => {
           const email = input.email.toLowerCase();
-          const existing = rows15(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
+          const existing = rows17(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
           let id2;
           if (existing) {
             id2 = String(existing.id);
             await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', staffRole = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id2]);
           } else {
-            const created = rows15(await conn.query("SELECT UUID() AS id"))[0];
+            const created = rows17(await conn.query("SELECT UUID() AS id"))[0];
             id2 = String(created?.id);
             await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, staffRole, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, email, input.phone, input.passwordHash, input.name]);
           }
@@ -90922,7 +91448,7 @@ var init_admin_store = __esm({
       }
       findAdminById(id2) {
         return this.run(async (conn) => {
-          const row = rows15(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id2]))[0];
+          const row = rows17(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id2]))[0];
           if (!row)
             return null;
           return {
@@ -90960,9 +91486,9 @@ var init_admin_store = __esm({
       }
       dashboard() {
         return this.run(async (conn) => ({
-          usersByRole: grouped(rows15(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
+          usersByRole: grouped(rows17(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
           vehicles: await scalar(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE deletedAt IS NULL"),
-          shopsByStatus: grouped(rows15(await conn.query("SELECT verificationStatus AS k, COUNT(*) AS n FROM `Shop` GROUP BY verificationStatus"))),
+          shopsByStatus: grouped(rows17(await conn.query("SELECT verificationStatus AS k, COUNT(*) AS n FROM `Shop` GROUP BY verificationStatus"))),
           stores: await scalar(conn, "SELECT COUNT(*) AS n FROM `Store`"),
           appointmentsToday: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE scheduledAt >= CURDATE() AND scheduledAt < CURDATE() + INTERVAL 1 DAY"),
           appointmentsPending: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE status = 'pending'"),
@@ -90972,28 +91498,28 @@ var init_admin_store = __esm({
       }
       listUsers(page) {
         return this.run(async (conn) => ({
-          items: rows15(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE3, offset(page)])),
+          items: rows17(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE3, offset(page)])),
           page,
           pageSize: PAGE_SIZE3
         }));
       }
       listVehicles(page) {
         return this.run(async (conn) => ({
-          items: rows15(await conn.query("SELECT id, make, model, year, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE3, offset(page)])),
+          items: rows17(await conn.query("SELECT id, make, model, year, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE3, offset(page)])),
           page,
           pageSize: PAGE_SIZE3
         }));
       }
       listShops(page) {
         return this.run(async (conn) => ({
-          items: rows15(await conn.query("SELECT id, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE3, offset(page)])),
+          items: rows17(await conn.query("SELECT id, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE3, offset(page)])),
           page,
           pageSize: PAGE_SIZE3
         }));
       }
       listAudit(page) {
         return this.run(async (conn) => ({
-          items: rows15(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE3, offset(page)])),
+          items: rows17(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE3, offset(page)])),
           page,
           pageSize: PAGE_SIZE3
         }));
@@ -91062,6 +91588,8 @@ var init_permissions = __esm({
       { method: "POST", pattern: /^\/users\/[^/]+\/notes$/, capability: "notes" },
       { method: "GET", pattern: /^\/users\/[^/]+\/schedule$/, capability: "appointments" },
       { method: "POST", pattern: /^\/verifications(\/|$)/, capability: "verifications" },
+      // Ubicación del taller en el mapa público: la confirma quien verifica talleres.
+      { method: "POST", pattern: /^\/users\/[^/]+\/shop-map$/, capability: "verifications" },
       { method: "POST", pattern: /^\/appointments(\/|$)/, capability: "appointments" },
       { method: "GET", pattern: /^\/work-orders\/new$/, capability: "workorders" },
       { method: "POST", pattern: /^\/work-orders(\/|$)/, capability: "workorders" },
@@ -91096,7 +91624,7 @@ var init_permissions = __esm({
 });
 
 // packages/api/dist/application/admin/security.js
-import { createHmac as createHmac2, randomBytes as randomBytes12, timingSafeEqual as timingSafeEqual3 } from "node:crypto";
+import { createHmac as createHmac2, randomBytes as randomBytes13, timingSafeEqual as timingSafeEqual3 } from "node:crypto";
 function getAdminSessionSecret() {
   const secret = process.env.ADMIN_SESSION_SECRET?.trim();
   return secret && secret.length >= 32 ? secret : null;
@@ -91105,12 +91633,12 @@ function allowInsecureAdminCookies() {
   return process.env.NODE_ENV !== "production" && process.env.ADMIN_INSECURE_COOKIES === "1";
 }
 function createCsrfToken() {
-  return randomBytes12(24).toString("base64url");
+  return randomBytes13(24).toString("base64url");
 }
 function createPendingSession(user) {
   const now = Date.now();
   const session = {
-    id: randomBytes12(24).toString("base64url"),
+    id: randomBytes13(24).toString("base64url"),
     userId: user.id,
     email: user.email,
     role: normalizeRole(user.role),
@@ -91261,7 +91789,7 @@ function safeEqual(a, b) {
   return left.length === right.length && timingSafeEqual3(left, right);
 }
 function generateTotpSecret(bytes = 20) {
-  return base32Encode(randomBytes12(bytes));
+  return base32Encode(randomBytes13(bytes));
 }
 function verifyTotp(secret, code3, timestampMs = Date.now()) {
   if (!/^\d{6}$/.test(code3))
@@ -91374,8 +91902,8 @@ function twoFactorView(error) {
   <label for="code">C\xF3digo</label><input id="code" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="one-time-code">
   <button class="full" type="submit">Entrar</button></form>`;
 }
-function messageView(title, text8) {
-  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text8)}</p></div>`;
+function messageView(title, text9) {
+  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text9)}</p></div>`;
 }
 function kv(record) {
   const entries = Object.entries(record);
@@ -91622,7 +92150,7 @@ var require_error_correction_level = __commonJS({
       }
       try {
         return fromString(value2);
-      } catch (e7) {
+      } catch (e8) {
         return defaultValue;
       }
     };
@@ -91641,9 +92169,9 @@ var require_bit_buffer = __commonJS({
         const bufIndex = Math.floor(index / 8);
         return (this.buffer[bufIndex] >>> 7 - index % 8 & 1) === 1;
       },
-      put: function(num4, length) {
+      put: function(num5, length) {
         for (let i = 0; i < length; i++) {
-          this.putBit((num4 >>> length - i - 1 & 1) === 1);
+          this.putBit((num5 >>> length - i - 1 & 1) === 1);
         }
       },
       getLengthInBits: function() {
@@ -92462,7 +92990,7 @@ var require_mode = __commonJS({
       }
       try {
         return fromString(value2);
-      } catch (e7) {
+      } catch (e8) {
         return defaultValue;
       }
     };
@@ -95794,7 +96322,7 @@ var require_canvas = __commonJS({
     function getCanvasElement() {
       try {
         return document.createElement("canvas");
-      } catch (e7) {
+      } catch (e8) {
         throw new Error("You need to specify a canvas element");
       }
     }
@@ -95839,7 +96367,7 @@ var require_browser = __commonJS({
     var QRCode2 = require_qrcode();
     var CanvasRenderer = require_canvas();
     var SvgRenderer = require_svg_tag();
-    function renderCanvas(renderFunc, canvas, text8, opts, cb) {
+    function renderCanvas(renderFunc, canvas, text9, opts, cb) {
       const args = [].slice.call(arguments, 1);
       const argsNum = args.length;
       const isLastArgCb = typeof args[argsNum - 1] === "function";
@@ -95851,8 +96379,8 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 2) {
-          cb = text8;
-          text8 = canvas;
+          cb = text9;
+          text9 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 3) {
           if (canvas.getContext && typeof cb === "undefined") {
@@ -95860,8 +96388,8 @@ var require_browser = __commonJS({
             opts = void 0;
           } else {
             cb = opts;
-            opts = text8;
-            text8 = canvas;
+            opts = text9;
+            text9 = canvas;
             canvas = void 0;
           }
         }
@@ -95870,27 +96398,27 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 1) {
-          text8 = canvas;
+          text9 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 2 && !canvas.getContext) {
-          opts = text8;
-          text8 = canvas;
+          opts = text9;
+          text9 = canvas;
           canvas = void 0;
         }
         return new Promise(function(resolve2, reject) {
           try {
-            const data2 = QRCode2.create(text8, opts);
+            const data2 = QRCode2.create(text9, opts);
             resolve2(renderFunc(data2, canvas, opts));
-          } catch (e7) {
-            reject(e7);
+          } catch (e8) {
+            reject(e8);
           }
         });
       }
       try {
-        const data2 = QRCode2.create(text8, opts);
+        const data2 = QRCode2.create(text9, opts);
         cb(null, renderFunc(data2, canvas, opts));
-      } catch (e7) {
-        cb(e7);
+      } catch (e8) {
+        cb(e8);
       }
     }
     exports.create = QRCode2.create;
@@ -95911,8 +96439,8 @@ var require_server2 = __commonJS({
     var Utf8Renderer = require_utf8();
     var TerminalRenderer = require_terminal2();
     var SvgRenderer = require_svg();
-    function checkParams(text8, opts, cb) {
-      if (typeof text8 === "undefined") {
+    function checkParams(text9, opts, cb) {
+      if (typeof text9 === "undefined") {
         throw new Error("String required as first argument");
       }
       if (typeof cb === "undefined") {
@@ -95959,65 +96487,65 @@ var require_server2 = __commonJS({
           return Utf8Renderer;
       }
     }
-    function render(renderFunc, text8, params2) {
+    function render(renderFunc, text9, params2) {
       if (!params2.cb) {
         return new Promise(function(resolve2, reject) {
           try {
-            const data2 = QRCode2.create(text8, params2.opts);
+            const data2 = QRCode2.create(text9, params2.opts);
             return renderFunc(data2, params2.opts, function(err, data3) {
               return err ? reject(err) : resolve2(data3);
             });
-          } catch (e7) {
-            reject(e7);
+          } catch (e8) {
+            reject(e8);
           }
         });
       }
       try {
-        const data2 = QRCode2.create(text8, params2.opts);
+        const data2 = QRCode2.create(text9, params2.opts);
         return renderFunc(data2, params2.opts, params2.cb);
-      } catch (e7) {
-        params2.cb(e7);
+      } catch (e8) {
+        params2.cb(e8);
       }
     }
     exports.create = QRCode2.create;
     exports.toCanvas = require_browser().toCanvas;
-    exports.toString = function toString2(text8, opts, cb) {
-      const params2 = checkParams(text8, opts, cb);
+    exports.toString = function toString2(text9, opts, cb) {
+      const params2 = checkParams(text9, opts, cb);
       const type = params2.opts ? params2.opts.type : void 0;
       const renderer = getStringRendererFromType(type);
-      return render(renderer.render, text8, params2);
+      return render(renderer.render, text9, params2);
     };
-    exports.toDataURL = function toDataURL(text8, opts, cb) {
-      const params2 = checkParams(text8, opts, cb);
+    exports.toDataURL = function toDataURL(text9, opts, cb) {
+      const params2 = checkParams(text9, opts, cb);
       const renderer = getRendererFromType(params2.opts.type);
-      return render(renderer.renderToDataURL, text8, params2);
+      return render(renderer.renderToDataURL, text9, params2);
     };
-    exports.toBuffer = function toBuffer(text8, opts, cb) {
-      const params2 = checkParams(text8, opts, cb);
+    exports.toBuffer = function toBuffer(text9, opts, cb) {
+      const params2 = checkParams(text9, opts, cb);
       const renderer = getRendererFromType(params2.opts.type);
-      return render(renderer.renderToBuffer, text8, params2);
+      return render(renderer.renderToBuffer, text9, params2);
     };
-    exports.toFile = function toFile(path, text8, opts, cb) {
-      if (typeof path !== "string" || !(typeof text8 === "string" || typeof text8 === "object")) {
+    exports.toFile = function toFile(path, text9, opts, cb) {
+      if (typeof path !== "string" || !(typeof text9 === "string" || typeof text9 === "object")) {
         throw new Error("Invalid argument");
       }
       if (arguments.length < 3 && !canPromise()) {
         throw new Error("Too few arguments provided");
       }
-      const params2 = checkParams(text8, opts, cb);
+      const params2 = checkParams(text9, opts, cb);
       const type = params2.opts.type || getTypeFromFilename(path);
       const renderer = getRendererFromType(type);
       const renderToFile = renderer.renderToFile.bind(null, path);
-      return render(renderToFile, text8, params2);
+      return render(renderToFile, text9, params2);
     };
-    exports.toFileStream = function toFileStream(stream, text8, opts) {
+    exports.toFileStream = function toFileStream(stream, text9, opts) {
       if (arguments.length < 2) {
         throw new Error("Too few arguments provided");
       }
-      const params2 = checkParams(text8, opts, stream.emit.bind(stream, "error"));
+      const params2 = checkParams(text9, opts, stream.emit.bind(stream, "error"));
       const renderer = getRendererFromType("png");
       const renderToFileStream = renderer.renderToFileStream.bind(null, stream);
-      render(renderToFileStream, text8, params2);
+      render(renderToFileStream, text9, params2);
     };
   }
 });
@@ -96107,9 +96635,9 @@ var init_views_setup = __esm({
 });
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
-import { randomBytes as randomBytes13 } from "node:crypto";
-function qrSvg(text8) {
-  return QRCode.toString(text8, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
+import { randomBytes as randomBytes14 } from "node:crypto";
+function qrSvg(text9) {
+  return QRCode.toString(text9, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
 async function adminCount(store) {
   try {
@@ -96139,7 +96667,7 @@ function registerSetupWizard(app2, deps) {
     return state;
   }
   function newState(reply) {
-    const state = { id: randomBytes13(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
+    const state = { id: randomBytes14(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
     states.set(state.id, state);
     reply.header("Set-Cookie", setupCookie(signSessionCookie(state.id, getAdminSessionSecret()), STATE_TTL_MS / 1e3));
     return state;
@@ -96254,8 +96782,8 @@ function registerSetupWizard(app2, deps) {
     try {
       userId = await store.upsertAdmin({ email, name, passwordHash, totpSecret: secret, phone: `admin:${email}` });
     } catch (err) {
-      const e7 = err;
-      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e7.code ?? "error"}${e7.sqlMessage ? `: ${e7.sqlMessage}` : ""}).` };
+      const e8 = err;
+      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e8.code ?? "error"}${e8.sqlMessage ? `: ${e8.sqlMessage}` : ""}).` };
       return back(reply);
     }
     recordLoginAttempt("setup", request.ip, true);
@@ -96292,8 +96820,8 @@ var init_setup_wizard = __esm({
 });
 
 // packages/api/dist/interfaces/admin/views-team.js
-function roleOptions(selected) {
-  return STAFF_ROLES.map((r) => `<option value="${escapeHtml(r.key)}"${r.key === selected ? " selected" : ""}>${escapeHtml(r.label)}</option>`).join("");
+function roleOptions(selected2) {
+  return STAFF_ROLES.map((r) => `<option value="${escapeHtml(r.key)}"${r.key === selected2 ? " selected" : ""}>${escapeHtml(r.label)}</option>`).join("");
 }
 function memberCard(member, csrf, self2, lastAdmin) {
   const role = normalizeRole(member.staffRole);
@@ -96553,8 +97081,8 @@ function toMember(row) {
   };
 }
 function list6(result) {
-  const [rows25] = result;
-  return Array.isArray(rows25) ? rows25 : [];
+  const [rows27] = result;
+  return Array.isArray(rows27) ? rows27 : [];
 }
 var SELECT, MysqlStaffStore;
 var init_staff_store = __esm({
@@ -96644,9 +97172,9 @@ function nextSanctionLevel(history) {
   const next = SANCTION_LEVELS.find((l) => l.step === Math.min(top + 1, 4));
   return (next ?? SANCTION_LEVELS[0]).key;
 }
-function sanctionEnd(level, days, from = /* @__PURE__ */ new Date()) {
+function sanctionEnd(level, days2, from = /* @__PURE__ */ new Date()) {
   const config = sanctionLevel(level);
-  const effective = days ?? config?.defaultDays ?? null;
+  const effective = days2 ?? config?.defaultDays ?? null;
   if (effective === null || effective <= 0)
     return null;
   return new Date(from.getTime() + effective * 24 * 60 * 60 * 1e3);
@@ -96726,7 +97254,7 @@ function tabs(current, base, options) {
   return `<div class="tabs">${options.map(([key, label2]) => `<a class="${key === current ? "active" : ""}" href="${base}?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("")}</div>`;
 }
 function relationsListView(input) {
-  const rows25 = input.page.items.map((r) => {
+  const rows27 = input.page.items.map((r) => {
     const waiting = waitingHours(r.waitingSince);
     const late2 = waiting !== null && waiting >= input.waitingHours;
     return `<tr><td><a href="/admin/relations/${escapeHtml(r.id)}">${escapeHtml(relationCode(r.number))}</a></td>
@@ -96743,7 +97271,7 @@ function relationsListView(input) {
   <p class="muted">Las partes hablan solo con AutoMantPro: aqu\xED registras lo que dice cada una y el texto listo para reenviar. El tel\xE9fono de una parte se muestra solo si autoriz\xF3 compartirlo.</p>
   ${empty}
   <div class="scroll"><table><thead><tr><th>V\xEDnculo</th><th>Tipo</th><th>Partes</th><th>Estado</th><th>Canal</th><th>\xDAltimo mensaje</th><th>Espera</th></tr></thead>
-  <tbody>${rows25}</tbody></table></div>
+  <tbody>${rows27}</tbody></table></div>
   <div class="pager">${input.page.page > 1 ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page - 1}">\u2190 Anteriores</a>` : ""}
   ${input.page.items.length === input.page.pageSize ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page + 1}">Siguientes \u2192</a>` : ""}</div></div>`;
 }
@@ -96836,7 +97364,7 @@ function relationDetailView(input) {
   </div>`;
 }
 function disputesListView(input) {
-  const rows25 = input.page.items.map((d) => {
+  const rows27 = input.page.items.map((d) => {
     const resolve2 = input.canResolve && (d.status === "abierta" || d.status === "en_revision") ? `<form method="post" action="/admin/disputes/${escapeHtml(d.id)}/resolve">${csrfField2(input.csrf)}
             <label for="res-${escapeHtml(d.id)}">Resoluci\xF3n</label><textarea id="res-${escapeHtml(d.id)}" name="resolution" rows="2" maxlength="2000" required></textarea>
             <select name="status"><option value="resuelta">Resuelta</option><option value="en_revision">En revisi\xF3n</option><option value="rechazada">Rechazada</option></select>
@@ -96852,10 +97380,10 @@ function disputesListView(input) {
   ${tabs(input.filter, "/admin/disputes", DISPUTE_FILTERS)}
   ${input.page.items.length === 0 ? `<p class="muted">No hay disputas con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Caso</th><th>V\xEDnculo</th><th>Partes</th><th>Motivo</th><th>Estado</th><th>Resoluci\xF3n</th></tr></thead>
-  <tbody>${rows25}</tbody></table></div></div>`;
+  <tbody>${rows27}</tbody></table></div></div>`;
 }
 function sanctionsListView(input) {
-  const rows25 = input.page.items.map((s) => {
+  const rows27 = input.page.items.map((s) => {
     const state = s.liftedAt ? `<span class="muted">levantada ${escapeHtml(when2(s.liftedAt))}</span>` : isActive(s) ? `<span class="error">vigente${s.endsAt ? ` hasta ${escapeHtml(when2(s.endsAt))}` : ""}</span>` : `<span class="muted">vencida</span>`;
     const lift = input.canLift && !s.liftedAt && isActive(s) ? `<form method="post" action="/admin/sanctions/${escapeHtml(s.id)}/lift">${csrfField2(input.csrf)}
             <label for="lift-${escapeHtml(s.id)}">Motivo para levantarla</label><input id="lift-${escapeHtml(s.id)}" name="reason" maxlength="191" required>
@@ -96870,7 +97398,7 @@ function sanctionsListView(input) {
   <p class="muted">Siempre con motivo, aviso a la entidad y registro en la auditor\xEDa. Se aplican desde el v\xEDnculo o desde la ficha de la persona.</p></div>
   ${input.page.items.length === 0 ? `<p class="muted">Todav\xEDa no hay sanciones registradas.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Entidad</th><th>Paso</th><th>Motivo</th><th>Vigencia</th><th>Levantar</th></tr></thead>
-  <tbody>${rows25}</tbody></table></div></div>`;
+  <tbody>${rows27}</tbody></table></div></div>`;
 }
 var FILTERS, DISPUTE_FILTERS, flashHtml2, csrfField2;
 var init_views_relations = __esm({
@@ -96902,7 +97430,7 @@ var init_views_relations = __esm({
 function registerRelationRoutes(app2, deps) {
   const { relations } = deps;
   const lateAfter = deps.waitingHours ?? 24;
-  const errorPage = (request, reply, session, title, text8, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text8)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
     if (code3 === "ER_NO_SUCH_TABLE" || code3 === "ER_BAD_FIELD_ERROR") {
@@ -96981,8 +97509,8 @@ function registerRelationRoutes(app2, deps) {
     const { id: id2 } = request.params;
     if (!UUID.test(id2))
       return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
-    const text8 = str8(body.body, 2e3);
-    if (text8.length < 2)
+    const text9 = str8(body.body, 2e3);
+    if (text9.length < 2)
       return renderDetail(request, reply, session, id2, { flash: { kind: "error", text: "Escribe el mensaje." }, status: 400 });
     let detail;
     try {
@@ -97010,7 +97538,7 @@ function registerRelationRoutes(app2, deps) {
         relationshipId: id2,
         fromUserId,
         toUserId: isNote ? null : target?.userId ?? null,
-        body: text8,
+        body: text9,
         kind: isNote ? "nota" : "reenvio",
         relayed,
         createdBy: session.userId
@@ -97031,7 +97559,7 @@ function registerRelationRoutes(app2, deps) {
         fromName: source?.name ?? "AutoMantPro",
         code: relationCode(detail.relation.number),
         subject: detail.relation.subject,
-        body: text8
+        body: text9
       })
     };
     const flash = detail.relation.relayPaused ? { kind: "error", text: "El reenv\xEDo est\xE1 en pausa: el mensaje qued\xF3 registrado pero no lo env\xEDes todav\xEDa." } : { kind: "ok", text: "Mensaje registrado. Copia el texto y env\xEDalo por WhatsApp." };
@@ -97253,7 +97781,7 @@ function registerRelationRoutes(app2, deps) {
     if (reason.length < 5)
       return errorPage(request, reply, session, "Sanciones", "Escribe el motivo: se le comunica a la entidad y queda registrado.", 400);
     const rawDays = str8(body.days, 6);
-    const days = rawDays === "" ? null : Number.isFinite(Number(rawDays)) ? Math.max(0, Math.floor(Number(rawDays))) : null;
+    const days2 = rawDays === "" ? null : Number.isFinite(Number(rawDays)) ? Math.max(0, Math.floor(Number(rawDays))) : null;
     try {
       const history = await relations.sanctionsForUser(id2);
       const suggested = nextSanctionLevel(history);
@@ -97263,7 +97791,7 @@ function registerRelationRoutes(app2, deps) {
         reason,
         relationshipId,
         disputeId: null,
-        endsAt: sanctionEnd(level.key, days),
+        endsAt: sanctionEnd(level.key, days2),
         createdBy: session.userId
       });
       await deps.audit("admin.sanction.apply", session.userId, `Sanci\xF3n ${level.key} a ${id2}: ${reason}${suggested !== level.key ? ` (el paso sugerido era ${suggested})` : ""}`);
@@ -97315,14 +97843,14 @@ var init_relations = __esm({
 function cell2(value2) {
   if (value2 === null || value2 === void 0)
     return "";
-  const text8 = value2 instanceof Date ? value2.toISOString() : String(value2);
-  const clean = text8.replace(/\r?\n/g, " ").replace(/\t/g, " ");
+  const text9 = value2 instanceof Date ? value2.toISOString() : String(value2);
+  const clean = text9.replace(/\r?\n/g, " ").replace(/\t/g, " ");
   const safe = /^[=+\-@]/.test(clean) ? `'${clean}` : clean;
   return `"${safe.replace(/"/g, '""')}"`;
 }
-function toCsv(columns, rows25) {
+function toCsv(columns, rows27) {
   const head = columns.map(([, label2]) => cell2(label2)).join(SEPARATOR);
-  const body = rows25.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
+  const body = rows27.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
   return `\uFEFF${[head, ...body].join("\r\n")}\r
 `;
 }
@@ -97378,7 +97906,7 @@ var init_lopdp = __esm({
 });
 
 // packages/api/dist/infrastructure/data/data-store.js
-function rows16(result) {
+function rows18(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -97592,13 +98120,13 @@ var init_data_store = __esm({
         if (!found)
           return Promise.resolve([]);
         const cap = Math.min(Math.max(1, Math.floor(limit)), MAX_ROWS);
-        return this.run(async (conn) => rows16(await conn.query(`${found.sql} LIMIT ${cap}`)));
+        return this.run(async (conn) => rows18(await conn.query(`${found.sql} LIMIT ${cap}`)));
       }
       createRequest(input) {
         return this.run(async (conn) => {
-          const created = rows16(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows18(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
-          const next = rows16(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest`"))[0];
+          const next = rows18(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest`"))[0];
           await conn.query("INSERT INTO `DataRequest` (id, `number`, userId, kind, status, channel, detail, dueAt, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'recibida', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, Number(next?.n ?? 1), input.userId, input.kind, input.channel, input.detail, dueDate(), input.createdBy]);
           return id2;
         });
@@ -97608,18 +98136,18 @@ var init_data_store = __esm({
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params2 = status === "todas" ? [] : [status];
-          const items = rows16(await conn.query(`${SELECT_REQUESTS} ${where} ORDER BY d.dueAt ASC LIMIT ${PAGE_SIZE4} OFFSET ${offset2}`, params2)).map(toRequest);
+          const items = rows18(await conn.query(`${SELECT_REQUESTS} ${where} ORDER BY d.dueAt ASC LIMIT ${PAGE_SIZE4} OFFSET ${offset2}`, params2)).map(toRequest);
           return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE4 };
         });
       }
       getRequest(id2) {
         return this.run(async (conn) => {
-          const row = rows16(await conn.query(`${SELECT_REQUESTS} WHERE d.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows18(await conn.query(`${SELECT_REQUESTS} WHERE d.id = ? LIMIT 1`, [id2]))[0];
           return row ? toRequest(row) : null;
         });
       }
       requestsForUser(userId) {
-        return this.run(async (conn) => rows16(await conn.query(`${SELECT_REQUESTS} WHERE d.userId = ? ORDER BY d.createdAt DESC LIMIT 20`, [userId])).map(toRequest));
+        return this.run(async (conn) => rows18(await conn.query(`${SELECT_REQUESTS} WHERE d.userId = ? ORDER BY d.createdAt DESC LIMIT 20`, [userId])).map(toRequest));
       }
       setStatus(id2, status, resolution, resolvedBy) {
         return this.run(async (conn) => {
@@ -97635,21 +98163,21 @@ var init_data_store = __esm({
       }
       personalExport(userId) {
         return this.run(async (conn) => {
-          const user = rows16(await conn.query("SELECT id, role, name, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? LIMIT 1", [userId]))[0];
+          const user = rows18(await conn.query("SELECT id, role, name, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? LIMIT 1", [userId]))[0];
           if (!user)
             return null;
           const [vehicles, appointments, workOrders, quotes, relations, sanctions, agentMessages, agentActions, agentTurns] = await Promise.all([
-            conn.query("SELECT make, model, year, plate, currentKm, vehicleClass, fuel, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL", [userId]).then(rows16),
-            conn.query("SELECT a.scheduledAt, a.status, a.summary, s.name AS shopName, a.createdAt FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId = ?", [userId]).then(rows16),
-            conn.query("SELECT w.number, w.status, w.intakeKm, w.exitKm, w.total, w.warrantyDays, s.name AS shopName, w.createdAt, w.closedAt FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.ownerId = ?", [userId]).then(rows16),
-            conn.query("SELECT `number`, status, partName, quantity, city, createdAt FROM `QuoteRequest` WHERE requesterId = ?", [userId]).then(rows16),
-            conn.query("SELECT r.`number`, r.kind, r.status, r.channel, r.createdAt FROM `Relationship` r JOIN `RelationshipParty` p ON p.relationshipId = r.id WHERE p.userId = ?", [userId]).then(rows16).catch(() => []),
-            conn.query("SELECT level, reason, startsAt, endsAt, liftedAt FROM `Sanction` WHERE userId = ?", [userId]).then(rows16).catch(() => []),
-            conn.query("SELECT m.direction, m.body, m.createdAt FROM `Message` m JOIN `Conversation` c ON c.id = m.conversationId WHERE c.userAId = ? AND c.agent = 1 ORDER BY m.createdAt, m.id", [userId]).then(rows16),
-            conn.query("SELECT id, kind, args, result, expiresAt, createdAt FROM `AgentAction` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows16),
-            conn.query("SELECT id, response, createdAt FROM `AgentTurn` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows16)
+            conn.query("SELECT make, model, year, plate, currentKm, vehicleClass, fuel, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL", [userId]).then(rows18),
+            conn.query("SELECT a.scheduledAt, a.status, a.summary, s.name AS shopName, a.createdAt FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId = ?", [userId]).then(rows18),
+            conn.query("SELECT w.number, w.status, w.intakeKm, w.exitKm, w.total, w.warrantyDays, s.name AS shopName, w.createdAt, w.closedAt FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.ownerId = ?", [userId]).then(rows18),
+            conn.query("SELECT `number`, status, partName, quantity, city, createdAt FROM `QuoteRequest` WHERE requesterId = ?", [userId]).then(rows18),
+            conn.query("SELECT r.`number`, r.kind, r.status, r.channel, r.createdAt FROM `Relationship` r JOIN `RelationshipParty` p ON p.relationshipId = r.id WHERE p.userId = ?", [userId]).then(rows18).catch(() => []),
+            conn.query("SELECT level, reason, startsAt, endsAt, liftedAt FROM `Sanction` WHERE userId = ?", [userId]).then(rows18).catch(() => []),
+            conn.query("SELECT m.direction, m.body, m.createdAt FROM `Message` m JOIN `Conversation` c ON c.id = m.conversationId WHERE c.userAId = ? AND c.agent = 1 ORDER BY m.createdAt, m.id", [userId]).then(rows18),
+            conn.query("SELECT id, kind, args, result, expiresAt, createdAt FROM `AgentAction` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows18),
+            conn.query("SELECT id, response, createdAt FROM `AgentTurn` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows18)
           ]);
-          const optional3 = (sql, args) => conn.query(sql, args).then(rows16).catch(() => []);
+          const optional3 = (sql, args) => conn.query(sql, args).then(rows18).catch(() => []);
           const [identity, requests, offers, notices, replies, records, symptoms, alerts, ratingsGiven, ratingsReceived, memberships, changes, imported] = await Promise.all([
             optional3("SELECT phone, confirmedAt FROM `WhatsAppIdentity` WHERE userId = ?", [userId]),
             optional3("SELECT kind, category, description, city, zone, status, createdAt, expiresAt FROM `LocalRequest` WHERE ownerId = ? ORDER BY createdAt", [userId]),
@@ -97720,13 +98248,13 @@ var init_data_store = __esm({
       anonymizeUser(userId, requestId) {
         return this.run(async (conn) => {
           const lock = agentUserLock(userId);
-          const acquired = Number(rows16(await conn.query("SELECT GET_LOCK(?, 5) AS acquired", [lock]))[0]?.acquired) === 1;
+          const acquired = Number(rows18(await conn.query("SELECT GET_LOCK(?, 5) AS acquired", [lock]))[0]?.acquired) === 1;
           if (!acquired)
             throw new Error("La conversaci\xF3n tiene una operaci\xF3n en curso; reintenta la anonimizaci\xF3n.");
           try {
             await conn.query("START TRANSACTION");
             const values = anonymizedValues(userId);
-            const user = rows16(await conn.query("SELECT phone FROM `User` WHERE id = ? FOR UPDATE", [userId]))[0];
+            const user = rows18(await conn.query("SELECT phone FROM `User` WHERE id = ? FOR UPDATE", [userId]))[0];
             const [result] = await conn.query("UPDATE `User` SET name = ?, phone = ?, email = NULL, notes = NULL, deletedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role <> 'admin' AND deletedAt IS NULL", [values.name, values.phone, userId]);
             const changed = Number(result.affectedRows ?? 0) > 0;
             if (changed) {
@@ -97761,7 +98289,7 @@ function when3(value2) {
   return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeZone: "America/Guayaquil" }).format(date2);
 }
 function exportsView(input) {
-  const rows25 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
+  const rows27 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
     <td>${input.counts ? String(input.counts[d.key] ?? 0) : "\u2014"}</td>
     <td>${d.personal ? '<span class="error">datos personales</span>' : '<span class="muted">sin datos personales</span>'}</td>
     <td><a href="/admin/exports/${escapeHtml(d.key)}.csv">Descargar CSV</a></td></tr>`).join("");
@@ -97769,11 +98297,11 @@ function exportsView(input) {
   <div class="card"><h2>C\xF3mo usarlo</h2>
     <p class="muted">Cada archivo se abre en Excel o en Google Sheets. Guarda los respaldos en un lugar cifrado y b\xF3rralos cuando ya no los necesites: los archivos marcados contienen datos personales y su descarga queda en la auditor\xEDa.</p>
     <p class="muted">La descarga trae hasta 5.000 filas por archivo, las m\xE1s recientes primero.</p></div>
-  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows25}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows27}</tbody></table></div></div>`;
 }
 function dataRequestsView(input) {
   const tabs2 = STATUS_FILTERS.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/data-requests?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("");
-  const rows25 = input.items.map((r) => {
+  const rows27 = input.items.map((r) => {
     const left = daysLeft2(r.dueAt);
     const plazo = isOverdue(r) ? `<span class="error">vencido hace ${Math.abs(left)} d\xEDas</span>` : r.status === "atendida" || r.status === "rechazada" ? `<span class="muted">cerrado ${when3(r.resolvedAt)}</span>` : `<span class="${left <= 3 ? "error" : "muted"}">${left} d\xEDas</span>`;
     const actions = r.status === "recibida" || r.status === "en_proceso" ? `<a href="/admin/data-requests/${escapeHtml(r.id)}/export.json">Descargar sus datos</a>
@@ -97798,7 +98326,7 @@ function dataRequestsView(input) {
     <ul>${REQUEST_KINDS.map((k) => `<li><strong>${escapeHtml(k.label)}:</strong> ${escapeHtml(k.description)}</li>`).join("")}</ul>
     <p class="muted">Las solicitudes se abren desde la ficha del titular.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay solicitudes con ese filtro.</p>` : ""}
-  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows25}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows27}</tbody></table></div></div>`;
 }
 function userDataRequestsCard(userId, items, csrf) {
   const list7 = items.length ? `<ul>${items.map((r) => `<li>${escapeHtml(dataRequestCode(r.number))} \xB7 ${escapeHtml(kindLabel(r.kind))} \xB7 ${escapeHtml(REQUEST_STATUS_LABELS[r.status] ?? r.status)}${isOverdue(r) ? ' <span class="error">vencido</span>' : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin solicitudes de datos.</p>`;
@@ -97834,7 +98362,7 @@ var init_views_data = __esm({
 // packages/api/dist/interfaces/admin/data.js
 function registerDataRoutes(app2, deps) {
   const { data: data2 } = deps;
-  const errorPage = (request, reply, session, title, text8, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text8)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
     if (code3 === "ER_NO_SUCH_TABLE" || code3 === "ER_BAD_FIELD_ERROR") {
@@ -97885,15 +98413,15 @@ function registerDataRoutes(app2, deps) {
     const dataset = DATASETS.find((d) => d.key === raw);
     if (!dataset)
       return errorPage(request, reply, session, "Respaldos", "Ese conjunto no existe.", 404);
-    let rows25;
+    let rows27;
     try {
-      rows25 = await data2.exportRows(dataset.key);
+      rows27 = await data2.exportRows(dataset.key);
     } catch (err) {
       const m = dbError2(err);
       return errorPage(request, reply, session, "Respaldos", m.text, m.status);
     }
-    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows25.length} filas${dataset.personal ? ", con datos personales" : ""})`);
-    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows25));
+    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows27.length} filas${dataset.personal ? ", con datos personales" : ""})`);
+    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows27));
   });
   app2.get("/data-requests", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -98077,7 +98605,7 @@ function contractView(input) {
   </div>`;
 }
 function catalogView(input) {
-  const rows25 = input.catalog.map((o) => {
+  const rows27 = input.catalog.map((o) => {
     const id2 = escapeHtml(o.key);
     const lim = (k) => o.limits[k] === void 0 ? "" : String(o.limits[k]);
     return `<div class="card"><h2>${escapeHtml(PROFILE_LABELS[o.profile])} \xB7 ${escapeHtml(o.name)}</h2>
@@ -98102,7 +98630,7 @@ function catalogView(input) {
   }).join("");
   return `<div class="stack wide"><h1>Cat\xE1logo y precios</h1>${billingTabs("catalogo")}${flashHtml4(input.flash)}
   <div class="card"><p class="muted">Los precios se guardan sin IVA y se muestran con IVA incluido (${escapeHtml(formatUsd(withIva(1)))} por cada US$ 1). Un cambio de precio vale para contratos nuevos y renovaciones; nunca cambia un per\xEDodo ya pagado. Un tope vac\xEDo significa sin tope.</p></div>
-  ${rows25}</div>`;
+  ${rows27}</div>`;
 }
 function accountsView(input) {
   const list7 = input.accounts.length ? `<div class="scroll"><table><thead><tr><th>Banco</th><th>Cuenta</th><th>Titular</th><th>Estado</th><th></th></tr></thead><tbody>${input.accounts.map((a) => `<tr><td>${escapeHtml(a.bank)}</td><td>${escapeHtml(a.accountType)} N\xB0 ${escapeHtml(a.number)}</td><td>${escapeHtml(a.holder)}<br><span class="muted">${escapeHtml(a.holderId)}</span></td>
@@ -98122,7 +98650,7 @@ function accountsView(input) {
 }
 function revenueView(input) {
   const r = input.report;
-  const rows25 = r.rows.map((x) => `<tr><td>SB-${escapeHtml(String(x.number).padStart(4, "0"))}</td><td>${escapeHtml(when4(x.verifiedAt))}</td><td>${escapeHtml(x.userName ?? "")}</td><td>${escapeHtml(planName(x.plan, input.catalog))}${x.period ? `<br><span class="muted">${escapeHtml(x.period)}</span>` : ""}</td>
+  const rows27 = r.rows.map((x) => `<tr><td>SB-${escapeHtml(String(x.number).padStart(4, "0"))}</td><td>${escapeHtml(when4(x.verifiedAt))}</td><td>${escapeHtml(x.userName ?? "")}</td><td>${escapeHtml(planName(x.plan, input.catalog))}${x.period ? `<br><span class="muted">${escapeHtml(x.period)}</span>` : ""}</td>
       <td>${escapeHtml(money4(x.subtotalUsd))}</td><td>${escapeHtml(money4(x.ivaUsd))}</td><td><strong>${escapeHtml(money4(x.amountUsd))}</strong></td><td>${escapeHtml(x.invoiceNumber ?? "\u2014")}</td></tr>`).join("");
   const [y, m] = r.month.split("-").map(Number);
   const prev = `${m === 1 ? y - 1 : y}-${String(m === 1 ? 12 : m - 1).padStart(2, "0")}`;
@@ -98135,7 +98663,7 @@ function revenueView(input) {
     <div class="card"><h2>Por verificar</h2><div class="big">${escapeHtml(String(r.toVerify))}</div><p class="muted">pagos informados \xB7 <a href="/admin/plans?f=pendiente">ver</a></p></div>
     <div class="card"><h2>Sin renovar</h2><div class="big">${escapeHtml(String(r.lapsed))}</div><p class="muted">planes que vencieron este mes</p></div>
   </div>
-  ${r.rows.length ? `<div class="scroll"><table><thead><tr><th>Contrato</th><th>Verificado</th><th>Cliente</th><th>Plan</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Factura</th></tr></thead><tbody>${rows25}</tbody></table></div>` : `<p class="muted">No hay pagos verificados en este mes.</p>`}
+  ${r.rows.length ? `<div class="scroll"><table><thead><tr><th>Contrato</th><th>Verificado</th><th>Cliente</th><th>Plan</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Factura</th></tr></thead><tbody>${rows27}</tbody></table></div>` : `<p class="muted">No hay pagos verificados en este mes.</p>`}
   </div>`;
 }
 var flashHtml4, csrfField4, money4, statusLabel;
@@ -98169,7 +98697,7 @@ function planBadge(plan, endsAt) {
 function plansListView(input) {
   const catalog = input.catalog ?? DEFAULT_OFFERS;
   const tabs2 = FILTERS3.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/plans?f=${escapeHtml(key)}">${escapeHtml(label2)}${key === "pendiente" && input.pending > 0 ? ` (${input.pending})` : ""}</a>`).join("");
-  const rows25 = input.items.map((s) => {
+  const rows27 = input.items.map((s) => {
     const left = daysLeft(s.endsAt);
     const vigencia = s.status === "activa" ? s.endsAt ? `${when5(s.startsAt)} \u2192 ${when5(s.endsAt)}<br><span class="${left !== null && left <= 7 ? "error" : "muted"}">${left} d\xEDas</span>` : `desde ${when5(s.startsAt)}<br><span class="muted">sin vencimiento</span>` : `<span class="muted">${when5(s.createdAt)}</span>`;
     const acciones = input.canDecide && (s.status === "pendiente" || s.status === "solicitada") ? `<form method="post" action="/admin/subscriptions/${escapeHtml(s.id)}/verify">${csrfField5(input.csrf)}
@@ -98194,7 +98722,7 @@ function plansListView(input) {
     <p class="muted">Premium habilita: ${Object.values(FEATURE_LABELS).slice(2).map((f) => escapeHtml(f)).join(" \xB7 ")}.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay suscripciones con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Titular</th><th>Plan</th><th>Pago</th><th>Vigencia</th><th>Acciones</th></tr></thead>
-  <tbody>${rows25}</tbody></table></div></div>`;
+  <tbody>${rows27}</tbody></table></div></div>`;
 }
 function userPlanCard(userId, subs, csrf, canRegister, role = "dueno", usage = {}) {
   const plan = effectivePlan(subs);
@@ -98246,7 +98774,7 @@ var init_views_plans = __esm({
 // packages/api/dist/interfaces/admin/plans.js
 function registerPlanRoutes(app2, deps) {
   const { plans } = deps;
-  const errorPage = (request, reply, session, text8, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text8)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text9, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
     if (code3 === "ER_NO_SUCH_TABLE" || code3 === "ER_BAD_FIELD_ERROR") {
@@ -98267,10 +98795,10 @@ function registerPlanRoutes(app2, deps) {
   }
   const str8 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
   const whole = (value2, max) => {
-    const text8 = str8(value2, 6);
-    if (!text8)
+    const text9 = str8(value2, 6);
+    if (!text9)
       return null;
-    const n = Number(text8);
+    const n = Number(text9);
     return Number.isFinite(n) && n >= 1 && n <= max ? Math.floor(n) : null;
   };
   async function render(request, reply, session, filter, flash, status = 200) {
@@ -98421,7 +98949,7 @@ var init_plans2 = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/billing-store.js
-import { randomUUID as randomUUID14 } from "node:crypto";
+import { randomUUID as randomUUID15 } from "node:crypto";
 function rowsOf(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
@@ -98436,8 +98964,8 @@ function monthRange(month) {
 }
 function revenueCsv(report, planLabel) {
   const cell3 = (v) => {
-    const text8 = v === null || v === void 0 ? "" : String(v);
-    const safe = /^[=+\-@\t\r]/.test(text8) ? `'${text8}` : text8;
+    const text9 = v === null || v === void 0 ? "" : String(v);
+    const safe = /^[=+\-@\t\r]/.test(text9) ? `'${text9}` : text9;
     return /[;"\n]/.test(safe) ? `"${safe.replace(/"/g, '""')}"` : safe;
   };
   const money7 = (n) => n.toFixed(2).replace(".", ",");
@@ -98458,13 +98986,13 @@ function revenueCsv(report, planLabel) {
   return `\uFEFF${[head.join(";"), ...lines].join("\r\n")}\r
 `;
 }
-var num, str2, MysqlBillingStore;
+var num2, str2, MysqlBillingStore;
 var init_billing_store = __esm({
   "packages/api/dist/infrastructure/plans/billing-store.js"() {
     "use strict";
     init_catalog_store();
     init_subscription_chat();
-    num = (v) => v === null || v === void 0 ? null : Number(v);
+    num2 = (v) => v === null || v === void 0 ? null : Number(v);
     str2 = (v) => v === null || v === void 0 ? null : String(v);
     MysqlBillingStore = class {
       connect;
@@ -98500,7 +99028,7 @@ var init_billing_store = __esm({
       }
       addAccount(input, by) {
         return this.run(async (conn) => {
-          const id2 = randomUUID14();
+          const id2 = randomUUID15();
           await conn.query("INSERT INTO `PaymentAccount` (id, bank, accountType, number, holder, holderId, active, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, TRUE, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, input.bank, input.accountType, input.number, input.holder, input.holderId, by]);
           return id2;
         });
@@ -98526,11 +99054,11 @@ var init_billing_store = __esm({
             plan: String(r.plan),
             status: String(r.status),
             period: str2(r.period),
-            units: num(r.units),
-            months: num(r.months),
-            subtotalUsd: num(r.subtotalUsd),
-            ivaUsd: num(r.ivaUsd),
-            amountUsd: num(r.amountUsd),
+            units: num2(r.units),
+            months: num2(r.months),
+            subtotalUsd: num2(r.subtotalUsd),
+            ivaUsd: num2(r.ivaUsd),
+            amountUsd: num2(r.amountUsd),
             method: str2(r.method),
             reference: str2(r.reference),
             notes: str2(r.notes),
@@ -98583,7 +99111,7 @@ var init_billing_store = __esm({
       }
       notify(userId, dedupKey, message2) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID14(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID15(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
         });
       }
       instructions(id2) {
@@ -98604,7 +99132,7 @@ function currentMonth(now = /* @__PURE__ */ new Date()) {
 }
 function registerBillingRoutes(app2, deps) {
   const { billing } = deps;
-  const errorPage = (request, reply, session, text8, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text8)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text9, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
     if (code3 === "ER_NO_SUCH_TABLE" || code3 === "ER_BAD_FIELD_ERROR") {
@@ -98862,8 +99390,8 @@ var init_billing = __esm({
 });
 
 // packages/api/dist/application/service-requests/workflow.js
-function categoryName(id2) {
-  return CATEGORIES.find((c) => c.id === id2)?.name ?? id2;
+function categoryName2(id2) {
+  return CATEGORIES2.find((c) => c.id === id2)?.name ?? id2;
 }
 function rankShopsFor(candidates, category, zone) {
   const zona = zone ? normalize3(zone) : null;
@@ -98883,7 +99411,7 @@ function shopsToInvite(ranked, max = MAX_SHOPS_PER_REQUEST) {
 function invitationMessage(request) {
   const donde = [request.zone, request.city].filter(Boolean).join(", ");
   return [
-    `\u{1F527} Solicitud ${serviceRequestCode(request.number)} \xB7 ${categoryName(request.category)}`,
+    `\u{1F527} Solicitud ${serviceRequestCode(request.number)} \xB7 ${categoryName2(request.category)}`,
     request.vehicle ? `Veh\xEDculo: ${request.vehicle}` : null,
     donde ? `Zona: ${donde}` : null,
     "",
@@ -98907,7 +99435,7 @@ function comparisonMessage(request, offers) {
     return `${index + 1}) ${offer.shopName} \xB7 ${partes.join(" \xB7 ")}`;
   });
   return [
-    `\u{1F527} Respuestas para ${serviceRequestCode(request.number)} (${categoryName(request.category)}):`,
+    `\u{1F527} Respuestas para ${serviceRequestCode(request.number)} (${categoryName2(request.category)}):`,
     ...lineas,
     "",
     "Responde con el n\xFAmero del taller que prefieras y te agendo el turno."
@@ -98921,7 +99449,7 @@ function parsePrice(input) {
     return null;
   return /^\d{1,6}(\.\d{1,2})?$/.test(value2) ? Number(value2) : null;
 }
-var REQUEST_STATUS_LABELS2, OFFER_STATUS_LABELS, MAX_SHOPS_PER_REQUEST, serviceRequestCode, CATEGORIES, normalize3;
+var REQUEST_STATUS_LABELS2, OFFER_STATUS_LABELS, MAX_SHOPS_PER_REQUEST, serviceRequestCode, CATEGORIES2, normalize3;
 var init_workflow3 = __esm({
   "packages/api/dist/application/service-requests/workflow.js"() {
     "use strict";
@@ -98940,7 +99468,7 @@ var init_workflow3 = __esm({
     };
     MAX_SHOPS_PER_REQUEST = 5;
     serviceRequestCode = (number) => `SS-${String(number).padStart(4, "0")}`;
-    CATEGORIES = serviceTaxonomy.categories.map((c) => ({ id: c.id, name: c.name }));
+    CATEGORIES2 = serviceTaxonomy.categories.map((c) => ({ id: c.id, name: c.name }));
     normalize3 = (value2) => value2.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
   }
 });
@@ -98955,7 +99483,7 @@ function when6(value2) {
 function serviceRequestsListView(input) {
   const tabs2 = FILTERS5.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/service-requests?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("");
   const filas = input.items.map((r) => `<tr><td><a href="/admin/service-requests/${escapeHtml(r.id)}">${escapeHtml(serviceRequestCode(r.number))}</a></td>
-      <td>${escapeHtml(categoryName(r.category))}<br><span class="muted">${escapeHtml(r.description.slice(0, 80))}</span></td>
+      <td>${escapeHtml(categoryName2(r.category))}<br><span class="muted">${escapeHtml(r.description.slice(0, 80))}</span></td>
       <td>${escapeHtml(r.ownerName)}${r.vehicleLabel ? `<br><span class="muted">${escapeHtml(r.vehicleLabel)}</span>` : ""}</td>
       <td>${escapeHtml([r.zone, r.city].filter(Boolean).join(", ") || "\u2014")}</td>
       <td>${escapeHtml(REQUEST_STATUS_LABELS2[r.status] ?? r.status)}<br><span class="muted">${r.respuestas ?? 0} respuestas</span></td>
@@ -98973,7 +99501,7 @@ function newServiceRequestView(input) {
     const raw = input.values?.[name];
     return typeof raw === "string" ? escapeHtml(raw) : "";
   };
-  const opciones = CATEGORIES.map((c) => `<option value="${escapeHtml(c.id)}"${valor("category") === c.id ? " selected" : ""}>${escapeHtml(c.name)}</option>`).join("");
+  const opciones = CATEGORIES2.map((c) => `<option value="${escapeHtml(c.id)}"${valor("category") === c.id ? " selected" : ""}>${escapeHtml(c.name)}</option>`).join("");
   const vehiculos = input.vehicles.map((v) => `<option value="${escapeHtml(v.id)}">${escapeHtml(v.label)}</option>`).join("");
   const talleres = input.shops.length ? input.shops.map((shop) => `<label class="choice"><input type="checkbox" name="shopIds" value="${escapeHtml(shop.id)}"${shop.specialist ? " checked" : ""}>
         <span><strong>${escapeHtml(shop.name)}</strong>${shop.specialist ? ' <span class="ok">atiende esa especialidad</span>' : ""}${shop.sameZone ? ' <span class="muted">\xB7 misma zona</span>' : ""}
@@ -99032,7 +99560,7 @@ function serviceRequestDetailView(input) {
         ${responder}</div>`;
   }).join("");
   return `<div class="stack wide"><p><a href="/admin/service-requests">\u2190 Solicitudes</a></p>
-  <h1>${escapeHtml(serviceRequestCode(request.number))} \xB7 ${escapeHtml(categoryName(request.category))}</h1>${flashHtml6(input.flash)}
+  <h1>${escapeHtml(serviceRequestCode(request.number))} \xB7 ${escapeHtml(categoryName2(request.category))}</h1>${flashHtml6(input.flash)}
   <div class="card"><h2>La solicitud</h2>
     <div>${escapeHtml(request.ownerName)} \xB7 ${escapeHtml(formatWhatsappNumber(request.ownerPhone.replace(/\\D/g, "")))}${request.vehicleLabel ? ` \xB7 ${escapeHtml(request.vehicleLabel)}` : ""}</div>
     <div class="muted">${escapeHtml([request.zone, request.city].filter(Boolean).join(", ") || "sin zona")}</div>
@@ -99068,7 +99596,7 @@ var init_views_service_requests = __esm({
 // packages/api/dist/interfaces/admin/service-requests.js
 function registerServiceRequestRoutes(app2, deps) {
   const store = deps.serviceRequests;
-  const errorPage = (request, reply, session, text8, status) => deps.html(reply, request, "Solicitudes", `<div class="card"><p class="error">${escapeHtml(text8)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text9, status) => deps.html(reply, request, "Solicitudes", `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
     if (code3 === "ER_NO_SUCH_TABLE" || code3 === "ER_BAD_FIELD_ERROR") {
@@ -99090,10 +99618,10 @@ function registerServiceRequestRoutes(app2, deps) {
   const str8 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
   const list7 = (value2) => Array.isArray(value2) ? value2.map(String) : typeof value2 === "string" && value2 ? [value2] : [];
   const whole = (value2, max) => {
-    const text8 = str8(value2, 6);
-    if (!text8)
+    const text9 = str8(value2, 6);
+    if (!text9)
       return null;
-    const n = Number(text8);
+    const n = Number(text9);
     return Number.isFinite(n) && n >= 0 && n <= max ? Math.floor(n) : null;
   };
   async function renderDetail(request, reply, session, id2, flash, status = 200) {
@@ -99138,7 +99666,7 @@ function registerServiceRequestRoutes(app2, deps) {
         return errorPage(request, reply, session, "Solo se piden especialistas para due\xF1os de veh\xEDculo registrados.", 404);
       }
       const city = String(detail.user.city ?? "");
-      const category = str8(query.category, 40) || CATEGORIES[0]?.id || "";
+      const category = str8(query.category, 40) || CATEGORIES2[0]?.id || "";
       let candidatos = await store.candidates(city);
       if (candidatos.length === 0)
         candidatos = await store.candidates("");
@@ -99163,7 +99691,7 @@ function registerServiceRequestRoutes(app2, deps) {
     const ownerId = typeof body.ownerId === "string" && UUID5.test(body.ownerId) ? body.ownerId : null;
     if (!ownerId)
       return errorPage(request, reply, session, "Usuario no encontrado.", 404);
-    const category = CATEGORIES.some((c) => c.id === str8(body.category, 40)) ? str8(body.category, 40) : null;
+    const category = CATEGORIES2.some((c) => c.id === str8(body.category, 40)) ? str8(body.category, 40) : null;
     const description = str8(body.description, 1e3);
     const zone = str8(body.zone, 120) || null;
     const vehicleId = typeof body.vehicleId === "string" && UUID5.test(body.vehicleId) ? body.vehicleId : null;
@@ -99318,11 +99846,11 @@ var init_service_requests = __esm({
 });
 
 // packages/api/dist/infrastructure/service-requests/service-request-store.js
-function rows17(result) {
+function rows19(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
-function stringList2(value2) {
+function stringList3(value2) {
   if (Array.isArray(value2))
     return value2.map(String);
   if (typeof value2 === "string" && value2.trim()) {
@@ -99344,15 +99872,15 @@ function toRequest2(row) {
     ownerId: String(row.ownerId),
     ownerName: String(row.ownerName ?? ""),
     ownerPhone: String(row.ownerPhone ?? ""),
-    vehicleId: text4(row.vehicleId),
+    vehicleId: text5(row.vehicleId),
     vehicleLabel: label2,
     category: String(row.category),
     description: String(row.description ?? ""),
-    city: text4(row.city),
-    zone: text4(row.zone),
+    city: text5(row.city),
+    zone: text5(row.zone),
     status: String(row.status),
-    chosenOfferId: text4(row.chosenOfferId),
-    closeReason: text4(row.closeReason),
+    chosenOfferId: text5(row.chosenOfferId),
+    closeReason: text5(row.closeReason),
     createdAt: row.createdAt,
     respuestas: Number(row.respuestas ?? 0)
   };
@@ -99365,23 +99893,23 @@ function toOffer(row) {
     shopName: String(row.shopName ?? ""),
     shopUserId: String(row.shopUserId ?? ""),
     shopCity: String(row.shopCity ?? ""),
-    shopZone: text4(row.shopZone),
+    shopZone: text5(row.shopZone),
     status: String(row.status),
     priceUsd: numberOrNull(row.priceUsd),
     durationMin: numberOrNull(row.durationMin),
-    availability: text4(row.availability),
+    availability: text5(row.availability),
     warrantyDays: numberOrNull(row.warrantyDays),
-    notes: text4(row.notes),
+    notes: text5(row.notes),
     respondedAt: row.respondedAt ?? null
   };
 }
-var PAGE_SIZE5, text4, numberOrNull, SELECT_REQUESTS2, MysqlServiceRequestStore;
+var PAGE_SIZE5, text5, numberOrNull, SELECT_REQUESTS2, MysqlServiceRequestStore;
 var init_service_request_store = __esm({
   "packages/api/dist/infrastructure/service-requests/service-request-store.js"() {
     "use strict";
     init_appointment_store();
     PAGE_SIZE5 = 25;
-    text4 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text5 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     numberOrNull = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     SELECT_REQUESTS2 = "SELECT r.*, u.name AS ownerName, u.phone AS ownerPhone, v.make, v.model, v.year, (SELECT COUNT(*) FROM `ServiceOffer` o WHERE o.requestId = r.id AND o.status = 'ofertado') AS respuestas FROM `ServiceRequest` r JOIN `User` u ON u.id = r.ownerId LEFT JOIN `Vehicle` v ON v.id = r.vehicleId";
     MysqlServiceRequestStore = class {
@@ -99399,7 +99927,7 @@ var init_service_request_store = __esm({
       }
       candidates(city) {
         const base = "SELECT sh.id, sh.name, sh.city, sh.zone, sh.specialties, sh.ratingAvg FROM `Shop` sh WHERE sh.verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(sh.city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows17(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows19(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY sh.name LIMIT 100`, [city.trim(), city.trim()]);
@@ -99407,16 +99935,16 @@ var init_service_request_store = __esm({
           id: String(row.id),
           name: String(row.name),
           city: String(row.city),
-          zone: text4(row.zone),
-          services: stringList2(row.specialties),
+          zone: text5(row.zone),
+          services: stringList3(row.specialties),
           ratingAvg: Number(row.ratingAvg ?? 0)
         })));
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows17(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows19(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
-          const next = rows17(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
+          const next = rows19(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
           await conn.query("INSERT INTO `ServiceRequest` (id, `number`, ownerId, vehicleId, category, description, city, zone, status, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'abierta', ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, Number(next?.n ?? 1), input.ownerId, input.vehicleId, input.category, input.description, input.city, input.zone, input.createdBy]);
           for (const shopId of input.shopIds) {
             await conn.query("INSERT INTO `ServiceOffer` (id, requestId, shopId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id2, shopId]);
@@ -99434,21 +99962,21 @@ var init_service_request_store = __esm({
             where = "WHERE r.status = 'abierta' AND (SELECT COUNT(*) FROM `ServiceOffer` o WHERE o.requestId = r.id AND o.status = 'ofertado') = 0";
           else if (filter === "cerradas")
             where = "WHERE r.status IN ('cerrada', 'cancelada')";
-          const items = rows17(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`)).map(toRequest2);
+          const items = rows19(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`)).map(toRequest2);
           return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE5 };
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows17(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows19(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
           if (!row)
             return null;
-          const offers = rows17(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id2])).map(toOffer);
+          const offers = rows19(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id2])).map(toOffer);
           return { request: toRequest2(row), offers };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows17(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
+        return this.run(async (conn) => rows19(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
       }
       saveOffer(requestId, offerId, response) {
         return this.run(async (conn) => {
@@ -99478,7 +100006,7 @@ var init_service_request_store = __esm({
 });
 
 // packages/api/dist/infrastructure/ratings/rating-store.js
-function rows18(result) {
+function rows20(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -99486,22 +100014,22 @@ function toRow(row) {
   return {
     id: String(row.id),
     fromId: String(row.fromId),
-    fromName: text5(row.fromName),
+    fromName: text6(row.fromName),
     toId: String(row.toId),
     score: Number(row.score ?? 0),
-    comment: text5(row.comment),
-    kind: text5(row.kind),
-    workOrderId: text5(row.workOrderId),
+    comment: text6(row.comment),
+    kind: text6(row.kind),
+    workOrderId: text6(row.workOrderId),
     hiddenAt: row.hiddenAt ?? null,
-    hiddenReason: text5(row.hiddenReason),
+    hiddenReason: text6(row.hiddenReason),
     createdAt: row.createdAt
   };
 }
-var text5, SELECT2, MysqlRatingStore;
+var text6, SELECT2, MysqlRatingStore;
 var init_rating_store = __esm({
   "packages/api/dist/infrastructure/ratings/rating-store.js"() {
     "use strict";
-    text5 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text6 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     SELECT2 = "SELECT r.*, u.name AS fromName FROM `Rating` r LEFT JOIN `User` u ON u.id = r.fromId";
     MysqlRatingStore = class {
       connect;
@@ -99524,7 +100052,7 @@ var init_rating_store = __esm({
       }
       add(input) {
         return this.run(async (conn) => {
-          const created = rows18(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows20(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [id2, input.fromId, input.toId, input.score, input.comment, input.kind, input.workOrderId, input.quoteRequestId]);
           await this.refresh(conn, input.toId);
@@ -99533,23 +100061,23 @@ var init_rating_store = __esm({
       }
       forUser(userId, limit = 20) {
         const cap = Math.min(Math.max(1, Math.floor(limit)), 100);
-        return this.run(async (conn) => rows18(await conn.query(`${SELECT2} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow));
+        return this.run(async (conn) => rows20(await conn.query(`${SELECT2} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow));
       }
       forWorkOrder(workOrderId) {
         return this.run(async (conn) => {
-          const row = rows18(await conn.query(`${SELECT2} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
+          const row = rows20(await conn.query(`${SELECT2} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
           return row ? toRow(row) : null;
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows18(await conn.query(`${SELECT2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows20(await conn.query(`${SELECT2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
           return row ? toRow(row) : null;
         });
       }
       hide(id2, reason, hiddenBy) {
         return this.run(async (conn) => {
-          const row = rows18(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
+          const row = rows20(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
           if (!row)
             return false;
           const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = CURRENT_TIMESTAMP(3), hiddenBy = ?, hiddenReason = ? WHERE id = ? AND hiddenAt IS NULL", [hiddenBy, reason, id2]);
@@ -99561,7 +100089,7 @@ var init_rating_store = __esm({
       }
       show(id2) {
         return this.run(async (conn) => {
-          const row = rows18(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
+          const row = rows20(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
           if (!row)
             return false;
           const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = NULL, hiddenBy = NULL, hiddenReason = NULL WHERE id = ? AND hiddenAt IS NOT NULL", [id2]);
@@ -99576,7 +100104,7 @@ var init_rating_store = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/plan-store.js
-function rows19(result) {
+function rows21(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -99589,8 +100117,8 @@ function toRow2(row) {
     userRole: str4(row.userRole),
     plan: String(row.plan),
     status: String(row.status),
-    months: num2(row.months),
-    amountUsd: num2(row.amountUsd),
+    months: num3(row.months),
+    amountUsd: num3(row.amountUsd),
     method: str4(row.method),
     reference: str4(row.reference),
     notes: str4(row.notes),
@@ -99600,22 +100128,22 @@ function toRow2(row) {
     decisionReason: str4(row.decisionReason),
     createdAt: row.createdAt,
     period: str4(row.period),
-    units: num2(row.units),
-    subtotalUsd: num2(row.subtotalUsd),
-    ivaUsd: num2(row.ivaUsd),
+    units: num3(row.units),
+    subtotalUsd: num3(row.subtotalUsd),
+    ivaUsd: num3(row.ivaUsd),
     invoiceNumber: str4(row.invoiceNumber),
     source: str4(row.source),
     reportedAt: row.reportedAt ?? null
   };
 }
-var PAGE_SIZE6, str4, num2, SELECT3, MysqlPlanStore;
+var PAGE_SIZE6, str4, num3, SELECT3, MysqlPlanStore;
 var init_plan_store = __esm({
   "packages/api/dist/infrastructure/plans/plan-store.js"() {
     "use strict";
     init_plans();
     PAGE_SIZE6 = 25;
     str4 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
-    num2 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
+    num3 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     SELECT3 = "SELECT s.*, s.expiresAt AS endsAt, u.name AS userName, u.role AS userRole FROM `Subscription` s JOIN `User` u ON u.id = s.userId";
     MysqlPlanStore = class {
       connect;
@@ -99632,9 +100160,9 @@ var init_plan_store = __esm({
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows19(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows21(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
-          const next = rows19(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
+          const next = rows21(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
           await conn.query(
             // `active` se mantiene en falso mientras el pago no esté verificado, para que cualquier
             // lectura antigua de esa columna vea lo mismo que el estado nuevo.
@@ -99660,25 +100188,25 @@ var init_plan_store = __esm({
             params2.push(Math.max(1, Math.floor(soonDays)));
           } else if (filter === "vencida")
             where = "WHERE s.status = 'vencida' OR (s.status = 'activa' AND s.expiresAt IS NOT NULL AND s.expiresAt <= UTC_TIMESTAMP(3))";
-          const items = rows19(await conn.query(`${SELECT3} ${where} ORDER BY s.status = 'pendiente' DESC, s.status = 'solicitada' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`, params2)).map(toRow2);
+          const items = rows21(await conn.query(`${SELECT3} ${where} ORDER BY s.status = 'pendiente' DESC, s.status = 'solicitada' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`, params2)).map(toRow2);
           return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE6 };
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows19(await conn.query(`${SELECT3} WHERE s.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows21(await conn.query(`${SELECT3} WHERE s.id = ? LIMIT 1`, [id2]))[0];
           return row ? toRow2(row) : null;
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows19(await conn.query(`${SELECT3} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
+        return this.run(async (conn) => rows21(await conn.query(`${SELECT3} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
       }
       verify(id2, months, verifiedBy) {
         return this.run(async (conn) => {
-          const [self2] = rows19(await conn.query("SELECT userId, plan FROM `Subscription` WHERE id = ? AND status IN ('pendiente','solicitada')", [id2]));
+          const [self2] = rows21(await conn.query("SELECT userId, plan FROM `Subscription` WHERE id = ? AND status IN ('pendiente','solicitada')", [id2]));
           if (!self2)
             return false;
-          const [running] = rows19(await conn.query("SELECT MAX(expiresAt) AS until FROM `Subscription` WHERE userId = ? AND plan = ? AND id <> ? AND status = 'activa' AND expiresAt > UTC_TIMESTAMP(3)", [self2.userId, self2.plan, id2]));
+          const [running] = rows21(await conn.query("SELECT MAX(expiresAt) AS until FROM `Subscription` WHERE userId = ? AND plan = ? AND id <> ? AND status = 'activa' AND expiresAt > UTC_TIMESTAMP(3)", [self2.userId, self2.plan, id2]));
           const from = running?.until ? "?" : "CURRENT_TIMESTAMP(3)";
           const fromParams = running?.until ? [running.until] : [];
           const vence = months === null ? "NULL" : `DATE_ADD(${from}, INTERVAL ? MONTH)`;
@@ -99707,7 +100235,7 @@ var init_plan_store = __esm({
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const row = rows19(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status IN ('pendiente','solicitada')"))[0];
+          const row = rows21(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status IN ('pendiente','solicitada')"))[0];
           return Number(row?.n ?? 0);
         });
       }
@@ -99715,7 +100243,7 @@ var init_plan_store = __esm({
         return this.run(async (conn) => {
           const cuenta = async (sql, params2) => {
             try {
-              const row = rows19(await conn.query(sql, params2))[0];
+              const row = rows21(await conn.query(sql, params2))[0];
               return Number(row?.n ?? 0);
             } catch {
               return 0;
@@ -99733,7 +100261,7 @@ var init_plan_store = __esm({
       }
       planForUser(userId) {
         return this.run(async (conn) => {
-          const list7 = rows19(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
+          const list7 = rows21(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
             plan: String(r.plan),
             status: String(r.status),
             startsAt: r.startsAt,
@@ -99747,7 +100275,7 @@ var init_plan_store = __esm({
 });
 
 // packages/api/dist/infrastructure/relations/relation-store.js
-function rows20(result) {
+function rows22(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -99828,15 +100356,15 @@ var init_relation_store = __esm({
         }
       }
       async nextNumber(conn, table) {
-        const row = rows20(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
+        const row = rows22(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
         return Number(row?.n ?? 1);
       }
       ensureForOrigin(input) {
         return this.run(async (conn) => {
-          const existing = rows20(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
+          const existing = rows22(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
           if (existing)
             return String(existing.id);
-          const created = rows20(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows22(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           const number = await this.nextNumber(conn, "Relationship");
           await conn.query("INSERT INTO `Relationship` (id, `number`, kind, status, channel, originType, originId, subject, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, 'activa', 'mediado', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, number, input.kind, input.originType, input.originId, input.subject, input.createdBy]);
@@ -99862,16 +100390,16 @@ var init_relation_store = __esm({
           } else if (filter === "cerradas") {
             where = "WHERE r.status IN ('cerrada', 'bloqueada')";
           }
-          const items = rows20(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`, params2)).map(toRelation);
+          const items = rows22(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`, params2)).map(toRelation);
           return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE7 };
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows20(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows22(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id2]))[0];
           if (!row)
             return null;
-          const parties = rows20(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id2])).map((p) => ({
+          const parties = rows22(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id2])).map((p) => ({
             id: String(p.id),
             userId: String(p.userId),
             role: String(p.role),
@@ -99881,7 +100409,7 @@ var init_relation_store = __esm({
             consentAt: p.consentAt ?? null,
             mutedAt: p.mutedAt ?? null
           }));
-          const messages = rows20(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id2])).map((m) => ({
+          const messages = rows22(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id2])).map((m) => ({
             id: String(m.id),
             fromUserId: str5(m.fromUserId),
             toUserId: str5(m.toUserId),
@@ -99893,16 +100421,16 @@ var init_relation_store = __esm({
             flagged: bool(m.flagged),
             createdAt: m.createdAt
           }));
-          const disputes = rows20(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id2])).map(toDispute);
+          const disputes = rows22(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id2])).map(toDispute);
           return { relation: toRelation(row), parties, messages, disputes };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows20(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
+        return this.run(async (conn) => rows22(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
       }
       addMessage(input) {
         return this.run(async (conn) => {
-          const created = rows20(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows22(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           await conn.query(`INSERT INTO \`RelationshipMessage\` (id, relationshipId, fromUserId, toUserId, body, kind, relayedAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ${input.relayed ? "CURRENT_TIMESTAMP(3)" : "NULL"}, ?, CURRENT_TIMESTAMP(3))`, [id2, input.relationshipId, input.fromUserId, input.toUserId, input.body, input.kind, input.createdBy]);
           await conn.query("UPDATE `Relationship` SET lastMessageAt = CURRENT_TIMESTAMP(3), waitingSince = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.toUserId ? /* @__PURE__ */ new Date() : null, input.relationshipId]);
@@ -99933,7 +100461,7 @@ var init_relation_store = __esm({
       }
       openDispute(input) {
         return this.run(async (conn) => {
-          const created = rows20(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows22(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           const number = await this.nextNumber(conn, "Dispute");
           await conn.query("INSERT INTO `Dispute` (id, `number`, relationshipId, openedBy, claimantUserId, againstUserId, reason, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, number, input.relationshipId, input.openedBy, input.claimantUserId, input.againstUserId, input.reason]);
@@ -99948,13 +100476,13 @@ var init_relation_store = __esm({
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params2 = status === "todas" ? [] : [status];
-          const items = rows20(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`, params2)).map(toDispute);
+          const items = rows22(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`, params2)).map(toDispute);
           return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE7 };
         });
       }
       getDispute(id2) {
         return this.run(async (conn) => {
-          const row = rows20(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id2]))[0];
+          const row = rows22(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id2]))[0];
           return row ? toDispute(row) : null;
         });
       }
@@ -99970,7 +100498,7 @@ var init_relation_store = __esm({
       }
       addSanction(input) {
         return this.run(async (conn) => {
-          const created = rows20(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows22(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           await conn.query("INSERT INTO `Sanction` (id, userId, level, reason, relationshipId, disputeId, startsAt, endsAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3), ?, ?, CURRENT_TIMESTAMP(3))", [id2, input.userId, input.level, input.reason, input.relationshipId, input.disputeId, input.endsAt, input.createdBy]);
           return id2;
@@ -99979,12 +100507,12 @@ var init_relation_store = __esm({
       listSanctions(page) {
         const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE7;
         return this.run(async (conn) => {
-          const items = rows20(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`)).map(toSanction);
+          const items = rows22(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`)).map(toSanction);
           return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE7 };
         });
       }
       sanctionsForUser(userId) {
-        return this.run(async (conn) => rows20(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
+        return this.run(async (conn) => rows22(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
       }
       liftSanction(id2, reason, liftedBy) {
         return this.run(async (conn) => {
@@ -99993,7 +100521,7 @@ var init_relation_store = __esm({
         });
       }
       searchBlockedUserIds() {
-        return this.run(async (conn) => rows20(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
+        return this.run(async (conn) => rows22(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
       }
     };
   }
@@ -100535,7 +101063,7 @@ var init_settings = __esm({
 });
 
 // packages/api/dist/interfaces/admin/local-agent.js
-import { createHash as createHash9, randomBytes as randomBytes14 } from "node:crypto";
+import { createHash as createHash9, randomBytes as randomBytes15 } from "node:crypto";
 function registerLocalAgentAdminRoutes(app2, deps) {
   function render(request, reply, session, input = {}) {
     reply.header("Cache-Control", "no-store").header("Pragma", "no-cache").header("Referrer-Policy", "no-referrer");
@@ -100595,7 +101123,7 @@ function registerLocalAgentAdminRoutes(app2, deps) {
         recordLoginAttempt(account.email, request.ip, false);
         return render(request, reply, session, { message: "La contrase\xF1a actual no es correcta.", status: 400 });
       }
-      const token2 = action === "rotate" ? randomBytes14(32).toString("base64url") : void 0;
+      const token2 = action === "rotate" ? randomBytes15(32).toString("base64url") : void 0;
       const value2 = JSON.stringify({ enabled: action === "rotate", tokenHash: token2 ? createHash9("sha256").update(token2).digest("hex") : null });
       try {
         await deps.settings.set(LOCAL_AGENT_CONFIG_KEY2, value2, account.id);
@@ -100649,12 +101177,12 @@ function registerWhatsAppQueueRoutes(app2, deps) {
     }
     const flash = request.query?.ok === "1" ? `<p class="ok">Aviso puesto de nuevo en la cola.</p>` : "";
     const counts = Object.entries(LABELS2).map(([k, label2]) => `<li>${escapeHtml(label2)}: <strong>${data2.counts[k] ?? 0}</strong></li>`).join("");
-    const rows25 = data2.attention.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when7(r.nextAttemptAt))}`}</td></tr>`).join("");
+    const rows27 = data2.attention.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when7(r.nextAttemptAt))}`}</td></tr>`).join("");
     const inbound = data2.inboundDead.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>\u2026${escapeHtml(String(r.phoneEnd))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td></tr>`).join("");
     const body = `<div class="stack"><h1>Cola de WhatsApp</h1>${flash}
       <p>Canal activo: <strong>${escapeHtml({ off: "ninguno (no se env\xEDa nada)", bridge: "puente WhatsApp Web del equipo local", cloud: "API oficial de WhatsApp" }[whatsappDelivery()])}</strong>. Aqu\xED no se muestra el texto de los mensajes.</p>
       <div class="card"><h2>Avisos</h2><ul>${counts}</ul></div>
-      <div class="card"><h2>Necesitan atenci\xF3n</h2>${rows25 ? `<table><thead><tr><th>Creado</th><th>Para</th><th>Tipo</th><th>Estado</th><th>Intentos</th><th>\xDAltimo error</th><th></th></tr></thead><tbody>${rows25}</tbody></table>` : "<p>Nada pendiente de revisi\xF3n.</p>"}
+      <div class="card"><h2>Necesitan atenci\xF3n</h2>${rows27 ? `<table><thead><tr><th>Creado</th><th>Para</th><th>Tipo</th><th>Estado</th><th>Intentos</th><th>\xDAltimo error</th><th></th></tr></thead><tbody>${rows27}</tbody></table>` : "<p>Nada pendiente de revisi\xF3n.</p>"}
       <p class="muted">TEMPLATE_REQUIRED: la API oficial necesita una plantilla aprobada porque pasaron m\xE1s de 24 horas desde el \xFAltimo mensaje del contacto. PACING: el puente esper\xF3 por el ritmo humano. CHAT_NOT_AVAILABLE: WhatsApp Web no abri\xF3 el chat de ese n\xFAmero.</p></div>
       <div class="card"><h2>Mensajes entrantes sin procesar</h2>${inbound ? `<table><thead><tr><th>Recibido</th><th>Tel\xE9fono</th><th>Intentos</th><th>\xDAltimo error</th></tr></thead><tbody>${inbound}</tbody></table>` : "<p>Ninguno.</p>"}</div></div>`;
     return deps.html(reply, request, "WhatsApp", body, session);
@@ -100694,15 +101222,15 @@ function chatLink(phone, label2) {
   const digits = raw.replace(/\D/g, "");
   if (!raw.startsWith("+") || digits.length < 8)
     return "";
-  return `<a href="https://wa.me/${e2(digits)}" target="_blank" rel="noopener">${e2(label2)} (${e2(formatWhatsappNumber(digits))})</a>`;
+  return `<a href="https://wa.me/${e3(digits)}" target="_blank" rel="noopener">${e3(label2)} (${e3(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox(id2, label2, content, rows25 = 8) {
-  return `<label for="${id2}">${e2(label2)}</label><textarea id="${id2}" readonly rows="${rows25}">${e2(content)}</textarea>`;
+function copyBox(id2, label2, content, rows27 = 8) {
+  return `<label for="${id2}">${e3(label2)}</label><textarea id="${id2}" readonly rows="${rows27}">${e3(content)}</textarea>`;
 }
 function appointmentsListView(input) {
-  const tabs2 = FILTERS7.map(([id2, label2]) => `<a href="/admin/appointments?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e2(label2)}</a>`).join("");
-  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin turnos</td></tr>` : input.page.items.map((a) => `<tr><td><a href="/admin/appointments/${e2(a.id)}">${e2(formatEcDateTime(a.scheduledAt))}</a></td><td>${e2(STATUS_LABELS[a.status] ?? a.status)}</td>
-            <td>${e2(a.shopName)}</td><td><a href="/admin/users/${e2(a.ownerId)}">${e2(a.ownerName)}</a></td><td>${e2(a.vehicleLabel)}</td><td>${e2(servicesLabel(a))}</td></tr>`).join("");
+  const tabs2 = FILTERS7.map(([id2, label2]) => `<a href="/admin/appointments?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e3(label2)}</a>`).join("");
+  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin turnos</td></tr>` : input.page.items.map((a) => `<tr><td><a href="/admin/appointments/${e3(a.id)}">${e3(formatEcDateTime(a.scheduledAt))}</a></td><td>${e3(STATUS_LABELS[a.status] ?? a.status)}</td>
+            <td>${e3(a.shopName)}</td><td><a href="/admin/users/${e3(a.ownerId)}">${e3(a.ownerName)}</a></td><td>${e3(a.vehicleLabel)}</td><td>${e3(servicesLabel(a))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>Turnos</h1>${flashHtml7(input.flash)}<div class="tabs">${tabs2}</div>
@@ -100715,68 +101243,68 @@ function appointmentDetailView(input) {
   const transitions = ALLOWED_TRANSITIONS[a.status] ?? [];
   const actions = [];
   if (transitions.includes("confirmed")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e2(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
+    actions.push(`<form method="post" action="/admin/appointments/${e3(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
   }
   if (transitions.includes("completed")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e2(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
+    actions.push(`<form method="post" action="/admin/appointments/${e3(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
   }
   if (transitions.includes("cancelled")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e2(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="cancelled">
+    actions.push(`<form method="post" action="/admin/appointments/${e3(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="cancelled">
       <label for="reason">Motivo de la cancelaci\xF3n</label><input id="reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cancelar turno</button></form>`);
   }
   const shopMessage = a.status === "pending" ? copyBox("msg-shop", "Mensaje para el taller", shopRequestMessage(a)) : "";
   return `<div class="stack wide"><p><a href="/admin/appointments">\u2190 Turnos</a></p>
-  <h1>Turno \xB7 ${e2(formatEcDateTime(a.scheduledAt))}</h1>${flashHtml7(input.flash)}
+  <h1>Turno \xB7 ${e3(formatEcDateTime(a.scheduledAt))}</h1>${flashHtml7(input.flash)}
   <div class="card"><h2>Resumen</h2>
-    <div>Estado: <strong>${e2(STATUS_LABELS[a.status] ?? a.status)}</strong>${a.cancelReason ? ` \xB7 ${e2(a.cancelReason)}` : ""}</div>
-    <div>Taller: <strong>${e2(a.shopName)}</strong> \xB7 ${e2(a.shopAddress)}, ${e2(a.shopCity)}</div>
-    <div>Due\xF1o: <a href="/admin/users/${e2(a.ownerId)}">${e2(a.ownerName)}</a></div>
-    <div>Veh\xEDculo: ${e2(a.vehicleLabel)}${a.plate ? ` \xB7 ${e2(a.plate)}` : ""}</div>
-    <div>Servicios: ${e2(servicesLabel(a))}</div>
-    ${a.notes ? `<div>Notas: ${e2(a.notes)}</div>` : ""}
+    <div>Estado: <strong>${e3(STATUS_LABELS[a.status] ?? a.status)}</strong>${a.cancelReason ? ` \xB7 ${e3(a.cancelReason)}` : ""}</div>
+    <div>Taller: <strong>${e3(a.shopName)}</strong> \xB7 ${e3(a.shopAddress)}, ${e3(a.shopCity)}</div>
+    <div>Due\xF1o: <a href="/admin/users/${e3(a.ownerId)}">${e3(a.ownerName)}</a></div>
+    <div>Veh\xEDculo: ${e3(a.vehicleLabel)}${a.plate ? ` \xB7 ${e3(a.plate)}` : ""}</div>
+    <div>Servicios: ${e3(servicesLabel(a))}</div>
+    ${a.notes ? `<div>Notas: ${e3(a.notes)}</div>` : ""}
   </div>
   <div class="card"><h2>Mensajes para enviar por WhatsApp</h2>
     ${shopMessage}
     ${copyBox("msg-owner", "Mensaje para el due\xF1o", ownerMessage(a))}
     <p class="row">${chatLink(a.shopPhone, "Abrir chat del taller")} ${chatLink(a.ownerPhone, "Abrir chat del due\xF1o")}</p>
   </div>
-  ${input.workOrderId ? `<div class="card"><h2>Orden de trabajo</h2><a class="button" href="/admin/work-orders/${e2(input.workOrderId)}">Ver orden de trabajo</a></div>` : a.status === "confirmed" || a.status === "pending" ? `<div class="card"><h2>Orden de trabajo</h2><p class="muted">Cuando el veh\xEDculo llegue al taller, registra la recepci\xF3n.</p><a class="button" href="/admin/work-orders/new?appointmentId=${e2(a.id)}">Abrir orden de trabajo</a></div>` : ""}
+  ${input.workOrderId ? `<div class="card"><h2>Orden de trabajo</h2><a class="button" href="/admin/work-orders/${e3(input.workOrderId)}">Ver orden de trabajo</a></div>` : a.status === "confirmed" || a.status === "pending" ? `<div class="card"><h2>Orden de trabajo</h2><p class="muted">Cuando el veh\xEDculo llegue al taller, registra la recepci\xF3n.</p><a class="button" href="/admin/work-orders/new?appointmentId=${e3(a.id)}">Abrir orden de trabajo</a></div>` : ""}
   ${actions.length > 0 ? `<div class="card"><h2>Cambiar estado</h2>${actions.join("")}</div>` : ""}
   </div>`;
 }
 function scheduleView(input) {
-  const ownerId = e2(input.owner.id);
-  const vehicleId = e2(input.vehicle.id);
+  const ownerId = e3(input.owner.id);
+  const vehicleId = e3(input.vehicle.id);
   const values = input.values ?? {};
-  const vehicleTabs = input.vehicles.length > 1 ? `<div class="tabs">${input.vehicles.map((v) => `<a href="/admin/users/${ownerId}/schedule?vehicleId=${e2(v.id)}"${String(v.id) === String(input.vehicle.id) ? ' class="active"' : ""}>${e2(v.make)} ${e2(v.model)}</a>`).join("")}</div>` : "";
+  const vehicleTabs = input.vehicles.length > 1 ? `<div class="tabs">${input.vehicles.map((v) => `<a href="/admin/users/${ownerId}/schedule?vehicleId=${e3(v.id)}"${String(v.id) === String(input.vehicle.id) ? ' class="active"' : ""}>${e3(v.make)} ${e3(v.model)}</a>`).join("")}</div>` : "";
   const defaults = input.items.filter((i) => i.status !== "al_dia").map((i) => i.serviceId);
   const checked = input.selected.length > 0 ? input.selected : defaults;
-  const itemChecks = input.items.length === 0 ? `<p class="muted">Este veh\xEDculo no tiene plan (faltan clase o combustible).</p>` : `<div class="checks">${input.items.map((i) => `<label><input type="checkbox" name="services" value="${e2(i.serviceId)}"${checked.includes(i.serviceId) ? " checked" : ""}> ${e2(i.serviceName)} <span class="muted">\xB7 ${e2(PLAN_STATUS[i.status] ?? i.status)}</span></label>`).join("")}</div>`;
+  const itemChecks = input.items.length === 0 ? `<p class="muted">Este veh\xEDculo no tiene plan (faltan clase o combustible).</p>` : `<div class="checks">${input.items.map((i) => `<label><input type="checkbox" name="services" value="${e3(i.serviceId)}"${checked.includes(i.serviceId) ? " checked" : ""}> ${e3(i.serviceName)} <span class="muted">\xB7 ${e3(PLAN_STATUS[i.status] ?? i.status)}</span></label>`).join("")}</div>`;
   let results = "";
   if (input.shops !== null) {
     const summary = copyBox("msg-selection", "Resumen de servicios para el due\xF1o", selectionSummary(input.selected), 6);
     if (input.shops.length === 0) {
       results = `<div class="card"><h2>Talleres</h2>${summary}<p class="error">No hay talleres verificados que ofrezcan estos servicios.</p></div>`;
     } else {
-      const notice = input.sameCity ? "" : `<p class="muted">No hay talleres verificados en ${e2(input.owner.city ?? "su ciudad")}; se muestran los de otras ciudades.</p>`;
-      const hidden = input.selected.map((id2) => `<input type="hidden" name="services" value="${e2(id2)}">`).join("");
-      const options = input.shops.map((shop, i) => `<label class="choice"><input type="radio" name="shopId" value="${e2(shop.id)}"${String(values.shopId ?? "") === shop.id || i === 0 && !values.shopId ? " checked" : ""} required>
-          <span><strong>${e2(shop.name)}</strong> \xB7 ${e2(shop.city)}${shop.zone ? ` (${e2(shop.zone)})` : ""}<br><span class="muted">${shop.covered === shop.needed ? "Cubre todo" : `Cubre ${shop.covered} de ${shop.needed}`}${shop.hours ? ` \xB7 ${e2(shop.hours)}` : ""}</span></span></label>`).join("");
+      const notice = input.sameCity ? "" : `<p class="muted">No hay talleres verificados en ${e3(input.owner.city ?? "su ciudad")}; se muestran los de otras ciudades.</p>`;
+      const hidden = input.selected.map((id2) => `<input type="hidden" name="services" value="${e3(id2)}">`).join("");
+      const options = input.shops.map((shop, i) => `<label class="choice"><input type="radio" name="shopId" value="${e3(shop.id)}"${String(values.shopId ?? "") === shop.id || i === 0 && !values.shopId ? " checked" : ""} required>
+          <span><strong>${e3(shop.name)}</strong> \xB7 ${e3(shop.city)}${shop.zone ? ` (${e3(shop.zone)})` : ""}<br><span class="muted">${shop.covered === shop.needed ? "Cubre todo" : `Cubre ${shop.covered} de ${shop.needed}`}${shop.hours ? ` \xB7 ${e3(shop.hours)}` : ""}</span></span></label>`).join("");
       results = `<div class="card"><h2>Talleres</h2>${notice}${summary}
         ${copyBox("msg-shops", "Lista de talleres para el due\xF1o", shopListMessage(input.shops))}
         <form method="post" action="/admin/appointments">${csrfField7(input.csrf)}
         <input type="hidden" name="ownerId" value="${ownerId}"><input type="hidden" name="vehicleId" value="${vehicleId}">${hidden}
         ${options}
-        <div class="row"><span><label for="date">D\xEDa</label><input id="date" name="date" type="date" value="${e2(values.date)}" required></span>
-        <span><label for="time">Hora (Ecuador)</label><input id="time" name="time" type="time" value="${e2(values.time)}" required></span></div>
-        <label for="notes">Notas para el taller (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e2(values.notes)}</textarea>
+        <div class="row"><span><label for="date">D\xEDa</label><input id="date" name="date" type="date" value="${e3(values.date)}" required></span>
+        <span><label for="time">Hora (Ecuador)</label><input id="time" name="time" type="time" value="${e3(values.time)}" required></span></div>
+        <label for="notes">Notas para el taller (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e3(values.notes)}</textarea>
         <button class="full" type="submit">Solicitar turno</button></form></div>`;
     }
   }
-  return `<div class="stack wide"><p><a href="/admin/users/${ownerId}">\u2190 ${e2(input.owner.name)}</a></p>
-  <h1>Agendar turno</h1>${input.error ? `<p class="error" role="alert">${e2(input.error)}</p>` : ""}${vehicleTabs}
-  <div class="card"><h2>${e2(input.vehicle.make)} ${e2(input.vehicle.model)} ${e2(input.vehicle.year)} \xB7 \xBFQu\xE9 servicios?</h2>
+  return `<div class="stack wide"><p><a href="/admin/users/${ownerId}">\u2190 ${e3(input.owner.name)}</a></p>
+  <h1>Agendar turno</h1>${input.error ? `<p class="error" role="alert">${e3(input.error)}</p>` : ""}${vehicleTabs}
+  <div class="card"><h2>${e3(input.vehicle.make)} ${e3(input.vehicle.model)} ${e3(input.vehicle.year)} \xB7 \xBFQu\xE9 servicios?</h2>
     <form method="get" action="/admin/users/${ownerId}/schedule"><input type="hidden" name="vehicleId" value="${vehicleId}">
     ${itemChecks}<button type="submit">Buscar talleres</button></form></div>
   ${results}</div>`;
@@ -100784,48 +101312,48 @@ function scheduleView(input) {
 function userAppointmentsSection(appointments) {
   if (appointments.length === 0)
     return "";
-  const items = appointments.map((a) => `<div><a href="/admin/appointments/${e2(a.id)}">${e2(formatEcDateTime(a.scheduledAt))}</a> \xB7 ${e2(STATUS_LABELS[a.status] ?? a.status)} \xB7 ${e2(a.shopName)} \xB7 ${e2(a.vehicleLabel)}</div>`).join("");
+  const items = appointments.map((a) => `<div><a href="/admin/appointments/${e3(a.id)}">${e3(formatEcDateTime(a.scheduledAt))}</a> \xB7 ${e3(STATUS_LABELS[a.status] ?? a.status)} \xB7 ${e3(a.shopName)} \xB7 ${e3(a.vehicleLabel)}</div>`).join("");
   return `<div class="card"><h2>Turnos</h2>${items}</div>`;
 }
 function eventText(event) {
   const p = event.payload;
   switch (event.type) {
     case "operator.note":
-      return `\u{1F4DD} ${String(p.text ?? "")}${p.channel && p.channel !== "whatsapp" ? ` (${String(p.channel)})` : ""}`;
+      return `Nota: ${String(p.text ?? "")}${p.channel && p.channel !== "whatsapp" ? ` (${String(p.channel)})` : ""}`;
     case "appointment.created":
-      return `\u{1F4C5} Turno solicitado en ${String(p.shopName ?? "un taller")} para ${formatEcDateTime(p.scheduledAt)}`;
+      return `Turno solicitado en ${String(p.shopName ?? "un taller")} para ${formatEcDateTime(p.scheduledAt)}`;
     case "appointment.status":
-      return `\u{1F504} Turno ${String(STATUS_LABELS[String(p.status)] ?? p.status).toLowerCase()}${p.reason ? `: ${String(p.reason)}` : ""}`;
+      return `Turno ${String(STATUS_LABELS[String(p.status)] ?? p.status).toLowerCase()}${p.reason ? `: ${String(p.reason)}` : ""}`;
     default:
       return event.type;
   }
 }
 function bitacoraSection(userId, events, csrf) {
-  const list7 = events.length === 0 ? `<p class="muted">Sin actividad registrada.</p>` : events.map((ev) => `<div><span class="muted">${e2(formatEcDateTime(ev.createdAt))}</span> \xB7 ${e2(eventText(ev))}</div>`).join("");
+  const list7 = events.length === 0 ? `<p class="muted">Sin actividad registrada.</p>` : events.map((ev) => `<div><span class="muted">${e3(formatEcDateTime(ev.createdAt))}</span> \xB7 ${e3(eventText(ev))}</div>`).join("");
   return `<div class="card"><h2>Bit\xE1cora</h2>
-    <form method="post" action="/admin/users/${e2(userId)}/notes">${csrfField7(csrf)}
+    <form method="post" action="/admin/users/${e3(userId)}/notes">${csrfField7(csrf)}
     <label for="note-text">Nueva nota (qu\xE9 se convers\xF3 o acord\xF3)</label><textarea id="note-text" name="text" maxlength="2000" rows="3" required></textarea>
     <label for="note-channel">Canal</label><select id="note-channel" name="channel"><option value="whatsapp">WhatsApp</option><option value="llamada">Llamada</option><option value="otro">Otro</option></select>
     <button type="submit">Agregar nota</button></form>
     ${list7}</div>`;
 }
-var e2, csrfField7, flashHtml7, FILTERS7, PLAN_STATUS, servicesLabel;
+var e3, csrfField7, flashHtml7, FILTERS7, PLAN_STATUS, servicesLabel;
 var init_views_appointments = __esm({
   "packages/api/dist/interfaces/admin/views-appointments.js"() {
     "use strict";
     init_page();
     init_whatsapp_number();
     init_messages();
-    e2 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField7 = (token2) => `<input type="hidden" name="csrf" value="${e2(token2)}">`;
-    flashHtml7 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e2(flash.text)}</p>` : "";
+    e3 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField7 = (token2) => `<input type="hidden" name="csrf" value="${e3(token2)}">`;
+    flashHtml7 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
     FILTERS7 = [
       ["hoy", "Hoy"],
       ["proximos", "Pr\xF3ximos"],
       ["pendientes", "Por confirmar"],
       ["todos", "Todos"]
     ];
-    PLAN_STATUS = { vencido: "\u{1F534} Vencido", proximo: "\u{1F7E1} Pr\xF3ximo", al_dia: "\u{1F7E2} Al d\xEDa" };
+    PLAN_STATUS = { vencido: "Vencido", proximo: "Pr\xF3ximo", al_dia: "Al d\xEDa" };
     servicesLabel = (a) => serviceNames(a.services).join(", ") || a.summary || "\u2014";
   }
 });
@@ -100880,15 +101408,15 @@ function chatLink2(phone, label2) {
   const digits = phone.replace(/\D/g, "");
   if (!phone.startsWith("+") || digits.length < 8)
     return "";
-  return `<a href="https://wa.me/${e3(digits)}" target="_blank" rel="noopener">${e3(label2)} (${e3(formatWhatsappNumber(digits))})</a>`;
+  return `<a href="https://wa.me/${e4(digits)}" target="_blank" rel="noopener">${e4(label2)} (${e4(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox2(id2, label2, content, rows25 = 9) {
-  return `<label for="${id2}">${e3(label2)}</label><textarea id="${id2}" readonly rows="${rows25}">${e3(content)}</textarea>`;
+function copyBox2(id2, label2, content, rows27 = 9) {
+  return `<label for="${id2}">${e4(label2)}</label><textarea id="${id2}" readonly rows="${rows27}">${e4(content)}</textarea>`;
 }
 function workOrdersListView(input) {
-  const tabs2 = FILTERS8.map(([id2, label2]) => `<a href="/admin/work-orders?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e3(label2)}</a>`).join("");
-  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin \xF3rdenes</td></tr>` : input.page.items.map((o) => `<tr><td><a href="/admin/work-orders/${e3(o.id)}">${e3(workOrderCode(o.number))}</a></td><td>${e3(WORK_ORDER_LABELS[o.status] ?? o.status)}</td>
-            <td>${e3(o.shopName)}</td><td><a href="/admin/users/${e3(o.ownerId)}">${e3(o.ownerName)}</a></td><td>${e3(o.vehicleLabel)}</td><td>${e3(formatUsd2(o.total))}</td></tr>`).join("");
+  const tabs2 = FILTERS8.map(([id2, label2]) => `<a href="/admin/work-orders?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e4(label2)}</a>`).join("");
+  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin \xF3rdenes</td></tr>` : input.page.items.map((o) => `<tr><td><a href="/admin/work-orders/${e4(o.id)}">${e4(workOrderCode(o.number))}</a></td><td>${e4(WORK_ORDER_LABELS[o.status] ?? o.status)}</td>
+            <td>${e4(o.shopName)}</td><td><a href="/admin/users/${e4(o.ownerId)}">${e4(o.ownerName)}</a></td><td>${e4(o.vehicleLabel)}</td><td>${e4(formatUsd2(o.total))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>\xD3rdenes de trabajo</h1>${flashHtml8(input.flash)}<div class="tabs">${tabs2}</div>
@@ -100899,47 +101427,47 @@ function workOrdersListView(input) {
 function newWorkOrderView(input) {
   const v = input.values ?? {};
   const intakeKm = v.intakeKm ?? input.vehicle.currentKm ?? "";
-  const shopField = input.appointment ? `<div>Taller: <strong>${e3(input.appointment.shopName)}</strong> \xB7 turno del ${e3(formatEcDateTime(input.appointment.scheduledAt))}</div>
-       <input type="hidden" name="appointmentId" value="${e3(input.appointment.id)}">` : input.shops.length === 0 ? `<p class="error">No hay talleres verificados. Aprueba un taller en Verificaciones antes de abrir una orden.</p>` : `<label for="shopId">Taller</label><select id="shopId" name="shopId" required>${input.shops.map((s) => `<option value="${e3(s.id)}"${String(v.shopId ?? "") === s.id ? " selected" : ""}>${e3(s.name)} \xB7 ${e3(s.city)}</option>`).join("")}</select>`;
-  return `<div class="stack wide"><p><a href="/admin/users/${e3(input.owner.id)}">\u2190 ${e3(input.owner.name)}</a></p>
-  <h1>Nueva orden de trabajo</h1>${input.error ? `<p class="error" role="alert">${e3(input.error)}</p>` : ""}
+  const shopField = input.appointment ? `<div>Taller: <strong>${e4(input.appointment.shopName)}</strong> \xB7 turno del ${e4(formatEcDateTime(input.appointment.scheduledAt))}</div>
+       <input type="hidden" name="appointmentId" value="${e4(input.appointment.id)}">` : input.shops.length === 0 ? `<p class="error">No hay talleres verificados. Aprueba un taller en Verificaciones antes de abrir una orden.</p>` : `<label for="shopId">Taller</label><select id="shopId" name="shopId" required>${input.shops.map((s) => `<option value="${e4(s.id)}"${String(v.shopId ?? "") === s.id ? " selected" : ""}>${e4(s.name)} \xB7 ${e4(s.city)}</option>`).join("")}</select>`;
+  return `<div class="stack wide"><p><a href="/admin/users/${e4(input.owner.id)}">\u2190 ${e4(input.owner.name)}</a></p>
+  <h1>Nueva orden de trabajo</h1>${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}
   <form method="post" action="/admin/work-orders" autocomplete="off">${csrfField8(input.csrf)}
-  <input type="hidden" name="ownerId" value="${e3(input.owner.id)}"><input type="hidden" name="vehicleId" value="${e3(input.vehicle.id)}">
+  <input type="hidden" name="ownerId" value="${e4(input.owner.id)}"><input type="hidden" name="vehicleId" value="${e4(input.vehicle.id)}">
   <div class="card"><h2>Recepci\xF3n del veh\xEDculo</h2>
-    <div>Due\xF1o: <strong>${e3(input.owner.name)}</strong></div>
-    <div>Veh\xEDculo: <strong>${e3(input.vehicle.make)} ${e3(input.vehicle.model)} ${e3(input.vehicle.year)}</strong>${input.vehicle.plate ? ` \xB7 ${e3(input.vehicle.plate)}` : ""} \xB7 \xFAltimo registro ${e3(km5(input.vehicle.currentKm))}</div>
+    <div>Due\xF1o: <strong>${e4(input.owner.name)}</strong></div>
+    <div>Veh\xEDculo: <strong>${e4(input.vehicle.make)} ${e4(input.vehicle.model)} ${e4(input.vehicle.year)}</strong>${input.vehicle.plate ? ` \xB7 ${e4(input.vehicle.plate)}` : ""} \xB7 \xFAltimo registro ${e4(km6(input.vehicle.currentKm))}</div>
     ${shopField}
-    <label for="intakeKm">Kilometraje de ingreso</label><input id="intakeKm" name="intakeKm" inputmode="numeric" value="${e3(intakeKm)}" required>
-    <label for="intakeNotes">Observaciones de ingreso (estado, golpes, objetos, nivel de combustible)</label><textarea id="intakeNotes" name="intakeNotes" maxlength="1000" rows="3">${e3(v.intakeNotes)}</textarea>
-    <label for="diagnosis">Diagn\xF3stico inicial del taller (opcional)</label><textarea id="diagnosis" name="diagnosis" maxlength="1000" rows="2">${e3(v.diagnosis)}</textarea>
+    <label for="intakeKm">Kilometraje de ingreso</label><input id="intakeKm" name="intakeKm" inputmode="numeric" value="${e4(intakeKm)}" required>
+    <label for="intakeNotes">Observaciones de ingreso (estado, golpes, objetos, nivel de combustible)</label><textarea id="intakeNotes" name="intakeNotes" maxlength="1000" rows="3">${e4(v.intakeNotes)}</textarea>
+    <label for="diagnosis">Diagn\xF3stico inicial del taller (opcional)</label><textarea id="diagnosis" name="diagnosis" maxlength="1000" rows="2">${e4(v.diagnosis)}</textarea>
   </div>
   <button class="full" type="submit">Abrir orden de trabajo</button></form></div>`;
 }
 function statusButton(order, csrf, status, label2, danger = false) {
-  return `<form method="post" action="/admin/work-orders/${e3(order.id)}/status">${csrfField8(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e3(label2)}</button></form>`;
+  return `<form method="post" action="/admin/work-orders/${e4(order.id)}/status">${csrfField8(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e4(label2)}</button></form>`;
 }
 function reasonForm(order, csrf, status, label2, button) {
-  return `<form method="post" action="/admin/work-orders/${e3(order.id)}/status">${csrfField8(csrf)}<input type="hidden" name="status" value="${status}">
-    <label for="reason-${status}">${e3(label2)}</label><input id="reason-${status}" name="reason" maxlength="191" required>
-    <button class="danger" type="submit">${e3(button)}</button></form>`;
+  return `<form method="post" action="/admin/work-orders/${e4(order.id)}/status">${csrfField8(csrf)}<input type="hidden" name="status" value="${status}">
+    <label for="reason-${status}">${e4(label2)}</label><input id="reason-${status}" name="reason" maxlength="191" required>
+    <button class="danger" type="submit">${e4(button)}</button></form>`;
 }
 function workOrderDetailView(input) {
   const { order, items, csrf } = input;
   const code3 = workOrderCode(order.number);
   const editable = EDITABLE_STATUSES.includes(order.status);
   const transitions = WORK_ORDER_TRANSITIONS[order.status] ?? [];
-  const itemRows = items.length === 0 ? `<tr><td colspan="${editable ? 7 : 6}" class="muted">A\xFAn no hay \xEDtems en el presupuesto.</td></tr>` : items.map((i) => `<tr><td>${i.kind === "mano_obra" ? "Mano de obra" : "Repuesto"}</td><td>${e3(i.description)}</td><td>${e3([i.brand, i.partCode].filter(Boolean).join(" \xB7 ") || "\u2014")}</td>
-            <td>${e3(String(i.quantity).replace(".", ","))}</td><td>${e3(formatUsd2(i.unitPrice))}</td><td>${e3(formatUsd2(lineTotal(i)))}</td>
-            ${editable ? `<td><form method="post" action="/admin/work-orders/${e3(order.id)}/items/${e3(i.id)}/delete">${csrfField8(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
-  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e3(order.id)}/items" autocomplete="off">${csrfField8(csrf)}
+  const itemRows = items.length === 0 ? `<tr><td colspan="${editable ? 7 : 6}" class="muted">A\xFAn no hay \xEDtems en el presupuesto.</td></tr>` : items.map((i) => `<tr><td>${i.kind === "mano_obra" ? "Mano de obra" : "Repuesto"}</td><td>${e4(i.description)}</td><td>${e4([i.brand, i.partCode].filter(Boolean).join(" \xB7 ") || "\u2014")}</td>
+            <td>${e4(String(i.quantity).replace(".", ","))}</td><td>${e4(formatUsd2(i.unitPrice))}</td><td>${e4(formatUsd2(lineTotal(i)))}</td>
+            ${editable ? `<td><form method="post" action="/admin/work-orders/${e4(order.id)}/items/${e4(i.id)}/delete">${csrfField8(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
+  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e4(order.id)}/items" autocomplete="off">${csrfField8(csrf)}
       <div class="row"><span><label for="kind">Tipo</label><select id="kind" name="kind">${ITEM_KINDS.map(([id2, label2]) => `<option value="${id2}">${label2}</option>`).join("")}</select></span>
       <span style="flex:2"><label for="description">Descripci\xF3n</label><input id="description" name="description" maxlength="191" required></span></div>
       <div class="row"><span><label for="brand">Marca (opcional)</label><input id="brand" name="brand" maxlength="60"></span><span><label for="partCode">C\xF3digo (opcional)</label><input id="partCode" name="partCode" maxlength="60"></span></div>
       <div class="row"><span><label for="quantity">Cantidad</label><input id="quantity" name="quantity" value="1" inputmode="decimal" required></span><span><label for="unitPrice">Precio unitario (USD)</label><input id="unitPrice" name="unitPrice" inputmode="decimal" placeholder="45,50" required></span></div>
       <button type="submit">Agregar al presupuesto</button></form>` : "";
-  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e3(order.id)}/diagnosis">${csrfField8(csrf)}
-      <label for="diag">Diagn\xF3stico del taller</label><textarea id="diag" name="diagnosis" maxlength="1000" rows="3">${e3(order.diagnosis)}</textarea>
-      <button type="submit">Guardar diagn\xF3stico</button></form>` : `<p>${e3(order.diagnosis ?? "Sin diagn\xF3stico registrado.")}</p>`;
+  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e4(order.id)}/diagnosis">${csrfField8(csrf)}
+      <label for="diag">Diagn\xF3stico del taller</label><textarea id="diag" name="diagnosis" maxlength="1000" rows="3">${e4(order.diagnosis)}</textarea>
+      <button type="submit">Guardar diagn\xF3stico</button></form>` : `<p>${e4(order.diagnosis ?? "Sin diagn\xF3stico registrado.")}</p>`;
   const actions = [];
   if (transitions.includes("presupuesto_enviado")) {
     actions.push(items.length > 0 ? statusButton(order, csrf, "presupuesto_enviado", order.status === "rechazado" ? "Reenviar presupuesto al due\xF1o" : "Enviar presupuesto al due\xF1o") : `<p class="muted">Agrega al menos un \xEDtem para enviar el presupuesto.</p>`);
@@ -100953,9 +101481,9 @@ function workOrderDetailView(input) {
   if (transitions.includes("esperando_repuesto"))
     actions.push(statusButton(order, csrf, "esperando_repuesto", "Esperando repuesto"));
   if (transitions.includes("cerrada")) {
-    actions.push(`<form method="post" action="/admin/work-orders/${e3(order.id)}/close" autocomplete="off">${csrfField8(csrf)}
+    actions.push(`<form method="post" action="/admin/work-orders/${e4(order.id)}/close" autocomplete="off">${csrfField8(csrf)}
       <h2>Cerrar con evidencia</h2>
-      <div class="row"><span><label for="exitKm">Kilometraje de salida</label><input id="exitKm" name="exitKm" inputmode="numeric" value="${e3(order.intakeKm ?? order.vehicleKm)}" required></span>
+      <div class="row"><span><label for="exitKm">Kilometraje de salida</label><input id="exitKm" name="exitKm" inputmode="numeric" value="${e4(order.intakeKm ?? order.vehicleKm)}" required></span>
       <span><label for="warrantyDays">Garant\xEDa (d\xEDas)</label><input id="warrantyDays" name="warrantyDays" inputmode="numeric" value="30" required></span></div>
       <label for="nextService">Pr\xF3ximo servicio sugerido (opcional)</label><input id="nextService" name="nextService" maxlength="191" placeholder="Cambio de aceite a los 55.000 km">
       <label for="diagnosisOutcome">Resultado del diagn\xF3stico</label><select id="diagnosisOutcome" name="diagnosisOutcome">${DIAGNOSIS_OUTCOMES.map(([id2, label2]) => `<option value="${id2}">${label2}</option>`).join("")}</select>
@@ -100967,43 +101495,43 @@ function workOrderDetailView(input) {
   const code22 = workOrderCode(order.number);
   const rating = input.rating ?? null;
   const ratingCard = order.status !== "cerrada" ? "" : rating ? `<div class="card"><h2>Calificaci\xF3n del due\xF1o</h2>
-          <p><strong>${e3(stars(rating.score))} ${rating.score} de 5</strong>${rating.hiddenAt ? ' \xB7 <span class="muted">rese\xF1a oculta</span>' : ""}</p>
-          ${rating.comment ? `<p>${e3(rating.comment)}</p>` : ""}
+          <p><strong>${e4(stars(rating.score))} ${rating.score} de 5</strong>${rating.hiddenAt ? ' \xB7 <span class="muted">rese\xF1a oculta</span>' : ""}</p>
+          ${rating.comment ? `<p>${e4(rating.comment)}</p>` : ""}
           ${needsReview(rating.score) ? `<p class="error">Calificaci\xF3n baja: conviene revisar el caso con el taller.</p>` : ""}
           ${copyBox2("msg-gracias", "Respuesta para el due\xF1o", thanksMessage(rating.score))}
-          ${input.canModerate && !rating.hiddenAt ? `<form method="post" action="/admin/ratings/${e3(rating.id)}/hide">${csrfField8(csrf)}
+          ${input.canModerate && !rating.hiddenAt ? `<form method="post" action="/admin/ratings/${e4(rating.id)}/hide">${csrfField8(csrf)}
               <label for="ocultar">Motivo para ocultar la rese\xF1a</label><input id="ocultar" name="reason" maxlength="191" required>
               <button class="danger" type="submit">Ocultar rese\xF1a</button></form>` : ""}
-          ${input.canModerate && rating.hiddenAt ? `<p class="muted">Oculta: ${e3(rating.hiddenReason ?? "")}</p>
-              <form method="post" action="/admin/ratings/${e3(rating.id)}/show">${csrfField8(csrf)}<button type="submit">Volver a mostrarla</button></form>` : ""}</div>` : `<div class="card"><h2>Calificaci\xF3n del due\xF1o</h2>
+          ${input.canModerate && rating.hiddenAt ? `<p class="muted">Oculta: ${e4(rating.hiddenReason ?? "")}</p>
+              <form method="post" action="/admin/ratings/${e4(rating.id)}/show">${csrfField8(csrf)}<button type="submit">Volver a mostrarla</button></form>` : ""}</div>` : `<div class="card"><h2>Calificaci\xF3n del due\xF1o</h2>
           <p class="muted">P\xEDdele la calificaci\xF3n ahora, que es cuando la recuerda. Alimenta el orden de las b\xFAsquedas y la confianza de la red.</p>
           ${copyBox2("msg-calificar", "Mensaje para pedirla", askMessage({ shopName: order.shopName, code: code22 }))}
-          <form method="post" action="/admin/work-orders/${e3(order.id)}/rating" autocomplete="off">${csrfField8(csrf)}
+          <form method="post" action="/admin/work-orders/${e4(order.id)}/rating" autocomplete="off">${csrfField8(csrf)}
           <label for="score">Qu\xE9 respondi\xF3</label>
-          <select id="score" name="score">${SCORES.map((s) => `<option value="${s.value}">${e3(s.label)}</option>`).join("")}</select>
+          <select id="score" name="score">${SCORES.map((s) => `<option value="${s.value}">${e4(s.label)}</option>`).join("")}</select>
           <label for="comment">Comentario (opcional)</label><input id="comment" name="comment" maxlength="191">
           <button class="full" type="submit">Guardar la calificaci\xF3n</button></form></div>`;
   const shopMessage = shopWorkOrderMessage(order);
   return `<div class="stack wide"><p><a href="/admin/work-orders">\u2190 \xD3rdenes de trabajo</a></p>
-  <h1>${e3(code3)} \xB7 ${e3(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml8(input.flash)}
+  <h1>${e4(code3)} \xB7 ${e4(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml8(input.flash)}
   <div class="card"><h2>Resumen</h2>
-    <div>Taller: <strong>${e3(order.shopName)}</strong></div>
-    <div>Due\xF1o: <a href="/admin/users/${e3(order.ownerId)}">${e3(order.ownerName)}</a></div>
-    <div>Veh\xEDculo: ${e3(order.vehicleLabel)}${order.plate ? ` \xB7 ${e3(order.plate)}` : ""}</div>
-    ${order.appointmentId ? `<div>Turno: <a href="/admin/appointments/${e3(order.appointmentId)}">ver turno</a></div>` : "<div>Sin cita previa</div>"}
-    <div>Ingreso: ${order.intakeKm !== null ? e3(km5(order.intakeKm)) : "\u2014"} \xB7 ${e3(formatEcDateTime(order.createdAt))}</div>
-    ${order.intakeNotes ? `<div>Observaciones: ${e3(order.intakeNotes)}</div>` : ""}
-    ${order.rejectionReason ? `<div>Motivo del rechazo: ${e3(order.rejectionReason)}</div>` : ""}
-    ${order.cancelReason ? `<div>Motivo de la cancelaci\xF3n: ${e3(order.cancelReason)}</div>` : ""}
-    ${order.status === "cerrada" ? `<div>Salida: ${e3(km5(order.exitKm))} \xB7 garant\xEDa ${e3(order.warrantyDays)} d\xEDas${order.nextService ? ` \xB7 pr\xF3ximo: ${e3(order.nextService)}` : ""}</div>` : ""}
+    <div>Taller: <strong>${e4(order.shopName)}</strong></div>
+    <div>Due\xF1o: <a href="/admin/users/${e4(order.ownerId)}">${e4(order.ownerName)}</a></div>
+    <div>Veh\xEDculo: ${e4(order.vehicleLabel)}${order.plate ? ` \xB7 ${e4(order.plate)}` : ""}</div>
+    ${order.appointmentId ? `<div>Turno: <a href="/admin/appointments/${e4(order.appointmentId)}">ver turno</a></div>` : "<div>Sin cita previa</div>"}
+    <div>Ingreso: ${order.intakeKm !== null ? e4(km6(order.intakeKm)) : "\u2014"} \xB7 ${e4(formatEcDateTime(order.createdAt))}</div>
+    ${order.intakeNotes ? `<div>Observaciones: ${e4(order.intakeNotes)}</div>` : ""}
+    ${order.rejectionReason ? `<div>Motivo del rechazo: ${e4(order.rejectionReason)}</div>` : ""}
+    ${order.cancelReason ? `<div>Motivo de la cancelaci\xF3n: ${e4(order.cancelReason)}</div>` : ""}
+    ${order.status === "cerrada" ? `<div>Salida: ${e4(km6(order.exitKm))} \xB7 garant\xEDa ${e4(order.warrantyDays)} d\xEDas${order.nextService ? ` \xB7 pr\xF3ximo: ${e4(order.nextService)}` : ""}</div>` : ""}
   </div>
   ${ratingCard}
   <div class="card"><h2>Diagn\xF3stico</h2>${diagnosis}</div>
-  ${order.status !== "cerrada" && order.status !== "cancelada" ? `<div class="card"><h2>Repuestos</h2><p class="muted">Si el taller necesita comprar repuestos, pide cotizaciones a los almacenes verificados.</p><a class="button" href="/admin/quotes/new?workOrderId=${e3(order.id)}">Pedir repuestos a almacenes</a></div>` : ""}
+  ${order.status !== "cerrada" && order.status !== "cancelada" ? `<div class="card"><h2>Repuestos</h2><p class="muted">Si el taller necesita comprar repuestos, pide cotizaciones a los almacenes verificados.</p><a class="button" href="/admin/quotes/new?workOrderId=${e4(order.id)}">Pedir repuestos a almacenes</a></div>` : ""}
   <div class="card"><h2>Presupuesto</h2>
     <div class="scroll"><table><thead><tr><th>Tipo</th><th>Descripci\xF3n</th><th>Marca / c\xF3digo</th><th>Cant.</th><th>P. unit.</th><th>Total</th>${editable ? "<th></th>" : ""}</tr></thead>
     <tbody>${itemRows}</tbody></table></div>
-    <p><strong>Total: ${e3(formatUsd2(order.total))}</strong></p>
+    <p><strong>Total: ${e4(formatUsd2(order.total))}</strong></p>
     ${editable ? "" : '<p class="muted">El presupuesto se edita solo en recepci\xF3n o despu\xE9s de un rechazo.</p>'}
     ${addItem}
   </div>
@@ -101018,14 +101546,14 @@ function workOrderDetailView(input) {
 function userWorkOrdersSection(orders) {
   if (orders.length === 0)
     return "";
-  return `<div class="card"><h2>\xD3rdenes de trabajo</h2>${orders.map((o) => `<div><a href="/admin/work-orders/${e3(o.id)}">${e3(workOrderCode(o.number))}</a> \xB7 ${e3(WORK_ORDER_LABELS[o.status] ?? o.status)} \xB7 ${e3(o.shopName)} \xB7 ${e3(o.vehicleLabel)} \xB7 ${e3(formatUsd2(o.total))}</div>`).join("")}</div>`;
+  return `<div class="card"><h2>\xD3rdenes de trabajo</h2>${orders.map((o) => `<div><a href="/admin/work-orders/${e4(o.id)}">${e4(workOrderCode(o.number))}</a> \xB7 ${e4(WORK_ORDER_LABELS[o.status] ?? o.status)} \xB7 ${e4(o.shopName)} \xB7 ${e4(o.vehicleLabel)} \xB7 ${e4(formatUsd2(o.total))}</div>`).join("")}</div>`;
 }
 function historySection(history) {
   if (history.length === 0)
     return "";
-  return `<div class="card"><h2>Historial de servicios</h2>${history.map((h) => `<div><span class="muted">${e3(formatEcDateTime(h.createdAt))}</span> \xB7 <strong>${e3(h.vehicleLabel)}</strong> \xB7 ${e3(h.shopName)} \xB7 ${e3(h.description)}${h.cost !== null ? ` \xB7 ${e3(formatUsd2(h.cost))}` : ""}</div>`).join("")}</div>`;
+  return `<div class="card"><h2>Historial de servicios</h2>${history.map((h) => `<div><span class="muted">${e4(formatEcDateTime(h.createdAt))}</span> \xB7 <strong>${e4(h.vehicleLabel)}</strong> \xB7 ${e4(h.shopName)} \xB7 ${e4(h.description)}${h.cost !== null ? ` \xB7 ${e4(formatUsd2(h.cost))}` : ""}</div>`).join("")}</div>`;
 }
-var e3, csrfField8, flashHtml8, km5, FILTERS8;
+var e4, csrfField8, flashHtml8, km6, FILTERS8;
 var init_views_work_orders = __esm({
   "packages/api/dist/interfaces/admin/views-work-orders.js"() {
     "use strict";
@@ -101034,10 +101562,10 @@ var init_views_work_orders = __esm({
     init_messages();
     init_workflow();
     init_workflow4();
-    e3 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField8 = (token2) => `<input type="hidden" name="csrf" value="${e3(token2)}">`;
-    flashHtml8 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
-    km5 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
+    e4 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField8 = (token2) => `<input type="hidden" name="csrf" value="${e4(token2)}">`;
+    flashHtml8 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
+    km6 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
     FILTERS8 = [
       ["abiertas", "Abiertas"],
       ["por_aprobar", "Por aprobar"],
@@ -101191,15 +101719,15 @@ function chatLink3(phone, label2) {
   const digits = phone.replace(/\D/g, "");
   if (!phone.startsWith("+") || digits.length < 8)
     return "";
-  return `<a href="https://wa.me/${e4(digits)}" target="_blank" rel="noopener">${e4(label2)} (${e4(formatWhatsappNumber(digits))})</a>`;
+  return `<a href="https://wa.me/${e5(digits)}" target="_blank" rel="noopener">${e5(label2)} (${e5(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox3(id2, label2, content, rows25 = 8) {
-  return `<label for="${id2}">${e4(label2)}</label><textarea id="${id2}" readonly rows="${rows25}">${e4(content)}</textarea>`;
+function copyBox3(id2, label2, content, rows27 = 8) {
+  return `<label for="${id2}">${e5(label2)}</label><textarea id="${id2}" readonly rows="${rows27}">${e5(content)}</textarea>`;
 }
 function quotesListView(input) {
-  const tabs2 = FILTERS9.map(([id2, label2]) => `<a href="/admin/quotes?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e4(label2)}</a>`).join("");
-  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin solicitudes</td></tr>` : input.page.items.map((r) => `<tr><td><a href="/admin/quotes/${e4(r.id)}">${e4(quoteRequestCode(r.number))}</a></td><td>${e4(REQUEST_LABELS[r.status] ?? r.status)}</td>
-            <td>${e4(r.partName)}${r.quantity > 1 ? ` x${e4(r.quantity)}` : ""}</td><td><a href="/admin/users/${e4(r.requesterId)}">${e4(r.requesterName)}</a></td><td>${e4(r.vehicleLabel ?? "\u2014")}</td><td>${e4(formatEcDateTime(r.createdAt))}</td></tr>`).join("");
+  const tabs2 = FILTERS9.map(([id2, label2]) => `<a href="/admin/quotes?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e5(label2)}</a>`).join("");
+  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin solicitudes</td></tr>` : input.page.items.map((r) => `<tr><td><a href="/admin/quotes/${e5(r.id)}">${e5(quoteRequestCode(r.number))}</a></td><td>${e5(REQUEST_LABELS[r.status] ?? r.status)}</td>
+            <td>${e5(r.partName)}${r.quantity > 1 ? ` x${e5(r.quantity)}` : ""}</td><td><a href="/admin/users/${e5(r.requesterId)}">${e5(r.requesterName)}</a></td><td>${e5(r.vehicleLabel ?? "\u2014")}</td><td>${e5(formatEcDateTime(r.createdAt))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/quotes?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/quotes?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>Cotizaciones de repuestos</h1>${flashHtml9(input.flash)}<div class="tabs">${tabs2}</div>
@@ -101210,38 +101738,38 @@ function quotesListView(input) {
 function newQuoteView(input) {
   const v = input.values ?? {};
   const chosen = Array.isArray(v.storeIds) ? v.storeIds.map(String) : v.storeIds ? [String(v.storeIds)] : null;
-  const storeChecks = input.stores.length === 0 ? `<p class="error">No hay almacenes verificados. Aprueba al menos uno en Verificaciones.</p>` : `${input.sameCity ? "" : `<p class="muted">No hay almacenes verificados en ${e4(input.city)}; se muestran los de otras ciudades.</p>`}
+  const storeChecks = input.stores.length === 0 ? `<p class="error">No hay almacenes verificados. Aprueba al menos uno en Verificaciones.</p>` : `${input.sameCity ? "" : `<p class="muted">No hay almacenes verificados en ${e5(input.city)}; se muestran los de otras ciudades.</p>`}
         <div class="checks">${input.stores.map((s, i) => {
     const checked = chosen ? chosen.includes(s.id) : i < MAX_STORES_PER_REQUEST;
-    return `<label><input type="checkbox" name="storeIds" value="${e4(s.id)}"${checked ? " checked" : ""}> ${e4(s.name)} <span class="muted">\xB7 ${e4(s.city)}${s.zone ? ` (${e4(s.zone)})` : ""}${s.delivery ? " \xB7 entrega a domicilio" : ""}</span></label>`;
+    return `<label><input type="checkbox" name="storeIds" value="${e5(s.id)}"${checked ? " checked" : ""}> ${e5(s.name)} <span class="muted">\xB7 ${e5(s.city)}${s.zone ? ` (${e5(s.zone)})` : ""}${s.delivery ? " \xB7 entrega a domicilio" : ""}</span></label>`;
   }).join("")}</div>`;
-  return `<div class="stack wide"><p><a href="/admin/users/${e4(input.requester.id)}">\u2190 ${e4(input.requester.name)}</a></p>
-  <h1>Nueva solicitud de cotizaci\xF3n</h1>${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}
+  return `<div class="stack wide"><p><a href="/admin/users/${e5(input.requester.id)}">\u2190 ${e5(input.requester.name)}</a></p>
+  <h1>Nueva solicitud de cotizaci\xF3n</h1>${input.error ? `<p class="error" role="alert">${e5(input.error)}</p>` : ""}
   <form method="post" action="/admin/quotes" autocomplete="off">${csrfField9(input.csrf)}
-  <input type="hidden" name="requesterId" value="${e4(input.requester.id)}">
-  ${input.vehicle ? `<input type="hidden" name="vehicleId" value="${e4(input.vehicle.id)}">` : ""}
-  ${input.workOrderId ? `<input type="hidden" name="workOrderId" value="${e4(input.workOrderId)}">` : ""}
+  <input type="hidden" name="requesterId" value="${e5(input.requester.id)}">
+  ${input.vehicle ? `<input type="hidden" name="vehicleId" value="${e5(input.vehicle.id)}">` : ""}
+  ${input.workOrderId ? `<input type="hidden" name="workOrderId" value="${e5(input.workOrderId)}">` : ""}
   <div class="card"><h2>Repuesto</h2>
-    <div>Solicitante: <strong>${e4(input.requester.name)}</strong>${input.vehicle ? ` \xB7 ${e4(input.vehicle.make)} ${e4(input.vehicle.model)} ${e4(input.vehicle.year)}` : ""} \xB7 ${e4(input.city)}</div>
-    <label for="partName">Qu\xE9 repuesto necesita</label><input id="partName" name="partName" maxlength="191" required value="${e4(v.partName)}" placeholder="Pastillas de freno delanteras">
-    <div class="row"><span><label for="partCode">C\xF3digo OEM (opcional)</label><input id="partCode" name="partCode" maxlength="60" value="${e4(v.partCode)}"></span>
-    <span><label for="quantity">Cantidad</label><input id="quantity" name="quantity" inputmode="numeric" maxlength="3" value="${e4(v.quantity ?? "1")}" required></span></div>
-    <label for="notes">Notas para los almacenes (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e4(v.notes)}</textarea>
+    <div>Solicitante: <strong>${e5(input.requester.name)}</strong>${input.vehicle ? ` \xB7 ${e5(input.vehicle.make)} ${e5(input.vehicle.model)} ${e5(input.vehicle.year)}` : ""} \xB7 ${e5(input.city)}</div>
+    <label for="partName">Qu\xE9 repuesto necesita</label><input id="partName" name="partName" maxlength="191" required value="${e5(v.partName)}" placeholder="Pastillas de freno delanteras">
+    <div class="row"><span><label for="partCode">C\xF3digo OEM (opcional)</label><input id="partCode" name="partCode" maxlength="60" value="${e5(v.partCode)}"></span>
+    <span><label for="quantity">Cantidad</label><input id="quantity" name="quantity" inputmode="numeric" maxlength="3" value="${e5(v.quantity ?? "1")}" required></span></div>
+    <label for="notes">Notas para los almacenes (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e5(v.notes)}</textarea>
   </div>
   <div class="card"><h2>A qu\xE9 almacenes (m\xE1ximo ${MAX_STORES_PER_REQUEST})</h2>${storeChecks}</div>
   <button class="full" type="submit">Crear solicitud</button></form></div>`;
 }
 function responseForm(requestId, q, csrf) {
   const unit = q.unitPrice !== null ? String(q.unitPrice).replace(".", ",") : "";
-  return `<details><summary>Registrar respuesta de ${e4(q.storeName)}</summary>
-    <form method="post" action="/admin/quotes/${e4(requestId)}/quotes/${e4(q.id)}" autocomplete="off">${csrfField9(csrf)}
-    <div class="row"><span><label>Precio unitario (USD)</label><input name="unitPrice" inputmode="decimal" value="${e4(unit)}" placeholder="45,50"></span>
-    <span><label>Marca</label><input name="brand" maxlength="60" value="${e4(q.brand)}"></span></div>
-    <div class="row"><span><label>Disponibilidad</label><input name="availability" maxlength="60" value="${e4(q.availability)}" placeholder="En stock"></span>
-    <span><label>Tiempo de entrega</label><input name="deliveryTime" maxlength="60" value="${e4(q.deliveryTime)}" placeholder="Hoy mismo"></span></div>
-    <div class="row"><span><label>Garant\xEDa (d\xEDas)</label><input name="warrantyDays" inputmode="numeric" value="${e4(q.warrantyDays)}"></span>
-    <span><label>Validez (d\xEDas)</label><input name="validDays" inputmode="numeric" value="${e4(q.validDays)}"></span></div>
-    <label>Notas</label><input name="notes" maxlength="191" value="${e4(q.notes)}">
+  return `<details><summary>Registrar respuesta de ${e5(q.storeName)}</summary>
+    <form method="post" action="/admin/quotes/${e5(requestId)}/quotes/${e5(q.id)}" autocomplete="off">${csrfField9(csrf)}
+    <div class="row"><span><label>Precio unitario (USD)</label><input name="unitPrice" inputmode="decimal" value="${e5(unit)}" placeholder="45,50"></span>
+    <span><label>Marca</label><input name="brand" maxlength="60" value="${e5(q.brand)}"></span></div>
+    <div class="row"><span><label>Disponibilidad</label><input name="availability" maxlength="60" value="${e5(q.availability)}" placeholder="En stock"></span>
+    <span><label>Tiempo de entrega</label><input name="deliveryTime" maxlength="60" value="${e5(q.deliveryTime)}" placeholder="Hoy mismo"></span></div>
+    <div class="row"><span><label>Garant\xEDa (d\xEDas)</label><input name="warrantyDays" inputmode="numeric" value="${e5(q.warrantyDays)}"></span>
+    <span><label>Validez (d\xEDas)</label><input name="validDays" inputmode="numeric" value="${e5(q.validDays)}"></span></div>
+    <label>Notas</label><input name="notes" maxlength="191" value="${e5(q.notes)}">
     <div class="row"><button type="submit" name="action" value="cotizado">Guardar cotizaci\xF3n</button>
     <button class="danger" type="submit" name="action" value="sin_stock">No lo tiene</button></div></form></details>`;
 }
@@ -101250,26 +101778,26 @@ function quoteDetailView(input) {
   const code3 = quoteRequestCode(request.number);
   const open = request.status === "abierta";
   const ranked = rankQuotes(quotes);
-  const invited = quotes.map((q) => `<tr><td>${e4(q.storeName)}</td><td>${e4(QUOTE_LABELS[q.status] ?? q.status)}</td><td>${q.unitPrice !== null ? e4(formatUsd2(q.unitPrice)) : "\u2014"}</td>
-      <td>${e4([q.brand, q.availability, q.deliveryTime ? `entrega ${q.deliveryTime}` : null, q.warrantyDays ? `garant\xEDa ${q.warrantyDays} d\xEDas` : null].filter(Boolean).join(" \xB7 ") || q.notes || "\u2014")}</td>
+  const invited = quotes.map((q) => `<tr><td>${e5(q.storeName)}</td><td>${e5(QUOTE_LABELS[q.status] ?? q.status)}</td><td>${q.unitPrice !== null ? e5(formatUsd2(q.unitPrice)) : "\u2014"}</td>
+      <td>${e5([q.brand, q.availability, q.deliveryTime ? `entrega ${q.deliveryTime}` : null, q.warrantyDays ? `garant\xEDa ${q.warrantyDays} d\xEDas` : null].filter(Boolean).join(" \xB7 ") || q.notes || "\u2014")}</td>
       <td>${chatLink3(q.storePhone, "Chat")}</td></tr>`).join("");
   const responses = open ? quotes.map((q) => responseForm(request.id, q, csrf)).join("") : "";
-  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e4(request.id)}/choose" class="row">${csrfField9(csrf)}<input type="hidden" name="quoteId" value="${e4(q.id)}">
-            <span>${i + 1}) <strong>${e4(q.storeName)}</strong> \xB7 ${e4(formatUsd2(q.unitPrice ?? 0))} c/u</span><button type="submit">Eligi\xF3 esta</button></form>`).join("")}` : "";
-  const closeForm = open ? `<form method="post" action="/admin/quotes/${e4(request.id)}/close">${csrfField9(csrf)}
+  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e5(request.id)}/choose" class="row">${csrfField9(csrf)}<input type="hidden" name="quoteId" value="${e5(q.id)}">
+            <span>${i + 1}) <strong>${e5(q.storeName)}</strong> \xB7 ${e5(formatUsd2(q.unitPrice ?? 0))} c/u</span><button type="submit">Eligi\xF3 esta</button></form>`).join("")}` : "";
+  const closeForm = open ? `<form method="post" action="/admin/quotes/${e5(request.id)}/close">${csrfField9(csrf)}
       <label for="close-reason">Si el cliente no pidi\xF3 ninguna, \xBFpor qu\xE9?</label><input id="close-reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cerrar sin pedido</button></form>` : "";
-  const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e4(request.id)}/quotes/${e4(q.id)}/loss" class="row">${csrfField9(csrf)}
-          <span>${e4(q.storeName)}: motivo de p\xE9rdida</span><select name="reason">${LOSS_REASONS.map(([id2, label2]) => `<option value="${id2}"${q.lossReason === id2 ? " selected" : ""}>${label2}</option>`).join("")}</select>
+  const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e5(request.id)}/quotes/${e5(q.id)}/loss" class="row">${csrfField9(csrf)}
+          <span>${e5(q.storeName)}: motivo de p\xE9rdida</span><select name="reason">${LOSS_REASONS.map(([id2, label2]) => `<option value="${id2}"${q.lossReason === id2 ? " selected" : ""}>${label2}</option>`).join("")}</select>
           <button type="submit">Guardar</button></form>`).join("") : "";
   let orderCard = "";
   if (order) {
     const transitions = ORDER_STAGE_TRANSITIONS[order.stage] ?? [];
-    const buttons = transitions.filter((s) => s !== "cancelado").map((s) => `<form method="post" action="/admin/quotes/${e4(request.id)}/order/stage">${csrfField9(csrf)}<input type="hidden" name="stage" value="${s}"><button type="submit">${e4(ORDER_STAGE_LABELS[s])}</button></form>`).join("");
-    const cancel = transitions.includes("cancelado") ? `<form method="post" action="/admin/quotes/${e4(request.id)}/order/stage">${csrfField9(csrf)}<input type="hidden" name="stage" value="cancelado">
+    const buttons = transitions.filter((s) => s !== "cancelado").map((s) => `<form method="post" action="/admin/quotes/${e5(request.id)}/order/stage">${csrfField9(csrf)}<input type="hidden" name="stage" value="${s}"><button type="submit">${e5(ORDER_STAGE_LABELS[s])}</button></form>`).join("");
+    const cancel = transitions.includes("cancelado") ? `<form method="post" action="/admin/quotes/${e5(request.id)}/order/stage">${csrfField9(csrf)}<input type="hidden" name="stage" value="cancelado">
         <label for="order-cancel">Motivo de la cancelaci\xF3n</label><input id="order-cancel" name="reason" maxlength="191" required><button class="danger" type="submit">Cancelar pedido</button></form>` : "";
-    orderCard = `<div class="card"><h2>Pedido \xB7 ${e4(ORDER_STAGE_LABELS[order.stage] ?? order.stage)}</h2>
-      <div><strong>${e4(order.storeName)}</strong> \xB7 ${e4(order.partName)}${order.quantity > 1 ? ` x${e4(order.quantity)}` : ""} \xB7 total ${e4(formatUsd2(order.total))}</div>
+    orderCard = `<div class="card"><h2>Pedido \xB7 ${e5(ORDER_STAGE_LABELS[order.stage] ?? order.stage)}</h2>
+      <div><strong>${e5(order.storeName)}</strong> \xB7 ${e5(order.partName)}${order.quantity > 1 ? ` x${e5(order.quantity)}` : ""} \xB7 total ${e5(formatUsd2(order.total))}</div>
       ${copyBox3("msg-order-requester", "Mensaje para el solicitante", requesterOrderMessage(order), 6)}
       ${order.stage === "confirmado" || order.stage === "cancelado" ? copyBox3("msg-order-store", "Mensaje para el almac\xE9n", storeOrderMessage(order), 6) : ""}
       <p class="row">${chatLink3(order.requesterPhone, "Chat del solicitante")} ${chatLink3(order.storePhone, "Chat del almac\xE9n")}</p>
@@ -101277,13 +101805,13 @@ function quoteDetailView(input) {
       ${lost ? `<h2>Almacenes no elegidos</h2>${copyBox3("msg-lost", "Mensaje para los no elegidos", lostQuoteMessage(request), 4)}${lost}` : ""}</div>`;
   }
   return `<div class="stack wide"><p><a href="/admin/quotes">\u2190 Cotizaciones</a></p>
-  <h1>${e4(code3)} \xB7 ${e4(REQUEST_LABELS[request.status] ?? request.status)}</h1>${flashHtml9(input.flash)}
+  <h1>${e5(code3)} \xB7 ${e5(REQUEST_LABELS[request.status] ?? request.status)}</h1>${flashHtml9(input.flash)}
   <div class="card"><h2>Solicitud</h2>
-    <div>Repuesto: <strong>${e4(request.partName)}</strong>${request.quantity > 1 ? ` x${e4(request.quantity)}` : ""}${request.partCode ? ` \xB7 c\xF3digo ${e4(request.partCode)}` : ""}</div>
-    <div>Solicitante: <a href="/admin/users/${e4(request.requesterId)}">${e4(request.requesterName)}</a>${request.vehicleLabel ? ` \xB7 ${e4(request.vehicleLabel)}` : ""} \xB7 ${e4(request.city)}</div>
-    ${request.workOrderId ? `<div>Para la orden de trabajo: <a href="/admin/work-orders/${e4(request.workOrderId)}">ver orden</a></div>` : ""}
-    ${request.notes ? `<div>Notas: ${e4(request.notes)}</div>` : ""}
-    ${request.closeReason ? `<div>Cerrada sin pedido: ${e4(request.closeReason)}</div>` : ""}
+    <div>Repuesto: <strong>${e5(request.partName)}</strong>${request.quantity > 1 ? ` x${e5(request.quantity)}` : ""}${request.partCode ? ` \xB7 c\xF3digo ${e5(request.partCode)}` : ""}</div>
+    <div>Solicitante: <a href="/admin/users/${e5(request.requesterId)}">${e5(request.requesterName)}</a>${request.vehicleLabel ? ` \xB7 ${e5(request.vehicleLabel)}` : ""} \xB7 ${e5(request.city)}</div>
+    ${request.workOrderId ? `<div>Para la orden de trabajo: <a href="/admin/work-orders/${e5(request.workOrderId)}">ver orden</a></div>` : ""}
+    ${request.notes ? `<div>Notas: ${e5(request.notes)}</div>` : ""}
+    ${request.closeReason ? `<div>Cerrada sin pedido: ${e5(request.closeReason)}</div>` : ""}
   </div>
   ${open ? `<div class="card"><h2>1. Enviar a los almacenes</h2>${copyBox3("msg-stores", "Mensaje para cada almac\xE9n", storeRequestMessage(request))}</div>` : ""}
   <div class="card"><h2>${open ? "2. Respuestas de los almacenes" : "Respuestas"}</h2>
@@ -101298,17 +101826,17 @@ function userQuotesSection(data2) {
     return "";
   const parts = [];
   if (data2.requests.length > 0) {
-    parts.push(`<h2>Cotizaciones pedidas</h2>${data2.requests.map((r) => `<div><a href="/admin/quotes/${e4(r.id)}">${e4(quoteRequestCode(r.number))}</a> \xB7 ${e4(REQUEST_LABELS[r.status] ?? r.status)} \xB7 ${e4(r.partName)}</div>`).join("")}`);
+    parts.push(`<h2>Cotizaciones pedidas</h2>${data2.requests.map((r) => `<div><a href="/admin/quotes/${e5(r.id)}">${e5(quoteRequestCode(r.number))}</a> \xB7 ${e5(REQUEST_LABELS[r.status] ?? r.status)} \xB7 ${e5(r.partName)}</div>`).join("")}`);
   }
   if (data2.storeQuotes.length > 0) {
-    parts.push(`<h2>Cotizaciones recibidas como almac\xE9n</h2>${data2.storeQuotes.map((q) => `<div><a href="/admin/quotes/${e4(q.requestId)}">${e4(quoteRequestCode(q.requestNumber))}</a> \xB7 ${e4(QUOTE_LABELS[q.status] ?? q.status)} \xB7 ${e4(q.partName)}</div>`).join("")}`);
+    parts.push(`<h2>Cotizaciones recibidas como almac\xE9n</h2>${data2.storeQuotes.map((q) => `<div><a href="/admin/quotes/${e5(q.requestId)}">${e5(quoteRequestCode(q.requestNumber))}</a> \xB7 ${e5(QUOTE_LABELS[q.status] ?? q.status)} \xB7 ${e5(q.partName)}</div>`).join("")}`);
   }
   if (data2.orders.length > 0) {
-    parts.push(`<h2>Pedidos de repuestos</h2>${data2.orders.map((o) => `<div><a href="/admin/quotes/${e4(o.quoteRequestId)}">${e4(quoteRequestCode(o.requestNumber))}</a> \xB7 ${e4(ORDER_STAGE_LABELS[o.stage] ?? o.stage)} \xB7 ${e4(o.partName)} \xB7 ${e4(o.storeName)} \xB7 ${e4(formatUsd2(o.total))}</div>`).join("")}`);
+    parts.push(`<h2>Pedidos de repuestos</h2>${data2.orders.map((o) => `<div><a href="/admin/quotes/${e5(o.quoteRequestId)}">${e5(quoteRequestCode(o.requestNumber))}</a> \xB7 ${e5(ORDER_STAGE_LABELS[o.stage] ?? o.stage)} \xB7 ${e5(o.partName)} \xB7 ${e5(o.storeName)} \xB7 ${e5(formatUsd2(o.total))}</div>`).join("")}`);
   }
   return parts.length > 0 ? `<div class="card">${parts.join("")}</div>` : "";
 }
-var e4, csrfField9, flashHtml9, FILTERS9;
+var e5, csrfField9, flashHtml9, FILTERS9;
 var init_views_quotes = __esm({
   "packages/api/dist/interfaces/admin/views-quotes.js"() {
     "use strict";
@@ -101317,9 +101845,9 @@ var init_views_quotes = __esm({
     init_messages();
     init_workflow();
     init_workflow5();
-    e4 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField9 = (token2) => `<input type="hidden" name="csrf" value="${e4(token2)}">`;
-    flashHtml9 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
+    e5 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField9 = (token2) => `<input type="hidden" name="csrf" value="${e5(token2)}">`;
+    flashHtml9 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e5(flash.text)}</p>` : "";
     FILTERS9 = [
       ["abiertas", "Abiertas"],
       ["con_pedido", "Con pedido"],
@@ -101334,25 +101862,25 @@ function day2(value2) {
   return date2 && !Number.isNaN(date2.getTime()) ? date2.toISOString().slice(0, 10) : "\u2014";
 }
 function phoneLabel(value2) {
-  const text8 = String(value2 ?? "");
-  const digits = text8.replace(/\D/g, "");
-  return text8.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text8;
+  const text9 = String(value2 ?? "");
+  const digits = text9.replace(/\D/g, "");
+  return text9.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text9;
 }
 function value(values, key) {
   const v = values[key];
-  return Array.isArray(v) ? "" : e5(v);
+  return Array.isArray(v) ? "" : e6(v);
 }
 function field(values, name, label2, attrs = "") {
-  return `<label for="f-${name}">${e5(label2)}</label><input id="f-${name}" name="${name}" value="${value(values, name)}" ${attrs}>`;
+  return `<label for="f-${name}">${e6(label2)}</label><input id="f-${name}" name="${name}" value="${value(values, name)}" ${attrs}>`;
 }
 function select(values, name, label2, options, placeholder) {
-  const selected = String(values[name] ?? "");
-  const opts = options.map(([id2, text8]) => `<option value="${e5(id2)}"${id2 === selected ? " selected" : ""}>${e5(text8)}</option>`).join("");
-  const empty = placeholder ? `<option value="">${e5(placeholder)}</option>` : "";
-  return `<label for="f-${name}">${e5(label2)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
+  const selected2 = String(values[name] ?? "");
+  const opts = options.map(([id2, text9]) => `<option value="${e6(id2)}"${id2 === selected2 ? " selected" : ""}>${e6(text9)}</option>`).join("");
+  const empty = placeholder ? `<option value="">${e6(placeholder)}</option>` : "";
+  return `<label for="f-${name}">${e6(label2)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
 }
 function checkbox(values, name, label2) {
-  return `<div class="checks"><label><input type="checkbox" name="${name}"${values[name] === "on" ? " checked" : ""}> ${e5(label2)}</label></div>`;
+  return `<div class="checks"><label><input type="checkbox" name="${name}"${values[name] === "on" ? " checked" : ""}> ${e6(label2)}</label></div>`;
 }
 function vehicleFields2(values) {
   return `${select(values, "vehicleClass", "Clase de veh\xEDculo", vehicleClasses.classes.map((c) => [c.id, c.name]), "Elige\u2026")}
@@ -101366,19 +101894,19 @@ function vehicleFields2(values) {
     ${checkbox(values, "reminders", "Acepta recordatorios por WhatsApp")}`;
 }
 function usersListView(input) {
-  const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e5(u.id)}">${e5(u.name)}</a></td><td>${e5(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
-            <td>${e5(phoneLabel(u.phone))}</td><td>${e5(u.city ?? "\u2014")}</td><td>${day2(u.createdAt)}</td></tr>`).join("");
+  const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e6(u.id)}">${e6(u.name)}</a></td><td>${e6(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
+            <td>${e6(phoneLabel(u.phone))}</td><td>${e6(u.city ?? "\u2014")}</td><td>${day2(u.createdAt)}</td></tr>`).join("");
   const q = encodeURIComponent(input.query);
   const prev = input.page.page > 1 ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<div class="row between"><h1>Usuarios</h1><a class="button" href="/admin/users/new">+ Nuevo registro</a></div>
-  <form method="get" action="/admin/users" class="row"><input name="q" value="${e5(input.query)}" placeholder="Buscar por nombre o tel\xE9fono" maxlength="60"><button type="submit">Buscar</button></form>
+  <form method="get" action="/admin/users" class="row"><input name="q" value="${e6(input.query)}" placeholder="Buscar por nombre o tel\xE9fono" maxlength="60"><button type="submit">Buscar</button></form>
   <div class="scroll"><table><thead><tr><th>Nombre</th><th>Perfil</th><th>Tel\xE9fono</th><th>Ciudad</th><th>Alta</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
 }
 function newUserView(input) {
   const v = input.values;
-  const tabs2 = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e5(ROLE_LABELS[p])}</a>`).join("");
+  const tabs2 = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e6(ROLE_LABELS[p])}</a>`).join("");
   const common = `<div class="card"><h2>Datos b\xE1sicos</h2>
     ${input_phone(v)}
     ${field(v, "name", input.perfil === "dueno" ? "Nombre y apellido" : "Nombre del responsable", 'required minlength="3" maxlength="60"')}
@@ -101399,7 +101927,7 @@ function newUserView(input) {
       ${field(v, "hours", "Horario (opcional)", 'maxlength="120" placeholder="Lun\u2013Vie 08:00\u201318:00"')}`;
     if (input.perfil === "taller") {
       const chosen = Array.isArray(v.services) ? v.services.map(String) : v.services ? [String(v.services)] : [];
-      const services = serviceTaxonomy.categories.map((c) => `<label><input type="checkbox" name="services" value="${e5(c.id)}"${chosen.includes(c.id) ? " checked" : ""}> ${e5(c.name)}</label>`).join("");
+      const services = serviceTaxonomy.categories.map((c) => `<label><input type="checkbox" name="services" value="${e6(c.id)}"${chosen.includes(c.id) ? " checked" : ""}> ${e6(c.name)}</label>`).join("");
       specific = `<div class="card"><h2>Taller</h2>${business}<label>Servicios que ofrece</label><div class="checks">${services}</div>
         <p class="muted">Queda en verificaci\xF3n hasta que lo apruebes; mientras tanto no aparece en las b\xFAsquedas.</p></div>`;
     } else {
@@ -101410,9 +101938,9 @@ function newUserView(input) {
     }
   }
   const visitCode = typeof input.values?.code === "string" ? input.values.code : "";
-  const codeField = visitCode ? `<input type="hidden" name="code" value="${e5(visitCode)}">` : "";
+  const codeField = visitCode ? `<input type="hidden" name="code" value="${e6(visitCode)}">` : "";
   return `<div class="stack wide"><h1>Nuevo registro</h1><div class="tabs">${tabs2}</div>
-  ${input.error ? `<p class="error" role="alert">${e5(input.error)}</p>` : ""}
+  ${input.error ? `<p class="error" role="alert">${e6(input.error)}</p>` : ""}
   <form method="post" action="/admin/users/new" autocomplete="off">${csrfField10(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">${codeField}
   ${common}${specific}
   <button class="full" type="submit">Guardar registro</button></form></div>`;
@@ -101421,77 +101949,100 @@ function input_phone(values) {
   return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567"');
 }
 function verificationForm(kind, id2, userId, csrf) {
-  return `<form method="post" action="/admin/verifications/${kind}/${e5(id2)}">${csrfField10(csrf)}
-    <input type="hidden" name="returnTo" value="${e5(userId)}">
-    <label for="reason-${e5(id2)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e5(id2)}" name="reason" maxlength="500">
+  return `<form method="post" action="/admin/verifications/${kind}/${e6(id2)}">${csrfField10(csrf)}
+    <input type="hidden" name="returnTo" value="${e6(userId)}">
+    <label for="reason-${e6(id2)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e6(id2)}" name="reason" maxlength="500">
     <div class="row"><button type="submit" name="decision" value="verified">Aprobar</button><button class="danger" type="submit" name="decision" value="rejected">Rechazar</button></div></form>`;
 }
 function userDetailView(input) {
   const { user, vehicles, shop, store } = input.detail;
   const digits = String(user.phone ?? "").replace(/\D/g, "");
-  const chat = String(user.phone ?? "").startsWith("+") && digits.length >= 8 ? ` \xB7 <a href="https://wa.me/${e5(digits)}" target="_blank" rel="noopener">Abrir chat</a>` : "";
+  const chat = String(user.phone ?? "").startsWith("+") && digits.length >= 8 ? ` \xB7 <a href="https://wa.me/${e6(digits)}" target="_blank" rel="noopener">Abrir chat</a>` : "";
   const datos = `<div class="card"><h2>Datos</h2>
-    <div>Perfil: <strong>${e5(ROLE_LABELS[String(user.role)] ?? user.role)}</strong></div>
-    <div>Tel\xE9fono: <strong>${e5(phoneLabel(user.phone))}</strong>${chat}</div>
-    <div>Correo: ${e5(user.email ?? "\u2014")}</div>
-    <div>Ciudad: ${e5(user.city ?? "\u2014")}</div>
-    <div>Consentimiento: ${user.consentAt ? `${day2(user.consentAt)} (versi\xF3n ${e5(user.consentVersion ?? "\u2014")})` : '<span class="error">sin registrar</span>'}</div>
-    <div>C\xF3mo nos conoci\xF3: ${e5(user.source ?? "\u2014")}</div>
-    ${user.notes ? `<div>Notas: ${e5(user.notes)}</div>` : ""}
+    <div>Perfil: <strong>${e6(ROLE_LABELS[String(user.role)] ?? user.role)}</strong></div>
+    <div>Tel\xE9fono: <strong>${e6(phoneLabel(user.phone))}</strong>${chat}</div>
+    <div>Correo: ${e6(user.email ?? "\u2014")}</div>
+    <div>Ciudad: ${e6(user.city ?? "\u2014")}</div>
+    <div>Consentimiento: ${user.consentAt ? `${day2(user.consentAt)} (versi\xF3n ${e6(user.consentVersion ?? "\u2014")})` : '<span class="error">sin registrar</span>'}</div>
+    <div>C\xF3mo nos conoci\xF3: ${e6(user.source ?? "\u2014")}</div>
+    ${user.notes ? `<div>Notas: ${e6(user.notes)}</div>` : ""}
     <div class="muted">Alta: ${day2(user.createdAt)}</div></div>`;
   const business = (title, b, extra, kind) => `<div class="card"><h2>${title}</h2>
-    <div><strong>${e5(b.name)}</strong> \xB7 RUC ${e5(b.ruc ?? "\u2014")}</div>
-    <div>${e5(b.address)}, ${e5(b.city)}${b.zone ? ` (${e5(b.zone)})` : ""}</div>
-    <div>Horario: ${e5(b.hours ?? "\u2014")}</div>${extra}
-    <div>Estado: <strong>${e5(STATUS_LABELS3[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
+    <div><strong>${e6(b.name)}</strong> \xB7 RUC ${e6(b.ruc ?? "\u2014")}</div>
+    <div>${e6(b.address)}, ${e6(b.city)}${b.zone ? ` (${e6(b.zone)})` : ""}</div>
+    <div>Horario: ${e6(b.hours ?? "\u2014")}</div>${extra}
+    <div>Estado: <strong>${e6(STATUS_LABELS3[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
     ${verificationForm(kind, b.id, user.id, input.csrf)}</div>`;
-  const shopCard = shop ? business("Taller", shop, `<div>Servicios: ${e5(shop.services.map(categoryName2).join(", ") || "\u2014")}</div>`, "shop") : "";
-  const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e5(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
+  const shopCard2 = shop ? business("Taller", shop, `<div>Servicios: ${e6(shop.services.map(categoryName3).join(", ") || "\u2014")}</div>`, "shop") + shopMapCard(user.id, input.shopMap, input.csrf, input.mapValues) : "";
+  const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e6(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
   const vehicleCards = vehicles.map((v) => {
     const plan = input.plans[String(v.id)];
-    return `<div class="card"><h2>${e5(v.make)} ${e5(v.model)} ${e5(v.year)}</h2>
-      <div>${e5(Number(v.currentKm).toLocaleString("es-EC"))} km \xB7 ${e5(className(v.vehicleClass))} \xB7 ${e5(fuelName(v.fuel))}${v.plate ? ` \xB7 ${e5(v.plate)}` : ""}</div>
-      <div class="muted">Uso ${e5(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
-      ${plan ? `<label for="plan-${e5(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e5(v.id)}" readonly rows="12">${e5(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e5(user.id)}/schedule?vehicleId=${e5(v.id)}">Agendar turno</a> \xB7 <a href="/admin/work-orders/new?ownerId=${e5(user.id)}&amp;vehicleId=${e5(v.id)}">Orden de trabajo sin cita</a> \xB7 <a href="/admin/quotes/new?ownerId=${e5(user.id)}&amp;vehicleId=${e5(v.id)}">Cotizar repuesto</a> \xB7 <a href="/admin/service-requests/new?ownerId=${e5(user.id)}">Buscar especialista</a></p>` : ""}</div>`;
+    return `<div class="card"><h2>${e6(v.make)} ${e6(v.model)} ${e6(v.year)}</h2>
+      <div>${e6(Number(v.currentKm).toLocaleString("es-EC"))} km \xB7 ${e6(className(v.vehicleClass))} \xB7 ${e6(fuelName(v.fuel))}${v.plate ? ` \xB7 ${e6(v.plate)}` : ""}</div>
+      <div class="muted">Uso ${e6(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
+      ${plan ? `<label for="plan-${e6(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e6(v.id)}" readonly rows="12">${e6(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e6(user.id)}/schedule?vehicleId=${e6(v.id)}">Agendar turno</a> \xB7 <a href="/admin/work-orders/new?ownerId=${e6(user.id)}&amp;vehicleId=${e6(v.id)}">Orden de trabajo sin cita</a> \xB7 <a href="/admin/quotes/new?ownerId=${e6(user.id)}&amp;vehicleId=${e6(v.id)}">Cotizar repuesto</a> \xB7 <a href="/admin/service-requests/new?ownerId=${e6(user.id)}">Buscar especialista</a></p>` : ""}</div>`;
   }).join("");
   const whatsappLink = ["dueno", "taller", "almacen"].includes(String(user.role)) && user.consentAt ? `<div class="card"><h2>WhatsApp del piloto</h2><p>Vincula este n\xFAmero solo si la persona te escribi\xF3 desde \xE9l. As\xED recibe por WhatsApp las respuestas y avisos de su cuenta.</p>
-      <form method="post" action="/admin/users/${e5(user.id)}/whatsapp-link">${csrfField10(input.csrf)}
-      <label><input type="checkbox" name="confirm" value="si" required> Confirmo que esta persona me escribi\xF3 desde ${e5(phoneLabel(user.phone))}</label>
+      <form method="post" action="/admin/users/${e6(user.id)}/whatsapp-link">${csrfField10(input.csrf)}
+      <label><input type="checkbox" name="confirm" value="si" required> Confirmo que esta persona me escribi\xF3 desde ${e6(phoneLabel(user.phone))}</label>
       <button class="full" type="submit">Vincular WhatsApp</button></form></div>` : "";
-  const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e5(input.error)}</p>` : ""}
-      <form method="post" action="/admin/users/${e5(user.id)}/vehicles" autocomplete="off">${csrfField10(input.csrf)}${vehicleFields2(input.values ?? {})}
+  const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e6(input.error)}</p>` : ""}
+      <form method="post" action="/admin/users/${e6(user.id)}/vehicles" autocomplete="off">${csrfField10(input.csrf)}${vehicleFields2(input.values ?? {})}
       <button class="full" type="submit">Agregar veh\xEDculo</button></form></div>` : "";
   const moderation = moderationSection(String(user.id), input.relations ?? [], input.sanctions ?? [], input.csrf, !!input.canSanction);
   const lopdp = input.canLopdp ? userDataRequestsCard(String(user.id), input.dataRequests ?? [], input.csrf) : "";
   const planCard = userPlanCard(String(user.id), input.subscriptions ?? [], input.csrf, !!input.canPayments, String(user.role ?? "dueno"), input.usage ?? {});
-  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e5(user.name)}</h1>${flashHtml10(input.flash)}
-  ${datos}${whatsappLink}${planCard}${shopCard}${storeCard}${moderation}${lopdp}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
+  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e6(user.name)}</h1>${flashHtml10(input.flash)}
+  ${datos}${whatsappLink}${planCard}${shopCard2}${storeCard}${moderation}${lopdp}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
 }
 function moderationSection(userId, relations, sanctions, csrf, canSanction) {
   if (relations.length === 0 && sanctions.length === 0 && !canSanction)
     return "";
-  const links = relations.length ? `<ul>${relations.map((r) => `<li><a href="/admin/relations/${e5(r.id)}">${e5(relationCode(r.number))}</a> \xB7 ${e5(RELATION_KIND_LABELS[r.kind] ?? r.kind)} \xB7 ${e5(RELATION_STATUS_LABELS[r.status] ?? r.status)}${r.subject ? ` \xB7 ${e5(r.subject)}` : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin v\xEDnculos registrados.</p>`;
+  const links = relations.length ? `<ul>${relations.map((r) => `<li><a href="/admin/relations/${e6(r.id)}">${e6(relationCode(r.number))}</a> \xB7 ${e6(RELATION_KIND_LABELS[r.kind] ?? r.kind)} \xB7 ${e6(RELATION_STATUS_LABELS[r.status] ?? r.status)}${r.subject ? ` \xB7 ${e6(r.subject)}` : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin v\xEDnculos registrados.</p>`;
   const active = sanctions.filter((s) => isActive(s));
-  const history = sanctions.length ? `<ul>${sanctions.map((s) => `<li>${e5(sanctionLabel(s.level))} \xB7 ${day2(s.startsAt)}${s.endsAt ? ` \u2192 ${day2(s.endsAt)}` : ""}${s.liftedAt ? " (levantada)" : isActive(s) ? ' <span class="error">vigente</span>' : " (vencida)"} \xB7 ${e5(s.reason.slice(0, 160))}</li>`).join("")}</ul>` : `<p class="muted">Sin sanciones.</p>`;
-  const form = canSanction ? `<form method="post" action="/admin/users/${e5(userId)}/sanctions">${csrfField10(csrf)}
+  const history = sanctions.length ? `<ul>${sanctions.map((s) => `<li>${e6(sanctionLabel(s.level))} \xB7 ${day2(s.startsAt)}${s.endsAt ? ` \u2192 ${day2(s.endsAt)}` : ""}${s.liftedAt ? " (levantada)" : isActive(s) ? ' <span class="error">vigente</span>' : " (vencida)"} \xB7 ${e6(s.reason.slice(0, 160))}</li>`).join("")}</ul>` : `<p class="muted">Sin sanciones.</p>`;
+  const form = canSanction ? `<form method="post" action="/admin/users/${e6(userId)}/sanctions">${csrfField10(csrf)}
       <label for="sanction-level">Aplicar un paso de la escala</label>
-      <select id="sanction-level" name="level">${SANCTION_LEVELS.map((l) => `<option value="${e5(l.key)}">${e5(l.label)} \u2014 ${e5(l.description)}</option>`).join("")}</select>
+      <select id="sanction-level" name="level">${SANCTION_LEVELS.map((l) => `<option value="${e6(l.key)}">${e6(l.label)} \u2014 ${e6(l.description)}</option>`).join("")}</select>
       <label for="sanction-days">D\xEDas (vac\xEDo = el valor por defecto del paso)</label><input id="sanction-days" name="days" inputmode="numeric">
       <label for="sanction-reason">Motivo (se le comunica)</label><input id="sanction-reason" name="reason" maxlength="500" required>
       <button class="danger" type="submit">Aplicar sanci\xF3n</button></form>` : "";
   return `<div class="card"><h2>Moderaci\xF3n</h2>
-    ${active.length ? `<p class="error">Sanci\xF3n vigente: ${e5(active.map((s) => sanctionLabel(s.level)).join(", "))}</p>` : ""}
+    ${active.length ? `<p class="error">Sanci\xF3n vigente: ${e6(active.map((s) => sanctionLabel(s.level)).join(", "))}</p>` : ""}
     <h2>V\xEDnculos</h2>${links}
     <h2>Sanciones</h2>${history}${form}</div>`;
 }
+function shopMapCard(userId, state, csrf, values) {
+  if (state === void 0)
+    return "";
+  if (state === null) {
+    return `<div class="card"><h2>Mapa de talleres</h2><p class="muted">Para guardar la ubicaci\xF3n, aplica las actualizaciones de la base en Ajustes.</p></div>`;
+  }
+  const point = values?.point !== void 0 ? String(values.point) : state.lat !== null && state.lng !== null ? `${state.lat}, ${state.lng}` : "";
+  const listed = values ? values.listed === "si" : state.listed;
+  const sector = (values?.precision ?? state.precision) === "sector";
+  const status = state.listed ? `<strong>Aparece en el mapa</strong>${state.consentAt ? ` \xB7 acept\xF3 el ${day2(state.consentAt)}` : ""} \xB7 ${state.precision === "sector" ? "solo su sector" : "punto exacto"}` : "No aparece en el mapa";
+  return `<div class="card"><h2>Mapa de talleres</h2>
+    <div>${status}. Solo se ve si adem\xE1s est\xE1 verificado.</div>
+    <p class="muted">El taller puede hacerlo solo por WhatsApp: comparte su ubicaci\xF3n y escribe Mapa | ubicaci\xF3n | ACEPTO. Para salir: Salir del mapa.</p>
+    <form method="post" action="/admin/users/${e6(userId)}/shop-map">${csrfField10(csrf)}
+      <label for="map-point">Ubicaci\xF3n (latitud, longitud)</label>
+      <input id="map-point" name="point" value="${e6(point)}" placeholder="-0.18065, -78.46784" maxlength="60" inputmode="decimal" autocomplete="off">
+      <label for="map-precision">Qu\xE9 se muestra</label>
+      <select id="map-precision" name="precision"><option value="exacta"${sector ? "" : " selected"}>El punto exacto del taller</option><option value="sector"${sector ? " selected" : ""}>Solo el sector (atiende en casa)</option></select>
+      <label><input type="checkbox" name="listed" value="si"${listed ? " checked" : ""}> Aparece en el mapa p\xFAblico</label>
+      ${state.consentAt ? "" : `<label><input type="checkbox" name="consent" value="si"> El taller acept\xF3 aparecer en el mapa (por WhatsApp o por escrito)</label>`}
+      <button class="full" type="submit">Guardar ubicaci\xF3n</button>
+    </form></div>`;
+}
 function verificationsView(input) {
-  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e5(item.userId)}">${e5(item.name)}</a></td>
-            <td>${e5(item.city)}</td><td>${e5(item.ruc ?? "\u2014")}</td><td>${day2(item.createdAt)}</td></tr>`).join("");
+  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e6(item.userId)}">${e6(item.name)}</a></td>
+            <td>${e6(item.city)}</td><td>${e6(item.ruc ?? "\u2014")}</td><td>${day2(item.createdAt)}</td></tr>`).join("");
   return `<h1>Verificaciones pendientes</h1>${flashHtml10(input.flash)}
   <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
-var ROLE_LABELS, STATUS_LABELS3, USAGE_OPTIONS, e5, csrfField10, flashHtml10, className, fuelName, categoryName2;
+var ROLE_LABELS, STATUS_LABELS3, USAGE_OPTIONS, e6, csrfField10, flashHtml10, className, fuelName, categoryName3;
 var init_views_registrations = __esm({
   "packages/api/dist/interfaces/admin/views-registrations.js"() {
     "use strict";
@@ -101516,17 +102067,17 @@ var init_views_registrations = __esm({
       ["carretera", "Carretera"],
       ["severo", "Severo (Sierra, carga, lastre)"]
     ];
-    e5 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField10 = (token2) => `<input type="hidden" name="csrf" value="${e5(token2)}">`;
-    flashHtml10 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e5(flash.text)}</p>` : "";
+    e6 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField10 = (token2) => `<input type="hidden" name="csrf" value="${e6(token2)}">`;
+    flashHtml10 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e6(flash.text)}</p>` : "";
     className = (id2) => vehicleClasses.classes.find((c) => c.id === id2)?.name ?? String(id2 ?? "\u2014");
     fuelName = (id2) => vehicleClasses.fuels.find((f) => f.id === id2)?.name ?? String(id2 ?? "\u2014");
-    categoryName2 = (id2) => serviceTaxonomy.categories.find((c) => c.id === id2)?.name ?? id2;
+    categoryName3 = (id2) => serviceTaxonomy.categories.find((c) => c.id === id2)?.name ?? id2;
   }
 });
 
 // packages/api/dist/interfaces/admin/registrations.js
-import { randomBytes as randomBytes15 } from "node:crypto";
+import { randomBytes as randomBytes16 } from "node:crypto";
 function dbError(err) {
   const code3 = err.code;
   if (code3 === "ER_DUP_ENTRY")
@@ -101555,7 +102106,7 @@ function flashFrom(request) {
 }
 function registerRegistrationRoutes(app2, deps) {
   const { registrations } = deps;
-  const errorPage = (request, reply, session, title, text8, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text8)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -101620,6 +102171,13 @@ function registerRegistrationRoutes(app2, deps) {
       } catch {
       }
     }
+    let shopMap;
+    if (deps.map && detail.shop) {
+      try {
+        shopMap = await deps.map.locationOf(String(detail.shop.id));
+      } catch {
+      }
+    }
     if (deps.plans) {
       try {
         [subscriptions, usage] = await Promise.all([deps.plans.forUser(id2), deps.plans.usageForUser(id2)]);
@@ -101645,7 +102203,9 @@ function registerRegistrationRoutes(app2, deps) {
       canLopdp: can(session.role, "lopdp"),
       subscriptions,
       usage,
-      canPayments: can(session.role, "payments")
+      canPayments: can(session.role, "payments"),
+      shopMap,
+      mapValues: extra.mapValues
     }), session, extra.status ?? 200);
   }
   app2.get("/users", async (request, reply) => {
@@ -101686,7 +102246,7 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const perfil = PERFILES.includes(body.perfil) ? body.perfil : "dueno";
-    const invalid = (text8, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text8 }), session, status);
+    const invalid = (text9, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text9 }), session, status);
     const userFrom = async (data2, keepEmail) => ({
       phone: data2.phone,
       name: data2.name,
@@ -101696,7 +102256,7 @@ function registerRegistrationRoutes(app2, deps) {
       notes: data2.notes,
       consentVersion: CONSENT_VERSION,
       // Las cuentas creadas por el operador no inician sesión con contraseña: se guarda una aleatoria.
-      passwordHash: await hashPassword(randomBytes15(24).toString("hex"))
+      passwordHash: await hashPassword(randomBytes16(24).toString("hex"))
     });
     const operation = deps.platform ? await deps.platform() : null;
     if (operation && typeof body.city === "string" && body.city.trim() && !cityAllowed(body.city.trim(), operation.cities)) {
@@ -101804,11 +102364,49 @@ function registerRegistrationRoutes(app2, deps) {
     } catch (err) {
       if (!(err instanceof BrokerError))
         throw err;
-      const text8 = err.code === "PHONE_ALREADY_LINKED" ? "Ese n\xFAmero o esta cuenta ya est\xE1 vinculado a otra cuenta. Rev\xEDsalo antes de continuar." : err.code === "INVALID_PHONE" ? "El tel\xE9fono de la cuenta no es v\xE1lido para WhatsApp." : "La cuenta no est\xE1 activa o no tiene consentimiento registrado.";
-      return renderDetail(request, reply, session, id2, { error: text8, status: 409 });
+      const text9 = err.code === "PHONE_ALREADY_LINKED" ? "Ese n\xFAmero o esta cuenta ya est\xE1 vinculado a otra cuenta. Rev\xEDsalo antes de continuar." : err.code === "INVALID_PHONE" ? "El tel\xE9fono de la cuenta no es v\xE1lido para WhatsApp." : "La cuenta no est\xE1 activa o no tiene consentimiento registrado.";
+      return renderDetail(request, reply, session, id2, { error: text9, status: 409 });
     }
     await deps.audit("admin.whatsapp.link", session.userId, `WhatsApp vinculado al usuario ${id2} tras confirmar el chat con ese n\xFAmero`);
     return reply.redirect(`/admin/users/${id2}?ok=whatsapp`, 302);
+  });
+  app2.post("/users/:id/shop-map", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id: id2 } = request.params;
+    if (!UUID6.test(id2))
+      return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
+    if (!deps.map)
+      return errorPage(request, reply, session, "Usuario", "El mapa necesita la base de datos.", 503);
+    const listed = body.listed === "si";
+    const precision = body.precision === "sector" ? "sector" : "exacta";
+    const raw = typeof body.point === "string" ? body.point.trim() : "";
+    const point = raw ? parsePoint(raw) : null;
+    const again = (error, status = 400) => renderDetail(request, reply, session, id2, { error, status, mapValues: body });
+    if (raw && !point)
+      return again("La ubicaci\xF3n no es v\xE1lida. Escr\xEDbela como -0.18065, -78.46784 (latitud, longitud de Ecuador).");
+    if (listed && !point)
+      return again("Para aparecer en el mapa falta la ubicaci\xF3n del taller.");
+    try {
+      const detail = await registrations.getUserDetail(id2);
+      if (!detail?.shop)
+        return errorPage(request, reply, session, "Usuario", "Este usuario no tiene taller.", 404);
+      const current = await deps.map.locationOf(String(detail.shop.id));
+      if (current === null)
+        return again("La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB.", 503);
+      if (listed && !current.consentAt && body.consent !== "si")
+        return again("Marca que el taller acept\xF3 aparecer en el mapa p\xFAblico.");
+      const done = await deps.map.setLocation(String(detail.shop.id), { lat: point?.lat ?? null, lng: point?.lng ?? null, precision, listed }, session.userId);
+      if (!done)
+        return errorPage(request, reply, session, "Usuario", "Taller no encontrado.", 404);
+    } catch (err) {
+      const m = dbError(err);
+      return again(m.text, m.status);
+    }
+    await deps.audit("admin.shop.map", session.userId, `Mapa del taller del usuario ${id2}: ${listed ? `aparece (${precision})` : "no aparece"}`);
+    return reply.redirect(`/admin/users/${id2}?ok=mapa`, 302);
   });
   app2.get("/verifications", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -101833,7 +102431,7 @@ function registerRegistrationRoutes(app2, deps) {
     const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "";
     const returnTo = typeof body.returnTo === "string" && UUID6.test(body.returnTo) ? body.returnTo : null;
-    const fail10 = (text8, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text8 }, status }) : errorPage(request, reply, session, "Verificaciones", text8, status);
+    const fail10 = (text9, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text9 }, status }) : errorPage(request, reply, session, "Verificaciones", text9, status);
     if (!decision)
       return fail10("Elige aprobar o rechazar.", 400);
     if (decision === "rejected" && reason.length < 5)
@@ -101865,6 +102463,7 @@ var init_registrations = __esm({
     init_permissions();
     init_platform();
     init_local_agent_broker();
+    init_workshop_map();
     init_views_registrations();
     UUID6 = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     OK_MESSAGES = {
@@ -101872,6 +102471,7 @@ var init_registrations = __esm({
       vehiculo: "Veh\xEDculo agregado.",
       verificado: "Verificaci\xF3n aprobada.",
       rechazado: "Verificaci\xF3n rechazada.",
+      mapa: "Ubicaci\xF3n del taller guardada.",
       nota: "Nota agregada a la bit\xE1cora.",
       sancion: "Sanci\xF3n registrada: queda el motivo y el aviso a la entidad.",
       lopdp: "Solicitud de datos registrada con su plazo de respuesta.",
@@ -101902,7 +102502,7 @@ function dbErrorText(err) {
 }
 function registerAppointmentRoutes(app2, deps) {
   const { appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text8, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text8)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -101914,7 +102514,7 @@ function registerAppointmentRoutes(app2, deps) {
     }
     return { session, body };
   }
-  async function renderSchedule(request, reply, session, ownerId, vehicleId, selected, extra = {}) {
+  async function renderSchedule(request, reply, session, ownerId, vehicleId, selected2, extra = {}) {
     let detail;
     try {
       detail = await registrations.getUserDetail(ownerId);
@@ -101930,14 +102530,14 @@ function registerAppointmentRoutes(app2, deps) {
       return errorPage(request, reply, session, "Agendar turno", "El due\xF1o no tiene veh\xEDculos registrados.", 400);
     let shops = null;
     let sameCity = true;
-    if (selected.length > 0 && extra.search !== false) {
+    if (selected2.length > 0 && extra.search !== false) {
       try {
         let candidates = await appointments.verifiedShops(String(detail.user.city ?? ""));
         if (candidates.length === 0) {
           candidates = await appointments.verifiedShops("");
           sameCity = false;
         }
-        shops = rankShops(candidates, categoriesFor(selected));
+        shops = rankShops(candidates, categoriesFor(selected2));
       } catch (err) {
         const m = dbErrorText(err);
         return errorPage(request, reply, session, "Agendar turno", m.text, m.status);
@@ -101948,7 +102548,7 @@ function registerAppointmentRoutes(app2, deps) {
       vehicles: detail.vehicles,
       vehicle,
       items: planItemsFor(vehicle),
-      selected,
+      selected: selected2,
       shops,
       sameCity,
       csrf: session.csrfToken,
@@ -102271,21 +102871,21 @@ function welcomeMessage(ctx, options = {}) {
   return `${intro}${parts.join("\n\n")}`;
 }
 function detectProfileIntent(input) {
-  const text8 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text8))
+  const text9 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text9))
     return "cuenta";
-  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text8))
+  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text9))
     return "almacen";
-  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text8))
+  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text9))
     return "taller";
-  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text8))
+  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text9))
     return "dueno";
   return null;
 }
 function parseContactInput(input) {
-  const text8 = input.slice(0, 2e3);
-  const code3 = /\bAMP-[A-HJ-NP-Z2-9]{4,6}\b/i.exec(text8)?.[0]?.toUpperCase() ?? null;
-  const rest = code3 ? text8.split(new RegExp(code3, "i")).join(" ") : text8;
+  const text9 = input.slice(0, 2e3);
+  const code3 = /\bAMP-[A-HJ-NP-Z2-9]{4,6}\b/i.exec(text9)?.[0]?.toUpperCase() ?? null;
+  const rest = code3 ? text9.split(new RegExp(code3, "i")).join(" ") : text9;
   for (const candidate of rest.match(/\+?\d[\d\s().-]{6,}\d/g) ?? []) {
     const digits = normalizeWhatsappNumber(candidate);
     if (digits)
@@ -102318,79 +102918,79 @@ function visitLine(result) {
   if (!result.code)
     return "";
   if (result.visit) {
-    return `<div>\u{1F310} Lleg\xF3 desde automantpro.app el ${e6(formatEcDateTime(result.visit.createdAt))}${result.visit.ref ? ` \xB7 origen: <strong>${e6(result.visit.ref)}</strong>` : ""} (c\xF3digo ${e6(result.code)}).</div>`;
+    return `<div>Lleg\xF3 desde automantpro.app el ${e7(formatEcDateTime(result.visit.createdAt))}${result.visit.ref ? ` \xB7 origen: <strong>${e7(result.visit.ref)}</strong>` : ""} (c\xF3digo ${e7(result.code)}).</div>`;
   }
-  return `<div class="muted">El c\xF3digo ${e6(result.code)} ${result.visitLookup ? "no corresponde a una visita de los \xFAltimos 7 d\xEDas" : "no se pudo consultar"}.</div>`;
+  return `<div class="muted">El c\xF3digo ${e7(result.code)} ${result.visitLookup ? "no corresponde a una visita de los \xFAltimos 7 d\xEDas" : "no se pudo consultar"}.</div>`;
 }
 function resultCard(result, csrf) {
   if (!result.phone) {
     return `<div class="card">${visitLine(result)}<p class="error">No encontr\xE9 un celular de Ecuador en lo que pegaste. Pega el n\xFAmero del contacto (por ejemplo 099 123 4567).</p></div>`;
   }
   const digits = phoneDigits(result.phone);
-  const chat = `<a href="https://wa.me/${e6(digits)}" target="_blank" rel="noopener">Abrir chat</a>`;
-  const message2 = `<label for="welcome">Mensaje para enviar</label><textarea id="welcome" readonly rows="10">${e6(result.message)}</textarea>`;
+  const chat = `<a href="https://wa.me/${e7(digits)}" target="_blank" rel="noopener">Abrir chat</a>`;
+  const message2 = `<label for="welcome">Mensaje para enviar</label><textarea id="welcome" readonly rows="10">${e7(result.message)}</textarea>`;
   if (!result.detail) {
     const intent = result.intent ?? null;
-    const intentLine = intent ? `<p class="ok">${e6(INTENT_LABELS[intent] ?? intent)}.</p>` : "";
-    const option = (value2, label2) => `<option value="${value2}"${intent === value2 ? " selected" : ""}>${label2}</option>`;
+    const intentLine = intent ? `<p class="ok">${e7(INTENT_LABELS[intent] ?? intent)}.</p>` : "";
+    const option2 = (value2, label2) => `<option value="${value2}"${intent === value2 ? " selected" : ""}>${label2}</option>`;
     return `<div class="card"><h2>Contacto nuevo</h2>
-      <div><strong>${e6(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}${intentLine}
+      <div><strong>${e7(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}${intentLine}
       <p class="muted">${intent === "cuenta" ? "Dice que ya tiene cuenta: b\xFAscala por su n\xFAmero anterior antes de registrarlo de nuevo." : "No est\xE1 registrado. Env\xEDa la bienvenida y, cuando diga qui\xE9n es, reg\xEDstralo."}</p>
       ${message2}
-      <form method="post" action="/admin/users/new/start" class="row">${csrfField11(csrf)}<input type="hidden" name="phone" value="${e6(result.phone)}">${result.code ? `<input type="hidden" name="code" value="${e6(result.code)}">` : ""}
-      <select name="perfil" aria-label="Perfil">${option("dueno", "Due\xF1o de veh\xEDculo")}${option("taller", "Taller")}${option("almacen", "Almac\xE9n")}</select>
+      <form method="post" action="/admin/users/new/start" class="row">${csrfField11(csrf)}<input type="hidden" name="phone" value="${e7(result.phone)}">${result.code ? `<input type="hidden" name="code" value="${e7(result.code)}">` : ""}
+      <select name="perfil" aria-label="Perfil">${option2("dueno", "Due\xF1o de veh\xEDculo")}${option2("taller", "Taller")}${option2("almacen", "Almac\xE9n")}</select>
       <button type="submit">Registrar</button></form></div>`;
   }
   const { user, vehicles } = result.detail;
   const role = String(user.role);
-  const tasks = result.tasks.length === 0 ? `<p class="muted">Sin pendientes.</p>` : `<ul>${result.tasks.map((t) => `<li>${e6(t.text)}${t.forCustomer ? "" : ' <span class="muted">(solo para ti)</span>'}</li>`).join("")}</ul>`;
-  const schedule = role === "dueno" && vehicles[0] ? ` \xB7 <a href="/admin/users/${e6(user.id)}/schedule?vehicleId=${e6(vehicles[0].id)}">Agendar turno</a>` : "";
+  const tasks = result.tasks.length === 0 ? `<p class="muted">Sin pendientes.</p>` : `<ul>${result.tasks.map((t) => `<li>${e7(t.text)}${t.forCustomer ? "" : ' <span class="muted">(solo para ti)</span>'}</li>`).join("")}</ul>`;
+  const schedule = role === "dueno" && vehicles[0] ? ` \xB7 <a href="/admin/users/${e7(user.id)}/schedule?vehicleId=${e7(vehicles[0].id)}">Agendar turno</a>` : "";
   const planCard = result.plan === void 0 ? "" : `<div class="card"><h2>Plan</h2>
         <p>${planBadge(result.plan)}</p>
-        ${(result.limits ?? []).length ? `<ul>${(result.limits ?? []).map((l) => `<li>${e6(String(l.used))} de ${e6(String(l.limit))} ${e6(l.label)}${l.reached ? ' <span class="error">(tope alcanzado)</span>' : ""}</li>`).join("")}</ul>` : ""}
-        ${(result.limits ?? []).some((l) => l.reached) ? `<label for="upgrade">Ofr\xE9cele el plan</label><textarea id="upgrade" readonly rows="3">${e6(upgradeMessage(role, (result.limits ?? []).find((l) => l.reached)))}</textarea>` : ""}
-        ${result.nearby ? `<label for="cercanos">Talleres cercanos (plan gratuito)</label><textarea id="cercanos" readonly rows="6">${e6(result.nearby)}</textarea>` : ""}
-        <p class="muted"><a href="/admin/users/${e6(user.id)}">Registrar un pago en su ficha</a></p></div>`;
-  return `${planCard}<div class="card"><h2>${e6(ROLE_LABELS[role] ?? role)} registrado</h2>
-    <div><strong>${e6(user.name)}</strong> \xB7 ${e6(formatWhatsappNumber(digits))} \xB7 ${chat}</div>${visitLine(result)}
-    <div><a href="/admin/users/${e6(user.id)}">Ver ficha</a>${schedule}</div>
+        ${(result.limits ?? []).length ? `<ul>${(result.limits ?? []).map((l) => `<li>${e7(String(l.used))} de ${e7(String(l.limit))} ${e7(l.label)}${l.reached ? ' <span class="error">(tope alcanzado)</span>' : ""}</li>`).join("")}</ul>` : ""}
+        ${(result.limits ?? []).some((l) => l.reached) ? `<label for="upgrade">Ofr\xE9cele el plan</label><textarea id="upgrade" readonly rows="3">${e7(upgradeMessage(role, (result.limits ?? []).find((l) => l.reached)))}</textarea>` : ""}
+        ${result.nearby ? `<label for="cercanos">Talleres cercanos (plan gratuito)</label><textarea id="cercanos" readonly rows="6">${e7(result.nearby)}</textarea>` : ""}
+        <p class="muted"><a href="/admin/users/${e7(user.id)}">Registrar un pago en su ficha</a></p></div>`;
+  return `${planCard}<div class="card"><h2>${e7(ROLE_LABELS[role] ?? role)} registrado</h2>
+    <div><strong>${e7(user.name)}</strong> \xB7 ${e7(formatWhatsappNumber(digits))} \xB7 ${chat}</div>${visitLine(result)}
+    <div><a href="/admin/users/${e7(user.id)}">Ver ficha</a>${schedule}</div>
     <h2>Pendientes del \xFAltimo chat</h2>${tasks}
     ${message2}</div>`;
 }
 function copilotCard(input) {
   const { csrf, copilot, draft } = input;
-  const hiddenQuery = `<input type="hidden" name="q" value="${e6(input.query)}">`;
+  const hiddenQuery = `<input type="hidden" name="q" value="${e7(input.query)}">`;
   let draftBlock = "";
   if (draft?.ok) {
-    const feedback = draft.usageId ? `<form method="post" action="/admin/attend/feedback" class="stack">${csrfField11(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e6(draft.usageId)}">
+    const feedback = draft.usageId ? `<form method="post" action="/admin/attend/feedback" class="stack">${csrfField11(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e7(draft.usageId)}">
         <label for="review-reason">Resultado de la prueba (opcional)</label><input id="review-reason" name="reason" maxlength="191" placeholder="\xBFQu\xE9 cambiaste o por qu\xE9 lo rechazaste?">
         <p class="muted">La respuesta no se env\xEDa ni se guarda desde este panel: rev\xEDsala, corr\xEDgela y env\xEDala manualmente solo durante la prueba autorizada.</p>
         <div class="row"><button type="submit" name="outcome" value="approved">Aprobado sin cambios</button><button class="secondary" type="submit" name="outcome" value="edited">Aprobado con edici\xF3n</button><button class="danger" type="submit" name="outcome" value="rejected">Rechazado</button></div></form>` : "";
-    draftBlock = `<p class="muted">Borrador generado por IA para prueba guiada: una persona debe revisarlo y decidir su resultado. Costo estimado US$ ${e6(draft.costUsd.toFixed(4))}.</p>
-      <label for="draft">Respuesta final para revisi\xF3n humana</label><textarea id="draft" rows="10">${e6(draft.reply)}</textarea>
-      ${draft.note ? `<p><strong>Nota para ti:</strong> ${e6(draft.note)}</p>` : ""}${feedback}`;
+    draftBlock = `<p class="muted">Borrador generado por IA para prueba guiada: una persona debe revisarlo y decidir su resultado. Costo estimado US$ ${e7(draft.costUsd.toFixed(4))}.</p>
+      <label for="draft">Respuesta final para revisi\xF3n humana</label><textarea id="draft" rows="10">${e7(draft.reply)}</textarea>
+      ${draft.note ? `<p><strong>Nota para ti:</strong> ${e7(draft.note)}</p>` : ""}${feedback}`;
   } else if (draft) {
-    draftBlock = `<p class="error" role="alert">${e6(draft.message)}</p><p class="muted">Usa el mensaje sugerido de arriba.</p>`;
+    draftBlock = `<p class="error" role="alert">${e7(draft.message)}</p><p class="muted">Usa el mensaje sugerido de arriba.</p>`;
   }
   const form = copilot.available ? `<form method="post" action="/admin/attend/draft" autocomplete="off">${csrfField11(csrf)}${hiddenQuery}
-      <label for="customer-message">Mensaje del cliente</label><textarea id="customer-message" name="message" rows="4" maxlength="2000" required>${e6(input.customerText)}</textarea>
-      <label for="instruction">Indicaci\xF3n para la IA (opcional)</label><input id="instruction" name="instruction" maxlength="300" value="${e6(input.instruction)}" placeholder="Ofr\xE9cele turno para el jueves en la ma\xF1ana">
-      <button class="full" type="submit">Sugerir respuesta con IA</button></form>` : `<p class="muted">${e6(copilot.reason ?? "La IA no est\xE1 disponible.")} Rev\xEDsalo en <a href="/admin/settings">Ajustes</a>.</p>`;
+      <label for="customer-message">Mensaje del cliente</label><textarea id="customer-message" name="message" rows="4" maxlength="2000" required>${e7(input.customerText)}</textarea>
+      <label for="instruction">Indicaci\xF3n para la IA (opcional)</label><input id="instruction" name="instruction" maxlength="300" value="${e7(input.instruction)}" placeholder="Ofr\xE9cele turno para el jueves en la ma\xF1ana">
+      <button class="full" type="submit">Sugerir respuesta con IA</button></form>` : `<p class="muted">${e7(copilot.reason ?? "La IA no est\xE1 disponible.")} Rev\xEDsalo en <a href="/admin/settings">Ajustes</a>.</p>`;
   return `<div class="card"><h2>Copiloto de IA</h2>${draftBlock}${form}</div>`;
 }
 function attendView(input) {
   return `<div class="stack wide"><h1>Atender a un contacto</h1>
-  ${input.notice ? `<div class="card"><p class="error" role="status">${e6(input.notice)}</p></div>` : ""}
+  ${input.notice ? `<div class="card"><p class="error" role="status">${e7(input.notice)}</p></div>` : ""}
   <p class="muted">Pega el n\xFAmero o el primer mensaje que lleg\xF3 por WhatsApp. Te digo si es nuevo o registrado, su perfil, lo pendiente y el mensaje para responder.</p>
-  ${input.error ? `<p class="error" role="alert">${e6(input.error)}</p>` : ""}
+  ${input.error ? `<p class="error" role="alert">${e7(input.error)}</p>` : ""}
   <form method="post" action="/admin/attend" autocomplete="off">${csrfField11(input.csrf)}
-  <label for="q">N\xFAmero o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. C\xF3digo: AMP-XXXX \xB7 099 123 4567">${e6(input.query)}</textarea>
+  <label for="q">N\xFAmero o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. C\xF3digo: AMP-XXXX \xB7 099 123 4567">${e7(input.query)}</textarea>
   <button class="full" type="submit">Identificar</button></form>
-  ${input.flash ? `<p class="ok" role="status">${e6(input.flash)}</p>` : ""}
+  ${input.flash ? `<p class="ok" role="status">${e7(input.flash)}</p>` : ""}
   ${input.result ? resultCard(input.result, input.csrf) : ""}
   ${input.result?.phone && input.copilot ? copilotCard({ csrf: input.csrf, query: input.query, copilot: input.copilot, draft: input.draft, customerText: input.customerText ?? input.query, instruction: input.instruction ?? "" }) : ""}</div>`;
 }
-var e6, csrfField11, phoneDigits, INTENT_LABELS;
+var e7, csrfField11, phoneDigits, INTENT_LABELS;
 var init_views_attend = __esm({
   "packages/api/dist/interfaces/admin/views-attend.js"() {
     "use strict";
@@ -102400,8 +103000,8 @@ var init_views_attend = __esm({
     init_views_registrations();
     init_plans();
     init_views_plans();
-    e6 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField11 = (token2) => `<input type="hidden" name="csrf" value="${e6(token2)}">`;
+    e7 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField11 = (token2) => `<input type="hidden" name="csrf" value="${e7(token2)}">`;
     phoneDigits = (phone) => phone.replace(/\D/g, "");
     INTENT_LABELS = {
       dueno: "Dijo que tiene un veh\xEDculo",
@@ -102637,7 +103237,7 @@ function dbErrorText2(err) {
 }
 function registerWorkOrderRoutes(app2, deps) {
   const { workOrders, appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text8, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text8)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -102820,7 +103420,7 @@ function registerWorkOrderRoutes(app2, deps) {
       const description = str6(body.description, 191);
       const quantity = parseAmount2(body.quantity);
       const unitPrice = parseAmount2(body.unitPrice);
-      const fail10 = (text8) => renderOrder(request, reply, session, id2, { kind: "error", text: text8 }, 400);
+      const fail10 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
       if (!kind)
         return fail10("Elige si es repuesto o mano de obra.");
       if (description.length < 2)
@@ -102888,7 +103488,7 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail10 = (text8) => renderOrder(request, reply, session, id2, { kind: "error", text: text8 }, 400);
+      const fail10 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
       if (next === "cerrada" || !(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes(next))
         return fail10("Ese cambio de estado no es posible.");
       if (next === "presupuesto_enviado" && found.items.length === 0)
@@ -102968,7 +103568,7 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail10 = (text8) => renderOrder(request, reply, session, id2, { kind: "error", text: text8 }, 400);
+      const fail10 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
       if (!(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes("cerrada"))
         return fail10("Solo se cierra una orden en ejecuci\xF3n o esperando repuesto.");
       const exitKm = wholeNumber(body.exitKm, 0, 2e6);
@@ -103044,7 +103644,7 @@ function dbErrorText3(err) {
 }
 function registerQuoteRoutes(app2, deps) {
   const { quotes, registrations, appointments } = deps;
-  const errorPage = (request, reply, session, title, text8, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text8)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -103223,7 +103823,7 @@ function registerQuoteRoutes(app2, deps) {
     const { id: id2, quoteId } = request.params;
     if (!UUID10.test(id2) || !UUID10.test(quoteId))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
-    const fail10 = (text8) => renderRequest(request, reply, session, id2, { kind: "error", text: text8 }, 400);
+    const fail10 = (text9) => renderRequest(request, reply, session, id2, { kind: "error", text: text9 }, 400);
     const action = body.action === "sin_stock" ? "sin_stock" : "cotizado";
     let unitPrice = null;
     if (action === "cotizado") {
@@ -103385,7 +103985,7 @@ var init_quotes = __esm({
 });
 
 // packages/api/dist/infrastructure/quotes/quote-store.js
-function rows21(result) {
+function rows23(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toRequest3(r) {
@@ -103397,16 +103997,16 @@ function toRequest3(r) {
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
     requesterRole: String(r.requesterRole),
-    vehicleId: text6(r.vehicleId),
+    vehicleId: text7(r.vehicleId),
     vehicleLabel: label(r),
-    plate: text6(r.plate),
-    workOrderId: text6(r.workOrderId),
+    plate: text7(r.plate),
+    workOrderId: text7(r.workOrderId),
     partName: String(r.partName),
-    partCode: text6(r.partCode),
+    partCode: text7(r.partCode),
     quantity: Number(r.quantity ?? 1),
     city: String(r.city),
-    notes: text6(r.notes),
-    closeReason: text6(r.closeReason),
+    notes: text7(r.notes),
+    closeReason: text7(r.closeReason),
     createdAt: r.createdAt
   };
 }
@@ -103420,14 +104020,14 @@ function toQuote(r) {
     storeUserId: String(r.storeUserId),
     storePhone: String(r.storePhone),
     status: String(r.status),
-    unitPrice: num3(r.unitPrice),
-    brand: text6(r.brand),
-    availability: text6(r.availability),
-    warrantyDays: num3(r.warrantyDays),
-    deliveryTime: text6(r.deliveryTime),
-    validDays: num3(r.validDays),
-    notes: text6(r.notes),
-    lossReason: text6(r.lossReason),
+    unitPrice: num4(r.unitPrice),
+    brand: text7(r.brand),
+    availability: text7(r.availability),
+    warrantyDays: num4(r.warrantyDays),
+    deliveryTime: text7(r.deliveryTime),
+    validDays: num4(r.validDays),
+    notes: text7(r.notes),
+    lossReason: text7(r.lossReason),
     respondedAt: r.respondedAt ?? null
   };
 }
@@ -103437,10 +104037,10 @@ function toOrder(r) {
     stage: String(r.stage ?? "confirmado"),
     status: String(r.status),
     total: Number(r.total ?? 0),
-    cancelReason: text6(r.cancelReason),
+    cancelReason: text7(r.cancelReason),
     createdAt: r.createdAt,
     quoteRequestId: String(r.quoteRequestId),
-    quoteId: text6(r.quoteId),
+    quoteId: text7(r.quoteId),
     requestNumber: Number(r.requestNumber),
     partName: String(r.partName),
     quantity: Number(r.quantity ?? 1),
@@ -103451,12 +104051,12 @@ function toOrder(r) {
     requesterId: String(r.requesterId),
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
-    unitPrice: num3(r.unitPrice),
-    brand: text6(r.brand),
-    deliveryTime: text6(r.deliveryTime)
+    unitPrice: num4(r.unitPrice),
+    brand: text7(r.brand),
+    deliveryTime: text7(r.deliveryTime)
   };
 }
-var PAGE_SIZE8, SELECT_REQUESTS3, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text6, num3, label, MysqlQuoteStore;
+var PAGE_SIZE8, SELECT_REQUESTS3, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text7, num4, label, MysqlQuoteStore;
 var init_quote_store = __esm({
   "packages/api/dist/infrastructure/quotes/quote-store.js"() {
     "use strict";
@@ -103469,8 +104069,8 @@ var init_quote_store = __esm({
     LIST_OPEN = `${SELECT_REQUESTS3} WHERE q.status = 'abierta' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_ORDERED = `${SELECT_REQUESTS3} WHERE q.status = 'con_pedido' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_ALL2 = `${SELECT_REQUESTS3} ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
-    text6 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
-    num3 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
+    text7 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    num4 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     label = (r) => {
       const parts = [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "");
       return parts.length > 0 ? parts.join(" ") : null;
@@ -103503,7 +104103,7 @@ var init_quote_store = __esm({
       }
       verifiedStores(city) {
         const base = "SELECT id, name, city, zone, categories, delivery FROM `Store` st WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows21(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows23(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
@@ -103511,15 +104111,15 @@ var init_quote_store = __esm({
           id: String(r.id),
           name: String(r.name),
           city: String(r.city),
-          zone: text6(r.zone),
-          categories: text6(r.categories),
+          zone: text7(r.zone),
+          categories: text7(r.categories),
           delivery: !!Number(r.delivery ?? 0)
         })));
       }
       async createRequest(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id2 = String(rows21(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows21(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
+          const id2 = String(rows23(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows23(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `QuoteRequest` (id, number, requesterId, vehicleId, workOrderId, partName, partCode, quantity, city, notes, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, next, input.requesterId, input.vehicleId, input.workOrderId, input.partName, input.partCode, input.quantity, input.city, input.notes]);
           for (const storeId of input.storeIds) {
             await conn.query("INSERT INTO `Quote` (id, requestId, storeId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id2, storeId]);
@@ -103536,26 +104136,26 @@ var init_quote_store = __esm({
       }
       getRequest(id2) {
         return this.run(async (conn) => {
-          const row = rows21(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows23(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id2]))[0];
           if (!row)
             return null;
-          const quotes = rows21(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id2])).map(toQuote);
-          const order = rows21(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id2]))[0];
+          const quotes = rows23(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id2])).map(toQuote);
+          const order = rows23(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id2]))[0];
           return { request: toRequest3(row), quotes, order: order ? toOrder(order) : null };
         });
       }
       listRequests(filter, page) {
         return this.run(async (conn) => {
           const sql = filter === "abiertas" ? LIST_OPEN : filter === "con_pedido" ? LIST_ORDERED : LIST_ALL2;
-          const items = rows21(await conn.query(sql, [PAGE_SIZE8, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE8])).map(toRequest3);
+          const items = rows23(await conn.query(sql, [PAGE_SIZE8, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE8])).map(toRequest3);
           return { items, page, pageSize: PAGE_SIZE8 };
         });
       }
       listForUser(userId) {
         return this.run(async (conn) => {
-          const requests = rows21(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
-          const storeQuotes = rows21(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
-          const orders = rows21(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
+          const requests = rows23(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
+          const storeQuotes = rows23(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
+          const orders = rows23(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
           return { requests, storeQuotes, orders };
         });
       }
@@ -103578,16 +104178,16 @@ var init_quote_store = __esm({
       }
       choose(requestId, quoteId) {
         return this.transaction(async (conn) => {
-          const request = rows21(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
+          const request = rows23(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
           if (!request || request.status !== "abierta")
             return null;
-          const quote2 = rows21(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
+          const quote2 = rows23(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
           if (!quote2 || quote2.status !== "cotizado" || quote2.unitPrice === null)
             return null;
           const quantity = Number(request.quantity ?? 1);
           const unitPrice = Number(quote2.unitPrice);
           const total = Math.round(unitPrice * quantity * 100) / 100;
-          const orderId = String(rows21(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const orderId = String(rows23(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("UPDATE `Quote` SET status = 'elegida' WHERE id = ?", [quoteId]);
           await conn.query("UPDATE `Quote` SET status = 'descartada' WHERE requestId = ? AND id <> ? AND status IN ('invitado', 'cotizado')", [requestId, quoteId]);
           await conn.query("UPDATE `QuoteRequest` SET status = 'con_pedido', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [requestId]);
@@ -103652,7 +104252,7 @@ function buildContactSheet(ctx) {
   if (detail.vehicles.length > 0) {
     lines.push("VEH\xCDCULOS:");
     for (const v of detail.vehicles.slice(0, 5)) {
-      lines.push(`- ${[v.make, v.model, v.year].filter(Boolean).join(" ")} \xB7 ${km6(v.currentKm)} \xB7 ${className2(v.vehicleClass)} \xB7 ${fuelName2(v.fuel)} \xB7 uso ${String(v.usageProfile ?? "urbano")}`);
+      lines.push(`- ${[v.make, v.model, v.year].filter(Boolean).join(" ")} \xB7 ${km7(v.currentKm)} \xB7 ${className2(v.vehicleClass)} \xB7 ${fuelName2(v.fuel)} \xB7 uso ${String(v.usageProfile ?? "urbano")}`);
       const items = planItemsFor(v);
       const overdue = items.filter((i) => i.status === "vencido").map((i) => i.serviceName);
       const upcoming = items.filter((i) => i.status === "proximo").map((i) => `${i.serviceName} (${i.reason})`);
@@ -103666,7 +104266,7 @@ function buildContactSheet(ctx) {
   if (business) {
     lines.push(`NEGOCIO: ${String(business.name)} en ${String(business.city)} \xB7 verificaci\xF3n ${String(business.verificationStatus)}`);
     if (detail.shop?.services?.length)
-      lines.push(`SERVICIOS DEL TALLER: ${detail.shop.services.map(categoryName3).join(", ")}`);
+      lines.push(`SERVICIOS DEL TALLER: ${detail.shop.services.map(categoryName4).join(", ")}`);
   }
   const appointments = ctx.appointments.slice(0, 5);
   if (appointments.length > 0) {
@@ -103715,8 +104315,8 @@ ${redactPii(sanitizeUntrusted(customerText, 2e3))}`];
 ${redactPii(sanitizeUntrusted(instruction, 300))}`);
   return parts.join("\n\n");
 }
-function parseDraft(text8) {
-  const clean = text8.trim();
+function parseDraft(text9) {
+  const clean = text9.trim();
   const match = /RESPUESTA:\s*([\s\S]*?)(?:\n\s*NOTA PARA EL OPERADOR:\s*([\s\S]*))?$/i.exec(clean);
   if (!match)
     return { reply: clean.slice(0, 1500), note: null };
@@ -103729,7 +104329,7 @@ function applyName(reply, firstName2) {
     return reply.replace(/\{nombre\}/g, firstName2);
   return reply.replace(/[ ,]*\{nombre\}/g, "").replace(/¡Hola\s*!/g, "\xA1Hola!");
 }
-var COPILOT_PROMPT_VERSION, COPILOT_SYSTEM_PROMPT, ROLE_NAMES, className2, fuelName2, categoryName3, km6;
+var COPILOT_PROMPT_VERSION, COPILOT_SYSTEM_PROMPT, ROLE_NAMES, className2, fuelName2, categoryName4, km7;
 var init_prompt = __esm({
   "packages/api/dist/application/copilot/prompt.js"() {
     "use strict";
@@ -103764,8 +104364,8 @@ NOTA PARA EL OPERADOR:
     ROLE_NAMES = { dueno: "Due\xF1o de veh\xEDculo", taller: "Taller", almacen: "Almac\xE9n de repuestos", admin: "Administrador" };
     className2 = (id2) => vehicleClasses.classes.find((c) => c.id === id2)?.name ?? "clase no registrada";
     fuelName2 = (id2) => vehicleClasses.fuels.find((f) => f.id === id2)?.name ?? "combustible no registrado";
-    categoryName3 = (id2) => serviceTaxonomy.categories.find((c) => c.id === id2)?.name ?? id2;
-    km6 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
+    categoryName4 = (id2) => serviceTaxonomy.categories.find((c) => c.id === id2)?.name ?? id2;
+    km7 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
   }
 });
 
@@ -103980,7 +104580,7 @@ ${input.instruction ?? ""}`);
 });
 
 // packages/api/dist/infrastructure/copilot/copilot-store.js
-function rows22(result) {
+function rows24(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 var MysqlCopilotStore;
@@ -104002,7 +104602,7 @@ var init_copilot_store = __esm({
       }
       recordUsage(usage) {
         return this.run(async (conn) => {
-          const id2 = String(rows22(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const id2 = String(rows24(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("INSERT INTO `LlmUsage` (id, agent, `function`, provider, model, promptVersion, inputTokens, outputTokens, cachedTokens, costUsd, latencyMs, outcome, createdAt) VALUES (?, 'copilot', 'draft_reply', ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [
             id2,
             usage.provider,
@@ -104020,7 +104620,7 @@ var init_copilot_store = __esm({
       }
       spentBetween(start, end) {
         return this.run(async (conn) => {
-          const row = rows22(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
+          const row = rows24(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
           return Number(row?.n ?? 0);
         });
       }
@@ -104031,7 +104631,7 @@ var init_copilot_store = __esm({
       }
       feedbackSummary(since) {
         return this.run(async (conn) => {
-          const row = rows22(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS approved, COALESCE(SUM(score = 3), 0) AS edited, COALESCE(SUM(score <= 2), 0) AS rejected FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
+          const row = rows24(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS approved, COALESCE(SUM(score = 3), 0) AS edited, COALESCE(SUM(score <= 2), 0) AS rejected FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
           return { approved: Number(row?.approved ?? 0), edited: Number(row?.edited ?? 0), rejected: Number(row?.rejected ?? 0) };
         });
       }
@@ -104040,7 +104640,7 @@ var init_copilot_store = __esm({
 });
 
 // packages/api/dist/infrastructure/work-orders/work-order-store.js
-function rows23(result) {
+function rows25(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toOrder2(r) {
@@ -104057,19 +104657,19 @@ function toOrder2(r) {
     ownerPhone: String(r.ownerPhone),
     vehicleId: String(r.vehicleId),
     vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
-    plate: text7(r.plate),
+    plate: text8(r.plate),
     vehicleKm: Number(r.currentKm ?? 0),
-    appointmentId: text7(r.appointmentId),
+    appointmentId: text8(r.appointmentId),
     intakeKm: int(r.intakeKm),
-    intakeNotes: text7(r.intakeNotes),
-    diagnosis: text7(r.diagnosis),
-    rejectionReason: text7(r.rejectionReason),
-    cancelReason: text7(r.cancelReason),
+    intakeNotes: text8(r.intakeNotes),
+    diagnosis: text8(r.diagnosis),
+    rejectionReason: text8(r.rejectionReason),
+    cancelReason: text8(r.cancelReason),
     exitKm: int(r.exitKm),
     warrantyDays: int(r.warrantyDays),
-    nextService: text7(r.nextService),
-    diagnosisOutcome: text7(r.diagnosisOutcome),
-    outcomeNote: text7(r.outcomeNote),
+    nextService: text8(r.nextService),
+    diagnosisOutcome: text8(r.diagnosisOutcome),
+    outcomeNote: text8(r.outcomeNote),
     total: Number(r.total ?? 0),
     createdAt: r.createdAt,
     closedAt: r.closedAt ?? null
@@ -104080,17 +104680,19 @@ function toItem(r) {
     id: String(r.id),
     kind: String(r.kind),
     description: String(r.description),
-    brand: text7(r.brand),
-    partCode: text7(r.partCode),
+    brand: text8(r.brand),
+    partCode: text8(r.partCode),
     quantity: Number(r.quantity),
     unitPrice: Number(r.unitPrice)
   };
 }
-var PAGE_SIZE9, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL, text7, int, MysqlWorkOrderStore;
+var PAGE_SIZE9, care, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL, text8, int, MysqlWorkOrderStore;
 var init_work_order_store = __esm({
   "packages/api/dist/infrastructure/work-orders/work-order-store.js"() {
     "use strict";
+    init_vehicle_care_store();
     PAGE_SIZE9 = 25;
+    care = new VehicleCareStore();
     SELECT_ORDERS2 = "SELECT w.id, w.number, w.status, w.appointmentId, w.intakeKm, w.intakeNotes, w.diagnosis, w.rejectionReason, w.cancelReason, w.exitKm, w.warrantyDays, w.nextService, w.diagnosisOutcome, w.outcomeNote, w.total, w.createdAt, w.closedAt, s.id AS shopId, s.name AS shopName, su.id AS shopUserId, su.phone AS shopPhone, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, v.id AS vehicleId, v.make, v.model, v.year, v.plate, v.currentKm FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `User` su ON su.id = s.userId JOIN `User` o ON o.id = w.ownerId JOIN `Vehicle` v ON v.id = w.vehicleId";
     LIST_OPEN2 = `${SELECT_ORDERS2} WHERE w.status NOT IN ('cerrada', 'cancelada') ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_TO_APPROVE = `${SELECT_ORDERS2} WHERE w.status = 'presupuesto_enviado' ORDER BY w.createdAt DESC LIMIT ? OFFSET ?`;
@@ -104100,7 +104702,7 @@ var init_work_order_store = __esm({
     GET_ONE2 = `${SELECT_ORDERS2} WHERE w.id = ? LIMIT 1`;
     FOR_USER2 = `${SELECT_ORDERS2} WHERE w.ownerId = ? OR su.id = ? ORDER BY w.createdAt DESC LIMIT 20`;
     RECALCULATE_TOTAL = "UPDATE `WorkOrder` SET total = (SELECT COALESCE(SUM(ROUND(quantity * unitPrice, 2)), 0) FROM `WorkOrderItem` WHERE workOrderId = ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?";
-    text7 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text8 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     int = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     MysqlWorkOrderStore = class {
       connect;
@@ -104130,8 +104732,8 @@ var init_work_order_store = __esm({
       }
       async create(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id2 = String(rows23(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows23(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
+          const id2 = String(rows25(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows25(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, diagnosis, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, next, input.shopId, input.ownerId, input.vehicleId, input.appointmentId, input.intakeKm, input.intakeNotes, input.diagnosis]);
           return id2;
         });
@@ -104145,10 +104747,10 @@ var init_work_order_store = __esm({
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows23(await conn.query(GET_ONE2, [id2]))[0];
+          const row = rows25(await conn.query(GET_ONE2, [id2]))[0];
           if (!row)
             return null;
-          const items = rows23(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id2])).map(toItem);
+          const items = rows25(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id2])).map(toItem);
           return { order: toOrder2(row), items };
         });
       }
@@ -104156,15 +104758,15 @@ var init_work_order_store = __esm({
         return this.run(async (conn) => {
           const params2 = [PAGE_SIZE9, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE9];
           const sql = filter === "abiertas" ? LIST_OPEN2 : filter === "por_aprobar" ? LIST_TO_APPROVE : filter === "en_taller" ? LIST_IN_SHOP : filter === "cerradas" ? LIST_CLOSED : LIST_ALL3;
-          return { items: rows23(await conn.query(sql, params2)).map(toOrder2), page, pageSize: PAGE_SIZE9 };
+          return { items: rows25(await conn.query(sql, params2)).map(toOrder2), page, pageSize: PAGE_SIZE9 };
         });
       }
       listForUser(userId) {
-        return this.run(async (conn) => rows23(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
+        return this.run(async (conn) => rows25(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
       }
       findByAppointment(appointmentId) {
         return this.run(async (conn) => {
-          const row = rows23(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
+          const row = rows25(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
           return row ? String(row.id) : null;
         });
       }
@@ -104188,12 +104790,15 @@ var init_work_order_store = __esm({
       setStatus(id2, expected, next, fields = {}) {
         return this.run(async (conn) => {
           const [result] = await conn.query("UPDATE `WorkOrder` SET status = ?, rejectionReason = COALESCE(?, rejectionReason), cancelReason = COALESCE(?, cancelReason), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status = ?", [next, fields.rejectionReason ?? null, fields.cancelReason ?? null, id2, expected]);
-          return Number(result.affectedRows ?? 0) > 0;
+          const changed = Number(result.affectedRows ?? 0) > 0;
+          if (changed && next === "en_ejecucion")
+            await care.repairStarted(conn, id2).catch(() => void 0);
+          return changed;
         });
       }
       close(id2, input) {
         return this.transaction(async (conn) => {
-          const order = rows23(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id2]))[0];
+          const order = rows25(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id2]))[0];
           if (!order)
             return false;
           await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', exitKm = ?, warrantyDays = ?, nextService = ?, diagnosisOutcome = ?, outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.exitKm, input.warrantyDays, input.nextService, input.diagnosisOutcome, input.outcomeNote, id2]);
@@ -104206,7 +104811,7 @@ var init_work_order_store = __esm({
         });
       }
       historyForUser(userId) {
-        return this.run(async (conn) => rows23(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
+        return this.run(async (conn) => rows25(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
           createdAt: r.createdAt,
           shopName: String(r.shopName),
           vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
@@ -104268,7 +104873,7 @@ var init_views_visits = __esm({
 });
 
 // packages/api/dist/infrastructure/registration/registration-store.js
-function rows24(result) {
+function rows26(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function parseServices(raw) {
@@ -104327,7 +104932,7 @@ var init_registration_store = __esm({
         });
       }
       async uuid(conn) {
-        return String(rows24(await conn.query("SELECT UUID() AS id"))[0]?.id);
+        return String(rows26(await conn.query("SELECT UUID() AS id"))[0]?.id);
       }
       async insertUser(conn, user, role) {
         const id2 = await this.uuid(conn);
@@ -104371,18 +104976,18 @@ var init_registration_store = __esm({
           const like = `%${q.replace(/[\\%_]/g, "\\$&")}%`;
           const digits = q.replace(/\D/g, "");
           const likePhone = digits ? `%${digits}%` : like;
-          const items = rows24(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE10, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE10]));
+          const items = rows26(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE10, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE10]));
           return { items, page, pageSize: PAGE_SIZE10 };
         });
       }
       getUserDetail(id2) {
         return this.run(async (conn) => {
-          const user = rows24(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id2]))[0];
+          const user = rows26(await conn.query("SELECT id, name, role, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [id2]))[0];
           if (!user)
             return null;
-          const vehicles = rows24(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id2]));
-          const shopRow = rows24(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id2]))[0];
-          const store = rows24(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id2]))[0];
+          const vehicles = rows26(await conn.query("SELECT id, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt", [id2]));
+          const shopRow = rows26(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt FROM `Shop` WHERE userId = ? LIMIT 1", [id2]))[0];
+          const store = rows26(await conn.query("SELECT id, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt FROM `Store` WHERE userId = ? LIMIT 1", [id2]))[0];
           return {
             user,
             vehicles,
@@ -104393,8 +104998,8 @@ var init_registration_store = __esm({
       }
       pendingVerifications() {
         return this.run(async (conn) => {
-          const shops = rows24(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
-          const stores = rows24(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
+          const shops = rows26(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
+          const stores = rows26(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
           return [...shops, ...stores].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
         });
       }
@@ -104405,12 +105010,12 @@ var init_registration_store = __esm({
         });
       }
       recentUsers(limit) {
-        return this.run(async (conn) => rows24(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
+        return this.run(async (conn) => rows26(await conn.query("SELECT id, name, role, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' ORDER BY createdAt DESC LIMIT ?", [limit])));
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const shops = Number(rows24(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
-          const stores = Number(rows24(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const shops = Number(rows26(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const stores = Number(rows26(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
           return shops + stores;
         });
       }
@@ -104425,7 +105030,7 @@ __export(admin_exports, {
   default: () => admin_default,
   resetEnrollmentsForTests: () => resetEnrollmentsForTests
 });
-import { randomBytes as randomBytes16 } from "node:crypto";
+import { randomBytes as randomBytes17 } from "node:crypto";
 function resetEnrollmentsForTests() {
   enrollments.clear();
 }
@@ -104456,6 +105061,8 @@ async function adminPanelRoutes(app2, options = {}) {
   const detailData = options.data || options.connect || missingDbEnv().length === 0 ? data2 : void 0;
   const detailRelations = options.relations || options.connect || missingDbEnv().length === 0 ? relations : void 0;
   const linker = detailRelations ? createRelationLinker(detailRelations) : void 0;
+  const workshopMap2 = options.workshopMap ?? new MysqlWorkshopMapStore(connect);
+  const detailMap = options.workshopMap || options.connect || missingDbEnv().length === 0 ? workshopMap2 : void 0;
   let platformCache = null;
   const platform = async () => {
     if (platformCache && Date.now() - platformCache.at < 6e4)
@@ -104484,7 +105091,7 @@ async function adminPanelRoutes(app2, options = {}) {
     }
   });
   app2.addHook("onRequest", async (request, reply) => {
-    request.cspNonce = randomBytes16(16).toString("base64");
+    request.cspNonce = randomBytes17(16).toString("base64");
     reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${request.cspNonce}'; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`).header("X-Frame-Options", "DENY").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("Cache-Control", "no-store");
     if (!getAdminSessionSecret()) {
       return reply.code(503).type("text/html; charset=utf-8").send(layout({
@@ -104535,7 +105142,7 @@ async function adminPanelRoutes(app2, options = {}) {
   }
   registerSetupWizard(app2, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
   registerAccountRoutes(app2, { store, requireSession, html, audit });
-  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, plans: detailPlans, visits: detailVisits, whatsappLinks: options.whatsappLinks, requireSession, html, audit, platform });
+  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, plans: detailPlans, visits: detailVisits, whatsappLinks: options.whatsappLinks, map: detailMap, requireSession, html, audit, platform });
   registerAppointmentRoutes(app2, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit, linker, platform });
   registerWorkOrderRoutes(app2, { workOrders, appointments, registrations, requireSession, html, audit, linker, platform, ratings: detailRatings });
   registerQuoteRoutes(app2, { quotes, registrations, appointments, workOrders, requireSession, html, audit, linker, platform });
@@ -104612,14 +105219,14 @@ async function adminPanelRoutes(app2, options = {}) {
       return reply;
     const raw = Number(request.query?.page ?? 1);
     const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
-    const days = 30;
+    const days2 = 30;
     try {
-      const [list7, stats] = await Promise.all([visits.list(page), visits.stats(days)]);
-      return html(reply, request, "Origen", visitsView({ items: list7.items, stats, days }), session);
+      const [list7, stats] = await Promise.all([visits.list(page), visits.stats(days2)]);
+      return html(reply, request, "Origen", visitsView({ items: list7.items, stats, days: days2 }), session);
     } catch (err) {
       const code3 = err.code;
-      const text8 = code3 === "ER_NO_SUCH_TABLE" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : `No se pudo consultar el origen de los contactos (${code3 ?? "base de datos no disponible"}).`;
-      return html(reply, request, "Origen", messageView("Origen", text8), session, 503);
+      const text9 = code3 === "ER_NO_SUCH_TABLE" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : `No se pudo consultar el origen de los contactos (${code3 ?? "base de datos no disponible"}).`;
+      return html(reply, request, "Origen", messageView("Origen", text9), session, 503);
     }
   });
   app2.get("/login", async (request, reply) => {
@@ -104839,6 +105446,7 @@ var init_admin = __esm({
     init_registration_store();
     init_settings_store();
     init_entry();
+    init_workshop_map_store();
     GENERIC_LOGIN_ERROR = "Correo, contrase\xF1a o c\xF3digo incorrectos.";
     ENROLL_TTL_MS = 10 * 60 * 1e3;
     enrollments = /* @__PURE__ */ new Map();
@@ -106204,6 +106812,176 @@ var LocalAgentConfig = class {
 init_theme();
 init_theme_layers();
 init_brand();
+
+// packages/api/dist/interfaces/pilot-panel-view.js
+init_catalogs();
+var option = (id2, name) => `<option value="${id2}">${name.replace(/[<>&"]/g, "")}</option>`;
+var PANEL_STYLES = `
+.panel{display:grid;gap:16px;margin:16px 0}
+.pcard{background:var(--c-surface);border:1px solid var(--c-line);border-radius:12px;padding:16px;display:grid;gap:12px;margin:0;box-shadow:none}
+.pcard>h2{font-size:17px;margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.pcard>h2 small{font:400 13px/1.3 var(--c-font);color:var(--c-muted)}
+.lead2{font:600 17px/1.35 var(--c-display);letter-spacing:-.01em;margin:0}
+.counts{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--c-line);border-radius:8px;overflow:hidden}
+.counts span{display:grid;gap:2px;padding:8px 10px;border-left:1px solid var(--c-line);font-size:12.5px;color:var(--c-muted)}
+.counts span:first-child{border-left:0}
+.counts b{font:700 20px/1 var(--c-display);font-variant-numeric:tabular-nums}
+.st-urgente{--st:var(--c-bad);--st-bg:var(--c-bad-bg)}.st-pronto{--st:var(--c-warn);--st-bg:var(--c-warn-bg)}
+.st-al_dia{--st:var(--c-ok);--st-bg:var(--c-ok-bg)}.st-sin_dato{--st:var(--c-muted);--st-bg:var(--c-sunk)}
+.counts .st b{color:var(--st)}
+.list{display:grid;border:1px solid var(--c-line);border-radius:12px;overflow:hidden}
+.reco{display:grid;grid-template-columns:32px 1fr;gap:4px 12px;padding:14px;border-top:1px solid var(--c-line);background:var(--c-surface)}
+.reco:first-child{border-top:0}
+.ic{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--st-bg);color:var(--st)}
+.ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.rhead{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.rhead b{font-size:15px;font-weight:600}
+.state{font-size:13px;font-weight:600;color:var(--st);font-variant-numeric:tabular-nums;white-space:nowrap}
+.detail{grid-column:2;font-size:13.5px;color:var(--c-muted);margin:0}
+.meter{grid-column:2;display:grid;gap:4px;margin-top:4px}
+.track{height:6px;border-radius:3px;background:var(--c-sunk);overflow:hidden}.fill{height:100%;width:0;border-radius:3px;background:var(--st)}
+.scale{display:flex;justify-content:space-between;font-size:12px;color:var(--c-muted);font-variant-numeric:tabular-nums}
+.acts{grid-column:2;display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;align-items:center}
+.acts input{width:auto;flex:1 1 150px;min-height:42px}
+.panel button{margin:0;min-height:42px;padding:9px 14px;border-radius:10px;font:600 14px/1.1 var(--c-font);text-transform:none;letter-spacing:0;width:auto}
+.panel button.primary{background:var(--c-cta);color:var(--c-on-cta)}
+.panel button.ghost{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}
+.panel button.full{width:100%}
+.veh{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1px solid var(--c-line);border-radius:12px;padding:12px;cursor:pointer;margin:0;font-weight:400}
+.veh input{width:18px;height:18px;min-height:0;margin:0;accent-color:var(--c-ink)}
+.veh.on{border-color:var(--c-ink);box-shadow:inset 0 0 0 1px var(--c-ink)}
+.veh b{font-weight:600}.veh small{display:block;color:var(--c-muted);font-size:12.5px}
+.plate{font:600 12px/1 var(--c-mono);letter-spacing:.04em;border:1px solid var(--c-line);border-radius:6px;padding:5px 7px;background:var(--c-sunk);white-space:nowrap}
+.tag{display:inline-block;justify-self:start;border-radius:6px;padding:3px 8px;font-size:12.5px;font-weight:600;background:var(--st-bg,var(--c-sunk));color:var(--st,var(--c-muted))}
+.stack{display:grid;gap:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid2 label{margin:0 0 4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.panel .chip{min-height:38px;padding:7px 12px;border-radius:8px;border:1px solid var(--c-line);background:var(--c-surface);color:var(--c-ink);font-weight:500;font-variant-numeric:tabular-nums}
+.panel .chip[aria-pressed="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}
+.days{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.panel .day{display:grid;gap:2px;justify-items:center;padding:6px 0;min-height:52px;font-size:12px;font-weight:500;color:var(--c-muted)}
+.panel .day b{font:700 17px/1 var(--c-display);color:var(--c-ink);font-variant-numeric:tabular-nums}
+.panel .day[aria-pressed="true"] b{color:var(--c-on-accent)}
+.sub{font-size:13.5px;font-weight:600;margin:0}
+.note{font-size:13px;color:var(--c-muted);margin:0}
+.steps{list-style:none;margin:0;padding:0;display:grid}
+.steps li{display:grid;grid-template-columns:28px 1fr;gap:10px;position:relative;padding-bottom:14px}
+.steps li:last-child{padding-bottom:0}
+.steps li::before{content:"";position:absolute;left:13px;top:28px;bottom:0;width:2px;background:var(--c-line)}
+.steps li:last-child::before{display:none}.steps li.done::before{background:var(--c-ok)}
+.n{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;border:2px solid var(--c-line);background:var(--c-surface);color:var(--c-muted);position:relative}
+.done .n{background:var(--c-ok);border-color:var(--c-ok);color:var(--c-surface)}.now .n{border-color:var(--c-ink);color:var(--c-ink)}
+.steps span{font-size:14px;align-self:center}.now span{font-weight:600}
+.row2{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.price{font:700 17px var(--c-display);font-variant-numeric:tabular-nums}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.kpi{border:1px solid var(--c-line);border-radius:12px;padding:12px;display:grid;gap:4px}
+.kpi b{font:700 26px/1 var(--c-display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12.5px;color:var(--c-muted);line-height:1.3}
+.kpi.alert b{color:var(--c-bad)}
+.line{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:12px 14px;border-top:1px solid var(--c-line);font-size:14px;background:var(--c-surface)}
+.line:first-child{border-top:0}
+.line div{min-width:0}.line button{white-space:nowrap;flex:none}
+#notices pre,#messages pre,#appointments pre{font:14px/1.5 var(--c-font);color:var(--c-muted)}.line small{display:block;color:var(--c-muted);font-size:12.5px}
+.more{border:0;box-shadow:none;padding:0;margin:0;background:none}.more>summary{min-height:44px;font:600 14px var(--c-font)}
+.empty{padding:14px;color:var(--c-muted);font-size:14px}
+@media (max-width:560px){.kpis{grid-template-columns:1fr 1fr}.days{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:1fr}}
+`;
+var PANEL_MARKUP = `<div id="panel" class="panel" aria-live="polite"></div>
+<template id="vehicleFormTpl"><div class="grid2">
+<div><label for="nvClass">Clase</label><select id="nvClass">${vehicleClasses.classes.map((c) => option(c.id, c.name)).join("")}</select></div>
+<div><label for="nvFuel">Combustible</label><select id="nvFuel">${vehicleClasses.fuels.map((f) => option(f.id, f.name)).join("")}</select></div>
+<div><label for="nvMake">Marca</label><input id="nvMake" maxlength="60" autocomplete="off"></div>
+<div><label for="nvModel">Modelo</label><input id="nvModel" maxlength="60" autocomplete="off"></div>
+<div><label for="nvYear">A\xF1o</label><input id="nvYear" type="number" min="1970" max="2100" inputmode="numeric"></div>
+<div><label for="nvKm">Kilometraje</label><input id="nvKm" type="number" min="0" max="2000000" inputmode="numeric"></div>
+</div></template>`;
+var PANEL_SCRIPT = `
+const ICON={urgente:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 2.8 19.5h18.4L12 3.5z"/><path d="M12 10v4.2"/><path d="M12 17.2v.1"/></svg>',pronto:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>',al_dia:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.5 4 4 9-9"/></svg>',sin_dato:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.6a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><path d="M12 16.8v.1"/></svg>'};
+const STATE_NAME={urgente:'Urgente',pronto:'Pronto',al_dia:'Al d\xEDa',sin_dato:'Sin dato'};
+let panelData=null;let panelVehicle=null;let booking={service:'',day:'',time:''};
+function h(tag,attrs,...kids){const n=document.createElement(tag);for(const [k,v] of Object.entries(attrs||{})){if(v===null||v===undefined||v===false)continue;if(k==='class')n.className=v;else if(k==='text')n.textContent=v;else if(k.startsWith('on'))n.addEventListener(k.slice(2),v);else n.setAttribute(k,v===true?'':String(v));}for(const kid of kids.flat()){if(kid===null||kid===undefined||kid===false)continue;n.append(kid instanceof Node?kid:document.createTextNode(String(kid)));}return n;}
+function icon(state){const s=h('span',{class:'ic'});s.innerHTML=ICON[state]||ICON.sin_dato;return s;}
+function km(n){return Math.round(Number(n)||0).toLocaleString('es-EC')+' km';}
+function usd(n){return '$ '+Number(n||0).toLocaleString('es-EC',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function ecDate(d,opts){return new Date(d).toLocaleString('es-EC',Object.assign({timeZone:'America/Guayaquil'},opts));}
+function card(title,aside,...kids){return h('section',{class:'pcard'},h('h2',{},title,aside?h('small',{text:aside}):null),...kids);}
+function btn(label,cls,fn){return h('button',{type:'button',class:cls||'ghost',onclick:fn},label);}
+function chipGroup(values,current,onPick,cls){const g=h('div',{class:cls&&cls.includes('day')?'days':'chips',role:'group'});for(const v of values){const b=h('button',{type:'button',class:cls||'chip','aria-pressed':String(v.value===current),onclick:()=>{for(const x of g.children)x.setAttribute('aria-pressed','false');b.setAttribute('aria-pressed','true');onPick(v.value);}});if(v.top){b.append(h('span',{text:v.top}),h('b',{text:v.label}));}else b.textContent=v.label;g.append(b);}return g;}
+async function loadPanel(epoch,vehicleId){const data=await api('/pilot/panel'+(vehicleId?'?vehicleId='+encodeURIComponent(vehicleId):''));if(epoch!==generation||!token)return;panelData=data;panelVehicle=data.vehicleId||null;renderPanel();}
+function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);}
+function lastServiceForm(name){const f=h('form',{class:'acts'});const kmIn=h('input',{type:'number',min:'0',max:'2000000',inputmode:'numeric',required:true,'aria-label':'Kilometraje cuando se hizo',placeholder:'Km cuando se hizo'});const month=h('input',{type:'month','aria-label':'Mes en que se hizo'});f.append(kmIn,month,h('button',{class:'ghost'},'Preparar registro'));f.onsubmit=e=>{e.preventDefault();prepare(['\xDAltimo servicio',name,String(Math.round(Number(kmIn.value))),...(month.value?[month.value]:[])]);};return f;}
+function renderOwner(root,d){
+ const r=d.recommendations;const v=d.vehicles.find(x=>x.id===d.vehicleId);
+ if(!d.vehicles.length){root.append(card('Tu garaje',null,h('p',{class:'note',text:'Todav\xEDa no tienes veh\xEDculos. Agrega el primero para calcular tu plan de mantenimiento.'}),vehicleForm()));return;}
+ if(r){const counts=h('div',{class:'counts'},...['urgente','pronto','al_dia','sin_dato'].map(s=>h('span',{class:'st st-'+s},h('b',{text:String(r.counts[s])}),STATE_NAME[s])));
+  root.append(card('Recomendaci\xF3n de hoy',v?v.label+' \xB7 '+km(v.km):null,h('p',{class:'lead2',text:r.headline}),counts,r.next?btn('Agendar '+r.next.serviceName.toLowerCase(),'primary full',()=>{booking.service=r.next.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}):null));}
+ root.append(garage(d));
+ if(r&&r.items.length){const list=h('div',{class:'list'});const more=h('div',{class:'list'});let quiet=0;for(const it of r.items){const target=(it.state==='urgente'||it.state==='pronto'||quiet++<3)?list:more;const row=h('div',{class:'reco st-'+it.state},icon(it.state),h('div',{class:'rhead'},h('b',{text:it.serviceName}),h('span',{class:'state',text:it.label})),h('p',{class:'detail',text:it.detail}));
+  if(it.progress!==null){const fill=h('div',{class:'fill'});fill.style.width=Math.round(it.progress*100)+'%';row.append(h('div',{class:'meter'},h('div',{class:'track'},fill),it.scale?h('div',{class:'scale'},h('span',{text:it.scale[0]}),h('span',{text:it.scale[1]})):null));}
+  const acts=h('div',{class:'acts'});if(it.state==='urgente'||it.state==='pronto')acts.append(btn('Agendar','ghost',()=>{booking.service=it.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}));
+  if(it.state!=='al_dia'){const done=btn(it.state==='sin_dato'?'Registrar fecha y km':'Ya lo hice','ghost',()=>{done.replaceWith(lastServiceForm(it.serviceName));});acts.append(done);}
+  if(acts.children.length)row.append(acts);target.append(row);}
+  const rest=more.children.length?h('details',{class:'more'},h('summary',{text:'Ver '+more.children.length+' servicios m\xE1s'}),more):null;
+  root.append(card('Plan de mantenimiento',r.items.length+' servicios',list,rest));}
+ else if(v)root.append(card('Plan de mantenimiento',null,h('p',{class:'note',text:'No hay plan para este veh\xEDculo. Falta su clase o combustible: escribe al operador para completarlos.'})));
+ root.append(bookCard(d,r));
+ root.append(ordersCard(d));
+ root.append(partsCard(d,v));
+}
+function garage(d){const box=h('div',{class:'stack'});
+ for(const v of d.vehicles){const input=h('input',{type:'radio',name:'garage',value:v.id,checked:v.id===d.vehicleId});const lab=h('label',{class:'veh'+(v.id===d.vehicleId?' on':'')},input,h('span',{},h('b',{text:v.label}),h('small',{text:[v.fuel,km(v.km),v.fleetName?'de '+v.fleetName:null,v.active?'activo en el chat':null].filter(Boolean).join(' \xB7 ')})),v.plate?h('span',{class:'plate',text:v.plate}):h('span'));input.onchange=()=>{const epoch=generation;loadPanel(epoch,v.id).catch(err=>{if(epoch===generation)status(err.message);});};box.append(lab);}
+ const chosen=d.vehicles.find(x=>x.id===d.vehicleId);
+ const kids=[box];
+ if(d.needsChoice)kids.unshift(h('p',{class:'note',text:'Tienes varios veh\xEDculos. Elige con cu\xE1l trabajar en el chat.'}));
+ if(chosen&&!chosen.active)kids.push(btn('Usar este veh\xEDculo en el chat','ghost',()=>prepare(['Usar veh\xEDculo '+chosen.position])));
+ const add=h('details',{},h('summary',{text:'Agregar veh\xEDculo'}));add.append(vehicleForm());kids.push(add);
+ return card('Mi garaje',d.vehicles.length+(d.vehicles.length===1?' veh\xEDculo':' veh\xEDculos'),...kids);}
+function vehicleForm(){const f=h('form',{});f.append(el('vehicleFormTpl').content.cloneNode(true));f.append(h('button',{class:'ghost full'},'Preparar alta del veh\xEDculo'));f.onsubmit=e=>{e.preventDefault();const q=id=>f.querySelector('#'+id).value.trim();if(!q('nvMake')||!q('nvModel')||!q('nvYear')||q('nvKm')===''){status('Completa marca, modelo, a\xF1o y kilometraje.');return;}prepare(['Veh\xEDculo',q('nvClass'),q('nvFuel'),q('nvMake'),q('nvModel'),q('nvYear'),q('nvKm')]);};return f;}
+function nextDays(){const out=[];const now=new Date();for(let i=1;out.length<6&&i<14;i++){const d=new Date(now.getTime()+i*86400000);if(ecDate(d,{weekday:'short'}).startsWith('dom'))continue;out.push({value:ecDate(d,{weekday:'long',day:'numeric',month:'long'}),top:ecDate(d,{weekday:'short'}).replace('.',''),label:ecDate(d,{day:'numeric'})});}return out;}
+function bookCard(d,r){
+ const names=[];if(r)for(const it of r.items)if((it.state==='urgente'||it.state==='pronto')&&names.length<3)names.push(it.serviceName);
+ for(const extra of ['Diagn\xF3stico','Frenos','Otro'])if(names.length<5&&!names.includes(extra))names.push(extra);
+ if(booking.service&&!names.includes(booking.service))names.unshift(booking.service);
+ if(!booking.service)booking.service=names[0];
+ const city=h('input',{required:true,maxlength:'120','aria-label':'Ciudad',placeholder:'Ciudad'});const zone=h('input',{required:true,maxlength:'120','aria-label':'Sector',placeholder:'Sector'});
+ const f=h('form',{},h('p',{class:'sub',text:'Servicio'}),chipGroup(names.map(n=>({value:n,label:n})),booking.service,x=>{booking.service=x;}),
+  h('p',{class:'sub',text:'D\xEDa que prefieres'}),chipGroup(nextDays(),booking.day,x=>{booking.day=x;},'day chip'),
+  h('p',{class:'sub',text:'Hora que prefieres'}),chipGroup(['08:00','09:30','11:00','14:00','15:30','17:00'].map(t=>({value:t,label:t})),booking.time,x=>{booking.time=x;}),
+  h('div',{class:'grid2'},city,zone),h('button',{class:'primary full'},'Preparar solicitud de cita'));
+ f.onsubmit=e=>{e.preventDefault();if(!d.vehicleId){status('Elige un veh\xEDculo.');return;}const when=[booking.day,booking.time?'a las '+booking.time:''].filter(Boolean).join(' ');prepare(['Buscar servicio',d.vehicleId,booking.service,city.value.trim(),zone.value.trim(),booking.service+(when?'. Prefiero '+when+'.':'.')]);};
+ const c=card('Agendar cita',null,f,h('p',{class:'note',text:'Los talleres de tu zona responden con precio y hora. T\xFA eliges la oferta y el taller confirma.'}));c.id='book';return c;}
+function ordersCard(d){
+ if(!d.orders.length)return card('\xD3rdenes de trabajo',null,h('p',{class:'note',text:'No tienes \xF3rdenes abiertas. Cuando un taller reciba tu veh\xEDculo, ver\xE1s aqu\xED cada paso.'}));
+ const kids=[];for(const o of d.orders){const steps=h('ol',{class:'steps'});d.steps.forEach((s,i)=>{const cls=i<o.step||o.status==='cerrada'?'done':i===o.step?'now':'';steps.append(h('li',{class:cls},h('span',{class:'n',text:String(i+1)}),h('span',{text:s})));});
+  const acts=h('div',{class:'chips'},btn('Ver estado','ghost',()=>prepare(['Estado '+o.code])));
+  if(o.status==='presupuesto_enviado'){acts.append(btn('Aprobar presupuesto','primary',()=>prepare(['Aprobar '+o.code])));const no=btn('No aprobar','ghost',()=>{const f=h('form',{class:'acts'});const why=h('input',{required:true,maxlength:'200','aria-label':'Motivo',placeholder:'Motivo'});f.append(why,h('button',{class:'ghost'},'Preparar'));f.onsubmit=e=>{e.preventDefault();prepare(['Rechazar '+o.code,why.value.trim()]);};no.replaceWith(f);});acts.append(no);}
+  kids.push(h('div',{class:'row2'},h('b',{text:o.vehicle+(o.plate?' \xB7 '+o.plate:'')}),h('span',{class:'tag '+(o.step>=4?'st-al_dia':o.status==='rechazado'?'st-urgente':'st-pronto'),text:o.statusText})),h('p',{class:'note',text:o.code+' en '+o.shopName+(o.totalUsd?' \xB7 '+usd(o.totalUsd):'')}),steps,acts);}
+ return card('\xD3rdenes de trabajo',d.orders.length+(d.orders.length===1?' orden':' \xF3rdenes'),...kids);}
+function partsCard(d,v){
+ const ask=btn('Buscar repuesto','ghost',()=>{el('requestTools').open=true;el('kind').value='repuesto';if(d.vehicleId){if(![...el('vehicle').options].some(o=>o.value===d.vehicleId)){el('vehicle').append(h('option',{value:d.vehicleId,text:v?v.label:'Veh\xEDculo'}));}el('vehicle').value=d.vehicleId;}el('category').focus();});
+ if(!d.parts.length)return card('Repuestos compatibles',v?'para '+v.label:null,h('p',{class:'note',text:'Todav\xEDa no hay repuestos del cat\xE1logo marcados para este veh\xEDculo. Pide uno y los almacenes de tu zona te ofertan.'}),ask);
+ const list=h('div',{class:'list'});for(const p of d.parts){list.append(h('div',{class:'line'},h('div',{},h('b',{text:p.name}),h('small',{text:p.storeName+', '+p.city+(p.stock!==null?' \xB7 '+(p.stock>0?p.stock+' en stock':'bajo pedido'):'')}),h('span',{class:'tag st-al_dia',text:'Compatible con tu '+(v?v.label:'veh\xEDculo')})),h('span',{class:'price',text:usd(p.priceUsd)})));}
+ return card('Repuestos compatibles',v?'para '+v.label:null,list,ask);}
+function requestsCard(d,title){
+ if(!d.requests.length)return card(title,null,h('p',{class:'note',text:'No tienes solicitudes abiertas. Te avisamos cuando un cliente de tu zona pida algo.'}));
+ const list=h('div',{class:'list'});for(const q of d.requests){const row=h('div',{class:'line'},h('div',{},h('b',{text:q.category}),h('small',{text:q.description}),h('small',{text:q.zone+', '+q.city+' \xB7 vence '+ecDate(q.expiresAt,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}),h('span',{class:'tag st-sin_dato',text:'Para '+q.vehicle+(q.fuel?' \xB7 '+q.fuel:'')})),q.offered?h('span',{class:'tag st-al_dia',text:'Oferta enviada'}):btn('Preparar oferta','ghost',()=>{el('offerTools').open=true;el('offerRequest').value=q.requestId;el('price').focus();}));list.append(row);}
+ return card(title,d.requests.length+(d.requests.length===1?' abierta':' abiertas'),list);}
+function renderShop(root,d){
+ const k=d.kpis;root.append(card('Hoy en '+d.shopName,ecDate(new Date(),{weekday:'long',day:'numeric',month:'long'}),h('div',{class:'kpis'},
+  h('div',{class:'kpi'},h('b',{text:String(k.appointmentsToday)}),h('span',{text:'Citas hoy'})),h('div',{class:'kpi'},h('b',{text:String(k.openOrders)}),h('span',{text:'\xD3rdenes abiertas'})),
+  h('div',{class:'kpi'+(k.budgetsWaiting?' alert':'')},h('b',{text:String(k.budgetsWaiting)}),h('span',{text:'Presupuestos sin respuesta'})),h('div',{class:'kpi'},h('b',{text:String(k.clientsDue)}),h('span',{text:'Clientes con mantenimiento por hacer'}))),
+  d.today.length?h('div',{class:'list'},...d.today.map(a=>h('div',{class:'line'},h('div',{},h('b',{text:ecDate(a.time,{hour:'2-digit',minute:'2-digit'})+' \xB7 '+a.vehicle}),h('small',{text:a.ref+(a.plate?' \xB7 '+a.plate:'')})),h('span',{class:'tag '+(a.status==='confirmed'?'st-al_dia':'st-pronto'),text:a.status==='confirmed'?'Confirmada':'Por confirmar'})))):h('p',{class:'note',text:'No hay citas para hoy.'}),
+  btn('Preparar resumen del d\xEDa','ghost',()=>prepare(['Resumen hoy']))));
+ if(d.reminders.length){const list=h('div',{class:'list'});for(const c of d.reminders){list.append(h('div',{class:'line st-'+c.state},h('div',{},h('b',{text:c.client+' \xB7 '+c.vehicle}),h('small',{text:c.serviceName+': '+c.label.toLowerCase()+(c.plate?' \xB7 '+c.plate:'')})),btn('Preparar aviso','ghost',()=>prepare(['Alerta '+c.ref,'Mantenimiento: '+c.serviceName,c.alertValue]))));}
+  root.append(card('Escribir hoy',d.reminders.length+' clientes',h('p',{class:'note',text:'Clientes que atendiste este a\xF1o y tienen un servicio vencido, pr\xF3ximo o sin registro.'}),list));}
+ else root.append(card('Escribir hoy',null,h('p',{class:'note',text:'Ning\xFAn cliente del \xFAltimo a\xF1o tiene servicios pendientes.'})));
+ root.append(requestsCard(d,'Solicitudes por responder'));}
+function renderStore(root,d){root.append(requestsCard(d,'Pedidos de repuestos'+(d.storeName?' \xB7 '+d.storeName:'')));}
+`;
+
+// packages/api/dist/interfaces/pilot-page.js
 function renderPilotPage(nonce) {
   return `<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Pruebas con operador \xB7 AutoMantPro</title>
 <style nonce="${nonce}">${THEME_TOKENS}
@@ -106215,16 +106993,16 @@ input,textarea,select,button{font:inherit;padding:10px 12px;border:1px solid var
 input,textarea,select{width:100%;background:var(--c-field);color:var(--c-ink)}
 button{background:var(--c-accent);color:var(--c-on-accent);border:0;border-radius:var(--c-r);font-weight:600;cursor:pointer;margin:10px 0;padding:10px 18px}
 form button{width:100%}
-#logout,#refresh,#older,#loadVehicles,#link{background:transparent;color:var(--c-accent);border:1px solid var(--c-line)}
+#logout,#reloadPanel,#refresh,#older,#loadVehicles,#link{background:transparent;color:var(--c-accent);border:1px solid var(--c-line)}
 button:disabled{opacity:.6;cursor:wait}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.45 var(--c-mono)}article{border-bottom:1px solid var(--c-line);padding:8px 0}
 details{margin:12px 0;background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:0 14px}details[open]{padding-bottom:14px}
 details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;cursor:pointer}
-.hidden{display:none}a{color:var(--c-accent);font-weight:600}${THEME_PILOT_LAYER}</style>
+.hidden{display:none}a{color:var(--c-accent);font-weight:600}${PANEL_STYLES}${THEME_PILOT_LAYER}</style>
 <main>${logoImg()}<h1>Pruebas con atenci\xF3n humana</h1><p>El operador revisa cada mensaje. Preparar un comando no ejecuta la operaci\xF3n: debes enviarlo y el operador debe aprobarlo.</p><p>Los avisos se muestran aqu\xED. El env\xEDo real por WhatsApp sigue pendiente.</p><p><a href="/admin/local-agent">Conectar o revocar equipo de atenci\xF3n</a></p>
 <section id="login"><h2>Entrar con tu cuenta</h2><form id="loginForm"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form></section>
-<section id="chat" class="hidden"><h2 id="who">Conversaci\xF3n de prueba</h2><button id="logout">Salir</button><form id="sendForm"><label for="message">Mensaje al operador</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar para revisi\xF3n</button></form>
+<div id="chat" class="hidden"><div class="row2"><h2 id="who">Conversaci\xF3n de prueba</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div>${PANEL_MARKUP}<section id="composer"><h2>Mensaje al operador</h2><form id="sendForm"><label for="message">Comando o mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar para revisi\xF3n</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
 <details id="requestTools"><summary>Buscar un servicio o repuesto</summary><form id="requestForm"><label for="vehicle">Veh\xEDculo</label><select id="vehicle" required></select><button type="button" id="loadVehicles">Cargar mis veh\xEDculos</button><label for="kind">Necesidad</label><select id="kind"><option value="servicio">Servicio</option><option value="repuesto">Repuesto</option></select><label for="category">Categor\xEDa registrada (por ejemplo frenos)</label><input id="category" required maxlength="120"><label for="city">Ciudad</label><input id="city" required maxlength="120"><label for="zone">Sector</label><input id="zone" required maxlength="120"><label for="description">Descripci\xF3n</label><input id="description" required minlength="5" maxlength="1000"><button>Preparar solicitud</button></form></details>
 <details id="offerTools"><summary>Preparar una oferta</summary><p>Copia el identificador de solicitud del aviso recibido.</p><form id="offerForm"><label for="offerRequest">Solicitud</label><input id="offerRequest" required maxlength="36"><label for="price">Costo total USD</label><input id="price" type="number" min="0" max="999999" step=".01" required><label for="duration">Duraci\xF3n del trabajo o plazo de entrega en minutos</label><input id="duration" type="number" min="1" max="43200" step="1" required><label for="date">Fecha disponible</label><input id="date" type="date" required><label for="time">Hora en Ecuador continental</label><input id="time" type="time" required><label for="notes">Condiciones</label><textarea id="notes" maxlength="300"></textarea><button>Preparar oferta</button></form></details>
 <details id="decisionTools"><summary>Comparar, elegir o cancelar</summary><form id="decisionForm"><label for="requestId">Solicitud</label><input id="requestId" required maxlength="36"><label for="decision">Operaci\xF3n</label><select id="decision"><option value="Ofertas">Comparar ofertas</option><option value="Aceptar">Aceptar una oferta</option><option value="Cancelar">Cancelar solicitud abierta</option></select><label for="offerId">Oferta que deseas aceptar</label><input id="offerId" maxlength="36"><button>Preparar operaci\xF3n</button></form><p>Aceptar un servicio solicita una cita; el taller confirma despu\xE9s de revisar su agenda. Aceptar un repuesto no confirma stock ni entrega: esa validaci\xF3n es manual en este piloto.</p></details>
@@ -106232,12 +107010,12 @@ details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;
 <h3>Citas del piloto</h3><div id="appointments"></div>
 <h3>Avisos para tu cuenta</h3><button id="refresh" type="button">Actualizar avisos y respuestas</button><div id="notices"></div><button id="older" type="button" class="hidden">Ver avisos anteriores</button>
 <h3>Mensajes y respuestas recientes</h3><p>El historial se recupera al volver a entrar, incluso despu\xE9s de un corte.</p><div id="messages"></div>
-<details><summary>Vinculaci\xF3n futura con WhatsApp</summary><button id="link" type="button">Preparar v\xEDnculo de WhatsApp</button><pre id="linkCode"></pre></details></section><p id="status" role="status"></p></main>
+<details><summary>Vinculaci\xF3n futura con WhatsApp</summary><button id="link" type="button">Preparar v\xEDnculo de WhatsApp</button><pre id="linkCode"></pre></details></section></div><p id="status" role="status"></p></main>
 <script nonce="${nonce}">
-const el=id=>document.getElementById(id);let token=null;let generation=0;let role=null;let timer=null;let pendingSend=null;let sending=false;let cursor=null;let loadedOlder=false;let historyFingerprint='';const noticeItems=new Map();
+const el=id=>document.getElementById(id);${PANEL_SCRIPT}let token=null;let generation=0;let role=null;let timer=null;let pendingSend=null;let sending=false;let cursor=null;let loadedOlder=false;let historyFingerprint='';const noticeItems=new Map();
 async function api(path,options={}){const sentToken=token;const sentGeneration=generation;const response=await fetch('/api/v1'+path,{...options,headers:{'Content-Type':'application/json',...(sentToken?{Authorization:'Bearer '+sentToken}:{}),...options.headers}});const body=await response.json();if(!response.ok){if(sentToken&&token===sentToken&&generation===sentGeneration&&(response.status===401||(response.status===403&&['ACCOUNT_UNAVAILABLE','CONSENT_OR_ACCOUNT_REQUIRED'].includes(body.error?.code))))leave();throw new Error(body.error?.message||body.error?.code||'No se pudo completar la operaci\xF3n');}return body.data;}
 function status(text){el('status').textContent=text;}function text(parent,value){const p=document.createElement('pre');p.textContent=value;parent.append(p);}
-function leave(){token=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;cursor=null;loadedOlder=false;historyFingerprint='';noticeItems.clear();el('chat').classList.add('hidden');el('login').classList.remove('hidden');for(const id of ['messages','notices','appointments','appointment','vehicle'])el(id).replaceChildren();el('linkCode').textContent='';el('message').value='';el('sendForm').querySelector('button').disabled=false;for(const id of ['sendForm','requestForm','offerForm','decisionForm','appointmentForm'])el(id).reset();status('Sesi\xF3n cerrada. Vuelve a entrar para continuar.');}
+function leave(){token=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;cursor=null;loadedOlder=false;historyFingerprint='';noticeItems.clear();el('chat').classList.add('hidden');el('login').classList.remove('hidden');for(const id of ['messages','notices','appointments','appointment','vehicle','panel'])el(id).replaceChildren();panelData=null;panelVehicle=null;booking={service:'',day:'',time:''};el('linkCode').textContent='';el('message').value='';el('sendForm').querySelector('button').disabled=false;for(const id of ['sendForm','requestForm','offerForm','decisionForm','appointmentForm'])el(id).reset();status('Sesi\xF3n cerrada. Vuelve a entrar para continuar.');}
 el('logout').onclick=leave;
 function prepare(parts){if(parts.some(p=>String(p).includes('|'))){status('Escribe los datos sin el car\xE1cter |.');return;}el('message').value=parts.join(' | ');status('Comando preparado. Rev\xEDsalo y env\xEDalo al operador.');el('message').focus();}
 function showNotices(){el('notices').replaceChildren();const items=[...noticeItems.values()].sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))||String(b.id).localeCompare(String(a.id)));if(!items.length)text(el('notices'),'Todav\xEDa no hay avisos para tu cuenta.');for(const n of items){const article=document.createElement('article');text(article,n.message);el('notices').append(article);}el('older').classList.toggle('hidden',!cursor);}
@@ -106246,7 +107024,7 @@ async function loadHistory(epoch){const data=await api('/pilot/history');if(epoc
 async function loadAppointments(epoch){const data=await api('/pilot/appointments');if(epoch!==generation||!token)return;const previous=el('appointment').value;el('appointments').replaceChildren();el('appointment').replaceChildren();for(const a of data.items){const when=new Date(a.scheduledAt).toLocaleString('es-EC',{timeZone:'America/Guayaquil'});text(el('appointments'),'Cita '+a.id+' | '+a.shopName+' | '+when+' | '+a.status);if(role==='taller'&&a.status==='pending'){const option=document.createElement('option');option.value=a.requestId+':'+a.id;option.textContent=a.category+' | '+when;el('appointment').append(option);}}if([...el('appointment').options].some(o=>o.value===previous))el('appointment').value=previous;if(!data.items.length)text(el('appointments'),'No hay citas registradas en este piloto.');}
 async function refresh(epoch){await Promise.all([loadNotices(epoch),loadHistory(epoch),loadAppointments(epoch)]);}
 async function poll(epoch){if(epoch!==generation||!token)return;try{await refresh(epoch);}catch(err){if(epoch===generation)status(err.message);}finally{if(epoch===generation&&token)timer=setTimeout(()=>poll(epoch),5000);}}
-el('loginForm').onsubmit=async e=>{e.preventDefault();const epoch=++generation;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({phone:el('phone').value,password:el('password').value})});if(epoch!==generation)return;if(!['dueno','taller','almacen'].includes(data.user.role)){status('Las pruebas requieren una cuenta de due\xF1o, taller o almac\xE9n.');return;}token=data.accessToken;role=data.user.role;el('password').value='';el('login').classList.add('hidden');el('chat').classList.remove('hidden');el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');poll(epoch);}catch(err){if(epoch===generation)status(err.message);}finally{button.disabled=false;}};
+el('loginForm').onsubmit=async e=>{e.preventDefault();const epoch=++generation;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({phone:el('phone').value,password:el('password').value})});if(epoch!==generation)return;if(!['dueno','taller','almacen'].includes(data.user.role)){status('Las pruebas requieren una cuenta de due\xF1o, taller o almac\xE9n.');return;}token=data.accessToken;role=data.user.role;el('password').value='';el('login').classList.add('hidden');el('chat').classList.remove('hidden');el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}catch(err){if(epoch===generation)status(err.message);}finally{button.disabled=false;}};
 el('sendForm').onsubmit=async e=>{e.preventDefault();if(sending||!token)return;const message=el('message').value.trim();if(!message){status('Escribe un mensaje.');return;}const epoch=generation;if(!pendingSend||pendingSend.message!==message)pendingSend={key:crypto.randomUUID(),message};const submission=pendingSend;const button=e.target.querySelector('button');sending=true;button.disabled=true;try{await api('/pilot/messages',{method:'POST',headers:{'Idempotency-Key':submission.key},body:JSON.stringify({message})});if(epoch!==generation)return;pendingSend=null;el('message').value='';status('En cola para revisi\xF3n humana.');await loadHistory(epoch);}catch(err){if(epoch===generation)status(err.message+'. Si la conexi\xF3n fall\xF3, vuelve a enviar el mismo texto para recuperar la solicitud sin duplicarla.');}finally{if(epoch===generation){sending=false;button.disabled=false;}}};
 el('refresh').onclick=()=>{const epoch=generation;refresh(epoch).catch(err=>{if(epoch===generation)status(err.message);});};
 el('older').onclick=async()=>{if(!cursor)return;const epoch=generation;const before=cursor;try{await loadNotices(epoch,before);if(epoch===generation)loadedOlder=true;}catch(err){if(epoch===generation)status(err.message);}};
@@ -106255,6 +107033,7 @@ el('requestForm').onsubmit=e=>{e.preventDefault();prepare(['Buscar '+el('kind').
 el('offerForm').onsubmit=e=>{e.preventDefault();prepare(['Ofertar',...['offerRequest','price','duration','date','time','notes'].map(id=>el(id).value.trim())]);};
 el('decisionForm').onsubmit=e=>{e.preventDefault();const action=el('decision').value;if(action==='Aceptar'&&!el('offerId').value.trim()){status('Indica la oferta que quieres aceptar.');return;}prepare([action,el('requestId').value.trim(),...(action==='Aceptar'?[el('offerId').value.trim()]:[])]);};
 el('appointmentForm').onsubmit=e=>{e.preventDefault();const ids=el('appointment').value.split(':');if(ids.length!==2){status('Selecciona una cita pendiente.');return;}prepare(['Confirmar cita',...ids]);};
+el('reloadPanel').onclick=()=>{const epoch=generation;loadPanel(epoch,panelVehicle).catch(err=>{if(epoch===generation)status(err.message);});};
 el('link').onclick=async()=>{const epoch=generation;try{const data=await api('/pilot/whatsapp-link',{method:'POST',body:'{}'});if(epoch!==generation)return;el('linkCode').textContent='Cuando WhatsApp est\xE9 conectado, env\xEDa al n\xFAmero de AutoMantPro: VINCULAR '+data.code+'\\nEl c\xF3digo vence en 10 minutos. No lo compartas.';}catch(err){if(epoch===generation)status(err.message);}};
 </script></html>`;
 }
@@ -106280,7 +107059,7 @@ init_outbox_delivery_store();
 
 // packages/api/dist/infrastructure/messaging/imported-contact-store.js
 init_apply();
-import { createHash as createHash6, randomUUID as randomUUID10 } from "node:crypto";
+import { createHash as createHash6, randomUUID as randomUUID11 } from "node:crypto";
 var MysqlImportedContactStore = class {
   connect;
   constructor(connect = openConnection) {
@@ -106304,7 +107083,7 @@ var MysqlImportedContactStore = class {
           skipped++;
           continue;
         }
-        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID10(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
+        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID11(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
         if (Number(result.affectedRows) === 1)
           imported++;
         else
@@ -106317,7 +107096,7 @@ var MysqlImportedContactStore = class {
     return this.run(async (conn) => {
       let queued = 0;
       let skipped = 0;
-      const text8 = `${message2}
+      const text9 = `${message2}
 
 Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
       for (const phone of phones) {
@@ -106327,12 +107106,180 @@ Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
           continue;
         }
         await conn.query("UPDATE `ImportedContact` SET status = 'approved', contactedAt = UTC_TIMESTAMP(3) WHERE id = ?", [contact.id]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID10(), `reactivation:${createHash6("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text8 })]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID10(), contact.id, JSON.stringify({ approvedBy })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID11(), `reactivation:${createHash6("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text9 })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID11(), contact.id, JSON.stringify({ approvedBy })]);
         queued++;
       }
       return { queued, skipped };
     });
+  }
+};
+
+// packages/api/dist/infrastructure/messaging/pilot-panel-store.js
+init_apply();
+init_plan_text();
+init_recommendations();
+init_entitlements();
+init_fleet_access();
+init_vehicle_care_store();
+init_local_agent_broker();
+var rows11 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var ref3 = (prefix, id2) => `${prefix}-${String(id2).replace(/-/g, "").slice(0, 6).toUpperCase()}`;
+var orderCode = (n) => `OT-${String(n).padStart(5, "0")}`;
+var vehicleLabel = (v) => [v.make, v.model, v.year].filter(Boolean).join(" ");
+var shortName = (name) => {
+  const [first, last] = String(name ?? "").trim().split(/\s+/);
+  return first ? `${first}${last ? ` ${last[0].toUpperCase()}.` : ""}` : "Cliente";
+};
+function ecDayStart(now = /* @__PURE__ */ new Date()) {
+  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 5));
+  if (start.getTime() > now.getTime())
+    start.setUTCDate(start.getUTCDate() - 1);
+  return start;
+}
+var ORDER_STEPS = ["Recibido", "Presupuesto enviado", "Presupuesto aprobado", "En reparaci\xF3n", "Listo para entregar"];
+var STEP_OF = { recepcion: 0, presupuesto_enviado: 1, rechazado: 1, aprobado: 2, en_ejecucion: 3, esperando_repuesto: 3, cerrada: 4 };
+var STATUS_TEXT = {
+  recepcion: "Recibido",
+  presupuesto_enviado: "Espera tu aprobaci\xF3n",
+  rechazado: "Presupuesto no aprobado",
+  aprobado: "Por iniciar",
+  en_ejecucion: "En reparaci\xF3n",
+  esperando_repuesto: "Esperando repuesto",
+  cerrada: "Entregado"
+};
+function alertValue(item, currentKm, now = /* @__PURE__ */ new Date()) {
+  if ((item.intervalKm ?? null) !== null)
+    return String(Math.max(item.dueKm, currentKm, 1));
+  const due = new Date(Math.max(new Date(item.dueDate).getTime(), now.getTime()) - 5 * 36e5);
+  return due.toISOString().slice(0, 10);
+}
+var REMINDER_STATES = ["urgente", "pronto", "sin_dato"];
+var PilotPanelStore = class {
+  connect;
+  care = new VehicleCareStore();
+  constructor(connect = openConnection) {
+    this.connect = connect;
+  }
+  async run(fn) {
+    const conn = await this.connect();
+    try {
+      return await fn(conn);
+    } finally {
+      await conn.end().catch(() => void 0);
+    }
+  }
+  async panel(userId, vehicleId) {
+    return this.run(async (conn) => {
+      const [user] = await rows11(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
+      const role = String(user?.role ?? "");
+      if (role === "dueno")
+        return this.owner(conn, userId, vehicleId);
+      if (role === "taller")
+        return this.shop(conn, userId);
+      if (role === "almacen")
+        return this.store(conn, userId);
+      throw new BrokerError("ACCOUNT_UNAVAILABLE");
+    });
+  }
+  async owner(conn, userId, wanted) {
+    const list7 = await myVehicles(conn, userId, true);
+    const selected2 = [...list7].filter((v) => v.selectedAt).sort((a, b) => new Date(b.selectedAt).getTime() - new Date(a.selectedAt).getTime())[0];
+    const active = list7.length === 1 ? list7[0] : selected2;
+    const vehicles = list7.map((v, i) => ({
+      id: String(v.id),
+      position: i + 1,
+      label: vehicleLabel(v),
+      plate: v.plate ? String(v.plate) : null,
+      km: Number(v.currentKm) || 0,
+      fuel: v.fuel ? String(v.fuel) : null,
+      fleetName: v.fleetName ? String(v.fleetName) : null,
+      active: v === active
+    }));
+    const chosen = list7.find((v) => String(v.id) === wanted) ?? active ?? list7[0] ?? null;
+    const recommendations = chosen ? buildRecommendations(planItemsFor(await this.care.planVehicle(conn, chosen), await vehicleLevel(conn, chosen))) : null;
+    const ids = list7.map((v) => String(v.id));
+    const orders = ids.length ? await rows11(conn, "SELECT w.number, w.status, w.intakeKm, w.total, w.updatedAt, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY))) ORDER BY w.number DESC LIMIT 5", [ids]) : [];
+    const parts = chosen ? await rows11(conn, "SELECT p.id, p.name, p.price, p.stock, st.name AS storeName, st.city FROM `ProductVehicle` pv JOIN `Product` p ON p.id = pv.productId JOIN `Store` st ON st.id = p.storeId WHERE pv.vehicleId = ? ORDER BY p.updatedAt DESC LIMIT 6", [chosen.id]).catch(() => []) : [];
+    return {
+      role: "dueno",
+      vehicles,
+      vehicleId: chosen ? String(chosen.id) : null,
+      needsChoice: list7.length > 1 && !selected2,
+      recommendations,
+      orders: orders.map((o) => ({
+        code: orderCode(o.number),
+        status: String(o.status),
+        statusText: STATUS_TEXT[String(o.status)] ?? String(o.status),
+        step: STEP_OF[String(o.status)] ?? 0,
+        vehicle: vehicleLabel(o),
+        plate: o.plate ? String(o.plate) : null,
+        shopName: String(o.shopName),
+        intakeKm: o.intakeKm === null ? null : Number(o.intakeKm),
+        totalUsd: Number(o.total ?? 0),
+        updatedAt: o.updatedAt
+      })),
+      parts: parts.map((p) => ({ id: String(p.id), name: String(p.name), priceUsd: Number(p.price), stock: p.stock === null ? null : Number(p.stock), storeName: String(p.storeName), city: String(p.city) })),
+      steps: ORDER_STEPS
+    };
+  }
+  async requests(conn, userId) {
+    const list7 = await rows11(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.city, lr.zone, lr.expiresAt, o.status, v.make, v.model, v.year, v.fuel FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
+    return list7.map((r) => ({
+      requestId: String(r.id),
+      ref: ref3("S", r.id),
+      kind: String(r.kind),
+      category: String(r.category),
+      description: String(r.description ?? ""),
+      city: String(r.city),
+      zone: String(r.zone),
+      expiresAt: r.expiresAt,
+      vehicle: vehicleLabel(r),
+      fuel: r.fuel ? String(r.fuel) : null,
+      offered: r.status !== "invited"
+    }));
+  }
+  async shop(conn, userId, now = /* @__PURE__ */ new Date()) {
+    const shop = await this.care.actingShop(conn, userId, "taller");
+    const start = ecDayStart(now);
+    const end = new Date(start.getTime() + 864e5);
+    const count3 = async (sql, args) => Number((await rows11(conn, sql, args))[0]?.n ?? 0);
+    const today = await rows11(conn, "SELECT a.id, a.scheduledAt, a.status, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt LIMIT 20", [shop.id, start, end]);
+    const openOrders = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status NOT IN ('cerrada','cancelada')", [shop.id]);
+    const budgetsWaiting = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status = 'presupuesto_enviado'", [shop.id]);
+    const clients = await rows11(conn, "SELECT a.id AS appointmentId, a.vehicleId, u.name AS ownerName, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = a.ownerId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) AND a.scheduledAt = (SELECT MAX(a2.scheduledAt) FROM `Appointment` a2 WHERE a2.shopId = a.shopId AND a2.vehicleId = a.vehicleId AND a2.status <> 'cancelled') ORDER BY a.scheduledAt DESC LIMIT 60", [shop.id]);
+    const reminders = [];
+    for (const c of clients) {
+      const items = planItemsFor(await this.care.planVehicle(conn, c));
+      const top = buildRecommendations(items).items.find((r) => REMINDER_STATES.includes(r.state));
+      const item = top && items.find((i) => i.serviceId === top.serviceId);
+      if (!top || !item)
+        continue;
+      reminders.push({
+        ref: ref3("C", c.appointmentId),
+        client: shortName(c.ownerName),
+        vehicle: vehicleLabel(c),
+        plate: c.plate ? String(c.plate) : null,
+        serviceName: top.serviceName,
+        state: top.state,
+        label: top.label,
+        alertValue: alertValue(item, Number(c.currentKm) || 0, now)
+      });
+    }
+    const rank = { urgente: 0, pronto: 1, sin_dato: 2, al_dia: 3 };
+    reminders.sort((a, b) => rank[a.state] - rank[b.state]);
+    return {
+      role: "taller",
+      shopName: shop.name,
+      kpis: { appointmentsToday: today.length, openOrders, budgetsWaiting, clientsDue: reminders.length },
+      today: today.map((a) => ({ ref: ref3("C", a.id), time: a.scheduledAt, vehicle: vehicleLabel(a), plate: a.plate ? String(a.plate) : null, status: String(a.status) })),
+      reminders: reminders.slice(0, 8),
+      requests: await this.requests(conn, userId)
+    };
+  }
+  async store(conn, userId) {
+    const [store] = await rows11(conn, "SELECT name FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
+    return { role: "almacen", storeName: store ? String(store.name) : null, requests: await this.requests(conn, userId) };
   }
 };
 
@@ -106346,6 +107293,7 @@ async function localAgentRoutes(app2, options = {}) {
   const inbound = options.inbound ?? new MysqlInboundWebhookStore();
   const outbox = options.outbox ?? new MysqlOutboxDeliveryStore();
   const imports = new MysqlImportedContactStore();
+  const panel = options.panel ?? new PilotPanelStore();
   const enabled = async () => (await config.read()).enabled;
   const workerAuth = async (request, reply) => {
     reply.header("Cache-Control", "no-store");
@@ -106407,6 +107355,16 @@ async function localAgentRoutes(app2, options = {}) {
   app2.get("/pilot/appointments", { preHandler: [pilot, authenticate] }, async (request, reply) => {
     try {
       return { data: { items: await broker.appointments(request.userId) }, error: null };
+    } catch (err) {
+      return error(err, reply);
+    }
+  });
+  app2.get("/pilot/panel", { preHandler: [pilot, authenticate] }, async (request, reply) => {
+    const query = external_exports.object({ vehicleId: external_exports.string().uuid().optional() }).safeParse(request.query ?? {});
+    if (!query.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_VEHICLE" } });
+    try {
+      return { data: await panel.panel(request.userId, query.data.vehicleId), error: null };
     } catch (err) {
       return error(err, reply);
     }
@@ -106690,10 +107648,10 @@ function registerRealReadTools(agent, userId) {
     const vehicle = await prisma.vehicle.findFirst({ where: { id: parsed.data.vehicleId, userId, deletedAt: null } });
     if (!vehicle)
       return fail9("get_maintenance_plan", "Veh\xEDculo no disponible para este usuario.");
-    const text8 = planTextFor(vehicle);
-    if (!text8)
+    const text9 = planTextFor(vehicle);
+    if (!text9)
       return fail9("get_maintenance_plan", "Completa clase y combustible del veh\xEDculo con el operador para generar el plan.");
-    return { toolName: "get_maintenance_plan", success: true, data: { vehicleId: vehicle.id, text: text8, source: "maintenance_catalog", manufacturerSpecific: false } };
+    return { toolName: "get_maintenance_plan", success: true, data: { vehicleId: vehicle.id, text: text9, source: "maintenance_catalog", manufacturerSpecific: false } };
   });
   agent.registerTool("get_alerts", async (args) => {
     const parsed = ownedVehicle.safeParse(args);
@@ -106817,9 +107775,9 @@ var AgentStateError = class extends Error {
 // packages/api/dist/infrastructure/agent/turn-store.js
 init_user_lock();
 init_apply();
-import { createHash as createHash8, randomUUID as randomUUID11 } from "node:crypto";
-var digest2 = (text8) => createHash8("sha256").update(text8).digest("hex");
-var rows10 = (result) => result[0];
+import { createHash as createHash8, randomUUID as randomUUID12 } from "node:crypto";
+var digest2 = (text9) => createHash8("sha256").update(text9).digest("hex");
+var rows12 = (result) => result[0];
 var json = (value2) => typeof value2 === "string" ? JSON.parse(value2) : value2;
 var missing = () => new AgentStateError("NOT_FOUND", 404, "Propuesta no disponible.");
 var MysqlAgentTurnStore = class {
@@ -106832,10 +107790,10 @@ var MysqlAgentTurnStore = class {
     const lock = agentUserLock(userId);
     let acquired = false;
     try {
-      acquired = Number(rows10(await conn.query("SELECT GET_LOCK(?, 0) AS acquired", [lock]))[0]?.acquired) === 1;
+      acquired = Number(rows12(await conn.query("SELECT GET_LOCK(?, 0) AS acquired", [lock]))[0]?.acquired) === 1;
       if (!acquired)
         throw new AgentStateError("AGENT_BUSY", 409, "Hay una solicitud en curso. Reintenta con el mismo identificador.");
-      const user = rows10(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL", [userId]))[0];
+      const user = rows12(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL", [userId]))[0];
       if (!user)
         throw new AgentStateError("CONSENT_REQUIRED", 403, "Se requiere una cuenta activa de due\xF1o con consentimiento registrado.");
       return await fn(conn);
@@ -106857,16 +107815,16 @@ var MysqlAgentTurnStore = class {
     };
   }
   async readProposal(conn, userId, id2) {
-    const row = rows10(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE id = ? AND userId = ? AND kind = 'register_vehicle'", [id2, userId]))[0];
+    const row = rows12(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE id = ? AND userId = ? AND kind = 'register_vehicle'", [id2, userId]))[0];
     if (!row)
       throw missing();
     return row;
   }
   async appendMessages(conn, conversationId, userId, messages) {
-    const next = rows10(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
+    const next = rows12(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
     const start = new Date(next).getTime();
     for (const [index, message2] of messages.entries()) {
-      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID11(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
+      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID12(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
     }
     await conn.query("UPDATE `Conversation` SET turnCount = turnCount + ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [messages.length, conversationId]);
   }
@@ -106875,9 +107833,9 @@ var MysqlAgentTurnStore = class {
   }
   async getState(userId) {
     return this.withUser(userId, async (conn) => {
-      const conversation = rows10(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY updatedAt DESC, id DESC LIMIT 1", [userId]))[0];
-      const history = conversation ? rows10(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversation.id])).reverse().map((row) => ({ role: row.direction === "incoming" ? "user" : "assistant", content: String(row.body ?? "") })) : [];
-      const actions = rows10(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND kind = 'register_vehicle' ORDER BY createdAt DESC, id DESC LIMIT 20", [userId]));
+      const conversation = rows12(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY updatedAt DESC, id DESC LIMIT 1", [userId]))[0];
+      const history = conversation ? rows12(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversation.id])).reverse().map((row) => ({ role: row.direction === "incoming" ? "user" : "assistant", content: String(row.body ?? "") })) : [];
+      const actions = rows12(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND kind = 'register_vehicle' ORDER BY createdAt DESC, id DESC LIMIT 20", [userId]));
       return { history, proposals: actions.map((row) => this.proposal(row)) };
     });
   }
@@ -106885,19 +107843,19 @@ var MysqlAgentTurnStore = class {
     return this.withUser(userId, async (conn) => {
       const turnId = digest2(`${userId}:${requestId}`);
       const fingerprint = digest2(message2);
-      const prior = rows10(await conn.query("SELECT fingerprint, response FROM `AgentTurn` WHERE id = ? AND userId = ?", [turnId, userId]))[0];
+      const prior = rows12(await conn.query("SELECT fingerprint, response FROM `AgentTurn` WHERE id = ? AND userId = ?", [turnId, userId]))[0];
       if (prior && prior.fingerprint !== fingerprint)
         throw new AgentStateError("IDEMPOTENCY_CONFLICT", 409, "Ese identificador ya se us\xF3 con otro mensaje.");
       if (prior?.response)
         return json(prior.response);
       if (!prior)
         await conn.query("INSERT INTO `AgentTurn` (id, userId, fingerprint) VALUES (?, ?, ?)", [turnId, userId, fingerprint]);
-      let conversationId = rows10(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
+      let conversationId = rows12(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
       if (!conversationId) {
-        conversationId = randomUUID11();
+        conversationId = randomUUID12();
         await conn.query("INSERT INTO `Conversation` (id, userAId, agent, turnCount, createdAt, updatedAt) VALUES (?, ?, 1, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [conversationId, userId]);
       }
-      const historyRows = rows10(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
+      const historyRows = rows12(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
       const history = historyRows.reverse().map((row) => ({ role: row.direction === "incoming" ? "user" : "assistant", content: String(row.body ?? "") }));
       const reply = await respond({ history, proposeVehicle: async (args) => {
         const parsed = proposedVehicleSchema.safeParse(args);
@@ -106908,7 +107866,7 @@ var MysqlAgentTurnStore = class {
         await conn.query("INSERT IGNORE INTO `AgentAction` (id, userId, turnId, kind, args, expiresAt) VALUES (?, ?, ?, 'register_vehicle', ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 15 MINUTE))", [id2, userId, turnId, encoded]);
         return this.proposal(await this.readProposal(conn, userId, id2));
       } });
-      const actions = rows10(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND turnId = ? ORDER BY createdAt, id", [userId, turnId]));
+      const actions = rows12(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND turnId = ? ORDER BY createdAt, id", [userId, turnId]));
       const response = { reply, proposals: actions.map((row) => this.proposal(row)) };
       await conn.query("START TRANSACTION");
       try {
@@ -106926,7 +107884,7 @@ var MysqlAgentTurnStore = class {
     return this.withUser(userId, async (conn) => {
       await conn.query("START TRANSACTION");
       try {
-        const user = rows10(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL FOR UPDATE", [userId]))[0];
+        const user = rows12(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL FOR UPDATE", [userId]))[0];
         if (!user)
           throw new AgentStateError("CONSENT_REQUIRED", 403, "La cuenta no est\xE1 habilitada para esta operaci\xF3n.");
         const row = await this.readProposal(conn, userId, id2);
@@ -106937,12 +107895,12 @@ var MysqlAgentTurnStore = class {
         if (Number(row.expired))
           throw new AgentStateError("PROPOSAL_EXPIRED", 410, "La propuesta caduc\xF3; solicita una nueva.");
         const vehicle = json(row.args);
-        const vehicleId = randomUUID11();
+        const vehicleId = randomUUID12();
         await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [vehicleId, userId, vehicle.brand, vehicle.model, vehicle.year, vehicle.mileage, vehicle.vehicleClass, vehicle.fuel, vehicle.plate, vehicle.usageProfile]);
         const result = JSON.stringify({ vehicleId });
         await conn.query("UPDATE `AgentAction` SET result = ? WHERE id = ? AND userId = ?", [result, id2, userId]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID11(), userId, vehicleId, JSON.stringify({ actionId: id2 })]);
-        const conversation = rows10(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), userId, vehicleId, JSON.stringify({ actionId: id2 })]);
+        const conversation = rows12(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
         if (conversation)
           await this.appendMessages(conn, String(conversation.id), userId, [{ role: "assistant", content: `Registro confirmado por el usuario. Veh\xEDculo: ${vehicle.brand} ${vehicle.model} ${vehicle.year}. ID: ${vehicleId}.` }]);
         await conn.query("COMMIT");
@@ -107126,8 +108084,8 @@ init_entry();
 
 // packages/api/dist/application/content/catalog.js
 init_maintenance();
-function slugify(text8) {
-  return text8.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+function slugify(text9) {
+  return text9.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 var money3 = (value2) => `US$ ${value2.toFixed(0)}`;
 function buildServicePages() {
@@ -107226,6 +108184,7 @@ var OG_IMAGE_B64 = "iVBORw0KGgoAAAANSUhEUgAABLAAAAJ2CAIAAADAIuwLAAAQAElEQVR4nOzd
 
 // packages/api/dist/interfaces/seo/index.js
 init_head();
+init_marketing();
 var DEFAULT_SITE = "https://automantpro.app";
 var AI_AGENTS = [
   "GPTBot",
@@ -107264,15 +108223,19 @@ ${permitidos}
 Sitemap: ${site}/sitemap.xml
 `;
 }
-function sitemapXml(site, updated = CONTENT_UPDATED) {
+function sitemapXml(site, updated = CONTENT_UPDATED, marketing = null) {
   const fecha = typeof updated === "string" ? updated : updated.toISOString().slice(0, 10);
   const paginas = [
     ["/", "1.0"],
-    ["/servicios", "0.9"],
-    ["/talleres", "0.9"],
-    ["/planes", "0.8"],
-    ...SERVICE_PAGES.map((page) => [`/servicios/${page.slug}`, "0.8"]),
-    ...CITY_PAGES.map((city) => [`/talleres/${city.slug}`, "0.8"]),
+    // Con automantpro.com publicado, los textos (y su sitemap) están allá: aquí solo queda lo operativo.
+    ["/mapa", "0.9"],
+    ...marketing ? [] : [
+      ["/servicios", "0.9"],
+      ["/talleres", "0.9"],
+      ["/planes", "0.8"],
+      ...SERVICE_PAGES.map((page) => [`/servicios/${page.slug}`, "0.8"]),
+      ...CITY_PAGES.map((city) => [`/talleres/${city.slug}`, "0.8"])
+    ],
     ["/terminos", "0.3"],
     ["/privacidad", "0.3"]
   ];
@@ -107285,6 +108248,22 @@ function sitemapXml(site, updated = CONTENT_UPDATED) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls}
 </urlset>
+`;
+}
+function llmsTxtOperativo(site, phone, marketing) {
+  const contacto = phone ? `https://wa.me/${phone}` : `${site}`;
+  return `# AutoMantPro (aplicaci\xF3n)
+
+> ${site} es la aplicaci\xF3n de AutoMantPro: entrada por WhatsApp, paneles y contrataci\xF3n de planes.
+> Qu\xE9 es, servicios, talleres por ciudad, planes y preguntas frecuentes: ${marketing}/
+> Descripci\xF3n completa para asistentes de IA: ${marketing}/llms.txt
+
+## Enlaces
+- Empezar por WhatsApp: ${contacto}
+- Mapa de talleres verificados: ${site}/mapa
+- Contratar plan: ${site}/planes
+- T\xE9rminos y condiciones: ${site}/terminos
+- Pol\xEDtica de privacidad (LOPDP): ${site}/privacidad
 `;
 }
 function llmsTxt(site, phone) {
@@ -107320,6 +108299,7 @@ Detalle y precios: ${site}/planes
 ## P\xE1ginas
 - Servicios con precios referenciales: ${site}/servicios
 ${SERVICE_PAGES.map((page) => `  - ${page.name}: ${site}/servicios/${page.slug}`).join("\n")}
+- Mapa de talleres verificados (ciudad, sector y servicio): ${site}/mapa
 - Talleres por ciudad: ${site}/talleres
 ${CITY_PAGES.map((city) => `  - ${city.name} (${city.province}): ${site}/talleres/${city.slug}`).join("\n")}
 
@@ -107355,8 +108335,9 @@ var IMAGES = [
 ];
 async function seoRoutes(app2, options = {}) {
   const site = (options.site ?? process.env.PUBLIC_SITE_URL ?? DEFAULT_SITE).replace(/\/+$/, "");
+  const marketing = options.marketingSite === void 0 ? marketingSite() : options.marketingSite;
   app2.get("/robots.txt", async (_request, reply) => reply.type("text/plain; charset=utf-8").header("Cache-Control", "public, max-age=3600").send(robotsTxt(site)));
-  app2.get("/sitemap.xml", async (_request, reply) => reply.type("application/xml; charset=utf-8").header("Cache-Control", "public, max-age=3600").send(sitemapXml(site)));
+  app2.get("/sitemap.xml", async (_request, reply) => reply.type("application/xml; charset=utf-8").header("Cache-Control", "public, max-age=3600").send(sitemapXml(site, CONTENT_UPDATED, marketing)));
   for (const image of IMAGES) {
     app2.get(image.path, async (_request, reply) => reply.type(image.type).header("Cache-Control", "public, max-age=604800").header("X-Content-Type-Options", "nosniff").send(image.body));
   }
@@ -107369,7 +108350,7 @@ async function seoRoutes(app2, options = {}) {
       phone = null;
     }
     const digits = (phone ?? process.env.WA_PUBLIC_NUMBER ?? "").replace(/\D/g, "");
-    return reply.type("text/plain; charset=utf-8").header("Cache-Control", "public, max-age=3600").send(llmsTxt(site, digits.length >= 8 ? digits : null));
+    return reply.type("text/plain; charset=utf-8").header("Cache-Control", "public, max-age=3600").send(marketing ? llmsTxtOperativo(site, digits.length >= 8 ? digits : null, marketing) : llmsTxt(site, digits.length >= 8 ? digits : null));
   });
 }
 
@@ -107431,10 +108412,12 @@ function structuredData2(input) {
         }))
       },
       ...input.schema ?? [],
-      {
-        "@type": "FAQPage",
-        mainEntity: input.faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } }))
-      }
+      ...input.faq.length ? [
+        {
+          "@type": "FAQPage",
+          mainEntity: input.faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } }))
+        }
+      ] : []
     ]
   };
   return JSON.stringify(datos).replace(/</g, "\\u003c");
@@ -107458,7 +108441,7 @@ function renderContentPage(input) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="${THEME_COLOR}">
 <title>${escapeHtml(input.title)}</title>
-${seoHead({ path: input.path, title: input.title, description: input.description, type: "website" })}
+${seoHead({ path: input.path, title: input.title, description: input.description, type: "website", noindex: input.noindex })}
 <style nonce="${nonce}">${STYLES}${EXTRA}${THEME_ENTRY_LAYER}</style>
 <script type="application/ld+json" nonce="${nonce}">${structuredData2(input)}</script>
 </head>
@@ -107472,6 +108455,7 @@ ${seoHead({ path: input.path, title: input.title, description: input.description
   ${bloques}
   ${faq}
   ${related}
+  ${input.footerNav ?? ""}
   ${socialLinks()}
   <p class="legal">Al escribirnos aceptas los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP).</p>
 </main>
@@ -107525,7 +108509,8 @@ function cityBlocks(city) {
       html: `<ol class="steps"><li>Cuentas por WhatsApp qu\xE9 le pasa a tu veh\xEDculo y en qu\xE9 zona est\xE1s.</li>
       <li>Te proponemos talleres cercanos; con Premium, talleres verificados con precio acordado.</li>
       <li>Agendas el turno y el trabajo queda con orden, garant\xEDa e historial.</li></ol>
-      <div class="zonas">${city.zones.map((z) => `<span>${escapeHtml(z)}</span>`).join("")}</div>`
+      <div class="zonas">${city.zones.map((z) => `<span>${escapeHtml(z)}</span>`).join("")}</div>
+      <p><a href="/mapa?ciudad=${encodeURIComponent(city.name)}">Ver el mapa de talleres verificados en ${escapeHtml(city.name)}</a></p>`
     },
     {
       title: "Qu\xE9 revisamos antes de recomendar un taller",
@@ -107537,6 +108522,7 @@ function cityBlocks(city) {
 
 // packages/api/dist/interfaces/content/index.js
 init_entry();
+init_marketing();
 var HEADERS = {
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "no-referrer",
@@ -107545,6 +108531,21 @@ var HEADERS = {
 };
 var csp = (nonce) => `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`;
 async function contentRoutes(app2, options = {}) {
+  const marketing = options.marketingSite === void 0 ? marketingSite() : options.marketingSite;
+  if (marketing) {
+    const moved = (reply, path) => reply.header("Cache-Control", "public, max-age=86400").redirect(marketingUrl(marketing, path), 301);
+    app2.get("/servicios", async (_request, reply) => moved(reply, "/servicios"));
+    app2.get("/talleres", async (_request, reply) => moved(reply, "/talleres"));
+    app2.get("/servicios/:slug", async (request, reply) => {
+      const page = findService(request.params.slug);
+      return page ? moved(reply, `/servicios/${page.slug}`) : reply.callNotFound();
+    });
+    app2.get("/talleres/:slug", async (request, reply) => {
+      const city = findCity(request.params.slug);
+      return city ? moved(reply, `/talleres/${city.slug}`) : reply.callNotFound();
+    });
+    return;
+  }
   async function number() {
     try {
       const digits = (await options.resolveNumber?.() ?? "").replace(/\D/g, "");
@@ -107554,10 +108555,10 @@ async function contentRoutes(app2, options = {}) {
     }
     return publicNumber();
   }
-  async function visitCode(ref3, userAgent) {
+  async function visitCode(ref4, userAgent) {
     const code3 = await uniqueVisitCode(options.codeTaken);
     if (options.onVisit && !isPreviewBot(userAgent)) {
-      Promise.resolve().then(() => options.onVisit?.(code3, ref3.slice(0, 32), null)).catch(() => void 0);
+      Promise.resolve().then(() => options.onVisit?.(code3, ref4.slice(0, 32), null)).catch(() => void 0);
     }
     return code3;
   }
@@ -107644,11 +108645,14 @@ async function contentRoutes(app2, options = {}) {
       description: "Talleres mec\xE1nicos en Quito, Guayaquil, Cuenca y m\xE1s ciudades del Ecuador: turno coordinado por WhatsApp, precio acordado antes de entrar y garant\xEDa anotada en la orden de trabajo.",
       h1: "Talleres mec\xE1nicos en Ecuador",
       intro: "Elige tu ciudad: te coordinamos el turno por WhatsApp, con el precio acordado antes de entrar y el trabajo registrado en el historial de tu veh\xEDculo.",
-      blocks: [{ title: "Ciudades", html: `<ul class="enlaces">${lista}</ul>` }],
+      blocks: [
+        { title: "Mapa de talleres", html: `<p>Busca por ciudad, sector y servicio en el <a href="/mapa">mapa de talleres verificados</a>, con el motivo de cada recomendaci\xF3n.</p>` },
+        { title: "Ciudades", html: `<ul class="enlaces">${lista}</ul>` }
+      ],
       faq: [
         {
           q: "\xBFQu\xE9 pasa si mi ciudad no est\xE1 en la lista?",
-          a: "Igual escr\xEDbenos: te buscamos talleres cercanos en el mapa y te avisamos cuando tengamos talleres verificados en tu zona."
+          a: "Mira el mapa de talleres verificados (automantpro.app/mapa), que cubre todo Ecuador y crece cada semana. Si en tu zona todav\xEDa no hay, desde el mismo mapa ves los talleres de Google Maps o invitas a tu mec\xE1nico de confianza."
         }
       ],
       related: SERVICE_PAGES.slice(0, 5).map((p) => ({ href: `/servicios/${p.slug}`, label: p.name })),
@@ -107692,13 +108696,918 @@ async function contentRoutes(app2, options = {}) {
   });
 }
 
+// packages/api/dist/interfaces/map/index.js
+init_page();
+init_entry();
+init_theme();
+init_theme_layers();
+init_head();
+init_brand();
+import { randomBytes as randomBytes8 } from "node:crypto";
+
+// packages/api/dist/interfaces/map/leaflet-assets.js
+var LEAFLET_JS_HASH = "db49d009c841";
+var LEAFLET_JS = `/* @preserve
+ * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
+ * (c) 2010-2023 Vladimir Agafonkin, (c) 2010-2011 CloudMade
+ */
+!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e((t="undefined"!=typeof globalThis?globalThis:t||self).leaflet={})}(this,function(t){"use strict";function l(t){for(var e,i,n=1,o=arguments.length;n<o;n++)for(e in i=arguments[n])t[e]=i[e];return t}var R=Object.create||function(t){return N.prototype=t,new N};function N(){}function a(t,e){var i,n=Array.prototype.slice;return t.bind?t.bind.apply(t,n.call(arguments,1)):(i=n.call(arguments,2),function(){return t.apply(e,i.length?i.concat(n.call(arguments)):arguments)})}var D=0;function h(t){return"_leaflet_id"in t||(t._leaflet_id=++D),t._leaflet_id}function j(t,e,i){var n,o,s=function(){n=!1,o&&(r.apply(i,o),o=!1)},r=function(){n?o=arguments:(t.apply(i,arguments),setTimeout(s,e),n=!0)};return r}function H(t,e,i){var n=e[1],e=e[0],o=n-e;return t===n&&i?t:((t-e)%o+o)%o+e}function u(){return!1}function i(t,e){return!1===e?t:(e=Math.pow(10,void 0===e?6:e),Math.round(t*e)/e)}function W(t){return t.trim?t.trim():t.replace(/^\\s+|\\s+$/g,"")}function F(t){return W(t).split(/\\s+/)}function c(t,e){for(var i in Object.prototype.hasOwnProperty.call(t,"options")||(t.options=t.options?R(t.options):{}),e)t.options[i]=e[i];return t.options}function U(t,e,i){var n,o=[];for(n in t)o.push(encodeURIComponent(i?n.toUpperCase():n)+"="+encodeURIComponent(t[n]));return(e&&-1!==e.indexOf("?")?"&":"?")+o.join("&")}var V=/\\{ *([\\w_ -]+) *\\}/g;function q(t,i){return t.replace(V,function(t,e){e=i[e];if(void 0===e)throw new Error("No value provided for variable "+t);return e="function"==typeof e?e(i):e})}var d=Array.isArray||function(t){return"[object Array]"===Object.prototype.toString.call(t)};function G(t,e){for(var i=0;i<t.length;i++)if(t[i]===e)return i;return-1}var K="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";function Y(t){return window["webkit"+t]||window["moz"+t]||window["ms"+t]}var X=0;function J(t){var e=+new Date,i=Math.max(0,16-(e-X));return X=e+i,window.setTimeout(t,i)}var $=window.requestAnimationFrame||Y("RequestAnimationFrame")||J,Q=window.cancelAnimationFrame||Y("CancelAnimationFrame")||Y("CancelRequestAnimationFrame")||function(t){window.clearTimeout(t)};function x(t,e,i){if(!i||$!==J)return $.call(window,a(t,e));t.call(e)}function r(t){t&&Q.call(window,t)}var tt={__proto__:null,extend:l,create:R,bind:a,get lastId(){return D},stamp:h,throttle:j,wrapNum:H,falseFn:u,formatNum:i,trim:W,splitWords:F,setOptions:c,getParamString:U,template:q,isArray:d,indexOf:G,emptyImageUrl:K,requestFn:$,cancelFn:Q,requestAnimFrame:x,cancelAnimFrame:r};function et(){}et.extend=function(t){function e(){c(this),this.initialize&&this.initialize.apply(this,arguments),this.callInitHooks()}var i,n=e.__super__=this.prototype,o=R(n);for(i in(o.constructor=e).prototype=o,this)Object.prototype.hasOwnProperty.call(this,i)&&"prototype"!==i&&"__super__"!==i&&(e[i]=this[i]);if(t.statics&&l(e,t.statics),t.includes){var s=t.includes;if("undefined"!=typeof L&&L&&L.Mixin){s=d(s)?s:[s];for(var r=0;r<s.length;r++)s[r]===L.Mixin.Events&&console.warn("Deprecated include of L.Mixin.Events: this property will be removed in future releases, please inherit from L.Evented instead.",(new Error).stack)}l.apply(null,[o].concat(t.includes))}return l(o,t),delete o.statics,delete o.includes,o.options&&(o.options=n.options?R(n.options):{},l(o.options,t.options)),o._initHooks=[],o.callInitHooks=function(){if(!this._initHooksCalled){n.callInitHooks&&n.callInitHooks.call(this),this._initHooksCalled=!0;for(var t=0,e=o._initHooks.length;t<e;t++)o._initHooks[t].call(this)}},e},et.include=function(t){var e=this.prototype.options;return l(this.prototype,t),t.options&&(this.prototype.options=e,this.mergeOptions(t.options)),this},et.mergeOptions=function(t){return l(this.prototype.options,t),this},et.addInitHook=function(t){var e=Array.prototype.slice.call(arguments,1),i="function"==typeof t?t:function(){this[t].apply(this,e)};return this.prototype._initHooks=this.prototype._initHooks||[],this.prototype._initHooks.push(i),this};var e={on:function(t,e,i){if("object"==typeof t)for(var n in t)this._on(n,t[n],e);else for(var o=0,s=(t=F(t)).length;o<s;o++)this._on(t[o],e,i);return this},off:function(t,e,i){if(arguments.length)if("object"==typeof t)for(var n in t)this._off(n,t[n],e);else{t=F(t);for(var o=1===arguments.length,s=0,r=t.length;s<r;s++)o?this._off(t[s]):this._off(t[s],e,i)}else delete this._events;return this},_on:function(t,e,i,n){"function"!=typeof e?console.warn("wrong listener type: "+typeof e):!1===this._listens(t,e,i)&&(e={fn:e,ctx:i=i===this?void 0:i},n&&(e.once=!0),this._events=this._events||{},this._events[t]=this._events[t]||[],this._events[t].push(e))},_off:function(t,e,i){var n,o,s;if(this._events&&(n=this._events[t]))if(1===arguments.length){if(this._firingCount)for(o=0,s=n.length;o<s;o++)n[o].fn=u;delete this._events[t]}else"function"!=typeof e?console.warn("wrong listener type: "+typeof e):!1!==(e=this._listens(t,e,i))&&(i=n[e],this._firingCount&&(i.fn=u,this._events[t]=n=n.slice()),n.splice(e,1))},fire:function(t,e,i){if(this.listens(t,i)){var n=l({},e,{type:t,target:this,sourceTarget:e&&e.sourceTarget||this});if(this._events){var o=this._events[t];if(o){this._firingCount=this._firingCount+1||1;for(var s=0,r=o.length;s<r;s++){var a=o[s],h=a.fn;a.once&&this.off(t,h,a.ctx),h.call(a.ctx||this,n)}this._firingCount--}}i&&this._propagateEvent(n)}return this},listens:function(t,e,i,n){"string"!=typeof t&&console.warn('"string" type argument expected');var o=e,s=("function"!=typeof e&&(n=!!e,i=o=void 0),this._events&&this._events[t]);if(s&&s.length&&!1!==this._listens(t,o,i))return!0;if(n)for(var r in this._eventParents)if(this._eventParents[r].listens(t,e,i,n))return!0;return!1},_listens:function(t,e,i){if(this._events){var n=this._events[t]||[];if(!e)return!!n.length;i===this&&(i=void 0);for(var o=0,s=n.length;o<s;o++)if(n[o].fn===e&&n[o].ctx===i)return o}return!1},once:function(t,e,i){if("object"==typeof t)for(var n in t)this._on(n,t[n],e,!0);else for(var o=0,s=(t=F(t)).length;o<s;o++)this._on(t[o],e,i,!0);return this},addEventParent:function(t){return this._eventParents=this._eventParents||{},this._eventParents[h(t)]=t,this},removeEventParent:function(t){return this._eventParents&&delete this._eventParents[h(t)],this},_propagateEvent:function(t){for(var e in this._eventParents)this._eventParents[e].fire(t.type,l({layer:t.target,propagatedFrom:t.target},t),!0)}},it=(e.addEventListener=e.on,e.removeEventListener=e.clearAllEventListeners=e.off,e.addOneTimeEventListener=e.once,e.fireEvent=e.fire,e.hasEventListeners=e.listens,et.extend(e));function p(t,e,i){this.x=i?Math.round(t):t,this.y=i?Math.round(e):e}var nt=Math.trunc||function(t){return 0<t?Math.floor(t):Math.ceil(t)};function m(t,e,i){return t instanceof p?t:d(t)?new p(t[0],t[1]):null==t?t:"object"==typeof t&&"x"in t&&"y"in t?new p(t.x,t.y):new p(t,e,i)}function f(t,e){if(t)for(var i=e?[t,e]:t,n=0,o=i.length;n<o;n++)this.extend(i[n])}function _(t,e){return!t||t instanceof f?t:new f(t,e)}function s(t,e){if(t)for(var i=e?[t,e]:t,n=0,o=i.length;n<o;n++)this.extend(i[n])}function g(t,e){return t instanceof s?t:new s(t,e)}function v(t,e,i){if(isNaN(t)||isNaN(e))throw new Error("Invalid LatLng object: ("+t+", "+e+")");this.lat=+t,this.lng=+e,void 0!==i&&(this.alt=+i)}function w(t,e,i){return t instanceof v?t:d(t)&&"object"!=typeof t[0]?3===t.length?new v(t[0],t[1],t[2]):2===t.length?new v(t[0],t[1]):null:null==t?t:"object"==typeof t&&"lat"in t?new v(t.lat,"lng"in t?t.lng:t.lon,t.alt):void 0===e?null:new v(t,e,i)}p.prototype={clone:function(){return new p(this.x,this.y)},add:function(t){return this.clone()._add(m(t))},_add:function(t){return this.x+=t.x,this.y+=t.y,this},subtract:function(t){return this.clone()._subtract(m(t))},_subtract:function(t){return this.x-=t.x,this.y-=t.y,this},divideBy:function(t){return this.clone()._divideBy(t)},_divideBy:function(t){return this.x/=t,this.y/=t,this},multiplyBy:function(t){return this.clone()._multiplyBy(t)},_multiplyBy:function(t){return this.x*=t,this.y*=t,this},scaleBy:function(t){return new p(this.x*t.x,this.y*t.y)},unscaleBy:function(t){return new p(this.x/t.x,this.y/t.y)},round:function(){return this.clone()._round()},_round:function(){return this.x=Math.round(this.x),this.y=Math.round(this.y),this},floor:function(){return this.clone()._floor()},_floor:function(){return this.x=Math.floor(this.x),this.y=Math.floor(this.y),this},ceil:function(){return this.clone()._ceil()},_ceil:function(){return this.x=Math.ceil(this.x),this.y=Math.ceil(this.y),this},trunc:function(){return this.clone()._trunc()},_trunc:function(){return this.x=nt(this.x),this.y=nt(this.y),this},distanceTo:function(t){var e=(t=m(t)).x-this.x,t=t.y-this.y;return Math.sqrt(e*e+t*t)},equals:function(t){return(t=m(t)).x===this.x&&t.y===this.y},contains:function(t){return t=m(t),Math.abs(t.x)<=Math.abs(this.x)&&Math.abs(t.y)<=Math.abs(this.y)},toString:function(){return"Point("+i(this.x)+", "+i(this.y)+")"}},f.prototype={extend:function(t){var e,i;if(t){if(t instanceof p||"number"==typeof t[0]||"x"in t)e=i=m(t);else if(e=(t=_(t)).min,i=t.max,!e||!i)return this;this.min||this.max?(this.min.x=Math.min(e.x,this.min.x),this.max.x=Math.max(i.x,this.max.x),this.min.y=Math.min(e.y,this.min.y),this.max.y=Math.max(i.y,this.max.y)):(this.min=e.clone(),this.max=i.clone())}return this},getCenter:function(t){return m((this.min.x+this.max.x)/2,(this.min.y+this.max.y)/2,t)},getBottomLeft:function(){return m(this.min.x,this.max.y)},getTopRight:function(){return m(this.max.x,this.min.y)},getTopLeft:function(){return this.min},getBottomRight:function(){return this.max},getSize:function(){return this.max.subtract(this.min)},contains:function(t){var e,i;return(t=("number"==typeof t[0]||t instanceof p?m:_)(t))instanceof f?(e=t.min,i=t.max):e=i=t,e.x>=this.min.x&&i.x<=this.max.x&&e.y>=this.min.y&&i.y<=this.max.y},intersects:function(t){t=_(t);var e=this.min,i=this.max,n=t.min,t=t.max,o=t.x>=e.x&&n.x<=i.x,t=t.y>=e.y&&n.y<=i.y;return o&&t},overlaps:function(t){t=_(t);var e=this.min,i=this.max,n=t.min,t=t.max,o=t.x>e.x&&n.x<i.x,t=t.y>e.y&&n.y<i.y;return o&&t},isValid:function(){return!(!this.min||!this.max)},pad:function(t){var e=this.min,i=this.max,n=Math.abs(e.x-i.x)*t,t=Math.abs(e.y-i.y)*t;return _(m(e.x-n,e.y-t),m(i.x+n,i.y+t))},equals:function(t){return!!t&&(t=_(t),this.min.equals(t.getTopLeft())&&this.max.equals(t.getBottomRight()))}},s.prototype={extend:function(t){var e,i,n=this._southWest,o=this._northEast;if(t instanceof v)i=e=t;else{if(!(t instanceof s))return t?this.extend(w(t)||g(t)):this;if(e=t._southWest,i=t._northEast,!e||!i)return this}return n||o?(n.lat=Math.min(e.lat,n.lat),n.lng=Math.min(e.lng,n.lng),o.lat=Math.max(i.lat,o.lat),o.lng=Math.max(i.lng,o.lng)):(this._southWest=new v(e.lat,e.lng),this._northEast=new v(i.lat,i.lng)),this},pad:function(t){var e=this._southWest,i=this._northEast,n=Math.abs(e.lat-i.lat)*t,t=Math.abs(e.lng-i.lng)*t;return new s(new v(e.lat-n,e.lng-t),new v(i.lat+n,i.lng+t))},getCenter:function(){return new v((this._southWest.lat+this._northEast.lat)/2,(this._southWest.lng+this._northEast.lng)/2)},getSouthWest:function(){return this._southWest},getNorthEast:function(){return this._northEast},getNorthWest:function(){return new v(this.getNorth(),this.getWest())},getSouthEast:function(){return new v(this.getSouth(),this.getEast())},getWest:function(){return this._southWest.lng},getSouth:function(){return this._southWest.lat},getEast:function(){return this._northEast.lng},getNorth:function(){return this._northEast.lat},contains:function(t){t=("number"==typeof t[0]||t instanceof v||"lat"in t?w:g)(t);var e,i,n=this._southWest,o=this._northEast;return t instanceof s?(e=t.getSouthWest(),i=t.getNorthEast()):e=i=t,e.lat>=n.lat&&i.lat<=o.lat&&e.lng>=n.lng&&i.lng<=o.lng},intersects:function(t){t=g(t);var e=this._southWest,i=this._northEast,n=t.getSouthWest(),t=t.getNorthEast(),o=t.lat>=e.lat&&n.lat<=i.lat,t=t.lng>=e.lng&&n.lng<=i.lng;return o&&t},overlaps:function(t){t=g(t);var e=this._southWest,i=this._northEast,n=t.getSouthWest(),t=t.getNorthEast(),o=t.lat>e.lat&&n.lat<i.lat,t=t.lng>e.lng&&n.lng<i.lng;return o&&t},toBBoxString:function(){return[this.getWest(),this.getSouth(),this.getEast(),this.getNorth()].join(",")},equals:function(t,e){return!!t&&(t=g(t),this._southWest.equals(t.getSouthWest(),e)&&this._northEast.equals(t.getNorthEast(),e))},isValid:function(){return!(!this._southWest||!this._northEast)}};var ot={latLngToPoint:function(t,e){t=this.projection.project(t),e=this.scale(e);return this.transformation._transform(t,e)},pointToLatLng:function(t,e){e=this.scale(e),t=this.transformation.untransform(t,e);return this.projection.unproject(t)},project:function(t){return this.projection.project(t)},unproject:function(t){return this.projection.unproject(t)},scale:function(t){return 256*Math.pow(2,t)},zoom:function(t){return Math.log(t/256)/Math.LN2},getProjectedBounds:function(t){var e;return this.infinite?null:(e=this.projection.bounds,t=this.scale(t),new f(this.transformation.transform(e.min,t),this.transformation.transform(e.max,t)))},infinite:!(v.prototype={equals:function(t,e){return!!t&&(t=w(t),Math.max(Math.abs(this.lat-t.lat),Math.abs(this.lng-t.lng))<=(void 0===e?1e-9:e))},toString:function(t){return"LatLng("+i(this.lat,t)+", "+i(this.lng,t)+")"},distanceTo:function(t){return st.distance(this,w(t))},wrap:function(){return st.wrapLatLng(this)},toBounds:function(t){var t=180*t/40075017,e=t/Math.cos(Math.PI/180*this.lat);return g([this.lat-t,this.lng-e],[this.lat+t,this.lng+e])},clone:function(){return new v(this.lat,this.lng,this.alt)}}),wrapLatLng:function(t){var e=this.wrapLng?H(t.lng,this.wrapLng,!0):t.lng;return new v(this.wrapLat?H(t.lat,this.wrapLat,!0):t.lat,e,t.alt)},wrapLatLngBounds:function(t){var e=t.getCenter(),i=this.wrapLatLng(e),n=e.lat-i.lat,e=e.lng-i.lng;return 0==n&&0==e?t:(i=t.getSouthWest(),t=t.getNorthEast(),new s(new v(i.lat-n,i.lng-e),new v(t.lat-n,t.lng-e)))}},st=l({},ot,{wrapLng:[-180,180],R:6371e3,distance:function(t,e){var i=Math.PI/180,n=t.lat*i,o=e.lat*i,s=Math.sin((e.lat-t.lat)*i/2),e=Math.sin((e.lng-t.lng)*i/2),t=s*s+Math.cos(n)*Math.cos(o)*e*e,i=2*Math.atan2(Math.sqrt(t),Math.sqrt(1-t));return this.R*i}}),rt=6378137,rt={R:rt,MAX_LATITUDE:85.0511287798,project:function(t){var e=Math.PI/180,i=this.MAX_LATITUDE,i=Math.max(Math.min(i,t.lat),-i),i=Math.sin(i*e);return new p(this.R*t.lng*e,this.R*Math.log((1+i)/(1-i))/2)},unproject:function(t){var e=180/Math.PI;return new v((2*Math.atan(Math.exp(t.y/this.R))-Math.PI/2)*e,t.x*e/this.R)},bounds:new f([-(rt=rt*Math.PI),-rt],[rt,rt])};function at(t,e,i,n){d(t)?(this._a=t[0],this._b=t[1],this._c=t[2],this._d=t[3]):(this._a=t,this._b=e,this._c=i,this._d=n)}function ht(t,e,i,n){return new at(t,e,i,n)}at.prototype={transform:function(t,e){return this._transform(t.clone(),e)},_transform:function(t,e){return t.x=(e=e||1)*(this._a*t.x+this._b),t.y=e*(this._c*t.y+this._d),t},untransform:function(t,e){return new p((t.x/(e=e||1)-this._b)/this._a,(t.y/e-this._d)/this._c)}};var lt=l({},st,{code:"EPSG:3857",projection:rt,transformation:ht(lt=.5/(Math.PI*rt.R),.5,-lt,.5)}),ut=l({},lt,{code:"EPSG:900913"});function ct(t){return document.createElementNS("http://www.w3.org/2000/svg",t)}function dt(t,e){for(var i,n,o,s,r="",a=0,h=t.length;a<h;a++){for(i=0,n=(o=t[a]).length;i<n;i++)r+=(i?"L":"M")+(s=o[i]).x+" "+s.y;r+=e?b.svg?"z":"x":""}return r||"M0 0"}var _t=document.documentElement.style,pt="ActiveXObject"in window,mt=pt&&!document.addEventListener,n="msLaunchUri"in navigator&&!("documentMode"in document),ft=y("webkit"),gt=y("android"),vt=y("android 2")||y("android 3"),yt=parseInt(/WebKit\\/([0-9]+)|$/.exec(navigator.userAgent)[1],10),yt=gt&&y("Google")&&yt<537&&!("AudioNode"in window),xt=!!window.opera,wt=!n&&y("chrome"),bt=y("gecko")&&!ft&&!xt&&!pt,Pt=!wt&&y("safari"),Lt=y("phantom"),o="OTransition"in _t,Tt=0===navigator.platform.indexOf("Win"),Mt=pt&&"transition"in _t,zt="WebKitCSSMatrix"in window&&"m11"in new window.WebKitCSSMatrix&&!vt,_t="MozPerspective"in _t,Ct=!window.L_DISABLE_3D&&(Mt||zt||_t)&&!o&&!Lt,Zt="undefined"!=typeof orientation||y("mobile"),St=Zt&&ft,Et=Zt&&zt,kt=!window.PointerEvent&&window.MSPointerEvent,Ot=!(!window.PointerEvent&&!kt),At="ontouchstart"in window||!!window.TouchEvent,Bt=!window.L_NO_TOUCH&&(At||Ot),It=Zt&&xt,Rt=Zt&&bt,Nt=1<(window.devicePixelRatio||window.screen.deviceXDPI/window.screen.logicalXDPI),Dt=function(){var t=!1;try{var e=Object.defineProperty({},"passive",{get:function(){t=!0}});window.addEventListener("testPassiveEventSupport",u,e),window.removeEventListener("testPassiveEventSupport",u,e)}catch(t){}return t}(),jt=!!document.createElement("canvas").getContext,Ht=!(!document.createElementNS||!ct("svg").createSVGRect),Wt=!!Ht&&((Wt=document.createElement("div")).innerHTML="<svg/>","http://www.w3.org/2000/svg"===(Wt.firstChild&&Wt.firstChild.namespaceURI));function y(t){return 0<=navigator.userAgent.toLowerCase().indexOf(t)}var b={ie:pt,ielt9:mt,edge:n,webkit:ft,android:gt,android23:vt,androidStock:yt,opera:xt,chrome:wt,gecko:bt,safari:Pt,phantom:Lt,opera12:o,win:Tt,ie3d:Mt,webkit3d:zt,gecko3d:_t,any3d:Ct,mobile:Zt,mobileWebkit:St,mobileWebkit3d:Et,msPointer:kt,pointer:Ot,touch:Bt,touchNative:At,mobileOpera:It,mobileGecko:Rt,retina:Nt,passiveEvents:Dt,canvas:jt,svg:Ht,vml:!Ht&&function(){try{var t=document.createElement("div"),e=(t.innerHTML='<v:shape adj="1"/>',t.firstChild);return e.style.behavior="url(#default#VML)",e&&"object"==typeof e.adj}catch(t){return!1}}(),inlineSvg:Wt,mac:0===navigator.platform.indexOf("Mac"),linux:0===navigator.platform.indexOf("Linux")},Ft=b.msPointer?"MSPointerDown":"pointerdown",Ut=b.msPointer?"MSPointerMove":"pointermove",Vt=b.msPointer?"MSPointerUp":"pointerup",qt=b.msPointer?"MSPointerCancel":"pointercancel",Gt={touchstart:Ft,touchmove:Ut,touchend:Vt,touchcancel:qt},Kt={touchstart:function(t,e){e.MSPOINTER_TYPE_TOUCH&&e.pointerType===e.MSPOINTER_TYPE_TOUCH&&O(e);ee(t,e)},touchmove:ee,touchend:ee,touchcancel:ee},Yt={},Xt=!1;function Jt(t,e,i){return"touchstart"!==e||Xt||(document.addEventListener(Ft,$t,!0),document.addEventListener(Ut,Qt,!0),document.addEventListener(Vt,te,!0),document.addEventListener(qt,te,!0),Xt=!0),Kt[e]?(i=Kt[e].bind(this,i),t.addEventListener(Gt[e],i,!1),i):(console.warn("wrong event specified:",e),u)}function $t(t){Yt[t.pointerId]=t}function Qt(t){Yt[t.pointerId]&&(Yt[t.pointerId]=t)}function te(t){delete Yt[t.pointerId]}function ee(t,e){if(e.pointerType!==(e.MSPOINTER_TYPE_MOUSE||"mouse")){for(var i in e.touches=[],Yt)e.touches.push(Yt[i]);e.changedTouches=[e],t(e)}}var ie=200;function ne(t,i){t.addEventListener("dblclick",i);var n,o=0;function e(t){var e;1!==t.detail?n=t.detail:"mouse"===t.pointerType||t.sourceCapabilities&&!t.sourceCapabilities.firesTouchEvents||((e=Ne(t)).some(function(t){return t instanceof HTMLLabelElement&&t.attributes.for})&&!e.some(function(t){return t instanceof HTMLInputElement||t instanceof HTMLSelectElement})||((e=Date.now())-o<=ie?2===++n&&i(function(t){var e,i,n={};for(i in t)e=t[i],n[i]=e&&e.bind?e.bind(t):e;return(t=n).type="dblclick",n.detail=2,n.isTrusted=!1,n._simulated=!0,n}(t)):n=1,o=e))}return t.addEventListener("click",e),{dblclick:i,simDblclick:e}}var oe,se,re,ae,he,le,ue=we(["transform","webkitTransform","OTransform","MozTransform","msTransform"]),ce=we(["webkitTransition","transition","OTransition","MozTransition","msTransition"]),de="webkitTransition"===ce||"OTransition"===ce?ce+"End":"transitionend";function _e(t){return"string"==typeof t?document.getElementById(t):t}function pe(t,e){var i=t.style[e]||t.currentStyle&&t.currentStyle[e];return"auto"===(i=i&&"auto"!==i||!document.defaultView?i:(t=document.defaultView.getComputedStyle(t,null))?t[e]:null)?null:i}function P(t,e,i){t=document.createElement(t);return t.className=e||"",i&&i.appendChild(t),t}function T(t){var e=t.parentNode;e&&e.removeChild(t)}function me(t){for(;t.firstChild;)t.removeChild(t.firstChild)}function fe(t){var e=t.parentNode;e&&e.lastChild!==t&&e.appendChild(t)}function ge(t){var e=t.parentNode;e&&e.firstChild!==t&&e.insertBefore(t,e.firstChild)}function ve(t,e){return void 0!==t.classList?t.classList.contains(e):0<(t=xe(t)).length&&new RegExp("(^|\\\\s)"+e+"(\\\\s|$)").test(t)}function M(t,e){var i;if(void 0!==t.classList)for(var n=F(e),o=0,s=n.length;o<s;o++)t.classList.add(n[o]);else ve(t,e)||ye(t,((i=xe(t))?i+" ":"")+e)}function z(t,e){void 0!==t.classList?t.classList.remove(e):ye(t,W((" "+xe(t)+" ").replace(" "+e+" "," ")))}function ye(t,e){void 0===t.className.baseVal?t.className=e:t.className.baseVal=e}function xe(t){return void 0===(t=t.correspondingElement?t.correspondingElement:t).className.baseVal?t.className:t.className.baseVal}function C(t,e){if("opacity"in t.style)t.style.opacity=e;else if("filter"in t.style){var i=!1,n="DXImageTransform.Microsoft.Alpha";try{i=t.filters.item(n)}catch(t){if(1===e)return}e=Math.round(100*e),i?(i.Enabled=100!==e,i.Opacity=e):t.style.filter+=" progid:"+n+"(opacity="+e+")"}}function we(t){for(var e=document.documentElement.style,i=0;i<t.length;i++)if(t[i]in e)return t[i];return!1}function be(t,e,i){e=e||new p(0,0);t.style[ue]=(b.ie3d?"translate("+e.x+"px,"+e.y+"px)":"translate3d("+e.x+"px,"+e.y+"px,0)")+(i?" scale("+i+")":"")}function Z(t,e){t._leaflet_pos=e,b.any3d?be(t,e):(t.style.left=e.x+"px",t.style.top=e.y+"px")}function Pe(t){return t._leaflet_pos||new p(0,0)}function Le(){S(window,"dragstart",O)}function Te(){k(window,"dragstart",O)}function Me(t){for(;-1===t.tabIndex;)t=t.parentNode;t.style&&(ze(),le=(he=t).style.outlineStyle,t.style.outlineStyle="none",S(window,"keydown",ze))}function ze(){he&&(he.style.outlineStyle=le,le=he=void 0,k(window,"keydown",ze))}function Ce(t){for(;!((t=t.parentNode).offsetWidth&&t.offsetHeight||t===document.body););return t}function Ze(t){var e=t.getBoundingClientRect();return{x:e.width/t.offsetWidth||1,y:e.height/t.offsetHeight||1,boundingClientRect:e}}ae="onselectstart"in document?(re=function(){S(window,"selectstart",O)},function(){k(window,"selectstart",O)}):(se=we(["userSelect","WebkitUserSelect","OUserSelect","MozUserSelect","msUserSelect"]),re=function(){var t;se&&(t=document.documentElement.style,oe=t[se],t[se]="none")},function(){se&&(document.documentElement.style[se]=oe,oe=void 0)});pt={__proto__:null,TRANSFORM:ue,TRANSITION:ce,TRANSITION_END:de,get:_e,getStyle:pe,create:P,remove:T,empty:me,toFront:fe,toBack:ge,hasClass:ve,addClass:M,removeClass:z,setClass:ye,getClass:xe,setOpacity:C,testProp:we,setTransform:be,setPosition:Z,getPosition:Pe,get disableTextSelection(){return re},get enableTextSelection(){return ae},disableImageDrag:Le,enableImageDrag:Te,preventOutline:Me,restoreOutline:ze,getSizedParentNode:Ce,getScale:Ze};function S(t,e,i,n){if(e&&"object"==typeof e)for(var o in e)ke(t,o,e[o],i);else for(var s=0,r=(e=F(e)).length;s<r;s++)ke(t,e[s],i,n);return this}var E="_leaflet_events";function k(t,e,i,n){if(1===arguments.length)Se(t),delete t[E];else if(e&&"object"==typeof e)for(var o in e)Oe(t,o,e[o],i);else if(e=F(e),2===arguments.length)Se(t,function(t){return-1!==G(e,t)});else for(var s=0,r=e.length;s<r;s++)Oe(t,e[s],i,n);return this}function Se(t,e){for(var i in t[E]){var n=i.split(/\\d/)[0];e&&!e(n)||Oe(t,n,null,null,i)}}var Ee={mouseenter:"mouseover",mouseleave:"mouseout",wheel:!("onwheel"in window)&&"mousewheel"};function ke(e,t,i,n){var o,s,r=t+h(i)+(n?"_"+h(n):"");e[E]&&e[E][r]||(s=o=function(t){return i.call(n||e,t||window.event)},!b.touchNative&&b.pointer&&0===t.indexOf("touch")?o=Jt(e,t,o):b.touch&&"dblclick"===t?o=ne(e,o):"addEventListener"in e?"touchstart"===t||"touchmove"===t||"wheel"===t||"mousewheel"===t?e.addEventListener(Ee[t]||t,o,!!b.passiveEvents&&{passive:!1}):"mouseenter"===t||"mouseleave"===t?e.addEventListener(Ee[t],o=function(t){t=t||window.event,We(e,t)&&s(t)},!1):e.addEventListener(t,s,!1):e.attachEvent("on"+t,o),e[E]=e[E]||{},e[E][r]=o)}function Oe(t,e,i,n,o){o=o||e+h(i)+(n?"_"+h(n):"");var s,r,i=t[E]&&t[E][o];i&&(!b.touchNative&&b.pointer&&0===e.indexOf("touch")?(n=t,r=i,Gt[s=e]?n.removeEventListener(Gt[s],r,!1):console.warn("wrong event specified:",s)):b.touch&&"dblclick"===e?(n=i,(r=t).removeEventListener("dblclick",n.dblclick),r.removeEventListener("click",n.simDblclick)):"removeEventListener"in t?t.removeEventListener(Ee[e]||e,i,!1):t.detachEvent("on"+e,i),t[E][o]=null)}function Ae(t){return t.stopPropagation?t.stopPropagation():t.originalEvent?t.originalEvent._stopped=!0:t.cancelBubble=!0,this}function Be(t){return ke(t,"wheel",Ae),this}function Ie(t){return S(t,"mousedown touchstart dblclick contextmenu",Ae),t._leaflet_disable_click=!0,this}function O(t){return t.preventDefault?t.preventDefault():t.returnValue=!1,this}function Re(t){return O(t),Ae(t),this}function Ne(t){if(t.composedPath)return t.composedPath();for(var e=[],i=t.target;i;)e.push(i),i=i.parentNode;return e}function De(t,e){var i,n;return e?(n=(i=Ze(e)).boundingClientRect,new p((t.clientX-n.left)/i.x-e.clientLeft,(t.clientY-n.top)/i.y-e.clientTop)):new p(t.clientX,t.clientY)}var je=b.linux&&b.chrome?window.devicePixelRatio:b.mac?3*window.devicePixelRatio:0<window.devicePixelRatio?2*window.devicePixelRatio:1;function He(t){return b.edge?t.wheelDeltaY/2:t.deltaY&&0===t.deltaMode?-t.deltaY/je:t.deltaY&&1===t.deltaMode?20*-t.deltaY:t.deltaY&&2===t.deltaMode?60*-t.deltaY:t.deltaX||t.deltaZ?0:t.wheelDelta?(t.wheelDeltaY||t.wheelDelta)/2:t.detail&&Math.abs(t.detail)<32765?20*-t.detail:t.detail?t.detail/-32765*60:0}function We(t,e){var i=e.relatedTarget;if(!i)return!0;try{for(;i&&i!==t;)i=i.parentNode}catch(t){return!1}return i!==t}var mt={__proto__:null,on:S,off:k,stopPropagation:Ae,disableScrollPropagation:Be,disableClickPropagation:Ie,preventDefault:O,stop:Re,getPropagationPath:Ne,getMousePosition:De,getWheelDelta:He,isExternalTarget:We,addListener:S,removeListener:k},Fe=it.extend({run:function(t,e,i,n){this.stop(),this._el=t,this._inProgress=!0,this._duration=i||.25,this._easeOutPower=1/Math.max(n||.5,.2),this._startPos=Pe(t),this._offset=e.subtract(this._startPos),this._startTime=+new Date,this.fire("start"),this._animate()},stop:function(){this._inProgress&&(this._step(!0),this._complete())},_animate:function(){this._animId=x(this._animate,this),this._step()},_step:function(t){var e=+new Date-this._startTime,i=1e3*this._duration;e<i?this._runFrame(this._easeOut(e/i),t):(this._runFrame(1),this._complete())},_runFrame:function(t,e){t=this._startPos.add(this._offset.multiplyBy(t));e&&t._round(),Z(this._el,t),this.fire("step")},_complete:function(){r(this._animId),this._inProgress=!1,this.fire("end")},_easeOut:function(t){return 1-Math.pow(1-t,this._easeOutPower)}}),A=it.extend({options:{crs:lt,center:void 0,zoom:void 0,minZoom:void 0,maxZoom:void 0,layers:[],maxBounds:void 0,renderer:void 0,zoomAnimation:!0,zoomAnimationThreshold:4,fadeAnimation:!0,markerZoomAnimation:!0,transform3DLimit:8388608,zoomSnap:1,zoomDelta:1,trackResize:!0},initialize:function(t,e){e=c(this,e),this._handlers=[],this._layers={},this._zoomBoundLayers={},this._sizeChanged=!0,this._initContainer(t),this._initLayout(),this._onResize=a(this._onResize,this),this._initEvents(),e.maxBounds&&this.setMaxBounds(e.maxBounds),void 0!==e.zoom&&(this._zoom=this._limitZoom(e.zoom)),e.center&&void 0!==e.zoom&&this.setView(w(e.center),e.zoom,{reset:!0}),this.callInitHooks(),this._zoomAnimated=ce&&b.any3d&&!b.mobileOpera&&this.options.zoomAnimation,this._zoomAnimated&&(this._createAnimProxy(),S(this._proxy,de,this._catchTransitionEnd,this)),this._addLayers(this.options.layers)},setView:function(t,e,i){if((e=void 0===e?this._zoom:this._limitZoom(e),t=this._limitCenter(w(t),e,this.options.maxBounds),i=i||{},this._stop(),this._loaded&&!i.reset&&!0!==i)&&(void 0!==i.animate&&(i.zoom=l({animate:i.animate},i.zoom),i.pan=l({animate:i.animate,duration:i.duration},i.pan)),this._zoom!==e?this._tryAnimatedZoom&&this._tryAnimatedZoom(t,e,i.zoom):this._tryAnimatedPan(t,i.pan)))return clearTimeout(this._sizeTimer),this;return this._resetView(t,e,i.pan&&i.pan.noMoveStart),this},setZoom:function(t,e){return this._loaded?this.setView(this.getCenter(),t,{zoom:e}):(this._zoom=t,this)},zoomIn:function(t,e){return t=t||(b.any3d?this.options.zoomDelta:1),this.setZoom(this._zoom+t,e)},zoomOut:function(t,e){return t=t||(b.any3d?this.options.zoomDelta:1),this.setZoom(this._zoom-t,e)},setZoomAround:function(t,e,i){var n=this.getZoomScale(e),o=this.getSize().divideBy(2),t=(t instanceof p?t:this.latLngToContainerPoint(t)).subtract(o).multiplyBy(1-1/n),n=this.containerPointToLatLng(o.add(t));return this.setView(n,e,{zoom:i})},_getBoundsCenterZoom:function(t,e){e=e||{},t=t.getBounds?t.getBounds():g(t);var i=m(e.paddingTopLeft||e.padding||[0,0]),n=m(e.paddingBottomRight||e.padding||[0,0]),o=this.getBoundsZoom(t,!1,i.add(n));return(o="number"==typeof e.maxZoom?Math.min(e.maxZoom,o):o)===1/0?{center:t.getCenter(),zoom:o}:(e=n.subtract(i).divideBy(2),n=this.project(t.getSouthWest(),o),i=this.project(t.getNorthEast(),o),{center:this.unproject(n.add(i).divideBy(2).add(e),o),zoom:o})},fitBounds:function(t,e){if((t=g(t)).isValid())return t=this._getBoundsCenterZoom(t,e),this.setView(t.center,t.zoom,e);throw new Error("Bounds are not valid.")},fitWorld:function(t){return this.fitBounds([[-90,-180],[90,180]],t)},panTo:function(t,e){return this.setView(t,this._zoom,{pan:e})},panBy:function(t,e){var i;return e=e||{},(t=m(t).round()).x||t.y?(!0===e.animate||this.getSize().contains(t)?(this._panAnim||(this._panAnim=new Fe,this._panAnim.on({step:this._onPanTransitionStep,end:this._onPanTransitionEnd},this)),e.noMoveStart||this.fire("movestart"),!1!==e.animate?(M(this._mapPane,"leaflet-pan-anim"),i=this._getMapPanePos().subtract(t).round(),this._panAnim.run(this._mapPane,i,e.duration||.25,e.easeLinearity)):(this._rawPanBy(t),this.fire("move").fire("moveend"))):this._resetView(this.unproject(this.project(this.getCenter()).add(t)),this.getZoom()),this):this.fire("moveend")},flyTo:function(n,o,t){if(!1===(t=t||{}).animate||!b.any3d)return this.setView(n,o,t);this._stop();var s=this.project(this.getCenter()),r=this.project(n),e=this.getSize(),a=this._zoom,h=(n=w(n),o=void 0===o?a:o,Math.max(e.x,e.y)),i=h*this.getZoomScale(a,o),l=r.distanceTo(s)||1,u=1.42,c=u*u;function d(t){t=(i*i-h*h+(t?-1:1)*c*c*l*l)/(2*(t?i:h)*c*l),t=Math.sqrt(t*t+1)-t;return t<1e-9?-18:Math.log(t)}function _(t){return(Math.exp(t)-Math.exp(-t))/2}function p(t){return(Math.exp(t)+Math.exp(-t))/2}var m=d(0);function f(t){return h*(p(m)*(_(t=m+u*t)/p(t))-_(m))/c}var g=Date.now(),v=(d(1)-m)/u,y=t.duration?1e3*t.duration:1e3*v*.8;return this._moveStart(!0,t.noMoveStart),function t(){var e=(Date.now()-g)/y,i=(1-Math.pow(1-e,1.5))*v;e<=1?(this._flyToFrame=x(t,this),this._move(this.unproject(s.add(r.subtract(s).multiplyBy(f(i)/l)),a),this.getScaleZoom(h/(e=i,h*(p(m)/p(m+u*e))),a),{flyTo:!0})):this._move(n,o)._moveEnd(!0)}.call(this),this},flyToBounds:function(t,e){t=this._getBoundsCenterZoom(t,e);return this.flyTo(t.center,t.zoom,e)},setMaxBounds:function(t){return t=g(t),this.listens("moveend",this._panInsideMaxBounds)&&this.off("moveend",this._panInsideMaxBounds),t.isValid()?(this.options.maxBounds=t,this._loaded&&this._panInsideMaxBounds(),this.on("moveend",this._panInsideMaxBounds)):(this.options.maxBounds=null,this)},setMinZoom:function(t){var e=this.options.minZoom;return this.options.minZoom=t,this._loaded&&e!==t&&(this.fire("zoomlevelschange"),this.getZoom()<this.options.minZoom)?this.setZoom(t):this},setMaxZoom:function(t){var e=this.options.maxZoom;return this.options.maxZoom=t,this._loaded&&e!==t&&(this.fire("zoomlevelschange"),this.getZoom()>this.options.maxZoom)?this.setZoom(t):this},panInsideBounds:function(t,e){this._enforcingBounds=!0;var i=this.getCenter(),t=this._limitCenter(i,this._zoom,g(t));return i.equals(t)||this.panTo(t,e),this._enforcingBounds=!1,this},panInside:function(t,e){var i=m((e=e||{}).paddingTopLeft||e.padding||[0,0]),n=m(e.paddingBottomRight||e.padding||[0,0]),o=this.project(this.getCenter()),t=this.project(t),s=this.getPixelBounds(),i=_([s.min.add(i),s.max.subtract(n)]),s=i.getSize();return i.contains(t)||(this._enforcingBounds=!0,n=t.subtract(i.getCenter()),i=i.extend(t).getSize().subtract(s),o.x+=n.x<0?-i.x:i.x,o.y+=n.y<0?-i.y:i.y,this.panTo(this.unproject(o),e),this._enforcingBounds=!1),this},invalidateSize:function(t){if(!this._loaded)return this;t=l({animate:!1,pan:!0},!0===t?{animate:!0}:t);var e=this.getSize(),i=(this._sizeChanged=!0,this._lastCenter=null,this.getSize()),n=e.divideBy(2).round(),o=i.divideBy(2).round(),n=n.subtract(o);return n.x||n.y?(t.animate&&t.pan?this.panBy(n):(t.pan&&this._rawPanBy(n),this.fire("move"),t.debounceMoveend?(clearTimeout(this._sizeTimer),this._sizeTimer=setTimeout(a(this.fire,this,"moveend"),200)):this.fire("moveend")),this.fire("resize",{oldSize:e,newSize:i})):this},stop:function(){return this.setZoom(this._limitZoom(this._zoom)),this.options.zoomSnap||this.fire("viewreset"),this._stop()},locate:function(t){var e,i;return t=this._locateOptions=l({timeout:1e4,watch:!1},t),"geolocation"in navigator?(e=a(this._handleGeolocationResponse,this),i=a(this._handleGeolocationError,this),t.watch?this._locationWatchId=navigator.geolocation.watchPosition(e,i,t):navigator.geolocation.getCurrentPosition(e,i,t)):this._handleGeolocationError({code:0,message:"Geolocation not supported."}),this},stopLocate:function(){return navigator.geolocation&&navigator.geolocation.clearWatch&&navigator.geolocation.clearWatch(this._locationWatchId),this._locateOptions&&(this._locateOptions.setView=!1),this},_handleGeolocationError:function(t){var e;this._container._leaflet_id&&(e=t.code,t=t.message||(1===e?"permission denied":2===e?"position unavailable":"timeout"),this._locateOptions.setView&&!this._loaded&&this.fitWorld(),this.fire("locationerror",{code:e,message:"Geolocation error: "+t+"."}))},_handleGeolocationResponse:function(t){if(this._container._leaflet_id){var e,i,n=new v(t.coords.latitude,t.coords.longitude),o=n.toBounds(2*t.coords.accuracy),s=this._locateOptions,r=(s.setView&&(e=this.getBoundsZoom(o),this.setView(n,s.maxZoom?Math.min(e,s.maxZoom):e)),{latlng:n,bounds:o,timestamp:t.timestamp});for(i in t.coords)"number"==typeof t.coords[i]&&(r[i]=t.coords[i]);this.fire("locationfound",r)}},addHandler:function(t,e){return e&&(e=this[t]=new e(this),this._handlers.push(e),this.options[t]&&e.enable()),this},remove:function(){if(this._initEvents(!0),this.options.maxBounds&&this.off("moveend",this._panInsideMaxBounds),this._containerId!==this._container._leaflet_id)throw new Error("Map container is being reused by another instance");try{delete this._container._leaflet_id,delete this._containerId}catch(t){this._container._leaflet_id=void 0,this._containerId=void 0}for(var t in void 0!==this._locationWatchId&&this.stopLocate(),this._stop(),T(this._mapPane),this._clearControlPos&&this._clearControlPos(),this._resizeRequest&&(r(this._resizeRequest),this._resizeRequest=null),this._clearHandlers(),this._loaded&&this.fire("unload"),this._layers)this._layers[t].remove();for(t in this._panes)T(this._panes[t]);return this._layers=[],this._panes=[],delete this._mapPane,delete this._renderer,this},createPane:function(t,e){e=P("div","leaflet-pane"+(t?" leaflet-"+t.replace("Pane","")+"-pane":""),e||this._mapPane);return t&&(this._panes[t]=e),e},getCenter:function(){return this._checkIfLoaded(),this._lastCenter&&!this._moved()?this._lastCenter.clone():this.layerPointToLatLng(this._getCenterLayerPoint())},getZoom:function(){return this._zoom},getBounds:function(){var t=this.getPixelBounds();return new s(this.unproject(t.getBottomLeft()),this.unproject(t.getTopRight()))},getMinZoom:function(){return void 0===this.options.minZoom?this._layersMinZoom||0:this.options.minZoom},getMaxZoom:function(){return void 0===this.options.maxZoom?void 0===this._layersMaxZoom?1/0:this._layersMaxZoom:this.options.maxZoom},getBoundsZoom:function(t,e,i){t=g(t),i=m(i||[0,0]);var n=this.getZoom()||0,o=this.getMinZoom(),s=this.getMaxZoom(),r=t.getNorthWest(),t=t.getSouthEast(),i=this.getSize().subtract(i),t=_(this.project(t,n),this.project(r,n)).getSize(),r=b.any3d?this.options.zoomSnap:1,a=i.x/t.x,i=i.y/t.y,t=e?Math.max(a,i):Math.min(a,i),n=this.getScaleZoom(t,n);return r&&(n=Math.round(n/(r/100))*(r/100),n=e?Math.ceil(n/r)*r:Math.floor(n/r)*r),Math.max(o,Math.min(s,n))},getSize:function(){return this._size&&!this._sizeChanged||(this._size=new p(this._container.clientWidth||0,this._container.clientHeight||0),this._sizeChanged=!1),this._size.clone()},getPixelBounds:function(t,e){t=this._getTopLeftPoint(t,e);return new f(t,t.add(this.getSize()))},getPixelOrigin:function(){return this._checkIfLoaded(),this._pixelOrigin},getPixelWorldBounds:function(t){return this.options.crs.getProjectedBounds(void 0===t?this.getZoom():t)},getPane:function(t){return"string"==typeof t?this._panes[t]:t},getPanes:function(){return this._panes},getContainer:function(){return this._container},getZoomScale:function(t,e){var i=this.options.crs;return e=void 0===e?this._zoom:e,i.scale(t)/i.scale(e)},getScaleZoom:function(t,e){var i=this.options.crs,t=(e=void 0===e?this._zoom:e,i.zoom(t*i.scale(e)));return isNaN(t)?1/0:t},project:function(t,e){return e=void 0===e?this._zoom:e,this.options.crs.latLngToPoint(w(t),e)},unproject:function(t,e){return e=void 0===e?this._zoom:e,this.options.crs.pointToLatLng(m(t),e)},layerPointToLatLng:function(t){t=m(t).add(this.getPixelOrigin());return this.unproject(t)},latLngToLayerPoint:function(t){return this.project(w(t))._round()._subtract(this.getPixelOrigin())},wrapLatLng:function(t){return this.options.crs.wrapLatLng(w(t))},wrapLatLngBounds:function(t){return this.options.crs.wrapLatLngBounds(g(t))},distance:function(t,e){return this.options.crs.distance(w(t),w(e))},containerPointToLayerPoint:function(t){return m(t).subtract(this._getMapPanePos())},layerPointToContainerPoint:function(t){return m(t).add(this._getMapPanePos())},containerPointToLatLng:function(t){t=this.containerPointToLayerPoint(m(t));return this.layerPointToLatLng(t)},latLngToContainerPoint:function(t){return this.layerPointToContainerPoint(this.latLngToLayerPoint(w(t)))},mouseEventToContainerPoint:function(t){return De(t,this._container)},mouseEventToLayerPoint:function(t){return this.containerPointToLayerPoint(this.mouseEventToContainerPoint(t))},mouseEventToLatLng:function(t){return this.layerPointToLatLng(this.mouseEventToLayerPoint(t))},_initContainer:function(t){t=this._container=_e(t);if(!t)throw new Error("Map container not found.");if(t._leaflet_id)throw new Error("Map container is already initialized.");S(t,"scroll",this._onScroll,this),this._containerId=h(t)},_initLayout:function(){var t=this._container,e=(this._fadeAnimated=this.options.fadeAnimation&&b.any3d,M(t,"leaflet-container"+(b.touch?" leaflet-touch":"")+(b.retina?" leaflet-retina":"")+(b.ielt9?" leaflet-oldie":"")+(b.safari?" leaflet-safari":"")+(this._fadeAnimated?" leaflet-fade-anim":"")),pe(t,"position"));"absolute"!==e&&"relative"!==e&&"fixed"!==e&&"sticky"!==e&&(t.style.position="relative"),this._initPanes(),this._initControlPos&&this._initControlPos()},_initPanes:function(){var t=this._panes={};this._paneRenderers={},this._mapPane=this.createPane("mapPane",this._container),Z(this._mapPane,new p(0,0)),this.createPane("tilePane"),this.createPane("overlayPane"),this.createPane("shadowPane"),this.createPane("markerPane"),this.createPane("tooltipPane"),this.createPane("popupPane"),this.options.markerZoomAnimation||(M(t.markerPane,"leaflet-zoom-hide"),M(t.shadowPane,"leaflet-zoom-hide"))},_resetView:function(t,e,i){Z(this._mapPane,new p(0,0));var n=!this._loaded,o=(this._loaded=!0,e=this._limitZoom(e),this.fire("viewprereset"),this._zoom!==e);this._moveStart(o,i)._move(t,e)._moveEnd(o),this.fire("viewreset"),n&&this.fire("load")},_moveStart:function(t,e){return t&&this.fire("zoomstart"),e||this.fire("movestart"),this},_move:function(t,e,i,n){void 0===e&&(e=this._zoom);var o=this._zoom!==e;return this._zoom=e,this._lastCenter=t,this._pixelOrigin=this._getNewPixelOrigin(t),n?i&&i.pinch&&this.fire("zoom",i):((o||i&&i.pinch)&&this.fire("zoom",i),this.fire("move",i)),this},_moveEnd:function(t){return t&&this.fire("zoomend"),this.fire("moveend")},_stop:function(){return r(this._flyToFrame),this._panAnim&&this._panAnim.stop(),this},_rawPanBy:function(t){Z(this._mapPane,this._getMapPanePos().subtract(t))},_getZoomSpan:function(){return this.getMaxZoom()-this.getMinZoom()},_panInsideMaxBounds:function(){this._enforcingBounds||this.panInsideBounds(this.options.maxBounds)},_checkIfLoaded:function(){if(!this._loaded)throw new Error("Set map center and zoom first.")},_initEvents:function(t){this._targets={};var e=t?k:S;e((this._targets[h(this._container)]=this)._container,"click dblclick mousedown mouseup mouseover mouseout mousemove contextmenu keypress keydown keyup",this._handleDOMEvent,this),this.options.trackResize&&e(window,"resize",this._onResize,this),b.any3d&&this.options.transform3DLimit&&(t?this.off:this.on).call(this,"moveend",this._onMoveEnd)},_onResize:function(){r(this._resizeRequest),this._resizeRequest=x(function(){this.invalidateSize({debounceMoveend:!0})},this)},_onScroll:function(){this._container.scrollTop=0,this._container.scrollLeft=0},_onMoveEnd:function(){var t=this._getMapPanePos();Math.max(Math.abs(t.x),Math.abs(t.y))>=this.options.transform3DLimit&&this._resetView(this.getCenter(),this.getZoom())},_findEventTargets:function(t,e){for(var i,n=[],o="mouseout"===e||"mouseover"===e,s=t.target||t.srcElement,r=!1;s;){if((i=this._targets[h(s)])&&("click"===e||"preclick"===e)&&this._draggableMoved(i)){r=!0;break}if(i&&i.listens(e,!0)){if(o&&!We(s,t))break;if(n.push(i),o)break}if(s===this._container)break;s=s.parentNode}return n=n.length||r||o||!this.listens(e,!0)?n:[this]},_isClickDisabled:function(t){for(;t&&t!==this._container;){if(t._leaflet_disable_click)return!0;t=t.parentNode}},_handleDOMEvent:function(t){var e,i=t.target||t.srcElement;!this._loaded||i._leaflet_disable_events||"click"===t.type&&this._isClickDisabled(i)||("mousedown"===(e=t.type)&&Me(i),this._fireDOMEvent(t,e))},_mouseEvents:["click","dblclick","mouseover","mouseout","contextmenu"],_fireDOMEvent:function(t,e,i){"click"===t.type&&((a=l({},t)).type="preclick",this._fireDOMEvent(a,a.type,i));var n=this._findEventTargets(t,e);if(i){for(var o=[],s=0;s<i.length;s++)i[s].listens(e,!0)&&o.push(i[s]);n=o.concat(n)}if(n.length){"contextmenu"===e&&O(t);var r,a=n[0],h={originalEvent:t};for("keypress"!==t.type&&"keydown"!==t.type&&"keyup"!==t.type&&(r=a.getLatLng&&(!a._radius||a._radius<=10),h.containerPoint=r?this.latLngToContainerPoint(a.getLatLng()):this.mouseEventToContainerPoint(t),h.layerPoint=this.containerPointToLayerPoint(h.containerPoint),h.latlng=r?a.getLatLng():this.layerPointToLatLng(h.layerPoint)),s=0;s<n.length;s++)if(n[s].fire(e,h,!0),h.originalEvent._stopped||!1===n[s].options.bubblingMouseEvents&&-1!==G(this._mouseEvents,e))return}},_draggableMoved:function(t){return(t=t.dragging&&t.dragging.enabled()?t:this).dragging&&t.dragging.moved()||this.boxZoom&&this.boxZoom.moved()},_clearHandlers:function(){for(var t=0,e=this._handlers.length;t<e;t++)this._handlers[t].disable()},whenReady:function(t,e){return this._loaded?t.call(e||this,{target:this}):this.on("load",t,e),this},_getMapPanePos:function(){return Pe(this._mapPane)||new p(0,0)},_moved:function(){var t=this._getMapPanePos();return t&&!t.equals([0,0])},_getTopLeftPoint:function(t,e){return(t&&void 0!==e?this._getNewPixelOrigin(t,e):this.getPixelOrigin()).subtract(this._getMapPanePos())},_getNewPixelOrigin:function(t,e){var i=this.getSize()._divideBy(2);return this.project(t,e)._subtract(i)._add(this._getMapPanePos())._round()},_latLngToNewLayerPoint:function(t,e,i){i=this._getNewPixelOrigin(i,e);return this.project(t,e)._subtract(i)},_latLngBoundsToNewLayerBounds:function(t,e,i){i=this._getNewPixelOrigin(i,e);return _([this.project(t.getSouthWest(),e)._subtract(i),this.project(t.getNorthWest(),e)._subtract(i),this.project(t.getSouthEast(),e)._subtract(i),this.project(t.getNorthEast(),e)._subtract(i)])},_getCenterLayerPoint:function(){return this.containerPointToLayerPoint(this.getSize()._divideBy(2))},_getCenterOffset:function(t){return this.latLngToLayerPoint(t).subtract(this._getCenterLayerPoint())},_limitCenter:function(t,e,i){var n,o;return!i||(n=this.project(t,e),o=this.getSize().divideBy(2),o=new f(n.subtract(o),n.add(o)),o=this._getBoundsOffset(o,i,e),Math.abs(o.x)<=1&&Math.abs(o.y)<=1)?t:this.unproject(n.add(o),e)},_limitOffset:function(t,e){var i;return e?(i=new f((i=this.getPixelBounds()).min.add(t),i.max.add(t)),t.add(this._getBoundsOffset(i,e))):t},_getBoundsOffset:function(t,e,i){e=_(this.project(e.getNorthEast(),i),this.project(e.getSouthWest(),i)),i=e.min.subtract(t.min),e=e.max.subtract(t.max);return new p(this._rebound(i.x,-e.x),this._rebound(i.y,-e.y))},_rebound:function(t,e){return 0<t+e?Math.round(t-e)/2:Math.max(0,Math.ceil(t))-Math.max(0,Math.floor(e))},_limitZoom:function(t){var e=this.getMinZoom(),i=this.getMaxZoom(),n=b.any3d?this.options.zoomSnap:1;return n&&(t=Math.round(t/n)*n),Math.max(e,Math.min(i,t))},_onPanTransitionStep:function(){this.fire("move")},_onPanTransitionEnd:function(){z(this._mapPane,"leaflet-pan-anim"),this.fire("moveend")},_tryAnimatedPan:function(t,e){t=this._getCenterOffset(t)._trunc();return!(!0!==(e&&e.animate)&&!this.getSize().contains(t))&&(this.panBy(t,e),!0)},_createAnimProxy:function(){var t=this._proxy=P("div","leaflet-proxy leaflet-zoom-animated");this._panes.mapPane.appendChild(t),this.on("zoomanim",function(t){var e=ue,i=this._proxy.style[e];be(this._proxy,this.project(t.center,t.zoom),this.getZoomScale(t.zoom,1)),i===this._proxy.style[e]&&this._animatingZoom&&this._onZoomTransitionEnd()},this),this.on("load moveend",this._animMoveEnd,this),this._on("unload",this._destroyAnimProxy,this)},_destroyAnimProxy:function(){T(this._proxy),this.off("load moveend",this._animMoveEnd,this),delete this._proxy},_animMoveEnd:function(){var t=this.getCenter(),e=this.getZoom();be(this._proxy,this.project(t,e),this.getZoomScale(e,1))},_catchTransitionEnd:function(t){this._animatingZoom&&0<=t.propertyName.indexOf("transform")&&this._onZoomTransitionEnd()},_nothingToAnimate:function(){return!this._container.getElementsByClassName("leaflet-zoom-animated").length},_tryAnimatedZoom:function(t,e,i){if(!this._animatingZoom){if(i=i||{},!this._zoomAnimated||!1===i.animate||this._nothingToAnimate()||Math.abs(e-this._zoom)>this.options.zoomAnimationThreshold)return!1;var n=this.getZoomScale(e),n=this._getCenterOffset(t)._divideBy(1-1/n);if(!0!==i.animate&&!this.getSize().contains(n))return!1;x(function(){this._moveStart(!0,i.noMoveStart||!1)._animateZoom(t,e,!0)},this)}return!0},_animateZoom:function(t,e,i,n){this._mapPane&&(i&&(this._animatingZoom=!0,this._animateToCenter=t,this._animateToZoom=e,M(this._mapPane,"leaflet-zoom-anim")),this.fire("zoomanim",{center:t,zoom:e,noUpdate:n}),this._tempFireZoomEvent||(this._tempFireZoomEvent=this._zoom!==this._animateToZoom),this._move(this._animateToCenter,this._animateToZoom,void 0,!0),setTimeout(a(this._onZoomTransitionEnd,this),250))},_onZoomTransitionEnd:function(){this._animatingZoom&&(this._mapPane&&z(this._mapPane,"leaflet-zoom-anim"),this._animatingZoom=!1,this._move(this._animateToCenter,this._animateToZoom,void 0,!0),this._tempFireZoomEvent&&this.fire("zoom"),delete this._tempFireZoomEvent,this.fire("move"),this._moveEnd(!0))}});function Ue(t){return new B(t)}var B=et.extend({options:{position:"topright"},initialize:function(t){c(this,t)},getPosition:function(){return this.options.position},setPosition:function(t){var e=this._map;return e&&e.removeControl(this),this.options.position=t,e&&e.addControl(this),this},getContainer:function(){return this._container},addTo:function(t){this.remove(),this._map=t;var e=this._container=this.onAdd(t),i=this.getPosition(),t=t._controlCorners[i];return M(e,"leaflet-control"),-1!==i.indexOf("bottom")?t.insertBefore(e,t.firstChild):t.appendChild(e),this._map.on("unload",this.remove,this),this},remove:function(){return this._map&&(T(this._container),this.onRemove&&this.onRemove(this._map),this._map.off("unload",this.remove,this),this._map=null),this},_refocusOnMap:function(t){this._map&&t&&0<t.screenX&&0<t.screenY&&this._map.getContainer().focus()}}),Ve=(A.include({addControl:function(t){return t.addTo(this),this},removeControl:function(t){return t.remove(),this},_initControlPos:function(){var i=this._controlCorners={},n="leaflet-",o=this._controlContainer=P("div",n+"control-container",this._container);function t(t,e){i[t+e]=P("div",n+t+" "+n+e,o)}t("top","left"),t("top","right"),t("bottom","left"),t("bottom","right")},_clearControlPos:function(){for(var t in this._controlCorners)T(this._controlCorners[t]);T(this._controlContainer),delete this._controlCorners,delete this._controlContainer}}),B.extend({options:{collapsed:!0,position:"topright",autoZIndex:!0,hideSingleBase:!1,sortLayers:!1,sortFunction:function(t,e,i,n){return i<n?-1:n<i?1:0}},initialize:function(t,e,i){for(var n in c(this,i),this._layerControlInputs=[],this._layers=[],this._lastZIndex=0,this._handlingClick=!1,this._preventClick=!1,t)this._addLayer(t[n],n);for(n in e)this._addLayer(e[n],n,!0)},onAdd:function(t){this._initLayout(),this._update(),(this._map=t).on("zoomend",this._checkDisabledLayers,this);for(var e=0;e<this._layers.length;e++)this._layers[e].layer.on("add remove",this._onLayerChange,this);return this._container},addTo:function(t){return B.prototype.addTo.call(this,t),this._expandIfNotCollapsed()},onRemove:function(){this._map.off("zoomend",this._checkDisabledLayers,this);for(var t=0;t<this._layers.length;t++)this._layers[t].layer.off("add remove",this._onLayerChange,this)},addBaseLayer:function(t,e){return this._addLayer(t,e),this._map?this._update():this},addOverlay:function(t,e){return this._addLayer(t,e,!0),this._map?this._update():this},removeLayer:function(t){t.off("add remove",this._onLayerChange,this);t=this._getLayer(h(t));return t&&this._layers.splice(this._layers.indexOf(t),1),this._map?this._update():this},expand:function(){M(this._container,"leaflet-control-layers-expanded"),this._section.style.height=null;var t=this._map.getSize().y-(this._container.offsetTop+50);return t<this._section.clientHeight?(M(this._section,"leaflet-control-layers-scrollbar"),this._section.style.height=t+"px"):z(this._section,"leaflet-control-layers-scrollbar"),this._checkDisabledLayers(),this},collapse:function(){return z(this._container,"leaflet-control-layers-expanded"),this},_initLayout:function(){var t="leaflet-control-layers",e=this._container=P("div",t),i=this.options.collapsed,n=(e.setAttribute("aria-haspopup",!0),Ie(e),Be(e),this._section=P("section",t+"-list")),o=(i&&(this._map.on("click",this.collapse,this),S(e,{mouseenter:this._expandSafely,mouseleave:this.collapse},this)),this._layersLink=P("a",t+"-toggle",e));o.href="#",o.title="Layers",o.setAttribute("role","button"),S(o,{keydown:function(t){13===t.keyCode&&this._expandSafely()},click:function(t){O(t),this._expandSafely()}},this),i||this.expand(),this._baseLayersList=P("div",t+"-base",n),this._separator=P("div",t+"-separator",n),this._overlaysList=P("div",t+"-overlays",n),e.appendChild(n)},_getLayer:function(t){for(var e=0;e<this._layers.length;e++)if(this._layers[e]&&h(this._layers[e].layer)===t)return this._layers[e]},_addLayer:function(t,e,i){this._map&&t.on("add remove",this._onLayerChange,this),this._layers.push({layer:t,name:e,overlay:i}),this.options.sortLayers&&this._layers.sort(a(function(t,e){return this.options.sortFunction(t.layer,e.layer,t.name,e.name)},this)),this.options.autoZIndex&&t.setZIndex&&(this._lastZIndex++,t.setZIndex(this._lastZIndex)),this._expandIfNotCollapsed()},_update:function(){if(this._container){me(this._baseLayersList),me(this._overlaysList),this._layerControlInputs=[];for(var t,e,i,n=0,o=0;o<this._layers.length;o++)i=this._layers[o],this._addItem(i),e=e||i.overlay,t=t||!i.overlay,n+=i.overlay?0:1;this.options.hideSingleBase&&(this._baseLayersList.style.display=(t=t&&1<n)?"":"none"),this._separator.style.display=e&&t?"":"none"}return this},_onLayerChange:function(t){this._handlingClick||this._update();var e=this._getLayer(h(t.target)),t=e.overlay?"add"===t.type?"overlayadd":"overlayremove":"add"===t.type?"baselayerchange":null;t&&this._map.fire(t,e)},_createRadioElement:function(t,e){t='<input type="radio" class="leaflet-control-layers-selector" name="'+t+'"'+(e?' checked="checked"':"")+"/>",e=document.createElement("div");return e.innerHTML=t,e.firstChild},_addItem:function(t){var e,i=document.createElement("label"),n=this._map.hasLayer(t.layer),n=(t.overlay?((e=document.createElement("input")).type="checkbox",e.className="leaflet-control-layers-selector",e.defaultChecked=n):e=this._createRadioElement("leaflet-base-layers_"+h(this),n),this._layerControlInputs.push(e),e.layerId=h(t.layer),S(e,"click",this._onInputClick,this),document.createElement("span")),o=(n.innerHTML=" "+t.name,document.createElement("span"));return i.appendChild(o),o.appendChild(e),o.appendChild(n),(t.overlay?this._overlaysList:this._baseLayersList).appendChild(i),this._checkDisabledLayers(),i},_onInputClick:function(){if(!this._preventClick){var t,e,i=this._layerControlInputs,n=[],o=[];this._handlingClick=!0;for(var s=i.length-1;0<=s;s--)t=i[s],e=this._getLayer(t.layerId).layer,t.checked?n.push(e):t.checked||o.push(e);for(s=0;s<o.length;s++)this._map.hasLayer(o[s])&&this._map.removeLayer(o[s]);for(s=0;s<n.length;s++)this._map.hasLayer(n[s])||this._map.addLayer(n[s]);this._handlingClick=!1,this._refocusOnMap()}},_checkDisabledLayers:function(){for(var t,e,i=this._layerControlInputs,n=this._map.getZoom(),o=i.length-1;0<=o;o--)t=i[o],e=this._getLayer(t.layerId).layer,t.disabled=void 0!==e.options.minZoom&&n<e.options.minZoom||void 0!==e.options.maxZoom&&n>e.options.maxZoom},_expandIfNotCollapsed:function(){return this._map&&!this.options.collapsed&&this.expand(),this},_expandSafely:function(){var t=this._section,e=(this._preventClick=!0,S(t,"click",O),this.expand(),this);setTimeout(function(){k(t,"click",O),e._preventClick=!1})}})),qe=B.extend({options:{position:"topleft",zoomInText:'<span aria-hidden="true">+</span>',zoomInTitle:"Zoom in",zoomOutText:'<span aria-hidden="true">&#x2212;</span>',zoomOutTitle:"Zoom out"},onAdd:function(t){var e="leaflet-control-zoom",i=P("div",e+" leaflet-bar"),n=this.options;return this._zoomInButton=this._createButton(n.zoomInText,n.zoomInTitle,e+"-in",i,this._zoomIn),this._zoomOutButton=this._createButton(n.zoomOutText,n.zoomOutTitle,e+"-out",i,this._zoomOut),this._updateDisabled(),t.on("zoomend zoomlevelschange",this._updateDisabled,this),i},onRemove:function(t){t.off("zoomend zoomlevelschange",this._updateDisabled,this)},disable:function(){return this._disabled=!0,this._updateDisabled(),this},enable:function(){return this._disabled=!1,this._updateDisabled(),this},_zoomIn:function(t){!this._disabled&&this._map._zoom<this._map.getMaxZoom()&&this._map.zoomIn(this._map.options.zoomDelta*(t.shiftKey?3:1))},_zoomOut:function(t){!this._disabled&&this._map._zoom>this._map.getMinZoom()&&this._map.zoomOut(this._map.options.zoomDelta*(t.shiftKey?3:1))},_createButton:function(t,e,i,n,o){i=P("a",i,n);return i.innerHTML=t,i.href="#",i.title=e,i.setAttribute("role","button"),i.setAttribute("aria-label",e),Ie(i),S(i,"click",Re),S(i,"click",o,this),S(i,"click",this._refocusOnMap,this),i},_updateDisabled:function(){var t=this._map,e="leaflet-disabled";z(this._zoomInButton,e),z(this._zoomOutButton,e),this._zoomInButton.setAttribute("aria-disabled","false"),this._zoomOutButton.setAttribute("aria-disabled","false"),!this._disabled&&t._zoom!==t.getMinZoom()||(M(this._zoomOutButton,e),this._zoomOutButton.setAttribute("aria-disabled","true")),!this._disabled&&t._zoom!==t.getMaxZoom()||(M(this._zoomInButton,e),this._zoomInButton.setAttribute("aria-disabled","true"))}}),Ge=(A.mergeOptions({zoomControl:!0}),A.addInitHook(function(){this.options.zoomControl&&(this.zoomControl=new qe,this.addControl(this.zoomControl))}),B.extend({options:{position:"bottomleft",maxWidth:100,metric:!0,imperial:!0},onAdd:function(t){var e="leaflet-control-scale",i=P("div",e),n=this.options;return this._addScales(n,e+"-line",i),t.on(n.updateWhenIdle?"moveend":"move",this._update,this),t.whenReady(this._update,this),i},onRemove:function(t){t.off(this.options.updateWhenIdle?"moveend":"move",this._update,this)},_addScales:function(t,e,i){t.metric&&(this._mScale=P("div",e,i)),t.imperial&&(this._iScale=P("div",e,i))},_update:function(){var t=this._map,e=t.getSize().y/2,t=t.distance(t.containerPointToLatLng([0,e]),t.containerPointToLatLng([this.options.maxWidth,e]));this._updateScales(t)},_updateScales:function(t){this.options.metric&&t&&this._updateMetric(t),this.options.imperial&&t&&this._updateImperial(t)},_updateMetric:function(t){var e=this._getRoundNum(t);this._updateScale(this._mScale,e<1e3?e+" m":e/1e3+" km",e/t)},_updateImperial:function(t){var e,i,t=3.2808399*t;5280<t?(i=this._getRoundNum(e=t/5280),this._updateScale(this._iScale,i+" mi",i/e)):(i=this._getRoundNum(t),this._updateScale(this._iScale,i+" ft",i/t))},_updateScale:function(t,e,i){t.style.width=Math.round(this.options.maxWidth*i)+"px",t.innerHTML=e},_getRoundNum:function(t){var e=Math.pow(10,(Math.floor(t)+"").length-1),t=t/e;return e*(t=10<=t?10:5<=t?5:3<=t?3:2<=t?2:1)}})),Ke=B.extend({options:{position:"bottomright",prefix:'<a href="https://leafletjs.com" title="A JavaScript library for interactive maps">'+(b.inlineSvg?'<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" class="leaflet-attribution-flag"><path fill="#4C7BE1" d="M0 0h12v4H0z"/><path fill="#FFD500" d="M0 4h12v3H0z"/><path fill="#E0BC00" d="M0 7h12v1H0z"/></svg> ':"")+"Leaflet</a>"},initialize:function(t){c(this,t),this._attributions={}},onAdd:function(t){for(var e in(t.attributionControl=this)._container=P("div","leaflet-control-attribution"),Ie(this._container),t._layers)t._layers[e].getAttribution&&this.addAttribution(t._layers[e].getAttribution());return this._update(),t.on("layeradd",this._addAttribution,this),this._container},onRemove:function(t){t.off("layeradd",this._addAttribution,this)},_addAttribution:function(t){t.layer.getAttribution&&(this.addAttribution(t.layer.getAttribution()),t.layer.once("remove",function(){this.removeAttribution(t.layer.getAttribution())},this))},setPrefix:function(t){return this.options.prefix=t,this._update(),this},addAttribution:function(t){return t&&(this._attributions[t]||(this._attributions[t]=0),this._attributions[t]++,this._update()),this},removeAttribution:function(t){return t&&this._attributions[t]&&(this._attributions[t]--,this._update()),this},_update:function(){if(this._map){var t,e=[];for(t in this._attributions)this._attributions[t]&&e.push(t);var i=[];this.options.prefix&&i.push(this.options.prefix),e.length&&i.push(e.join(", ")),this._container.innerHTML=i.join(' <span aria-hidden="true">|</span> ')}}}),n=(A.mergeOptions({attributionControl:!0}),A.addInitHook(function(){this.options.attributionControl&&(new Ke).addTo(this)}),B.Layers=Ve,B.Zoom=qe,B.Scale=Ge,B.Attribution=Ke,Ue.layers=function(t,e,i){return new Ve(t,e,i)},Ue.zoom=function(t){return new qe(t)},Ue.scale=function(t){return new Ge(t)},Ue.attribution=function(t){return new Ke(t)},et.extend({initialize:function(t){this._map=t},enable:function(){return this._enabled||(this._enabled=!0,this.addHooks()),this},disable:function(){return this._enabled&&(this._enabled=!1,this.removeHooks()),this},enabled:function(){return!!this._enabled}})),ft=(n.addTo=function(t,e){return t.addHandler(e,this),this},{Events:e}),Ye=b.touch?"touchstart mousedown":"mousedown",Xe=it.extend({options:{clickTolerance:3},initialize:function(t,e,i,n){c(this,n),this._element=t,this._dragStartTarget=e||t,this._preventOutline=i},enable:function(){this._enabled||(S(this._dragStartTarget,Ye,this._onDown,this),this._enabled=!0)},disable:function(){this._enabled&&(Xe._dragging===this&&this.finishDrag(!0),k(this._dragStartTarget,Ye,this._onDown,this),this._enabled=!1,this._moved=!1)},_onDown:function(t){var e,i;this._enabled&&(this._moved=!1,ve(this._element,"leaflet-zoom-anim")||(t.touches&&1!==t.touches.length?Xe._dragging===this&&this.finishDrag():Xe._dragging||t.shiftKey||1!==t.which&&1!==t.button&&!t.touches||((Xe._dragging=this)._preventOutline&&Me(this._element),Le(),re(),this._moving||(this.fire("down"),i=t.touches?t.touches[0]:t,e=Ce(this._element),this._startPoint=new p(i.clientX,i.clientY),this._startPos=Pe(this._element),this._parentScale=Ze(e),i="mousedown"===t.type,S(document,i?"mousemove":"touchmove",this._onMove,this),S(document,i?"mouseup":"touchend touchcancel",this._onUp,this)))))},_onMove:function(t){var e;this._enabled&&(t.touches&&1<t.touches.length?this._moved=!0:!(e=new p((e=t.touches&&1===t.touches.length?t.touches[0]:t).clientX,e.clientY)._subtract(this._startPoint)).x&&!e.y||Math.abs(e.x)+Math.abs(e.y)<this.options.clickTolerance||(e.x/=this._parentScale.x,e.y/=this._parentScale.y,O(t),this._moved||(this.fire("dragstart"),this._moved=!0,M(document.body,"leaflet-dragging"),this._lastTarget=t.target||t.srcElement,window.SVGElementInstance&&this._lastTarget instanceof window.SVGElementInstance&&(this._lastTarget=this._lastTarget.correspondingUseElement),M(this._lastTarget,"leaflet-drag-target")),this._newPos=this._startPos.add(e),this._moving=!0,this._lastEvent=t,this._updatePosition()))},_updatePosition:function(){var t={originalEvent:this._lastEvent};this.fire("predrag",t),Z(this._element,this._newPos),this.fire("drag",t)},_onUp:function(){this._enabled&&this.finishDrag()},finishDrag:function(t){z(document.body,"leaflet-dragging"),this._lastTarget&&(z(this._lastTarget,"leaflet-drag-target"),this._lastTarget=null),k(document,"mousemove touchmove",this._onMove,this),k(document,"mouseup touchend touchcancel",this._onUp,this),Te(),ae();var e=this._moved&&this._moving;this._moving=!1,Xe._dragging=!1,e&&this.fire("dragend",{noInertia:t,distance:this._newPos.distanceTo(this._startPos)})}});function Je(t,e,i){for(var n,o,s,r,a,h,l,u=[1,4,2,8],c=0,d=t.length;c<d;c++)t[c]._code=si(t[c],e);for(s=0;s<4;s++){for(h=u[s],n=[],c=0,o=(d=t.length)-1;c<d;o=c++)r=t[c],a=t[o],r._code&h?a._code&h||((l=oi(a,r,h,e,i))._code=si(l,e),n.push(l)):(a._code&h&&((l=oi(a,r,h,e,i))._code=si(l,e),n.push(l)),n.push(r));t=n}return t}function $e(t,e){var i,n,o,s,r,a,h;if(!t||0===t.length)throw new Error("latlngs not passed");I(t)||(console.warn("latlngs are not flat! Only the first ring will be used"),t=t[0]);for(var l=w([0,0]),u=g(t),c=(u.getNorthWest().distanceTo(u.getSouthWest())*u.getNorthEast().distanceTo(u.getNorthWest())<1700&&(l=Qe(t)),t.length),d=[],_=0;_<c;_++){var p=w(t[_]);d.push(e.project(w([p.lat-l.lat,p.lng-l.lng])))}for(_=r=a=h=0,i=c-1;_<c;i=_++)n=d[_],o=d[i],s=n.y*o.x-o.y*n.x,a+=(n.x+o.x)*s,h+=(n.y+o.y)*s,r+=3*s;u=0===r?d[0]:[a/r,h/r],u=e.unproject(m(u));return w([u.lat+l.lat,u.lng+l.lng])}function Qe(t){for(var e=0,i=0,n=0,o=0;o<t.length;o++){var s=w(t[o]);e+=s.lat,i+=s.lng,n++}return w([e/n,i/n])}var ti,gt={__proto__:null,clipPolygon:Je,polygonCenter:$e,centroid:Qe};function ei(t,e){if(e&&t.length){var i=t=function(t,e){for(var i=[t[0]],n=1,o=0,s=t.length;n<s;n++)(function(t,e){var i=e.x-t.x,e=e.y-t.y;return i*i+e*e})(t[n],t[o])>e&&(i.push(t[n]),o=n);o<s-1&&i.push(t[s-1]);return i}(t,e=e*e),n=i.length,o=new(typeof Uint8Array!=void 0+""?Uint8Array:Array)(n);o[0]=o[n-1]=1,function t(e,i,n,o,s){var r,a,h,l=0;for(a=o+1;a<=s-1;a++)h=ri(e[a],e[o],e[s],!0),l<h&&(r=a,l=h);n<l&&(i[r]=1,t(e,i,n,o,r),t(e,i,n,r,s))}(i,o,e,0,n-1);var s,r=[];for(s=0;s<n;s++)o[s]&&r.push(i[s]);return r}return t.slice()}function ii(t,e,i){return Math.sqrt(ri(t,e,i,!0))}function ni(t,e,i,n,o){var s,r,a,h=n?ti:si(t,i),l=si(e,i);for(ti=l;;){if(!(h|l))return[t,e];if(h&l)return!1;a=si(r=oi(t,e,s=h||l,i,o),i),s===h?(t=r,h=a):(e=r,l=a)}}function oi(t,e,i,n,o){var s,r,a=e.x-t.x,e=e.y-t.y,h=n.min,n=n.max;return 8&i?(s=t.x+a*(n.y-t.y)/e,r=n.y):4&i?(s=t.x+a*(h.y-t.y)/e,r=h.y):2&i?(s=n.x,r=t.y+e*(n.x-t.x)/a):1&i&&(s=h.x,r=t.y+e*(h.x-t.x)/a),new p(s,r,o)}function si(t,e){var i=0;return t.x<e.min.x?i|=1:t.x>e.max.x&&(i|=2),t.y<e.min.y?i|=4:t.y>e.max.y&&(i|=8),i}function ri(t,e,i,n){var o=e.x,e=e.y,s=i.x-o,r=i.y-e,a=s*s+r*r;return 0<a&&(1<(a=((t.x-o)*s+(t.y-e)*r)/a)?(o=i.x,e=i.y):0<a&&(o+=s*a,e+=r*a)),s=t.x-o,r=t.y-e,n?s*s+r*r:new p(o,e)}function I(t){return!d(t[0])||"object"!=typeof t[0][0]&&void 0!==t[0][0]}function ai(t){return console.warn("Deprecated use of _flat, please use L.LineUtil.isFlat instead."),I(t)}function hi(t,e){var i,n,o,s,r,a;if(!t||0===t.length)throw new Error("latlngs not passed");I(t)||(console.warn("latlngs are not flat! Only the first ring will be used"),t=t[0]);for(var h=w([0,0]),l=g(t),u=(l.getNorthWest().distanceTo(l.getSouthWest())*l.getNorthEast().distanceTo(l.getNorthWest())<1700&&(h=Qe(t)),t.length),c=[],d=0;d<u;d++){var _=w(t[d]);c.push(e.project(w([_.lat-h.lat,_.lng-h.lng])))}for(i=d=0;d<u-1;d++)i+=c[d].distanceTo(c[d+1])/2;if(0===i)a=c[0];else for(n=d=0;d<u-1;d++)if(o=c[d],s=c[d+1],i<(n+=r=o.distanceTo(s))){a=[s.x-(r=(n-i)/r)*(s.x-o.x),s.y-r*(s.y-o.y)];break}l=e.unproject(m(a));return w([l.lat+h.lat,l.lng+h.lng])}var vt={__proto__:null,simplify:ei,pointToSegmentDistance:ii,closestPointOnSegment:function(t,e,i){return ri(t,e,i)},clipSegment:ni,_getEdgeIntersection:oi,_getBitCode:si,_sqClosestPointOnSegment:ri,isFlat:I,_flat:ai,polylineCenter:hi},yt={project:function(t){return new p(t.lng,t.lat)},unproject:function(t){return new v(t.y,t.x)},bounds:new f([-180,-90],[180,90])},xt={R:6378137,R_MINOR:6356752.314245179,bounds:new f([-20037508.34279,-15496570.73972],[20037508.34279,18764656.23138]),project:function(t){var e=Math.PI/180,i=this.R,n=t.lat*e,o=this.R_MINOR/i,o=Math.sqrt(1-o*o),s=o*Math.sin(n),s=Math.tan(Math.PI/4-n/2)/Math.pow((1-s)/(1+s),o/2),n=-i*Math.log(Math.max(s,1e-10));return new p(t.lng*e*i,n)},unproject:function(t){for(var e,i=180/Math.PI,n=this.R,o=this.R_MINOR/n,s=Math.sqrt(1-o*o),r=Math.exp(-t.y/n),a=Math.PI/2-2*Math.atan(r),h=0,l=.1;h<15&&1e-7<Math.abs(l);h++)e=s*Math.sin(a),e=Math.pow((1-e)/(1+e),s/2),a+=l=Math.PI/2-2*Math.atan(r*e)-a;return new v(a*i,t.x*i/n)}},wt={__proto__:null,LonLat:yt,Mercator:xt,SphericalMercator:rt},Pt=l({},st,{code:"EPSG:3395",projection:xt,transformation:ht(bt=.5/(Math.PI*xt.R),.5,-bt,.5)}),li=l({},st,{code:"EPSG:4326",projection:yt,transformation:ht(1/180,1,-1/180,.5)}),Lt=l({},ot,{projection:yt,transformation:ht(1,0,-1,0),scale:function(t){return Math.pow(2,t)},zoom:function(t){return Math.log(t)/Math.LN2},distance:function(t,e){var i=e.lng-t.lng,e=e.lat-t.lat;return Math.sqrt(i*i+e*e)},infinite:!0}),o=(ot.Earth=st,ot.EPSG3395=Pt,ot.EPSG3857=lt,ot.EPSG900913=ut,ot.EPSG4326=li,ot.Simple=Lt,it.extend({options:{pane:"overlayPane",attribution:null,bubblingMouseEvents:!0},addTo:function(t){return t.addLayer(this),this},remove:function(){return this.removeFrom(this._map||this._mapToAdd)},removeFrom:function(t){return t&&t.removeLayer(this),this},getPane:function(t){return this._map.getPane(t?this.options[t]||t:this.options.pane)},addInteractiveTarget:function(t){return this._map._targets[h(t)]=this},removeInteractiveTarget:function(t){return delete this._map._targets[h(t)],this},getAttribution:function(){return this.options.attribution},_layerAdd:function(t){var e,i=t.target;i.hasLayer(this)&&(this._map=i,this._zoomAnimated=i._zoomAnimated,this.getEvents&&(e=this.getEvents(),i.on(e,this),this.once("remove",function(){i.off(e,this)},this)),this.onAdd(i),this.fire("add"),i.fire("layeradd",{layer:this}))}})),ui=(A.include({addLayer:function(t){var e;if(t._layerAdd)return e=h(t),this._layers[e]||((this._layers[e]=t)._mapToAdd=this,t.beforeAdd&&t.beforeAdd(this),this.whenReady(t._layerAdd,t)),this;throw new Error("The provided object is not a Layer.")},removeLayer:function(t){var e=h(t);return this._layers[e]&&(this._loaded&&t.onRemove(this),delete this._layers[e],this._loaded&&(this.fire("layerremove",{layer:t}),t.fire("remove")),t._map=t._mapToAdd=null),this},hasLayer:function(t){return h(t)in this._layers},eachLayer:function(t,e){for(var i in this._layers)t.call(e,this._layers[i]);return this},_addLayers:function(t){for(var e=0,i=(t=t?d(t)?t:[t]:[]).length;e<i;e++)this.addLayer(t[e])},_addZoomLimit:function(t){isNaN(t.options.maxZoom)&&isNaN(t.options.minZoom)||(this._zoomBoundLayers[h(t)]=t,this._updateZoomLevels())},_removeZoomLimit:function(t){t=h(t);this._zoomBoundLayers[t]&&(delete this._zoomBoundLayers[t],this._updateZoomLevels())},_updateZoomLevels:function(){var t,e=1/0,i=-1/0,n=this._getZoomSpan();for(t in this._zoomBoundLayers)var o=this._zoomBoundLayers[t].options,e=void 0===o.minZoom?e:Math.min(e,o.minZoom),i=void 0===o.maxZoom?i:Math.max(i,o.maxZoom);this._layersMaxZoom=i===-1/0?void 0:i,this._layersMinZoom=e===1/0?void 0:e,n!==this._getZoomSpan()&&this.fire("zoomlevelschange"),void 0===this.options.maxZoom&&this._layersMaxZoom&&this.getZoom()>this._layersMaxZoom&&this.setZoom(this._layersMaxZoom),void 0===this.options.minZoom&&this._layersMinZoom&&this.getZoom()<this._layersMinZoom&&this.setZoom(this._layersMinZoom)}}),o.extend({initialize:function(t,e){var i,n;if(c(this,e),this._layers={},t)for(i=0,n=t.length;i<n;i++)this.addLayer(t[i])},addLayer:function(t){var e=this.getLayerId(t);return this._layers[e]=t,this._map&&this._map.addLayer(t),this},removeLayer:function(t){t=t in this._layers?t:this.getLayerId(t);return this._map&&this._layers[t]&&this._map.removeLayer(this._layers[t]),delete this._layers[t],this},hasLayer:function(t){return("number"==typeof t?t:this.getLayerId(t))in this._layers},clearLayers:function(){return this.eachLayer(this.removeLayer,this)},invoke:function(t){var e,i,n=Array.prototype.slice.call(arguments,1);for(e in this._layers)(i=this._layers[e])[t]&&i[t].apply(i,n);return this},onAdd:function(t){this.eachLayer(t.addLayer,t)},onRemove:function(t){this.eachLayer(t.removeLayer,t)},eachLayer:function(t,e){for(var i in this._layers)t.call(e,this._layers[i]);return this},getLayer:function(t){return this._layers[t]},getLayers:function(){var t=[];return this.eachLayer(t.push,t),t},setZIndex:function(t){return this.invoke("setZIndex",t)},getLayerId:h})),ci=ui.extend({addLayer:function(t){return this.hasLayer(t)?this:(t.addEventParent(this),ui.prototype.addLayer.call(this,t),this.fire("layeradd",{layer:t}))},removeLayer:function(t){return this.hasLayer(t)?((t=t in this._layers?this._layers[t]:t).removeEventParent(this),ui.prototype.removeLayer.call(this,t),this.fire("layerremove",{layer:t})):this},setStyle:function(t){return this.invoke("setStyle",t)},bringToFront:function(){return this.invoke("bringToFront")},bringToBack:function(){return this.invoke("bringToBack")},getBounds:function(){var t,e=new s;for(t in this._layers){var i=this._layers[t];e.extend(i.getBounds?i.getBounds():i.getLatLng())}return e}}),di=et.extend({options:{popupAnchor:[0,0],tooltipAnchor:[0,0],crossOrigin:!1},initialize:function(t){c(this,t)},createIcon:function(t){return this._createIcon("icon",t)},createShadow:function(t){return this._createIcon("shadow",t)},_createIcon:function(t,e){var i=this._getIconUrl(t);if(i)return i=this._createImg(i,e&&"IMG"===e.tagName?e:null),this._setIconStyles(i,t),!this.options.crossOrigin&&""!==this.options.crossOrigin||(i.crossOrigin=!0===this.options.crossOrigin?"":this.options.crossOrigin),i;if("icon"===t)throw new Error("iconUrl not set in Icon options (see the docs).");return null},_setIconStyles:function(t,e){var i=this.options,n=i[e+"Size"],n=m(n="number"==typeof n?[n,n]:n),o=m("shadow"===e&&i.shadowAnchor||i.iconAnchor||n&&n.divideBy(2,!0));t.className="leaflet-marker-"+e+" "+(i.className||""),o&&(t.style.marginLeft=-o.x+"px",t.style.marginTop=-o.y+"px"),n&&(t.style.width=n.x+"px",t.style.height=n.y+"px")},_createImg:function(t,e){return(e=e||document.createElement("img")).src=t,e},_getIconUrl:function(t){return b.retina&&this.options[t+"RetinaUrl"]||this.options[t+"Url"]}});var _i=di.extend({options:{iconUrl:"marker-icon.png",iconRetinaUrl:"marker-icon-2x.png",shadowUrl:"marker-shadow.png",iconSize:[25,41],iconAnchor:[12,41],popupAnchor:[1,-34],tooltipAnchor:[16,-28],shadowSize:[41,41]},_getIconUrl:function(t){return"string"!=typeof _i.imagePath&&(_i.imagePath=this._detectIconPath()),(this.options.imagePath||_i.imagePath)+di.prototype._getIconUrl.call(this,t)},_stripUrl:function(t){function e(t,e,i){return(e=e.exec(t))&&e[i]}return(t=e(t,/^url\\((['"])?(.+)\\1\\)$/,2))&&e(t,/^(.*)marker-icon\\.png$/,1)},_detectIconPath:function(){var t=P("div","leaflet-default-icon-path",document.body),e=pe(t,"background-image")||pe(t,"backgroundImage");return document.body.removeChild(t),(e=this._stripUrl(e))?e:(t=document.querySelector('link[href$="leaflet.css"]'))?t.href.substring(0,t.href.length-"leaflet.css".length-1):""}}),pi=n.extend({initialize:function(t){this._marker=t},addHooks:function(){var t=this._marker._icon;this._draggable||(this._draggable=new Xe(t,t,!0)),this._draggable.on({dragstart:this._onDragStart,predrag:this._onPreDrag,drag:this._onDrag,dragend:this._onDragEnd},this).enable(),M(t,"leaflet-marker-draggable")},removeHooks:function(){this._draggable.off({dragstart:this._onDragStart,predrag:this._onPreDrag,drag:this._onDrag,dragend:this._onDragEnd},this).disable(),this._marker._icon&&z(this._marker._icon,"leaflet-marker-draggable")},moved:function(){return this._draggable&&this._draggable._moved},_adjustPan:function(t){var e=this._marker,i=e._map,n=this._marker.options.autoPanSpeed,o=this._marker.options.autoPanPadding,s=Pe(e._icon),r=i.getPixelBounds(),a=i.getPixelOrigin(),a=_(r.min._subtract(a).add(o),r.max._subtract(a).subtract(o));a.contains(s)||(o=m((Math.max(a.max.x,s.x)-a.max.x)/(r.max.x-a.max.x)-(Math.min(a.min.x,s.x)-a.min.x)/(r.min.x-a.min.x),(Math.max(a.max.y,s.y)-a.max.y)/(r.max.y-a.max.y)-(Math.min(a.min.y,s.y)-a.min.y)/(r.min.y-a.min.y)).multiplyBy(n),i.panBy(o,{animate:!1}),this._draggable._newPos._add(o),this._draggable._startPos._add(o),Z(e._icon,this._draggable._newPos),this._onDrag(t),this._panRequest=x(this._adjustPan.bind(this,t)))},_onDragStart:function(){this._oldLatLng=this._marker.getLatLng(),this._marker.closePopup&&this._marker.closePopup(),this._marker.fire("movestart").fire("dragstart")},_onPreDrag:function(t){this._marker.options.autoPan&&(r(this._panRequest),this._panRequest=x(this._adjustPan.bind(this,t)))},_onDrag:function(t){var e=this._marker,i=e._shadow,n=Pe(e._icon),o=e._map.layerPointToLatLng(n);i&&Z(i,n),e._latlng=o,t.latlng=o,t.oldLatLng=this._oldLatLng,e.fire("move",t).fire("drag",t)},_onDragEnd:function(t){r(this._panRequest),delete this._oldLatLng,this._marker.fire("moveend").fire("dragend",t)}}),mi=o.extend({options:{icon:new _i,interactive:!0,keyboard:!0,title:"",alt:"Marker",zIndexOffset:0,opacity:1,riseOnHover:!1,riseOffset:250,pane:"markerPane",shadowPane:"shadowPane",bubblingMouseEvents:!1,autoPanOnFocus:!0,draggable:!1,autoPan:!1,autoPanPadding:[50,50],autoPanSpeed:10},initialize:function(t,e){c(this,e),this._latlng=w(t)},onAdd:function(t){this._zoomAnimated=this._zoomAnimated&&t.options.markerZoomAnimation,this._zoomAnimated&&t.on("zoomanim",this._animateZoom,this),this._initIcon(),this.update()},onRemove:function(t){this.dragging&&this.dragging.enabled()&&(this.options.draggable=!0,this.dragging.removeHooks()),delete this.dragging,this._zoomAnimated&&t.off("zoomanim",this._animateZoom,this),this._removeIcon(),this._removeShadow()},getEvents:function(){return{zoom:this.update,viewreset:this.update}},getLatLng:function(){return this._latlng},setLatLng:function(t){var e=this._latlng;return this._latlng=w(t),this.update(),this.fire("move",{oldLatLng:e,latlng:this._latlng})},setZIndexOffset:function(t){return this.options.zIndexOffset=t,this.update()},getIcon:function(){return this.options.icon},setIcon:function(t){return this.options.icon=t,this._map&&(this._initIcon(),this.update()),this._popup&&this.bindPopup(this._popup,this._popup.options),this},getElement:function(){return this._icon},update:function(){var t;return this._icon&&this._map&&(t=this._map.latLngToLayerPoint(this._latlng).round(),this._setPos(t)),this},_initIcon:function(){var t=this.options,e="leaflet-zoom-"+(this._zoomAnimated?"animated":"hide"),i=t.icon.createIcon(this._icon),n=!1,i=(i!==this._icon&&(this._icon&&this._removeIcon(),n=!0,t.title&&(i.title=t.title),"IMG"===i.tagName&&(i.alt=t.alt||"")),M(i,e),t.keyboard&&(i.tabIndex="0",i.setAttribute("role","button")),this._icon=i,t.riseOnHover&&this.on({mouseover:this._bringToFront,mouseout:this._resetZIndex}),this.options.autoPanOnFocus&&S(i,"focus",this._panOnFocus,this),t.icon.createShadow(this._shadow)),o=!1;i!==this._shadow&&(this._removeShadow(),o=!0),i&&(M(i,e),i.alt=""),this._shadow=i,t.opacity<1&&this._updateOpacity(),n&&this.getPane().appendChild(this._icon),this._initInteraction(),i&&o&&this.getPane(t.shadowPane).appendChild(this._shadow)},_removeIcon:function(){this.options.riseOnHover&&this.off({mouseover:this._bringToFront,mouseout:this._resetZIndex}),this.options.autoPanOnFocus&&k(this._icon,"focus",this._panOnFocus,this),T(this._icon),this.removeInteractiveTarget(this._icon),this._icon=null},_removeShadow:function(){this._shadow&&T(this._shadow),this._shadow=null},_setPos:function(t){this._icon&&Z(this._icon,t),this._shadow&&Z(this._shadow,t),this._zIndex=t.y+this.options.zIndexOffset,this._resetZIndex()},_updateZIndex:function(t){this._icon&&(this._icon.style.zIndex=this._zIndex+t)},_animateZoom:function(t){t=this._map._latLngToNewLayerPoint(this._latlng,t.zoom,t.center).round();this._setPos(t)},_initInteraction:function(){var t;this.options.interactive&&(M(this._icon,"leaflet-interactive"),this.addInteractiveTarget(this._icon),pi&&(t=this.options.draggable,this.dragging&&(t=this.dragging.enabled(),this.dragging.disable()),this.dragging=new pi(this),t&&this.dragging.enable()))},setOpacity:function(t){return this.options.opacity=t,this._map&&this._updateOpacity(),this},_updateOpacity:function(){var t=this.options.opacity;this._icon&&C(this._icon,t),this._shadow&&C(this._shadow,t)},_bringToFront:function(){this._updateZIndex(this.options.riseOffset)},_resetZIndex:function(){this._updateZIndex(0)},_panOnFocus:function(){var t,e,i=this._map;i&&(t=(e=this.options.icon.options).iconSize?m(e.iconSize):m(0,0),e=e.iconAnchor?m(e.iconAnchor):m(0,0),i.panInside(this._latlng,{paddingTopLeft:e,paddingBottomRight:t.subtract(e)}))},_getPopupAnchor:function(){return this.options.icon.options.popupAnchor},_getTooltipAnchor:function(){return this.options.icon.options.tooltipAnchor}});var fi=o.extend({options:{stroke:!0,color:"#3388ff",weight:3,opacity:1,lineCap:"round",lineJoin:"round",dashArray:null,dashOffset:null,fill:!1,fillColor:null,fillOpacity:.2,fillRule:"evenodd",interactive:!0,bubblingMouseEvents:!0},beforeAdd:function(t){this._renderer=t.getRenderer(this)},onAdd:function(){this._renderer._initPath(this),this._reset(),this._renderer._addPath(this)},onRemove:function(){this._renderer._removePath(this)},redraw:function(){return this._map&&this._renderer._updatePath(this),this},setStyle:function(t){return c(this,t),this._renderer&&(this._renderer._updateStyle(this),this.options.stroke&&t&&Object.prototype.hasOwnProperty.call(t,"weight")&&this._updateBounds()),this},bringToFront:function(){return this._renderer&&this._renderer._bringToFront(this),this},bringToBack:function(){return this._renderer&&this._renderer._bringToBack(this),this},getElement:function(){return this._path},_reset:function(){this._project(),this._update()},_clickTolerance:function(){return(this.options.stroke?this.options.weight/2:0)+(this._renderer.options.tolerance||0)}}),gi=fi.extend({options:{fill:!0,radius:10},initialize:function(t,e){c(this,e),this._latlng=w(t),this._radius=this.options.radius},setLatLng:function(t){var e=this._latlng;return this._latlng=w(t),this.redraw(),this.fire("move",{oldLatLng:e,latlng:this._latlng})},getLatLng:function(){return this._latlng},setRadius:function(t){return this.options.radius=this._radius=t,this.redraw()},getRadius:function(){return this._radius},setStyle:function(t){var e=t&&t.radius||this._radius;return fi.prototype.setStyle.call(this,t),this.setRadius(e),this},_project:function(){this._point=this._map.latLngToLayerPoint(this._latlng),this._updateBounds()},_updateBounds:function(){var t=this._radius,e=this._radiusY||t,i=this._clickTolerance(),t=[t+i,e+i];this._pxBounds=new f(this._point.subtract(t),this._point.add(t))},_update:function(){this._map&&this._updatePath()},_updatePath:function(){this._renderer._updateCircle(this)},_empty:function(){return this._radius&&!this._renderer._bounds.intersects(this._pxBounds)},_containsPoint:function(t){return t.distanceTo(this._point)<=this._radius+this._clickTolerance()}});var vi=gi.extend({initialize:function(t,e,i){if(c(this,e="number"==typeof e?l({},i,{radius:e}):e),this._latlng=w(t),isNaN(this.options.radius))throw new Error("Circle radius cannot be NaN");this._mRadius=this.options.radius},setRadius:function(t){return this._mRadius=t,this.redraw()},getRadius:function(){return this._mRadius},getBounds:function(){var t=[this._radius,this._radiusY||this._radius];return new s(this._map.layerPointToLatLng(this._point.subtract(t)),this._map.layerPointToLatLng(this._point.add(t)))},setStyle:fi.prototype.setStyle,_project:function(){var t,e,i,n,o,s=this._latlng.lng,r=this._latlng.lat,a=this._map,h=a.options.crs;h.distance===st.distance?(n=Math.PI/180,o=this._mRadius/st.R/n,t=a.project([r+o,s]),e=a.project([r-o,s]),e=t.add(e).divideBy(2),i=a.unproject(e).lat,n=Math.acos((Math.cos(o*n)-Math.sin(r*n)*Math.sin(i*n))/(Math.cos(r*n)*Math.cos(i*n)))/n,!isNaN(n)&&0!==n||(n=o/Math.cos(Math.PI/180*r)),this._point=e.subtract(a.getPixelOrigin()),this._radius=isNaN(n)?0:e.x-a.project([i,s-n]).x,this._radiusY=e.y-t.y):(o=h.unproject(h.project(this._latlng).subtract([this._mRadius,0])),this._point=a.latLngToLayerPoint(this._latlng),this._radius=this._point.x-a.latLngToLayerPoint(o).x),this._updateBounds()}});var yi=fi.extend({options:{smoothFactor:1,noClip:!1},initialize:function(t,e){c(this,e),this._setLatLngs(t)},getLatLngs:function(){return this._latlngs},setLatLngs:function(t){return this._setLatLngs(t),this.redraw()},isEmpty:function(){return!this._latlngs.length},closestLayerPoint:function(t){for(var e=1/0,i=null,n=ri,o=0,s=this._parts.length;o<s;o++)for(var r=this._parts[o],a=1,h=r.length;a<h;a++){var l,u,c=n(t,l=r[a-1],u=r[a],!0);c<e&&(e=c,i=n(t,l,u))}return i&&(i.distance=Math.sqrt(e)),i},getCenter:function(){if(this._map)return hi(this._defaultShape(),this._map.options.crs);throw new Error("Must add layer to map before using getCenter()")},getBounds:function(){return this._bounds},addLatLng:function(t,e){return e=e||this._defaultShape(),t=w(t),e.push(t),this._bounds.extend(t),this.redraw()},_setLatLngs:function(t){this._bounds=new s,this._latlngs=this._convertLatLngs(t)},_defaultShape:function(){return I(this._latlngs)?this._latlngs:this._latlngs[0]},_convertLatLngs:function(t){for(var e=[],i=I(t),n=0,o=t.length;n<o;n++)i?(e[n]=w(t[n]),this._bounds.extend(e[n])):e[n]=this._convertLatLngs(t[n]);return e},_project:function(){var t=new f;this._rings=[],this._projectLatlngs(this._latlngs,this._rings,t),this._bounds.isValid()&&t.isValid()&&(this._rawPxBounds=t,this._updateBounds())},_updateBounds:function(){var t=this._clickTolerance(),t=new p(t,t);this._rawPxBounds&&(this._pxBounds=new f([this._rawPxBounds.min.subtract(t),this._rawPxBounds.max.add(t)]))},_projectLatlngs:function(t,e,i){var n,o,s=t[0]instanceof v,r=t.length;if(s){for(o=[],n=0;n<r;n++)o[n]=this._map.latLngToLayerPoint(t[n]),i.extend(o[n]);e.push(o)}else for(n=0;n<r;n++)this._projectLatlngs(t[n],e,i)},_clipPoints:function(){var t=this._renderer._bounds;if(this._parts=[],this._pxBounds&&this._pxBounds.intersects(t))if(this.options.noClip)this._parts=this._rings;else for(var e,i,n,o,s=this._parts,r=0,a=0,h=this._rings.length;r<h;r++)for(e=0,i=(o=this._rings[r]).length;e<i-1;e++)(n=ni(o[e],o[e+1],t,e,!0))&&(s[a]=s[a]||[],s[a].push(n[0]),n[1]===o[e+1]&&e!==i-2||(s[a].push(n[1]),a++))},_simplifyPoints:function(){for(var t=this._parts,e=this.options.smoothFactor,i=0,n=t.length;i<n;i++)t[i]=ei(t[i],e)},_update:function(){this._map&&(this._clipPoints(),this._simplifyPoints(),this._updatePath())},_updatePath:function(){this._renderer._updatePoly(this)},_containsPoint:function(t,e){var i,n,o,s,r,a,h=this._clickTolerance();if(this._pxBounds&&this._pxBounds.contains(t))for(i=0,s=this._parts.length;i<s;i++)for(n=0,o=(r=(a=this._parts[i]).length)-1;n<r;o=n++)if((e||0!==n)&&ii(t,a[o],a[n])<=h)return!0;return!1}});yi._flat=ai;var xi=yi.extend({options:{fill:!0},isEmpty:function(){return!this._latlngs.length||!this._latlngs[0].length},getCenter:function(){if(this._map)return $e(this._defaultShape(),this._map.options.crs);throw new Error("Must add layer to map before using getCenter()")},_convertLatLngs:function(t){var t=yi.prototype._convertLatLngs.call(this,t),e=t.length;return 2<=e&&t[0]instanceof v&&t[0].equals(t[e-1])&&t.pop(),t},_setLatLngs:function(t){yi.prototype._setLatLngs.call(this,t),I(this._latlngs)&&(this._latlngs=[this._latlngs])},_defaultShape:function(){return(I(this._latlngs[0])?this._latlngs:this._latlngs[0])[0]},_clipPoints:function(){var t=this._renderer._bounds,e=this.options.weight,e=new p(e,e),t=new f(t.min.subtract(e),t.max.add(e));if(this._parts=[],this._pxBounds&&this._pxBounds.intersects(t))if(this.options.noClip)this._parts=this._rings;else for(var i,n=0,o=this._rings.length;n<o;n++)(i=Je(this._rings[n],t,!0)).length&&this._parts.push(i)},_updatePath:function(){this._renderer._updatePoly(this,!0)},_containsPoint:function(t){var e,i,n,o,s,r,a,h,l=!1;if(!this._pxBounds||!this._pxBounds.contains(t))return!1;for(o=0,a=this._parts.length;o<a;o++)for(s=0,r=(h=(e=this._parts[o]).length)-1;s<h;r=s++)i=e[s],n=e[r],i.y>t.y!=n.y>t.y&&t.x<(n.x-i.x)*(t.y-i.y)/(n.y-i.y)+i.x&&(l=!l);return l||yi.prototype._containsPoint.call(this,t,!0)}});var wi=ci.extend({initialize:function(t,e){c(this,e),this._layers={},t&&this.addData(t)},addData:function(t){var e,i,n,o=d(t)?t:t.features;if(o){for(e=0,i=o.length;e<i;e++)((n=o[e]).geometries||n.geometry||n.features||n.coordinates)&&this.addData(n);return this}var s,r=this.options;return(!r.filter||r.filter(t))&&(s=bi(t,r))?(s.feature=Zi(t),s.defaultOptions=s.options,this.resetStyle(s),r.onEachFeature&&r.onEachFeature(t,s),this.addLayer(s)):this},resetStyle:function(t){return void 0===t?this.eachLayer(this.resetStyle,this):(t.options=l({},t.defaultOptions),this._setLayerStyle(t,this.options.style),this)},setStyle:function(e){return this.eachLayer(function(t){this._setLayerStyle(t,e)},this)},_setLayerStyle:function(t,e){t.setStyle&&("function"==typeof e&&(e=e(t.feature)),t.setStyle(e))}});function bi(t,e){var i,n,o,s,r="Feature"===t.type?t.geometry:t,a=r?r.coordinates:null,h=[],l=e&&e.pointToLayer,u=e&&e.coordsToLatLng||Li;if(!a&&!r)return null;switch(r.type){case"Point":return Pi(l,t,i=u(a),e);case"MultiPoint":for(o=0,s=a.length;o<s;o++)i=u(a[o]),h.push(Pi(l,t,i,e));return new ci(h);case"LineString":case"MultiLineString":return n=Ti(a,"LineString"===r.type?0:1,u),new yi(n,e);case"Polygon":case"MultiPolygon":return n=Ti(a,"Polygon"===r.type?1:2,u),new xi(n,e);case"GeometryCollection":for(o=0,s=r.geometries.length;o<s;o++){var c=bi({geometry:r.geometries[o],type:"Feature",properties:t.properties},e);c&&h.push(c)}return new ci(h);case"FeatureCollection":for(o=0,s=r.features.length;o<s;o++){var d=bi(r.features[o],e);d&&h.push(d)}return new ci(h);default:throw new Error("Invalid GeoJSON object.")}}function Pi(t,e,i,n){return t?t(e,i):new mi(i,n&&n.markersInheritOptions&&n)}function Li(t){return new v(t[1],t[0],t[2])}function Ti(t,e,i){for(var n,o=[],s=0,r=t.length;s<r;s++)n=e?Ti(t[s],e-1,i):(i||Li)(t[s]),o.push(n);return o}function Mi(t,e){return void 0!==(t=w(t)).alt?[i(t.lng,e),i(t.lat,e),i(t.alt,e)]:[i(t.lng,e),i(t.lat,e)]}function zi(t,e,i,n){for(var o=[],s=0,r=t.length;s<r;s++)o.push(e?zi(t[s],I(t[s])?0:e-1,i,n):Mi(t[s],n));return!e&&i&&0<o.length&&o.push(o[0].slice()),o}function Ci(t,e){return t.feature?l({},t.feature,{geometry:e}):Zi(e)}function Zi(t){return"Feature"===t.type||"FeatureCollection"===t.type?t:{type:"Feature",properties:{},geometry:t}}Tt={toGeoJSON:function(t){return Ci(this,{type:"Point",coordinates:Mi(this.getLatLng(),t)})}};function Si(t,e){return new wi(t,e)}mi.include(Tt),vi.include(Tt),gi.include(Tt),yi.include({toGeoJSON:function(t){var e=!I(this._latlngs);return Ci(this,{type:(e?"Multi":"")+"LineString",coordinates:zi(this._latlngs,e?1:0,!1,t)})}}),xi.include({toGeoJSON:function(t){var e=!I(this._latlngs),i=e&&!I(this._latlngs[0]),t=zi(this._latlngs,i?2:e?1:0,!0,t);return Ci(this,{type:(i?"Multi":"")+"Polygon",coordinates:t=e?t:[t]})}}),ui.include({toMultiPoint:function(e){var i=[];return this.eachLayer(function(t){i.push(t.toGeoJSON(e).geometry.coordinates)}),Ci(this,{type:"MultiPoint",coordinates:i})},toGeoJSON:function(e){var i,n,t=this.feature&&this.feature.geometry&&this.feature.geometry.type;return"MultiPoint"===t?this.toMultiPoint(e):(i="GeometryCollection"===t,n=[],this.eachLayer(function(t){t.toGeoJSON&&(t=t.toGeoJSON(e),i?n.push(t.geometry):"FeatureCollection"===(t=Zi(t)).type?n.push.apply(n,t.features):n.push(t))}),i?Ci(this,{geometries:n,type:"GeometryCollection"}):{type:"FeatureCollection",features:n})}});var Mt=Si,Ei=o.extend({options:{opacity:1,alt:"",interactive:!1,crossOrigin:!1,errorOverlayUrl:"",zIndex:1,className:""},initialize:function(t,e,i){this._url=t,this._bounds=g(e),c(this,i)},onAdd:function(){this._image||(this._initImage(),this.options.opacity<1&&this._updateOpacity()),this.options.interactive&&(M(this._image,"leaflet-interactive"),this.addInteractiveTarget(this._image)),this.getPane().appendChild(this._image),this._reset()},onRemove:function(){T(this._image),this.options.interactive&&this.removeInteractiveTarget(this._image)},setOpacity:function(t){return this.options.opacity=t,this._image&&this._updateOpacity(),this},setStyle:function(t){return t.opacity&&this.setOpacity(t.opacity),this},bringToFront:function(){return this._map&&fe(this._image),this},bringToBack:function(){return this._map&&ge(this._image),this},setUrl:function(t){return this._url=t,this._image&&(this._image.src=t),this},setBounds:function(t){return this._bounds=g(t),this._map&&this._reset(),this},getEvents:function(){var t={zoom:this._reset,viewreset:this._reset};return this._zoomAnimated&&(t.zoomanim=this._animateZoom),t},setZIndex:function(t){return this.options.zIndex=t,this._updateZIndex(),this},getBounds:function(){return this._bounds},getElement:function(){return this._image},_initImage:function(){var t="IMG"===this._url.tagName,e=this._image=t?this._url:P("img");M(e,"leaflet-image-layer"),this._zoomAnimated&&M(e,"leaflet-zoom-animated"),this.options.className&&M(e,this.options.className),e.onselectstart=u,e.onmousemove=u,e.onload=a(this.fire,this,"load"),e.onerror=a(this._overlayOnError,this,"error"),!this.options.crossOrigin&&""!==this.options.crossOrigin||(e.crossOrigin=!0===this.options.crossOrigin?"":this.options.crossOrigin),this.options.zIndex&&this._updateZIndex(),t?this._url=e.src:(e.src=this._url,e.alt=this.options.alt)},_animateZoom:function(t){var e=this._map.getZoomScale(t.zoom),t=this._map._latLngBoundsToNewLayerBounds(this._bounds,t.zoom,t.center).min;be(this._image,t,e)},_reset:function(){var t=this._image,e=new f(this._map.latLngToLayerPoint(this._bounds.getNorthWest()),this._map.latLngToLayerPoint(this._bounds.getSouthEast())),i=e.getSize();Z(t,e.min),t.style.width=i.x+"px",t.style.height=i.y+"px"},_updateOpacity:function(){C(this._image,this.options.opacity)},_updateZIndex:function(){this._image&&void 0!==this.options.zIndex&&null!==this.options.zIndex&&(this._image.style.zIndex=this.options.zIndex)},_overlayOnError:function(){this.fire("error");var t=this.options.errorOverlayUrl;t&&this._url!==t&&(this._url=t,this._image.src=t)},getCenter:function(){return this._bounds.getCenter()}}),ki=Ei.extend({options:{autoplay:!0,loop:!0,keepAspectRatio:!0,muted:!1,playsInline:!0},_initImage:function(){var t="VIDEO"===this._url.tagName,e=this._image=t?this._url:P("video");if(M(e,"leaflet-image-layer"),this._zoomAnimated&&M(e,"leaflet-zoom-animated"),this.options.className&&M(e,this.options.className),e.onselectstart=u,e.onmousemove=u,e.onloadeddata=a(this.fire,this,"load"),t){for(var i=e.getElementsByTagName("source"),n=[],o=0;o<i.length;o++)n.push(i[o].src);this._url=0<i.length?n:[e.src]}else{d(this._url)||(this._url=[this._url]),!this.options.keepAspectRatio&&Object.prototype.hasOwnProperty.call(e.style,"objectFit")&&(e.style.objectFit="fill"),e.autoplay=!!this.options.autoplay,e.loop=!!this.options.loop,e.muted=!!this.options.muted,e.playsInline=!!this.options.playsInline;for(var s=0;s<this._url.length;s++){var r=P("source");r.src=this._url[s],e.appendChild(r)}}}});var Oi=Ei.extend({_initImage:function(){var t=this._image=this._url;M(t,"leaflet-image-layer"),this._zoomAnimated&&M(t,"leaflet-zoom-animated"),this.options.className&&M(t,this.options.className),t.onselectstart=u,t.onmousemove=u}});var Ai=o.extend({options:{interactive:!1,offset:[0,0],className:"",pane:void 0,content:""},initialize:function(t,e){t&&(t instanceof v||d(t))?(this._latlng=w(t),c(this,e)):(c(this,t),this._source=e),this.options.content&&(this._content=this.options.content)},openOn:function(t){return(t=arguments.length?t:this._source._map).hasLayer(this)||t.addLayer(this),this},close:function(){return this._map&&this._map.removeLayer(this),this},toggle:function(t){return this._map?this.close():(arguments.length?this._source=t:t=this._source,this._prepareOpen(),this.openOn(t._map)),this},onAdd:function(t){this._zoomAnimated=t._zoomAnimated,this._container||this._initLayout(),t._fadeAnimated&&C(this._container,0),clearTimeout(this._removeTimeout),this.getPane().appendChild(this._container),this.update(),t._fadeAnimated&&C(this._container,1),this.bringToFront(),this.options.interactive&&(M(this._container,"leaflet-interactive"),this.addInteractiveTarget(this._container))},onRemove:function(t){t._fadeAnimated?(C(this._container,0),this._removeTimeout=setTimeout(a(T,void 0,this._container),200)):T(this._container),this.options.interactive&&(z(this._container,"leaflet-interactive"),this.removeInteractiveTarget(this._container))},getLatLng:function(){return this._latlng},setLatLng:function(t){return this._latlng=w(t),this._map&&(this._updatePosition(),this._adjustPan()),this},getContent:function(){return this._content},setContent:function(t){return this._content=t,this.update(),this},getElement:function(){return this._container},update:function(){this._map&&(this._container.style.visibility="hidden",this._updateContent(),this._updateLayout(),this._updatePosition(),this._container.style.visibility="",this._adjustPan())},getEvents:function(){var t={zoom:this._updatePosition,viewreset:this._updatePosition};return this._zoomAnimated&&(t.zoomanim=this._animateZoom),t},isOpen:function(){return!!this._map&&this._map.hasLayer(this)},bringToFront:function(){return this._map&&fe(this._container),this},bringToBack:function(){return this._map&&ge(this._container),this},_prepareOpen:function(t){if(!(i=this._source)._map)return!1;if(i instanceof ci){var e,i=null,n=this._source._layers;for(e in n)if(n[e]._map){i=n[e];break}if(!i)return!1;this._source=i}if(!t)if(i.getCenter)t=i.getCenter();else if(i.getLatLng)t=i.getLatLng();else{if(!i.getBounds)throw new Error("Unable to get source layer LatLng.");t=i.getBounds().getCenter()}return this.setLatLng(t),this._map&&this.update(),!0},_updateContent:function(){if(this._content){var t=this._contentNode,e="function"==typeof this._content?this._content(this._source||this):this._content;if("string"==typeof e)t.innerHTML=e;else{for(;t.hasChildNodes();)t.removeChild(t.firstChild);t.appendChild(e)}this.fire("contentupdate")}},_updatePosition:function(){var t,e,i;this._map&&(e=this._map.latLngToLayerPoint(this._latlng),t=m(this.options.offset),i=this._getAnchor(),this._zoomAnimated?Z(this._container,e.add(i)):t=t.add(e).add(i),e=this._containerBottom=-t.y,i=this._containerLeft=-Math.round(this._containerWidth/2)+t.x,this._container.style.bottom=e+"px",this._container.style.left=i+"px")},_getAnchor:function(){return[0,0]}}),Bi=(A.include({_initOverlay:function(t,e,i,n){var o=e;return o instanceof t||(o=new t(n).setContent(e)),i&&o.setLatLng(i),o}}),o.include({_initOverlay:function(t,e,i,n){var o=i;return o instanceof t?(c(o,n),o._source=this):(o=e&&!n?e:new t(n,this)).setContent(i),o}}),Ai.extend({options:{pane:"popupPane",offset:[0,7],maxWidth:300,minWidth:50,maxHeight:null,autoPan:!0,autoPanPaddingTopLeft:null,autoPanPaddingBottomRight:null,autoPanPadding:[5,5],keepInView:!1,closeButton:!0,autoClose:!0,closeOnEscapeKey:!0,className:""},openOn:function(t){return!(t=arguments.length?t:this._source._map).hasLayer(this)&&t._popup&&t._popup.options.autoClose&&t.removeLayer(t._popup),t._popup=this,Ai.prototype.openOn.call(this,t)},onAdd:function(t){Ai.prototype.onAdd.call(this,t),t.fire("popupopen",{popup:this}),this._source&&(this._source.fire("popupopen",{popup:this},!0),this._source instanceof fi||this._source.on("preclick",Ae))},onRemove:function(t){Ai.prototype.onRemove.call(this,t),t.fire("popupclose",{popup:this}),this._source&&(this._source.fire("popupclose",{popup:this},!0),this._source instanceof fi||this._source.off("preclick",Ae))},getEvents:function(){var t=Ai.prototype.getEvents.call(this);return(void 0!==this.options.closeOnClick?this.options.closeOnClick:this._map.options.closePopupOnClick)&&(t.preclick=this.close),this.options.keepInView&&(t.moveend=this._adjustPan),t},_initLayout:function(){var t="leaflet-popup",e=this._container=P("div",t+" "+(this.options.className||"")+" leaflet-zoom-animated"),i=this._wrapper=P("div",t+"-content-wrapper",e);this._contentNode=P("div",t+"-content",i),Ie(e),Be(this._contentNode),S(e,"contextmenu",Ae),this._tipContainer=P("div",t+"-tip-container",e),this._tip=P("div",t+"-tip",this._tipContainer),this.options.closeButton&&((i=this._closeButton=P("a",t+"-close-button",e)).setAttribute("role","button"),i.setAttribute("aria-label","Close popup"),i.href="#close",i.innerHTML='<span aria-hidden="true">&#215;</span>',S(i,"click",function(t){O(t),this.close()},this))},_updateLayout:function(){var t=this._contentNode,e=t.style,i=(e.width="",e.whiteSpace="nowrap",t.offsetWidth),i=Math.min(i,this.options.maxWidth),i=(i=Math.max(i,this.options.minWidth),e.width=i+1+"px",e.whiteSpace="",e.height="",t.offsetHeight),n=this.options.maxHeight,o="leaflet-popup-scrolled";(n&&n<i?(e.height=n+"px",M):z)(t,o),this._containerWidth=this._container.offsetWidth},_animateZoom:function(t){var t=this._map._latLngToNewLayerPoint(this._latlng,t.zoom,t.center),e=this._getAnchor();Z(this._container,t.add(e))},_adjustPan:function(){var t,e,i,n,o,s,r,a;this.options.autoPan&&(this._map._panAnim&&this._map._panAnim.stop(),this._autopanning?this._autopanning=!1:(t=this._map,e=parseInt(pe(this._container,"marginBottom"),10)||0,e=this._container.offsetHeight+e,a=this._containerWidth,(i=new p(this._containerLeft,-e-this._containerBottom))._add(Pe(this._container)),i=t.layerPointToContainerPoint(i),o=m(this.options.autoPanPadding),n=m(this.options.autoPanPaddingTopLeft||o),o=m(this.options.autoPanPaddingBottomRight||o),s=t.getSize(),r=0,i.x+a+o.x>s.x&&(r=i.x+a-s.x+o.x),i.x-r-n.x<(a=0)&&(r=i.x-n.x),i.y+e+o.y>s.y&&(a=i.y+e-s.y+o.y),i.y-a-n.y<0&&(a=i.y-n.y),(r||a)&&(this.options.keepInView&&(this._autopanning=!0),t.fire("autopanstart").panBy([r,a]))))},_getAnchor:function(){return m(this._source&&this._source._getPopupAnchor?this._source._getPopupAnchor():[0,0])}})),Ii=(A.mergeOptions({closePopupOnClick:!0}),A.include({openPopup:function(t,e,i){return this._initOverlay(Bi,t,e,i).openOn(this),this},closePopup:function(t){return(t=arguments.length?t:this._popup)&&t.close(),this}}),o.include({bindPopup:function(t,e){return this._popup=this._initOverlay(Bi,this._popup,t,e),this._popupHandlersAdded||(this.on({click:this._openPopup,keypress:this._onKeyPress,remove:this.closePopup,move:this._movePopup}),this._popupHandlersAdded=!0),this},unbindPopup:function(){return this._popup&&(this.off({click:this._openPopup,keypress:this._onKeyPress,remove:this.closePopup,move:this._movePopup}),this._popupHandlersAdded=!1,this._popup=null),this},openPopup:function(t){return this._popup&&(this instanceof ci||(this._popup._source=this),this._popup._prepareOpen(t||this._latlng)&&this._popup.openOn(this._map)),this},closePopup:function(){return this._popup&&this._popup.close(),this},togglePopup:function(){return this._popup&&this._popup.toggle(this),this},isPopupOpen:function(){return!!this._popup&&this._popup.isOpen()},setPopupContent:function(t){return this._popup&&this._popup.setContent(t),this},getPopup:function(){return this._popup},_openPopup:function(t){var e;this._popup&&this._map&&(Re(t),e=t.layer||t.target,this._popup._source!==e||e instanceof fi?(this._popup._source=e,this.openPopup(t.latlng)):this._map.hasLayer(this._popup)?this.closePopup():this.openPopup(t.latlng))},_movePopup:function(t){this._popup.setLatLng(t.latlng)},_onKeyPress:function(t){13===t.originalEvent.keyCode&&this._openPopup(t)}}),Ai.extend({options:{pane:"tooltipPane",offset:[0,0],direction:"auto",permanent:!1,sticky:!1,opacity:.9},onAdd:function(t){Ai.prototype.onAdd.call(this,t),this.setOpacity(this.options.opacity),t.fire("tooltipopen",{tooltip:this}),this._source&&(this.addEventParent(this._source),this._source.fire("tooltipopen",{tooltip:this},!0))},onRemove:function(t){Ai.prototype.onRemove.call(this,t),t.fire("tooltipclose",{tooltip:this}),this._source&&(this.removeEventParent(this._source),this._source.fire("tooltipclose",{tooltip:this},!0))},getEvents:function(){var t=Ai.prototype.getEvents.call(this);return this.options.permanent||(t.preclick=this.close),t},_initLayout:function(){var t="leaflet-tooltip "+(this.options.className||"")+" leaflet-zoom-"+(this._zoomAnimated?"animated":"hide");this._contentNode=this._container=P("div",t),this._container.setAttribute("role","tooltip"),this._container.setAttribute("id","leaflet-tooltip-"+h(this))},_updateLayout:function(){},_adjustPan:function(){},_setPosition:function(t){var e,i=this._map,n=this._container,o=i.latLngToContainerPoint(i.getCenter()),i=i.layerPointToContainerPoint(t),s=this.options.direction,r=n.offsetWidth,a=n.offsetHeight,h=m(this.options.offset),l=this._getAnchor(),i="top"===s?(e=r/2,a):"bottom"===s?(e=r/2,0):(e="center"===s?r/2:"right"===s?0:"left"===s?r:i.x<o.x?(s="right",0):(s="left",r+2*(h.x+l.x)),a/2);t=t.subtract(m(e,i,!0)).add(h).add(l),z(n,"leaflet-tooltip-right"),z(n,"leaflet-tooltip-left"),z(n,"leaflet-tooltip-top"),z(n,"leaflet-tooltip-bottom"),M(n,"leaflet-tooltip-"+s),Z(n,t)},_updatePosition:function(){var t=this._map.latLngToLayerPoint(this._latlng);this._setPosition(t)},setOpacity:function(t){this.options.opacity=t,this._container&&C(this._container,t)},_animateZoom:function(t){t=this._map._latLngToNewLayerPoint(this._latlng,t.zoom,t.center);this._setPosition(t)},_getAnchor:function(){return m(this._source&&this._source._getTooltipAnchor&&!this.options.sticky?this._source._getTooltipAnchor():[0,0])}})),Ri=(A.include({openTooltip:function(t,e,i){return this._initOverlay(Ii,t,e,i).openOn(this),this},closeTooltip:function(t){return t.close(),this}}),o.include({bindTooltip:function(t,e){return this._tooltip&&this.isTooltipOpen()&&this.unbindTooltip(),this._tooltip=this._initOverlay(Ii,this._tooltip,t,e),this._initTooltipInteractions(),this._tooltip.options.permanent&&this._map&&this._map.hasLayer(this)&&this.openTooltip(),this},unbindTooltip:function(){return this._tooltip&&(this._initTooltipInteractions(!0),this.closeTooltip(),this._tooltip=null),this},_initTooltipInteractions:function(t){var e,i;!t&&this._tooltipHandlersAdded||(e=t?"off":"on",i={remove:this.closeTooltip,move:this._moveTooltip},this._tooltip.options.permanent?i.add=this._openTooltip:(i.mouseover=this._openTooltip,i.mouseout=this.closeTooltip,i.click=this._openTooltip,this._map?this._addFocusListeners():i.add=this._addFocusListeners),this._tooltip.options.sticky&&(i.mousemove=this._moveTooltip),this[e](i),this._tooltipHandlersAdded=!t)},openTooltip:function(t){return this._tooltip&&(this instanceof ci||(this._tooltip._source=this),this._tooltip._prepareOpen(t)&&(this._tooltip.openOn(this._map),this.getElement?this._setAriaDescribedByOnLayer(this):this.eachLayer&&this.eachLayer(this._setAriaDescribedByOnLayer,this))),this},closeTooltip:function(){if(this._tooltip)return this._tooltip.close()},toggleTooltip:function(){return this._tooltip&&this._tooltip.toggle(this),this},isTooltipOpen:function(){return this._tooltip.isOpen()},setTooltipContent:function(t){return this._tooltip&&this._tooltip.setContent(t),this},getTooltip:function(){return this._tooltip},_addFocusListeners:function(){this.getElement?this._addFocusListenersOnLayer(this):this.eachLayer&&this.eachLayer(this._addFocusListenersOnLayer,this)},_addFocusListenersOnLayer:function(t){var e="function"==typeof t.getElement&&t.getElement();e&&(S(e,"focus",function(){this._tooltip._source=t,this.openTooltip()},this),S(e,"blur",this.closeTooltip,this))},_setAriaDescribedByOnLayer:function(t){t="function"==typeof t.getElement&&t.getElement();t&&t.setAttribute("aria-describedby",this._tooltip._container.id)},_openTooltip:function(t){var e;this._tooltip&&this._map&&(this._map.dragging&&this._map.dragging.moving()&&!this._openOnceFlag?(this._openOnceFlag=!0,(e=this)._map.once("moveend",function(){e._openOnceFlag=!1,e._openTooltip(t)})):(this._tooltip._source=t.layer||t.target,this.openTooltip(this._tooltip.options.sticky?t.latlng:void 0)))},_moveTooltip:function(t){var e=t.latlng;this._tooltip.options.sticky&&t.originalEvent&&(t=this._map.mouseEventToContainerPoint(t.originalEvent),t=this._map.containerPointToLayerPoint(t),e=this._map.layerPointToLatLng(t)),this._tooltip.setLatLng(e)}}),di.extend({options:{iconSize:[12,12],html:!1,bgPos:null,className:"leaflet-div-icon"},createIcon:function(t){var t=t&&"DIV"===t.tagName?t:document.createElement("div"),e=this.options;return e.html instanceof Element?(me(t),t.appendChild(e.html)):t.innerHTML=!1!==e.html?e.html:"",e.bgPos&&(e=m(e.bgPos),t.style.backgroundPosition=-e.x+"px "+-e.y+"px"),this._setIconStyles(t,"icon"),t},createShadow:function(){return null}}));di.Default=_i;var Ni=o.extend({options:{tileSize:256,opacity:1,updateWhenIdle:b.mobile,updateWhenZooming:!0,updateInterval:200,zIndex:1,bounds:null,minZoom:0,maxZoom:void 0,maxNativeZoom:void 0,minNativeZoom:void 0,noWrap:!1,pane:"tilePane",className:"",keepBuffer:2},initialize:function(t){c(this,t)},onAdd:function(){this._initContainer(),this._levels={},this._tiles={},this._resetView()},beforeAdd:function(t){t._addZoomLimit(this)},onRemove:function(t){this._removeAllTiles(),T(this._container),t._removeZoomLimit(this),this._container=null,this._tileZoom=void 0},bringToFront:function(){return this._map&&(fe(this._container),this._setAutoZIndex(Math.max)),this},bringToBack:function(){return this._map&&(ge(this._container),this._setAutoZIndex(Math.min)),this},getContainer:function(){return this._container},setOpacity:function(t){return this.options.opacity=t,this._updateOpacity(),this},setZIndex:function(t){return this.options.zIndex=t,this._updateZIndex(),this},isLoading:function(){return this._loading},redraw:function(){var t;return this._map&&(this._removeAllTiles(),(t=this._clampZoom(this._map.getZoom()))!==this._tileZoom&&(this._tileZoom=t,this._updateLevels()),this._update()),this},getEvents:function(){var t={viewprereset:this._invalidateAll,viewreset:this._resetView,zoom:this._resetView,moveend:this._onMoveEnd};return this.options.updateWhenIdle||(this._onMove||(this._onMove=j(this._onMoveEnd,this.options.updateInterval,this)),t.move=this._onMove),this._zoomAnimated&&(t.zoomanim=this._animateZoom),t},createTile:function(){return document.createElement("div")},getTileSize:function(){var t=this.options.tileSize;return t instanceof p?t:new p(t,t)},_updateZIndex:function(){this._container&&void 0!==this.options.zIndex&&null!==this.options.zIndex&&(this._container.style.zIndex=this.options.zIndex)},_setAutoZIndex:function(t){for(var e,i=this.getPane().children,n=-t(-1/0,1/0),o=0,s=i.length;o<s;o++)e=i[o].style.zIndex,i[o]!==this._container&&e&&(n=t(n,+e));isFinite(n)&&(this.options.zIndex=n+t(-1,1),this._updateZIndex())},_updateOpacity:function(){if(this._map&&!b.ielt9){C(this._container,this.options.opacity);var t,e=+new Date,i=!1,n=!1;for(t in this._tiles){var o,s=this._tiles[t];s.current&&s.loaded&&(o=Math.min(1,(e-s.loaded)/200),C(s.el,o),o<1?i=!0:(s.active?n=!0:this._onOpaqueTile(s),s.active=!0))}n&&!this._noPrune&&this._pruneTiles(),i&&(r(this._fadeFrame),this._fadeFrame=x(this._updateOpacity,this))}},_onOpaqueTile:u,_initContainer:function(){this._container||(this._container=P("div","leaflet-layer "+(this.options.className||"")),this._updateZIndex(),this.options.opacity<1&&this._updateOpacity(),this.getPane().appendChild(this._container))},_updateLevels:function(){var t=this._tileZoom,e=this.options.maxZoom;if(void 0!==t){for(var i in this._levels)i=Number(i),this._levels[i].el.children.length||i===t?(this._levels[i].el.style.zIndex=e-Math.abs(t-i),this._onUpdateLevel(i)):(T(this._levels[i].el),this._removeTilesAtZoom(i),this._onRemoveLevel(i),delete this._levels[i]);var n=this._levels[t],o=this._map;return n||((n=this._levels[t]={}).el=P("div","leaflet-tile-container leaflet-zoom-animated",this._container),n.el.style.zIndex=e,n.origin=o.project(o.unproject(o.getPixelOrigin()),t).round(),n.zoom=t,this._setZoomTransform(n,o.getCenter(),o.getZoom()),u(n.el.offsetWidth),this._onCreateLevel(n)),this._level=n}},_onUpdateLevel:u,_onRemoveLevel:u,_onCreateLevel:u,_pruneTiles:function(){if(this._map){var t,e,i,n=this._map.getZoom();if(n>this.options.maxZoom||n<this.options.minZoom)this._removeAllTiles();else{for(t in this._tiles)(i=this._tiles[t]).retain=i.current;for(t in this._tiles)(i=this._tiles[t]).current&&!i.active&&(e=i.coords,this._retainParent(e.x,e.y,e.z,e.z-5)||this._retainChildren(e.x,e.y,e.z,e.z+2));for(t in this._tiles)this._tiles[t].retain||this._removeTile(t)}}},_removeTilesAtZoom:function(t){for(var e in this._tiles)this._tiles[e].coords.z===t&&this._removeTile(e)},_removeAllTiles:function(){for(var t in this._tiles)this._removeTile(t)},_invalidateAll:function(){for(var t in this._levels)T(this._levels[t].el),this._onRemoveLevel(Number(t)),delete this._levels[t];this._removeAllTiles(),this._tileZoom=void 0},_retainParent:function(t,e,i,n){var t=Math.floor(t/2),e=Math.floor(e/2),i=i-1,o=new p(+t,+e),o=(o.z=i,this._tileCoordsToKey(o)),o=this._tiles[o];return o&&o.active?o.retain=!0:(o&&o.loaded&&(o.retain=!0),n<i&&this._retainParent(t,e,i,n))},_retainChildren:function(t,e,i,n){for(var o=2*t;o<2*t+2;o++)for(var s=2*e;s<2*e+2;s++){var r=new p(o,s),r=(r.z=i+1,this._tileCoordsToKey(r)),r=this._tiles[r];r&&r.active?r.retain=!0:(r&&r.loaded&&(r.retain=!0),i+1<n&&this._retainChildren(o,s,i+1,n))}},_resetView:function(t){t=t&&(t.pinch||t.flyTo);this._setView(this._map.getCenter(),this._map.getZoom(),t,t)},_animateZoom:function(t){this._setView(t.center,t.zoom,!0,t.noUpdate)},_clampZoom:function(t){var e=this.options;return void 0!==e.minNativeZoom&&t<e.minNativeZoom?e.minNativeZoom:void 0!==e.maxNativeZoom&&e.maxNativeZoom<t?e.maxNativeZoom:t},_setView:function(t,e,i,n){var o=Math.round(e),o=void 0!==this.options.maxZoom&&o>this.options.maxZoom||void 0!==this.options.minZoom&&o<this.options.minZoom?void 0:this._clampZoom(o),s=this.options.updateWhenZooming&&o!==this._tileZoom;n&&!s||(this._tileZoom=o,this._abortLoading&&this._abortLoading(),this._updateLevels(),this._resetGrid(),void 0!==o&&this._update(t),i||this._pruneTiles(),this._noPrune=!!i),this._setZoomTransforms(t,e)},_setZoomTransforms:function(t,e){for(var i in this._levels)this._setZoomTransform(this._levels[i],t,e)},_setZoomTransform:function(t,e,i){var n=this._map.getZoomScale(i,t.zoom),e=t.origin.multiplyBy(n).subtract(this._map._getNewPixelOrigin(e,i)).round();b.any3d?be(t.el,e,n):Z(t.el,e)},_resetGrid:function(){var t=this._map,e=t.options.crs,i=this._tileSize=this.getTileSize(),n=this._tileZoom,o=this._map.getPixelWorldBounds(this._tileZoom);o&&(this._globalTileRange=this._pxBoundsToTileRange(o)),this._wrapX=e.wrapLng&&!this.options.noWrap&&[Math.floor(t.project([0,e.wrapLng[0]],n).x/i.x),Math.ceil(t.project([0,e.wrapLng[1]],n).x/i.y)],this._wrapY=e.wrapLat&&!this.options.noWrap&&[Math.floor(t.project([e.wrapLat[0],0],n).y/i.x),Math.ceil(t.project([e.wrapLat[1],0],n).y/i.y)]},_onMoveEnd:function(){this._map&&!this._map._animatingZoom&&this._update()},_getTiledPixelBounds:function(t){var e=this._map,i=e._animatingZoom?Math.max(e._animateToZoom,e.getZoom()):e.getZoom(),i=e.getZoomScale(i,this._tileZoom),t=e.project(t,this._tileZoom).floor(),e=e.getSize().divideBy(2*i);return new f(t.subtract(e),t.add(e))},_update:function(t){var e=this._map;if(e){var i=this._clampZoom(e.getZoom());if(void 0===t&&(t=e.getCenter()),void 0!==this._tileZoom){var n,e=this._getTiledPixelBounds(t),o=this._pxBoundsToTileRange(e),s=o.getCenter(),r=[],e=this.options.keepBuffer,a=new f(o.getBottomLeft().subtract([e,-e]),o.getTopRight().add([e,-e]));if(!(isFinite(o.min.x)&&isFinite(o.min.y)&&isFinite(o.max.x)&&isFinite(o.max.y)))throw new Error("Attempted to load an infinite number of tiles");for(n in this._tiles){var h=this._tiles[n].coords;h.z===this._tileZoom&&a.contains(new p(h.x,h.y))||(this._tiles[n].current=!1)}if(1<Math.abs(i-this._tileZoom))this._setView(t,i);else{for(var l=o.min.y;l<=o.max.y;l++)for(var u=o.min.x;u<=o.max.x;u++){var c,d=new p(u,l);d.z=this._tileZoom,this._isValidTile(d)&&((c=this._tiles[this._tileCoordsToKey(d)])?c.current=!0:r.push(d))}if(r.sort(function(t,e){return t.distanceTo(s)-e.distanceTo(s)}),0!==r.length){this._loading||(this._loading=!0,this.fire("loading"));for(var _=document.createDocumentFragment(),u=0;u<r.length;u++)this._addTile(r[u],_);this._level.el.appendChild(_)}}}}},_isValidTile:function(t){var e=this._map.options.crs;if(!e.infinite){var i=this._globalTileRange;if(!e.wrapLng&&(t.x<i.min.x||t.x>i.max.x)||!e.wrapLat&&(t.y<i.min.y||t.y>i.max.y))return!1}return!this.options.bounds||(e=this._tileCoordsToBounds(t),g(this.options.bounds).overlaps(e))},_keyToBounds:function(t){return this._tileCoordsToBounds(this._keyToTileCoords(t))},_tileCoordsToNwSe:function(t){var e=this._map,i=this.getTileSize(),n=t.scaleBy(i),i=n.add(i);return[e.unproject(n,t.z),e.unproject(i,t.z)]},_tileCoordsToBounds:function(t){t=this._tileCoordsToNwSe(t),t=new s(t[0],t[1]);return t=this.options.noWrap?t:this._map.wrapLatLngBounds(t)},_tileCoordsToKey:function(t){return t.x+":"+t.y+":"+t.z},_keyToTileCoords:function(t){var t=t.split(":"),e=new p(+t[0],+t[1]);return e.z=+t[2],e},_removeTile:function(t){var e=this._tiles[t];e&&(T(e.el),delete this._tiles[t],this.fire("tileunload",{tile:e.el,coords:this._keyToTileCoords(t)}))},_initTile:function(t){M(t,"leaflet-tile");var e=this.getTileSize();t.style.width=e.x+"px",t.style.height=e.y+"px",t.onselectstart=u,t.onmousemove=u,b.ielt9&&this.options.opacity<1&&C(t,this.options.opacity)},_addTile:function(t,e){var i=this._getTilePos(t),n=this._tileCoordsToKey(t),o=this.createTile(this._wrapCoords(t),a(this._tileReady,this,t));this._initTile(o),this.createTile.length<2&&x(a(this._tileReady,this,t,null,o)),Z(o,i),this._tiles[n]={el:o,coords:t,current:!0},e.appendChild(o),this.fire("tileloadstart",{tile:o,coords:t})},_tileReady:function(t,e,i){e&&this.fire("tileerror",{error:e,tile:i,coords:t});var n=this._tileCoordsToKey(t);(i=this._tiles[n])&&(i.loaded=+new Date,this._map._fadeAnimated?(C(i.el,0),r(this._fadeFrame),this._fadeFrame=x(this._updateOpacity,this)):(i.active=!0,this._pruneTiles()),e||(M(i.el,"leaflet-tile-loaded"),this.fire("tileload",{tile:i.el,coords:t})),this._noTilesToLoad()&&(this._loading=!1,this.fire("load"),b.ielt9||!this._map._fadeAnimated?x(this._pruneTiles,this):setTimeout(a(this._pruneTiles,this),250)))},_getTilePos:function(t){return t.scaleBy(this.getTileSize()).subtract(this._level.origin)},_wrapCoords:function(t){var e=new p(this._wrapX?H(t.x,this._wrapX):t.x,this._wrapY?H(t.y,this._wrapY):t.y);return e.z=t.z,e},_pxBoundsToTileRange:function(t){var e=this.getTileSize();return new f(t.min.unscaleBy(e).floor(),t.max.unscaleBy(e).ceil().subtract([1,1]))},_noTilesToLoad:function(){for(var t in this._tiles)if(!this._tiles[t].loaded)return!1;return!0}});var Di=Ni.extend({options:{minZoom:0,maxZoom:18,subdomains:"abc",errorTileUrl:"",zoomOffset:0,tms:!1,zoomReverse:!1,detectRetina:!1,crossOrigin:!1,referrerPolicy:!1},initialize:function(t,e){this._url=t,(e=c(this,e)).detectRetina&&b.retina&&0<e.maxZoom?(e.tileSize=Math.floor(e.tileSize/2),e.zoomReverse?(e.zoomOffset--,e.minZoom=Math.min(e.maxZoom,e.minZoom+1)):(e.zoomOffset++,e.maxZoom=Math.max(e.minZoom,e.maxZoom-1)),e.minZoom=Math.max(0,e.minZoom)):e.zoomReverse?e.minZoom=Math.min(e.maxZoom,e.minZoom):e.maxZoom=Math.max(e.minZoom,e.maxZoom),"string"==typeof e.subdomains&&(e.subdomains=e.subdomains.split("")),this.on("tileunload",this._onTileRemove)},setUrl:function(t,e){return this._url===t&&void 0===e&&(e=!0),this._url=t,e||this.redraw(),this},createTile:function(t,e){var i=document.createElement("img");return S(i,"load",a(this._tileOnLoad,this,e,i)),S(i,"error",a(this._tileOnError,this,e,i)),!this.options.crossOrigin&&""!==this.options.crossOrigin||(i.crossOrigin=!0===this.options.crossOrigin?"":this.options.crossOrigin),"string"==typeof this.options.referrerPolicy&&(i.referrerPolicy=this.options.referrerPolicy),i.alt="",i.src=this.getTileUrl(t),i},getTileUrl:function(t){var e={r:b.retina?"@2x":"",s:this._getSubdomain(t),x:t.x,y:t.y,z:this._getZoomForUrl()};return this._map&&!this._map.options.crs.infinite&&(t=this._globalTileRange.max.y-t.y,this.options.tms&&(e.y=t),e["-y"]=t),q(this._url,l(e,this.options))},_tileOnLoad:function(t,e){b.ielt9?setTimeout(a(t,this,null,e),0):t(null,e)},_tileOnError:function(t,e,i){var n=this.options.errorTileUrl;n&&e.getAttribute("src")!==n&&(e.src=n),t(i,e)},_onTileRemove:function(t){t.tile.onload=null},_getZoomForUrl:function(){var t=this._tileZoom,e=this.options.maxZoom;return(t=this.options.zoomReverse?e-t:t)+this.options.zoomOffset},_getSubdomain:function(t){t=Math.abs(t.x+t.y)%this.options.subdomains.length;return this.options.subdomains[t]},_abortLoading:function(){var t,e,i;for(t in this._tiles)this._tiles[t].coords.z!==this._tileZoom&&((i=this._tiles[t].el).onload=u,i.onerror=u,i.complete||(i.src=K,e=this._tiles[t].coords,T(i),delete this._tiles[t],this.fire("tileabort",{tile:i,coords:e})))},_removeTile:function(t){var e=this._tiles[t];if(e)return e.el.setAttribute("src",K),Ni.prototype._removeTile.call(this,t)},_tileReady:function(t,e,i){if(this._map&&(!i||i.getAttribute("src")!==K))return Ni.prototype._tileReady.call(this,t,e,i)}});function ji(t,e){return new Di(t,e)}var Hi=Di.extend({defaultWmsParams:{service:"WMS",request:"GetMap",layers:"",styles:"",format:"image/jpeg",transparent:!1,version:"1.1.1"},options:{crs:null,uppercase:!1},initialize:function(t,e){this._url=t;var i,n=l({},this.defaultWmsParams);for(i in e)i in this.options||(n[i]=e[i]);var t=(e=c(this,e)).detectRetina&&b.retina?2:1,o=this.getTileSize();n.width=o.x*t,n.height=o.y*t,this.wmsParams=n},onAdd:function(t){this._crs=this.options.crs||t.options.crs,this._wmsVersion=parseFloat(this.wmsParams.version);var e=1.3<=this._wmsVersion?"crs":"srs";this.wmsParams[e]=this._crs.code,Di.prototype.onAdd.call(this,t)},getTileUrl:function(t){var e=this._tileCoordsToNwSe(t),i=this._crs,i=_(i.project(e[0]),i.project(e[1])),e=i.min,i=i.max,e=(1.3<=this._wmsVersion&&this._crs===li?[e.y,e.x,i.y,i.x]:[e.x,e.y,i.x,i.y]).join(","),i=Di.prototype.getTileUrl.call(this,t);return i+U(this.wmsParams,i,this.options.uppercase)+(this.options.uppercase?"&BBOX=":"&bbox=")+e},setParams:function(t,e){return l(this.wmsParams,t),e||this.redraw(),this}});Di.WMS=Hi,ji.wms=function(t,e){return new Hi(t,e)};var Wi=o.extend({options:{padding:.1},initialize:function(t){c(this,t),h(this),this._layers=this._layers||{}},onAdd:function(){this._container||(this._initContainer(),M(this._container,"leaflet-zoom-animated")),this.getPane().appendChild(this._container),this._update(),this.on("update",this._updatePaths,this)},onRemove:function(){this.off("update",this._updatePaths,this),this._destroyContainer()},getEvents:function(){var t={viewreset:this._reset,zoom:this._onZoom,moveend:this._update,zoomend:this._onZoomEnd};return this._zoomAnimated&&(t.zoomanim=this._onAnimZoom),t},_onAnimZoom:function(t){this._updateTransform(t.center,t.zoom)},_onZoom:function(){this._updateTransform(this._map.getCenter(),this._map.getZoom())},_updateTransform:function(t,e){var i=this._map.getZoomScale(e,this._zoom),n=this._map.getSize().multiplyBy(.5+this.options.padding),o=this._map.project(this._center,e),n=n.multiplyBy(-i).add(o).subtract(this._map._getNewPixelOrigin(t,e));b.any3d?be(this._container,n,i):Z(this._container,n)},_reset:function(){for(var t in this._update(),this._updateTransform(this._center,this._zoom),this._layers)this._layers[t]._reset()},_onZoomEnd:function(){for(var t in this._layers)this._layers[t]._project()},_updatePaths:function(){for(var t in this._layers)this._layers[t]._update()},_update:function(){var t=this.options.padding,e=this._map.getSize(),i=this._map.containerPointToLayerPoint(e.multiplyBy(-t)).round();this._bounds=new f(i,i.add(e.multiplyBy(1+2*t)).round()),this._center=this._map.getCenter(),this._zoom=this._map.getZoom()}}),Fi=Wi.extend({options:{tolerance:0},getEvents:function(){var t=Wi.prototype.getEvents.call(this);return t.viewprereset=this._onViewPreReset,t},_onViewPreReset:function(){this._postponeUpdatePaths=!0},onAdd:function(){Wi.prototype.onAdd.call(this),this._draw()},_initContainer:function(){var t=this._container=document.createElement("canvas");S(t,"mousemove",this._onMouseMove,this),S(t,"click dblclick mousedown mouseup contextmenu",this._onClick,this),S(t,"mouseout",this._handleMouseOut,this),t._leaflet_disable_events=!0,this._ctx=t.getContext("2d")},_destroyContainer:function(){r(this._redrawRequest),delete this._ctx,T(this._container),k(this._container),delete this._container},_updatePaths:function(){if(!this._postponeUpdatePaths){for(var t in this._redrawBounds=null,this._layers)this._layers[t]._update();this._redraw()}},_update:function(){var t,e,i,n;this._map._animatingZoom&&this._bounds||(Wi.prototype._update.call(this),t=this._bounds,e=this._container,i=t.getSize(),n=b.retina?2:1,Z(e,t.min),e.width=n*i.x,e.height=n*i.y,e.style.width=i.x+"px",e.style.height=i.y+"px",b.retina&&this._ctx.scale(2,2),this._ctx.translate(-t.min.x,-t.min.y),this.fire("update"))},_reset:function(){Wi.prototype._reset.call(this),this._postponeUpdatePaths&&(this._postponeUpdatePaths=!1,this._updatePaths())},_initPath:function(t){this._updateDashArray(t);t=(this._layers[h(t)]=t)._order={layer:t,prev:this._drawLast,next:null};this._drawLast&&(this._drawLast.next=t),this._drawLast=t,this._drawFirst=this._drawFirst||this._drawLast},_addPath:function(t){this._requestRedraw(t)},_removePath:function(t){var e=t._order,i=e.next,e=e.prev;i?i.prev=e:this._drawLast=e,e?e.next=i:this._drawFirst=i,delete t._order,delete this._layers[h(t)],this._requestRedraw(t)},_updatePath:function(t){this._extendRedrawBounds(t),t._project(),t._update(),this._requestRedraw(t)},_updateStyle:function(t){this._updateDashArray(t),this._requestRedraw(t)},_updateDashArray:function(t){if("string"==typeof t.options.dashArray){for(var e,i=t.options.dashArray.split(/[, ]+/),n=[],o=0;o<i.length;o++){if(e=Number(i[o]),isNaN(e))return;n.push(e)}t.options._dashArray=n}else t.options._dashArray=t.options.dashArray},_requestRedraw:function(t){this._map&&(this._extendRedrawBounds(t),this._redrawRequest=this._redrawRequest||x(this._redraw,this))},_extendRedrawBounds:function(t){var e;t._pxBounds&&(e=(t.options.weight||0)+1,this._redrawBounds=this._redrawBounds||new f,this._redrawBounds.extend(t._pxBounds.min.subtract([e,e])),this._redrawBounds.extend(t._pxBounds.max.add([e,e])))},_redraw:function(){this._redrawRequest=null,this._redrawBounds&&(this._redrawBounds.min._floor(),this._redrawBounds.max._ceil()),this._clear(),this._draw(),this._redrawBounds=null},_clear:function(){var t,e=this._redrawBounds;e?(t=e.getSize(),this._ctx.clearRect(e.min.x,e.min.y,t.x,t.y)):(this._ctx.save(),this._ctx.setTransform(1,0,0,1,0,0),this._ctx.clearRect(0,0,this._container.width,this._container.height),this._ctx.restore())},_draw:function(){var t,e,i=this._redrawBounds;this._ctx.save(),i&&(e=i.getSize(),this._ctx.beginPath(),this._ctx.rect(i.min.x,i.min.y,e.x,e.y),this._ctx.clip()),this._drawing=!0;for(var n=this._drawFirst;n;n=n.next)t=n.layer,(!i||t._pxBounds&&t._pxBounds.intersects(i))&&t._updatePath();this._drawing=!1,this._ctx.restore()},_updatePoly:function(t,e){if(this._drawing){var i,n,o,s,r=t._parts,a=r.length,h=this._ctx;if(a){for(h.beginPath(),i=0;i<a;i++){for(n=0,o=r[i].length;n<o;n++)s=r[i][n],h[n?"lineTo":"moveTo"](s.x,s.y);e&&h.closePath()}this._fillStroke(h,t)}}},_updateCircle:function(t){var e,i,n,o;this._drawing&&!t._empty()&&(e=t._point,i=this._ctx,n=Math.max(Math.round(t._radius),1),1!=(o=(Math.max(Math.round(t._radiusY),1)||n)/n)&&(i.save(),i.scale(1,o)),i.beginPath(),i.arc(e.x,e.y/o,n,0,2*Math.PI,!1),1!=o&&i.restore(),this._fillStroke(i,t))},_fillStroke:function(t,e){var i=e.options;i.fill&&(t.globalAlpha=i.fillOpacity,t.fillStyle=i.fillColor||i.color,t.fill(i.fillRule||"evenodd")),i.stroke&&0!==i.weight&&(t.setLineDash&&t.setLineDash(e.options&&e.options._dashArray||[]),t.globalAlpha=i.opacity,t.lineWidth=i.weight,t.strokeStyle=i.color,t.lineCap=i.lineCap,t.lineJoin=i.lineJoin,t.stroke())},_onClick:function(t){for(var e,i,n=this._map.mouseEventToLayerPoint(t),o=this._drawFirst;o;o=o.next)(e=o.layer).options.interactive&&e._containsPoint(n)&&(("click"===t.type||"preclick"===t.type)&&this._map._draggableMoved(e)||(i=e));this._fireEvent(!!i&&[i],t)},_onMouseMove:function(t){var e;!this._map||this._map.dragging.moving()||this._map._animatingZoom||(e=this._map.mouseEventToLayerPoint(t),this._handleMouseHover(t,e))},_handleMouseOut:function(t){var e=this._hoveredLayer;e&&(z(this._container,"leaflet-interactive"),this._fireEvent([e],t,"mouseout"),this._hoveredLayer=null,this._mouseHoverThrottled=!1)},_handleMouseHover:function(t,e){if(!this._mouseHoverThrottled){for(var i,n,o=this._drawFirst;o;o=o.next)(i=o.layer).options.interactive&&i._containsPoint(e)&&(n=i);n!==this._hoveredLayer&&(this._handleMouseOut(t),n&&(M(this._container,"leaflet-interactive"),this._fireEvent([n],t,"mouseover"),this._hoveredLayer=n)),this._fireEvent(!!this._hoveredLayer&&[this._hoveredLayer],t),this._mouseHoverThrottled=!0,setTimeout(a(function(){this._mouseHoverThrottled=!1},this),32)}},_fireEvent:function(t,e,i){this._map._fireDOMEvent(e,i||e.type,t)},_bringToFront:function(t){var e,i,n=t._order;n&&(e=n.next,i=n.prev,e&&((e.prev=i)?i.next=e:e&&(this._drawFirst=e),n.prev=this._drawLast,(this._drawLast.next=n).next=null,this._drawLast=n,this._requestRedraw(t)))},_bringToBack:function(t){var e,i,n=t._order;n&&(e=n.next,(i=n.prev)&&((i.next=e)?e.prev=i:i&&(this._drawLast=i),n.prev=null,n.next=this._drawFirst,this._drawFirst.prev=n,this._drawFirst=n,this._requestRedraw(t)))}});function Ui(t){return b.canvas?new Fi(t):null}var Vi=function(){try{return document.namespaces.add("lvml","urn:schemas-microsoft-com:vml"),function(t){return document.createElement("<lvml:"+t+' class="lvml">')}}catch(t){}return function(t){return document.createElement("<"+t+' xmlns="urn:schemas-microsoft.com:vml" class="lvml">')}}(),zt={_initContainer:function(){this._container=P("div","leaflet-vml-container")},_update:function(){this._map._animatingZoom||(Wi.prototype._update.call(this),this.fire("update"))},_initPath:function(t){var e=t._container=Vi("shape");M(e,"leaflet-vml-shape "+(this.options.className||"")),e.coordsize="1 1",t._path=Vi("path"),e.appendChild(t._path),this._updateStyle(t),this._layers[h(t)]=t},_addPath:function(t){var e=t._container;this._container.appendChild(e),t.options.interactive&&t.addInteractiveTarget(e)},_removePath:function(t){var e=t._container;T(e),t.removeInteractiveTarget(e),delete this._layers[h(t)]},_updateStyle:function(t){var e=t._stroke,i=t._fill,n=t.options,o=t._container;o.stroked=!!n.stroke,o.filled=!!n.fill,n.stroke?(e=e||(t._stroke=Vi("stroke")),o.appendChild(e),e.weight=n.weight+"px",e.color=n.color,e.opacity=n.opacity,n.dashArray?e.dashStyle=d(n.dashArray)?n.dashArray.join(" "):n.dashArray.replace(/( *, *)/g," "):e.dashStyle="",e.endcap=n.lineCap.replace("butt","flat"),e.joinstyle=n.lineJoin):e&&(o.removeChild(e),t._stroke=null),n.fill?(i=i||(t._fill=Vi("fill")),o.appendChild(i),i.color=n.fillColor||n.color,i.opacity=n.fillOpacity):i&&(o.removeChild(i),t._fill=null)},_updateCircle:function(t){var e=t._point.round(),i=Math.round(t._radius),n=Math.round(t._radiusY||i);this._setPath(t,t._empty()?"M0 0":"AL "+e.x+","+e.y+" "+i+","+n+" 0,23592600")},_setPath:function(t,e){t._path.v=e},_bringToFront:function(t){fe(t._container)},_bringToBack:function(t){ge(t._container)}},qi=b.vml?Vi:ct,Gi=Wi.extend({_initContainer:function(){this._container=qi("svg"),this._container.setAttribute("pointer-events","none"),this._rootGroup=qi("g"),this._container.appendChild(this._rootGroup)},_destroyContainer:function(){T(this._container),k(this._container),delete this._container,delete this._rootGroup,delete this._svgSize},_update:function(){var t,e,i;this._map._animatingZoom&&this._bounds||(Wi.prototype._update.call(this),e=(t=this._bounds).getSize(),i=this._container,this._svgSize&&this._svgSize.equals(e)||(this._svgSize=e,i.setAttribute("width",e.x),i.setAttribute("height",e.y)),Z(i,t.min),i.setAttribute("viewBox",[t.min.x,t.min.y,e.x,e.y].join(" ")),this.fire("update"))},_initPath:function(t){var e=t._path=qi("path");t.options.className&&M(e,t.options.className),t.options.interactive&&M(e,"leaflet-interactive"),this._updateStyle(t),this._layers[h(t)]=t},_addPath:function(t){this._rootGroup||this._initContainer(),this._rootGroup.appendChild(t._path),t.addInteractiveTarget(t._path)},_removePath:function(t){T(t._path),t.removeInteractiveTarget(t._path),delete this._layers[h(t)]},_updatePath:function(t){t._project(),t._update()},_updateStyle:function(t){var e=t._path,t=t.options;e&&(t.stroke?(e.setAttribute("stroke",t.color),e.setAttribute("stroke-opacity",t.opacity),e.setAttribute("stroke-width",t.weight),e.setAttribute("stroke-linecap",t.lineCap),e.setAttribute("stroke-linejoin",t.lineJoin),t.dashArray?e.setAttribute("stroke-dasharray",t.dashArray):e.removeAttribute("stroke-dasharray"),t.dashOffset?e.setAttribute("stroke-dashoffset",t.dashOffset):e.removeAttribute("stroke-dashoffset")):e.setAttribute("stroke","none"),t.fill?(e.setAttribute("fill",t.fillColor||t.color),e.setAttribute("fill-opacity",t.fillOpacity),e.setAttribute("fill-rule",t.fillRule||"evenodd")):e.setAttribute("fill","none"))},_updatePoly:function(t,e){this._setPath(t,dt(t._parts,e))},_updateCircle:function(t){var e=t._point,i=Math.max(Math.round(t._radius),1),n="a"+i+","+(Math.max(Math.round(t._radiusY),1)||i)+" 0 1,0 ",e=t._empty()?"M0 0":"M"+(e.x-i)+","+e.y+n+2*i+",0 "+n+2*-i+",0 ";this._setPath(t,e)},_setPath:function(t,e){t._path.setAttribute("d",e)},_bringToFront:function(t){fe(t._path)},_bringToBack:function(t){ge(t._path)}});function Ki(t){return b.svg||b.vml?new Gi(t):null}b.vml&&Gi.include(zt),A.include({getRenderer:function(t){t=(t=t.options.renderer||this._getPaneRenderer(t.options.pane)||this.options.renderer||this._renderer)||(this._renderer=this._createRenderer());return this.hasLayer(t)||this.addLayer(t),t},_getPaneRenderer:function(t){var e;return"overlayPane"!==t&&void 0!==t&&(void 0===(e=this._paneRenderers[t])&&(e=this._createRenderer({pane:t}),this._paneRenderers[t]=e),e)},_createRenderer:function(t){return this.options.preferCanvas&&Ui(t)||Ki(t)}});var Yi=xi.extend({initialize:function(t,e){xi.prototype.initialize.call(this,this._boundsToLatLngs(t),e)},setBounds:function(t){return this.setLatLngs(this._boundsToLatLngs(t))},_boundsToLatLngs:function(t){return[(t=g(t)).getSouthWest(),t.getNorthWest(),t.getNorthEast(),t.getSouthEast()]}});Gi.create=qi,Gi.pointsToPath=dt,wi.geometryToLayer=bi,wi.coordsToLatLng=Li,wi.coordsToLatLngs=Ti,wi.latLngToCoords=Mi,wi.latLngsToCoords=zi,wi.getFeature=Ci,wi.asFeature=Zi,A.mergeOptions({boxZoom:!0});var _t=n.extend({initialize:function(t){this._map=t,this._container=t._container,this._pane=t._panes.overlayPane,this._resetStateTimeout=0,t.on("unload",this._destroy,this)},addHooks:function(){S(this._container,"mousedown",this._onMouseDown,this)},removeHooks:function(){k(this._container,"mousedown",this._onMouseDown,this)},moved:function(){return this._moved},_destroy:function(){T(this._pane),delete this._pane},_resetState:function(){this._resetStateTimeout=0,this._moved=!1},_clearDeferredResetState:function(){0!==this._resetStateTimeout&&(clearTimeout(this._resetStateTimeout),this._resetStateTimeout=0)},_onMouseDown:function(t){if(!t.shiftKey||1!==t.which&&1!==t.button)return!1;this._clearDeferredResetState(),this._resetState(),re(),Le(),this._startPoint=this._map.mouseEventToContainerPoint(t),S(document,{contextmenu:Re,mousemove:this._onMouseMove,mouseup:this._onMouseUp,keydown:this._onKeyDown},this)},_onMouseMove:function(t){this._moved||(this._moved=!0,this._box=P("div","leaflet-zoom-box",this._container),M(this._container,"leaflet-crosshair"),this._map.fire("boxzoomstart")),this._point=this._map.mouseEventToContainerPoint(t);var t=new f(this._point,this._startPoint),e=t.getSize();Z(this._box,t.min),this._box.style.width=e.x+"px",this._box.style.height=e.y+"px"},_finish:function(){this._moved&&(T(this._box),z(this._container,"leaflet-crosshair")),ae(),Te(),k(document,{contextmenu:Re,mousemove:this._onMouseMove,mouseup:this._onMouseUp,keydown:this._onKeyDown},this)},_onMouseUp:function(t){1!==t.which&&1!==t.button||(this._finish(),this._moved&&(this._clearDeferredResetState(),this._resetStateTimeout=setTimeout(a(this._resetState,this),0),t=new s(this._map.containerPointToLatLng(this._startPoint),this._map.containerPointToLatLng(this._point)),this._map.fitBounds(t).fire("boxzoomend",{boxZoomBounds:t})))},_onKeyDown:function(t){27===t.keyCode&&(this._finish(),this._clearDeferredResetState(),this._resetState())}}),Ct=(A.addInitHook("addHandler","boxZoom",_t),A.mergeOptions({doubleClickZoom:!0}),n.extend({addHooks:function(){this._map.on("dblclick",this._onDoubleClick,this)},removeHooks:function(){this._map.off("dblclick",this._onDoubleClick,this)},_onDoubleClick:function(t){var e=this._map,i=e.getZoom(),n=e.options.zoomDelta,i=t.originalEvent.shiftKey?i-n:i+n;"center"===e.options.doubleClickZoom?e.setZoom(i):e.setZoomAround(t.containerPoint,i)}})),Zt=(A.addInitHook("addHandler","doubleClickZoom",Ct),A.mergeOptions({dragging:!0,inertia:!0,inertiaDeceleration:3400,inertiaMaxSpeed:1/0,easeLinearity:.2,worldCopyJump:!1,maxBoundsViscosity:0}),n.extend({addHooks:function(){var t;this._draggable||(t=this._map,this._draggable=new Xe(t._mapPane,t._container),this._draggable.on({dragstart:this._onDragStart,drag:this._onDrag,dragend:this._onDragEnd},this),this._draggable.on("predrag",this._onPreDragLimit,this),t.options.worldCopyJump&&(this._draggable.on("predrag",this._onPreDragWrap,this),t.on("zoomend",this._onZoomEnd,this),t.whenReady(this._onZoomEnd,this))),M(this._map._container,"leaflet-grab leaflet-touch-drag"),this._draggable.enable(),this._positions=[],this._times=[]},removeHooks:function(){z(this._map._container,"leaflet-grab"),z(this._map._container,"leaflet-touch-drag"),this._draggable.disable()},moved:function(){return this._draggable&&this._draggable._moved},moving:function(){return this._draggable&&this._draggable._moving},_onDragStart:function(){var t,e=this._map;e._stop(),this._map.options.maxBounds&&this._map.options.maxBoundsViscosity?(t=g(this._map.options.maxBounds),this._offsetLimit=_(this._map.latLngToContainerPoint(t.getNorthWest()).multiplyBy(-1),this._map.latLngToContainerPoint(t.getSouthEast()).multiplyBy(-1).add(this._map.getSize())),this._viscosity=Math.min(1,Math.max(0,this._map.options.maxBoundsViscosity))):this._offsetLimit=null,e.fire("movestart").fire("dragstart"),e.options.inertia&&(this._positions=[],this._times=[])},_onDrag:function(t){var e,i;this._map.options.inertia&&(e=this._lastTime=+new Date,i=this._lastPos=this._draggable._absPos||this._draggable._newPos,this._positions.push(i),this._times.push(e),this._prunePositions(e)),this._map.fire("move",t).fire("drag",t)},_prunePositions:function(t){for(;1<this._positions.length&&50<t-this._times[0];)this._positions.shift(),this._times.shift()},_onZoomEnd:function(){var t=this._map.getSize().divideBy(2),e=this._map.latLngToLayerPoint([0,0]);this._initialWorldOffset=e.subtract(t).x,this._worldWidth=this._map.getPixelWorldBounds().getSize().x},_viscousLimit:function(t,e){return t-(t-e)*this._viscosity},_onPreDragLimit:function(){var t,e;this._viscosity&&this._offsetLimit&&(t=this._draggable._newPos.subtract(this._draggable._startPos),e=this._offsetLimit,t.x<e.min.x&&(t.x=this._viscousLimit(t.x,e.min.x)),t.y<e.min.y&&(t.y=this._viscousLimit(t.y,e.min.y)),t.x>e.max.x&&(t.x=this._viscousLimit(t.x,e.max.x)),t.y>e.max.y&&(t.y=this._viscousLimit(t.y,e.max.y)),this._draggable._newPos=this._draggable._startPos.add(t))},_onPreDragWrap:function(){var t=this._worldWidth,e=Math.round(t/2),i=this._initialWorldOffset,n=this._draggable._newPos.x,o=(n-e+i)%t+e-i,n=(n+e+i)%t-e-i,t=Math.abs(o+i)<Math.abs(n+i)?o:n;this._draggable._absPos=this._draggable._newPos.clone(),this._draggable._newPos.x=t},_onDragEnd:function(t){var e,i,n,o,s=this._map,r=s.options,a=!r.inertia||t.noInertia||this._times.length<2;s.fire("dragend",t),!a&&(this._prunePositions(+new Date),t=this._lastPos.subtract(this._positions[0]),a=(this._lastTime-this._times[0])/1e3,e=r.easeLinearity,a=(t=t.multiplyBy(e/a)).distanceTo([0,0]),i=Math.min(r.inertiaMaxSpeed,a),t=t.multiplyBy(i/a),n=i/(r.inertiaDeceleration*e),(o=t.multiplyBy(-n/2).round()).x||o.y)?(o=s._limitOffset(o,s.options.maxBounds),x(function(){s.panBy(o,{duration:n,easeLinearity:e,noMoveStart:!0,animate:!0})})):s.fire("moveend")}})),St=(A.addInitHook("addHandler","dragging",Zt),A.mergeOptions({keyboard:!0,keyboardPanDelta:80}),n.extend({keyCodes:{left:[37],right:[39],down:[40],up:[38],zoomIn:[187,107,61,171],zoomOut:[189,109,54,173]},initialize:function(t){this._map=t,this._setPanDelta(t.options.keyboardPanDelta),this._setZoomDelta(t.options.zoomDelta)},addHooks:function(){var t=this._map._container;t.tabIndex<=0&&(t.tabIndex="0"),S(t,{focus:this._onFocus,blur:this._onBlur,mousedown:this._onMouseDown},this),this._map.on({focus:this._addHooks,blur:this._removeHooks},this)},removeHooks:function(){this._removeHooks(),k(this._map._container,{focus:this._onFocus,blur:this._onBlur,mousedown:this._onMouseDown},this),this._map.off({focus:this._addHooks,blur:this._removeHooks},this)},_onMouseDown:function(){var t,e,i;this._focused||(i=document.body,t=document.documentElement,e=i.scrollTop||t.scrollTop,i=i.scrollLeft||t.scrollLeft,this._map._container.focus(),window.scrollTo(i,e))},_onFocus:function(){this._focused=!0,this._map.fire("focus")},_onBlur:function(){this._focused=!1,this._map.fire("blur")},_setPanDelta:function(t){for(var e=this._panKeys={},i=this.keyCodes,n=0,o=i.left.length;n<o;n++)e[i.left[n]]=[-1*t,0];for(n=0,o=i.right.length;n<o;n++)e[i.right[n]]=[t,0];for(n=0,o=i.down.length;n<o;n++)e[i.down[n]]=[0,t];for(n=0,o=i.up.length;n<o;n++)e[i.up[n]]=[0,-1*t]},_setZoomDelta:function(t){for(var e=this._zoomKeys={},i=this.keyCodes,n=0,o=i.zoomIn.length;n<o;n++)e[i.zoomIn[n]]=t;for(n=0,o=i.zoomOut.length;n<o;n++)e[i.zoomOut[n]]=-t},_addHooks:function(){S(document,"keydown",this._onKeyDown,this)},_removeHooks:function(){k(document,"keydown",this._onKeyDown,this)},_onKeyDown:function(t){if(!(t.altKey||t.ctrlKey||t.metaKey)){var e,i,n=t.keyCode,o=this._map;if(n in this._panKeys)o._panAnim&&o._panAnim._inProgress||(i=this._panKeys[n],t.shiftKey&&(i=m(i).multiplyBy(3)),o.options.maxBounds&&(i=o._limitOffset(m(i),o.options.maxBounds)),o.options.worldCopyJump?(e=o.wrapLatLng(o.unproject(o.project(o.getCenter()).add(i))),o.panTo(e)):o.panBy(i));else if(n in this._zoomKeys)o.setZoom(o.getZoom()+(t.shiftKey?3:1)*this._zoomKeys[n]);else{if(27!==n||!o._popup||!o._popup.options.closeOnEscapeKey)return;o.closePopup()}Re(t)}}})),Et=(A.addInitHook("addHandler","keyboard",St),A.mergeOptions({scrollWheelZoom:!0,wheelDebounceTime:40,wheelPxPerZoomLevel:60}),n.extend({addHooks:function(){S(this._map._container,"wheel",this._onWheelScroll,this),this._delta=0},removeHooks:function(){k(this._map._container,"wheel",this._onWheelScroll,this)},_onWheelScroll:function(t){var e=He(t),i=this._map.options.wheelDebounceTime,e=(this._delta+=e,this._lastMousePos=this._map.mouseEventToContainerPoint(t),this._startTime||(this._startTime=+new Date),Math.max(i-(+new Date-this._startTime),0));clearTimeout(this._timer),this._timer=setTimeout(a(this._performZoom,this),e),Re(t)},_performZoom:function(){var t=this._map,e=t.getZoom(),i=this._map.options.zoomSnap||0,n=(t._stop(),this._delta/(4*this._map.options.wheelPxPerZoomLevel)),n=4*Math.log(2/(1+Math.exp(-Math.abs(n))))/Math.LN2,i=i?Math.ceil(n/i)*i:n,n=t._limitZoom(e+(0<this._delta?i:-i))-e;this._delta=0,this._startTime=null,n&&("center"===t.options.scrollWheelZoom?t.setZoom(e+n):t.setZoomAround(this._lastMousePos,e+n))}})),kt=(A.addInitHook("addHandler","scrollWheelZoom",Et),A.mergeOptions({tapHold:b.touchNative&&b.safari&&b.mobile,tapTolerance:15}),n.extend({addHooks:function(){S(this._map._container,"touchstart",this._onDown,this)},removeHooks:function(){k(this._map._container,"touchstart",this._onDown,this)},_onDown:function(t){var e;clearTimeout(this._holdTimeout),1===t.touches.length&&(e=t.touches[0],this._startPos=this._newPos=new p(e.clientX,e.clientY),this._holdTimeout=setTimeout(a(function(){this._cancel(),this._isTapValid()&&(S(document,"touchend",O),S(document,"touchend touchcancel",this._cancelClickPrevent),this._simulateEvent("contextmenu",e))},this),600),S(document,"touchend touchcancel contextmenu",this._cancel,this),S(document,"touchmove",this._onMove,this))},_cancelClickPrevent:function t(){k(document,"touchend",O),k(document,"touchend touchcancel",t)},_cancel:function(){clearTimeout(this._holdTimeout),k(document,"touchend touchcancel contextmenu",this._cancel,this),k(document,"touchmove",this._onMove,this)},_onMove:function(t){t=t.touches[0];this._newPos=new p(t.clientX,t.clientY)},_isTapValid:function(){return this._newPos.distanceTo(this._startPos)<=this._map.options.tapTolerance},_simulateEvent:function(t,e){t=new MouseEvent(t,{bubbles:!0,cancelable:!0,view:window,screenX:e.screenX,screenY:e.screenY,clientX:e.clientX,clientY:e.clientY});t._simulated=!0,e.target.dispatchEvent(t)}})),Ot=(A.addInitHook("addHandler","tapHold",kt),A.mergeOptions({touchZoom:b.touch,bounceAtZoomLimits:!0}),n.extend({addHooks:function(){M(this._map._container,"leaflet-touch-zoom"),S(this._map._container,"touchstart",this._onTouchStart,this)},removeHooks:function(){z(this._map._container,"leaflet-touch-zoom"),k(this._map._container,"touchstart",this._onTouchStart,this)},_onTouchStart:function(t){var e,i,n=this._map;!t.touches||2!==t.touches.length||n._animatingZoom||this._zooming||(e=n.mouseEventToContainerPoint(t.touches[0]),i=n.mouseEventToContainerPoint(t.touches[1]),this._centerPoint=n.getSize()._divideBy(2),this._startLatLng=n.containerPointToLatLng(this._centerPoint),"center"!==n.options.touchZoom&&(this._pinchStartLatLng=n.containerPointToLatLng(e.add(i)._divideBy(2))),this._startDist=e.distanceTo(i),this._startZoom=n.getZoom(),this._moved=!1,this._zooming=!0,n._stop(),S(document,"touchmove",this._onTouchMove,this),S(document,"touchend touchcancel",this._onTouchEnd,this),O(t))},_onTouchMove:function(t){if(t.touches&&2===t.touches.length&&this._zooming){var e=this._map,i=e.mouseEventToContainerPoint(t.touches[0]),n=e.mouseEventToContainerPoint(t.touches[1]),o=i.distanceTo(n)/this._startDist;if(this._zoom=e.getScaleZoom(o,this._startZoom),!e.options.bounceAtZoomLimits&&(this._zoom<e.getMinZoom()&&o<1||this._zoom>e.getMaxZoom()&&1<o)&&(this._zoom=e._limitZoom(this._zoom)),"center"===e.options.touchZoom){if(this._center=this._startLatLng,1==o)return}else{i=i._add(n)._divideBy(2)._subtract(this._centerPoint);if(1==o&&0===i.x&&0===i.y)return;this._center=e.unproject(e.project(this._pinchStartLatLng,this._zoom).subtract(i),this._zoom)}this._moved||(e._moveStart(!0,!1),this._moved=!0),r(this._animRequest);n=a(e._move,e,this._center,this._zoom,{pinch:!0,round:!1},void 0);this._animRequest=x(n,this,!0),O(t)}},_onTouchEnd:function(){this._moved&&this._zooming?(this._zooming=!1,r(this._animRequest),k(document,"touchmove",this._onTouchMove,this),k(document,"touchend touchcancel",this._onTouchEnd,this),this._map.options.zoomAnimation?this._map._animateZoom(this._center,this._map._limitZoom(this._zoom),!0,this._map.options.zoomSnap):this._map._resetView(this._center,this._map._limitZoom(this._zoom))):this._zooming=!1}})),Xi=(A.addInitHook("addHandler","touchZoom",Ot),A.BoxZoom=_t,A.DoubleClickZoom=Ct,A.Drag=Zt,A.Keyboard=St,A.ScrollWheelZoom=Et,A.TapHold=kt,A.TouchZoom=Ot,t.Bounds=f,t.Browser=b,t.CRS=ot,t.Canvas=Fi,t.Circle=vi,t.CircleMarker=gi,t.Class=et,t.Control=B,t.DivIcon=Ri,t.DivOverlay=Ai,t.DomEvent=mt,t.DomUtil=pt,t.Draggable=Xe,t.Evented=it,t.FeatureGroup=ci,t.GeoJSON=wi,t.GridLayer=Ni,t.Handler=n,t.Icon=di,t.ImageOverlay=Ei,t.LatLng=v,t.LatLngBounds=s,t.Layer=o,t.LayerGroup=ui,t.LineUtil=vt,t.Map=A,t.Marker=mi,t.Mixin=ft,t.Path=fi,t.Point=p,t.PolyUtil=gt,t.Polygon=xi,t.Polyline=yi,t.Popup=Bi,t.PosAnimation=Fe,t.Projection=wt,t.Rectangle=Yi,t.Renderer=Wi,t.SVG=Gi,t.SVGOverlay=Oi,t.TileLayer=Di,t.Tooltip=Ii,t.Transformation=at,t.Util=tt,t.VideoOverlay=ki,t.bind=a,t.bounds=_,t.canvas=Ui,t.circle=function(t,e,i){return new vi(t,e,i)},t.circleMarker=function(t,e){return new gi(t,e)},t.control=Ue,t.divIcon=function(t){return new Ri(t)},t.extend=l,t.featureGroup=function(t,e){return new ci(t,e)},t.geoJSON=Si,t.geoJson=Mt,t.gridLayer=function(t){return new Ni(t)},t.icon=function(t){return new di(t)},t.imageOverlay=function(t,e,i){return new Ei(t,e,i)},t.latLng=w,t.latLngBounds=g,t.layerGroup=function(t,e){return new ui(t,e)},t.map=function(t,e){return new A(t,e)},t.marker=function(t,e){return new mi(t,e)},t.point=m,t.polygon=function(t,e){return new xi(t,e)},t.polyline=function(t,e){return new yi(t,e)},t.popup=function(t,e){return new Bi(t,e)},t.rectangle=function(t,e){return new Yi(t,e)},t.setOptions=c,t.stamp=h,t.svg=Ki,t.svgOverlay=function(t,e,i){return new Oi(t,e,i)},t.tileLayer=ji,t.tooltip=function(t,e){return new Ii(t,e)},t.transformation=ht,t.version="1.9.4",t.videoOverlay=function(t,e,i){return new ki(t,e,i)},window.L);t.noConflict=function(){return window.L=Xi,this},window.L=t});
+//# sourceMappingURL=leaflet.js.map`;
+var LEAFLET_CSS = `/* required styles */\r
+\r
+.leaflet-pane,\r
+.leaflet-tile,\r
+.leaflet-marker-icon,\r
+.leaflet-marker-shadow,\r
+.leaflet-tile-container,\r
+.leaflet-pane > svg,\r
+.leaflet-pane > canvas,\r
+.leaflet-zoom-box,\r
+.leaflet-image-layer,\r
+.leaflet-layer {\r
+	position: absolute;\r
+	left: 0;\r
+	top: 0;\r
+	}\r
+.leaflet-container {\r
+	overflow: hidden;\r
+	}\r
+.leaflet-tile,\r
+.leaflet-marker-icon,\r
+.leaflet-marker-shadow {\r
+	-webkit-user-select: none;\r
+	   -moz-user-select: none;\r
+	        user-select: none;\r
+	  -webkit-user-drag: none;\r
+	}\r
+/* Prevents IE11 from highlighting tiles in blue */\r
+.leaflet-tile::selection {\r
+	background: transparent;\r
+}\r
+/* Safari renders non-retina tile on retina better with this, but Chrome is worse */\r
+.leaflet-safari .leaflet-tile {\r
+	image-rendering: -webkit-optimize-contrast;\r
+	}\r
+/* hack that prevents hw layers "stretching" when loading new tiles */\r
+.leaflet-safari .leaflet-tile-container {\r
+	width: 1600px;\r
+	height: 1600px;\r
+	-webkit-transform-origin: 0 0;\r
+	}\r
+.leaflet-marker-icon,\r
+.leaflet-marker-shadow {\r
+	display: block;\r
+	}\r
+/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */\r
+/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */\r
+.leaflet-container .leaflet-overlay-pane svg {\r
+	max-width: none !important;\r
+	max-height: none !important;\r
+	}\r
+.leaflet-container .leaflet-marker-pane img,\r
+.leaflet-container .leaflet-shadow-pane img,\r
+.leaflet-container .leaflet-tile-pane img,\r
+.leaflet-container img.leaflet-image-layer,\r
+.leaflet-container .leaflet-tile {\r
+	max-width: none !important;\r
+	max-height: none !important;\r
+	width: auto;\r
+	padding: 0;\r
+	}\r
+\r
+.leaflet-container img.leaflet-tile {\r
+	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */\r
+	mix-blend-mode: plus-lighter;\r
+}\r
+\r
+.leaflet-container.leaflet-touch-zoom {\r
+	-ms-touch-action: pan-x pan-y;\r
+	touch-action: pan-x pan-y;\r
+	}\r
+.leaflet-container.leaflet-touch-drag {\r
+	-ms-touch-action: pinch-zoom;\r
+	/* Fallback for FF which doesn't support pinch-zoom */\r
+	touch-action: none;\r
+	touch-action: pinch-zoom;\r
+}\r
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {\r
+	-ms-touch-action: none;\r
+	touch-action: none;\r
+}\r
+.leaflet-container {\r
+	-webkit-tap-highlight-color: transparent;\r
+}\r
+.leaflet-container a {\r
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);\r
+}\r
+.leaflet-tile {\r
+	filter: inherit;\r
+	visibility: hidden;\r
+	}\r
+.leaflet-tile-loaded {\r
+	visibility: inherit;\r
+	}\r
+.leaflet-zoom-box {\r
+	width: 0;\r
+	height: 0;\r
+	-moz-box-sizing: border-box;\r
+	     box-sizing: border-box;\r
+	z-index: 800;\r
+	}\r
+/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */\r
+.leaflet-overlay-pane svg {\r
+	-moz-user-select: none;\r
+	}\r
+\r
+.leaflet-pane         { z-index: 400; }\r
+\r
+.leaflet-tile-pane    { z-index: 200; }\r
+.leaflet-overlay-pane { z-index: 400; }\r
+.leaflet-shadow-pane  { z-index: 500; }\r
+.leaflet-marker-pane  { z-index: 600; }\r
+.leaflet-tooltip-pane   { z-index: 650; }\r
+.leaflet-popup-pane   { z-index: 700; }\r
+\r
+.leaflet-map-pane canvas { z-index: 100; }\r
+.leaflet-map-pane svg    { z-index: 200; }\r
+\r
+.leaflet-vml-shape {\r
+	width: 1px;\r
+	height: 1px;\r
+	}\r
+.lvml {\r
+	behavior: url(#default#VML);\r
+	display: inline-block;\r
+	position: absolute;\r
+	}\r
+\r
+\r
+/* control positioning */\r
+\r
+.leaflet-control {\r
+	position: relative;\r
+	z-index: 800;\r
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */\r
+	pointer-events: auto;\r
+	}\r
+.leaflet-top,\r
+.leaflet-bottom {\r
+	position: absolute;\r
+	z-index: 1000;\r
+	pointer-events: none;\r
+	}\r
+.leaflet-top {\r
+	top: 0;\r
+	}\r
+.leaflet-right {\r
+	right: 0;\r
+	}\r
+.leaflet-bottom {\r
+	bottom: 0;\r
+	}\r
+.leaflet-left {\r
+	left: 0;\r
+	}\r
+.leaflet-control {\r
+	float: left;\r
+	clear: both;\r
+	}\r
+.leaflet-right .leaflet-control {\r
+	float: right;\r
+	}\r
+.leaflet-top .leaflet-control {\r
+	margin-top: 10px;\r
+	}\r
+.leaflet-bottom .leaflet-control {\r
+	margin-bottom: 10px;\r
+	}\r
+.leaflet-left .leaflet-control {\r
+	margin-left: 10px;\r
+	}\r
+.leaflet-right .leaflet-control {\r
+	margin-right: 10px;\r
+	}\r
+\r
+\r
+/* zoom and fade animations */\r
+\r
+.leaflet-fade-anim .leaflet-popup {\r
+	opacity: 0;\r
+	-webkit-transition: opacity 0.2s linear;\r
+	   -moz-transition: opacity 0.2s linear;\r
+	        transition: opacity 0.2s linear;\r
+	}\r
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {\r
+	opacity: 1;\r
+	}\r
+.leaflet-zoom-animated {\r
+	-webkit-transform-origin: 0 0;\r
+	    -ms-transform-origin: 0 0;\r
+	        transform-origin: 0 0;\r
+	}\r
+svg.leaflet-zoom-animated {\r
+	will-change: transform;\r
+}\r
+\r
+.leaflet-zoom-anim .leaflet-zoom-animated {\r
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);\r
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);\r
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);\r
+	}\r
+.leaflet-zoom-anim .leaflet-tile,\r
+.leaflet-pan-anim .leaflet-tile {\r
+	-webkit-transition: none;\r
+	   -moz-transition: none;\r
+	        transition: none;\r
+	}\r
+\r
+.leaflet-zoom-anim .leaflet-zoom-hide {\r
+	visibility: hidden;\r
+	}\r
+\r
+\r
+/* cursors */\r
+\r
+.leaflet-interactive {\r
+	cursor: pointer;\r
+	}\r
+.leaflet-grab {\r
+	cursor: -webkit-grab;\r
+	cursor:    -moz-grab;\r
+	cursor:         grab;\r
+	}\r
+.leaflet-crosshair,\r
+.leaflet-crosshair .leaflet-interactive {\r
+	cursor: crosshair;\r
+	}\r
+.leaflet-popup-pane,\r
+.leaflet-control {\r
+	cursor: auto;\r
+	}\r
+.leaflet-dragging .leaflet-grab,\r
+.leaflet-dragging .leaflet-grab .leaflet-interactive,\r
+.leaflet-dragging .leaflet-marker-draggable {\r
+	cursor: move;\r
+	cursor: -webkit-grabbing;\r
+	cursor:    -moz-grabbing;\r
+	cursor:         grabbing;\r
+	}\r
+\r
+/* marker & overlays interactivity */\r
+.leaflet-marker-icon,\r
+.leaflet-marker-shadow,\r
+.leaflet-image-layer,\r
+.leaflet-pane > svg path,\r
+.leaflet-tile-container {\r
+	pointer-events: none;\r
+	}\r
+\r
+.leaflet-marker-icon.leaflet-interactive,\r
+.leaflet-image-layer.leaflet-interactive,\r
+.leaflet-pane > svg path.leaflet-interactive,\r
+svg.leaflet-image-layer.leaflet-interactive path {\r
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */\r
+	pointer-events: auto;\r
+	}\r
+\r
+/* visual tweaks */\r
+\r
+.leaflet-container {\r
+	background: #ddd;\r
+	outline-offset: 1px;\r
+	}\r
+.leaflet-container a {\r
+	color: #0078A8;\r
+	}\r
+.leaflet-zoom-box {\r
+	border: 2px dotted #38f;\r
+	background: rgba(255,255,255,0.5);\r
+	}\r
+\r
+\r
+/* general typography */\r
+.leaflet-container {\r
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;\r
+	font-size: 12px;\r
+	font-size: 0.75rem;\r
+	line-height: 1.5;\r
+	}\r
+\r
+\r
+/* general toolbar styles */\r
+\r
+.leaflet-bar {\r
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);\r
+	border-radius: 4px;\r
+	}\r
+.leaflet-bar a {\r
+	background-color: #fff;\r
+	border-bottom: 1px solid #ccc;\r
+	width: 26px;\r
+	height: 26px;\r
+	line-height: 26px;\r
+	display: block;\r
+	text-align: center;\r
+	text-decoration: none;\r
+	color: black;\r
+	}\r
+.leaflet-bar a,\r
+.leaflet-control-layers-toggle {\r
+	background-position: 50% 50%;\r
+	background-repeat: no-repeat;\r
+	display: block;\r
+	}\r
+.leaflet-bar a:hover,\r
+.leaflet-bar a:focus {\r
+	background-color: #f4f4f4;\r
+	}\r
+.leaflet-bar a:first-child {\r
+	border-top-left-radius: 4px;\r
+	border-top-right-radius: 4px;\r
+	}\r
+.leaflet-bar a:last-child {\r
+	border-bottom-left-radius: 4px;\r
+	border-bottom-right-radius: 4px;\r
+	border-bottom: none;\r
+	}\r
+.leaflet-bar a.leaflet-disabled {\r
+	cursor: default;\r
+	background-color: #f4f4f4;\r
+	color: #bbb;\r
+	}\r
+\r
+.leaflet-touch .leaflet-bar a {\r
+	width: 30px;\r
+	height: 30px;\r
+	line-height: 30px;\r
+	}\r
+.leaflet-touch .leaflet-bar a:first-child {\r
+	border-top-left-radius: 2px;\r
+	border-top-right-radius: 2px;\r
+	}\r
+.leaflet-touch .leaflet-bar a:last-child {\r
+	border-bottom-left-radius: 2px;\r
+	border-bottom-right-radius: 2px;\r
+	}\r
+\r
+/* zoom control */\r
+\r
+.leaflet-control-zoom-in,\r
+.leaflet-control-zoom-out {\r
+	font: bold 18px 'Lucida Console', Monaco, monospace;\r
+	text-indent: 1px;\r
+	}\r
+\r
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {\r
+	font-size: 22px;\r
+	}\r
+\r
+\r
+/* layers control */\r
+\r
+.leaflet-control-layers {\r
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);\r
+	background: #fff;\r
+	border-radius: 5px;\r
+	}\r
+.leaflet-control-layers-toggle {\r
+	background-image: url(images/layers.png);\r
+	width: 36px;\r
+	height: 36px;\r
+	}\r
+.leaflet-retina .leaflet-control-layers-toggle {\r
+	background-image: url(images/layers-2x.png);\r
+	background-size: 26px 26px;\r
+	}\r
+.leaflet-touch .leaflet-control-layers-toggle {\r
+	width: 44px;\r
+	height: 44px;\r
+	}\r
+.leaflet-control-layers .leaflet-control-layers-list,\r
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {\r
+	display: none;\r
+	}\r
+.leaflet-control-layers-expanded .leaflet-control-layers-list {\r
+	display: block;\r
+	position: relative;\r
+	}\r
+.leaflet-control-layers-expanded {\r
+	padding: 6px 10px 6px 6px;\r
+	color: #333;\r
+	background: #fff;\r
+	}\r
+.leaflet-control-layers-scrollbar {\r
+	overflow-y: scroll;\r
+	overflow-x: hidden;\r
+	padding-right: 5px;\r
+	}\r
+.leaflet-control-layers-selector {\r
+	margin-top: 2px;\r
+	position: relative;\r
+	top: 1px;\r
+	}\r
+.leaflet-control-layers label {\r
+	display: block;\r
+	font-size: 13px;\r
+	font-size: 1.08333em;\r
+	}\r
+.leaflet-control-layers-separator {\r
+	height: 0;\r
+	border-top: 1px solid #ddd;\r
+	margin: 5px -10px 5px -6px;\r
+	}\r
+\r
+/* Default icon URLs */\r
+.leaflet-default-icon-path { /* used only in path-guessing heuristic, see L.Icon.Default */\r
+	background-image: url(images/marker-icon.png);\r
+	}\r
+\r
+\r
+/* attribution and scale controls */\r
+\r
+.leaflet-container .leaflet-control-attribution {\r
+	background: #fff;\r
+	background: rgba(255, 255, 255, 0.8);\r
+	margin: 0;\r
+	}\r
+.leaflet-control-attribution,\r
+.leaflet-control-scale-line {\r
+	padding: 0 5px;\r
+	color: #333;\r
+	line-height: 1.4;\r
+	}\r
+.leaflet-control-attribution a {\r
+	text-decoration: none;\r
+	}\r
+.leaflet-control-attribution a:hover,\r
+.leaflet-control-attribution a:focus {\r
+	text-decoration: underline;\r
+	}\r
+.leaflet-attribution-flag {\r
+	display: inline !important;\r
+	vertical-align: baseline !important;\r
+	width: 1em;\r
+	height: 0.6669em;\r
+	}\r
+.leaflet-left .leaflet-control-scale {\r
+	margin-left: 5px;\r
+	}\r
+.leaflet-bottom .leaflet-control-scale {\r
+	margin-bottom: 5px;\r
+	}\r
+.leaflet-control-scale-line {\r
+	border: 2px solid #777;\r
+	border-top: none;\r
+	line-height: 1.1;\r
+	padding: 2px 5px 1px;\r
+	white-space: nowrap;\r
+	-moz-box-sizing: border-box;\r
+	     box-sizing: border-box;\r
+	background: rgba(255, 255, 255, 0.8);\r
+	text-shadow: 1px 1px #fff;\r
+	}\r
+.leaflet-control-scale-line:not(:first-child) {\r
+	border-top: 2px solid #777;\r
+	border-bottom: none;\r
+	margin-top: -2px;\r
+	}\r
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {\r
+	border-bottom: 2px solid #777;\r
+	}\r
+\r
+.leaflet-touch .leaflet-control-attribution,\r
+.leaflet-touch .leaflet-control-layers,\r
+.leaflet-touch .leaflet-bar {\r
+	box-shadow: none;\r
+	}\r
+.leaflet-touch .leaflet-control-layers,\r
+.leaflet-touch .leaflet-bar {\r
+	border: 2px solid rgba(0,0,0,0.2);\r
+	background-clip: padding-box;\r
+	}\r
+\r
+\r
+/* popup */\r
+\r
+.leaflet-popup {\r
+	position: absolute;\r
+	text-align: center;\r
+	margin-bottom: 20px;\r
+	}\r
+.leaflet-popup-content-wrapper {\r
+	padding: 1px;\r
+	text-align: left;\r
+	border-radius: 12px;\r
+	}\r
+.leaflet-popup-content {\r
+	margin: 13px 24px 13px 20px;\r
+	line-height: 1.3;\r
+	font-size: 13px;\r
+	font-size: 1.08333em;\r
+	min-height: 1px;\r
+	}\r
+.leaflet-popup-content p {\r
+	margin: 17px 0;\r
+	margin: 1.3em 0;\r
+	}\r
+.leaflet-popup-tip-container {\r
+	width: 40px;\r
+	height: 20px;\r
+	position: absolute;\r
+	left: 50%;\r
+	margin-top: -1px;\r
+	margin-left: -20px;\r
+	overflow: hidden;\r
+	pointer-events: none;\r
+	}\r
+.leaflet-popup-tip {\r
+	width: 17px;\r
+	height: 17px;\r
+	padding: 1px;\r
+\r
+	margin: -10px auto 0;\r
+	pointer-events: auto;\r
+\r
+	-webkit-transform: rotate(45deg);\r
+	   -moz-transform: rotate(45deg);\r
+	    -ms-transform: rotate(45deg);\r
+	        transform: rotate(45deg);\r
+	}\r
+.leaflet-popup-content-wrapper,\r
+.leaflet-popup-tip {\r
+	background: white;\r
+	color: #333;\r
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);\r
+	}\r
+.leaflet-container a.leaflet-popup-close-button {\r
+	position: absolute;\r
+	top: 0;\r
+	right: 0;\r
+	border: none;\r
+	text-align: center;\r
+	width: 24px;\r
+	height: 24px;\r
+	font: 16px/24px Tahoma, Verdana, sans-serif;\r
+	color: #757575;\r
+	text-decoration: none;\r
+	background: transparent;\r
+	}\r
+.leaflet-container a.leaflet-popup-close-button:hover,\r
+.leaflet-container a.leaflet-popup-close-button:focus {\r
+	color: #585858;\r
+	}\r
+.leaflet-popup-scrolled {\r
+	overflow: auto;\r
+	}\r
+\r
+.leaflet-oldie .leaflet-popup-content-wrapper {\r
+	-ms-zoom: 1;\r
+	}\r
+.leaflet-oldie .leaflet-popup-tip {\r
+	width: 24px;\r
+	margin: 0 auto;\r
+\r
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";\r
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);\r
+	}\r
+\r
+.leaflet-oldie .leaflet-control-zoom,\r
+.leaflet-oldie .leaflet-control-layers,\r
+.leaflet-oldie .leaflet-popup-content-wrapper,\r
+.leaflet-oldie .leaflet-popup-tip {\r
+	border: 1px solid #999;\r
+	}\r
+\r
+\r
+/* div icon */\r
+\r
+.leaflet-div-icon {\r
+	background: #fff;\r
+	border: 1px solid #666;\r
+	}\r
+\r
+\r
+/* Tooltip */\r
+/* Base styles for the element that has a tooltip */\r
+.leaflet-tooltip {\r
+	position: absolute;\r
+	padding: 6px;\r
+	background-color: #fff;\r
+	border: 1px solid #fff;\r
+	border-radius: 3px;\r
+	color: #222;\r
+	white-space: nowrap;\r
+	-webkit-user-select: none;\r
+	-moz-user-select: none;\r
+	-ms-user-select: none;\r
+	user-select: none;\r
+	pointer-events: none;\r
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);\r
+	}\r
+.leaflet-tooltip.leaflet-interactive {\r
+	cursor: pointer;\r
+	pointer-events: auto;\r
+	}\r
+.leaflet-tooltip-top:before,\r
+.leaflet-tooltip-bottom:before,\r
+.leaflet-tooltip-left:before,\r
+.leaflet-tooltip-right:before {\r
+	position: absolute;\r
+	pointer-events: none;\r
+	border: 6px solid transparent;\r
+	background: transparent;\r
+	content: "";\r
+	}\r
+\r
+/* Directions */\r
+\r
+.leaflet-tooltip-bottom {\r
+	margin-top: 6px;\r
+}\r
+.leaflet-tooltip-top {\r
+	margin-top: -6px;\r
+}\r
+.leaflet-tooltip-bottom:before,\r
+.leaflet-tooltip-top:before {\r
+	left: 50%;\r
+	margin-left: -6px;\r
+	}\r
+.leaflet-tooltip-top:before {\r
+	bottom: 0;\r
+	margin-bottom: -12px;\r
+	border-top-color: #fff;\r
+	}\r
+.leaflet-tooltip-bottom:before {\r
+	top: 0;\r
+	margin-top: -12px;\r
+	margin-left: -6px;\r
+	border-bottom-color: #fff;\r
+	}\r
+.leaflet-tooltip-left {\r
+	margin-left: -6px;\r
+}\r
+.leaflet-tooltip-right {\r
+	margin-left: 6px;\r
+}\r
+.leaflet-tooltip-left:before,\r
+.leaflet-tooltip-right:before {\r
+	top: 50%;\r
+	margin-top: -6px;\r
+	}\r
+.leaflet-tooltip-left:before {\r
+	right: 0;\r
+	margin-right: -12px;\r
+	border-left-color: #fff;\r
+	}\r
+.leaflet-tooltip-right:before {\r
+	left: 0;\r
+	margin-left: -12px;\r
+	border-right-color: #fff;\r
+	}\r
+\r
+/* Printing */\r
+\r
+@media print {\r
+	/* Prevent printers from removing background-images of controls. */\r
+	.leaflet-control {\r
+		-webkit-print-color-adjust: exact;\r
+		print-color-adjust: exact;\r
+		}\r
+	}\r
+`;
+
+// packages/api/dist/interfaces/map/index.js
+init_workshop_map();
+var TILE_HOST = "https://tile.openstreetmap.org";
+var LEAFLET_PATH = `/mapa/leaflet.${LEAFLET_JS_HASH}.js`;
+var mapCsp = (nonce) => `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data: ${TILE_HOST}; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`;
+var HEADERS2 = {
+  "X-Content-Type-Options": "nosniff",
+  // OpenStreetMap pide que cada imagen del mapa llegue con el sitio de origen (no la ruta completa).
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "X-Frame-Options": "DENY",
+  // La ubicación solo la pide esta página, y solo cuando la persona toca "Usar mi ubicación".
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(self), payment=(), usb=()",
+  "Cache-Control": "public, max-age=300"
+};
+var clip = (value2, max) => typeof value2 === "string" ? value2.replace(/\s+/g, " ").trim().slice(0, max) : "";
+function selected(a, b) {
+  return fold4(a) === fold4(b) ? " selected" : "";
+}
+function shopCard(shop, number, index) {
+  const tags = [
+    `<span class="tag ok">Verificado</span>`,
+    ...shop.categories.slice(0, 4).map((c) => `<span class="tag">${escapeHtml(categoryName(c))}</span>`),
+    shop.rating ? `<span class="tag">${escapeHtml(shop.rating.avg.toLocaleString("es-EC"))} de 5 \xB7 ${shop.rating.count} calificaciones</span>` : `<span class="tag nuevo">Nuevo, a\xFAn sin calificaciones</span>`
+  ].join("");
+  const where = [shop.address, shop.zone, shop.city].filter(Boolean).join(" \xB7 ");
+  const route = shop.point ? `<a href="${escapeHtml(`https://www.google.com/maps/dir/?api=1&destination=${shop.point.lat},${shop.point.lng}`)}" rel="noopener" target="_blank">C\xF3mo llegar</a>` : `<span class="muted">Muestra solo su sector</span>`;
+  const turno = number ? `<a class="pedir" href="${escapeHtml(`https://wa.me/${number}?text=${encodeURIComponent(`Hola AutoMantPro, quiero un turno en ${shop.name} (${shop.city}).`)}`)}" rel="noopener">Pedir turno por WhatsApp</a>` : "";
+  return `<li class="taller" data-id="${escapeHtml(shop.id)}"${shop.point ? ` data-lat="${shop.point.lat}" data-lng="${shop.point.lng}"` : ""}>
+    <div class="fila"><h3><span class="num">${index + 1}</span> ${escapeHtml(shop.name)}</h3><span class="dist">${shop.distanceKm === null ? "" : `${escapeHtml(shop.distanceKm.toLocaleString("es-EC"))} km`}</span></div>
+    <div class="tags">${tags}</div>
+    <p class="donde">${escapeHtml(where)}${shop.hours ? ` \xB7 ${escapeHtml(shop.hours)}` : ""}</p>
+    <p class="por"><b>Por qu\xE9 aparece:</b> <span class="razones">${escapeHtml(shop.reasons.join(" \xB7 "))}</span></p>
+    <p class="acciones">${turno}${route}</p>
+  </li>`;
+}
+function renderMapPage(input) {
+  const nonce = escapeHtml(input.nonce);
+  const places = placesOf(input.records);
+  const cityEntry = places.find((p) => fold4(p.city) === fold4(input.city)) ?? null;
+  const city = cityEntry?.city ?? "";
+  const zone = cityEntry?.zones.find((z) => fold4(z) === fold4(input.zone)) ?? "";
+  const service = CATEGORIES.some((c) => c.id === input.service) ? input.service : "";
+  const shops = searchShops(input.records, { city, zone, service });
+  const google = googleMapsSearchUrl({ service, zone, city: city || "Ecuador" });
+  const serviceLabel = service ? categoryName(service).toLowerCase() : "";
+  const cityOptions = places.map((p) => `<option value="${escapeHtml(p.city)}"${selected(p.city, city)}>${escapeHtml(p.city)}</option>`).join("");
+  const zoneOptions = (cityEntry?.zones ?? []).map((z) => `<option value="${escapeHtml(z)}"${selected(z, zone)}>${escapeHtml(z)}</option>`).join("");
+  const serviceOptions = CATEGORIES.map((c) => `<option value="${escapeHtml(c.id)}"${c.id === service ? " selected" : ""}>${escapeHtml(c.name)}</option>`).join("");
+  const heading = [
+    `${shops.length} ${shops.length === 1 ? "taller verificado" : "talleres verificados"}`,
+    serviceLabel ? `para ${serviceLabel}` : "",
+    zone ? `en ${zone}, ${city}` : city ? `en ${city}` : "en Ecuador"
+  ].filter(Boolean).join(" ");
+  const invite = `https://wa.me/?text=${encodeURIComponent(`Te recomiendo AutoMantPro para recibir clientes por WhatsApp. Registra tu taller gratis aqu\xED: ${SITE_URL}/`)}`;
+  const empty = `<div class="vacio"><p>Todav\xEDa no hay talleres verificados con esos filtros.</p>
+    <p><a href="${escapeHtml(google)}" rel="noopener" target="_blank">Ver talleres en Google Maps</a> (no verificados por AutoMantPro)
+    o <a href="${escapeHtml(invite)}" rel="noopener">invita a tu taller de confianza</a> desde tu WhatsApp.</p></div>`;
+  const list7 = shops.length ? `<ol class="lista" id="lista">${shops.map((s, i) => shopCard(s, input.number, i)).join("")}</ol>` : empty;
+  const data2 = JSON.stringify(shops.map((s) => ({ id: s.id, name: s.name, point: s.point, zone: s.zone, city: s.city }))).replace(/</g, "\\u003c");
+  const joinText = input.number ? `<a href="${escapeHtml(`https://wa.me/${input.number}?text=${encodeURIComponent("Hola AutoMantPro, quiero que mi taller aparezca en el mapa.")}`)}" rel="noopener">escr\xEDbenos</a>` : "escr\xEDbenos por WhatsApp";
+  const title = city ? `Talleres verificados en ${city} \xB7 mapa` : "Mapa de talleres verificados en Ecuador";
+  const description = `Busca talleres mec\xE1nicos verificados por ciudad, sector y servicio${city ? ` en ${city}` : " en Ecuador"}, con el motivo de cada recomendaci\xF3n y calificaciones reales de trabajos terminados.`;
+  return `<!doctype html>
+<html lang="es-EC">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="${THEME_COLOR}">
+<title>${escapeHtml(title)}</title>
+${seoHead({ path: "/mapa", title, description, type: "website" })}
+<style nonce="${nonce}">${STYLES}${THEME_ENTRY_LAYER}${LEAFLET_CSS}${MAP_STYLES}</style>
+</head>
+<body>
+<main>
+  <header><a class="logo" href="/">${logoImg()}<small class="lema">Tu asistente inteligente de mantenimiento automotriz</small></a></header>
+  <nav class="migas"><a href="/">Inicio</a> \u203A <a href="/talleres">Talleres</a> \u203A <span>Mapa</span></nav>
+  <h1>Mapa de talleres verificados</h1>
+  <p class="lead">Elige ciudad, sector y servicio. Te mostramos primero los talleres que hacen lo que necesitas y te decimos por qu\xE9 aparece cada uno.</p>
+  <form class="filtros" method="get" action="/mapa" id="filtros">
+    <label for="ciudad">Ciudad<select id="ciudad" name="ciudad"><option value="">Todo Ecuador</option>${cityOptions}</select></label>
+    <label for="sector">Sector<select id="sector" name="sector"${cityEntry ? "" : " disabled"}><option value="">${cityEntry ? "Todos los sectores" : "Elige primero la ciudad"}</option>${zoneOptions}</select></label>
+    <label for="servicio">Servicio<select id="servicio" name="servicio"><option value="">Todos los servicios</option>${serviceOptions}</select></label>
+    <button type="submit">Buscar</button>
+  </form>
+  <p class="ubic"><button id="cerca" type="button" hidden>Usar mi ubicaci\xF3n</button> <span id="ubic-nota" class="muted">Tu ubicaci\xF3n se usa solo en tu tel\xE9fono para calcular distancias; no la guardamos.</span></p>
+  <div id="mapa" class="mapa" role="region" aria-label="Mapa de talleres"><noscript>Activa JavaScript para ver el mapa. La lista de talleres est\xE1 abajo.</noscript></div>
+  <h2 class="titulo" id="cuantos">${escapeHtml(heading)}</h2>
+  ${list7}
+  <section class="card mas">
+    <h2 class="titulo">\xBFNo est\xE1 tu taller?</h2>
+    <p><a href="${escapeHtml(google)}" rel="noopener" target="_blank">Ver m\xE1s talleres en Google Maps</a>. Esos talleres no est\xE1n verificados por AutoMantPro.</p>
+    <p>Si tienes un mec\xE1nico de confianza, <a href="${escapeHtml(invite)}" rel="noopener">inv\xEDtalo desde tu WhatsApp</a> para que se registre.</p>
+    <p>\xBFTienes un taller? Para aparecer aqu\xED, ${joinText}. Solo mostramos talleres verificados que aceptaron estar en el mapa, y pueden salir cuando quieran.</p>
+    <p class="muted">Las calificaciones salen de trabajos terminados por AutoMantPro y se muestran desde ${MIN_RATINGS}. Mapa \xA9 colaboradores de OpenStreetMap.</p>
+  </section>
+  <p class="legal">Al usar el mapa aceptas los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP).</p>
+</main>
+<script type="application/json" id="datos" nonce="${nonce}">${data2}</script>
+<script src="${LEAFLET_PATH}" nonce="${nonce}"></script>
+<script nonce="${nonce}">${MAP_SCRIPT}</script>
+</body>
+</html>`;
+}
+var MAP_STYLES = `
+main{max-width:760px}
+header{margin-bottom:12px}
+h1{font-size:26px;margin:10px 0 8px}
+.migas{font:500 13px/1.4 var(--c-font);color:var(--c-muted);margin:0 0 6px}
+.migas a,.mas a,.vacio a,.acciones a{color:var(--c-link);text-decoration:underline;text-decoration-color:var(--c-link-line);text-underline-offset:2px;font-weight:600}
+.lead{margin:0 0 14px}
+.titulo{font:700 18px/1.25 var(--c-font);color:var(--c-ink);margin:16px 0 10px}
+.filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end;margin:0 0 10px}
+.filtros label{display:flex;flex-direction:column;gap:4px;font:600 13px/1.2 var(--c-font);color:var(--c-muted)}
+.filtros select{font:600 15px/1.2 var(--c-font);padding:10px;border:1px solid var(--c-line);border-radius:var(--c-r-sm);background:var(--c-field);color:var(--c-ink);width:100%;min-width:0}
+.filtros button,#cerca{font:700 15px/1 var(--c-font);padding:12px 16px;border-radius:999px;border:0;background:var(--c-accent);color:var(--c-on-accent);cursor:pointer}
+#cerca{background:var(--c-sunk);color:var(--c-ink);border:1px solid var(--c-line);padding:9px 14px}
+.filtros select:focus-visible,.filtros button:focus-visible,#cerca:focus-visible,main a:focus-visible{outline:3px solid var(--c-focus);outline-offset:2px}
+.ubic{margin:0 0 10px;font-size:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.muted{color:var(--c-muted)}
+.mapa{height:min(56vh,420px);min-height:280px;border-radius:var(--c-r);border:1px solid var(--c-line);background:var(--c-sunk);overflow:hidden;position:relative;z-index:0}
+.mapa noscript{display:block;padding:16px}
+.lista{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.taller{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:14px;display:grid;gap:6px}
+.taller.activo{outline:3px solid var(--c-promo);outline-offset:-1px}
+.fila{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.fila h3{font:700 16px/1.3 var(--c-font);margin:0}
+.num{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:999px;background:var(--c-cta);color:var(--c-on-cta);font-size:12px;margin-right:4px}
+.dist{font:600 13px/1 var(--c-font);color:var(--c-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font:600 12px/1 var(--c-font);padding:5px 8px;border-radius:999px;background:var(--c-sunk);border:1px solid var(--c-line);color:var(--c-ink)}
+.tag.ok{background:var(--c-ok-bg);color:var(--c-ok);border-color:transparent}
+.tag.nuevo{background:var(--c-warn-bg);color:var(--c-warn);border-color:transparent}
+.donde,.por{margin:0;font-size:14px;color:var(--c-muted)}
+.por b{color:var(--c-ink)}
+.acciones{margin:4px 0 0;display:flex;gap:14px;flex-wrap:wrap;font-size:14px}
+.pedir{color:var(--c-cta)!important}
+.vacio{background:var(--c-surface);border:1px dashed var(--c-line);border-radius:var(--c-r);padding:14px}
+.vacio p{margin:0 0 6px}
+.mas{padding:16px;margin-top:16px}
+.mas p{margin:0 0 8px}
+.leaflet-container{font:13px/1.4 var(--c-font)}
+.leaflet-popup-content b{display:block;margin-bottom:2px}
+.leaflet-tooltip.leaflet-num{background:transparent;border:0;box-shadow:none;padding:0;color:var(--c-on-cta);font:700 11px/1 var(--c-font)}
+.leaflet-tooltip.leaflet-num:before{display:none}
+`;
+var MAP_SCRIPT = `(function(){
+var datos=[];try{datos=JSON.parse(document.getElementById('datos').textContent||'[]');}catch(_){}
+var f=document.getElementById('filtros');
+document.getElementById('ciudad').addEventListener('change',function(){var s=document.getElementById('sector');s.value='';s.disabled=true;f.submit();});
+var cerca=document.getElementById('cerca');
+if(!window.L)return;
+var css=getComputedStyle(document.documentElement);
+var color=(css.getPropertyValue('--c-cta')||'#13804a').trim();
+var borde=(css.getPropertyValue('--c-surface')||'#fff').trim();
+var mapa=L.map('mapa',{scrollWheelZoom:false,zoomSnap:0.5});
+L.tileLayer('${TILE_HOST}/{z}/{x}/{y}.png',{maxZoom:19,referrerPolicy:'strict-origin-when-cross-origin',attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(mapa);
+var marcas={},puntos=[];
+function popup(t){var d=document.createElement('div');var b=document.createElement('b');b.textContent=t.name;var s=document.createElement('span');s.textContent=[t.zone,t.city].filter(Boolean).join(' \xB7 ');d.appendChild(b);d.appendChild(s);return d;}
+datos.forEach(function(t,i){if(!t.point)return;var m=L.circleMarker([t.point.lat,t.point.lng],{radius:10,color:borde,weight:2,fillColor:color,fillOpacity:1}).addTo(mapa).bindPopup(popup(t)).bindTooltip(String(i+1),{permanent:true,direction:'center',className:'leaflet-num'});m.on('click',function(){marcar(t.id);});marcas[t.id]=m;puntos.push([t.point.lat,t.point.lng]);});
+if(puntos.length>1)mapa.fitBounds(puntos,{padding:[30,30],maxZoom:15});else if(puntos.length===1)mapa.setView(puntos[0],15);else mapa.setView([-1.45,-78.4],6);
+function marcar(id){document.querySelectorAll('.taller.activo').forEach(function(n){n.classList.remove('activo');});var n=document.querySelector('.taller[data-id="'+id+'"]');if(n){n.classList.add('activo');n.scrollIntoView({block:'nearest',behavior:'smooth'});}}
+document.querySelectorAll('.taller[data-lat]').forEach(function(n){n.querySelector('h3').addEventListener('click',function(){var m=marcas[n.getAttribute('data-id')];if(m){mapa.setView(m.getLatLng(),16);m.openPopup();}});});
+if(!navigator.geolocation||!cerca)return;
+cerca.hidden=false;
+function km(a,b){var r=Math.PI/180,dl=(b[0]-a[0])*r,dg=(b[1]-a[1])*r,h=Math.pow(Math.sin(dl/2),2)+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.pow(Math.sin(dg/2),2);return 12742*Math.asin(Math.min(1,Math.sqrt(h)));}
+var yo=null;
+cerca.addEventListener('click',function(){var nota=document.getElementById('ubic-nota');nota.textContent='Buscando tu ubicaci\xF3n\u2026';
+navigator.geolocation.getCurrentPosition(function(p){var o=[p.coords.latitude,p.coords.longitude];nota.textContent='Ordenado por distancia. Tu ubicaci\xF3n no se guarda.';
+if(yo)mapa.removeLayer(yo);yo=L.circleMarker(o,{radius:7,color:borde,weight:2,fillColor:(css.getPropertyValue('--c-accent')||'#111').trim(),fillOpacity:1}).addTo(mapa).bindTooltip('T\xFA');
+var lista=document.getElementById('lista');if(!lista){mapa.setView(o,13);return;}
+var items=[].slice.call(lista.children);items.forEach(function(n){var la=n.getAttribute('data-lat');var d=la?km(o,[Number(la),Number(n.getAttribute('data-lng'))]):Infinity;n._d=d;n.querySelector('.dist').textContent=isFinite(d)?d.toLocaleString('es-EC',{maximumFractionDigits:1})+' km':'';});
+items.sort(function(a,b){return a._d-b._d;}).forEach(function(n){lista.appendChild(n);});
+var cerc=items.filter(function(n){return isFinite(n._d);}).slice(0,3).map(function(n){return [Number(n.getAttribute('data-lat')),Number(n.getAttribute('data-lng'))];});
+mapa.fitBounds(cerc.concat([o]),{padding:[30,30],maxZoom:15});
+},function(){nota.textContent='No pudimos leer tu ubicaci\xF3n. Puedes elegir tu sector en los filtros.';},{enableHighAccuracy:false,timeout:10000,maximumAge:300000});});
+})();`;
+async function mapRoutes(app2, options = {}) {
+  const ttl = (options.cacheSeconds ?? 60) * 1e3;
+  let cache = null;
+  async function records() {
+    if (!options.load)
+      return [];
+    if (cache && Date.now() - cache.at < ttl)
+      return cache.records;
+    try {
+      const loaded = await options.load();
+      cache = { at: Date.now(), records: loaded };
+      return loaded;
+    } catch (err) {
+      app2.log.error({ err }, "mapa: no se pudo leer la lista de talleres");
+      return cache?.records ?? [];
+    }
+  }
+  async function number() {
+    try {
+      const digits = (await options.resolveNumber?.() ?? "").replace(/\D/g, "");
+      if (digits.length >= 8 && digits.length <= 15)
+        return digits;
+    } catch {
+    }
+    return publicNumber();
+  }
+  app2.get(LEAFLET_PATH, async (_request, reply) => reply.header("Cache-Control", "public, max-age=31536000, immutable").header("X-Content-Type-Options", "nosniff").header("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'").type("application/javascript; charset=utf-8").send(LEAFLET_JS));
+  app2.get("/mapa", async (request, reply) => {
+    const q = request.query ?? {};
+    const nonce = randomBytes8(16).toString("base64");
+    const html = renderMapPage({
+      nonce,
+      number: await number(),
+      city: clip(q.ciudad, 80),
+      zone: clip(q.sector, 80),
+      service: clip(q.servicio, 40),
+      records: await records()
+    });
+    for (const [name, value2] of Object.entries(HEADERS2))
+      reply.header(name, value2);
+    reply.header("Content-Security-Policy", mapCsp(nonce));
+    return reply.type("text/html; charset=utf-8").send(html);
+  });
+}
+
+// packages/api/dist/server.js
+init_workshop_map_store();
+
 // packages/api/dist/interfaces/content/plans-page.js
 init_catalog();
 init_page();
-import { randomBytes as randomBytes8 } from "node:crypto";
+import { randomBytes as randomBytes9 } from "node:crypto";
 init_entry();
+init_marketing();
 var PROFILES = ["dueno", "taller", "almacen", "flota"];
-var HEADERS2 = {
+var HEADERS3 = {
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "no-referrer",
   "Cache-Control": "public, max-age=600"
@@ -107723,18 +109632,12 @@ function planBlocks(catalog, number, code3) {
 }
 var HOW = {
   title: "C\xF3mo se contrata",
-  html: `<ol class="steps"><li>Escribes \xABQuiero plan \u2026\xBB por WhatsApp (o tocas el bot\xF3n del plan).</li>
+  html: `<ol class="steps"><li>Tocas \xABQuiero plan \u2026\xBB y se abre WhatsApp.</li>
   <li>Te enviamos el c\xF3digo del pedido (SB-\u2026), el total con IVA y las cuentas para la transferencia.</li>
-  <li>Transfieres y respondes \xABPago SB-\u2026 | n\xFAmero de comprobante\xBB.</li>
-  <li>Verificamos el dep\xF3sito, activamos el plan y te enviamos la factura electr\xF3nica.</li></ol>`
-};
-var LEVELS = {
-  title: "Plan de mantenimiento de cada plan",
-  html: `<ul class="enlaces">
-  <li><b>Funcional (Gratis)</b>: lo b\xE1sico preventivo (aceite, filtros, frenos, llantas, bater\xEDa, l\xEDquidos) y el correctivo por s\xEDntomas.</li>
-  <li><b>Avanzado (Premium y Flota)</b>: lo anterior m\xE1s la afinaci\xF3n mayor, los intervalos del fabricante cuando los tenemos y las inspecciones especializadas: esc\xE1ner, gases, pre-chequeo de RTV, alternador, turbo y alto voltaje.</li></ul>`
+  <li>Transfieres y respondes \xABPago SB-\u2026 | n\xFAmero de comprobante\xBB. Verificamos el pago, activamos el plan y te llega la factura electr\xF3nica.</li></ol>`
 };
 async function plansPageRoutes(app2, options = {}) {
+  const marketing = options.marketingSite === void 0 ? marketingSite() : options.marketingSite;
   async function number() {
     try {
       const digits = (await options.resolveNumber?.() ?? "").replace(/\D/g, "");
@@ -107752,7 +109655,7 @@ async function plansPageRoutes(app2, options = {}) {
     }
   }
   const send = (reply, html) => {
-    for (const [name, value2] of Object.entries(HEADERS2))
+    for (const [name, value2] of Object.entries(HEADERS3))
       reply.header(name, value2);
     return reply.type("text/html; charset=utf-8").send(html);
   };
@@ -107768,42 +109671,24 @@ async function plansPageRoutes(app2, options = {}) {
     return send(reply, renderContentPage({
       number: phone,
       code: code3,
-      nonce: randomBytes8(16).toString("base64"),
+      nonce: randomBytes9(16).toString("base64"),
       path: "/planes",
-      title: "Planes y precios \xB7 AutoMantPro",
-      description: `Planes para due\xF1os de veh\xEDculos, talleres, almacenes de repuestos y flotas en Ecuador. Precios con IVA, ${TRIAL_DAYS} d\xEDas de prueba gratis y pago por transferencia.`,
-      h1: "Planes y precios",
-      intro: `Todos empiezan con ${TRIAL_DAYS} d\xEDas de prueba gratis. Los precios incluyen IVA (15 %) y se pagan por transferencia bancaria, mensual o anual (dos meses gratis).`,
-      blocks: [...planBlocks(offers, phone, code3), LEVELS, HOW],
-      faq: [
-        {
-          q: "\xBFQu\xE9 pasa al terminar la prueba?",
-          a: "Si no contratas, pasas al plan Gratis de tu perfil y tus datos se conservan. Un due\xF1o queda con 1 veh\xEDculo y el plan de mantenimiento Funcional."
-        },
-        {
-          q: "\xBFC\xF3mo pago?",
-          a: "Por transferencia o dep\xF3sito bancario. Al pedir el plan te enviamos el c\xF3digo SB-\u2026 para la descripci\xF3n de la transferencia y verificamos el pago antes de activarlo."
-        },
-        {
-          q: "\xBFRecibo factura?",
-          a: "S\xED, factura electr\xF3nica del SRI por cada pago verificado."
-        },
-        {
-          q: "\xBFPuedo cancelar?",
-          a: "S\xED. El plan dura el per\xEDodo pagado y no se renueva solo: te avisamos 5 d\xEDas antes de que venza."
-        }
-      ],
-      related: [
-        { href: "/servicios", label: "Servicios y precios referenciales" },
-        { href: "/talleres", label: "Talleres mec\xE1nicos en Ecuador" },
-        { href: "/terminos", label: "T\xE9rminos y condiciones" }
-      ],
+      title: "Contratar plan \xB7 AutoMantPro",
+      description: `Contrata tu plan de AutoMantPro por WhatsApp: precios con IVA, ${TRIAL_DAYS} d\xEDas de prueba gratis y pago por transferencia.`,
+      h1: "Contratar plan",
+      intro: `${TRIAL_DAYS} d\xEDas de prueba gratis. Precios con IVA (15 %), pago por transferencia, mensual o anual.`,
+      blocks: [...planBlocks(offers, phone, code3), HOW],
+      faq: [],
+      related: [],
+      // Con .com publicado, la explicación de los planes está allá: esta página no compite con ella.
+      noindex: marketing !== null,
+      footerNav: siteLinksNav(marketing),
       breadcrumb: [
         { href: "/", label: "Inicio" },
-        { href: "/planes", label: "Planes y precios" }
+        { href: "/planes", label: "Contratar plan" }
       ],
       chatText: "Planes"
-    }).replace("</style>", `${PLAN_STYLES}</style>`));
+    }).replace("</style>", `${PLAN_STYLES}${SITE_LINKS_STYLES}</style>`));
   });
 }
 var PLAN_STYLES = `
@@ -107830,7 +109715,7 @@ init_documents();
 init_theme();
 init_theme_layers();
 init_brand();
-import { randomBytes as randomBytes9 } from "node:crypto";
+import { randomBytes as randomBytes10 } from "node:crypto";
 var STYLES2 = `${THEME_TOKENS}
 *{box-sizing:border-box}
 body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.6 var(--c-font);padding:24px 16px}
@@ -107899,7 +109784,7 @@ async function legalRoutes(app2, options = {}) {
       } catch {
         data2 = emptyLegalData();
       }
-      const nonce = randomBytes9(16).toString("base64");
+      const nonce = randomBytes10(16).toString("base64");
       return reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-cache").type("text/html; charset=utf-8").send(renderLegalPage({ title: page.title, path: page.path, description: page.description, sections: page.sections(data2), complete: isLegalComplete(data2), nonce }));
     });
   }
@@ -108112,13 +109997,13 @@ init_apply();
 init_plan_text();
 init_entitlements();
 init_catalog_store();
-import { randomUUID as randomUUID13 } from "node:crypto";
+import { randomUUID as randomUUID14 } from "node:crypto";
 
 // packages/api/dist/infrastructure/plans/renewal-notices.js
 init_catalog();
 init_plans();
-import { randomUUID as randomUUID12 } from "node:crypto";
-var rows12 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomUUID as randomUUID13 } from "node:crypto";
+var rows14 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 function ecDate(value2) {
   return new Intl.DateTimeFormat("es-EC", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Guayaquil" }).format(value2);
 }
@@ -108131,14 +110016,14 @@ function expiryText(plan, code3) {
 Para volver a ${plan}: Renovar ${code3}`;
 }
 async function notify(conn, userId, dedup, message2) {
-  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID12(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID13(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
   return Number(result.affectedRows ?? 0) === 1;
 }
 async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date()) {
   let renewals = 0;
   let expired = 0;
   const soon = new Date(now.getTime() + RENEWAL_NOTICE_DAYS * 864e5);
-  const ending = await rows12(conn, "SELECT s.id, s.userId, s.plan, s.number, s.expiresAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'activa' AND s.renewalNoticeAt IS NULL AND s.expiresAt > ? AND s.expiresAt <= ? AND u.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND (n.status IN ('solicitada','pendiente') OR (n.status = 'activa' AND n.expiresAt > s.expiresAt))) LIMIT 500", [now, soon]);
+  const ending = await rows14(conn, "SELECT s.id, s.userId, s.plan, s.number, s.expiresAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'activa' AND s.renewalNoticeAt IS NULL AND s.expiresAt > ? AND s.expiresAt <= ? AND u.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND (n.status IN ('solicitada','pendiente') OR (n.status = 'activa' AND n.expiresAt > s.expiresAt))) LIMIT 500", [now, soon]);
   for (const sub of ending) {
     const code3 = subscriptionCode(Number(sub.number ?? 0));
     if (await notify(conn, String(sub.userId), `plan-renewal:${String(sub.id)}`, renewalText(planName(String(sub.plan), catalog), code3, new Date(String(sub.expiresAt)))))
@@ -108146,9 +110031,9 @@ async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date
     await conn.query("UPDATE `Subscription` SET renewalNoticeAt = ? WHERE id = ?", [now, sub.id]);
   }
   await conn.query("UPDATE `Subscription` SET status = 'vencida', active = 0, updatedAt = CURRENT_TIMESTAMP(3) WHERE status = 'activa' AND expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
-  const lapsed = await rows12(conn, "SELECT s.id, s.userId, s.plan, s.number FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'vencida' AND s.expiryNoticeAt IS NULL AND s.expiresAt > DATE_SUB(?, INTERVAL 7 DAY) AND u.deletedAt IS NULL LIMIT 500", [now]);
+  const lapsed = await rows14(conn, "SELECT s.id, s.userId, s.plan, s.number FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'vencida' AND s.expiryNoticeAt IS NULL AND s.expiresAt > DATE_SUB(?, INTERVAL 7 DAY) AND u.deletedAt IS NULL LIMIT 500", [now]);
   for (const sub of lapsed) {
-    const [still] = await rows12(conn, "SELECT 1 AS x FROM `Subscription` WHERE userId = ? AND status = 'activa' AND expiresAt > ? LIMIT 1", [sub.userId, now]);
+    const [still] = await rows14(conn, "SELECT 1 AS x FROM `Subscription` WHERE userId = ? AND status = 'activa' AND expiresAt > ? LIMIT 1", [sub.userId, now]);
     if (!still) {
       const code3 = subscriptionCode(Number(sub.number ?? 0));
       if (await notify(conn, String(sub.userId), `plan-expired:${String(sub.id)}`, expiryText(planName(String(sub.plan), catalog), code3)))
@@ -108163,8 +110048,49 @@ async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date
 init_vehicle_care_store();
 init_fleet_access();
 init_fleet_store();
-var rows13 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
-var km3 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
+init_workshop_map();
+init_reminder_done();
+
+// packages/api/dist/application/panel/rtv-calendar.js
+var NATIONAL_RTV_CALENDAR = { 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10, 0: 11 };
+var RTV_CALENDARS = {
+  nacional: NATIONAL_RTV_CALENDAR,
+  quito: NATIONAL_RTV_CALENDAR,
+  guayaquil: NATIONAL_RTV_CALENDAR
+};
+var MONTH_NAMES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+var fold7 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+function calendarFor(city, calendars = RTV_CALENDARS) {
+  return calendars[fold7(city ?? "")] ?? calendars.nacional ?? NATIONAL_RTV_CALENDAR;
+}
+function rtvMonth(plate2, city, calendars) {
+  const digits = String(plate2 ?? "").match(/\d/g);
+  if (!digits)
+    return null;
+  return calendarFor(city, calendars)[Number(digits[digits.length - 1])] ?? null;
+}
+function ecMonthYear(now) {
+  const ec = new Date(now.getTime() - 5 * 36e5);
+  return { month: ec.getUTCMonth() + 1, year: ec.getUTCFullYear() };
+}
+function rtvNotice(vehicle, now, label2) {
+  if (!vehicle.remindersOptIn)
+    return null;
+  const month = rtvMonth(vehicle.plate, vehicle.city);
+  if (month === null)
+    return null;
+  const { month: current, year: year2 } = ecMonthYear(now);
+  if (month !== current)
+    return null;
+  return {
+    key: `rtv:${vehicle.id}:${year2}`,
+    message: `\u{1F5D3}\uFE0F Este mes (${MONTH_NAMES[month - 1]}) le toca la revisi\xF3n t\xE9cnica vehicular (RTV) y la matr\xEDcula a tu ${label2}, placa ${vehicle.plate}. Agenda tu turno a tiempo. Para dejar de recibir avisos: Alertas no`
+  };
+}
+
+// packages/api/dist/infrastructure/messaging/vehicle-reminders.js
+var rows15 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var km4 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
 var VehicleReminders = class {
   connect;
   care = new VehicleCareStore();
@@ -108173,6 +110099,7 @@ var VehicleReminders = class {
   }
   async run(now = /* @__PURE__ */ new Date()) {
     const conn = await this.connect();
+    let rtvReminders = 0;
     let planReminders = 0;
     let alerts = 0;
     let reports = 0;
@@ -108187,29 +110114,32 @@ var VehicleReminders = class {
         await subscriptionNotices(conn, await loadCatalog(conn), now);
       } catch {
       }
-      const vehicles = await rows13(conn, "SELECT v.* FROM `Vehicle` v JOIN `User` u ON u.id = v.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE v.remindersOptIn = TRUE AND v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ORDER BY v.id LIMIT 1000");
+      const vehicles = await rows15(conn, "SELECT v.*, u.city AS ownerCity FROM `Vehicle` v JOIN `User` u ON u.id = v.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE v.remindersOptIn = TRUE AND v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ORDER BY v.id LIMIT 1000");
       const levels = /* @__PURE__ */ new Map();
       for (const vehicle of vehicles) {
         const owner = String(vehicle.userId);
+        const rtv = rtvNotice({ id: String(vehicle.id), plate: vehicle.plate ? String(vehicle.plate) : null, remindersOptIn: Boolean(vehicle.remindersOptIn), city: vehicle.ownerCity ? String(vehicle.ownerCity) : null }, now, `${vehicle.make} ${vehicle.model} ${vehicle.year}`);
+        if (rtv && await this.notify(conn, owner, rtv.key, rtv.message, "care.rtv"))
+          rtvReminders++;
         if (!levels.has(owner))
           levels.set(owner, await vehicleLevel(conn, vehicle));
-        const due = planItemsFor(await this.care.planVehicle(conn, vehicle), levels.get(owner)).filter((i) => i.status === "proximo" || i.status === "vencido");
+        const due = dueItems(planItemsFor(await this.care.planVehicle(conn, vehicle), levels.get(owner)));
         if (!due.length)
           continue;
         const label2 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
-        const lines = due.slice(0, 5).map((i) => `\u2022 ${i.serviceName}: ${i.status === "vencido" ? `vencido (${i.reason.replace(/^Vencido /, "")})` : `a los ${km3(i.dueKm)}`}`);
+        const lines = due.slice(0, 5).map(reminderLine);
         const key = due.map((i) => `${i.serviceId}@${i.dueKm}`).sort().join(",");
         let created;
         if (vehicle.fleetId) {
           const unit = `${unitLabel(vehicle)} ${label2}`;
-          created = await this.notify(conn, String(vehicle.userId), `reminder:${String(vehicle.id)}:${key}`.slice(0, 191), `\u{1F514} Mantenimiento de ${unit} (${km3(Number(vehicle.currentKm))}):
+          created = await this.notify(conn, String(vehicle.userId), `reminder:${String(vehicle.id)}:${key}`.slice(0, 191), `\u{1F514} Mantenimiento de ${unit} (${km4(Number(vehicle.currentKm))}):
 ${lines.join("\n")}
 Para enviarlo a un taller con convenio: Agendar ${String(vehicle.plate ?? "PLACA")} | K-XXXXXX | AAAA-MM-DD | HH:mm | motivo`);
           if (!created)
             continue;
           for (const manager of await fleetManagers(conn, String(vehicle.id)))
             if (manager !== String(vehicle.userId))
-              await this.notify(conn, manager, `reminder:${String(vehicle.id)}:${key}:${manager}`.slice(0, 191), `\u{1F514} Mantenimiento de ${unit} (${km3(Number(vehicle.currentKm))}):
+              await this.notify(conn, manager, `reminder:${String(vehicle.id)}:${key}:${manager}`.slice(0, 191), `\u{1F514} Mantenimiento de ${unit} (${km4(Number(vehicle.currentKm))}):
 ${lines.join("\n")}`);
           const driver = await vehicleDriver(conn, String(vehicle.id));
           if (driver)
@@ -108217,21 +110147,25 @@ ${lines.join("\n")}`);
 ${lines.join("\n")}
 Tu administrador ya fue avisado. Si notas algo raro: S\xEDntoma | qu\xE9 notas`);
         } else {
-          created = await this.notify(conn, String(vehicle.userId), `reminder:${String(vehicle.id)}:${key}`.slice(0, 191), `\u{1F514} Recordatorio de mantenimiento de tu ${label2} (${km3(Number(vehicle.currentKm))}):
-${lines.join("\n")}
+          const service = categoryOfService(String(due[0].serviceId));
+          const map = service ? `
+Talleres que lo hacen: ${mapUrl(SITE_URL, { city: String(vehicle.ownerCity ?? ""), service })}` : "";
+          created = await this.notify(conn, String(vehicle.userId), `reminder:${String(vehicle.id)}:${key}`.slice(0, 191), `\u{1F514} Recordatorio de mantenimiento de tu ${label2} (${km4(Number(vehicle.currentKm))}):
+${lines.join("\n")}${map}
+${doneHint(due)}
 Para pedir talleres: Buscar servicio | categor\xEDa | ciudad | sector | descripci\xF3n \xB7 Para dejar de recibirlos: Alertas no`);
         }
         if (!created)
           continue;
         planReminders++;
-        const [shop] = await rows13(conn, "SELECT s.userId, a.id AS appointmentId FROM `Service` sv JOIN `Shop` s ON s.id = sv.shopId LEFT JOIN `Appointment` a ON a.shopId = s.id AND a.vehicleId = sv.vehicleId WHERE sv.vehicleId = ? AND sv.createdAt > DATE_SUB(?, INTERVAL 365 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = sv.vehicleId AND b.shopId = s.id) ORDER BY sv.createdAt DESC, a.scheduledAt DESC LIMIT 1", [vehicle.id, now]);
+        const [shop] = await rows15(conn, "SELECT s.userId, a.id AS appointmentId FROM `Service` sv JOIN `Shop` s ON s.id = sv.shopId LEFT JOIN `Appointment` a ON a.shopId = s.id AND a.vehicleId = sv.vehicleId WHERE sv.vehicleId = ? AND sv.createdAt > DATE_SUB(?, INTERVAL 365 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = sv.vehicleId AND b.shopId = s.id) ORDER BY sv.createdAt DESC, a.scheduledAt DESC LIMIT 1", [vehicle.id, now]);
         if (shop) {
-          const ref3 = shop.appointmentId ? ` Puedes proponer la visita: Pr\xF3xima visita C-${String(shop.appointmentId).replace(/-/g, "").slice(0, 6).toUpperCase()} | AAAA-MM-DD | HH:mm` : "";
+          const ref4 = shop.appointmentId ? ` Puedes proponer la visita: Pr\xF3xima visita C-${String(shop.appointmentId).replace(/-/g, "").slice(0, 6).toUpperCase()} | AAAA-MM-DD | HH:mm` : "";
           await this.notify(conn, String(shop.userId), `reminder-shop:${String(vehicle.id)}:${key}`.slice(0, 191), `\u{1F514} Tu cliente con ${label2} tiene mantenimiento pr\xF3ximo:
-${lines.join("\n")}${ref3}`);
+${lines.join("\n")}${ref4}`);
         }
       }
-      const dueAlerts = await rows13(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
+      const dueAlerts = await rows15(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
       for (const a of dueAlerts) {
         const label2 = `${a.make} ${a.model} ${a.year}`;
         await this.notify(conn, String(a.ownerId), `alert:${String(a.id)}`, `\u{1F514} Alerta de tu ${label2}: ${a.label}`);
@@ -108247,7 +110181,7 @@ ${lines.join("\n")}${ref3}`);
         alerts++;
       }
       const week = Math.floor((now.getTime() - 5 * 36e5) / (7 * 864e5));
-      const silent = await rows13(conn, "SELECT a.vehicleId, m.userId, v.make, v.model, v.plate, v.unitCode FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL AND v.deletedAt IS NULL AND f.status = 'activa' AND a.startsAt < DATE_SUB(?, INTERVAL 14 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleOdometerReading` r WHERE r.vehicleId = a.vehicleId AND r.createdAt > DATE_SUB(?, INTERVAL 14 DAY)) LIMIT 500", [now, now]);
+      const silent = await rows15(conn, "SELECT a.vehicleId, m.userId, v.make, v.model, v.plate, v.unitCode FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL AND v.deletedAt IS NULL AND f.status = 'activa' AND a.startsAt < DATE_SUB(?, INTERVAL 14 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleOdometerReading` r WHERE r.vehicleId = a.vehicleId AND r.createdAt > DATE_SUB(?, INTERVAL 14 DAY)) LIMIT 500", [now, now]);
       for (const d of silent) {
         if (await this.notify(conn, String(d.userId), `kmask:${String(d.vehicleId)}:${week}`, `\u{1F4CF} \xBFCu\xE1ntos kil\xF3metros marca ${unitLabel(d)} ${d.make} ${d.model}? Responde: Kilometraje | km. Con ese dato sabemos cu\xE1ndo le toca mantenimiento.`))
           kmReminders++;
@@ -108256,23 +110190,23 @@ ${lines.join("\n")}${ref3}`);
       if (local.getUTCDate() === 1 && local.getUTCHours() >= 8) {
         const monthEnd = new Date(ecMonthStart(now).getTime() - 1);
         const label2 = new Intl.DateTimeFormat("es-EC", { month: "long", year: "numeric", timeZone: "America/Guayaquil" }).format(monthEnd);
-        const fleets = await rows13(conn, "SELECT f.id, f.name, f.ownerUserId FROM `Fleet` f JOIN `User` u ON u.id = f.ownerUserId WHERE f.status = 'activa' AND u.deletedAt IS NULL LIMIT 500");
+        const fleets = await rows15(conn, "SELECT f.id, f.name, f.ownerUserId FROM `Fleet` f JOIN `User` u ON u.id = f.ownerUserId WHERE f.status = 'activa' AND u.deletedAt IS NULL LIMIT 500");
         for (const f of fleets) {
-          const text8 = `\u{1F4CA} Reporte de ${label2}
+          const text9 = `\u{1F4CA} Reporte de ${label2}
 ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
-          const managers = await rows13(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role IN ('admin','supervisor') AND status = 'active' AND userId IS NOT NULL", [f.id]);
+          const managers = await rows15(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role IN ('admin','supervisor') AND status = 'active' AND userId IS NOT NULL", [f.id]);
           for (const recipient of /* @__PURE__ */ new Set([String(f.ownerUserId), ...managers.map((m) => String(m.userId))]))
-            if (await this.notify(conn, recipient, `fleetreport:${String(f.id)}:${local.toISOString().slice(0, 7)}:${recipient}`.slice(0, 191), text8))
+            if (await this.notify(conn, recipient, `fleetreport:${String(f.id)}:${local.toISOString().slice(0, 7)}:${recipient}`.slice(0, 191), text9))
               fleetReports++;
         }
       }
       const ecHour = (now.getUTCHours() + 19) % 24;
       if (ecHour >= 19) {
         const day3 = new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
-        const shops = await rows13(conn, "SELECT s.id, s.name, s.userId FROM `Shop` s JOIN `User` u ON u.id = s.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE s.verificationStatus IN ('verified','pending') AND u.deletedAt IS NULL AND EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.shopId = s.id AND (w.createdAt >= DATE_SUB(?, INTERVAL 1 DAY) OR w.status NOT IN ('cerrada','cancelada'))) LIMIT 500", [now]);
+        const shops = await rows15(conn, "SELECT s.id, s.name, s.userId FROM `Shop` s JOIN `User` u ON u.id = s.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE s.verificationStatus IN ('verified','pending') AND u.deletedAt IS NULL AND EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.shopId = s.id AND (w.createdAt >= DATE_SUB(?, INTERVAL 1 DAY) OR w.status NOT IN ('cerrada','cancelada'))) LIMIT 500", [now]);
         for (const shop of shops) {
           const report = await shopReport(conn, String(shop.id), String(shop.name), "hoy", now);
-          const admins = await rows13(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shop.id]);
+          const admins = await rows15(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shop.id]);
           for (const recipient of /* @__PURE__ */ new Set([String(shop.userId), ...admins.map((a) => String(a.userId))]))
             await this.notify(conn, recipient, `shopreport:${String(shop.id)}:${day3}:${recipient}`.slice(0, 191), report);
           reports++;
@@ -108281,11 +110215,11 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
     } finally {
       await conn.end().catch(() => void 0);
     }
-    return { planReminders, alerts, reports, fleetReports, kmReminders, expiredCards };
+    return { planReminders, alerts, reports, fleetReports, kmReminders, expiredCards, rtvReminders };
   }
   /** True when the reminder was new; the dedup key makes repeated runs harmless. */
-  async notify(conn, recipient, dedup, message2) {
-    const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'care.reminder', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID13(), dedup, recipient, JSON.stringify({ message: message2 })]);
+  async notify(conn, recipient, dedup, message2, kind = "care.reminder") {
+    const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID14(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
     return Number(result.affectedRows) === 1;
   }
   start(intervalMs = 36e5, onError = () => {
@@ -108322,8 +110256,8 @@ var REQUIRED_RUNTIME_COLUMNS = {
 async function checkDatabaseReady(connect = openConnection) {
   const conn = await connect();
   try {
-    const [rows25] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-    const present = new Set(rows25.map((row) => row.name));
+    const [rows27] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+    const present = new Set(rows27.map((row) => row.name));
     if (!EXPECTED_TABLES2.every((table) => present.has(table)))
       return false;
     const [columns] = await conn.query("SELECT table_name AS tbl, column_name AS col FROM information_schema.columns WHERE table_schema = DATABASE()");
@@ -108355,7 +110289,7 @@ async function readinessRoutes(app2, options = {}) {
 init_theme();
 init_theme_layers();
 init_brand();
-import { randomBytes as randomBytes10 } from "node:crypto";
+import { randomBytes as randomBytes11 } from "node:crypto";
 function renderAssistantPage(nonce) {
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Asistente \xB7 AutoMantPro</title>
 <style nonce="${nonce}">${THEME_TOKENS}
@@ -108372,7 +110306,7 @@ async function assistantPageRoutes(app2, options = {}) {
   app2.get("/asistente", async (_request, reply) => {
     if (!enabled())
       return reply.code(404).send({ error: "Not found" });
-    const nonce = randomBytes10(16).toString("base64");
+    const nonce = randomBytes11(16).toString("base64");
     return reply.header("Content-Security-Policy", `default-src 'none'; img-src 'self'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(renderAssistantPage(nonce));
   });
 }
@@ -108387,15 +110321,15 @@ init_vehicle_card_store();
 init_fleet_access();
 init_fleet_store();
 init_workflow();
-import { randomBytes as randomBytes11 } from "node:crypto";
-var rows14 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomBytes as randomBytes12 } from "node:crypto";
+var rows16 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-var km4 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
+var km5 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
 var token = external_exports.string().regex(/^[A-Za-z0-9_-]{32}$/);
 async function loadFleetPanel(value2, connect = openConnection) {
   const conn = await connect();
   try {
-    const [link] = await rows14(conn, "SELECT t.fleetId, t.userId, f.name, f.city FROM `FleetPanelToken` t JOIN `Fleet` f ON f.id = t.fleetId WHERE t.tokenHash = ? AND t.expiresAt > UTC_TIMESTAMP(3) AND f.status = 'activa'", [secretHash(value2)]);
+    const [link] = await rows16(conn, "SELECT t.fleetId, t.userId, f.name, f.city FROM `FleetPanelToken` t JOIN `Fleet` f ON f.id = t.fleetId WHERE t.tokenHash = ? AND t.expiresAt > UTC_TIMESTAMP(3) AND f.status = 'activa'", [secretHash(value2)]);
     if (!link)
       return null;
     const roles = await fleetRoles(conn, String(link.userId));
@@ -108403,9 +110337,9 @@ async function loadFleetPanel(value2, connect = openConnection) {
       return null;
     const fleetId = String(link.fleetId);
     const vehicles = await fleetSnapshot(conn, fleetId);
-    const months = (await rows14(conn, "SELECT DATE_FORMAT(DATE_SUB(spentAt, INTERVAL 5 HOUR), '%Y-%m') AS month, SUM(amountUsd) AS total FROM `VehicleExpense` WHERE fleetId = ? AND spentAt >= DATE_SUB(?, INTERVAL 5 MONTH) GROUP BY month ORDER BY month", [fleetId, ecMonthStart()])).map((m) => ({ month: String(m.month), total: Number(m.total) }));
-    const members = await rows14(conn, "SELECT m.id, m.name, m.role, m.status FROM `FleetMember` m WHERE m.fleetId = ? AND m.status <> 'removed' ORDER BY m.role, m.name", [fleetId]);
-    const agreements = await rows14(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status = 'activo' ORDER BY s.name", [fleetId]);
+    const months = (await rows16(conn, "SELECT DATE_FORMAT(DATE_SUB(spentAt, INTERVAL 5 HOUR), '%Y-%m') AS month, SUM(amountUsd) AS total FROM `VehicleExpense` WHERE fleetId = ? AND spentAt >= DATE_SUB(?, INTERVAL 5 MONTH) GROUP BY month ORDER BY month", [fleetId, ecMonthStart()])).map((m) => ({ month: String(m.month), total: Number(m.total) }));
+    const members = await rows16(conn, "SELECT m.id, m.name, m.role, m.status FROM `FleetMember` m WHERE m.fleetId = ? AND m.status <> 'removed' ORDER BY m.role, m.name", [fleetId]);
+    const agreements = await rows16(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status = 'activo' ORDER BY s.name", [fleetId]);
     return { fleet: { name: String(link.name), city: String(link.city) }, vehicles, months, members, agreements, generatedAt: /* @__PURE__ */ new Date() };
   } finally {
     await conn.end().catch(() => void 0);
@@ -108433,14 +110367,14 @@ function renderFleetPanel(data2, nonce, csvHref) {
   const maxMonth = Math.max(1, ...data2.months.map((m) => m.total));
   const row = (v) => {
     const st = stateOf(v);
-    return `<tr><td><b>${esc(unitLabel(v))}</b></td><td>${esc(`${v.make} ${v.model} ${v.year}`)}</td><td class="num">${esc(km4(Number(v.currentKm)))}</td><td>${esc(v.driver ?? "\u2014")}</td><td><span class="pill ${st.cls}">${st.text}</span></td><td>${esc([...v.overdue.map((o) => o.serviceName), ...v.soon.map((s) => `${s.serviceName} a ${km4(s.dueKm)}`)].slice(0, 3).join(" \xB7 ") || "\u2014")}</td><td>${esc(v.inShop ?? "\u2014")}</td><td class="num">${esc(formatUsd2(v.monthCost))}</td><td class="num">${v.monthKm > 0 ? esc(formatUsd2(v.monthCost / v.monthKm)) : "\u2014"}</td></tr>`;
+    return `<tr><td><b>${esc(unitLabel(v))}</b></td><td>${esc(`${v.make} ${v.model} ${v.year}`)}</td><td class="num">${esc(km5(Number(v.currentKm)))}</td><td>${esc(v.driver ?? "\u2014")}</td><td><span class="pill ${st.cls}">${st.text}</span></td><td>${esc([...v.overdue.map((o) => o.serviceName), ...v.soon.map((s) => `${s.serviceName} a ${km5(s.dueKm)}`)].slice(0, 3).join(" \xB7 ") || "\u2014")}</td><td>${esc(v.inShop ?? "\u2014")}</td><td class="num">${esc(formatUsd2(v.monthCost))}</td><td class="num">${v.monthKm > 0 ? esc(formatUsd2(v.monthCost / v.monthKm)) : "\u2014"}</td></tr>`;
   };
   const roleName = { admin: "Administrador", supervisor: "Supervisor", conductor: "Conductor" };
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${esc(data2.fleet.name)} \xB7 Flota \xB7 AutoMantPro</title>
 <style nonce="${nonce}">${THEME_TOKENS}
 *{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.45 var(--c-font)}header{background:var(--c-head);color:var(--c-head-ink);padding:16px max(16px,env(safe-area-inset-left))}header .brand{color:var(--c-head-brand);font-weight:800}header h1{margin:.2rem 0 0;font-size:clamp(1.3rem,4vw,1.8rem)}main{max-width:1180px;margin:auto;padding:18px max(16px,env(safe-area-inset-left)) 48px;display:grid;gap:18px}.muted{color:var(--c-muted)}.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.tile{background:var(--c-surface);border-radius:var(--c-r);padding:14px;box-shadow:var(--c-shadow)}.tile b{display:block;font-size:1.6rem;font-variant-numeric:tabular-nums}.tile.bad b{color:var(--c-bad)}.tile.warn b{color:var(--c-warn)}.tile.ok b{color:var(--c-ok)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:16px;box-shadow:var(--c-shadow);min-width:0}.card h2{margin:0 0 10px;font-size:1.05rem}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:860px}th,td{padding:8px 10px;border-bottom:1px solid var(--c-line);text-align:left;vertical-align:top}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--c-muted)}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.8rem;font-weight:600}.pill.ok{background:var(--c-ok-bg);color:var(--c-ok)}.pill.warn{background:var(--c-warn-bg);color:var(--c-warn)}.pill.bad{background:var(--c-bad-bg);color:var(--c-bad)}.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.bars{display:grid;gap:8px}.bar{display:grid;grid-template-columns:70px 1fr 90px;gap:8px;align-items:center;font-variant-numeric:tabular-nums}.bar span{display:block;height:12px;border-radius:6px;background:var(--c-accent)}ul{margin:0;padding-left:1.1em}a.button{display:inline-block;background:var(--c-cta);color:var(--c-on-cta);padding:10px 16px;border-radius:var(--c-r);text-decoration:none;font-weight:600}a.button:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.gap{margin-top:14px!important}${Array.from({ length: 20 }, (_, i) => `.w${(i + 1) * 5}{width:${(i + 1) * 5}%}`).join("")}${THEME_FLEET_LAYER}
 </style></head><body><header><div class="brand">${logoImg()}</div><h1>${esc(data2.fleet.name)}</h1><div>${esc(data2.fleet.city)} \xB7 ${list7.length} veh\xEDculos \xB7 solo lectura</div></header><main>
-<section class="tiles" aria-label="Resumen"><div class="tile ok"><b>${list7.length - overdue - soon}</b>Al d\xEDa</div><div class="tile warn"><b>${soon}</b>Por vencer</div><div class="tile bad"><b>${overdue}</b>Vencidos</div><div class="tile"><b>${inShop}</b>En taller</div><div class="tile"><b>${esc(formatUsd2(cost))}</b>Costo del mes</div><div class="tile"><b>${kms > 0 ? esc(formatUsd2(cost / kms)) : "\u2014"}</b>USD por km (${esc(km4(kms))})</div></section>
+<section class="tiles" aria-label="Resumen"><div class="tile ok"><b>${list7.length - overdue - soon}</b>Al d\xEDa</div><div class="tile warn"><b>${soon}</b>Por vencer</div><div class="tile bad"><b>${overdue}</b>Vencidos</div><div class="tile"><b>${inShop}</b>En taller</div><div class="tile"><b>${esc(formatUsd2(cost))}</b>Costo del mes</div><div class="tile"><b>${kms > 0 ? esc(formatUsd2(cost / kms)) : "\u2014"}</b>USD por km (${esc(km5(kms))})</div></section>
 <section class="card"><h2>Veh\xEDculos</h2><div class="scroll"><table><thead><tr><th>Unidad</th><th>Veh\xEDculo</th><th class="num">Km</th><th>Conductor</th><th>Estado</th><th>Servicios</th><th>En taller</th><th class="num">Costo mes</th><th class="num">USD/km</th></tr></thead><tbody>${list7.map(row).join("") || `<tr><td colspan="9" class="muted">Todav\xEDa no hay veh\xEDculos. Agr\xE9galos por WhatsApp: Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km</td></tr>`}</tbody></table></div><p><a class="button" href="${esc(csvHref)}">Descargar CSV</a></p></section>
 <div class="two"><section class="card"><h2>Costos de los \xFAltimos meses</h2>${data2.months.length ? `<div class="bars">${data2.months.map((m) => `<div class="bar"><div>${esc(m.month)}</div><div><span class="w${Math.max(1, Math.round(m.total / maxMonth * 20)) * 5}"></span></div><div class="num">${esc(formatUsd2(m.total))}</div></div>`).join("")}</div>` : `<p class="muted">Sin gastos registrados. Llegan al cerrar \xF3rdenes en AutoMantPro o con: Gasto PLACA | concepto | USD</p>`}</section>
 <section class="card"><h2>Personas y talleres</h2><ul>${data2.members.map((m) => `<li>${esc(m.name)} \xB7 ${esc(roleName[String(m.role)] ?? m.role)}${m.status === "invited" ? " (invitado)" : ""}</li>`).join("") || `<li class="muted">Sin conductores todav\xEDa.</li>`}</ul><h2 class="gap">Talleres con convenio</h2><ul>${data2.agreements.map((a) => `<li>${esc(a.name)} (${esc(a.city)})${Number(a.ratingAvg) ? ` \xB7 ${esc(Number(a.ratingAvg))}/5` : ""}</li>`).join("") || `<li class="muted">Sin convenios. Por WhatsApp: Convenio | RUC del taller</li>`}</ul></section></div>
@@ -108453,7 +110387,7 @@ async function fleetPanelRoutes(app2, options = {}) {
   const expired = '<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Enlace vencido</title><h1>Este enlace ya no es v\xE1lido</h1><p>Pide uno nuevo por WhatsApp escribiendo: Panel flota</p></html>';
   app2.get("/flota/:token", async (request, reply) => {
     const parsed = token.safeParse(request.params.token);
-    const nonce = randomBytes11(16).toString("base64");
+    const nonce = randomBytes12(16).toString("base64");
     headers(reply, nonce);
     const data2 = parsed.success ? await load(parsed.data) : null;
     if (!data2)
@@ -108687,13 +110621,13 @@ await app.register(readinessRoutes);
 app.get("/health", async () => ({ status: "ok", jwt: jwtSecretSource, build: BUILD_STAMP, channel: process.env.APP_RELEASE_CHANNEL ?? "production" }));
 await app.register(entryRoutes, {
   resolveNumber: () => whatsappNumber.get(),
-  onVisit: missingDbEnv().length === 0 ? (code3, ref3, profile) => visitStore.record(code3, ref3, profile) : void 0,
+  onVisit: missingDbEnv().length === 0 ? (code3, ref4, profile) => visitStore.record(code3, ref4, profile) : void 0,
   codeTaken: missingDbEnv().length === 0 ? (code3) => visitStore.exists(code3) : void 0,
   entryMode: async () => parseEntryMode(await entryMode.get())
 });
 await app.register(contentRoutes, {
   resolveNumber: () => whatsappNumber.get(),
-  onVisit: missingDbEnv().length === 0 ? (code3, ref3, profile) => visitStore.record(code3, ref3, profile) : void 0,
+  onVisit: missingDbEnv().length === 0 ? (code3, ref4, profile) => visitStore.record(code3, ref4, profile) : void 0,
   codeTaken: missingDbEnv().length === 0 ? (code3) => visitStore.exists(code3) : void 0
 });
 var catalogCache = null;
@@ -108710,10 +110644,15 @@ await app.register(plansPageRoutes, {
       await conn.end().catch(() => void 0);
     }
   } : void 0,
-  onVisit: missingDbEnv().length === 0 ? (code3, ref3, profile) => visitStore.record(code3, ref3, profile) : void 0,
+  onVisit: missingDbEnv().length === 0 ? (code3, ref4, profile) => visitStore.record(code3, ref4, profile) : void 0,
   codeTaken: missingDbEnv().length === 0 ? (code3) => visitStore.exists(code3) : void 0
 });
 await app.register(seoRoutes, { resolveNumber: () => whatsappNumber.get() });
+var workshopMap = new MysqlWorkshopMapStore(() => openConnection());
+await app.register(mapRoutes, {
+  resolveNumber: () => whatsappNumber.get(),
+  load: missingDbEnv().length === 0 ? () => workshopMap.listed() : void 0
+});
 await app.register(brandRoutes);
 await app.register(legalRoutes, { load: () => legalData.get() });
 app.setErrorHandler((error, request, reply) => {
