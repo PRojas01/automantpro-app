@@ -21271,6 +21271,8 @@ var LOCAL_AGENT_STATEMENTS = [
   { kind: "createTable", target: "LocalAgentReply", sql: "CREATE TABLE IF NOT EXISTS `LocalAgentReply` (wamid VARCHAR(191) COLLATE utf8mb4_bin PRIMARY KEY, userId VARCHAR(191) NOT NULL, leaseToken VARCHAR(36) NOT NULL, message TEXT NOT NULL, channel VARCHAR(20) NOT NULL, executedCommand BOOLEAN NOT NULL DEFAULT false, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX LocalAgentReply_user_idx(userId,createdAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
   { kind: "createTable", target: "WhatsAppIdentity", sql: "CREATE TABLE IF NOT EXISTS `WhatsAppIdentity` (userId VARCHAR(191) PRIMARY KEY, phone VARCHAR(32) NOT NULL UNIQUE, confirmedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
   { kind: "createTable", target: "WhatsAppLinkCode", sql: "CREATE TABLE IF NOT EXISTS `WhatsAppLinkCode` (codeHash VARCHAR(64) PRIMARY KEY, userId VARCHAR(191) NOT NULL, expiresAt DATETIME(3) NOT NULL, usedAt DATETIME(3) NULL, INDEX WhatsAppLinkCode_user_idx(userId)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  // Replies to contacts that do not have an account yet carry no userId.
+  { kind: "modifyColumn", target: "LocalAgentReply.userId", sql: "ALTER TABLE `LocalAgentReply` MODIFY COLUMN `userId` VARCHAR(191) NULL" },
   { kind: "modifyColumn", target: "LocalAgentReply.wamid", sql: "ALTER TABLE `LocalAgentReply` MODIFY COLUMN `wamid` VARCHAR(191) COLLATE utf8mb4_bin NOT NULL" }
 ];
 
@@ -21282,6 +21284,18 @@ var LOCAL_MARKETPLACE_STATEMENTS = [
   { kind: "createTable", target: "LocalCommandReceipt", sql: "CREATE TABLE IF NOT EXISTS `LocalCommandReceipt` (id VARCHAR(191) PRIMARY KEY, userId VARCHAR(191) NOT NULL, fingerprint VARCHAR(64) NOT NULL, response JSON NOT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
   // Outbox records represent pending notifications; they never imply delivery.
   { kind: "createTable", target: "NotificationOutbox", sql: "CREATE TABLE IF NOT EXISTS `NotificationOutbox` (id VARCHAR(191) PRIMARY KEY, dedupKey VARCHAR(191) NOT NULL UNIQUE, recipientUserId VARCHAR(191) NOT NULL, kind VARCHAR(40) NOT NULL, payload JSON NOT NULL, status VARCHAR(20) NOT NULL DEFAULT 'pending', createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX NotificationOutbox_status_idx(status, createdAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  // Delivery state for the WhatsApp bridge or Cloud API; 'sent' means handed to WhatsApp, not read.
+  { kind: "addColumn", target: "NotificationOutbox.attempts", sql: "ALTER TABLE `NotificationOutbox` ADD COLUMN `attempts` INT NOT NULL DEFAULT 0" },
+  { kind: "addColumn", target: "NotificationOutbox.leaseToken", sql: "ALTER TABLE `NotificationOutbox` ADD COLUMN `leaseToken` VARCHAR(36) NULL" },
+  { kind: "addColumn", target: "NotificationOutbox.lockedAt", sql: "ALTER TABLE `NotificationOutbox` ADD COLUMN `lockedAt` DATETIME(3) NULL" },
+  { kind: "addColumn", target: "NotificationOutbox.nextAttemptAt", sql: "ALTER TABLE `NotificationOutbox` ADD COLUMN `nextAttemptAt` DATETIME(3) NULL" },
+  { kind: "addColumn", target: "NotificationOutbox.sentAt", sql: "ALTER TABLE `NotificationOutbox` ADD COLUMN `sentAt` DATETIME(3) NULL" },
+  { kind: "addColumn", target: "NotificationOutbox.deliveredVia", sql: "ALTER TABLE `NotificationOutbox` ADD COLUMN `deliveredVia` VARCHAR(20) NULL" },
+  { kind: "addColumn", target: "NotificationOutbox.lastError", sql: "ALTER TABLE `NotificationOutbox` ADD COLUMN `lastError` VARCHAR(64) NULL" },
+  // Contacts that are not yet linked to an account can only receive the fixed welcome reply.
+  { kind: "addColumn", target: "NotificationOutbox.recipientPhone", sql: "ALTER TABLE `NotificationOutbox` ADD COLUMN `recipientPhone` VARCHAR(32) NULL" },
+  { kind: "modifyColumn", target: "NotificationOutbox.recipientUserId", sql: "ALTER TABLE `NotificationOutbox` MODIFY COLUMN `recipientUserId` VARCHAR(191) NULL" },
+  { kind: "createIndex", target: "NotificationOutbox.NotificationOutbox_delivery_idx", sql: "CREATE INDEX `NotificationOutbox_delivery_idx` ON `NotificationOutbox` (status, nextAttemptAt, createdAt)" },
   { kind: "addForeignKey", target: "LocalRequest.LocalRequest_ownerId_fkey", sql: "ALTER TABLE `LocalRequest` ADD CONSTRAINT `LocalRequest_ownerId_fkey` FOREIGN KEY (`ownerId`) REFERENCES `User` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
   { kind: "addForeignKey", target: "LocalRequest.LocalRequest_vehicleId_fkey", sql: "ALTER TABLE `LocalRequest` ADD CONSTRAINT `LocalRequest_vehicleId_fkey` FOREIGN KEY (`vehicleId`) REFERENCES `Vehicle` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
   { kind: "addForeignKey", target: "LocalOffer.LocalOffer_requestId_fkey", sql: "ALTER TABLE `LocalOffer` ADD CONSTRAINT `LocalOffer_requestId_fkey` FOREIGN KEY (`requestId`) REFERENCES `LocalRequest` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
@@ -21927,9 +21941,64 @@ var EXTRA_STATEMENTS = [
   addColumn("Order", "updatedAt", "DATETIME(3) NULL")
 ];
 
+// packages/api/src/infrastructure/schema-setup/vehicle-care-statements.ts
+var VEHICLE_CARE_TABLES = ["VehicleServiceRecord", "VehicleSymptom", "ShopMember", "WorkOrderChange", "ImportedContact"];
+var VEHICLE_CARE_STATEMENTS = [
+  { kind: "createTable", target: "VehicleServiceRecord", sql: "CREATE TABLE IF NOT EXISTS `VehicleServiceRecord` (id VARCHAR(191) PRIMARY KEY, vehicleId VARCHAR(191) NOT NULL, serviceId VARCHAR(80) NOT NULL, km INTEGER NULL, doneAt DATETIME(3) NULL, source VARCHAR(20) NOT NULL, shopId VARCHAR(191) NULL, createdBy VARCHAR(191) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX VehicleServiceRecord_vehicle_idx(vehicleId, serviceId)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "createTable", target: "VehicleSymptom", sql: "CREATE TABLE IF NOT EXISTS `VehicleSymptom` (id VARCHAR(191) PRIMARY KEY, vehicleId VARCHAR(191) NOT NULL, `system` VARCHAR(40) NOT NULL, risk VARCHAR(30) NOT NULL, description VARCHAR(500) NOT NULL, createdBy VARCHAR(191) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), resolvedAt DATETIME(3) NULL, INDEX VehicleSymptom_vehicle_idx(vehicleId, resolvedAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  // Technicians and mechanics of a workshop; each acts from their own linked WhatsApp.
+  { kind: "createTable", target: "ShopMember", sql: "CREATE TABLE IF NOT EXISTS `ShopMember` (id VARCHAR(191) PRIMARY KEY, shopId VARCHAR(191) NOT NULL, userId VARCHAR(191) NULL, name VARCHAR(60) NOT NULL, status VARCHAR(20) NOT NULL DEFAULT 'invited', invitedBy VARCHAR(191) NOT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX ShopMember_shop_idx(shopId, status), INDEX ShopMember_user_idx(userId)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "addForeignKey", target: "ShopMember.ShopMember_shopId_fkey", sql: "ALTER TABLE `ShopMember` ADD CONSTRAINT `ShopMember_shopId_fkey` FOREIGN KEY (`shopId`) REFERENCES `Shop` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
+  // Changes to a work order that need the owner's word: extra work found during the job, and delivery.
+  { kind: "createTable", target: "WorkOrderChange", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderChange` (id VARCHAR(191) PRIMARY KEY, workOrderId VARCHAR(191) NOT NULL, kind VARCHAR(20) NOT NULL, description TEXT NOT NULL, payload JSON NOT NULL, total DECIMAL(10,2) NOT NULL DEFAULT 0, status VARCHAR(20) NOT NULL DEFAULT 'pending', createdBy VARCHAR(191) NOT NULL, decidedBy VARCHAR(191) NULL, reason VARCHAR(191) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), decidedAt DATETIME(3) NULL, INDEX WorkOrderChange_order_idx(workOrderId, status)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "addForeignKey", target: "WorkOrderChange.WorkOrderChange_workOrderId_fkey", sql: "ALTER TABLE `WorkOrderChange` ADD CONSTRAINT `WorkOrderChange_workOrderId_fkey` FOREIGN KEY (`workOrderId`) REFERENCES `WorkOrder` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
+  { kind: "addColumn", target: "ShopMember.role", sql: "ALTER TABLE `ShopMember` ADD COLUMN `role` VARCHAR(20) NOT NULL DEFAULT 'tecnico'" },
+  // Contacts the owner chose from their WhatsApp history. They gave no consent to AutoMantPro:
+  // only the approved reactivation message may be sent, once, and nothing else until they write.
+  { kind: "createTable", target: "ImportedContact", sql: "CREATE TABLE IF NOT EXISTS `ImportedContact` (id VARCHAR(191) PRIMARY KEY, phone VARCHAR(32) NOT NULL UNIQUE, displayName VARCHAR(80) NULL, category VARCHAR(30) NOT NULL, reason VARCHAR(191) NULL, lastMessageAt VARCHAR(40) NULL, consent VARCHAR(30) NOT NULL DEFAULT 'sin_consentimiento', status VARCHAR(20) NOT NULL DEFAULT 'imported', importedBy VARCHAR(40) NOT NULL DEFAULT 'operador', contactedAt DATETIME(3) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  // An invitation that a business received through an owner's link: it may offer while its registration is reviewed.
+  { kind: "addColumn", target: "LocalOffer.referred", sql: "ALTER TABLE `LocalOffer` ADD COLUMN `referred` BOOLEAN NOT NULL DEFAULT FALSE" },
+  { kind: "addForeignKey", target: "VehicleServiceRecord.VehicleServiceRecord_vehicleId_fkey", sql: "ALTER TABLE `VehicleServiceRecord` ADD CONSTRAINT `VehicleServiceRecord_vehicleId_fkey` FOREIGN KEY (`vehicleId`) REFERENCES `Vehicle` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
+  { kind: "addForeignKey", target: "VehicleSymptom.VehicleSymptom_vehicleId_fkey", sql: "ALTER TABLE `VehicleSymptom` ADD CONSTRAINT `VehicleSymptom_vehicleId_fkey` FOREIGN KEY (`vehicleId`) REFERENCES `Vehicle` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
+  // Rating breakdown (quality, service, timeliness, price, right part…) next to the overall score.
+  { kind: "addColumn", target: "Rating.details", sql: "ALTER TABLE `Rating` ADD COLUMN `details` JSON NULL" },
+  { kind: "addColumn", target: "Rating.localRequestId", sql: "ALTER TABLE `Rating` ADD COLUMN `localRequestId` VARCHAR(191) NULL" },
+  // Alerts: who created them and, for plan reminders, which service and milestone they refer to.
+  { kind: "addColumn", target: "Alert.source", sql: "ALTER TABLE `Alert` ADD COLUMN `source` VARCHAR(20) NOT NULL DEFAULT 'manual'" },
+  { kind: "addColumn", target: "Alert.serviceId", sql: "ALTER TABLE `Alert` ADD COLUMN `serviceId` VARCHAR(80) NULL" },
+  { kind: "addColumn", target: "Alert.createdBy", sql: "ALTER TABLE `Alert` ADD COLUMN `createdBy` VARCHAR(191) NULL" },
+  // The vehicle an owner with several chose last with "Usar vehículo N"; chat commands act on it.
+  { kind: "addColumn", target: "Vehicle.selectedAt", sql: "ALTER TABLE `Vehicle` ADD COLUMN `selectedAt` DATETIME(3) NULL" },
+  { kind: "addColumn", target: "Alert.shopId", sql: "ALTER TABLE `Alert` ADD COLUMN `shopId` VARCHAR(191) NULL" }
+];
+
+// packages/api/src/infrastructure/schema-setup/fleet-statements.ts
+var T = "CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+var FLEET_TABLES = ["VehicleCard", "VehicleShopBlock", "Fleet", "FleetMember", "FleetAssignment", "FleetShop", "VehicleExpense", "VehicleOdometerReading", "FleetPanelToken"];
+var FLEET_STATEMENTS = [
+  // Before it is claimed the file has no owner, no name and no phone: only what the workshop saw.
+  { kind: "createTable", target: "VehicleCard", sql: `CREATE TABLE IF NOT EXISTS \`VehicleCard\` (id VARCHAR(191) PRIMARY KEY, codeHash VARCHAR(64) NOT NULL UNIQUE, shopId VARCHAR(191) NOT NULL, createdBy VARCHAR(191) NOT NULL, plate VARCHAR(16) NULL, make VARCHAR(60) NOT NULL, model VARCHAR(60) NOT NULL, year INTEGER NOT NULL, currentKm INTEGER NOT NULL, vehicleClass VARCHAR(40) NOT NULL, fuel VARCHAR(20) NOT NULL, services JSON NULL, status VARCHAR(20) NOT NULL DEFAULT 'pending', expiresAt DATETIME(3) NOT NULL, claimedBy VARCHAR(191) NULL, vehicleId VARCHAR(191) NULL, claimedAt DATETIME(3) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX VehicleCard_shop_idx(shopId, status, createdAt), INDEX VehicleCard_claimed_idx(claimedBy), INDEX VehicleCard_expiry_idx(status, expiresAt)) ${T}` },
+  { kind: "createTable", target: "VehicleShopBlock", sql: `CREATE TABLE IF NOT EXISTS \`VehicleShopBlock\` (id VARCHAR(191) PRIMARY KEY, vehicleId VARCHAR(191) NOT NULL, shopId VARCHAR(191) NOT NULL, createdBy VARCHAR(191) NOT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), UNIQUE INDEX VehicleShopBlock_pair(vehicleId, shopId)) ${T}` },
+  { kind: "createTable", target: "Fleet", sql: `CREATE TABLE IF NOT EXISTS \`Fleet\` (id VARCHAR(191) PRIMARY KEY, name VARCHAR(120) NOT NULL, ruc VARCHAR(13) NOT NULL, city VARCHAR(120) NOT NULL, ownerUserId VARCHAR(191) NOT NULL UNIQUE, supervisorLimitUsd DECIMAL(10,2) NULL, autoApproveUsd DECIMAL(10,2) NULL, status VARCHAR(20) NOT NULL DEFAULT 'activa', createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX Fleet_ruc_idx(ruc)) ${T}` },
+  { kind: "createTable", target: "FleetMember", sql: `CREATE TABLE IF NOT EXISTS \`FleetMember\` (id VARCHAR(191) PRIMARY KEY, fleetId VARCHAR(191) NOT NULL, userId VARCHAR(191) NULL, name VARCHAR(60) NOT NULL, role VARCHAR(20) NOT NULL, status VARCHAR(20) NOT NULL DEFAULT 'invited', inviteHash VARCHAR(64) NULL UNIQUE, invitedBy VARCHAR(191) NOT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX FleetMember_fleet_idx(fleetId, status), INDEX FleetMember_user_idx(userId, status)) ${T}` },
+  { kind: "createTable", target: "FleetAssignment", sql: `CREATE TABLE IF NOT EXISTS \`FleetAssignment\` (id VARCHAR(191) PRIMARY KEY, fleetId VARCHAR(191) NOT NULL, vehicleId VARCHAR(191) NOT NULL, memberId VARCHAR(191) NOT NULL, startsAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), endsAt DATETIME(3) NULL, createdBy VARCHAR(191) NOT NULL, INDEX FleetAssignment_vehicle_idx(vehicleId, endsAt), INDEX FleetAssignment_member_idx(memberId, endsAt)) ${T}` },
+  { kind: "createTable", target: "FleetShop", sql: `CREATE TABLE IF NOT EXISTS \`FleetShop\` (id VARCHAR(191) PRIMARY KEY, fleetId VARCHAR(191) NOT NULL, shopId VARCHAR(191) NOT NULL, status VARCHAR(20) NOT NULL DEFAULT 'propuesto', createdBy VARCHAR(191) NOT NULL, decidedBy VARCHAR(191) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), decidedAt DATETIME(3) NULL, UNIQUE INDEX FleetShop_pair(fleetId, shopId), INDEX FleetShop_shop_idx(shopId, status)) ${T}` },
+  { kind: "createTable", target: "VehicleExpense", sql: `CREATE TABLE IF NOT EXISTS \`VehicleExpense\` (id VARCHAR(191) PRIMARY KEY, vehicleId VARCHAR(191) NOT NULL, fleetId VARCHAR(191) NULL, kind VARCHAR(20) NOT NULL, amountUsd DECIMAL(10,2) NOT NULL, description VARCHAR(191) NOT NULL, source VARCHAR(20) NOT NULL, refId VARCHAR(191) NULL, createdBy VARCHAR(191) NOT NULL, spentAt DATETIME(3) NOT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), UNIQUE INDEX VehicleExpense_ref(source, refId), INDEX VehicleExpense_fleet_idx(fleetId, spentAt), INDEX VehicleExpense_vehicle_idx(vehicleId, spentAt)) ${T}` },
+  { kind: "createTable", target: "VehicleOdometerReading", sql: `CREATE TABLE IF NOT EXISTS \`VehicleOdometerReading\` (id VARCHAR(191) PRIMARY KEY, vehicleId VARCHAR(191) NOT NULL, km INTEGER NOT NULL, source VARCHAR(20) NOT NULL, createdBy VARCHAR(191) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX VehicleOdometerReading_vehicle_idx(vehicleId, createdAt)) ${T}` },
+  { kind: "createTable", target: "FleetPanelToken", sql: `CREATE TABLE IF NOT EXISTS \`FleetPanelToken\` (tokenHash VARCHAR(64) PRIMARY KEY, fleetId VARCHAR(191) NOT NULL, userId VARCHAR(191) NOT NULL, expiresAt DATETIME(3) NOT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX FleetPanelToken_expiry_idx(expiresAt)) ${T}` },
+  { kind: "addColumn", target: "Vehicle.fleetId", sql: "ALTER TABLE `Vehicle` ADD COLUMN `fleetId` VARCHAR(191) NULL" },
+  { kind: "addColumn", target: "Vehicle.unitCode", sql: "ALTER TABLE `Vehicle` ADD COLUMN `unitCode` VARCHAR(20) NULL" },
+  { kind: "createIndex", target: "Vehicle.Vehicle_fleet_idx", sql: "CREATE INDEX `Vehicle_fleet_idx` ON `Vehicle`(`fleetId`)" },
+  { kind: "addForeignKey", target: "VehicleCard.VehicleCard_shopId_fkey", sql: "ALTER TABLE `VehicleCard` ADD CONSTRAINT `VehicleCard_shopId_fkey` FOREIGN KEY (`shopId`) REFERENCES `Shop` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
+  { kind: "addForeignKey", target: "FleetMember.FleetMember_fleetId_fkey", sql: "ALTER TABLE `FleetMember` ADD CONSTRAINT `FleetMember_fleetId_fkey` FOREIGN KEY (`fleetId`) REFERENCES `Fleet` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
+  { kind: "addForeignKey", target: "FleetAssignment.FleetAssignment_vehicleId_fkey", sql: "ALTER TABLE `FleetAssignment` ADD CONSTRAINT `FleetAssignment_vehicleId_fkey` FOREIGN KEY (`vehicleId`) REFERENCES `Vehicle` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
+  { kind: "addForeignKey", target: "FleetShop.FleetShop_fleetId_fkey", sql: "ALTER TABLE `FleetShop` ADD CONSTRAINT `FleetShop_fleetId_fkey` FOREIGN KEY (`fleetId`) REFERENCES `Fleet` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
+  { kind: "addForeignKey", target: "VehicleExpense.VehicleExpense_vehicleId_fkey", sql: "ALTER TABLE `VehicleExpense` ADD CONSTRAINT `VehicleExpense_vehicleId_fkey` FOREIGN KEY (`vehicleId`) REFERENCES `Vehicle` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" }
+];
+
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS];
-var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS];
+var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));
   if (env.DATABASE_URL?.trim()) {

@@ -116,6 +116,7 @@ model Vehicle {
   plate          String?
   usageProfile   String?
   remindersOptIn Boolean  @default(false)
+  selectedAt     DateTime?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   deletedAt   DateTime?
@@ -150,6 +151,10 @@ model Alert {
   dueKm       Int?
   dueAt       DateTime?
   triggeredAt DateTime?
+  source      String    @default("manual") @db.VarChar(20)
+  serviceId   String?   @db.VarChar(80)
+  createdBy   String?   @db.VarChar(191)
+  shopId      String?   @db.VarChar(191)
   createdAt   DateTime  @default(now())
 
   vehicle Vehicle @relation(fields: [vehicleId], references: [id])
@@ -651,6 +656,7 @@ model LocalOffer {
  durationMin Int?
  proposedAt DateTime? @db.DateTime(3)
  notes String? @db.VarChar(300)
+ referred Boolean @default(false)
  createdAt DateTime @default(now()) @db.DateTime(3)
  @@unique([requestId,businessId], map: "LocalOffer_request_business_key")
  @@index([businessUserId,status], map: "LocalOffer_business_idx")
@@ -658,12 +664,21 @@ model LocalOffer {
 model NotificationOutbox {
  id String @id @db.VarChar(191)
  dedupKey String @unique @db.VarChar(191)
- recipientUserId String @db.VarChar(191)
+ recipientUserId String? @db.VarChar(191)
+ recipientPhone String? @db.VarChar(32)
  kind String @db.VarChar(40)
  payload Json
  status String @default("pending") @db.VarChar(20)
+ attempts Int @default(0)
+ leaseToken String? @db.VarChar(36)
+ lockedAt DateTime? @db.DateTime(3)
+ nextAttemptAt DateTime? @db.DateTime(3)
+ sentAt DateTime? @db.DateTime(3)
+ deliveredVia String? @db.VarChar(20)
+ lastError String? @db.VarChar(64)
  createdAt DateTime @default(now()) @db.DateTime(3)
  @@index([status,createdAt], map: "NotificationOutbox_status_idx")
+ @@index([status,nextAttemptAt,createdAt], map: "NotificationOutbox_delivery_idx")
 }
 model LocalCommandReceipt {
  id String @id @db.VarChar(191)
@@ -675,7 +690,7 @@ model LocalCommandReceipt {
 
 model LocalAgentReply {
  wamid String @id @db.VarChar(191)
- userId String @db.VarChar(191)
+ userId String? @db.VarChar(191)
  leaseToken String @db.VarChar(36)
  message String @db.Text
  channel String @db.VarChar(20)
@@ -694,4 +709,57 @@ model WhatsAppLinkCode {
  expiresAt DateTime @db.DateTime(3)
  usedAt DateTime? @db.DateTime(3)
  @@index([userId], map: "WhatsAppLinkCode_user_idx")
+}
+
+// Cuidado del vehículo por WhatsApp (piloto). Las tablas las crea `npm run db:deploy`;
+// se acceden con SQL parametrizado, no con el cliente de Prisma.
+model VehicleServiceRecord {
+ id String @id @db.VarChar(191)
+ vehicleId String @db.VarChar(191)
+ serviceId String @db.VarChar(80)
+ km Int?
+ doneAt DateTime? @db.DateTime(3)
+ source String @db.VarChar(20)
+ shopId String? @db.VarChar(191)
+ createdBy String? @db.VarChar(191)
+ createdAt DateTime @default(now()) @db.DateTime(3)
+ @@index([vehicleId,serviceId], map: "VehicleServiceRecord_vehicle_idx")
+}
+model VehicleSymptom {
+ id String @id @db.VarChar(191)
+ vehicleId String @db.VarChar(191)
+ system String @db.VarChar(40)
+ risk String @db.VarChar(30)
+ description String @db.VarChar(500)
+ createdBy String? @db.VarChar(191)
+ createdAt DateTime @default(now()) @db.DateTime(3)
+ resolvedAt DateTime? @db.DateTime(3)
+ @@index([vehicleId,resolvedAt], map: "VehicleSymptom_vehicle_idx")
+}
+model ShopMember {
+ id String @id @db.VarChar(191)
+ shopId String @db.VarChar(191)
+ userId String? @db.VarChar(191)
+ name String @db.VarChar(60)
+ status String @default("invited") @db.VarChar(20)
+ role String @default("tecnico") @db.VarChar(20)
+ invitedBy String @db.VarChar(191)
+ createdAt DateTime @default(now()) @db.DateTime(3)
+ @@index([shopId,status], map: "ShopMember_shop_idx")
+ @@index([userId], map: "ShopMember_user_idx")
+}
+model WorkOrderChange {
+ id String @id @db.VarChar(191)
+ workOrderId String @db.VarChar(191)
+ kind String @db.VarChar(20)
+ description String @db.Text
+ payload Json
+ total Decimal @default(0) @db.Decimal(10, 2)
+ status String @default("pending") @db.VarChar(20)
+ createdBy String @db.VarChar(191)
+ decidedBy String? @db.VarChar(191)
+ reason String? @db.VarChar(191)
+ createdAt DateTime @default(now()) @db.DateTime(3)
+ decidedAt DateTime? @db.DateTime(3)
+ @@index([workOrderId,status], map: "WorkOrderChange_order_idx")
 }
