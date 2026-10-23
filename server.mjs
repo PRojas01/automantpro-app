@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='1a74e3c03427af95893003ab0174b4e7923166d8'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='ceb67dd073f6073b8e755eec4c719d555350660f'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -61047,10 +61047,10 @@ function estimateKmPerDay(input) {
   const today = toDate(input.today ?? /* @__PURE__ */ new Date());
   const readings = [...input.odometerReadings ?? []].filter((r) => toDate(r.date).getTime() <= today.getTime()).sort((a, b) => toDate(a.date).getTime() - toDate(b.date).getTime());
   for (let i = readings.length - 1; i >= 0; i -= 1) {
-    const reading = readings[i];
-    const days2 = daysBetween(reading.date, today);
-    if (days2 >= 1 && input.odometerKm > reading.km) {
-      const kmPerDay = (input.odometerKm - reading.km) / days2;
+    const reading2 = readings[i];
+    const days2 = daysBetween(reading2.date, today);
+    if (days2 >= 1 && input.odometerKm > reading2.km) {
+      const kmPerDay = (input.odometerKm - reading2.km) / days2;
       return Math.round(kmPerDay * 10) / 10;
     }
   }
@@ -90538,12 +90538,23 @@ function renderEntryPage(input) {
   </a>`;
   const contact = links ? `<p class="small linea"><a href="${escapeHtml(links.wame)}" rel="noopener">${number}</a> \xB7 <span class="code">${escapeHtml(input.code)}</span> <em class="nota">identifica tu visita en el chat</em></p>` : "";
   const menu = links ? `<p class="section">\xBFQu\xE9 quieres gestionar?</p>
-    <div class="menu">${ENTRY_PROFILES.map((profile) => `<a class="option${profile.intent === null ? " ghost" : ""}" href="/?perfil=${escapeHtml(profile.key)}${refQuery}">
+    <div class="menu">${ENTRY_PROFILES.map((profile, i) => `<a class="option${profile.intent === null ? " ghost" : ""}" href="/?perfil=${escapeHtml(profile.key)}${refQuery}">
+        ${profile.intent === null ? "" : `<span class="pcode" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>`}
         <span class="badge">${icon(profile.icon)}</span>
         <span><b>${escapeHtml(profile.label)}</b><i>${escapeHtml(profile.hint)}</i></span>
         <span class="go" aria-hidden="true">\u203A</span>
       </a>`).join("")}</div>
     ${contact}` : "";
+  const red = `<ul class="red" aria-label="Conecta a">
+      <li>${icon("auto")}Due\xF1os</li><li class="enlace" aria-hidden="true">\u21C4</li>
+      <li>${icon("taller")}Talleres</li><li class="enlace" aria-hidden="true">\u21C4</li>
+      <li>${icon("caja")}Almacenes</li>
+    </ul>`;
+  const beneficios = `<p class="section">Lo que ganas</p>
+    <ul class="beneficios">${BENEFICIOS.map((b) => `<li><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span></li>`).join("")}</ul>`;
+  const funciones = `<p class="section">Qu\xE9 puedes hacer</p>
+    ${FUNCIONES_PERFIL.map((bloque) => `<details class="card"${bloque.key === "dueno" ? " open" : ""}><summary>${escapeHtml(bloque.titulo)}</summary>
+      <ul class="ganas">${bloque.funciones.map((f) => `<li>${escapeHtml(f)}</li>`).join("")}</ul></details>`).join("")}`;
   const button = links ? `<button id="abrir" class="cta" type="button" data-app="${escapeHtml(links.app)}" data-wame="${escapeHtml(links.wame)}" data-web="${escapeHtml(links.web)}">Abrir WhatsApp</button>
     <p class="small spaced">Escr\xEDbenos al <strong>${number}</strong> \xB7 <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> \xB7 <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a> \xB7 <a href="${escapeHtml(links.web)}" rel="noopener">WhatsApp Web</a></p>
     <p class="small"><span class="code">${escapeHtml(input.code)}</span> <em class="nota">identifica tu visita en el chat</em></p>` : `<button id="abrir" class="cta" type="button" disabled>Abrir WhatsApp</button>
@@ -90562,7 +90573,7 @@ ${seoHead({
   })}
 <meta name="author" content="AutoMantPro">
 <script type="application/ld+json" nonce="${nonce}">${structuredData(input)}</script>
-<style nonce="${nonce}">${STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}</style>
+<style nonce="${nonce}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}</style>
 <script nonce="${nonce}">${THEME_BOOT}</script>
 </head>
 <body>
@@ -90576,8 +90587,13 @@ ${seoHead({
   <section class="hero">
     <svg class="silueta" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS.auto_hero}</svg>
     <h1>Tu asistente de <em>mantenimiento automotriz</em></h1>
+    <p class="lead">Organiza el mantenimiento y conecta a due\xF1os de veh\xEDculos, talleres y almacenes de repuestos en un solo chat de WhatsApp.</p>
+    ${red}
+    ${BOARD}
   </section>
   ${input.menu && links ? menu : button}
+  ${funciones}
+  ${beneficios}
   <a class="panel" href="/admin/login">Ingresar al panel web</a>
   ${siteLinksNav(input.marketing ?? null)}
   ${socialLinks()}
@@ -90587,7 +90603,7 @@ ${seoHead({
 </body>
 </html>`;
 }
-var ENTRY_PROFILES, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, HOME_TITLE, HOME_DESCRIPTION;
+var ENTRY_PROFILES, FUNCIONES_PERFIL, BENEFICIOS, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, HOME_TITLE, HOME_DESCRIPTION, SCAN_STYLES, BOARD;
 var init_page = __esm({
   "packages/api/dist/interfaces/entry/page.js"() {
     "use strict";
@@ -90638,6 +90654,54 @@ var init_page = __esm({
         icon: "chat",
         intent: null
       }
+    ];
+    FUNCIONES_PERFIL = [
+      {
+        key: "dueno",
+        titulo: "Due\xF1o de veh\xEDculo",
+        funciones: [
+          "Plan de mantenimiento de tu auto y recordatorios por fecha o kilometraje.",
+          "\xABEstado\xBB te muestra con sem\xE1foro qu\xE9 est\xE1 urgente, pronto o al d\xEDa.",
+          "Responde \xABHecho\xBB y se anota el servicio; ves el historial completo.",
+          "Agenda citas, aprueba presupuestos y sigue tu orden de trabajo.",
+          "Busca talleres por ciudad, sector y servicio en el mapa."
+        ]
+      },
+      {
+        key: "taller",
+        titulo: "Taller",
+        funciones: [
+          "Recibe citas, ac\xE9ptalas, reprograma o rech\xE1zalas desde el chat.",
+          "Registra el ingreso del veh\xEDculo y comparte la ficha por enlace.",
+          "Lleva la orden de trabajo: presupuesto, aprobaci\xF3n del due\xF1o, avisos y entrega.",
+          "Tablero del d\xEDa con los clientes a los que conviene avisar.",
+          "Aparece en el mapa de talleres si lo autorizas."
+        ]
+      },
+      {
+        key: "almacen",
+        titulo: "Almac\xE9n de repuestos",
+        funciones: [
+          "Recibe solicitudes con el veh\xEDculo y la pieza ya identificados.",
+          "Responde precio, marca, garant\xEDa y tiempo de entrega por WhatsApp.",
+          "Sigue cada pedido hasta la entrega."
+        ]
+      },
+      {
+        key: "flota",
+        titulo: "Flotas",
+        funciones: [
+          "Registra veh\xEDculos, conductores y supervisores.",
+          "Costos, vencimientos y reporte mensual en un panel con descarga CSV.",
+          "Agenda mantenimiento en talleres con convenio."
+        ]
+      }
+    ];
+    BENEFICIOS = [
+      { icono: "alerta", titulo: "Evita fallas", texto: "Avisos de mantenimiento seg\xFAn el kilometraje de cada veh\xEDculo." },
+      { icono: "ahorro", titulo: "Gasta mejor", texto: "Mantenimiento preventivo y precios claros antes de pagar." },
+      { icono: "agenda", titulo: "Clientes y citas en orden", texto: "Turnos coordinados y el historial de cada veh\xEDculo a mano." },
+      { icono: "recursos", titulo: "Optimiza recursos", texto: "Menos llamadas y viajes: cada pedido llega claro desde el inicio." }
     ];
     ICONS = {
       auto: '<path d="M4 15h16M6 15l1.6-5.2A2 2 0 0 1 9.5 8.4h5a2 2 0 0 1 1.9 1.4L18 15M4 15v3h3v-3M17 15v3h3v-3"/><circle cx="8" cy="15" r="1.4"/><circle cx="16" cy="15" r="1.4"/>',
@@ -90798,7 +90862,35 @@ h1 em{font-style:normal;color:var(--c-accent)}
 })();
 `;
     HOME_TITLE = "AutoMantPro \xB7 Mantenimiento, talleres y repuestos por WhatsApp en Ecuador";
-    HOME_DESCRIPTION = "Mantenimiento de tu veh\xEDculo por WhatsApp en Ecuador: plan de mantenimiento por kilometraje, diagn\xF3stico con IA, talleres mec\xE1nicos verificados y cotizaci\xF3n de repuestos. Sin instalar nada.";
+    HOME_DESCRIPTION = "Mantenimiento de tu veh\xEDculo por WhatsApp en Ecuador: plan de mantenimiento por kilometraje, diagn\xF3stico con IA, talleres mec\xE1nicos con orden de trabajo y cotizaci\xF3n de repuestos. Sin instalar nada.";
+    SCAN_STYLES = `
+.board{position:relative;z-index:1;color:var(--c-ink);display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:center;margin:12px 0 0;padding:12px;border:1px solid var(--c-line);border-radius:12px;background:var(--c-bg)}
+.board .cap{grid-column:1/-1;display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--c-muted);margin:0}
+.board .cap b{font:600 11px/1 var(--c-mono);letter-spacing:.04em;border:1px solid var(--c-line);border-radius:5px;padding:3px 6px;color:var(--c-muted)}
+.board svg{display:block}
+.board ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:13.5px}
+.board li{display:flex;align-items:center;gap:8px}
+.board li span:nth-child(2){flex:1}
+.board .led{width:9px;height:9px;border-radius:50%;flex:none;background:var(--st)}
+.board .pill{font-size:11.5px;font-weight:600;padding:1px 7px;border-radius:6px;color:var(--st);background:var(--st-bg)}
+.board .bad{--st:var(--c-bad);--st-bg:var(--c-bad-bg)}.board .warn{--st:var(--c-warn);--st-bg:var(--c-warn-bg)}.board .ok{--st:var(--c-ok);--st-bg:var(--c-ok-bg)}
+.option{position:relative}
+.option .pcode{position:absolute;top:10px;right:10px;font:600 11px/1 var(--c-mono);letter-spacing:.04em;color:var(--c-muted);border:1px solid var(--c-line);border-radius:5px;padding:3px 5px}
+`;
+    BOARD = `<div class="board" aria-label="Ejemplo del informe de tu veh\xEDculo">
+  <p class="cap"><span>As\xED se ve el informe de tu veh\xEDculo</span><b>EJEMPLO</b></p>
+  <svg viewBox="0 0 104 104" width="84" height="84" aria-hidden="true">
+    <circle cx="52" cy="52" r="44" fill="none" stroke="var(--c-sunk)" stroke-width="8" stroke-dasharray="207.3 277" transform="rotate(135 52 52)" stroke-linecap="round"/>
+    <circle cx="52" cy="52" r="44" fill="none" stroke="var(--c-warn)" stroke-width="8" stroke-dasharray="161.7 277" transform="rotate(135 52 52)" stroke-linecap="round"/>
+    <text x="52" y="58" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="22" font-weight="700" fill="var(--c-ink)">78%</text>
+    <text x="52" y="76" text-anchor="middle" font-size="10" fill="var(--c-muted)">al d\xEDa</text>
+  </svg>
+  <ul>
+    <li class="bad"><span class="led"></span><span>Motor y lubricaci\xF3n</span><span class="pill">Urgente</span></li>
+    <li class="warn"><span class="led"></span><span>Frenos</span><span class="pill">Pronto</span></li>
+    <li class="ok"><span class="led"></span><span>Suspensi\xF3n y direcci\xF3n</span><span class="pill">Al d\xEDa</span></li>
+  </ul>
+</div>`;
   }
 });
 
@@ -91911,16 +92003,19 @@ function kv(record) {
     return `<p class="muted">Sin datos</p>`;
   return entries.map(([k, v]) => `<div>${escapeHtml(k)}: <strong>${v}</strong></div>`).join("");
 }
+function reading(label2, value2, state = null) {
+  return `<tr><td>${state ? `<span class="led ${state}"></span>` : ""}${escapeHtml(label2)}</td><td>${escapeHtml(String(value2 ?? "\u2014"))}</td></tr>`;
+}
 function dashboardView(input) {
   const roleLabels = { dueno: "Due\xF1o", taller: "Taller", almacen: "Almac\xE9n" };
   const recentList = input.recent && input.recent.length > 0 ? input.recent.map((r) => `<div><a href="/admin/users/${escapeHtml(String(r.id))}">${escapeHtml(String(r.name ?? "\u2014"))}</a> <span class="muted">\xB7 ${escapeHtml(roleLabels[String(r.role)] ?? String(r.role ?? ""))}</span></div>`).join("") : `<p class="muted">${input.recent ? "A\xFAn no hay registros" : "Sin datos"}</p>`;
   const registros = `<div class="card"><h2>Atender a un contacto</h2><p class="muted">Pega su n\xFAmero o su primer mensaje: te digo si es nuevo o registrado y qu\xE9 tiene pendiente.</p><p><a class="button" href="/admin/attend">Atender</a></p></div>
-  <div class="card"><h2>Verificaciones pendientes</h2><div class="big">${input.pendingVerifications ?? "\u2014"}</div><p><a href="/admin/verifications">Revisar talleres y almacenes</a></p></div>
+  <div class="card"><h2><span class="led ${input.pendingVerifications ? "warn" : input.pendingVerifications === 0 ? "ok" : "off"}"></span>Verificaciones pendientes</h2><div class="big">${input.pendingVerifications ?? "\u2014"}</div><p><a href="/admin/verifications">Revisar talleres y almacenes</a></p></div>
   <div class="card"><h2>Registros recientes</h2>${recentList}<p><a class="button" href="/admin/users/new">+ Nuevo registro</a></p></div>`;
-  const salud = `<div class="card"><h2>Salud</h2>
-    <div>Versi\xF3n: <strong>${escapeHtml(input.version)}</strong></div>
-    <div>Activo hace: <strong>${Math.floor(input.uptimeSeconds / 60)} min</strong></div>
-    <div>Base de datos: <strong>${input.data ? "conectada" : "no conectada"}</strong></div>
+  const salud = `<div class="card"><h2><span class="led ${input.data ? "ok" : "bad"}"></span>Salud</h2><table class="pid">
+    ${reading("Versi\xF3n", input.version.slice(0, 12))}
+    ${reading("Activo hace", `${Math.floor(input.uptimeSeconds / 60)} min`)}
+    ${reading("Base de datos", input.data ? "conectada" : "no conectada", input.data ? "ok" : "bad")}</table>
     ${input.dbError ? `<div class="muted">${escapeHtml(input.dbError)}</div>` : ""}</div>`;
   if (!input.data) {
     return `<h1>Tablero</h1><div class="grid">${registros}${salud}</div>`;
@@ -91928,7 +92023,7 @@ function dashboardView(input) {
   const d = input.data;
   const totalUsers = Object.values(d.usersByRole).reduce((a, b) => a + b, 0);
   return `<h1>Tablero</h1><div class="grid">
-  <div class="card"><h2>Operaci\xF3n</h2><div>Turnos hoy: <strong>${d.appointmentsToday}</strong></div><div>Turnos pendientes: <strong>${d.appointmentsPending}</strong></div><div>Conversaciones: <strong>${d.conversations}</strong></div><div>Mensajes 24 h: <strong>${d.messages24h}</strong></div></div>
+  <div class="card"><h2><span class="led ${d.appointmentsPending ? "warn" : "ok"}"></span>Operaci\xF3n</h2><table class="pid">${reading("Turnos hoy", d.appointmentsToday)}${reading("Turnos pendientes", d.appointmentsPending, d.appointmentsPending ? "warn" : "ok")}${reading("Conversaciones", d.conversations)}${reading("Mensajes 24 h", d.messages24h)}</table></div>
   <div class="card"><h2>Crecimiento</h2><div class="big">${totalUsers}</div><div class="muted">usuarios</div>${kv(d.usersByRole)}<div>Veh\xEDculos: <strong>${d.vehicles}</strong></div><div>Almacenes: <strong>${d.stores}</strong></div></div>
   <div class="card"><h2>Talleres por verificaci\xF3n</h2>${kv(d.shopsByStatus)}</div>
   ${registros}${salud}</div>`;
@@ -91995,6 +92090,15 @@ a.button{display:inline-flex;align-items:center;min-height:48px;padding:10px 18p
 button.danger{background:var(--c-bad);color:var(--c-on-bad)}
 input[type=radio]{width:auto;min-height:0;margin-top:4px}.choice{display:flex;gap:10px;align-items:flex-start;font-weight:400;padding:12px;border:1px solid var(--c-line);border-radius:10px;margin:6px 0;background:var(--c-surface)}
 .card form{margin-bottom:8px}
+main .card .big,main .card strong,main .mono{font-family:var(--c-mono);font-variant-numeric:tabular-nums}
+main table.pid{width:100%;border-collapse:collapse;background:none;box-shadow:none;border:0;border-radius:0}
+main table.pid td{padding:7px 0;border:0;border-bottom:1px solid var(--c-line);font-size:14px;background:none}main table.pid tr:last-child td{border-bottom:0}
+main table.pid td:nth-child(2){text-align:right;font-family:var(--c-mono);font-weight:600;white-space:nowrap}
+.led{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:1px;background:var(--c-muted)}
+.led.ok{background:var(--c-ok)}.led.warn{background:var(--c-warn)}.led.bad{background:var(--c-bad)}.led.off{background:transparent;border:1.5px solid var(--c-muted)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:2px 9px;border:1px solid var(--c-line);border-radius:999px;font-size:13px;font-weight:600;line-height:1.5;color:var(--c-ink);background:transparent;white-space:nowrap;vertical-align:1px}
+.pill .led{margin-right:0;flex:none}
+.card h2{display:flex;align-items:center}
 `;
     NAV = [
       { href: "/admin", label: "Tablero", capability: "read" },
@@ -101217,6 +101321,10 @@ var init_whatsapp_queue = __esm({
 });
 
 // packages/api/dist/interfaces/admin/views-appointments.js
+function statusPill(status) {
+  const tone = STATUS_TONES[status] ?? "off";
+  return `<span class="pill"><span class="led ${tone}"></span>${e3(statusLabel2(status))}</span>`;
+}
 function chatLink(phone, label2) {
   const raw = String(phone ?? "");
   const digits = raw.replace(/\D/g, "");
@@ -101229,8 +101337,11 @@ function copyBox(id2, label2, content, rows27 = 8) {
 }
 function appointmentsListView(input) {
   const tabs2 = FILTERS7.map(([id2, label2]) => `<a href="/admin/appointments?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e3(label2)}</a>`).join("");
-  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin turnos</td></tr>` : input.page.items.map((a) => `<tr><td><a href="/admin/appointments/${e3(a.id)}">${e3(formatEcDateTime(a.scheduledAt))}</a></td><td>${e3(STATUS_LABELS[a.status] ?? a.status)}</td>
-            <td>${e3(a.shopName)}</td><td><a href="/admin/users/${e3(a.ownerId)}">${e3(a.ownerName)}</a></td><td>${e3(a.vehicleLabel)}</td><td>${e3(servicesLabel(a))}</td></tr>`).join("");
+  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin turnos</td></tr>` : input.page.items.map((a) => {
+    const code3 = appointmentCode(a.id);
+    return `<tr><td><a href="/admin/appointments/${e3(a.id)}"><span class="mono">${e3(formatEcDateTime(a.scheduledAt))}</span></a><div class="muted mono">${e3(code3)}</div></td><td>${statusPill(a.status)}</td>
+            <td>${e3(a.shopName)}</td><td><a href="/admin/users/${e3(a.ownerId)}">${e3(a.ownerName)}</a></td><td>${e3(a.vehicleLabel)}${a.plate ? ` \xB7 <span class="mono">${e3(a.plate)}</span>` : ""}</td><td>${e3(servicesLabel(a))}</td></tr>`;
+  }).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>Turnos</h1>${flashHtml7(input.flash)}<div class="tabs">${tabs2}</div>
@@ -101254,13 +101365,14 @@ function appointmentDetailView(input) {
       <button class="danger" type="submit">Cancelar turno</button></form>`);
   }
   const shopMessage = a.status === "pending" ? copyBox("msg-shop", "Mensaje para el taller", shopRequestMessage(a)) : "";
+  const code3 = appointmentCode(a.id);
   return `<div class="stack wide"><p><a href="/admin/appointments">\u2190 Turnos</a></p>
-  <h1>Turno \xB7 ${e3(formatEcDateTime(a.scheduledAt))}</h1>${flashHtml7(input.flash)}
+  <h1>Turno \xB7 <span class="mono">${e3(code3)}</span> \xB7 <span class="mono">${e3(formatEcDateTime(a.scheduledAt))}</span></h1>${flashHtml7(input.flash)}
   <div class="card"><h2>Resumen</h2>
-    <div>Estado: <strong>${e3(STATUS_LABELS[a.status] ?? a.status)}</strong>${a.cancelReason ? ` \xB7 ${e3(a.cancelReason)}` : ""}</div>
+    <div>Estado: ${statusPill(a.status)}${a.cancelReason ? ` \xB7 ${e3(a.cancelReason)}` : ""}</div>
     <div>Taller: <strong>${e3(a.shopName)}</strong> \xB7 ${e3(a.shopAddress)}, ${e3(a.shopCity)}</div>
     <div>Due\xF1o: <a href="/admin/users/${e3(a.ownerId)}">${e3(a.ownerName)}</a></div>
-    <div>Veh\xEDculo: ${e3(a.vehicleLabel)}${a.plate ? ` \xB7 ${e3(a.plate)}` : ""}</div>
+    <div>Veh\xEDculo: ${e3(a.vehicleLabel)}${a.plate ? ` \xB7 <span class="mono">${e3(a.plate)}</span>` : ""}</div>
     <div>Servicios: ${e3(servicesLabel(a))}</div>
     ${a.notes ? `<div>Notas: ${e3(a.notes)}</div>` : ""}
   </div>
@@ -101280,7 +101392,7 @@ function scheduleView(input) {
   const vehicleTabs = input.vehicles.length > 1 ? `<div class="tabs">${input.vehicles.map((v) => `<a href="/admin/users/${ownerId}/schedule?vehicleId=${e3(v.id)}"${String(v.id) === String(input.vehicle.id) ? ' class="active"' : ""}>${e3(v.make)} ${e3(v.model)}</a>`).join("")}</div>` : "";
   const defaults = input.items.filter((i) => i.status !== "al_dia").map((i) => i.serviceId);
   const checked = input.selected.length > 0 ? input.selected : defaults;
-  const itemChecks = input.items.length === 0 ? `<p class="muted">Este veh\xEDculo no tiene plan (faltan clase o combustible).</p>` : `<div class="checks">${input.items.map((i) => `<label><input type="checkbox" name="services" value="${e3(i.serviceId)}"${checked.includes(i.serviceId) ? " checked" : ""}> ${e3(i.serviceName)} <span class="muted">\xB7 ${e3(PLAN_STATUS[i.status] ?? i.status)}</span></label>`).join("")}</div>`;
+  const itemChecks = input.items.length === 0 ? `<p class="muted">Este veh\xEDculo no tiene plan (faltan clase o combustible).</p>` : `<div class="checks">${input.items.map((i) => `<label><input type="checkbox" name="services" value="${e3(i.serviceId)}"${checked.includes(i.serviceId) ? " checked" : ""}> ${e3(i.serviceName)} <span class="muted">\xB7 <span class="led ${PLAN_TONES[i.status] ?? "off"}"></span>${e3(PLAN_STATUS[i.status] ?? i.status)}</span></label>`).join("")}</div>`;
   let results = "";
   if (input.shops !== null) {
     const summary = copyBox("msg-selection", "Resumen de servicios para el due\xF1o", selectionSummary(input.selected), 6);
@@ -101312,7 +101424,7 @@ function scheduleView(input) {
 function userAppointmentsSection(appointments) {
   if (appointments.length === 0)
     return "";
-  const items = appointments.map((a) => `<div><a href="/admin/appointments/${e3(a.id)}">${e3(formatEcDateTime(a.scheduledAt))}</a> \xB7 ${e3(STATUS_LABELS[a.status] ?? a.status)} \xB7 ${e3(a.shopName)} \xB7 ${e3(a.vehicleLabel)}</div>`).join("");
+  const items = appointments.map((a) => `<div><a href="/admin/appointments/${e3(a.id)}"><span class="mono">${e3(formatEcDateTime(a.scheduledAt))}</span></a> \xB7 ${statusPill(a.status)} \xB7 ${e3(a.shopName)} \xB7 ${e3(a.vehicleLabel)}</div>`).join("");
   return `<div class="card"><h2>Turnos</h2>${items}</div>`;
 }
 function eventText(event) {
@@ -101337,13 +101449,14 @@ function bitacoraSection(userId, events, csrf) {
     <button type="submit">Agregar nota</button></form>
     ${list7}</div>`;
 }
-var e3, csrfField7, flashHtml7, FILTERS7, PLAN_STATUS, servicesLabel;
+var e3, csrfField7, flashHtml7, FILTERS7, PLAN_STATUS, STATUS_TONES, PLAN_TONES, appointmentCode, statusLabel2, servicesLabel;
 var init_views_appointments = __esm({
   "packages/api/dist/interfaces/admin/views-appointments.js"() {
     "use strict";
     init_page();
     init_whatsapp_number();
     init_messages();
+    init_contracts();
     e3 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
     csrfField7 = (token2) => `<input type="hidden" name="csrf" value="${e3(token2)}">`;
     flashHtml7 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
@@ -101354,6 +101467,16 @@ var init_views_appointments = __esm({
       ["todos", "Todos"]
     ];
     PLAN_STATUS = { vencido: "Vencido", proximo: "Pr\xF3ximo", al_dia: "Al d\xEDa" };
+    STATUS_TONES = {
+      pending: "warn",
+      confirmed: "ok",
+      completed: "ok",
+      cancelled: "bad",
+      no_show: "bad"
+    };
+    PLAN_TONES = { vencido: "bad", proximo: "warn", al_dia: "ok" };
+    appointmentCode = (id2) => shortCode("C", id2);
+    statusLabel2 = (status) => STATUS_LABELS[status] ?? (status === "no_show" ? "No asisti\xF3" : status);
     servicesLabel = (a) => serviceNames(a.services).join(", ") || a.summary || "\u2014";
   }
 });
@@ -101404,6 +101527,10 @@ var init_workflow4 = __esm({
 });
 
 // packages/api/dist/interfaces/admin/views-work-orders.js
+function statusPill2(status) {
+  const tone = STATUS_TONES2[status] ?? "off";
+  return `<span class="pill"><span class="led ${tone}"></span>${e4(WORK_ORDER_LABELS[status] ?? status)}</span>`;
+}
 function chatLink2(phone, label2) {
   const digits = phone.replace(/\D/g, "");
   if (!phone.startsWith("+") || digits.length < 8)
@@ -101415,8 +101542,8 @@ function copyBox2(id2, label2, content, rows27 = 9) {
 }
 function workOrdersListView(input) {
   const tabs2 = FILTERS8.map(([id2, label2]) => `<a href="/admin/work-orders?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e4(label2)}</a>`).join("");
-  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin \xF3rdenes</td></tr>` : input.page.items.map((o) => `<tr><td><a href="/admin/work-orders/${e4(o.id)}">${e4(workOrderCode(o.number))}</a></td><td>${e4(WORK_ORDER_LABELS[o.status] ?? o.status)}</td>
-            <td>${e4(o.shopName)}</td><td><a href="/admin/users/${e4(o.ownerId)}">${e4(o.ownerName)}</a></td><td>${e4(o.vehicleLabel)}</td><td>${e4(formatUsd2(o.total))}</td></tr>`).join("");
+  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin \xF3rdenes</td></tr>` : input.page.items.map((o) => `<tr><td><a href="/admin/work-orders/${e4(o.id)}" class="mono">${e4(workOrderCode(o.number))}</a></td><td>${statusPill2(o.status)}</td>
+            <td>${e4(o.shopName)}</td><td><a href="/admin/users/${e4(o.ownerId)}">${e4(o.ownerName)}</a></td><td>${e4(o.vehicleLabel)}</td><td><span class="mono">${e4(formatUsd2(o.total))}</span></td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>\xD3rdenes de trabajo</h1>${flashHtml8(input.flash)}<div class="tabs">${tabs2}</div>
@@ -101457,7 +101584,7 @@ function workOrderDetailView(input) {
   const editable = EDITABLE_STATUSES.includes(order.status);
   const transitions = WORK_ORDER_TRANSITIONS[order.status] ?? [];
   const itemRows = items.length === 0 ? `<tr><td colspan="${editable ? 7 : 6}" class="muted">A\xFAn no hay \xEDtems en el presupuesto.</td></tr>` : items.map((i) => `<tr><td>${i.kind === "mano_obra" ? "Mano de obra" : "Repuesto"}</td><td>${e4(i.description)}</td><td>${e4([i.brand, i.partCode].filter(Boolean).join(" \xB7 ") || "\u2014")}</td>
-            <td>${e4(String(i.quantity).replace(".", ","))}</td><td>${e4(formatUsd2(i.unitPrice))}</td><td>${e4(formatUsd2(lineTotal(i)))}</td>
+            <td><span class="mono">${e4(String(i.quantity).replace(".", ","))}</span></td><td><span class="mono">${e4(formatUsd2(i.unitPrice))}</span></td><td><span class="mono">${e4(formatUsd2(lineTotal(i)))}</span></td>
             ${editable ? `<td><form method="post" action="/admin/work-orders/${e4(order.id)}/items/${e4(i.id)}/delete">${csrfField8(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
   const addItem = editable ? `<form method="post" action="/admin/work-orders/${e4(order.id)}/items" autocomplete="off">${csrfField8(csrf)}
       <div class="row"><span><label for="kind">Tipo</label><select id="kind" name="kind">${ITEM_KINDS.map(([id2, label2]) => `<option value="${id2}">${label2}</option>`).join("")}</select></span>
@@ -101513,17 +101640,17 @@ function workOrderDetailView(input) {
           <button class="full" type="submit">Guardar la calificaci\xF3n</button></form></div>`;
   const shopMessage = shopWorkOrderMessage(order);
   return `<div class="stack wide"><p><a href="/admin/work-orders">\u2190 \xD3rdenes de trabajo</a></p>
-  <h1>${e4(code3)} \xB7 ${e4(WORK_ORDER_LABELS[order.status] ?? order.status)}</h1>${flashHtml8(input.flash)}
+  <h1><span class="mono">${e4(code3)}</span> \xB7 ${statusPill2(order.status)}</h1>${flashHtml8(input.flash)}
   <div class="card"><h2>Resumen</h2>
     <div>Taller: <strong>${e4(order.shopName)}</strong></div>
     <div>Due\xF1o: <a href="/admin/users/${e4(order.ownerId)}">${e4(order.ownerName)}</a></div>
-    <div>Veh\xEDculo: ${e4(order.vehicleLabel)}${order.plate ? ` \xB7 ${e4(order.plate)}` : ""}</div>
+    <div>Veh\xEDculo: ${e4(order.vehicleLabel)}${order.plate ? ` \xB7 <span class="mono">${e4(order.plate)}</span>` : ""}</div>
     ${order.appointmentId ? `<div>Turno: <a href="/admin/appointments/${e4(order.appointmentId)}">ver turno</a></div>` : "<div>Sin cita previa</div>"}
-    <div>Ingreso: ${order.intakeKm !== null ? e4(km6(order.intakeKm)) : "\u2014"} \xB7 ${e4(formatEcDateTime(order.createdAt))}</div>
+    <div>Ingreso: <span class="mono">${order.intakeKm !== null ? e4(km6(order.intakeKm)) : "\u2014"}</span> \xB7 ${e4(formatEcDateTime(order.createdAt))}</div>
     ${order.intakeNotes ? `<div>Observaciones: ${e4(order.intakeNotes)}</div>` : ""}
     ${order.rejectionReason ? `<div>Motivo del rechazo: ${e4(order.rejectionReason)}</div>` : ""}
     ${order.cancelReason ? `<div>Motivo de la cancelaci\xF3n: ${e4(order.cancelReason)}</div>` : ""}
-    ${order.status === "cerrada" ? `<div>Salida: ${e4(km6(order.exitKm))} \xB7 garant\xEDa ${e4(order.warrantyDays)} d\xEDas${order.nextService ? ` \xB7 pr\xF3ximo: ${e4(order.nextService)}` : ""}</div>` : ""}
+    ${order.status === "cerrada" ? `<div>Salida: <span class="mono">${e4(km6(order.exitKm))}</span> \xB7 garant\xEDa ${e4(order.warrantyDays)} d\xEDas${order.nextService ? ` \xB7 pr\xF3ximo: ${e4(order.nextService)}` : ""}</div>` : ""}
   </div>
   ${ratingCard}
   <div class="card"><h2>Diagn\xF3stico</h2>${diagnosis}</div>
@@ -101531,7 +101658,7 @@ function workOrderDetailView(input) {
   <div class="card"><h2>Presupuesto</h2>
     <div class="scroll"><table><thead><tr><th>Tipo</th><th>Descripci\xF3n</th><th>Marca / c\xF3digo</th><th>Cant.</th><th>P. unit.</th><th>Total</th>${editable ? "<th></th>" : ""}</tr></thead>
     <tbody>${itemRows}</tbody></table></div>
-    <p><strong>Total: ${e4(formatUsd2(order.total))}</strong></p>
+    <p><strong>Total: <span class="mono">${e4(formatUsd2(order.total))}</span></strong></p>
     ${editable ? "" : '<p class="muted">El presupuesto se edita solo en recepci\xF3n o despu\xE9s de un rechazo.</p>'}
     ${addItem}
   </div>
@@ -101546,14 +101673,14 @@ function workOrderDetailView(input) {
 function userWorkOrdersSection(orders) {
   if (orders.length === 0)
     return "";
-  return `<div class="card"><h2>\xD3rdenes de trabajo</h2>${orders.map((o) => `<div><a href="/admin/work-orders/${e4(o.id)}">${e4(workOrderCode(o.number))}</a> \xB7 ${e4(WORK_ORDER_LABELS[o.status] ?? o.status)} \xB7 ${e4(o.shopName)} \xB7 ${e4(o.vehicleLabel)} \xB7 ${e4(formatUsd2(o.total))}</div>`).join("")}</div>`;
+  return `<div class="card"><h2>\xD3rdenes de trabajo</h2>${orders.map((o) => `<div><a href="/admin/work-orders/${e4(o.id)}" class="mono">${e4(workOrderCode(o.number))}</a> \xB7 ${statusPill2(o.status)} \xB7 ${e4(o.shopName)} \xB7 ${e4(o.vehicleLabel)} \xB7 <span class="mono">${e4(formatUsd2(o.total))}</span></div>`).join("")}</div>`;
 }
 function historySection(history) {
   if (history.length === 0)
     return "";
   return `<div class="card"><h2>Historial de servicios</h2>${history.map((h) => `<div><span class="muted">${e4(formatEcDateTime(h.createdAt))}</span> \xB7 <strong>${e4(h.vehicleLabel)}</strong> \xB7 ${e4(h.shopName)} \xB7 ${e4(h.description)}${h.cost !== null ? ` \xB7 ${e4(formatUsd2(h.cost))}` : ""}</div>`).join("")}</div>`;
 }
-var e4, csrfField8, flashHtml8, km6, FILTERS8;
+var e4, csrfField8, flashHtml8, km6, STATUS_TONES2, FILTERS8;
 var init_views_work_orders = __esm({
   "packages/api/dist/interfaces/admin/views-work-orders.js"() {
     "use strict";
@@ -101566,6 +101693,16 @@ var init_views_work_orders = __esm({
     csrfField8 = (token2) => `<input type="hidden" name="csrf" value="${e4(token2)}">`;
     flashHtml8 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
     km6 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
+    STATUS_TONES2 = {
+      rechazado: "bad",
+      cancelada: "bad",
+      presupuesto_enviado: "warn",
+      esperando_repuesto: "warn",
+      aprobado: "ok",
+      en_ejecucion: "ok",
+      cerrada: "ok",
+      recepcion: "off"
+    };
     FILTERS8 = [
       ["abiertas", "Abiertas"],
       ["por_aprobar", "Por aprobar"],
@@ -101857,6 +101994,10 @@ var init_views_quotes = __esm({
 });
 
 // packages/api/dist/interfaces/admin/views-registrations.js
+function verificationPill(status) {
+  const tone = STATUS_TONES3[status] ?? "off";
+  return `<span class="pill"><span class="led ${tone}"></span>${e6(STATUS_LABELS3[status] ?? status)}</span>`;
+}
 function day2(value2) {
   const date2 = value2 instanceof Date ? value2 : value2 ? new Date(String(value2)) : null;
   return date2 && !Number.isNaN(date2.getTime()) ? date2.toISOString().slice(0, 10) : "\u2014";
@@ -101895,7 +102036,7 @@ function vehicleFields2(values) {
 }
 function usersListView(input) {
   const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e6(u.id)}">${e6(u.name)}</a></td><td>${e6(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
-            <td>${e6(phoneLabel(u.phone))}</td><td>${e6(u.city ?? "\u2014")}</td><td>${day2(u.createdAt)}</td></tr>`).join("");
+            <td><span class="mono">${e6(phoneLabel(u.phone))}</span></td><td>${e6(u.city ?? "\u2014")}</td><td>${day2(u.createdAt)}</td></tr>`).join("");
   const q = encodeURIComponent(input.query);
   const prev = input.page.page > 1 ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
@@ -101921,7 +102062,7 @@ function newUserView(input) {
     specific = `<div class="card"><h2>Primer veh\xEDculo</h2>${vehicleFields2(v)}</div>`;
   } else {
     const business = `${field(v, "businessName", "Nombre comercial", 'required maxlength="120"')}
-      ${field(v, "ruc", "RUC", 'required inputmode="numeric" maxlength="13" placeholder="1790000000001"')}
+      ${field(v, "ruc", "RUC", 'required inputmode="numeric" maxlength="13" placeholder="1790000000001" class="mono"')}
       ${field(v, "address", "Direcci\xF3n", 'required maxlength="200"')}
       ${field(v, "zone", "Zona o barrio (opcional)", 'maxlength="120"')}
       ${field(v, "hours", "Horario (opcional)", 'maxlength="120" placeholder="Lun\u2013Vie 08:00\u201318:00"')}`;
@@ -101946,7 +102087,7 @@ function newUserView(input) {
   <button class="full" type="submit">Guardar registro</button></form></div>`;
 }
 function input_phone(values) {
-  return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567"');
+  return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567" class="mono"');
 }
 function verificationForm(kind, id2, userId, csrf) {
   return `<form method="post" action="/admin/verifications/${kind}/${e6(id2)}">${csrfField10(csrf)}
@@ -101960,7 +102101,7 @@ function userDetailView(input) {
   const chat = String(user.phone ?? "").startsWith("+") && digits.length >= 8 ? ` \xB7 <a href="https://wa.me/${e6(digits)}" target="_blank" rel="noopener">Abrir chat</a>` : "";
   const datos = `<div class="card"><h2>Datos</h2>
     <div>Perfil: <strong>${e6(ROLE_LABELS[String(user.role)] ?? user.role)}</strong></div>
-    <div>Tel\xE9fono: <strong>${e6(phoneLabel(user.phone))}</strong>${chat}</div>
+    <div>Tel\xE9fono: <span class="mono">${e6(phoneLabel(user.phone))}</span>${chat}</div>
     <div>Correo: ${e6(user.email ?? "\u2014")}</div>
     <div>Ciudad: ${e6(user.city ?? "\u2014")}</div>
     <div>Consentimiento: ${user.consentAt ? `${day2(user.consentAt)} (versi\xF3n ${e6(user.consentVersion ?? "\u2014")})` : '<span class="error">sin registrar</span>'}</div>
@@ -101968,10 +102109,10 @@ function userDetailView(input) {
     ${user.notes ? `<div>Notas: ${e6(user.notes)}</div>` : ""}
     <div class="muted">Alta: ${day2(user.createdAt)}</div></div>`;
   const business = (title, b, extra, kind) => `<div class="card"><h2>${title}</h2>
-    <div><strong>${e6(b.name)}</strong> \xB7 RUC ${e6(b.ruc ?? "\u2014")}</div>
+    <div><strong>${e6(b.name)}</strong> \xB7 RUC <span class="mono">${e6(b.ruc ?? "\u2014")}</span></div>
     <div>${e6(b.address)}, ${e6(b.city)}${b.zone ? ` (${e6(b.zone)})` : ""}</div>
     <div>Horario: ${e6(b.hours ?? "\u2014")}</div>${extra}
-    <div>Estado: <strong>${e6(STATUS_LABELS3[String(b.verificationStatus)] ?? b.verificationStatus)}</strong></div>
+    <div>Estado: ${verificationPill(String(b.verificationStatus))}</div>
     ${verificationForm(kind, b.id, user.id, input.csrf)}</div>`;
   const shopCard2 = shop ? business("Taller", shop, `<div>Servicios: ${e6(shop.services.map(categoryName3).join(", ") || "\u2014")}</div>`, "shop") + shopMapCard(user.id, input.shopMap, input.csrf, input.mapValues) : "";
   const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e6(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
@@ -102037,12 +102178,12 @@ function shopMapCard(userId, state, csrf, values) {
 }
 function verificationsView(input) {
   const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e6(item.userId)}">${e6(item.name)}</a></td>
-            <td>${e6(item.city)}</td><td>${e6(item.ruc ?? "\u2014")}</td><td>${day2(item.createdAt)}</td></tr>`).join("");
+            <td>${e6(item.city)}</td><td><span class="mono">${e6(item.ruc ?? "\u2014")}</span></td><td>${day2(item.createdAt)}</td></tr>`).join("");
   return `<h1>Verificaciones pendientes</h1>${flashHtml10(input.flash)}
   <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
-var ROLE_LABELS, STATUS_LABELS3, USAGE_OPTIONS, e6, csrfField10, flashHtml10, className, fuelName, categoryName3;
+var ROLE_LABELS, STATUS_LABELS3, STATUS_TONES3, USAGE_OPTIONS, e6, csrfField10, flashHtml10, className, fuelName, categoryName3;
 var init_views_registrations = __esm({
   "packages/api/dist/interfaces/admin/views-registrations.js"() {
     "use strict";
@@ -102062,6 +102203,7 @@ var init_views_registrations = __esm({
       admin: "Administrador"
     };
     STATUS_LABELS3 = { pending: "En verificaci\xF3n", verified: "Verificado", rejected: "Rechazado" };
+    STATUS_TONES3 = { pending: "warn", verified: "ok", rejected: "bad" };
     USAGE_OPTIONS = [
       ["urbano", "Urbano"],
       ["carretera", "Carretera"],
@@ -106886,6 +107028,34 @@ var PANEL_STYLES = `
 #notices pre,#messages pre,#appointments pre{font:14px/1.5 var(--c-font);color:var(--c-muted)}.line small{display:block;color:var(--c-muted);font-size:12.5px}
 .more{border:0;box-shadow:none;padding:0;margin:0;background:none}.more>summary{min-height:44px;font:600 14px var(--c-font)}
 .empty{padding:14px;color:var(--c-muted);font-size:14px}
+/* Interfaz tipo esc\xE1ner: monoespaciada solo para n\xFAmeros y c\xF3digos; color solo para estados. */
+.mono{font-family:var(--c-mono);font-variant-numeric:tabular-nums}
+.scan{display:flex;gap:16px;align-items:center}
+.scan .gauge{flex:none;width:104px;height:104px}
+.scan .word{font:700 22px/1.1 var(--c-display);margin:2px 0}
+.scan small{display:block;color:var(--c-muted);font-size:12.5px}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:13px;padding-top:12px;border-top:1px solid var(--c-line);margin:0}
+.meta dt{color:var(--c-muted)}.meta dd{margin:0;font-family:var(--c-mono);font-variant-numeric:tabular-nums}.meta dd.txt{font-family:var(--c-font);color:var(--c-muted)}
+.led{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none;background:var(--st)}
+.led.st-sin_dato{background:transparent;border:1.5px solid var(--c-muted)}
+.sys{list-style:none;margin:0;padding:0}
+.sys li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--c-line);font-size:14px}
+.sys li:last-child{border-bottom:0}.sys .nm{flex:1;min-width:0}.sys .cnt{font:12px var(--c-mono);color:var(--c-muted)}
+.pill{font-size:12px;font-weight:600;padding:2px 8px;border-radius:6px;color:var(--st);background:var(--st-bg);white-space:nowrap}
+.code{font:700 12px/1 var(--c-mono);letter-spacing:.02em;padding:3px 6px;border-radius:6px;border:1px solid currentColor;color:var(--st);white-space:nowrap;margin-right:8px;vertical-align:1px}
+.counts b,.scale,.pct{font-family:var(--c-mono);font-variant-numeric:tabular-nums}
+.track{position:relative;height:8px;border-radius:2px;overflow:visible}
+.track::after{content:"";position:absolute;inset:0;border-radius:2px;pointer-events:none;background:linear-gradient(90deg,transparent calc(25% - 1px),var(--c-muted) calc(25% - 1px),var(--c-muted) 25%,transparent 25%,transparent calc(50% - 1px),var(--c-muted) calc(50% - 1px),var(--c-muted) 50%,transparent 50%,transparent calc(75% - 1px),var(--c-muted) calc(75% - 1px),var(--c-muted) 75%,transparent 75%);opacity:.45}
+.fill{border-radius:2px 0 0 2px}
+.needle{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;background:var(--c-ink);border-radius:1px}
+.pct{color:var(--st);font-weight:600}
+.kpi b{font-family:var(--c-mono)}
+.kpi .kh{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--c-muted)}
+.kpi.alert{--st:var(--c-warn)}.kpi.alert b{color:var(--c-warn)}.kpi.ok{--st:var(--c-ok)}.kpi.idle{--st:var(--c-muted)}
+.kpi.idle .led{background:transparent;border:1.5px solid var(--c-muted)}
+.line .who{display:flex;align-items:center;gap:8px;min-width:0}
+.time{font:700 13px/1 var(--c-mono);padding:4px 7px;border-radius:6px;background:var(--c-sunk);white-space:nowrap}
+.summary{font-size:12.5px;color:var(--c-muted);margin:0}
 @media (max-width:560px){.kpis{grid-template-columns:1fr 1fr}.days{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:1fr}}
 `;
 var PANEL_MARKUP = `<div id="panel" class="panel" aria-live="polite"></div>
@@ -106912,14 +107082,36 @@ function chipGroup(values,current,onPick,cls){const g=h('div',{class:cls&&cls.in
 async function loadPanel(epoch,vehicleId){const data=await api('/pilot/panel'+(vehicleId?'?vehicleId='+encodeURIComponent(vehicleId):''));if(epoch!==generation||!token)return;panelData=data;panelVehicle=data.vehicleId||null;renderPanel();}
 function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);}
 function lastServiceForm(name){const f=h('form',{class:'acts'});const kmIn=h('input',{type:'number',min:'0',max:'2000000',inputmode:'numeric',required:true,'aria-label':'Kilometraje cuando se hizo',placeholder:'Km cuando se hizo'});const month=h('input',{type:'month','aria-label':'Mes en que se hizo'});f.append(kmIn,month,h('button',{class:'ghost'},'Preparar registro'));f.onsubmit=e=>{e.preventDefault();prepare(['\xDAltimo servicio',name,String(Math.round(Number(kmIn.value))),...(month.value?[month.value]:[])]);};return f;}
+const ORDER={urgente:0,pronto:1,sin_dato:2,al_dia:3};
+function svcCode(it){const plain=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036F]/g,'');const c=plain(it.categoryName).replace(/[^A-Za-z]/g,'').charAt(0).toUpperCase()||'S';
+ const words=plain(it.serviceName).toLowerCase().split(/[^a-z]+/).filter(w=>w&&!['de','del','y','la','el','los','las','a','por','con','o','en','al'].includes(w));
+ let code=words.slice(0,3).map(w=>w.charAt(0)).join('');const last=words[words.length-1]||'gen';let i=1;while(code.length<3&&i<last.length)code+=last.charAt(i++);return c+'-'+(code||'GEN').toUpperCase();}
+function gauge(r){const total=r.items.length;const known=total-r.counts.sin_dato;const pct=known?Math.round(100*r.counts.al_dia/known):null;
+ const worst=r.counts.urgente?'urgente':r.counts.pronto?'pronto':known?'al_dia':'sin_dato';const color={urgente:'var(--c-bad)',pronto:'var(--c-warn)',al_dia:'var(--c-ok)',sin_dato:'var(--c-muted)'}[worst];
+ const arc=207.3,val=pct===null?0:arc*pct/100;const g=h('span',{class:'gauge'});
+ const NS='http://www.w3.org/2000/svg';const sv=(tag,attrs,txt)=>{const n=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));if(txt!==undefined)n.textContent=txt;return n;};
+ const svg=sv('svg',{viewBox:'0 0 104 104',width:104,height:104,role:'img','aria-label':pct===null?'Sin datos':pct+' % de servicios al d\xEDa'});
+ const ring={cx:52,cy:52,r:44,fill:'none','stroke-width':8,transform:'rotate(135 52 52)','stroke-linecap':'round'};
+ svg.append(sv('circle',{...ring,stroke:'var(--c-sunk)','stroke-dasharray':arc+' 277'}));
+ if(val>0)svg.append(sv('circle',{...ring,stroke:color,'stroke-dasharray':val.toFixed(1)+' 277'}));
+ svg.append(sv('text',{x:52,y:58,'text-anchor':'middle','font-family':'ui-monospace,Menlo,Consolas,monospace','font-size':22,'font-weight':700,fill:'var(--c-ink)'},pct===null?'--':pct+'%'));
+ svg.append(sv('text',{x:52,y:76,'text-anchor':'middle','font-size':10,fill:'var(--c-muted)'},'al d\xEDa'));
+ g.append(svg);
+ const word={urgente:'Atenci\xF3n',pronto:'Pronto',al_dia:'Al d\xEDa',sin_dato:'Sin datos'}[worst];
+ return h('div',{class:'scan'},g,h('div',{},h('small',{text:'Estado del plan'}),h('div',{class:'word',text:word}),h('small',{text:r.counts.urgente+' urgente \xB7 '+r.counts.pronto+' pronto \xB7 '+r.counts.al_dia+' al d\xEDa \xB7 '+r.counts.sin_dato+' sin dato'})));}
+function systemsCard(r){const by=new Map();for(const it of r.items){const k=it.categoryName||'Otros';const cur=by.get(k)||{state:'al_dia',n:0};cur.n++;if(ORDER[it.state]<ORDER[cur.state])cur.state=it.state;by.set(k,cur);}
+ const rows=[...by.entries()].sort((a,b)=>ORDER[a[1].state]-ORDER[b[1].state]||a[0].localeCompare(b[0],'es'));
+ const ul=h('ul',{class:'sys'});for(const [name,x] of rows)ul.append(h('li',{class:'st-'+x.state},h('span',{class:'led st-'+x.state}),h('span',{class:'nm',text:name}),h('span',{class:'cnt',text:String(x.n)}),h('span',{class:'pill',text:STATE_NAME[x.state]})));
+ return card('Informe por sistemas',rows.length+' sistemas',ul);}
 function renderOwner(root,d){
  const r=d.recommendations;const v=d.vehicles.find(x=>x.id===d.vehicleId);
  if(!d.vehicles.length){root.append(card('Tu garaje',null,h('p',{class:'note',text:'Todav\xEDa no tienes veh\xEDculos. Agrega el primero para calcular tu plan de mantenimiento.'}),vehicleForm()));return;}
- if(r){const counts=h('div',{class:'counts'},...['urgente','pronto','al_dia','sin_dato'].map(s=>h('span',{class:'st st-'+s},h('b',{text:String(r.counts[s])}),STATE_NAME[s])));
-  root.append(card('Recomendaci\xF3n de hoy',v?v.label+' \xB7 '+km(v.km):null,h('p',{class:'lead2',text:r.headline}),counts,r.next?btn('Agendar '+r.next.serviceName.toLowerCase(),'primary full',()=>{booking.service=r.next.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}):null));}
+ if(r){  const meta=v?h('dl',{class:'meta'},h('dt',{text:'Veh\xEDculo'}),h('dd',{text:v.label+(v.plate?' \xB7 '+v.plate:'')}),h('dt',{text:'Od\xF3metro'}),h('dd',{text:km(v.km)}),h('dt',{text:'Origen'}),h('dd',{class:'txt',text:'plan de mantenimiento y registros del due\xF1o y del taller'})):null;
+  root.append(card('Recomendaci\xF3n de hoy',null,gauge(r),meta,h('p',{class:'lead2',text:r.headline}),r.next?btn('Agendar '+r.next.serviceName.toLowerCase(),'primary full',()=>{booking.service=r.next.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}):null));}
  root.append(garage(d));
- if(r&&r.items.length){const list=h('div',{class:'list'});const more=h('div',{class:'list'});let quiet=0;for(const it of r.items){const target=(it.state==='urgente'||it.state==='pronto'||quiet++<3)?list:more;const row=h('div',{class:'reco st-'+it.state},icon(it.state),h('div',{class:'rhead'},h('b',{text:it.serviceName}),h('span',{class:'state',text:it.label})),h('p',{class:'detail',text:it.detail}));
-  if(it.progress!==null){const fill=h('div',{class:'fill'});fill.style.width=Math.round(it.progress*100)+'%';row.append(h('div',{class:'meter'},h('div',{class:'track'},fill),it.scale?h('div',{class:'scale'},h('span',{text:it.scale[0]}),h('span',{text:it.scale[1]})):null));}
+ if(r&&r.items.length)root.append(systemsCard(r));
+ if(r&&r.items.length){const list=h('div',{class:'list'});const more=h('div',{class:'list'});let quiet=0;for(const it of r.items){const target=(it.state==='urgente'||it.state==='pronto'||quiet++<3)?list:more;const row=h('div',{class:'reco st-'+it.state},icon(it.state),h('div',{class:'rhead'},h('b',{},h('span',{class:'code',text:svcCode(it)}),it.serviceName),h('span',{class:'state',text:it.label})),h('p',{class:'detail',text:it.detail}));
+  if(it.progress!==null){const p=Math.round(it.progress*100);const fill=h('div',{class:'fill'});fill.style.width=p+'%';const needle=h('span',{class:'needle'});needle.style.left=p+'%';row.append(h('div',{class:'meter'},h('div',{class:'track'},fill,needle),it.scale?h('div',{class:'scale'},h('span',{text:it.scale[0]}),h('span',{class:'pct',text:p+' %'}),h('span',{text:it.scale[1]})):null));}
   const acts=h('div',{class:'acts'});if(it.state==='urgente'||it.state==='pronto')acts.append(btn('Agendar','ghost',()=>{booking.service=it.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}));
   if(it.state!=='al_dia'){const done=btn(it.state==='sin_dato'?'Registrar fecha y km':'Ya lo hice','ghost',()=>{done.replaceWith(lastServiceForm(it.serviceName));});acts.append(done);}
   if(acts.children.length)row.append(acts);target.append(row);}
@@ -106968,14 +107160,15 @@ function requestsCard(d,title){
  if(!d.requests.length)return card(title,null,h('p',{class:'note',text:'No tienes solicitudes abiertas. Te avisamos cuando un cliente de tu zona pida algo.'}));
  const list=h('div',{class:'list'});for(const q of d.requests){const row=h('div',{class:'line'},h('div',{},h('b',{text:q.category}),h('small',{text:q.description}),h('small',{text:q.zone+', '+q.city+' \xB7 vence '+ecDate(q.expiresAt,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}),h('span',{class:'tag st-sin_dato',text:'Para '+q.vehicle+(q.fuel?' \xB7 '+q.fuel:'')})),q.offered?h('span',{class:'tag st-al_dia',text:'Oferta enviada'}):btn('Preparar oferta','ghost',()=>{el('offerTools').open=true;el('offerRequest').value=q.requestId;el('price').focus();}));list.append(row);}
  return card(title,d.requests.length+(d.requests.length===1?' abierta':' abiertas'),list);}
+function kpi(value,label,cls){return h('div',{class:'kpi '+cls},h('b',{text:String(value)}),h('span',{class:'kh'},h('span',{class:'led'}),label));}
 function renderShop(root,d){
  const k=d.kpis;root.append(card('Hoy en '+d.shopName,ecDate(new Date(),{weekday:'long',day:'numeric',month:'long'}),h('div',{class:'kpis'},
-  h('div',{class:'kpi'},h('b',{text:String(k.appointmentsToday)}),h('span',{text:'Citas hoy'})),h('div',{class:'kpi'},h('b',{text:String(k.openOrders)}),h('span',{text:'\xD3rdenes abiertas'})),
-  h('div',{class:'kpi'+(k.budgetsWaiting?' alert':'')},h('b',{text:String(k.budgetsWaiting)}),h('span',{text:'Presupuestos sin respuesta'})),h('div',{class:'kpi'},h('b',{text:String(k.clientsDue)}),h('span',{text:'Clientes con mantenimiento por hacer'}))),
-  d.today.length?h('div',{class:'list'},...d.today.map(a=>h('div',{class:'line'},h('div',{},h('b',{text:ecDate(a.time,{hour:'2-digit',minute:'2-digit'})+' \xB7 '+a.vehicle}),h('small',{text:a.ref+(a.plate?' \xB7 '+a.plate:'')})),h('span',{class:'tag '+(a.status==='confirmed'?'st-al_dia':'st-pronto'),text:a.status==='confirmed'?'Confirmada':'Por confirmar'})))):h('p',{class:'note',text:'No hay citas para hoy.'}),
+  kpi(k.appointmentsToday,'Citas hoy',k.appointmentsToday?'ok':'idle'),kpi(k.openOrders,'\xD3rdenes abiertas',k.openOrders?'ok':'idle'),
+  kpi(k.budgetsWaiting,'Presupuestos sin respuesta',k.budgetsWaiting?'alert':'idle'),kpi(k.clientsDue,'Clientes con mantenimiento por hacer',k.clientsDue?'alert':'idle')),
+  d.today.length?h('div',{class:'list'},...d.today.map(a=>{const st=a.status==='confirmed'?'al_dia':'pronto';return h('div',{class:'line st-'+st},h('div',{class:'who'},h('span',{class:'time',text:ecDate(a.time,{hour:'2-digit',minute:'2-digit'})}),h('div',{},h('b',{text:a.vehicle}),h('small',{class:'mono',text:a.ref+(a.plate?' \xB7 '+a.plate:'')}))),h('span',{class:'pill'},st==='al_dia'?'Confirmada':'Por confirmar'));})):h('p',{class:'note',text:'No hay citas para hoy.'}),
   btn('Preparar resumen del d\xEDa','ghost',()=>prepare(['Resumen hoy']))));
- if(d.reminders.length){const list=h('div',{class:'list'});for(const c of d.reminders){list.append(h('div',{class:'line st-'+c.state},h('div',{},h('b',{text:c.client+' \xB7 '+c.vehicle}),h('small',{text:c.serviceName+': '+c.label.toLowerCase()+(c.plate?' \xB7 '+c.plate:'')})),btn('Preparar aviso','ghost',()=>prepare(['Alerta '+c.ref,'Mantenimiento: '+c.serviceName,c.alertValue]))));}
-  root.append(card('Escribir hoy',d.reminders.length+' clientes',h('p',{class:'note',text:'Clientes que atendiste este a\xF1o y tienen un servicio vencido, pr\xF3ximo o sin registro.'}),list));}
+ if(d.reminders.length){const list=h('div',{class:'list'});const n={urgente:0,pronto:0,sin_dato:0};for(const c of d.reminders){n[c.state]=(n[c.state]||0)+1;list.append(h('div',{class:'line st-'+c.state},h('div',{class:'who'},h('span',{class:'led st-'+c.state}),h('div',{},h('b',{text:c.client+' \xB7 '+c.vehicle}),h('small',{},h('span',{class:'code',text:svcCode(c)}),c.serviceName+': '+c.label.toLowerCase()+(c.plate?' \xB7 '+c.plate:'')))),btn('Preparar aviso','ghost',()=>prepare(['Alerta '+c.ref,'Mantenimiento: '+c.serviceName,c.alertValue]))));}
+  root.append(card('Escribir hoy',d.reminders.length+' clientes',h('p',{class:'summary'},n.urgente+' urgente \xB7 '+n.pronto+' pronto \xB7 '+n.sin_dato+' sin dato'),h('p',{class:'note',text:'Clientes que atendiste este a\xF1o y tienen un servicio vencido, pr\xF3ximo o sin registro.'}),list));}
  else root.append(card('Escribir hoy',null,h('p',{class:'note',text:'Ning\xFAn cliente del \xFAltimo a\xF1o tiene servicios pendientes.'})));
  root.append(requestsCard(d,'Solicitudes por responder'));}
 function renderStore(root,d){root.append(requestsCard(d,'Pedidos de repuestos'+(d.storeName?' \xB7 '+d.storeName:'')));}
@@ -110345,6 +110538,20 @@ async function loadFleetPanel(value2, connect = openConnection) {
     await conn.end().catch(() => void 0);
   }
 }
+function serviceCode(name) {
+  const words = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().split(/[^a-z]+/).filter((w) => w && !["de", "del", "y", "la", "el", "los", "las", "a", "por", "con", "o", "en", "al"].includes(w));
+  let code3 = words.slice(0, 3).map((w) => w.charAt(0)).join("");
+  const last = words[words.length - 1] ?? "gen";
+  for (let i = 1; code3.length < 3 && i < last.length; i++)
+    code3 += last.charAt(i);
+  return (code3 || "gen").toUpperCase();
+}
+function fleetGauge(okPct, cls) {
+  const arc = 207.3;
+  const val = okPct === null ? 0 : arc * okPct / 100;
+  const color = cls === "bad" ? "var(--c-bad)" : cls === "warn" ? "var(--c-warn)" : "var(--c-ok)";
+  return `<svg viewBox="0 0 104 104" width="96" height="96" role="img" aria-label="${okPct === null ? "Sin veh\xEDculos" : `${okPct} % de veh\xEDculos al d\xEDa`}"><circle cx="52" cy="52" r="44" fill="none" stroke="var(--c-sunk)" stroke-width="8" stroke-dasharray="${arc} 277" transform="rotate(135 52 52)" stroke-linecap="round"/>${val > 0 ? `<circle cx="52" cy="52" r="44" fill="none" stroke="${color}" stroke-width="8" stroke-dasharray="${val.toFixed(1)} 277" transform="rotate(135 52 52)" stroke-linecap="round"/>` : ""}<text x="52" y="58" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="22" font-weight="700" fill="var(--c-ink)">${okPct === null ? "--" : `${okPct}%`}</text><text x="52" y="76" text-anchor="middle" font-size="10" fill="var(--c-muted)">al d\xEDa</text></svg>`;
+}
 var stateOf = (v) => v.overdue.length ? { cls: "bad", text: "Vencido" } : v.soon.length ? { cls: "warn", text: "Por vencer" } : { cls: "ok", text: "Al d\xEDa" };
 function fleetCsv(data2) {
   const cell3 = (v) => {
@@ -110367,14 +110574,14 @@ function renderFleetPanel(data2, nonce, csvHref) {
   const maxMonth = Math.max(1, ...data2.months.map((m) => m.total));
   const row = (v) => {
     const st = stateOf(v);
-    return `<tr><td><b>${esc(unitLabel(v))}</b></td><td>${esc(`${v.make} ${v.model} ${v.year}`)}</td><td class="num">${esc(km5(Number(v.currentKm)))}</td><td>${esc(v.driver ?? "\u2014")}</td><td><span class="pill ${st.cls}">${st.text}</span></td><td>${esc([...v.overdue.map((o) => o.serviceName), ...v.soon.map((s) => `${s.serviceName} a ${km5(s.dueKm)}`)].slice(0, 3).join(" \xB7 ") || "\u2014")}</td><td>${esc(v.inShop ?? "\u2014")}</td><td class="num">${esc(formatUsd2(v.monthCost))}</td><td class="num">${v.monthKm > 0 ? esc(formatUsd2(v.monthCost / v.monthKm)) : "\u2014"}</td></tr>`;
+    return `<tr><td><b class="mono">${esc(unitLabel(v))}</b></td><td>${esc(`${v.make} ${v.model} ${v.year}`)}</td><td class="num">${esc(km5(Number(v.currentKm)))}</td><td>${esc(v.driver ?? "\u2014")}</td><td><span class="pill ${st.cls}"><span class="led"></span>${st.text}</span></td><td>${[...v.overdue.map((o) => ({ cls: "bad", name: o.serviceName, note: "vencido" })), ...v.soon.map((s) => ({ cls: "warn", name: s.serviceName, note: `a ${km5(s.dueKm)}` }))].slice(0, 3).map((x) => `<div class="svc"><span class="code ${x.cls}">${esc(serviceCode(x.name))}</span>${esc(x.name)} <span class="muted mono">${esc(x.note)}</span></div>`).join("") || "\u2014"}</td><td>${esc(v.inShop ?? "\u2014")}</td><td class="num">${esc(formatUsd2(v.monthCost))}</td><td class="num">${v.monthKm > 0 ? esc(formatUsd2(v.monthCost / v.monthKm)) : "\u2014"}</td></tr>`;
   };
   const roleName = { admin: "Administrador", supervisor: "Supervisor", conductor: "Conductor" };
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${esc(data2.fleet.name)} \xB7 Flota \xB7 AutoMantPro</title>
 <style nonce="${nonce}">${THEME_TOKENS}
-*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.45 var(--c-font)}header{background:var(--c-head);color:var(--c-head-ink);padding:16px max(16px,env(safe-area-inset-left))}header .brand{color:var(--c-head-brand);font-weight:800}header h1{margin:.2rem 0 0;font-size:clamp(1.3rem,4vw,1.8rem)}main{max-width:1180px;margin:auto;padding:18px max(16px,env(safe-area-inset-left)) 48px;display:grid;gap:18px}.muted{color:var(--c-muted)}.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.tile{background:var(--c-surface);border-radius:var(--c-r);padding:14px;box-shadow:var(--c-shadow)}.tile b{display:block;font-size:1.6rem;font-variant-numeric:tabular-nums}.tile.bad b{color:var(--c-bad)}.tile.warn b{color:var(--c-warn)}.tile.ok b{color:var(--c-ok)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:16px;box-shadow:var(--c-shadow);min-width:0}.card h2{margin:0 0 10px;font-size:1.05rem}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:860px}th,td{padding:8px 10px;border-bottom:1px solid var(--c-line);text-align:left;vertical-align:top}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--c-muted)}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.8rem;font-weight:600}.pill.ok{background:var(--c-ok-bg);color:var(--c-ok)}.pill.warn{background:var(--c-warn-bg);color:var(--c-warn)}.pill.bad{background:var(--c-bad-bg);color:var(--c-bad)}.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.bars{display:grid;gap:8px}.bar{display:grid;grid-template-columns:70px 1fr 90px;gap:8px;align-items:center;font-variant-numeric:tabular-nums}.bar span{display:block;height:12px;border-radius:6px;background:var(--c-accent)}ul{margin:0;padding-left:1.1em}a.button{display:inline-block;background:var(--c-cta);color:var(--c-on-cta);padding:10px 16px;border-radius:var(--c-r);text-decoration:none;font-weight:600}a.button:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.gap{margin-top:14px!important}${Array.from({ length: 20 }, (_, i) => `.w${(i + 1) * 5}{width:${(i + 1) * 5}%}`).join("")}${THEME_FLEET_LAYER}
+*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.45 var(--c-font)}header{background:var(--c-head);color:var(--c-head-ink);padding:16px max(16px,env(safe-area-inset-left))}header .brand{color:var(--c-head-brand);font-weight:800}header h1{margin:.2rem 0 0;font-size:clamp(1.3rem,4vw,1.8rem)}main{max-width:1180px;margin:auto;padding:18px max(16px,env(safe-area-inset-left)) 48px;display:grid;gap:18px}.muted{color:var(--c-muted)}.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.tile{background:var(--c-surface);border-radius:var(--c-r);padding:14px;box-shadow:var(--c-shadow)}.tile b{display:block;font-size:1.6rem;font-variant-numeric:tabular-nums}.tile.bad b{color:var(--c-bad)}.tile.warn b{color:var(--c-warn)}.tile.ok b{color:var(--c-ok)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:16px;box-shadow:var(--c-shadow);min-width:0}.card h2{margin:0 0 10px;font-size:1.05rem}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:860px}th,td{padding:8px 10px;border-bottom:1px solid var(--c-line);text-align:left;vertical-align:top}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--c-muted)}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.8rem;font-weight:600}.pill.ok{background:var(--c-ok-bg);color:var(--c-ok)}.pill.warn{background:var(--c-warn-bg);color:var(--c-warn)}.pill.bad{background:var(--c-bad-bg);color:var(--c-bad)}.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.bars{display:grid;gap:8px}.bar{display:grid;grid-template-columns:70px 1fr 90px;gap:8px;align-items:center;font-variant-numeric:tabular-nums}.bar span{display:block;height:12px;border-radius:6px;background:var(--c-accent)}ul{margin:0;padding-left:1.1em}a.button{display:inline-block;background:var(--c-cta);color:var(--c-on-cta);padding:10px 16px;border-radius:var(--c-r);text-decoration:none;font-weight:600}a.button:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.gap{margin-top:14px!important}.mono,.num,.tile b,.bar{font-family:var(--c-mono);font-variant-numeric:tabular-nums}.led{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:1px}.tile{display:grid;gap:4px}.tile .kh{display:flex;align-items:center;font-size:.85rem;color:var(--c-muted)}.tile.ok .led{background:var(--c-ok)}.tile.warn .led{background:var(--c-warn)}.tile.bad .led{background:var(--c-bad)}.tile.idle .led{background:transparent;border:1.5px solid var(--c-muted)}.tile.gauge{grid-template-columns:auto 1fr;align-items:center;gap:12px;grid-column:span 2}.pill{display:inline-flex;align-items:center;white-space:nowrap}th:first-child,td:first-child{min-width:140px}.tile.gauge strong{display:block;font-size:1.1rem}.svc{white-space:nowrap;margin:0 0 3px}.code{font:700 .72rem/1 var(--c-mono);padding:3px 5px;border-radius:5px;border:1px solid currentColor;margin-right:6px}.code.bad{color:var(--c-bad)}.code.warn{color:var(--c-warn)}.bar span{background:var(--c-muted)!important;border-radius:2px}${Array.from({ length: 20 }, (_, i) => `.w${(i + 1) * 5}{width:${(i + 1) * 5}%}`).join("")}${THEME_FLEET_LAYER}
 </style></head><body><header><div class="brand">${logoImg()}</div><h1>${esc(data2.fleet.name)}</h1><div>${esc(data2.fleet.city)} \xB7 ${list7.length} veh\xEDculos \xB7 solo lectura</div></header><main>
-<section class="tiles" aria-label="Resumen"><div class="tile ok"><b>${list7.length - overdue - soon}</b>Al d\xEDa</div><div class="tile warn"><b>${soon}</b>Por vencer</div><div class="tile bad"><b>${overdue}</b>Vencidos</div><div class="tile"><b>${inShop}</b>En taller</div><div class="tile"><b>${esc(formatUsd2(cost))}</b>Costo del mes</div><div class="tile"><b>${kms > 0 ? esc(formatUsd2(cost / kms)) : "\u2014"}</b>USD por km (${esc(km5(kms))})</div></section>
+<section class="tiles" aria-label="Resumen"><div class="tile gauge">${fleetGauge(list7.length ? Math.round(100 * (list7.length - overdue - soon) / list7.length) : null, overdue ? "bad" : soon ? "warn" : "ok")}<div><span class="muted">Estado de la flota</span><strong>${overdue ? "Atenci\xF3n" : soon ? "Pronto" : "Al d\xEDa"}</strong><span class="muted">${list7.length} veh\xEDculos</span></div></div><div class="tile ${list7.length - overdue - soon ? "ok" : "idle"}"><b>${list7.length - overdue - soon}</b><span class="kh"><span class="led"></span>Al d\xEDa</span></div><div class="tile ${soon ? "warn" : "idle"}"><b>${soon}</b><span class="kh"><span class="led"></span>Por vencer</span></div><div class="tile ${overdue ? "bad" : "idle"}"><b>${overdue}</b><span class="kh"><span class="led"></span>Vencidos</span></div><div class="tile"><b>${inShop}</b><span class="kh">En taller</span></div><div class="tile"><b>${esc(formatUsd2(cost))}</b><span class="kh">Costo del mes</span></div><div class="tile"><b>${kms > 0 ? esc(formatUsd2(cost / kms)) : "\u2014"}</b><span class="kh">USD por km (${esc(km5(kms))})</span></div></section>
 <section class="card"><h2>Veh\xEDculos</h2><div class="scroll"><table><thead><tr><th>Unidad</th><th>Veh\xEDculo</th><th class="num">Km</th><th>Conductor</th><th>Estado</th><th>Servicios</th><th>En taller</th><th class="num">Costo mes</th><th class="num">USD/km</th></tr></thead><tbody>${list7.map(row).join("") || `<tr><td colspan="9" class="muted">Todav\xEDa no hay veh\xEDculos. Agr\xE9galos por WhatsApp: Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km</td></tr>`}</tbody></table></div><p><a class="button" href="${esc(csvHref)}">Descargar CSV</a></p></section>
 <div class="two"><section class="card"><h2>Costos de los \xFAltimos meses</h2>${data2.months.length ? `<div class="bars">${data2.months.map((m) => `<div class="bar"><div>${esc(m.month)}</div><div><span class="w${Math.max(1, Math.round(m.total / maxMonth * 20)) * 5}"></span></div><div class="num">${esc(formatUsd2(m.total))}</div></div>`).join("")}</div>` : `<p class="muted">Sin gastos registrados. Llegan al cerrar \xF3rdenes en AutoMantPro o con: Gasto PLACA | concepto | USD</p>`}</section>
 <section class="card"><h2>Personas y talleres</h2><ul>${data2.members.map((m) => `<li>${esc(m.name)} \xB7 ${esc(roleName[String(m.role)] ?? m.role)}${m.status === "invited" ? " (invitado)" : ""}</li>`).join("") || `<li class="muted">Sin conductores todav\xEDa.</li>`}</ul><h2 class="gap">Talleres con convenio</h2><ul>${data2.agreements.map((a) => `<li>${esc(a.name)} (${esc(a.city)})${Number(a.ratingAvg) ? ` \xB7 ${esc(Number(a.ratingAvg))}/5` : ""}</li>`).join("") || `<li class="muted">Sin convenios. Por WhatsApp: Convenio | RUC del taller</li>`}</ul></section></div>
