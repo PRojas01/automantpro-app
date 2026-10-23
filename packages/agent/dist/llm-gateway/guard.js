@@ -19,12 +19,13 @@ export function sanitizeUntrusted(text, maxLength = 4000) {
         .slice(0, maxLength);
 }
 const INJECTION_PATTERNS = [
-    ["ignorar-instrucciones", /\b(?:ignora|olvida|omite|descarta|desobedece)\w*\s+(?:\w+\s+){0,4}(?:instrucciones|reglas|indicaciones|restricciones|[oó]rdenes)/i],
+    ["ignorar-instrucciones", /\b(?:ignora|olvida|omite|descarta|desobedece)\w*\s+(?:(?:todas?\s+)?(?:tus|las|sus)\s+)?(?:instrucciones|reglas|indicaciones|restricciones|[oó]rdenes)\b/i],
+    ["exfiltrar-secreto", /\b(?:env[ií]a|manda|reenv[ií]a)\w*\s+(?:(?:el|la|los|las)\s+)?(?:c[oó]digo|clave|contrase[nñ]a)s?\b[^.!?\n]{0,80}\b(?:a|al|hacia)\s+\S+/i],
     ["ignore-instructions", /\b(?:ignore|forget|disregard|override|bypass)\s+(?:\w+\s+){0,4}(?:instructions|rules|prompt|guidelines|restrictions)/i],
     ["revelar-prompt", /\b(?:mu[eé]strame|revela|dime|imprime|repite|copia|escribe)\w*\s+(?:\w+\s+){0,4}(?:prompt|instrucciones\s+(?:del\s+sistema|iniciales|internas|ocultas)|mensaje\s+del\s+sistema)/i],
     ["reveal-prompt", /\b(?:show|reveal|print|repeat|output)\s+(?:\w+\s+){0,4}(?:system\s+prompt|initial\s+instructions|hidden\s+instructions)/i],
     ["system-prompt", /\b(?:system\s+prompt|prompt\s+del\s+sistema|mensaje\s+de\s+sistema)\b/i],
-    ["cambio-de-rol", /\b(?:ahora\s+eres|a\s+partir\s+de\s+ahora\s+(?:eres|ser[aá]s|act[uú]a)|act[uú]a\s+como\s+(?:si\s+fueras\s+)?(?:un|una|el|la)?\s*(?:administrador|admin|desarrollador|sistema|otro)|you\s+are\s+now|pretend\s+(?:to\s+be|you\s+are)|act\s+as\s+(?:an?\s+)?(?:admin|developer|system))/i],
+    ["cambio-de-rol", /\b(?:ahora\s+eres|eres\s+ahora|a\s+partir\s+de\s+ahora\s+(?:eres|ser[aá]s|act[uú]a)|act[uú]a\s+como\s+(?:si\s+fueras\s+)?(?:un|una|el|la)?\s*(?:administrador|operador|admin|desarrollador|sistema|otro)|you\s+are\s+now|pretend\s+(?:to\s+be|you\s+are)|act\s+as\s+(?:an?\s+)?(?:admin|developer|system))/i],
     ["modo-especial", /\b(?:modo\s+(?:desarrollador|dios|sin\s+restricciones|administrador)|developer\s+mode|jailbreak|do\s+anything\s+now)/i],
     ["marca-de-rol", /<\|[a-z_]{2,20}\|>|\[\/?(?:INST|SYS)\]|<\/?(?:system|assistant)>|^\s*(?:system|assistant)\s*:/im],
     ["datos-de-otros", /\b(?:lista|dame|mu[eé]strame|exporta)\w*\s+(?:\w+\s+){0,3}(?:todos\s+los\s+(?:usuarios|clientes|tel[eé]fonos|correos)|contrase[nñ]as|tokens?|claves?\s+de\s+acceso|api\s*keys?)\b/i],
