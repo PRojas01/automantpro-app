@@ -22028,9 +22028,15 @@ var MAP_STATEMENTS = [
   { kind: "addColumn", target: "Shop.mapPrecision", sql: "ALTER TABLE `Shop` ADD COLUMN `mapPrecision` VARCHAR(10) NOT NULL DEFAULT 'exacta'" }
 ];
 
+// packages/api/src/infrastructure/schema-setup/web-login-statements.ts
+var WEB_LOGIN_TABLES = ["WebLoginCode"];
+var WEB_LOGIN_STATEMENTS = [
+  { kind: "createTable", target: "WebLoginCode", sql: "CREATE TABLE IF NOT EXISTS `WebLoginCode` (id VARCHAR(191) PRIMARY KEY, phone VARCHAR(15) NOT NULL, purpose ENUM('login','signup') NOT NULL, codeHash CHAR(64) NOT NULL, attempts INT NOT NULL DEFAULT 0, expiresAt DATETIME(3) NOT NULL, usedAt DATETIME(3) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX WebLoginCode_phone_created_idx(phone, createdAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+];
+
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS];
-var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS];
+var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));
   if (env.DATABASE_URL?.trim()) {
