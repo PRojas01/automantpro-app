@@ -1,4 +1,6 @@
 export * from "./types.js";
+export { inspectUserText, wrapAsData } from "./guard.js";
+export type { GuardResult } from "./guard.js";
 export type { GatewayConfig, ProviderName } from "./config.js";
 export { buildConfig, createAdapter, loadGatewayConfig, DEFAULT_TIMEOUT_MS } from "./config.js";
 export { OpenAIAdapter } from "./adapters/openai.js";

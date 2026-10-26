@@ -1,4 +1,5 @@
 export * from "./types.js";
+export { inspectUserText, wrapAsData } from "./guard.js";
 export { buildConfig, createAdapter, loadGatewayConfig, DEFAULT_TIMEOUT_MS } from "./config.js";
 export { OpenAIAdapter } from "./adapters/openai.js";
 export { AnthropicAdapter } from "./adapters/anthropic.js";

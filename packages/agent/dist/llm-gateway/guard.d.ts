@@ -25,4 +25,11 @@ export declare function guardOutput(text: string, options?: {
 }): OutputCheck;
 /** Limpia en profundidad los textos de un resultado de función (datos de la base que escriben usuarios). */
 export declare function sanitizeToolData(value: unknown, depth?: number): unknown;
+export interface GuardResult {
+    safe: boolean;
+    flags: string[];
+    text: string;
+}
+export declare function inspectUserText(input: unknown, maxLength?: number): GuardResult;
+export declare function wrapAsData(text: string): string;
 //# sourceMappingURL=guard.d.ts.map

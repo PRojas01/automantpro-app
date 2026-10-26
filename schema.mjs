@@ -21281,7 +21281,16 @@ var LOCAL_MARKETPLACE_TABLES = ["LocalRequest", "LocalOffer", "NotificationOutbo
 var LOCAL_MARKETPLACE_STATEMENTS = [
   { kind: "createTable", target: "LocalRequest", sql: "CREATE TABLE IF NOT EXISTS `LocalRequest` (id VARCHAR(191) PRIMARY KEY, ownerId VARCHAR(191) NOT NULL, vehicleId VARCHAR(191) NOT NULL, kind VARCHAR(20) NOT NULL, category VARCHAR(120) NOT NULL, description TEXT NOT NULL, city VARCHAR(120) NOT NULL, zone VARCHAR(120) NOT NULL, status VARCHAR(20) NOT NULL DEFAULT 'open', chosenOfferId VARCHAR(191) NULL, expiresAt DATETIME(3) NOT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX LocalRequest_owner_idx(ownerId, status)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
   { kind: "createTable", target: "LocalOffer", sql: "CREATE TABLE IF NOT EXISTS `LocalOffer` (id VARCHAR(191) PRIMARY KEY, requestId VARCHAR(191) NOT NULL, businessId VARCHAR(191) NOT NULL, businessUserId VARCHAR(191) NOT NULL, businessName VARCHAR(191) NOT NULL, status VARCHAR(20) NOT NULL DEFAULT 'invited', priceUsd DECIMAL(10,2) NULL, durationMin INTEGER NULL, proposedAt DATETIME(3) NULL, notes VARCHAR(300) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), UNIQUE KEY LocalOffer_request_business_key(requestId, businessId), INDEX LocalOffer_business_idx(businessUserId, status)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "addColumn", target: "LocalOffer.brand", sql: "ALTER TABLE `LocalOffer` ADD COLUMN `brand` VARCHAR(120) NULL" },
+  { kind: "addColumn", target: "LocalOffer.quality", sql: "ALTER TABLE `LocalOffer` ADD COLUMN `quality` VARCHAR(20) NULL" },
+  { kind: "addColumn", target: "LocalOffer.warrantyDays", sql: "ALTER TABLE `LocalOffer` ADD COLUMN `warrantyDays` INTEGER NULL" },
+  { kind: "addColumn", target: "LocalOffer.stockStatus", sql: "ALTER TABLE `LocalOffer` ADD COLUMN `stockStatus` VARCHAR(20) NULL" },
+  { kind: "addColumn", target: "LocalOffer.deliveryDate", sql: "ALTER TABLE `LocalOffer` ADD COLUMN `deliveryDate` DATE NULL" },
+  { kind: "addColumn", target: "LocalOffer.stockReason", sql: "ALTER TABLE `LocalOffer` ADD COLUMN `stockReason` VARCHAR(300) NULL" },
   { kind: "createTable", target: "LocalCommandReceipt", sql: "CREATE TABLE IF NOT EXISTS `LocalCommandReceipt` (id VARCHAR(191) PRIMARY KEY, userId VARCHAR(191) NOT NULL, fingerprint VARCHAR(64) NOT NULL, response JSON NOT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "addColumn", target: "Appointment.localOfferId", sql: "ALTER TABLE `Appointment` ADD COLUMN `localOfferId` VARCHAR(191) NULL" },
+  { kind: "createIndex", target: "Appointment.Appointment_localOfferId_idx", sql: "CREATE INDEX `Appointment_localOfferId_idx` ON `Appointment` (`localOfferId`)" },
+  { kind: "update", target: "Appointment.localOfferId", sql: "UPDATE `Appointment` a JOIN `LocalCommandReceipt` r ON JSON_UNQUOTE(JSON_EXTRACT(r.response, '$.appointmentId')) COLLATE utf8mb4_unicode_ci = a.id JOIN `LocalOffer` o ON JSON_UNQUOTE(JSON_EXTRACT(r.response, '$.offerId')) COLLATE utf8mb4_unicode_ci = o.id JOIN `LocalRequest` lr ON JSON_UNQUOTE(JSON_EXTRACT(r.response, '$.requestId')) COLLATE utf8mb4_unicode_ci = lr.id AND o.requestId = lr.id AND lr.ownerId = r.userId SET a.localOfferId = o.id WHERE a.localOfferId IS NULL AND a.ownerId = r.userId AND a.shopId = o.businessId AND a.status IN ('pending','confirmed')" },
   // Outbox records represent pending notifications; they never imply delivery.
   { kind: "createTable", target: "NotificationOutbox", sql: "CREATE TABLE IF NOT EXISTS `NotificationOutbox` (id VARCHAR(191) PRIMARY KEY, dedupKey VARCHAR(191) NOT NULL UNIQUE, recipientUserId VARCHAR(191) NOT NULL, kind VARCHAR(40) NOT NULL, payload JSON NOT NULL, status VARCHAR(20) NOT NULL DEFAULT 'pending', createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX NotificationOutbox_status_idx(status, createdAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
   // Delivery state for the WhatsApp bridge or Cloud API; 'sent' means handed to WhatsApp, not read.
@@ -21837,6 +21846,7 @@ var EXTRA_STATEMENTS = [
     sql: "CREATE INDEX `Rating_workOrderId_idx` ON `Rating`(`workOrderId`)"
   },
   addColumn("Shop", "ratingCount", "INTEGER NOT NULL DEFAULT 0"),
+  addColumn("Shop", "appointmentCapacity", "INTEGER NOT NULL DEFAULT 1"),
   addColumn("Store", "ratingAvg", "DOUBLE NOT NULL DEFAULT 0"),
   addColumn("Store", "ratingCount", "INTEGER NOT NULL DEFAULT 0"),
   // Solicitudes de especialista (docs/45): el dueño describe lo que necesita y la solicitud llega
@@ -22034,9 +22044,17 @@ var WEB_LOGIN_STATEMENTS = [
   { kind: "createTable", target: "WebLoginCode", sql: "CREATE TABLE IF NOT EXISTS `WebLoginCode` (id VARCHAR(191) PRIMARY KEY, phone VARCHAR(15) NOT NULL, purpose ENUM('login','signup') NOT NULL, codeHash CHAR(64) NOT NULL, attempts INT NOT NULL DEFAULT 0, expiresAt DATETIME(3) NOT NULL, usedAt DATETIME(3) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX WebLoginCode_phone_created_idx(phone, createdAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
 ];
 
+// packages/api/src/infrastructure/schema-setup/plan-override-statements.ts
+var PLAN_OVERRIDE_TABLES = ["VehiclePlanOverride", "VehiclePlanOverrideLog"];
+var PLAN_OVERRIDE_STATEMENTS = [
+  { kind: "createTable", target: "VehiclePlanOverride", sql: "CREATE TABLE IF NOT EXISTS `VehiclePlanOverride` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `serviceId` VARCHAR(191) NOT NULL, `intervalKm` INT NULL, `intervalMonths` INT NULL, `disabled` TINYINT(1) NOT NULL DEFAULT 0, `nota` VARCHAR(200) NULL, `actorUserId` VARCHAR(191) NOT NULL, `actorRole` ENUM('dueno','taller') NOT NULL, `shopId` VARCHAR(191) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), UNIQUE INDEX `VehiclePlanOverride_vehicleId_serviceId_key` (`vehicleId`,`serviceId`), INDEX `VehiclePlanOverride_actorUserId_idx` (`actorUserId`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "addColumn", target: "VehiclePlanOverride.customName", sql: "ALTER TABLE `VehiclePlanOverride` ADD COLUMN `customName` VARCHAR(100) NULL" },
+  { kind: "createTable", target: "VehiclePlanOverrideLog", sql: "CREATE TABLE IF NOT EXISTS `VehiclePlanOverrideLog` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `serviceId` VARCHAR(191) NOT NULL, `before` JSON NULL, `after` JSON NOT NULL, `actorUserId` VARCHAR(191) NOT NULL, `actorRole` ENUM('dueno','taller') NOT NULL, `shopId` VARCHAR(191) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehiclePlanOverrideLog_vehicleId_serviceId_createdAt_idx` (`vehicleId`,`serviceId`,`createdAt`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+];
+
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS];
-var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS];
+var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));
   if (env.DATABASE_URL?.trim()) {
