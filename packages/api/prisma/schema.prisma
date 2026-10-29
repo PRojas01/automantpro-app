@@ -507,6 +507,151 @@ model AppSetting {
   updatedAt DateTime @default(now())
 }
 
+model ExpertProfile {
+  userId String @id
+  especialidades Json
+  verificationStatus String @default("pendiente")
+  motivo String? @db.Text
+  verifiedAt DateTime?
+  tipoDocumentoRevisado String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Course {
+  id String @id
+  expertId String
+  slug String @unique
+  code String @unique
+  titulo String
+  especialidad String
+  nivel String
+  horas Int
+  precioUsd Decimal? @db.Decimal(10, 2)
+  notaMinima Decimal @default(70) @db.Decimal(5, 2)
+  estado String @default("borrador")
+  inscripcionesAbiertas Boolean @default(true)
+  firstPublishedAt DateTime?
+  altoVoltajeGas Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  lessons Lesson[]
+  questions Question[]
+  enrollments Enrollment[]
+  @@index([expertId])
+  @@index([estado, especialidad, nivel])
+}
+
+model Lesson {
+  id String @id
+  courseId String
+  orden Int
+  titulo String
+  videoUrl String? @db.VarChar(2048)
+  pdfUrl String? @db.VarChar(2048)
+  texto String? @db.VarChar(900)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progresses LessonProgress[]
+  @@unique([courseId, orden])
+  @@index([courseId])
+}
+
+model Question {
+  id String @id
+  courseId String
+  enunciado String @db.Text
+  orden Int
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  options Option[]
+  @@index([courseId])
+}
+
+model Option {
+  id String @id
+  questionId String
+  letra String @db.VarChar(8)
+  texto String @db.Text
+  correcta Boolean @default(false)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  @@unique([questionId, letra])
+  @@index([questionId])
+}
+
+model Enrollment {
+  id String @id
+  code String @unique
+  courseId String
+  userId String
+  estado String @default("solicitada")
+  comprobante String? @db.VarChar(2048)
+  beca Boolean @default(false)
+  compartirConTaller Boolean @default(false)
+  consentVersion String
+  consentAt DateTime
+  respuestas Json?
+  nota Decimal? @db.Decimal(5, 2)
+  aprobadoAt DateTime?
+  createdAt DateTime @default(now())
+  course Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  progresses LessonProgress[]
+  certificate Certificate?
+  @@unique([courseId, userId])
+  @@index([userId, estado])
+  @@index([courseId, estado])
+}
+
+model LessonProgress {
+  id String @id
+  enrollmentId String
+  lessonId String
+  completadoAt DateTime @default(now())
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  @@unique([enrollmentId, lessonId])
+}
+
+model Certificate {
+  id String @id
+  code String @unique
+  enrollmentId String @unique
+  publico Boolean @default(false)
+  emitidoAt DateTime @default(now())
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+}
+
+model InviteCode {
+  id String @id
+  courseId String
+  code String @unique
+  cupo Int
+  usados Int @default(0)
+  venceAt DateTime?
+  createdAt DateTime @default(now())
+  @@index([courseId])
+}
+
+model CourseChange {
+  id String @id
+  courseId String
+  actorUserId String
+  campo String
+  antes String? @db.Text
+  despues String? @db.Text
+  createdAt DateTime @default(now())
+  @@index([courseId, createdAt])
+}
+
+model ContentReport {
+  id String @id
+  courseId String
+  lessonId String?
+  reporterUserId String?
+  motivo String @db.Text
+  estado String @default("pendiente")
+  createdAt DateTime @default(now())
+  @@index([courseId, estado])
+}
+
 model WorkOrder {
   id               String    @id @default(uuid())
   number           Int       @unique

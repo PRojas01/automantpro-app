@@ -22052,24 +22052,52 @@ var PLAN_OVERRIDE_STATEMENTS = [
   { kind: "createTable", target: "VehiclePlanOverrideLog", sql: "CREATE TABLE IF NOT EXISTS `VehiclePlanOverrideLog` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `serviceId` VARCHAR(191) NOT NULL, `before` JSON NULL, `after` JSON NOT NULL, `actorUserId` VARCHAR(191) NOT NULL, `actorRole` ENUM('dueno','taller') NOT NULL, `shopId` VARCHAR(191) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehiclePlanOverrideLog_vehicleId_serviceId_createdAt_idx` (`vehicleId`,`serviceId`,`createdAt`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
 ];
 
+// packages/api/src/infrastructure/schema-setup/courses-statements.ts
+var T3 = "CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+var COURSES_TABLES = ["ExpertProfile", "Course", "Lesson", "Question", "Option", "Enrollment", "LessonProgress", "Certificate", "InviteCode", "CourseChange", "ContentReport"];
+var COURSES_STATEMENTS = [
+  { kind: "createTable", target: "ExpertProfile", sql: `CREATE TABLE IF NOT EXISTS \`ExpertProfile\` (userId VARCHAR(191) PRIMARY KEY, especialidades JSON NOT NULL, verificationStatus ENUM('pendiente','verificado','rechazado') NOT NULL DEFAULT 'pendiente', motivo TEXT NULL, verifiedAt DATETIME(3) NULL, tipoDocumentoRevisado VARCHAR(80) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), CONSTRAINT ExpertProfile_user_fkey FOREIGN KEY (userId) REFERENCES \`User\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+  { kind: "createTable", target: "Course", sql: `CREATE TABLE IF NOT EXISTS \`Course\` (id VARCHAR(191) PRIMARY KEY, expertId VARCHAR(191) NOT NULL, slug VARCHAR(191) NOT NULL UNIQUE, code VARCHAR(24) NOT NULL UNIQUE, titulo VARCHAR(191) NOT NULL, especialidad VARCHAR(100) NOT NULL, nivel VARCHAR(40) NOT NULL, horas INTEGER NOT NULL, precioUsd DECIMAL(10,2) NULL, notaMinima DECIMAL(5,2) NOT NULL DEFAULT 70, estado ENUM('borrador','en_revision','publicado','oculto') NOT NULL DEFAULT 'borrador', inscripcionesAbiertas BOOLEAN NOT NULL DEFAULT TRUE, firstPublishedAt DATETIME(3) NULL, altoVoltajeGas BOOLEAN NOT NULL DEFAULT FALSE, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX Course_expert_idx(expertId), INDEX Course_catalog_idx(estado, especialidad, nivel), CONSTRAINT Course_expert_fkey FOREIGN KEY (expertId) REFERENCES \`User\`(id) ON DELETE RESTRICT ON UPDATE CASCADE) ${T3}` },
+  { kind: "createTable", target: "Lesson", sql: `CREATE TABLE IF NOT EXISTS \`Lesson\` (id VARCHAR(191) PRIMARY KEY, courseId VARCHAR(191) NOT NULL, orden INTEGER NOT NULL, titulo VARCHAR(191) NOT NULL, videoUrl VARCHAR(2048) NULL, pdfUrl VARCHAR(2048) NULL, texto VARCHAR(900) NULL, UNIQUE KEY Lesson_course_order_key(courseId, orden), INDEX Lesson_course_idx(courseId), CONSTRAINT Lesson_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+  { kind: "createTable", target: "Question", sql: `CREATE TABLE IF NOT EXISTS \`Question\` (id VARCHAR(191) PRIMARY KEY, courseId VARCHAR(191) NOT NULL, enunciado TEXT NOT NULL, orden INTEGER NOT NULL, INDEX Question_course_idx(courseId), CONSTRAINT Question_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+  { kind: "createTable", target: "Option", sql: `CREATE TABLE IF NOT EXISTS \`Option\` (id VARCHAR(191) PRIMARY KEY, questionId VARCHAR(191) NOT NULL, letra VARCHAR(8) NOT NULL, texto TEXT NOT NULL, correcta BOOLEAN NOT NULL DEFAULT FALSE, UNIQUE KEY Option_question_letter_key(questionId, letra), INDEX Option_question_idx(questionId), CONSTRAINT Option_question_fkey FOREIGN KEY (questionId) REFERENCES \`Question\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+  { kind: "createTable", target: "Enrollment", sql: `CREATE TABLE IF NOT EXISTS \`Enrollment\` (id VARCHAR(191) PRIMARY KEY, code VARCHAR(24) NOT NULL UNIQUE, courseId VARCHAR(191) NOT NULL, userId VARCHAR(191) NOT NULL, estado ENUM('solicitada','pendiente','activa','rechazada','revocada') NOT NULL DEFAULT 'solicitada', comprobante VARCHAR(2048) NULL, beca BOOLEAN NOT NULL DEFAULT FALSE, compartirConTaller BOOLEAN NOT NULL DEFAULT FALSE, certificadoPublico BOOLEAN NOT NULL DEFAULT FALSE, consentVersion VARCHAR(40) NOT NULL, consentAt DATETIME(3) NOT NULL, respuestas JSON NULL, nota DECIMAL(5,2) NULL, aprobadoAt DATETIME(3) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), UNIQUE KEY Enrollment_course_user_key(courseId,userId), INDEX Enrollment_user_idx(userId, estado), INDEX Enrollment_course_idx(courseId, estado), CONSTRAINT Enrollment_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE RESTRICT ON UPDATE CASCADE, CONSTRAINT Enrollment_user_fkey FOREIGN KEY (userId) REFERENCES \`User\`(id) ON DELETE RESTRICT ON UPDATE CASCADE) ${T3}` },
+  { kind: "createTable", target: "LessonProgress", sql: `CREATE TABLE IF NOT EXISTS \`LessonProgress\` (id VARCHAR(191) PRIMARY KEY, enrollmentId VARCHAR(191) NOT NULL, lessonId VARCHAR(191) NOT NULL, completadoAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), UNIQUE KEY LessonProgress_enrollment_lesson_key(enrollmentId,lessonId), CONSTRAINT LessonProgress_enrollment_fkey FOREIGN KEY (enrollmentId) REFERENCES \`Enrollment\`(id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT LessonProgress_lesson_fkey FOREIGN KEY (lessonId) REFERENCES \`Lesson\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+  { kind: "createTable", target: "Certificate", sql: `CREATE TABLE IF NOT EXISTS \`Certificate\` (id VARCHAR(191) PRIMARY KEY, code VARCHAR(24) NOT NULL UNIQUE, enrollmentId VARCHAR(191) NOT NULL UNIQUE, publico BOOLEAN NOT NULL DEFAULT FALSE, emitidoAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), CONSTRAINT Certificate_enrollment_fkey FOREIGN KEY (enrollmentId) REFERENCES \`Enrollment\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+  { kind: "createTable", target: "InviteCode", sql: `CREATE TABLE IF NOT EXISTS \`InviteCode\` (id VARCHAR(191) PRIMARY KEY, courseId VARCHAR(191) NOT NULL, code VARCHAR(40) NOT NULL UNIQUE, cupo INTEGER NOT NULL, usados INTEGER NOT NULL DEFAULT 0, venceAt DATETIME(3) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX InviteCode_course_idx(courseId), CONSTRAINT InviteCode_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+  { kind: "createTable", target: "CourseChange", sql: `CREATE TABLE IF NOT EXISTS \`CourseChange\` (id VARCHAR(191) PRIMARY KEY, courseId VARCHAR(191) NOT NULL, actorUserId VARCHAR(191) NOT NULL, campo VARCHAR(191) NOT NULL, antes TEXT NULL, despues TEXT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX CourseChange_course_idx(courseId,createdAt), CONSTRAINT CourseChange_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT CourseChange_actor_fkey FOREIGN KEY (actorUserId) REFERENCES \`User\`(id) ON DELETE RESTRICT ON UPDATE CASCADE) ${T3}` },
+  { kind: "createTable", target: "ContentReport", sql: `CREATE TABLE IF NOT EXISTS \`ContentReport\` (id VARCHAR(191) PRIMARY KEY, courseId VARCHAR(191) NOT NULL, lessonId VARCHAR(191) NULL, reporterUserId VARCHAR(191) NULL, motivo TEXT NOT NULL, estado VARCHAR(24) NOT NULL DEFAULT 'pendiente', createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX ContentReport_course_idx(courseId,estado), CONSTRAINT ContentReport_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT ContentReport_lesson_fkey FOREIGN KEY (lessonId) REFERENCES \`Lesson\`(id) ON DELETE SET NULL ON UPDATE CASCADE, CONSTRAINT ContentReport_reporter_fkey FOREIGN KEY (reporterUserId) REFERENCES \`User\`(id) ON DELETE SET NULL ON UPDATE CASCADE) ${T3}` },
+  { kind: "addColumn", target: "ExpertProfile.tokenHash", sql: "ALTER TABLE `ExpertProfile` ADD COLUMN `tokenHash` CHAR(64) NULL" },
+  { kind: "addColumn", target: "ExpertProfile.tokenExpiresAt", sql: "ALTER TABLE `ExpertProfile` ADD COLUMN `tokenExpiresAt` DATETIME(3) NULL" },
+  { kind: "addColumn", target: "ExpertProfile.tokenUsedAt", sql: "ALTER TABLE `ExpertProfile` ADD COLUMN `tokenUsedAt` DATETIME(3) NULL" },
+  { kind: "addColumn", target: "ExpertProfile.documento", sql: "ALTER TABLE `ExpertProfile` ADD COLUMN `documento` MEDIUMBLOB NULL" },
+  { kind: "addColumn", target: "ExpertProfile.documentoMime", sql: "ALTER TABLE `ExpertProfile` ADD COLUMN `documentoMime` VARCHAR(80) NULL" },
+  { kind: "addColumn", target: "Course.motivoRevision", sql: "ALTER TABLE `Course` ADD COLUMN `motivoRevision` TEXT NULL" }
+];
+
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS];
-var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...COURSES_STATEMENTS];
+var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...COURSES_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));
+  let conn2;
   if (env.DATABASE_URL?.trim()) {
-    return await mysql.createConnection({ uri: env.DATABASE_URL, multipleStatements: false, timezone: "Z", connectTimeout: 1e4 });
+    const uri = new URL(env.DATABASE_URL);
+    if (uri.searchParams.has("socket")) {
+      if (!uri.searchParams.has("socketPath")) uri.searchParams.set("socketPath", uri.searchParams.get("socket"));
+      uri.searchParams.delete("socket");
+    }
+    conn2 = await mysql.createConnection({ uri: uri.toString(), multipleStatements: false, timezone: "Z", connectTimeout: 1e4 });
+  } else {
+    conn2 = await mysql.createConnection({ host: env.DB_HOST, port: Number(env.DB_PORT) || 3306, user: env.DB_USER, password: env.DB_PASSWORD, database: env.DB_NAME, multipleStatements: false, timezone: "Z", connectTimeout: 1e4 });
   }
-  return await mysql.createConnection({
-    host: env.DB_HOST,
-    port: Number(env.DB_PORT) || 3306,
-    user: env.DB_USER,
-    password: env.DB_PASSWORD,
-    database: env.DB_NAME,
-    multipleStatements: false,
-    timezone: "Z",
-    connectTimeout: 1e4
-  });
+  try {
+    await conn2.query("SET time_zone = '+00:00'");
+    return conn2;
+  } catch (error) {
+    await conn2.end().catch(() => void 0);
+    throw error;
+  }
 }
 function firstRow(result) {
   const rows = result[0];

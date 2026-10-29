@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='c5105dd525193d2266dab4d79488109d4fb1a07d'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2415c86d2c3ea3bbb23e6f9ff1be4c9eb23c8468'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -15,15 +15,15 @@ var __esm = (fn, res, err) => function __init() {
   if (err) throw err[0];
   try {
     return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
-  } catch (e8) {
-    throw err = [e8], e8;
+  } catch (e9) {
+    throw err = [e9], e9;
   }
 };
 var __commonJS = (cb, mod) => function __require2() {
   try {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-  } catch (e8) {
-    throw mod = 0, e8;
+  } catch (e9) {
+    throw mod = 0, e9;
   }
 };
 var __export = (target, all) => {
@@ -810,7 +810,7 @@ var require_plugin = __commonJS({
         debug("exec: resolving promise", name);
         maybePromiseLike.then(
           () => process.nextTick(done),
-          (e8) => process.nextTick(done, e8)
+          (e9) => process.nextTick(done, e9)
         );
       } else if (func.length < 3) {
         done();
@@ -1420,7 +1420,7 @@ var require_avvio = __commonJS({
           debug("resolving close/onClose promise");
           promise.then(
             () => process.nextTick(cb),
-            (e8) => process.nextTick(cb, e8)
+            (e9) => process.nextTick(cb, e9)
           );
         } else {
           process.nextTick(cb);
@@ -2469,8 +2469,8 @@ var require_hooks = __commonJS({
         if (fn.length === 1) {
           try {
             fn.call(server2, done);
-          } catch (e8) {
-            done(e8);
+          } catch (e9) {
+            done(e9);
           }
           return;
         }
@@ -5850,7 +5850,7 @@ var require_initial_config_validation = __commonJS({
     function validateInitialConfig(options) {
       const opts = deepClone(options);
       if (!validate(opts)) {
-        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e8) => e8.message)));
+        const error = new FST_ERR_INIT_OPTS_INVALID(JSON.stringify(validate.errors.map((e9) => e9.message)));
         error.errors = validate.errors;
         throw error;
       }
@@ -7080,7 +7080,7 @@ var require_quick_format_unescaped = __commonJS({
     function tryStringify(o) {
       try {
         return JSON.stringify(o);
-      } catch (e8) {
+      } catch (e9) {
         return '"[Circular]"';
       }
     }
@@ -9155,7 +9155,7 @@ var require_levels = __commonJS({
           if (typeof stream.flushSync === "function") {
             try {
               stream.flushSync();
-            } catch (e8) {
+            } catch (e9) {
             }
           }
         };
@@ -9706,8 +9706,8 @@ var require_safe_stable_stringify = __commonJS({
     }
     function configure(options) {
       options = { ...options };
-      const fail10 = getStrictOption(options);
-      if (fail10) {
+      const fail11 = getStrictOption(options);
+      if (fail11) {
         if (options.bigint === void 0) {
           options.bigint = false;
         }
@@ -9818,7 +9818,7 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value2) ? String(value2) : fail10 ? fail10(value2) : "null";
+            return isFinite(value2) ? String(value2) : fail11 ? fail11(value2) : "null";
           case "boolean":
             return value2 === true ? "true" : "false";
           case "undefined":
@@ -9829,7 +9829,7 @@ ${originalIndentation}`;
             }
           // fallthrough
           default:
-            return fail10 ? fail10(value2) : void 0;
+            return fail11 ? fail11(value2) : void 0;
         }
       }
       function stringifyArrayReplacer(key, value2, stack, replacer, spacer, indentation) {
@@ -9909,7 +9909,7 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value2) ? String(value2) : fail10 ? fail10(value2) : "null";
+            return isFinite(value2) ? String(value2) : fail11 ? fail11(value2) : "null";
           case "boolean":
             return value2 === true ? "true" : "false";
           case "undefined":
@@ -9920,7 +9920,7 @@ ${originalIndentation}`;
             }
           // fallthrough
           default:
-            return fail10 ? fail10(value2) : void 0;
+            return fail11 ? fail11(value2) : void 0;
         }
       }
       function stringifyIndent(key, value2, stack, spacer, indentation) {
@@ -10021,7 +10021,7 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value2) ? String(value2) : fail10 ? fail10(value2) : "null";
+            return isFinite(value2) ? String(value2) : fail11 ? fail11(value2) : "null";
           case "boolean":
             return value2 === true ? "true" : "false";
           case "undefined":
@@ -10032,7 +10032,7 @@ ${originalIndentation}`;
             }
           // fallthrough
           default:
-            return fail10 ? fail10(value2) : void 0;
+            return fail11 ? fail11(value2) : void 0;
         }
       }
       function stringifySimple(key, value2, stack) {
@@ -10117,7 +10117,7 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value2) ? String(value2) : fail10 ? fail10(value2) : "null";
+            return isFinite(value2) ? String(value2) : fail11 ? fail11(value2) : "null";
           case "boolean":
             return value2 === true ? "true" : "false";
           case "undefined":
@@ -10128,7 +10128,7 @@ ${originalIndentation}`;
             }
           // fallthrough
           default:
-            return fail10 ? fail10(value2) : void 0;
+            return fail11 ? fail11(value2) : void 0;
         }
       }
       function stringify2(value2, replacer, space) {
@@ -11806,9 +11806,9 @@ var require_reply = __commonJS({
         } else {
           payload = serialize(reply[kRouteContext], payload, reply.raw.statusCode, reply[kReplyHeaders]["content-type"]);
         }
-      } catch (e8) {
-        wrapSerializationError(e8, reply);
-        onErrorHook(reply, e8);
+      } catch (e9) {
+        wrapSerializationError(e9, reply);
+        onErrorHook(reply, e9);
         return;
       }
       onSendHook(reply, payload);
@@ -12503,8 +12503,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e8) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e8 });
+        } catch (e9) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e9 });
         }
       };
       ipaddr.IPv4.isIPv4 = function(string) {
@@ -12553,8 +12553,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e8) {
-          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e8 });
+        } catch (e9) {
+          throw new Error("ipaddr: the address does not have IPv4 CIDR format", { cause: e9 });
         }
       };
       ipaddr.IPv4.parse = function(string) {
@@ -12879,8 +12879,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e8) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e8 });
+        } catch (e9) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e9 });
         }
       };
       ipaddr.IPv6.isIPv6 = function(string) {
@@ -12922,8 +12922,8 @@ var require_ipaddr = __commonJS({
             i++;
           }
           return new this(octets);
-        } catch (e8) {
-          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e8 });
+        } catch (e9) {
+          throw new Error("ipaddr: the address does not have IPv6 CIDR format", { cause: e9 });
         }
       };
       ipaddr.IPv6.parse = function(string) {
@@ -13035,8 +13035,8 @@ var require_ipaddr = __commonJS({
         } catch {
           try {
             return ipaddr.IPv4.parseCIDR(string);
-          } catch (e8) {
-            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e8 });
+          } catch (e9) {
+            throw new Error("ipaddr: the address has neither IPv6 nor IPv4 CIDR format", { cause: e9 });
           }
         }
       };
@@ -13658,8 +13658,8 @@ var require_context = __commonJS({
       let text9 = "";
       const separator = ", ";
       for (let i = 0; i !== errors.length; ++i) {
-        const e8 = errors[i];
-        text9 += dataVar + (e8.instancePath || "") + " " + e8.message + separator;
+        const e9 = errors[i];
+        text9 += dataVar + (e9.instancePath || "") + " " + e9.message + separator;
       }
       return new Error(text9.slice(0, -separator.length));
     }
@@ -13667,9 +13667,9 @@ var require_context = __commonJS({
   }
 });
 
-// node_modules/fastify/node_modules/secure-json-parse/index.js
+// node_modules/secure-json-parse/index.js
 var require_secure_json_parse = __commonJS({
-  "node_modules/fastify/node_modules/secure-json-parse/index.js"(exports, module) {
+  "node_modules/secure-json-parse/index.js"(exports, module) {
     "use strict";
     var hasBuffer = typeof Buffer !== "undefined";
     var suspectProtoRx = /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
@@ -13755,13 +13755,15 @@ var require_secure_json_parse = __commonJS({
     function safeParse(text9, reviver) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
+      let result;
       try {
-        return _parse(text9, reviver, { safe: true });
+        result = _parse(text9, reviver, { safe: true });
       } catch {
-        return void 0;
+        result = void 0;
       } finally {
         Error.stackTraceLimit = stackTraceLimit;
       }
+      return result;
     }
     module.exports = parse;
     module.exports.default = parse;
@@ -14656,17 +14658,17 @@ var require_codegen = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e8 = this.else;
-        if (e8) {
-          const ns = e8.optimizeNodes();
-          e8 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e9 = this.else;
+        if (e9) {
+          const ns = e9.optimizeNodes();
+          e9 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e8) {
+        if (e9) {
           if (cond === false)
-            return e8 instanceof _If ? e8 : e8.nodes;
+            return e9 instanceof _If ? e9 : e9.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e8 instanceof _If ? [e8] : e8.nodes);
+          return new _If(not(cond), e9 instanceof _If ? [e9] : e9.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -15110,8 +15112,8 @@ var require_codegen = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e8) {
-        return e8 instanceof code_1._Code && e8._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e9) {
+        return e9 instanceof code_1._Code && e9._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -15979,7 +15981,7 @@ var require_keyword = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e8) => gen.assign(valid, false).if((0, codegen_1._)`${e8} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e8}.errors`), () => gen.throw(e8)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e9) => gen.assign(valid, false).if((0, codegen_1._)`${e9} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e9}.errors`), () => gen.throw(e9)));
         return ruleErrs;
       }
       function validateSync() {
@@ -17056,12 +17058,12 @@ var require_compile = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e8) {
+      } catch (e9) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e8;
+        throw e9;
       } finally {
         this._compilations.delete(sch);
       }
@@ -18167,8 +18169,8 @@ var require_fast_uri = __commonJS({
         let url;
         try {
           url = new URL("http://" + parsed.host);
-        } catch (e8) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e8;
+        } catch (e9) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e9;
           return true;
         }
         if (!isHostOnlyURL(url)) {
@@ -18570,11 +18572,11 @@ var require_core = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e8) {
-            if (!(e8 instanceof ref_error_1.default))
-              throw e8;
-            checkLoaded.call(this, e8);
-            await loadMissingSchema.call(this, e8.missingSchema);
+          } catch (e9) {
+            if (!(e9 instanceof ref_error_1.default))
+              throw e9;
+            checkLoaded.call(this, e9);
+            await loadMissingSchema.call(this, e9.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
@@ -18770,7 +18772,7 @@ var require_core = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e8) => `${dataVar}${e8.instancePath} ${e8.message}`).reduce((text9, msg) => text9 + separator + msg);
+        return errors.map((e9) => `${dataVar}${e9.instancePath} ${e9.message}`).reduce((text9, msg) => text9 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -19078,9 +19080,9 @@ var require_ref = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e8) => {
-          gen.if((0, codegen_1._)`!(${e8} instanceof ${it.ValidationError})`, () => gen.throw(e8));
-          addErrorsFrom(e8);
+        }, (e9) => {
+          gen.if((0, codegen_1._)`!(${e9} instanceof ${it.ValidationError})`, () => gen.throw(e9));
+          addErrorsFrom(e9);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -21926,12 +21928,12 @@ var require_serialize = __commonJS({
         const serialize = makeSerialize(this.scope.get());
         this.scope.value(serializeName, { ref: serialize });
         sch.serialize = serialize;
-      } catch (e8) {
+      } catch (e9) {
         if (sourceCode)
           this.logger.error("Error compiling serializer, function code:", sourceCode);
         delete sch.serialize;
         delete sch.serializeName;
-        throw e8;
+        throw e9;
       } finally {
         this._compilations.delete(sch);
       }
@@ -22120,8 +22122,8 @@ var require_parseJson = __commonJS({
       try {
         parseJson.position = pos + s.length;
         return JSON.parse(s);
-      } catch (e8) {
-        matches = rxParseJson.exec(e8.message);
+      } catch (e9) {
+        matches = rxParseJson.exec(e9.message);
         if (!matches) {
           parseJson.message = "unexpected end";
           return void 0;
@@ -22337,12 +22339,12 @@ var require_parse = __commonJS({
         const parse = makeParse(this.scope.get());
         this.scope.value(parseName, { ref: parse });
         sch.parse = parse;
-      } catch (e8) {
+      } catch (e9) {
         if (sourceCode)
           this.logger.error("Error compiling parser, function code:", sourceCode);
         delete sch.parse;
         delete sch.parseName;
-        throw e8;
+        throw e9;
       } finally {
         this._compilations.delete(sch);
       }
@@ -22521,8 +22523,8 @@ var require_parse = __commonJS({
           const vts = (0, util_1.useFunc)(gen, timestamp_1.default);
           const { allowDate, parseDate } = self2.opts;
           const notValid = allowDate ? (0, codegen_1._)`!${vts}(${data2}, true)` : (0, codegen_1._)`!${vts}(${data2})`;
-          const fail10 = parseDate ? (0, codegen_1.or)(notValid, (0, codegen_1._)`(${data2} = new Date(${data2}), false)`, (0, codegen_1._)`isNaN(${data2}.valueOf())`) : notValid;
-          gen.if(fail10, () => parsingError(cxt, (0, codegen_1.str)`invalid timestamp`));
+          const fail11 = parseDate ? (0, codegen_1.or)(notValid, (0, codegen_1._)`(${data2} = new Date(${data2}), false)`, (0, codegen_1._)`isNaN(${data2}.valueOf())`) : notValid;
+          gen.if(fail11, () => parsingError(cxt, (0, codegen_1.str)`invalid timestamp`));
           break;
         }
         case "float32":
@@ -22568,10 +22570,10 @@ var require_parse = __commonJS({
       skipWhitespace(cxt);
       gen.if((0, codegen_1._)`"-0123456789".indexOf(${jsonSlice(1)}) < 0`, () => jsonSyntaxError(cxt), () => parseWith(cxt, parseJson_1.parseJsonNumber, maxDigits));
     }
-    function parseBooleanToken(bool2, fail10) {
+    function parseBooleanToken(bool2, fail11) {
       return (cxt) => {
         const { gen, data: data2 } = cxt;
-        tryParseToken(cxt, `${bool2}`, () => fail10(cxt), () => gen.assign(data2, bool2));
+        tryParseToken(cxt, `${bool2}`, () => fail11(cxt), () => gen.assign(data2, bool2));
       };
     }
     function parseRef(cxt) {
@@ -22604,14 +22606,14 @@ var require_parse = __commonJS({
     function parseToken(cxt, tok) {
       tryParseToken(cxt, tok, jsonSyntaxError);
     }
-    function tryParseToken(cxt, tok, fail10, success) {
+    function tryParseToken(cxt, tok, fail11, success) {
       const { gen } = cxt;
       const n = tok.length;
       skipWhitespace(cxt);
       gen.if((0, codegen_1._)`${jsonSlice(n)} === ${tok}`, () => {
         gen.add(names_1.default.jsonPos, n);
         success === null || success === void 0 ? void 0 : success(cxt);
-      }, () => fail10(cxt));
+      }, () => fail11(cxt));
     }
     function skipWhitespace({ gen, char: c }) {
       gen.code((0, codegen_1._)`while((${c}=${names_1.default.json}[${names_1.default.jsonPos}],${c}===" "||${c}==="\\n"||${c}==="\\r"||${c}==="\\t"))${names_1.default.jsonPos}++;`);
@@ -24017,8 +24019,8 @@ var require_fast_uri2 = __commonJS({
         let url;
         try {
           url = new URL("http://" + parsed.host);
-        } catch (e8) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e8;
+        } catch (e9) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e9;
           return true;
         }
         if (!isHostOnlyURL(url)) {
@@ -24445,7 +24447,7 @@ var require_formats = __commonJS({
       try {
         new RegExp(str8);
         return true;
-      } catch (e8) {
+      } catch (e9) {
         return false;
       }
     }
@@ -25786,17 +25788,17 @@ var require_codegen2 = __commonJS({
         const cond = this.condition;
         if (cond === true)
           return this.nodes;
-        let e8 = this.else;
-        if (e8) {
-          const ns = e8.optimizeNodes();
-          e8 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
+        let e9 = this.else;
+        if (e9) {
+          const ns = e9.optimizeNodes();
+          e9 = this.else = Array.isArray(ns) ? new Else(ns) : ns;
         }
-        if (e8) {
+        if (e9) {
           if (cond === false)
-            return e8 instanceof _If ? e8 : e8.nodes;
+            return e9 instanceof _If ? e9 : e9.nodes;
           if (this.nodes.length)
             return this;
-          return new _If(not(cond), e8 instanceof _If ? [e8] : e8.nodes);
+          return new _If(not(cond), e9 instanceof _If ? [e9] : e9.nodes);
         }
         if (cond === false || !this.nodes.length)
           return void 0;
@@ -26240,8 +26242,8 @@ var require_codegen2 = __commonJS({
         delete names[n.str];
         return c;
       }
-      function canOptimize(e8) {
-        return e8 instanceof code_1._Code && e8._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
+      function canOptimize(e9) {
+        return e9 instanceof code_1._Code && e9._items.some((c) => c instanceof code_1.Name && names[c.str] === 1 && constants[c.str] !== void 0);
       }
     }
     function subtractNames(names, from) {
@@ -27109,7 +27111,7 @@ var require_keyword2 = __commonJS({
       }
       function validateAsync() {
         const ruleErrs = gen.let("ruleErrs", null);
-        gen.try(() => assignValid((0, codegen_1._)`await `), (e8) => gen.assign(valid, false).if((0, codegen_1._)`${e8} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e8}.errors`), () => gen.throw(e8)));
+        gen.try(() => assignValid((0, codegen_1._)`await `), (e9) => gen.assign(valid, false).if((0, codegen_1._)`${e9} instanceof ${it.ValidationError}`, () => gen.assign(ruleErrs, (0, codegen_1._)`${e9}.errors`), () => gen.throw(e9)));
         return ruleErrs;
       }
       function validateSync() {
@@ -28151,12 +28153,12 @@ var require_compile2 = __commonJS({
         }
         sch.validate = validate;
         return sch;
-      } catch (e8) {
+      } catch (e9) {
         delete sch.validate;
         delete sch.validateName;
         if (sourceCode)
           this.logger.error("Error compiling schema, function code:", sourceCode);
-        throw e8;
+        throw e9;
       } finally {
         this._compilations.delete(sch);
       }
@@ -29262,8 +29264,8 @@ var require_fast_uri3 = __commonJS({
         let url;
         try {
           url = new URL("http://" + parsed.host);
-        } catch (e8) {
-          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e8;
+        } catch (e9) {
+          parsed.error = parsed.error || "Host's domain name can not be converted to ASCII: " + e9;
           return true;
         }
         if (!isHostOnlyURL(url)) {
@@ -29665,11 +29667,11 @@ var require_core3 = __commonJS({
         async function _compileAsync(sch) {
           try {
             return this._compileSchemaEnv(sch);
-          } catch (e8) {
-            if (!(e8 instanceof ref_error_1.default))
-              throw e8;
-            checkLoaded.call(this, e8);
-            await loadMissingSchema.call(this, e8.missingSchema);
+          } catch (e9) {
+            if (!(e9 instanceof ref_error_1.default))
+              throw e9;
+            checkLoaded.call(this, e9);
+            await loadMissingSchema.call(this, e9.missingSchema);
             return _compileAsync.call(this, sch);
           }
         }
@@ -29865,7 +29867,7 @@ var require_core3 = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e8) => `${dataVar}${e8.instancePath} ${e8.message}`).reduce((text9, msg) => text9 + separator + msg);
+        return errors.map((e9) => `${dataVar}${e9.instancePath} ${e9.message}`).reduce((text9, msg) => text9 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -30173,9 +30175,9 @@ var require_ref3 = __commonJS({
           addEvaluatedFrom(v);
           if (!allErrors)
             gen.assign(valid, true);
-        }, (e8) => {
-          gen.if((0, codegen_1._)`!(${e8} instanceof ${it.ValidationError})`, () => gen.throw(e8));
-          addErrorsFrom(e8);
+        }, (e9) => {
+          gen.if((0, codegen_1._)`!(${e9} instanceof ${it.ValidationError})`, () => gen.throw(e9));
+          addErrorsFrom(e9);
           if (!allErrors)
             gen.assign(valid, false);
         });
@@ -32318,7 +32320,7 @@ var require_formats2 = __commonJS({
       try {
         new RegExp(str8);
         return true;
-      } catch (e8) {
+      } catch (e9) {
         return false;
       }
     }
@@ -41880,7 +41882,7 @@ var require_dist5 = __commonJS({
         return str8;
       try {
         return decodeURIComponent(str8);
-      } catch (e8) {
+      } catch (e9) {
         return str8;
       }
     }
@@ -41990,7 +41992,7 @@ var require_parse_url = __commonJS({
 var require_form_data = __commonJS({
   "node_modules/light-my-request/lib/form-data.js"(exports, module) {
     "use strict";
-    var { randomUUID: randomUUID20 } = __require("node:crypto");
+    var { randomUUID: randomUUID21 } = __require("node:crypto");
     var { Readable } = __require("node:stream");
     var textEncoder;
     function isFormDataLike(payload) {
@@ -41998,7 +42000,7 @@ var require_form_data = __commonJS({
     }
     function formDataToStream(formdata) {
       textEncoder = textEncoder ?? new TextEncoder();
-      const boundary = `----formdata-${randomUUID20()}`;
+      const boundary = `----formdata-${randomUUID21()}`;
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
       const escape2 = (str8) => str8.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
@@ -42262,10 +42264,10 @@ var require_set_cookie = __commonJS({
       }
       try {
         value2 = options.decodeValues ? decodeURIComponent(value2) : value2;
-      } catch (e8) {
+      } catch (e9) {
         console.error(
           "set-cookie-parser: failed to decode cookie value. Set options.decodeValues=false to disable decoding.",
-          e8
+          e9
         );
       }
       var cookie = createNullObj();
@@ -43487,7 +43489,7 @@ var require_light_my_request = __commonJS({
         assert(typeof dispatchFunc === "function", "dispatchFunc should be a function");
         const isOptionValid = optsValidator(options);
         if (!isOptionValid) {
-          throw new Error(optsValidator.errors.map((e8) => e8.message));
+          throw new Error(optsValidator.errors.map((e9) => e9.message));
         }
       }
       const server = options.server || {};
@@ -44443,9 +44445,9 @@ var require_getPluginName = __commonJS({
       Error.stackTraceLimit = 10;
       try {
         throw new Error("anonymous function");
-      } catch (e8) {
+      } catch (e9) {
         Error.stackTraceLimit = stackTraceLimit;
-        return extractPluginName(e8.stack);
+        return extractPluginName(e9.stack);
       }
     };
     function extractPluginName(stack) {
@@ -44961,9 +44963,9 @@ var require_decoder = __commonJS({
           throw new TokenError(TokenError.codes.invalidPayload, "The payload must be an object", { payload });
         }
         return complete ? { header, payload, signature: signatureSegment, input: token2.slice(0, lastSeparator) } : payload;
-      } catch (e8) {
+      } catch (e9) {
         throw TokenError.wrap(
-          e8,
+          e9,
           TokenError.codes.malformed,
           `The token ${validHeader ? "payload" : "header"} is not a valid base64url serialized JSON.`
         );
@@ -45462,7 +45464,7 @@ var require_bn = __commonJS({
         } else {
           Buffer2 = __require("buffer").Buffer;
         }
-      } catch (e8) {
+      } catch (e9) {
       }
       BN.isBN = function isBN(num5) {
         if (num5 instanceof BN) {
@@ -48275,7 +48277,7 @@ var require_inherits = __commonJS({
       util2 = __require("util");
       if (typeof util2.inherits !== "function") throw "";
       module.exports = util2.inherits;
-    } catch (e8) {
+    } catch (e9) {
       module.exports = require_inherits_browser();
     }
     var util2;
@@ -48335,7 +48337,7 @@ var require_safer = __commonJS({
     if (!safer.kStringMaxLength) {
       try {
         safer.kStringMaxLength = process.binding("buffer").kStringMaxLength;
-      } catch (e8) {
+      } catch (e9) {
       }
     }
     if (!safer.constants) {
@@ -48442,8 +48444,8 @@ var require_reporter = __commonJS({
       if (!this.stack) {
         try {
           throw new Error(this.message);
-        } catch (e8) {
-          this.stack = e8.stack;
+        } catch (e9) {
+          this.stack = e9.stack;
         }
       }
       return this;
@@ -48491,15 +48493,15 @@ var require_buffer = __commonJS({
     DecoderBuffer.prototype.isEmpty = function isEmpty() {
       return this.offset === this.length;
     };
-    DecoderBuffer.prototype.readUInt8 = function readUInt8(fail10) {
+    DecoderBuffer.prototype.readUInt8 = function readUInt8(fail11) {
       if (this.offset + 1 <= this.length)
         return this.base.readUInt8(this.offset++, true);
       else
-        return this.error(fail10 || "DecoderBuffer overrun");
+        return this.error(fail11 || "DecoderBuffer overrun");
     };
-    DecoderBuffer.prototype.skip = function skip(bytes, fail10) {
+    DecoderBuffer.prototype.skip = function skip(bytes, fail11) {
       if (!(this.offset + bytes <= this.length))
-        return this.error(fail10 || "DecoderBuffer overrun");
+        return this.error(fail11 || "DecoderBuffer overrun");
       const res = new DecoderBuffer(this.base);
       res._reporterState = this._reporterState;
       res.offset = this.offset;
@@ -48863,7 +48865,7 @@ var require_node2 = __commonJS({
             else
               this._decodeChoice(input, options);
             present = true;
-          } catch (e8) {
+          } catch (e9) {
             present = false;
           }
           input.restore(save);
@@ -48982,7 +48984,7 @@ var require_node2 = __commonJS({
             return false;
           result = { type: key, value: value2 };
           match = true;
-        } catch (e8) {
+        } catch (e9) {
           input.restore(save);
           return false;
         }
@@ -49506,19 +49508,19 @@ var require_der3 = __commonJS({
       buffer.restore(state);
       return buffer.skip(len, 'Failed to match body of: "' + tag + '"');
     };
-    DERNode.prototype._skipUntilEnd = function skipUntilEnd(buffer, fail10) {
+    DERNode.prototype._skipUntilEnd = function skipUntilEnd(buffer, fail11) {
       for (; ; ) {
-        const tag = derDecodeTag(buffer, fail10);
+        const tag = derDecodeTag(buffer, fail11);
         if (buffer.isError(tag))
           return tag;
-        const len = derDecodeLen(buffer, tag.primitive, fail10);
+        const len = derDecodeLen(buffer, tag.primitive, fail11);
         if (buffer.isError(len))
           return len;
         let res;
         if (tag.primitive || len !== null)
           res = buffer.skip(len);
         else
-          res = this._skipUntilEnd(buffer, fail10);
+          res = this._skipUntilEnd(buffer, fail11);
         if (buffer.isError(res))
           return res;
         if (tag.tagStr === "end")
@@ -49659,8 +49661,8 @@ var require_der3 = __commonJS({
         entity = entity(obj);
       return entity._getDecoder("der").tree;
     };
-    function derDecodeTag(buf, fail10) {
-      let tag = buf.readUInt8(fail10);
+    function derDecodeTag(buf, fail11) {
+      let tag = buf.readUInt8(fail11);
       if (buf.isError(tag))
         return tag;
       const cls = der.tagClass[tag >> 6];
@@ -49669,7 +49671,7 @@ var require_der3 = __commonJS({
         let oct = tag;
         tag = 0;
         while ((oct & 128) === 128) {
-          oct = buf.readUInt8(fail10);
+          oct = buf.readUInt8(fail11);
           if (buf.isError(oct))
             return oct;
           tag <<= 7;
@@ -49686,8 +49688,8 @@ var require_der3 = __commonJS({
         tagStr
       };
     }
-    function derDecodeLen(buf, primitive, fail10) {
-      let len = buf.readUInt8(fail10);
+    function derDecodeLen(buf, primitive, fail11) {
+      let len = buf.readUInt8(fail11);
       if (buf.isError(len))
         return len;
       if (!primitive && len === 128)
@@ -49701,7 +49703,7 @@ var require_der3 = __commonJS({
       len = 0;
       for (let i = 0; i < num5; i++) {
         len <<= 8;
-        const j = buf.readUInt8(fail10);
+        const j = buf.readUInt8(fail11);
         if (buf.isError(j))
           return j;
         len |= j;
@@ -50295,12 +50297,12 @@ var require_crypto = __commonJS({
           return cacheSet(privateKeysCache, key, providedAlgorithm);
         }
         return cacheSet(privateKeysCache, key, detectedAlgorithm);
-      } catch (e8) {
+      } catch (e9) {
         throw cacheSet(
           privateKeysCache,
           key,
           null,
-          TokenError.wrap(e8, TokenError.codes.invalidKey, "Unsupported PEM private key.")
+          TokenError.wrap(e9, TokenError.codes.invalidKey, "Unsupported PEM private key.")
         );
       }
     }
@@ -50324,12 +50326,12 @@ var require_crypto = __commonJS({
           throw new TokenError(TokenError.codes.invalidKey, "The public key must be a string or a buffer.");
         }
         return cacheSet(publicKeysCache, key, performDetectPublicKeyAlgorithms(key));
-      } catch (e8) {
+      } catch (e9) {
         throw cacheSet(
           publicKeysCache,
           key,
           null,
-          TokenError.wrap(e8, TokenError.codes.invalidKey, "Unsupported PEM public key.")
+          TokenError.wrap(e9, TokenError.codes.invalidKey, "Unsupported PEM public key.")
         );
       }
     }
@@ -50363,8 +50365,8 @@ var require_crypto = __commonJS({
             raw = directSign(void 0, Buffer.from(input, "utf-8"), key).toString("base64");
         }
         return raw.replace(base64UrlMatcher, base64UrlReplacer);
-      } catch (e8) {
-        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e8 });
+      } catch (e9) {
+        throw new TokenError(TokenError.codes.signError, "Cannot create the signature.", { originalError: e9 });
       }
     }
     function verifySignature(algorithm, key, input, signature) {
@@ -50389,8 +50391,8 @@ var require_crypto = __commonJS({
           signature = joseToDer(signature, algorithm);
         }
         return createVerify("RSA-" + alg).update(input).verify(options, signature);
-      } catch (e8) {
-        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e8 });
+      } catch (e9) {
+        throw new TokenError(TokenError.codes.verifyError, "Cannot verify the signature.", { originalError: e9 });
       }
     }
     module.exports = {
@@ -50413,7 +50415,7 @@ var require_crypto = __commonJS({
 var require_utils4 = __commonJS({
   "node_modules/fast-jwt/src/utils.js"(exports, module) {
     "use strict";
-    var { createHash: createHash10 } = __require("node:crypto");
+    var { createHash: createHash11 } = __require("node:crypto");
     var { TokenError } = require_error3();
     var algorithmMatcher = /"alg"\s*:\s*"[HERP]S(256|384)"/m;
     var edAlgorithmMatcher = /"alg"\s*:\s*"EdDSA"/m;
@@ -50450,10 +50452,10 @@ var require_utils4 = __commonJS({
       const header = Buffer.from(rawHeader, "base64").toString("utf-8");
       let hasher;
       if (header.match(edAlgorithmMatcher) && header.match(ed448CurveMatcher)) {
-        hasher = createHash10("shake256", { outputLength: 114 });
+        hasher = createHash11("shake256", { outputLength: 114 });
       } else {
         const mo = header.match(algorithmMatcher);
-        hasher = createHash10(`sha${mo ? mo[1] : "512"}`);
+        hasher = createHash11(`sha${mo ? mo[1] : "512"}`);
       }
       return hasher.update(token2).digest("hex");
     }
@@ -50751,12 +50753,12 @@ var require_verifier = __commonJS({
       let decoded;
       try {
         decoded = decode(token2);
-      } catch (e8) {
+      } catch (e9) {
         if (callback) {
-          callback(e8);
+          callback(e9);
           return promise;
         }
-        throw e8;
+        throw e9;
       }
       const { header, payload, signature, input } = decoded;
       const cacheContext = {
@@ -50785,8 +50787,8 @@ var require_verifier = __commonJS({
         try {
           verifyToken(key, decoded, validationContext);
           return cacheSet(cacheContext, complete ? { header, payload, signature, input } : payload);
-        } catch (e8) {
-          throw cacheSet(cacheContext, e8);
+        } catch (e9) {
+          throw cacheSet(cacheContext, e9);
         }
       }
       getAsyncKey(key, { header, payload, signature }, (err, currentKey) => {
@@ -50817,8 +50819,8 @@ var require_verifier = __commonJS({
           }
           currentKey = prepareKeyOrSecret(currentKey, availableAlgorithms[0] === hsAlgorithms[0]);
           verifyToken(currentKey, decoded, validationContext);
-        } catch (e8) {
-          return callback(cacheSet(cacheContext, e8));
+        } catch (e9) {
+          return callback(cacheSet(cacheContext, e9));
         }
         callback(null, cacheSet(cacheContext, complete ? { header, payload, signature, input: token2 } : payload));
       });
@@ -51152,8 +51154,8 @@ var require_signer = __commonJS({
           const encodedHeader = Buffer.from(JSON.stringify(header), "utf-8").toString("base64").replace(base64UrlMatcher, base64UrlReplacer);
           const input = encodedHeader + "." + encodedPayload;
           token2 = input + "." + createSignature(algorithm, currentKey, input);
-        } catch (e8) {
-          return callback(e8);
+        } catch (e9) {
+          return callback(e9);
         }
         callback(null, token2);
       });
@@ -51172,7 +51174,7 @@ var require_signer = __commonJS({
         aud,
         iss,
         sub,
-        nonce,
+        nonce: nonce2,
         kid,
         typ,
         header: additionalHeader
@@ -51252,7 +51254,7 @@ var require_signer = __commonJS({
       if (sub && typeof sub !== "string") {
         throw new TokenError(TokenError.codes.invalidOption, "The sub option must be a string.");
       }
-      if (nonce && typeof nonce !== "string") {
+      if (nonce2 && typeof nonce2 !== "string") {
         throw new TokenError(TokenError.codes.invalidOption, "The nonce option must be a string.");
       }
       if (kid && typeof kid !== "string") {
@@ -51261,7 +51263,7 @@ var require_signer = __commonJS({
       if (additionalHeader && typeof additionalHeader !== "object") {
         throw new TokenError(TokenError.codes.invalidOption, "The header option must be a object.");
       }
-      const fpo = { jti, aud, iss, sub, nonce };
+      const fpo = { jti, aud, iss, sub, nonce: nonce2 };
       const fixedPayload = Object.entries(fpo).reduce((obj, [key2, value2]) => {
         if (value2 !== void 0) {
           obj[key2] = value2;
@@ -51969,8 +51971,8 @@ var require_jwt = __commonJS({
     function fastifyJwt(fastify, options, next) {
       try {
         validateOptions(options);
-      } catch (e8) {
-        return next(e8);
+      } catch (e9) {
+        return next(e9);
       }
       const {
         cookie,
@@ -52015,8 +52017,8 @@ var require_jwt = __commonJS({
       try {
         signOptions = convertTemporalProps(initialSignOptions);
         verifyOptions = convertTemporalProps(initialVerifyOptions, true);
-      } catch (e8) {
-        return next(e8);
+      } catch (e9) {
+        return next(e9);
       }
       const messagesOptions = Object.assign({}, messages, pluginOptions.messages);
       const namespace = typeof pluginOptions.namespace === "string" ? pluginOptions.namespace : void 0;
@@ -52078,8 +52080,8 @@ var require_jwt = __commonJS({
         decoder = createDecoder(decodeOptions);
         verifierConfig = checkAndMergeVerifyOptions();
         verifier = createVerifier(verifierConfig.options);
-      } catch (e8) {
-        return next(e8);
+      } catch (e9) {
+        return next(e9);
       }
       next();
       function getVerifier(options2, globalOptions) {
@@ -52654,11 +52656,11 @@ var require_main = __commonJS({
         try {
           const parsed = DotenvModule.parse(fs.readFileSync(path2, { encoding }));
           DotenvModule.populate(parsedAll, parsed, options);
-        } catch (e8) {
+        } catch (e9) {
           if (debug) {
-            _debug(`Failed to load ${path2} ${e8.message}`);
+            _debug(`Failed to load ${path2} ${e9.message}`);
           }
-          lastError = e8;
+          lastError = e9;
         }
       }
       let processEnv = process.env;
@@ -52673,11 +52675,11 @@ var require_main = __commonJS({
           try {
             const relative = path.relative(process.cwd(), filePath);
             shortPaths.push(relative);
-          } catch (e8) {
+          } catch (e9) {
             if (debug) {
-              _debug(`Failed to load ${filePath} ${e8.message}`);
+              _debug(`Failed to load ${filePath} ${e9.message}`);
             }
-            lastError = e8;
+            lastError = e9;
           }
         }
         _log(`injecting env (${keysCount}) from ${shortPaths.join(",")}`);
@@ -52702,11 +52704,11 @@ var require_main = __commonJS({
     function decrypt(encrypted, keyStr) {
       const key = Buffer.from(keyStr.slice(-64), "hex");
       let ciphertext = Buffer.from(encrypted, "base64");
-      const nonce = ciphertext.subarray(0, 12);
+      const nonce2 = ciphertext.subarray(0, 12);
       const authTag = ciphertext.subarray(-16);
       ciphertext = ciphertext.subarray(12, -16);
       try {
-        const aesgcm = crypto.createDecipheriv("aes-256-gcm", key, nonce);
+        const aesgcm = crypto.createDecipheriv("aes-256-gcm", key, nonce2);
         aesgcm.setAuthTag(authTag);
         return `${aesgcm.update(ciphertext)}${aesgcm.final()}`;
       } catch (error) {
@@ -52789,13 +52791,13 @@ var require_bcrypt = __commonJS({
         if (typeof module !== "undefined" && module && module["exports"])
           try {
             return __require("crypto")["randomBytes"](len);
-          } catch (e8) {
+          } catch (e9) {
           }
         try {
           var a;
           (self["crypto"] || self["msCrypto"])["getRandomValues"](a = new Uint32Array(len));
           return Array.prototype.slice.call(a);
-        } catch (e8) {
+        } catch (e9) {
         }
         if (!randomFallback)
           throw Error("Neither WebCryptoAPI nor a crypto module is available. Use bcrypt.setRandomFallback to set an alternative");
@@ -52805,7 +52807,7 @@ var require_bcrypt = __commonJS({
       try {
         random(1);
         randomAvailable = true;
-      } catch (e8) {
+      } catch (e9) {
       }
       randomFallback = null;
       bcrypt2.setRandomFallback = function(random2) {
@@ -53189,7 +53191,7 @@ var require_bcrypt = __commonJS({
           }
         };
         utfx2.decodeUTF8 = function(src, dst) {
-          var a, b, c, d, fail10 = function(b2) {
+          var a, b, c, d, fail11 = function(b2) {
             b2 = b2.slice(0, b2.indexOf(null));
             var err = Error(b2.toString());
             err.name = "TruncatedError";
@@ -53200,11 +53202,11 @@ var require_bcrypt = __commonJS({
             if ((a & 128) === 0)
               dst(a);
             else if ((a & 224) === 192)
-              (b = src()) === null && fail10([a, b]), dst((a & 31) << 6 | b & 63);
+              (b = src()) === null && fail11([a, b]), dst((a & 31) << 6 | b & 63);
             else if ((a & 240) === 224)
-              ((b = src()) === null || (c = src()) === null) && fail10([a, b, c]), dst((a & 15) << 12 | (b & 63) << 6 | c & 63);
+              ((b = src()) === null || (c = src()) === null) && fail11([a, b, c]), dst((a & 15) << 12 | (b & 63) << 6 | c & 63);
             else if ((a & 248) === 240)
-              ((b = src()) === null || (c = src()) === null || (d = src()) === null) && fail10([a, b, c, d]), dst((a & 7) << 18 | (b & 63) << 12 | (c & 63) << 6 | d & 63);
+              ((b = src()) === null || (c = src()) === null || (d = src()) === null) && fail11([a, b, c, d]), dst((a & 7) << 18 | (b & 63) << 12 | (c & 63) << 6 | d & 63);
             else throw RangeError("Illegal starting byte: " + a);
           }
         };
@@ -54635,8 +54637,8 @@ var init_util = __esm({
         return util2.objectValues(filtered);
       };
       util2.objectValues = (obj) => {
-        return util2.objectKeys(obj).map(function(e8) {
-          return obj[e8];
+        return util2.objectKeys(obj).map(function(e9) {
+          return obj[e9];
         });
       };
       util2.objectKeys = typeof Object.keys === "function" ? (obj) => Object.keys(obj) : (object) => {
@@ -57882,13 +57884,13 @@ var init_types = __esm({
           const me = this;
           return OK(async function(...args) {
             const error = new ZodError([]);
-            const parsedArgs = await me._def.args.parseAsync(args, params2).catch((e8) => {
-              error.addIssue(makeArgsIssue(args, e8));
+            const parsedArgs = await me._def.args.parseAsync(args, params2).catch((e9) => {
+              error.addIssue(makeArgsIssue(args, e9));
               throw error;
             });
             const result = await Reflect.apply(fn, this, parsedArgs);
-            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params2).catch((e8) => {
-              error.addIssue(makeReturnsIssue(result, e8));
+            const parsedReturns = await me._def.returns._def.type.parseAsync(result, params2).catch((e9) => {
+              error.addIssue(makeReturnsIssue(result, e9));
               throw error;
             });
             return parsedReturns;
@@ -60513,7 +60515,7 @@ function paginateText(headerLines, blocks, footerLines, maxLength = DEFAULT_MAX_
   if (current.length > 0 || pages.length === 0) {
     pages.push(current);
   }
-  return pages.map((page) => page.join("\n"));
+  return pages.map((page2) => page2.join("\n"));
 }
 function alDiaLine(items, budget) {
   if (items.length === 0) {
@@ -60740,7 +60742,7 @@ var init_schemas2 = __esm({
     init_maintenance();
     init_whatsapp_number();
     PERFILES = ["dueno", "taller", "almacen"];
-    CONSENT_VERSION = "2026-09";
+    CONSENT_VERSION = "2026-10";
     USAGE_PROFILES = ["urbano", "carretera", "severo"];
     categoryIds = serviceTaxonomy.categories.map((c) => c.id);
     req = (schema) => external_exports.preprocess((v) => v === void 0 || v === null ? "" : Array.isArray(v) ? v[0] : v, schema);
@@ -61737,6 +61739,35 @@ var init_plan_override_statements = __esm({
       { kind: "createTable", target: "VehiclePlanOverride", sql: "CREATE TABLE IF NOT EXISTS `VehiclePlanOverride` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `serviceId` VARCHAR(191) NOT NULL, `intervalKm` INT NULL, `intervalMonths` INT NULL, `disabled` TINYINT(1) NOT NULL DEFAULT 0, `nota` VARCHAR(200) NULL, `actorUserId` VARCHAR(191) NOT NULL, `actorRole` ENUM('dueno','taller') NOT NULL, `shopId` VARCHAR(191) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), UNIQUE INDEX `VehiclePlanOverride_vehicleId_serviceId_key` (`vehicleId`,`serviceId`), INDEX `VehiclePlanOverride_actorUserId_idx` (`actorUserId`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
       { kind: "addColumn", target: "VehiclePlanOverride.customName", sql: "ALTER TABLE `VehiclePlanOverride` ADD COLUMN `customName` VARCHAR(100) NULL" },
       { kind: "createTable", target: "VehiclePlanOverrideLog", sql: "CREATE TABLE IF NOT EXISTS `VehiclePlanOverrideLog` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `serviceId` VARCHAR(191) NOT NULL, `before` JSON NULL, `after` JSON NOT NULL, `actorUserId` VARCHAR(191) NOT NULL, `actorRole` ENUM('dueno','taller') NOT NULL, `shopId` VARCHAR(191) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehiclePlanOverrideLog_vehicleId_serviceId_createdAt_idx` (`vehicleId`,`serviceId`,`createdAt`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+    ];
+  }
+});
+
+// packages/api/dist/infrastructure/schema-setup/courses-statements.js
+var T3, COURSES_TABLES, COURSES_STATEMENTS;
+var init_courses_statements = __esm({
+  "packages/api/dist/infrastructure/schema-setup/courses-statements.js"() {
+    "use strict";
+    T3 = "CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+    COURSES_TABLES = ["ExpertProfile", "Course", "Lesson", "Question", "Option", "Enrollment", "LessonProgress", "Certificate", "InviteCode", "CourseChange", "ContentReport"];
+    COURSES_STATEMENTS = [
+      { kind: "createTable", target: "ExpertProfile", sql: `CREATE TABLE IF NOT EXISTS \`ExpertProfile\` (userId VARCHAR(191) PRIMARY KEY, especialidades JSON NOT NULL, verificationStatus ENUM('pendiente','verificado','rechazado') NOT NULL DEFAULT 'pendiente', motivo TEXT NULL, verifiedAt DATETIME(3) NULL, tipoDocumentoRevisado VARCHAR(80) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), CONSTRAINT ExpertProfile_user_fkey FOREIGN KEY (userId) REFERENCES \`User\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+      { kind: "createTable", target: "Course", sql: `CREATE TABLE IF NOT EXISTS \`Course\` (id VARCHAR(191) PRIMARY KEY, expertId VARCHAR(191) NOT NULL, slug VARCHAR(191) NOT NULL UNIQUE, code VARCHAR(24) NOT NULL UNIQUE, titulo VARCHAR(191) NOT NULL, especialidad VARCHAR(100) NOT NULL, nivel VARCHAR(40) NOT NULL, horas INTEGER NOT NULL, precioUsd DECIMAL(10,2) NULL, notaMinima DECIMAL(5,2) NOT NULL DEFAULT 70, estado ENUM('borrador','en_revision','publicado','oculto') NOT NULL DEFAULT 'borrador', inscripcionesAbiertas BOOLEAN NOT NULL DEFAULT TRUE, firstPublishedAt DATETIME(3) NULL, altoVoltajeGas BOOLEAN NOT NULL DEFAULT FALSE, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX Course_expert_idx(expertId), INDEX Course_catalog_idx(estado, especialidad, nivel), CONSTRAINT Course_expert_fkey FOREIGN KEY (expertId) REFERENCES \`User\`(id) ON DELETE RESTRICT ON UPDATE CASCADE) ${T3}` },
+      { kind: "createTable", target: "Lesson", sql: `CREATE TABLE IF NOT EXISTS \`Lesson\` (id VARCHAR(191) PRIMARY KEY, courseId VARCHAR(191) NOT NULL, orden INTEGER NOT NULL, titulo VARCHAR(191) NOT NULL, videoUrl VARCHAR(2048) NULL, pdfUrl VARCHAR(2048) NULL, texto VARCHAR(900) NULL, UNIQUE KEY Lesson_course_order_key(courseId, orden), INDEX Lesson_course_idx(courseId), CONSTRAINT Lesson_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+      { kind: "createTable", target: "Question", sql: `CREATE TABLE IF NOT EXISTS \`Question\` (id VARCHAR(191) PRIMARY KEY, courseId VARCHAR(191) NOT NULL, enunciado TEXT NOT NULL, orden INTEGER NOT NULL, INDEX Question_course_idx(courseId), CONSTRAINT Question_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+      { kind: "createTable", target: "Option", sql: `CREATE TABLE IF NOT EXISTS \`Option\` (id VARCHAR(191) PRIMARY KEY, questionId VARCHAR(191) NOT NULL, letra VARCHAR(8) NOT NULL, texto TEXT NOT NULL, correcta BOOLEAN NOT NULL DEFAULT FALSE, UNIQUE KEY Option_question_letter_key(questionId, letra), INDEX Option_question_idx(questionId), CONSTRAINT Option_question_fkey FOREIGN KEY (questionId) REFERENCES \`Question\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+      { kind: "createTable", target: "Enrollment", sql: `CREATE TABLE IF NOT EXISTS \`Enrollment\` (id VARCHAR(191) PRIMARY KEY, code VARCHAR(24) NOT NULL UNIQUE, courseId VARCHAR(191) NOT NULL, userId VARCHAR(191) NOT NULL, estado ENUM('solicitada','pendiente','activa','rechazada','revocada') NOT NULL DEFAULT 'solicitada', comprobante VARCHAR(2048) NULL, beca BOOLEAN NOT NULL DEFAULT FALSE, compartirConTaller BOOLEAN NOT NULL DEFAULT FALSE, certificadoPublico BOOLEAN NOT NULL DEFAULT FALSE, consentVersion VARCHAR(40) NOT NULL, consentAt DATETIME(3) NOT NULL, respuestas JSON NULL, nota DECIMAL(5,2) NULL, aprobadoAt DATETIME(3) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), UNIQUE KEY Enrollment_course_user_key(courseId,userId), INDEX Enrollment_user_idx(userId, estado), INDEX Enrollment_course_idx(courseId, estado), CONSTRAINT Enrollment_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE RESTRICT ON UPDATE CASCADE, CONSTRAINT Enrollment_user_fkey FOREIGN KEY (userId) REFERENCES \`User\`(id) ON DELETE RESTRICT ON UPDATE CASCADE) ${T3}` },
+      { kind: "createTable", target: "LessonProgress", sql: `CREATE TABLE IF NOT EXISTS \`LessonProgress\` (id VARCHAR(191) PRIMARY KEY, enrollmentId VARCHAR(191) NOT NULL, lessonId VARCHAR(191) NOT NULL, completadoAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), UNIQUE KEY LessonProgress_enrollment_lesson_key(enrollmentId,lessonId), CONSTRAINT LessonProgress_enrollment_fkey FOREIGN KEY (enrollmentId) REFERENCES \`Enrollment\`(id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT LessonProgress_lesson_fkey FOREIGN KEY (lessonId) REFERENCES \`Lesson\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+      { kind: "createTable", target: "Certificate", sql: `CREATE TABLE IF NOT EXISTS \`Certificate\` (id VARCHAR(191) PRIMARY KEY, code VARCHAR(24) NOT NULL UNIQUE, enrollmentId VARCHAR(191) NOT NULL UNIQUE, publico BOOLEAN NOT NULL DEFAULT FALSE, emitidoAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), CONSTRAINT Certificate_enrollment_fkey FOREIGN KEY (enrollmentId) REFERENCES \`Enrollment\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+      { kind: "createTable", target: "InviteCode", sql: `CREATE TABLE IF NOT EXISTS \`InviteCode\` (id VARCHAR(191) PRIMARY KEY, courseId VARCHAR(191) NOT NULL, code VARCHAR(40) NOT NULL UNIQUE, cupo INTEGER NOT NULL, usados INTEGER NOT NULL DEFAULT 0, venceAt DATETIME(3) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX InviteCode_course_idx(courseId), CONSTRAINT InviteCode_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE CASCADE ON UPDATE CASCADE) ${T3}` },
+      { kind: "createTable", target: "CourseChange", sql: `CREATE TABLE IF NOT EXISTS \`CourseChange\` (id VARCHAR(191) PRIMARY KEY, courseId VARCHAR(191) NOT NULL, actorUserId VARCHAR(191) NOT NULL, campo VARCHAR(191) NOT NULL, antes TEXT NULL, despues TEXT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX CourseChange_course_idx(courseId,createdAt), CONSTRAINT CourseChange_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT CourseChange_actor_fkey FOREIGN KEY (actorUserId) REFERENCES \`User\`(id) ON DELETE RESTRICT ON UPDATE CASCADE) ${T3}` },
+      { kind: "createTable", target: "ContentReport", sql: `CREATE TABLE IF NOT EXISTS \`ContentReport\` (id VARCHAR(191) PRIMARY KEY, courseId VARCHAR(191) NOT NULL, lessonId VARCHAR(191) NULL, reporterUserId VARCHAR(191) NULL, motivo TEXT NOT NULL, estado VARCHAR(24) NOT NULL DEFAULT 'pendiente', createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX ContentReport_course_idx(courseId,estado), CONSTRAINT ContentReport_course_fkey FOREIGN KEY (courseId) REFERENCES \`Course\`(id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT ContentReport_lesson_fkey FOREIGN KEY (lessonId) REFERENCES \`Lesson\`(id) ON DELETE SET NULL ON UPDATE CASCADE, CONSTRAINT ContentReport_reporter_fkey FOREIGN KEY (reporterUserId) REFERENCES \`User\`(id) ON DELETE SET NULL ON UPDATE CASCADE) ${T3}` },
+      { kind: "addColumn", target: "ExpertProfile.tokenHash", sql: "ALTER TABLE `ExpertProfile` ADD COLUMN `tokenHash` CHAR(64) NULL" },
+      { kind: "addColumn", target: "ExpertProfile.tokenExpiresAt", sql: "ALTER TABLE `ExpertProfile` ADD COLUMN `tokenExpiresAt` DATETIME(3) NULL" },
+      { kind: "addColumn", target: "ExpertProfile.tokenUsedAt", sql: "ALTER TABLE `ExpertProfile` ADD COLUMN `tokenUsedAt` DATETIME(3) NULL" },
+      { kind: "addColumn", target: "ExpertProfile.documento", sql: "ALTER TABLE `ExpertProfile` ADD COLUMN `documento` MEDIUMBLOB NULL" },
+      { kind: "addColumn", target: "ExpertProfile.documentoMime", sql: "ALTER TABLE `ExpertProfile` ADD COLUMN `documentoMime` VARCHAR(80) NULL" },
+      { kind: "addColumn", target: "Course.motivoRevision", sql: "ALTER TABLE `Course` ADD COLUMN `motivoRevision` TEXT NULL" }
     ];
   }
 });
@@ -71400,8 +71431,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res);
           done();
-        } catch (e8) {
-          done(e8);
+        } catch (e9) {
+          done(e9);
         }
       };
       IconvLiteEncoderStream.prototype._flush = function(done) {
@@ -71409,8 +71440,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res);
           done();
-        } catch (e8) {
-          done(e8);
+        } catch (e9) {
+          done(e9);
         }
       };
       IconvLiteEncoderStream.prototype.collect = function(cb) {
@@ -71441,8 +71472,8 @@ var require_streams = __commonJS({
           var res = this.conv.write(chunk);
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e8) {
-          done(e8);
+        } catch (e9) {
+          done(e9);
         }
       };
       IconvLiteDecoderStream.prototype._flush = function(done) {
@@ -71450,8 +71481,8 @@ var require_streams = __commonJS({
           var res = this.conv.end();
           if (res && res.length) this.push(res, this.encoding);
           done();
-        } catch (e8) {
-          done(e8);
+        } catch (e9) {
+          done(e9);
         }
       };
       IconvLiteDecoderStream.prototype.collect = function(cb) {
@@ -71507,7 +71538,7 @@ var require_lib4 = __commonJS({
       try {
         module.exports.getCodec(enc);
         return true;
-      } catch (e8) {
+      } catch (e9) {
         return false;
       }
     };
@@ -71590,7 +71621,7 @@ var require_lib4 = __commonJS({
     var streamModule;
     try {
       streamModule = __require("stream");
-    } catch (e8) {
+    } catch (e9) {
     }
     if (streamModule && streamModule.Transform) {
       module.exports.enableStreamingAPI(streamModule);
@@ -76592,9 +76623,9 @@ var require_client_handshake = __commonJS({
         }
       }
       handshakeInit(helloPacket, connection) {
-        this.on("error", (e8) => {
-          connection._fatalError = e8;
-          connection._protocolError = e8;
+        this.on("error", (e9) => {
+          connection._fatalError = e9;
+          connection._protocolError = e9;
         });
         this.handshake = Packets.Handshake.fromPacket(helloPacket);
         if (connection.config.debug) {
@@ -78348,21 +78379,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows30, fields;
+          let rows31, fields;
           if (this._resultIndex === 0) {
-            rows30 = this._rows[0];
+            rows31 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows30 = this._rows;
+            rows31 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows30, fields);
+              this.onResult(null, rows31, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows30);
+              this.onResult(null, rows31);
             });
           }
         }
@@ -80919,9 +80950,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows30, columns, binary = false) {
+      writeTextResult(rows31, columns, binary = false) {
         this.writeColumns(columns);
-        rows30.forEach((row) => {
+        rows31.forEach((row) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column) => {
             arrayRow.push(row[column.name]);
@@ -81031,12 +81062,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve2, reject, stackHolder) {
-      return function(err, rows30, fields) {
+      return function(err, rows31, fields) {
         if (err) {
           applyCapturedStack(err, stackHolder);
           reject(err);
         } else {
-          resolve2([rows30, fields]);
+          resolve2([rows31, fields]);
         }
       };
     }
@@ -81644,9 +81675,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err2, rows30, fields) {
+              cmdQuery.onResult = function(err2, rows31, fields) {
                 queryError = err2 || null;
-                origOnResult(err2, rows30, fields);
+                origOnResult(err2, rows31, fields);
               };
             } else {
               cmdQuery.once("error", (err2) => {
@@ -81660,12 +81691,12 @@ var require_pool = __commonJS({
                 conn.release();
               }
             });
-          } catch (e8) {
+          } catch (e9) {
             conn.release();
             if (typeof cmdQuery.onResult === "function") {
-              cmdQuery.onResult(e8);
+              cmdQuery.onResult(e9);
             } else {
-              cmdQuery.emit("error", e8);
+              cmdQuery.emit("error", e9);
             }
           }
         });
@@ -81681,17 +81712,17 @@ var require_pool = __commonJS({
             return cb(err);
           }
           try {
-            conn.execute(sql, values, (err2, rows30, fields) => {
+            conn.execute(sql, values, (err2, rows31, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
-              cb(err2, rows30, fields);
+              cb(err2, rows31, fields);
             }).once("end", () => {
               conn.release();
             });
-          } catch (e8) {
+          } catch (e9) {
             conn.release();
-            return cb(e8);
+            return cb(e9);
           }
         });
       }
@@ -81977,9 +82008,9 @@ var require_pool_cluster = __commonJS({
             conn.query(query).once("end", () => {
               conn.release();
             });
-          } catch (e8) {
+          } catch (e9) {
             conn.release();
-            throw e8;
+            throw e9;
           }
         });
         return query;
@@ -82003,9 +82034,9 @@ var require_pool_cluster = __commonJS({
             conn.execute(sql, values, cb).once("end", () => {
               conn.release();
             });
-          } catch (e8) {
+          } catch (e9) {
             conn.release();
-            throw e8;
+            throw e9;
           }
         });
       }
@@ -82505,23 +82536,29 @@ function missingDbEnv(env = process.env) {
 }
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise2(), 1));
+  let conn;
   if (env.DATABASE_URL?.trim()) {
-    return await mysql.createConnection({ uri: env.DATABASE_URL, multipleStatements: false, timezone: "Z", connectTimeout: 1e4 });
+    const uri = new URL(env.DATABASE_URL);
+    if (uri.searchParams.has("socket")) {
+      if (!uri.searchParams.has("socketPath"))
+        uri.searchParams.set("socketPath", uri.searchParams.get("socket"));
+      uri.searchParams.delete("socket");
+    }
+    conn = await mysql.createConnection({ uri: uri.toString(), multipleStatements: false, timezone: "Z", connectTimeout: 1e4 });
+  } else {
+    conn = await mysql.createConnection({ host: env.DB_HOST, port: Number(env.DB_PORT) || 3306, user: env.DB_USER, password: env.DB_PASSWORD, database: env.DB_NAME, multipleStatements: false, timezone: "Z", connectTimeout: 1e4 });
   }
-  return await mysql.createConnection({
-    host: env.DB_HOST,
-    port: Number(env.DB_PORT) || 3306,
-    user: env.DB_USER,
-    password: env.DB_PASSWORD,
-    database: env.DB_NAME,
-    multipleStatements: false,
-    timezone: "Z",
-    connectTimeout: 1e4
-  });
+  try {
+    await conn.query("SET time_zone = '+00:00'");
+    return conn;
+  } catch (error) {
+    await conn.end().catch(() => void 0);
+    throw error;
+  }
 }
 function firstRow(result) {
-  const rows30 = result[0];
-  return Array.isArray(rows30) ? rows30[0] : void 0;
+  const rows31 = result[0];
+  return Array.isArray(rows31) ? rows31[0] : void 0;
 }
 async function count(conn, sql, params2) {
   const row = firstRow(await conn.query(sql, params2));
@@ -82550,8 +82587,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows30] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows30) ? rows30.map((r) => String(r.name)) : [];
+  const [rows31] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows31) ? rows31.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -82589,15 +82626,15 @@ async function applySchemaNow(conn, statements = ALL_STATEMENTS) {
       await conn.query(statement.sql);
       results.push({ ...base, status: "applied" });
     } catch (err) {
-      const e8 = err;
-      if (e8.code && ALREADY_APPLIED.has(e8.code)) {
+      const e9 = err;
+      if (e9.code && ALREADY_APPLIED.has(e9.code)) {
         results.push({ ...base, status: "skipped" });
         continue;
       }
       results.push({
         ...base,
         status: "failed",
-        error: { code: e8.code ?? "UNKNOWN", message: e8.sqlMessage ?? e8.message ?? "Error desconocido" }
+        error: { code: e9.code ?? "UNKNOWN", message: e9.sqlMessage ?? e9.message ?? "Error desconocido" }
       });
       break;
     }
@@ -82628,8 +82665,9 @@ var init_apply = __esm({
     init_map_statements();
     init_web_login_statements();
     init_plan_override_statements();
-    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS];
-    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES];
+    init_courses_statements();
+    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...COURSES_STATEMENTS];
+    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...COURSES_TABLES];
     DB_ENV = ["DB_HOST", "DB_PORT", "DB_NAME", "DB_USER", "DB_PASSWORD"];
     tableExists = (conn, table) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?", [table]);
     columnExists = (conn, table, column) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ?", [table, column]);
@@ -82738,14 +82776,14 @@ var init_registration_store = __esm({
       addVehicle(userId, vehicle) {
         return this.run((conn) => this.insertVehicle(conn, userId, vehicle));
       }
-      searchUsers(query, page) {
+      searchUsers(query, page2) {
         return this.run(async (conn) => {
           const q = query.trim();
           const like = `%${q.replace(/[\\%_]/g, "\\$&")}%`;
           const digits = q.replace(/\D/g, "");
           const likePhone = digits ? `%${digits}%` : like;
-          const items = rows2(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE]));
-          return { items, page, pageSize: PAGE_SIZE };
+          const items = rows2(await conn.query("SELECT id, name, role, phone, city, createdAt FROM `User` WHERE deletedAt IS NULL AND role <> 'admin' AND (? = '' OR name LIKE ? OR phone LIKE ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?", [q, like, likePhone, PAGE_SIZE, (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE]));
+          return { items, page: page2, pageSize: PAGE_SIZE };
         });
       }
       getUserDetail(id2) {
@@ -82840,8 +82878,8 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows30] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row = Array.isArray(rows30) ? rows30[0] : void 0;
+          const [rows31] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row = Array.isArray(rows31) ? rows31[0] : void 0;
           return row?.value === void 0 || row.value === null ? null : String(row.value);
         });
       }
@@ -83403,8 +83441,8 @@ var init_inbound_webhook_store = __esm({
         return this.run(async (conn) => {
           const changed = affected(await conn.query("UPDATE `InboundWebhook` SET status = IF(attempts >= ?, 'dead', 'queued'), nextAttemptAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? SECOND), lastError = ?, leaseToken = NULL, lockedAt = NULL, updatedAt = UTC_TIMESTAMP(3) WHERE wamid = ? AND status = 'processing' AND leaseToken = ? AND lockedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ? SECOND)", [MAX_ATTEMPTS, delaySeconds, safeCode, wamid, leaseToken, LEASE_SECONDS])) === 1;
           if (changed) {
-            const [rows30] = await conn.query("SELECT status FROM `InboundWebhook` WHERE wamid = ?", [wamid]);
-            if (rows30[0]?.status === "dead")
+            const [rows31] = await conn.query("SELECT status FROM `InboundWebhook` WHERE wamid = ?", [wamid]);
+            if (rows31[0]?.status === "dead")
               void new MysqlAdminAlerts().notify("inbound_dead", 1);
           }
           return changed;
@@ -83652,9 +83690,9 @@ var init_appointment_store = __esm({
           return row ? toAppointment(row) : null;
         });
       }
-      listAppointments(filter, page, now = /* @__PURE__ */ new Date()) {
+      listAppointments(filter, page2, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE2;
+          const offset2 = (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE2;
           let result;
           if (filter === "hoy") {
             const { start, end } = ecDayRange(now);
@@ -83666,7 +83704,7 @@ var init_appointment_store = __esm({
           } else {
             result = await conn.query(LIST_ALL, [PAGE_SIZE2, offset2]);
           }
-          return { items: rows3(result).map(toAppointment), page, pageSize: PAGE_SIZE2 };
+          return { items: rows3(result).map(toAppointment), page: page2, pageSize: PAGE_SIZE2 };
         });
       }
       listForUser(userId) {
@@ -84509,7 +84547,7 @@ function placesOf(shops) {
       entry.zones.set(fold4(shop.zone), placeLabel(shop.zone));
     byCity.set(key, entry);
   }
-  return [...byCity.values()].map((e8) => ({ city: e8.city, zones: [...e8.zones.values()].sort((a, b) => a.localeCompare(b, "es")) })).sort((a, b) => a.city.localeCompare(b.city, "es"));
+  return [...byCity.values()].map((e9) => ({ city: e9.city, zones: [...e9.zones.values()].sort((a, b) => a.localeCompare(b, "es")) })).sort((a, b) => a.city.localeCompare(b.city, "es"));
 }
 function searchShops(records, query) {
   const city = fold4(query.city ?? "");
@@ -86672,6 +86710,34 @@ function parseAccountCommand(raw) {
     command = { action: "reportPayment", number: Number(verb.match(/\d+$/)[0]), reference: parts[1], note: parts[2] ? parts[2] : null };
   else if (/^renovar sb-?\d{1,6}$/.test(verb) && parts.length === 1)
     command = { action: "renewPlan", number: Number(verb.match(/\d+$/)[0]) };
+  else if (["cursos"].includes(verb) && parts.length === 1)
+    command = { action: "courseList" };
+  else if (/^curso cu-\d{4}$/.test(verb) && parts.length === 1)
+    command = { action: "courseDetail", code: verb.toUpperCase().slice(6) };
+  else if (/^inscribirme cu-\d{4}$/.test(verb) && (parts.length === 1 || accepted(parts[1]) && parts.slice(2).every((p) => ["compartir", "publico"].includes(fold6(p)))))
+    command = { action: "courseEnroll", code: verb.toUpperCase().match(/CU-\d{4}/)[0], consent: parts.length > 1, share: parts.slice(2).some((p) => fold6(p) === "compartir"), publicCertificate: parts.slice(2).some((p) => fold6(p) === "publico") };
+  else if (/^pago in-\d{4}$/.test(verb) && parts.length === 1)
+    command = { action: "coursePayment", code: verb.toUpperCase().replace("PAGO ", "") };
+  else if (verb === "listo" && parts.length === 1)
+    command = { action: "courseDone" };
+  else if (/^listo cu-\d{4}$/.test(verb) && parts.length === 1)
+    command = { action: "courseDone", code: verb.toUpperCase().slice(6) };
+  else if (/^[abc]$/.test(verb) && parts.length === 1)
+    command = { action: "courseAnswer", letter: verb.toUpperCase() };
+  else if (verb === "mis cursos" && parts.length === 1)
+    command = { action: "myCourses" };
+  else if (/^certificado cu-\d{4}$/.test(verb) && parts.length === 1)
+    command = { action: "courseCertificate", code: verb.toUpperCase().slice(12) };
+  else if (/^inscribir tecnicos cu-\d{4}$/.test(verb) && parts.length === 1)
+    command = { action: "courseTechnicianEnroll", code: verb.toUpperCase().match(/CU-\d{4}/)[0] };
+  else if (verb === "avance tecnicos" && parts.length === 1)
+    command = { action: "courseTechnicianProgress" };
+  else if (verb === "soy experto" && parts.length === 1)
+    command = { action: "becomeExpert" };
+  else if (/^(aprobar|rechazar) in-\d{4}$/.test(verb) && parts.length === 1)
+    command = { action: "courseEnrollmentDecision", code: verb.toUpperCase().match(/IN-\d{4}/)[0], approve: verb.startsWith("aprobar") };
+  else if (/^(curso|inscribirme|pago in-|certificado|inscribir tecnicos|avance tecnicos|soy experto|aprobar in-|rechazar in-|listo|mis cursos|[abc]$)/.test(verb))
+    command = { action: "trainingNoop", key: "invalid" };
   else if (["registrarme", "registrar taller", "registrar almacen", "registrar flota", "vehiculo", "vehiculo flota", "ficha", "ultimo servicio", "kilometraje", "sintoma", "alerta", "agregar tecnico", "agregar conductor", "agregar supervisor", "convenio", "aprobacion automatica", "limite supervisor"].includes(verb) || /^(ingreso|servicio|proxima visita|alerta|tecnico|presupuesto|aprobar|rechazar|novedad|entrega|acepto entrega|rechazo entrega|aprobar novedad|rechazar novedad|llamar novedad|calificar) [a-z]{1,2}-/.test(verb) || /^(ficha|no es mio|anular ficha|quitar taller) f-|^unirme (a )?(la )?flota j-|^(aceptar|rechazar|terminar) convenio k-/.test(verb) || new RegExp(`^(agendar|gasto|asignar|retirar|liberar) ${PLATE}$`).test(verb) || /^pago sb-?\d/.test(verb))
     return { invalid: true };
   if (command === null)
@@ -86796,6 +86862,19 @@ var init_commands = __esm({
       external_exports.object({ action: external_exports.literal("requestPlan"), name: text2(2, 40), period: external_exports.enum(["mensual", "anual"]), units: external_exports.number().int().min(1).max(500).nullable() }).strict(),
       external_exports.object({ action: external_exports.literal("reportPayment"), number: external_exports.number().int().min(1).max(999999), reference: text2(3, 60), note: external_exports.string().trim().max(120).nullable() }).strict(),
       external_exports.object({ action: external_exports.literal("renewPlan"), number: external_exports.number().int().min(1).max(999999) }).strict(),
+      external_exports.object({ action: external_exports.literal("courseList") }).strict(),
+      external_exports.object({ action: external_exports.literal("courseDetail"), code: external_exports.string().regex(/^CU-\d{4}$/) }).strict(),
+      external_exports.object({ action: external_exports.literal("courseEnroll"), code: external_exports.string().regex(/^CU-\d{4}$/), consent: external_exports.boolean(), share: external_exports.boolean().optional(), publicCertificate: external_exports.boolean().optional() }).strict(),
+      external_exports.object({ action: external_exports.literal("coursePayment"), code: external_exports.string().regex(/^IN-\d{4}$/) }).strict(),
+      external_exports.object({ action: external_exports.literal("courseDone"), code: external_exports.string().regex(/^CU-\d{4}$/).optional() }).strict(),
+      external_exports.object({ action: external_exports.literal("courseAnswer"), letter: external_exports.enum(["A", "B", "C"]) }).strict(),
+      external_exports.object({ action: external_exports.literal("myCourses") }).strict(),
+      external_exports.object({ action: external_exports.literal("courseCertificate"), code: external_exports.string().regex(/^CU-\d{4}$/) }).strict(),
+      external_exports.object({ action: external_exports.literal("courseTechnicianEnroll"), code: external_exports.string().regex(/^CU-\d{4}$/) }).strict(),
+      external_exports.object({ action: external_exports.literal("courseTechnicianProgress") }).strict(),
+      external_exports.object({ action: external_exports.literal("becomeExpert") }).strict(),
+      external_exports.object({ action: external_exports.literal("courseEnrollmentDecision"), code: external_exports.string().regex(/^IN-\d{4}$/), approve: external_exports.boolean() }).strict(),
+      external_exports.object({ action: external_exports.literal("trainingNoop"), key: text2(1, 30) }).strict(),
       // Mapa de talleres: el taller comparte su ubicación y acepta aparecer, o sale del mapa.
       external_exports.object({ action: external_exports.literal("shopMap"), lat: external_exports.number().min(-5.1).max(1.7), lng: external_exports.number().min(-92.2).max(-75.1), precision: external_exports.enum(["exacta", "sector"]) }).strict(),
       external_exports.object({ action: external_exports.literal("shopMapLeave") }).strict()
@@ -86817,6 +86896,7 @@ var init_commands = __esm({
       "Ficha creada por el taller: Ficha | placa | clase | combustible | marca | modelo | a\xF1o | km (| servicios de hoy separados por coma) \xB7 Mis fichas \xB7 Anular ficha F-XXXXXXXX \xB7 Due\xF1o: Ficha F-XXXXXXXX (ver) \xB7 Ficha F-XXXXXXXX | ACEPTO \xB7 Ficha F-XXXXXXXX | nombre y apellido | ciudad | ACEPTO \xB7 Ficha F-XXXXXXXX | flota | ACEPTO \xB7 No es m\xEDo F-XXXXXXXX \xB7 Quitar taller F-XXXXXXXX",
       "Flota: Registrar flota | raz\xF3n social | RUC | ciudad | tu nombre y apellido | ACEPTO \xB7 Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km (| c\xF3digo interno) \xB7 Retirar PCD-4521 \xB7 Agregar conductor | nombre \xB7 Agregar supervisor | nombre \xB7 Conductores \xB7 Quitar D-XXXXXX \xB7 Asignar PCD-4521 | D-XXXXXX \xB7 Liberar PCD-4521 \xB7 Flota \xB7 Vencidos \xB7 Plan PCD-4521 \xB7 Kilometraje PCD-4521 | km \xB7 Gasto PCD-4521 | concepto | USD (| AAAA-MM-DD) \xB7 Costos mes \xB7 Costos PCD-4521 \xB7 Convenio | RUC del taller \xB7 Convenios \xB7 Terminar convenio K-XXXXXX \xB7 Agendar PCD-4521 | K-XXXXXX | AAAA-MM-DD | HH:mm | motivo \xB7 Aprobaci\xF3n autom\xE1tica | USD \xB7 L\xEDmite supervisor | USD \xB7 Panel flota",
       "Planes: Planes \xB7 Mi suscripci\xF3n \xB7 Quiero plan Premium (| anual) \xB7 Quiero plan Flota | 12 veh\xEDculos \xB7 Pago SB-0042 | n\xFAmero de comprobante (| banco) \xB7 Renovar SB-0042",
+      "Capacitaci\xF3n: Cursos \xB7 Curso CU-0001 \xB7 Inscribirme CU-0001 \xB7 Pago IN-0001 + foto \xB7 Listo \xB7 A/B/C \xB7 Mis cursos \xB7 Certificado CU-0001 \xB7 Taller: Inscribir t\xE9cnicos CU-0001 \xB7 Avance t\xE9cnicos \xB7 Experto: Soy experto \xB7 Aprobar/Rechazar IN-0001",
       "Conductor: Unirme flota J-XXXXXXXX | nombre | ACEPTO \xB7 Mi veh\xEDculo \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n \xB7 Salir de flota \xB7 Taller: Mis flotas \xB7 Aceptar convenio K-XXXXXX \xB7 Rechazar convenio K-XXXXXX"
     ].join("\n");
     fold6 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
@@ -87628,7 +87708,7 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
           const last = await rows11(conn, "SELECT description, amountUsd, spentAt FROM `VehicleExpense` WHERE vehicleId = ? ORDER BY spentAt DESC LIMIT 5", [vehicle.id]);
           if (!months.length)
             return { userId, message: `${unitLabel(vehicle)} no tiene gastos en los \xFAltimos 6 meses. Para anotar uno: Gasto ${vehicle.plate} | concepto | USD` };
-          return { userId, message: [`\u{1F4B5} ${unitLabel(vehicle)} ${vehicle.make} ${vehicle.model}: \xFAltimos 6 meses`, ...months.map((m) => `\u2022 ${m.month}: ${formatUsd2(Number(m.total))} (${Number(m.n)} gastos)`), "\xDAltimos gastos:", ...last.map((e8) => `\u2022 ${formatEcDateTime(e8.spentAt).split(",")[0]} ${e8.description}: ${formatUsd2(Number(e8.amountUsd))}`)].join("\n") };
+          return { userId, message: [`\u{1F4B5} ${unitLabel(vehicle)} ${vehicle.make} ${vehicle.model}: \xFAltimos 6 meses`, ...months.map((m) => `\u2022 ${m.month}: ${formatUsd2(Number(m.total))} (${Number(m.n)} gastos)`), "\xDAltimos gastos:", ...last.map((e9) => `\u2022 ${formatEcDateTime(e9.spentAt).split(",")[0]} ${e9.description}: ${formatUsd2(Number(e9.amountUsd))}`)].join("\n") };
         }
         const list7 = (await fleetSnapshot(conn, fleet.fleetId)).sort((a, b) => b.monthCost - a.monthCost);
         const total = list7.reduce((a, v) => a + v.monthCost, 0);
@@ -87785,12 +87865,12 @@ function toRecord(r) {
     ratingCount: Number(r.ratingCount ?? 0)
   };
 }
-async function executeShopMapCommand(conn, userId, role, command, fail10) {
+async function executeShopMapCommand(conn, userId, role, command, fail11) {
   if (role !== "taller")
-    fail10("FORBIDDEN");
+    fail11("FORBIDDEN");
   const [shop] = rows12(await conn.query("SELECT id, name, verificationStatus, city, zone FROM `Shop` WHERE userId = ? LIMIT 1 FOR UPDATE", [userId]));
   if (!shop)
-    return fail10("NOT_FOUND");
+    return fail11("NOT_FOUND");
   if (command.action === "shopMapLeave") {
     await conn.query("UPDATE `Shop` SET mapListed = FALSE, mapConsentAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [shop.id]);
     await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.leave', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID11(), userId, shop.id, JSON.stringify({ source: "whatsapp" })]);
@@ -88006,8 +88086,10 @@ Luego escribe de nuevo: ${kind === "taller" ? "Taller" : "Almac\xE9n"} ${ref4}` 
           return fail7("ACCOUNT_REQUIRED");
         if (command.action === "shopMap" || command.action === "shopMapLeave")
           return { userId, message: await executeShopMapCommand(conn, userId, role ?? "", command, fail7) };
-        if (command.action !== "addVehicle")
+        if (command.action !== "addVehicle" && !(command.action === "courseList" || command.action === "courseDetail" || command.action === "courseEnroll" || command.action === "coursePayment" || command.action === "courseDone" || command.action === "courseAnswer" || command.action === "myCourses" || command.action === "courseCertificate" || command.action === "courseTechnicianEnroll" || command.action === "courseTechnicianProgress" || command.action === "becomeExpert" || command.action === "courseEnrollmentDecision" || command.action === "trainingNoop"))
           return this.care.execute(conn, userId, role ?? "", command, await this.publicNumber(conn));
+        if (command.action !== "addVehicle")
+          return fail7("UNSUPPORTED_ACCOUNT_COMMAND");
         if (role !== "dueno")
           fail7("FORBIDDEN");
         {
@@ -88117,6 +88199,7 @@ var init_error_messages = __esm({
       STOCK_ALREADY_REPORTED: "Ya registraste la disponibilidad de este repuesto. Espera la respuesta del due\xF1o en este chat.",
       TECHNICIAN_LIMIT: "El taller alcanz\xF3 el l\xEDmite de t\xE9cnicos. Revisa el plan o libera un cupo antes de agregar a otra persona.",
       UNKNOWN_SERVICE: "No reconocimos ese servicio. Revisa el nombre y vuelve a buscarlo con: Buscar servicio | categor\xEDa | ciudad | sector | descripci\xF3n.",
+      UNSUPPORTED_ACCOUNT_COMMAND: "Ese comando de cuenta no est\xE1 disponible por chat. Para agregar un veh\xEDculo escribe: Veh\xEDculo | clase | combustible | marca | modelo | a\xF1o | kilometraje.",
       VEHICLE_LIMIT: "Alcanzaste el l\xEDmite de veh\xEDculos de tu cuenta. Revisa tus veh\xEDculos con: Mis veh\xEDculos.",
       VEHICLE_NOT_FOUND: "No encontramos un veh\xEDculo disponible en tu cuenta. Reg\xEDstralo con: Veh\xEDculo | clase | combustible | marca | modelo | a\xF1o | kilometraje.",
       VEHICLE_NOT_FOUND_OR_PLATE_REQUIRED: "No encontramos ese veh\xEDculo. Indica la placa o selecci\xF3nalo con: Mis veh\xEDculos.",
@@ -88126,9 +88209,760 @@ var init_error_messages = __esm({
   }
 });
 
+// packages/api/dist/application/courses/domain.js
+function canTransitionEnrollment(from, to) {
+  return TRANSITIONS[from]?.includes(to) ?? false;
+}
+function transitionEnrollment(from, to) {
+  if (!canTransitionEnrollment(from, to))
+    throw new Error("INVALID_ENROLLMENT_TRANSITION");
+  return to;
+}
+function publicationStatus(current, firstPublishedAt) {
+  if (current === "publicado" && firstPublishedAt !== null)
+    return "publicado";
+  if (current === "oculto" && firstPublishedAt !== null)
+    return "publicado";
+  return "en_revision";
+}
+function requiresPaidCourseCommission(priceUsd) {
+  return priceUsd !== null && priceUsd > 0;
+}
+function canPublishCourse(priceUsd, commission) {
+  return !requiresPaidCourseCommission(priceUsd) || Boolean(commission?.trim());
+}
+function assertPublishable(priceUsd, commission) {
+  if (!canPublishCourse(priceUsd, commission))
+    throw new Error("COURSES_COMMISSION_REQUIRED");
+}
+function isHttpsUrl(value2) {
+  if (!value2?.trim())
+    return true;
+  try {
+    const url = new URL(value2);
+    return url.protocol === "https:" && Boolean(url.hostname);
+  } catch {
+    return false;
+  }
+}
+function assertHttpsUrl(value2) {
+  if (!isHttpsUrl(value2))
+    throw new Error("INVALID_URL");
+}
+function validateLessonText(value2) {
+  if ((value2 ?? "").length > 900)
+    throw new Error("LESSON_TEXT_TOO_LONG");
+}
+function isHighVoltageOrGas(specialty) {
+  return /(^|[^A-Z])(EV|HEV|GLP|GNV)([^A-Z]|$)/i.test(specialty);
+}
+var CERTIFICATE_DISCLAIMER, HIGH_VOLTAGE_GAS_NOTICE, TRANSITIONS;
+var init_domain = __esm({
+  "packages/api/dist/application/courses/domain.js"() {
+    "use strict";
+    CERTIFICATE_DISCLAIMER = "Certificado de aprobaci\xF3n de un curso en l\xEDnea. No es un t\xEDtulo oficial ni una certificaci\xF3n de competencias laborales reconocida por el Estado.";
+    HIGH_VOLTAGE_GAS_NOTICE = "Este curso no habilita para trabajar en estos sistemas: requiere pr\xE1ctica presencial supervisada y equipo de protecci\xF3n personal (EPP).";
+    TRANSITIONS = {
+      solicitada: ["pendiente", "activa"],
+      pendiente: ["activa", "rechazada"],
+      activa: ["revocada"],
+      rechazada: [],
+      revocada: []
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/courses/courses-store.js
+import { randomUUID as randomUUID13 } from "node:crypto";
+import { createHash as createHash5 } from "node:crypto";
+async function isVerifiedExpert(conn, userId) {
+  return rowsOf(await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId = ? AND verificationStatus = 'verificado' LIMIT 1", [userId])).length > 0;
+}
+var courseCode, enrollmentCode, certificateCode, rowsOf, affected2, fail8, MysqlCoursesStore;
+var init_courses_store = __esm({
+  "packages/api/dist/infrastructure/courses/courses-store.js"() {
+    "use strict";
+    init_domain();
+    courseCode = (n) => `CU-${String(n).padStart(4, "0")}`;
+    enrollmentCode = (n) => `IN-${String(n).padStart(4, "0")}`;
+    certificateCode = (n) => `C-${String(n).padStart(4, "0")}`;
+    rowsOf = (r) => Array.isArray(r[0]) ? r[0] : [];
+    affected2 = (r) => Number(r[0].affectedRows ?? 0);
+    fail8 = (code3) => {
+      throw new Error(code3);
+    };
+    MysqlCoursesStore = class _MysqlCoursesStore {
+      connect;
+      settings;
+      boundConnection;
+      constructor(connect, settings, boundConnection) {
+        this.connect = connect;
+        this.settings = settings;
+        this.boundConnection = boundConnection;
+      }
+      async run(work) {
+        if (this.boundConnection)
+          return work(this.boundConnection);
+        const conn = await this.connect();
+        try {
+          await conn.query("START TRANSACTION");
+          const result = await work(conn);
+          await conn.query("COMMIT");
+          return result;
+        } catch (error) {
+          await conn.query("ROLLBACK").catch(() => void 0);
+          throw error;
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      async nextNumber(c, kind) {
+        const sql = {
+          Course: "SELECT COALESCE(MAX(CAST(SUBSTRING(code,4) AS UNSIGNED)),0) n FROM `Course`",
+          Enrollment: "SELECT COALESCE(MAX(CAST(SUBSTRING(code,4) AS UNSIGNED)),0) n FROM `Enrollment`",
+          Certificate: "SELECT GREATEST((SELECT COALESCE(MAX(CAST(SUBSTRING(code,3) AS UNSIGNED)),0) FROM `Certificate`),(SELECT COALESCE(MAX(CAST(SUBSTRING_INDEX(dedupKey,'C-',-1) AS UNSIGNED)),0) FROM `NotificationOutbox` WHERE dedupKey LIKE 'course-certificate:C-%')) n",
+          InviteCode: "SELECT COALESCE(MAX(CAST(SUBSTRING(code,4) AS UNSIGNED)),0) n FROM `InviteCode`"
+        };
+        const key = `courses.sequence.${kind}`;
+        await c.query("INSERT INTO `AppSetting` (name,value,updatedAt) VALUES (?,'0',UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE name=name", [key]);
+        const [counter] = rowsOf(await c.query("SELECT value FROM `AppSetting` WHERE name=? FOR UPDATE", [key]));
+        const [existing] = rowsOf(await c.query(sql[kind]));
+        const number = Math.max(Number(counter?.value ?? 0), Number(existing?.n ?? 0)) + 1;
+        await c.query("UPDATE `AppSetting` SET value=?,updatedAt=UTC_TIMESTAMP(3) WHERE name=?", [String(number), key]);
+        return number;
+      }
+      async commissionValue(c) {
+        if (this.settings)
+          return this.settings.get("courses.commission");
+        const [row] = rowsOf(await c.query("SELECT value FROM `AppSetting` WHERE name=?", ["courses.commission"]));
+        return row ? String(row.value) : null;
+      }
+      async contentChange(c, courseId, actorId, field2, before, after) {
+        const [course] = rowsOf(await c.query("SELECT firstPublishedAt FROM `Course` WHERE id=?", [courseId]));
+        if (!course?.firstPublishedAt || JSON.stringify(before) === JSON.stringify(after))
+          return;
+        await c.query("INSERT INTO `CourseChange` (id,courseId,actorUserId,campo,antes,despues) VALUES (?,?,?,?,?,?)", [randomUUID13(), courseId, actorId, field2, JSON.stringify(before) ?? null, JSON.stringify(after) ?? null]);
+      }
+      async listPublished(filters = {}) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT c.id,c.slug,c.code,c.titulo,c.especialidad,c.nivel,c.horas,c.precioUsd,c.notaMinima,c.altoVoltajeGas,u.name expertName FROM `Course` c JOIN `User` u ON u.id=c.expertId WHERE c.estado='publicado' AND (? IS NULL OR c.especialidad=?) AND (? IS NULL OR c.nivel=?) ORDER BY c.updatedAt DESC", [filters.especialidad ?? null, filters.especialidad ?? null, filters.nivel ?? null, filters.nivel ?? null])).map((r) => ({ ...r, id: String(r.id), slug: String(r.slug), code: String(r.code), titulo: String(r.titulo), especialidad: String(r.especialidad), nivel: String(r.nivel), horas: Number(r.horas), precioUsd: r.precioUsd === null ? null : Number(r.precioUsd), notaMinima: Number(r.notaMinima), altoVoltajeGas: Boolean(r.altoVoltajeGas), expertName: String(r.expertName) })));
+      }
+      async expertCourses(expertId) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT c.*, (SELECT COUNT(*) FROM `Enrollment` e WHERE e.courseId=c.id) enrollmentCount FROM `Course` c WHERE c.expertId=? ORDER BY c.updatedAt DESC", [expertId])));
+      }
+      async expertCourseDetail(expertId, courseId) {
+        return this.run(async (c) => {
+          const [course] = rowsOf(await c.query("SELECT * FROM `Course` WHERE id=? AND expertId=? LIMIT 1", [courseId, expertId]));
+          if (!course)
+            return null;
+          course.lessons = rowsOf(await c.query("SELECT id,orden,titulo,videoUrl,pdfUrl,texto FROM `Lesson` WHERE courseId=? ORDER BY orden", [courseId]));
+          course.questions = rowsOf(await c.query("SELECT q.id,q.orden,q.enunciado,o.letra,o.texto,o.correcta FROM `Question` q LEFT JOIN `Option` o ON o.questionId=q.id WHERE q.courseId=? ORDER BY q.orden,o.letra", [courseId]));
+          return course;
+        });
+      }
+      async enrollmentRecords(expertId, courseId) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT e.id,e.code,e.estado,e.comprobante,e.beca,e.createdAt,u.name studentName FROM `Enrollment` e JOIN `Course` c ON c.id=e.courseId JOIN `User` u ON u.id=e.userId WHERE c.expertId=? AND c.id=? ORDER BY e.createdAt DESC", [expertId, courseId])));
+      }
+      async issueExpertLink(userId, token2) {
+        const tokenHash = createHash5("sha256").update(token2).digest("hex");
+        await this.run(async (c) => {
+          await c.query("INSERT INTO `ExpertProfile` (userId,especialidades,verificationStatus,tokenHash,tokenExpiresAt,tokenUsedAt) VALUES (?,JSON_ARRAY(),'pendiente',?,DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 24 HOUR),NULL) ON DUPLICATE KEY UPDATE tokenHash=VALUES(tokenHash),tokenExpiresAt=VALUES(tokenExpiresAt),tokenUsedAt=NULL", [userId, tokenHash]);
+        });
+      }
+      async submitExpertApplication(token2, specialties, mime, document2) {
+        const tokenHash = createHash5("sha256").update(token2).digest("hex");
+        return this.run(async (c) => affected2(await c.query("UPDATE `ExpertProfile` SET especialidades=?,documento=?,documentoMime=?,verificationStatus='pendiente',motivo=NULL,tokenUsedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3) WHERE tokenHash=? AND tokenUsedAt IS NULL AND tokenExpiresAt>UTC_TIMESTAMP(3)", [JSON.stringify(specialties), document2, mime, tokenHash])) > 0);
+      }
+      async courseDetail(slug) {
+        return this.run(async (c) => {
+          const [raw] = rowsOf(await c.query("SELECT c.id,c.slug,c.code,c.titulo,c.especialidad,c.nivel,c.horas,c.precioUsd,c.notaMinima,c.altoVoltajeGas,u.name expertName FROM `Course` c JOIN `User` u ON u.id=c.expertId WHERE c.slug=? AND c.estado='publicado' LIMIT 1", [slug]));
+          if (!raw)
+            return null;
+          const id2 = String(raw.id);
+          const lessons = rowsOf(await c.query("SELECT id,orden,titulo,videoUrl,pdfUrl,texto FROM `Lesson` WHERE courseId=? ORDER BY orden", [id2])).map((r) => ({ id: String(r.id), orden: Number(r.orden), titulo: String(r.titulo), videoUrl: r.videoUrl ? String(r.videoUrl) : null, pdfUrl: r.pdfUrl ? String(r.pdfUrl) : null, texto: r.texto ? String(r.texto) : null }));
+          const questions = rowsOf(await c.query("SELECT id,orden,enunciado FROM `Question` WHERE courseId=? ORDER BY orden", [id2]));
+          const q = [];
+          for (const row of questions)
+            q.push({ id: String(row.id), orden: Number(row.orden), enunciado: String(row.enunciado), options: rowsOf(await c.query("SELECT letra,texto FROM `Option` WHERE questionId=? ORDER BY letra", [row.id])).map((o) => ({ letra: String(o.letra), texto: String(o.texto) })) });
+          return { ...raw, id: id2, slug: String(raw.slug), code: String(raw.code), titulo: String(raw.titulo), especialidad: String(raw.especialidad), nivel: String(raw.nivel), horas: Number(raw.horas), precioUsd: raw.precioUsd === null ? null : Number(raw.precioUsd), notaMinima: Number(raw.notaMinima), altoVoltajeGas: Boolean(raw.altoVoltajeGas), expertName: String(raw.expertName), lessons, questions: q };
+        });
+      }
+      async studentCourses(userId) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT e.id enrollmentId,e.code,c.code courseCode,e.estado,e.nota,e.compartirConTaller,e.certificadoPublico,c.notaMinima,c.id courseId,c.slug,c.titulo,c.especialidad,c.nivel,c.horas,(SELECT code FROM `Certificate` WHERE enrollmentId=e.id) certificateCode,(SELECT publico FROM `Certificate` WHERE enrollmentId=e.id) certificatePublic FROM `Enrollment` e JOIN `Course` c ON c.id=e.courseId WHERE e.userId=? ORDER BY e.createdAt DESC", [userId])));
+      }
+      async courseByCode(code3) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT id,code,titulo,especialidad,nivel,horas,precioUsd,estado,slug FROM `Course` WHERE code=? AND estado='publicado' LIMIT 1", [code3]))[0] ?? null);
+      }
+      async studentEnrollmentByCode(userId, code3) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT e.id,e.code,e.estado,e.userId,e.courseId,e.certificadoPublico,c.notaMinima,c.code courseCode,c.titulo FROM `Enrollment` e JOIN `Course` c ON c.id=e.courseId WHERE e.userId=? AND (e.code=? OR c.code=?) ORDER BY e.createdAt DESC LIMIT 1", [userId, code3, code3]))[0] ?? null);
+      }
+      async shopTechnicians(shopUserId) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT u.id,COALESCE(NULLIF(m.name,''),u.name) name FROM `Shop` s JOIN `ShopMember` m ON m.shopId=s.id AND m.status='active' JOIN `User` u ON u.id=m.userId WHERE s.userId=? ORDER BY u.name LIMIT 50", [shopUserId])));
+      }
+      async sharedTechnicianProgress(shopUserId) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT COALESCE(NULLIF(m.name,''),u.name) name,c.titulo,e.estado,(SELECT COUNT(*) FROM `LessonProgress` p WHERE p.enrollmentId=e.id) completadas,(SELECT COUNT(*) FROM `Lesson` l WHERE l.courseId=e.courseId) total FROM `Shop` s JOIN `ShopMember` m ON m.shopId=s.id AND m.status='active' JOIN `Enrollment` e ON e.userId=m.userId AND e.compartirConTaller=TRUE JOIN `Course` c ON c.id=e.courseId JOIN `User` u ON u.id=e.userId WHERE s.userId=? ORDER BY u.name,c.titulo LIMIT 100", [shopUserId])));
+      }
+      async consentedShopTechnician(shopUserId, studentId) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT id FROM `ShopMember` WHERE shopId=(SELECT id FROM `Shop` WHERE userId=? LIMIT 1) AND userId=? AND status='active'", [shopUserId, studentId])).length > 0);
+      }
+      async enrollTechnician(shopUserId, studentId, courseCodeValue) {
+        return this.run(async (c) => {
+          const [course] = rowsOf(await c.query("SELECT id FROM `Course` WHERE code=? AND estado='publicado' AND inscripcionesAbiertas=TRUE FOR UPDATE", [courseCodeValue]));
+          const [member] = rowsOf(await c.query("SELECT m.id FROM `Shop` s JOIN `ShopMember` m ON m.shopId=s.id AND m.userId=? AND m.status='active' WHERE s.userId=? LIMIT 1", [studentId, shopUserId]));
+          if (!course || !member)
+            return false;
+          if (rowsOf(await c.query("SELECT id FROM `Enrollment` WHERE userId=? AND courseId=?", [studentId, course.id])).length)
+            return false;
+          const id2 = randomUUID13();
+          const n = await this.nextNumber(c, "Enrollment");
+          await c.query("INSERT INTO `Enrollment` (id,code,courseId,userId,estado,beca,compartirConTaller,consentVersion,consentAt) VALUES (?,?,?,?,'solicitada',FALSE,FALSE,'pending',UTC_TIMESTAMP(3))", [id2, enrollmentCode(n), course.id, studentId]);
+          await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.consent',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID13(), `course-consent:${id2}`, studentId, JSON.stringify({ message: `Tu taller solicita inscribirte en ${courseCodeValue}. Para aceptar: Inscribirme ${courseCodeValue} | ACEPTO. Para compartir avance, a\xF1ade | COMPARTIR; para certificado p\xFAblico, a\xF1ade | PUBLICO. Son elecciones independientes.` })]);
+          return true;
+        });
+      }
+      async examQuestion(userId) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT e.id enrollmentId,q.id questionId,q.enunciado FROM `Enrollment` e JOIN `Question` q ON q.courseId=e.courseId WHERE e.userId=? AND e.estado='activa' AND NOT EXISTS(SELECT 1 FROM `Lesson` l WHERE l.courseId=e.courseId AND NOT EXISTS(SELECT 1 FROM `LessonProgress` p WHERE p.enrollmentId=e.id AND p.lessonId=l.id)) ORDER BY e.createdAt DESC,q.orden LIMIT 1", [userId]))[0] ?? null);
+      }
+      async completeLatestLesson(userId, code3) {
+        return this.run(async (c) => {
+          const active = rowsOf(await c.query("SELECT e.id FROM `Enrollment` e JOIN `Course` c ON c.id=e.courseId WHERE e.userId=? AND e.estado='activa' AND (? IS NULL OR e.code=? OR c.code=?) ORDER BY e.createdAt DESC LIMIT 2", [userId, code3 ?? null, code3 ?? null, code3 ?? null]));
+          if (!code3 && active.length > 1)
+            return false;
+          if (!active.length)
+            return false;
+          const enrollmentId = String(active[0].id);
+          const [lesson] = rowsOf(await c.query("SELECT l.id lessonId FROM `Lesson` l WHERE l.courseId=(SELECT courseId FROM `Enrollment` WHERE id=?) AND NOT EXISTS(SELECT 1 FROM `LessonProgress` p WHERE p.enrollmentId=? AND p.lessonId=l.id) ORDER BY l.orden LIMIT 1", [enrollmentId, enrollmentId]));
+          if (!lesson)
+            return false;
+          await c.query("INSERT IGNORE INTO `LessonProgress` (id,enrollmentId,lessonId) VALUES (?,?,?)", [randomUUID13(), enrollmentId, lesson.lessonId]);
+          return true;
+        });
+      }
+      async certificate(code3) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT ce.code,ce.publico,ce.emitidoAt,u.name studentName,c.titulo,c.horas,u2.name expertName FROM `Certificate` ce JOIN `Enrollment` e ON e.id=ce.enrollmentId JOIN `User` u ON u.id=e.userId JOIN `Course` c ON c.id=e.courseId JOIN `User` u2 ON u2.id=c.expertId WHERE ce.code=? AND ce.publico=TRUE LIMIT 1", [code3]))[0] ?? null);
+      }
+      async lessonRecords(courseId, enrollmentId) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT l.id,l.orden,l.titulo,l.videoUrl,l.pdfUrl,l.texto,(p.id IS NOT NULL) complete FROM `Lesson` l LEFT JOIN `LessonProgress` p ON p.lessonId=l.id AND p.enrollmentId=? WHERE l.courseId=? ORDER BY l.orden", [enrollmentId, courseId])));
+      }
+      async questionRecords(courseId) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT q.id,q.orden,q.enunciado,o.letra,o.texto FROM `Question` q LEFT JOIN `Option` o ON o.questionId=q.id WHERE q.courseId=? ORDER BY q.orden,o.letra", [courseId])));
+      }
+      async setCertificatePublic(userId, enrollmentId, pub) {
+        return this.setEnrollmentCertificatePublic(userId, enrollmentId, pub);
+      }
+      async createCourse(expertId, input) {
+        return this.run(async (c) => {
+          const id2 = randomUUID13();
+          const code3 = courseCode(await this.nextNumber(c, "Course"));
+          await c.query("INSERT INTO `Course` (id, expertId, slug, code, titulo, especialidad, nivel, horas, precioUsd, notaMinima, inscripcionesAbiertas, altoVoltajeGas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [id2, expertId, input.slug, code3, input.titulo, input.especialidad, input.nivel, input.horas, input.precioUsd, input.notaMinima ?? 70, input.inscripcionesAbiertas ?? true, isHighVoltageOrGas(input.especialidad)]);
+          return id2;
+        });
+      }
+      async editCourse(expertId, courseId, input) {
+        const fields = { slug: input.slug, titulo: input.titulo, especialidad: input.especialidad, nivel: input.nivel, horas: input.horas, precioUsd: input.precioUsd, notaMinima: input.notaMinima, inscripcionesAbiertas: input.inscripcionesAbiertas };
+        return this.run(async (c) => {
+          try {
+            const [before] = rowsOf(await c.query("SELECT * FROM `Course` WHERE id = ? AND expertId = ? LIMIT 1", [courseId, expertId]));
+            if (!before)
+              return fail8("FORBIDDEN_OR_NOT_FOUND");
+            if (before.estado === "publicado")
+              assertPublishable(input.precioUsd === void 0 ? before.precioUsd === null ? null : Number(before.precioUsd) : input.precioUsd, await this.commissionValue(c));
+            const changed = [];
+            for (const [key, value2] of Object.entries(fields))
+              if (value2 !== void 0 && String(before[key] ?? "") !== String(value2 ?? ""))
+                changed.push([key, before[key], value2]);
+            if (!changed.length) {
+              return true;
+            }
+            await c.query("UPDATE `Course` SET slug = COALESCE(?,slug), titulo = COALESCE(?,titulo), especialidad = COALESCE(?,especialidad), nivel = COALESCE(?,nivel), horas = COALESCE(?,horas), precioUsd = ?, notaMinima = COALESCE(?,notaMinima), inscripcionesAbiertas = COALESCE(?,inscripcionesAbiertas), altoVoltajeGas = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ? AND expertId = ?", [input.slug ?? null, input.titulo ?? null, input.especialidad ?? null, input.nivel ?? null, input.horas ?? null, input.precioUsd === void 0 ? before.precioUsd : input.precioUsd, input.notaMinima ?? null, input.inscripcionesAbiertas ?? null, isHighVoltageOrGas(input.especialidad ?? String(before.especialidad)), courseId, expertId]);
+            if (before.estado === "publicado")
+              for (const [field2, oldValue, newValue] of changed)
+                await c.query("INSERT INTO `CourseChange` (id, courseId, actorUserId, campo, antes, despues) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID13(), courseId, expertId, field2, oldValue === null ? null : String(oldValue), newValue === null ? null : String(newValue)]);
+            return true;
+          } catch (error) {
+            throw error;
+          }
+        });
+      }
+      async publishCourse(expertId, courseId) {
+        return this.run(async (c) => {
+          if (!await isVerifiedExpert(c, expertId))
+            return fail8("EXPERT_NOT_VERIFIED");
+          const [course] = rowsOf(await c.query("SELECT estado, firstPublishedAt, precioUsd FROM `Course` WHERE id = ? AND expertId = ? FOR UPDATE", [courseId, expertId]));
+          if (!course)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          if (course.estado === "oculto")
+            return fail8("COURSE_HIDDEN");
+          assertPublishable(course.precioUsd === null ? null : Number(course.precioUsd), await this.commissionValue(c));
+          const state = course.firstPublishedAt ? "publicado" : publicationStatus(String(course.estado), course.firstPublishedAt);
+          await c.query("UPDATE `Course` SET estado = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [state, courseId]);
+          return state;
+        });
+      }
+      async reviewFirstPublication(adminId, courseId, approve, reason = "") {
+        return this.run(async (c) => {
+          const [course] = rowsOf(await c.query("SELECT precioUsd FROM `Course` WHERE id=? AND estado='en_revision' AND firstPublishedAt IS NULL FOR UPDATE", [courseId]));
+          if (!course)
+            return false;
+          if (approve)
+            assertPublishable(course.precioUsd === null ? null : Number(course.precioUsd), await this.commissionValue(c));
+          const state = approve ? "publicado" : "borrador";
+          const changed = affected2(await c.query("UPDATE `Course` SET estado = ?, motivoRevision=?, firstPublishedAt = IF(?, COALESCE(firstPublishedAt, UTC_TIMESTAMP(3)), firstPublishedAt) WHERE id = ? AND estado = 'en_revision' AND firstPublishedAt IS NULL", [state, approve ? null : reason, approve, courseId]));
+          if (changed)
+            await c.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'Course', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), approve ? "course.published" : "course.publication.rejected", adminId, courseId, JSON.stringify({ state, reason: approve ? null : reason })]);
+          return changed > 0;
+        });
+      }
+      async adminExperts() {
+        return this.run(async (c) => rowsOf(await c.query("SELECT p.userId,p.especialidades,p.verificationStatus,p.motivo,p.tipoDocumentoRevisado,p.documentoMime,u.name,u.email FROM `ExpertProfile` p JOIN `User` u ON u.id=p.userId ORDER BY p.updatedAt DESC")));
+      }
+      async decideExpert(adminId, userId, approve, reason, documentType) {
+        return this.run(async (c) => {
+          const status = approve ? "verificado" : "rechazado";
+          const changed = affected2(await c.query("UPDATE `ExpertProfile` SET verificationStatus=?,motivo=?,verifiedAt=IF(?,UTC_TIMESTAMP(3),NULL),tipoDocumentoRevisado=?,documento=NULL,documentoMime=NULL,updatedAt=UTC_TIMESTAMP(3) WHERE userId=? AND verificationStatus='pendiente'", [status, approve ? null : reason, approve, documentType, userId]));
+          if (changed)
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?,? ,?,'admin','ExpertProfile',?,?,UTC_TIMESTAMP(3))", [randomUUID13(), approve ? "expert.verified" : "expert.rejected", adminId, userId, JSON.stringify({ status, reason: approve ? null : reason, documentType })]);
+          return changed > 0;
+        });
+      }
+      async adminCourses() {
+        return this.run(async (c) => rowsOf(await c.query("SELECT c.*,u.name expertName FROM `Course` c JOIN `User` u ON u.id=c.expertId ORDER BY c.updatedAt DESC")));
+      }
+      async changeCommission(adminId, value2) {
+        if (value2 !== null && (!/^\d+(\.\d{1,2})?$/.test(value2) || Number(value2) < 0 || Number(value2) > 100))
+          throw new Error("INVALID_COMMISSION");
+        return this.run(async (c) => {
+          if (value2 === null || value2.trim() === "")
+            await c.query("DELETE FROM `AppSetting` WHERE `name`=?", ["courses.commission"]);
+          else
+            await c.query("INSERT INTO `AppSetting` (`name`,`value`,`updatedBy`,`updatedAt`) VALUES (?,?,?,UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`),`updatedBy`=VALUES(`updatedBy`),`updatedAt`=UTC_TIMESTAMP(3)", ["courses.commission", value2, adminId]);
+          await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'course.commission.changed', ?,'admin','AppSetting','courses.commission',?,UTC_TIMESTAMP(3))", [randomUUID13(), adminId, JSON.stringify({ value: value2 })]);
+        });
+      }
+      async courseHistory() {
+        return this.run(async (c) => rowsOf(await c.query("SELECT h.*,c.titulo FROM `CourseChange` h JOIN `Course` c ON c.id=h.courseId ORDER BY h.createdAt DESC LIMIT 300")));
+      }
+      async commission() {
+        return this.run((c) => this.commissionValue(c));
+      }
+      async adminReports() {
+        return this.run(async (c) => rowsOf(await c.query("SELECT r.*,c.titulo,l.titulo lessonTitle FROM `ContentReport` r JOIN `Course` c ON c.id=r.courseId LEFT JOIN `Lesson` l ON l.id=r.lessonId ORDER BY r.createdAt DESC")));
+      }
+      async decideReport(adminId, reportId, hide, reason) {
+        return this.run(async (c) => {
+          const [row] = rowsOf(await c.query("SELECT courseId FROM `ContentReport` WHERE id=?", [reportId]));
+          if (!row)
+            return false;
+          if (!hide) {
+            const [course] = rowsOf(await c.query("SELECT precioUsd FROM `Course` WHERE id=? FOR UPDATE", [row.courseId]));
+            if (course)
+              assertPublishable(course.precioUsd === null ? null : Number(course.precioUsd), await this.commissionValue(c));
+          }
+          await c.query("UPDATE `ContentReport` SET estado=? WHERE id=?", [hide ? "atendido" : "restaurado", reportId]);
+          if (hide)
+            await c.query("UPDATE `Course` SET estado='oculto',updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [row.courseId]);
+          else
+            await c.query("UPDATE `Course` SET estado='publicado',updatedAt=UTC_TIMESTAMP(3) WHERE id=? AND firstPublishedAt IS NOT NULL", [row.courseId]);
+          await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?,? ,?,'admin','ContentReport',?,?,UTC_TIMESTAMP(3))", [randomUUID13(), hide ? "course.hidden" : "course.restored", adminId, reportId, JSON.stringify({ courseId: row.courseId, reason })]);
+          return true;
+        });
+      }
+      async saveLesson(expertId, courseId, input, id2 = randomUUID13()) {
+        validateLessonText(input.texto);
+        assertHttpsUrl(input.videoUrl);
+        assertHttpsUrl(input.pdfUrl);
+        return this.run(async (c) => {
+          if (!rowsOf(await c.query("SELECT id FROM `Course` WHERE id=? AND expertId=? FOR UPDATE", [courseId, expertId])).length)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          const [before] = rowsOf(await c.query("SELECT * FROM `Lesson` WHERE id=? FOR UPDATE", [id2]));
+          if (before && before.courseId !== courseId)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          if (before)
+            await c.query("UPDATE `Lesson` SET orden=?,titulo=?,videoUrl=?,pdfUrl=?,texto=? WHERE id=? AND courseId=?", [input.orden, input.titulo, input.videoUrl ?? null, input.pdfUrl ?? null, input.texto ?? null, id2, courseId]);
+          else
+            await c.query("INSERT INTO `Lesson` (id,courseId,orden,titulo,videoUrl,pdfUrl,texto) VALUES (?,?,?,?,?,?,?)", [id2, courseId, input.orden, input.titulo, input.videoUrl ?? null, input.pdfUrl ?? null, input.texto ?? null]);
+          await this.contentChange(c, courseId, expertId, `lesson:${id2}`, before ?? null, input);
+          return id2;
+        });
+      }
+      async deleteLesson(expertId, lessonId) {
+        return this.run(async (c) => {
+          const [before] = rowsOf(await c.query("SELECT l.* FROM `Lesson` l JOIN `Course` c ON c.id=l.courseId WHERE l.id=? AND c.expertId=? FOR UPDATE", [lessonId, expertId]));
+          if (!before)
+            return false;
+          await c.query("DELETE FROM `Lesson` WHERE id=? AND courseId=?", [lessonId, before.courseId]);
+          await this.contentChange(c, String(before.courseId), expertId, `lesson:${lessonId}`, before, null);
+          return true;
+        });
+      }
+      async saveQuestion(expertId, courseId, input, id2 = randomUUID13()) {
+        return this.run(async (c) => {
+          if (!rowsOf(await c.query("SELECT id FROM `Course` WHERE id=? AND expertId=? FOR UPDATE", [courseId, expertId])).length)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          const [before] = rowsOf(await c.query("SELECT * FROM `Question` WHERE id=? FOR UPDATE", [id2]));
+          if (before && before.courseId !== courseId)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          if (before)
+            await c.query("UPDATE `Question` SET enunciado=?,orden=? WHERE id=? AND courseId=?", [input.enunciado, input.orden, id2, courseId]);
+          else
+            await c.query("INSERT INTO `Question` (id,courseId,enunciado,orden) VALUES (?,?,?,?)", [id2, courseId, input.enunciado, input.orden]);
+          await this.contentChange(c, courseId, expertId, `question:${id2}`, before ?? null, input);
+          return id2;
+        });
+      }
+      async deleteQuestion(expertId, questionId) {
+        return this.run(async (c) => {
+          const [before] = rowsOf(await c.query("SELECT q.* FROM `Question` q JOIN `Course` c ON c.id=q.courseId WHERE q.id=? AND c.expertId=? FOR UPDATE", [questionId, expertId]));
+          if (!before)
+            return false;
+          await c.query("DELETE FROM `Question` WHERE id=? AND courseId=?", [questionId, before.courseId]);
+          await this.contentChange(c, String(before.courseId), expertId, `question:${questionId}`, before, null);
+          return true;
+        });
+      }
+      async saveOption(expertId, questionId, input, id2 = randomUUID13()) {
+        return this.run(async (c) => {
+          const [question] = rowsOf(await c.query("SELECT q.id,q.courseId FROM `Question` q JOIN `Course` c ON c.id=q.courseId WHERE q.id=? AND c.expertId=? FOR UPDATE", [questionId, expertId]));
+          if (!question)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          const [byId] = rowsOf(await c.query("SELECT * FROM `Option` WHERE id=? FOR UPDATE", [id2]));
+          if (byId && byId.questionId !== questionId)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          const [byLetter] = rowsOf(await c.query("SELECT * FROM `Option` WHERE questionId=? AND letra=? FOR UPDATE", [questionId, input.letra]));
+          const before = byId ?? byLetter;
+          const effectiveId = before ? String(before.id) : id2;
+          if (before)
+            await c.query("UPDATE `Option` SET letra=?,texto=?,correcta=? WHERE id=? AND questionId=?", [input.letra, input.texto, input.correcta, effectiveId, questionId]);
+          else
+            await c.query("INSERT INTO `Option` (id,questionId,letra,texto,correcta) VALUES (?,?,?,?,?)", [id2, questionId, input.letra, input.texto, input.correcta]);
+          await this.contentChange(c, String(question.courseId), expertId, `option:${effectiveId}`, before ?? null, input);
+          return effectiveId;
+        });
+      }
+      async deleteOption(expertId, optionId) {
+        return this.run(async (c) => {
+          const [before] = rowsOf(await c.query("SELECT o.*,q.courseId FROM `Option` o JOIN `Question` q ON q.id=o.questionId JOIN `Course` c ON c.id=q.courseId WHERE o.id=? AND c.expertId=? FOR UPDATE", [optionId, expertId]));
+          if (!before)
+            return false;
+          await c.query("DELETE FROM `Option` WHERE id=? AND questionId=?", [optionId, before.questionId]);
+          await this.contentChange(c, String(before.courseId), expertId, `option:${optionId}`, before, null);
+          return true;
+        });
+      }
+      async enroll(input) {
+        if (!input.consentVersion.trim() || input.consentVersion === "pending")
+          return fail8("CONSENT_REQUIRED");
+        return this.run(async (c) => {
+          const [course] = rowsOf(await c.query("SELECT precioUsd,inscripcionesAbiertas FROM `Course` WHERE id=? AND estado='publicado' FOR UPDATE", [input.courseId]));
+          if (!course || !course.inscripcionesAbiertas)
+            return fail8("COURSE_CLOSED");
+          const [existing] = rowsOf(await c.query("SELECT id,consentVersion FROM `Enrollment` WHERE courseId=? AND userId=? FOR UPDATE", [input.courseId, input.userId]));
+          if (existing && existing.consentVersion !== "pending")
+            return String(existing.id);
+          let active = Boolean(input.beca) || course.precioUsd === null || Number(course.precioUsd) === 0;
+          if (input.inviteCode) {
+            const [invite] = rowsOf(await c.query("SELECT id FROM `InviteCode` WHERE courseId=? AND code=? AND usados<cupo AND (venceAt IS NULL OR venceAt>UTC_TIMESTAMP(3)) FOR UPDATE", [input.courseId, input.inviteCode]));
+            if (!invite)
+              return fail8("INVALID_INVITE_CODE");
+            if (affected2(await c.query("UPDATE `InviteCode` SET usados=usados+1 WHERE id=? AND usados<cupo", [invite.id])) === 0)
+              return fail8("INVITE_CODE_EXHAUSTED");
+            active = true;
+          }
+          if (existing) {
+            await c.query("UPDATE `Enrollment` SET consentVersion=?,consentAt=UTC_TIMESTAMP(3),compartirConTaller=?,certificadoPublico=?,estado=? WHERE id=?", [input.consentVersion, Boolean(input.compartirConTaller), Boolean(input.certificadoPublico), active ? "activa" : "solicitada", existing.id]);
+            return String(existing.id);
+          }
+          const id2 = randomUUID13();
+          const code3 = enrollmentCode(await this.nextNumber(c, "Enrollment"));
+          await c.query("INSERT INTO `Enrollment` (id,code,courseId,userId,estado,beca,compartirConTaller,certificadoPublico,consentVersion,consentAt) VALUES (?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [id2, code3, input.courseId, input.userId, active ? "activa" : "solicitada", Boolean(input.beca), Boolean(input.compartirConTaller), Boolean(input.certificadoPublico), input.consentVersion]);
+          return id2;
+        });
+      }
+      async reportPayment(studentId, code3, proofRef) {
+        return this.run(async (c) => affected2(await c.query("UPDATE `Enrollment` SET estado = 'pendiente', comprobante = ? WHERE code = ? AND userId = ? AND estado = 'solicitada' AND beca = FALSE AND EXISTS (SELECT 1 FROM `Course` c WHERE c.id = `Enrollment`.courseId AND c.precioUsd > 0)", [proofRef, code3, studentId])) > 0);
+      }
+      async transitionEnrollment(expertId, code3, to) {
+        return this.run(async (c) => {
+          const [enrollment2] = rowsOf(await c.query("SELECT e.id, e.estado, e.userId, e.consentVersion, c.titulo FROM `Enrollment` e JOIN `Course` c ON c.id = e.courseId WHERE e.code = ? AND c.expertId = ? FOR UPDATE", [code3, expertId]));
+          if (!enrollment2)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          if (enrollment2.consentVersion === "pending")
+            return fail8("CONSENT_REQUIRED");
+          const from = String(enrollment2.estado);
+          if (from === to)
+            return true;
+          transitionEnrollment(from, to);
+          const changed = affected2(await c.query("UPDATE `Enrollment` SET estado = ? WHERE id = ? AND estado = ?", [to, enrollment2.id, from])) > 0;
+          if (changed) {
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?,'dueno','Enrollment',?,?,UTC_TIMESTAMP(3))", [randomUUID13(), to === "activa" ? "enrollment.approved" : to === "rechazada" ? "enrollment.rejected" : "enrollment.revoked", expertId, String(enrollment2.id), JSON.stringify({ state: to })]);
+            if (to === "activa" || to === "rechazada")
+              await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.enrollment',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID13(), `course-enrollment:${String(enrollment2.id)}:${to}`, String(enrollment2.userId), JSON.stringify({ message: to === "activa" ? `Tu inscripci\xF3n ${code3} al curso ${String(enrollment2.titulo)} fue aprobada.` : `Tu inscripci\xF3n ${code3} al curso ${String(enrollment2.titulo)} fue rechazada.` })]);
+          }
+          return changed;
+        });
+      }
+      async setScholarship(expertId, code3) {
+        return this.run(async (c) => {
+          const changed = affected2(await c.query("UPDATE `Enrollment` e JOIN `Course` c ON c.id = e.courseId SET e.beca = TRUE, e.estado = 'activa' WHERE e.code = ? AND c.expertId = ? AND e.estado = 'solicitada' AND e.consentVersion <> 'pending'", [code3, expertId])) > 0;
+          if (changed)
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'enrollment.scholarship', ?,'dueno','Enrollment',?,'{\"state\":\"activa\"}',UTC_TIMESTAMP(3))", [randomUUID13(), expertId, code3]);
+          return changed;
+        });
+      }
+      async markLessonComplete(userId, enrollmentId, lessonId) {
+        return this.run(async (c) => {
+          const own = rowsOf(await c.query("SELECT e.id FROM `Enrollment` e JOIN `Lesson` l ON l.courseId = e.courseId WHERE e.id = ? AND e.userId = ? AND e.estado = 'activa' AND l.id = ?", [enrollmentId, userId, lessonId]));
+          if (!own.length)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          await c.query("INSERT IGNORE INTO `LessonProgress` (id, enrollmentId, lessonId) VALUES (?, ?, ?)", [randomUUID13(), enrollmentId, lessonId]);
+          return true;
+        });
+      }
+      async studentEnrollment(userId, enrollmentId) {
+        return this.run(async (c) => rowsOf(await c.query("SELECT e.id enrollmentId,e.code,e.estado,e.nota,e.certificadoPublico,c.id courseId,c.slug,c.titulo,c.especialidad,c.nivel,c.horas,(SELECT code FROM `Certificate` WHERE enrollmentId=e.id) certificateCode FROM `Enrollment` e JOIN `Course` c ON c.id=e.courseId WHERE e.id=? AND e.userId=? LIMIT 1", [enrollmentId, userId]))[0] ?? null);
+      }
+      async studentQuestionRecords(courseId, _enrollmentId) {
+        return this.run(async (c) => {
+          const qs = rowsOf(await c.query("SELECT q.id,q.orden,q.enunciado FROM `Question` q WHERE q.courseId=? ORDER BY q.orden", [courseId]));
+          const result = [];
+          for (const q of qs) {
+            const options = rowsOf(await c.query("SELECT letra,texto FROM `Option` WHERE questionId=? ORDER BY letra", [q.id]));
+            result.push({ ...q, options });
+          }
+          return result;
+        });
+      }
+      async setEnrollmentCertificatePublic(userId, enrollmentId, pub) {
+        return this.run(async (c) => {
+          if (!rowsOf(await c.query("SELECT id FROM `Enrollment` WHERE id=? AND userId=? FOR UPDATE", [enrollmentId, userId])).length)
+            return false;
+          await c.query("UPDATE `Enrollment` SET certificadoPublico=? WHERE id=? AND userId=?", [pub, enrollmentId, userId]);
+          await c.query("UPDATE `Certificate` ce JOIN `Enrollment` e ON e.id=ce.enrollmentId SET ce.publico=? WHERE e.id=? AND e.userId=?", [pub, enrollmentId, userId]);
+          return true;
+        });
+      }
+      async progress(userId, enrollmentId) {
+        return this.run(async (c) => {
+          const [r] = rowsOf(await c.query("SELECT (SELECT COUNT(*) FROM `LessonProgress` p WHERE p.enrollmentId=e.id) completedLessons, (SELECT COUNT(*) FROM `Lesson` l WHERE l.courseId=e.courseId) totalLessons, e.nota grade FROM `Enrollment` e WHERE e.id = ? AND e.userId = ?", [enrollmentId, userId]));
+          if (!r)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          return { completedLessons: Number(r.completedLessons), totalLessons: Number(r.totalLessons), grade: r.grade === null ? null : Number(r.grade) };
+        });
+      }
+      async issueEarnedCertificate(userId, enrollmentId) {
+        return this.run(async (c) => {
+          const [row] = rowsOf(await c.query("SELECT e.nota,e.certificadoPublico,c.notaMinima,(SELECT COUNT(*) FROM `Lesson` WHERE courseId=c.id) total,(SELECT COUNT(*) FROM `LessonProgress` WHERE enrollmentId=e.id) completed FROM `Enrollment` e JOIN `Course` c ON c.id=e.courseId WHERE e.id=? AND e.userId=? AND e.estado='activa' AND e.consentVersion<>'pending' FOR UPDATE", [enrollmentId, userId]));
+          if (!row || row.nota === null || Number(row.nota) < Number(row.notaMinima) || Number(row.completed) < Number(row.total))
+            return null;
+          return new _MysqlCoursesStore(async () => c, this.settings, c).issueCertificate(enrollmentId, Number(row.nota), Boolean(row.certificadoPublico));
+        });
+      }
+      async issueCertificate(enrollmentId, grade, _publicChoice) {
+        return this.run(async (c) => {
+          const [row] = rowsOf(await c.query("SELECT e.id,e.userId,e.nota,e.certificadoPublico,c.notaMinima,(SELECT COUNT(*) FROM `Lesson` WHERE courseId=c.id) lessonCount,(SELECT COUNT(*) FROM `LessonProgress` WHERE enrollmentId=e.id) completedCount FROM `Enrollment` e JOIN `Course` c ON c.id=e.courseId WHERE e.id=? AND e.estado='activa' AND e.consentVersion<>'pending' FOR UPDATE", [enrollmentId]));
+          if (!row || row.nota === null || Number(row.nota) !== grade || grade < Number(row.notaMinima) || Number(row.completedCount) < Number(row.lessonCount))
+            return fail8("COURSE_NOT_PASSED");
+          await c.query("UPDATE `Enrollment` SET aprobadoAt=COALESCE(aprobadoAt,UTC_TIMESTAMP(3)) WHERE id=?", [enrollmentId]);
+          let [certificate] = rowsOf(await c.query("SELECT id,code,publico FROM `Certificate` WHERE enrollmentId=? FOR UPDATE", [enrollmentId]));
+          const publicChoice = Boolean(row.certificadoPublico);
+          if (!certificate) {
+            const code3 = certificateCode(await this.nextNumber(c, "Certificate"));
+            await c.query("INSERT INTO `Certificate` (id,code,enrollmentId,publico) VALUES (?,?,?,?)", [randomUUID13(), code3, enrollmentId, publicChoice]);
+            certificate = { code: code3 };
+          } else
+            await c.query("UPDATE `Certificate` SET publico=? WHERE enrollmentId=?", [publicChoice, enrollmentId]);
+          await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.certificate',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID13(), `course-certificate:${String(certificate.code)}`, String(row.userId), JSON.stringify({ message: `Tu certificado ${String(certificate.code)} fue emitido.${publicChoice ? ` Consulta: https://automantpro.app/certificados/${String(certificate.code)}` : ""}` })]);
+          return String(certificate.code);
+        });
+      }
+      async saveAnswer(userId, enrollmentId, questionId, letter) {
+        return this.run(async (c) => {
+          const owned = rowsOf(await c.query("SELECT e.id FROM `Enrollment` e JOIN `Question` q ON q.courseId=e.courseId WHERE e.id=? AND e.userId=? AND e.estado='activa' AND q.id=?", [enrollmentId, userId, questionId]));
+          if (!owned.length)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          const [answer] = rowsOf(await c.query("SELECT o.id, o.correcta FROM `Option` o WHERE o.questionId=? AND o.letra=?", [questionId, letter]));
+          if (!answer)
+            return fail8("INVALID_ANSWER");
+          const previous = rowsOf(await c.query("SELECT respuestas FROM `Enrollment` WHERE id=? FOR UPDATE", [enrollmentId]))[0]?.respuestas;
+          const answers = typeof previous === "string" ? JSON.parse(previous) : previous ?? {};
+          answers[questionId] = letter;
+          await c.query("UPDATE `Enrollment` SET respuestas=? WHERE id=?", [JSON.stringify(answers), enrollmentId]);
+          const [totals] = rowsOf(await c.query("SELECT COUNT(*) total, SUM(CASE WHEN JSON_UNQUOTE(JSON_EXTRACT(e.respuestas, CONCAT('$.\"', q.id, '\"'))) = correctOption.letra THEN 1 ELSE 0 END) correct, COUNT(JSON_EXTRACT(e.respuestas, CONCAT('$.\"', q.id, '\"'))) answered FROM `Enrollment` e JOIN `Question` q ON q.courseId=e.courseId LEFT JOIN `Option` correctOption ON correctOption.questionId=q.id AND correctOption.correcta=TRUE WHERE e.id=?", [enrollmentId]));
+          const count3 = Number(totals?.total ?? 0);
+          const correct = Number(totals?.correct ?? 0);
+          const answered = Number(totals?.answered ?? 0);
+          await c.query("UPDATE `Enrollment` SET nota=? WHERE id=?", [answered === count3 && count3 ? correct * 100 / count3 : null, enrollmentId]);
+          return Boolean(answer.correcta);
+        });
+      }
+      async createInvite(expertId, courseId, cupo, venceAt) {
+        return this.run(async (c) => {
+          if (!Number.isInteger(cupo) || cupo < 1)
+            return fail8("INVALID_INVITE_CAPACITY");
+          const code3 = `CI-${String(await this.nextNumber(c, "InviteCode")).padStart(4, "0")}`;
+          await c.query("INSERT INTO `InviteCode` (id, courseId, code, cupo, venceAt) SELECT ?, id, ?, ?, ? FROM `Course` WHERE id = ? AND expertId = ?", [randomUUID13(), code3, cupo, venceAt, courseId, expertId]);
+          if (!rowsOf(await c.query("SELECT id FROM `InviteCode` WHERE code = ?", [code3])).length)
+            return fail8("FORBIDDEN_OR_NOT_FOUND");
+          return code3;
+        });
+      }
+      async submitReport(courseId, lessonId, reporterUserId, motivo) {
+        return this.run(async (c) => {
+          const id2 = randomUUID13();
+          await c.query("INSERT INTO `ContentReport` (id, courseId, lessonId, reporterUserId, motivo) VALUES (?, ?, ?, ?, ?)", [id2, courseId, lessonId, reporterUserId, motivo]);
+          return id2;
+        });
+      }
+    };
+  }
+});
+
+// packages/api/dist/application/courses/whatsapp.js
+import { randomBytes as randomBytes5 } from "node:crypto";
+async function handleCourseCommand(conn, uid, role, text9, mediaId) {
+  const command = parseAccountCommand(text9);
+  const numeric = role === "taller" && /^\s*\d+(?:[ ,]+\d+)*\s*$/.test(text9);
+  if (!numeric && (!command || !("action" in command) || !(command.action.startsWith("course") || ["myCourses", "becomeExpert"].includes(command.action))))
+    return null;
+  const [rate] = await rows14(conn, "SELECT COUNT(*) n FROM `InboundWebhook` WHERE phone=(SELECT phone FROM `WhatsAppIdentity` WHERE userId=?) AND status='completed' AND completedAt>DATE_SUB(UTC_TIMESTAMP(3),INTERVAL 60 SECOND)", [uid]);
+  if (Number(rate?.n ?? 0) >= 30)
+    return "Has alcanzado el l\xEDmite de capacitaci\xF3n por tel\xE9fono. Espera un minuto e intenta de nuevo.";
+  const id2 = `courses:${uid}`;
+  const [saved] = await rows14(conn, "SELECT summary FROM `Conversation` WHERE id=? AND userAId=? FOR UPDATE", [id2, uid]);
+  const state = typeof saved?.summary === "string" ? JSON.parse(saved.summary) : saved?.summary ?? {};
+  const save = async () => {
+    await conn.query("INSERT INTO `Conversation` (id,userAId,agent,summary,updatedAt) VALUES (?,?,TRUE,?,UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE summary=VALUES(summary),updatedAt=UTC_TIMESTAMP(3)", [id2, uid, JSON.stringify(state)]);
+  };
+  const store = new MysqlCoursesStore(async () => conn, void 0, conn);
+  const question = async (enrollmentId) => {
+    const [q] = await rows14(conn, "SELECT q.id,q.enunciado FROM `Question` q JOIN `Enrollment` e ON e.courseId=q.courseId WHERE e.id=? AND e.userId=? AND e.estado='activa' AND JSON_EXTRACT(COALESCE(e.respuestas,JSON_OBJECT()),CONCAT('$.\"',q.id,'\"')) IS NULL ORDER BY q.orden,q.id LIMIT 1", [enrollmentId, uid]);
+    if (!q) {
+      delete state.question;
+      await save();
+      return "No hay m\xE1s preguntas pendientes.";
+    }
+    const options = await rows14(conn, "SELECT letra,texto FROM `Option` WHERE questionId=? ORDER BY letra", [q.id]);
+    state.question = { enrollmentId, questionId: q.id, expiresAt: Date.now() + 30 * 60 * 1e3 };
+    await save();
+    return `${q.enunciado}
+${options.map((o) => `${o.letra}. ${o.texto}`).join("\n")}`;
+  };
+  if (numeric) {
+    const selection = state.selection;
+    if (!selection || selection.expiresAt <= Date.now())
+      return null;
+    const selected2 = [...new Set(text9.trim().split(/[ ,]+/).map(Number))];
+    if (selected2.some((n) => n < 1 || n > selection.technicians.length))
+      return "Selecciona \xFAnicamente n\xFAmeros de la lista de t\xE9cnicos de tu taller.";
+    let count3 = 0;
+    for (const n of selected2)
+      if (await store.enrollTechnician(uid, selection.technicians[n - 1], selection.code))
+        count3++;
+    delete state.selection;
+    await save();
+    return `Solicitamos la inscripci\xF3n de ${count3} t\xE9cnico(s) en ${selection.code}. Cada t\xE9cnico debe aceptar su consentimiento y decidir si comparte su avance.`;
+  }
+  if (!command || !("action" in command))
+    return null;
+  switch (command.action) {
+    case "courseList":
+      return (await store.listPublished()).map((c) => `${c.code} \xB7 ${c.titulo} \xB7 ${Number(c.precioUsd ?? 0) === 0 ? "Gratis" : `$${c.precioUsd}`}`).join("\n") || "A\xFAn no hay cursos publicados.";
+    case "courseDetail": {
+      const c = await store.courseByCode(command.code);
+      return c ? `${c.code} \xB7 ${c.titulo}
+${c.especialidad} \xB7 ${c.nivel} \xB7 ${c.horas} horas
+Para inscribirte: Inscribirme ${c.code}` : "No encontr\xE9 ese curso publicado.";
+    }
+    case "courseEnroll": {
+      if (!command.consent)
+        return "Para inscribirte, confirma el consentimiento: Inscribirme CU-XXXX | ACEPTO. A\xF1ade | COMPARTIR para compartir avance con tu taller y | PUBLICO para un certificado p\xFAblico; ambas opciones son voluntarias.";
+      const c = await store.courseByCode(command.code);
+      if (!c)
+        return "No encontr\xE9 ese curso publicado.";
+      const enrollmentId = await store.enroll({ courseId: String(c.id), userId: uid, consentVersion: "whatsapp-v1", compartirConTaller: command.share ?? false, certificadoPublico: command.publicCertificate ?? false });
+      const record = await store.studentEnrollment(uid, enrollmentId);
+      const first = (await store.lessonRecords(String(c.id), enrollmentId)).find((l) => !l.complete);
+      return `Inscripci\xF3n registrada: ${record?.code}. ${record?.estado === "activa" ? first ? `Lecci\xF3n: ${first.titulo}${first.texto ? `
+${first.texto}` : ""}${first.videoUrl ? `
+${first.videoUrl}` : ""}${first.pdfUrl ? `
+${first.pdfUrl}` : ""}
+Escribe Listo ${command.code} al terminar.` : "Ya puedes empezar." : "Env\xEDa el comprobante con Pago IN-XXXX y una foto."}`;
+    }
+    case "coursePayment":
+      return !mediaId ? "Adjunta una foto del comprobante junto con Pago IN-XXXX." : await store.reportPayment(uid, command.code, mediaId) ? "Comprobante recibido. La inscripci\xF3n queda pendiente de revisi\xF3n." : "No encontr\xE9 una inscripci\xF3n pendiente de pago tuya con ese c\xF3digo.";
+    case "myCourses":
+      return (await store.studentCourses(uid)).map((c) => `${c.courseCode} \xB7 ${c.code} \xB7 ${c.titulo} \xB7 ${c.estado}`).join("\n") || "Todav\xEDa no tienes cursos.";
+    case "courseDone": {
+      const active = (await store.studentCourses(uid)).filter((c) => c.estado === "activa");
+      if (!command.code && active.length > 1)
+        return `Tienes varias inscripciones activas. Indica el curso: ${active.map((c) => `Listo ${c.courseCode}`).join(" \xB7 ")}`;
+      const chosen = command.code ? active.find((c) => c.courseCode === command.code) : active[0];
+      if (!chosen)
+        return "No encontr\xE9 una lecci\xF3n pendiente en esa inscripci\xF3n activa.";
+      await store.completeLatestLesson(uid, String(chosen.courseCode));
+      const next = (await store.lessonRecords(String(chosen.courseId), String(chosen.enrollmentId))).find((l) => !l.complete);
+      return next ? `Lecci\xF3n lista. Sigue: ${next.titulo}${next.texto ? `
+${next.texto}` : ""}${next.videoUrl ? `
+${next.videoUrl}` : ""}${next.pdfUrl ? `
+${next.pdfUrl}` : ""}` : await question(String(chosen.enrollmentId));
+    }
+    case "courseAnswer": {
+      const pending = state.question;
+      if (!pending || pending.expiresAt <= Date.now())
+        return "No hay una pregunta abierta en tus cursos.";
+      await store.saveAnswer(uid, pending.enrollmentId, pending.questionId, command.letter);
+      const next = await question(pending.enrollmentId);
+      const certificate = await store.issueEarnedCertificate(uid, pending.enrollmentId);
+      return `Respuesta ${command.letter} registrada.
+${next}${certificate ? `
+Certificado emitido: ${certificate}.` : ""}`;
+    }
+    case "courseCertificate": {
+      const record = await store.studentEnrollmentByCode(uid, command.code);
+      const code3 = record ? await store.issueEarnedCertificate(uid, String(record.id)) : null;
+      return code3 ? `Certificado emitido: ${code3}.` : "Completa las lecciones y aprueba con la nota m\xEDnima para emitir tu certificado.";
+    }
+    case "courseTechnicianProgress":
+      if (role !== "taller")
+        throw new Error("FORBIDDEN");
+      return (await store.sharedTechnicianProgress(uid)).map((r) => `${r.name} \xB7 ${r.titulo}: ${r.completadas}/${r.total} lecciones`).join("\n") || "No hay avances compartidos.";
+    case "courseTechnicianEnroll": {
+      if (role !== "taller")
+        throw new Error("FORBIDDEN");
+      if (!await store.courseByCode(command.code))
+        return "No encontr\xE9 ese curso publicado.";
+      const techs = await store.shopTechnicians(uid);
+      if (!techs.length)
+        return "Tu taller no tiene t\xE9cnicos activos.";
+      state.selection = { code: command.code, technicians: techs.map((t) => String(t.id)), expiresAt: Date.now() + 30 * 60 * 1e3 };
+      await save();
+      return techs.map((t, i) => `${i + 1}. ${t.name}`).join("\n") + `
+Responde con los n\xFAmeros para inscribir en ${command.code}.`;
+    }
+    case "courseEnrollmentDecision":
+      return await store.transitionEnrollment(uid, command.code, command.approve ? "activa" : "rechazada") ? `Inscripci\xF3n ${command.approve ? "aprobada" : "rechazada"}.` : "No encontr\xE9 esa inscripci\xF3n en tus cursos.";
+    case "becomeExpert": {
+      const token2 = randomBytes5(32).toString("hex");
+      await store.issueExpertLink(uid, token2);
+      return `Solicita tu perfil experto aqu\xED: https://automantpro.app/experto/registro/${token2}
+El enlace es de un solo uso y vence en 24 horas. Los documentos se reciben \xFAnicamente en ese formulario.`;
+    }
+    default:
+      return null;
+  }
+}
+var rows14;
+var init_whatsapp = __esm({
+  "packages/api/dist/application/courses/whatsapp.js"() {
+    "use strict";
+    init_courses_store();
+    init_commands();
+    rows14 = async (c, sql, args = []) => (await c.query(sql, args))[0];
+  }
+});
+
 // packages/api/dist/infrastructure/messaging/local-agent-broker.js
-import { createHash as createHash5, randomBytes as randomBytes5 } from "node:crypto";
-function fail8(code3) {
+import { createHash as createHash6, randomBytes as randomBytes6 } from "node:crypto";
+function fail9(code3) {
   throw new BrokerError(code3);
 }
 var data, digest, BrokerError, WELCOME_MESSAGES, MysqlLocalAgentBroker;
@@ -88144,8 +88978,9 @@ var init_local_agent_broker = __esm({
     init_chat_account_store();
     init_error_messages();
     init_appointment_capacity();
+    init_whatsapp();
     data = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
-    digest = (s) => createHash5("sha256").update(s).digest("hex");
+    digest = (s) => createHash6("sha256").update(s).digest("hex");
     BrokerError = class extends Error {
       code;
       constructor(code3) {
@@ -88181,12 +89016,12 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
       async account(conn, userId) {
         const user = (await data(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]))[0];
         if (!user || !["dueno", "taller", "almacen"].includes(String(user.role)))
-          fail8("ACCOUNT_UNAVAILABLE");
+          fail9("ACCOUNT_UNAVAILABLE");
         return user;
       }
       async submit(userId, key, message2) {
         if (!/^[A-Za-z0-9._:-]{8,120}$/.test(key))
-          fail8("INVALID_IDEMPOTENCY_KEY");
+          fail9("INVALID_IDEMPOTENCY_KEY");
         const wamid = `pilot_${digest(`${userId}:${key}`)}`;
         await this.run(async (conn) => {
           await this.account(conn, userId);
@@ -88194,17 +89029,17 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
           if (existing) {
             const payload = typeof existing.payload === "string" ? JSON.parse(existing.payload) : existing.payload;
             if (payload.message !== message2 || payload.userId !== userId)
-              fail8("IDEMPOTENCY_CONFLICT");
+              fail9("IDEMPOTENCY_CONFLICT");
             return;
           }
           const [pending] = await data(conn, "SELECT COUNT(*) AS n FROM `InboundWebhook` WHERE status IN ('queued','processing') AND JSON_UNQUOTE(JSON_EXTRACT(payload, '$.userId')) = ?", [userId]);
           if (Number(pending?.n) >= 10)
-            fail8("PENDING_LIMIT");
+            fail9("PENDING_LIMIT");
           await this.queue.enqueue({ wamid, phone: "000000", payload: { channel: "pilot", userId, message: message2 } });
           const [persisted] = await data(conn, "SELECT payload FROM `InboundWebhook` WHERE wamid = ?", [wamid]);
           const value2 = typeof persisted?.payload === "string" ? JSON.parse(persisted.payload) : persisted?.payload;
           if (value2?.message !== message2)
-            fail8("IDEMPOTENCY_CONFLICT");
+            fail9("IDEMPOTENCY_CONFLICT");
         });
         return { wamid };
       }
@@ -88213,7 +89048,7 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
           await this.account(conn, userId);
           const [job] = await data(conn, "SELECT q.status, r.message AS reply, r.executedCommand FROM `InboundWebhook` q LEFT JOIN `LocalAgentReply` r ON r.wamid = q.wamid WHERE q.wamid = ? AND JSON_UNQUOTE(JSON_EXTRACT(q.payload, '$.userId')) = ?", [wamid, userId]);
           if (!job)
-            fail8("NOT_FOUND");
+            fail9("NOT_FOUND");
           return job;
         });
       }
@@ -88232,24 +89067,24 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
         if (before) {
           try {
             if (!/^[A-Za-z0-9_-]{1,256}$/.test(before))
-              fail8("INVALID_CURSOR");
+              fail9("INVALID_CURSOR");
             const value2 = JSON.parse(Buffer.from(before, "base64url").toString("utf8"));
             if (typeof value2.id !== "string" || !/^[a-f0-9-]{36}$/.test(value2.id) || typeof value2.at !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value2.at))
-              fail8("INVALID_CURSOR");
+              fail9("INVALID_CURSOR");
             const at = new Date(value2.at);
             if (!Number.isFinite(at.getTime()) || at.toISOString() !== value2.at)
-              fail8("INVALID_CURSOR");
+              fail9("INVALID_CURSOR");
             cursor = { id: value2.id, at };
           } catch {
-            fail8("INVALID_CURSOR");
+            fail9("INVALID_CURSOR");
           }
         }
         return this.run(async (conn) => {
           await this.account(conn, userId);
           const notifications = await data(conn, "SELECT n.id, n.kind, n.payload, n.createdAt FROM `NotificationOutbox` n JOIN `User` u ON u.id = n.recipientUserId WHERE n.recipientUserId = ? AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND u.role IN ('dueno','taller','almacen') AND n.kind IN ('local.invitation','local.offer','local.cancelled','local.decision','local.accepted','local.appointment')" + (cursor ? " AND (n.createdAt < ? OR (n.createdAt = ? AND n.id < ?))" : "") + " ORDER BY n.createdAt DESC, n.id DESC LIMIT 51", cursor ? [userId, cursor.at, cursor.at, cursor.id] : [userId]);
-          const page = notifications.slice(0, 50);
-          const last = page[page.length - 1];
-          const items = page.map((item) => {
+          const page2 = notifications.slice(0, 50);
+          const last = page2[page2.length - 1];
+          const items = page2.map((item) => {
             const payload = typeof item.payload === "string" ? JSON.parse(item.payload) : item.payload;
             return { id: item.id, kind: item.kind, message: typeof payload?.message === "string" ? payload.message.slice(0, 6e3) : "Aviso pendiente de revisi\xF3n", createdAt: item.createdAt };
           });
@@ -88265,7 +89100,7 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
         });
       }
       async linkCode(userId) {
-        const code3 = randomBytes5(16).toString("hex");
+        const code3 = randomBytes6(16).toString("hex");
         return this.run(async (conn) => {
           await this.account(conn, userId);
           await conn.query("UPDATE `WhatsAppLinkCode` SET usedAt = UTC_TIMESTAMP(3) WHERE userId = ? AND usedAt IS NULL", [userId]);
@@ -88283,7 +89118,12 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
           const [identity] = await data(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ?", [job.phone]);
           if (!identity)
             return null;
-          return this.account(conn, String(identity.userId));
+          const [user] = await data(conn, "SELECT id,role FROM `User` WHERE id=? AND deletedAt IS NULL AND consentAt IS NOT NULL", [identity.userId]);
+          if (!user)
+            return null;
+          if (["dueno", "taller", "almacen"].includes(String(user.role)))
+            return user;
+          return user;
         });
       }
       async bind(job, code3) {
@@ -88316,7 +89156,7 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
       async welcome(phone) {
         const day3 = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
         await this.run(async (conn) => {
-          await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,recipientPhone,kind,payload) VALUES (?, ?, NULL, ?, 'contact.welcome', ?) ON DUPLICATE KEY UPDATE id = id", [randomBytes5(16).toString("hex"), `welcome:${digest(phone)}:${day3}`, phone, JSON.stringify({ message: WELCOME_MESSAGES[parseInt(digest(`${phone}:${day3}`).slice(0, 8), 16) % WELCOME_MESSAGES.length] })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,recipientPhone,kind,payload) VALUES (?, ?, NULL, ?, 'contact.welcome', ?) ON DUPLICATE KEY UPDATE id = id", [randomBytes6(16).toString("hex"), `welcome:${digest(phone)}:${day3}`, phone, JSON.stringify({ message: WELCOME_MESSAGES[parseInt(digest(`${phone}:${day3}`).slice(0, 8), 16) % WELCOME_MESSAGES.length] })]);
         });
       }
       /**
@@ -88329,13 +89169,13 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
           try {
             const [user] = await data(conn, "SELECT id, phone FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL AND role IN ('dueno','taller','almacen') FOR UPDATE", [userId]);
             if (!user)
-              fail8("ACCOUNT_UNAVAILABLE");
+              fail9("ACCOUNT_UNAVAILABLE");
             const phone = String(user.phone ?? "").replace(/\D/g, "");
             if (!/^\d{8,15}$/.test(phone))
-              fail8("INVALID_PHONE");
+              fail9("INVALID_PHONE");
             const bindings = await data(conn, "SELECT userId, phone FROM `WhatsAppIdentity` WHERE userId = ? OR phone = ? FOR UPDATE", [userId, phone]);
             if (bindings.some((b) => b.userId !== userId || b.phone !== phone))
-              fail8("PHONE_ALREADY_LINKED");
+              fail9("PHONE_ALREADY_LINKED");
             if (!bindings.length)
               await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [userId, phone]);
             await conn.query("COMMIT");
@@ -88402,11 +89242,11 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
         return this.run(async (conn) => {
           const [job] = await data(conn, "SELECT wamid, phone, payload, attempts FROM `InboundWebhook` WHERE wamid = ? AND leaseToken = ? AND status = 'processing'", [wamid, leaseToken]);
           if (!job)
-            fail8("NOT_FOUND");
+            fail9("NOT_FOUND");
           const payload = typeof job.payload === "string" ? JSON.parse(job.payload) : job.payload;
           const user = await this.resolve({ wamid, phone: String(job.phone), payload, attempts: Number(job.attempts), leaseToken });
           if (!user)
-            fail8("ACCOUNT_UNAVAILABLE");
+            fail9("ACCOUNT_UNAVAILABLE");
           const id2 = String(user.id);
           const role = String(user.role);
           const [profile] = await data(conn, "SELECT name, city FROM `User` WHERE id = ?", [id2]);
@@ -88430,7 +89270,7 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
       async dismiss(wamid, leaseToken) {
         const accepted2 = await this.queue.complete(wamid, leaseToken);
         if (accepted2)
-          await this.run((conn) => conn.query("INSERT INTO `AuditLog` (id,eventType,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.dismissed', 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes5(16).toString("hex"), wamid, JSON.stringify({ reason: "operator" })]));
+          await this.run((conn) => conn.query("INSERT INTO `AuditLog` (id,eventType,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.dismissed', 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes6(16).toString("hex"), wamid, JSON.stringify({ reason: "operator" })]));
         return { accepted: accepted2 };
       }
       heartbeat(wamid, token2) {
@@ -88461,17 +89301,25 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
             const payload = incoming.payload;
             const user = await this.resolve(incoming);
             if (!user && payload.channel !== "whatsapp")
-              fail8("ACCOUNT_UNAVAILABLE");
+              fail9("ACCOUNT_UNAVAILABLE");
             if (executeCommand && command !== null && command !== payload.message)
-              fail8("COMMAND_MISMATCH");
+              fail9("COMMAND_MISMATCH");
             const commandText = payload.message;
             const accountCommand = executeCommand ? parseAccountCommand(commandText) : null;
             if (isInvalidAccountCommand(accountCommand))
-              fail8("INVALID_ACCOUNT_COMMAND");
+              fail9("INVALID_ACCOUNT_COMMAND");
             let recipient = user ? String(user.id) : null;
             let message2 = reply;
             let executed = false;
-            if (accountCommand) {
+            if (executeCommand && user) {
+              const result = await handleCourseCommand(conn, String(user.id), String(user.role), commandText, payload.mediaId);
+              if (result !== null) {
+                message2 = result;
+                executed = true;
+              }
+            }
+            if (executed) {
+            } else if (accountCommand) {
               const done = await this.accounts.execute(conn, String(owned.phone), recipient, user ? String(user.role) : null, accountCommand);
               recipient = done.userId || recipient;
               message2 = done.message;
@@ -88484,19 +89332,19 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
               executed = !!result;
               message2 = result?.message ?? reply;
             } else if (executeCommand)
-              fail8("ACCOUNT_REQUIRED");
+              fail9("ACCOUNT_REQUIRED");
             const [active] = recipient ? await data(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL FOR UPDATE", [recipient]) : [];
             if (recipient && (!active || !["dueno", "taller", "almacen"].includes(String(active.role))))
-              fail8("ACCOUNT_UNAVAILABLE");
+              fail9("ACCOUNT_UNAVAILABLE");
             await conn.query("INSERT INTO `LocalAgentReply` (wamid,userId,leaseToken,message,channel,executedCommand) VALUES (?, ?, ?, ?, ?, ?)", [wamid, recipient, leaseToken, message2, payload.channel, executed]);
             if (payload.channel === "whatsapp") {
               if (recipient)
-                await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?, ?, ?, 'agent.reply', ?)", [randomBytes5(16).toString("hex"), `reply:${digest(wamid)}`, recipient, JSON.stringify({ message: message2 })]);
+                await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?, ?, ?, 'agent.reply', ?)", [randomBytes6(16).toString("hex"), `reply:${digest(wamid)}`, recipient, JSON.stringify({ message: message2 })]);
               else
-                await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,recipientPhone,kind,payload) VALUES (?, ?, NULL, ?, 'contact.reply', ?)", [randomBytes5(16).toString("hex"), `reply:${digest(wamid)}`, String(owned.phone), JSON.stringify({ message: message2 })]);
+                await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,recipientPhone,kind,payload) VALUES (?, ?, NULL, ?, 'contact.reply', ?)", [randomBytes6(16).toString("hex"), `reply:${digest(wamid)}`, String(owned.phone), JSON.stringify({ message: message2 })]);
             }
             await conn.query("UPDATE `InboundWebhook` SET status = 'completed', leaseToken = NULL, lockedAt = NULL, completedAt = UTC_TIMESTAMP(3), updatedAt = UTC_TIMESTAMP(3) WHERE wamid = ?", [wamid]);
-            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.approved', ?, ?, 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes5(16).toString("hex"), recipient, active?.role ?? null, wamid, JSON.stringify({ executedCommand: executed, channel: payload.channel, newContact: !user, commandSource: "contact" })]);
+            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.approved', ?, ?, 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes6(16).toString("hex"), recipient, active?.role ?? null, wamid, JSON.stringify({ executedCommand: executed, channel: payload.channel, newContact: !user, commandSource: "contact" })]);
             await conn.query("COMMIT");
             return { accepted: true };
           } catch (err) {
@@ -88507,7 +89355,7 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
               err.message = chatErrorMessage(code3, capacity);
             }
             if (err.code === "COMMAND_MISMATCH")
-              await conn.query("INSERT INTO `AuditLog` (id,eventType,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.command-mismatch', 'operador', 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes5(16).toString("hex"), wamid, JSON.stringify({ rejected: true, commandSource: "operator" })]);
+              await conn.query("INSERT INTO `AuditLog` (id,eventType,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.command-mismatch', 'operador', 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes6(16).toString("hex"), wamid, JSON.stringify({ rejected: true, commandSource: "operator" })]);
             throw err;
           }
         });
@@ -88517,12 +89365,12 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
 });
 
 // packages/api/dist/infrastructure/messaging/outbox-delivery-store.js
-import { randomUUID as randomUUID13 } from "node:crypto";
+import { randomUUID as randomUUID14 } from "node:crypto";
 function whatsappDelivery(env = process.env) {
   const value2 = env.WHATSAPP_DELIVERY?.trim();
   return value2 === "bridge" || value2 === "cloud" ? value2 : "off";
 }
-var MAX_ATTEMPTS2, LEASE_SECONDS2, affected2, MysqlOutboxDeliveryStore;
+var MAX_ATTEMPTS2, LEASE_SECONDS2, affected3, MysqlOutboxDeliveryStore;
 var init_outbox_delivery_store = __esm({
   "packages/api/dist/infrastructure/messaging/outbox-delivery-store.js"() {
     "use strict";
@@ -88530,7 +89378,7 @@ var init_outbox_delivery_store = __esm({
     init_admin_alerts();
     MAX_ATTEMPTS2 = 5;
     LEASE_SECONDS2 = 300;
-    affected2 = (result) => Number(result[0].affectedRows ?? 0);
+    affected3 = (result) => Number(result[0].affectedRows ?? 0);
     MysqlOutboxDeliveryStore = class {
       connect;
       constructor(connect = openConnection) {
@@ -88547,7 +89395,7 @@ var init_outbox_delivery_store = __esm({
       async enqueueVerification(userId, businessId, decision, reason) {
         await this.run(async (conn) => {
           const message2 = decision === "verified" ? "Tu negocio fue aprobado. Comandos \xFAtiles: Invitaciones | Mapa | Planes." : `Tu negocio no fue aprobado. Motivo: ${reason.slice(0, 500)}`;
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID13(), `verification:${businessId}:${decision}`, userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID14(), `verification:${businessId}:${decision}`, userId, JSON.stringify({ message: message2 })]);
         });
       }
       claim(limit = 5) {
@@ -88565,9 +89413,9 @@ var init_outbox_delivery_store = __esm({
               await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'EMPTY_MESSAGE' WHERE id = ? AND status = 'pending'", [id2]);
               continue;
             }
-            const leaseToken = randomUUID13();
+            const leaseToken = randomUUID14();
             const changed = await conn.query("UPDATE `NotificationOutbox` SET status = 'sending', attempts = attempts + 1, leaseToken = ?, lockedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status = 'pending' AND attempts < ?", [leaseToken, id2, MAX_ATTEMPTS2]);
-            if (affected2(changed) !== 1)
+            if (affected3(changed) !== 1)
               continue;
             const [current] = await conn.query("SELECT attempts FROM `NotificationOutbox` WHERE id = ? AND leaseToken = ?", [id2, leaseToken]);
             const owned = current[0];
@@ -88578,7 +89426,7 @@ var init_outbox_delivery_store = __esm({
         });
       }
       sent(id2, leaseToken, via) {
-        return this.run(async (conn) => affected2(await conn.query("UPDATE `NotificationOutbox` SET status = 'sent', sentAt = UTC_TIMESTAMP(3), deliveredVia = ?, leaseToken = NULL, lockedAt = NULL, lastError = NULL WHERE id = ? AND status = 'sending' AND leaseToken = ?", [via, id2, leaseToken])) === 1);
+        return this.run(async (conn) => affected3(await conn.query("UPDATE `NotificationOutbox` SET status = 'sent', sentAt = UTC_TIMESTAMP(3), deliveredVia = ?, leaseToken = NULL, lockedAt = NULL, lastError = NULL WHERE id = ? AND status = 'sending' AND leaseToken = ?", [via, id2, leaseToken])) === 1);
       }
       /** Counts by status and the latest rows that need a person: never message text or full phones. */
       overview() {
@@ -88596,17 +89444,17 @@ var init_outbox_delivery_store = __esm({
       }
       /** A person decided to try a failed notice again. */
       requeue(id2) {
-        return this.run(async (conn) => affected2(await conn.query("UPDATE `NotificationOutbox` SET status = 'pending', attempts = 0, nextAttemptAt = UTC_TIMESTAMP(3), lastError = NULL, leaseToken = NULL, lockedAt = NULL WHERE id = ? AND status = 'dead' AND (recipientUserId IS NOT NULL OR kind IN ('contact.welcome','contact.reply')) AND JSON_UNQUOTE(JSON_EXTRACT(payload, '$.message')) <> ''", [id2])) === 1);
+        return this.run(async (conn) => affected3(await conn.query("UPDATE `NotificationOutbox` SET status = 'pending', attempts = 0, nextAttemptAt = UTC_TIMESTAMP(3), lastError = NULL, leaseToken = NULL, lockedAt = NULL WHERE id = ? AND status = 'dead' AND (recipientUserId IS NOT NULL OR kind IN ('contact.welcome','contact.reply')) AND JSON_UNQUOTE(JSON_EXTRACT(payload, '$.message')) <> ''", [id2])) === 1);
       }
       failed(id2, leaseToken, errorCode, delaySeconds = 60) {
         if (!Number.isInteger(delaySeconds) || delaySeconds < 1 || delaySeconds > 3600)
           throw new Error("INVALID_RETRY_DELAY");
         const code3 = /^[A-Z_]{1,64}$/.test(errorCode) ? errorCode : "DELIVERY_FAILED";
         return this.run(async (conn) => {
-          const changed = affected2(await conn.query("UPDATE `NotificationOutbox` SET status = IF(attempts >= ?, 'dead', 'pending'), nextAttemptAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? SECOND), lastError = ?, leaseToken = NULL, lockedAt = NULL WHERE id = ? AND status = 'sending' AND leaseToken = ?", [MAX_ATTEMPTS2, delaySeconds, code3, id2, leaseToken])) === 1;
+          const changed = affected3(await conn.query("UPDATE `NotificationOutbox` SET status = IF(attempts >= ?, 'dead', 'pending'), nextAttemptAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? SECOND), lastError = ?, leaseToken = NULL, lockedAt = NULL WHERE id = ? AND status = 'sending' AND leaseToken = ?", [MAX_ATTEMPTS2, delaySeconds, code3, id2, leaseToken])) === 1;
           if (changed) {
-            const [rows30] = await conn.query("SELECT kind,status FROM `NotificationOutbox` WHERE id = ?", [id2]);
-            const row = rows30[0];
+            const [rows31] = await conn.query("SELECT kind,status FROM `NotificationOutbox` WHERE id = ?", [id2]);
+            const row = rows31[0];
             if (row?.status === "dead" && row.kind !== "admin.alert")
               void new MysqlAdminAlerts().notify("outbox_dead", 1);
           }
@@ -90304,12 +91152,12 @@ var init_dist = __esm({
 });
 
 // packages/api/dist/infrastructure/agent/user-lock.js
-import { createHash as createHash7 } from "node:crypto";
+import { createHash as createHash8 } from "node:crypto";
 var agentUserLock;
 var init_user_lock = __esm({
   "packages/api/dist/infrastructure/agent/user-lock.js"() {
     "use strict";
-    agentUserLock = (userId) => `amp-agent:${createHash7("sha256").update(userId).digest("hex").slice(0, 48)}`;
+    agentUserLock = (userId) => `amp-agent:${createHash8("sha256").update(userId).digest("hex").slice(0, 48)}`;
   }
 });
 
@@ -90467,7 +91315,7 @@ function structuredData(input) {
   return JSON.stringify(datos).replace(/</g, "\\u003c");
 }
 function renderEntryPage(input) {
-  const nonce = escapeHtml(input.nonce);
+  const nonce2 = escapeHtml(input.nonce);
   const available = input.number !== null;
   const links = available ? buildLinks(input.number, input.code, input.ref) : null;
   const number = available ? escapeHtml(formatNumber(input.number)) : "";
@@ -90518,9 +91366,9 @@ ${seoHead({
     description: HOME_DESCRIPTION
   })}
 <meta name="author" content="AutoMantPro">
-<script type="application/ld+json" nonce="${nonce}">${structuredData(input)}</script>
-<style nonce="${nonce}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}</style>
-<script nonce="${nonce}">${THEME_BOOT}</script>
+<script type="application/ld+json" nonce="${nonce2}">${structuredData(input)}</script>
+<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}</style>
+<script nonce="${nonce2}">${THEME_BOOT}</script>
 </head>
 <body>
 <main>
@@ -90545,7 +91393,7 @@ ${seoHead({
   ${socialLinks()}
   <p class="legal">Aceptas los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP).</p>
 </main>
-<script nonce="${nonce}">${SCRIPT}</script>
+<script nonce="${nonce2}">${SCRIPT}</script>
 </body>
 </html>`;
 }
@@ -90882,7 +91730,7 @@ h1 em{font-style:normal;color:var(--c-accent)}
 });
 
 // packages/api/dist/interfaces/entry/index.js
-import { randomBytes as randomBytes6, randomInt as randomInt2 } from "node:crypto";
+import { randomBytes as randomBytes7, randomInt as randomInt2 } from "node:crypto";
 function wantsHtml(accept) {
   if (!accept)
     return false;
@@ -90953,7 +91801,7 @@ async function entryRoutes(app2, options = {}) {
     if (request.method === "HEAD" || !wantsHtml(request.headers.accept) && !bot) {
       return reply.send(API_STATUS);
     }
-    const nonce = randomBytes6(16).toString("base64");
+    const nonce2 = randomBytes7(16).toString("base64");
     const query = request.query ?? {};
     const code3 = await uniqueVisitCode(options.codeTaken);
     const ref4 = sanitizeRef(query.ref);
@@ -90973,8 +91821,8 @@ async function entryRoutes(app2, options = {}) {
     if (number && !bot && !("pagina" in query) && (mode === "directo" || profile)) {
       return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number, code3, ref4, profile).wame, 302);
     }
-    const html = renderEntryPage({ number, code: code3, ref: ref4, nonce, menu: mode === "menu", marketing });
-    return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
+    const html = renderEntryPage({ number, code: code3, ref: ref4, nonce: nonce2, menu: mode === "menu", marketing });
+    return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
   });
 }
 var API_STATUS, CODE_ALPHABET, CODE_LENGTH, VISITS_PER_HOUR, PREVIEW_BOTS;
@@ -91089,7 +91937,7 @@ var init_platform = __esm({
 });
 
 // packages/api/dist/infrastructure/visits/visit-store.js
-function rows17(result) {
+function rows18(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -91121,13 +91969,13 @@ var init_visit_store = __esm({
       }
       exists(code3) {
         return this.run(async (conn) => {
-          const row = rows17(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code3]))[0];
+          const row = rows18(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code3]))[0];
           return !!row;
         });
       }
       find(code3, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const row = rows17(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code3, new Date(now.getTime() - MAX_AGE_MS)]))[0];
+          const row = rows18(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code3, new Date(now.getTime() - MAX_AGE_MS)]))[0];
           if (!row)
             return null;
           return {
@@ -91153,10 +92001,10 @@ var init_visit_store = __esm({
           await conn.query("UPDATE `Visit` SET userId = ?, linkedAt = CURRENT_TIMESTAMP(3) WHERE code = ? AND userId IS NULL", [userId, code3]);
         });
       }
-      list(page) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE3;
+      list(page2) {
+        const offset2 = (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE3;
         return this.run(async (conn) => {
-          const items = rows17(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`)).map((row) => ({
+          const items = rows18(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`)).map((row) => ({
             code: String(row.code),
             ref: text4(row.ref),
             profile: text4(row.profile),
@@ -91167,12 +92015,12 @@ var init_visit_store = __esm({
             linkedAt: row.linkedAt ?? null,
             createdAt: row.createdAt
           }));
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE3 };
+          return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE3 };
         });
       }
       stats(days2) {
         const window2 = Math.max(1, Math.floor(days2));
-        return this.run(async (conn) => rows17(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window2} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row) => ({
+        return this.run(async (conn) => rows18(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window2} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row) => ({
           ref: text4(row.ref),
           profile: text4(row.profile),
           visitas: Number(row.visitas ?? 0),
@@ -91244,6 +92092,19 @@ function company(data2) {
 function termsSections(data2) {
   const c = company(data2);
   return [
+    {
+      title: "Cursos y capacitaci\xF3n",
+      paragraphs: ["Pendiente de revisi\xF3n legal. Esta secci\xF3n aplica a los cursos en l\xEDnea y a la capacitaci\xF3n de t\xE9cnicos."],
+      items: [
+        "Datos tratados: cuenta del alumno, inscripci\xF3n, consentimiento LOPDP y su versi\xF3n, avance por lecci\xF3n, respuestas, calificaci\xF3n y, si se emite, c\xF3digo y estado del certificado. Para pagos tambi\xE9n se registra la referencia de transferencia; el comprobante es informaci\xF3n no confiable.",
+        "El t\xE9cnico decide al inscribirse si comparte su avance con su taller y si permite que su certificado sea p\xFAblico. Puede cambiar la visibilidad del certificado desde Mis cursos.",
+        "Los documentos que el experto entregue para revisi\xF3n de identidad o experiencia se borran al tomar la decisi\xF3n. Se conserva \xFAnicamente el resultado de la revisi\xF3n y el tipo de documento revisado.",
+        "El experto concede a AutoMantPro una licencia no exclusiva para alojar, mostrar y distribuir el contenido del curso mientras est\xE9 publicado y para administrar reportes o reclamos relacionados.",
+        "El experto declara ser autor o contar con autorizaci\xF3n suficiente sobre el material que publica, y mantiene la responsabilidad por su contenido.",
+        "No se permite publicar material de terceros sin autorizaci\xF3n, incluidos videos, textos, im\xE1genes, marcas o documentos protegidos.",
+        "Puedes reportar contenido desde la p\xE1gina de cada curso. AutoMantPro revisar\xE1 el reporte y podr\xE1 ocultar el contenido mientras lo analiza."
+      ]
+    },
     {
       title: "1. Qui\xE9nes somos y aceptaci\xF3n",
       paragraphs: [
@@ -91362,6 +92223,16 @@ function privacySections(data2) {
   const c = company(data2);
   return [
     {
+      title: "Cursos y capacitaci\xF3n",
+      paragraphs: ["Pendiente de revisi\xF3n legal. Para esta secci\xF3n tratamos los datos de cuenta, inscripci\xF3n, versi\xF3n del consentimiento LOPDP, avance por lecci\xF3n, respuestas, calificaciones y certificado; para pagos, la referencia de transferencia y el comprobante enviado, que se considera dato no confiable."],
+      items: [
+        "El t\xE9cnico decide si comparte su avance con el taller y si su certificado queda p\xFAblico.",
+        "Al decidir sobre el registro del experto se borran los documentos recibidos; se conserva solo el resultado y el tipo de documento revisado.",
+        "El experto declara la autor\xEDa y concede una licencia no exclusiva para alojar, mostrar y distribuir el contenido del curso mientras est\xE9 publicado.",
+        "No se admite material de terceros sin autorizaci\xF3n. Puedes usar \xABReportar contenido\xBB en cada curso para solicitar una revisi\xF3n."
+      ]
+    },
+    {
       title: "1. Responsable del tratamiento",
       paragraphs: [`${c.name}, con RUC ${c.ruc} y domicilio en ${c.address}. Contacto para datos personales: ${c.email}.`]
     },
@@ -91462,155 +92333,6 @@ var init_documents = __esm({
   }
 });
 
-// packages/api/dist/infrastructure/admin/admin-store.js
-function rows21(result) {
-  return Array.isArray(result[0]) ? result[0] : [];
-}
-async function scalar(conn, sql, params2 = []) {
-  const row = rows21(await conn.query(sql, params2))[0];
-  return Number(row?.n ?? 0);
-}
-function grouped(list7) {
-  const out = {};
-  for (const r of list7)
-    out[String(r.k)] = Number(r.n ?? 0);
-  return out;
-}
-function offset(page) {
-  return (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE4;
-}
-var PAGE_SIZE4, MysqlAdminStore;
-var init_admin_store = __esm({
-  "packages/api/dist/infrastructure/admin/admin-store.js"() {
-    "use strict";
-    PAGE_SIZE4 = 25;
-    MysqlAdminStore = class {
-      connect;
-      constructor(connect) {
-        this.connect = connect;
-      }
-      async run(work) {
-        const conn = await this.connect();
-        try {
-          return await work(conn);
-        } finally {
-          await conn.end().catch(() => void 0);
-        }
-      }
-      findAdminByEmail(email) {
-        return this.run(async (conn) => {
-          const row = rows21(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
-          if (!row)
-            return null;
-          return {
-            id: String(row.id),
-            email: String(row.email),
-            name: String(row.name),
-            passwordHash: String(row.passwordHash),
-            totpSecret: row.totpSecret ? String(row.totpSecret) : null,
-            staffRole: row.staffRole ? String(row.staffRole) : null
-          };
-        });
-      }
-      upsertAdmin(input) {
-        return this.run(async (conn) => {
-          const email = input.email.toLowerCase();
-          const existing = rows21(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
-          let id2;
-          if (existing) {
-            id2 = String(existing.id);
-            await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', staffRole = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id2]);
-          } else {
-            const created = rows21(await conn.query("SELECT UUID() AS id"))[0];
-            id2 = String(created?.id);
-            await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, staffRole, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, email, input.phone, input.passwordHash, input.name]);
-          }
-          await conn.query("INSERT INTO `AdminTotp` (userId, secret, createdAt, updatedAt) VALUES (?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE secret = VALUES(secret), updatedAt = CURRENT_TIMESTAMP(3)", [id2, input.totpSecret]);
-          return id2;
-        });
-      }
-      findAdminById(id2) {
-        return this.run(async (conn) => {
-          const row = rows21(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id2]))[0];
-          if (!row)
-            return null;
-          return {
-            id: String(row.id),
-            email: String(row.email),
-            name: String(row.name),
-            passwordHash: String(row.passwordHash),
-            totpSecret: row.totpSecret ? String(row.totpSecret) : null,
-            staffRole: row.staffRole ? String(row.staffRole) : null
-          };
-        });
-      }
-      countAdmins() {
-        return this.run((conn) => scalar(conn, "SELECT COUNT(*) AS n FROM `User` u JOIN `AdminTotp` t ON t.userId = u.id WHERE u.role = 'admin' AND u.deletedAt IS NULL"));
-      }
-      updateAdminProfile(id2, input) {
-        return this.run(async (conn) => {
-          await conn.query("UPDATE `User` SET email = ?, name = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role = 'admin'", [input.email.toLowerCase(), input.name, id2]);
-        });
-      }
-      updateAdminPassword(id2, passwordHash) {
-        return this.run(async (conn) => {
-          await conn.query("UPDATE `User` SET passwordHash = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role = 'admin'", [passwordHash, id2]);
-        });
-      }
-      updateAdminTotp(id2, secret2) {
-        return this.run(async (conn) => {
-          await conn.query("UPDATE `AdminTotp` SET secret = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ?", [secret2, id2]);
-        });
-      }
-      recordAudit(input) {
-        return this.run(async (conn) => {
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, reason, createdAt) VALUES (UUID(), ?, ?, 'admin', ?, CURRENT_TIMESTAMP(3))", [input.eventType, input.actorUserId ?? null, input.reason ?? null]);
-        });
-      }
-      dashboard() {
-        return this.run(async (conn) => ({
-          usersByRole: grouped(rows21(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
-          vehicles: await scalar(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE deletedAt IS NULL"),
-          shopsByStatus: grouped(rows21(await conn.query("SELECT verificationStatus AS k, COUNT(*) AS n FROM `Shop` GROUP BY verificationStatus"))),
-          stores: await scalar(conn, "SELECT COUNT(*) AS n FROM `Store`"),
-          appointmentsToday: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE scheduledAt >= CURDATE() AND scheduledAt < CURDATE() + INTERVAL 1 DAY"),
-          appointmentsPending: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE status = 'pending'"),
-          conversations: await scalar(conn, "SELECT COUNT(*) AS n FROM `Conversation`"),
-          messages24h: await scalar(conn, "SELECT COUNT(*) AS n FROM `Message` WHERE createdAt >= NOW() - INTERVAL 1 DAY")
-        }));
-      }
-      listUsers(page) {
-        return this.run(async (conn) => ({
-          items: rows21(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page)])),
-          page,
-          pageSize: PAGE_SIZE4
-        }));
-      }
-      listVehicles(page) {
-        return this.run(async (conn) => ({
-          items: rows21(await conn.query("SELECT id, make, model, year, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page)])),
-          page,
-          pageSize: PAGE_SIZE4
-        }));
-      }
-      listShops(page) {
-        return this.run(async (conn) => ({
-          items: rows21(await conn.query("SELECT id, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page)])),
-          page,
-          pageSize: PAGE_SIZE4
-        }));
-      }
-      listAudit(page) {
-        return this.run(async (conn) => ({
-          items: rows21(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page)])),
-          page,
-          pageSize: PAGE_SIZE4
-        }));
-      }
-    };
-  }
-});
-
 // packages/api/dist/application/admin/permissions.js
 function normalizeRole(value2) {
   if (value2 === null || value2 === void 0 || value2 === "")
@@ -91671,6 +92393,11 @@ var init_permissions = __esm({
       { method: "POST", pattern: /^\/users\/[^/]+\/notes$/, capability: "notes" },
       { method: "GET", pattern: /^\/users\/[^/]+\/schedule$/, capability: "appointments" },
       { method: "POST", pattern: /^\/verifications(\/|$)/, capability: "verifications" },
+      { method: "POST", pattern: /^\/expertos(\/|$)/, capability: "verifications" },
+      { method: "POST", pattern: /^\/cursos\/comision$/, capability: "settings" },
+      { method: "POST", pattern: /^\/cursos(\/|$)/, capability: "verifications" },
+      { method: "GET", pattern: /^\/expertos(\/|$)/, capability: "verifications" },
+      { method: "GET", pattern: /^\/cursos(\/|$)/, capability: "verifications" },
       // Ubicación del taller en el mapa público: la confirma quien verifica talleres.
       { method: "POST", pattern: /^\/users\/[^/]+\/shop-map$/, capability: "verifications" },
       { method: "POST", pattern: /^\/appointments(\/|$)/, capability: "appointments" },
@@ -91707,7 +92434,7 @@ var init_permissions = __esm({
 });
 
 // packages/api/dist/application/admin/security.js
-import { createHmac as createHmac3, randomBytes as randomBytes13, timingSafeEqual as timingSafeEqual4 } from "node:crypto";
+import { createHmac as createHmac3, randomBytes as randomBytes14, timingSafeEqual as timingSafeEqual4 } from "node:crypto";
 function getAdminSessionSecret() {
   const secret2 = process.env.ADMIN_SESSION_SECRET?.trim();
   return secret2 && secret2.length >= 32 ? secret2 : null;
@@ -91716,12 +92443,12 @@ function allowInsecureAdminCookies() {
   return process.env.NODE_ENV !== "production" && process.env.ADMIN_INSECURE_COOKIES === "1";
 }
 function createCsrfToken() {
-  return randomBytes13(24).toString("base64url");
+  return randomBytes14(24).toString("base64url");
 }
 function createPendingSession(user) {
   const now = Date.now();
   const session = {
-    id: randomBytes13(24).toString("base64url"),
+    id: randomBytes14(24).toString("base64url"),
     userId: user.id,
     email: user.email,
     role: normalizeRole(user.role),
@@ -91872,7 +92599,7 @@ function safeEqual(a, b) {
   return left.length === right.length && timingSafeEqual4(left, right);
 }
 function generateTotpSecret(bytes = 20) {
-  return base32Encode(randomBytes13(bytes));
+  return base32Encode(randomBytes14(bytes));
 }
 function verifyTotp(secret2, code3, timestampMs = Date.now()) {
   if (!/^\d{6}$/.test(code3))
@@ -91959,6 +92686,3213 @@ var init_security = __esm({
   }
 });
 
+// node_modules/@fastify/busboy/deps/streamsearch/sbmh.js
+var require_sbmh = __commonJS({
+  "node_modules/@fastify/busboy/deps/streamsearch/sbmh.js"(exports, module) {
+    "use strict";
+    var { EventEmitter } = __require("node:events");
+    var { inherits } = __require("node:util");
+    function SBMH(needle) {
+      if (typeof needle === "string") {
+        needle = Buffer.from(needle);
+      }
+      if (!Buffer.isBuffer(needle)) {
+        throw new TypeError("The needle has to be a String or a Buffer.");
+      }
+      const needleLength = needle.length;
+      const needleLastCharIndex = needleLength - 1;
+      if (needleLength === 0) {
+        throw new Error("The needle cannot be an empty String/Buffer.");
+      }
+      if (needleLength > 256) {
+        throw new Error("The needle cannot have a length bigger than 256.");
+      }
+      this.maxMatches = Infinity;
+      this.matches = 0;
+      this._occ = new Uint16Array(256).fill(needleLength);
+      this._lookbehind_size = 0;
+      this._needle = needle;
+      this._bufpos = 0;
+      this._lookbehind = Buffer.alloc(needleLastCharIndex);
+      for (var i = 0; i < needleLastCharIndex; ++i) {
+        this._occ[needle[i]] = needleLastCharIndex - i;
+      }
+    }
+    inherits(SBMH, EventEmitter);
+    SBMH.prototype.reset = function() {
+      this._lookbehind_size = 0;
+      this.matches = 0;
+      this._bufpos = 0;
+    };
+    SBMH.prototype.push = function(chunk, pos) {
+      if (!Buffer.isBuffer(chunk)) {
+        chunk = Buffer.from(chunk, "binary");
+      }
+      const chlen = chunk.length;
+      this._bufpos = pos || 0;
+      let r;
+      while (r !== chlen && this.matches < this.maxMatches) {
+        r = this._sbmh_feed(chunk);
+      }
+      return r;
+    };
+    SBMH.prototype._sbmh_feed = function(data2) {
+      const len = data2.length;
+      const needle = this._needle;
+      const needleLength = needle.length;
+      const needleLastCharIndex = needleLength - 1;
+      const needleLastChar = needle[needleLastCharIndex];
+      let pos = -this._lookbehind_size;
+      let ch;
+      if (pos < 0) {
+        while (pos < 0 && pos <= len - needleLength) {
+          ch = data2[pos + needleLastCharIndex];
+          if (ch === needleLastChar && this._sbmh_memcmp(data2, pos, needleLastCharIndex)) {
+            this._lookbehind_size = 0;
+            ++this.matches;
+            this.emit("info", true);
+            return this._bufpos = pos + needleLength;
+          }
+          pos += this._occ[ch];
+        }
+        while (pos < 0 && !this._sbmh_memcmp(data2, pos, len - pos)) {
+          ++pos;
+        }
+        if (pos >= 0) {
+          this.emit("info", false, this._lookbehind, 0, this._lookbehind_size);
+          this._lookbehind_size = 0;
+        } else {
+          const bytesToCutOff = this._lookbehind_size + pos;
+          if (bytesToCutOff > 0) {
+            this.emit("info", false, this._lookbehind, 0, bytesToCutOff);
+          }
+          this._lookbehind_size -= bytesToCutOff;
+          this._lookbehind.copy(this._lookbehind, 0, bytesToCutOff, this._lookbehind_size);
+          data2.copy(this._lookbehind, this._lookbehind_size);
+          this._lookbehind_size += len;
+          this._bufpos = len;
+          return len;
+        }
+      }
+      pos = data2.indexOf(needle, pos + this._bufpos);
+      if (pos !== -1) {
+        ++this.matches;
+        if (pos === 0) {
+          this.emit("info", true);
+        } else {
+          this.emit("info", true, data2, this._bufpos, pos);
+        }
+        return this._bufpos = pos + needleLength;
+      }
+      pos = len - needleLastCharIndex;
+      if (pos < 0) {
+        pos = 0;
+      }
+      while (pos !== len && (data2[pos] !== needle[0] || Buffer.compare(
+        data2.subarray(pos + 1, len),
+        needle.subarray(1, len - pos)
+      ) !== 0)) {
+        ++pos;
+      }
+      if (pos !== len) {
+        data2.copy(this._lookbehind, 0, pos, len);
+        this._lookbehind_size = len - pos;
+      }
+      if (pos !== 0) {
+        this.emit("info", false, data2, this._bufpos, pos);
+      }
+      this._bufpos = len;
+      return len;
+    };
+    SBMH.prototype._sbmh_lookup_char = function(data2, pos) {
+      return pos < 0 ? this._lookbehind[this._lookbehind_size + pos] : data2[pos];
+    };
+    SBMH.prototype._sbmh_memcmp = function(data2, pos, len) {
+      for (var i = 0; i < len; ++i) {
+        if (this._sbmh_lookup_char(data2, pos + i) !== this._needle[i]) {
+          return false;
+        }
+      }
+      return true;
+    };
+    module.exports = SBMH;
+  }
+});
+
+// node_modules/@fastify/busboy/deps/dicer/lib/PartStream.js
+var require_PartStream = __commonJS({
+  "node_modules/@fastify/busboy/deps/dicer/lib/PartStream.js"(exports, module) {
+    "use strict";
+    var inherits = __require("node:util").inherits;
+    var ReadableStream = __require("node:stream").Readable;
+    function PartStream(opts) {
+      ReadableStream.call(this, opts);
+    }
+    inherits(PartStream, ReadableStream);
+    PartStream.prototype._read = function(n) {
+    };
+    module.exports = PartStream;
+  }
+});
+
+// node_modules/@fastify/busboy/lib/utils/getLimit.js
+var require_getLimit = __commonJS({
+  "node_modules/@fastify/busboy/lib/utils/getLimit.js"(exports, module) {
+    "use strict";
+    module.exports = function getLimit(limits, name, defaultLimit) {
+      if (!limits || limits[name] === void 0 || limits[name] === null) {
+        return defaultLimit;
+      }
+      if (typeof limits[name] !== "number" || isNaN(limits[name])) {
+        throw new TypeError("Limit " + name + " is not a valid number");
+      }
+      return limits[name];
+    };
+  }
+});
+
+// node_modules/@fastify/busboy/deps/dicer/lib/HeaderParser.js
+var require_HeaderParser = __commonJS({
+  "node_modules/@fastify/busboy/deps/dicer/lib/HeaderParser.js"(exports, module) {
+    "use strict";
+    var EventEmitter = __require("node:events").EventEmitter;
+    var inherits = __require("node:util").inherits;
+    var getLimit = require_getLimit();
+    var B_DCRLF = Buffer.from("\r\n\r\n");
+    var S_DCRLF = "\r\n\r\n";
+    function HeaderParser(cfg) {
+      EventEmitter.call(this);
+      cfg = cfg || {};
+      this.nread = 0;
+      this.maxed = false;
+      this.npairs = 0;
+      this.maxHeaderPairs = getLimit(cfg, "maxHeaderPairs", 2e3);
+      this.maxHeaderSize = getLimit(cfg, "maxHeaderSize", 80 * 1024);
+      this.buffer = "";
+      this.header = /* @__PURE__ */ Object.create(null);
+      this.finished = false;
+      this.tail = "";
+    }
+    inherits(HeaderParser, EventEmitter);
+    HeaderParser.prototype.push = function(data2) {
+      if (!Buffer.isBuffer(data2)) {
+        data2 = Buffer.from(data2, "binary");
+      }
+      let end = data2.length;
+      let appendEnd = data2.length;
+      let found = false;
+      let splitTail = 0;
+      const tail = this.tail;
+      for (let i = tail.length; i > 0; --i) {
+        if (tail.endsWith(S_DCRLF.slice(0, i))) {
+          let matched = data2.length >= S_DCRLF.length - i;
+          for (let j = i; matched && j < S_DCRLF.length; ++j) {
+            matched = data2[j - i] === S_DCRLF.charCodeAt(j);
+          }
+          if (matched) {
+            end = S_DCRLF.length - i;
+            appendEnd = 0;
+            splitTail = i;
+            found = true;
+            break;
+          }
+        }
+      }
+      if (!found) {
+        const pos = data2.indexOf(B_DCRLF);
+        if (pos !== -1) {
+          end = pos + B_DCRLF.length;
+          appendEnd = pos;
+          found = true;
+        }
+      }
+      if (!found) {
+        this.tail = data2.length >= 3 ? data2.toString("binary", data2.length - 3) : (tail + data2.toString("binary")).slice(-3);
+      } else {
+        this.tail = "";
+      }
+      if (appendEnd !== 0 && !this.maxed) {
+        const remaining = this.maxHeaderSize - this.nread;
+        if (appendEnd >= remaining) {
+          this.buffer += data2.toString("binary", 0, remaining);
+          this.nread = this.maxHeaderSize;
+          this.maxed = true;
+        } else {
+          this.buffer += data2.toString("binary", 0, appendEnd);
+          this.nread += appendEnd;
+        }
+      }
+      if (found) {
+        if (!this.maxed) {
+          this.buffer = this.buffer.slice(0, this.buffer.length - splitTail);
+        }
+        this._finish();
+        return end;
+      }
+    };
+    HeaderParser.prototype.reset = function() {
+      this.finished = false;
+      this.buffer = "";
+      this.header = /* @__PURE__ */ Object.create(null);
+      this.tail = "";
+    };
+    HeaderParser.prototype._finish = function() {
+      if (this.buffer) {
+        this._parseHeader();
+      }
+      const header = this.header;
+      this.header = /* @__PURE__ */ Object.create(null);
+      this.buffer = "";
+      this.tail = "";
+      this.finished = true;
+      this.nread = this.npairs = 0;
+      this.maxed = false;
+      this.emit("header", header);
+    };
+    HeaderParser.prototype._parseHeader = function() {
+      if (this.npairs === this.maxHeaderPairs) {
+        return;
+      }
+      const buffer = this.buffer;
+      let h;
+      let lineStart = 0;
+      while (lineStart < buffer.length) {
+        let lineEnd = buffer.indexOf("\r\n", lineStart);
+        if (lineEnd === -1) {
+          lineEnd = buffer.length;
+        }
+        if (lineEnd === lineStart) {
+          lineStart = lineEnd + 2;
+          continue;
+        }
+        const line = buffer.slice(lineStart, lineEnd);
+        if (line.includes("\r") || line.includes("\n")) {
+          return;
+        }
+        if ((buffer[lineStart] === "	" || buffer[lineStart] === " ") && h) {
+          this.header[h][this.header[h].length - 1] += buffer.slice(lineStart, lineEnd);
+          lineStart = lineEnd + 2;
+          continue;
+        }
+        const posColon = buffer.indexOf(":", lineStart);
+        if (posColon === -1 || posColon === lineStart || posColon > lineEnd) {
+          return;
+        }
+        h = buffer.slice(lineStart, posColon).toLowerCase();
+        let valueStart = posColon + 1;
+        if (buffer[valueStart] === " " || buffer[valueStart] === "	") {
+          ++valueStart;
+        }
+        const values = this.header[h] || (this.header[h] = []);
+        values.push(buffer.slice(valueStart, lineEnd));
+        if (++this.npairs === this.maxHeaderPairs) {
+          break;
+        }
+        lineStart = lineEnd + 2;
+      }
+    };
+    module.exports = HeaderParser;
+  }
+});
+
+// node_modules/@fastify/busboy/deps/dicer/lib/Dicer.js
+var require_Dicer = __commonJS({
+  "node_modules/@fastify/busboy/deps/dicer/lib/Dicer.js"(exports, module) {
+    "use strict";
+    var WritableStream = __require("node:stream").Writable;
+    var inherits = __require("node:util").inherits;
+    var StreamSearch = require_sbmh();
+    var PartStream = require_PartStream();
+    var HeaderParser = require_HeaderParser();
+    var DASH = 45;
+    var B_ONEDASH = Buffer.from("-");
+    var B_CRLF = Buffer.from("\r\n");
+    var EMPTY_FN = function() {
+    };
+    function Dicer(cfg) {
+      if (!(this instanceof Dicer)) {
+        return new Dicer(cfg);
+      }
+      WritableStream.call(this, cfg);
+      if (!cfg || !cfg.headerFirst && typeof cfg.boundary !== "string") {
+        throw new TypeError("Boundary required");
+      }
+      if (typeof cfg.boundary === "string") {
+        this.setBoundary(cfg.boundary);
+      } else {
+        this._bparser = void 0;
+      }
+      this._headerFirst = cfg.headerFirst;
+      this._dashes = 0;
+      this._parts = 0;
+      this._finished = false;
+      this._realFinish = false;
+      this._isPreamble = true;
+      this._justMatched = false;
+      this._firstWrite = true;
+      this._inHeader = true;
+      this._part = void 0;
+      this._cb = void 0;
+      this._ignoreData = false;
+      this._partOpts = { highWaterMark: cfg.partHwm };
+      this._pause = false;
+      const self2 = this;
+      this._hparser = new HeaderParser(cfg);
+      this._hparser.on("header", function(header) {
+        self2._inHeader = false;
+        self2._part.emit("header", header);
+      });
+    }
+    inherits(Dicer, WritableStream);
+    Dicer.prototype.emit = function(ev) {
+      if (ev === "finish" && !this._realFinish) {
+        if (!this._finished) {
+          const self2 = this;
+          process.nextTick(function() {
+            self2.emit("error", new Error("Unexpected end of multipart data"));
+            if (self2._part && !self2._ignoreData) {
+              const type = self2._isPreamble ? "Preamble" : "Part";
+              self2._part.emit("error", new Error(type + " terminated early due to unexpected end of multipart data"));
+              self2._part.push(null);
+              process.nextTick(function() {
+                self2._realFinish = true;
+                self2.emit("finish");
+                self2._realFinish = false;
+              });
+              return;
+            }
+            self2._realFinish = true;
+            self2.emit("finish");
+            self2._realFinish = false;
+          });
+        }
+      } else {
+        WritableStream.prototype.emit.apply(this, arguments);
+      }
+    };
+    Dicer.prototype._write = function(data2, encoding, cb) {
+      if (!this._hparser && !this._bparser) {
+        return cb();
+      }
+      if (this._headerFirst && this._isPreamble) {
+        if (!this._part) {
+          this._part = new PartStream(this._partOpts);
+          if (this.listenerCount("preamble") !== 0) {
+            this.emit("preamble", this._part);
+          } else {
+            this._ignore();
+          }
+        }
+        const r = this._hparser.push(data2);
+        if (!this._inHeader && r !== void 0 && r < data2.length) {
+          data2 = data2.slice(r);
+        } else {
+          return cb();
+        }
+      }
+      if (this._firstWrite) {
+        this._bparser.push(B_CRLF);
+        this._firstWrite = false;
+      }
+      this._bparser.push(data2);
+      if (this._pause) {
+        this._cb = cb;
+      } else {
+        cb();
+      }
+    };
+    Dicer.prototype.reset = function() {
+      this._part = void 0;
+      this._bparser = void 0;
+      this._hparser = void 0;
+    };
+    Dicer.prototype.setBoundary = function(boundary) {
+      const self2 = this;
+      this._bparser = new StreamSearch("\r\n--" + boundary);
+      this._bparser.on("info", function(isMatch, data2, start, end) {
+        self2._oninfo(isMatch, data2, start, end);
+      });
+    };
+    Dicer.prototype._ignore = function() {
+      if (this._part && !this._ignoreData) {
+        this._ignoreData = true;
+        this._part.on("error", EMPTY_FN);
+        this._part.resume();
+      }
+    };
+    Dicer.prototype._oninfo = function(isMatch, data2, start, end) {
+      let buf;
+      const self2 = this;
+      let i = 0;
+      let r;
+      let shouldWriteMore = true;
+      if (!this._part && this._justMatched && data2) {
+        while (this._dashes < 2 && start + i < end) {
+          if (data2[start + i] === DASH) {
+            ++i;
+            ++this._dashes;
+          } else {
+            if (this._dashes) {
+              buf = B_ONEDASH;
+            }
+            this._dashes = 0;
+            break;
+          }
+        }
+        if (this._dashes === 2) {
+          if (start + i < end && this.listenerCount("trailer") !== 0) {
+            this.emit("trailer", data2.slice(start + i, end));
+          }
+          this.reset();
+          this._finished = true;
+          if (self2._parts === 0) {
+            self2._realFinish = true;
+            self2.emit("finish");
+            self2._realFinish = false;
+          }
+        }
+        if (this._dashes) {
+          return;
+        }
+      }
+      if (this._justMatched) {
+        this._justMatched = false;
+      }
+      if (!this._part) {
+        this._part = new PartStream(this._partOpts);
+        this._part._read = function(n) {
+          self2._unpause();
+        };
+        if (this._isPreamble && this.listenerCount("preamble") !== 0) {
+          this.emit("preamble", this._part);
+        } else if (this._isPreamble !== true && this.listenerCount("part") !== 0) {
+          this.emit("part", this._part);
+        } else {
+          this._ignore();
+        }
+        if (!this._isPreamble) {
+          this._inHeader = true;
+        }
+      }
+      if (data2 && start < end && !this._ignoreData) {
+        if (this._isPreamble || !this._inHeader) {
+          if (buf) {
+            shouldWriteMore = this._part.push(buf);
+          }
+          shouldWriteMore = this._part.push(data2.slice(start, end));
+          if (!shouldWriteMore) {
+            this._pause = true;
+          }
+        } else if (!this._isPreamble && this._inHeader) {
+          if (buf) {
+            this._hparser.push(buf);
+          }
+          r = this._hparser.push(data2.slice(start, end));
+          if (!this._inHeader && r !== void 0 && r < end) {
+            this._oninfo(false, data2, start + r, end);
+          }
+        }
+      }
+      if (isMatch) {
+        this._hparser.reset();
+        if (this._isPreamble) {
+          this._isPreamble = false;
+        } else {
+          if (start !== end) {
+            ++this._parts;
+            this._part.on("end", function() {
+              if (--self2._parts === 0) {
+                if (self2._finished) {
+                  self2._realFinish = true;
+                  self2.emit("finish");
+                  self2._realFinish = false;
+                } else {
+                  self2._unpause();
+                }
+              }
+            });
+          }
+        }
+        this._part.push(null);
+        this._part = void 0;
+        this._ignoreData = false;
+        this._justMatched = true;
+        this._dashes = 0;
+      }
+    };
+    Dicer.prototype._unpause = function() {
+      if (!this._pause) {
+        return;
+      }
+      this._pause = false;
+      if (this._cb) {
+        const cb = this._cb;
+        this._cb = void 0;
+        cb();
+      }
+    };
+    module.exports = Dicer;
+  }
+});
+
+// node_modules/@fastify/busboy/lib/utils/decodeText.js
+var require_decodeText = __commonJS({
+  "node_modules/@fastify/busboy/lib/utils/decodeText.js"(exports, module) {
+    "use strict";
+    var utf8Decoder = new TextDecoder("utf-8");
+    var textDecoders = /* @__PURE__ */ new Map([
+      ["utf-8", utf8Decoder],
+      ["utf8", utf8Decoder]
+    ]);
+    function getDecoder(charset) {
+      let lc;
+      while (true) {
+        switch (charset) {
+          case "utf-8":
+          case "utf8":
+            return decoders.utf8;
+          case "latin1":
+          case "ascii":
+          // TODO: Make these a separate, strict decoder?
+          case "us-ascii":
+          case "iso-8859-1":
+          case "iso8859-1":
+          case "iso88591":
+          case "iso_8859-1":
+          case "windows-1252":
+          case "iso_8859-1:1987":
+          case "cp1252":
+          case "x-cp1252":
+            return decoders.latin1;
+          case "utf16le":
+          case "utf-16le":
+          case "ucs2":
+          case "ucs-2":
+            return decoders.utf16le;
+          case "base64":
+            return decoders.base64;
+          default:
+            if (lc === void 0) {
+              lc = true;
+              charset = charset.toLowerCase();
+              continue;
+            }
+            return decoders.other.bind(charset);
+        }
+      }
+    }
+    function isAscii(data2) {
+      for (var i = 0, len = data2.length; i < len; ++i) {
+        if (data2.charCodeAt(i) > 127) {
+          return false;
+        }
+      }
+      return true;
+    }
+    var decoders = {
+      utf8: (data2, sourceEncoding) => {
+        if (data2.length === 0) {
+          return "";
+        }
+        if (typeof data2 === "string") {
+          if (isAscii(data2)) {
+            return data2;
+          }
+          data2 = Buffer.from(data2, sourceEncoding);
+        }
+        return data2.utf8Slice(0, data2.length);
+      },
+      latin1: (data2, sourceEncoding) => {
+        if (data2.length === 0) {
+          return "";
+        }
+        if (typeof data2 === "string") {
+          return data2;
+        }
+        return data2.latin1Slice(0, data2.length);
+      },
+      utf16le: (data2, sourceEncoding) => {
+        if (data2.length === 0) {
+          return "";
+        }
+        if (typeof data2 === "string") {
+          data2 = Buffer.from(data2, sourceEncoding);
+        }
+        return data2.ucs2Slice(0, data2.length);
+      },
+      base64: (data2, sourceEncoding) => {
+        if (data2.length === 0) {
+          return "";
+        }
+        if (typeof data2 === "string") {
+          data2 = Buffer.from(data2, sourceEncoding);
+        }
+        return data2.base64Slice(0, data2.length);
+      },
+      other: (data2, sourceEncoding) => {
+        if (data2.length === 0) {
+          return "";
+        }
+        if (typeof data2 === "string") {
+          data2 = Buffer.from(data2, sourceEncoding);
+        }
+        if (textDecoders.has(exports.toString())) {
+          try {
+            return textDecoders.get(exports).decode(data2);
+          } catch {
+          }
+        }
+        return typeof data2 === "string" ? data2 : data2.toString();
+      }
+    };
+    function decodeText(text9, sourceEncoding, destEncoding) {
+      if (text9) {
+        return getDecoder(destEncoding)(text9, sourceEncoding);
+      }
+      return text9;
+    }
+    module.exports = decodeText;
+  }
+});
+
+// node_modules/@fastify/busboy/lib/utils/parseParams.js
+var require_parseParams = __commonJS({
+  "node_modules/@fastify/busboy/lib/utils/parseParams.js"(exports, module) {
+    "use strict";
+    var decodeText = require_decodeText();
+    var RE_ENCODED = /%[a-fA-F0-9][a-fA-F0-9]/g;
+    var EncodedLookup = {
+      "%00": "\0",
+      "%01": "",
+      "%02": "",
+      "%03": "",
+      "%04": "",
+      "%05": "",
+      "%06": "",
+      "%07": "\x07",
+      "%08": "\b",
+      "%09": "	",
+      "%0a": "\n",
+      "%0A": "\n",
+      "%0b": "\v",
+      "%0B": "\v",
+      "%0c": "\f",
+      "%0C": "\f",
+      "%0d": "\r",
+      "%0D": "\r",
+      "%0e": "",
+      "%0E": "",
+      "%0f": "",
+      "%0F": "",
+      "%10": "",
+      "%11": "",
+      "%12": "",
+      "%13": "",
+      "%14": "",
+      "%15": "",
+      "%16": "",
+      "%17": "",
+      "%18": "",
+      "%19": "",
+      "%1a": "",
+      "%1A": "",
+      "%1b": "\x1B",
+      "%1B": "\x1B",
+      "%1c": "",
+      "%1C": "",
+      "%1d": "",
+      "%1D": "",
+      "%1e": "",
+      "%1E": "",
+      "%1f": "",
+      "%1F": "",
+      "%20": " ",
+      "%21": "!",
+      "%22": '"',
+      "%23": "#",
+      "%24": "$",
+      "%25": "%",
+      "%26": "&",
+      "%27": "'",
+      "%28": "(",
+      "%29": ")",
+      "%2a": "*",
+      "%2A": "*",
+      "%2b": "+",
+      "%2B": "+",
+      "%2c": ",",
+      "%2C": ",",
+      "%2d": "-",
+      "%2D": "-",
+      "%2e": ".",
+      "%2E": ".",
+      "%2f": "/",
+      "%2F": "/",
+      "%30": "0",
+      "%31": "1",
+      "%32": "2",
+      "%33": "3",
+      "%34": "4",
+      "%35": "5",
+      "%36": "6",
+      "%37": "7",
+      "%38": "8",
+      "%39": "9",
+      "%3a": ":",
+      "%3A": ":",
+      "%3b": ";",
+      "%3B": ";",
+      "%3c": "<",
+      "%3C": "<",
+      "%3d": "=",
+      "%3D": "=",
+      "%3e": ">",
+      "%3E": ">",
+      "%3f": "?",
+      "%3F": "?",
+      "%40": "@",
+      "%41": "A",
+      "%42": "B",
+      "%43": "C",
+      "%44": "D",
+      "%45": "E",
+      "%46": "F",
+      "%47": "G",
+      "%48": "H",
+      "%49": "I",
+      "%4a": "J",
+      "%4A": "J",
+      "%4b": "K",
+      "%4B": "K",
+      "%4c": "L",
+      "%4C": "L",
+      "%4d": "M",
+      "%4D": "M",
+      "%4e": "N",
+      "%4E": "N",
+      "%4f": "O",
+      "%4F": "O",
+      "%50": "P",
+      "%51": "Q",
+      "%52": "R",
+      "%53": "S",
+      "%54": "T",
+      "%55": "U",
+      "%56": "V",
+      "%57": "W",
+      "%58": "X",
+      "%59": "Y",
+      "%5a": "Z",
+      "%5A": "Z",
+      "%5b": "[",
+      "%5B": "[",
+      "%5c": "\\",
+      "%5C": "\\",
+      "%5d": "]",
+      "%5D": "]",
+      "%5e": "^",
+      "%5E": "^",
+      "%5f": "_",
+      "%5F": "_",
+      "%60": "`",
+      "%61": "a",
+      "%62": "b",
+      "%63": "c",
+      "%64": "d",
+      "%65": "e",
+      "%66": "f",
+      "%67": "g",
+      "%68": "h",
+      "%69": "i",
+      "%6a": "j",
+      "%6A": "j",
+      "%6b": "k",
+      "%6B": "k",
+      "%6c": "l",
+      "%6C": "l",
+      "%6d": "m",
+      "%6D": "m",
+      "%6e": "n",
+      "%6E": "n",
+      "%6f": "o",
+      "%6F": "o",
+      "%70": "p",
+      "%71": "q",
+      "%72": "r",
+      "%73": "s",
+      "%74": "t",
+      "%75": "u",
+      "%76": "v",
+      "%77": "w",
+      "%78": "x",
+      "%79": "y",
+      "%7a": "z",
+      "%7A": "z",
+      "%7b": "{",
+      "%7B": "{",
+      "%7c": "|",
+      "%7C": "|",
+      "%7d": "}",
+      "%7D": "}",
+      "%7e": "~",
+      "%7E": "~",
+      "%7f": "\x7F",
+      "%7F": "\x7F",
+      "%80": "\x80",
+      "%81": "\x81",
+      "%82": "\x82",
+      "%83": "\x83",
+      "%84": "\x84",
+      "%85": "\x85",
+      "%86": "\x86",
+      "%87": "\x87",
+      "%88": "\x88",
+      "%89": "\x89",
+      "%8a": "\x8A",
+      "%8A": "\x8A",
+      "%8b": "\x8B",
+      "%8B": "\x8B",
+      "%8c": "\x8C",
+      "%8C": "\x8C",
+      "%8d": "\x8D",
+      "%8D": "\x8D",
+      "%8e": "\x8E",
+      "%8E": "\x8E",
+      "%8f": "\x8F",
+      "%8F": "\x8F",
+      "%90": "\x90",
+      "%91": "\x91",
+      "%92": "\x92",
+      "%93": "\x93",
+      "%94": "\x94",
+      "%95": "\x95",
+      "%96": "\x96",
+      "%97": "\x97",
+      "%98": "\x98",
+      "%99": "\x99",
+      "%9a": "\x9A",
+      "%9A": "\x9A",
+      "%9b": "\x9B",
+      "%9B": "\x9B",
+      "%9c": "\x9C",
+      "%9C": "\x9C",
+      "%9d": "\x9D",
+      "%9D": "\x9D",
+      "%9e": "\x9E",
+      "%9E": "\x9E",
+      "%9f": "\x9F",
+      "%9F": "\x9F",
+      "%a0": "\xA0",
+      "%A0": "\xA0",
+      "%a1": "\xA1",
+      "%A1": "\xA1",
+      "%a2": "\xA2",
+      "%A2": "\xA2",
+      "%a3": "\xA3",
+      "%A3": "\xA3",
+      "%a4": "\xA4",
+      "%A4": "\xA4",
+      "%a5": "\xA5",
+      "%A5": "\xA5",
+      "%a6": "\xA6",
+      "%A6": "\xA6",
+      "%a7": "\xA7",
+      "%A7": "\xA7",
+      "%a8": "\xA8",
+      "%A8": "\xA8",
+      "%a9": "\xA9",
+      "%A9": "\xA9",
+      "%aa": "\xAA",
+      "%Aa": "\xAA",
+      "%aA": "\xAA",
+      "%AA": "\xAA",
+      "%ab": "\xAB",
+      "%Ab": "\xAB",
+      "%aB": "\xAB",
+      "%AB": "\xAB",
+      "%ac": "\xAC",
+      "%Ac": "\xAC",
+      "%aC": "\xAC",
+      "%AC": "\xAC",
+      "%ad": "\xAD",
+      "%Ad": "\xAD",
+      "%aD": "\xAD",
+      "%AD": "\xAD",
+      "%ae": "\xAE",
+      "%Ae": "\xAE",
+      "%aE": "\xAE",
+      "%AE": "\xAE",
+      "%af": "\xAF",
+      "%Af": "\xAF",
+      "%aF": "\xAF",
+      "%AF": "\xAF",
+      "%b0": "\xB0",
+      "%B0": "\xB0",
+      "%b1": "\xB1",
+      "%B1": "\xB1",
+      "%b2": "\xB2",
+      "%B2": "\xB2",
+      "%b3": "\xB3",
+      "%B3": "\xB3",
+      "%b4": "\xB4",
+      "%B4": "\xB4",
+      "%b5": "\xB5",
+      "%B5": "\xB5",
+      "%b6": "\xB6",
+      "%B6": "\xB6",
+      "%b7": "\xB7",
+      "%B7": "\xB7",
+      "%b8": "\xB8",
+      "%B8": "\xB8",
+      "%b9": "\xB9",
+      "%B9": "\xB9",
+      "%ba": "\xBA",
+      "%Ba": "\xBA",
+      "%bA": "\xBA",
+      "%BA": "\xBA",
+      "%bb": "\xBB",
+      "%Bb": "\xBB",
+      "%bB": "\xBB",
+      "%BB": "\xBB",
+      "%bc": "\xBC",
+      "%Bc": "\xBC",
+      "%bC": "\xBC",
+      "%BC": "\xBC",
+      "%bd": "\xBD",
+      "%Bd": "\xBD",
+      "%bD": "\xBD",
+      "%BD": "\xBD",
+      "%be": "\xBE",
+      "%Be": "\xBE",
+      "%bE": "\xBE",
+      "%BE": "\xBE",
+      "%bf": "\xBF",
+      "%Bf": "\xBF",
+      "%bF": "\xBF",
+      "%BF": "\xBF",
+      "%c0": "\xC0",
+      "%C0": "\xC0",
+      "%c1": "\xC1",
+      "%C1": "\xC1",
+      "%c2": "\xC2",
+      "%C2": "\xC2",
+      "%c3": "\xC3",
+      "%C3": "\xC3",
+      "%c4": "\xC4",
+      "%C4": "\xC4",
+      "%c5": "\xC5",
+      "%C5": "\xC5",
+      "%c6": "\xC6",
+      "%C6": "\xC6",
+      "%c7": "\xC7",
+      "%C7": "\xC7",
+      "%c8": "\xC8",
+      "%C8": "\xC8",
+      "%c9": "\xC9",
+      "%C9": "\xC9",
+      "%ca": "\xCA",
+      "%Ca": "\xCA",
+      "%cA": "\xCA",
+      "%CA": "\xCA",
+      "%cb": "\xCB",
+      "%Cb": "\xCB",
+      "%cB": "\xCB",
+      "%CB": "\xCB",
+      "%cc": "\xCC",
+      "%Cc": "\xCC",
+      "%cC": "\xCC",
+      "%CC": "\xCC",
+      "%cd": "\xCD",
+      "%Cd": "\xCD",
+      "%cD": "\xCD",
+      "%CD": "\xCD",
+      "%ce": "\xCE",
+      "%Ce": "\xCE",
+      "%cE": "\xCE",
+      "%CE": "\xCE",
+      "%cf": "\xCF",
+      "%Cf": "\xCF",
+      "%cF": "\xCF",
+      "%CF": "\xCF",
+      "%d0": "\xD0",
+      "%D0": "\xD0",
+      "%d1": "\xD1",
+      "%D1": "\xD1",
+      "%d2": "\xD2",
+      "%D2": "\xD2",
+      "%d3": "\xD3",
+      "%D3": "\xD3",
+      "%d4": "\xD4",
+      "%D4": "\xD4",
+      "%d5": "\xD5",
+      "%D5": "\xD5",
+      "%d6": "\xD6",
+      "%D6": "\xD6",
+      "%d7": "\xD7",
+      "%D7": "\xD7",
+      "%d8": "\xD8",
+      "%D8": "\xD8",
+      "%d9": "\xD9",
+      "%D9": "\xD9",
+      "%da": "\xDA",
+      "%Da": "\xDA",
+      "%dA": "\xDA",
+      "%DA": "\xDA",
+      "%db": "\xDB",
+      "%Db": "\xDB",
+      "%dB": "\xDB",
+      "%DB": "\xDB",
+      "%dc": "\xDC",
+      "%Dc": "\xDC",
+      "%dC": "\xDC",
+      "%DC": "\xDC",
+      "%dd": "\xDD",
+      "%Dd": "\xDD",
+      "%dD": "\xDD",
+      "%DD": "\xDD",
+      "%de": "\xDE",
+      "%De": "\xDE",
+      "%dE": "\xDE",
+      "%DE": "\xDE",
+      "%df": "\xDF",
+      "%Df": "\xDF",
+      "%dF": "\xDF",
+      "%DF": "\xDF",
+      "%e0": "\xE0",
+      "%E0": "\xE0",
+      "%e1": "\xE1",
+      "%E1": "\xE1",
+      "%e2": "\xE2",
+      "%E2": "\xE2",
+      "%e3": "\xE3",
+      "%E3": "\xE3",
+      "%e4": "\xE4",
+      "%E4": "\xE4",
+      "%e5": "\xE5",
+      "%E5": "\xE5",
+      "%e6": "\xE6",
+      "%E6": "\xE6",
+      "%e7": "\xE7",
+      "%E7": "\xE7",
+      "%e8": "\xE8",
+      "%E8": "\xE8",
+      "%e9": "\xE9",
+      "%E9": "\xE9",
+      "%ea": "\xEA",
+      "%Ea": "\xEA",
+      "%eA": "\xEA",
+      "%EA": "\xEA",
+      "%eb": "\xEB",
+      "%Eb": "\xEB",
+      "%eB": "\xEB",
+      "%EB": "\xEB",
+      "%ec": "\xEC",
+      "%Ec": "\xEC",
+      "%eC": "\xEC",
+      "%EC": "\xEC",
+      "%ed": "\xED",
+      "%Ed": "\xED",
+      "%eD": "\xED",
+      "%ED": "\xED",
+      "%ee": "\xEE",
+      "%Ee": "\xEE",
+      "%eE": "\xEE",
+      "%EE": "\xEE",
+      "%ef": "\xEF",
+      "%Ef": "\xEF",
+      "%eF": "\xEF",
+      "%EF": "\xEF",
+      "%f0": "\xF0",
+      "%F0": "\xF0",
+      "%f1": "\xF1",
+      "%F1": "\xF1",
+      "%f2": "\xF2",
+      "%F2": "\xF2",
+      "%f3": "\xF3",
+      "%F3": "\xF3",
+      "%f4": "\xF4",
+      "%F4": "\xF4",
+      "%f5": "\xF5",
+      "%F5": "\xF5",
+      "%f6": "\xF6",
+      "%F6": "\xF6",
+      "%f7": "\xF7",
+      "%F7": "\xF7",
+      "%f8": "\xF8",
+      "%F8": "\xF8",
+      "%f9": "\xF9",
+      "%F9": "\xF9",
+      "%fa": "\xFA",
+      "%Fa": "\xFA",
+      "%fA": "\xFA",
+      "%FA": "\xFA",
+      "%fb": "\xFB",
+      "%Fb": "\xFB",
+      "%fB": "\xFB",
+      "%FB": "\xFB",
+      "%fc": "\xFC",
+      "%Fc": "\xFC",
+      "%fC": "\xFC",
+      "%FC": "\xFC",
+      "%fd": "\xFD",
+      "%Fd": "\xFD",
+      "%fD": "\xFD",
+      "%FD": "\xFD",
+      "%fe": "\xFE",
+      "%Fe": "\xFE",
+      "%fE": "\xFE",
+      "%FE": "\xFE",
+      "%ff": "\xFF",
+      "%Ff": "\xFF",
+      "%fF": "\xFF",
+      "%FF": "\xFF"
+    };
+    function encodedReplacer(match) {
+      return EncodedLookup[match];
+    }
+    function decodeUtf8Text(text9) {
+      for (var i = 0, len = text9.length; i < len; ++i) {
+        if (text9.charCodeAt(i) > 127) {
+          return decodeText(text9, "binary", "utf8");
+        }
+      }
+      return text9;
+    }
+    var STATE_KEY = 0;
+    var STATE_VALUE = 1;
+    var STATE_CHARSET = 2;
+    var STATE_LANG = 3;
+    function parseFormDataDisposition(str8) {
+      if (!str8.startsWith('form-data; name="')) {
+        return;
+      }
+      let valueStart = 17;
+      let valueEnd = str8.indexOf('"', valueStart);
+      if (valueEnd === -1 || str8.indexOf("\\", valueStart) !== -1) {
+        return;
+      }
+      const res = ["form-data", ["name", decodeUtf8Text(str8.slice(valueStart, valueEnd))]];
+      let pos = valueEnd + 1;
+      while (pos < str8.length && str8[pos] !== ";") {
+        ++pos;
+      }
+      if (pos === str8.length) {
+        return res;
+      }
+      ++pos;
+      while (str8[pos] === " " || str8[pos] === "	") {
+        ++pos;
+      }
+      if (!str8.startsWith('filename="', pos)) {
+        return;
+      }
+      valueStart = pos + 10;
+      valueEnd = str8.indexOf('"', valueStart);
+      if (valueEnd === -1 || str8.indexOf("\\", valueStart) !== -1) {
+        return;
+      }
+      res.push(["filename", decodeUtf8Text(str8.slice(valueStart, valueEnd))]);
+      return res;
+    }
+    function parseParams(str8) {
+      if (str8.indexOf(";") === -1) {
+        return [decodeUtf8Text(str8)];
+      }
+      const fastFormData = parseFormDataDisposition(str8);
+      if (fastFormData !== void 0) {
+        return fastFormData;
+      }
+      const res = [];
+      let state = STATE_KEY;
+      let charset = "";
+      let inquote = false;
+      let escaping = false;
+      let p = 0;
+      let tmp = "";
+      const len = str8.length;
+      for (var i = 0; i < len; ++i) {
+        const char = str8[i];
+        if (char === "\\" && inquote) {
+          if (escaping) {
+            escaping = false;
+          } else {
+            escaping = true;
+            continue;
+          }
+        } else if (char === '"') {
+          if (!escaping) {
+            if (inquote) {
+              inquote = false;
+              state = STATE_KEY;
+              while (i + 1 < len && str8[i + 1] !== ";") {
+                ++i;
+              }
+            } else {
+              inquote = true;
+            }
+            continue;
+          } else {
+            escaping = false;
+          }
+        } else {
+          if (escaping && inquote) {
+            tmp += "\\";
+          }
+          escaping = false;
+          if ((state === STATE_CHARSET || state === STATE_LANG) && char === "'") {
+            if (state === STATE_CHARSET) {
+              state = STATE_LANG;
+              charset = tmp.substring(1);
+            } else {
+              state = STATE_VALUE;
+            }
+            tmp = "";
+            continue;
+          } else if (state === STATE_KEY && (char === "*" || char === "=") && res.length) {
+            state = char === "*" ? STATE_CHARSET : STATE_VALUE;
+            res[p] = [tmp, void 0];
+            tmp = "";
+            continue;
+          } else if (!inquote && char === ";") {
+            state = STATE_KEY;
+            if (charset) {
+              if (tmp.length) {
+                tmp = decodeText(
+                  tmp.replace(RE_ENCODED, encodedReplacer),
+                  "binary",
+                  charset
+                );
+              }
+              charset = "";
+            } else if (tmp.length) {
+              tmp = decodeUtf8Text(tmp);
+            }
+            if (res[p] === void 0) {
+              res[p] = tmp;
+            } else {
+              res[p][1] = tmp;
+            }
+            tmp = "";
+            ++p;
+            continue;
+          } else if (!inquote && (char === " " || char === "	")) {
+            continue;
+          }
+        }
+        tmp += char;
+      }
+      if (charset && tmp.length) {
+        tmp = decodeText(
+          tmp.replace(RE_ENCODED, encodedReplacer),
+          "binary",
+          charset
+        );
+      } else if (tmp) {
+        tmp = decodeUtf8Text(tmp);
+      }
+      if (res[p] === void 0) {
+        if (tmp) {
+          res[p] = tmp;
+        }
+      } else {
+        res[p][1] = tmp;
+      }
+      return res;
+    }
+    module.exports = parseParams;
+  }
+});
+
+// node_modules/@fastify/busboy/lib/utils/basename.js
+var require_basename = __commonJS({
+  "node_modules/@fastify/busboy/lib/utils/basename.js"(exports, module) {
+    "use strict";
+    module.exports = function basename(path) {
+      if (typeof path !== "string") {
+        return "";
+      }
+      for (var i = path.length - 1; i >= 0; --i) {
+        switch (path.charCodeAt(i)) {
+          case 47:
+          // '/'
+          case 92:
+            path = path.slice(i + 1);
+            return path === ".." || path === "." ? "" : path;
+        }
+      }
+      return path === ".." || path === "." ? "" : path;
+    };
+  }
+});
+
+// node_modules/@fastify/busboy/lib/types/multipart.js
+var require_multipart = __commonJS({
+  "node_modules/@fastify/busboy/lib/types/multipart.js"(exports, module) {
+    "use strict";
+    var { Readable } = __require("node:stream");
+    var { inherits } = __require("node:util");
+    var Dicer = require_Dicer();
+    var parseParams = require_parseParams();
+    var decodeText = require_decodeText();
+    var basename = require_basename();
+    var getLimit = require_getLimit();
+    var RE_BOUNDARY = /^boundary$/i;
+    var RE_FIELD = /^form-data$/i;
+    var RE_CHARSET = /^charset$/i;
+    var RE_FILENAME = /^filename$/i;
+    var RE_NAME = /^name$/i;
+    Multipart.detect = /^multipart\/form-data/i;
+    function Multipart(boy, cfg) {
+      let i;
+      let len;
+      const self2 = this;
+      let boundary;
+      const limits = cfg.limits;
+      const isPartAFile = cfg.isPartAFile || ((fieldName, contentType, fileName) => contentType === "application/octet-stream" || fileName !== void 0);
+      const parsedConType = cfg.parsedConType || [];
+      const defCharset = cfg.defCharset || "utf8";
+      const preservePath = cfg.preservePath;
+      const fileOpts = { highWaterMark: cfg.fileHwm };
+      for (i = 0, len = parsedConType.length; i < len; ++i) {
+        if (Array.isArray(parsedConType[i]) && RE_BOUNDARY.test(parsedConType[i][0])) {
+          boundary = parsedConType[i][1];
+          break;
+        }
+      }
+      function checkFinished() {
+        if (nends === 0 && finished && !boy._done) {
+          finished = false;
+          self2.end();
+        }
+      }
+      if (typeof boundary !== "string") {
+        throw new Error("Multipart: Boundary not found");
+      }
+      const fieldSizeLimit = getLimit(limits, "fieldSize", 1 * 1024 * 1024);
+      const fileSizeLimit = getLimit(limits, "fileSize", Infinity);
+      const filesLimit = getLimit(limits, "files", Infinity);
+      const fieldsLimit = getLimit(limits, "fields", Infinity);
+      const partsLimit = getLimit(limits, "parts", Infinity);
+      const headerPairsLimit = getLimit(limits, "headerPairs", 2e3);
+      const headerSizeLimit = getLimit(limits, "headerSize", 80 * 1024);
+      let nfiles = 0;
+      let nfields = 0;
+      let nends = 0;
+      let curFile;
+      let curField;
+      let finished = false;
+      this._needDrain = false;
+      this._pause = false;
+      this._cb = void 0;
+      this._nparts = 0;
+      this._boy = boy;
+      const parserCfg = {
+        boundary,
+        maxHeaderPairs: headerPairsLimit,
+        maxHeaderSize: headerSizeLimit,
+        partHwm: fileOpts.highWaterMark,
+        highWaterMark: cfg.highWaterMark
+      };
+      this.parser = new Dicer(parserCfg);
+      this.parser.on("drain", function() {
+        self2._needDrain = false;
+        if (self2._cb && !self2._pause) {
+          const cb = self2._cb;
+          self2._cb = void 0;
+          cb();
+        }
+      }).on("part", function onPart(part) {
+        if (++self2._nparts > partsLimit) {
+          self2.parser.removeListener("part", onPart);
+          self2.parser.on("part", skipPart);
+          boy.hitPartsLimit = true;
+          boy.emit("partsLimit");
+          return skipPart(part);
+        }
+        if (curField) {
+          const field2 = curField;
+          field2.emit("end");
+          field2.removeAllListeners("end");
+        }
+        part.on("header", function(header) {
+          let contype;
+          let fieldname;
+          let parsed;
+          let charset;
+          let encoding;
+          let filename;
+          let nsize = 0;
+          if (header["content-type"]) {
+            const contentType = header["content-type"][0];
+            if (contentType.length !== 0 && contentType.indexOf(";") === -1 && contentType.indexOf(" ") === -1 && contentType.indexOf("	") === -1) {
+              contype = contentType.toLowerCase();
+            } else {
+              parsed = parseParams(contentType);
+              if (parsed[0]) {
+                contype = parsed[0].toLowerCase();
+                for (i = 0, len = parsed.length; i < len; ++i) {
+                  if (RE_CHARSET.test(parsed[i][0])) {
+                    charset = parsed[i][1].toLowerCase();
+                    break;
+                  }
+                }
+              }
+            }
+          }
+          if (contype === void 0) {
+            contype = "text/plain";
+          }
+          if (charset === void 0) {
+            charset = defCharset;
+          }
+          if (header["content-disposition"]) {
+            parsed = parseParams(header["content-disposition"][0]);
+            if (!RE_FIELD.test(parsed[0])) {
+              return skipPart(part);
+            }
+            for (i = 0, len = parsed.length; i < len; ++i) {
+              if (RE_NAME.test(parsed[i][0])) {
+                fieldname = parsed[i][1];
+                if (hasBareLineBreak(fieldname)) {
+                  return skipPart(part);
+                }
+              } else if (RE_FILENAME.test(parsed[i][0])) {
+                filename = parsed[i][1];
+                if (hasBareLineBreak(filename)) {
+                  return skipPart(part);
+                }
+                if (!preservePath) {
+                  filename = basename(filename);
+                }
+              }
+            }
+          } else {
+            return skipPart(part);
+          }
+          if (header["content-transfer-encoding"]) {
+            encoding = header["content-transfer-encoding"][0].toLowerCase();
+          } else {
+            encoding = "7bit";
+          }
+          let onData, onEnd;
+          if (isPartAFile(fieldname, contype, filename)) {
+            if (nfiles === filesLimit) {
+              if (!boy.hitFilesLimit) {
+                boy.hitFilesLimit = true;
+                boy.emit("filesLimit");
+              }
+              return skipPart(part);
+            }
+            ++nfiles;
+            if (boy.listenerCount("file") === 0) {
+              self2.parser._ignore();
+              return;
+            }
+            ++nends;
+            const file = new FileStream(fileOpts);
+            curFile = file;
+            file.on("end", function() {
+              --nends;
+              self2._pause = false;
+              checkFinished();
+              if (self2._cb && !self2._needDrain) {
+                const cb = self2._cb;
+                self2._cb = void 0;
+                cb();
+              }
+            });
+            file._read = function(n) {
+              if (!self2._pause) {
+                return;
+              }
+              self2._pause = false;
+              if (self2._cb && !self2._needDrain) {
+                const cb = self2._cb;
+                self2._cb = void 0;
+                cb();
+              }
+            };
+            boy.emit("file", fieldname, file, filename, encoding, contype);
+            onData = function(data2) {
+              if ((nsize += data2.length) > fileSizeLimit) {
+                const extralen = fileSizeLimit - nsize + data2.length;
+                if (extralen > 0) {
+                  file.push(data2.slice(0, extralen));
+                }
+                file.truncated = true;
+                file.bytesRead = fileSizeLimit;
+                part.removeAllListeners("data");
+                file.emit("limit");
+                return;
+              } else if (!file.push(data2)) {
+                self2._pause = true;
+              }
+              file.bytesRead = nsize;
+            };
+            onEnd = function() {
+              curFile = void 0;
+              file.push(null);
+            };
+          } else {
+            if (nfields === fieldsLimit) {
+              if (!boy.hitFieldsLimit) {
+                boy.hitFieldsLimit = true;
+                boy.emit("fieldsLimit");
+              }
+              return skipPart(part);
+            }
+            ++nfields;
+            ++nends;
+            let buffer = "";
+            let truncated = false;
+            curField = part;
+            onData = function(data2) {
+              if ((nsize += data2.length) > fieldSizeLimit) {
+                const extralen = fieldSizeLimit - (nsize - data2.length);
+                buffer += data2.toString("binary", 0, extralen);
+                truncated = true;
+                part.removeAllListeners("data");
+              } else {
+                buffer += data2.toString("binary");
+              }
+            };
+            onEnd = function() {
+              curField = void 0;
+              if (buffer.length) {
+                buffer = decodeText(buffer, "binary", charset);
+              }
+              boy.emit("field", fieldname, buffer, false, truncated, encoding, contype);
+              --nends;
+              checkFinished();
+            };
+          }
+          part._readableState.sync = false;
+          part.on("data", onData);
+          part.on("end", onEnd);
+        }).on("error", function(err) {
+          if (curFile) {
+            curFile.emit("error", err);
+          }
+        });
+      }).on("error", function(err) {
+        boy.emit("error", err);
+      }).on("finish", function() {
+        finished = true;
+        checkFinished();
+      });
+    }
+    Multipart.prototype.write = function(chunk, cb) {
+      if (!this.parser.writable) {
+        cb();
+        return;
+      }
+      const r = this.parser.write(chunk);
+      if (r && !this._pause) {
+        cb();
+      } else {
+        this._needDrain = !r;
+        this._cb = cb;
+      }
+    };
+    Multipart.prototype.end = function() {
+      const self2 = this;
+      if (self2.parser.writable) {
+        self2.parser.end();
+      } else if (!self2._boy._done) {
+        process.nextTick(function() {
+          self2._boy._done = true;
+          self2._boy.emit("finish");
+        });
+      }
+    };
+    function skipPart(part) {
+      part.resume();
+    }
+    function hasBareLineBreak(value2) {
+      return typeof value2 === "string" && (value2.includes("\r") || value2.includes("\n"));
+    }
+    function FileStream(opts) {
+      Readable.call(this, opts);
+      this.bytesRead = 0;
+      this.truncated = false;
+    }
+    inherits(FileStream, Readable);
+    FileStream.prototype._read = function(n) {
+    };
+    module.exports = Multipart;
+  }
+});
+
+// node_modules/@fastify/busboy/lib/utils/Decoder.js
+var require_Decoder = __commonJS({
+  "node_modules/@fastify/busboy/lib/utils/Decoder.js"(exports, module) {
+    "use strict";
+    var RE_PLUS = /\+/g;
+    var HEX = [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ];
+    function Decoder() {
+      this.buffer = void 0;
+    }
+    Decoder.prototype.write = function(str8) {
+      str8 = str8.replace(RE_PLUS, " ");
+      let res = "";
+      let i = 0;
+      let p = 0;
+      const len = str8.length;
+      for (; i < len; ++i) {
+        if (this.buffer !== void 0) {
+          if (!HEX[str8.charCodeAt(i)]) {
+            res += "%" + this.buffer;
+            this.buffer = void 0;
+            --i;
+          } else {
+            this.buffer += str8[i];
+            ++p;
+            if (this.buffer.length === 2) {
+              res += String.fromCharCode(parseInt(this.buffer, 16));
+              this.buffer = void 0;
+            }
+          }
+        } else if (str8[i] === "%") {
+          if (i > p) {
+            res += str8.substring(p, i);
+            p = i;
+          }
+          this.buffer = "";
+          ++p;
+        }
+      }
+      if (p < len && this.buffer === void 0) {
+        res += str8.substring(p);
+      }
+      return res;
+    };
+    Decoder.prototype.reset = function() {
+      this.buffer = void 0;
+    };
+    module.exports = Decoder;
+  }
+});
+
+// node_modules/@fastify/busboy/lib/types/urlencoded.js
+var require_urlencoded = __commonJS({
+  "node_modules/@fastify/busboy/lib/types/urlencoded.js"(exports, module) {
+    "use strict";
+    var Decoder = require_Decoder();
+    var decodeText = require_decodeText();
+    var getLimit = require_getLimit();
+    var RE_CHARSET = /^charset$/i;
+    UrlEncoded.detect = /^application\/x-www-form-urlencoded/i;
+    function UrlEncoded(boy, cfg) {
+      const limits = cfg.limits;
+      const parsedConType = cfg.parsedConType;
+      this.boy = boy;
+      this.fieldSizeLimit = getLimit(limits, "fieldSize", 1 * 1024 * 1024);
+      this.fieldNameSizeLimit = getLimit(limits, "fieldNameSize", 100);
+      this.fieldsLimit = getLimit(limits, "fields", Infinity);
+      let charset;
+      for (var i = 0, len = parsedConType.length; i < len; ++i) {
+        if (Array.isArray(parsedConType[i]) && RE_CHARSET.test(parsedConType[i][0])) {
+          charset = parsedConType[i][1].toLowerCase();
+          break;
+        }
+      }
+      if (charset === void 0) {
+        charset = cfg.defCharset || "utf8";
+      }
+      this.decoder = new Decoder();
+      this.charset = charset;
+      this._fields = 0;
+      this._state = "key";
+      this._checkingBytes = true;
+      this._bytesKey = 0;
+      this._bytesVal = 0;
+      this._key = "";
+      this._val = "";
+      this._keyTrunc = false;
+      this._valTrunc = false;
+      this._hitLimit = false;
+    }
+    UrlEncoded.prototype.write = function(data2, cb) {
+      if (this._fields === this.fieldsLimit) {
+        if (!this.boy.hitFieldsLimit) {
+          this.boy.hitFieldsLimit = true;
+          this.boy.emit("fieldsLimit");
+        }
+        return cb();
+      }
+      let idxeq;
+      let idxamp;
+      let i;
+      let p = 0;
+      const len = data2.length;
+      while (p < len) {
+        if (this._state === "key") {
+          idxeq = idxamp = void 0;
+          for (i = p; i < len; ++i) {
+            if (!this._checkingBytes) {
+              ++p;
+            }
+            if (data2[i] === 61) {
+              idxeq = i;
+              break;
+            } else if (data2[i] === 38) {
+              idxamp = i;
+              break;
+            }
+            if (this._checkingBytes && this._bytesKey === this.fieldNameSizeLimit) {
+              this._hitLimit = true;
+              break;
+            } else if (this._checkingBytes) {
+              ++this._bytesKey;
+            }
+          }
+          if (idxeq !== void 0) {
+            if (idxeq > p) {
+              this._key += this.decoder.write(data2.toString("binary", p, idxeq));
+            }
+            this._state = "val";
+            this._hitLimit = false;
+            this._checkingBytes = true;
+            this._val = "";
+            this._bytesVal = 0;
+            this._valTrunc = false;
+            this.decoder.reset();
+            p = idxeq + 1;
+          } else if (idxamp !== void 0) {
+            ++this._fields;
+            let key;
+            const keyTrunc = this._keyTrunc;
+            if (idxamp > p) {
+              key = this._key += this.decoder.write(data2.toString("binary", p, idxamp));
+            } else {
+              key = this._key;
+            }
+            this._hitLimit = false;
+            this._checkingBytes = true;
+            this._key = "";
+            this._bytesKey = 0;
+            this._keyTrunc = false;
+            this.decoder.reset();
+            if (key.length) {
+              this.boy.emit(
+                "field",
+                decodeText(key, "binary", this.charset),
+                "",
+                keyTrunc,
+                false
+              );
+            }
+            p = idxamp + 1;
+            if (this._fields === this.fieldsLimit) {
+              return cb();
+            }
+          } else if (this._hitLimit) {
+            if (i > p) {
+              this._key += this.decoder.write(data2.toString("binary", p, i));
+            }
+            p = i;
+            if ((this._bytesKey = this._key.length) === this.fieldNameSizeLimit) {
+              this._checkingBytes = false;
+              this._keyTrunc = true;
+            }
+          } else {
+            if (p < len) {
+              this._key += this.decoder.write(data2.toString("binary", p));
+            }
+            p = len;
+          }
+        } else {
+          idxamp = void 0;
+          for (i = p; i < len; ++i) {
+            if (!this._checkingBytes) {
+              ++p;
+            }
+            if (data2[i] === 38) {
+              idxamp = i;
+              break;
+            }
+            if (this._checkingBytes && this._bytesVal === this.fieldSizeLimit) {
+              this._hitLimit = true;
+              break;
+            } else if (this._checkingBytes) {
+              ++this._bytesVal;
+            }
+          }
+          if (idxamp !== void 0) {
+            ++this._fields;
+            if (idxamp > p) {
+              this._val += this.decoder.write(data2.toString("binary", p, idxamp));
+            }
+            this.boy.emit(
+              "field",
+              decodeText(this._key, "binary", this.charset),
+              decodeText(this._val, "binary", this.charset),
+              this._keyTrunc,
+              this._valTrunc
+            );
+            this._state = "key";
+            this._hitLimit = false;
+            this._checkingBytes = true;
+            this._key = "";
+            this._bytesKey = 0;
+            this._keyTrunc = false;
+            this.decoder.reset();
+            p = idxamp + 1;
+            if (this._fields === this.fieldsLimit) {
+              return cb();
+            }
+          } else if (this._hitLimit) {
+            if (i > p) {
+              this._val += this.decoder.write(data2.toString("binary", p, i));
+            }
+            p = i;
+            if (this._val === "" && this.fieldSizeLimit === 0 || (this._bytesVal = this._val.length) === this.fieldSizeLimit) {
+              this._checkingBytes = false;
+              this._valTrunc = true;
+            }
+          } else {
+            if (p < len) {
+              this._val += this.decoder.write(data2.toString("binary", p));
+            }
+            p = len;
+          }
+        }
+      }
+      cb();
+    };
+    UrlEncoded.prototype.end = function() {
+      if (this.boy._done) {
+        return;
+      }
+      if (this._state === "key" && this._key.length > 0) {
+        this.boy.emit(
+          "field",
+          decodeText(this._key, "binary", this.charset),
+          "",
+          this._keyTrunc,
+          false
+        );
+      } else if (this._state === "val") {
+        this.boy.emit(
+          "field",
+          decodeText(this._key, "binary", this.charset),
+          decodeText(this._val, "binary", this.charset),
+          this._keyTrunc,
+          this._valTrunc
+        );
+      }
+      this.boy._done = true;
+      this.boy.emit("finish");
+    };
+    module.exports = UrlEncoded;
+  }
+});
+
+// node_modules/@fastify/busboy/index.js
+var require_busboy = __commonJS({
+  "node_modules/@fastify/busboy/index.js"(exports, module) {
+    "use strict";
+    var WritableStream = __require("node:stream").Writable;
+    var { inherits } = __require("node:util");
+    var Dicer = require_Dicer();
+    var MultipartParser = require_multipart();
+    var UrlencodedParser = require_urlencoded();
+    var parseParams = require_parseParams();
+    function Busboy(opts) {
+      if (!(this instanceof Busboy)) {
+        return new Busboy(opts);
+      }
+      if (typeof opts !== "object") {
+        throw new TypeError("Busboy expected an options-Object.");
+      }
+      if (typeof opts.headers !== "object") {
+        throw new TypeError("Busboy expected an options-Object with headers-attribute.");
+      }
+      if (typeof opts.headers["content-type"] !== "string") {
+        throw new TypeError("Missing Content-Type-header.");
+      }
+      const {
+        headers,
+        ...streamOptions
+      } = opts;
+      this.opts = {
+        autoDestroy: false,
+        ...streamOptions
+      };
+      WritableStream.call(this, this.opts);
+      this._done = false;
+      this._parser = this.getParserByHeaders(headers);
+      this._finished = false;
+    }
+    inherits(Busboy, WritableStream);
+    Busboy.prototype.emit = function(ev) {
+      if (ev === "finish") {
+        if (!this._done) {
+          this._parser?.end();
+          return;
+        } else if (this._finished) {
+          return;
+        }
+        this._finished = true;
+      }
+      WritableStream.prototype.emit.apply(this, arguments);
+    };
+    Busboy.prototype.getParserByHeaders = function(headers) {
+      const parsed = parseParams(headers["content-type"]);
+      const cfg = {
+        defCharset: this.opts.defCharset,
+        fileHwm: this.opts.fileHwm,
+        headers,
+        highWaterMark: this.opts.highWaterMark,
+        isPartAFile: this.opts.isPartAFile,
+        limits: this.opts.limits,
+        parsedConType: parsed,
+        preservePath: this.opts.preservePath
+      };
+      if (MultipartParser.detect.test(parsed[0])) {
+        return new MultipartParser(this, cfg);
+      }
+      if (UrlencodedParser.detect.test(parsed[0])) {
+        return new UrlencodedParser(this, cfg);
+      }
+      throw new Error("Unsupported Content-Type.");
+    };
+    Busboy.prototype._write = function(chunk, encoding, cb) {
+      this._parser.write(chunk, cb);
+    };
+    module.exports = Busboy;
+    module.exports.default = Busboy;
+    module.exports.Busboy = Busboy;
+    module.exports.Dicer = Dicer;
+  }
+});
+
+// node_modules/@fastify/multipart/lib/generateId.js
+var require_generateId = __commonJS({
+  "node_modules/@fastify/multipart/lib/generateId.js"(exports, module) {
+    "use strict";
+    var HEX = [
+      "00",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "0a",
+      "0b",
+      "0c",
+      "0d",
+      "0e",
+      "0f",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "1a",
+      "1b",
+      "1c",
+      "1d",
+      "1e",
+      "1f",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "2a",
+      "2b",
+      "2c",
+      "2d",
+      "2e",
+      "2f",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39",
+      "3a",
+      "3b",
+      "3c",
+      "3d",
+      "3e",
+      "3f",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48",
+      "49",
+      "4a",
+      "4b",
+      "4c",
+      "4d",
+      "4e",
+      "4f",
+      "50",
+      "51",
+      "52",
+      "53",
+      "54",
+      "55",
+      "56",
+      "57",
+      "58",
+      "59",
+      "5a",
+      "5b",
+      "5c",
+      "5d",
+      "5e",
+      "5f",
+      "60",
+      "61",
+      "62",
+      "63",
+      "64",
+      "65",
+      "66",
+      "67",
+      "68",
+      "69",
+      "6a",
+      "6b",
+      "6c",
+      "6d",
+      "6e",
+      "6f",
+      "70",
+      "71",
+      "72",
+      "73",
+      "74",
+      "75",
+      "76",
+      "77",
+      "78",
+      "79",
+      "7a",
+      "7b",
+      "7c",
+      "7d",
+      "7e",
+      "7f",
+      "80",
+      "81",
+      "82",
+      "83",
+      "84",
+      "85",
+      "86",
+      "87",
+      "88",
+      "89",
+      "8a",
+      "8b",
+      "8c",
+      "8d",
+      "8e",
+      "8f",
+      "90",
+      "91",
+      "92",
+      "93",
+      "94",
+      "95",
+      "96",
+      "97",
+      "98",
+      "99",
+      "9a",
+      "9b",
+      "9c",
+      "9d",
+      "9e",
+      "9f",
+      "a0",
+      "a1",
+      "a2",
+      "a3",
+      "a4",
+      "a5",
+      "a6",
+      "a7",
+      "a8",
+      "a9",
+      "aa",
+      "ab",
+      "ac",
+      "ad",
+      "ae",
+      "af",
+      "b0",
+      "b1",
+      "b2",
+      "b3",
+      "b4",
+      "b5",
+      "b6",
+      "b7",
+      "b8",
+      "b9",
+      "ba",
+      "bb",
+      "bc",
+      "bd",
+      "be",
+      "bf",
+      "c0",
+      "c1",
+      "c2",
+      "c3",
+      "c4",
+      "c5",
+      "c6",
+      "c7",
+      "c8",
+      "c9",
+      "ca",
+      "cb",
+      "cc",
+      "cd",
+      "ce",
+      "cf",
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "d4",
+      "d5",
+      "d6",
+      "d7",
+      "d8",
+      "d9",
+      "da",
+      "db",
+      "dc",
+      "dd",
+      "de",
+      "df",
+      "e0",
+      "e1",
+      "e2",
+      "e3",
+      "e4",
+      "e5",
+      "e6",
+      "e7",
+      "e8",
+      "e9",
+      "ea",
+      "eb",
+      "ec",
+      "ed",
+      "ee",
+      "ef",
+      "f0",
+      "f1",
+      "f2",
+      "f3",
+      "f4",
+      "f5",
+      "f6",
+      "f7",
+      "f8",
+      "f9",
+      "fa",
+      "fb",
+      "fc",
+      "fd",
+      "fe",
+      "ff"
+    ];
+    var random = Math.random;
+    function seed() {
+      return HEX[255 * random() | 0] + HEX[255 * random() | 0] + HEX[255 * random() | 0] + HEX[255 * random() | 0] + HEX[255 * random() | 0] + HEX[255 * random() | 0] + HEX[255 * random() | 0];
+    }
+    module.exports.generateId = (function generateIdFn() {
+      let num5 = 0;
+      let str8 = seed();
+      return function generateId() {
+        return num5 === 255 ? (str8 = seed()) + HEX[num5 = 0] : str8 + HEX[++num5];
+      };
+    })();
+  }
+});
+
+// node_modules/@fastify/multipart/lib/stream-consumer.js
+var require_stream_consumer = __commonJS({
+  "node_modules/@fastify/multipart/lib/stream-consumer.js"(exports, module) {
+    "use strict";
+    module.exports = function streamToNull(stream) {
+      return new Promise((resolve2, reject) => {
+        stream.on("data", () => {
+        });
+        stream.on("close", () => {
+          resolve2();
+        });
+        stream.on("end", () => {
+          resolve2();
+        });
+        stream.on("error", (error) => {
+          reject(error);
+        });
+      });
+    };
+  }
+});
+
+// node_modules/@fastify/deepmerge/index.js
+var require_deepmerge = __commonJS({
+  "node_modules/@fastify/deepmerge/index.js"(exports, module) {
+    "use strict";
+    var JSON_PROTO = Object.getPrototypeOf({});
+    function defaultIsMergeableObjectFactory() {
+      return function defaultIsMergeableObject(value2) {
+        return typeof value2 === "object" && value2 !== null && !(value2 instanceof RegExp) && !(value2 instanceof Date);
+      };
+    }
+    function deepmergeConstructor(options) {
+      function isNotPrototypeKey(value2) {
+        return value2 !== "constructor" && value2 !== "prototype" && value2 !== "__proto__";
+      }
+      function cloneArray(value2) {
+        let i = 0;
+        const il = value2.length;
+        const result = new Array(il);
+        for (i; i < il; ++i) {
+          result[i] = clone(value2[i]);
+        }
+        return result;
+      }
+      function cloneObject(target) {
+        const result = {};
+        if (cloneProtoObject && Object.getPrototypeOf(target) !== JSON_PROTO) {
+          return cloneProtoObject(target);
+        }
+        const targetKeys = getKeys(target);
+        let i, il, key;
+        for (i = 0, il = targetKeys.length; i < il; ++i) {
+          isNotPrototypeKey(key = targetKeys[i]) && (result[key] = clone(target[key]));
+        }
+        return result;
+      }
+      function concatArrays(target, source) {
+        const tl = target.length;
+        const sl = source.length;
+        let i = 0;
+        const result = new Array(tl + sl);
+        for (i; i < tl; ++i) {
+          result[i] = clone(target[i]);
+        }
+        for (i = 0; i < sl; ++i) {
+          result[i + tl] = clone(source[i]);
+        }
+        return result;
+      }
+      const propertyIsEnumerable = Object.prototype.propertyIsEnumerable;
+      function getSymbolsAndKeys(value2) {
+        const result = Object.keys(value2);
+        const keys = Object.getOwnPropertySymbols(value2);
+        for (let i = 0, il = keys.length; i < il; ++i) {
+          propertyIsEnumerable.call(value2, keys[i]) && result.push(keys[i]);
+        }
+        return result;
+      }
+      const getKeys = options?.symbols ? getSymbolsAndKeys : Object.keys;
+      const cloneProtoObject = typeof options?.cloneProtoObject === "function" ? options.cloneProtoObject : void 0;
+      const isMergeableObject = typeof options?.isMergeableObject === "function" ? options.isMergeableObject : defaultIsMergeableObjectFactory();
+      const onlyDefinedProperties = options?.onlyDefinedProperties === true;
+      function isPrimitive(value2) {
+        return typeof value2 !== "object" || value2 === null;
+      }
+      const mergeArray = options && typeof options.mergeArray === "function" ? options.mergeArray({ clone, deepmerge: _deepmerge, getKeys, isMergeableObject }) : concatArrays;
+      function clone(entry) {
+        return isMergeableObject(entry) ? Array.isArray(entry) ? cloneArray(entry) : cloneObject(entry) : entry;
+      }
+      function mergeObject(target, source) {
+        const result = {};
+        const targetKeys = getKeys(target);
+        const sourceKeys = getKeys(source);
+        let i, il, key;
+        for (i = 0, il = targetKeys.length; i < il; ++i) {
+          isNotPrototypeKey(key = targetKeys[i]) && sourceKeys.indexOf(key) === -1 && (result[key] = clone(target[key]));
+        }
+        for (i = 0, il = sourceKeys.length; i < il; ++i) {
+          if (!isNotPrototypeKey(key = sourceKeys[i])) {
+            continue;
+          }
+          if (key in target) {
+            if (targetKeys.indexOf(key) !== -1) {
+              if (cloneProtoObject && isMergeableObject(source[key]) && Object.getPrototypeOf(source[key]) !== JSON_PROTO) {
+                result[key] = cloneProtoObject(source[key]);
+              } else {
+                result[key] = _deepmerge(target[key], source[key]);
+              }
+            }
+          } else {
+            if (onlyDefinedProperties && typeof source[key] === "undefined") {
+              continue;
+            }
+            result[key] = clone(source[key]);
+          }
+        }
+        return result;
+      }
+      function _deepmerge(target, source) {
+        if (onlyDefinedProperties && typeof source === "undefined") {
+          return clone(target);
+        }
+        const sourceIsArray = Array.isArray(source);
+        const targetIsArray = Array.isArray(target);
+        if (isPrimitive(source)) {
+          return source;
+        } else if (!isMergeableObject(target)) {
+          return clone(source);
+        } else if (sourceIsArray && targetIsArray) {
+          return mergeArray(target, source);
+        } else if (sourceIsArray !== targetIsArray) {
+          return clone(source);
+        } else {
+          return mergeObject(target, source);
+        }
+      }
+      function _deepmergeAll() {
+        switch (arguments.length) {
+          case 0:
+            return {};
+          case 1:
+            return clone(arguments[0]);
+          case 2:
+            return _deepmerge(arguments[0], arguments[1]);
+        }
+        let result;
+        for (let i = 0, il = arguments.length; i < il; ++i) {
+          result = _deepmerge(result, arguments[i]);
+        }
+        return result;
+      }
+      return options?.all ? _deepmergeAll : _deepmerge;
+    }
+    module.exports = deepmergeConstructor;
+    module.exports.default = deepmergeConstructor;
+    module.exports.deepmerge = deepmergeConstructor;
+    Object.defineProperty(module.exports, "isMergeableObject", {
+      get: defaultIsMergeableObjectFactory
+    });
+  }
+});
+
+// node_modules/@fastify/multipart/index.js
+var require_multipart2 = __commonJS({
+  "node_modules/@fastify/multipart/index.js"(exports, module) {
+    "use strict";
+    var Busboy = require_busboy();
+    var os = __require("node:os");
+    var fp = require_fastify_plugin();
+    var { createWriteStream } = __require("node:fs");
+    var { unlink } = __require("node:fs/promises");
+    var path = __require("node:path");
+    var { generateId } = require_generateId();
+    var createError = require_error();
+    var streamToNull = require_stream_consumer();
+    var deepmergeAll = require_deepmerge()({ all: true });
+    var { PassThrough, Readable } = __require("node:stream");
+    var { pipeline: pump } = __require("node:stream/promises");
+    var secureJSON = require_secure_json_parse();
+    var kMultipart = /* @__PURE__ */ Symbol("multipart");
+    var kMultipartHandler = /* @__PURE__ */ Symbol("multipartHandler");
+    var kSavedRequestFilesResult = /* @__PURE__ */ Symbol("savedRequestFilesResult");
+    var kResponseEnded = /* @__PURE__ */ Symbol("responseEnded");
+    var PartsLimitError = createError("FST_PARTS_LIMIT", "reach parts limit", 413);
+    var FilesLimitError = createError("FST_FILES_LIMIT", "reach files limit", 413);
+    var FieldsLimitError = createError("FST_FIELDS_LIMIT", "reach fields limit", 413);
+    var RequestFileTooLargeError = createError("FST_REQ_FILE_TOO_LARGE", "request file too large", 413);
+    var PrototypeViolationError = createError("FST_PROTO_VIOLATION", "prototype property is not allowed as field name", 400);
+    var InvalidMultipartContentTypeError = createError("FST_INVALID_MULTIPART_CONTENT_TYPE", "the request is not multipart", 406);
+    var InvalidJSONFieldError = createError("FST_INVALID_JSON_FIELD_ERROR", "a request field is not a valid JSON as declared by its Content-Type", 406);
+    var FileBufferNotFoundError = createError("FST_FILE_BUFFER_NOT_FOUND", "the file buffer was not found", 500);
+    var PrematureCloseError = createError("FST_MP_PREMATURE_CLOSE", "the request was closed before the multipart data was fully parsed", 400);
+    var NoFormData = createError("FST_NO_FORM_DATA", "FormData is not available", 500);
+    function setMultipart(req2, _payload, done) {
+      req2[kMultipart] = true;
+      done();
+    }
+    function busboy(options) {
+      try {
+        return new Busboy(options);
+      } catch (error) {
+        const errorEmitter = new PassThrough();
+        process.nextTick(function() {
+          errorEmitter.emit("error", error);
+        });
+        return errorEmitter;
+      }
+    }
+    function fastifyMultipart(fastify, options, done) {
+      options.limits = {
+        ...options.limits,
+        parts: options.limits?.parts ?? 1e3,
+        fileSize: options.limits?.fileSize ?? fastify.initialConfig.bodyLimit
+      };
+      const attachFieldsToBody = options.attachFieldsToBody;
+      if (attachFieldsToBody === true || attachFieldsToBody === "keyValues") {
+        if (typeof options.sharedSchemaId === "string" && attachFieldsToBody === true) {
+          fastify.addSchema({
+            $id: options.sharedSchemaId,
+            type: "object",
+            properties: {
+              fieldname: { type: "string" },
+              encoding: { type: "string" },
+              filename: { type: "string" },
+              mimetype: { type: "string" }
+            }
+          });
+        }
+        fastify.addHook("preValidation", async function(req2) {
+          if (!req2.isMultipart()) {
+            return;
+          }
+          for await (const part of req2.parts(req2.routeOptions.config.multipartOptions)) {
+            req2.body = part.fields;
+            if (part.file) {
+              if (options.onFile) {
+                await options.onFile.call(req2, part);
+              } else {
+                await part.toBuffer();
+              }
+            }
+          }
+          if (attachFieldsToBody === "keyValues") {
+            const body = {};
+            if (req2.body) {
+              const reqBodyKeys = Object.keys(req2.body);
+              for (let i = 0; i < reqBodyKeys.length; ++i) {
+                const key = reqBodyKeys[i];
+                const field2 = req2.body[key];
+                if (field2.value !== void 0) {
+                  body[key] = field2.value;
+                } else if (field2._buf) {
+                  body[key] = field2._buf;
+                } else if (Array.isArray(field2)) {
+                  const items = [];
+                  for (let i2 = 0; i2 < field2.length; ++i2) {
+                    const item = field2[i2];
+                    if (item.value !== void 0) {
+                      items.push(item.value);
+                    } else if (item._buf) {
+                      items.push(item._buf);
+                    }
+                  }
+                  if (items.length) {
+                    body[key] = items;
+                  }
+                }
+              }
+            }
+            req2.body = body;
+          }
+        });
+        if (globalThis.FormData && !fastify.hasRequestDecorator("formData")) {
+          fastify.decorateRequest("formData", async function() {
+            const formData = new FormData();
+            for (const key in this.body) {
+              const value2 = this.body[key];
+              if (Array.isArray(value2)) {
+                for (const item of value2) {
+                  await append(key, item);
+                }
+              } else {
+                await append(key, value2);
+              }
+            }
+            async function append(key, entry) {
+              if (entry.type === "file" || attachFieldsToBody === "keyValues" && Buffer.isBuffer(entry)) {
+                formData.append(key, new Blob([await entry.toBuffer()], {
+                  type: entry.mimetype
+                }), entry.filename);
+              } else {
+                formData.append(key, entry.value);
+              }
+            }
+            return formData;
+          });
+        }
+      }
+      if (!fastify.hasRequestDecorator("formData")) {
+        fastify.decorateRequest("formData", async function() {
+          throw new NoFormData();
+        });
+      }
+      const defaultThrowFileSizeLimit = typeof options.throwFileSizeLimit === "boolean" ? options.throwFileSizeLimit : true;
+      fastify.decorate("multipartErrors", {
+        PartsLimitError,
+        FilesLimitError,
+        FieldsLimitError,
+        PrototypeViolationError,
+        InvalidMultipartContentTypeError,
+        RequestFileTooLargeError,
+        FileBufferNotFoundError,
+        PrematureCloseError
+      });
+      fastify.addContentTypeParser("multipart/form-data", setMultipart);
+      fastify.decorateRequest(kMultipart, false);
+      fastify.decorateRequest(kMultipartHandler, handleMultipart);
+      fastify.decorateRequest(kSavedRequestFilesResult, null);
+      fastify.decorateRequest(kResponseEnded, false);
+      fastify.decorateRequest("parts", getMultipartIterator);
+      fastify.decorateRequest("isMultipart", isMultipart);
+      fastify.decorateRequest("tmpUploads", null);
+      fastify.decorateRequest("savedRequestFiles", null);
+      fastify.decorateRequest("file", getMultipartFile);
+      fastify.decorateRequest("files", getMultipartFiles);
+      fastify.decorateRequest("saveRequestFiles", saveRequestFiles);
+      fastify.decorateRequest("cleanRequestFiles", cleanRequestFiles);
+      fastify.addHook("onResponse", async (request) => {
+        request[kResponseEnded] = true;
+        await request.cleanRequestFiles();
+      });
+      fastify.addHook("onRequest", async (request, reply) => {
+        reply.raw.on("close", () => {
+          if (reply.raw.writableFinished) {
+            return;
+          }
+          request[kResponseEnded] = true;
+          request.cleanRequestFiles();
+        });
+      });
+      function isMultipart() {
+        return this[kMultipart];
+      }
+      function handleMultipart(opts = {}) {
+        if (!this.isMultipart()) {
+          throw new InvalidMultipartContentTypeError();
+        }
+        this.log.debug("starting multipart parsing");
+        let values = [];
+        let pendingHandler = null;
+        const ch = (val) => {
+          if (pendingHandler) {
+            pendingHandler(val);
+            pendingHandler = null;
+          } else {
+            values.push(val);
+          }
+        };
+        const handle = (handler) => {
+          if (values.length > 0) {
+            const value2 = values[0];
+            values = values.slice(1);
+            handler(value2);
+          } else {
+            pendingHandler = handler;
+          }
+        };
+        const parts = () => {
+          return new Promise((resolve2, reject) => {
+            handle((val) => {
+              if (val instanceof Error) return reject(val);
+              resolve2(val);
+            });
+          });
+        };
+        const body = {};
+        let lastError = null;
+        let currentFile = null;
+        let sawData = false;
+        const request = this.raw;
+        const busboyOptions = deepmergeAll(
+          { headers: request.headers },
+          options,
+          opts
+        );
+        this.log.trace({ busboyOptions }, "Providing options to busboy");
+        const bb = busboy(busboyOptions);
+        request.on("close", onRequestClose);
+        request.on("error", cleanup);
+        bb.on("field", onField).on("file", onFile).on("end", cleanup).on("finish", cleanup).on("close", cleanup).on("error", onBusboyError);
+        function onLimit(err) {
+          onError(err);
+          process.nextTick(() => cleanup(err, true));
+        }
+        bb.on("partsLimit", function() {
+          onLimit(new PartsLimitError());
+        });
+        bb.on("filesLimit", function() {
+          onLimit(new FilesLimitError());
+        });
+        bb.on("fieldsLimit", function() {
+          onLimit(new FieldsLimitError());
+        });
+        request.once("data", onFirstData);
+        request.pipe(bb);
+        function onFirstData() {
+          sawData = true;
+        }
+        function onBusboyError(err) {
+          if (!sawData && err.message === "Unexpected end of multipart data") {
+            cleanup();
+          } else {
+            cleanup(err);
+          }
+        }
+        function onField(name, fieldValue, fieldnameTruncated, valueTruncated, encoding, contentType) {
+          if (name in Object.prototype) {
+            onError(new PrototypeViolationError());
+            return;
+          }
+          if (contentType.startsWith("application/json")) {
+            if (valueTruncated) {
+              onError(new InvalidJSONFieldError());
+              return;
+            }
+            try {
+              fieldValue = secureJSON.parse(fieldValue);
+              contentType = "application/json";
+            } catch {
+              onError(new InvalidJSONFieldError());
+              return;
+            }
+          }
+          const value2 = {
+            type: "field",
+            fieldname: name,
+            mimetype: contentType,
+            encoding,
+            value: fieldValue,
+            fieldnameTruncated,
+            valueTruncated,
+            fields: body
+          };
+          if (body[name] === void 0) {
+            body[name] = value2;
+          } else if (Array.isArray(body[name])) {
+            body[name].push(value2);
+          } else {
+            body[name] = [body[name], value2];
+          }
+          ch(value2);
+        }
+        function onFile(name, file, filename, encoding, mimetype) {
+          if (name in Object.prototype) {
+            streamToNull(file).catch(() => {
+            });
+            onError(new PrototypeViolationError());
+            return;
+          }
+          const throwFileSizeLimit = typeof opts.throwFileSizeLimit === "boolean" ? opts.throwFileSizeLimit : defaultThrowFileSizeLimit;
+          const value2 = {
+            type: "file",
+            fieldname: name,
+            filename,
+            encoding,
+            mimetype,
+            file,
+            fields: body,
+            _buf: null,
+            async toBuffer() {
+              if (this._buf) {
+                return this._buf;
+              }
+              const fileChunks = [];
+              let err;
+              for await (const chunk of this.file) {
+                fileChunks.push(chunk);
+                if (throwFileSizeLimit && this.file.truncated) {
+                  err = new RequestFileTooLargeError();
+                  err.part = this;
+                  onError(err);
+                  fileChunks.length = 0;
+                }
+              }
+              if (err) {
+                throw err;
+              }
+              this._buf = Buffer.concat(fileChunks);
+              return this._buf;
+            }
+          };
+          file.on("error", function(err) {
+            if (err.message && err.message.includes("terminated early")) {
+              onError(err);
+            }
+          });
+          file.on("close", function() {
+            if (!file.readableEnded) {
+              cleanup();
+            }
+          });
+          if (throwFileSizeLimit) {
+            file.on("limit", function() {
+              const err = new RequestFileTooLargeError();
+              err.part = value2;
+              onError(err);
+            });
+          }
+          if (body[name] === void 0) {
+            body[name] = value2;
+          } else if (Array.isArray(body[name])) {
+            body[name].push(value2);
+          } else {
+            body[name] = [body[name], value2];
+          }
+          currentFile = file;
+          ch(value2);
+        }
+        function onError(err) {
+          lastError = err;
+        }
+        function onRequestClose() {
+          if (!request.readableEnded) {
+            cleanup(lastError || new PrematureCloseError());
+          }
+        }
+        function cleanup(err, keepParsing = false) {
+          if (!keepParsing) {
+            request.unpipe(bb);
+            if ((err || request.aborted) && currentFile) {
+              currentFile.destroy();
+              currentFile = null;
+            }
+          }
+          ch(err || lastError || null);
+        }
+        return parts;
+      }
+      async function saveRequestFiles(options2) {
+        if (this[kSavedRequestFilesResult]) {
+          return this[kSavedRequestFilesResult];
+        }
+        let parts;
+        let values = {};
+        if (attachFieldsToBody === true || attachFieldsToBody === "keyValues") {
+          parts = this.body ? filesFromFields.call(this, this.body) : [];
+          values = this.body || {};
+        } else {
+          parts = this.parts(options2);
+        }
+        this.savedRequestFiles = [];
+        const tmpdir = options2?.tmpdir || os.tmpdir();
+        this.tmpUploads = [];
+        let i = 0;
+        let target;
+        try {
+          for await (const part of parts) {
+            values = part.fields;
+            if (!part.file) {
+              continue;
+            }
+            const filepath = path.join(tmpdir, generateId() + path.extname(part.filename || "file" + i++));
+            target = createWriteStream(filepath);
+            this.tmpUploads.push(filepath);
+            await pump(part.file, target);
+            target = null;
+            this.savedRequestFiles.push({ ...part, filepath });
+          }
+        } catch (err) {
+          target?.destroy();
+          await this.cleanRequestFiles();
+          this.log.error({ err }, "save request file");
+          throw err;
+        }
+        if (this[kResponseEnded]) {
+          await this.cleanRequestFiles();
+        }
+        this[kSavedRequestFilesResult] = {
+          files: this.savedRequestFiles,
+          values
+        };
+        return this[kSavedRequestFilesResult];
+      }
+      function* filesFromFields(container) {
+        try {
+          const fields = Array.isArray(container) ? container : Object.values(container);
+          for (let i = 0; i < fields.length; ++i) {
+            const field2 = fields[i];
+            if (Array.isArray(field2)) {
+              for (const subField of filesFromFields.call(this, field2)) {
+                yield subField;
+              }
+            }
+            if (!field2.file) {
+              continue;
+            }
+            if (!field2._buf) {
+              throw new FileBufferNotFoundError();
+            }
+            field2.file = Readable.from(field2._buf);
+            yield field2;
+          }
+        } catch (err) {
+          this.log.error({ err }, "save request file failed");
+          throw err;
+        }
+      }
+      async function cleanRequestFiles() {
+        if (!this.tmpUploads) {
+          return;
+        }
+        for (let i = 0; i < this.tmpUploads.length; ++i) {
+          const filepath = this.tmpUploads[i];
+          try {
+            await unlink(filepath);
+          } catch (error) {
+            this.log.error(error, "Could not delete file");
+          }
+        }
+      }
+      async function getMultipartFile(options2) {
+        const parts = this[kMultipartHandler](options2);
+        let part;
+        while ((part = await parts()) != null) {
+          if (part.file) {
+            return part;
+          }
+        }
+      }
+      async function* getMultipartFiles(options2) {
+        const parts = this[kMultipartHandler](options2);
+        let part;
+        while ((part = await parts()) != null) {
+          if (part.file) {
+            yield part;
+          }
+        }
+      }
+      async function* getMultipartIterator(options2) {
+        const parts = this[kMultipartHandler](options2);
+        let part;
+        while ((part = await parts()) != null) {
+          yield part;
+        }
+      }
+      done();
+    }
+    function ajvFilePlugin(ajv) {
+      return ajv.addKeyword({
+        keyword: "isFile",
+        compile: (_schema, parent) => {
+          parent.type = "string";
+          parent.format = "binary";
+          delete parent.isFile;
+          return (field2) => !!field2.file;
+        },
+        error: {
+          message: "should be a file"
+        }
+      });
+    }
+    module.exports = fp(fastifyMultipart, {
+      fastify: "5.x",
+      name: "@fastify/multipart"
+    });
+    module.exports.default = fastifyMultipart;
+    module.exports.fastifyMultipart = fastifyMultipart;
+    module.exports.ajvFilePlugin = ajvFilePlugin;
+  }
+});
+
+// packages/api/dist/infrastructure/admin/admin-store.js
+function rows22(result) {
+  return Array.isArray(result[0]) ? result[0] : [];
+}
+async function scalar(conn, sql, params2 = []) {
+  const row = rows22(await conn.query(sql, params2))[0];
+  return Number(row?.n ?? 0);
+}
+function grouped(list7) {
+  const out = {};
+  for (const r of list7)
+    out[String(r.k)] = Number(r.n ?? 0);
+  return out;
+}
+function offset(page2) {
+  return (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE4;
+}
+var PAGE_SIZE4, MysqlAdminStore;
+var init_admin_store = __esm({
+  "packages/api/dist/infrastructure/admin/admin-store.js"() {
+    "use strict";
+    PAGE_SIZE4 = 25;
+    MysqlAdminStore = class {
+      connect;
+      constructor(connect) {
+        this.connect = connect;
+      }
+      async run(work) {
+        const conn = await this.connect();
+        try {
+          return await work(conn);
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      }
+      findAdminByEmail(email) {
+        return this.run(async (conn) => {
+          const row = rows22(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
+          if (!row)
+            return null;
+          return {
+            id: String(row.id),
+            email: String(row.email),
+            name: String(row.name),
+            passwordHash: String(row.passwordHash),
+            totpSecret: row.totpSecret ? String(row.totpSecret) : null,
+            staffRole: row.staffRole ? String(row.staffRole) : null
+          };
+        });
+      }
+      upsertAdmin(input) {
+        return this.run(async (conn) => {
+          const email = input.email.toLowerCase();
+          const existing = rows22(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
+          let id2;
+          if (existing) {
+            id2 = String(existing.id);
+            await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', staffRole = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id2]);
+          } else {
+            const created = rows22(await conn.query("SELECT UUID() AS id"))[0];
+            id2 = String(created?.id);
+            await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, staffRole, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, email, input.phone, input.passwordHash, input.name]);
+          }
+          await conn.query("INSERT INTO `AdminTotp` (userId, secret, createdAt, updatedAt) VALUES (?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE secret = VALUES(secret), updatedAt = CURRENT_TIMESTAMP(3)", [id2, input.totpSecret]);
+          return id2;
+        });
+      }
+      findAdminById(id2) {
+        return this.run(async (conn) => {
+          const row = rows22(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id2]))[0];
+          if (!row)
+            return null;
+          return {
+            id: String(row.id),
+            email: String(row.email),
+            name: String(row.name),
+            passwordHash: String(row.passwordHash),
+            totpSecret: row.totpSecret ? String(row.totpSecret) : null,
+            staffRole: row.staffRole ? String(row.staffRole) : null
+          };
+        });
+      }
+      countAdmins() {
+        return this.run((conn) => scalar(conn, "SELECT COUNT(*) AS n FROM `User` u JOIN `AdminTotp` t ON t.userId = u.id WHERE u.role = 'admin' AND u.deletedAt IS NULL"));
+      }
+      updateAdminProfile(id2, input) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `User` SET email = ?, name = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role = 'admin'", [input.email.toLowerCase(), input.name, id2]);
+        });
+      }
+      updateAdminPassword(id2, passwordHash) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `User` SET passwordHash = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role = 'admin'", [passwordHash, id2]);
+        });
+      }
+      updateAdminTotp(id2, secret2) {
+        return this.run(async (conn) => {
+          await conn.query("UPDATE `AdminTotp` SET secret = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ?", [secret2, id2]);
+        });
+      }
+      recordAudit(input) {
+        return this.run(async (conn) => {
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, reason, createdAt) VALUES (UUID(), ?, ?, 'admin', ?, CURRENT_TIMESTAMP(3))", [input.eventType, input.actorUserId ?? null, input.reason ?? null]);
+        });
+      }
+      dashboard() {
+        return this.run(async (conn) => ({
+          usersByRole: grouped(rows22(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
+          vehicles: await scalar(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE deletedAt IS NULL"),
+          shopsByStatus: grouped(rows22(await conn.query("SELECT verificationStatus AS k, COUNT(*) AS n FROM `Shop` GROUP BY verificationStatus"))),
+          stores: await scalar(conn, "SELECT COUNT(*) AS n FROM `Store`"),
+          appointmentsToday: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE scheduledAt >= CURDATE() AND scheduledAt < CURDATE() + INTERVAL 1 DAY"),
+          appointmentsPending: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE status = 'pending'"),
+          conversations: await scalar(conn, "SELECT COUNT(*) AS n FROM `Conversation`"),
+          messages24h: await scalar(conn, "SELECT COUNT(*) AS n FROM `Message` WHERE createdAt >= NOW() - INTERVAL 1 DAY")
+        }));
+      }
+      listUsers(page2) {
+        return this.run(async (conn) => ({
+          items: rows22(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
+          page: page2,
+          pageSize: PAGE_SIZE4
+        }));
+      }
+      listVehicles(page2) {
+        return this.run(async (conn) => ({
+          items: rows22(await conn.query("SELECT id, make, model, year, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
+          page: page2,
+          pageSize: PAGE_SIZE4
+        }));
+      }
+      listShops(page2) {
+        return this.run(async (conn) => ({
+          items: rows22(await conn.query("SELECT id, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
+          page: page2,
+          pageSize: PAGE_SIZE4
+        }));
+      }
+      listAudit(page2) {
+        return this.run(async (conn) => ({
+          items: rows22(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
+          page: page2,
+          pageSize: PAGE_SIZE4
+        }));
+      }
+    };
+  }
+});
+
 // packages/api/dist/interfaces/admin/views.js
 function navIcon(name) {
   return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICONS2[name]}"></path></svg>`;
@@ -91984,7 +95918,7 @@ function menuContents(role, active, csrfToken) {
   return `<nav class="side-nav" aria-label="Men\xFA del panel">${groups}</nav>${foot}`;
 }
 function layout(input) {
-  const nonce = escapeHtml(input.nonce);
+  const nonce2 = escapeHtml(input.nonce);
   const active = activeHref(input.current);
   const menu = menuContents(input.role, active, input.csrfToken);
   const shell = input.nav ? `<div class="shell"><aside class="side" aria-label="Men\xFA del panel"><div class="side-brand">${logoImg()}<b>Admin</b></div>${menu}</aside>
@@ -91992,7 +95926,7 @@ function layout(input) {
 <main>${input.body}</main></div>` : `<main>${input.body}</main>`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>${escapeHtml(input.title)} \xB7 AutoMantPro Admin</title>
-<style nonce="${nonce}">${STYLES3}${THEME_ADMIN_LAYER}</style></head><body>${shell}</body></html>`;
+<style nonce="${nonce2}">${STYLES3}${THEME_ADMIN_LAYER}</style></head><body>${shell}</body></html>`;
 }
 function loginView(error) {
   return `<form class="login" method="post" action="/admin/login" autocomplete="on">
@@ -92050,11 +95984,11 @@ function cell(value2) {
     return `<span class="muted">\u2014</span>`;
   return escapeHtml(String(value2));
 }
-function tableView(title, base, page, columns) {
+function tableView(title, base, page2, columns) {
   const head = columns.map(([, label2]) => `<th>${escapeHtml(label2)}</th>`).join("");
-  const body = page.items.length === 0 ? `<tr><td colspan="${columns.length}" class="muted">Sin registros</td></tr>` : page.items.map((row) => `<tr>${columns.map(([key]) => `<td>${cell(row[key])}</td>`).join("")}</tr>`).join("");
-  const prev = page.page > 1 ? `<a href="${base}?page=${page.page - 1}">\u2190 Anterior</a>` : "";
-  const next = page.items.length === page.pageSize ? `<a href="${base}?page=${page.page + 1}">Siguiente \u2192</a>` : "";
+  const body = page2.items.length === 0 ? `<tr><td colspan="${columns.length}" class="muted">Sin registros</td></tr>` : page2.items.map((row) => `<tr>${columns.map(([key]) => `<td>${cell(row[key])}</td>`).join("")}</tr>`).join("");
+  const prev = page2.page > 1 ? `<a href="${base}?page=${page2.page - 1}">\u2190 Anterior</a>` : "";
+  const next = page2.items.length === page2.pageSize ? `<a href="${base}?page=${page2.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>${escapeHtml(title)}</h1><div class="scroll"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div><div class="pager">${prev}${next}</div>`;
 }
 var STYLES3, ICONS2, NAV, ACCOUNT;
@@ -92183,6 +96117,8 @@ main table.pid td:nth-child(2){text-align:right;font-family:var(--c-mono);font-w
         { href: "/admin/appointments", label: "Turnos", capability: "read", icon: "cal" },
         { href: "/admin/work-orders", label: "\xD3rdenes", capability: "read", icon: "clip" },
         { href: "/admin/service-requests", label: "Especialistas", capability: "read", icon: "star" },
+        { href: "/admin/expertos", label: "Expertos", capability: "verifications", icon: "shield" },
+        { href: "/admin/cursos", label: "Cursos", capability: "plans", icon: "layers" },
         { href: "/admin/quotes", label: "Cotizaciones", capability: "read", icon: "tag" }
       ] },
       { label: "Relaciones", items: [
@@ -92336,7 +96272,7 @@ var require_error_correction_level = __commonJS({
       }
       try {
         return fromString(value2);
-      } catch (e8) {
+      } catch (e9) {
         return defaultValue;
       }
     };
@@ -93176,7 +97112,7 @@ var require_mode = __commonJS({
       }
       try {
         return fromString(value2);
-      } catch (e8) {
+      } catch (e9) {
         return defaultValue;
       }
     };
@@ -93540,15 +97476,15 @@ var require_dijkstra = __commonJS({
        */
       PriorityQueue: {
         make: function(opts) {
-          var T3 = dijkstra.PriorityQueue, t = {}, key;
+          var T4 = dijkstra.PriorityQueue, t = {}, key;
           opts = opts || {};
-          for (key in T3) {
-            if (T3.hasOwnProperty(key)) {
-              t[key] = T3[key];
+          for (key in T4) {
+            if (T4.hasOwnProperty(key)) {
+              t[key] = T4[key];
             }
           }
           t.queue = [];
-          t.sorter = opts.sorter || T3.default_sorter;
+          t.sorter = opts.sorter || T4.default_sorter;
           return t;
         },
         default_sorter: function(a, b) {
@@ -96508,7 +100444,7 @@ var require_canvas = __commonJS({
     function getCanvasElement() {
       try {
         return document.createElement("canvas");
-      } catch (e8) {
+      } catch (e9) {
         throw new Error("You need to specify a canvas element");
       }
     }
@@ -96595,16 +100531,16 @@ var require_browser = __commonJS({
           try {
             const data2 = QRCode2.create(text9, opts);
             resolve2(renderFunc(data2, canvas, opts));
-          } catch (e8) {
-            reject(e8);
+          } catch (e9) {
+            reject(e9);
           }
         });
       }
       try {
         const data2 = QRCode2.create(text9, opts);
         cb(null, renderFunc(data2, canvas, opts));
-      } catch (e8) {
-        cb(e8);
+      } catch (e9) {
+        cb(e9);
       }
     }
     exports.create = QRCode2.create;
@@ -96681,16 +100617,16 @@ var require_server2 = __commonJS({
             return renderFunc(data2, params2.opts, function(err, data3) {
               return err ? reject(err) : resolve2(data3);
             });
-          } catch (e8) {
-            reject(e8);
+          } catch (e9) {
+            reject(e9);
           }
         });
       }
       try {
         const data2 = QRCode2.create(text9, params2.opts);
         return renderFunc(data2, params2.opts, params2.cb);
-      } catch (e8) {
-        params2.cb(e8);
+      } catch (e9) {
+        params2.cb(e9);
       }
     }
     exports.create = QRCode2.create;
@@ -96821,7 +100757,7 @@ var init_views_setup = __esm({
 });
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
-import { randomBytes as randomBytes14 } from "node:crypto";
+import { randomBytes as randomBytes17 } from "node:crypto";
 function qrSvg(text9) {
   return QRCode.toString(text9, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
@@ -96853,7 +100789,7 @@ function registerSetupWizard(app2, deps) {
     return state;
   }
   function newState(reply) {
-    const state = { id: randomBytes14(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
+    const state = { id: randomBytes17(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
     states.set(state.id, state);
     reply.header("Set-Cookie", setupCookie(signSessionCookie(state.id, getAdminSessionSecret()), STATE_TTL_MS / 1e3));
     return state;
@@ -96968,8 +100904,8 @@ function registerSetupWizard(app2, deps) {
     try {
       userId = await store.upsertAdmin({ email, name, passwordHash, totpSecret: secret2, phone: `admin:${email}` });
     } catch (err) {
-      const e8 = err;
-      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e8.code ?? "error"}${e8.sqlMessage ? `: ${e8.sqlMessage}` : ""}).` };
+      const e9 = err;
+      state.flash = { kind: "error", text: `No se pudo guardar la cuenta (${e9.code ?? "error"}${e9.sqlMessage ? `: ${e9.sqlMessage}` : ""}).` };
       return back(reply);
     }
     recordLoginAttempt("setup", request.ip, true);
@@ -97267,8 +101203,8 @@ function toMember(row) {
   };
 }
 function list6(result) {
-  const [rows30] = result;
-  return Array.isArray(rows30) ? rows30 : [];
+  const [rows31] = result;
+  return Array.isArray(rows31) ? rows31 : [];
 }
 var SELECT, MysqlStaffStore;
 var init_staff_store = __esm({
@@ -97440,7 +101376,7 @@ function tabs(current, base, options) {
   return `<div class="tabs">${options.map(([key, label2]) => `<a class="${key === current ? "active" : ""}" href="${base}?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("")}</div>`;
 }
 function relationsListView(input) {
-  const rows30 = input.page.items.map((r) => {
+  const rows31 = input.page.items.map((r) => {
     const waiting = waitingHours(r.waitingSince);
     const late2 = waiting !== null && waiting >= input.waitingHours;
     return `<tr><td><a href="/admin/relations/${escapeHtml(r.id)}">${escapeHtml(relationCode(r.number))}</a></td>
@@ -97457,7 +101393,7 @@ function relationsListView(input) {
   <p class="muted">Las partes hablan solo con AutoMantPro: aqu\xED registras lo que dice cada una y el texto listo para reenviar. El tel\xE9fono de una parte se muestra solo si autoriz\xF3 compartirlo.</p>
   ${empty}
   <div class="scroll"><table><thead><tr><th>V\xEDnculo</th><th>Tipo</th><th>Partes</th><th>Estado</th><th>Canal</th><th>\xDAltimo mensaje</th><th>Espera</th></tr></thead>
-  <tbody>${rows30}</tbody></table></div>
+  <tbody>${rows31}</tbody></table></div>
   <div class="pager">${input.page.page > 1 ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page - 1}">\u2190 Anteriores</a>` : ""}
   ${input.page.items.length === input.page.pageSize ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page + 1}">Siguientes \u2192</a>` : ""}</div></div>`;
 }
@@ -97550,7 +101486,7 @@ function relationDetailView(input) {
   </div>`;
 }
 function disputesListView(input) {
-  const rows30 = input.page.items.map((d) => {
+  const rows31 = input.page.items.map((d) => {
     const resolve2 = input.canResolve && (d.status === "abierta" || d.status === "en_revision") ? `<form method="post" action="/admin/disputes/${escapeHtml(d.id)}/resolve">${csrfField2(input.csrf)}
             <label for="res-${escapeHtml(d.id)}">Resoluci\xF3n</label><textarea id="res-${escapeHtml(d.id)}" name="resolution" rows="2" maxlength="2000" required></textarea>
             <select name="status"><option value="resuelta">Resuelta</option><option value="en_revision">En revisi\xF3n</option><option value="rechazada">Rechazada</option></select>
@@ -97566,10 +101502,10 @@ function disputesListView(input) {
   ${tabs(input.filter, "/admin/disputes", DISPUTE_FILTERS)}
   ${input.page.items.length === 0 ? `<p class="muted">No hay disputas con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Caso</th><th>V\xEDnculo</th><th>Partes</th><th>Motivo</th><th>Estado</th><th>Resoluci\xF3n</th></tr></thead>
-  <tbody>${rows30}</tbody></table></div></div>`;
+  <tbody>${rows31}</tbody></table></div></div>`;
 }
 function sanctionsListView(input) {
-  const rows30 = input.page.items.map((s) => {
+  const rows31 = input.page.items.map((s) => {
     const state = s.liftedAt ? `<span class="muted">levantada ${escapeHtml(when2(s.liftedAt))}</span>` : isActive(s) ? `<span class="error">vigente${s.endsAt ? ` hasta ${escapeHtml(when2(s.endsAt))}` : ""}</span>` : `<span class="muted">vencida</span>`;
     const lift = input.canLift && !s.liftedAt && isActive(s) ? `<form method="post" action="/admin/sanctions/${escapeHtml(s.id)}/lift">${csrfField2(input.csrf)}
             <label for="lift-${escapeHtml(s.id)}">Motivo para levantarla</label><input id="lift-${escapeHtml(s.id)}" name="reason" maxlength="191" required>
@@ -97584,7 +101520,7 @@ function sanctionsListView(input) {
   <p class="muted">Siempre con motivo, aviso a la entidad y registro en la auditor\xEDa. Se aplican desde el v\xEDnculo o desde la ficha de la persona.</p></div>
   ${input.page.items.length === 0 ? `<p class="muted">Todav\xEDa no hay sanciones registradas.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Entidad</th><th>Paso</th><th>Motivo</th><th>Vigencia</th><th>Levantar</th></tr></thead>
-  <tbody>${rows30}</tbody></table></div></div>`;
+  <tbody>${rows31}</tbody></table></div></div>`;
 }
 var FILTERS, DISPUTE_FILTERS, flashHtml2, csrfField2;
 var init_views_relations = __esm({
@@ -97669,9 +101605,9 @@ function registerRelationRoutes(app2, deps) {
     const query = request.query ?? {};
     const filter = FILTERS2.includes(query.f) ? query.f : "abiertas";
     const raw = Number(query.page ?? 1);
-    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    const page2 = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
-      const list7 = await relations.list(filter, page, lateAfter);
+      const list7 = await relations.list(filter, page2, lateAfter);
       return deps.html(reply, request, "Relaciones", relationsListView({ filter, page: list7, waitingHours: lateAfter }), session);
     } catch (err) {
       const m = dbError2(err);
@@ -97900,9 +101836,9 @@ function registerRelationRoutes(app2, deps) {
     const query = request.query ?? {};
     const filter = DISPUTE_STATUSES.includes(String(query.f)) ? String(query.f) : "abierta";
     const raw = Number(query.page ?? 1);
-    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    const page2 = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
-      const list7 = await relations.listDisputes(filter, page);
+      const list7 = await relations.listDisputes(filter, page2);
       return deps.html(reply, request, "Disputas", disputesListView({ csrf: session.csrfToken, filter, page: list7, canResolve: can(session.role, "disputes") }), session);
     } catch (err) {
       const m = dbError2(err);
@@ -97941,9 +101877,9 @@ function registerRelationRoutes(app2, deps) {
     if (!session)
       return reply;
     const raw = Number(request.query?.page ?? 1);
-    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    const page2 = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
-      const list7 = await relations.listSanctions(page);
+      const list7 = await relations.listSanctions(page2);
       return deps.html(reply, request, "Sanciones", sanctionsListView({ csrf: session.csrfToken, page: list7, canLift: can(session.role, "sanctions") }), session);
     } catch (err) {
       const m = dbError2(err);
@@ -98034,9 +101970,9 @@ function cell2(value2) {
   const safe = /^[=+\-@]/.test(clean) ? `'${clean}` : clean;
   return `"${safe.replace(/"/g, '""')}"`;
 }
-function toCsv(columns, rows30) {
+function toCsv(columns, rows31) {
   const head = columns.map(([, label2]) => cell2(label2)).join(SEPARATOR);
-  const body = rows30.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
+  const body = rows31.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
   return `\uFEFF${[head, ...body].join("\r\n")}\r
 `;
 }
@@ -98092,7 +102028,7 @@ var init_lopdp = __esm({
 });
 
 // packages/api/dist/infrastructure/data/data-store.js
-function rows22(result) {
+function rows23(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -98314,34 +102250,34 @@ var init_data_store = __esm({
         if (!found)
           return Promise.resolve([]);
         const cap = Math.min(Math.max(1, Math.floor(limit)), MAX_ROWS);
-        return this.run(async (conn) => rows22(await conn.query(`${found.sql} LIMIT ${cap}`)));
+        return this.run(async (conn) => rows23(await conn.query(`${found.sql} LIMIT ${cap}`)));
       }
       createRequest(input) {
         return this.run(async (conn) => {
-          const created = rows22(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows23(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
-          const next = rows22(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest`"))[0];
+          const next = rows23(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest`"))[0];
           await conn.query("INSERT INTO `DataRequest` (id, `number`, userId, kind, status, channel, detail, dueAt, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'recibida', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, Number(next?.n ?? 1), input.userId, input.kind, input.channel, input.detail, dueDate(), input.createdBy]);
           return id2;
         });
       }
-      listRequests(status, page) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE5;
+      listRequests(status, page2) {
+        const offset2 = (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE5;
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params2 = status === "todas" ? [] : [status];
-          const items = rows22(await conn.query(`${SELECT_REQUESTS} ${where} ORDER BY d.dueAt ASC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params2)).map(toRequest);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE5 };
+          const items = rows23(await conn.query(`${SELECT_REQUESTS} ${where} ORDER BY d.dueAt ASC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params2)).map(toRequest);
+          return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE5 };
         });
       }
       getRequest(id2) {
         return this.run(async (conn) => {
-          const row = rows22(await conn.query(`${SELECT_REQUESTS} WHERE d.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows23(await conn.query(`${SELECT_REQUESTS} WHERE d.id = ? LIMIT 1`, [id2]))[0];
           return row ? toRequest(row) : null;
         });
       }
       requestsForUser(userId) {
-        return this.run(async (conn) => rows22(await conn.query(`${SELECT_REQUESTS} WHERE d.userId = ? ORDER BY d.createdAt DESC LIMIT 20`, [userId])).map(toRequest));
+        return this.run(async (conn) => rows23(await conn.query(`${SELECT_REQUESTS} WHERE d.userId = ? ORDER BY d.createdAt DESC LIMIT 20`, [userId])).map(toRequest));
       }
       setStatus(id2, status, resolution, resolvedBy) {
         return this.run(async (conn) => {
@@ -98357,21 +102293,21 @@ var init_data_store = __esm({
       }
       personalExport(userId) {
         return this.run(async (conn) => {
-          const user = rows22(await conn.query("SELECT id, role, name, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? LIMIT 1", [userId]))[0];
+          const user = rows23(await conn.query("SELECT id, role, name, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? LIMIT 1", [userId]))[0];
           if (!user)
             return null;
           const [vehicles, appointments, workOrders, quotes, relations, sanctions, agentMessages, agentActions, agentTurns] = await Promise.all([
-            conn.query("SELECT make, model, year, plate, currentKm, vehicleClass, fuel, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL", [userId]).then(rows22),
-            conn.query("SELECT a.scheduledAt, a.status, a.summary, s.name AS shopName, a.createdAt FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId = ?", [userId]).then(rows22),
-            conn.query("SELECT w.number, w.status, w.intakeKm, w.exitKm, w.total, w.warrantyDays, s.name AS shopName, w.createdAt, w.closedAt FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.ownerId = ?", [userId]).then(rows22),
-            conn.query("SELECT `number`, status, partName, quantity, city, createdAt FROM `QuoteRequest` WHERE requesterId = ?", [userId]).then(rows22),
-            conn.query("SELECT r.`number`, r.kind, r.status, r.channel, r.createdAt FROM `Relationship` r JOIN `RelationshipParty` p ON p.relationshipId = r.id WHERE p.userId = ?", [userId]).then(rows22).catch(() => []),
-            conn.query("SELECT level, reason, startsAt, endsAt, liftedAt FROM `Sanction` WHERE userId = ?", [userId]).then(rows22).catch(() => []),
-            conn.query("SELECT m.direction, m.body, m.createdAt FROM `Message` m JOIN `Conversation` c ON c.id = m.conversationId WHERE c.userAId = ? AND c.agent = 1 ORDER BY m.createdAt, m.id", [userId]).then(rows22),
-            conn.query("SELECT id, kind, args, result, expiresAt, createdAt FROM `AgentAction` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows22),
-            conn.query("SELECT id, response, createdAt FROM `AgentTurn` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows22)
+            conn.query("SELECT make, model, year, plate, currentKm, vehicleClass, fuel, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL", [userId]).then(rows23),
+            conn.query("SELECT a.scheduledAt, a.status, a.summary, s.name AS shopName, a.createdAt FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId = ?", [userId]).then(rows23),
+            conn.query("SELECT w.number, w.status, w.intakeKm, w.exitKm, w.total, w.warrantyDays, s.name AS shopName, w.createdAt, w.closedAt FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.ownerId = ?", [userId]).then(rows23),
+            conn.query("SELECT `number`, status, partName, quantity, city, createdAt FROM `QuoteRequest` WHERE requesterId = ?", [userId]).then(rows23),
+            conn.query("SELECT r.`number`, r.kind, r.status, r.channel, r.createdAt FROM `Relationship` r JOIN `RelationshipParty` p ON p.relationshipId = r.id WHERE p.userId = ?", [userId]).then(rows23).catch(() => []),
+            conn.query("SELECT level, reason, startsAt, endsAt, liftedAt FROM `Sanction` WHERE userId = ?", [userId]).then(rows23).catch(() => []),
+            conn.query("SELECT m.direction, m.body, m.createdAt FROM `Message` m JOIN `Conversation` c ON c.id = m.conversationId WHERE c.userAId = ? AND c.agent = 1 ORDER BY m.createdAt, m.id", [userId]).then(rows23),
+            conn.query("SELECT id, kind, args, result, expiresAt, createdAt FROM `AgentAction` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows23),
+            conn.query("SELECT id, response, createdAt FROM `AgentTurn` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows23)
           ]);
-          const optional3 = (sql, args) => conn.query(sql, args).then(rows22).catch(() => []);
+          const optional3 = (sql, args) => conn.query(sql, args).then(rows23).catch(() => []);
           const [identity, requests, offers, notices, replies, records, symptoms, alerts, ratingsGiven, ratingsReceived, memberships, changes, imported, webLoginCodes] = await Promise.all([
             optional3("SELECT phone, confirmedAt FROM `WhatsAppIdentity` WHERE userId = ?", [userId]),
             optional3("SELECT kind, category, description, city, zone, status, createdAt, expiresAt FROM `LocalRequest` WHERE ownerId = ? ORDER BY createdAt", [userId]),
@@ -98445,13 +102381,13 @@ var init_data_store = __esm({
       anonymizeUser(userId, requestId) {
         return this.run(async (conn) => {
           const lock = agentUserLock(userId);
-          const acquired = Number(rows22(await conn.query("SELECT GET_LOCK(?, 5) AS acquired", [lock]))[0]?.acquired) === 1;
+          const acquired = Number(rows23(await conn.query("SELECT GET_LOCK(?, 5) AS acquired", [lock]))[0]?.acquired) === 1;
           if (!acquired)
             throw new Error("La conversaci\xF3n tiene una operaci\xF3n en curso; reintenta la anonimizaci\xF3n.");
           try {
             await conn.query("START TRANSACTION");
             const values = anonymizedValues(userId);
-            const user = rows22(await conn.query("SELECT phone FROM `User` WHERE id = ? FOR UPDATE", [userId]))[0];
+            const user = rows23(await conn.query("SELECT phone FROM `User` WHERE id = ? FOR UPDATE", [userId]))[0];
             const [result] = await conn.query("UPDATE `User` SET name = ?, phone = ?, email = NULL, notes = NULL, deletedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role <> 'admin' AND deletedAt IS NULL", [values.name, values.phone, userId]);
             const changed = Number(result.affectedRows ?? 0) > 0;
             if (changed) {
@@ -98486,7 +102422,7 @@ function when3(value2) {
   return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeZone: "America/Guayaquil" }).format(date2);
 }
 function exportsView(input) {
-  const rows30 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
+  const rows31 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
     <td>${input.counts ? String(input.counts[d.key] ?? 0) : "\u2014"}</td>
     <td>${d.personal ? '<span class="error">datos personales</span>' : '<span class="muted">sin datos personales</span>'}</td>
     <td><a href="/admin/exports/${escapeHtml(d.key)}.csv">Descargar CSV</a></td></tr>`).join("");
@@ -98494,11 +102430,11 @@ function exportsView(input) {
   <div class="card"><h2>C\xF3mo usarlo</h2>
     <p class="muted">Cada archivo se abre en Excel o en Google Sheets. Guarda los respaldos en un lugar cifrado y b\xF3rralos cuando ya no los necesites: los archivos marcados contienen datos personales y su descarga queda en la auditor\xEDa.</p>
     <p class="muted">La descarga trae hasta 5.000 filas por archivo, las m\xE1s recientes primero.</p></div>
-  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows30}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows31}</tbody></table></div></div>`;
 }
 function dataRequestsView(input) {
   const tabs2 = STATUS_FILTERS.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/data-requests?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("");
-  const rows30 = input.items.map((r) => {
+  const rows31 = input.items.map((r) => {
     const left = daysLeft2(r.dueAt);
     const plazo = isOverdue(r) ? `<span class="error">vencido hace ${Math.abs(left)} d\xEDas</span>` : r.status === "atendida" || r.status === "rechazada" ? `<span class="muted">cerrado ${when3(r.resolvedAt)}</span>` : `<span class="${left <= 3 ? "error" : "muted"}">${left} d\xEDas</span>`;
     const actions = r.status === "recibida" || r.status === "en_proceso" ? `<a href="/admin/data-requests/${escapeHtml(r.id)}/export.json">Descargar sus datos</a>
@@ -98523,7 +102459,7 @@ function dataRequestsView(input) {
     <ul>${REQUEST_KINDS.map((k) => `<li><strong>${escapeHtml(k.label)}:</strong> ${escapeHtml(k.description)}</li>`).join("")}</ul>
     <p class="muted">Las solicitudes se abren desde la ficha del titular.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay solicitudes con ese filtro.</p>` : ""}
-  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows30}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows31}</tbody></table></div></div>`;
 }
 function userDataRequestsCard(userId, items, csrf) {
   const list7 = items.length ? `<ul>${items.map((r) => `<li>${escapeHtml(dataRequestCode(r.number))} \xB7 ${escapeHtml(kindLabel(r.kind))} \xB7 ${escapeHtml(REQUEST_STATUS_LABELS[r.status] ?? r.status)}${isOverdue(r) ? ' <span class="error">vencido</span>' : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin solicitudes de datos.</p>`;
@@ -98610,15 +102546,15 @@ function registerDataRoutes(app2, deps) {
     const dataset = DATASETS.find((d) => d.key === raw);
     if (!dataset)
       return errorPage(request, reply, session, "Respaldos", "Ese conjunto no existe.", 404);
-    let rows30;
+    let rows31;
     try {
-      rows30 = await data2.exportRows(dataset.key);
+      rows31 = await data2.exportRows(dataset.key);
     } catch (err) {
       const m = dbError2(err);
       return errorPage(request, reply, session, "Respaldos", m.text, m.status);
     }
-    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows30.length} filas${dataset.personal ? ", con datos personales" : ""})`);
-    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows30));
+    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows31.length} filas${dataset.personal ? ", con datos personales" : ""})`);
+    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows31));
   });
   app2.get("/data-requests", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -98802,7 +102738,7 @@ function contractView(input) {
   </div>`;
 }
 function catalogView(input) {
-  const rows30 = input.catalog.map((o) => {
+  const rows31 = input.catalog.map((o) => {
     const id2 = escapeHtml(o.key);
     const lim = (k) => o.limits[k] === void 0 ? "" : String(o.limits[k]);
     return `<div class="card"><h2>${escapeHtml(PROFILE_LABELS[o.profile])} \xB7 ${escapeHtml(o.name)}</h2>
@@ -98827,7 +102763,7 @@ function catalogView(input) {
   }).join("");
   return `<div class="stack wide"><h1>Cat\xE1logo y precios</h1>${billingTabs("catalogo")}${flashHtml4(input.flash)}
   <div class="card"><p class="muted">Los precios se guardan sin IVA y se muestran con IVA incluido (${escapeHtml(formatUsd(withIva(1)))} por cada US$ 1). Un cambio de precio vale para contratos nuevos y renovaciones; nunca cambia un per\xEDodo ya pagado. Un tope vac\xEDo significa sin tope.</p></div>
-  ${rows30}</div>`;
+  ${rows31}</div>`;
 }
 function accountsView(input) {
   const list7 = input.accounts.length ? `<div class="scroll"><table><thead><tr><th>Banco</th><th>Cuenta</th><th>Titular</th><th>Estado</th><th></th></tr></thead><tbody>${input.accounts.map((a) => `<tr><td>${escapeHtml(a.bank)}</td><td>${escapeHtml(a.accountType)} N\xB0 ${escapeHtml(a.number)}</td><td>${escapeHtml(a.holder)}<br><span class="muted">${escapeHtml(a.holderId)}</span></td>
@@ -98847,7 +102783,7 @@ function accountsView(input) {
 }
 function revenueView(input) {
   const r = input.report;
-  const rows30 = r.rows.map((x) => `<tr><td>SB-${escapeHtml(String(x.number).padStart(4, "0"))}</td><td>${escapeHtml(when4(x.verifiedAt))}</td><td>${escapeHtml(x.userName ?? "")}</td><td>${escapeHtml(planName(x.plan, input.catalog))}${x.period ? `<br><span class="muted">${escapeHtml(x.period)}</span>` : ""}</td>
+  const rows31 = r.rows.map((x) => `<tr><td>SB-${escapeHtml(String(x.number).padStart(4, "0"))}</td><td>${escapeHtml(when4(x.verifiedAt))}</td><td>${escapeHtml(x.userName ?? "")}</td><td>${escapeHtml(planName(x.plan, input.catalog))}${x.period ? `<br><span class="muted">${escapeHtml(x.period)}</span>` : ""}</td>
       <td>${escapeHtml(money4(x.subtotalUsd))}</td><td>${escapeHtml(money4(x.ivaUsd))}</td><td><strong>${escapeHtml(money4(x.amountUsd))}</strong></td><td>${escapeHtml(x.invoiceNumber ?? "\u2014")}</td></tr>`).join("");
   const [y, m] = r.month.split("-").map(Number);
   const prev = `${m === 1 ? y - 1 : y}-${String(m === 1 ? 12 : m - 1).padStart(2, "0")}`;
@@ -98860,7 +102796,7 @@ function revenueView(input) {
     <div class="card"><h2>Por verificar</h2><div class="big">${escapeHtml(String(r.toVerify))}</div><p class="muted">pagos informados \xB7 <a href="/admin/plans?f=pendiente">ver</a></p></div>
     <div class="card"><h2>Sin renovar</h2><div class="big">${escapeHtml(String(r.lapsed))}</div><p class="muted">planes que vencieron este mes</p></div>
   </div>
-  ${r.rows.length ? `<div class="scroll"><table><thead><tr><th>Contrato</th><th>Verificado</th><th>Cliente</th><th>Plan</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Factura</th></tr></thead><tbody>${rows30}</tbody></table></div>` : `<p class="muted">No hay pagos verificados en este mes.</p>`}
+  ${r.rows.length ? `<div class="scroll"><table><thead><tr><th>Contrato</th><th>Verificado</th><th>Cliente</th><th>Plan</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Factura</th></tr></thead><tbody>${rows31}</tbody></table></div>` : `<p class="muted">No hay pagos verificados en este mes.</p>`}
   </div>`;
 }
 var flashHtml4, csrfField4, money4, statusLabel;
@@ -98894,7 +102830,7 @@ function planBadge(plan, endsAt) {
 function plansListView(input) {
   const catalog = input.catalog ?? DEFAULT_OFFERS;
   const tabs2 = FILTERS3.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/plans?f=${escapeHtml(key)}">${escapeHtml(label2)}${key === "pendiente" && input.pending > 0 ? ` (${input.pending})` : ""}</a>`).join("");
-  const rows30 = input.items.map((s) => {
+  const rows31 = input.items.map((s) => {
     const left = daysLeft(s.endsAt);
     const vigencia = s.status === "activa" ? s.endsAt ? `${when5(s.startsAt)} \u2192 ${when5(s.endsAt)}<br><span class="${left !== null && left <= 7 ? "error" : "muted"}">${left} d\xEDas</span>` : `desde ${when5(s.startsAt)}<br><span class="muted">sin vencimiento</span>` : `<span class="muted">${when5(s.createdAt)}</span>`;
     const acciones = input.canDecide && (s.status === "pendiente" || s.status === "solicitada") ? `<form method="post" action="/admin/subscriptions/${escapeHtml(s.id)}/verify">${csrfField5(input.csrf)}
@@ -98919,7 +102855,7 @@ function plansListView(input) {
     <p class="muted">Premium habilita: ${Object.values(FEATURE_LABELS).slice(2).map((f) => escapeHtml(f)).join(" \xB7 ")}.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay suscripciones con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Titular</th><th>Plan</th><th>Pago</th><th>Vigencia</th><th>Acciones</th></tr></thead>
-  <tbody>${rows30}</tbody></table></div></div>`;
+  <tbody>${rows31}</tbody></table></div></div>`;
 }
 function userPlanCard(userId, subs, csrf, canRegister, role = "dueno", usage = {}) {
   const plan = effectivePlan(subs);
@@ -99146,8 +103082,8 @@ var init_plans2 = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/billing-store.js
-import { randomUUID as randomUUID19 } from "node:crypto";
-function rowsOf(result) {
+import { randomUUID as randomUUID20 } from "node:crypto";
+function rowsOf2(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -99213,7 +103149,7 @@ var init_billing_store = __esm({
         });
       }
       accounts() {
-        return this.run(async (conn) => rowsOf(await conn.query("SELECT id, bank, accountType, number, holder, holderId, active FROM `PaymentAccount` ORDER BY active DESC, createdAt")).map((r) => ({
+        return this.run(async (conn) => rowsOf2(await conn.query("SELECT id, bank, accountType, number, holder, holderId, active FROM `PaymentAccount` ORDER BY active DESC, createdAt")).map((r) => ({
           id: String(r.id),
           bank: String(r.bank),
           accountType: String(r.accountType),
@@ -99225,7 +103161,7 @@ var init_billing_store = __esm({
       }
       addAccount(input, by) {
         return this.run(async (conn) => {
-          const id2 = randomUUID19();
+          const id2 = randomUUID20();
           await conn.query("INSERT INTO `PaymentAccount` (id, bank, accountType, number, holder, holderId, active, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, TRUE, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, input.bank, input.accountType, input.number, input.holder, input.holderId, by]);
           return id2;
         });
@@ -99238,7 +103174,7 @@ var init_billing_store = __esm({
       }
       contract(id2) {
         return this.run(async (conn) => {
-          const [r] = rowsOf(await conn.query("SELECT s.*, s.expiresAt AS endsAt, u.name AS userName, u.role AS userRole, u.phone AS userPhone FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.id = ? LIMIT 1", [id2]));
+          const [r] = rowsOf2(await conn.query("SELECT s.*, s.expiresAt AS endsAt, u.name AS userName, u.role AS userRole, u.phone AS userPhone FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.id = ? LIMIT 1", [id2]));
           if (!r)
             return null;
           return {
@@ -99281,7 +103217,7 @@ var init_billing_store = __esm({
         if (!range)
           return Promise.reject(new Error("INVALID_MONTH"));
         return this.run(async (conn) => {
-          const list7 = rowsOf(await conn.query("SELECT s.`number`, u.name AS userName, s.plan, s.period, s.subtotalUsd, s.ivaUsd, s.amountUsd, s.reference, s.invoiceNumber, s.verifiedAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.verifiedAt >= ? AND s.verifiedAt < ? AND s.status IN ('activa','vencida','cancelada') AND COALESCE(s.amountUsd, 0) > 0 ORDER BY s.verifiedAt", [range.from, range.to])).map((r) => {
+          const list7 = rowsOf2(await conn.query("SELECT s.`number`, u.name AS userName, s.plan, s.period, s.subtotalUsd, s.ivaUsd, s.amountUsd, s.reference, s.invoiceNumber, s.verifiedAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.verifiedAt >= ? AND s.verifiedAt < ? AND s.status IN ('activa','vencida','cancelada') AND COALESCE(s.amountUsd, 0) > 0 ORDER BY s.verifiedAt", [range.from, range.to])).map((r) => {
             const total = Number(r.amountUsd ?? 0);
             const subtotal = r.subtotalUsd === null || r.subtotalUsd === void 0 ? Math.round(total / 1.15 * 100) / 100 : Number(r.subtotalUsd);
             const iva = r.ivaUsd === null || r.ivaUsd === void 0 ? Math.round((total - subtotal) * 100) / 100 : Number(r.ivaUsd);
@@ -99299,7 +103235,7 @@ var init_billing_store = __esm({
             };
           });
           const sum = (key) => Math.round(list7.reduce((acc, r) => acc + r[key], 0) * 100) / 100;
-          const count3 = async (sql, args = []) => Number(rowsOf(await conn.query(sql, args))[0]?.n ?? 0);
+          const count3 = async (sql, args = []) => Number(rowsOf2(await conn.query(sql, args))[0]?.n ?? 0);
           const requested = await count3("SELECT COUNT(*) AS n FROM `Subscription` WHERE status = 'solicitada'");
           const toVerify = await count3("SELECT COUNT(*) AS n FROM `Subscription` WHERE status = 'pendiente'");
           const lapsed = await count3("SELECT COUNT(*) AS n FROM `Subscription` s WHERE s.expiresAt >= ? AND s.expiresAt < ? AND s.expiresAt <= UTC_TIMESTAMP(3) AND s.status IN ('activa','vencida') AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND n.status = 'activa' AND (n.expiresAt IS NULL OR n.expiresAt > s.expiresAt))", [range.from, range.to]);
@@ -99308,12 +103244,12 @@ var init_billing_store = __esm({
       }
       notify(userId, dedupKey, message2) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID19(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID20(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
         });
       }
       instructions(id2) {
         return this.run(async (conn) => {
-          const [sub] = rowsOf(await conn.query("SELECT * FROM `Subscription` WHERE id = ?", [id2]));
+          const [sub] = rowsOf2(await conn.query("SELECT * FROM `Subscription` WHERE id = ?", [id2]));
           if (!sub)
             return null;
           return paymentInstructions(conn, sub, await loadCatalog(conn));
@@ -99840,9 +103776,9 @@ function registerServiceRequestRoutes(app2, deps) {
     const query = request.query ?? {};
     const filter = FILTERS6.includes(String(query.f)) ? String(query.f) : "abiertas";
     const raw = Number(query.page ?? 1);
-    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    const page2 = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
-      const listado = await store.list(filter, page);
+      const listado = await store.list(filter, page2);
       return deps.html(reply, request, "Solicitudes de especialista", serviceRequestsListView({ filter, items: listado.items }), session);
     } catch (err) {
       const m = dbError2(err);
@@ -100043,7 +103979,7 @@ var init_service_requests = __esm({
 });
 
 // packages/api/dist/infrastructure/service-requests/service-request-store.js
-function rows23(result) {
+function rows24(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -100124,7 +104060,7 @@ var init_service_request_store = __esm({
       }
       candidates(city) {
         const base = "SELECT sh.id, sh.name, sh.city, sh.zone, sh.specialties, sh.ratingAvg FROM `Shop` sh WHERE sh.verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(sh.city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows23(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows24(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY sh.name LIMIT 100`, [city.trim(), city.trim()]);
@@ -100139,9 +104075,9 @@ var init_service_request_store = __esm({
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows23(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows24(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
-          const next = rows23(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
+          const next = rows24(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
           await conn.query("INSERT INTO `ServiceRequest` (id, `number`, ownerId, vehicleId, category, description, city, zone, status, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'abierta', ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, Number(next?.n ?? 1), input.ownerId, input.vehicleId, input.category, input.description, input.city, input.zone, input.createdBy]);
           for (const shopId of input.shopIds) {
             await conn.query("INSERT INTO `ServiceOffer` (id, requestId, shopId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id2, shopId]);
@@ -100149,8 +104085,8 @@ var init_service_request_store = __esm({
           return id2;
         });
       }
-      list(filter, page) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE6;
+      list(filter, page2) {
+        const offset2 = (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE6;
         return this.run(async (conn) => {
           let where = "";
           if (filter === "abiertas")
@@ -100159,21 +104095,21 @@ var init_service_request_store = __esm({
             where = "WHERE r.status = 'abierta' AND (SELECT COUNT(*) FROM `ServiceOffer` o WHERE o.requestId = r.id AND o.status = 'ofertado') = 0";
           else if (filter === "cerradas")
             where = "WHERE r.status IN ('cerrada', 'cancelada')";
-          const items = rows23(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`)).map(toRequest2);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE6 };
+          const items = rows24(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`)).map(toRequest2);
+          return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE6 };
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows23(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows24(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
           if (!row)
             return null;
-          const offers = rows23(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id2])).map(toOffer);
+          const offers = rows24(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id2])).map(toOffer);
           return { request: toRequest2(row), offers };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows23(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
+        return this.run(async (conn) => rows24(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
       }
       saveOffer(requestId, offerId, response) {
         return this.run(async (conn) => {
@@ -100203,7 +104139,7 @@ var init_service_request_store = __esm({
 });
 
 // packages/api/dist/infrastructure/ratings/rating-store.js
-function rows24(result) {
+function rows25(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -100249,7 +104185,7 @@ var init_rating_store = __esm({
       }
       add(input) {
         return this.run(async (conn) => {
-          const created = rows24(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows25(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [id2, input.fromId, input.toId, input.score, input.comment, input.kind, input.workOrderId, input.quoteRequestId]);
           await this.refresh(conn, input.toId);
@@ -100258,23 +104194,23 @@ var init_rating_store = __esm({
       }
       forUser(userId, limit = 20) {
         const cap = Math.min(Math.max(1, Math.floor(limit)), 100);
-        return this.run(async (conn) => rows24(await conn.query(`${SELECT2} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow));
+        return this.run(async (conn) => rows25(await conn.query(`${SELECT2} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow));
       }
       forWorkOrder(workOrderId) {
         return this.run(async (conn) => {
-          const row = rows24(await conn.query(`${SELECT2} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
+          const row = rows25(await conn.query(`${SELECT2} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
           return row ? toRow(row) : null;
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows24(await conn.query(`${SELECT2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows25(await conn.query(`${SELECT2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
           return row ? toRow(row) : null;
         });
       }
       hide(id2, reason, hiddenBy) {
         return this.run(async (conn) => {
-          const row = rows24(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
+          const row = rows25(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
           if (!row)
             return false;
           const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = CURRENT_TIMESTAMP(3), hiddenBy = ?, hiddenReason = ? WHERE id = ? AND hiddenAt IS NULL", [hiddenBy, reason, id2]);
@@ -100286,7 +104222,7 @@ var init_rating_store = __esm({
       }
       show(id2) {
         return this.run(async (conn) => {
-          const row = rows24(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
+          const row = rows25(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
           if (!row)
             return false;
           const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = NULL, hiddenBy = NULL, hiddenReason = NULL WHERE id = ? AND hiddenAt IS NOT NULL", [id2]);
@@ -100301,7 +104237,7 @@ var init_rating_store = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/plan-store.js
-function rows25(result) {
+function rows26(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -100357,9 +104293,9 @@ var init_plan_store = __esm({
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows25(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows26(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
-          const next = rows25(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
+          const next = rows26(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
           await conn.query(
             // `active` se mantiene en falso mientras el pago no esté verificado, para que cualquier
             // lectura antigua de esa columna vea lo mismo que el estado nuevo.
@@ -100369,8 +104305,8 @@ var init_plan_store = __esm({
           return id2;
         });
       }
-      list(filter, page, soonDays = 7) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE7;
+      list(filter, page2, soonDays = 7) {
+        const offset2 = (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE7;
         return this.run(async (conn) => {
           let where = "";
           const params2 = [];
@@ -100385,25 +104321,25 @@ var init_plan_store = __esm({
             params2.push(Math.max(1, Math.floor(soonDays)));
           } else if (filter === "vencida")
             where = "WHERE s.status = 'vencida' OR (s.status = 'activa' AND s.expiresAt IS NOT NULL AND s.expiresAt <= UTC_TIMESTAMP(3))";
-          const items = rows25(await conn.query(`${SELECT3} ${where} ORDER BY s.status = 'pendiente' DESC, s.status = 'solicitada' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`, params2)).map(toRow2);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE7 };
+          const items = rows26(await conn.query(`${SELECT3} ${where} ORDER BY s.status = 'pendiente' DESC, s.status = 'solicitada' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`, params2)).map(toRow2);
+          return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE7 };
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows25(await conn.query(`${SELECT3} WHERE s.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows26(await conn.query(`${SELECT3} WHERE s.id = ? LIMIT 1`, [id2]))[0];
           return row ? toRow2(row) : null;
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows25(await conn.query(`${SELECT3} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
+        return this.run(async (conn) => rows26(await conn.query(`${SELECT3} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
       }
       verify(id2, months, verifiedBy) {
         return this.run(async (conn) => {
-          const [self2] = rows25(await conn.query("SELECT userId, plan FROM `Subscription` WHERE id = ? AND status IN ('pendiente','solicitada')", [id2]));
+          const [self2] = rows26(await conn.query("SELECT userId, plan FROM `Subscription` WHERE id = ? AND status IN ('pendiente','solicitada')", [id2]));
           if (!self2)
             return false;
-          const [running] = rows25(await conn.query("SELECT MAX(expiresAt) AS until FROM `Subscription` WHERE userId = ? AND plan = ? AND id <> ? AND status = 'activa' AND expiresAt > UTC_TIMESTAMP(3)", [self2.userId, self2.plan, id2]));
+          const [running] = rows26(await conn.query("SELECT MAX(expiresAt) AS until FROM `Subscription` WHERE userId = ? AND plan = ? AND id <> ? AND status = 'activa' AND expiresAt > UTC_TIMESTAMP(3)", [self2.userId, self2.plan, id2]));
           const from = running?.until ? "?" : "CURRENT_TIMESTAMP(3)";
           const fromParams = running?.until ? [running.until] : [];
           const vence = months === null ? "NULL" : `DATE_ADD(${from}, INTERVAL ? MONTH)`;
@@ -100432,7 +104368,7 @@ var init_plan_store = __esm({
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const row = rows25(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status IN ('pendiente','solicitada')"))[0];
+          const row = rows26(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status IN ('pendiente','solicitada')"))[0];
           return Number(row?.n ?? 0);
         });
       }
@@ -100440,7 +104376,7 @@ var init_plan_store = __esm({
         return this.run(async (conn) => {
           const cuenta = async (sql, params2) => {
             try {
-              const row = rows25(await conn.query(sql, params2))[0];
+              const row = rows26(await conn.query(sql, params2))[0];
               return Number(row?.n ?? 0);
             } catch {
               return 0;
@@ -100458,7 +104394,7 @@ var init_plan_store = __esm({
       }
       planForUser(userId) {
         return this.run(async (conn) => {
-          const list7 = rows25(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
+          const list7 = rows26(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
             plan: String(r.plan),
             status: String(r.status),
             startsAt: r.startsAt,
@@ -100472,7 +104408,7 @@ var init_plan_store = __esm({
 });
 
 // packages/api/dist/infrastructure/relations/relation-store.js
-function rows26(result) {
+function rows27(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -100553,15 +104489,15 @@ var init_relation_store = __esm({
         }
       }
       async nextNumber(conn, table) {
-        const row = rows26(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
+        const row = rows27(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
         return Number(row?.n ?? 1);
       }
       ensureForOrigin(input) {
         return this.run(async (conn) => {
-          const existing = rows26(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
+          const existing = rows27(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
           if (existing)
             return String(existing.id);
-          const created = rows26(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows27(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           const number = await this.nextNumber(conn, "Relationship");
           await conn.query("INSERT INTO `Relationship` (id, `number`, kind, status, channel, originType, originId, subject, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, 'activa', 'mediado', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, number, input.kind, input.originType, input.originId, input.subject, input.createdBy]);
@@ -100571,8 +104507,8 @@ var init_relation_store = __esm({
           return id2;
         });
       }
-      list(filter, page, waitingHours2 = 24) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE8;
+      list(filter, page2, waitingHours2 = 24) {
+        const offset2 = (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE8;
         return this.run(async (conn) => {
           let where = "";
           const params2 = [];
@@ -100587,16 +104523,16 @@ var init_relation_store = __esm({
           } else if (filter === "cerradas") {
             where = "WHERE r.status IN ('cerrada', 'bloqueada')";
           }
-          const items = rows26(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`, params2)).map(toRelation);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE8 };
+          const items = rows27(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`, params2)).map(toRelation);
+          return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE8 };
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows26(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows27(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id2]))[0];
           if (!row)
             return null;
-          const parties = rows26(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id2])).map((p) => ({
+          const parties = rows27(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id2])).map((p) => ({
             id: String(p.id),
             userId: String(p.userId),
             role: String(p.role),
@@ -100606,7 +104542,7 @@ var init_relation_store = __esm({
             consentAt: p.consentAt ?? null,
             mutedAt: p.mutedAt ?? null
           }));
-          const messages = rows26(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id2])).map((m) => ({
+          const messages = rows27(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id2])).map((m) => ({
             id: String(m.id),
             fromUserId: str5(m.fromUserId),
             toUserId: str5(m.toUserId),
@@ -100618,16 +104554,16 @@ var init_relation_store = __esm({
             flagged: bool(m.flagged),
             createdAt: m.createdAt
           }));
-          const disputes = rows26(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id2])).map(toDispute);
+          const disputes = rows27(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id2])).map(toDispute);
           return { relation: toRelation(row), parties, messages, disputes };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows26(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
+        return this.run(async (conn) => rows27(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
       }
       addMessage(input) {
         return this.run(async (conn) => {
-          const created = rows26(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows27(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           await conn.query(`INSERT INTO \`RelationshipMessage\` (id, relationshipId, fromUserId, toUserId, body, kind, relayedAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ${input.relayed ? "CURRENT_TIMESTAMP(3)" : "NULL"}, ?, CURRENT_TIMESTAMP(3))`, [id2, input.relationshipId, input.fromUserId, input.toUserId, input.body, input.kind, input.createdBy]);
           await conn.query("UPDATE `Relationship` SET lastMessageAt = CURRENT_TIMESTAMP(3), waitingSince = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.toUserId ? /* @__PURE__ */ new Date() : null, input.relationshipId]);
@@ -100658,7 +104594,7 @@ var init_relation_store = __esm({
       }
       openDispute(input) {
         return this.run(async (conn) => {
-          const created = rows26(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows27(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           const number = await this.nextNumber(conn, "Dispute");
           await conn.query("INSERT INTO `Dispute` (id, `number`, relationshipId, openedBy, claimantUserId, againstUserId, reason, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, number, input.relationshipId, input.openedBy, input.claimantUserId, input.againstUserId, input.reason]);
@@ -100668,18 +104604,18 @@ var init_relation_store = __esm({
           return id2;
         });
       }
-      listDisputes(status, page) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE8;
+      listDisputes(status, page2) {
+        const offset2 = (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE8;
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params2 = status === "todas" ? [] : [status];
-          const items = rows26(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`, params2)).map(toDispute);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE8 };
+          const items = rows27(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`, params2)).map(toDispute);
+          return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE8 };
         });
       }
       getDispute(id2) {
         return this.run(async (conn) => {
-          const row = rows26(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id2]))[0];
+          const row = rows27(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id2]))[0];
           return row ? toDispute(row) : null;
         });
       }
@@ -100695,21 +104631,21 @@ var init_relation_store = __esm({
       }
       addSanction(input) {
         return this.run(async (conn) => {
-          const created = rows26(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows27(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           await conn.query("INSERT INTO `Sanction` (id, userId, level, reason, relationshipId, disputeId, startsAt, endsAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3), ?, ?, CURRENT_TIMESTAMP(3))", [id2, input.userId, input.level, input.reason, input.relationshipId, input.disputeId, input.endsAt, input.createdBy]);
           return id2;
         });
       }
-      listSanctions(page) {
-        const offset2 = (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE8;
+      listSanctions(page2) {
+        const offset2 = (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE8;
         return this.run(async (conn) => {
-          const items = rows26(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`)).map(toSanction);
-          return { items, page: Math.max(1, Math.floor(page)), pageSize: PAGE_SIZE8 };
+          const items = rows27(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`)).map(toSanction);
+          return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE8 };
         });
       }
       sanctionsForUser(userId) {
-        return this.run(async (conn) => rows26(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
+        return this.run(async (conn) => rows27(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
       }
       liftSanction(id2, reason, liftedBy) {
         return this.run(async (conn) => {
@@ -100718,7 +104654,7 @@ var init_relation_store = __esm({
         });
       }
       searchBlockedUserIds() {
-        return this.run(async (conn) => rows26(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
+        return this.run(async (conn) => rows27(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
       }
     };
   }
@@ -101264,7 +105200,7 @@ var init_settings = __esm({
 });
 
 // packages/api/dist/interfaces/admin/local-agent.js
-import { createHash as createHash9, randomBytes as randomBytes15 } from "node:crypto";
+import { createHash as createHash10, randomBytes as randomBytes18 } from "node:crypto";
 function registerLocalAgentAdminRoutes(app2, deps) {
   function render(request, reply, session, input = {}) {
     reply.header("Cache-Control", "no-store").header("Pragma", "no-cache").header("Referrer-Policy", "no-referrer");
@@ -101324,8 +105260,8 @@ function registerLocalAgentAdminRoutes(app2, deps) {
         recordLoginAttempt(account.email, request.ip, false);
         return render(request, reply, session, { message: "La contrase\xF1a actual no es correcta.", status: 400 });
       }
-      const token2 = action === "rotate" ? randomBytes15(32).toString("base64url") : void 0;
-      const value2 = JSON.stringify({ enabled: action === "rotate", tokenHash: token2 ? createHash9("sha256").update(token2).digest("hex") : null });
+      const token2 = action === "rotate" ? randomBytes18(32).toString("base64url") : void 0;
+      const value2 = JSON.stringify({ enabled: action === "rotate", tokenHash: token2 ? createHash10("sha256").update(token2).digest("hex") : null });
       try {
         await deps.settings.set(LOCAL_AGENT_CONFIG_KEY2, value2, account.id);
       } catch {
@@ -101378,14 +105314,14 @@ function registerWhatsAppQueueRoutes(app2, deps) {
     }
     const flash = request.query?.ok === "1" ? `<p class="ok">Aviso puesto de nuevo en la cola.</p>` : "";
     const counts = Object.entries(LABELS2).map(([k, label2]) => `<li>${escapeHtml(label2)}: <strong>${data2.counts[k] ?? 0}</strong></li>`).join("");
-    const rows30 = data2.attention.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when7(r.nextAttemptAt))}`}</td></tr>`).join("");
+    const rows31 = data2.attention.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when7(r.nextAttemptAt))}`}</td></tr>`).join("");
     const inbound = data2.inboundDead.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>\u2026${escapeHtml(String(r.phoneEnd))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td></tr>`).join("");
     const alertLabels = { outbox_dead: "Mensajes salientes fallidos", inbound_dead: "Mensajes entrantes fallidos", reminders_failed: "Ciclo de recordatorios", database_not_ready: "Base de datos" };
     const alerts = (data2.lastAlerts ?? []).map((r) => `<li>${escapeHtml(alertLabels[String(r.type)] ?? String(r.type))}: ${escapeHtml(when7(r.sentAt))}</li>`).join("");
     const body = `<div class="stack"><h1>Cola de WhatsApp</h1>${flash}
       <p>Canal activo: <strong>${escapeHtml({ off: "ninguno (no se env\xEDa nada)", bridge: "puente WhatsApp Web del equipo local", cloud: "API oficial de WhatsApp" }[whatsappDelivery()])}</strong>. Aqu\xED no se muestra el texto de los mensajes.</p>
       <div class="card"><h2>Avisos</h2><ul>${counts}</ul><h3>\xDAltima alerta enviada por tipo</h3>${alerts ? `<ul>${alerts}</ul>` : "<p>Ninguna alerta enviada.</p>"}</div>
-      <div class="card"><h2>Necesitan atenci\xF3n</h2>${rows30 ? `<table><thead><tr><th>Creado</th><th>Para</th><th>Tipo</th><th>Estado</th><th>Intentos</th><th>\xDAltimo error</th><th></th></tr></thead><tbody>${rows30}</tbody></table>` : "<p>Nada pendiente de revisi\xF3n.</p>"}
+      <div class="card"><h2>Necesitan atenci\xF3n</h2>${rows31 ? `<table><thead><tr><th>Creado</th><th>Para</th><th>Tipo</th><th>Estado</th><th>Intentos</th><th>\xDAltimo error</th><th></th></tr></thead><tbody>${rows31}</tbody></table>` : "<p>Nada pendiente de revisi\xF3n.</p>"}
       <p class="muted">TEMPLATE_REQUIRED: la API oficial necesita una plantilla aprobada porque pasaron m\xE1s de 24 horas desde el \xFAltimo mensaje del contacto. PACING: el puente esper\xF3 por el ritmo humano. CHAT_NOT_AVAILABLE: WhatsApp Web no abri\xF3 el chat de ese n\xFAmero.</p></div>
       <div class="card"><h2>Mensajes entrantes sin procesar</h2>${inbound ? `<table><thead><tr><th>Recibido</th><th>Tel\xE9fono</th><th>Intentos</th><th>\xDAltimo error</th></tr></thead><tbody>${inbound}</tbody></table>` : "<p>Ninguno.</p>"}</div></div>`;
     return deps.html(reply, request, "WhatsApp", body, session);
@@ -101422,24 +105358,24 @@ var init_whatsapp_queue = __esm({
 // packages/api/dist/interfaces/admin/views-appointments.js
 function statusPill(status) {
   const tone = STATUS_TONES[status] ?? "off";
-  return `<span class="pill"><span class="led ${tone}"></span>${e3(statusLabel2(status))}</span>`;
+  return `<span class="pill"><span class="led ${tone}"></span>${e4(statusLabel2(status))}</span>`;
 }
 function chatLink(phone, label2) {
   const raw = String(phone ?? "");
   const digits = raw.replace(/\D/g, "");
   if (!raw.startsWith("+") || digits.length < 8)
     return "";
-  return `<a href="https://wa.me/${e3(digits)}" target="_blank" rel="noopener">${e3(label2)} (${e3(formatWhatsappNumber(digits))})</a>`;
+  return `<a href="https://wa.me/${e4(digits)}" target="_blank" rel="noopener">${e4(label2)} (${e4(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox(id2, label2, content, rows30 = 8) {
-  return `<label for="${id2}">${e3(label2)}</label><textarea id="${id2}" readonly rows="${rows30}">${e3(content)}</textarea>`;
+function copyBox(id2, label2, content, rows31 = 8) {
+  return `<label for="${id2}">${e4(label2)}</label><textarea id="${id2}" readonly rows="${rows31}">${e4(content)}</textarea>`;
 }
 function appointmentsListView(input) {
-  const tabs2 = FILTERS7.map(([id2, label2]) => `<a href="/admin/appointments?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e3(label2)}</a>`).join("");
+  const tabs2 = FILTERS7.map(([id2, label2]) => `<a href="/admin/appointments?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e4(label2)}</a>`).join("");
   const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin turnos</td></tr>` : input.page.items.map((a) => {
     const code3 = appointmentCode(a.id);
-    return `<tr><td><a href="/admin/appointments/${e3(a.id)}"><span class="mono">${e3(formatEcDateTime(a.scheduledAt))}</span></a><div class="muted mono">${e3(code3)}</div></td><td>${statusPill(a.status)}</td>
-            <td>${e3(a.shopName)}</td><td><a href="/admin/users/${e3(a.ownerId)}">${e3(a.ownerName)}</a></td><td>${e3(a.vehicleLabel)}${a.plate ? ` \xB7 <span class="mono">${e3(a.plate)}</span>` : ""}</td><td>${e3(servicesLabel(a))}</td></tr>`;
+    return `<tr><td><a href="/admin/appointments/${e4(a.id)}"><span class="mono">${e4(formatEcDateTime(a.scheduledAt))}</span></a><div class="muted mono">${e4(code3)}</div></td><td>${statusPill(a.status)}</td>
+            <td>${e4(a.shopName)}</td><td><a href="/admin/users/${e4(a.ownerId)}">${e4(a.ownerName)}</a></td><td>${e4(a.vehicleLabel)}${a.plate ? ` \xB7 <span class="mono">${e4(a.plate)}</span>` : ""}</td><td>${e4(servicesLabel(a))}</td></tr>`;
   }).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/appointments?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
@@ -101453,69 +105389,69 @@ function appointmentDetailView(input) {
   const transitions = ALLOWED_TRANSITIONS[a.status] ?? [];
   const actions = [];
   if (transitions.includes("confirmed")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e3(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
+    actions.push(`<form method="post" action="/admin/appointments/${e4(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="confirmed"><button type="submit">Confirmar turno</button></form>`);
   }
   if (transitions.includes("completed")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e3(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
+    actions.push(`<form method="post" action="/admin/appointments/${e4(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="completed"><button type="submit">Marcar como completado</button></form>`);
   }
   if (transitions.includes("cancelled")) {
-    actions.push(`<form method="post" action="/admin/appointments/${e3(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="cancelled">
+    actions.push(`<form method="post" action="/admin/appointments/${e4(a.id)}/status">${csrfField7(input.csrf)}<input type="hidden" name="status" value="cancelled">
       <label for="reason">Motivo de la cancelaci\xF3n</label><input id="reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cancelar turno</button></form>`);
   }
   const shopMessage = a.status === "pending" ? copyBox("msg-shop", "Mensaje para el taller", shopRequestMessage(a)) : "";
   const code3 = appointmentCode(a.id);
   return `<div class="stack wide"><p><a href="/admin/appointments">\u2190 Turnos</a></p>
-  <h1>Turno \xB7 <span class="mono">${e3(code3)}</span> \xB7 <span class="mono">${e3(formatEcDateTime(a.scheduledAt))}</span></h1>${flashHtml7(input.flash)}
+  <h1>Turno \xB7 <span class="mono">${e4(code3)}</span> \xB7 <span class="mono">${e4(formatEcDateTime(a.scheduledAt))}</span></h1>${flashHtml7(input.flash)}
   <div class="card"><h2>Resumen</h2>
-    <div>Estado: ${statusPill(a.status)}${a.cancelReason ? ` \xB7 ${e3(a.cancelReason)}` : ""}</div>
-    <div>Taller: <strong>${e3(a.shopName)}</strong> \xB7 ${e3(a.shopAddress)}, ${e3(a.shopCity)}</div>
-    <div>Due\xF1o: <a href="/admin/users/${e3(a.ownerId)}">${e3(a.ownerName)}</a></div>
-    <div>Veh\xEDculo: ${e3(a.vehicleLabel)}${a.plate ? ` \xB7 <span class="mono">${e3(a.plate)}</span>` : ""}</div>
-    <div>Servicios: ${e3(servicesLabel(a))}</div>
-    ${a.notes ? `<div>Notas: ${e3(a.notes)}</div>` : ""}
+    <div>Estado: ${statusPill(a.status)}${a.cancelReason ? ` \xB7 ${e4(a.cancelReason)}` : ""}</div>
+    <div>Taller: <strong>${e4(a.shopName)}</strong> \xB7 ${e4(a.shopAddress)}, ${e4(a.shopCity)}</div>
+    <div>Due\xF1o: <a href="/admin/users/${e4(a.ownerId)}">${e4(a.ownerName)}</a></div>
+    <div>Veh\xEDculo: ${e4(a.vehicleLabel)}${a.plate ? ` \xB7 <span class="mono">${e4(a.plate)}</span>` : ""}</div>
+    <div>Servicios: ${e4(servicesLabel(a))}</div>
+    ${a.notes ? `<div>Notas: ${e4(a.notes)}</div>` : ""}
   </div>
   <div class="card"><h2>Mensajes para enviar por WhatsApp</h2>
     ${shopMessage}
     ${copyBox("msg-owner", "Mensaje para el due\xF1o", ownerMessage(a))}
     <p class="row">${chatLink(a.shopPhone, "Abrir chat del taller")} ${chatLink(a.ownerPhone, "Abrir chat del due\xF1o")}</p>
   </div>
-  ${input.workOrderId ? `<div class="card"><h2>Orden de trabajo</h2><a class="button" href="/admin/work-orders/${e3(input.workOrderId)}">Ver orden de trabajo</a></div>` : a.status === "confirmed" || a.status === "pending" ? `<div class="card"><h2>Orden de trabajo</h2><p class="muted">Cuando el veh\xEDculo llegue al taller, registra la recepci\xF3n.</p><a class="button" href="/admin/work-orders/new?appointmentId=${e3(a.id)}">Abrir orden de trabajo</a></div>` : ""}
+  ${input.workOrderId ? `<div class="card"><h2>Orden de trabajo</h2><a class="button" href="/admin/work-orders/${e4(input.workOrderId)}">Ver orden de trabajo</a></div>` : a.status === "confirmed" || a.status === "pending" ? `<div class="card"><h2>Orden de trabajo</h2><p class="muted">Cuando el veh\xEDculo llegue al taller, registra la recepci\xF3n.</p><a class="button" href="/admin/work-orders/new?appointmentId=${e4(a.id)}">Abrir orden de trabajo</a></div>` : ""}
   ${actions.length > 0 ? `<div class="card"><h2>Cambiar estado</h2>${actions.join("")}</div>` : ""}
   </div>`;
 }
 function scheduleView(input) {
-  const ownerId = e3(input.owner.id);
-  const vehicleId = e3(input.vehicle.id);
+  const ownerId = e4(input.owner.id);
+  const vehicleId = e4(input.vehicle.id);
   const values = input.values ?? {};
-  const vehicleTabs = input.vehicles.length > 1 ? `<div class="tabs">${input.vehicles.map((v) => `<a href="/admin/users/${ownerId}/schedule?vehicleId=${e3(v.id)}"${String(v.id) === String(input.vehicle.id) ? ' class="active"' : ""}>${e3(v.make)} ${e3(v.model)}</a>`).join("")}</div>` : "";
+  const vehicleTabs = input.vehicles.length > 1 ? `<div class="tabs">${input.vehicles.map((v) => `<a href="/admin/users/${ownerId}/schedule?vehicleId=${e4(v.id)}"${String(v.id) === String(input.vehicle.id) ? ' class="active"' : ""}>${e4(v.make)} ${e4(v.model)}</a>`).join("")}</div>` : "";
   const defaults = input.items.filter((i) => i.status !== "al_dia").map((i) => i.serviceId);
   const checked = input.selected.length > 0 ? input.selected : defaults;
-  const itemChecks = input.items.length === 0 ? `<p class="muted">Este veh\xEDculo no tiene plan (faltan clase o combustible).</p>` : `<div class="checks">${input.items.map((i) => `<label><input type="checkbox" name="services" value="${e3(i.serviceId)}"${checked.includes(i.serviceId) ? " checked" : ""}> ${e3(i.serviceName)} <span class="muted">\xB7 <span class="led ${PLAN_TONES[i.status] ?? "off"}"></span>${e3(PLAN_STATUS[i.status] ?? i.status)}</span></label>`).join("")}</div>`;
+  const itemChecks = input.items.length === 0 ? `<p class="muted">Este veh\xEDculo no tiene plan (faltan clase o combustible).</p>` : `<div class="checks">${input.items.map((i) => `<label><input type="checkbox" name="services" value="${e4(i.serviceId)}"${checked.includes(i.serviceId) ? " checked" : ""}> ${e4(i.serviceName)} <span class="muted">\xB7 <span class="led ${PLAN_TONES[i.status] ?? "off"}"></span>${e4(PLAN_STATUS[i.status] ?? i.status)}</span></label>`).join("")}</div>`;
   let results = "";
   if (input.shops !== null) {
     const summary = copyBox("msg-selection", "Resumen de servicios para el due\xF1o", selectionSummary(input.selected), 6);
     if (input.shops.length === 0) {
       results = `<div class="card"><h2>Talleres</h2>${summary}<p class="error">No hay talleres verificados que ofrezcan estos servicios.</p></div>`;
     } else {
-      const notice = input.sameCity ? "" : `<p class="muted">No hay talleres verificados en ${e3(input.owner.city ?? "su ciudad")}; se muestran los de otras ciudades.</p>`;
-      const hidden = input.selected.map((id2) => `<input type="hidden" name="services" value="${e3(id2)}">`).join("");
-      const options = input.shops.map((shop, i) => `<label class="choice"><input type="radio" name="shopId" value="${e3(shop.id)}"${String(values.shopId ?? "") === shop.id || i === 0 && !values.shopId ? " checked" : ""} required>
-          <span><strong>${e3(shop.name)}</strong> \xB7 ${e3(shop.city)}${shop.zone ? ` (${e3(shop.zone)})` : ""}<br><span class="muted">${shop.covered === shop.needed ? "Cubre todo" : `Cubre ${shop.covered} de ${shop.needed}`}${shop.hours ? ` \xB7 ${e3(shop.hours)}` : ""}</span></span></label>`).join("");
+      const notice = input.sameCity ? "" : `<p class="muted">No hay talleres verificados en ${e4(input.owner.city ?? "su ciudad")}; se muestran los de otras ciudades.</p>`;
+      const hidden = input.selected.map((id2) => `<input type="hidden" name="services" value="${e4(id2)}">`).join("");
+      const options = input.shops.map((shop, i) => `<label class="choice"><input type="radio" name="shopId" value="${e4(shop.id)}"${String(values.shopId ?? "") === shop.id || i === 0 && !values.shopId ? " checked" : ""} required>
+          <span><strong>${e4(shop.name)}</strong> \xB7 ${e4(shop.city)}${shop.zone ? ` (${e4(shop.zone)})` : ""}<br><span class="muted">${shop.covered === shop.needed ? "Cubre todo" : `Cubre ${shop.covered} de ${shop.needed}`}${shop.hours ? ` \xB7 ${e4(shop.hours)}` : ""}</span></span></label>`).join("");
       results = `<div class="card"><h2>Talleres</h2>${notice}${summary}
         ${copyBox("msg-shops", "Lista de talleres para el due\xF1o", shopListMessage(input.shops))}
         <form method="post" action="/admin/appointments">${csrfField7(input.csrf)}
         <input type="hidden" name="ownerId" value="${ownerId}"><input type="hidden" name="vehicleId" value="${vehicleId}">${hidden}
         ${options}
-        <div class="row"><span><label for="date">D\xEDa</label><input id="date" name="date" type="date" value="${e3(values.date)}" required></span>
-        <span><label for="time">Hora (Ecuador)</label><input id="time" name="time" type="time" value="${e3(values.time)}" required></span></div>
-        <label for="notes">Notas para el taller (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e3(values.notes)}</textarea>
+        <div class="row"><span><label for="date">D\xEDa</label><input id="date" name="date" type="date" value="${e4(values.date)}" required></span>
+        <span><label for="time">Hora (Ecuador)</label><input id="time" name="time" type="time" value="${e4(values.time)}" required></span></div>
+        <label for="notes">Notas para el taller (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e4(values.notes)}</textarea>
         <button class="full" type="submit">Solicitar turno</button></form></div>`;
     }
   }
-  return `<div class="stack wide"><p><a href="/admin/users/${ownerId}">\u2190 ${e3(input.owner.name)}</a></p>
-  <h1>Agendar turno</h1>${input.error ? `<p class="error" role="alert">${e3(input.error)}</p>` : ""}${vehicleTabs}
-  <div class="card"><h2>${e3(input.vehicle.make)} ${e3(input.vehicle.model)} ${e3(input.vehicle.year)} \xB7 \xBFQu\xE9 servicios?</h2>
+  return `<div class="stack wide"><p><a href="/admin/users/${ownerId}">\u2190 ${e4(input.owner.name)}</a></p>
+  <h1>Agendar turno</h1>${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}${vehicleTabs}
+  <div class="card"><h2>${e4(input.vehicle.make)} ${e4(input.vehicle.model)} ${e4(input.vehicle.year)} \xB7 \xBFQu\xE9 servicios?</h2>
     <form method="get" action="/admin/users/${ownerId}/schedule"><input type="hidden" name="vehicleId" value="${vehicleId}">
     ${itemChecks}<button type="submit">Buscar talleres</button></form></div>
   ${results}</div>`;
@@ -101523,7 +105459,7 @@ function scheduleView(input) {
 function userAppointmentsSection(appointments) {
   if (appointments.length === 0)
     return "";
-  const items = appointments.map((a) => `<div><a href="/admin/appointments/${e3(a.id)}"><span class="mono">${e3(formatEcDateTime(a.scheduledAt))}</span></a> \xB7 ${statusPill(a.status)} \xB7 ${e3(a.shopName)} \xB7 ${e3(a.vehicleLabel)}</div>`).join("");
+  const items = appointments.map((a) => `<div><a href="/admin/appointments/${e4(a.id)}"><span class="mono">${e4(formatEcDateTime(a.scheduledAt))}</span></a> \xB7 ${statusPill(a.status)} \xB7 ${e4(a.shopName)} \xB7 ${e4(a.vehicleLabel)}</div>`).join("");
   return `<div class="card"><h2>Turnos</h2>${items}</div>`;
 }
 function eventText(event) {
@@ -101540,15 +105476,15 @@ function eventText(event) {
   }
 }
 function bitacoraSection(userId, events, csrf) {
-  const list7 = events.length === 0 ? `<p class="muted">Sin actividad registrada.</p>` : events.map((ev) => `<div><span class="muted">${e3(formatEcDateTime(ev.createdAt))}</span> \xB7 ${e3(eventText(ev))}</div>`).join("");
+  const list7 = events.length === 0 ? `<p class="muted">Sin actividad registrada.</p>` : events.map((ev) => `<div><span class="muted">${e4(formatEcDateTime(ev.createdAt))}</span> \xB7 ${e4(eventText(ev))}</div>`).join("");
   return `<div class="card"><h2>Bit\xE1cora</h2>
-    <form method="post" action="/admin/users/${e3(userId)}/notes">${csrfField7(csrf)}
+    <form method="post" action="/admin/users/${e4(userId)}/notes">${csrfField7(csrf)}
     <label for="note-text">Nueva nota (qu\xE9 se convers\xF3 o acord\xF3)</label><textarea id="note-text" name="text" maxlength="2000" rows="3" required></textarea>
     <label for="note-channel">Canal</label><select id="note-channel" name="channel"><option value="whatsapp">WhatsApp</option><option value="llamada">Llamada</option><option value="otro">Otro</option></select>
     <button type="submit">Agregar nota</button></form>
     ${list7}</div>`;
 }
-var e3, csrfField7, flashHtml7, FILTERS7, PLAN_STATUS, STATUS_TONES, PLAN_TONES, appointmentCode, statusLabel2, servicesLabel;
+var e4, csrfField7, flashHtml7, FILTERS7, PLAN_STATUS, STATUS_TONES, PLAN_TONES, appointmentCode, statusLabel2, servicesLabel;
 var init_views_appointments = __esm({
   "packages/api/dist/interfaces/admin/views-appointments.js"() {
     "use strict";
@@ -101556,9 +105492,9 @@ var init_views_appointments = __esm({
     init_whatsapp_number();
     init_messages();
     init_contracts();
-    e3 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField7 = (token2) => `<input type="hidden" name="csrf" value="${e3(token2)}">`;
-    flashHtml7 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e3(flash.text)}</p>` : "";
+    e4 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField7 = (token2) => `<input type="hidden" name="csrf" value="${e4(token2)}">`;
+    flashHtml7 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
     FILTERS7 = [
       ["hoy", "Hoy"],
       ["proximos", "Pr\xF3ximos"],
@@ -101628,21 +105564,21 @@ var init_workflow4 = __esm({
 // packages/api/dist/interfaces/admin/views-work-orders.js
 function statusPill2(status) {
   const tone = STATUS_TONES2[status] ?? "off";
-  return `<span class="pill"><span class="led ${tone}"></span>${e4(WORK_ORDER_LABELS[status] ?? status)}</span>`;
+  return `<span class="pill"><span class="led ${tone}"></span>${e5(WORK_ORDER_LABELS[status] ?? status)}</span>`;
 }
 function chatLink2(phone, label2) {
   const digits = phone.replace(/\D/g, "");
   if (!phone.startsWith("+") || digits.length < 8)
     return "";
-  return `<a href="https://wa.me/${e4(digits)}" target="_blank" rel="noopener">${e4(label2)} (${e4(formatWhatsappNumber(digits))})</a>`;
+  return `<a href="https://wa.me/${e5(digits)}" target="_blank" rel="noopener">${e5(label2)} (${e5(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox2(id2, label2, content, rows30 = 9) {
-  return `<label for="${id2}">${e4(label2)}</label><textarea id="${id2}" readonly rows="${rows30}">${e4(content)}</textarea>`;
+function copyBox2(id2, label2, content, rows31 = 9) {
+  return `<label for="${id2}">${e5(label2)}</label><textarea id="${id2}" readonly rows="${rows31}">${e5(content)}</textarea>`;
 }
 function workOrdersListView(input) {
-  const tabs2 = FILTERS8.map(([id2, label2]) => `<a href="/admin/work-orders?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e4(label2)}</a>`).join("");
-  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin \xF3rdenes</td></tr>` : input.page.items.map((o) => `<tr><td><a href="/admin/work-orders/${e4(o.id)}" class="mono">${e4(workOrderCode(o.number))}</a></td><td>${statusPill2(o.status)}</td>
-            <td>${e4(o.shopName)}</td><td><a href="/admin/users/${e4(o.ownerId)}">${e4(o.ownerName)}</a></td><td>${e4(o.vehicleLabel)}</td><td><span class="mono">${e4(formatUsd2(o.total))}</span></td></tr>`).join("");
+  const tabs2 = FILTERS8.map(([id2, label2]) => `<a href="/admin/work-orders?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e5(label2)}</a>`).join("");
+  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin \xF3rdenes</td></tr>` : input.page.items.map((o) => `<tr><td><a href="/admin/work-orders/${e5(o.id)}" class="mono">${e5(workOrderCode(o.number))}</a></td><td>${statusPill2(o.status)}</td>
+            <td>${e5(o.shopName)}</td><td><a href="/admin/users/${e5(o.ownerId)}">${e5(o.ownerName)}</a></td><td>${e5(o.vehicleLabel)}</td><td><span class="mono">${e5(formatUsd2(o.total))}</span></td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/work-orders?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>\xD3rdenes de trabajo</h1>${flashHtml8(input.flash)}<div class="tabs">${tabs2}</div>
@@ -101653,47 +105589,47 @@ function workOrdersListView(input) {
 function newWorkOrderView(input) {
   const v = input.values ?? {};
   const intakeKm = v.intakeKm ?? input.vehicle.currentKm ?? "";
-  const shopField = input.appointment ? `<div>Taller: <strong>${e4(input.appointment.shopName)}</strong> \xB7 turno del ${e4(formatEcDateTime(input.appointment.scheduledAt))}</div>
-       <input type="hidden" name="appointmentId" value="${e4(input.appointment.id)}">` : input.shops.length === 0 ? `<p class="error">No hay talleres verificados. Aprueba un taller en Verificaciones antes de abrir una orden.</p>` : `<label for="shopId">Taller</label><select id="shopId" name="shopId" required>${input.shops.map((s) => `<option value="${e4(s.id)}"${String(v.shopId ?? "") === s.id ? " selected" : ""}>${e4(s.name)} \xB7 ${e4(s.city)}</option>`).join("")}</select>`;
-  return `<div class="stack wide"><p><a href="/admin/users/${e4(input.owner.id)}">\u2190 ${e4(input.owner.name)}</a></p>
-  <h1>Nueva orden de trabajo</h1>${input.error ? `<p class="error" role="alert">${e4(input.error)}</p>` : ""}
+  const shopField = input.appointment ? `<div>Taller: <strong>${e5(input.appointment.shopName)}</strong> \xB7 turno del ${e5(formatEcDateTime(input.appointment.scheduledAt))}</div>
+       <input type="hidden" name="appointmentId" value="${e5(input.appointment.id)}">` : input.shops.length === 0 ? `<p class="error">No hay talleres verificados. Aprueba un taller en Verificaciones antes de abrir una orden.</p>` : `<label for="shopId">Taller</label><select id="shopId" name="shopId" required>${input.shops.map((s) => `<option value="${e5(s.id)}"${String(v.shopId ?? "") === s.id ? " selected" : ""}>${e5(s.name)} \xB7 ${e5(s.city)}</option>`).join("")}</select>`;
+  return `<div class="stack wide"><p><a href="/admin/users/${e5(input.owner.id)}">\u2190 ${e5(input.owner.name)}</a></p>
+  <h1>Nueva orden de trabajo</h1>${input.error ? `<p class="error" role="alert">${e5(input.error)}</p>` : ""}
   <form method="post" action="/admin/work-orders" autocomplete="off">${csrfField8(input.csrf)}
-  <input type="hidden" name="ownerId" value="${e4(input.owner.id)}"><input type="hidden" name="vehicleId" value="${e4(input.vehicle.id)}">
+  <input type="hidden" name="ownerId" value="${e5(input.owner.id)}"><input type="hidden" name="vehicleId" value="${e5(input.vehicle.id)}">
   <div class="card"><h2>Recepci\xF3n del veh\xEDculo</h2>
-    <div>Due\xF1o: <strong>${e4(input.owner.name)}</strong></div>
-    <div>Veh\xEDculo: <strong>${e4(input.vehicle.make)} ${e4(input.vehicle.model)} ${e4(input.vehicle.year)}</strong>${input.vehicle.plate ? ` \xB7 ${e4(input.vehicle.plate)}` : ""} \xB7 \xFAltimo registro ${e4(km6(input.vehicle.currentKm))}</div>
+    <div>Due\xF1o: <strong>${e5(input.owner.name)}</strong></div>
+    <div>Veh\xEDculo: <strong>${e5(input.vehicle.make)} ${e5(input.vehicle.model)} ${e5(input.vehicle.year)}</strong>${input.vehicle.plate ? ` \xB7 ${e5(input.vehicle.plate)}` : ""} \xB7 \xFAltimo registro ${e5(km6(input.vehicle.currentKm))}</div>
     ${shopField}
-    <label for="intakeKm">Kilometraje de ingreso</label><input id="intakeKm" name="intakeKm" inputmode="numeric" value="${e4(intakeKm)}" required>
-    <label for="intakeNotes">Observaciones de ingreso (estado, golpes, objetos, nivel de combustible)</label><textarea id="intakeNotes" name="intakeNotes" maxlength="1000" rows="3">${e4(v.intakeNotes)}</textarea>
-    <label for="diagnosis">Diagn\xF3stico inicial del taller (opcional)</label><textarea id="diagnosis" name="diagnosis" maxlength="1000" rows="2">${e4(v.diagnosis)}</textarea>
+    <label for="intakeKm">Kilometraje de ingreso</label><input id="intakeKm" name="intakeKm" inputmode="numeric" value="${e5(intakeKm)}" required>
+    <label for="intakeNotes">Observaciones de ingreso (estado, golpes, objetos, nivel de combustible)</label><textarea id="intakeNotes" name="intakeNotes" maxlength="1000" rows="3">${e5(v.intakeNotes)}</textarea>
+    <label for="diagnosis">Diagn\xF3stico inicial del taller (opcional)</label><textarea id="diagnosis" name="diagnosis" maxlength="1000" rows="2">${e5(v.diagnosis)}</textarea>
   </div>
   <button class="full" type="submit">Abrir orden de trabajo</button></form></div>`;
 }
 function statusButton(order, csrf, status, label2, danger = false) {
-  return `<form method="post" action="/admin/work-orders/${e4(order.id)}/status">${csrfField8(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e4(label2)}</button></form>`;
+  return `<form method="post" action="/admin/work-orders/${e5(order.id)}/status">${csrfField8(csrf)}<input type="hidden" name="status" value="${status}"><button type="submit"${danger ? ' class="danger"' : ""}>${e5(label2)}</button></form>`;
 }
 function reasonForm(order, csrf, status, label2, button) {
-  return `<form method="post" action="/admin/work-orders/${e4(order.id)}/status">${csrfField8(csrf)}<input type="hidden" name="status" value="${status}">
-    <label for="reason-${status}">${e4(label2)}</label><input id="reason-${status}" name="reason" maxlength="191" required>
-    <button class="danger" type="submit">${e4(button)}</button></form>`;
+  return `<form method="post" action="/admin/work-orders/${e5(order.id)}/status">${csrfField8(csrf)}<input type="hidden" name="status" value="${status}">
+    <label for="reason-${status}">${e5(label2)}</label><input id="reason-${status}" name="reason" maxlength="191" required>
+    <button class="danger" type="submit">${e5(button)}</button></form>`;
 }
 function workOrderDetailView(input) {
   const { order, items, csrf } = input;
   const code3 = workOrderCode(order.number);
   const editable = EDITABLE_STATUSES.includes(order.status);
   const transitions = WORK_ORDER_TRANSITIONS[order.status] ?? [];
-  const itemRows = items.length === 0 ? `<tr><td colspan="${editable ? 7 : 6}" class="muted">A\xFAn no hay \xEDtems en el presupuesto.</td></tr>` : items.map((i) => `<tr><td>${i.kind === "mano_obra" ? "Mano de obra" : "Repuesto"}</td><td>${e4(i.description)}</td><td>${e4([i.brand, i.partCode].filter(Boolean).join(" \xB7 ") || "\u2014")}</td>
-            <td><span class="mono">${e4(String(i.quantity).replace(".", ","))}</span></td><td><span class="mono">${e4(formatUsd2(i.unitPrice))}</span></td><td><span class="mono">${e4(formatUsd2(lineTotal(i)))}</span></td>
-            ${editable ? `<td><form method="post" action="/admin/work-orders/${e4(order.id)}/items/${e4(i.id)}/delete">${csrfField8(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
-  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e4(order.id)}/items" autocomplete="off">${csrfField8(csrf)}
+  const itemRows = items.length === 0 ? `<tr><td colspan="${editable ? 7 : 6}" class="muted">A\xFAn no hay \xEDtems en el presupuesto.</td></tr>` : items.map((i) => `<tr><td>${i.kind === "mano_obra" ? "Mano de obra" : "Repuesto"}</td><td>${e5(i.description)}</td><td>${e5([i.brand, i.partCode].filter(Boolean).join(" \xB7 ") || "\u2014")}</td>
+            <td><span class="mono">${e5(String(i.quantity).replace(".", ","))}</span></td><td><span class="mono">${e5(formatUsd2(i.unitPrice))}</span></td><td><span class="mono">${e5(formatUsd2(lineTotal(i)))}</span></td>
+            ${editable ? `<td><form method="post" action="/admin/work-orders/${e5(order.id)}/items/${e5(i.id)}/delete">${csrfField8(csrf)}<button class="danger" type="submit">Quitar</button></form></td>` : ""}</tr>`).join("");
+  const addItem = editable ? `<form method="post" action="/admin/work-orders/${e5(order.id)}/items" autocomplete="off">${csrfField8(csrf)}
       <div class="row"><span><label for="kind">Tipo</label><select id="kind" name="kind">${ITEM_KINDS.map(([id2, label2]) => `<option value="${id2}">${label2}</option>`).join("")}</select></span>
       <span style="flex:2"><label for="description">Descripci\xF3n</label><input id="description" name="description" maxlength="191" required></span></div>
       <div class="row"><span><label for="brand">Marca (opcional)</label><input id="brand" name="brand" maxlength="60"></span><span><label for="partCode">C\xF3digo (opcional)</label><input id="partCode" name="partCode" maxlength="60"></span></div>
       <div class="row"><span><label for="quantity">Cantidad</label><input id="quantity" name="quantity" value="1" inputmode="decimal" required></span><span><label for="unitPrice">Precio unitario (USD)</label><input id="unitPrice" name="unitPrice" inputmode="decimal" placeholder="45,50" required></span></div>
       <button type="submit">Agregar al presupuesto</button></form>` : "";
-  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e4(order.id)}/diagnosis">${csrfField8(csrf)}
-      <label for="diag">Diagn\xF3stico del taller</label><textarea id="diag" name="diagnosis" maxlength="1000" rows="3">${e4(order.diagnosis)}</textarea>
-      <button type="submit">Guardar diagn\xF3stico</button></form>` : `<p>${e4(order.diagnosis ?? "Sin diagn\xF3stico registrado.")}</p>`;
+  const diagnosis = editable ? `<form method="post" action="/admin/work-orders/${e5(order.id)}/diagnosis">${csrfField8(csrf)}
+      <label for="diag">Diagn\xF3stico del taller</label><textarea id="diag" name="diagnosis" maxlength="1000" rows="3">${e5(order.diagnosis)}</textarea>
+      <button type="submit">Guardar diagn\xF3stico</button></form>` : `<p>${e5(order.diagnosis ?? "Sin diagn\xF3stico registrado.")}</p>`;
   const actions = [];
   if (transitions.includes("presupuesto_enviado")) {
     actions.push(items.length > 0 ? statusButton(order, csrf, "presupuesto_enviado", order.status === "rechazado" ? "Reenviar presupuesto al due\xF1o" : "Enviar presupuesto al due\xF1o") : `<p class="muted">Agrega al menos un \xEDtem para enviar el presupuesto.</p>`);
@@ -101707,9 +105643,9 @@ function workOrderDetailView(input) {
   if (transitions.includes("esperando_repuesto"))
     actions.push(statusButton(order, csrf, "esperando_repuesto", "Esperando repuesto"));
   if (transitions.includes("cerrada")) {
-    actions.push(`<form method="post" action="/admin/work-orders/${e4(order.id)}/close" autocomplete="off">${csrfField8(csrf)}
+    actions.push(`<form method="post" action="/admin/work-orders/${e5(order.id)}/close" autocomplete="off">${csrfField8(csrf)}
       <h2>Cerrar con evidencia</h2>
-      <div class="row"><span><label for="exitKm">Kilometraje de salida</label><input id="exitKm" name="exitKm" inputmode="numeric" value="${e4(order.intakeKm ?? order.vehicleKm)}" required></span>
+      <div class="row"><span><label for="exitKm">Kilometraje de salida</label><input id="exitKm" name="exitKm" inputmode="numeric" value="${e5(order.intakeKm ?? order.vehicleKm)}" required></span>
       <span><label for="warrantyDays">Garant\xEDa (d\xEDas)</label><input id="warrantyDays" name="warrantyDays" inputmode="numeric" value="30" required></span></div>
       <label for="nextService">Pr\xF3ximo servicio sugerido (opcional)</label><input id="nextService" name="nextService" maxlength="191" placeholder="Cambio de aceite a los 55.000 km">
       <label for="diagnosisOutcome">Resultado del diagn\xF3stico</label><select id="diagnosisOutcome" name="diagnosisOutcome">${DIAGNOSIS_OUTCOMES.map(([id2, label2]) => `<option value="${id2}">${label2}</option>`).join("")}</select>
@@ -101721,43 +105657,43 @@ function workOrderDetailView(input) {
   const code22 = workOrderCode(order.number);
   const rating = input.rating ?? null;
   const ratingCard = order.status !== "cerrada" ? "" : rating ? `<div class="card"><h2>Calificaci\xF3n del due\xF1o</h2>
-          <p><strong>${e4(stars(rating.score))} ${rating.score} de 5</strong>${rating.hiddenAt ? ' \xB7 <span class="muted">rese\xF1a oculta</span>' : ""}</p>
-          ${rating.comment ? `<p>${e4(rating.comment)}</p>` : ""}
+          <p><strong>${e5(stars(rating.score))} ${rating.score} de 5</strong>${rating.hiddenAt ? ' \xB7 <span class="muted">rese\xF1a oculta</span>' : ""}</p>
+          ${rating.comment ? `<p>${e5(rating.comment)}</p>` : ""}
           ${needsReview(rating.score) ? `<p class="error">Calificaci\xF3n baja: conviene revisar el caso con el taller.</p>` : ""}
           ${copyBox2("msg-gracias", "Respuesta para el due\xF1o", thanksMessage(rating.score))}
-          ${input.canModerate && !rating.hiddenAt ? `<form method="post" action="/admin/ratings/${e4(rating.id)}/hide">${csrfField8(csrf)}
+          ${input.canModerate && !rating.hiddenAt ? `<form method="post" action="/admin/ratings/${e5(rating.id)}/hide">${csrfField8(csrf)}
               <label for="ocultar">Motivo para ocultar la rese\xF1a</label><input id="ocultar" name="reason" maxlength="191" required>
               <button class="danger" type="submit">Ocultar rese\xF1a</button></form>` : ""}
-          ${input.canModerate && rating.hiddenAt ? `<p class="muted">Oculta: ${e4(rating.hiddenReason ?? "")}</p>
-              <form method="post" action="/admin/ratings/${e4(rating.id)}/show">${csrfField8(csrf)}<button type="submit">Volver a mostrarla</button></form>` : ""}</div>` : `<div class="card"><h2>Calificaci\xF3n del due\xF1o</h2>
+          ${input.canModerate && rating.hiddenAt ? `<p class="muted">Oculta: ${e5(rating.hiddenReason ?? "")}</p>
+              <form method="post" action="/admin/ratings/${e5(rating.id)}/show">${csrfField8(csrf)}<button type="submit">Volver a mostrarla</button></form>` : ""}</div>` : `<div class="card"><h2>Calificaci\xF3n del due\xF1o</h2>
           <p class="muted">P\xEDdele la calificaci\xF3n ahora, que es cuando la recuerda. Alimenta el orden de las b\xFAsquedas y la confianza de la red.</p>
           ${copyBox2("msg-calificar", "Mensaje para pedirla", askMessage({ shopName: order.shopName, code: code22 }))}
-          <form method="post" action="/admin/work-orders/${e4(order.id)}/rating" autocomplete="off">${csrfField8(csrf)}
+          <form method="post" action="/admin/work-orders/${e5(order.id)}/rating" autocomplete="off">${csrfField8(csrf)}
           <label for="score">Qu\xE9 respondi\xF3</label>
-          <select id="score" name="score">${SCORES.map((s) => `<option value="${s.value}">${e4(s.label)}</option>`).join("")}</select>
+          <select id="score" name="score">${SCORES.map((s) => `<option value="${s.value}">${e5(s.label)}</option>`).join("")}</select>
           <label for="comment">Comentario (opcional)</label><input id="comment" name="comment" maxlength="191">
           <button class="full" type="submit">Guardar la calificaci\xF3n</button></form></div>`;
   const shopMessage = shopWorkOrderMessage(order);
   return `<div class="stack wide"><p><a href="/admin/work-orders">\u2190 \xD3rdenes de trabajo</a></p>
-  <h1><span class="mono">${e4(code3)}</span> \xB7 ${statusPill2(order.status)}</h1>${flashHtml8(input.flash)}
+  <h1><span class="mono">${e5(code3)}</span> \xB7 ${statusPill2(order.status)}</h1>${flashHtml8(input.flash)}
   <div class="card"><h2>Resumen</h2>
-    <div>Taller: <strong>${e4(order.shopName)}</strong></div>
-    <div>Due\xF1o: <a href="/admin/users/${e4(order.ownerId)}">${e4(order.ownerName)}</a></div>
-    <div>Veh\xEDculo: ${e4(order.vehicleLabel)}${order.plate ? ` \xB7 <span class="mono">${e4(order.plate)}</span>` : ""}</div>
-    ${order.appointmentId ? `<div>Turno: <a href="/admin/appointments/${e4(order.appointmentId)}">ver turno</a></div>` : "<div>Sin cita previa</div>"}
-    <div>Ingreso: <span class="mono">${order.intakeKm !== null ? e4(km6(order.intakeKm)) : "\u2014"}</span> \xB7 ${e4(formatEcDateTime(order.createdAt))}</div>
-    ${order.intakeNotes ? `<div>Observaciones: ${e4(order.intakeNotes)}</div>` : ""}
-    ${order.rejectionReason ? `<div>Motivo del rechazo: ${e4(order.rejectionReason)}</div>` : ""}
-    ${order.cancelReason ? `<div>Motivo de la cancelaci\xF3n: ${e4(order.cancelReason)}</div>` : ""}
-    ${order.status === "cerrada" ? `<div>Salida: <span class="mono">${e4(km6(order.exitKm))}</span> \xB7 garant\xEDa ${e4(order.warrantyDays)} d\xEDas${order.nextService ? ` \xB7 pr\xF3ximo: ${e4(order.nextService)}` : ""}</div>` : ""}
+    <div>Taller: <strong>${e5(order.shopName)}</strong></div>
+    <div>Due\xF1o: <a href="/admin/users/${e5(order.ownerId)}">${e5(order.ownerName)}</a></div>
+    <div>Veh\xEDculo: ${e5(order.vehicleLabel)}${order.plate ? ` \xB7 <span class="mono">${e5(order.plate)}</span>` : ""}</div>
+    ${order.appointmentId ? `<div>Turno: <a href="/admin/appointments/${e5(order.appointmentId)}">ver turno</a></div>` : "<div>Sin cita previa</div>"}
+    <div>Ingreso: <span class="mono">${order.intakeKm !== null ? e5(km6(order.intakeKm)) : "\u2014"}</span> \xB7 ${e5(formatEcDateTime(order.createdAt))}</div>
+    ${order.intakeNotes ? `<div>Observaciones: ${e5(order.intakeNotes)}</div>` : ""}
+    ${order.rejectionReason ? `<div>Motivo del rechazo: ${e5(order.rejectionReason)}</div>` : ""}
+    ${order.cancelReason ? `<div>Motivo de la cancelaci\xF3n: ${e5(order.cancelReason)}</div>` : ""}
+    ${order.status === "cerrada" ? `<div>Salida: <span class="mono">${e5(km6(order.exitKm))}</span> \xB7 garant\xEDa ${e5(order.warrantyDays)} d\xEDas${order.nextService ? ` \xB7 pr\xF3ximo: ${e5(order.nextService)}` : ""}</div>` : ""}
   </div>
   ${ratingCard}
   <div class="card"><h2>Diagn\xF3stico</h2>${diagnosis}</div>
-  ${order.status !== "cerrada" && order.status !== "cancelada" ? `<div class="card"><h2>Repuestos</h2><p class="muted">Si el taller necesita comprar repuestos, pide cotizaciones a los almacenes verificados.</p><a class="button" href="/admin/quotes/new?workOrderId=${e4(order.id)}">Pedir repuestos a almacenes</a></div>` : ""}
+  ${order.status !== "cerrada" && order.status !== "cancelada" ? `<div class="card"><h2>Repuestos</h2><p class="muted">Si el taller necesita comprar repuestos, pide cotizaciones a los almacenes verificados.</p><a class="button" href="/admin/quotes/new?workOrderId=${e5(order.id)}">Pedir repuestos a almacenes</a></div>` : ""}
   <div class="card"><h2>Presupuesto</h2>
     <div class="scroll"><table><thead><tr><th>Tipo</th><th>Descripci\xF3n</th><th>Marca / c\xF3digo</th><th>Cant.</th><th>P. unit.</th><th>Total</th>${editable ? "<th></th>" : ""}</tr></thead>
     <tbody>${itemRows}</tbody></table></div>
-    <p><strong>Total: <span class="mono">${e4(formatUsd2(order.total))}</span></strong></p>
+    <p><strong>Total: <span class="mono">${e5(formatUsd2(order.total))}</span></strong></p>
     ${editable ? "" : '<p class="muted">El presupuesto se edita solo en recepci\xF3n o despu\xE9s de un rechazo.</p>'}
     ${addItem}
   </div>
@@ -101772,14 +105708,14 @@ function workOrderDetailView(input) {
 function userWorkOrdersSection(orders) {
   if (orders.length === 0)
     return "";
-  return `<div class="card"><h2>\xD3rdenes de trabajo</h2>${orders.map((o) => `<div><a href="/admin/work-orders/${e4(o.id)}" class="mono">${e4(workOrderCode(o.number))}</a> \xB7 ${statusPill2(o.status)} \xB7 ${e4(o.shopName)} \xB7 ${e4(o.vehicleLabel)} \xB7 <span class="mono">${e4(formatUsd2(o.total))}</span></div>`).join("")}</div>`;
+  return `<div class="card"><h2>\xD3rdenes de trabajo</h2>${orders.map((o) => `<div><a href="/admin/work-orders/${e5(o.id)}" class="mono">${e5(workOrderCode(o.number))}</a> \xB7 ${statusPill2(o.status)} \xB7 ${e5(o.shopName)} \xB7 ${e5(o.vehicleLabel)} \xB7 <span class="mono">${e5(formatUsd2(o.total))}</span></div>`).join("")}</div>`;
 }
 function historySection(history) {
   if (history.length === 0)
     return "";
-  return `<div class="card"><h2>Historial de servicios</h2>${history.map((h) => `<div><span class="muted">${e4(formatEcDateTime(h.createdAt))}</span> \xB7 <strong>${e4(h.vehicleLabel)}</strong> \xB7 ${e4(h.shopName)} \xB7 ${e4(h.description)}${h.cost !== null ? ` \xB7 ${e4(formatUsd2(h.cost))}` : ""}</div>`).join("")}</div>`;
+  return `<div class="card"><h2>Historial de servicios</h2>${history.map((h) => `<div><span class="muted">${e5(formatEcDateTime(h.createdAt))}</span> \xB7 <strong>${e5(h.vehicleLabel)}</strong> \xB7 ${e5(h.shopName)} \xB7 ${e5(h.description)}${h.cost !== null ? ` \xB7 ${e5(formatUsd2(h.cost))}` : ""}</div>`).join("")}</div>`;
 }
-var e4, csrfField8, flashHtml8, km6, STATUS_TONES2, FILTERS8;
+var e5, csrfField8, flashHtml8, km6, STATUS_TONES2, FILTERS8;
 var init_views_work_orders = __esm({
   "packages/api/dist/interfaces/admin/views-work-orders.js"() {
     "use strict";
@@ -101788,9 +105724,9 @@ var init_views_work_orders = __esm({
     init_messages();
     init_workflow();
     init_workflow4();
-    e4 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField8 = (token2) => `<input type="hidden" name="csrf" value="${e4(token2)}">`;
-    flashHtml8 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e4(flash.text)}</p>` : "";
+    e5 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField8 = (token2) => `<input type="hidden" name="csrf" value="${e5(token2)}">`;
+    flashHtml8 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e5(flash.text)}</p>` : "";
     km6 = (value2) => `${Number(value2 ?? 0).toLocaleString("es-EC")} km`;
     STATUS_TONES2 = {
       rechazado: "bad",
@@ -101955,15 +105891,15 @@ function chatLink3(phone, label2) {
   const digits = phone.replace(/\D/g, "");
   if (!phone.startsWith("+") || digits.length < 8)
     return "";
-  return `<a href="https://wa.me/${e5(digits)}" target="_blank" rel="noopener">${e5(label2)} (${e5(formatWhatsappNumber(digits))})</a>`;
+  return `<a href="https://wa.me/${e6(digits)}" target="_blank" rel="noopener">${e6(label2)} (${e6(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox3(id2, label2, content, rows30 = 8) {
-  return `<label for="${id2}">${e5(label2)}</label><textarea id="${id2}" readonly rows="${rows30}">${e5(content)}</textarea>`;
+function copyBox3(id2, label2, content, rows31 = 8) {
+  return `<label for="${id2}">${e6(label2)}</label><textarea id="${id2}" readonly rows="${rows31}">${e6(content)}</textarea>`;
 }
 function quotesListView(input) {
-  const tabs2 = FILTERS9.map(([id2, label2]) => `<a href="/admin/quotes?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e5(label2)}</a>`).join("");
-  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin solicitudes</td></tr>` : input.page.items.map((r) => `<tr><td><a href="/admin/quotes/${e5(r.id)}">${e5(quoteRequestCode(r.number))}</a></td><td>${e5(REQUEST_LABELS[r.status] ?? r.status)}</td>
-            <td>${e5(r.partName)}${r.quantity > 1 ? ` x${e5(r.quantity)}` : ""}</td><td><a href="/admin/users/${e5(r.requesterId)}">${e5(r.requesterName)}</a></td><td>${e5(r.vehicleLabel ?? "\u2014")}</td><td>${e5(formatEcDateTime(r.createdAt))}</td></tr>`).join("");
+  const tabs2 = FILTERS9.map(([id2, label2]) => `<a href="/admin/quotes?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e6(label2)}</a>`).join("");
+  const body = input.page.items.length === 0 ? `<tr><td colspan="6" class="muted">Sin solicitudes</td></tr>` : input.page.items.map((r) => `<tr><td><a href="/admin/quotes/${e6(r.id)}">${e6(quoteRequestCode(r.number))}</a></td><td>${e6(REQUEST_LABELS[r.status] ?? r.status)}</td>
+            <td>${e6(r.partName)}${r.quantity > 1 ? ` x${e6(r.quantity)}` : ""}</td><td><a href="/admin/users/${e6(r.requesterId)}">${e6(r.requesterName)}</a></td><td>${e6(r.vehicleLabel ?? "\u2014")}</td><td>${e6(formatEcDateTime(r.createdAt))}</td></tr>`).join("");
   const prev = input.page.page > 1 ? `<a href="/admin/quotes?f=${input.filter}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/quotes?f=${input.filter}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>Cotizaciones de repuestos</h1>${flashHtml9(input.flash)}<div class="tabs">${tabs2}</div>
@@ -101974,38 +105910,38 @@ function quotesListView(input) {
 function newQuoteView(input) {
   const v = input.values ?? {};
   const chosen = Array.isArray(v.storeIds) ? v.storeIds.map(String) : v.storeIds ? [String(v.storeIds)] : null;
-  const storeChecks = input.stores.length === 0 ? `<p class="error">No hay almacenes verificados. Aprueba al menos uno en Verificaciones.</p>` : `${input.sameCity ? "" : `<p class="muted">No hay almacenes verificados en ${e5(input.city)}; se muestran los de otras ciudades.</p>`}
+  const storeChecks = input.stores.length === 0 ? `<p class="error">No hay almacenes verificados. Aprueba al menos uno en Verificaciones.</p>` : `${input.sameCity ? "" : `<p class="muted">No hay almacenes verificados en ${e6(input.city)}; se muestran los de otras ciudades.</p>`}
         <div class="checks">${input.stores.map((s, i) => {
     const checked = chosen ? chosen.includes(s.id) : i < MAX_STORES_PER_REQUEST;
-    return `<label><input type="checkbox" name="storeIds" value="${e5(s.id)}"${checked ? " checked" : ""}> ${e5(s.name)} <span class="muted">\xB7 ${e5(s.city)}${s.zone ? ` (${e5(s.zone)})` : ""}${s.delivery ? " \xB7 entrega a domicilio" : ""}</span></label>`;
+    return `<label><input type="checkbox" name="storeIds" value="${e6(s.id)}"${checked ? " checked" : ""}> ${e6(s.name)} <span class="muted">\xB7 ${e6(s.city)}${s.zone ? ` (${e6(s.zone)})` : ""}${s.delivery ? " \xB7 entrega a domicilio" : ""}</span></label>`;
   }).join("")}</div>`;
-  return `<div class="stack wide"><p><a href="/admin/users/${e5(input.requester.id)}">\u2190 ${e5(input.requester.name)}</a></p>
-  <h1>Nueva solicitud de cotizaci\xF3n</h1>${input.error ? `<p class="error" role="alert">${e5(input.error)}</p>` : ""}
+  return `<div class="stack wide"><p><a href="/admin/users/${e6(input.requester.id)}">\u2190 ${e6(input.requester.name)}</a></p>
+  <h1>Nueva solicitud de cotizaci\xF3n</h1>${input.error ? `<p class="error" role="alert">${e6(input.error)}</p>` : ""}
   <form method="post" action="/admin/quotes" autocomplete="off">${csrfField9(input.csrf)}
-  <input type="hidden" name="requesterId" value="${e5(input.requester.id)}">
-  ${input.vehicle ? `<input type="hidden" name="vehicleId" value="${e5(input.vehicle.id)}">` : ""}
-  ${input.workOrderId ? `<input type="hidden" name="workOrderId" value="${e5(input.workOrderId)}">` : ""}
+  <input type="hidden" name="requesterId" value="${e6(input.requester.id)}">
+  ${input.vehicle ? `<input type="hidden" name="vehicleId" value="${e6(input.vehicle.id)}">` : ""}
+  ${input.workOrderId ? `<input type="hidden" name="workOrderId" value="${e6(input.workOrderId)}">` : ""}
   <div class="card"><h2>Repuesto</h2>
-    <div>Solicitante: <strong>${e5(input.requester.name)}</strong>${input.vehicle ? ` \xB7 ${e5(input.vehicle.make)} ${e5(input.vehicle.model)} ${e5(input.vehicle.year)}` : ""} \xB7 ${e5(input.city)}</div>
-    <label for="partName">Qu\xE9 repuesto necesita</label><input id="partName" name="partName" maxlength="191" required value="${e5(v.partName)}" placeholder="Pastillas de freno delanteras">
-    <div class="row"><span><label for="partCode">C\xF3digo OEM (opcional)</label><input id="partCode" name="partCode" maxlength="60" value="${e5(v.partCode)}"></span>
-    <span><label for="quantity">Cantidad</label><input id="quantity" name="quantity" inputmode="numeric" maxlength="3" value="${e5(v.quantity ?? "1")}" required></span></div>
-    <label for="notes">Notas para los almacenes (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e5(v.notes)}</textarea>
+    <div>Solicitante: <strong>${e6(input.requester.name)}</strong>${input.vehicle ? ` \xB7 ${e6(input.vehicle.make)} ${e6(input.vehicle.model)} ${e6(input.vehicle.year)}` : ""} \xB7 ${e6(input.city)}</div>
+    <label for="partName">Qu\xE9 repuesto necesita</label><input id="partName" name="partName" maxlength="191" required value="${e6(v.partName)}" placeholder="Pastillas de freno delanteras">
+    <div class="row"><span><label for="partCode">C\xF3digo OEM (opcional)</label><input id="partCode" name="partCode" maxlength="60" value="${e6(v.partCode)}"></span>
+    <span><label for="quantity">Cantidad</label><input id="quantity" name="quantity" inputmode="numeric" maxlength="3" value="${e6(v.quantity ?? "1")}" required></span></div>
+    <label for="notes">Notas para los almacenes (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e6(v.notes)}</textarea>
   </div>
   <div class="card"><h2>A qu\xE9 almacenes (m\xE1ximo ${MAX_STORES_PER_REQUEST})</h2>${storeChecks}</div>
   <button class="full" type="submit">Crear solicitud</button></form></div>`;
 }
 function responseForm(requestId, q, csrf) {
   const unit = q.unitPrice !== null ? String(q.unitPrice).replace(".", ",") : "";
-  return `<details><summary>Registrar respuesta de ${e5(q.storeName)}</summary>
-    <form method="post" action="/admin/quotes/${e5(requestId)}/quotes/${e5(q.id)}" autocomplete="off">${csrfField9(csrf)}
-    <div class="row"><span><label>Precio unitario (USD)</label><input name="unitPrice" inputmode="decimal" value="${e5(unit)}" placeholder="45,50"></span>
-    <span><label>Marca</label><input name="brand" maxlength="60" value="${e5(q.brand)}"></span></div>
-    <div class="row"><span><label>Disponibilidad</label><input name="availability" maxlength="60" value="${e5(q.availability)}" placeholder="En stock"></span>
-    <span><label>Tiempo de entrega</label><input name="deliveryTime" maxlength="60" value="${e5(q.deliveryTime)}" placeholder="Hoy mismo"></span></div>
-    <div class="row"><span><label>Garant\xEDa (d\xEDas)</label><input name="warrantyDays" inputmode="numeric" value="${e5(q.warrantyDays)}"></span>
-    <span><label>Validez (d\xEDas)</label><input name="validDays" inputmode="numeric" value="${e5(q.validDays)}"></span></div>
-    <label>Notas</label><input name="notes" maxlength="191" value="${e5(q.notes)}">
+  return `<details><summary>Registrar respuesta de ${e6(q.storeName)}</summary>
+    <form method="post" action="/admin/quotes/${e6(requestId)}/quotes/${e6(q.id)}" autocomplete="off">${csrfField9(csrf)}
+    <div class="row"><span><label>Precio unitario (USD)</label><input name="unitPrice" inputmode="decimal" value="${e6(unit)}" placeholder="45,50"></span>
+    <span><label>Marca</label><input name="brand" maxlength="60" value="${e6(q.brand)}"></span></div>
+    <div class="row"><span><label>Disponibilidad</label><input name="availability" maxlength="60" value="${e6(q.availability)}" placeholder="En stock"></span>
+    <span><label>Tiempo de entrega</label><input name="deliveryTime" maxlength="60" value="${e6(q.deliveryTime)}" placeholder="Hoy mismo"></span></div>
+    <div class="row"><span><label>Garant\xEDa (d\xEDas)</label><input name="warrantyDays" inputmode="numeric" value="${e6(q.warrantyDays)}"></span>
+    <span><label>Validez (d\xEDas)</label><input name="validDays" inputmode="numeric" value="${e6(q.validDays)}"></span></div>
+    <label>Notas</label><input name="notes" maxlength="191" value="${e6(q.notes)}">
     <div class="row"><button type="submit" name="action" value="cotizado">Guardar cotizaci\xF3n</button>
     <button class="danger" type="submit" name="action" value="sin_stock">No lo tiene</button></div></form></details>`;
 }
@@ -102014,26 +105950,26 @@ function quoteDetailView(input) {
   const code3 = quoteRequestCode(request.number);
   const open = request.status === "abierta";
   const ranked = rankQuotes(quotes);
-  const invited = quotes.map((q) => `<tr><td>${e5(q.storeName)}</td><td>${e5(QUOTE_LABELS[q.status] ?? q.status)}</td><td>${q.unitPrice !== null ? e5(formatUsd2(q.unitPrice)) : "\u2014"}</td>
-      <td>${e5([q.brand, q.availability, q.deliveryTime ? `entrega ${q.deliveryTime}` : null, q.warrantyDays ? `garant\xEDa ${q.warrantyDays} d\xEDas` : null].filter(Boolean).join(" \xB7 ") || q.notes || "\u2014")}</td>
+  const invited = quotes.map((q) => `<tr><td>${e6(q.storeName)}</td><td>${e6(QUOTE_LABELS[q.status] ?? q.status)}</td><td>${q.unitPrice !== null ? e6(formatUsd2(q.unitPrice)) : "\u2014"}</td>
+      <td>${e6([q.brand, q.availability, q.deliveryTime ? `entrega ${q.deliveryTime}` : null, q.warrantyDays ? `garant\xEDa ${q.warrantyDays} d\xEDas` : null].filter(Boolean).join(" \xB7 ") || q.notes || "\u2014")}</td>
       <td>${chatLink3(q.storePhone, "Chat")}</td></tr>`).join("");
   const responses = open ? quotes.map((q) => responseForm(request.id, q, csrf)).join("") : "";
-  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e5(request.id)}/choose" class="row">${csrfField9(csrf)}<input type="hidden" name="quoteId" value="${e5(q.id)}">
-            <span>${i + 1}) <strong>${e5(q.storeName)}</strong> \xB7 ${e5(formatUsd2(q.unitPrice ?? 0))} c/u</span><button type="submit">Eligi\xF3 esta</button></form>`).join("")}` : "";
-  const closeForm = open ? `<form method="post" action="/admin/quotes/${e5(request.id)}/close">${csrfField9(csrf)}
+  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e6(request.id)}/choose" class="row">${csrfField9(csrf)}<input type="hidden" name="quoteId" value="${e6(q.id)}">
+            <span>${i + 1}) <strong>${e6(q.storeName)}</strong> \xB7 ${e6(formatUsd2(q.unitPrice ?? 0))} c/u</span><button type="submit">Eligi\xF3 esta</button></form>`).join("")}` : "";
+  const closeForm = open ? `<form method="post" action="/admin/quotes/${e6(request.id)}/close">${csrfField9(csrf)}
       <label for="close-reason">Si el cliente no pidi\xF3 ninguna, \xBFpor qu\xE9?</label><input id="close-reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cerrar sin pedido</button></form>` : "";
-  const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e5(request.id)}/quotes/${e5(q.id)}/loss" class="row">${csrfField9(csrf)}
-          <span>${e5(q.storeName)}: motivo de p\xE9rdida</span><select name="reason">${LOSS_REASONS.map(([id2, label2]) => `<option value="${id2}"${q.lossReason === id2 ? " selected" : ""}>${label2}</option>`).join("")}</select>
+  const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e6(request.id)}/quotes/${e6(q.id)}/loss" class="row">${csrfField9(csrf)}
+          <span>${e6(q.storeName)}: motivo de p\xE9rdida</span><select name="reason">${LOSS_REASONS.map(([id2, label2]) => `<option value="${id2}"${q.lossReason === id2 ? " selected" : ""}>${label2}</option>`).join("")}</select>
           <button type="submit">Guardar</button></form>`).join("") : "";
   let orderCard = "";
   if (order) {
     const transitions = ORDER_STAGE_TRANSITIONS[order.stage] ?? [];
-    const buttons = transitions.filter((s) => s !== "cancelado").map((s) => `<form method="post" action="/admin/quotes/${e5(request.id)}/order/stage">${csrfField9(csrf)}<input type="hidden" name="stage" value="${s}"><button type="submit">${e5(ORDER_STAGE_LABELS[s])}</button></form>`).join("");
-    const cancel = transitions.includes("cancelado") ? `<form method="post" action="/admin/quotes/${e5(request.id)}/order/stage">${csrfField9(csrf)}<input type="hidden" name="stage" value="cancelado">
+    const buttons = transitions.filter((s) => s !== "cancelado").map((s) => `<form method="post" action="/admin/quotes/${e6(request.id)}/order/stage">${csrfField9(csrf)}<input type="hidden" name="stage" value="${s}"><button type="submit">${e6(ORDER_STAGE_LABELS[s])}</button></form>`).join("");
+    const cancel = transitions.includes("cancelado") ? `<form method="post" action="/admin/quotes/${e6(request.id)}/order/stage">${csrfField9(csrf)}<input type="hidden" name="stage" value="cancelado">
         <label for="order-cancel">Motivo de la cancelaci\xF3n</label><input id="order-cancel" name="reason" maxlength="191" required><button class="danger" type="submit">Cancelar pedido</button></form>` : "";
-    orderCard = `<div class="card"><h2>Pedido \xB7 ${e5(ORDER_STAGE_LABELS[order.stage] ?? order.stage)}</h2>
-      <div><strong>${e5(order.storeName)}</strong> \xB7 ${e5(order.partName)}${order.quantity > 1 ? ` x${e5(order.quantity)}` : ""} \xB7 total ${e5(formatUsd2(order.total))}</div>
+    orderCard = `<div class="card"><h2>Pedido \xB7 ${e6(ORDER_STAGE_LABELS[order.stage] ?? order.stage)}</h2>
+      <div><strong>${e6(order.storeName)}</strong> \xB7 ${e6(order.partName)}${order.quantity > 1 ? ` x${e6(order.quantity)}` : ""} \xB7 total ${e6(formatUsd2(order.total))}</div>
       ${copyBox3("msg-order-requester", "Mensaje para el solicitante", requesterOrderMessage(order), 6)}
       ${order.stage === "confirmado" || order.stage === "cancelado" ? copyBox3("msg-order-store", "Mensaje para el almac\xE9n", storeOrderMessage(order), 6) : ""}
       <p class="row">${chatLink3(order.requesterPhone, "Chat del solicitante")} ${chatLink3(order.storePhone, "Chat del almac\xE9n")}</p>
@@ -102041,13 +105977,13 @@ function quoteDetailView(input) {
       ${lost ? `<h2>Almacenes no elegidos</h2>${copyBox3("msg-lost", "Mensaje para los no elegidos", lostQuoteMessage(request), 4)}${lost}` : ""}</div>`;
   }
   return `<div class="stack wide"><p><a href="/admin/quotes">\u2190 Cotizaciones</a></p>
-  <h1>${e5(code3)} \xB7 ${e5(REQUEST_LABELS[request.status] ?? request.status)}</h1>${flashHtml9(input.flash)}
+  <h1>${e6(code3)} \xB7 ${e6(REQUEST_LABELS[request.status] ?? request.status)}</h1>${flashHtml9(input.flash)}
   <div class="card"><h2>Solicitud</h2>
-    <div>Repuesto: <strong>${e5(request.partName)}</strong>${request.quantity > 1 ? ` x${e5(request.quantity)}` : ""}${request.partCode ? ` \xB7 c\xF3digo ${e5(request.partCode)}` : ""}</div>
-    <div>Solicitante: <a href="/admin/users/${e5(request.requesterId)}">${e5(request.requesterName)}</a>${request.vehicleLabel ? ` \xB7 ${e5(request.vehicleLabel)}` : ""} \xB7 ${e5(request.city)}</div>
-    ${request.workOrderId ? `<div>Para la orden de trabajo: <a href="/admin/work-orders/${e5(request.workOrderId)}">ver orden</a></div>` : ""}
-    ${request.notes ? `<div>Notas: ${e5(request.notes)}</div>` : ""}
-    ${request.closeReason ? `<div>Cerrada sin pedido: ${e5(request.closeReason)}</div>` : ""}
+    <div>Repuesto: <strong>${e6(request.partName)}</strong>${request.quantity > 1 ? ` x${e6(request.quantity)}` : ""}${request.partCode ? ` \xB7 c\xF3digo ${e6(request.partCode)}` : ""}</div>
+    <div>Solicitante: <a href="/admin/users/${e6(request.requesterId)}">${e6(request.requesterName)}</a>${request.vehicleLabel ? ` \xB7 ${e6(request.vehicleLabel)}` : ""} \xB7 ${e6(request.city)}</div>
+    ${request.workOrderId ? `<div>Para la orden de trabajo: <a href="/admin/work-orders/${e6(request.workOrderId)}">ver orden</a></div>` : ""}
+    ${request.notes ? `<div>Notas: ${e6(request.notes)}</div>` : ""}
+    ${request.closeReason ? `<div>Cerrada sin pedido: ${e6(request.closeReason)}</div>` : ""}
   </div>
   ${open ? `<div class="card"><h2>1. Enviar a los almacenes</h2>${copyBox3("msg-stores", "Mensaje para cada almac\xE9n", storeRequestMessage(request))}</div>` : ""}
   <div class="card"><h2>${open ? "2. Respuestas de los almacenes" : "Respuestas"}</h2>
@@ -102062,17 +105998,17 @@ function userQuotesSection(data2) {
     return "";
   const parts = [];
   if (data2.requests.length > 0) {
-    parts.push(`<h2>Cotizaciones pedidas</h2>${data2.requests.map((r) => `<div><a href="/admin/quotes/${e5(r.id)}">${e5(quoteRequestCode(r.number))}</a> \xB7 ${e5(REQUEST_LABELS[r.status] ?? r.status)} \xB7 ${e5(r.partName)}</div>`).join("")}`);
+    parts.push(`<h2>Cotizaciones pedidas</h2>${data2.requests.map((r) => `<div><a href="/admin/quotes/${e6(r.id)}">${e6(quoteRequestCode(r.number))}</a> \xB7 ${e6(REQUEST_LABELS[r.status] ?? r.status)} \xB7 ${e6(r.partName)}</div>`).join("")}`);
   }
   if (data2.storeQuotes.length > 0) {
-    parts.push(`<h2>Cotizaciones recibidas como almac\xE9n</h2>${data2.storeQuotes.map((q) => `<div><a href="/admin/quotes/${e5(q.requestId)}">${e5(quoteRequestCode(q.requestNumber))}</a> \xB7 ${e5(QUOTE_LABELS[q.status] ?? q.status)} \xB7 ${e5(q.partName)}</div>`).join("")}`);
+    parts.push(`<h2>Cotizaciones recibidas como almac\xE9n</h2>${data2.storeQuotes.map((q) => `<div><a href="/admin/quotes/${e6(q.requestId)}">${e6(quoteRequestCode(q.requestNumber))}</a> \xB7 ${e6(QUOTE_LABELS[q.status] ?? q.status)} \xB7 ${e6(q.partName)}</div>`).join("")}`);
   }
   if (data2.orders.length > 0) {
-    parts.push(`<h2>Pedidos de repuestos</h2>${data2.orders.map((o) => `<div><a href="/admin/quotes/${e5(o.quoteRequestId)}">${e5(quoteRequestCode(o.requestNumber))}</a> \xB7 ${e5(ORDER_STAGE_LABELS[o.stage] ?? o.stage)} \xB7 ${e5(o.partName)} \xB7 ${e5(o.storeName)} \xB7 ${e5(formatUsd2(o.total))}</div>`).join("")}`);
+    parts.push(`<h2>Pedidos de repuestos</h2>${data2.orders.map((o) => `<div><a href="/admin/quotes/${e6(o.quoteRequestId)}">${e6(quoteRequestCode(o.requestNumber))}</a> \xB7 ${e6(ORDER_STAGE_LABELS[o.stage] ?? o.stage)} \xB7 ${e6(o.partName)} \xB7 ${e6(o.storeName)} \xB7 ${e6(formatUsd2(o.total))}</div>`).join("")}`);
   }
   return parts.length > 0 ? `<div class="card">${parts.join("")}</div>` : "";
 }
-var e5, csrfField9, flashHtml9, FILTERS9;
+var e6, csrfField9, flashHtml9, FILTERS9;
 var init_views_quotes = __esm({
   "packages/api/dist/interfaces/admin/views-quotes.js"() {
     "use strict";
@@ -102081,9 +106017,9 @@ var init_views_quotes = __esm({
     init_messages();
     init_workflow();
     init_workflow5();
-    e5 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField9 = (token2) => `<input type="hidden" name="csrf" value="${e5(token2)}">`;
-    flashHtml9 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e5(flash.text)}</p>` : "";
+    e6 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField9 = (token2) => `<input type="hidden" name="csrf" value="${e6(token2)}">`;
+    flashHtml9 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e6(flash.text)}</p>` : "";
     FILTERS9 = [
       ["abiertas", "Abiertas"],
       ["con_pedido", "Con pedido"],
@@ -102095,7 +106031,7 @@ var init_views_quotes = __esm({
 // packages/api/dist/interfaces/admin/views-registrations.js
 function verificationPill(status) {
   const tone = STATUS_TONES3[status] ?? "off";
-  return `<span class="pill"><span class="led ${tone}"></span>${e6(STATUS_LABELS3[status] ?? status)}</span>`;
+  return `<span class="pill"><span class="led ${tone}"></span>${e7(STATUS_LABELS3[status] ?? status)}</span>`;
 }
 function day2(value2) {
   const date2 = value2 instanceof Date ? value2 : value2 ? new Date(String(value2)) : null;
@@ -102108,19 +106044,19 @@ function phoneLabel(value2) {
 }
 function value(values, key) {
   const v = values[key];
-  return Array.isArray(v) ? "" : e6(v);
+  return Array.isArray(v) ? "" : e7(v);
 }
 function field(values, name, label2, attrs = "") {
-  return `<label for="f-${name}">${e6(label2)}</label><input id="f-${name}" name="${name}" value="${value(values, name)}" ${attrs}>`;
+  return `<label for="f-${name}">${e7(label2)}</label><input id="f-${name}" name="${name}" value="${value(values, name)}" ${attrs}>`;
 }
 function select(values, name, label2, options, placeholder) {
   const selected2 = String(values[name] ?? "");
-  const opts = options.map(([id2, text9]) => `<option value="${e6(id2)}"${id2 === selected2 ? " selected" : ""}>${e6(text9)}</option>`).join("");
-  const empty = placeholder ? `<option value="">${e6(placeholder)}</option>` : "";
-  return `<label for="f-${name}">${e6(label2)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
+  const opts = options.map(([id2, text9]) => `<option value="${e7(id2)}"${id2 === selected2 ? " selected" : ""}>${e7(text9)}</option>`).join("");
+  const empty = placeholder ? `<option value="">${e7(placeholder)}</option>` : "";
+  return `<label for="f-${name}">${e7(label2)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
 }
 function checkbox(values, name, label2) {
-  return `<div class="checks"><label><input type="checkbox" name="${name}"${values[name] === "on" ? " checked" : ""}> ${e6(label2)}</label></div>`;
+  return `<div class="checks"><label><input type="checkbox" name="${name}"${values[name] === "on" ? " checked" : ""}> ${e7(label2)}</label></div>`;
 }
 function vehicleFields2(values) {
   return `${select(values, "vehicleClass", "Clase de veh\xEDculo", vehicleClasses.classes.map((c) => [c.id, c.name]), "Elige\u2026")}
@@ -102134,19 +106070,19 @@ function vehicleFields2(values) {
     ${checkbox(values, "reminders", "Acepta recordatorios por WhatsApp")}`;
 }
 function usersListView(input) {
-  const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e6(u.id)}">${e6(u.name)}</a></td><td>${e6(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
-            <td><span class="mono">${e6(phoneLabel(u.phone))}</span></td><td>${e6(u.city ?? "\u2014")}</td><td>${day2(u.createdAt)}</td></tr>`).join("");
+  const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e7(u.id)}">${e7(u.name)}</a></td><td>${e7(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
+            <td><span class="mono">${e7(phoneLabel(u.phone))}</span></td><td>${e7(u.city ?? "\u2014")}</td><td>${day2(u.createdAt)}</td></tr>`).join("");
   const q = encodeURIComponent(input.query);
   const prev = input.page.page > 1 ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page - 1}">\u2190 Anterior</a>` : "";
   const next = input.page.items.length === input.page.pageSize ? `<a href="/admin/users?q=${q}&amp;page=${input.page.page + 1}">Siguiente \u2192</a>` : "";
   return `<div class="row between"><h1>Usuarios</h1><a class="button" href="/admin/users/new">+ Nuevo registro</a></div>
-  <form method="get" action="/admin/users" class="row"><input name="q" value="${e6(input.query)}" placeholder="Buscar por nombre o tel\xE9fono" maxlength="60"><button type="submit">Buscar</button></form>
+  <form method="get" action="/admin/users" class="row"><input name="q" value="${e7(input.query)}" placeholder="Buscar por nombre o tel\xE9fono" maxlength="60"><button type="submit">Buscar</button></form>
   <div class="scroll"><table><thead><tr><th>Nombre</th><th>Perfil</th><th>Tel\xE9fono</th><th>Ciudad</th><th>Alta</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
   <div class="pager">${prev}${next}</div>`;
 }
 function newUserView(input) {
   const v = input.values;
-  const tabs2 = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e6(ROLE_LABELS[p])}</a>`).join("");
+  const tabs2 = ["dueno", "taller", "almacen"].map((p) => `<a href="/admin/users/new?perfil=${p}"${p === input.perfil ? ' class="active"' : ""}>${e7(ROLE_LABELS[p])}</a>`).join("");
   const common = `<div class="card"><h2>Datos b\xE1sicos</h2>
     ${input_phone(v)}
     ${field(v, "name", input.perfil === "dueno" ? "Nombre y apellido" : "Nombre del responsable", 'required minlength="3" maxlength="60"')}
@@ -102167,7 +106103,7 @@ function newUserView(input) {
       ${field(v, "hours", "Horario (opcional)", 'maxlength="120" placeholder="Lun\u2013Vie 08:00\u201318:00"')}`;
     if (input.perfil === "taller") {
       const chosen = Array.isArray(v.services) ? v.services.map(String) : v.services ? [String(v.services)] : [];
-      const services = serviceTaxonomy.categories.map((c) => `<label><input type="checkbox" name="services" value="${e6(c.id)}"${chosen.includes(c.id) ? " checked" : ""}> ${e6(c.name)}</label>`).join("");
+      const services = serviceTaxonomy.categories.map((c) => `<label><input type="checkbox" name="services" value="${e7(c.id)}"${chosen.includes(c.id) ? " checked" : ""}> ${e7(c.name)}</label>`).join("");
       specific = `<div class="card"><h2>Taller</h2>${business}<label>Servicios que ofrece</label><div class="checks">${services}</div>
         <p class="muted">Queda en verificaci\xF3n hasta que lo apruebes; mientras tanto no aparece en las b\xFAsquedas.</p></div>`;
     } else {
@@ -102178,9 +106114,9 @@ function newUserView(input) {
     }
   }
   const visitCode = typeof input.values?.code === "string" ? input.values.code : "";
-  const codeField = visitCode ? `<input type="hidden" name="code" value="${e6(visitCode)}">` : "";
+  const codeField = visitCode ? `<input type="hidden" name="code" value="${e7(visitCode)}">` : "";
   return `<div class="stack wide"><h1>Nuevo registro</h1><div class="tabs">${tabs2}</div>
-  ${input.error ? `<p class="error" role="alert">${e6(input.error)}</p>` : ""}
+  ${input.error ? `<p class="error" role="alert">${e7(input.error)}</p>` : ""}
   <form method="post" action="/admin/users/new" autocomplete="off">${csrfField10(input.csrf)}<input type="hidden" name="perfil" value="${input.perfil}">${codeField}
   ${common}${specific}
   <button class="full" type="submit">Guardar registro</button></form></div>`;
@@ -102189,66 +106125,66 @@ function input_phone(values) {
   return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567" class="mono"');
 }
 function verificationForm(kind, id2, userId, csrf) {
-  return `<form method="post" action="/admin/verifications/${kind}/${e6(id2)}">${csrfField10(csrf)}
-    <input type="hidden" name="returnTo" value="${e6(userId)}">
-    <label for="reason-${e6(id2)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e6(id2)}" name="reason" maxlength="500">
+  return `<form method="post" action="/admin/verifications/${kind}/${e7(id2)}">${csrfField10(csrf)}
+    <input type="hidden" name="returnTo" value="${e7(userId)}">
+    <label for="reason-${e7(id2)}">Observaci\xF3n (obligatoria para rechazar)</label><input id="reason-${e7(id2)}" name="reason" maxlength="500">
     <div class="row"><button type="submit" name="decision" value="verified">Aprobar</button><button class="danger" type="submit" name="decision" value="rejected">Rechazar</button></div></form>`;
 }
 function userDetailView(input) {
   const { user, vehicles, shop, store } = input.detail;
   const digits = String(user.phone ?? "").replace(/\D/g, "");
-  const chat = String(user.phone ?? "").startsWith("+") && digits.length >= 8 ? ` \xB7 <a href="https://wa.me/${e6(digits)}" target="_blank" rel="noopener">Abrir chat</a>` : "";
+  const chat = String(user.phone ?? "").startsWith("+") && digits.length >= 8 ? ` \xB7 <a href="https://wa.me/${e7(digits)}" target="_blank" rel="noopener">Abrir chat</a>` : "";
   const datos = `<div class="card"><h2>Datos</h2>
-    <div>Perfil: <strong>${e6(ROLE_LABELS[String(user.role)] ?? user.role)}</strong></div>
-    <div>Tel\xE9fono: <span class="mono">${e6(phoneLabel(user.phone))}</span>${chat}</div>
-    <div>Correo: ${e6(user.email ?? "\u2014")}</div>
-    <div>Ciudad: ${e6(user.city ?? "\u2014")}</div>
-    <div>Consentimiento: ${user.consentAt ? `${day2(user.consentAt)} (versi\xF3n ${e6(user.consentVersion ?? "\u2014")})` : '<span class="error">sin registrar</span>'}</div>
-    <div>C\xF3mo nos conoci\xF3: ${e6(user.source ?? "\u2014")}</div>
-    ${user.notes ? `<div>Notas: ${e6(user.notes)}</div>` : ""}
+    <div>Perfil: <strong>${e7(ROLE_LABELS[String(user.role)] ?? user.role)}</strong></div>
+    <div>Tel\xE9fono: <span class="mono">${e7(phoneLabel(user.phone))}</span>${chat}</div>
+    <div>Correo: ${e7(user.email ?? "\u2014")}</div>
+    <div>Ciudad: ${e7(user.city ?? "\u2014")}</div>
+    <div>Consentimiento: ${user.consentAt ? `${day2(user.consentAt)} (versi\xF3n ${e7(user.consentVersion ?? "\u2014")})` : '<span class="error">sin registrar</span>'}</div>
+    <div>C\xF3mo nos conoci\xF3: ${e7(user.source ?? "\u2014")}</div>
+    ${user.notes ? `<div>Notas: ${e7(user.notes)}</div>` : ""}
     <div class="muted">Alta: ${day2(user.createdAt)}</div></div>`;
   const business = (title, b, extra, kind) => `<div class="card"><h2>${title}</h2>
-    <div><strong>${e6(b.name)}</strong> \xB7 RUC <span class="mono">${e6(b.ruc ?? "\u2014")}</span></div>
-    <div>${e6(b.address)}, ${e6(b.city)}${b.zone ? ` (${e6(b.zone)})` : ""}</div>
-    <div>Horario: ${e6(b.hours ?? "\u2014")}</div>${extra}
+    <div><strong>${e7(b.name)}</strong> \xB7 RUC <span class="mono">${e7(b.ruc ?? "\u2014")}</span></div>
+    <div>${e7(b.address)}, ${e7(b.city)}${b.zone ? ` (${e7(b.zone)})` : ""}</div>
+    <div>Horario: ${e7(b.hours ?? "\u2014")}</div>${extra}
     <div>Estado: ${verificationPill(String(b.verificationStatus))}</div>
     ${verificationForm(kind, b.id, user.id, input.csrf)}</div>`;
-  const shopCard2 = shop ? business("Taller", shop, `<div>Servicios: ${e6(shop.services.map(categoryName3).join(", ") || "\u2014")}</div>`, "shop") + shopMapCard(user.id, input.shopMap, input.csrf, input.mapValues) : "";
-  const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e6(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
+  const shopCard2 = shop ? business("Taller", shop, `<div>Servicios: ${e7(shop.services.map(categoryName3).join(", ") || "\u2014")}</div>`, "shop") + shopMapCard(user.id, input.shopMap, input.csrf, input.mapValues) : "";
+  const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e7(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
   const vehicleCards = vehicles.map((v) => {
     const plan = input.plans[String(v.id)];
-    return `<div class="card"><h2>${e6(v.make)} ${e6(v.model)} ${e6(v.year)}</h2>
-      <div>${e6(Number(v.currentKm).toLocaleString("es-EC"))} km \xB7 ${e6(className(v.vehicleClass))} \xB7 ${e6(fuelName(v.fuel))}${v.plate ? ` \xB7 ${e6(v.plate)}` : ""}</div>
-      <div class="muted">Uso ${e6(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
-      ${plan ? `<label for="plan-${e6(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e6(v.id)}" readonly rows="12">${e6(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e6(user.id)}/schedule?vehicleId=${e6(v.id)}">Agendar turno</a> \xB7 <a href="/admin/work-orders/new?ownerId=${e6(user.id)}&amp;vehicleId=${e6(v.id)}">Orden de trabajo sin cita</a> \xB7 <a href="/admin/quotes/new?ownerId=${e6(user.id)}&amp;vehicleId=${e6(v.id)}">Cotizar repuesto</a> \xB7 <a href="/admin/service-requests/new?ownerId=${e6(user.id)}">Buscar especialista</a></p>` : ""}</div>`;
+    return `<div class="card"><h2>${e7(v.make)} ${e7(v.model)} ${e7(v.year)}</h2>
+      <div>${e7(Number(v.currentKm).toLocaleString("es-EC"))} km \xB7 ${e7(className(v.vehicleClass))} \xB7 ${e7(fuelName(v.fuel))}${v.plate ? ` \xB7 ${e7(v.plate)}` : ""}</div>
+      <div class="muted">Uso ${e7(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
+      ${plan ? `<label for="plan-${e7(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e7(v.id)}" readonly rows="12">${e7(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e7(user.id)}/schedule?vehicleId=${e7(v.id)}">Agendar turno</a> \xB7 <a href="/admin/work-orders/new?ownerId=${e7(user.id)}&amp;vehicleId=${e7(v.id)}">Orden de trabajo sin cita</a> \xB7 <a href="/admin/quotes/new?ownerId=${e7(user.id)}&amp;vehicleId=${e7(v.id)}">Cotizar repuesto</a> \xB7 <a href="/admin/service-requests/new?ownerId=${e7(user.id)}">Buscar especialista</a></p>` : ""}</div>`;
   }).join("");
   const whatsappLink = ["dueno", "taller", "almacen"].includes(String(user.role)) && user.consentAt ? `<div class="card"><h2>WhatsApp del piloto</h2><p>Vincula este n\xFAmero solo si la persona te escribi\xF3 desde \xE9l. As\xED recibe por WhatsApp las respuestas y avisos de su cuenta.</p>
-      <form method="post" action="/admin/users/${e6(user.id)}/whatsapp-link">${csrfField10(input.csrf)}
-      <label><input type="checkbox" name="confirm" value="si" required> Confirmo que esta persona me escribi\xF3 desde ${e6(phoneLabel(user.phone))}</label>
+      <form method="post" action="/admin/users/${e7(user.id)}/whatsapp-link">${csrfField10(input.csrf)}
+      <label><input type="checkbox" name="confirm" value="si" required> Confirmo que esta persona me escribi\xF3 desde ${e7(phoneLabel(user.phone))}</label>
       <button class="full" type="submit">Vincular WhatsApp</button></form></div>` : "";
-  const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e6(input.error)}</p>` : ""}
-      <form method="post" action="/admin/users/${e6(user.id)}/vehicles" autocomplete="off">${csrfField10(input.csrf)}${vehicleFields2(input.values ?? {})}
+  const addVehicle = String(user.role) === "dueno" ? `<div class="card"><h2>Agregar veh\xEDculo</h2>${input.error ? `<p class="error" role="alert">${e7(input.error)}</p>` : ""}
+      <form method="post" action="/admin/users/${e7(user.id)}/vehicles" autocomplete="off">${csrfField10(input.csrf)}${vehicleFields2(input.values ?? {})}
       <button class="full" type="submit">Agregar veh\xEDculo</button></form></div>` : "";
   const moderation = moderationSection(String(user.id), input.relations ?? [], input.sanctions ?? [], input.csrf, !!input.canSanction);
   const lopdp = input.canLopdp ? userDataRequestsCard(String(user.id), input.dataRequests ?? [], input.csrf) : "";
   const planCard = userPlanCard(String(user.id), input.subscriptions ?? [], input.csrf, !!input.canPayments, String(user.role ?? "dueno"), input.usage ?? {});
-  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e6(user.name)}</h1>${flashHtml10(input.flash)}
+  return `<div class="stack wide"><p><a href="/admin/users">\u2190 Usuarios</a></p><h1>${e7(user.name)}</h1>${flashHtml10(input.flash)}
   ${datos}${whatsappLink}${planCard}${shopCard2}${storeCard}${moderation}${lopdp}${vehicleCards}${userAppointmentsSection(input.appointments ?? [])}${userWorkOrdersSection(input.workOrders ?? [])}${historySection(input.history ?? [])}${userQuotesSection(input.quotes ?? null)}${bitacoraSection(String(user.id), input.events ?? [], input.csrf)}${addVehicle}</div>`;
 }
 function moderationSection(userId, relations, sanctions, csrf, canSanction) {
   if (relations.length === 0 && sanctions.length === 0 && !canSanction)
     return "";
-  const links = relations.length ? `<ul>${relations.map((r) => `<li><a href="/admin/relations/${e6(r.id)}">${e6(relationCode(r.number))}</a> \xB7 ${e6(RELATION_KIND_LABELS[r.kind] ?? r.kind)} \xB7 ${e6(RELATION_STATUS_LABELS[r.status] ?? r.status)}${r.subject ? ` \xB7 ${e6(r.subject)}` : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin v\xEDnculos registrados.</p>`;
+  const links = relations.length ? `<ul>${relations.map((r) => `<li><a href="/admin/relations/${e7(r.id)}">${e7(relationCode(r.number))}</a> \xB7 ${e7(RELATION_KIND_LABELS[r.kind] ?? r.kind)} \xB7 ${e7(RELATION_STATUS_LABELS[r.status] ?? r.status)}${r.subject ? ` \xB7 ${e7(r.subject)}` : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin v\xEDnculos registrados.</p>`;
   const active = sanctions.filter((s) => isActive(s));
-  const history = sanctions.length ? `<ul>${sanctions.map((s) => `<li>${e6(sanctionLabel(s.level))} \xB7 ${day2(s.startsAt)}${s.endsAt ? ` \u2192 ${day2(s.endsAt)}` : ""}${s.liftedAt ? " (levantada)" : isActive(s) ? ' <span class="error">vigente</span>' : " (vencida)"} \xB7 ${e6(s.reason.slice(0, 160))}</li>`).join("")}</ul>` : `<p class="muted">Sin sanciones.</p>`;
-  const form = canSanction ? `<form method="post" action="/admin/users/${e6(userId)}/sanctions">${csrfField10(csrf)}
+  const history = sanctions.length ? `<ul>${sanctions.map((s) => `<li>${e7(sanctionLabel(s.level))} \xB7 ${day2(s.startsAt)}${s.endsAt ? ` \u2192 ${day2(s.endsAt)}` : ""}${s.liftedAt ? " (levantada)" : isActive(s) ? ' <span class="error">vigente</span>' : " (vencida)"} \xB7 ${e7(s.reason.slice(0, 160))}</li>`).join("")}</ul>` : `<p class="muted">Sin sanciones.</p>`;
+  const form = canSanction ? `<form method="post" action="/admin/users/${e7(userId)}/sanctions">${csrfField10(csrf)}
       <label for="sanction-level">Aplicar un paso de la escala</label>
-      <select id="sanction-level" name="level">${SANCTION_LEVELS.map((l) => `<option value="${e6(l.key)}">${e6(l.label)} \u2014 ${e6(l.description)}</option>`).join("")}</select>
+      <select id="sanction-level" name="level">${SANCTION_LEVELS.map((l) => `<option value="${e7(l.key)}">${e7(l.label)} \u2014 ${e7(l.description)}</option>`).join("")}</select>
       <label for="sanction-days">D\xEDas (vac\xEDo = el valor por defecto del paso)</label><input id="sanction-days" name="days" inputmode="numeric">
       <label for="sanction-reason">Motivo (se le comunica)</label><input id="sanction-reason" name="reason" maxlength="500" required>
       <button class="danger" type="submit">Aplicar sanci\xF3n</button></form>` : "";
   return `<div class="card"><h2>Moderaci\xF3n</h2>
-    ${active.length ? `<p class="error">Sanci\xF3n vigente: ${e6(active.map((s) => sanctionLabel(s.level)).join(", "))}</p>` : ""}
+    ${active.length ? `<p class="error">Sanci\xF3n vigente: ${e7(active.map((s) => sanctionLabel(s.level)).join(", "))}</p>` : ""}
     <h2>V\xEDnculos</h2>${links}
     <h2>Sanciones</h2>${history}${form}</div>`;
 }
@@ -102265,9 +106201,9 @@ function shopMapCard(userId, state, csrf, values) {
   return `<div class="card"><h2>Mapa de talleres</h2>
     <div>${status}. Solo se ve si adem\xE1s est\xE1 verificado.</div>
     <p class="muted">El taller puede hacerlo solo por WhatsApp: comparte su ubicaci\xF3n y escribe Mapa | ubicaci\xF3n | ACEPTO. Para salir: Salir del mapa.</p>
-    <form method="post" action="/admin/users/${e6(userId)}/shop-map">${csrfField10(csrf)}
+    <form method="post" action="/admin/users/${e7(userId)}/shop-map">${csrfField10(csrf)}
       <label for="map-point">Ubicaci\xF3n (latitud, longitud)</label>
-      <input id="map-point" name="point" value="${e6(point)}" placeholder="-0.18065, -78.46784" maxlength="60" inputmode="decimal" autocomplete="off">
+      <input id="map-point" name="point" value="${e7(point)}" placeholder="-0.18065, -78.46784" maxlength="60" inputmode="decimal" autocomplete="off">
       <label for="map-precision">Qu\xE9 se muestra</label>
       <select id="map-precision" name="precision"><option value="exacta"${sector ? "" : " selected"}>El punto exacto del taller</option><option value="sector"${sector ? " selected" : ""}>Solo el sector (atiende en casa)</option></select>
       <label><input type="checkbox" name="listed" value="si"${listed ? " checked" : ""}> Aparece en el mapa p\xFAblico</label>
@@ -102276,13 +106212,13 @@ function shopMapCard(userId, state, csrf, values) {
     </form></div>`;
 }
 function verificationsView(input) {
-  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e6(item.userId)}">${e6(item.name)}</a></td>
-            <td>${e6(item.city)}</td><td><span class="mono">${e6(item.ruc ?? "\u2014")}</span></td><td>${day2(item.createdAt)}</td></tr>`).join("");
+  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e7(item.userId)}">${e7(item.name)}</a></td>
+            <td>${e7(item.city)}</td><td><span class="mono">${e7(item.ruc ?? "\u2014")}</span></td><td>${day2(item.createdAt)}</td></tr>`).join("");
   return `<h1>Verificaciones pendientes</h1>${flashHtml10(input.flash)}
   <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
-var ROLE_LABELS, STATUS_LABELS3, STATUS_TONES3, USAGE_OPTIONS, e6, csrfField10, flashHtml10, className, fuelName, categoryName3;
+var ROLE_LABELS, STATUS_LABELS3, STATUS_TONES3, USAGE_OPTIONS, e7, csrfField10, flashHtml10, className, fuelName, categoryName3;
 var init_views_registrations = __esm({
   "packages/api/dist/interfaces/admin/views-registrations.js"() {
     "use strict";
@@ -102308,9 +106244,9 @@ var init_views_registrations = __esm({
       ["carretera", "Carretera"],
       ["severo", "Severo (Sierra, carga, lastre)"]
     ];
-    e6 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField10 = (token2) => `<input type="hidden" name="csrf" value="${e6(token2)}">`;
-    flashHtml10 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e6(flash.text)}</p>` : "";
+    e7 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField10 = (token2) => `<input type="hidden" name="csrf" value="${e7(token2)}">`;
+    flashHtml10 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${e7(flash.text)}</p>` : "";
     className = (id2) => vehicleClasses.classes.find((c) => c.id === id2)?.name ?? String(id2 ?? "\u2014");
     fuelName = (id2) => vehicleClasses.fuels.find((f) => f.id === id2)?.name ?? String(id2 ?? "\u2014");
     categoryName3 = (id2) => serviceTaxonomy.categories.find((c) => c.id === id2)?.name ?? id2;
@@ -102318,7 +106254,7 @@ var init_views_registrations = __esm({
 });
 
 // packages/api/dist/interfaces/admin/registrations.js
-import { randomBytes as randomBytes16 } from "node:crypto";
+import { randomBytes as randomBytes19 } from "node:crypto";
 function dbError(err) {
   const code3 = err.code;
   if (code3 === "ER_DUP_ENTRY")
@@ -102456,9 +106392,9 @@ function registerRegistrationRoutes(app2, deps) {
     const query = request.query ?? {};
     const q = typeof query.q === "string" ? query.q.trim().slice(0, 60) : "";
     const raw = Number(query.page ?? 1);
-    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    const page2 = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
-      return deps.html(reply, request, "Usuarios", usersListView({ query: q, page: await registrations.searchUsers(q, page) }), session);
+      return deps.html(reply, request, "Usuarios", usersListView({ query: q, page: await registrations.searchUsers(q, page2) }), session);
     } catch (err) {
       const m = dbError(err);
       return errorPage(request, reply, session, "Usuarios", m.text, m.status);
@@ -102497,7 +106433,7 @@ function registerRegistrationRoutes(app2, deps) {
       notes: data2.notes,
       consentVersion: CONSENT_VERSION,
       // Las cuentas creadas por el operador no inician sesión con contraseña: se guarda una aleatoria.
-      passwordHash: await hashPassword(randomBytes16(24).toString("hex"))
+      passwordHash: await hashPassword(randomBytes19(24).toString("hex"))
     });
     const operation = deps.platform ? await deps.platform() : null;
     if (operation && typeof body.city === "string" && body.city.trim() && !cityAllowed(body.city.trim(), operation.cities)) {
@@ -102672,21 +106608,21 @@ function registerRegistrationRoutes(app2, deps) {
     const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "";
     const returnTo = typeof body.returnTo === "string" && UUID6.test(body.returnTo) ? body.returnTo : null;
-    const fail10 = (text9, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text9 }, status }) : errorPage(request, reply, session, "Verificaciones", text9, status);
+    const fail11 = (text9, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text9 }, status }) : errorPage(request, reply, session, "Verificaciones", text9, status);
     if (!decision)
-      return fail10("Elige aprobar o rechazar.", 400);
+      return fail11("Elige aprobar o rechazar.", 400);
     if (decision === "rejected" && reason.length < 5)
-      return fail10("Para rechazar escribe la observaci\xF3n que recibir\xE1 la entidad.", 400);
+      return fail11("Para rechazar escribe la observaci\xF3n que recibir\xE1 la entidad.", 400);
     try {
       const business = (await registrations.pendingVerifications()).find((item) => item.kind === kind && item.id === id2);
       const updated = await registrations.setVerification(kind, id2, decision);
       if (!updated)
-        return fail10("Registro no encontrado.", 404);
+        return fail11("Registro no encontrado.", 404);
       if (business)
         await (deps.verificationNotices ?? new MysqlOutboxDeliveryStore()).enqueueVerification(business.userId, id2, decision, reason).catch(() => app2.log.warn("verification notice could not be queued"));
     } catch (err) {
       const m = dbError(err);
-      return fail10(m.text, m.status);
+      return fail11(m.text, m.status);
     }
     const label2 = kind === "shop" ? "Taller" : "Almac\xE9n";
     await deps.audit(`admin.verification.${decision}`, session.userId, `${label2} ${id2}: ${reason || "sin observaciones"}`);
@@ -102825,33 +106761,33 @@ function registerAppointmentRoutes(app2, deps) {
     const shopId = typeof body.shopId === "string" && UUID7.test(body.shopId) ? body.shopId : null;
     const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, 500) || null : null;
     const scheduledAt = parseEcDateTime(body.date, body.time);
-    const fail10 = (error, status = 400) => renderSchedule(request, reply, session, ownerId, vehicleId, services, { error, values: body, status });
+    const fail11 = (error, status = 400) => renderSchedule(request, reply, session, ownerId, vehicleId, services, { error, values: body, status });
     const operation = deps.platform ? await deps.platform() : null;
     const paused = operation ? featurePaused(operation, "appointments") : null;
     if (paused)
-      return fail10(paused);
+      return fail11(paused);
     if (services.length === 0)
-      return fail10("Elige al menos un servicio.");
+      return fail11("Elige al menos un servicio.");
     if (!shopId)
-      return fail10("Elige un taller.");
+      return fail11("Elige un taller.");
     if (!scheduledAt)
-      return fail10("Fecha u hora no v\xE1lida.");
+      return fail11("Fecha u hora no v\xE1lida.");
     const now = Date.now();
     if (scheduledAt.getTime() < now - 5 * 60 * 1e3)
-      return fail10("La fecha y hora ya pasaron: elige un horario futuro.");
+      return fail11("La fecha y hora ya pasaron: elige un horario futuro.");
     if (scheduledAt.getTime() > now + MAX_AHEAD_MS)
-      return fail10("Solo se agendan turnos dentro de los pr\xF3ximos 6 meses.");
+      return fail11("Solo se agendan turnos dentro de los pr\xF3ximos 6 meses.");
     let id2;
     let shopName;
     try {
       const detail = await registrations.getUserDetail(ownerId);
       if (!detail || String(detail.user.role) !== "dueno")
-        return fail10("Solo se agendan turnos para due\xF1os de veh\xEDculo registrados.", 404);
+        return fail11("Solo se agendan turnos para due\xF1os de veh\xEDculo registrados.", 404);
       if (!detail.vehicles.some((v) => String(v.id) === vehicleId))
-        return fail10("El veh\xEDculo no pertenece a este due\xF1o.");
+        return fail11("El veh\xEDculo no pertenece a este due\xF1o.");
       const shop = (await appointments.verifiedShops("")).find((s) => s.id === shopId);
       if (!shop)
-        return fail10("El taller elegido no est\xE1 verificado.");
+        return fail11("El taller elegido no est\xE1 verificado.");
       shopName = shop.name;
       id2 = await appointments.createAppointment({
         ownerId,
@@ -102879,7 +106815,7 @@ function registerAppointmentRoutes(app2, deps) {
       }
     } catch (err) {
       const m = dbErrorText(err);
-      return fail10(m.text, m.status);
+      return fail11(m.text, m.status);
     }
     await deps.audit("admin.appointment.create", session.userId, `Turno ${id2} en ${shopName} para el usuario ${ownerId}`);
     return reply.redirect(`/admin/appointments/${id2}?ok=creado`, 302);
@@ -102891,9 +106827,9 @@ function registerAppointmentRoutes(app2, deps) {
     const query = request.query ?? {};
     const filter = FILTERS10.includes(query.f) ? query.f : "proximos";
     const raw = Number(query.page ?? 1);
-    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    const page2 = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
-      return deps.html(reply, request, "Turnos", appointmentsListView({ filter, page: await appointments.listAppointments(filter, page) }), session);
+      return deps.html(reply, request, "Turnos", appointmentsListView({ filter, page: await appointments.listAppointments(filter, page2) }), session);
     } catch (err) {
       const m = dbErrorText(err);
       return errorPage(request, reply, session, "Turnos", m.text, m.status);
@@ -103163,79 +107099,79 @@ function visitLine(result) {
   if (!result.code)
     return "";
   if (result.visit) {
-    return `<div>Lleg\xF3 desde automantpro.app el ${e7(formatEcDateTime(result.visit.createdAt))}${result.visit.ref ? ` \xB7 origen: <strong>${e7(result.visit.ref)}</strong>` : ""} (c\xF3digo ${e7(result.code)}).</div>`;
+    return `<div>Lleg\xF3 desde automantpro.app el ${e8(formatEcDateTime(result.visit.createdAt))}${result.visit.ref ? ` \xB7 origen: <strong>${e8(result.visit.ref)}</strong>` : ""} (c\xF3digo ${e8(result.code)}).</div>`;
   }
-  return `<div class="muted">El c\xF3digo ${e7(result.code)} ${result.visitLookup ? "no corresponde a una visita de los \xFAltimos 7 d\xEDas" : "no se pudo consultar"}.</div>`;
+  return `<div class="muted">El c\xF3digo ${e8(result.code)} ${result.visitLookup ? "no corresponde a una visita de los \xFAltimos 7 d\xEDas" : "no se pudo consultar"}.</div>`;
 }
 function resultCard(result, csrf) {
   if (!result.phone) {
     return `<div class="card">${visitLine(result)}<p class="error">No encontr\xE9 un celular de Ecuador en lo que pegaste. Pega el n\xFAmero del contacto (por ejemplo 099 123 4567).</p></div>`;
   }
   const digits = phoneDigits(result.phone);
-  const chat = `<a href="https://wa.me/${e7(digits)}" target="_blank" rel="noopener">Abrir chat</a>`;
-  const message2 = `<label for="welcome">Mensaje para enviar</label><textarea id="welcome" readonly rows="10">${e7(result.message)}</textarea>`;
+  const chat = `<a href="https://wa.me/${e8(digits)}" target="_blank" rel="noopener">Abrir chat</a>`;
+  const message2 = `<label for="welcome">Mensaje para enviar</label><textarea id="welcome" readonly rows="10">${e8(result.message)}</textarea>`;
   if (!result.detail) {
     const intent = result.intent ?? null;
-    const intentLine = intent ? `<p class="ok">${e7(INTENT_LABELS[intent] ?? intent)}.</p>` : "";
+    const intentLine = intent ? `<p class="ok">${e8(INTENT_LABELS[intent] ?? intent)}.</p>` : "";
     const option2 = (value2, label2) => `<option value="${value2}"${intent === value2 ? " selected" : ""}>${label2}</option>`;
     return `<div class="card"><h2>Contacto nuevo</h2>
-      <div><strong>${e7(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}${intentLine}
+      <div><strong>${e8(formatWhatsappNumber(digits))}</strong> \xB7 ${chat}</div>${visitLine(result)}${intentLine}
       <p class="muted">${intent === "cuenta" ? "Dice que ya tiene cuenta: b\xFAscala por su n\xFAmero anterior antes de registrarlo de nuevo." : "No est\xE1 registrado. Env\xEDa la bienvenida y, cuando diga qui\xE9n es, reg\xEDstralo."}</p>
       ${message2}
-      <form method="post" action="/admin/users/new/start" class="row">${csrfField11(csrf)}<input type="hidden" name="phone" value="${e7(result.phone)}">${result.code ? `<input type="hidden" name="code" value="${e7(result.code)}">` : ""}
+      <form method="post" action="/admin/users/new/start" class="row">${csrfField11(csrf)}<input type="hidden" name="phone" value="${e8(result.phone)}">${result.code ? `<input type="hidden" name="code" value="${e8(result.code)}">` : ""}
       <select name="perfil" aria-label="Perfil">${option2("dueno", "Due\xF1o de veh\xEDculo")}${option2("taller", "Taller")}${option2("almacen", "Almac\xE9n")}</select>
       <button type="submit">Registrar</button></form></div>`;
   }
   const { user, vehicles } = result.detail;
   const role = String(user.role);
-  const tasks = result.tasks.length === 0 ? `<p class="muted">Sin pendientes.</p>` : `<ul>${result.tasks.map((t) => `<li>${e7(t.text)}${t.forCustomer ? "" : ' <span class="muted">(solo para ti)</span>'}</li>`).join("")}</ul>`;
-  const schedule = role === "dueno" && vehicles[0] ? ` \xB7 <a href="/admin/users/${e7(user.id)}/schedule?vehicleId=${e7(vehicles[0].id)}">Agendar turno</a>` : "";
+  const tasks = result.tasks.length === 0 ? `<p class="muted">Sin pendientes.</p>` : `<ul>${result.tasks.map((t) => `<li>${e8(t.text)}${t.forCustomer ? "" : ' <span class="muted">(solo para ti)</span>'}</li>`).join("")}</ul>`;
+  const schedule = role === "dueno" && vehicles[0] ? ` \xB7 <a href="/admin/users/${e8(user.id)}/schedule?vehicleId=${e8(vehicles[0].id)}">Agendar turno</a>` : "";
   const planCard = result.plan === void 0 ? "" : `<div class="card"><h2>Plan</h2>
         <p>${planBadge(result.plan)}</p>
-        ${(result.limits ?? []).length ? `<ul>${(result.limits ?? []).map((l) => `<li>${e7(String(l.used))} de ${e7(String(l.limit))} ${e7(l.label)}${l.reached ? ' <span class="error">(tope alcanzado)</span>' : ""}</li>`).join("")}</ul>` : ""}
-        ${(result.limits ?? []).some((l) => l.reached) ? `<label for="upgrade">Ofr\xE9cele el plan</label><textarea id="upgrade" readonly rows="3">${e7(upgradeMessage(role, (result.limits ?? []).find((l) => l.reached)))}</textarea>` : ""}
-        ${result.nearby ? `<label for="cercanos">Talleres cercanos (plan gratuito)</label><textarea id="cercanos" readonly rows="6">${e7(result.nearby)}</textarea>` : ""}
-        <p class="muted"><a href="/admin/users/${e7(user.id)}">Registrar un pago en su ficha</a></p></div>`;
-  return `${planCard}<div class="card"><h2>${e7(ROLE_LABELS[role] ?? role)} registrado</h2>
-    <div><strong>${e7(user.name)}</strong> \xB7 ${e7(formatWhatsappNumber(digits))} \xB7 ${chat}</div>${visitLine(result)}
-    <div><a href="/admin/users/${e7(user.id)}">Ver ficha</a>${schedule}</div>
+        ${(result.limits ?? []).length ? `<ul>${(result.limits ?? []).map((l) => `<li>${e8(String(l.used))} de ${e8(String(l.limit))} ${e8(l.label)}${l.reached ? ' <span class="error">(tope alcanzado)</span>' : ""}</li>`).join("")}</ul>` : ""}
+        ${(result.limits ?? []).some((l) => l.reached) ? `<label for="upgrade">Ofr\xE9cele el plan</label><textarea id="upgrade" readonly rows="3">${e8(upgradeMessage(role, (result.limits ?? []).find((l) => l.reached)))}</textarea>` : ""}
+        ${result.nearby ? `<label for="cercanos">Talleres cercanos (plan gratuito)</label><textarea id="cercanos" readonly rows="6">${e8(result.nearby)}</textarea>` : ""}
+        <p class="muted"><a href="/admin/users/${e8(user.id)}">Registrar un pago en su ficha</a></p></div>`;
+  return `${planCard}<div class="card"><h2>${e8(ROLE_LABELS[role] ?? role)} registrado</h2>
+    <div><strong>${e8(user.name)}</strong> \xB7 ${e8(formatWhatsappNumber(digits))} \xB7 ${chat}</div>${visitLine(result)}
+    <div><a href="/admin/users/${e8(user.id)}">Ver ficha</a>${schedule}</div>
     <h2>Pendientes del \xFAltimo chat</h2>${tasks}
     ${message2}</div>`;
 }
 function copilotCard(input) {
   const { csrf, copilot, draft } = input;
-  const hiddenQuery = `<input type="hidden" name="q" value="${e7(input.query)}">`;
+  const hiddenQuery = `<input type="hidden" name="q" value="${e8(input.query)}">`;
   let draftBlock = "";
   if (draft?.ok) {
-    const feedback = draft.usageId ? `<form method="post" action="/admin/attend/feedback" class="stack">${csrfField11(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e7(draft.usageId)}">
+    const feedback = draft.usageId ? `<form method="post" action="/admin/attend/feedback" class="stack">${csrfField11(csrf)}${hiddenQuery}<input type="hidden" name="usageId" value="${e8(draft.usageId)}">
         <label for="review-reason">Resultado de la prueba (opcional)</label><input id="review-reason" name="reason" maxlength="191" placeholder="\xBFQu\xE9 cambiaste o por qu\xE9 lo rechazaste?">
         <p class="muted">La respuesta no se env\xEDa ni se guarda desde este panel: rev\xEDsala, corr\xEDgela y env\xEDala manualmente solo durante la prueba autorizada.</p>
         <div class="row"><button type="submit" name="outcome" value="approved">Aprobado sin cambios</button><button class="secondary" type="submit" name="outcome" value="edited">Aprobado con edici\xF3n</button><button class="danger" type="submit" name="outcome" value="rejected">Rechazado</button></div></form>` : "";
-    draftBlock = `<p class="muted">Borrador generado por IA para prueba guiada: una persona debe revisarlo y decidir su resultado. Costo estimado US$ ${e7(draft.costUsd.toFixed(4))}.</p>
-      <label for="draft">Respuesta final para revisi\xF3n humana</label><textarea id="draft" rows="10">${e7(draft.reply)}</textarea>
-      ${draft.note ? `<p><strong>Nota para ti:</strong> ${e7(draft.note)}</p>` : ""}${feedback}`;
+    draftBlock = `<p class="muted">Borrador generado por IA para prueba guiada: una persona debe revisarlo y decidir su resultado. Costo estimado US$ ${e8(draft.costUsd.toFixed(4))}.</p>
+      <label for="draft">Respuesta final para revisi\xF3n humana</label><textarea id="draft" rows="10">${e8(draft.reply)}</textarea>
+      ${draft.note ? `<p><strong>Nota para ti:</strong> ${e8(draft.note)}</p>` : ""}${feedback}`;
   } else if (draft) {
-    draftBlock = `<p class="error" role="alert">${e7(draft.message)}</p><p class="muted">Usa el mensaje sugerido de arriba.</p>`;
+    draftBlock = `<p class="error" role="alert">${e8(draft.message)}</p><p class="muted">Usa el mensaje sugerido de arriba.</p>`;
   }
   const form = copilot.available ? `<form method="post" action="/admin/attend/draft" autocomplete="off">${csrfField11(csrf)}${hiddenQuery}
-      <label for="customer-message">Mensaje del cliente</label><textarea id="customer-message" name="message" rows="4" maxlength="2000" required>${e7(input.customerText)}</textarea>
-      <label for="instruction">Indicaci\xF3n para la IA (opcional)</label><input id="instruction" name="instruction" maxlength="300" value="${e7(input.instruction)}" placeholder="Ofr\xE9cele turno para el jueves en la ma\xF1ana">
-      <button class="full" type="submit">Sugerir respuesta con IA</button></form>` : `<p class="muted">${e7(copilot.reason ?? "La IA no est\xE1 disponible.")} Rev\xEDsalo en <a href="/admin/settings">Ajustes</a>.</p>`;
+      <label for="customer-message">Mensaje del cliente</label><textarea id="customer-message" name="message" rows="4" maxlength="2000" required>${e8(input.customerText)}</textarea>
+      <label for="instruction">Indicaci\xF3n para la IA (opcional)</label><input id="instruction" name="instruction" maxlength="300" value="${e8(input.instruction)}" placeholder="Ofr\xE9cele turno para el jueves en la ma\xF1ana">
+      <button class="full" type="submit">Sugerir respuesta con IA</button></form>` : `<p class="muted">${e8(copilot.reason ?? "La IA no est\xE1 disponible.")} Rev\xEDsalo en <a href="/admin/settings">Ajustes</a>.</p>`;
   return `<div class="card"><h2>Copiloto de IA</h2>${draftBlock}${form}</div>`;
 }
 function attendView(input) {
   return `<div class="stack wide"><h1>Atender a un contacto</h1>
-  ${input.notice ? `<div class="card"><p class="error" role="status">${e7(input.notice)}</p></div>` : ""}
+  ${input.notice ? `<div class="card"><p class="error" role="status">${e8(input.notice)}</p></div>` : ""}
   <p class="muted">Pega el n\xFAmero o el primer mensaje que lleg\xF3 por WhatsApp. Te digo si es nuevo o registrado, su perfil, lo pendiente y el mensaje para responder.</p>
-  ${input.error ? `<p class="error" role="alert">${e7(input.error)}</p>` : ""}
+  ${input.error ? `<p class="error" role="alert">${e8(input.error)}</p>` : ""}
   <form method="post" action="/admin/attend" autocomplete="off">${csrfField11(input.csrf)}
-  <label for="q">N\xFAmero o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. C\xF3digo: AMP-XXXX \xB7 099 123 4567">${e7(input.query)}</textarea>
+  <label for="q">N\xFAmero o mensaje</label><textarea id="q" name="q" rows="3" maxlength="2000" required placeholder="Hola AutoMantPro, quiero empezar. C\xF3digo: AMP-XXXX \xB7 099 123 4567">${e8(input.query)}</textarea>
   <button class="full" type="submit">Identificar</button></form>
-  ${input.flash ? `<p class="ok" role="status">${e7(input.flash)}</p>` : ""}
+  ${input.flash ? `<p class="ok" role="status">${e8(input.flash)}</p>` : ""}
   ${input.result ? resultCard(input.result, input.csrf) : ""}
   ${input.result?.phone && input.copilot ? copilotCard({ csrf: input.csrf, query: input.query, copilot: input.copilot, draft: input.draft, customerText: input.customerText ?? input.query, instruction: input.instruction ?? "" }) : ""}</div>`;
 }
-var e7, csrfField11, phoneDigits, INTENT_LABELS;
+var e8, csrfField11, phoneDigits, INTENT_LABELS;
 var init_views_attend = __esm({
   "packages/api/dist/interfaces/admin/views-attend.js"() {
     "use strict";
@@ -103245,8 +107181,8 @@ var init_views_attend = __esm({
     init_views_registrations();
     init_plans();
     init_views_plans();
-    e7 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
-    csrfField11 = (token2) => `<input type="hidden" name="csrf" value="${e7(token2)}">`;
+    e8 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
+    csrfField11 = (token2) => `<input type="hidden" name="csrf" value="${e8(token2)}">`;
     phoneDigits = (phone) => phone.replace(/\D/g, "");
     INTENT_LABELS = {
       dueno: "Dijo que tiene un veh\xEDculo",
@@ -103534,9 +107470,9 @@ function registerWorkOrderRoutes(app2, deps) {
     const query = request.query ?? {};
     const filter = FILTERS11.includes(query.f) ? query.f : "abiertas";
     const raw = Number(query.page ?? 1);
-    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    const page2 = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
-      return deps.html(reply, request, "\xD3rdenes de trabajo", workOrdersListView({ filter, page: await workOrders.list(filter, page) }), session);
+      return deps.html(reply, request, "\xD3rdenes de trabajo", workOrdersListView({ filter, page: await workOrders.list(filter, page2) }), session);
     } catch (err) {
       const m = dbErrorText2(err);
       return errorPage(request, reply, session, "\xD3rdenes de trabajo", m.text, m.status);
@@ -103665,15 +107601,15 @@ function registerWorkOrderRoutes(app2, deps) {
       const description = str6(body.description, 191);
       const quantity = parseAmount2(body.quantity);
       const unitPrice = parseAmount2(body.unitPrice);
-      const fail10 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
+      const fail11 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
       if (!kind)
-        return fail10("Elige si es repuesto o mano de obra.");
+        return fail11("Elige si es repuesto o mano de obra.");
       if (description.length < 2)
-        return fail10("Escribe la descripci\xF3n del \xEDtem.");
+        return fail11("Escribe la descripci\xF3n del \xEDtem.");
       if (quantity === null || quantity <= 0 || quantity > 999)
-        return fail10("Cantidad no v\xE1lida.");
+        return fail11("Cantidad no v\xE1lida.");
       if (unitPrice === null || unitPrice > 1e5)
-        return fail10("Precio unitario no v\xE1lido.");
+        return fail11("Precio unitario no v\xE1lido.");
       await workOrders.addItem(id2, { kind, description, brand: optional(body.brand, 60), partCode: optional(body.partCode, 60), quantity, unitPrice });
     } catch (err) {
       const m = dbErrorText2(err);
@@ -103733,19 +107669,19 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail10 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
+      const fail11 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
       if (next === "cerrada" || !(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes(next))
-        return fail10("Ese cambio de estado no es posible.");
+        return fail11("Ese cambio de estado no es posible.");
       if (next === "presupuesto_enviado" && found.items.length === 0)
-        return fail10("Agrega al menos un \xEDtem antes de enviar el presupuesto.");
+        return fail11("Agrega al menos un \xEDtem antes de enviar el presupuesto.");
       if ((next === "rechazado" || next === "cancelada") && reason.length < 5)
-        return fail10("Escribe el motivo.");
+        return fail11("Escribe el motivo.");
       const updated = await workOrders.setStatus(id2, order.status, next, {
         rejectionReason: next === "rechazado" ? reason : void 0,
         cancelReason: next === "cancelada" ? reason : void 0
       });
       if (!updated)
-        return fail10("La orden cambi\xF3 mientras tanto: revisa su estado actual.");
+        return fail11("La orden cambi\xF3 mientras tanto: revisa su estado actual.");
     } catch (err) {
       const m = dbErrorText2(err);
       return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
@@ -103813,17 +107749,17 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail10 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
+      const fail11 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
       if (!(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes("cerrada"))
-        return fail10("Solo se cierra una orden en ejecuci\xF3n o esperando repuesto.");
+        return fail11("Solo se cierra una orden en ejecuci\xF3n o esperando repuesto.");
       const exitKm = wholeNumber(body.exitKm, 0, 2e6);
       if (exitKm === null)
-        return fail10("Kilometraje de salida no v\xE1lido.");
+        return fail11("Kilometraje de salida no v\xE1lido.");
       if (order.intakeKm !== null && exitKm < order.intakeKm)
-        return fail10("El kilometraje de salida no puede ser menor que el de ingreso.");
+        return fail11("El kilometraje de salida no puede ser menor que el de ingreso.");
       const warrantyDays = wholeNumber(body.warrantyDays, 0, 3650);
       if (warrantyDays === null)
-        return fail10("D\xEDas de garant\xEDa no v\xE1lidos.");
+        return fail11("D\xEDas de garant\xEDa no v\xE1lidos.");
       const diagnosisOutcome = DIAGNOSIS_OUTCOMES.some(([k]) => k === body.diagnosisOutcome) ? String(body.diagnosisOutcome) : "no_aplica";
       const nextService = optional(body.nextService, 191);
       const closed = await workOrders.close(id2, {
@@ -103835,7 +107771,7 @@ function registerWorkOrderRoutes(app2, deps) {
         historyDescription: historyDescription({ ...order, warrantyDays, nextService }, found.items)
       });
       if (!closed)
-        return fail10("La orden cambi\xF3 mientras tanto: revisa su estado actual.");
+        return fail11("La orden cambi\xF3 mientras tanto: revisa su estado actual.");
     } catch (err) {
       const m = dbErrorText2(err);
       return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
@@ -103963,9 +107899,9 @@ function registerQuoteRoutes(app2, deps) {
     const query = request.query ?? {};
     const filter = FILTERS12.includes(query.f) ? query.f : "abiertas";
     const raw = Number(query.page ?? 1);
-    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    const page2 = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     try {
-      return deps.html(reply, request, "Cotizaciones", quotesListView({ filter, page: await quotes.listRequests(filter, page) }), session);
+      return deps.html(reply, request, "Cotizaciones", quotesListView({ filter, page: await quotes.listRequests(filter, page2) }), session);
     } catch (err) {
       const m = dbErrorText3(err);
       return errorPage(request, reply, session, "Cotizaciones", m.text, m.status);
@@ -104068,20 +108004,20 @@ function registerQuoteRoutes(app2, deps) {
     const { id: id2, quoteId } = request.params;
     if (!UUID10.test(id2) || !UUID10.test(quoteId))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
-    const fail10 = (text9) => renderRequest(request, reply, session, id2, { kind: "error", text: text9 }, 400);
+    const fail11 = (text9) => renderRequest(request, reply, session, id2, { kind: "error", text: text9 }, 400);
     const action = body.action === "sin_stock" ? "sin_stock" : "cotizado";
     let unitPrice = null;
     if (action === "cotizado") {
       unitPrice = parseAmount2(body.unitPrice);
       if (unitPrice === null || unitPrice <= 0 || unitPrice > 1e5)
-        return fail10("Escribe un precio unitario v\xE1lido.");
+        return fail11("Escribe un precio unitario v\xE1lido.");
     }
     const warrantyDays = smallInt(body.warrantyDays, 0, 3650);
     const validDays = smallInt(body.validDays, 0, 365);
     if (warrantyDays === null)
-      return fail10("D\xEDas de garant\xEDa no v\xE1lidos.");
+      return fail11("D\xEDas de garant\xEDa no v\xE1lidos.");
     if (validDays === null)
-      return fail10("D\xEDas de validez no v\xE1lidos.");
+      return fail11("D\xEDas de validez no v\xE1lidos.");
     try {
       const saved = await quotes.saveQuote(id2, quoteId, {
         status: action,
@@ -104094,7 +108030,7 @@ function registerQuoteRoutes(app2, deps) {
         notes: optional2(body.notes, 191)
       });
       if (!saved)
-        return fail10("La solicitud ya no est\xE1 abierta o el almac\xE9n no fue invitado.");
+        return fail11("La solicitud ya no est\xE1 abierta o el almac\xE9n no fue invitado.");
     } catch (err) {
       const m = dbErrorText3(err);
       return errorPage(request, reply, session, "Cotizaci\xF3n", m.text, m.status);
@@ -104230,7 +108166,7 @@ var init_quotes = __esm({
 });
 
 // packages/api/dist/infrastructure/quotes/quote-store.js
-function rows27(result) {
+function rows28(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toRequest3(r) {
@@ -104348,7 +108284,7 @@ var init_quote_store = __esm({
       }
       verifiedStores(city) {
         const base = "SELECT id, name, city, zone, categories, delivery FROM `Store` st WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows27(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows28(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
@@ -104363,8 +108299,8 @@ var init_quote_store = __esm({
       }
       async createRequest(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id2 = String(rows27(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows27(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
+          const id2 = String(rows28(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows28(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `QuoteRequest` (id, number, requesterId, vehicleId, workOrderId, partName, partCode, quantity, city, notes, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, next, input.requesterId, input.vehicleId, input.workOrderId, input.partName, input.partCode, input.quantity, input.city, input.notes]);
           for (const storeId of input.storeIds) {
             await conn.query("INSERT INTO `Quote` (id, requestId, storeId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id2, storeId]);
@@ -104381,26 +108317,26 @@ var init_quote_store = __esm({
       }
       getRequest(id2) {
         return this.run(async (conn) => {
-          const row = rows27(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows28(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id2]))[0];
           if (!row)
             return null;
-          const quotes = rows27(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id2])).map(toQuote);
-          const order = rows27(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id2]))[0];
+          const quotes = rows28(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id2])).map(toQuote);
+          const order = rows28(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id2]))[0];
           return { request: toRequest3(row), quotes, order: order ? toOrder(order) : null };
         });
       }
-      listRequests(filter, page) {
+      listRequests(filter, page2) {
         return this.run(async (conn) => {
           const sql = filter === "abiertas" ? LIST_OPEN : filter === "con_pedido" ? LIST_ORDERED : LIST_ALL2;
-          const items = rows27(await conn.query(sql, [PAGE_SIZE9, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE9])).map(toRequest3);
-          return { items, page, pageSize: PAGE_SIZE9 };
+          const items = rows28(await conn.query(sql, [PAGE_SIZE9, (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE9])).map(toRequest3);
+          return { items, page: page2, pageSize: PAGE_SIZE9 };
         });
       }
       listForUser(userId) {
         return this.run(async (conn) => {
-          const requests = rows27(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
-          const storeQuotes = rows27(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
-          const orders = rows27(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
+          const requests = rows28(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
+          const storeQuotes = rows28(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
+          const orders = rows28(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
           return { requests, storeQuotes, orders };
         });
       }
@@ -104423,16 +108359,16 @@ var init_quote_store = __esm({
       }
       choose(requestId, quoteId) {
         return this.transaction(async (conn) => {
-          const request = rows27(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
+          const request = rows28(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
           if (!request || request.status !== "abierta")
             return null;
-          const quote2 = rows27(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
+          const quote2 = rows28(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
           if (!quote2 || quote2.status !== "cotizado" || quote2.unitPrice === null)
             return null;
           const quantity = Number(request.quantity ?? 1);
           const unitPrice = Number(quote2.unitPrice);
           const total = Math.round(unitPrice * quantity * 100) / 100;
-          const orderId = String(rows27(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const orderId = String(rows28(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("UPDATE `Quote` SET status = 'elegida' WHERE id = ?", [quoteId]);
           await conn.query("UPDATE `Quote` SET status = 'descartada' WHERE requestId = ? AND id <> ? AND status IN ('invitado', 'cotizado')", [requestId, quoteId]);
           await conn.query("UPDATE `QuoteRequest` SET status = 'con_pedido', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [requestId]);
@@ -104825,7 +108761,7 @@ ${input.instruction ?? ""}`);
 });
 
 // packages/api/dist/infrastructure/copilot/copilot-store.js
-function rows28(result) {
+function rows29(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 var MysqlCopilotStore;
@@ -104847,7 +108783,7 @@ var init_copilot_store = __esm({
       }
       recordUsage(usage) {
         return this.run(async (conn) => {
-          const id2 = String(rows28(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const id2 = String(rows29(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("INSERT INTO `LlmUsage` (id, agent, `function`, provider, model, promptVersion, inputTokens, outputTokens, cachedTokens, costUsd, latencyMs, outcome, createdAt) VALUES (?, 'copilot', 'draft_reply', ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [
             id2,
             usage.provider,
@@ -104865,7 +108801,7 @@ var init_copilot_store = __esm({
       }
       spentBetween(start, end) {
         return this.run(async (conn) => {
-          const row = rows28(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
+          const row = rows29(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
           return Number(row?.n ?? 0);
         });
       }
@@ -104876,7 +108812,7 @@ var init_copilot_store = __esm({
       }
       feedbackSummary(since) {
         return this.run(async (conn) => {
-          const row = rows28(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS approved, COALESCE(SUM(score = 3), 0) AS edited, COALESCE(SUM(score <= 2), 0) AS rejected FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
+          const row = rows29(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS approved, COALESCE(SUM(score = 3), 0) AS edited, COALESCE(SUM(score <= 2), 0) AS rejected FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
           return { approved: Number(row?.approved ?? 0), edited: Number(row?.edited ?? 0), rejected: Number(row?.rejected ?? 0) };
         });
       }
@@ -104885,7 +108821,7 @@ var init_copilot_store = __esm({
 });
 
 // packages/api/dist/infrastructure/work-orders/work-order-store.js
-function rows29(result) {
+function rows30(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toOrder2(r) {
@@ -104977,8 +108913,8 @@ var init_work_order_store = __esm({
       }
       async create(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id2 = String(rows29(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows29(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
+          const id2 = String(rows30(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows30(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, diagnosis, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, next, input.shopId, input.ownerId, input.vehicleId, input.appointmentId, input.intakeKm, input.intakeNotes, input.diagnosis]);
           return id2;
         });
@@ -104992,26 +108928,26 @@ var init_work_order_store = __esm({
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows29(await conn.query(GET_ONE2, [id2]))[0];
+          const row = rows30(await conn.query(GET_ONE2, [id2]))[0];
           if (!row)
             return null;
-          const items = rows29(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id2])).map(toItem);
+          const items = rows30(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id2])).map(toItem);
           return { order: toOrder2(row), items };
         });
       }
-      list(filter, page) {
+      list(filter, page2) {
         return this.run(async (conn) => {
-          const params2 = [PAGE_SIZE10, (Math.max(1, Math.floor(page)) - 1) * PAGE_SIZE10];
+          const params2 = [PAGE_SIZE10, (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE10];
           const sql = filter === "abiertas" ? LIST_OPEN2 : filter === "por_aprobar" ? LIST_TO_APPROVE : filter === "en_taller" ? LIST_IN_SHOP : filter === "cerradas" ? LIST_CLOSED : LIST_ALL3;
-          return { items: rows29(await conn.query(sql, params2)).map(toOrder2), page, pageSize: PAGE_SIZE10 };
+          return { items: rows30(await conn.query(sql, params2)).map(toOrder2), page: page2, pageSize: PAGE_SIZE10 };
         });
       }
       listForUser(userId) {
-        return this.run(async (conn) => rows29(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
+        return this.run(async (conn) => rows30(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
       }
       findByAppointment(appointmentId) {
         return this.run(async (conn) => {
-          const row = rows29(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
+          const row = rows30(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
           return row ? String(row.id) : null;
         });
       }
@@ -105043,7 +108979,7 @@ var init_work_order_store = __esm({
       }
       close(id2, input) {
         return this.transaction(async (conn) => {
-          const order = rows29(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id2]))[0];
+          const order = rows30(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id2]))[0];
           if (!order)
             return false;
           await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', exitKm = ?, warrantyDays = ?, nextService = ?, diagnosisOutcome = ?, outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.exitKm, input.warrantyDays, input.nextService, input.diagnosisOutcome, input.outcomeNote, id2]);
@@ -105056,7 +108992,7 @@ var init_work_order_store = __esm({
         });
       }
       historyForUser(userId) {
-        return this.run(async (conn) => rows29(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
+        return this.run(async (conn) => rows30(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
           createdAt: r.createdAt,
           shopName: String(r.shopName),
           vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
@@ -105117,6 +109053,98 @@ var init_views_visits = __esm({
   }
 });
 
+// packages/api/dist/interfaces/admin/courses.js
+function registerCourseAdminRoutes(app2, deps) {
+  const { store, requireSession, html } = deps;
+  const text9 = (value2) => String(value2 ?? "");
+  app2.get("/expertos", async (request, reply) => {
+    const session = requireSession(request, reply);
+    if (!session)
+      return reply;
+    const rows31 = await store.adminExperts();
+    const content = rows31.map((row) => `<article><h2>${escapeHtml(text9(row.name))}</h2><p>${escapeHtml(text9(row.verificationStatus))} \xB7 ${escapeHtml(text9(row.especialidades))}</p><form method="post" action="/admin/expertos/${encodeURIComponent(String(row.userId))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Tipo de documento revisado <input name="documentType" required maxlength="80"></label><label>Motivo (requerido para rechazar) <input name="reason" maxlength="500"></label><button name="decision" value="verificar">Verificar y borrar documento</button><button name="decision" value="rechazar">Rechazar y borrar documento</button></form></article>`).join("");
+    return html(reply, request, "Expertos", `<h1>Expertos</h1>${content || "<p>No hay solicitudes.</p>"}`, session);
+  });
+  app2.post("/expertos/:id", async (request, reply) => {
+    const session = requireSession(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return html(reply, request, "Expertos", messageView("Solicitud inv\xE1lida", "Vuelve a abrir la p\xE1gina."), session, 403);
+    const approve = body.decision === "verificar";
+    if (!approve && body.decision !== "rechazar" || !body.documentType || !approve && !body.reason)
+      return html(reply, request, "Expertos", messageView("Datos incompletos", "Indica tipo de documento y motivo si rechazas."), session, 422);
+    await store.decideExpert(session.userId, request.params.id, approve, body.reason ?? "", body.documentType);
+    return reply.redirect("/admin/expertos", 303);
+  });
+  app2.get("/cursos", async (request, reply) => {
+    const session = requireSession(request, reply);
+    if (!session)
+      return reply;
+    const courses = await store.adminCourses();
+    const reports = await store.adminReports();
+    const history = await store.courseHistory();
+    const commission = await store.commission();
+    const cRows = courses.map((row) => `<article><h2>${escapeHtml(text9(row.titulo))}</h2><p>${escapeHtml(text9(row.expertName))} \xB7 ${escapeHtml(text9(row.estado))} \xB7 ${escapeHtml(text9(row.precioUsd ?? "Gratis"))}</p>${row.estado === "en_revision" && row.firstPublishedAt == null ? `<form method="post" action="/admin/cursos/${encodeURIComponent(String(row.id))}/publicacion"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Motivo de devoluci\xF3n <input name="reason" maxlength="500"></label><button name="decision" value="aprobar">Aprobar primera publicaci\xF3n</button><button name="decision" value="devolver">Devolver con motivo</button></form>` : ""}</article>`).join("");
+    const rRows = reports.map((row) => `<article><h3>${escapeHtml(text9(row.titulo))}</h3><p>${escapeHtml(text9(row.motivo))}</p><form method="post" action="/admin/cursos/denuncias/${encodeURIComponent(String(row.id))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Motivo <input name="reason" maxlength="500"></label><button name="decision" value="ocultar">Ocultar curso</button><button name="decision" value="restaurar">Restaurar curso</button></form></article>`).join("");
+    const hist = history.map((row) => `<li>${escapeHtml(text9(row.titulo))} \xB7 ${escapeHtml(text9(row.campo))}: ${escapeHtml(text9(row.antes))} \u2192 ${escapeHtml(text9(row.despues))}</li>`).join("");
+    const commissionForm = session.role === "admin" ? `<form method="post" action="/admin/cursos/comision"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Comisi\xF3n (%) <input name="commission" inputmode="decimal" value="${escapeHtml(text9(commission ?? ""))}"></label><p>Mientras est\xE9 vac\xEDo, solo se publican cursos gratis. Los cursos de pago requieren una comisi\xF3n num\xE9rica.</p><button>Guardar comisi\xF3n</button></form>` : `<p>Comisi\xF3n actual: ${escapeHtml(text9(commission ?? "Vac\xEDa"))}. Mientras est\xE9 vac\xEDa, solo se publican cursos gratis.</p>`;
+    return html(reply, request, "Cursos", `<h1>Cursos</h1>${commissionForm}<h2>Primera publicaci\xF3n</h2>${cRows || "<p>Sin cursos.</p>"}<h2>Denuncias</h2>${rRows || "<p>Sin denuncias pendientes.</p>"}<h2>Historial</h2><ul>${hist}</ul>`, session);
+  });
+  app2.post("/cursos/:id/publicacion", async (request, reply) => {
+    const session = requireSession(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return html(reply, request, "Cursos", messageView("Solicitud inv\xE1lida", "Vuelve a abrir la p\xE1gina."), session, 403);
+    const approve = body.decision === "aprobar";
+    if (!approve && (!body.reason || body.decision !== "devolver"))
+      return html(reply, request, "Cursos", messageView("Motivo requerido", "Escribe el motivo para devolver el curso."), session, 422);
+    await store.reviewFirstPublication(session.userId, request.params.id, approve, body.reason);
+    return reply.redirect("/admin/cursos", 303);
+  });
+  app2.post("/cursos/denuncias/:id", async (request, reply) => {
+    const session = requireSession(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return html(reply, request, "Cursos", messageView("Solicitud inv\xE1lida", "Vuelve a abrir la p\xE1gina."), session, 403);
+    const hide = body.decision === "ocultar";
+    if (!hide && body.decision !== "restaurar")
+      return reply.code(422).send();
+    await store.decideReport(session.userId, request.params.id, hide, body.reason ?? "");
+    return reply.redirect("/admin/cursos", 303);
+  });
+  app2.post("/cursos/comision", async (request, reply) => {
+    const session = requireSession(request, reply);
+    if (!session)
+      return reply;
+    if (session.role !== "admin" || !can(session.role, "settings"))
+      return reply.code(403).send("Sin permiso.");
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return html(reply, request, "Cursos", messageView("Solicitud inv\xE1lida", "Vuelve a abrir la p\xE1gina."), session, 403);
+    try {
+      await store.changeCommission(session.userId, body.commission?.trim() ? body.commission.trim() : null);
+    } catch {
+      return html(reply, request, "Cursos", messageView("Comisi\xF3n no v\xE1lida", "Usa un n\xFAmero entre 0 y 100."), session, 422);
+    }
+    return reply.redirect("/admin/cursos", 303);
+  });
+}
+var init_courses = __esm({
+  "packages/api/dist/interfaces/admin/courses.js"() {
+    "use strict";
+    init_security();
+    init_permissions();
+    init_views();
+    init_page();
+  }
+});
+
 // packages/api/dist/interfaces/admin/index.js
 var admin_exports = {};
 __export(admin_exports, {
@@ -105124,7 +109152,7 @@ __export(admin_exports, {
   default: () => admin_default,
   resetEnrollmentsForTests: () => resetEnrollmentsForTests
 });
-import { randomBytes as randomBytes17 } from "node:crypto";
+import { randomBytes as randomBytes20 } from "node:crypto";
 function resetEnrollmentsForTests() {
   enrollments.clear();
 }
@@ -105171,6 +109199,7 @@ async function adminPanelRoutes(app2, options = {}) {
   };
   const dashboardDb = () => !!options.connect || !!options.registrations || missingDbEnv().length === 0;
   const startedAt = Date.now();
+  registerCourseAdminRoutes(app2, { store: new MysqlCoursesStore(connect, settings), requireSession, html });
   app2.decorateRequest("cspNonce", "");
   app2.addContentTypeParser("application/x-www-form-urlencoded", { parseAs: "string" }, (_request, body, done) => {
     try {
@@ -105185,7 +109214,7 @@ async function adminPanelRoutes(app2, options = {}) {
     }
   });
   app2.addHook("onRequest", async (request, reply) => {
-    request.cspNonce = randomBytes17(16).toString("base64");
+    request.cspNonce = randomBytes20(16).toString("base64");
     reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${request.cspNonce}'; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`).header("X-Frame-Options", "DENY").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("Cache-Control", "no-store");
     if (!getAdminSessionSecret()) {
       return reply.code(503).type("text/html; charset=utf-8").send(layout({
@@ -105313,10 +109342,10 @@ async function adminPanelRoutes(app2, options = {}) {
     if (!session)
       return reply;
     const raw = Number(request.query?.page ?? 1);
-    const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+    const page2 = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
     const days2 = 30;
     try {
-      const [list7, stats] = await Promise.all([visits.list(page), visits.stats(days2)]);
+      const [list7, stats] = await Promise.all([visits.list(page2), visits.stats(days2)]);
       return html(reply, request, "Origen", visitsView({ items: list7.items, stats, days: days2 }), session);
     } catch (err) {
       const code3 = err.code;
@@ -105486,9 +109515,9 @@ async function adminPanelRoutes(app2, options = {}) {
       if (!session)
         return reply;
       const raw = Number(request.query?.page ?? 1);
-      const page = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
+      const page2 = Number.isFinite(raw) && raw >= 1 ? Math.floor(raw) : 1;
       try {
-        return html(reply, request, list7.title, tableView(list7.title, `/admin${list7.path}`, await list7.load(page), list7.columns), session);
+        return html(reply, request, list7.title, tableView(list7.title, `/admin${list7.path}`, await list7.load(page2), list7.columns), session);
       } catch {
         return html(reply, request, list7.title, messageView(list7.title, "Base de datos no conectada."), session, 503);
       }
@@ -105542,6 +109571,8 @@ var init_admin = __esm({
     init_settings_store();
     init_entry();
     init_workshop_map_store();
+    init_courses();
+    init_courses_store();
     GENERIC_LOGIN_ERROR = "Correo, contrase\xF1a o c\xF3digo incorrectos.";
     ENROLL_TTL_MS = 10 * 60 * 1e3;
     enrollments = /* @__PURE__ */ new Map();
@@ -107249,7 +111280,7 @@ function ecDate(d,opts){return new Date(d).toLocaleString('es-EC',Object.assign(
 function card(title,aside,...kids){return h('section',{class:'pcard'},h('h2',{},title,aside?h('small',{text:aside}):null),...kids);}
 function btn(label,cls,fn){return h('button',{type:'button',class:cls||'ghost',onclick:fn},label);}
 function chipGroup(values,current,onPick,cls){const g=h('div',{class:cls&&cls.includes('day')?'days':'chips',role:'group'});for(const v of values){const b=h('button',{type:'button',class:cls||'chip','aria-pressed':String(v.value===current),onclick:()=>{for(const x of g.children)x.setAttribute('aria-pressed','false');b.setAttribute('aria-pressed','true');onPick(v.value);}});if(v.top){b.append(h('span',{text:v.top}),h('b',{text:v.label}));}else b.textContent=v.label;g.append(b);}return g;}
-async function loadPanel(epoch,vehicleId){const data=await api('/pilot/panel'+(vehicleId?'?vehicleId='+encodeURIComponent(vehicleId):''));if(epoch!==generation||!token)return;panelData=data;panelVehicle=data.vehicleId||null;renderPanel();}
+async function loadPanel(epoch,vehicleId){const data=await api('/pilot/panel'+(vehicleId?'?vehicleId='+encodeURIComponent(vehicleId):''));if(epoch!==generation||!token)return;panelData=data;panelVehicle=data.vehicleId||null;renderPanel();renderExpertCourses(Boolean(data.isVerifiedExpert));}
 function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);}
 function planEditCard(vehicle,label,services){const sec=card('Plan de mantenimiento',label);const list=h('div',{class:'list'});for(const it of services||[]){const row=h('div',{class:'reco'},h('div',{class:'rhead'},h('b',{text:it.serviceName}),h('span',{class:'state',text:it.intervalKm==null?'\u2014':km(it.intervalKm)+' / '+(it.intervalMonths??'\u2014')+' meses'})),h('p',{class:'detail',text:it.reason+(it.override?.disabled?' \xB7 no aplica a este veh\xEDculo':'')}),it.override&&!it.override.disabled?h('small',{class:'detail',text:it.override.actorRole==='taller'?'Ajustado por el taller':'Ajustado por ti'}):null);const edit=btn('Ajustar','ghost',()=>{const box=h('div',{class:'plan-edit'});const f=h('form',{});const kmIn=h('input',{type:'number',min:'500',max:'100000',placeholder:'Intervalo km',value:it.intervalKm??''});const moIn=h('input',{type:'number',min:'1',max:'60',placeholder:'Intervalo meses',value:it.intervalMonths??''});const note=h('textarea',{maxlength:'200',placeholder:'Nota (opcional)'});note.value=it.override?.nota||'';const disabled=h('label',{});const check=h('input',{type:'checkbox',checked:!!it.override?.disabled});disabled.append(check,' No aplica a este veh\xEDculo');const customName=h('input',{type:'text',maxlength:'100',placeholder:'Nombre del servicio propio',value:it.override?.customName||''});const fields=h('div',{class:'interval'},kmIn,moIn);if(String(it.serviceId).startsWith('custom-'))f.append(customName);f.append(fields,note,disabled,h('div',{class:'acts'},h('button',{class:'primary'},'Guardar'),btn('Volver al recomendado','ghost',async()=>{try{await api('/pilot/plan-overrides/reset',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId:it.serviceId})});await loadPanel(generation,panelVehicle);}catch(err){status(err.message);}})));f.onsubmit=async e=>{e.preventDefault();const k=kmIn.value.trim(),m=moIn.value.trim();if(!check.checked&&!k&&!m){status('Indica km o meses.');return;}try{await api('/pilot/plan-overrides',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId:it.serviceId,intervalKm:k?Number(k):null,intervalMonths:m?Number(m):null,disabled:check.checked,nota:note.value,customName:String(it.serviceId).startsWith('custom-')?customName.value:null})});await loadPanel(generation,panelVehicle);}catch(err){status(err.message);}};box.append(f);row.replaceChild(box,edit);});const last=btn('Registrar \xFAltima vez','ghost',()=>{const f=h('form',{class:'acts'});const kmDone=h('input',{type:'number',min:'0',max:'2000000',required:true,placeholder:'Km cuando se hizo','aria-label':'Km cuando se hizo'});const dateDone=h('input',{type:'date',required:true,'aria-label':'Fecha en que se hizo'});const save=h('button',{class:'ghost'},'Guardar registro');f.append(kmDone,dateDone,save);f.onsubmit=async e=>{e.preventDefault();try{await api('/pilot/plan-last-service',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId:it.serviceId,km:Number(kmDone.value),doneAt:dateDone.value})});await loadPanel(generation,panelVehicle);}catch(err){status(err.message);}};row.replaceChild(f,last);});row.append(edit,last);list.append(row);}const add=btn('Agregar servicio propio','ghost',()=>{const name=window.prompt('Nombre del servicio');if(!name||!name.trim())return;const kmValue=window.prompt('Intervalo en km (500 a 100 000)');const monthsValue=window.prompt('Intervalo en meses (opcional)');const serviceId='custom-'+crypto.randomUUID();api('/pilot/plan-overrides',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId,customName:name.trim(),intervalKm:kmValue?Number(kmValue):null,intervalMonths:monthsValue?Number(monthsValue):null,disabled:false,nota:''})}).then(()=>loadPanel(generation,panelVehicle)).catch(err=>status(err.message));});sec.append(list,add);return sec;}
 function lastServiceForm(name){const f=h('form',{class:'acts'});const kmIn=h('input',{type:'number',min:'0',max:'2000000',inputmode:'numeric',required:true,'aria-label':'Kilometraje cuando se hizo',placeholder:'Km cuando se hizo'});const month=h('input',{type:'month','aria-label':'Mes en que se hizo'});f.append(kmIn,month,h('button',{class:'ghost'},'Preparar registro'));f.onsubmit=e=>{e.preventDefault();prepare(['\xDAltimo servicio',name,String(Math.round(Number(kmIn.value))),...(month.value?[month.value]:[])]);};return f;}
@@ -107401,7 +111432,8 @@ const MENU_PATHS={
  cal:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',
  bell:'M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 0 0 4 0',
  hist:'M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5M12 7v5l3 2',
- more:'M5 12h.01M12 12h.01M19 12h.01'
+ more:'M5 12h.01M12 12h.01M19 12h.01',
+ book:'M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21zM4 5.5v15.5M8 7h8M8 11h8'
 };
 const MENU_ITEMS={
  dueno:[
@@ -107437,15 +111469,15 @@ function menuCurrent(target){for(const a of document.querySelectorAll('.side-lin
 function menuGo(target){const section=el(target);if(!section)return;if(section.tagName==='DETAILS')section.open=true;const parent=section.closest?section.closest('details'):null;if(parent)parent.open=true;menuCurrent(target);const more=el('mobileMore');if(more)more.hidden=true;const toggle=el('mobileMoreButton');if(toggle&&target!=='more')toggle.setAttribute('aria-expanded','false');section.scrollIntoView({behavior:'smooth',block:'start'});}
 function menuOpenWhatsApp(){const details=el('vincular');if(details)details.open=true;const more=el('mobileMore');if(more)more.hidden=true;const toggle=el('mobileMoreButton');if(toggle)toggle.setAttribute('aria-expanded','false');const button=el('link');if(button)button.click();if(details)details.scrollIntoView({behavior:'smooth',block:'start'});}
 function menuToggleMore(){const more=el('mobileMore');const toggle=el('mobileMoreButton');if(!more||!toggle)return;const open=more.hidden;more.hidden=!open;toggle.setAttribute('aria-expanded',String(open));if(open){for(const a of document.querySelectorAll('.side-link,.mobile-link,.more-link'))a.removeAttribute('aria-current');toggle.setAttribute('aria-current','page');}else toggle.removeAttribute('aria-current');}
-function buildMobileMenu(items){const bar=el('mobileMenu');bar.replaceChildren();const byTarget={};for(const item of items)byTarget[item.target]=item;const more=el('mobileMore');more.replaceChildren();const keys=MENU_BOTTOM[role]||MENU_BOTTOM.dueno;for(const key of keys){if(key==='more'){const toggle=menuAction(MENU_BOTTOM_LABEL.more,'mobile-link mobile-more-toggle',menuToggleMore);toggle.id='mobileMoreButton';toggle.setAttribute('aria-controls','mobileMore');toggle.setAttribute('aria-expanded','false');toggle.prepend(menuIcon('more'));bar.append(toggle);continue;}let item=byTarget[key];if(!item&&key==='citas')item={label:'Citas',icon:'cal',target:'citas'};if(!item)continue;bar.append(menuLink(item,'mobile-link',MENU_BOTTOM_LABEL[item.target]||item.label));}const used=new Set(keys);for(const item of items)if(!used.has(item.target))more.append(menuLink(item,'more-link'));more.append(menuAction('Vincular WhatsApp','more-link',menuOpenWhatsApp));more.append(menuAction('Salir','more-link',()=>el('logout').click()));}
-function buildMenu(name){const items=MENU_ITEMS[role]||MENU_ITEMS.dueno;el('accountWho').textContent=name+' \xB7 '+(MENU_ROLE_LABEL[role]||role||'');const nav=el('accountNav');nav.replaceChildren();for(const item of items)nav.append(menuLink(item,'side-link'));const foot=el('accountFoot');foot.replaceChildren();foot.append(menuAction('Vincular WhatsApp','side-action',menuOpenWhatsApp));foot.append(menuAction('Salir','side-action',()=>el('logout').click()));buildMobileMenu(items);el('accountMenu').hidden=false;el('mobileMenu').hidden=false;document.body.classList.add('pilot-menu');menuCurrent('chat');}
+function buildMobileMenu(items){const bar=el('mobileMenu');bar.replaceChildren();const byTarget={};for(const item of items)byTarget[item.target]=item;const more=el('mobileMore');more.replaceChildren();const keys=MENU_BOTTOM[role]||MENU_BOTTOM.dueno;for(const key of keys){if(key==='more'){const toggle=menuAction(MENU_BOTTOM_LABEL.more,'mobile-link mobile-more-toggle',menuToggleMore);toggle.id='mobileMoreButton';toggle.setAttribute('aria-controls','mobileMore');toggle.setAttribute('aria-expanded','false');toggle.prepend(menuIcon('more'));bar.append(toggle);continue;}let item=byTarget[key];if(!item&&key==='citas')item={label:'Citas',icon:'cal',target:'citas'};if(!item)continue;bar.append(menuLink(item,'mobile-link',MENU_BOTTOM_LABEL[item.target]||item.label));}for(const item of items)if(!keys.includes(item.target))more.append(menuLink(item,'more-link'));more.append(menuLink({label:'Cursos',icon:'book',target:'coursesLink'},'more-link'));more.lastChild.href='/cursos';more.lastChild.onclick=null;more.append(menuLink({label:'Mis cursos',icon:'book',target:'studentCourses'},'more-link'));more.lastChild.href='#studentCourses';more.lastChild.onclick=e=>{e.preventDefault();menuGo('studentCourses');};more.append(menuAction('Vincular WhatsApp','more-link',menuOpenWhatsApp));more.append(menuAction('Salir','more-link',()=>el('logout').click()));}
+function buildMenu(name){const items=MENU_ITEMS[role]||MENU_ITEMS.dueno;el('accountWho').textContent=name+' \xB7 '+(MENU_ROLE_LABEL[role]||role||'');const nav=el('accountNav');nav.replaceChildren();for(const item of items)nav.append(menuLink(item,'side-link'));for(const [label,url] of [['Cursos','/cursos']]){const a=document.createElement('a');a.className='side-link';a.href=url;a.append(menuIcon('book'));const span=document.createElement('span');span.textContent=label;a.append(span);nav.append(a);}const foot=el('accountFoot');foot.replaceChildren();foot.append(menuAction('Vincular WhatsApp','side-action',menuOpenWhatsApp));foot.append(menuAction('Salir','side-action',()=>el('logout').click()));buildMobileMenu(items);el('accountMenu').hidden=false;el('mobileMenu').hidden=false;document.body.classList.add('pilot-menu');menuCurrent('chat');}
 function clearMenu(){el('accountMenu').hidden=true;el('mobileMenu').hidden=true;el('mobileMore').hidden=true;el('accountNav').replaceChildren();el('accountFoot').replaceChildren();el('mobileMore').replaceChildren();el('accountWho').textContent='';document.body.classList.remove('pilot-menu');}
 `;
 
 // packages/api/dist/interfaces/pilot-page.js
-function renderPilotPage(nonce) {
+function renderPilotPage(nonce2) {
   return `<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Pruebas con operador \xB7 AutoMantPro</title>
-<style nonce="${nonce}">${THEME_TOKENS}
+<style nonce="${nonce2}">${THEME_TOKENS}
 *{box-sizing:border-box}body{font:16px/1.5 var(--c-font);background:var(--c-bg);color:var(--c-ink);margin:0}main{max-width:760px;margin:auto;padding:20px 16px 40px}
 h1{font-size:26px;line-height:1.15;font-weight:800;letter-spacing:-.035em}h2{font-size:11px;font-weight:700}h3{font-size:11px;font-weight:700;margin-top:22px}main>p{color:var(--c-muted)}
 section{background:var(--c-surface);border:1px solid var(--c-line);border-radius:12px;box-shadow:var(--c-shadow);padding:20px;margin:16px 0}
@@ -107465,7 +111497,8 @@ details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;
 ${MENU_MARKUP}
 <main>${logoImg()}<h1>Pruebas con atenci\xF3n humana</h1><p>El operador revisa cada mensaje. Preparar un comando no ejecuta la operaci\xF3n: debes enviarlo y el operador debe aprobarlo.</p><p>Los avisos se muestran aqu\xED. El env\xEDo real por WhatsApp sigue pendiente.</p><p><a href="/admin/local-agent">Conectar o revocar equipo de atenci\xF3n</a></p>
 <section id="login"><h2 id="entrar">Entrar con tu cuenta</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true">Con c\xF3digo por WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">Con contrase\xF1a</button></nav><form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form><form id="codeVerifyForm" class="hidden"><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><form id="loginForm" class="hidden"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><h3 id="crear">Crear cuenta</h3><form id="signupForm"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><div id="signupFields"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Pedir c\xF3digo y continuar</button></form><form id="signupVerifyForm" class="hidden"><label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></section>
-<div id="chat" class="hidden"><div class="row2"><h2 id="who">Conversaci\xF3n de prueba</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div>${PANEL_MARKUP}<section id="composer"><h2>Mensaje al operador</h2><form id="sendForm"><label for="message">Comando o mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar para revisi\xF3n</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
+<div id="chat" class="hidden"><div class="row2"><h2 id="who">Conversaci\xF3n de prueba</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div>${PANEL_MARKUP}<section id="studentCourses"><h2>Mis cursos</h2><div id="courseEnrollment"></div><div id="studentCourseItems"></div></section><section id="composer"><h2>Mensaje al operador</h2><form id="sendForm"><label for="message">Comando o mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar para revisi\xF3n</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
+<section id="expertCourses" class="hidden"><h2>Mis cursos como experto</h2><p id="expertStatus"></p><div id="expertItems"></div><form id="expertCreate"><label>T\xEDtulo <input name="titulo" required maxlength="191"></label><label>Slug <input name="slug" required maxlength="191"></label><label>Especialidad <input name="especialidad" required maxlength="100"></label><label>Nivel <input name="nivel" required maxlength="40"></label><label>Horas <input name="horas" type="number" min="1" required></label><label>Precio USD (vac\xEDo = gratis) <input name="precioUsd" type="number" min="0" step="0.01"></label><label>Nota m\xEDnima <input name="notaMinima" type="number" min="0" max="100" value="70"></label><button>Crear curso</button></form><form id="expertLesson"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>T\xEDtulo de lecci\xF3n <input name="titulo" required maxlength="191"></label><label>Video URL HTTPS <input name="videoUrl" type="url"></label><label>PDF URL HTTPS <input name="pdfUrl" type="url"></label><label>Texto (m\xE1ximo 900 caracteres) <textarea name="texto" maxlength="900"></textarea></label><button>Guardar lecci\xF3n</button></form><form id="expertQuestion"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>Pregunta <input name="enunciado" required maxlength="2000"></label><label>Opci\xF3n A <input name="optionA" required></label><label>Opci\xF3n B <input name="optionB" required></label><label>Respuesta correcta <select name="correcta"><option>A</option><option>B</option></select></label><button>Guardar pregunta</button></form></section>
 <details id="requestTools"><summary>Buscar un servicio o repuesto</summary><form id="requestForm"><label for="vehicle">Veh\xEDculo</label><select id="vehicle" required></select><button type="button" id="loadVehicles">Cargar mis veh\xEDculos</button><label for="kind">Necesidad</label><select id="kind"><option value="servicio">Servicio</option><option value="repuesto">Repuesto</option></select><label for="category">Categor\xEDa registrada (por ejemplo frenos)</label><input id="category" required maxlength="120"><label for="city">Ciudad</label><input id="city" required maxlength="120"><label for="zone">Sector</label><input id="zone" required maxlength="120"><label for="description">Descripci\xF3n</label><input id="description" required minlength="5" maxlength="1000"><button>Preparar solicitud</button></form></details>
 <details id="offerTools"><summary>Preparar una oferta</summary><p>Copia el identificador de solicitud del aviso recibido.</p><form id="offerForm"><label for="offerRequest">Solicitud</label><input id="offerRequest" required maxlength="36"><label for="price">Costo total USD</label><input id="price" type="number" min="0" max="999999" step=".01" required><label for="duration">Duraci\xF3n del trabajo o plazo de entrega en minutos</label><input id="duration" type="number" min="1" max="43200" step="1" required><label for="date">Fecha disponible</label><input id="date" type="date" required><label for="time">Hora en Ecuador continental</label><input id="time" type="time" required><label for="notes">Condiciones</label><textarea id="notes" maxlength="300"></textarea><label for="brand">Marca del repuesto (opcional)</label><input id="brand" maxlength="120"><label for="quality">Calidad (opcional)</label><select id="quality"><option value="">Sin especificar</option><option value="original">Original</option><option value="alterno">Alterno</option><option value="usado">Usado</option></select><label for="warrantyDays">Garant\xEDa en d\xEDas (opcional)</label><input id="warrantyDays" type="number" min="0" max="3650" step="1"><button>Preparar oferta</button></form></details>
 <details id="decisionTools"><summary>Comparar, elegir o cancelar</summary><form id="decisionForm"><label for="requestId">Solicitud</label><input id="requestId" required maxlength="36"><label for="decision">Operaci\xF3n</label><select id="decision"><option value="Ofertas">Comparar ofertas</option><option value="Aceptar">Aceptar una oferta</option><option value="Cancelar">Cancelar solicitud abierta</option></select><label for="offerId">Oferta que deseas aceptar</label><input id="offerId" maxlength="36"><button>Preparar operaci\xF3n</button></form><p>Aceptar un servicio solicita una cita; el taller confirma despu\xE9s de revisar su agenda. Al aceptar un repuesto, el almac\xE9n confirma stock y fecha de entrega o retiro.</p></details>
@@ -107474,11 +111507,18 @@ ${MENU_MARKUP}
 <h3 id="avisos">Avisos para tu cuenta</h3><button id="refresh" type="button">Actualizar avisos y respuestas</button><div id="notices"></div><button id="older" type="button" class="hidden">Ver avisos anteriores</button>
 <h3 id="historial">Mensajes y respuestas recientes</h3><p>El historial se recupera al volver a entrar, incluso despu\xE9s de un corte.</p><div id="messages"></div>
 <details id="vincular"><summary>Vinculaci\xF3n futura con WhatsApp</summary><button id="link" type="button">Preparar v\xEDnculo de WhatsApp</button><pre id="linkCode"></pre></details></section></div><p id="status" role="status"></p></main>
-<script nonce="${nonce}">
+<script nonce="${nonce2}">
 const el=id=>document.getElementById(id);${PANEL_SCRIPT}${MENU_SCRIPT}let token=null;let generation=0;let role=null;let timer=null;let pendingSend=null;let sending=false;let cursor=null;let loadedOlder=false;let historyFingerprint='';const noticeItems=new Map();
 async function api(path,options={}){const sentToken=token;const sentGeneration=generation;const response=await fetch('/api/v1'+path,{...options,headers:{'Content-Type':'application/json',...(sentToken?{Authorization:'Bearer '+sentToken}:{}),...options.headers}});const body=await response.json();if(!response.ok){if(sentToken&&token===sentToken&&generation===sentGeneration&&(response.status===401||(response.status===403&&['ACCOUNT_UNAVAILABLE','CONSENT_OR_ACCOUNT_REQUIRED'].includes(body.error?.code))))leave();throw new Error(body.error?.message||body.error?.code||'No se pudo completar la operaci\xF3n');}return body.data;}
+const COURSE_CONSENT_VERSION='lopdp-2026-10-v1';
+function courseNode(tag,props={},...children){const node=document.createElement(tag);for(const [key,value] of Object.entries(props)){if(key==='text')node.textContent=value;else if(key==='class')node.className=value;else if(key==='href')node.href=value;else node.setAttribute(key,String(value));}for(const child of children)if(child)node.append(child);return node;}
+function renderStudentCourses(){const epoch=generation;const box=el('studentCourseItems');box.replaceChildren();const enrollmentBox=el('courseEnrollment');enrollmentBox.replaceChildren();const params=new URLSearchParams(location.search);const requested=params.get('curso');if(requested){const form=courseNode('form');const consent=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox',required:true}),document.createTextNode(' Acepto el tratamiento de datos personales (LOPDP), versi\xF3n '+COURSE_CONSENT_VERSION+'.'));const share=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox',name:'share'}),document.createTextNode(' Compartir mi avance con mi taller'));const visible=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox',name:'public'}),document.createTextNode(' Certificado p\xFAblico'));const invite=courseNode('input',{name:'invite',maxlength:'191','aria-label':'C\xF3digo de invitaci\xF3n (opcional)'});form.append(consent,share,visible,courseNode('label',{},document.createTextNode('C\xF3digo de invitaci\xF3n (opcional)'),invite));const submit=courseNode('button',{type:'submit',text:'Inscribirme'});form.append(submit);form.onsubmit=async event=>{event.preventDefault();if(!consent.querySelector('input').checked)return;submit.disabled=true;try{await api('/courses/'+encodeURIComponent(requested)+'/enroll',{method:'POST',body:JSON.stringify({consentVersion:COURSE_CONSENT_VERSION,compartirConTaller:share.querySelector('input').checked,certificadoPublico:visible.querySelector('input').checked,...(invite.value.trim()?{inviteCode:invite.value.trim()}:{})})});history.replaceState(null,'',location.pathname+'#cursos');status('Inscripci\xF3n enviada.');renderStudentCourses();}catch(error){status(error.message);}finally{submit.disabled=false;}};enrollmentBox.append(courseNode('h3',{text:'Inscripci\xF3n'}),form);}api('/courses/mine').then(data=>{if(epoch!==generation||!token)return;for(const enrollment of data.items){const article=courseNode('article',{class:'pcard'});article.append(courseNode('h3',{text:enrollment.titulo}),courseNode('p',{class:'pill',text:'Estado: '+enrollment.estado}),courseNode('p',{text:'Nota: '+(enrollment.nota??'Pendiente')}));for(const lesson of enrollment.lessons){const item=courseNode('section',{class:'reco'});item.append(courseNode('h4',{text:lesson.titulo}));if(lesson.texto)item.append(courseNode('p',{text:lesson.texto}));for(const [url,label] of [[lesson.videoUrl,'Ver video'],[lesson.pdfUrl,'Abrir PDF']])if(url){try{if(new URL(url).protocol==='https:')item.append(courseNode('p',{},courseNode('a',{href:url,target:'_blank',rel:'noopener',text:label})));}catch{}}if(enrollment.estado==='activa'){const done=courseNode('button',{type:'button',text:lesson.completada?'Listo':'Listo'});done.disabled=!!lesson.completada;done.onclick=async()=>{try{await api('/courses/enrollments/'+encodeURIComponent(enrollment.enrollmentId)+'/lessons/'+encodeURIComponent(lesson.id)+'/done',{method:'POST',body:'{}'});renderStudentCourses();}catch(error){status(error.message);}};item.append(done);}article.append(item);}if(enrollment.estado==='activa')for(const question of enrollment.questions){const q=courseNode('section',{class:'reco'},courseNode('p',{text:question.text}));for(const option of question.opts){const answer=courseNode('button',{type:'button',text:option.letra+' \xB7 '+option.texto});answer.onclick=async()=>{try{await api('/courses/enrollments/'+encodeURIComponent(enrollment.enrollmentId)+'/answers',{method:'POST',body:JSON.stringify({questionId:question.id,letra:option.letra})});renderStudentCourses();}catch(error){status(error.message);}};q.append(answer);}article.append(q);}if(enrollment.certificateCode)article.append(courseNode('p',{},courseNode('a',{href:'/certificados/'+encodeURIComponent(enrollment.certificateCode),text:'Ver certificado'})));const publicLabel=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox'}),document.createTextNode(' Certificado p\xFAblico'));const checkbox=publicLabel.querySelector('input');checkbox.checked=!!enrollment.certificatePublic;checkbox.onchange=async()=>{try{await api('/courses/enrollments/'+encodeURIComponent(enrollment.enrollmentId)+'/certificate-public',{method:'POST',body:JSON.stringify({publico:checkbox.checked})});}catch(error){status(error.message);checkbox.checked=!checkbox.checked;}};article.append(publicLabel);box.append(article);}if(!data.items.length)box.append(courseNode('p',{text:'A\xFAn no tienes inscripciones.'}));}).catch(error=>status(error.message));}
+function renderExpertCourses(visible){const epoch=generation;const section=el('expertCourses');section.classList.toggle('hidden',!visible);if(!visible)return;api('/expert/courses').then(data=>{if(epoch!==generation||!token)return;const box=el('expertItems');box.replaceChildren();for(const course of data.items){const article=document.createElement('article');const title=document.createElement('h3');title.textContent=course.titulo+' \xB7 '+course.estado;article.append(title);const details=document.createElement('p');details.textContent='Precio: '+(course.precioUsd==null?'Gratis':'$'+course.precioUsd)+' \xB7 Inscripciones: '+(course.inscripcionesAbiertas?'abiertas':'cerradas');article.append(details);const toggle=document.createElement('button');toggle.type='button';toggle.textContent=course.inscripcionesAbiertas?'Cerrar inscripciones':'Abrir inscripciones';toggle.onclick=async()=>{try{await api('/expert/courses/'+encodeURIComponent(course.id),{method:'PATCH',body:JSON.stringify({inscripcionesAbiertas:!course.inscripcionesAbiertas})});renderExpertCourses(true);}catch(error){status(error.message);}};article.append(toggle);const button=document.createElement('button');button.type='button';button.textContent='Enviar a revisi\xF3n / publicar cambios';button.onclick=async()=>{try{const result=await api('/expert/courses/'+encodeURIComponent(course.id)+'/review',{method:'POST',body:'{}'});status('Estado del curso: '+result.estado);}catch(error){status(error.message);}};article.append(button);box.append(article);}for(const select of section.querySelectorAll('select[name="courseId"]')){select.replaceChildren();for(const course of data.items){const option=document.createElement('option');option.value=course.id;option.textContent=course.titulo;select.append(option);}}if(!data.items.length)box.textContent='Todav\xEDa no tienes cursos.';}).catch(error=>status(error.message));}
+el('expertCreate').onsubmit=async event=>{event.preventDefault();const form=new FormData(event.target);const price=String(form.get('precioUsd')||'').trim();try{await api('/expert/courses',{method:'POST',body:JSON.stringify({titulo:String(form.get('titulo')),slug:String(form.get('slug')),especialidad:String(form.get('especialidad')),nivel:String(form.get('nivel')),horas:Number(form.get('horas')),precioUsd:price?Number(price):null,notaMinima:Number(form.get('notaMinima'))})});event.target.reset();status('Curso creado.');renderExpertCourses(true);}catch(error){status(error.message);}};
+el('expertLesson').onsubmit=async event=>{event.preventDefault();const form=new FormData(event.target);try{await api('/expert/courses/'+encodeURIComponent(String(form.get('courseId')) )+'/lessons',{method:'POST',body:JSON.stringify({orden:Number(form.get('orden')),titulo:String(form.get('titulo')),videoUrl:String(form.get('videoUrl')||'').trim()||null,pdfUrl:String(form.get('pdfUrl')||'').trim()||null,texto:String(form.get('texto')||'').trim()||null})});event.target.reset();status('Lecci\xF3n guardada.');}catch(error){status(error.message);}};
+el('expertQuestion').onsubmit=async event=>{event.preventDefault();const form=new FormData(event.target);const correct=String(form.get('correcta'));try{await api('/expert/courses/'+encodeURIComponent(String(form.get('courseId')) )+'/questions',{method:'POST',body:JSON.stringify({orden:Number(form.get('orden')),enunciado:String(form.get('enunciado')),options:[{letra:'A',texto:String(form.get('optionA')),correcta:correct==='A'},{letra:'B',texto:String(form.get('optionB')),correcta:correct==='B'}]})});event.target.reset();status('Pregunta guardada.');}catch(error){status(error.message);}};
 function status(text){el('status').textContent=text;}function text(parent,value){const p=document.createElement('pre');p.textContent=value;parent.append(p);}
-function leave(){token=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;cursor=null;loadedOlder=false;historyFingerprint='';noticeItems.clear();clearMenu();el('chat').classList.add('hidden');el('login').classList.remove('hidden');for(const id of ['messages','notices','appointments','appointment','vehicle','panel'])el(id).replaceChildren();panelData=null;panelVehicle=null;booking={service:'',day:'',time:''};el('linkCode').textContent='';el('message').value='';el('sendForm').querySelector('button').disabled=false;for(const id of ['sendForm','requestForm','offerForm','decisionForm','appointmentForm'])el(id).reset();status('Sesi\xF3n cerrada. Vuelve a entrar para continuar.');}
+function leave(){token=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;cursor=null;loadedOlder=false;historyFingerprint='';noticeItems.clear();clearMenu();el('chat').classList.add('hidden');el('login').classList.remove('hidden');for(const id of ['messages','notices','appointments','appointment','vehicle','panel','studentCourseItems','courseEnrollment','expertItems'])el(id).replaceChildren();el('expertCourses').classList.add('hidden');panelData=null;panelVehicle=null;booking={service:'',day:'',time:''};el('linkCode').textContent='';el('message').value='';el('sendForm').querySelector('button').disabled=false;for(const id of ['sendForm','requestForm','offerForm','decisionForm','appointmentForm'])el(id).reset();status('Sesi\xF3n cerrada. Vuelve a entrar para continuar.');}
 el('logout').onclick=leave;
 function prepare(parts){if(parts.some(p=>String(p).includes('|'))){status('Escribe los datos sin el car\xE1cter |.');return;}el('message').value=parts.join(' | ');status('Comando preparado. Rev\xEDsalo y env\xEDalo al operador.');el('message').focus();}
 function showNotices(){el('notices').replaceChildren();const items=[...noticeItems.values()].sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))||String(b.id).localeCompare(String(a.id)));if(!items.length)text(el('notices'),'Todav\xEDa no hay avisos para tu cuenta.');for(const n of items){const article=document.createElement('article');text(article,n.message);el('notices').append(article);}el('older').classList.toggle('hidden',!cursor);}
@@ -107487,8 +111527,8 @@ async function loadHistory(epoch){const data=await api('/pilot/history');if(epoc
 async function loadAppointments(epoch){const data=await api('/pilot/appointments');if(epoch!==generation||!token)return;const previous=el('appointment').value;el('appointments').replaceChildren();el('appointment').replaceChildren();for(const a of data.items){const when=new Date(a.scheduledAt).toLocaleString('es-EC',{timeZone:'America/Guayaquil'});text(el('appointments'),'Cita '+a.id+' | '+a.shopName+' | '+when+' | '+a.status);if(role==='taller'&&a.status==='pending'){const option=document.createElement('option');option.value=a.requestId+':'+a.id;option.textContent=a.category+' | '+when;el('appointment').append(option);}}if([...el('appointment').options].some(o=>o.value===previous))el('appointment').value=previous;if(!data.items.length)text(el('appointments'),'No hay citas registradas en este piloto.');}
 async function refresh(epoch){await Promise.all([loadNotices(epoch),loadHistory(epoch),loadAppointments(epoch)]);}
 async function poll(epoch){if(epoch!==generation||!token)return;try{await refresh(epoch);}catch(err){if(epoch===generation)status(err.message);}finally{if(epoch===generation&&token)timer=setTimeout(()=>poll(epoch),5000);}}
-el('loginForm').onsubmit=async e=>{e.preventDefault();const epoch=++generation;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({phone:el('phone').value,password:el('password').value})});if(epoch!==generation)return;if(!['dueno','taller','almacen'].includes(data.user.role)){status('Las pruebas requieren una cuenta de due\xF1o, taller o almac\xE9n.');return;}token=data.accessToken;role=data.user.role;buildMenu(data.user.name);el('password').value='';el('login').classList.add('hidden');el('chat').classList.remove('hidden');el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}catch(err){if(epoch===generation)status(err.message);}finally{button.disabled=false;}};
-function acceptLogin(data){token=data.accessToken;role=data.user.role;buildMenu(data.user.name);el('login').classList.add('hidden');el('chat').classList.remove('hidden');el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');const epoch=generation;poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}
+el('loginForm').onsubmit=async e=>{e.preventDefault();const epoch=++generation;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({phone:el('phone').value,password:el('password').value})});if(epoch!==generation)return;if(!['dueno','taller','almacen'].includes(data.user.role)){status('Las pruebas requieren una cuenta de due\xF1o, taller o almac\xE9n.');return;}token=data.accessToken;role=data.user.role;buildMenu(data.user.name);el('password').value='';el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}catch(err){if(epoch===generation)status(err.message);}finally{button.disabled=false;}};
+function acceptLogin(data){token=data.accessToken;role=data.user.role;buildMenu(data.user.name);el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');const epoch=generation;poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}
 el('codeTab').onclick=()=>{el('codeTab').setAttribute('aria-selected','true');el('passwordTab').setAttribute('aria-selected','false');el('codeRequestForm').classList.remove('hidden');el('codeVerifyForm').classList.add('hidden');el('loginForm').classList.add('hidden');};
 el('passwordTab').onclick=()=>{el('codeTab').setAttribute('aria-selected','false');el('passwordTab').setAttribute('aria-selected','true');el('codeRequestForm').classList.add('hidden');el('codeVerifyForm').classList.add('hidden');el('loginForm').classList.remove('hidden');};
 el('codeRequestForm').onsubmit=async e=>{e.preventDefault();try{const phone=el('codePhone').value.trim();await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'login'})});el('verifyPhone').value=phone;el('codeRequestForm').classList.add('hidden');el('codeVerifyForm').classList.remove('hidden');status('Si el n\xFAmero est\xE1 registrado, llegar\xE1 un c\xF3digo por WhatsApp.');}catch(err){status(err.message);}};
@@ -107513,10 +111553,10 @@ el('link').onclick=async()=>{const epoch=generation;try{const data=await api('/p
 async function pilotPageRoutes(app2, options = {}) {
   const config = options.config ?? new LocalAgentConfig();
   app2.get("/pruebas", async (_request, reply) => {
-    const nonce = randomBytes(18).toString("base64");
+    const nonce2 = randomBytes(18).toString("base64");
     const enabled = await config.read().then((c) => c.enabled).catch(() => false);
-    reply.header("Cache-Control", "no-store").header("X-Robots-Tag", "noindex, nofollow").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`);
-    return enabled ? reply.type("text/html").send(renderPilotPage(nonce)) : reply.code(503).type("text/html").send('<h1>Pruebas pendientes de activar</h1><p>El administrador debe conectar el equipo de atenci\xF3n en <a href="/admin/local-agent">Administraci\xF3n</a>.</p>');
+    reply.header("Cache-Control", "no-store").header("X-Robots-Tag", "noindex, nofollow").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`);
+    return enabled ? reply.type("text/html").send(renderPilotPage(nonce2)) : reply.code(503).type("text/html").send('<h1>Pruebas pendientes de activar</h1><p>El administrador debe conectar el equipo de atenci\xF3n en <a href="/admin/local-agent">Administraci\xF3n</a>.</p>');
   });
 }
 
@@ -107533,7 +111573,7 @@ init_outbox_delivery_store();
 
 // packages/api/dist/infrastructure/messaging/imported-contact-store.js
 init_apply();
-import { createHash as createHash6, randomUUID as randomUUID14 } from "node:crypto";
+import { createHash as createHash7, randomUUID as randomUUID15 } from "node:crypto";
 var MysqlImportedContactStore = class {
   connect;
   constructor(connect = openConnection) {
@@ -107557,7 +111597,7 @@ var MysqlImportedContactStore = class {
           skipped++;
           continue;
         }
-        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID14(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
+        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID15(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
         if (Number(result.affectedRows) === 1)
           imported++;
         else
@@ -107580,8 +111620,8 @@ Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
           continue;
         }
         await conn.query("UPDATE `ImportedContact` SET status = 'approved', contactedAt = UTC_TIMESTAMP(3) WHERE id = ?", [contact.id]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID14(), `reactivation:${createHash6("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text9 })]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID14(), contact.id, JSON.stringify({ approvedBy })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID15(), `reactivation:${createHash7("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text9 })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID15(), contact.id, JSON.stringify({ approvedBy })]);
         queued++;
       }
       return { queued, skipped };
@@ -107603,8 +111643,8 @@ init_reminder_done();
 // packages/api/dist/infrastructure/messaging/vehicle-plan-override-store.js
 init_apply();
 init_catalogs();
-import { randomUUID as randomUUID15 } from "node:crypto";
-var rows14 = async (c, sql, args = []) => (await c.query(sql, args))[0];
+import { randomUUID as randomUUID16 } from "node:crypto";
+var rows15 = async (c, sql, args = []) => (await c.query(sql, args))[0];
 var PlanOverrideError = class extends Error {
   code;
   constructor(code3) {
@@ -107626,16 +111666,16 @@ var VehiclePlanOverrideStore = class {
     }
   }
   async list(vehicleId) {
-    return this.run(async (c) => rows14(c, "SELECT o.*, s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id = o.shopId WHERE o.vehicleId = ?", [vehicleId]));
+    return this.run(async (c) => rows15(c, "SELECT o.*, s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id = o.shopId WHERE o.vehicleId = ?", [vehicleId]));
   }
   async recordLastService(userId, role, input) {
     if (!Number.isInteger(input.km) || input.km < 0 || input.km > 2e6 || !/^\d{4}-\d{2}-\d{2}$/.test(input.doneAt) || !input.serviceId.startsWith("custom-") && !serviceTaxonomy.categories.some((c) => c.subservices.some((s) => s.id === input.serviceId)))
       throw new PlanOverrideError("INVALID_SERVICE_RECORD");
     await this.run(async (c) => {
-      const [actor] = await rows14(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows15(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
-      const [vehicle] = await rows14(c, "SELECT id,userId FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [input.vehicleId]);
+      const [vehicle] = await rows15(c, "SELECT id,userId FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [input.vehicleId]);
       if (!vehicle)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -107643,13 +111683,13 @@ var VehiclePlanOverrideStore = class {
         if (String(vehicle.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows14(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
+        const [shop] = await rows15(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
         shopId = shop ? String(shop.id) : null;
-        const [related] = await rows14(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [input.vehicleId, shopId, shopId]);
+        const [related] = await rows15(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [input.vehicleId, shopId, shopId]);
         if (!shop || !related)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      await c.query("INSERT INTO `VehicleServiceRecord` (id,vehicleId,serviceId,km,doneAt,source,shopId,createdBy) VALUES (?,?,?,?,? ,?, ?, ?)", [randomUUID15(), input.vehicleId, input.serviceId, input.km, `${input.doneAt} 12:00:00.000`, role === "taller" ? "taller" : "dueno", shopId, userId]);
+      await c.query("INSERT INTO `VehicleServiceRecord` (id,vehicleId,serviceId,km,doneAt,source,shopId,createdBy) VALUES (?,?,?,?,? ,?, ?, ?)", [randomUUID16(), input.vehicleId, input.serviceId, input.km, `${input.doneAt} 12:00:00.000`, role === "taller" ? "taller" : "dueno", shopId, userId]);
     });
   }
   async save(userId, role, input) {
@@ -107658,10 +111698,10 @@ var VehiclePlanOverrideStore = class {
     if (!custom2 && !names.includes(input.serviceId) || custom2 && (!input.customName?.trim() || input.customName.trim().length > 100) || input.nota.length > 200 || input.intervalKm !== null && (!Number.isInteger(input.intervalKm) || input.intervalKm < 500 || input.intervalKm > 1e5) || input.intervalMonths !== null && (!Number.isInteger(input.intervalMonths) || input.intervalMonths < 1 || input.intervalMonths > 60) || !input.disabled && input.intervalKm === null && input.intervalMonths === null)
       throw new PlanOverrideError("INVALID_OVERRIDE");
     await this.run(async (c) => {
-      const [actor] = await rows14(c, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows15(c, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
-      const [vehicle] = await rows14(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL", [input.vehicleId]);
+      const [vehicle] = await rows15(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL", [input.vehicleId]);
       if (!vehicle)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -107669,46 +111709,46 @@ var VehiclePlanOverrideStore = class {
         if (String(vehicle.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows14(c, "SELECT id FROM `Shop` WHERE userId = ? LIMIT 1", [userId]);
+        const [shop] = await rows15(c, "SELECT id FROM `Shop` WHERE userId = ? LIMIT 1", [userId]);
         if (!shop)
           throw new PlanOverrideError("FORBIDDEN");
         shopId = String(shop.id);
-        const [rel] = await rows14(c, "SELECT v.id FROM `Vehicle` v WHERE v.id = ? AND (EXISTS (SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status <> 'cancelled') OR EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [input.vehicleId, shopId, shopId]);
+        const [rel] = await rows15(c, "SELECT v.id FROM `Vehicle` v WHERE v.id = ? AND (EXISTS (SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status <> 'cancelled') OR EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [input.vehicleId, shopId, shopId]);
         if (!rel)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      const [old] = await rows14(c, "SELECT id,intervalKm,intervalMonths,disabled,nota,actorUserId,actorRole,shopId FROM `VehiclePlanOverride` WHERE vehicleId = ? AND serviceId = ?", [input.vehicleId, input.serviceId]);
-      const id2 = String(old?.id ?? randomUUID15());
+      const [old] = await rows15(c, "SELECT id,intervalKm,intervalMonths,disabled,nota,actorUserId,actorRole,shopId FROM `VehiclePlanOverride` WHERE vehicleId = ? AND serviceId = ?", [input.vehicleId, input.serviceId]);
+      const id2 = String(old?.id ?? randomUUID16());
       const after = { ...input, actorUserId: userId, actorRole: role, shopId };
       await c.query("INSERT INTO `VehiclePlanOverride` (id,vehicleId,serviceId,intervalKm,intervalMonths,disabled,customName,nota,actorUserId,actorRole,shopId,createdAt,updatedAt) VALUES (?,?,?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3),UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE intervalKm=VALUES(intervalKm),intervalMonths=VALUES(intervalMonths),disabled=VALUES(disabled),customName=VALUES(customName),nota=VALUES(nota),actorUserId=VALUES(actorUserId),actorRole=VALUES(actorRole),shopId=VALUES(shopId),updatedAt=UTC_TIMESTAMP(3)", [id2, input.vehicleId, input.serviceId, input.intervalKm, input.intervalMonths, input.disabled ? 1 : 0, input.customName?.trim() || null, input.nota || null, userId, role, shopId]);
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID15(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID15(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID16(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID16(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
       if (role === "taller" && (String(old?.intervalKm ?? "") !== String(input.intervalKm ?? "") || String(old?.intervalMonths ?? "") !== String(input.intervalMonths ?? ""))) {
-        const [service] = await rows14(c, "SELECT name FROM `Service` WHERE vehicleId=? AND id=? LIMIT 1", [input.vehicleId, input.serviceId]);
+        const [service] = await rows15(c, "SELECT name FROM `Service` WHERE vehicleId=? AND id=? LIMIT 1", [input.vehicleId, input.serviceId]);
         const serviceName3 = input.customName || String(service?.name || input.serviceId);
-        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID15(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName3} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
+        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID16(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName3} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
       }
     });
   }
   async reset(userId, role, vehicleId, serviceId) {
     await this.run(async (c) => {
-      const [old] = await rows14(c, "SELECT * FROM `VehiclePlanOverride` WHERE vehicleId=? AND serviceId=?", [vehicleId, serviceId]);
+      const [old] = await rows15(c, "SELECT * FROM `VehiclePlanOverride` WHERE vehicleId=? AND serviceId=?", [vehicleId, serviceId]);
       if (!old)
         return;
-      const [actor] = await rows14(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows15(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
       if (role === "dueno") {
-        const [v] = await rows14(c, "SELECT id FROM `Vehicle` WHERE id=? AND userId=? AND deletedAt IS NULL", [vehicleId, userId]);
+        const [v] = await rows15(c, "SELECT id FROM `Vehicle` WHERE id=? AND userId=? AND deletedAt IS NULL", [vehicleId, userId]);
         if (!v)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows14(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
-        const [v] = await rows14(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [vehicleId, shop?.id, shop?.id]);
+        const [shop] = await rows15(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
+        const [v] = await rows15(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [vehicleId, shop?.id, shop?.id]);
         if (!shop || !v)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      const [vrow] = await rows14(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id=? AND v.deletedAt IS NULL", [vehicleId]);
+      const [vrow] = await rows15(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id=? AND v.deletedAt IS NULL", [vehicleId]);
       if (!vrow)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -107716,14 +111756,14 @@ var VehiclePlanOverrideStore = class {
         if (String(vrow.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows14(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
+        const [shop] = await rows15(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
         shopId = shop ? String(shop.id) : null;
-        const [rel] = await rows14(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [vehicleId, shopId, shopId]);
+        const [rel] = await rows15(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [vehicleId, shopId, shopId]);
         if (!shop || !rel)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID15(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID15(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID16(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID16(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
       await c.query("UPDATE `VehiclePlanOverride` SET intervalKm=NULL,intervalMonths=NULL,disabled=1,nota='Restaurado a f\xE1brica',actorUserId=?,actorRole=?,shopId=?,updatedAt=UTC_TIMESTAMP(3) WHERE vehicleId=? AND serviceId=?", [userId, role, shopId, vehicleId, serviceId]);
     });
   }
@@ -107731,7 +111771,7 @@ var VehiclePlanOverrideStore = class {
 
 // packages/api/dist/infrastructure/messaging/pilot-panel-store.js
 init_catalogs();
-var rows15 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows16 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var ref3 = (prefix, id2) => `${prefix}-${String(id2).replace(/-/g, "").slice(0, 6).toUpperCase()}`;
 var orderCode = (n) => `OT-${String(n).padStart(5, "0")}`;
 var vehicleLabel = (v) => [v.make, v.model, v.year].filter(Boolean).join(" ");
@@ -107780,7 +111820,7 @@ var PilotPanelStore = class {
   }
   async panel(userId, vehicleId) {
     return this.run(async (conn) => {
-      const [user] = await rows15(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
+      const [user] = await rows16(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
       const role = String(user?.role ?? "");
       if (role === "dueno")
         return this.owner(conn, userId, vehicleId);
@@ -107829,10 +111869,10 @@ var PilotPanelStore = class {
           alerts.push({ kind: "rtv", title: "RTV y matr\xEDcula", detail: `${month === current ? `Este mes (${MES[month - 1]})` : `El pr\xF3ximo mes (${MES[month - 1]})`}, seg\xFAn el \xFAltimo d\xEDgito de la placa; calendario referencial, confirma la fecha en la ANT o en tu agencia de matriculaci\xF3n. El valor a pagar por la matr\xEDcula incluye el SOAT`, state: month === current ? "pronto" : "al_dia", when: String(month) });
         }
       }
-      const scheduled = await rows15(conn, "SELECT label, dueKm, dueAt FROM `Alert` WHERE vehicleId = ? AND triggeredAt IS NULL ORDER BY createdAt DESC", [chosen.id]);
+      const scheduled = await rows16(conn, "SELECT label, dueKm, dueAt FROM `Alert` WHERE vehicleId = ? AND triggeredAt IS NULL ORDER BY createdAt DESC", [chosen.id]);
       for (const a of scheduled)
         alerts.push({ kind: "programada", title: String(a.label), detail: a.dueKm !== null ? `A los ${Number(a.dueKm).toLocaleString("es-EC")} km` : a.dueAt ? `El ${new Date(String(a.dueAt)).toLocaleDateString("es-EC", { timeZone: "America/Guayaquil" })}` : "", state: "pronto", when: String(a.dueAt ?? a.dueKm ?? "") });
-      const repairing = await rows15(conn, "SELECT w.number, w.status, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.vehicleId = ? AND w.status IN ('en_ejecucion','esperando_repuesto') ORDER BY w.number DESC", [chosen.id]);
+      const repairing = await rows16(conn, "SELECT w.number, w.status, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.vehicleId = ? AND w.status IN ('en_ejecucion','esperando_repuesto') ORDER BY w.number DESC", [chosen.id]);
       for (const o of repairing)
         alerts.push({ kind: "reparacion", title: `OT-${String(o.number).padStart(5, "0")} en taller`, detail: String(o.shopName), state: "urgente", when: String(o.number) });
       const due = recommendations?.items.filter((i) => i.state === "urgente" || i.state === "pronto") ?? [];
@@ -107842,8 +111882,8 @@ var PilotPanelStore = class {
       alerts.sort((a, b) => rank[a.state] - rank[b.state]);
     }
     const ids = list7.map((v) => String(v.id));
-    const orders = ids.length ? await rows15(conn, "SELECT w.number, w.status, w.intakeKm, w.total, w.updatedAt, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY))) ORDER BY w.number DESC LIMIT 5", [ids]) : [];
-    const parts = chosen ? await rows15(conn, "SELECT p.id, p.name, p.price, p.stock, st.name AS storeName, st.city FROM `ProductVehicle` pv JOIN `Product` p ON p.id = pv.productId JOIN `Store` st ON st.id = p.storeId WHERE pv.vehicleId = ? ORDER BY p.updatedAt DESC LIMIT 6", [chosen.id]).catch(() => []) : [];
+    const orders = ids.length ? await rows16(conn, "SELECT w.number, w.status, w.intakeKm, w.total, w.updatedAt, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY))) ORDER BY w.number DESC LIMIT 5", [ids]) : [];
+    const parts = chosen ? await rows16(conn, "SELECT p.id, p.name, p.price, p.stock, st.name AS storeName, st.city FROM `ProductVehicle` pv JOIN `Product` p ON p.id = pv.productId JOIN `Store` st ON st.id = p.storeId WHERE pv.vehicleId = ? ORDER BY p.updatedAt DESC LIMIT 6", [chosen.id]).catch(() => []) : [];
     const planServices = chosen ? await this.planServices(conn, chosen) : [];
     return {
       role: "dueno",
@@ -107870,7 +111910,7 @@ var PilotPanelStore = class {
     };
   }
   async requests(conn, userId) {
-    const list7 = await rows15(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.city, lr.zone, lr.expiresAt, o.status, v.make, v.model, v.year, v.fuel FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
+    const list7 = await rows16(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.city, lr.zone, lr.expiresAt, o.status, v.make, v.model, v.year, v.fuel FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
     return list7.map((r) => ({
       requestId: String(r.id),
       ref: ref3("S", r.id),
@@ -107889,11 +111929,11 @@ var PilotPanelStore = class {
     const shop = await this.care.actingShop(conn, userId, "taller");
     const start = ecDayStart(now);
     const end = new Date(start.getTime() + 864e5);
-    const count3 = async (sql, args) => Number((await rows15(conn, sql, args))[0]?.n ?? 0);
-    const today = await rows15(conn, "SELECT a.id, a.scheduledAt, a.status, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt LIMIT 20", [shop.id, start, end]);
+    const count3 = async (sql, args) => Number((await rows16(conn, sql, args))[0]?.n ?? 0);
+    const today = await rows16(conn, "SELECT a.id, a.scheduledAt, a.status, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt LIMIT 20", [shop.id, start, end]);
     const openOrders = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status NOT IN ('cerrada','cancelada')", [shop.id]);
     const budgetsWaiting = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status = 'presupuesto_enviado'", [shop.id]);
-    const clients = await rows15(conn, "SELECT a.id AS appointmentId, a.vehicleId, u.name AS ownerName, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = a.ownerId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) AND a.scheduledAt = (SELECT MAX(a2.scheduledAt) FROM `Appointment` a2 WHERE a2.shopId = a.shopId AND a2.vehicleId = a.vehicleId AND a2.status <> 'cancelled') ORDER BY a.scheduledAt DESC LIMIT 60", [shop.id]);
+    const clients = await rows16(conn, "SELECT a.id AS appointmentId, a.vehicleId, u.name AS ownerName, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = a.ownerId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) AND a.scheduledAt = (SELECT MAX(a2.scheduledAt) FROM `Appointment` a2 WHERE a2.shopId = a.shopId AND a2.vehicleId = a.vehicleId AND a2.status <> 'cancelled') ORDER BY a.scheduledAt DESC LIMIT 60", [shop.id]);
     const reminders = [];
     for (const c of clients) {
       const items = planItemsFor(await this.care.planVehicle(conn, c));
@@ -107914,7 +111954,7 @@ var PilotPanelStore = class {
     }
     const rank = { urgente: 0, pronto: 1, sin_dato: 2, al_dia: 3 };
     reminders.sort((a, b) => rank[a.state] - rank[b.state]);
-    const vehicles = await rows15(conn, "SELECT DISTINCT v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id=a.vehicleId WHERE a.shopId=? AND a.status<>'cancelled' AND v.deletedAt IS NULL UNION SELECT DISTINCT v.* FROM `WorkOrder` w JOIN `Vehicle` v ON v.id=w.vehicleId WHERE w.shopId=? AND v.deletedAt IS NULL ORDER BY make,model LIMIT 60", [shop.id, shop.id]);
+    const vehicles = await rows16(conn, "SELECT DISTINCT v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id=a.vehicleId WHERE a.shopId=? AND a.status<>'cancelled' AND v.deletedAt IS NULL UNION SELECT DISTINCT v.* FROM `WorkOrder` w JOIN `Vehicle` v ON v.id=w.vehicleId WHERE w.shopId=? AND v.deletedAt IS NULL ORDER BY make,model LIMIT 60", [shop.id, shop.id]);
     return {
       role: "taller",
       shopName: shop.name,
@@ -107928,7 +111968,7 @@ var PilotPanelStore = class {
   async planServices(conn, vehicle) {
     const planned = await this.care.planVehicle(conn, vehicle);
     const items = planItemsFor(planned);
-    const overrides = await rows15(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]);
+    const overrides = await rows16(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]);
     const byId = new Map(overrides.map((o) => [String(o.serviceId), o]));
     const visible = new Set(items.map((i) => i.serviceId));
     const result = items.map((i) => ({ serviceId: i.serviceId, serviceName: i.serviceName, intervalKm: i.intervalKm ?? null, intervalMonths: i.intervalMonths ?? null, reason: i.reason, override: byId.get(i.serviceId) ?? null }));
@@ -107944,7 +111984,7 @@ var PilotPanelStore = class {
     return result;
   }
   async store(conn, userId) {
-    const [store] = await rows15(conn, "SELECT name FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
+    const [store] = await rows16(conn, "SELECT name FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
     return { role: "almacen", storeName: store ? String(store.name) : null, requests: await this.requests(conn, userId) };
   }
 };
@@ -108032,7 +112072,20 @@ async function localAgentRoutes(app2, options = {}) {
     if (!query.success)
       return reply.code(422).send({ data: null, error: { code: "INVALID_VEHICLE" } });
     try {
-      return { data: await panel.panel(request.userId, query.data.vehicleId), error: null };
+      const result = await panel.panel(request.userId, query.data.vehicleId);
+      let isVerifiedExpert2 = false;
+      try {
+        const conn = await (await Promise.resolve().then(() => (init_apply(), apply_exports))).openConnection();
+        try {
+          const [rows31] = await conn.query("SELECT verificationStatus FROM `ExpertProfile` WHERE userId=? LIMIT 1", [request.userId]);
+          const profile = Array.isArray(rows31) ? rows31[0] : void 0;
+          isVerifiedExpert2 = profile?.verificationStatus === "verificado";
+        } finally {
+          await conn.end().catch(() => void 0);
+        }
+      } catch {
+      }
+      return { data: { ...result, isVerifiedExpert: isVerifiedExpert2 }, error: null };
     } catch (err) {
       return error(err, reply);
     }
@@ -108273,13 +112326,13 @@ async function workOrderRoutes(app2) {
 }
 
 // packages/api/dist/application/admin.service.js
-async function listPendingVerification(page, limit) {
+async function listPendingVerification(page2, limit) {
   const where = { verificationStatus: "pending" };
   const [total, shops] = await Promise.all([
     prisma.shop.count({ where }),
     prisma.shop.findMany({
       where,
-      skip: (page - 1) * limit,
+      skip: (page2 - 1) * limit,
       take: limit,
       orderBy: { createdAt: "asc" },
       select: {
@@ -108292,7 +112345,7 @@ async function listPendingVerification(page, limit) {
       }
     })
   ]);
-  return { data: shops, meta: { page, limit, total } };
+  return { data: shops, meta: { page: page2, limit, total } };
 }
 async function verifyShop(shopId, status) {
   const shop = await prisma.shop.findUnique({ where: { id: shopId } });
@@ -108310,8 +112363,8 @@ async function adminRoutes(app2) {
   app2.addHook("preHandler", requireRole("admin"));
   app2.get("/admin/shops", {
     handler: async (request, reply) => {
-      const { page = "1", limit = "20" } = request.query;
-      const result = await listPendingVerification(parseInt(page, 10), parseInt(limit, 10));
+      const { page: page2 = "1", limit = "20" } = request.query;
+      const result = await listPendingVerification(parseInt(page2, 10), parseInt(limit, 10));
       return reply.send({ ...result, error: null });
     }
   });
@@ -108361,34 +112414,34 @@ init_plan_text();
 var ownedVehicle = external_exports.object({ vehicleId: external_exports.string().min(1).max(100) });
 var shopsQuery = external_exports.object({ city: external_exports.string().trim().min(1).max(100) });
 var partsQuery = external_exports.object({ query: external_exports.string().trim().min(1).max(120), vehicleId: external_exports.string().min(1).max(100).optional() });
-var fail9 = (toolName, error) => ({ toolName, success: false, data: null, error });
+var fail10 = (toolName, error) => ({ toolName, success: false, data: null, error });
 function registerRealReadTools(agent, userId) {
   agent.registerTool("get_maintenance_plan", async (args) => {
     const parsed = ownedVehicle.safeParse(args);
     if (!parsed.success)
-      return fail9("get_maintenance_plan", "Selecciona un veh\xEDculo registrado antes de consultar su plan.");
+      return fail10("get_maintenance_plan", "Selecciona un veh\xEDculo registrado antes de consultar su plan.");
     const vehicle = await prisma.vehicle.findFirst({ where: { id: parsed.data.vehicleId, userId, deletedAt: null } });
     if (!vehicle)
-      return fail9("get_maintenance_plan", "Veh\xEDculo no disponible para este usuario.");
+      return fail10("get_maintenance_plan", "Veh\xEDculo no disponible para este usuario.");
     const text9 = planTextFor(vehicle);
     if (!text9)
-      return fail9("get_maintenance_plan", "Completa clase y combustible del veh\xEDculo con el operador para generar el plan.");
+      return fail10("get_maintenance_plan", "Completa clase y combustible del veh\xEDculo con el operador para generar el plan.");
     return { toolName: "get_maintenance_plan", success: true, data: { vehicleId: vehicle.id, text: text9, source: "maintenance_catalog", manufacturerSpecific: false } };
   });
   agent.registerTool("get_alerts", async (args) => {
     const parsed = ownedVehicle.safeParse(args);
     if (!parsed.success)
-      return fail9("get_alerts", "Selecciona un veh\xEDculo registrado.");
+      return fail10("get_alerts", "Selecciona un veh\xEDculo registrado.");
     const vehicle = await prisma.vehicle.findFirst({ where: { id: parsed.data.vehicleId, userId, deletedAt: null }, select: { id: true } });
     if (!vehicle)
-      return fail9("get_alerts", "Veh\xEDculo no disponible para este usuario.");
+      return fail10("get_alerts", "Veh\xEDculo no disponible para este usuario.");
     const alerts = await prisma.alert.findMany({ where: { vehicleId: vehicle.id }, take: 20, orderBy: { createdAt: "desc" }, select: { id: true, label: true, dueKm: true, dueAt: true } });
     return { toolName: "get_alerts", success: true, data: { alerts } };
   });
   agent.registerTool("search_shops", async (args) => {
     const parsed = shopsQuery.safeParse(args);
     if (!parsed.success)
-      return fail9("search_shops", "Indica una ciudad v\xE1lida.");
+      return fail10("search_shops", "Indica una ciudad v\xE1lida.");
     const shops = await prisma.shop.findMany({
       where: { city: { equals: parsed.data.city }, verificationStatus: "verified", user: { deletedAt: null } },
       take: 20,
@@ -108400,10 +112453,10 @@ function registerRealReadTools(agent, userId) {
   agent.registerTool("search_parts", async (args) => {
     const parsed = partsQuery.safeParse(args);
     if (!parsed.success)
-      return fail9("search_parts", "Indica el repuesto que buscas.");
+      return fail10("search_parts", "Indica el repuesto que buscas.");
     const { query, vehicleId } = parsed.data;
     if (vehicleId && !await prisma.vehicle.findFirst({ where: { id: vehicleId, userId, deletedAt: null }, select: { id: true } })) {
-      return fail9("search_parts", "Veh\xEDculo no disponible para este usuario.");
+      return fail10("search_parts", "Veh\xEDculo no disponible para este usuario.");
     }
     const parts = await prisma.product.findMany({
       where: { name: { contains: query }, store: { verificationStatus: "verified", user: { deletedAt: null } }, ...vehicleId ? { compat: { some: { vehicleId } } } : {} },
@@ -108497,9 +112550,9 @@ var AgentStateError = class extends Error {
 // packages/api/dist/infrastructure/agent/turn-store.js
 init_user_lock();
 init_apply();
-import { createHash as createHash8, randomUUID as randomUUID16 } from "node:crypto";
-var digest2 = (text9) => createHash8("sha256").update(text9).digest("hex");
-var rows16 = (result) => result[0];
+import { createHash as createHash9, randomUUID as randomUUID17 } from "node:crypto";
+var digest2 = (text9) => createHash9("sha256").update(text9).digest("hex");
+var rows17 = (result) => result[0];
 var json = (value2) => typeof value2 === "string" ? JSON.parse(value2) : value2;
 var missing = () => new AgentStateError("NOT_FOUND", 404, "Propuesta no disponible.");
 var MysqlAgentTurnStore = class {
@@ -108512,10 +112565,10 @@ var MysqlAgentTurnStore = class {
     const lock = agentUserLock(userId);
     let acquired = false;
     try {
-      acquired = Number(rows16(await conn.query("SELECT GET_LOCK(?, 0) AS acquired", [lock]))[0]?.acquired) === 1;
+      acquired = Number(rows17(await conn.query("SELECT GET_LOCK(?, 0) AS acquired", [lock]))[0]?.acquired) === 1;
       if (!acquired)
         throw new AgentStateError("AGENT_BUSY", 409, "Hay una solicitud en curso. Reintenta con el mismo identificador.");
-      const user = rows16(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL", [userId]))[0];
+      const user = rows17(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL", [userId]))[0];
       if (!user)
         throw new AgentStateError("CONSENT_REQUIRED", 403, "Se requiere una cuenta activa de due\xF1o con consentimiento registrado.");
       return await fn(conn);
@@ -108537,16 +112590,16 @@ var MysqlAgentTurnStore = class {
     };
   }
   async readProposal(conn, userId, id2) {
-    const row = rows16(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE id = ? AND userId = ? AND kind = 'register_vehicle'", [id2, userId]))[0];
+    const row = rows17(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE id = ? AND userId = ? AND kind = 'register_vehicle'", [id2, userId]))[0];
     if (!row)
       throw missing();
     return row;
   }
   async appendMessages(conn, conversationId, userId, messages) {
-    const next = rows16(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
+    const next = rows17(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
     const start = new Date(next).getTime();
     for (const [index, message2] of messages.entries()) {
-      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID16(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
+      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID17(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
     }
     await conn.query("UPDATE `Conversation` SET turnCount = turnCount + ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [messages.length, conversationId]);
   }
@@ -108555,9 +112608,9 @@ var MysqlAgentTurnStore = class {
   }
   async getState(userId) {
     return this.withUser(userId, async (conn) => {
-      const conversation = rows16(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY updatedAt DESC, id DESC LIMIT 1", [userId]))[0];
-      const history = conversation ? rows16(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversation.id])).reverse().map((row) => ({ role: row.direction === "incoming" ? "user" : "assistant", content: String(row.body ?? "") })) : [];
-      const actions = rows16(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND kind = 'register_vehicle' ORDER BY createdAt DESC, id DESC LIMIT 20", [userId]));
+      const conversation = rows17(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY updatedAt DESC, id DESC LIMIT 1", [userId]))[0];
+      const history = conversation ? rows17(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversation.id])).reverse().map((row) => ({ role: row.direction === "incoming" ? "user" : "assistant", content: String(row.body ?? "") })) : [];
+      const actions = rows17(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND kind = 'register_vehicle' ORDER BY createdAt DESC, id DESC LIMIT 20", [userId]));
       return { history, proposals: actions.map((row) => this.proposal(row)) };
     });
   }
@@ -108565,19 +112618,19 @@ var MysqlAgentTurnStore = class {
     return this.withUser(userId, async (conn) => {
       const turnId = digest2(`${userId}:${requestId}`);
       const fingerprint = digest2(message2);
-      const prior = rows16(await conn.query("SELECT fingerprint, response FROM `AgentTurn` WHERE id = ? AND userId = ?", [turnId, userId]))[0];
+      const prior = rows17(await conn.query("SELECT fingerprint, response FROM `AgentTurn` WHERE id = ? AND userId = ?", [turnId, userId]))[0];
       if (prior && prior.fingerprint !== fingerprint)
         throw new AgentStateError("IDEMPOTENCY_CONFLICT", 409, "Ese identificador ya se us\xF3 con otro mensaje.");
       if (prior?.response)
         return json(prior.response);
       if (!prior)
         await conn.query("INSERT INTO `AgentTurn` (id, userId, fingerprint) VALUES (?, ?, ?)", [turnId, userId, fingerprint]);
-      let conversationId = rows16(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
+      let conversationId = rows17(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
       if (!conversationId) {
-        conversationId = randomUUID16();
+        conversationId = randomUUID17();
         await conn.query("INSERT INTO `Conversation` (id, userAId, agent, turnCount, createdAt, updatedAt) VALUES (?, ?, 1, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [conversationId, userId]);
       }
-      const historyRows = rows16(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
+      const historyRows = rows17(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
       const history = historyRows.reverse().map((row) => ({ role: row.direction === "incoming" ? "user" : "assistant", content: String(row.body ?? "") }));
       const reply = await respond({ history, proposeVehicle: async (args) => {
         const parsed = proposedVehicleSchema.safeParse(args);
@@ -108588,7 +112641,7 @@ var MysqlAgentTurnStore = class {
         await conn.query("INSERT IGNORE INTO `AgentAction` (id, userId, turnId, kind, args, expiresAt) VALUES (?, ?, ?, 'register_vehicle', ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 15 MINUTE))", [id2, userId, turnId, encoded]);
         return this.proposal(await this.readProposal(conn, userId, id2));
       } });
-      const actions = rows16(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND turnId = ? ORDER BY createdAt, id", [userId, turnId]));
+      const actions = rows17(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND turnId = ? ORDER BY createdAt, id", [userId, turnId]));
       const response = { reply, proposals: actions.map((row) => this.proposal(row)) };
       await conn.query("START TRANSACTION");
       try {
@@ -108606,7 +112659,7 @@ var MysqlAgentTurnStore = class {
     return this.withUser(userId, async (conn) => {
       await conn.query("START TRANSACTION");
       try {
-        const user = rows16(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL FOR UPDATE", [userId]))[0];
+        const user = rows17(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL FOR UPDATE", [userId]))[0];
         if (!user)
           throw new AgentStateError("CONSENT_REQUIRED", 403, "La cuenta no est\xE1 habilitada para esta operaci\xF3n.");
         const row = await this.readProposal(conn, userId, id2);
@@ -108617,12 +112670,12 @@ var MysqlAgentTurnStore = class {
         if (Number(row.expired))
           throw new AgentStateError("PROPOSAL_EXPIRED", 410, "La propuesta caduc\xF3; solicita una nueva.");
         const vehicle = json(row.args);
-        const vehicleId = randomUUID16();
+        const vehicleId = randomUUID17();
         await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [vehicleId, userId, vehicle.brand, vehicle.model, vehicle.year, vehicle.mileage, vehicle.vehicleClass, vehicle.fuel, vehicle.plate, vehicle.usageProfile]);
         const result = JSON.stringify({ vehicleId });
         await conn.query("UPDATE `AgentAction` SET result = ? WHERE id = ? AND userId = ?", [result, id2, userId]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID16(), userId, vehicleId, JSON.stringify({ actionId: id2 })]);
-        const conversation = rows16(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID17(), userId, vehicleId, JSON.stringify({ actionId: id2 })]);
+        const conversation = rows17(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
         if (conversation)
           await this.appendMessages(conn, String(conversation.id), userId, [{ role: "assistant", content: `Registro confirmado por el usuario. Veh\xEDculo: ${vehicle.brand} ${vehicle.model} ${vehicle.year}. ID: ${vehicleId}.` }]);
         await conn.query("COMMIT");
@@ -108854,12 +112907,12 @@ var CITY_PAGES = [
 }));
 var findService = (slug) => SERVICE_PAGES.find((p) => p.slug === slug) ?? null;
 var findCity = (slug) => CITY_PAGES.find((p) => p.slug === slug) ?? null;
-function serviceFaq(page) {
-  const principal = page.items[0];
+function serviceFaq(page2) {
+  const principal = page2.items[0];
   const faq = [
     {
-      q: `\xBFCu\xE1nto cuesta ${page.name.toLowerCase()} en Ecuador?`,
-      a: page.priceFrom === null ? `El precio depende del veh\xEDculo y del trabajo. Escribi\xE9ndonos por WhatsApp con la marca, el modelo y el a\xF1o te damos el precio antes de entrar al taller.` : `Como referencia, entre ${money3(page.priceFrom)} y ${money3(page.priceTo)} seg\xFAn el veh\xEDculo y el taller. El precio exacto se acuerda antes de entrar.`
+      q: `\xBFCu\xE1nto cuesta ${page2.name.toLowerCase()} en Ecuador?`,
+      a: page2.priceFrom === null ? `El precio depende del veh\xEDculo y del trabajo. Escribi\xE9ndonos por WhatsApp con la marca, el modelo y el a\xF1o te damos el precio antes de entrar al taller.` : `Como referencia, entre ${money3(page2.priceFrom)} y ${money3(page2.priceTo)} seg\xFAn el veh\xEDculo y el taller. El precio exacto se acuerda antes de entrar.`
     },
     {
       q: `\xBFCu\xE1nto demora?`,
@@ -108955,7 +113008,7 @@ function sitemapXml(site, updated = CONTENT_UPDATED, marketing = null) {
       ["/servicios", "0.9"],
       ["/talleres", "0.9"],
       ["/planes", "0.8"],
-      ...SERVICE_PAGES.map((page) => [`/servicios/${page.slug}`, "0.8"]),
+      ...SERVICE_PAGES.map((page2) => [`/servicios/${page2.slug}`, "0.8"]),
       ...CITY_PAGES.map((city) => [`/talleres/${city.slug}`, "0.8"])
     ],
     ["/terminos", "0.3"],
@@ -109020,7 +113073,7 @@ Detalle y precios: ${site}/planes
 
 ## P\xE1ginas
 - Servicios con precios referenciales: ${site}/servicios
-${SERVICE_PAGES.map((page) => `  - ${page.name}: ${site}/servicios/${page.slug}`).join("\n")}
+${SERVICE_PAGES.map((page2) => `  - ${page2.name}: ${site}/servicios/${page2.slug}`).join("\n")}
 - Mapa de talleres (ciudad, sector y servicio): ${site}/mapa
 - Talleres por ciudad: ${site}/talleres
 ${CITY_PAGES.map((city) => `  - ${city.name} (${city.province}): ${site}/talleres/${city.slug}`).join("\n")}
@@ -109080,7 +113133,7 @@ async function seoRoutes(app2, options = {}) {
 init_brand();
 
 // packages/api/dist/interfaces/content/index.js
-import { randomBytes as randomBytes7 } from "node:crypto";
+import { randomBytes as randomBytes8 } from "node:crypto";
 
 // packages/api/dist/interfaces/content/page.js
 init_page();
@@ -109089,18 +113142,18 @@ init_theme_layers();
 init_head();
 init_brand();
 var ORGANIZACION = { "@id": `${SITE}/#organizacion` };
-function serviceSchema(page) {
+function serviceSchema(page2) {
   return {
     "@type": "Service",
-    "@id": `${SITE}/servicios/${page.slug}#servicio`,
-    name: page.name,
-    serviceType: page.name,
-    description: page.description,
-    url: `${SITE}/servicios/${page.slug}`,
+    "@id": `${SITE}/servicios/${page2.slug}#servicio`,
+    name: page2.name,
+    serviceType: page2.name,
+    description: page2.description,
+    url: `${SITE}/servicios/${page2.slug}`,
     provider: { ...ORGANIZACION, "@type": "Organization", name: "AutoMantPro", url: `${SITE}/` },
     areaServed: { "@type": "Country", name: "Ecuador" },
     availableChannel: { "@type": "ServiceChannel", name: "WhatsApp", serviceUrl: `${SITE}/` },
-    ...page.priceFrom !== null && page.priceTo !== null ? { offers: { "@type": "AggregateOffer", priceCurrency: "USD", lowPrice: page.priceFrom, highPrice: page.priceTo, description: "Precio referencial; el precio final se acuerda con el taller antes de entrar." } } : {}
+    ...page2.priceFrom !== null && page2.priceTo !== null ? { offers: { "@type": "AggregateOffer", priceCurrency: "USD", lowPrice: page2.priceFrom, highPrice: page2.priceTo, description: "Precio referencial; el precio final se acuerda con el taller antes de entrar." } } : {}
   };
 }
 function citySchema(city) {
@@ -109145,7 +113198,7 @@ function structuredData2(input) {
   return JSON.stringify(datos).replace(/</g, "\\u003c");
 }
 function renderContentPage(input) {
-  const nonce = escapeHtml(input.nonce);
+  const nonce2 = escapeHtml(input.nonce);
   const links = input.number ? buildLinks(input.number, input.code, null) : null;
   const wame = links ? `${links.wame.split("?text=")[0]}?text=${encodeURIComponent(`${input.chatText} C\xF3digo: ${input.code}`)}` : null;
   const cta = wame ? `<a class="cta" href="${escapeHtml(wame)}" rel="noopener">Escribir por WhatsApp</a>
@@ -109164,8 +113217,8 @@ function renderContentPage(input) {
 <meta name="theme-color" content="${THEME_COLOR}">
 <title>${escapeHtml(input.title)}</title>
 ${seoHead({ path: input.path, title: input.title, description: input.description, type: "website", noindex: input.noindex })}
-<style nonce="${nonce}">${STYLES}${EXTRA}${THEME_ENTRY_LAYER}</style>
-<script type="application/ld+json" nonce="${nonce}">${structuredData2(input)}</script>
+<style nonce="${nonce2}">${STYLES}${EXTRA}${THEME_ENTRY_LAYER}</style>
+<script type="application/ld+json" nonce="${nonce2}">${structuredData2(input)}</script>
 </head>
 <body>
 <main>
@@ -109206,8 +113259,8 @@ h1{font-size:26px;margin:10px 0 8px}
 .zonas{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0}
 .zonas span{font:500 13px/1 var(--c-font);color:var(--c-muted);border:1px solid var(--c-line);padding:6px 9px;border-radius:7px}
 `;
-function serviceBlocks(page) {
-  const items = page.items.map((item) => `<article class="servicio"><h3>${escapeHtml(item.name)}</h3>
+function serviceBlocks(page2) {
+  const items = page2.items.map((item) => `<article class="servicio"><h3>${escapeHtml(item.name)}</h3>
       ${item.detail ? `<p>${escapeHtml(item.detail)}</p>` : ""}
       <div class="datos">
         ${item.durationMin ? `<span>${item.durationMin} min</span>` : ""}
@@ -109251,7 +113304,7 @@ var HEADERS = {
   "X-Frame-Options": "DENY",
   "Cache-Control": "public, max-age=600"
 };
-var csp = (nonce) => `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`;
+var csp = (nonce2) => `default-src 'none'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`;
 async function contentRoutes(app2, options = {}) {
   const marketing = options.marketingSite === void 0 ? marketingSite() : options.marketingSite;
   if (marketing) {
@@ -109259,8 +113312,8 @@ async function contentRoutes(app2, options = {}) {
     app2.get("/servicios", async (_request, reply) => moved(reply, "/servicios"));
     app2.get("/talleres", async (_request, reply) => moved(reply, "/talleres"));
     app2.get("/servicios/:slug", async (request, reply) => {
-      const page = findService(request.params.slug);
-      return page ? moved(reply, `/servicios/${page.slug}`) : reply.callNotFound();
+      const page2 = findService(request.params.slug);
+      return page2 ? moved(reply, `/servicios/${page2.slug}`) : reply.callNotFound();
     });
     app2.get("/talleres/:slug", async (request, reply) => {
       const city = findCity(request.params.slug);
@@ -109284,20 +113337,20 @@ async function contentRoutes(app2, options = {}) {
     }
     return code3;
   }
-  const send = (reply, html, nonce) => {
+  const send = (reply, html, nonce2) => {
     for (const [name, value2] of Object.entries(HEADERS))
       reply.header(name, value2);
-    reply.header("Content-Security-Policy", csp(nonce));
+    reply.header("Content-Security-Policy", csp(nonce2));
     return reply.type("text/html; charset=utf-8").send(html);
   };
   app2.get("/servicios", async (request, reply) => {
     const code3 = await visitCode("servicios", request.headers["user-agent"]);
-    const lista = SERVICE_PAGES.map((page) => `<li><a href="/servicios/${page.slug}">${page.name}</a>${page.priceFrom === null ? "" : ` \u2014 desde US$ ${page.priceFrom.toFixed(0)}`}</li>`).join("");
-    const nonce = randomBytes7(16).toString("base64");
+    const lista = SERVICE_PAGES.map((page2) => `<li><a href="/servicios/${page2.slug}">${page2.name}</a>${page2.priceFrom === null ? "" : ` \u2014 desde US$ ${page2.priceFrom.toFixed(0)}`}</li>`).join("");
+    const nonce2 = randomBytes8(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number(),
       code: code3,
-      nonce,
+      nonce: nonce2,
       path: "/servicios",
       title: "Servicios de mantenimiento y reparaci\xF3n en Ecuador \xB7 precios referenciales",
       description: "Qu\xE9 incluye cada servicio del veh\xEDculo, cu\xE1nto demora y cu\xE1nto cuesta en Ecuador: frenos, aceite, motor, suspensi\xF3n, neum\xE1ticos, aire acondicionado y m\xE1s. Agenda por WhatsApp.",
@@ -109320,28 +113373,28 @@ async function contentRoutes(app2, options = {}) {
         { href: "/servicios", label: "Servicios" }
       ],
       chatText: "Hola AutoMantPro, quiero saber qu\xE9 mantenimiento le toca a mi veh\xEDculo."
-    }), nonce);
+    }), nonce2);
   });
   app2.get("/servicios/:slug", async (request, reply) => {
     const { slug } = request.params;
-    const page = findService(slug);
-    if (!page)
+    const page2 = findService(slug);
+    if (!page2)
       return reply.callNotFound();
-    const code3 = await visitCode(`servicio:${page.id}`, request.headers["user-agent"]);
-    const otros = SERVICE_PAGES.filter((p) => p.slug !== page.slug).slice(0, 5);
-    const nonce = randomBytes7(16).toString("base64");
+    const code3 = await visitCode(`servicio:${page2.id}`, request.headers["user-agent"]);
+    const otros = SERVICE_PAGES.filter((p) => p.slug !== page2.slug).slice(0, 5);
+    const nonce2 = randomBytes8(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number(),
       code: code3,
-      nonce,
-      path: `/servicios/${page.slug}`,
-      title: page.title,
-      description: page.description,
-      h1: `${page.name} para tu veh\xEDculo`,
-      intro: page.description,
-      blocks: serviceBlocks(page),
-      faq: serviceFaq(page),
-      schema: [serviceSchema(page)],
+      nonce: nonce2,
+      path: `/servicios/${page2.slug}`,
+      title: page2.title,
+      description: page2.description,
+      h1: `${page2.name} para tu veh\xEDculo`,
+      intro: page2.description,
+      blocks: serviceBlocks(page2),
+      faq: serviceFaq(page2),
+      schema: [serviceSchema(page2)],
       related: [
         ...otros.map((p) => ({ href: `/servicios/${p.slug}`, label: p.name })),
         { href: "/servicios", label: "Ver todos los servicios" }
@@ -109349,19 +113402,19 @@ async function contentRoutes(app2, options = {}) {
       breadcrumb: [
         { href: "/", label: "Inicio" },
         { href: "/servicios", label: "Servicios" },
-        { href: `/servicios/${page.slug}`, label: page.name }
+        { href: `/servicios/${page2.slug}`, label: page2.name }
       ],
-      chatText: `Hola AutoMantPro, necesito ${page.name.toLowerCase()} para mi veh\xEDculo.`
-    }), nonce);
+      chatText: `Hola AutoMantPro, necesito ${page2.name.toLowerCase()} para mi veh\xEDculo.`
+    }), nonce2);
   });
   app2.get("/talleres", async (request, reply) => {
     const code3 = await visitCode("talleres", request.headers["user-agent"]);
     const lista = CITY_PAGES.map((city) => `<li><a href="/talleres/${city.slug}">Talleres mec\xE1nicos en ${city.name}</a> \u2014 ${city.province}</li>`).join("");
-    const nonce = randomBytes7(16).toString("base64");
+    const nonce2 = randomBytes8(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number(),
       code: code3,
-      nonce,
+      nonce: nonce2,
       path: "/talleres",
       title: "Talleres mec\xE1nicos en Ecuador por ciudad \xB7 turnos por WhatsApp",
       description: "Talleres mec\xE1nicos en Quito, Guayaquil, Cuenca y m\xE1s ciudades del Ecuador: turno coordinado por WhatsApp, precio acordado antes de entrar y garant\xEDa anotada en la orden de trabajo.",
@@ -109383,7 +113436,7 @@ async function contentRoutes(app2, options = {}) {
         { href: "/talleres", label: "Talleres" }
       ],
       chatText: "Hola AutoMantPro, busco un taller mec\xE1nico de confianza."
-    }), nonce);
+    }), nonce2);
   });
   app2.get("/talleres/:slug", async (request, reply) => {
     const { slug } = request.params;
@@ -109391,11 +113444,11 @@ async function contentRoutes(app2, options = {}) {
     if (!city)
       return reply.callNotFound();
     const code3 = await visitCode(`ciudad:${city.slug}`, request.headers["user-agent"]);
-    const nonce = randomBytes7(16).toString("base64");
+    const nonce2 = randomBytes8(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number(),
       code: code3,
-      nonce,
+      nonce: nonce2,
       path: `/talleres/${city.slug}`,
       title: city.title,
       description: city.description,
@@ -109414,7 +113467,7 @@ async function contentRoutes(app2, options = {}) {
         { href: `/talleres/${city.slug}`, label: city.name }
       ],
       chatText: `Hola AutoMantPro, busco un taller mec\xE1nico en ${city.name}.`
-    }), nonce);
+    }), nonce2);
   });
 }
 
@@ -109425,7 +113478,7 @@ init_theme();
 init_theme_layers();
 init_head();
 init_brand();
-import { randomBytes as randomBytes8 } from "node:crypto";
+import { randomBytes as randomBytes9 } from "node:crypto";
 
 // packages/api/dist/interfaces/map/leaflet-assets.js
 var LEAFLET_JS_HASH = "db49d009c841";
@@ -110102,7 +114155,7 @@ svg.leaflet-image-layer.leaflet-interactive path {\r
 init_workshop_map();
 var TILE_HOST = "https://tile.openstreetmap.org";
 var LEAFLET_PATH = `/mapa/leaflet.${LEAFLET_JS_HASH}.js`;
-var mapCsp = (nonce) => `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; img-src 'self' data: ${TILE_HOST}; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`;
+var mapCsp = (nonce2) => `default-src 'none'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; img-src 'self' data: ${TILE_HOST}; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`;
 var HEADERS2 = {
   "X-Content-Type-Options": "nosniff",
   // OpenStreetMap pide que cada imagen del mapa llegue con el sitio de origen (no la ruta completa).
@@ -110134,7 +114187,7 @@ function shopCard(shop, number, index) {
   </li>`;
 }
 function renderMapPage(input) {
-  const nonce = escapeHtml(input.nonce);
+  const nonce2 = escapeHtml(input.nonce);
   const places = placesOf(input.records);
   const cityEntry = places.find((p) => fold4(p.city) === fold4(input.city)) ?? null;
   const city = cityEntry?.city ?? "";
@@ -110168,7 +114221,7 @@ function renderMapPage(input) {
 <meta name="theme-color" content="${THEME_COLOR}">
 <title>${escapeHtml(title)}</title>
 ${seoHead({ path: "/mapa", title, description, type: "website" })}
-<style nonce="${nonce}">${STYLES}${THEME_ENTRY_LAYER}${LEAFLET_CSS}${MAP_STYLES}</style>
+<style nonce="${nonce2}">${STYLES}${THEME_ENTRY_LAYER}${LEAFLET_CSS}${MAP_STYLES}</style>
 </head>
 <body>
 <main>
@@ -110195,9 +114248,9 @@ ${seoHead({ path: "/mapa", title, description, type: "website" })}
   </section>
   <p class="legal">Al usar el mapa aceptas los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP).</p>
 </main>
-<script type="application/json" id="datos" nonce="${nonce}">${data2}</script>
-<script src="${LEAFLET_PATH}" nonce="${nonce}"></script>
-<script nonce="${nonce}">${MAP_SCRIPT}</script>
+<script type="application/json" id="datos" nonce="${nonce2}">${data2}</script>
+<script src="${LEAFLET_PATH}" nonce="${nonce2}"></script>
+<script nonce="${nonce2}">${MAP_SCRIPT}</script>
 </body>
 </html>`;
 }
@@ -110316,9 +114369,9 @@ async function mapRoutes(app2, options = {}) {
   app2.get(LEAFLET_PATH, async (_request, reply) => reply.header("Cache-Control", "public, max-age=31536000, immutable").header("X-Content-Type-Options", "nosniff").header("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'").type("application/javascript; charset=utf-8").send(LEAFLET_JS));
   app2.get("/mapa", async (request, reply) => {
     const q = request.query ?? {};
-    const nonce = randomBytes8(16).toString("base64");
+    const nonce2 = randomBytes9(16).toString("base64");
     const html = renderMapPage({
-      nonce,
+      nonce: nonce2,
       number: await number(),
       city: clip(q.ciudad, 80),
       zone: clip(q.sector, 80),
@@ -110327,7 +114380,7 @@ async function mapRoutes(app2, options = {}) {
     });
     for (const [name, value2] of Object.entries(HEADERS2))
       reply.header(name, value2);
-    reply.header("Content-Security-Policy", mapCsp(nonce));
+    reply.header("Content-Security-Policy", mapCsp(nonce2));
     return reply.type("text/html; charset=utf-8").send(html);
   });
 }
@@ -110338,7 +114391,7 @@ init_workshop_map_store();
 // packages/api/dist/interfaces/content/plans-page.js
 init_catalog();
 init_page();
-import { randomBytes as randomBytes9 } from "node:crypto";
+import { randomBytes as randomBytes10 } from "node:crypto";
 init_entry();
 init_marketing();
 var PROFILES = ["dueno", "taller", "almacen", "flota"];
@@ -110406,7 +114459,7 @@ async function plansPageRoutes(app2, options = {}) {
     return send(reply, renderContentPage({
       number: phone,
       code: code3,
-      nonce: randomBytes9(16).toString("base64"),
+      nonce: randomBytes10(16).toString("base64"),
       path: "/planes",
       title: "Contratar plan \xB7 AutoMantPro",
       description: `Contrata tu plan de AutoMantPro por WhatsApp: precios con IVA, ${TRIAL_DAYS} d\xEDas de prueba gratis y pago por transferencia.`,
@@ -110457,7 +114510,7 @@ init_documents();
 init_theme();
 init_theme_layers();
 init_brand();
-import { randomBytes as randomBytes10 } from "node:crypto";
+import { randomBytes as randomBytes11 } from "node:crypto";
 var STYLES2 = `${THEME_TOKENS}
 *{box-sizing:border-box}
 body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.6 var(--c-font);padding:24px 16px}
@@ -110478,7 +114531,7 @@ function renderSections(sections) {
   }).join("");
 }
 function renderLegalPage(input) {
-  const nonce = escapeHtml(input.nonce);
+  const nonce2 = escapeHtml(input.nonce);
   const notice = input.complete ? "" : `<p class="notice" role="note">Documento en revisi\xF3n: algunos datos de la empresa est\xE1n pendientes y se completar\xE1n en breve.</p>`;
   return `<!doctype html>
 <html lang="es-EC">
@@ -110487,7 +114540,7 @@ function renderLegalPage(input) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(input.title)} \xB7 AutoMantPro</title>
 ${input.path ? seoHead({ path: input.path, title: `${input.title} \xB7 AutoMantPro`, description: input.description ?? input.title }) : ICON_LINKS}
-<style nonce="${nonce}">${STYLES2}${THEME_LEGAL_LAYER}</style>
+<style nonce="${nonce2}">${STYLES2}${THEME_LEGAL_LAYER}</style>
 </head>
 <body>
 <main>
@@ -110518,16 +114571,16 @@ async function legalRoutes(app2, options = {}) {
       sections: privacySections
     }
   ];
-  for (const page of pages) {
-    app2.get(page.path, async (_request, reply) => {
+  for (const page2 of pages) {
+    app2.get(page2.path, async (_request, reply) => {
       let data2;
       try {
         data2 = await load();
       } catch {
         data2 = emptyLegalData();
       }
-      const nonce = randomBytes10(16).toString("base64");
-      return reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-cache").type("text/html; charset=utf-8").send(renderLegalPage({ title: page.title, path: page.path, description: page.description, sections: page.sections(data2), complete: isLegalComplete(data2), nonce }));
+      const nonce2 = randomBytes11(16).toString("base64");
+      return reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-cache").type("text/html; charset=utf-8").send(renderLegalPage({ title: page2.title, path: page2.path, description: page2.description, sections: page2.sections(data2), complete: isLegalComplete(data2), nonce: nonce2 }));
     });
   }
 }
@@ -110541,6 +114594,7 @@ var messageSchema = external_exports.object({
   from: external_exports.string().regex(/^\d{6,32}$/),
   type: external_exports.string().min(1).max(40),
   text: external_exports.object({ body: external_exports.string().min(1).max(2e3) }).optional(),
+  image: external_exports.object({ id: external_exports.string().min(1).max(191) }).optional(),
   interactive: external_exports.object({
     button_reply: external_exports.object({ id: external_exports.string().max(256), title: external_exports.string().max(256) }).optional(),
     list_reply: external_exports.object({ id: external_exports.string().max(256), title: external_exports.string().max(256) }).optional()
@@ -110631,7 +114685,10 @@ async function whatsappIngressRoutes(app2, options) {
         if (notificationCount > 100)
           return reply.code(422).send({ error: "INVALID_NOTIFICATION" });
         for (const message2 of change.value.messages ?? []) {
-          pending.push({ wamid: message2.id, phone: message2.from, payload: { channel: "whatsapp", message: inboundText(message2) } });
+          const parsedMessage = inboundText(message2);
+          const payment = parsedMessage.match(/^Pago\s+(IN-\d{4})$/i);
+          const payload = { channel: "whatsapp", message: parsedMessage, ...message2.image?.id ? { mediaId: message2.image.id } : {}, ...payment?.[1] && message2.image?.id ? { message: `Pago ${payment[1].toUpperCase()}` } : {} };
+          pending.push({ wamid: message2.id, phone: message2.from, payload });
         }
       }
     }
@@ -110742,13 +114799,13 @@ init_apply();
 init_plan_text();
 init_entitlements();
 init_catalog_store();
-import { randomUUID as randomUUID18 } from "node:crypto";
+import { randomUUID as randomUUID19 } from "node:crypto";
 
 // packages/api/dist/infrastructure/plans/renewal-notices.js
 init_catalog();
 init_plans();
-import { randomUUID as randomUUID17 } from "node:crypto";
-var rows18 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomUUID as randomUUID18 } from "node:crypto";
+var rows19 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 function ecDate(value2) {
   return new Intl.DateTimeFormat("es-EC", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Guayaquil" }).format(value2);
 }
@@ -110761,14 +114818,14 @@ function expiryText(plan, code3) {
 Para volver a ${plan}: Renovar ${code3}`;
 }
 async function notify(conn, userId, dedup, message2) {
-  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID17(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID18(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
   return Number(result.affectedRows ?? 0) === 1;
 }
 async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date()) {
   let renewals = 0;
   let expired = 0;
   const soon = new Date(now.getTime() + RENEWAL_NOTICE_DAYS * 864e5);
-  const ending = await rows18(conn, "SELECT s.id, s.userId, s.plan, s.number, s.expiresAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'activa' AND s.renewalNoticeAt IS NULL AND s.expiresAt > ? AND s.expiresAt <= ? AND u.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND (n.status IN ('solicitada','pendiente') OR (n.status = 'activa' AND n.expiresAt > s.expiresAt))) LIMIT 500", [now, soon]);
+  const ending = await rows19(conn, "SELECT s.id, s.userId, s.plan, s.number, s.expiresAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'activa' AND s.renewalNoticeAt IS NULL AND s.expiresAt > ? AND s.expiresAt <= ? AND u.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND (n.status IN ('solicitada','pendiente') OR (n.status = 'activa' AND n.expiresAt > s.expiresAt))) LIMIT 500", [now, soon]);
   for (const sub of ending) {
     const code3 = subscriptionCode(Number(sub.number ?? 0));
     if (await notify(conn, String(sub.userId), `plan-renewal:${String(sub.id)}`, renewalText(planName(String(sub.plan), catalog), code3, new Date(String(sub.expiresAt)))))
@@ -110776,9 +114833,9 @@ async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date
     await conn.query("UPDATE `Subscription` SET renewalNoticeAt = ? WHERE id = ?", [now, sub.id]);
   }
   await conn.query("UPDATE `Subscription` SET status = 'vencida', active = 0, updatedAt = CURRENT_TIMESTAMP(3) WHERE status = 'activa' AND expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
-  const lapsed = await rows18(conn, "SELECT s.id, s.userId, s.plan, s.number FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'vencida' AND s.expiryNoticeAt IS NULL AND s.expiresAt > DATE_SUB(?, INTERVAL 7 DAY) AND u.deletedAt IS NULL LIMIT 500", [now]);
+  const lapsed = await rows19(conn, "SELECT s.id, s.userId, s.plan, s.number FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'vencida' AND s.expiryNoticeAt IS NULL AND s.expiresAt > DATE_SUB(?, INTERVAL 7 DAY) AND u.deletedAt IS NULL LIMIT 500", [now]);
   for (const sub of lapsed) {
-    const [still] = await rows18(conn, "SELECT 1 AS x FROM `Subscription` WHERE userId = ? AND status = 'activa' AND expiresAt > ? LIMIT 1", [sub.userId, now]);
+    const [still] = await rows19(conn, "SELECT 1 AS x FROM `Subscription` WHERE userId = ? AND status = 'activa' AND expiresAt > ? LIMIT 1", [sub.userId, now]);
     if (!still) {
       const code3 = subscriptionCode(Number(sub.number ?? 0));
       if (await notify(conn, String(sub.userId), `plan-expired:${String(sub.id)}`, expiryText(planName(String(sub.plan), catalog), code3)))
@@ -110796,7 +114853,7 @@ init_fleet_store();
 init_workshop_map();
 init_reminder_done();
 init_rtv_calendar();
-var rows19 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows20 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var km4 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
 var VehicleReminders = class {
   connect;
@@ -110823,7 +114880,7 @@ var VehicleReminders = class {
         await subscriptionNotices(conn, await loadCatalog(conn), now);
       } catch {
       }
-      const vehicles = await rows19(conn, "SELECT v.*, u.city AS ownerCity FROM `Vehicle` v JOIN `User` u ON u.id = v.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE v.remindersOptIn = TRUE AND v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ORDER BY v.id LIMIT 1000");
+      const vehicles = await rows20(conn, "SELECT v.*, u.city AS ownerCity FROM `Vehicle` v JOIN `User` u ON u.id = v.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE v.remindersOptIn = TRUE AND v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ORDER BY v.id LIMIT 1000");
       const levels = /* @__PURE__ */ new Map();
       for (const vehicle of vehicles) {
         const owner = String(vehicle.userId);
@@ -110867,14 +114924,14 @@ Para pedir talleres: Buscar servicio | categor\xEDa | ciudad | sector | descripc
         if (!created)
           continue;
         planReminders++;
-        const [shop] = await rows19(conn, "SELECT s.userId, a.id AS appointmentId FROM `Service` sv JOIN `Shop` s ON s.id = sv.shopId LEFT JOIN `Appointment` a ON a.shopId = s.id AND a.vehicleId = sv.vehicleId WHERE sv.vehicleId = ? AND sv.createdAt > DATE_SUB(?, INTERVAL 365 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = sv.vehicleId AND b.shopId = s.id) ORDER BY sv.createdAt DESC, a.scheduledAt DESC LIMIT 1", [vehicle.id, now]);
+        const [shop] = await rows20(conn, "SELECT s.userId, a.id AS appointmentId FROM `Service` sv JOIN `Shop` s ON s.id = sv.shopId LEFT JOIN `Appointment` a ON a.shopId = s.id AND a.vehicleId = sv.vehicleId WHERE sv.vehicleId = ? AND sv.createdAt > DATE_SUB(?, INTERVAL 365 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = sv.vehicleId AND b.shopId = s.id) ORDER BY sv.createdAt DESC, a.scheduledAt DESC LIMIT 1", [vehicle.id, now]);
         if (shop) {
           const ref4 = shop.appointmentId ? ` Puedes proponer la visita: Pr\xF3xima visita C-${String(shop.appointmentId).replace(/-/g, "").slice(0, 6).toUpperCase()} | AAAA-MM-DD | HH:mm` : "";
           await this.notify(conn, String(shop.userId), `reminder-shop:${String(vehicle.id)}:${key}`.slice(0, 191), `\u{1F514} Tu cliente con ${label2} tiene mantenimiento pr\xF3ximo:
 ${lines.join("\n")}${ref4}`);
         }
       }
-      const dueAlerts = await rows19(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
+      const dueAlerts = await rows20(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
       for (const a of dueAlerts) {
         const label2 = `${a.make} ${a.model} ${a.year}`;
         await this.notify(conn, String(a.ownerId), `alert:${String(a.id)}`, `\u{1F514} Alerta de tu ${label2}: ${a.label}`);
@@ -110890,7 +114947,7 @@ ${lines.join("\n")}${ref4}`);
         alerts++;
       }
       const week = Math.floor((now.getTime() - 5 * 36e5) / (7 * 864e5));
-      const silent = await rows19(conn, "SELECT a.vehicleId, m.userId, v.make, v.model, v.plate, v.unitCode FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL AND v.deletedAt IS NULL AND f.status = 'activa' AND a.startsAt < DATE_SUB(?, INTERVAL 14 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleOdometerReading` r WHERE r.vehicleId = a.vehicleId AND r.createdAt > DATE_SUB(?, INTERVAL 14 DAY)) LIMIT 500", [now, now]);
+      const silent = await rows20(conn, "SELECT a.vehicleId, m.userId, v.make, v.model, v.plate, v.unitCode FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL AND v.deletedAt IS NULL AND f.status = 'activa' AND a.startsAt < DATE_SUB(?, INTERVAL 14 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleOdometerReading` r WHERE r.vehicleId = a.vehicleId AND r.createdAt > DATE_SUB(?, INTERVAL 14 DAY)) LIMIT 500", [now, now]);
       for (const d of silent) {
         if (await this.notify(conn, String(d.userId), `kmask:${String(d.vehicleId)}:${week}`, `\u{1F4CF} \xBFCu\xE1ntos kil\xF3metros marca ${unitLabel(d)} ${d.make} ${d.model}? Responde: Kilometraje | km. Con ese dato sabemos cu\xE1ndo le toca mantenimiento.`))
           kmReminders++;
@@ -110899,11 +114956,11 @@ ${lines.join("\n")}${ref4}`);
       if (local.getUTCDate() === 1 && local.getUTCHours() >= 8) {
         const monthEnd = new Date(ecMonthStart(now).getTime() - 1);
         const label2 = new Intl.DateTimeFormat("es-EC", { month: "long", year: "numeric", timeZone: "America/Guayaquil" }).format(monthEnd);
-        const fleets = await rows19(conn, "SELECT f.id, f.name, f.ownerUserId FROM `Fleet` f JOIN `User` u ON u.id = f.ownerUserId WHERE f.status = 'activa' AND u.deletedAt IS NULL LIMIT 500");
+        const fleets = await rows20(conn, "SELECT f.id, f.name, f.ownerUserId FROM `Fleet` f JOIN `User` u ON u.id = f.ownerUserId WHERE f.status = 'activa' AND u.deletedAt IS NULL LIMIT 500");
         for (const f of fleets) {
           const text9 = `\u{1F4CA} Reporte de ${label2}
 ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
-          const managers = await rows19(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role IN ('admin','supervisor') AND status = 'active' AND userId IS NOT NULL", [f.id]);
+          const managers = await rows20(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role IN ('admin','supervisor') AND status = 'active' AND userId IS NOT NULL", [f.id]);
           for (const recipient of /* @__PURE__ */ new Set([String(f.ownerUserId), ...managers.map((m) => String(m.userId))]))
             if (await this.notify(conn, recipient, `fleetreport:${String(f.id)}:${local.toISOString().slice(0, 7)}:${recipient}`.slice(0, 191), text9))
               fleetReports++;
@@ -110912,10 +114969,10 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
       const ecHour = (now.getUTCHours() + 19) % 24;
       if (ecHour >= 19) {
         const day3 = new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
-        const shops = await rows19(conn, "SELECT s.id, s.name, s.userId FROM `Shop` s JOIN `User` u ON u.id = s.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE s.verificationStatus IN ('verified','pending') AND u.deletedAt IS NULL AND EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.shopId = s.id AND (w.createdAt >= DATE_SUB(?, INTERVAL 1 DAY) OR w.status NOT IN ('cerrada','cancelada'))) LIMIT 500", [now]);
+        const shops = await rows20(conn, "SELECT s.id, s.name, s.userId FROM `Shop` s JOIN `User` u ON u.id = s.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE s.verificationStatus IN ('verified','pending') AND u.deletedAt IS NULL AND EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.shopId = s.id AND (w.createdAt >= DATE_SUB(?, INTERVAL 1 DAY) OR w.status NOT IN ('cerrada','cancelada'))) LIMIT 500", [now]);
         for (const shop of shops) {
           const report = await shopReport(conn, String(shop.id), String(shop.name), "hoy", now);
-          const admins = await rows19(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shop.id]);
+          const admins = await rows20(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shop.id]);
           for (const recipient of /* @__PURE__ */ new Set([String(shop.userId), ...admins.map((a) => String(a.userId))]))
             await this.notify(conn, recipient, `shopreport:${String(shop.id)}:${day3}:${recipient}`.slice(0, 191), report);
           reports++;
@@ -110928,7 +114985,7 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
   }
   /** True when the reminder was new; the dedup key makes repeated runs harmless. */
   async notify(conn, recipient, dedup, message2, kind = "care.reminder") {
-    const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID18(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
+    const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID19(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
     return Number(result.affectedRows) === 1;
   }
   start(intervalMs = 36e5, onError = () => {
@@ -110965,8 +115022,8 @@ var REQUIRED_RUNTIME_COLUMNS = {
 async function checkDatabaseReady(connect = openConnection) {
   const conn = await connect();
   try {
-    const [rows30] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-    const present = new Set(rows30.map((row) => row.name));
+    const [rows31] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+    const present = new Set(rows31.map((row) => row.name));
     if (!EXPECTED_TABLES2.every((table) => present.has(table)))
       return false;
     const [columns] = await conn.query("SELECT table_name AS tbl, column_name AS col FROM information_schema.columns WHERE table_schema = DATABASE()");
@@ -111001,15 +115058,15 @@ init_admin_alerts();
 init_theme();
 init_theme_layers();
 init_brand();
-import { randomBytes as randomBytes11 } from "node:crypto";
-function renderAssistantPage(nonce) {
+import { randomBytes as randomBytes12 } from "node:crypto";
+function renderAssistantPage(nonce2) {
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Asistente \xB7 AutoMantPro</title>
-<style nonce="${nonce}">${THEME_TOKENS}
+<style nonce="${nonce2}">${THEME_TOKENS}
 :root{--ink:var(--c-ink);--muted:var(--c-muted);--brand:var(--c-accent);--bg:var(--c-bg);--card:var(--c-surface);--line:var(--c-line);--danger:var(--c-bad);--ok:var(--c-ok)}*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.45 var(--c-font)}.shell{max-width:920px;margin:auto;padding:24px 16px 48px}header{margin-bottom:18px}.brand{color:var(--c-accent);font-weight:700;letter-spacing:-.01em}h1{font-size:clamp(1.55rem,4vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin:.25rem 0}h2{font-size:1.05rem;margin:0 0 8px}.muted{color:var(--c-muted)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:18px;box-shadow:var(--c-shadow)}.hidden{display:none!important}label{display:block;font-weight:600;margin:12px 0 5px}input,textarea,button{font:inherit}input,textarea{width:100%;min-height:48px;border:1px solid var(--c-line);border-radius:10px;padding:11px;background:var(--c-field);color:var(--c-ink)}textarea{min-height:88px;resize:vertical}button{min-height:48px;border:0;border-radius:var(--c-r);background:var(--c-accent);color:var(--c-on-accent);font-weight:600;padding:11px 18px;cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.secondary{background:transparent;color:var(--c-accent);border:1px solid var(--c-line)}.danger{color:var(--c-bad)}.notice{min-height:1.5em;margin:10px 0}.chat{display:grid;gap:12px;margin:18px 0}.message{max-width:82%;padding:11px 13px;border-radius:13px;background:var(--c-sunk);white-space:pre-wrap}.message.user{justify-self:end;background:var(--c-ok-bg)}.message.assistant{justify-self:start}.proposal{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:14px;margin:12px 0}.proposal dl{display:grid;grid-template-columns:minmax(120px,1fr) 2fr;gap:5px 12px;margin:12px 0}.proposal dt{color:var(--c-muted)}.proposal dd{margin:0;font-weight:600}.confirm{display:flex;gap:9px;align-items:flex-start;margin:13px 0}.confirm input{width:20px;height:20px;min-height:0;flex:0 0 auto;margin-top:2px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row button{margin-left:auto}@media(max-width:560px){.shell{padding:18px 12px}.card{padding:14px}.message{max-width:92%}.proposal dl{grid-template-columns:1fr}.proposal dt{margin-top:6px}.row button{width:100%;margin-left:0}}${THEME_ASSISTANT_LAYER}
 </style></head><body><main class="shell"><header><div class="brand">${logoImg()}</div><h1>Asistente de mantenimiento</h1><p class="muted">Las propuestas se revisan antes de registrar cualquier veh\xEDculo.</p></header>
 <section id="login" class="card"><h2>Ingresar</h2><p class="muted">Usa las credenciales de tu cuenta de due\xF1o.</p><form id="login-form"><label for="phone">Tel\xE9fono</label><input id="phone" name="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" name="password" type="password" autocomplete="current-password" required><p id="login-notice" class="notice" role="status"></p><button type="submit">Continuar</button></form></section>
 <section id="workspace" class="hidden"><div class="card"><div id="chat" class="chat" aria-live="polite"></div><form id="chat-form"><label for="message">\xBFEn qu\xE9 necesitas ayuda?</label><textarea id="message" maxlength="2000" required placeholder="Describe tu veh\xEDculo o la consulta de mantenimiento."></textarea><p id="chat-notice" class="notice" role="status"></p><div class="row"><button id="send" type="submit">Enviar</button><button id="logout" class="secondary" type="button">Salir</button></div></form></div><section id="proposals" aria-live="polite"></section></section>
-</main><script nonce="${nonce}">
+</main><script nonce="${nonce2}">
 (()=>{const $=id=>document.getElementById(id),login=$("login"),work=$("workspace"),chat=$("chat"),proposals=$("proposals"),loginNotice=$("login-notice"),chatNotice=$("chat-notice"),message=$("message"),send=$("send");let accessToken="",pending=null;const labels={vehicleClass:"Tipo",fuel:"Combustible",usageProfile:"Uso",brand:"Marca",model:"Modelo",year:"A\xF1o",mileage:"Kilometraje",plate:"Placa"};const usage={urbano:"Urbano",carretera:"Carretera",severo:"Severo"};function notice(el,text,error=false){el.textContent=text;el.className="notice"+(error?" danger":"")}function request(path,init={}){const headers=new Headers(init.headers||{});headers.set("Authorization","Bearer "+accessToken);if(init.body)headers.set("Content-Type","application/json");return fetch("/api/v1"+path,{...init,headers,cache:"no-store"}).then(async r=>{const body=await r.json().catch(()=>null);if(!r.ok)throw new Error(body&&body.error&&body.error.message||"No se pudo completar la solicitud.");return body.data})}function addMessage(role,content){const node=document.createElement("div");node.className="message "+role;node.textContent=content;chat.append(node)}function field(parent,key,value){if(value===null||value===undefined||value==="")return;const dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=labels[key]||key;dd.textContent=key==="usageProfile"?(usage[value]||value):String(value);parent.append(dt,dd)}function renderProposals(items){proposals.replaceChildren();const heading=document.createElement("h2");heading.textContent="Propuestas para revisar";proposals.append(heading);if(!items.length){const empty=document.createElement("p");empty.className="muted";empty.textContent="No hay propuestas pendientes o recientes.";proposals.append(empty);return}for(const item of items){const card=document.createElement("article");card.className="card proposal";const title=document.createElement("h2");title.textContent=item.status==="completed"?"Veh\xEDculo registrado":item.status==="expired"?"Propuesta vencida":"Revisa esta propuesta";card.append(title);const detail=document.createElement("dl");["brand","model","year","mileage","vehicleClass","fuel","usageProfile","plate"].forEach(key=>field(detail,key,item.vehicle[key]));card.append(detail);const expires=document.createElement("p");expires.className="muted";expires.textContent=item.status==="pending"?"Vence: "+new Date(item.expiresAt).toLocaleString():item.status==="completed"?"Registro confirmado.":"Esta propuesta ya venci\xF3.";card.append(expires);if(item.status==="pending"){const line=document.createElement("label");line.className="confirm";const box=document.createElement("input");box.type="checkbox";const copy=document.createElement("span");copy.textContent="Revis\xE9 los datos y autorizo registrar exactamente este veh\xEDculo.";line.append(box,copy);const button=document.createElement("button");button.type="button";button.disabled=true;button.textContent="Confirmar registro";box.addEventListener("change",()=>button.disabled=!box.checked);button.addEventListener("click",async()=>{button.disabled=true;notice(chatNotice,"Confirmando\u2026");try{const current=await request("/agent/actions/"+item.id);if(current.status!=="pending")throw new Error(current.status==="expired"?"La propuesta ya venci\xF3.":"La propuesta ya fue confirmada.");await request("/agent/actions/"+item.id+"/confirm",{method:"POST",body:JSON.stringify({confirm:true})});notice(chatNotice,"Veh\xEDculo registrado.");await loadState()}catch(error){notice(chatNotice,error.message,true);button.disabled=!box.checked}});card.append(line,button)}proposals.append(card)}}async function loadState(){const state=await request("/agent/state");chat.replaceChildren();state.history.forEach(turn=>addMessage(turn.role,turn.content));renderProposals(state.proposals)}async function sendMessage(){const content=message.value.trim();if(!content)return;if(!pending)pending={content,key:(crypto.randomUUID?crypto.randomUUID():"req_"+Date.now()+Math.random().toString(16).slice(2))};send.disabled=true;notice(chatNotice,"Consultando\u2026");try{const result=await request("/agent/chat",{method:"POST",headers:{"Idempotency-Key":pending.key},body:JSON.stringify({message:pending.content})});addMessage("user",pending.content);addMessage("assistant",result.reply);message.value="";pending=null;notice(chatNotice,"");await loadState()}catch(error){notice(chatNotice,error.message+" Puedes reintentar: se conservar\xE1 el mismo mensaje.",true)}finally{send.disabled=false}}$("login-form").addEventListener("submit",async event=>{event.preventDefault();notice(loginNotice,"Ingresando\u2026");const form=new FormData(event.currentTarget);try{const r=await fetch("/api/v1/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone:form.get("phone"),password:form.get("password")})});const body=await r.json();if(!r.ok)throw new Error(body.error&&body.error.message||"No fue posible ingresar.");accessToken=body.data.accessToken;$("password").value="";login.classList.add("hidden");work.classList.remove("hidden");await loadState()}catch(error){notice(loginNotice,error.message,true)}});$("chat-form").addEventListener("submit",event=>{event.preventDefault();sendMessage()});$("logout").addEventListener("click",()=>{accessToken="";pending=null;chat.replaceChildren();proposals.replaceChildren();work.classList.add("hidden");login.classList.remove("hidden");notice(loginNotice,"")})})();
 </script></body></html>`;
 }
@@ -111018,8 +115075,8 @@ async function assistantPageRoutes(app2, options = {}) {
   app2.get("/asistente", async (_request, reply) => {
     if (!enabled())
       return reply.code(404).send({ error: "Not found" });
-    const nonce = randomBytes11(16).toString("base64");
-    return reply.header("Content-Security-Policy", `default-src 'none'; img-src 'self'; script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(renderAssistantPage(nonce));
+    const nonce2 = randomBytes12(16).toString("base64");
+    return reply.header("Content-Security-Policy", `default-src 'none'; img-src 'self'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(renderAssistantPage(nonce2));
   });
 }
 
@@ -111033,15 +115090,15 @@ init_vehicle_card_store();
 init_fleet_access();
 init_fleet_store();
 init_workflow();
-import { randomBytes as randomBytes12 } from "node:crypto";
-var rows20 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomBytes as randomBytes13 } from "node:crypto";
+var rows21 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 var km5 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
 var token = external_exports.string().regex(/^[A-Za-z0-9_-]{32}$/);
 async function loadFleetPanel(value2, connect = openConnection) {
   const conn = await connect();
   try {
-    const [link] = await rows20(conn, "SELECT t.fleetId, t.userId, f.name, f.city FROM `FleetPanelToken` t JOIN `Fleet` f ON f.id = t.fleetId WHERE t.tokenHash = ? AND t.expiresAt > UTC_TIMESTAMP(3) AND f.status = 'activa'", [secretHash(value2)]);
+    const [link] = await rows21(conn, "SELECT t.fleetId, t.userId, f.name, f.city FROM `FleetPanelToken` t JOIN `Fleet` f ON f.id = t.fleetId WHERE t.tokenHash = ? AND t.expiresAt > UTC_TIMESTAMP(3) AND f.status = 'activa'", [secretHash(value2)]);
     if (!link)
       return null;
     const roles = await fleetRoles(conn, String(link.userId));
@@ -111049,9 +115106,9 @@ async function loadFleetPanel(value2, connect = openConnection) {
       return null;
     const fleetId = String(link.fleetId);
     const vehicles = await fleetSnapshot(conn, fleetId, /* @__PURE__ */ new Date(), String(link.city));
-    const months = (await rows20(conn, "SELECT DATE_FORMAT(DATE_SUB(spentAt, INTERVAL 5 HOUR), '%Y-%m') AS month, SUM(amountUsd) AS total FROM `VehicleExpense` WHERE fleetId = ? AND spentAt >= DATE_SUB(?, INTERVAL 5 MONTH) GROUP BY month ORDER BY month", [fleetId, ecMonthStart()])).map((m) => ({ month: String(m.month), total: Number(m.total) }));
-    const members = await rows20(conn, "SELECT m.id, m.name, m.role, m.status FROM `FleetMember` m WHERE m.fleetId = ? AND m.status <> 'removed' ORDER BY m.role, m.name", [fleetId]);
-    const agreements = await rows20(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status = 'activo' ORDER BY s.name", [fleetId]);
+    const months = (await rows21(conn, "SELECT DATE_FORMAT(DATE_SUB(spentAt, INTERVAL 5 HOUR), '%Y-%m') AS month, SUM(amountUsd) AS total FROM `VehicleExpense` WHERE fleetId = ? AND spentAt >= DATE_SUB(?, INTERVAL 5 MONTH) GROUP BY month ORDER BY month", [fleetId, ecMonthStart()])).map((m) => ({ month: String(m.month), total: Number(m.total) }));
+    const members = await rows21(conn, "SELECT m.id, m.name, m.role, m.status FROM `FleetMember` m WHERE m.fleetId = ? AND m.status <> 'removed' ORDER BY m.role, m.name", [fleetId]);
+    const agreements = await rows21(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status = 'activo' ORDER BY s.name", [fleetId]);
     return { fleet: { name: String(link.name), city: String(link.city) }, vehicles, months, members, agreements, generatedAt: /* @__PURE__ */ new Date() };
   } finally {
     await conn.end().catch(() => void 0);
@@ -111083,7 +115140,7 @@ function fleetCsv(data2) {
   return `\uFEFF${[head.join(";"), ...lines].join("\r\n")}\r
 `;
 }
-function renderFleetPanel(data2, nonce, csvHref) {
+function renderFleetPanel(data2, nonce2, csvHref) {
   const list7 = data2.vehicles;
   const overdue = list7.filter((v) => v.overdue.length).length;
   const soon = list7.filter((v) => !v.overdue.length && v.soon.length).length;
@@ -111098,7 +115155,7 @@ function renderFleetPanel(data2, nonce, csvHref) {
   };
   const roleName = { admin: "Administrador", supervisor: "Supervisor", conductor: "Conductor" };
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${esc(data2.fleet.name)} \xB7 Flota \xB7 AutoMantPro</title>
-<style nonce="${nonce}">${THEME_TOKENS}
+<style nonce="${nonce2}">${THEME_TOKENS}
 *{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.45 var(--c-font)}header{background:var(--c-head);color:var(--c-head-ink);padding:16px max(16px,env(safe-area-inset-left))}header .brand{color:var(--c-head-brand);font-weight:800}header h1{margin:.2rem 0 0;font-size:clamp(1.3rem,4vw,1.8rem)}main{max-width:1180px;margin:auto;padding:18px max(16px,env(safe-area-inset-left)) 48px;display:grid;gap:18px}.muted{color:var(--c-muted)}.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.tile{background:var(--c-surface);border-radius:var(--c-r);padding:14px;box-shadow:var(--c-shadow)}.tile b{display:block;font-size:1.6rem;font-variant-numeric:tabular-nums}.tile.bad b{color:var(--c-bad)}.tile.warn b{color:var(--c-warn)}.tile.ok b{color:var(--c-ok)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:16px;box-shadow:var(--c-shadow);min-width:0}.card h2{margin:0 0 10px;font-size:1.05rem}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:860px}th,td{padding:8px 10px;border-bottom:1px solid var(--c-line);text-align:left;vertical-align:top}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--c-muted)}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.8rem;font-weight:600}.pill.ok{background:var(--c-ok-bg);color:var(--c-ok)}.pill.warn{background:var(--c-warn-bg);color:var(--c-warn)}.pill.bad{background:var(--c-bad-bg);color:var(--c-bad)}.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.bars{display:grid;gap:8px}.bar{display:grid;grid-template-columns:70px 1fr 90px;gap:8px;align-items:center;font-variant-numeric:tabular-nums}.bar span{display:block;height:12px;border-radius:6px;background:var(--c-accent)}ul{margin:0;padding-left:1.1em}a.button{display:inline-block;background:var(--c-cta);color:var(--c-on-cta);padding:10px 16px;border-radius:var(--c-r);text-decoration:none;font-weight:600}a.button:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.gap{margin-top:14px!important}.mono,.num,.tile b,.bar{font-family:var(--c-mono);font-variant-numeric:tabular-nums}.led{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:1px}.tile{display:grid;gap:4px}.tile .kh{display:flex;align-items:center;font-size:.85rem;color:var(--c-muted)}.tile.ok .led{background:var(--c-ok)}.tile.warn .led{background:var(--c-warn)}.tile.bad .led{background:var(--c-bad)}.tile.idle .led{background:transparent;border:1.5px solid var(--c-muted)}.tile.gauge{grid-template-columns:auto 1fr;align-items:center;gap:12px;grid-column:span 2}.pill{display:inline-flex;align-items:center;white-space:nowrap}th:first-child,td:first-child{min-width:140px}.tile.gauge strong{display:block;font-size:1.1rem}.svc{white-space:nowrap;margin:0 0 3px}.code{font:700 .72rem/1 var(--c-mono);padding:3px 5px;border-radius:5px;border:1px solid currentColor;margin-right:6px}.code.bad{color:var(--c-bad)}.code.warn{color:var(--c-warn)}.bar span{background:var(--c-muted)!important;border-radius:2px}.shell{display:flex;align-items:flex-start}.index{position:sticky;top:0;width:220px;flex:none;min-height:calc(100vh - 96px);background:var(--c-head);color:var(--c-head-ink);padding:20px 12px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box}.index-brand .logo-img{height:36px;padding:3px 8px}.index-fleet{padding:2px 10px 14px;font-size:14px;color:var(--c-head-ink);opacity:.75}.index-fleet b{display:block;font-family:var(--c-display);font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--c-head-ink)}.index-fleet span{display:block}.index nav{display:flex;flex-direction:column;gap:2px}.index nav a{display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:var(--c-pill);color:var(--c-head-ink);text-decoration:none;font-size:15px;font-weight:500}.index nav a:hover,.index nav a:focus-visible{background:var(--c-head-line);color:var(--c-head-ink)}.index-mobile{display:none}.index-mobile summary{list-style:none;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--c-head-line);border-radius:var(--c-pill);color:var(--c-head-ink);font-weight:600;cursor:pointer}.index-mobile summary::-webkit-details-marker{display:none}.index-mobile nav{margin-top:8px}
 .index-note{margin-top:auto;padding:14px 10px 0;font-size:13px;color:var(--c-head-ink);opacity:.55}.shell main{flex:1;min-width:0}section[id]{scroll-margin-top:16px}@media (max-width:900px){.shell{display:block}.index{position:static;width:auto;min-height:0;padding:10px 12px;gap:8px;border-bottom:1px solid var(--c-head-line)}.index-brand{display:none}.index-fleet{padding:0 2px;font-size:12px}.index-fleet b{font-size:15px}.index-desk{display:none!important}.index-mobile{display:block}.index-note{display:none}}${Array.from({ length: 20 }, (_, i) => `.w${(i + 1) * 5}{width:${(i + 1) * 5}%}`).join("")}${THEME_FLEET_LAYER}
 </style></head><body><header><div class="brand">${logoImg()}</div><h1>${esc(data2.fleet.name)}</h1><div>${esc(data2.fleet.city)} \xB7 ${list7.length} veh\xEDculos \xB7 solo lectura</div></header>
@@ -111118,16 +115175,16 @@ function renderFleetPanel(data2, nonce, csvHref) {
 }
 async function fleetPanelRoutes(app2, options = {}) {
   const load = options.load ?? ((value2) => loadFleetPanel(value2));
-  const headers = (reply, nonce = "") => reply.header("Cache-Control", "no-store").header("X-Robots-Tag", "noindex, nofollow").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self'; style-src ${nonce ? `'nonce-${nonce}'` : "'none'"}; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`);
+  const headers = (reply, nonce2 = "") => reply.header("Cache-Control", "no-store").header("X-Robots-Tag", "noindex, nofollow").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self'; style-src ${nonce2 ? `'nonce-${nonce2}'` : "'none'"}; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`);
   const expired = '<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Enlace vencido</title><h1>Este enlace ya no es v\xE1lido</h1><p>Pide uno nuevo por WhatsApp escribiendo: Panel flota</p></html>';
   app2.get("/flota/:token", async (request, reply) => {
     const parsed = token.safeParse(request.params.token);
-    const nonce = randomBytes12(16).toString("base64");
-    headers(reply, nonce);
+    const nonce2 = randomBytes13(16).toString("base64");
+    headers(reply, nonce2);
     const data2 = parsed.success ? await load(parsed.data) : null;
     if (!data2)
       return reply.code(404).type("text/html; charset=utf-8").send(expired);
-    return reply.type("text/html; charset=utf-8").send(renderFleetPanel(data2, nonce, `/flota/${parsed.data}/flota.csv`));
+    return reply.type("text/html; charset=utf-8").send(renderFleetPanel(data2, nonce2, `/flota/${parsed.data}/flota.csv`));
   });
   app2.get("/flota/:token/flota.csv", async (request, reply) => {
     const parsed = token.safeParse(request.params.token);
@@ -111258,7 +115315,476 @@ function installSecurity(app2, options = {}) {
   return { limiters };
 }
 
+// packages/api/dist/interfaces/courses/index.js
+init_courses_store();
+init_apply();
+init_domain();
+init_security();
+init_page();
+init_theme();
+import { randomBytes as randomBytes15 } from "node:crypto";
+var e3 = (value2) => escapeHtml(String(value2 ?? ""));
+var buckets = /* @__PURE__ */ new Map();
+function defaultSession(request, reply, required = true) {
+  const secret2 = getAdminSessionSecret();
+  const id2 = secret2 ? verifySessionCookie(parseCookies(request.headers.cookie)[SESSION_COOKIE], secret2) : null;
+  const s = getSession(id2 ?? void 0);
+  if (s?.twoFactorVerified)
+    return { userId: s.userId, csrfToken: s.csrfToken };
+  const auth = String(request.headers.authorization ?? "");
+  if (auth.startsWith("Bearer ")) {
+    try {
+      const claims = request.server.jwt.verify(auth.slice(7));
+      if (claims.sub && claims.tokenUse === "access")
+        return { userId: claims.sub, csrfToken: createCsrfToken() };
+    } catch {
+    }
+  }
+  if (!required)
+    return null;
+  reply.code(401).type("text/html; charset=utf-8").send("Inicia sesi\xF3n para continuar.");
+  return null;
+}
+function page(title, body, nonce2) {
+  return `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>${e3(title)} \xB7 AutoMantPro</title><style nonce="${e3(nonce2)}">${THEME_TOKENS}*{box-sizing:border-box}body{max-width:1000px;margin:0 auto;padding:clamp(16px,4vw,36px);background:var(--c-bg);color:var(--c-ink);font:16px/1.55 var(--c-font)}a{color:var(--c-accent);overflow-wrap:anywhere}nav{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px}article,section{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:clamp(14px,3vw,22px);margin:12px 0;min-width:0}h1,h2,h3{overflow-wrap:anywhere}.notice{background:var(--c-warn-bg);color:var(--c-warn);border-left:4px solid var(--c-warn);padding:12px}form{margin:12px 0}label{display:block;margin:10px 0;overflow-wrap:anywhere}input,textarea,button{max-width:100%;font:inherit}input,textarea{width:100%;padding:10px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface);color:var(--c-ink)}input[type=checkbox],input[type=radio]{width:auto}button{padding:10px 16px;border:0;border-radius:var(--c-pill);background:var(--c-promo);color:var(--c-on-promo);cursor:pointer}.locked{color:var(--c-muted)}ol{padding-left:24px}li{overflow-wrap:anywhere}</style></head><body><nav aria-label="Capacitaci\xF3n"><a href="/cursos">Cursos</a><a href="/mis-cursos">Mis cursos</a></nav><main>${body}</main></body></html>`;
+}
+function nonce(request) {
+  return String(request.cspNonce ?? randomBytes15(16).toString("base64"));
+}
+async function courseWebRoutes(app2, options = {}) {
+  const store = options.store ?? new MysqlCoursesStore(() => openConnection());
+  const session = options.session ?? defaultSession;
+  const consent = options.consentVersion ?? "lopdp-2026-10-v1";
+  const send = (reply, request, title, body, status = 200) => reply.code(status).type("text/html; charset=utf-8").header("Cache-Control", "no-store").send(page(title, body, nonce(request)));
+  app2.get("/cursos", async (req2, reply) => {
+    const q = req2.query;
+    let rows31 = [];
+    try {
+      if (!options.store && missingDbEnv().length)
+        return send(reply, req2, "Cursos", "<h1>Cursos</h1><p>Cat\xE1logo no disponible por el momento.</p>", 503);
+      rows31 = await store.listPublished({ especialidad: q.esp, nivel: q.nivel });
+    } catch {
+      return send(reply, req2, "Cursos", "<h1>Cursos</h1><p>Cat\xE1logo no disponible por el momento.</p>", 503);
+    }
+    const cards = rows31.map((c) => `<article><h2><a href="/cursos/${e3(c.slug)}">${e3(c.titulo)}</a></h2><p>${e3(c.especialidad)} \xB7 ${e3(c.nivel)} \xB7 ${e3(c.horas)} horas \xB7 ${c.precioUsd == null || c.precioUsd === 0 ? "Gratis" : `$${e3(c.precioUsd)} USD`}</p><p>Experto: ${e3(c.expertName)}</p>${c.altoVoltajeGas ? `<p class="notice">${e3(HIGH_VOLTAGE_GAS_NOTICE)}</p>` : ""}</article>`).join("");
+    return send(reply, req2, "Cursos", `<h1>Cursos publicados</h1><form method="get"><label>Especialidad <input name="esp" value="${e3(q.esp ?? "")}"></label><label>Nivel <input name="nivel" value="${e3(q.nivel ?? "")}"></label><button>Filtrar</button></form>${cards || "<p>No hay cursos para estos filtros.</p>"}`);
+  });
+  app2.get("/cursos/:slug", async (req2, reply) => {
+    let c;
+    try {
+      c = await store.courseDetail(req2.params.slug);
+    } catch {
+      return send(reply, req2, "Curso", "<p>Curso no disponible.</p>", 503);
+    }
+    if (!c)
+      return reply.callNotFound();
+    const s = options.session ? options.session(req2, reply) : defaultSession(req2, reply, false);
+    const lessons = c.lessons.map((l) => `<li>${e3(l.titulo)} ${s ? `<span class="locked">(inscr\xEDbete para acceder a las lecciones)</span>` : '<span class="locked">Bloqueada hasta inscribirte</span>'}</li>`).join("");
+    const paid = !!c.precioUsd && c.precioUsd > 0;
+    const form = `<p><a href="/pruebas?curso=${encodeURIComponent(c.slug)}#cursos">Inscribirme</a>${s ? "" : " \xB7 Inicia sesi\xF3n o crea tu cuenta en la p\xE1gina siguiente."}</p>`;
+    return send(reply, req2, "Curso", `<h1>${e3(c.titulo)}</h1><p>${e3(c.especialidad)} \xB7 ${e3(c.nivel)} \xB7 ${e3(c.horas)} horas \xB7 ${paid ? `$${e3(c.precioUsd)} USD` : "Gratis"}</p><p>Experto: ${e3(c.expertName)}</p>${c.altoVoltajeGas ? `<p class="notice">${e3(HIGH_VOLTAGE_GAS_NOTICE)}</p>` : ""}<h2>Lecciones</h2><ol>${lessons || "<li>Contenido pr\xF3ximamente.</li>"}</ol>${paid ? `<section><h2>Pago por transferencia</h2><p>${e3(options.transferInstructions ?? "Solicita al experto los datos para transferir. Luego env\xEDa el comprobante por WhatsApp con el texto Pago IN-XXXX.")}</p></section>` : ""}${form}<section><h2>Reportar contenido</h2><form method="post" action="/cursos/${e3(c.slug)}/reportar"><label>Motivo <textarea name="motivo" minlength="8" maxlength="1000" required></textarea></label><button>Enviar reporte</button></form></section>`);
+  });
+  app2.post("/cursos/:slug/inscribirme", async (req2, reply) => {
+    const s = session(req2, reply);
+    if (!s)
+      return reply;
+    const b = req2.body ?? {};
+    if (!verifyCsrf(s, b.csrf))
+      return send(reply, req2, "Solicitud inv\xE1lida", "<p>Vuelve a abrir el formulario.</p>", 403);
+    if (b.acepto !== "si" || b.consentVersion !== consent)
+      return send(reply, req2, "Consentimiento requerido", "<p>Acepta el consentimiento vigente.</p>", 400);
+    const ip = req2.ip;
+    if (options.limitEnrollment ? !options.limitEnrollment(ip) : (() => {
+      const n = Date.now(), r = buckets.get(ip);
+      if (!r || n - r.at > 36e5) {
+        buckets.set(ip, { at: n, count: 1 });
+        return false;
+      }
+      r.count++;
+      return r.count > 5;
+    })())
+      return send(reply, req2, "L\xEDmite alcanzado", "<p>Has realizado varias solicitudes. Intenta m\xE1s tarde.</p>", 429);
+    try {
+      const c = await store.courseDetail(req2.params.slug);
+      if (!c)
+        return reply.callNotFound();
+      await store.enroll({
+        courseId: c.id,
+        userId: s.userId,
+        consentVersion: consent,
+        compartirConTaller: b.compartirConTaller === "si"
+      });
+      return reply.redirect("/mis-cursos", 303);
+    } catch {
+      return send(reply, req2, "No se pudo inscribir", "<p>Revisa si ya tienes una inscripci\xF3n para este curso.</p>", 400);
+    }
+  });
+  app2.post("/cursos/:slug/reportar", async (req2, reply) => {
+    const bucketKey = req2.ip;
+    const now = Date.now();
+    const bucket = buckets.get(bucketKey);
+    if (!bucket || now - bucket.at > 36e5)
+      buckets.set(bucketKey, { at: now, count: 1 });
+    else {
+      bucket.count++;
+      if (bucket.count > 5)
+        return reply.code(429).type("text/html; charset=utf-8").send("L\xEDmite alcanzado. Intenta m\xE1s tarde.");
+    }
+    const body = req2.body ?? {};
+    const motivo = String(body.motivo ?? "").trim();
+    if (motivo.length < 8 || motivo.length > 1e3)
+      return reply.code(422).type("text/html; charset=utf-8").send("Escribe un motivo de 8 a 1000 caracteres.");
+    const course = await store.courseDetail(req2.params.slug);
+    if (!course)
+      return reply.callNotFound();
+    try {
+      await store.submitReport(course.id, null, null, motivo);
+      return reply.redirect(`/cursos/${encodeURIComponent(req2.params.slug)}?reporte=recibido`, 303);
+    } catch {
+      return reply.code(503).type("text/html; charset=utf-8").send("No se pudo registrar el reporte.");
+    }
+  });
+  app2.get("/mis-cursos", async (req2, reply) => {
+    const s = session(req2, reply);
+    if (!s)
+      return reply;
+    try {
+      const rows31 = await store.studentCourses(s.userId);
+      const cards = [];
+      for (const r of rows31) {
+        const id2 = String(r.enrollmentId), lessons = await store.lessonRecords(String(r.courseId), id2), questions = await store.questionRecords(String(r.courseId));
+        const qs = /* @__PURE__ */ new Map();
+        for (const q of questions) {
+          const k = String(q.id);
+          if (!qs.has(k))
+            qs.set(k, { id: k, text: String(q.enunciado), opts: [] });
+          if (q.letra)
+            qs.get(k).opts.push({
+              letra: String(q.letra),
+              texto: String(q.texto)
+            });
+        }
+        cards.push(`<article><h2>${e3(r.titulo)}</h2><p>Estado: ${e3(r.estado)} \xB7 Nota: ${e3(r.nota ?? "Pendiente")}</p>${lessons.map((l) => `<section><h3>${e3(l.titulo)}</h3>${r.estado === "activa" ? `${l.texto ? `<p>${e3(l.texto)}</p>` : ""}${l.videoUrl && isHttpsUrl(String(l.videoUrl)) ? `<p><a target="_blank" rel="noopener" href="${e3(l.videoUrl)}">Ver video</a></p>` : ""}${l.pdfUrl && isHttpsUrl(String(l.pdfUrl)) ? `<p><a target="_blank" rel="noopener" href="${e3(l.pdfUrl)}">Abrir PDF</a></p>` : ""}<form method="post" action="/mis-cursos/${e3(id2)}/listo"><input type="hidden" name="csrf" value="${e3(s.csrfToken)}"><input type="hidden" name="lessonId" value="${e3(l.id)}"><button>Listo</button></form>` : "Lecci\xF3n bloqueada hasta activar la inscripci\xF3n."}</section>`).join("")}${r.estado === "activa" ? [...qs.values()].map((q) => `<form method="post" action="/mis-cursos/${e3(id2)}/respuesta"><input type="hidden" name="csrf" value="${e3(s.csrfToken)}"><input type="hidden" name="questionId" value="${e3(q.id)}"><p>${e3(q.text)}</p>${q.opts.map((o) => `<label><input type="radio" required name="letra" value="${e3(o.letra)}"> ${e3(o.letra)} \xB7 ${e3(o.texto)}</label>`).join("")}<button>Responder</button></form>`).join("") : ""}${r.certificateCode ? `<p><a href="/certificados/${e3(r.certificateCode)}">Ver certificado</a></p><form method="post" action="/mis-cursos/${e3(id2)}/certificado-publico"><input type="hidden" name="csrf" value="${e3(s.csrfToken)}"><input type="hidden" name="publico" value="${r.certificatePublic ? "0" : "1"}"><button>${r.certificatePublic ? "Ocultar certificado" : "Hacer p\xFAblico"}</button></form>` : ""}</article>`);
+      }
+      return send(reply, req2, "Mis cursos", `<h1>Mis cursos</h1>${cards.join("") || "<p>A\xFAn no tienes inscripciones.</p>"}`);
+    } catch {
+      return send(reply, req2, "Mis cursos", "<p>No fue posible cargar tus cursos.</p>", 503);
+    }
+  });
+  async function postGuard(req2, reply) {
+    const s = session(req2, reply);
+    if (!s)
+      return null;
+    const b = req2.body ?? {};
+    if (!verifyCsrf(s, b.csrf)) {
+      send(reply, req2, "Solicitud inv\xE1lida", "<p>Vuelve a abrir la p\xE1gina.</p>", 403);
+      return null;
+    }
+    return s;
+  }
+  app2.post("/mis-cursos/:id/listo", async (req2, reply) => {
+    const s = await postGuard(req2, reply);
+    if (!s)
+      return reply;
+    const b = req2.body;
+    try {
+      await store.markLessonComplete(s.userId, req2.params.id, String(b.lessonId ?? ""));
+      return reply.redirect("/mis-cursos", 303);
+    } catch {
+      return reply.callNotFound();
+    }
+  });
+  app2.post("/mis-cursos/:id/respuesta", async (req2, reply) => {
+    const s = await postGuard(req2, reply);
+    if (!s)
+      return reply;
+    const b = req2.body;
+    try {
+      await store.saveAnswer(s.userId, req2.params.id, String(b.questionId ?? ""), String(b.letra ?? ""));
+      await store.issueEarnedCertificate(s.userId, req2.params.id);
+      return reply.redirect("/mis-cursos", 303);
+    } catch {
+      return send(reply, req2, "Respuesta no v\xE1lida", "<p>Selecciona una alternativa v\xE1lida.</p>", 400);
+    }
+  });
+  app2.post("/mis-cursos/:id/certificado-publico", async (req2, reply) => {
+    const s = await postGuard(req2, reply);
+    if (!s)
+      return reply;
+    const b = req2.body;
+    try {
+      await store.setCertificatePublic(s.userId, req2.params.id, b.publico === "1");
+      return reply.redirect("/mis-cursos", 303);
+    } catch {
+      return reply.callNotFound();
+    }
+  });
+  app2.get("/certificados/:codigo", async (req2, reply) => {
+    try {
+      const c = await store.certificate(req2.params.codigo);
+      if (!c)
+        return reply.callNotFound();
+      return send(reply, req2, "Certificado", `<article class="certificate"><h1>Certificado de aprobaci\xF3n</h1><p>${e3(c.studentName)}</p><p>Curso: ${e3(c.titulo)}</p><p>${e3(c.horas)} horas \xB7 Experto: ${e3(c.expertName)}</p><p>Fecha: ${e3(new Date(String(c.emitidoAt)).toLocaleDateString("es-EC"))}</p><p>${e3(CERTIFICATE_DISCLAIMER)}</p></article>`);
+    } catch {
+      return reply.callNotFound();
+    }
+  });
+}
+
+// packages/api/dist/interfaces/expert.routes.js
+var import_multipart = __toESM(require_multipart2(), 1);
+init_zod();
+import { randomBytes as randomBytes16 } from "node:crypto";
+init_courses_store();
+init_apply();
+init_page();
+async function expertRoutes(app2, options = {}) {
+  const store = options.store ?? new MysqlCoursesStore(() => openConnection());
+  const config = options.config ?? new LocalAgentConfig();
+  const pilot = async (_request, reply) => {
+    reply.header("Cache-Control", "no-store");
+    if (!await config.read().then((value2) => value2.enabled))
+      return reply.code(503).send({ data: null, error: { code: "LOCAL_AGENT_DISABLED" } });
+  };
+  const verified = async (request, reply) => {
+    const conn = await openConnection();
+    try {
+      const [rows31] = await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId=? AND verificationStatus='verificado' LIMIT 1", [request.userId]);
+      if (!Array.isArray(rows31) || !rows31.length)
+        return reply.code(403).send({ data: null, error: { code: "EXPERT_NOT_VERIFIED" } });
+    } finally {
+      await conn.end().catch(() => void 0);
+    }
+  };
+  app2.post("/expert/apply", { preHandler: [pilot, authenticate] }, async (request, reply) => {
+    const token2 = randomBytes16(32).toString("base64url");
+    try {
+      await store.issueExpertLink(request.userId, token2);
+    } catch {
+      return reply.code(503).send({ data: null, error: { code: "UNAVAILABLE" } });
+    }
+    return reply.code(201).send({ data: { url: `/experto/registro/${token2}`, expiresInHours: 24 }, error: null });
+  });
+  app2.get("/expert/courses", { preHandler: [pilot, authenticate, verified] }, async (request) => ({ data: { items: await store.expertCourses(request.userId) }, error: null }));
+  app2.post("/expert/courses", { preHandler: [pilot, authenticate, verified] }, async (request, reply) => {
+    const parsed = external_exports.object({ slug: external_exports.string().trim().min(1).max(191), titulo: external_exports.string().trim().min(1).max(191), especialidad: external_exports.string().trim().min(1).max(100), nivel: external_exports.string().trim().min(1).max(40), horas: external_exports.number().int().min(1).max(1e3), precioUsd: external_exports.number().min(0).nullable(), notaMinima: external_exports.number().min(0).max(100).default(70) }).strict().safeParse(request.body);
+    if (!parsed.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_COURSE" } });
+    return reply.code(201).send({ data: { id: await store.createCourse(request.userId, parsed.data) }, error: null });
+  });
+  app2.patch("/expert/courses/:id", { preHandler: [pilot, authenticate, verified] }, async (request, reply) => {
+    const parsed = external_exports.object({ slug: external_exports.string().trim().min(1).max(191).optional(), titulo: external_exports.string().trim().min(1).max(191).optional(), especialidad: external_exports.string().trim().min(1).max(100).optional(), nivel: external_exports.string().trim().min(1).max(40).optional(), horas: external_exports.number().int().min(1).max(1e3).optional(), precioUsd: external_exports.number().min(0).nullable().optional(), notaMinima: external_exports.number().min(0).max(100).optional(), inscripcionesAbiertas: external_exports.boolean().optional() }).strict().safeParse(request.body);
+    if (!parsed.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_COURSE" } });
+    try {
+      await store.editCourse(request.userId, request.params.id, parsed.data);
+      return { data: { ok: true }, error: null };
+    } catch {
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    }
+  });
+  app2.post("/expert/courses/:id/lessons", { preHandler: [pilot, authenticate, verified] }, async (request, reply) => {
+    const parsed = external_exports.object({ id: external_exports.string().uuid().optional(), orden: external_exports.number().int().min(1), titulo: external_exports.string().trim().min(1).max(191), videoUrl: external_exports.string().url().nullable().optional(), pdfUrl: external_exports.string().url().nullable().optional(), texto: external_exports.string().max(900).nullable().optional() }).strict().safeParse(request.body);
+    if (!parsed.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_LESSON" } });
+    try {
+      return reply.code(201).send({ data: { id: await store.saveLesson(request.userId, request.params.id, parsed.data, parsed.data.id) }, error: null });
+    } catch {
+      return reply.code(422).send({ data: null, error: { code: "INVALID_LESSON" } });
+    }
+  });
+  app2.delete("/expert/lessons/:id", { preHandler: [pilot, authenticate, verified] }, async (request, reply) => await store.deleteLesson(request.userId, request.params.id) ? { data: { ok: true }, error: null } : reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } }));
+  app2.post("/expert/courses/:id/questions", { preHandler: [pilot, authenticate, verified] }, async (request, reply) => {
+    const parsed = external_exports.object({ id: external_exports.string().uuid().optional(), enunciado: external_exports.string().trim().min(1).max(2e3), orden: external_exports.number().int().min(1), options: external_exports.array(external_exports.object({ letra: external_exports.string().trim().min(1).max(8), texto: external_exports.string().trim().min(1).max(1e3), correcta: external_exports.boolean() }).strict()).min(2).max(8) }).strict().safeParse(request.body);
+    if (!parsed.success || parsed.success && parsed.data.options.filter((o) => o.correcta).length !== 1)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_QUESTION" } });
+    try {
+      const id2 = await store.saveQuestion(request.userId, request.params.id, { enunciado: parsed.data.enunciado, orden: parsed.data.orden }, parsed.data.id);
+      for (const option2 of parsed.data.options)
+        await store.saveOption(request.userId, id2, option2);
+      return reply.code(201).send({ data: { id: id2 }, error: null });
+    } catch {
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    }
+  });
+  app2.post("/expert/courses/:id/review", { preHandler: [pilot, authenticate, verified] }, async (request, reply) => {
+    try {
+      return { data: { estado: await store.publishCourse(request.userId, request.params.id) }, error: null };
+    } catch {
+      return reply.code(409).send({ data: null, error: { code: "COURSE_NOT_PUBLISHABLE" } });
+    }
+  });
+  app2.get("/expert/courses/:id/enrollments", { preHandler: [pilot, authenticate, verified] }, async (request) => ({ data: { items: await store.enrollmentRecords(request.userId, request.params.id) }, error: null }));
+  app2.get("/expert/courses/:id", { preHandler: [pilot, authenticate, verified] }, async (request, reply) => {
+    const course = await store.expertCourseDetail(request.userId, request.params.id);
+    return course ? { data: course, error: null } : reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+  });
+  app2.post("/expert/enrollments/:code/:action", { preHandler: [pilot, authenticate, verified] }, async (request, reply) => {
+    const action = request.params.action;
+    try {
+      const ok = action === "beca" ? await store.setScholarship(request.userId, request.params.code) : action === "revocar" ? await store.transitionEnrollment(request.userId, request.params.code, "revocada") : action === "aprobar" ? await store.transitionEnrollment(request.userId, request.params.code, "activa") : action === "rechazar" ? await store.transitionEnrollment(request.userId, request.params.code, "rechazada") : false;
+      return ok ? { data: { ok: true }, error: null } : reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    } catch {
+      return reply.code(409).send({ data: null, error: { code: "INVALID_TRANSITION" } });
+    }
+  });
+  app2.post("/expert/courses/:id/invites", { preHandler: [pilot, authenticate, verified] }, async (request, reply) => {
+    const parsed = external_exports.object({ cupo: external_exports.number().int().min(1).max(500), venceAt: external_exports.string().datetime().nullable() }).strict().safeParse(request.body);
+    if (!parsed.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_INVITE" } });
+    try {
+      return reply.code(201).send({ data: { code: await store.createInvite(request.userId, request.params.id, parsed.data.cupo, parsed.data.venceAt ? new Date(parsed.data.venceAt) : null) }, error: null });
+    } catch {
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    }
+  });
+}
+async function expertRegistrationRoutes(app2, options = {}) {
+  const store = options.store ?? new MysqlCoursesStore(() => openConnection());
+  await app2.register(import_multipart.default, { limits: { fileSize: 5 * 1024 * 1024, files: 1, fields: 1, parts: 2, fieldSize: 500, fieldNameSize: 100 } });
+  const attempts = /* @__PURE__ */ new Map();
+  app2.addHook("onRequest", async (request, reply) => {
+    reply.header("Cache-Control", "no-store");
+    if (request.method !== "POST")
+      return;
+    const now = Date.now();
+    for (const [ip, e10] of attempts)
+      if (now - e10.at >= 36e5)
+        attempts.delete(ip);
+    const e9 = attempts.get(request.ip) ?? { at: now, count: 0 };
+    if (e9.count >= 10 || !attempts.has(request.ip) && attempts.size >= 1e4)
+      return reply.code(429).send("Intenta de nuevo m\xE1s tarde.");
+    e9.count++;
+    attempts.set(request.ip, e9);
+  });
+  app2.get("/experto/registro/:token", async (request, reply) => {
+    const safe = escapeHtml(request.params.token);
+    return reply.type("text/html; charset=utf-8").send(`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Registro de experto</title><body><main><h1>Registro de experto</h1><form method="post" action="/experto/registro/${safe}" enctype="multipart/form-data"><label>Especialidades <input name="especialidades" required maxlength="500"></label><label>Documento (imagen o PDF, m\xE1ximo 5 MB) <input name="documento" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required></label><button>Enviar para revisi\xF3n</button></form></main></body></html>`);
+  });
+  app2.post("/experto/registro/:token", async (request, reply) => {
+    let file;
+    let mime = "";
+    let specialties = [];
+    try {
+      for await (const part of request.parts()) {
+        if (part.type === "file") {
+          mime = part.mimetype;
+          const chunks = [];
+          for await (const chunk of part.file)
+            chunks.push(Buffer.from(chunk));
+          if (part.file.truncated)
+            return reply.code(413).send("El documento supera 5 MB.");
+          file = Buffer.concat(chunks);
+        } else if (part.fieldname === "especialidades")
+          specialties = String(part.value).split(",").map((value2) => value2.trim()).filter(Boolean).slice(0, 20);
+      }
+    } catch (error) {
+      const status = error.statusCode === 413 ? 413 : 400;
+      return reply.code(status).send(status === 413 ? "El documento supera 5 MB." : "Formulario inv\xE1lido.");
+    }
+    if (!file || !specialties.length || !["image/jpeg", "image/png", "image/webp", "application/pdf"].includes(mime))
+      return reply.code(422).send("Selecciona especialidades y un documento v\xE1lido.");
+    const signature = mime === "application/pdf" ? file.subarray(0, 5).toString() === "%PDF-" : mime === "image/png" ? file.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) : mime === "image/jpeg" ? file[0] === 255 && file[1] === 216 && file[file.length - 2] === 255 && file[file.length - 1] === 217 : file.subarray(0, 4).toString() === "RIFF" && file.subarray(8, 12).toString() === "WEBP";
+    if (!signature)
+      return reply.code(422).send("El contenido del documento no coincide con su tipo.");
+    try {
+      const accepted2 = await store.submitExpertApplication(request.params.token, specialties, mime, file);
+      if (!accepted2)
+        return reply.code(410).send("El enlace venci\xF3 o ya fue utilizado.");
+      return reply.type("text/html; charset=utf-8").send('<!doctype html><html lang="es"><meta charset="utf-8"><title>Solicitud recibida</title><main><h1>Solicitud recibida</h1><p>Tu perfil qued\xF3 pendiente de revisi\xF3n.</p></main></html>');
+    } catch {
+      return reply.code(503).send("No se pudo guardar la solicitud.");
+    }
+  });
+}
+
+// packages/api/dist/interfaces/courses/student-api.js
+init_zod();
+init_courses_store();
+init_apply();
+async function studentApiRoutes(app2, options = {}) {
+  const store = options.store ?? new MysqlCoursesStore(() => openConnection());
+  const config = options.config ?? new LocalAgentConfig();
+  const now = options.now ?? Date.now;
+  const attempts = /* @__PURE__ */ new Map();
+  const pilot = async (_request, reply) => {
+    reply.header("Cache-Control", "no-store");
+    if (!await config.read().then((value2) => value2.enabled))
+      return reply.code(503).send({ data: null, error: { code: "LOCAL_AGENT_DISABLED" } });
+  };
+  const preHandler = [pilot, authenticate];
+  app2.get("/courses/mine", { preHandler }, async (request) => {
+    const enrollments2 = await store.studentCourses(request.userId);
+    const items = await Promise.all(enrollments2.map(async (enrollment2) => {
+      const enrollmentId = String(enrollment2.enrollmentId);
+      const courseId = String(enrollment2.courseId);
+      const active = enrollment2.estado === "activa";
+      const [lessons, questions] = await Promise.all([store.lessonRecords(courseId, enrollmentId), active ? store.studentQuestionRecords(courseId, enrollmentId) : Promise.resolve([])]);
+      return { ...enrollment2, certificatePublic: Boolean(enrollment2.certificadoPublico), lessons: lessons.map((lesson) => ({ ...lesson, ...!active ? { texto: null, videoUrl: null, pdfUrl: null } : {}, completada: Boolean(lesson.complete) })), questions: questions.map((question) => ({ ...question, text: question.enunciado, opts: question.options })) };
+    }));
+    return { data: { items }, error: null };
+  });
+  app2.post("/courses/:slug/enroll", { preHandler }, async (request, reply) => {
+    const parsed = external_exports.object({ consentVersion: external_exports.string().trim().min(1).max(40), compartirConTaller: external_exports.boolean(), certificadoPublico: external_exports.boolean(), inviteCode: external_exports.string().trim().min(1).max(191).optional() }).strict().safeParse(request.body);
+    if (!parsed.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_ENROLLMENT" } });
+    const timestamp = now();
+    const recent = (attempts.get(request.userId) ?? []).filter((time3) => time3 <= timestamp && timestamp - time3 < 36e5);
+    const ipKey = `ip:${request.ip}`;
+    const ipRecent = (attempts.get(ipKey) ?? []).filter((time3) => time3 <= timestamp && timestamp - time3 < 36e5);
+    if (ipRecent.length >= 20)
+      return reply.code(429).send({ data: null, error: { code: "RATE_LIMITED" } });
+    if (recent.length >= 5)
+      return reply.code(429).send({ data: null, error: { code: "RATE_LIMITED" } });
+    ipRecent.push(timestamp);
+    attempts.set(ipKey, ipRecent);
+    recent.push(timestamp);
+    attempts.set(request.userId, recent);
+    const course = await store.courseDetail(request.params.slug);
+    if (!course)
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    try {
+      const id2 = await store.enroll({ courseId: course.id, userId: request.userId, consentVersion: parsed.data.consentVersion, compartirConTaller: parsed.data.compartirConTaller, certificadoPublico: parsed.data.certificadoPublico, inviteCode: parsed.data.inviteCode });
+      return reply.code(201).send({ data: { id: id2 }, error: null });
+    } catch {
+      return reply.code(409).send({ data: null, error: { code: "ENROLLMENT_FAILED" } });
+    }
+  });
+  app2.post("/courses/enrollments/:id/lessons/:lessonId/done", { preHandler }, async (request, reply) => {
+    if (!await store.studentEnrollment(request.userId, request.params.id))
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    const ok = await store.markLessonComplete(request.userId, request.params.id, request.params.lessonId);
+    if (ok)
+      await store.issueEarnedCertificate(request.userId, request.params.id);
+    return ok ? { data: { ok: true }, error: null } : reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+  });
+  app2.post("/courses/enrollments/:id/answers", { preHandler }, async (request, reply) => {
+    const parsed = external_exports.object({ questionId: external_exports.string().min(1).max(191), letra: external_exports.string().trim().min(1).max(8) }).strict().safeParse(request.body);
+    if (!parsed.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_ANSWER" } });
+    if (!await store.studentEnrollment(request.userId, request.params.id))
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    try {
+      await store.saveAnswer(request.userId, request.params.id, parsed.data.questionId, parsed.data.letra);
+      await store.issueEarnedCertificate(request.userId, request.params.id);
+      return { data: { ok: true }, error: null };
+    } catch {
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    }
+  });
+  app2.post("/courses/enrollments/:id/certificate-public", { preHandler }, async (request, reply) => {
+    const parsed = external_exports.object({ publico: external_exports.boolean() }).strict().safeParse(request.body);
+    if (!parsed.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_CERTIFICATE_CHOICE" } });
+    if (!await store.studentEnrollment(request.userId, request.params.id))
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    const ok = await store.setEnrollmentCertificatePublic(request.userId, request.params.id, parsed.data.publico);
+    return ok ? { data: { ok: true }, error: null } : reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+  });
+}
+
 // packages/api/dist/server.js
+init_courses_store();
 import_dotenv.default.config();
 var PORT = Number(process.env.PORT) || 3e3;
 var HOST = process.env.LISTEN_HOST || "0.0.0.0";
@@ -111317,6 +115843,10 @@ await app.register(fleetPanelRoutes);
 await app.register(localAgentDownloadRoutes);
 await app.register(adminRoutes, { prefix: apiPrefix });
 await app.register(agentRoutes, { prefix: apiPrefix });
+var coursesStore = new MysqlCoursesStore(() => openConnection(), new MysqlSettingsStore(() => openConnection()));
+await app.register(expertRoutes, { prefix: apiPrefix, store: coursesStore });
+await app.register(expertRegistrationRoutes, { store: coursesStore });
+await app.register(studentApiRoutes, { prefix: apiPrefix, store: coursesStore });
 await app.register(assistantPageRoutes, {
   enabled: () => process.env.AGENT_WEB_ENABLED === "true" && (process.env.NODE_ENV !== "production" || process.env.AI_AGENT_ENABLED === "true" && !!process.env.LLM_API_KEY)
 });
@@ -111405,6 +115935,7 @@ await app.register(mapRoutes, {
 });
 await app.register(brandRoutes);
 await app.register(legalRoutes, { load: () => legalData.get() });
+await app.register(courseWebRoutes);
 app.setErrorHandler((error, request, reply) => {
   const statusCode = error.statusCode ?? 500;
   const code3 = error.code;
