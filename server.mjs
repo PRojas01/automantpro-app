@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='4d69d6ae5ebe4a55ecfdfd052584820e1a20534c'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='31a4e04995cdce86341f1af15e7cb3a8388872f9'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -110389,8 +110389,10 @@ async function webSessionRoutes(app2) {
   });
   app2.post("/auth/web/resume", async (request, reply) => {
     const cookie = readCookie(request.headers.cookie, WEB_COOKIE);
-    if (!sameSite(request) || !cookie)
+    if (!sameSite(request))
       return reply.code(401).send(unauthorized);
+    if (!cookie)
+      return reply.send({ data: null, error: null });
     try {
       const decoded = app2.jwt.verify(cookie);
       if (decoded.tokenUse !== "web" || !decoded.sub)
@@ -110403,7 +110405,7 @@ async function webSessionRoutes(app2) {
       return reply.send({ data: { user: { id: user.id, name: user.name, role: user.role, email: user.email }, accessToken }, error: null });
     } catch {
       reply.header("Set-Cookie", webCookie(request, path, "", 0));
-      return reply.code(401).send(unauthorized);
+      return reply.send({ data: null, error: null });
     }
   });
   app2.post("/auth/web/logout", async (request, reply) => {
@@ -112133,7 +112135,7 @@ ${MENU_MARKUP}
 const el=id=>document.getElementById(id);${PANEL_SCRIPT}${MENU_SCRIPT}let token=null;let generation=0;let role=null;let timer=null;let pendingSend=null;let sending=false;let cursor=null;let loadedOlder=false;let historyFingerprint='';const noticeItems=new Map();
 async function api(path,options={}){const sentToken=token;const sentGeneration=generation;const response=await fetch('/api/v1'+path,{...options,headers:{'Content-Type':'application/json',...(sentToken?{Authorization:'Bearer '+sentToken}:{}),...options.headers}});const body=await response.json();if(!response.ok){if(response.status===401&&sentToken&&token===sentToken&&generation===sentGeneration&&!options.renewed&&await renew()&&generation===sentGeneration)return api(path,{...options,renewed:true});if(sentToken&&token===sentToken&&generation===sentGeneration&&(response.status===401||(response.status===403&&['ACCOUNT_UNAVAILABLE','CONSENT_OR_ACCOUNT_REQUIRED'].includes(body.error?.code))))leave();throw new Error(body.error?.message||body.error?.code||'No se pudo completar la operaci\xF3n');}return body.data;}
 function webSession(action,body){return fetch('/api/v1/auth/web/'+action,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-AMP-Web':'1'},body:JSON.stringify(body||{})});}
-async function renew(){try{const response=await webSession('resume');if(!response.ok)return false;const body=await response.json();token=body.data.accessToken;return true;}catch{return false;}}
+async function renew(){try{const response=await webSession('resume');if(!response.ok)return false;const body=await response.json();if(!body.data)return false;token=body.data.accessToken;return true;}catch{return false;}}
 function remember(data){if(data&&data.refreshToken&&el('remember').checked)webSession('session',{refreshToken:data.refreshToken}).catch(()=>{});}
 const COURSE_CONSENT_VERSION='lopdp-2026-10-v1';
 function courseNode(tag,props={},...children){const node=document.createElement(tag);for(const [key,value] of Object.entries(props)){if(key==='text')node.textContent=value;else if(key==='class')node.className=value;else if(key==='href')node.href=value;else node.setAttribute(key,String(value));}for(const child of children)if(child)node.append(child);return node;}
@@ -112173,7 +112175,7 @@ el('decisionForm').onsubmit=e=>{e.preventDefault();const action=el('decision').v
 el('appointmentForm').onsubmit=e=>{e.preventDefault();const ids=el('appointment').value.split(':');if(ids.length!==2){status('Selecciona una cita pendiente.');return;}prepare(['Confirmar cita',...ids]);};
 el('reloadPanel').onclick=()=>{const epoch=generation;loadPanel(epoch,panelVehicle).catch(err=>{if(epoch===generation)status(err.message);});};
 el('link').onclick=async()=>{const epoch=generation;try{const data=await api('/pilot/whatsapp-link',{method:'POST',body:'{}'});if(epoch!==generation)return;el('linkCode').textContent='Cuando WhatsApp est\xE9 conectado, env\xEDa al n\xFAmero de AutoMantPro: VINCULAR '+data.code+'\\nEl c\xF3digo vence en 10 minutos. No lo compartas.';}catch(err){if(epoch===generation)status(err.message);}};
-(async()=>{const epoch=generation;status('Revisando si ya tienes una sesi\xF3n abierta\u2026');try{const response=await webSession('resume');if(epoch!==generation||token)return;if(!response.ok){status('');return;}const body=await response.json();if(!['dueno','taller','almacen'].includes(body.data.user.role)){status('');return;}acceptLogin(body.data);window.scrollTo(0,0);status('Sesi\xF3n abierta: entraste directo a tu panel.');}catch{if(epoch===generation&&!token)status('');}})();
+(async()=>{const epoch=generation;status('Revisando si ya tienes una sesi\xF3n abierta\u2026');try{const response=await webSession('resume');if(epoch!==generation||token)return;if(!response.ok){status('');return;}const body=await response.json();if(!body.data||!['dueno','taller','almacen'].includes(body.data.user.role)){status('');return;}acceptLogin(body.data);window.scrollTo(0,0);status('Sesi\xF3n abierta: entraste directo a tu panel.');}catch{if(epoch===generation&&!token)status('');}})();
 </script></html>`;
 }
 async function pilotPageRoutes(app2, options = {}) {
