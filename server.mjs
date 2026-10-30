@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='57d2e7a3be61a126ba144c2b97a94559a4064fd5'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='ac221a8f0b4c7893b377758ffd55f61e834e1504'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -83110,18 +83110,18 @@ h1{font-family:var(--c-display);font-size:clamp(26px,7.4vw,32px)}
 @media (max-width:640px){
  h1{font-size:clamp(24px,6.4vw,30px)}
 .hero{padding:14px;margin-bottom:8px}
- .trust,.card,.option,.access,.profile-card,.servicio,.taller,.mas,.vacio{padding:12px}
+ .trust,.card,.option,.servicio,.taller,.mas,.vacio{padding:12px}
  .option{min-height:0;gap:8px}
  .badge{width:36px;height:36px}
  .option .ico{width:20px;height:20px}
- .menu,.beneficios,.access-grid{grid-template-columns:1fr;gap:8px}
+ .menu,.beneficios{grid-template-columns:1fr;gap:8px}
  .menu,.beneficios{margin-bottom:8px}
  .card{margin-bottom:8px}
  .card>summary{min-height:44px;font-size:14px}
  .card[open]{padding-bottom:12px}
  .card>summary::after{font-size:18px}
  .option b,.pregunta,.titulo{font-size:calc(100% - 2px)}
- .option i,.beneficios span,.access-card p,.profile-card i,.servicio p,.respuesta,.steps li{font-size:max(14px,calc(100% - 2px))}
+ .option i,.beneficios span,.servicio p,.respuesta,.steps li{font-size:max(14px,calc(100% - 2px))}
  .small,.nota,.legal,.migas,.section,.subtitulo{font-size:max(12px,calc(100% - 2px))}
  .section,.subtitulo{margin-top:10px}
  .steps{gap:8px}
@@ -91344,13 +91344,11 @@ function renderEntryPage(input) {
   const contact = links ? `<p class="small linea"><a href="${escapeHtml(links.wame)}" rel="noopener">${number}</a> \xB7 <span class="code">${escapeHtml(input.code)}</span> <em class="nota">identifica tu visita en el chat</em></p>` : "";
   const access = links ? `<section class="access" aria-labelledby="access-title">
     <p class="section" id="access-title">C\xF3mo quieres entrar</p>
-    <div class="access-grid">
-      <article class="access-card"><b>Por WhatsApp</b><p>Escribe y te atendemos en el chat. No instalas nada.</p><div class="access-actions"><a class="access-btn" href="${escapeHtml(links.wame)}" rel="noopener">Abrir WhatsApp</a></div></article>
-      <article class="access-card"><b>Por la web</b><p>Entra con un c\xF3digo que te llega por WhatsApp o crea tu cuenta.</p><div class="access-actions"><a class="access-btn secondary" href="/pruebas#entrar">Ingresar o crear cuenta</a></div></article>
-    </div>
+    <div class="access-actions"><a class="access-btn" href="${escapeHtml(links.wame)}" rel="noopener">Abrir WhatsApp</a><a class="access-btn secondary" href="/pruebas#entrar">Ingresar o crear cuenta</a></div>
+    <p class="access-note"><b>WhatsApp:</b> Escribe y te atendemos en el chat. No instalas nada. <b>Web:</b> entra con un c\xF3digo que te llega por WhatsApp o crea tu cuenta.</p>
   </section>` : "";
   const menu = links ? `${access}<p class="section">\xBFQu\xE9 quieres gestionar?</p>
-    <div class="menu">${ENTRY_PROFILES.map((profile) => profile.intent === null ? `<a class="option ghost" href="/?perfil=${escapeHtml(profile.key)}${refQuery}"><span class="badge">${icon(profile.icon)}</span><span><b>${escapeHtml(profile.label)}</b><i>${escapeHtml(profile.hint)}</i></span><span class="go" aria-hidden="true">\u203A</span></a>` : `<article class="profile-card">
+    <div class="menu perfiles">${ENTRY_PROFILES.map((profile) => profile.intent === null ? `<a class="option ghost" href="/?perfil=${escapeHtml(profile.key)}${refQuery}"><span class="badge">${icon(profile.icon)}</span><span><b>${escapeHtml(profile.label)}</b><i>${escapeHtml(profile.hint)}</i></span><span class="go" aria-hidden="true">\u203A</span></a>` : `<article class="profile-card">
           <span class="badge">${icon(profile.icon)}</span>
           <span><b>${escapeHtml(profile.label)}</b><i>${escapeHtml(profile.hint)}</i></span>
           <div class="profile-actions"><a class="access-btn" href="/?perfil=${escapeHtml(profile.key)}${refQuery}" rel="noopener">WhatsApp</a><a class="access-btn secondary" href="/pruebas#${profile.key === "cuenta" ? "entrar" : "crear"}">Web</a></div>
@@ -91596,20 +91594,21 @@ h1 em{font-style:normal;color:var(--c-accent)}
 .option b{display:block;font-size:16px;line-height:1.25;font-weight:600;letter-spacing:-.01em}
 .option i{display:block;font-style:normal;font-size:13.5px;color:var(--c-muted);margin-top:2px}
 .option .go{display:none}
-.access{background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:14px;margin:0 0 12px;min-width:0}
-.access-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.access-card{min-width:0;background:var(--c-sunk);border-radius:var(--c-r);padding:12px;display:flex;flex-direction:column;gap:8px}
-.access-card b{font-size:15px;line-height:1.25}
-.access-card p{font-size:13.5px;line-height:1.4;color:var(--c-muted);margin:0;min-width:0}
-.access-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.access{margin:0 0 12px;min-width:0}
+.access-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.access-note{font-size:13px;line-height:1.45;color:var(--c-muted);margin:8px 0 0}
+.access-note b{color:var(--c-ink);font-weight:600}
 .access-btn{display:inline-flex;align-items:center;justify-content:center;min-width:0;min-height:44px;padding:9px 13px;border-radius:999px;background:var(--c-cta);color:var(--c-on-cta);text-align:center;text-decoration:none;font:700 13px/1.2 var(--c-font);overflow-wrap:anywhere}
 .access-btn.secondary{background:var(--c-accent);color:var(--c-on-accent)}
-.profile-card{min-width:0;display:flex;flex-direction:column;gap:10px;padding:14px;background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);box-shadow:var(--c-shadow)}
-.profile-card b{overflow-wrap:anywhere}
-.profile-card i{display:block;font-style:normal;font-size:13.5px;color:var(--c-muted);margin-top:2px;overflow-wrap:anywhere}
-.profile-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
-.profile-actions .access-btn{flex:1 1 76px}
-.option.ghost{grid-column:1/-1;flex-direction:row;align-items:center;min-height:60px;background:transparent;border:1px dashed var(--c-line);box-shadow:none}
+.menu.perfiles{grid-template-columns:1fr;gap:8px}
+.profile-card{min-width:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 12px;background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);box-shadow:var(--c-shadow)}
+.profile-card .badge{width:34px;height:34px}
+.profile-card .badge .ico{width:19px;height:19px}
+.profile-card b{display:block;font-size:15px;line-height:1.25;overflow-wrap:anywhere}
+.profile-card i{display:block;font-style:normal;font-size:13px;line-height:1.3;color:var(--c-muted);margin-top:1px;overflow-wrap:anywhere}
+.profile-actions{display:flex;gap:6px}
+.profile-actions .access-btn{min-height:40px;padding:8px 12px;font-size:12.5px}
+.option.ghost{grid-column:1/-1;flex-direction:row;align-items:center;min-height:0;padding:10px 12px;background:transparent;border:1px dashed var(--c-line);box-shadow:none}
 .option.ghost .badge{background:transparent;color:var(--c-muted)}
 .cta{
   display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;border:0;border-radius:var(--c-r);cursor:pointer;
@@ -91644,7 +91643,7 @@ h1 em{font-style:normal;color:var(--c-accent)}
 .soon{margin-top:14px;font-weight:600;text-align:center;color:var(--c-warn)}
 .legal{font-size:13px;color:var(--c-muted);margin:6px 0 0;text-align:center}
 @media (prefers-reduced-motion:reduce){.option{transition:none}}
-@media (max-width:390px){h1{font-size:23px}.menu,.beneficios,.access-grid{grid-template-columns:1fr}.option{min-height:0}}
+@media (max-width:390px){h1{font-size:23px}.menu,.beneficios{grid-template-columns:1fr}.option{min-height:0}}
 /* Pantallas bajas: se recorta lo accesorio para que lo principal quepa sin desplazar. */
 @media (max-height:700px){h1{font-size:22px}.lead{font-size:14px}.hero{padding:12px 14px}}
 `;
