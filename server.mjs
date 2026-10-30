@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='4a1b070bfad9b1302dd6edcb5be1d160fde50584'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='a703e2164d11653732cc9a65d5483fb593f6d86b'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -110325,7 +110325,69 @@ var webSignupSchema = external_exports.object({
   categories: external_exports.string().optional(),
   delivery: external_exports.unknown().optional()
 });
+var WEB_COOKIE = "amp_web";
+var WEB_SESSION_DAYS = Math.min(90, Math.max(1, Number(process.env.WEB_SESSION_DAYS) || 30));
+var WEB_ROLES = ["dueno", "taller", "almacen"];
+function readCookie(header, name) {
+  for (const part of (header ?? "").split(";")) {
+    const [key, ...rest] = part.trim().split("=");
+    if (key === name)
+      return rest.join("=") || null;
+  }
+  return null;
+}
+function webCookie(request, path, value2, maxAge) {
+  const secure = request.protocol === "https" || process.env.NODE_ENV === "production" ? "; Secure" : "";
+  return `${WEB_COOKIE}=${value2}; Path=${path}; Max-Age=${maxAge}; HttpOnly; SameSite=Strict${secure}`;
+}
+async function webSessionRoutes(app2) {
+  const path = `${app2.prefix}/auth/web`;
+  const sign = (user) => app2.jwt.sign({ sub: user.id, role: user.role, tokenUse: "web" }, { expiresIn: `${WEB_SESSION_DAYS}d` });
+  const sameSite = (request) => request.headers["x-amp-web"] === "1";
+  const unauthorized = { data: null, error: { code: "UNAUTHORIZED", message: "Sin sesi\xF3n guardada" } };
+  app2.post("/auth/web/session", async (request, reply) => {
+    const parsed = refreshSchema.safeParse(request.body);
+    if (!sameSite(request) || !parsed.success)
+      return reply.code(401).send(unauthorized);
+    try {
+      const decoded = app2.jwt.verify(parsed.data.refreshToken);
+      if (decoded.tokenUse !== "refresh" || !decoded.sub)
+        throw new Error("Invalid refresh token");
+      const user = await findUserById(decoded.sub);
+      if (!user || user.deletedAt || !WEB_ROLES.includes(user.role))
+        throw new Error("Inactive user");
+      reply.header("Set-Cookie", webCookie(request, path, sign(user), WEB_SESSION_DAYS * 86400));
+      return reply.send({ data: { remembered: true, days: WEB_SESSION_DAYS }, error: null });
+    } catch {
+      return reply.code(401).send(unauthorized);
+    }
+  });
+  app2.post("/auth/web/resume", async (request, reply) => {
+    const cookie = readCookie(request.headers.cookie, WEB_COOKIE);
+    if (!sameSite(request) || !cookie)
+      return reply.code(401).send(unauthorized);
+    try {
+      const decoded = app2.jwt.verify(cookie);
+      if (decoded.tokenUse !== "web" || !decoded.sub)
+        throw new Error("Invalid web session");
+      const user = await findUserById(decoded.sub);
+      if (!user || user.deletedAt || !WEB_ROLES.includes(user.role))
+        throw new Error("Inactive user");
+      const accessToken = app2.jwt.sign({ sub: user.id, role: user.role, email: user.email ?? void 0, tokenUse: "access" }, { expiresIn: process.env.JWT_ACCESS_EXPIRY ?? "15m" });
+      reply.header("Set-Cookie", webCookie(request, path, sign(user), WEB_SESSION_DAYS * 86400));
+      return reply.send({ data: { user: { id: user.id, name: user.name, role: user.role, email: user.email }, accessToken }, error: null });
+    } catch {
+      reply.header("Set-Cookie", webCookie(request, path, "", 0));
+      return reply.code(401).send(unauthorized);
+    }
+  });
+  app2.post("/auth/web/logout", async (request, reply) => {
+    reply.header("Set-Cookie", webCookie(request, path, "", 0));
+    return reply.send({ data: { remembered: false }, error: null });
+  });
+}
 async function authRoutes(app2) {
+  await webSessionRoutes(app2);
   app2.post("/auth/code/request", async (request, reply) => {
     const parsed = codeRequestSchema.safeParse(request.body);
     if (!parsed.success)
@@ -111552,6 +111614,84 @@ async function localAgentDownloadRoutes(app2) {
     });
 }
 
+// packages/api/dist/interfaces/ui/scanner-layer.js
+var PANTALLA = [
+  "--c-surface:#0d1116",
+  "--c-sunk:#222c37",
+  "--c-line:#26313c",
+  "--c-ink:#eaf0f5",
+  "--c-muted:#9eabb8",
+  "--c-ok:#4fd08a",
+  "--c-ok-bg:#0f2e1c",
+  "--c-warn:#f5b84f",
+  "--c-warn-bg:#33240b",
+  "--c-bad:#ff7a70",
+  "--c-bad-bg:#3a1412",
+  "--c-cta:#3ccf7e",
+  "--c-on-cta:#06140c"
+].join(";");
+var SCANNER_LAYER = `
+:root{--esc-yellow:#fcf622;--esc-grid:rgba(17,24,32,.05);--esc-glow:rgba(252,246,34,.0)}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){--esc-grid:rgba(255,255,255,.035)}}
+:root[data-tema="oscuro"]{--esc-grid:rgba(255,255,255,.035)}
+body{background-color:var(--c-bg);background-image:linear-gradient(var(--esc-grid) 1px,transparent 1px),linear-gradient(90deg,var(--esc-grid) 1px,transparent 1px);background-size:24px 24px}
+
+/* Barra superior del equipo: nombre en monoespaciada con LED de conexi\xF3n. */
+#chat>.row2{position:relative;background:#0d1116;color:#eaf0f5;border:1px solid #26313c;border-radius:12px;padding:10px 12px 10px 14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 6px 18px rgba(0,0,0,.18)}
+#chat>.row2 h2#who{display:flex;align-items:center;gap:10px;margin:0;border:0;padding:0;color:#eaf0f5;font:700 12px/1.2 var(--c-mono);letter-spacing:.08em}
+#chat>.row2 h2#who::before{content:"";width:10px;height:10px;border-radius:50%;flex:none;background:#4fd08a;box-shadow:0 0 0 3px rgba(79,208,138,.18),0 0 10px rgba(79,208,138,.55)}
+#chat>.row2 #reloadPanel,#chat>.row2 #logout{background:transparent;color:#eaf0f5;border:1px solid #3a4652;min-height:40px;margin:0;padding:8px 14px;font-size:14px}
+#chat>.row2 #reloadPanel:hover,#chat>.row2 #logout:hover{border-color:var(--esc-yellow);color:var(--esc-yellow)}
+
+/* Pantalla del esc\xE1ner: resumen del plan. */
+.pcard:has(.scan){${PANTALLA};position:relative;overflow:hidden;color:var(--c-ink);background:radial-gradient(120% 90% at 0% 0%,#16202a 0%,#0d1116 55%,#090c10 100%);border:1px solid #2b3742;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),inset 0 0 40px rgba(0,0,0,.45),0 10px 28px rgba(0,0,0,.22)}
+.pcard:has(.scan)::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px)}
+.pcard:has(.scan)::after{content:"";position:absolute;top:0;bottom:0;left:-40%;width:40%;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(252,246,34,.08),transparent);opacity:0}
+.pcard:has(.scan)>*{position:relative;z-index:1}
+.pcard:has(.scan)>h2{color:var(--esc-yellow);font:700 12px/1.2 var(--c-mono);letter-spacing:.12em;border-left-color:var(--esc-yellow)}
+.pcard:has(.scan) .scan .word{font-family:var(--c-mono);letter-spacing:.01em}
+.pcard:has(.scan) .lead2{color:var(--c-ink)}
+.pcard:has(.scan) .meta{border-top-color:var(--c-line)}
+.scan .gauge svg{filter:drop-shadow(0 0 6px rgba(252,246,34,.12))}
+
+/* T\xEDtulos de secci\xF3n como canales del equipo. */
+.pcard>h2,main section>h2{font-family:var(--c-mono);font-size:12px;letter-spacing:.12em}
+.pcard>h2 small{font-family:var(--c-mono);letter-spacing:.02em;text-transform:none}
+
+/* Lista de servicios: franja LED por estado y lecturas en monoespaciada. */
+.reco{position:relative}
+.reco::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 2px 2px 0;background:var(--st,transparent)}
+.reco .state,.line .time,.plate,.price,.counts b,.kpi b,.steps .n{font-family:var(--c-mono)}
+.ic{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--st) 35%,transparent)}
+.led.st-urgente,.led.st-pronto,.led.st-al_dia{box-shadow:0 0 0 3px var(--st-bg),0 0 8px color-mix(in srgb,var(--st) 60%,transparent)}
+.kpi{position:relative;background:var(--c-surface)}
+.kpi::before{content:"";position:absolute;left:12px;right:12px;top:0;height:2px;border-radius:0 0 2px 2px;background:var(--st,var(--c-line))}
+.track{background:var(--c-sunk)}
+.fill{box-shadow:0 0 8px color-mix(in srgb,var(--st) 55%,transparent)}
+
+/* Ingreso: el formulario como la pantalla de inicio del equipo. */
+#login{position:relative;border-top:3px solid var(--esc-yellow)}
+#login h2#entrar{font-family:var(--c-mono);font-size:12px;letter-spacing:.12em}
+.auth-tabs button[aria-selected="true"]{background:var(--esc-yellow);color:#111111;border-color:#c9c300}
+.remember{margin-top:10px;font-size:14px}
+#status:not(:empty){font-family:var(--c-mono);font-size:13px}
+
+@media (prefers-reduced-motion:no-preference){
+ @keyframes esc-barrido{0%{left:-40%;opacity:0}15%{opacity:1}100%{left:110%;opacity:0}}
+ @keyframes esc-enciende{0%{opacity:.35;filter:brightness(.6)}100%{opacity:1;filter:none}}
+ @keyframes esc-latido{0%,100%{opacity:1}50%{opacity:.45}}
+ @keyframes esc-sube{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+ .pcard:has(.scan)::after{animation:esc-barrido 1.6s cubic-bezier(.2,.7,.2,1) .2s 1 both}
+ .scan .gauge{animation:esc-enciende .9s ease-out both}
+ .led.st-urgente,#chat>.row2 h2#who::before{animation:esc-latido 1.8s ease-in-out infinite}
+ .panel>*{animation:esc-sube .45s ease-out both}
+ .panel>*:nth-child(2){animation-delay:.06s}.panel>*:nth-child(3){animation-delay:.12s}.panel>*:nth-child(4){animation-delay:.18s}.panel>*:nth-child(n+5){animation-delay:.24s}
+ .reco,.kpi,.line{transition:background-color .2s ease,transform .2s ease}
+ .reco:hover{background:color-mix(in srgb,var(--st,var(--c-ink)) 6%,var(--c-surface))}
+}
+@media (max-width:640px){#chat>.row2{padding:8px 10px}#chat>.row2 h2#who{font-size:11px}}
+`;
+
 // packages/api/dist/interfaces/pilot-page.js
 import { randomBytes } from "node:crypto";
 
@@ -111948,10 +112088,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.45 var(--c-mono)}article{border-bottom:1px solid var(--c-line);padding:8px 0}
 details{margin:12px 0;background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:0 14px}details[open]{padding-bottom:14px}
 details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;cursor:pointer}
-.hidden{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}</style>
+.hidden{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}</style>
 ${MENU_MARKUP}
 <main>${logoImg()}<h1>Pruebas con atenci\xF3n humana</h1><p>El operador revisa cada mensaje. Preparar un comando no ejecuta la operaci\xF3n: debes enviarlo y el operador debe aprobarlo.</p><p>Los avisos se muestran aqu\xED. El env\xEDo real por WhatsApp sigue pendiente.</p><p><a href="/admin/local-agent">Conectar o revocar equipo de atenci\xF3n</a></p>
-<section id="login"><h2 id="entrar">Entrar con tu cuenta</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true">Con c\xF3digo por WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">Con contrase\xF1a</button></nav><form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form><form id="codeVerifyForm" class="hidden"><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><form id="loginForm" class="hidden"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><h3 id="crear">Crear cuenta</h3><form id="signupForm"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><div id="signupFields"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Pedir c\xF3digo y continuar</button></form><form id="signupVerifyForm" class="hidden"><label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></section>
+<section id="login"><h2 id="entrar">Entrar con tu cuenta</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true">Con c\xF3digo por WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">Con contrase\xF1a</button></nav><form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form><form id="codeVerifyForm" class="hidden"><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><form id="loginForm" class="hidden"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label><h3 id="crear">Crear cuenta</h3><form id="signupForm"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><div id="signupFields"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Pedir c\xF3digo y continuar</button></form><form id="signupVerifyForm" class="hidden"><label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></section>
 <div id="chat" class="hidden"><div class="row2"><h2 id="who">Conversaci\xF3n de prueba</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div>${PANEL_MARKUP}<section id="studentCourses"><h2>Mis cursos</h2><div id="courseEnrollment"></div><div id="studentCourseItems"></div></section><section id="composer"><h2>Mensaje al operador</h2><form id="sendForm"><label for="message">Comando o mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar para revisi\xF3n</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
 <section id="expertCourses" class="hidden"><h2>Mis cursos como experto</h2><p id="expertStatus"></p><div id="expertItems"></div><form id="expertCreate"><label>T\xEDtulo <input name="titulo" required maxlength="191"></label><label>Slug <input name="slug" required maxlength="191"></label><label>Especialidad <input name="especialidad" required maxlength="100"></label><label>Nivel <input name="nivel" required maxlength="40"></label><label>Horas <input name="horas" type="number" min="1" required></label><label>Precio USD (vac\xEDo = gratis) <input name="precioUsd" type="number" min="0" step="0.01"></label><label>Nota m\xEDnima <input name="notaMinima" type="number" min="0" max="100" value="70"></label><button>Crear curso</button></form><form id="expertLesson"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>T\xEDtulo de lecci\xF3n <input name="titulo" required maxlength="191"></label><label>Video URL HTTPS <input name="videoUrl" type="url"></label><label>PDF URL HTTPS <input name="pdfUrl" type="url"></label><label>Texto (m\xE1ximo 900 caracteres) <textarea name="texto" maxlength="900"></textarea></label><button>Guardar lecci\xF3n</button></form><form id="expertQuestion"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>Pregunta <input name="enunciado" required maxlength="2000"></label><label>Opci\xF3n A <input name="optionA" required></label><label>Opci\xF3n B <input name="optionB" required></label><label>Respuesta correcta <select name="correcta"><option>A</option><option>B</option></select></label><button>Guardar pregunta</button></form></section>
 <details id="requestTools"><summary>Buscar un servicio o repuesto</summary><form id="requestForm"><label for="vehicle">Veh\xEDculo</label><select id="vehicle" required></select><button type="button" id="loadVehicles">Cargar mis veh\xEDculos</button><label for="kind">Necesidad</label><select id="kind"><option value="servicio">Servicio</option><option value="repuesto">Repuesto</option></select><label for="category">Categor\xEDa registrada (por ejemplo frenos)</label><input id="category" required maxlength="120"><label for="city">Ciudad</label><input id="city" required maxlength="120"><label for="zone">Sector</label><input id="zone" required maxlength="120"><label for="description">Descripci\xF3n</label><input id="description" required minlength="5" maxlength="1000"><button>Preparar solicitud</button></form></details>
@@ -111964,7 +112104,10 @@ ${MENU_MARKUP}
 <details id="vincular"><summary>Vinculaci\xF3n futura con WhatsApp</summary><button id="link" type="button">Preparar v\xEDnculo de WhatsApp</button><pre id="linkCode"></pre></details></section></div><p id="status" role="status"></p></main>
 <script nonce="${nonce2}">
 const el=id=>document.getElementById(id);${PANEL_SCRIPT}${MENU_SCRIPT}let token=null;let generation=0;let role=null;let timer=null;let pendingSend=null;let sending=false;let cursor=null;let loadedOlder=false;let historyFingerprint='';const noticeItems=new Map();
-async function api(path,options={}){const sentToken=token;const sentGeneration=generation;const response=await fetch('/api/v1'+path,{...options,headers:{'Content-Type':'application/json',...(sentToken?{Authorization:'Bearer '+sentToken}:{}),...options.headers}});const body=await response.json();if(!response.ok){if(sentToken&&token===sentToken&&generation===sentGeneration&&(response.status===401||(response.status===403&&['ACCOUNT_UNAVAILABLE','CONSENT_OR_ACCOUNT_REQUIRED'].includes(body.error?.code))))leave();throw new Error(body.error?.message||body.error?.code||'No se pudo completar la operaci\xF3n');}return body.data;}
+async function api(path,options={}){const sentToken=token;const sentGeneration=generation;const response=await fetch('/api/v1'+path,{...options,headers:{'Content-Type':'application/json',...(sentToken?{Authorization:'Bearer '+sentToken}:{}),...options.headers}});const body=await response.json();if(!response.ok){if(response.status===401&&sentToken&&token===sentToken&&generation===sentGeneration&&!options.renewed&&await renew()&&generation===sentGeneration)return api(path,{...options,renewed:true});if(sentToken&&token===sentToken&&generation===sentGeneration&&(response.status===401||(response.status===403&&['ACCOUNT_UNAVAILABLE','CONSENT_OR_ACCOUNT_REQUIRED'].includes(body.error?.code))))leave();throw new Error(body.error?.message||body.error?.code||'No se pudo completar la operaci\xF3n');}return body.data;}
+function webSession(action,body){return fetch('/api/v1/auth/web/'+action,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-AMP-Web':'1'},body:JSON.stringify(body||{})});}
+async function renew(){try{const response=await webSession('resume');if(!response.ok)return false;const body=await response.json();token=body.data.accessToken;return true;}catch{return false;}}
+function remember(data){if(data&&data.refreshToken&&el('remember').checked)webSession('session',{refreshToken:data.refreshToken}).catch(()=>{});}
 const COURSE_CONSENT_VERSION='lopdp-2026-10-v1';
 function courseNode(tag,props={},...children){const node=document.createElement(tag);for(const [key,value] of Object.entries(props)){if(key==='text')node.textContent=value;else if(key==='class')node.className=value;else if(key==='href')node.href=value;else node.setAttribute(key,String(value));}for(const child of children)if(child)node.append(child);return node;}
 function renderStudentCourses(){const epoch=generation;const box=el('studentCourseItems');box.replaceChildren();const enrollmentBox=el('courseEnrollment');enrollmentBox.replaceChildren();const params=new URLSearchParams(location.search);const requested=params.get('curso');if(requested){const form=courseNode('form');const consent=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox',required:true}),document.createTextNode(' Acepto el tratamiento de datos personales (LOPDP), versi\xF3n '+COURSE_CONSENT_VERSION+'.'));const share=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox',name:'share'}),document.createTextNode(' Compartir mi avance con mi taller'));const visible=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox',name:'public'}),document.createTextNode(' Certificado p\xFAblico'));const invite=courseNode('input',{name:'invite',maxlength:'191','aria-label':'C\xF3digo de invitaci\xF3n (opcional)'});form.append(consent,share,visible,courseNode('label',{},document.createTextNode('C\xF3digo de invitaci\xF3n (opcional)'),invite));const submit=courseNode('button',{type:'submit',text:'Inscribirme'});form.append(submit);form.onsubmit=async event=>{event.preventDefault();if(!consent.querySelector('input').checked)return;submit.disabled=true;try{await api('/courses/'+encodeURIComponent(requested)+'/enroll',{method:'POST',body:JSON.stringify({consentVersion:COURSE_CONSENT_VERSION,compartirConTaller:share.querySelector('input').checked,certificadoPublico:visible.querySelector('input').checked,...(invite.value.trim()?{inviteCode:invite.value.trim()}:{})})});history.replaceState(null,'',location.pathname+'#cursos');status('Inscripci\xF3n enviada.');renderStudentCourses();}catch(error){status(error.message);}finally{submit.disabled=false;}};enrollmentBox.append(courseNode('h3',{text:'Inscripci\xF3n'}),form);}api('/courses/mine').then(data=>{if(epoch!==generation||!token)return;for(const enrollment of data.items){const article=courseNode('article',{class:'pcard'});article.append(courseNode('h3',{text:enrollment.titulo}),courseNode('p',{class:'pill',text:'Estado: '+enrollment.estado}),courseNode('p',{text:'Nota: '+(enrollment.nota??'Pendiente')}));for(const lesson of enrollment.lessons){const item=courseNode('section',{class:'reco'});item.append(courseNode('h4',{text:lesson.titulo}));if(lesson.texto)item.append(courseNode('p',{text:lesson.texto}));for(const [url,label] of [[lesson.videoUrl,'Ver video'],[lesson.pdfUrl,'Abrir PDF']])if(url){try{if(new URL(url).protocol==='https:')item.append(courseNode('p',{},courseNode('a',{href:url,target:'_blank',rel:'noopener',text:label})));}catch{}}if(enrollment.estado==='activa'){const done=courseNode('button',{type:'button',text:lesson.completada?'Listo':'Listo'});done.disabled=!!lesson.completada;done.onclick=async()=>{try{await api('/courses/enrollments/'+encodeURIComponent(enrollment.enrollmentId)+'/lessons/'+encodeURIComponent(lesson.id)+'/done',{method:'POST',body:'{}'});renderStudentCourses();}catch(error){status(error.message);}};item.append(done);}article.append(item);}if(enrollment.estado==='activa')for(const question of enrollment.questions){const q=courseNode('section',{class:'reco'},courseNode('p',{text:question.text}));for(const option of question.opts){const answer=courseNode('button',{type:'button',text:option.letra+' \xB7 '+option.texto});answer.onclick=async()=>{try{await api('/courses/enrollments/'+encodeURIComponent(enrollment.enrollmentId)+'/answers',{method:'POST',body:JSON.stringify({questionId:question.id,letra:option.letra})});renderStudentCourses();}catch(error){status(error.message);}};q.append(answer);}article.append(q);}if(enrollment.certificateCode)article.append(courseNode('p',{},courseNode('a',{href:'/certificados/'+encodeURIComponent(enrollment.certificateCode),text:'Ver certificado'})));const publicLabel=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox'}),document.createTextNode(' Certificado p\xFAblico'));const checkbox=publicLabel.querySelector('input');checkbox.checked=!!enrollment.certificatePublic;checkbox.onchange=async()=>{try{await api('/courses/enrollments/'+encodeURIComponent(enrollment.enrollmentId)+'/certificate-public',{method:'POST',body:JSON.stringify({publico:checkbox.checked})});}catch(error){status(error.message);checkbox.checked=!checkbox.checked;}};article.append(publicLabel);box.append(article);}if(!data.items.length)box.append(courseNode('p',{text:'A\xFAn no tienes inscripciones.'}));}).catch(error=>status(error.message));}
@@ -111973,7 +112116,7 @@ el('expertCreate').onsubmit=async event=>{event.preventDefault();const form=new 
 el('expertLesson').onsubmit=async event=>{event.preventDefault();const form=new FormData(event.target);try{await api('/expert/courses/'+encodeURIComponent(String(form.get('courseId')) )+'/lessons',{method:'POST',body:JSON.stringify({orden:Number(form.get('orden')),titulo:String(form.get('titulo')),videoUrl:String(form.get('videoUrl')||'').trim()||null,pdfUrl:String(form.get('pdfUrl')||'').trim()||null,texto:String(form.get('texto')||'').trim()||null})});event.target.reset();status('Lecci\xF3n guardada.');}catch(error){status(error.message);}};
 el('expertQuestion').onsubmit=async event=>{event.preventDefault();const form=new FormData(event.target);const correct=String(form.get('correcta'));try{await api('/expert/courses/'+encodeURIComponent(String(form.get('courseId')) )+'/questions',{method:'POST',body:JSON.stringify({orden:Number(form.get('orden')),enunciado:String(form.get('enunciado')),options:[{letra:'A',texto:String(form.get('optionA')),correcta:correct==='A'},{letra:'B',texto:String(form.get('optionB')),correcta:correct==='B'}]})});event.target.reset();status('Pregunta guardada.');}catch(error){status(error.message);}};
 function status(text){el('status').textContent=text;}function text(parent,value){const p=document.createElement('pre');p.textContent=value;parent.append(p);}
-function leave(){token=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;cursor=null;loadedOlder=false;historyFingerprint='';noticeItems.clear();clearMenu();el('chat').classList.add('hidden');el('login').classList.remove('hidden');for(const id of ['messages','notices','appointments','appointment','vehicle','panel','studentCourseItems','courseEnrollment','expertItems'])el(id).replaceChildren();el('expertCourses').classList.add('hidden');panelData=null;panelVehicle=null;booking={service:'',day:'',time:''};el('linkCode').textContent='';el('message').value='';el('sendForm').querySelector('button').disabled=false;for(const id of ['sendForm','requestForm','offerForm','decisionForm','appointmentForm'])el(id).reset();status('Sesi\xF3n cerrada. Vuelve a entrar para continuar.');}
+function leave(){webSession('logout').catch(()=>{});token=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;cursor=null;loadedOlder=false;historyFingerprint='';noticeItems.clear();clearMenu();el('chat').classList.add('hidden');el('login').classList.remove('hidden');for(const id of ['messages','notices','appointments','appointment','vehicle','panel','studentCourseItems','courseEnrollment','expertItems'])el(id).replaceChildren();el('expertCourses').classList.add('hidden');panelData=null;panelVehicle=null;booking={service:'',day:'',time:''};el('linkCode').textContent='';el('message').value='';el('sendForm').querySelector('button').disabled=false;for(const id of ['sendForm','requestForm','offerForm','decisionForm','appointmentForm'])el(id).reset();status('Sesi\xF3n cerrada. Vuelve a entrar para continuar.');}
 el('logout').onclick=leave;
 function prepare(parts){if(parts.some(p=>String(p).includes('|'))){status('Escribe los datos sin el car\xE1cter |.');return;}el('message').value=parts.join(' | ');status('Comando preparado. Rev\xEDsalo y env\xEDalo al operador.');el('message').focus();}
 function showNotices(){el('notices').replaceChildren();const items=[...noticeItems.values()].sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))||String(b.id).localeCompare(String(a.id)));if(!items.length)text(el('notices'),'Todav\xEDa no hay avisos para tu cuenta.');for(const n of items){const article=document.createElement('article');text(article,n.message);el('notices').append(article);}el('older').classList.toggle('hidden',!cursor);}
@@ -111982,8 +112125,8 @@ async function loadHistory(epoch){const data=await api('/pilot/history');if(epoc
 async function loadAppointments(epoch){const data=await api('/pilot/appointments');if(epoch!==generation||!token)return;const previous=el('appointment').value;el('appointments').replaceChildren();el('appointment').replaceChildren();for(const a of data.items){const when=new Date(a.scheduledAt).toLocaleString('es-EC',{timeZone:'America/Guayaquil'});text(el('appointments'),'Cita '+a.id+' | '+a.shopName+' | '+when+' | '+a.status);if(role==='taller'&&a.status==='pending'){const option=document.createElement('option');option.value=a.requestId+':'+a.id;option.textContent=a.category+' | '+when;el('appointment').append(option);}}if([...el('appointment').options].some(o=>o.value===previous))el('appointment').value=previous;if(!data.items.length)text(el('appointments'),'No hay citas registradas en este piloto.');}
 async function refresh(epoch){await Promise.all([loadNotices(epoch),loadHistory(epoch),loadAppointments(epoch)]);}
 async function poll(epoch){if(epoch!==generation||!token)return;try{await refresh(epoch);}catch(err){if(epoch===generation)status(err.message);}finally{if(epoch===generation&&token)timer=setTimeout(()=>poll(epoch),5000);}}
-el('loginForm').onsubmit=async e=>{e.preventDefault();const epoch=++generation;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({phone:el('phone').value,password:el('password').value})});if(epoch!==generation)return;if(!['dueno','taller','almacen'].includes(data.user.role)){status('Las pruebas requieren una cuenta de due\xF1o, taller o almac\xE9n.');return;}token=data.accessToken;role=data.user.role;buildMenu(data.user.name);el('password').value='';el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}catch(err){if(epoch===generation)status(err.message);}finally{button.disabled=false;}};
-function acceptLogin(data){token=data.accessToken;role=data.user.role;buildMenu(data.user.name);el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');const epoch=generation;poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}
+el('loginForm').onsubmit=async e=>{e.preventDefault();const epoch=++generation;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({phone:el('phone').value,password:el('password').value})});if(epoch!==generation)return;if(!['dueno','taller','almacen'].includes(data.user.role)){status('Las pruebas requieren una cuenta de due\xF1o, taller o almac\xE9n.');return;}remember(data);token=data.accessToken;role=data.user.role;buildMenu(data.user.name);el('password').value='';el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}catch(err){if(epoch===generation)status(err.message);}finally{button.disabled=false;}};
+function acceptLogin(data){remember(data);token=data.accessToken;role=data.user.role;buildMenu(data.user.name);el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');const epoch=generation;poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}
 el('codeTab').onclick=()=>{el('codeTab').setAttribute('aria-selected','true');el('passwordTab').setAttribute('aria-selected','false');el('codeRequestForm').classList.remove('hidden');el('codeVerifyForm').classList.add('hidden');el('loginForm').classList.add('hidden');};
 el('passwordTab').onclick=()=>{el('codeTab').setAttribute('aria-selected','false');el('passwordTab').setAttribute('aria-selected','true');el('codeRequestForm').classList.add('hidden');el('codeVerifyForm').classList.add('hidden');el('loginForm').classList.remove('hidden');};
 el('codeRequestForm').onsubmit=async e=>{e.preventDefault();try{const phone=el('codePhone').value.trim();await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'login'})});el('verifyPhone').value=phone;el('codeRequestForm').classList.add('hidden');el('codeVerifyForm').classList.remove('hidden');status('Si el n\xFAmero est\xE1 registrado, llegar\xE1 un c\xF3digo por WhatsApp.');}catch(err){status(err.message);}};
@@ -112003,6 +112146,7 @@ el('decisionForm').onsubmit=e=>{e.preventDefault();const action=el('decision').v
 el('appointmentForm').onsubmit=e=>{e.preventDefault();const ids=el('appointment').value.split(':');if(ids.length!==2){status('Selecciona una cita pendiente.');return;}prepare(['Confirmar cita',...ids]);};
 el('reloadPanel').onclick=()=>{const epoch=generation;loadPanel(epoch,panelVehicle).catch(err=>{if(epoch===generation)status(err.message);});};
 el('link').onclick=async()=>{const epoch=generation;try{const data=await api('/pilot/whatsapp-link',{method:'POST',body:'{}'});if(epoch!==generation)return;el('linkCode').textContent='Cuando WhatsApp est\xE9 conectado, env\xEDa al n\xFAmero de AutoMantPro: VINCULAR '+data.code+'\\nEl c\xF3digo vence en 10 minutos. No lo compartas.';}catch(err){if(epoch===generation)status(err.message);}};
+(async()=>{const epoch=generation;status('Revisando si ya tienes una sesi\xF3n abierta\u2026');try{const response=await webSession('resume');if(epoch!==generation||token)return;if(!response.ok){status('');return;}const body=await response.json();if(!['dueno','taller','almacen'].includes(body.data.user.role)){status('');return;}acceptLogin(body.data);window.scrollTo(0,0);status('Sesi\xF3n abierta: entraste directo a tu panel.');}catch{if(epoch===generation&&!token)status('');}})();
 </script></html>`;
 }
 async function pilotPageRoutes(app2, options = {}) {
