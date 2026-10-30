@@ -21719,6 +21719,8 @@ var EXTRA_STATEMENTS = [
   addColumn("User", "notes", "TEXT NULL"),
   // Rol del equipo del panel; nulo en las cuentas creadas antes de los roles (administrador).
   addColumn("User", "staffRole", "VARCHAR(20) NULL"),
+  // Baja por chat ("BAJA"): desde esta fecha solo sale por WhatsApp la respuesta a lo que la persona escribe.
+  addColumn("User", "whatsappOptOutAt", "DATETIME(3) NULL"),
   addColumn("Vehicle", "vehicleClass", "VARCHAR(191) NULL"),
   addColumn("Vehicle", "fuel", "VARCHAR(191) NULL"),
   addColumn("Vehicle", "plate", "VARCHAR(191) NULL"),

@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='dfbb4c719bccab5738903be4e8e756d173e029f6'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='4a1b070bfad9b1302dd6edcb5be1d160fde50584'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -61372,6 +61372,8 @@ var init_statements_extra = __esm({
       addColumn("User", "notes", "TEXT NULL"),
       // Rol del equipo del panel; nulo en las cuentas creadas antes de los roles (administrador).
       addColumn("User", "staffRole", "VARCHAR(20) NULL"),
+      // Baja por chat ("BAJA"): desde esta fecha solo sale por WhatsApp la respuesta a lo que la persona escribe.
+      addColumn("User", "whatsappOptOutAt", "DATETIME(3) NULL"),
       addColumn("Vehicle", "vehicleClass", "VARCHAR(191) NULL"),
       addColumn("Vehicle", "fuel", "VARCHAR(191) NULL"),
       addColumn("Vehicle", "plate", "VARCHAR(191) NULL"),
@@ -83291,6 +83293,8 @@ var init_brand = __esm({
 // packages/api/dist/infrastructure/messaging/admin-alerts.js
 import { randomUUID as randomUUID3 } from "node:crypto";
 function adminAlertText(type, count3 = 1) {
+  if (type === "data_request")
+    return "AutoMantPro: lleg\xF3 una solicitud de eliminaci\xF3n de datos por chat. Rev\xEDsala en /admin/data-requests (plazo de 15 d\xEDas).";
   const summary = type === "outbox_dead" || type === "inbound_dead" ? `${Math.max(0, Math.floor(count3))} ${LABEL[type]}` : `Se detect\xF3 un problema en ${LABEL[type]}`;
   return `AutoMantPro: ${summary}. Revisa /admin/whatsapp.`;
 }
@@ -83299,7 +83303,7 @@ var init_admin_alerts = __esm({
   "packages/api/dist/infrastructure/messaging/admin-alerts.js"() {
     "use strict";
     init_apply();
-    LABEL = { outbox_dead: "mensajes salientes fallidos", inbound_dead: "mensajes entrantes fallidos", reminders_failed: "ciclo de recordatorios", database_not_ready: "base de datos" };
+    LABEL = { outbox_dead: "mensajes salientes fallidos", inbound_dead: "mensajes entrantes fallidos", reminders_failed: "ciclo de recordatorios", database_not_ready: "base de datos", data_request: "solicitudes de eliminaci\xF3n de datos" };
     MysqlAdminAlerts = class {
       connect;
       log;
@@ -86897,6 +86901,7 @@ var init_commands = __esm({
       "Flota: Registrar flota | raz\xF3n social | RUC | ciudad | tu nombre y apellido | ACEPTO \xB7 Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km (| c\xF3digo interno) \xB7 Retirar PCD-4521 \xB7 Agregar conductor | nombre \xB7 Agregar supervisor | nombre \xB7 Conductores \xB7 Quitar D-XXXXXX \xB7 Asignar PCD-4521 | D-XXXXXX \xB7 Liberar PCD-4521 \xB7 Flota \xB7 Vencidos \xB7 Plan PCD-4521 \xB7 Kilometraje PCD-4521 | km \xB7 Gasto PCD-4521 | concepto | USD (| AAAA-MM-DD) \xB7 Costos mes \xB7 Costos PCD-4521 \xB7 Convenio | RUC del taller \xB7 Convenios \xB7 Terminar convenio K-XXXXXX \xB7 Agendar PCD-4521 | K-XXXXXX | AAAA-MM-DD | HH:mm | motivo \xB7 Aprobaci\xF3n autom\xE1tica | USD \xB7 L\xEDmite supervisor | USD \xB7 Panel flota",
       "Planes: Planes \xB7 Mi suscripci\xF3n \xB7 Quiero plan Premium (| anual) \xB7 Quiero plan Flota | 12 veh\xEDculos \xB7 Pago SB-0042 | n\xFAmero de comprobante (| banco) \xB7 Renovar SB-0042",
       "Capacitaci\xF3n: Cursos \xB7 Curso CU-0001 \xB7 Inscribirme CU-0001 \xB7 Pago IN-0001 + foto \xB7 Listo \xB7 A/B/C \xB7 Mis cursos \xB7 Certificado CU-0001 \xB7 Taller: Inscribir t\xE9cnicos CU-0001 \xB7 Avance t\xE9cnicos \xB7 Experto: Soy experto \xB7 Aprobar/Rechazar IN-0001",
+      "Baja y privacidad: BAJA (dejar de recibir avisos por WhatsApp) \xB7 ALTA (volver a recibirlos) \xB7 Eliminar mi cuenta (pide borrar tus datos personales)",
       "Conductor: Unirme flota J-XXXXXXXX | nombre | ACEPTO \xB7 Mi veh\xEDculo \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n \xB7 Salir de flota \xB7 Taller: Mis flotas \xB7 Aceptar convenio K-XXXXXX \xB7 Rechazar convenio K-XXXXXX"
     ].join("\n");
     fold6 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
@@ -88960,6 +88965,74 @@ var init_whatsapp = __esm({
   }
 });
 
+// packages/api/dist/application/chat-account/self-service.js
+function parseSelfService(message2) {
+  const text9 = fold8(String(message2 ?? "").slice(0, 200));
+  if (BAJA.test(text9))
+    return "baja";
+  if (ALTA.test(text9))
+    return "alta";
+  if (DELETE.test(text9))
+    return "eliminar_cuenta";
+  return null;
+}
+var fold8, BAJA, ALTA, DELETE, OPT_OUT_ALLOWED_KINDS, SELF_SERVICE_MESSAGES;
+var init_self_service = __esm({
+  "packages/api/dist/application/chat-account/self-service.js"() {
+    "use strict";
+    fold8 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[.!¡¿?]+/g, " ").replace(/\s+/g, " ").trim();
+    BAJA = /^(baja|stop|darme de baja|dar de baja|no quiero recibir (mas )?mensajes)$/;
+    ALTA = /^(alta|darme de alta)$/;
+    DELETE = /^(eliminar|borrar|cerrar) (mi cuenta|mis datos|mi cuenta y mis datos)$/;
+    OPT_OUT_ALLOWED_KINDS = ["agent.reply", "auth.login_code"];
+    SELF_SERVICE_MESSAGES = {
+      baja: "Listo: ya no te enviaremos avisos ni recordatorios por WhatsApp. Solo te responderemos cuando t\xFA nos escribas. Para volver a recibirlos escribe: ALTA. Para eliminar tu cuenta y tus datos escribe: Eliminar mi cuenta",
+      alta: "Listo: volver\xE1s a recibir por aqu\xED los avisos de tus solicitudes, citas y \xF3rdenes. Los recordatorios de mantenimiento se activan aparte con: Alertas s\xED",
+      eliminar: (code3, days2) => `Recibimos tu solicitud ${code3} para eliminar tu cuenta y tus datos personales. El equipo la atender\xE1 en un m\xE1ximo de ${days2} d\xEDas y te confirmar\xE1 por aqu\xED. Se conserva solo el historial t\xE9cnico de los veh\xEDculos, sin datos que te identifiquen. Mientras tanto ya no te enviaremos avisos.`,
+      eliminarAbierta: (code3) => `Ya tenemos tu solicitud ${code3} para eliminar tu cuenta y tus datos; est\xE1 en proceso. Te confirmaremos por aqu\xED cuando est\xE9 lista.`
+    };
+  }
+});
+
+// packages/api/dist/application/data/lopdp.js
+function dueDate(from = /* @__PURE__ */ new Date()) {
+  return new Date(from.getTime() + RESPONSE_DAYS * 24 * 60 * 60 * 1e3);
+}
+function daysLeft2(dueAt, now = /* @__PURE__ */ new Date()) {
+  const due = dueAt instanceof Date ? dueAt : new Date(dueAt);
+  return Math.ceil((due.getTime() - now.getTime()) / (24 * 60 * 60 * 1e3));
+}
+function isOverdue(request, now = /* @__PURE__ */ new Date()) {
+  if (request.status === "atendida" || request.status === "rechazada")
+    return false;
+  return daysLeft2(request.dueAt, now) < 0;
+}
+function kindLabel(kind) {
+  return REQUEST_KINDS.find((k) => k.key === kind)?.label ?? kind;
+}
+function anonymizedValues(userId) {
+  return { name: "Titular dado de baja", phone: `anon:${userId}`, email: null, notes: null };
+}
+var REQUEST_KINDS, REQUEST_STATUS_LABELS, RESPONSE_DAYS, dataRequestCode;
+var init_lopdp = __esm({
+  "packages/api/dist/application/data/lopdp.js"() {
+    "use strict";
+    REQUEST_KINDS = [
+      { key: "acceso", label: "Acceso", description: "Entregar copia de sus datos personales." },
+      { key: "rectificacion", label: "Rectificaci\xF3n", description: "Corregir datos equivocados." },
+      { key: "eliminacion", label: "Eliminaci\xF3n", description: "Anonimizar sus datos personales y conservar solo el historial." }
+    ];
+    REQUEST_STATUS_LABELS = {
+      recibida: "Recibida",
+      en_proceso: "En proceso",
+      atendida: "Atendida",
+      rechazada: "Rechazada"
+    };
+    RESPONSE_DAYS = 15;
+    dataRequestCode = (number) => `LP-${String(number).padStart(4, "0")}`;
+  }
+});
+
 // packages/api/dist/infrastructure/messaging/local-agent-broker.js
 import { createHash as createHash6, randomBytes as randomBytes6 } from "node:crypto";
 function fail9(code3) {
@@ -88979,6 +89052,9 @@ var init_local_agent_broker = __esm({
     init_error_messages();
     init_appointment_capacity();
     init_whatsapp();
+    init_self_service();
+    init_lopdp();
+    init_admin_alerts();
     data = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     digest = (s) => createHash6("sha256").update(s).digest("hex");
     BrokerError = class extends Error {
@@ -89216,7 +89292,7 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
               await this.queue.complete(job.wamid, job.leaseToken);
               continue;
             }
-            if (/^\s*baja\s*$/i.test(payload.message)) {
+            if (parseSelfService(payload.message) === "baja") {
               await this.run(async (conn) => {
                 await conn.query("UPDATE `ImportedContact` SET status = 'baja' WHERE phone = ?", [job.phone]).catch(() => void 0);
                 await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'OPTED_OUT' WHERE recipientPhone = ? AND status IN ('pending','sending')", [job.phone]);
@@ -89229,9 +89305,74 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
             result.push({ wamid: job.wamid, leaseToken: job.leaseToken, userId: "", role: "nuevo", message: payload.message, channel: payload.channel, attempts: job.attempts, ...payload.category ? { category: payload.category } : {} });
             continue;
           }
+          const selfService = parseSelfService(payload.message);
+          if (selfService) {
+            try {
+              await this.selfService(job.wamid, job.leaseToken, String(account.id), payload.channel, selfService);
+              continue;
+            } catch (err) {
+              if (err.code !== "ER_BAD_FIELD_ERROR")
+                throw err;
+            }
+          }
           result.push({ wamid: job.wamid, leaseToken: job.leaseToken, userId: String(account.id), role: String(account.role), message: payload.message, channel: payload.channel, attempts: job.attempts, ...payload.category ? { category: payload.category } : {} });
         }
         return result;
+      }
+      /**
+       * Baja de una persona con cuenta. "BAJA" apaga los avisos y recordatorios por WhatsApp (solo sale la
+       * respuesta a lo que ella escriba); "ALTA" los vuelve a encender; "Eliminar mi cuenta" abre la
+       * solicitud de eliminación de la LOPDP, que el equipo atiende y anonimiza en /admin, y también apaga
+       * los avisos. Todo queda en la misma transacción que la respuesta y en la auditoría.
+       */
+      async selfService(wamid, leaseToken, userId, channel, command) {
+        let newRequest = false;
+        await this.run(async (conn) => {
+          await conn.query("START TRANSACTION");
+          try {
+            const [owned] = await data(conn, "SELECT wamid FROM `InboundWebhook` WHERE wamid = ? AND leaseToken = ? AND status = 'processing' FOR UPDATE", [wamid, leaseToken]);
+            if (!owned) {
+              await conn.query("ROLLBACK");
+              return;
+            }
+            let message2;
+            let requestCode = null;
+            if (command === "alta") {
+              await conn.query("UPDATE `User` SET whatsappOptOutAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [userId]);
+              message2 = SELF_SERVICE_MESSAGES.alta;
+            } else {
+              await conn.query("UPDATE `User` SET whatsappOptOutAt = COALESCE(whatsappOptOutAt, UTC_TIMESTAMP(3)), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [userId]);
+              await conn.query("UPDATE `Vehicle` SET remindersOptIn = false, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ? AND remindersOptIn = true", [userId]);
+              await conn.query(`UPDATE \`NotificationOutbox\` SET status = 'dead', lastError = 'OPTED_OUT' WHERE recipientUserId = ? AND status = 'pending' AND kind NOT IN (${OPT_OUT_ALLOWED_KINDS.map(() => "?").join(",")})`, [userId, ...OPT_OUT_ALLOWED_KINDS]);
+              message2 = SELF_SERVICE_MESSAGES.baja;
+              if (command === "eliminar_cuenta") {
+                const [open] = await data(conn, "SELECT `number` FROM `DataRequest` WHERE userId = ? AND kind = 'eliminacion' AND status IN ('recibida','en_proceso') ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [userId]);
+                if (open) {
+                  requestCode = dataRequestCode(Number(open.number));
+                  message2 = SELF_SERVICE_MESSAGES.eliminarAbierta(requestCode);
+                } else {
+                  const [next] = await data(conn, "SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest` FOR UPDATE");
+                  const number = Number(next?.n ?? 1);
+                  await conn.query("INSERT INTO `DataRequest` (id, `number`, userId, kind, status, channel, detail, dueAt, createdBy, createdAt, updatedAt) VALUES (UUID(), ?, ?, 'eliminacion', 'recibida', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [number, userId, channel === "whatsapp" ? "whatsapp" : "web", "Pedida por la misma persona desde el chat: \xABEliminar mi cuenta\xBB.", dueDate(), userId]);
+                  requestCode = dataRequestCode(number);
+                  message2 = SELF_SERVICE_MESSAGES.eliminar(requestCode, RESPONSE_DAYS);
+                  newRequest = true;
+                }
+              }
+            }
+            await conn.query("INSERT INTO `LocalAgentReply` (wamid,userId,leaseToken,message,channel,executedCommand) VALUES (?, ?, ?, ?, ?, true)", [wamid, userId, leaseToken, message2, channel]);
+            if (channel === "whatsapp")
+              await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?, ?, ?, 'agent.reply', ?)", [randomBytes6(16).toString("hex"), `reply:${digest(wamid)}`, userId, JSON.stringify({ message: message2 })]);
+            await conn.query("UPDATE `InboundWebhook` SET status = 'completed', leaseToken = NULL, lockedAt = NULL, completedAt = UTC_TIMESTAMP(3), updatedAt = UTC_TIMESTAMP(3) WHERE wamid = ?", [wamid]);
+            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?, 'User', ?, ?, UTC_TIMESTAMP(3))", [randomBytes6(16).toString("hex"), `contact.self-service.${command}`, userId, userId, JSON.stringify({ channel, ...requestCode ? { request: requestCode } : {} })]);
+            await conn.query("COMMIT");
+          } catch (err) {
+            await conn.query("ROLLBACK").catch(() => void 0);
+            throw err;
+          }
+        });
+        if (newRequest)
+          await new MysqlAdminAlerts(this.connect).notify("data_request");
       }
       /**
        * Minimal, already-authorized context for drafting the reply to a leased job: what Claude needs to
@@ -89370,12 +89511,14 @@ function whatsappDelivery(env = process.env) {
   const value2 = env.WHATSAPP_DELIVERY?.trim();
   return value2 === "bridge" || value2 === "cloud" ? value2 : "off";
 }
-var MAX_ATTEMPTS2, LEASE_SECONDS2, affected3, MysqlOutboxDeliveryStore;
+var ALLOWED, MAX_ATTEMPTS2, LEASE_SECONDS2, affected3, MysqlOutboxDeliveryStore;
 var init_outbox_delivery_store = __esm({
   "packages/api/dist/infrastructure/messaging/outbox-delivery-store.js"() {
     "use strict";
     init_apply();
     init_admin_alerts();
+    init_self_service();
+    ALLOWED = OPT_OUT_ALLOWED_KINDS.map((kind) => `'${kind}'`).join(",");
     MAX_ATTEMPTS2 = 5;
     LEASE_SECONDS2 = 300;
     affected3 = (result) => Number(result[0].affectedRows ?? 0);
@@ -89403,7 +89546,15 @@ var init_outbox_delivery_store = __esm({
           throw new Error("INVALID_CLAIM_LIMIT");
         return this.run(async (conn) => {
           await conn.query("UPDATE `NotificationOutbox` SET status = IF(attempts >= ?, 'dead', 'pending'), leaseToken = NULL, lockedAt = NULL WHERE status = 'sending' AND lockedAt <= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ? SECOND)", [MAX_ATTEMPTS2, LEASE_SECONDS2]);
-          const [found] = await conn.query("SELECT o.id, o.kind, o.payload, COALESCE(i.phone, o.recipientPhone) AS phone FROM `NotificationOutbox` o LEFT JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId LEFT JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts < ? AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND ((o.recipientUserId IS NOT NULL AND i.phone IS NOT NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND (o.kind <> 'admin.alert' OR u.role = 'admin')) OR (o.recipientUserId IS NULL AND o.recipientPhone IS NOT NULL AND (o.kind IN ('contact.welcome', 'contact.reply') OR (o.kind = 'contact.reactivation' AND EXISTS (SELECT 1 FROM `ImportedContact` c WHERE c.phone = o.recipientPhone AND c.status = 'approved'))))) ORDER BY o.createdAt, o.id LIMIT ?", [MAX_ATTEMPTS2, limit]);
+          let optOut = "";
+          try {
+            await conn.query(`UPDATE \`NotificationOutbox\` o JOIN \`User\` u ON u.id = o.recipientUserId SET o.status = 'dead', o.lastError = 'OPTED_OUT' WHERE o.status = 'pending' AND u.whatsappOptOutAt IS NOT NULL AND o.kind NOT IN (${ALLOWED})`);
+            optOut = ` AND (u.whatsappOptOutAt IS NULL OR o.kind IN (${ALLOWED}))`;
+          } catch (err) {
+            if (err.code !== "ER_BAD_FIELD_ERROR")
+              throw err;
+          }
+          const [found] = await conn.query("SELECT o.id, o.kind, o.payload, COALESCE(i.phone, o.recipientPhone) AS phone FROM `NotificationOutbox` o LEFT JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId LEFT JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts < ? AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND ((o.recipientUserId IS NOT NULL AND i.phone IS NOT NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND (o.kind <> 'admin.alert' OR u.role = 'admin')" + optOut + ") OR (o.recipientUserId IS NULL AND o.recipientPhone IS NOT NULL AND (o.kind IN ('contact.welcome', 'contact.reply') OR (o.kind = 'contact.reactivation' AND EXISTS (SELECT 1 FROM `ImportedContact` c WHERE c.phone = o.recipientPhone AND c.status = 'approved'))))) ORDER BY o.createdAt, o.id LIMIT ?", [MAX_ATTEMPTS2, limit]);
           const claimed = [];
           for (const row of found) {
             const payload = typeof row.payload === "string" ? JSON.parse(row.payload) : row.payload;
@@ -91425,7 +91576,8 @@ ${seoHead({
 </head>
 <body>
 <main>
-  <header>${logo}
+  <header class="cabecera">${logo}
+    <h1>Asistente Inteligente de <em>Mantenimiento Automotriz</em></h1>
     <span class="acciones">
       <a class="pill" href="/planes">Registro gratis</a>
       <button id="tema" class="tema" type="button" aria-label="Cambiar de tema">${icon("sol", "sol")}${icon("luna", "luna")}</button>
@@ -91435,7 +91587,6 @@ ${seoHead({
   <div class="col-a">
   <section class="hero">
     <svg class="silueta" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS.auto_hero}</svg>
-    <h1>Asistente Inteligente de <em>Mantenimiento Automotriz</em></h1>
     <p class="lead">Plan, recordatorios, talleres y repuestos en un solo chat de WhatsApp.</p>
     ${red}
     ${BOARD}
@@ -91911,7 +92062,7 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
 .profile-card{padding:9px 10px 9px 12px;gap:10px}
 .profile-card b{font-size:15px}
 .profile-card i{font-size:12.5px}
-.profile-card .mas{display:block;width:fit-content;min-height:24px;margin-top:2px;font:600 12.5px/1.2 var(--c-font);color:var(--c-ink)!important;text-decoration:underline;text-decoration-color:var(--amp-bar)!important;text-underline-offset:3px}
+.profile-card .mas{display:block;width:fit-content;padding:0!important;min-height:24px;margin-top:2px;font:600 12.5px/1.2 var(--c-font);color:var(--c-ink)!important;text-decoration:underline;text-decoration-color:var(--amp-bar)!important;text-underline-offset:3px}
 .profile-card .mas::after{content:"\u203A";margin-left:4px;text-decoration:none}
 .profile-actions .access-btn{min-height:40px}
 .option.ghost{padding:8px 12px}
@@ -91969,6 +92120,24 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
  .access-btn,.profile-actions .access-btn{min-height:48px;font-size:14px}
  .access-note{display:none}
 }
+/* T\xEDtulo en la cabecera, junto al logo; el bloque de abajo solo describe (pedido de Pedro, 30/10/2026) */
+header.cabecera{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px 14px;margin:2px 0 12px}
+header.cabecera .logo{grid-column:1}
+header.cabecera .acciones{grid-column:3;margin-left:0}
+header.cabecera h1{grid-column:2;margin:0;font-size:clamp(20px,2.2vw,28px);line-height:1.1;letter-spacing:-.025em;font-weight:850;font-family:var(--c-display);color:var(--c-ink);text-wrap:balance}
+header.cabecera h1 em{font-style:normal;background:linear-gradient(var(--amp-yellow),var(--amp-yellow)) no-repeat 0 90%/100% .28em;padding:0 .04em}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) header.cabecera h1 em{background-size:100% .14em}}
+:root[data-tema="oscuro"] header.cabecera h1 em{background-size:100% .14em}
+@media (max-width:760px){
+ header.cabecera{grid-template-columns:auto 1fr}
+ header.cabecera .acciones{grid-column:2;justify-self:end}
+ header.cabecera h1{grid-column:1/-1;grid-row:2;font-size:clamp(22px,6.4vw,30px)}
+}
+.hero{padding-top:16px}
+.hero .lead{font-size:17px;line-height:1.45;color:var(--c-hero-ink);font-weight:500;max-width:46ch;padding-right:90px}
+@media (max-width:640px){.hero .lead{font-size:16px;padding-right:0}}
+@media (prefers-reduced-motion:no-preference){header.cabecera h1{animation:amp-sube .6s .05s var(--amp-ease) both}header.cabecera h1 em{animation:amp-revela .8s .15s cubic-bezier(.6,0,.2,1) both,amp-subraya .7s .85s var(--amp-ease) both}}
+@media (min-width:700px) and (max-height:620px) and (orientation:landscape){header.cabecera h1{font-size:22px}}
 `;
     BOARD = `<div class="board" aria-label="Ejemplo del informe de tu veh\xEDculo">
   <p class="cap"><span>As\xED se ve el informe de tu veh\xEDculo</span><b>EJEMPLO</b></p>
@@ -102286,45 +102455,6 @@ var init_csv = __esm({
   "packages/api/dist/application/data/csv.js"() {
     "use strict";
     SEPARATOR = ";";
-  }
-});
-
-// packages/api/dist/application/data/lopdp.js
-function dueDate(from = /* @__PURE__ */ new Date()) {
-  return new Date(from.getTime() + RESPONSE_DAYS * 24 * 60 * 60 * 1e3);
-}
-function daysLeft2(dueAt, now = /* @__PURE__ */ new Date()) {
-  const due = dueAt instanceof Date ? dueAt : new Date(dueAt);
-  return Math.ceil((due.getTime() - now.getTime()) / (24 * 60 * 60 * 1e3));
-}
-function isOverdue(request, now = /* @__PURE__ */ new Date()) {
-  if (request.status === "atendida" || request.status === "rechazada")
-    return false;
-  return daysLeft2(request.dueAt, now) < 0;
-}
-function kindLabel(kind) {
-  return REQUEST_KINDS.find((k) => k.key === kind)?.label ?? kind;
-}
-function anonymizedValues(userId) {
-  return { name: "Titular dado de baja", phone: `anon:${userId}`, email: null, notes: null };
-}
-var REQUEST_KINDS, REQUEST_STATUS_LABELS, RESPONSE_DAYS, dataRequestCode;
-var init_lopdp = __esm({
-  "packages/api/dist/application/data/lopdp.js"() {
-    "use strict";
-    REQUEST_KINDS = [
-      { key: "acceso", label: "Acceso", description: "Entregar copia de sus datos personales." },
-      { key: "rectificacion", label: "Rectificaci\xF3n", description: "Corregir datos equivocados." },
-      { key: "eliminacion", label: "Eliminaci\xF3n", description: "Anonimizar sus datos personales y conservar solo el historial." }
-    ];
-    REQUEST_STATUS_LABELS = {
-      recibida: "Recibida",
-      en_proceso: "En proceso",
-      atendida: "Atendida",
-      rechazada: "Rechazada"
-    };
-    RESPONSE_DAYS = 15;
-    dataRequestCode = (number) => `LP-${String(number).padStart(4, "0")}`;
   }
 });
 
