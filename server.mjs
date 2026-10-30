@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='d5e8994da97bace0e8d2a5b559fdc0b6ae21de93'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='4d69d6ae5ebe4a55ecfdfd052584820e1a20534c'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -92269,7 +92269,7 @@ async function entryRoutes(app2, options = {}) {
   app2.get("/", async (request, reply) => {
     reply.header("Vary", "Accept, User-Agent");
     const bot = isPreviewBot(request.headers["user-agent"]);
-    if (request.method === "HEAD" || !wantsPage(request.headers.accept, request.headers["user-agent"])) {
+    if (request.method === "HEAD" || !wantsHtml(request.headers.accept) && !bot) {
       return reply.send(API_STATUS);
     }
     const nonce2 = randomBytes7(16).toString("base64");
