@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='a703e2164d11653732cc9a65d5483fb593f6d86b'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='d5e8994da97bace0e8d2a5b559fdc0b6ae21de93'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -60819,7 +60819,7 @@ function allowWhatsappMessage(phone) {
   const day3 = whatsappPerDay.hit(phone);
   return minute.allowed && day3.allowed;
 }
-var RateLimiter, whatsappPerMinute, whatsappPerDay, loginFailuresByPhone, loginCodePerMinute, loginCodePerHour, loginCodePerIpHour;
+var RateLimiter, whatsappPerMinute, whatsappPerDay, loginFailuresByPhone, loginFailuresByPhoneTotal, loginFailuresByIp, loginLock, loginCodePerMinute, loginCodePerHour, loginCodePerIpHour;
 var init_rate_limit = __esm({
   "packages/api/dist/application/security/rate-limit.js"() {
     "use strict";
@@ -60884,6 +60884,24 @@ var init_rate_limit = __esm({
     whatsappPerMinute = new RateLimiter(20, 6e4);
     whatsappPerDay = new RateLimiter(300, 24 * 60 * 6e4);
     loginFailuresByPhone = new RateLimiter(5, 15 * 6e4);
+    loginFailuresByPhoneTotal = new RateLimiter(30, 15 * 6e4);
+    loginFailuresByIp = new RateLimiter(20, 15 * 6e4);
+    loginLock = {
+      peek(phone, ip) {
+        for (const d of [loginFailuresByPhone.peek(`${phone}|${ip}`), loginFailuresByPhoneTotal.peek(phone), loginFailuresByIp.peek(ip)])
+          if (!d.allowed)
+            return d;
+        return { allowed: true, remaining: 0, retryAfter: 0 };
+      },
+      fail(phone, ip) {
+        loginFailuresByPhone.hit(`${phone}|${ip}`);
+        loginFailuresByPhoneTotal.hit(phone);
+        loginFailuresByIp.hit(ip);
+      },
+      success(phone, ip) {
+        loginFailuresByPhone.reset(`${phone}|${ip}`);
+      }
+    };
     loginCodePerMinute = new RateLimiter(1, 6e4);
     loginCodePerHour = new RateLimiter(5, 60 * 6e4);
     loginCodePerIpHour = new RateLimiter(20, 60 * 6e4);
@@ -92182,6 +92200,13 @@ function wantsHtml(accept) {
     return false;
   return accept.split(",").some((part) => part.trim().toLowerCase().startsWith("text/html"));
 }
+function wantsPage(accept, userAgent) {
+  if (wantsHtml(accept) || isPreviewBot(userAgent))
+    return true;
+  if (typeof userAgent !== "string" || !/^Mozilla\//.test(userAgent))
+    return false;
+  return !/application\/json/i.test(accept ?? "");
+}
 function sanitizeRef(ref4) {
   if (typeof ref4 !== "string")
     return null;
@@ -92244,7 +92269,7 @@ async function entryRoutes(app2, options = {}) {
   app2.get("/", async (request, reply) => {
     reply.header("Vary", "Accept, User-Agent");
     const bot = isPreviewBot(request.headers["user-agent"]);
-    if (request.method === "HEAD" || !wantsHtml(request.headers.accept) && !bot) {
+    if (request.method === "HEAD" || !wantsPage(request.headers.accept, request.headers["user-agent"])) {
       return reply.send(API_STATUS);
     }
     const nonce2 = randomBytes7(16).toString("base64");
@@ -110382,6 +110407,8 @@ async function webSessionRoutes(app2) {
     }
   });
   app2.post("/auth/web/logout", async (request, reply) => {
+    if (!sameSite(request))
+      return reply.code(401).send(unauthorized);
     reply.header("Set-Cookie", webCookie(request, path, "", 0));
     return reply.send({ data: { remembered: false }, error: null });
   });
@@ -110416,16 +110443,16 @@ async function authRoutes(app2) {
     if (!parsed.success)
       return reply.code(401).send({ data: null, error: { code: "UNAUTHORIZED", message: "C\xF3digo inv\xE1lido o vencido" } });
     const phoneKey = parsed.data.phone.replace(/\D/g, "");
-    const lock = loginFailuresByPhone.peek(phoneKey);
+    const lock = loginLock.peek(phoneKey, request.ip);
     if (!lock.allowed)
       return reply.header("Retry-After", String(lock.retryAfter)).code(429).send({ data: null, error: { code: "RATE_LIMITED", message: "Demasiados intentos. Espera unos minutos." } });
     const valid = await loginCodes.verify(phoneKey, "login", parsed.data.code);
     const user = valid ? await findActiveUserByPhone(phoneKey) : null;
     if (!user || user.deletedAt) {
-      loginFailuresByPhone.hit(phoneKey);
+      loginLock.fail(phoneKey, request.ip);
       return reply.code(401).send({ data: null, error: { code: "UNAUTHORIZED", message: "C\xF3digo inv\xE1lido o vencido" } });
     }
-    loginFailuresByPhone.reset(phoneKey);
+    loginLock.success(phoneKey, request.ip);
     const accessToken = app2.jwt.sign({ sub: user.id, role: user.role, email: user.email ?? void 0, tokenUse: "access" }, { expiresIn: process.env.JWT_ACCESS_EXPIRY ?? "15m" });
     const refreshToken = app2.jwt.sign({ sub: user.id, role: user.role, tokenUse: "refresh" }, { expiresIn: process.env.JWT_REFRESH_EXPIRY ?? "7d" });
     return reply.send({ data: { user: { id: user.id, name: user.name, role: user.role, email: user.email }, accessToken, refreshToken }, error: null });
@@ -110536,7 +110563,7 @@ async function authRoutes(app2) {
         });
       }
       const phoneKey = String(parsed.data.phone).replace(/\D/g, "");
-      const lock = loginFailuresByPhone.peek(phoneKey);
+      const lock = loginLock.peek(phoneKey, request.ip);
       if (!lock.allowed) {
         return reply.header("Retry-After", String(lock.retryAfter)).code(429).send({
           data: null,
@@ -110545,13 +110572,13 @@ async function authRoutes(app2) {
       }
       const user = await validateCredentials(parsed.data);
       if (!user) {
-        loginFailuresByPhone.hit(phoneKey);
+        loginLock.fail(phoneKey, request.ip);
         return reply.code(401).send({
           data: null,
           error: { code: "UNAUTHORIZED", message: "Invalid credentials" }
         });
       }
-      loginFailuresByPhone.reset(phoneKey);
+      loginLock.success(phoneKey, request.ip);
       const accessToken = app2.jwt.sign({ sub: user.id, role: user.role, email: user.email ?? void 0, tokenUse: "access" }, { expiresIn: process.env.JWT_ACCESS_EXPIRY ?? "15m" });
       const refreshToken = app2.jwt.sign({ sub: user.id, role: user.role, tokenUse: "refresh" }, { expiresIn: process.env.JWT_REFRESH_EXPIRY ?? "7d" });
       return reply.send({ data: { user: { id: user.id, name: user.name, role: user.role, email: user.email }, accessToken, refreshToken }, error: null });
@@ -115643,7 +115670,7 @@ async function plansPageRoutes(app2, options = {}) {
     return reply.type("text/html; charset=utf-8").send(html);
   };
   app2.get("/planes", async (request, reply) => {
-    if (!wantsHtml(request.headers.accept))
+    if (!wantsPage(request.headers.accept, request.headers["user-agent"]))
       return reply.callNotFound();
     const code3 = await uniqueVisitCode(options.codeTaken);
     if (options.onVisit) {
@@ -116499,7 +116526,7 @@ function installSecurity(app2, options = {}) {
     set("Cross-Origin-Opener-Policy", "same-origin");
     set("X-Permitted-Cross-Domain-Policies", "none");
     if (production)
-      set("Strict-Transport-Security", "max-age=15552000");
+      set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
     const type = String(reply.getHeader("content-type") ?? "");
     if (!reply.hasHeader("Content-Security-Policy")) {
       reply.header("Content-Security-Policy", type.includes("text/html") ? "frame-ancestors 'none'; base-uri 'none'; object-src 'none'" : "default-src 'none'; frame-ancestors 'none'");
