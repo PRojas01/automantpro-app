@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='31a4e04995cdce86341f1af15e7cb3a8388872f9'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='b41fd1a1990adf1d220275850b5a0e3160e64201'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -3379,14 +3379,14 @@ var require_validation = __commonJS({
       const value2 = request[paramName];
       let ret;
       try {
-        const data2 = value2 === void 0 ? null : value2;
+        const data3 = value2 === void 0 ? null : value2;
         if (validatorFunction.schemaEnv) {
-          ret = validatorFunction(data2, {
+          ret = validatorFunction(data3, {
             parentData: request,
             parentDataProperty: paramName
           });
         } else {
-          ret = validatorFunction(data2);
+          ret = validatorFunction(data3);
         }
       } catch (err) {
         err.statusCode = 500;
@@ -4497,79 +4497,79 @@ var require_config_validator = __commonJS({
     var schema11 = { "type": "object", "additionalProperties": false, "properties": { "connectionTimeout": { "type": "integer", "default": 0 }, "keepAliveTimeout": { "type": "integer", "default": 72e3 }, "forceCloseConnections": { "oneOf": [{ "type": "string", "pattern": "idle" }, { "type": "boolean" }] }, "maxRequestsPerSocket": { "type": "integer", "default": 0, "nullable": true }, "requestTimeout": { "type": "integer", "default": 0 }, "handlerTimeout": { "type": "integer", "default": 0 }, "bodyLimit": { "type": "integer", "default": 1048576 }, "caseSensitive": { "type": "boolean", "default": true }, "allowUnsafeRegex": { "type": "boolean", "default": false }, "http2": { "type": "boolean" }, "https": { "if": { "not": { "oneOf": [{ "type": "boolean" }, { "type": "null" }, { "type": "object", "additionalProperties": false, "required": ["allowHTTP1"], "properties": { "allowHTTP1": { "type": "boolean" } } }] } }, "then": { "setDefaultValue": true } }, "ignoreTrailingSlash": { "type": "boolean", "default": false }, "ignoreDuplicateSlashes": { "type": "boolean", "default": false }, "disableRequestLogging": { "default": false }, "maxParamLength": { "type": "integer", "default": 100 }, "onProtoPoisoning": { "type": "string", "default": "error" }, "onConstructorPoisoning": { "type": "string", "default": "error" }, "pluginTimeout": { "type": "integer", "default": 1e4 }, "requestIdHeader": { "anyOf": [{ "type": "boolean" }, { "type": "string" }], "default": false }, "requestIdLogLabel": { "type": "string", "default": "reqId" }, "http2SessionTimeout": { "type": "integer", "default": 72e3 }, "exposeHeadRoutes": { "type": "boolean", "default": true }, "useSemicolonDelimiter": { "type": "boolean", "default": false }, "routerOptions": { "type": "object", "additionalProperties": true, "properties": { "ignoreTrailingSlash": { "type": "boolean", "default": false }, "ignoreDuplicateSlashes": { "type": "boolean", "default": false }, "maxParamLength": { "type": "integer", "default": 100 }, "allowUnsafeRegex": { "type": "boolean", "default": false }, "useSemicolonDelimiter": { "type": "boolean", "default": false } } }, "constraints": { "type": "object", "additionalProperties": { "type": "object", "required": ["name", "storage", "validate", "deriveConstraint"], "additionalProperties": true, "properties": { "name": { "type": "string" }, "storage": {}, "validate": {}, "deriveConstraint": {} } } } } };
     var func2 = Object.prototype.hasOwnProperty;
     var pattern0 = new RegExp("idle", "u");
-    function validate10(data2, { instancePath = "", parentData, parentDataProperty, rootData = data2 } = {}) {
+    function validate10(data3, { instancePath = "", parentData, parentDataProperty, rootData = data3 } = {}) {
       let vErrors = null;
       let errors = 0;
       if (errors === 0) {
-        if (data2 && typeof data2 == "object" && !Array.isArray(data2)) {
-          if (data2.connectionTimeout === void 0) {
-            data2.connectionTimeout = 0;
+        if (data3 && typeof data3 == "object" && !Array.isArray(data3)) {
+          if (data3.connectionTimeout === void 0) {
+            data3.connectionTimeout = 0;
           }
-          if (data2.keepAliveTimeout === void 0) {
-            data2.keepAliveTimeout = 72e3;
+          if (data3.keepAliveTimeout === void 0) {
+            data3.keepAliveTimeout = 72e3;
           }
-          if (data2.maxRequestsPerSocket === void 0) {
-            data2.maxRequestsPerSocket = 0;
+          if (data3.maxRequestsPerSocket === void 0) {
+            data3.maxRequestsPerSocket = 0;
           }
-          if (data2.requestTimeout === void 0) {
-            data2.requestTimeout = 0;
+          if (data3.requestTimeout === void 0) {
+            data3.requestTimeout = 0;
           }
-          if (data2.handlerTimeout === void 0) {
-            data2.handlerTimeout = 0;
+          if (data3.handlerTimeout === void 0) {
+            data3.handlerTimeout = 0;
           }
-          if (data2.bodyLimit === void 0) {
-            data2.bodyLimit = 1048576;
+          if (data3.bodyLimit === void 0) {
+            data3.bodyLimit = 1048576;
           }
-          if (data2.caseSensitive === void 0) {
-            data2.caseSensitive = true;
+          if (data3.caseSensitive === void 0) {
+            data3.caseSensitive = true;
           }
-          if (data2.allowUnsafeRegex === void 0) {
-            data2.allowUnsafeRegex = false;
+          if (data3.allowUnsafeRegex === void 0) {
+            data3.allowUnsafeRegex = false;
           }
-          if (data2.ignoreTrailingSlash === void 0) {
-            data2.ignoreTrailingSlash = false;
+          if (data3.ignoreTrailingSlash === void 0) {
+            data3.ignoreTrailingSlash = false;
           }
-          if (data2.ignoreDuplicateSlashes === void 0) {
-            data2.ignoreDuplicateSlashes = false;
+          if (data3.ignoreDuplicateSlashes === void 0) {
+            data3.ignoreDuplicateSlashes = false;
           }
-          if (data2.disableRequestLogging === void 0) {
-            data2.disableRequestLogging = false;
+          if (data3.disableRequestLogging === void 0) {
+            data3.disableRequestLogging = false;
           }
-          if (data2.maxParamLength === void 0) {
-            data2.maxParamLength = 100;
+          if (data3.maxParamLength === void 0) {
+            data3.maxParamLength = 100;
           }
-          if (data2.onProtoPoisoning === void 0) {
-            data2.onProtoPoisoning = "error";
+          if (data3.onProtoPoisoning === void 0) {
+            data3.onProtoPoisoning = "error";
           }
-          if (data2.onConstructorPoisoning === void 0) {
-            data2.onConstructorPoisoning = "error";
+          if (data3.onConstructorPoisoning === void 0) {
+            data3.onConstructorPoisoning = "error";
           }
-          if (data2.pluginTimeout === void 0) {
-            data2.pluginTimeout = 1e4;
+          if (data3.pluginTimeout === void 0) {
+            data3.pluginTimeout = 1e4;
           }
-          if (data2.requestIdHeader === void 0) {
-            data2.requestIdHeader = false;
+          if (data3.requestIdHeader === void 0) {
+            data3.requestIdHeader = false;
           }
-          if (data2.requestIdLogLabel === void 0) {
-            data2.requestIdLogLabel = "reqId";
+          if (data3.requestIdLogLabel === void 0) {
+            data3.requestIdLogLabel = "reqId";
           }
-          if (data2.http2SessionTimeout === void 0) {
-            data2.http2SessionTimeout = 72e3;
+          if (data3.http2SessionTimeout === void 0) {
+            data3.http2SessionTimeout = 72e3;
           }
-          if (data2.exposeHeadRoutes === void 0) {
-            data2.exposeHeadRoutes = true;
+          if (data3.exposeHeadRoutes === void 0) {
+            data3.exposeHeadRoutes = true;
           }
-          if (data2.useSemicolonDelimiter === void 0) {
-            data2.useSemicolonDelimiter = false;
+          if (data3.useSemicolonDelimiter === void 0) {
+            data3.useSemicolonDelimiter = false;
           }
           const _errs1 = errors;
-          for (const key0 in data2) {
+          for (const key0 in data3) {
             if (!func2.call(schema11.properties, key0)) {
-              delete data2[key0];
+              delete data3[key0];
             }
           }
           if (_errs1 === errors) {
-            let data0 = data2.connectionTimeout;
+            let data0 = data3.connectionTimeout;
             const _errs2 = errors;
             if (!(typeof data0 == "number" && (!(data0 % 1) && !isNaN(data0)) && isFinite(data0))) {
               let dataType0 = typeof data0;
@@ -4584,14 +4584,14 @@ var require_config_validator = __commonJS({
               }
               if (coerced0 !== void 0) {
                 data0 = coerced0;
-                if (data2 !== void 0) {
-                  data2["connectionTimeout"] = coerced0;
+                if (data3 !== void 0) {
+                  data3["connectionTimeout"] = coerced0;
                 }
               }
             }
             var valid0 = _errs2 === errors;
             if (valid0) {
-              let data1 = data2.keepAliveTimeout;
+              let data1 = data3.keepAliveTimeout;
               const _errs4 = errors;
               if (!(typeof data1 == "number" && (!(data1 % 1) && !isNaN(data1)) && isFinite(data1))) {
                 let dataType1 = typeof data1;
@@ -4606,15 +4606,15 @@ var require_config_validator = __commonJS({
                 }
                 if (coerced1 !== void 0) {
                   data1 = coerced1;
-                  if (data2 !== void 0) {
-                    data2["keepAliveTimeout"] = coerced1;
+                  if (data3 !== void 0) {
+                    data3["keepAliveTimeout"] = coerced1;
                   }
                 }
               }
               var valid0 = _errs4 === errors;
               if (valid0) {
-                if (data2.forceCloseConnections !== void 0) {
-                  let data22 = data2.forceCloseConnections;
+                if (data3.forceCloseConnections !== void 0) {
+                  let data22 = data3.forceCloseConnections;
                   const _errs6 = errors;
                   const _errs7 = errors;
                   let valid1 = false;
@@ -4640,8 +4640,8 @@ var require_config_validator = __commonJS({
                     }
                     if (coerced2 !== void 0) {
                       data22 = coerced2;
-                      if (data2 !== void 0) {
-                        data2["forceCloseConnections"] = coerced2;
+                      if (data3 !== void 0) {
+                        data3["forceCloseConnections"] = coerced2;
                       }
                     }
                   }
@@ -4683,8 +4683,8 @@ var require_config_validator = __commonJS({
                     }
                     if (coerced3 !== void 0) {
                       data22 = coerced3;
-                      if (data2 !== void 0) {
-                        data2["forceCloseConnections"] = coerced3;
+                      if (data3 !== void 0) {
+                        data3["forceCloseConnections"] = coerced3;
                       }
                     }
                   }
@@ -4723,15 +4723,15 @@ var require_config_validator = __commonJS({
                   var valid0 = true;
                 }
                 if (valid0) {
-                  let data3 = data2.maxRequestsPerSocket;
+                  let data32 = data3.maxRequestsPerSocket;
                   const _errs12 = errors;
-                  if (!(typeof data3 == "number" && (!(data3 % 1) && !isNaN(data3)) && isFinite(data3)) && data3 !== null) {
-                    let dataType4 = typeof data3;
+                  if (!(typeof data32 == "number" && (!(data32 % 1) && !isNaN(data32)) && isFinite(data32)) && data32 !== null) {
+                    let dataType4 = typeof data32;
                     let coerced4 = void 0;
                     if (!(coerced4 !== void 0)) {
-                      if (dataType4 === "boolean" || data3 === null || dataType4 === "string" && data3 && data3 == +data3 && !(data3 % 1)) {
-                        coerced4 = +data3;
-                      } else if (data3 === "" || data3 === 0 || data3 === false) {
+                      if (dataType4 === "boolean" || data32 === null || dataType4 === "string" && data32 && data32 == +data32 && !(data32 % 1)) {
+                        coerced4 = +data32;
+                      } else if (data32 === "" || data32 === 0 || data32 === false) {
                         coerced4 = null;
                       } else {
                         validate10.errors = [{ instancePath: instancePath + "/maxRequestsPerSocket", schemaPath: "#/properties/maxRequestsPerSocket/type", keyword: "type", params: { type: "integer" }, message: "must be integer" }];
@@ -4739,15 +4739,15 @@ var require_config_validator = __commonJS({
                       }
                     }
                     if (coerced4 !== void 0) {
-                      data3 = coerced4;
-                      if (data2 !== void 0) {
-                        data2["maxRequestsPerSocket"] = coerced4;
+                      data32 = coerced4;
+                      if (data3 !== void 0) {
+                        data3["maxRequestsPerSocket"] = coerced4;
                       }
                     }
                   }
                   var valid0 = _errs12 === errors;
                   if (valid0) {
-                    let data4 = data2.requestTimeout;
+                    let data4 = data3.requestTimeout;
                     const _errs15 = errors;
                     if (!(typeof data4 == "number" && (!(data4 % 1) && !isNaN(data4)) && isFinite(data4))) {
                       let dataType5 = typeof data4;
@@ -4762,14 +4762,14 @@ var require_config_validator = __commonJS({
                       }
                       if (coerced5 !== void 0) {
                         data4 = coerced5;
-                        if (data2 !== void 0) {
-                          data2["requestTimeout"] = coerced5;
+                        if (data3 !== void 0) {
+                          data3["requestTimeout"] = coerced5;
                         }
                       }
                     }
                     var valid0 = _errs15 === errors;
                     if (valid0) {
-                      let data5 = data2.handlerTimeout;
+                      let data5 = data3.handlerTimeout;
                       const _errs17 = errors;
                       if (!(typeof data5 == "number" && (!(data5 % 1) && !isNaN(data5)) && isFinite(data5))) {
                         let dataType6 = typeof data5;
@@ -4784,14 +4784,14 @@ var require_config_validator = __commonJS({
                         }
                         if (coerced6 !== void 0) {
                           data5 = coerced6;
-                          if (data2 !== void 0) {
-                            data2["handlerTimeout"] = coerced6;
+                          if (data3 !== void 0) {
+                            data3["handlerTimeout"] = coerced6;
                           }
                         }
                       }
                       var valid0 = _errs17 === errors;
                       if (valid0) {
-                        let data6 = data2.bodyLimit;
+                        let data6 = data3.bodyLimit;
                         const _errs19 = errors;
                         if (!(typeof data6 == "number" && (!(data6 % 1) && !isNaN(data6)) && isFinite(data6))) {
                           let dataType7 = typeof data6;
@@ -4806,14 +4806,14 @@ var require_config_validator = __commonJS({
                           }
                           if (coerced7 !== void 0) {
                             data6 = coerced7;
-                            if (data2 !== void 0) {
-                              data2["bodyLimit"] = coerced7;
+                            if (data3 !== void 0) {
+                              data3["bodyLimit"] = coerced7;
                             }
                           }
                         }
                         var valid0 = _errs19 === errors;
                         if (valid0) {
-                          let data7 = data2.caseSensitive;
+                          let data7 = data3.caseSensitive;
                           const _errs21 = errors;
                           if (typeof data7 !== "boolean") {
                             let coerced8 = void 0;
@@ -4829,14 +4829,14 @@ var require_config_validator = __commonJS({
                             }
                             if (coerced8 !== void 0) {
                               data7 = coerced8;
-                              if (data2 !== void 0) {
-                                data2["caseSensitive"] = coerced8;
+                              if (data3 !== void 0) {
+                                data3["caseSensitive"] = coerced8;
                               }
                             }
                           }
                           var valid0 = _errs21 === errors;
                           if (valid0) {
-                            let data8 = data2.allowUnsafeRegex;
+                            let data8 = data3.allowUnsafeRegex;
                             const _errs23 = errors;
                             if (typeof data8 !== "boolean") {
                               let coerced9 = void 0;
@@ -4852,15 +4852,15 @@ var require_config_validator = __commonJS({
                               }
                               if (coerced9 !== void 0) {
                                 data8 = coerced9;
-                                if (data2 !== void 0) {
-                                  data2["allowUnsafeRegex"] = coerced9;
+                                if (data3 !== void 0) {
+                                  data3["allowUnsafeRegex"] = coerced9;
                                 }
                               }
                             }
                             var valid0 = _errs23 === errors;
                             if (valid0) {
-                              if (data2.http2 !== void 0) {
-                                let data9 = data2.http2;
+                              if (data3.http2 !== void 0) {
+                                let data9 = data3.http2;
                                 const _errs25 = errors;
                                 if (typeof data9 !== "boolean") {
                                   let coerced10 = void 0;
@@ -4876,8 +4876,8 @@ var require_config_validator = __commonJS({
                                   }
                                   if (coerced10 !== void 0) {
                                     data9 = coerced10;
-                                    if (data2 !== void 0) {
-                                      data2["http2"] = coerced10;
+                                    if (data3 !== void 0) {
+                                      data3["http2"] = coerced10;
                                     }
                                   }
                                 }
@@ -4886,8 +4886,8 @@ var require_config_validator = __commonJS({
                                 var valid0 = true;
                               }
                               if (valid0) {
-                                if (data2.https !== void 0) {
-                                  let data10 = data2.https;
+                                if (data3.https !== void 0) {
+                                  let data10 = data3.https;
                                   const _errs27 = errors;
                                   const _errs28 = errors;
                                   let valid2 = true;
@@ -4917,8 +4917,8 @@ var require_config_validator = __commonJS({
                                     }
                                     if (coerced11 !== void 0) {
                                       data10 = coerced11;
-                                      if (data2 !== void 0) {
-                                        data2["https"] = coerced11;
+                                      if (data3 !== void 0) {
+                                        data3["https"] = coerced11;
                                       }
                                     }
                                   }
@@ -4945,8 +4945,8 @@ var require_config_validator = __commonJS({
                                     }
                                     if (coerced12 !== void 0) {
                                       data10 = coerced12;
-                                      if (data2 !== void 0) {
-                                        data2["https"] = coerced12;
+                                      if (data3 !== void 0) {
+                                        data3["https"] = coerced12;
                                       }
                                     }
                                   }
@@ -5077,7 +5077,7 @@ var require_config_validator = __commonJS({
                                   }
                                   if (_valid1) {
                                     const _errs42 = errors;
-                                    data2["https"] = true;
+                                    data3["https"] = true;
                                     var _valid1 = _errs42 === errors;
                                     valid2 = _valid1;
                                   }
@@ -5097,7 +5097,7 @@ var require_config_validator = __commonJS({
                                   var valid0 = true;
                                 }
                                 if (valid0) {
-                                  let data12 = data2.ignoreTrailingSlash;
+                                  let data12 = data3.ignoreTrailingSlash;
                                   const _errs43 = errors;
                                   if (typeof data12 !== "boolean") {
                                     let coerced14 = void 0;
@@ -5113,14 +5113,14 @@ var require_config_validator = __commonJS({
                                     }
                                     if (coerced14 !== void 0) {
                                       data12 = coerced14;
-                                      if (data2 !== void 0) {
-                                        data2["ignoreTrailingSlash"] = coerced14;
+                                      if (data3 !== void 0) {
+                                        data3["ignoreTrailingSlash"] = coerced14;
                                       }
                                     }
                                   }
                                   var valid0 = _errs43 === errors;
                                   if (valid0) {
-                                    let data13 = data2.ignoreDuplicateSlashes;
+                                    let data13 = data3.ignoreDuplicateSlashes;
                                     const _errs45 = errors;
                                     if (typeof data13 !== "boolean") {
                                       let coerced15 = void 0;
@@ -5136,14 +5136,14 @@ var require_config_validator = __commonJS({
                                       }
                                       if (coerced15 !== void 0) {
                                         data13 = coerced15;
-                                        if (data2 !== void 0) {
-                                          data2["ignoreDuplicateSlashes"] = coerced15;
+                                        if (data3 !== void 0) {
+                                          data3["ignoreDuplicateSlashes"] = coerced15;
                                         }
                                       }
                                     }
                                     var valid0 = _errs45 === errors;
                                     if (valid0) {
-                                      let data14 = data2.maxParamLength;
+                                      let data14 = data3.maxParamLength;
                                       const _errs47 = errors;
                                       if (!(typeof data14 == "number" && (!(data14 % 1) && !isNaN(data14)) && isFinite(data14))) {
                                         let dataType16 = typeof data14;
@@ -5158,14 +5158,14 @@ var require_config_validator = __commonJS({
                                         }
                                         if (coerced16 !== void 0) {
                                           data14 = coerced16;
-                                          if (data2 !== void 0) {
-                                            data2["maxParamLength"] = coerced16;
+                                          if (data3 !== void 0) {
+                                            data3["maxParamLength"] = coerced16;
                                           }
                                         }
                                       }
                                       var valid0 = _errs47 === errors;
                                       if (valid0) {
-                                        let data15 = data2.onProtoPoisoning;
+                                        let data15 = data3.onProtoPoisoning;
                                         const _errs49 = errors;
                                         if (typeof data15 !== "string") {
                                           let dataType17 = typeof data15;
@@ -5182,14 +5182,14 @@ var require_config_validator = __commonJS({
                                           }
                                           if (coerced17 !== void 0) {
                                             data15 = coerced17;
-                                            if (data2 !== void 0) {
-                                              data2["onProtoPoisoning"] = coerced17;
+                                            if (data3 !== void 0) {
+                                              data3["onProtoPoisoning"] = coerced17;
                                             }
                                           }
                                         }
                                         var valid0 = _errs49 === errors;
                                         if (valid0) {
-                                          let data16 = data2.onConstructorPoisoning;
+                                          let data16 = data3.onConstructorPoisoning;
                                           const _errs51 = errors;
                                           if (typeof data16 !== "string") {
                                             let dataType18 = typeof data16;
@@ -5206,14 +5206,14 @@ var require_config_validator = __commonJS({
                                             }
                                             if (coerced18 !== void 0) {
                                               data16 = coerced18;
-                                              if (data2 !== void 0) {
-                                                data2["onConstructorPoisoning"] = coerced18;
+                                              if (data3 !== void 0) {
+                                                data3["onConstructorPoisoning"] = coerced18;
                                               }
                                             }
                                           }
                                           var valid0 = _errs51 === errors;
                                           if (valid0) {
-                                            let data17 = data2.pluginTimeout;
+                                            let data17 = data3.pluginTimeout;
                                             const _errs53 = errors;
                                             if (!(typeof data17 == "number" && (!(data17 % 1) && !isNaN(data17)) && isFinite(data17))) {
                                               let dataType19 = typeof data17;
@@ -5228,14 +5228,14 @@ var require_config_validator = __commonJS({
                                               }
                                               if (coerced19 !== void 0) {
                                                 data17 = coerced19;
-                                                if (data2 !== void 0) {
-                                                  data2["pluginTimeout"] = coerced19;
+                                                if (data3 !== void 0) {
+                                                  data3["pluginTimeout"] = coerced19;
                                                 }
                                               }
                                             }
                                             var valid0 = _errs53 === errors;
                                             if (valid0) {
-                                              let data18 = data2.requestIdHeader;
+                                              let data18 = data3.requestIdHeader;
                                               const _errs55 = errors;
                                               const _errs56 = errors;
                                               let valid6 = false;
@@ -5259,8 +5259,8 @@ var require_config_validator = __commonJS({
                                                 }
                                                 if (coerced20 !== void 0) {
                                                   data18 = coerced20;
-                                                  if (data2 !== void 0) {
-                                                    data2["requestIdHeader"] = coerced20;
+                                                  if (data3 !== void 0) {
+                                                    data3["requestIdHeader"] = coerced20;
                                                   }
                                                 }
                                               }
@@ -5288,8 +5288,8 @@ var require_config_validator = __commonJS({
                                                   }
                                                   if (coerced21 !== void 0) {
                                                     data18 = coerced21;
-                                                    if (data2 !== void 0) {
-                                                      data2["requestIdHeader"] = coerced21;
+                                                    if (data3 !== void 0) {
+                                                      data3["requestIdHeader"] = coerced21;
                                                     }
                                                   }
                                                 }
@@ -5318,7 +5318,7 @@ var require_config_validator = __commonJS({
                                               }
                                               var valid0 = _errs55 === errors;
                                               if (valid0) {
-                                                let data19 = data2.requestIdLogLabel;
+                                                let data19 = data3.requestIdLogLabel;
                                                 const _errs61 = errors;
                                                 if (typeof data19 !== "string") {
                                                   let dataType22 = typeof data19;
@@ -5335,14 +5335,14 @@ var require_config_validator = __commonJS({
                                                   }
                                                   if (coerced22 !== void 0) {
                                                     data19 = coerced22;
-                                                    if (data2 !== void 0) {
-                                                      data2["requestIdLogLabel"] = coerced22;
+                                                    if (data3 !== void 0) {
+                                                      data3["requestIdLogLabel"] = coerced22;
                                                     }
                                                   }
                                                 }
                                                 var valid0 = _errs61 === errors;
                                                 if (valid0) {
-                                                  let data20 = data2.http2SessionTimeout;
+                                                  let data20 = data3.http2SessionTimeout;
                                                   const _errs63 = errors;
                                                   if (!(typeof data20 == "number" && (!(data20 % 1) && !isNaN(data20)) && isFinite(data20))) {
                                                     let dataType23 = typeof data20;
@@ -5357,14 +5357,14 @@ var require_config_validator = __commonJS({
                                                     }
                                                     if (coerced23 !== void 0) {
                                                       data20 = coerced23;
-                                                      if (data2 !== void 0) {
-                                                        data2["http2SessionTimeout"] = coerced23;
+                                                      if (data3 !== void 0) {
+                                                        data3["http2SessionTimeout"] = coerced23;
                                                       }
                                                     }
                                                   }
                                                   var valid0 = _errs63 === errors;
                                                   if (valid0) {
-                                                    let data21 = data2.exposeHeadRoutes;
+                                                    let data21 = data3.exposeHeadRoutes;
                                                     const _errs65 = errors;
                                                     if (typeof data21 !== "boolean") {
                                                       let coerced24 = void 0;
@@ -5380,14 +5380,14 @@ var require_config_validator = __commonJS({
                                                       }
                                                       if (coerced24 !== void 0) {
                                                         data21 = coerced24;
-                                                        if (data2 !== void 0) {
-                                                          data2["exposeHeadRoutes"] = coerced24;
+                                                        if (data3 !== void 0) {
+                                                          data3["exposeHeadRoutes"] = coerced24;
                                                         }
                                                       }
                                                     }
                                                     var valid0 = _errs65 === errors;
                                                     if (valid0) {
-                                                      let data22 = data2.useSemicolonDelimiter;
+                                                      let data22 = data3.useSemicolonDelimiter;
                                                       const _errs67 = errors;
                                                       if (typeof data22 !== "boolean") {
                                                         let coerced25 = void 0;
@@ -5403,15 +5403,15 @@ var require_config_validator = __commonJS({
                                                         }
                                                         if (coerced25 !== void 0) {
                                                           data22 = coerced25;
-                                                          if (data2 !== void 0) {
-                                                            data2["useSemicolonDelimiter"] = coerced25;
+                                                          if (data3 !== void 0) {
+                                                            data3["useSemicolonDelimiter"] = coerced25;
                                                           }
                                                         }
                                                       }
                                                       var valid0 = _errs67 === errors;
                                                       if (valid0) {
-                                                        if (data2.routerOptions !== void 0) {
-                                                          let data23 = data2.routerOptions;
+                                                        if (data3.routerOptions !== void 0) {
+                                                          let data23 = data3.routerOptions;
                                                           const _errs69 = errors;
                                                           if (errors === _errs69) {
                                                             if (data23 && typeof data23 == "object" && !Array.isArray(data23)) {
@@ -5557,8 +5557,8 @@ var require_config_validator = __commonJS({
                                                           var valid0 = true;
                                                         }
                                                         if (valid0) {
-                                                          if (data2.constraints !== void 0) {
-                                                            let data29 = data2.constraints;
+                                                          if (data3.constraints !== void 0) {
+                                                            let data29 = data3.constraints;
                                                             const _errs82 = errors;
                                                             if (errors === _errs82) {
                                                               if (data29 && typeof data29 == "object" && !Array.isArray(data29)) {
@@ -7479,22 +7479,22 @@ var require_sonic_boom = __commonJS({
       }
       return Buffer.concat(bufs, len);
     }
-    function write(data2) {
+    function write(data3) {
       if (this.destroyed) {
         throw new Error("SonicBoom destroyed");
       }
-      data2 = "" + data2;
-      const dataLen = Buffer.byteLength(data2);
+      data3 = "" + data3;
+      const dataLen = Buffer.byteLength(data3);
       const len = this._len + dataLen;
       const bufs = this._bufs;
       if (this.maxLength && len > this.maxLength) {
-        this.emit("drop", data2);
+        this.emit("drop", data3);
         return this._len < this._hwm;
       }
       if (bufs.length === 0 || Buffer.byteLength(bufs[bufs.length - 1]) + dataLen > this.maxWrite) {
-        bufs.push(data2);
+        bufs.push(data3);
       } else {
-        bufs[bufs.length - 1] += data2;
+        bufs[bufs.length - 1] += data3;
       }
       this._len = len;
       if (!this._writing && this._len >= this.minLength) {
@@ -7502,23 +7502,23 @@ var require_sonic_boom = __commonJS({
       }
       return this._len < this._hwm;
     }
-    function writeBuffer(data2) {
+    function writeBuffer(data3) {
       if (this.destroyed) {
         throw new Error("SonicBoom destroyed");
       }
-      const len = this._len + data2.length;
+      const len = this._len + data3.length;
       const bufs = this._bufs;
       const lens = this._lens;
       if (this.maxLength && len > this.maxLength) {
-        this.emit("drop", data2);
+        this.emit("drop", data3);
         return this._len < this._hwm;
       }
-      if (bufs.length === 0 || lens[lens.length - 1] + data2.length > this.maxWrite) {
-        bufs.push([data2]);
-        lens.push(data2.length);
+      if (bufs.length === 0 || lens[lens.length - 1] + data3.length > this.maxWrite) {
+        bufs.push([data3]);
+        lens.push(data3.length);
       } else {
-        bufs[bufs.length - 1].push(data2);
-        lens[lens.length - 1] += data2.length;
+        bufs[bufs.length - 1].push(data3);
+        lens[lens.length - 1] += data3.length;
       }
       this._len = len;
       if (!this._writing && this._len >= this.minLength) {
@@ -8248,8 +8248,8 @@ var require_thread_stream = __commonJS({
           this.worker.postMessage(message2, transferList);
         });
       }
-      write(data2) {
-        const dataBuf = Buffer.isBuffer(data2) ? data2 : Buffer.from(data2);
+      write(data3) {
+        const dataBuf = Buffer.isBuffer(data3) ? data3 : Buffer.from(data3);
         if (this[kImpl].destroyed) {
           error(this, new Error("the worker has exited"));
           return false;
@@ -8890,8 +8890,8 @@ var require_tools = __commonJS({
       const formatters = this[formattersSym];
       const messageKey = this[messageKeySym];
       const errorKey = this[errorKeySym];
-      let data2 = this[lsCacheSym][num5] + time3;
-      data2 = data2 + chindings;
+      let data3 = this[lsCacheSym][num5] + time3;
+      data3 = data3 + chindings;
       let value2;
       if (formatters.log) {
         obj = formatters.log(obj);
@@ -8956,14 +8956,14 @@ var require_tools = __commonJS({
         }
       }
       if (this[nestedKeySym] && propStr) {
-        return data2 + this[nestedKeyStrSym] + propStr.slice(1) + "}" + msgStr + end;
+        return data3 + this[nestedKeyStrSym] + propStr.slice(1) + "}" + msgStr + end;
       } else {
-        return data2 + propStr + msgStr + end;
+        return data3 + propStr + msgStr + end;
       }
     }
     function asChindings(instance, bindings) {
       let value2;
-      let data2 = instance[chindingsSym];
+      let data3 = instance[chindingsSym];
       const stringify2 = instance[stringifySym];
       const stringifySafe = instance[stringifySafeSym];
       const stringifiers = instance[stringifiersSym];
@@ -8978,10 +8978,10 @@ var require_tools = __commonJS({
           value2 = serializers[key] ? serializers[key](value2) : value2;
           value2 = (stringifiers[key] || wildcardStringifier || stringify2)(value2, stringifySafe);
           if (value2 === void 0) continue;
-          data2 += ',"' + key + '":' + value2;
+          data3 += ',"' + key + '":' + value2;
         }
       }
-      return data2;
+      return data3;
     }
     function hasBeenTampered(stream) {
       return stream.write !== stream.constructor.prototype.write;
@@ -10196,7 +10196,7 @@ var require_multistream = __commonJS({
       }
       streamsArray = null;
       return res;
-      function write(data2) {
+      function write(data3) {
         let dest;
         const level = this.lastLevel;
         const { streams } = this;
@@ -10217,7 +10217,7 @@ var require_multistream = __commonJS({
               stream.lastObj = lastObj;
               stream.lastLogger = lastLogger;
             }
-            stream.write(data2);
+            stream.write(data3);
             if (opts.dedupe) {
               recordedLevel = dest.level;
             }
@@ -12207,12 +12207,12 @@ var require_reply = __commonJS({
         internals.preHandlerCallback(null, reply.request, reply);
       }
     }
-    function serialize(context, data2, statusCode, contentType) {
+    function serialize(context, data3, statusCode, contentType) {
       const fnSerialize = getSchemaSerializer(context, statusCode, contentType);
       if (fnSerialize) {
-        return fnSerialize(data2);
+        return fnSerialize(data3);
       }
-      return JSON.stringify(data2);
+      return JSON.stringify(data3);
     }
     function noop() {
     }
@@ -15390,7 +15390,7 @@ var require_errors3 = __commonJS({
       gen.if((0, codegen_1._)`${names_1.default.vErrors} !== null`, () => gen.if(errsCount, () => gen.assign((0, codegen_1._)`${names_1.default.vErrors}.length`, errsCount), () => gen.assign(names_1.default.vErrors, null)));
     }
     exports.resetErrorsCount = resetErrorsCount;
-    function extendErrors({ gen, keyword, schemaValue, data: data2, errsCount, it }) {
+    function extendErrors({ gen, keyword, schemaValue, data: data3, errsCount, it }) {
       if (errsCount === void 0)
         throw new Error("ajv implementation error");
       const err = gen.name("err");
@@ -15400,7 +15400,7 @@ var require_errors3 = __commonJS({
         gen.assign((0, codegen_1._)`${err}.schemaPath`, (0, codegen_1.str)`${it.errSchemaPath}/${keyword}`);
         if (it.opts.verbose) {
           gen.assign((0, codegen_1._)`${err}.schema`, schemaValue);
-          gen.assign((0, codegen_1._)`${err}.data`, data2);
+          gen.assign((0, codegen_1._)`${err}.data`, data3);
         }
       });
     }
@@ -15456,14 +15456,14 @@ var require_errors3 = __commonJS({
       return [E.schemaPath, schPath];
     }
     function extraErrorProps(cxt, { params: params2, message: message2 }, keyValues) {
-      const { keyword, data: data2, schemaValue, it } = cxt;
+      const { keyword, data: data3, schemaValue, it } = cxt;
       const { opts, propertyName, topSchemaRef, schemaPath } = it;
       keyValues.push([E.keyword, keyword], [E.params, typeof params2 == "function" ? params2(cxt) : params2 || (0, codegen_1._)`{}`]);
       if (opts.messages) {
         keyValues.push([E.message, typeof message2 == "function" ? message2(cxt) : message2]);
       }
       if (opts.verbose) {
-        keyValues.push([E.schema, schemaValue], [E.parentSchema, (0, codegen_1._)`${topSchemaRef}${schemaPath}`], [names_1.default.data, data2]);
+        keyValues.push([E.schema, schemaValue], [E.parentSchema, (0, codegen_1._)`${topSchemaRef}${schemaPath}`], [names_1.default.data, data3]);
       }
       if (propertyName)
         keyValues.push([E.propertyName, propertyName]);
@@ -15506,11 +15506,11 @@ var require_boolSchema = __commonJS({
     }
     exports.boolOrEmptySchema = boolOrEmptySchema;
     function falseSchemaError(it, overrideAllErrors) {
-      const { gen, data: data2 } = it;
+      const { gen, data: data3 } = it;
       const cxt = {
         gen,
         keyword: "false schema",
-        data: data2,
+        data: data3,
         schema: false,
         schemaCode: false,
         schemaValue: false,
@@ -15616,11 +15616,11 @@ var require_dataType = __commonJS({
     }
     exports.getJSONTypes = getJSONTypes;
     function coerceAndCheckDataType(it, types) {
-      const { gen, data: data2, opts } = it;
+      const { gen, data: data3, opts } = it;
       const coerceTo = coerceToTypes(types, opts.coerceTypes);
       const checkTypes = types.length > 0 && !(coerceTo.length === 0 && types.length === 1 && (0, applicability_1.schemaHasRulesForType)(it, types[0]));
       if (checkTypes) {
-        const wrongType = checkDataTypes(types, data2, opts.strictNumbers, DataType.Wrong);
+        const wrongType = checkDataTypes(types, data3, opts.strictNumbers, DataType.Wrong);
         gen.if(wrongType, () => {
           if (coerceTo.length)
             coerceData(it, types, coerceTo);
@@ -15636,11 +15636,11 @@ var require_dataType = __commonJS({
       return coerceTypes ? types.filter((t) => COERCIBLE.has(t) || coerceTypes === "array" && t === "array") : [];
     }
     function coerceData(it, types, coerceTo) {
-      const { gen, data: data2, opts } = it;
-      const dataType = gen.let("dataType", (0, codegen_1._)`typeof ${data2}`);
+      const { gen, data: data3, opts } = it;
+      const dataType = gen.let("dataType", (0, codegen_1._)`typeof ${data3}`);
       const coerced = gen.let("coerced", (0, codegen_1._)`undefined`);
       if (opts.coerceTypes === "array") {
-        gen.if((0, codegen_1._)`${dataType} == 'object' && Array.isArray(${data2}) && ${data2}.length == 1`, () => gen.assign(data2, (0, codegen_1._)`${data2}[0]`).assign(dataType, (0, codegen_1._)`typeof ${data2}`).if(checkDataTypes(types, data2, opts.strictNumbers), () => gen.assign(coerced, data2)));
+        gen.if((0, codegen_1._)`${dataType} == 'object' && Array.isArray(${data3}) && ${data3}.length == 1`, () => gen.assign(data3, (0, codegen_1._)`${data3}[0]`).assign(dataType, (0, codegen_1._)`typeof ${data3}`).if(checkDataTypes(types, data3, opts.strictNumbers), () => gen.assign(coerced, data3)));
       }
       gen.if((0, codegen_1._)`${coerced} !== undefined`);
       for (const t of coerceTo) {
@@ -15652,74 +15652,74 @@ var require_dataType = __commonJS({
       reportTypeError(it);
       gen.endIf();
       gen.if((0, codegen_1._)`${coerced} !== undefined`, () => {
-        gen.assign(data2, coerced);
+        gen.assign(data3, coerced);
         assignParentData(it, coerced);
       });
       function coerceSpecificType(t) {
         switch (t) {
           case "string":
-            gen.elseIf((0, codegen_1._)`${dataType} == "number" || ${dataType} == "boolean"`).assign(coerced, (0, codegen_1._)`"" + ${data2}`).elseIf((0, codegen_1._)`${data2} === null`).assign(coerced, (0, codegen_1._)`""`);
+            gen.elseIf((0, codegen_1._)`${dataType} == "number" || ${dataType} == "boolean"`).assign(coerced, (0, codegen_1._)`"" + ${data3}`).elseIf((0, codegen_1._)`${data3} === null`).assign(coerced, (0, codegen_1._)`""`);
             return;
           case "number":
-            gen.elseIf((0, codegen_1._)`${dataType} == "boolean" || ${data2} === null
-              || (${dataType} == "string" && ${data2} && ${data2} == +${data2})`).assign(coerced, (0, codegen_1._)`+${data2}`);
+            gen.elseIf((0, codegen_1._)`${dataType} == "boolean" || ${data3} === null
+              || (${dataType} == "string" && ${data3} && ${data3} == +${data3})`).assign(coerced, (0, codegen_1._)`+${data3}`);
             return;
           case "integer":
-            gen.elseIf((0, codegen_1._)`${dataType} === "boolean" || ${data2} === null
-              || (${dataType} === "string" && ${data2} && ${data2} == +${data2} && !(${data2} % 1))`).assign(coerced, (0, codegen_1._)`+${data2}`);
+            gen.elseIf((0, codegen_1._)`${dataType} === "boolean" || ${data3} === null
+              || (${dataType} === "string" && ${data3} && ${data3} == +${data3} && !(${data3} % 1))`).assign(coerced, (0, codegen_1._)`+${data3}`);
             return;
           case "boolean":
-            gen.elseIf((0, codegen_1._)`${data2} === "false" || ${data2} === 0 || ${data2} === null`).assign(coerced, false).elseIf((0, codegen_1._)`${data2} === "true" || ${data2} === 1`).assign(coerced, true);
+            gen.elseIf((0, codegen_1._)`${data3} === "false" || ${data3} === 0 || ${data3} === null`).assign(coerced, false).elseIf((0, codegen_1._)`${data3} === "true" || ${data3} === 1`).assign(coerced, true);
             return;
           case "null":
-            gen.elseIf((0, codegen_1._)`${data2} === "" || ${data2} === 0 || ${data2} === false`);
+            gen.elseIf((0, codegen_1._)`${data3} === "" || ${data3} === 0 || ${data3} === false`);
             gen.assign(coerced, null);
             return;
           case "array":
             gen.elseIf((0, codegen_1._)`${dataType} === "string" || ${dataType} === "number"
-              || ${dataType} === "boolean" || ${data2} === null`).assign(coerced, (0, codegen_1._)`[${data2}]`);
+              || ${dataType} === "boolean" || ${data3} === null`).assign(coerced, (0, codegen_1._)`[${data3}]`);
         }
       }
     }
     function assignParentData({ gen, parentData, parentDataProperty }, expr) {
       gen.if((0, codegen_1._)`${parentData} !== undefined`, () => gen.assign((0, codegen_1._)`${parentData}[${parentDataProperty}]`, expr));
     }
-    function checkDataType(dataType, data2, strictNums, correct = DataType.Correct) {
+    function checkDataType(dataType, data3, strictNums, correct = DataType.Correct) {
       const EQ = correct === DataType.Correct ? codegen_1.operators.EQ : codegen_1.operators.NEQ;
       let cond;
       switch (dataType) {
         case "null":
-          return (0, codegen_1._)`${data2} ${EQ} null`;
+          return (0, codegen_1._)`${data3} ${EQ} null`;
         case "array":
-          cond = (0, codegen_1._)`Array.isArray(${data2})`;
+          cond = (0, codegen_1._)`Array.isArray(${data3})`;
           break;
         case "object":
-          cond = (0, codegen_1._)`${data2} && typeof ${data2} == "object" && !Array.isArray(${data2})`;
+          cond = (0, codegen_1._)`${data3} && typeof ${data3} == "object" && !Array.isArray(${data3})`;
           break;
         case "integer":
-          cond = numCond((0, codegen_1._)`!(${data2} % 1) && !isNaN(${data2})`);
+          cond = numCond((0, codegen_1._)`!(${data3} % 1) && !isNaN(${data3})`);
           break;
         case "number":
           cond = numCond();
           break;
         default:
-          return (0, codegen_1._)`typeof ${data2} ${EQ} ${dataType}`;
+          return (0, codegen_1._)`typeof ${data3} ${EQ} ${dataType}`;
       }
       return correct === DataType.Correct ? cond : (0, codegen_1.not)(cond);
       function numCond(_cond = codegen_1.nil) {
-        return (0, codegen_1.and)((0, codegen_1._)`typeof ${data2} == "number"`, _cond, strictNums ? (0, codegen_1._)`isFinite(${data2})` : codegen_1.nil);
+        return (0, codegen_1.and)((0, codegen_1._)`typeof ${data3} == "number"`, _cond, strictNums ? (0, codegen_1._)`isFinite(${data3})` : codegen_1.nil);
       }
     }
     exports.checkDataType = checkDataType;
-    function checkDataTypes(dataTypes, data2, strictNums, correct) {
+    function checkDataTypes(dataTypes, data3, strictNums, correct) {
       if (dataTypes.length === 1) {
-        return checkDataType(dataTypes[0], data2, strictNums, correct);
+        return checkDataType(dataTypes[0], data3, strictNums, correct);
       }
       let cond;
       const types = (0, util_1.toHash)(dataTypes);
       if (types.array && types.object) {
-        const notObj = (0, codegen_1._)`typeof ${data2} != "object"`;
-        cond = types.null ? notObj : (0, codegen_1._)`!${data2} || ${notObj}`;
+        const notObj = (0, codegen_1._)`typeof ${data3} != "object"`;
+        cond = types.null ? notObj : (0, codegen_1._)`!${data3} || ${notObj}`;
         delete types.null;
         delete types.array;
         delete types.object;
@@ -15729,7 +15729,7 @@ var require_dataType = __commonJS({
       if (types.number)
         delete types.integer;
       for (const t in types)
-        cond = (0, codegen_1.and)(cond, checkDataType(t, data2, strictNums, correct));
+        cond = (0, codegen_1.and)(cond, checkDataType(t, data3, strictNums, correct));
       return cond;
     }
     exports.checkDataTypes = checkDataTypes;
@@ -15743,12 +15743,12 @@ var require_dataType = __commonJS({
     }
     exports.reportTypeError = reportTypeError;
     function getTypeErrorContext(it) {
-      const { gen, data: data2, schema } = it;
+      const { gen, data: data3, schema } = it;
       const schemaCode = (0, util_1.schemaRefOrVal)(it, schema, "type");
       return {
         gen,
         keyword: "type",
-        data: data2,
+        data: data3,
         schema: schema.type,
         schemaCode,
         schemaValue: schemaCode,
@@ -15780,10 +15780,10 @@ var require_defaults = __commonJS({
     }
     exports.assignDefaults = assignDefaults;
     function assignDefault(it, prop, defaultValue) {
-      const { gen, compositeRule, data: data2, opts } = it;
+      const { gen, compositeRule, data: data3, opts } = it;
       if (defaultValue === void 0)
         return;
-      const childData = (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(prop)}`;
+      const childData = (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(prop)}`;
       if (compositeRule) {
         (0, util_1.checkStrictMode)(it, `default is ignored for: ${childData}`);
         return;
@@ -15808,15 +15808,15 @@ var require_code2 = __commonJS({
     var names_1 = require_names();
     var util_2 = require_util();
     function checkReportMissingProp(cxt, prop) {
-      const { gen, data: data2, it } = cxt;
-      gen.if(noPropertyInData(gen, data2, prop, it.opts.ownProperties), () => {
+      const { gen, data: data3, it } = cxt;
+      gen.if(noPropertyInData(gen, data3, prop, it.opts.ownProperties), () => {
         cxt.setParams({ missingProperty: (0, codegen_1._)`${prop}` }, true);
         cxt.error();
       });
     }
     exports.checkReportMissingProp = checkReportMissingProp;
-    function checkMissingProp({ gen, data: data2, it: { opts } }, properties, missing2) {
-      return (0, codegen_1.or)(...properties.map((prop) => (0, codegen_1.and)(noPropertyInData(gen, data2, prop, opts.ownProperties), (0, codegen_1._)`${missing2} = ${prop}`)));
+    function checkMissingProp({ gen, data: data3, it: { opts } }, properties, missing2) {
+      return (0, codegen_1.or)(...properties.map((prop) => (0, codegen_1.and)(noPropertyInData(gen, data3, prop, opts.ownProperties), (0, codegen_1._)`${missing2} = ${prop}`)));
     }
     exports.checkMissingProp = checkMissingProp;
     function reportMissingProp(cxt, missing2) {
@@ -15832,18 +15832,18 @@ var require_code2 = __commonJS({
       });
     }
     exports.hasPropFunc = hasPropFunc;
-    function isOwnProperty(gen, data2, property) {
-      return (0, codegen_1._)`${hasPropFunc(gen)}.call(${data2}, ${property})`;
+    function isOwnProperty(gen, data3, property) {
+      return (0, codegen_1._)`${hasPropFunc(gen)}.call(${data3}, ${property})`;
     }
     exports.isOwnProperty = isOwnProperty;
-    function propertyInData(gen, data2, property, ownProperties) {
-      const cond = (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(property)} !== undefined`;
-      return ownProperties ? (0, codegen_1._)`${cond} && ${isOwnProperty(gen, data2, property)}` : cond;
+    function propertyInData(gen, data3, property, ownProperties) {
+      const cond = (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(property)} !== undefined`;
+      return ownProperties ? (0, codegen_1._)`${cond} && ${isOwnProperty(gen, data3, property)}` : cond;
     }
     exports.propertyInData = propertyInData;
-    function noPropertyInData(gen, data2, property, ownProperties) {
-      const cond = (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(property)} === undefined`;
-      return ownProperties ? (0, codegen_1.or)(cond, (0, codegen_1.not)(isOwnProperty(gen, data2, property))) : cond;
+    function noPropertyInData(gen, data3, property, ownProperties) {
+      const cond = (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(property)} === undefined`;
+      return ownProperties ? (0, codegen_1.or)(cond, (0, codegen_1.not)(isOwnProperty(gen, data3, property))) : cond;
     }
     exports.noPropertyInData = noPropertyInData;
     function allSchemaProperties(schemaMap) {
@@ -15854,8 +15854,8 @@ var require_code2 = __commonJS({
       return allSchemaProperties(schemaMap).filter((p) => !(0, util_1.alwaysValidSchema)(it, schemaMap[p]));
     }
     exports.schemaProperties = schemaProperties;
-    function callValidateCode({ schemaCode, data: data2, it: { gen, topSchemaRef, schemaPath, errorPath }, it }, func, context, passSchema) {
-      const dataAndSchema = passSchema ? (0, codegen_1._)`${schemaCode}, ${data2}, ${topSchemaRef}${schemaPath}` : data2;
+    function callValidateCode({ schemaCode, data: data3, it: { gen, topSchemaRef, schemaPath, errorPath }, it }, func, context, passSchema) {
+      const dataAndSchema = passSchema ? (0, codegen_1._)`${schemaCode}, ${data3}, ${topSchemaRef}${schemaPath}` : data3;
       const valCxt = [
         [names_1.default.instancePath, (0, codegen_1.strConcat)(names_1.default.instancePath, errorPath)],
         [names_1.default.parentData, it.parentData],
@@ -15881,7 +15881,7 @@ var require_code2 = __commonJS({
     }
     exports.usePattern = usePattern;
     function validateArray(cxt) {
-      const { gen, data: data2, keyword, it } = cxt;
+      const { gen, data: data3, keyword, it } = cxt;
       const valid = gen.name("valid");
       if (it.allErrors) {
         const validArr = gen.let("valid", true);
@@ -15892,7 +15892,7 @@ var require_code2 = __commonJS({
       validateItems(() => gen.break());
       return valid;
       function validateItems(notValid) {
-        const len = gen.const("len", (0, codegen_1._)`${data2}.length`);
+        const len = gen.const("len", (0, codegen_1._)`${data3}.length`);
         gen.forRange("i", 0, len, (i) => {
           cxt.subschema({
             keyword,
@@ -16002,8 +16002,8 @@ var require_keyword = __commonJS({
     }
     exports.funcKeywordCode = funcKeywordCode;
     function modifyData(cxt) {
-      const { gen, data: data2, it } = cxt;
-      gen.if(it.parentData, () => gen.assign(data2, (0, codegen_1._)`${it.parentData}[${it.parentDataProperty}]`));
+      const { gen, data: data3, it } = cxt;
+      gen.if(it.parentData, () => gen.assign(data3, (0, codegen_1._)`${it.parentData}[${it.parentDataProperty}]`));
     }
     function addErrs(cxt, errs) {
       const { gen } = cxt;
@@ -16086,8 +16086,8 @@ var require_subschema = __commonJS({
       throw new Error('either "keyword" or "schema" must be passed');
     }
     exports.getSubschema = getSubschema;
-    function extendSubschemaData(subschema, it, { dataProp, dataPropType: dpType, data: data2, dataTypes, propertyName }) {
-      if (data2 !== void 0 && dataProp !== void 0) {
+    function extendSubschemaData(subschema, it, { dataProp, dataPropType: dpType, data: data3, dataTypes, propertyName }) {
+      if (data3 !== void 0 && dataProp !== void 0) {
         throw new Error('both "data" and "dataProp" passed, only one allowed');
       }
       const { gen } = it;
@@ -16099,8 +16099,8 @@ var require_subschema = __commonJS({
         subschema.parentDataProperty = (0, codegen_1._)`${dataProp}`;
         subschema.dataPathArr = [...dataPathArr, subschema.parentDataProperty];
       }
-      if (data2 !== void 0) {
-        const nextData = data2 instanceof codegen_1.Name ? data2 : gen.let("data", data2, true);
+      if (data3 !== void 0) {
+        const nextData = data3 instanceof codegen_1.Name ? data3 : gen.let("data", data3, true);
         dataContextProps(nextData);
         if (propertyName !== void 0)
           subschema.propertyName = propertyName;
@@ -16586,7 +16586,7 @@ var require_validate = __commonJS({
         gen.assign((0, codegen_1._)`${evaluated}.items`, items);
     }
     function schemaKeywords(it, types, typeErrors, errsCount) {
-      const { gen, schema, data: data2, allErrors, opts, self: self2 } = it;
+      const { gen, schema, data: data3, allErrors, opts, self: self2 } = it;
       const { RULES: RULES2 } = self2;
       if (schema.$ref && (opts.ignoreKeywordsWithRef || !(0, util_1.schemaHasRulesButRef)(schema, RULES2))) {
         gen.block(() => keywordCode(it, "$ref", RULES2.all.$ref.definition));
@@ -16603,7 +16603,7 @@ var require_validate = __commonJS({
         if (!(0, applicability_1.shouldUseGroup)(schema, group))
           return;
         if (group.type) {
-          gen.if((0, dataType_2.checkDataType)(group.type, data2, opts.strictNumbers));
+          gen.if((0, dataType_2.checkDataType)(group.type, data3, opts.strictNumbers));
           iterateKeywords(it, group);
           if (types.length === 1 && types[0] === group.type && typeErrors) {
             gen.else();
@@ -16876,14 +16876,14 @@ var require_validate = __commonJS({
     var RELATIVE_JSON_POINTER = /^([0-9]+)(#|\/(?:[^~]|~0|~1)*)?$/;
     function getData($data, { dataLevel, dataNames, dataPathArr }) {
       let jsonPointer;
-      let data2;
+      let data3;
       if ($data === "")
         return names_1.default.rootData;
       if ($data[0] === "/") {
         if (!JSON_POINTER.test($data))
           throw new Error(`Invalid JSON-pointer: ${$data}`);
         jsonPointer = $data;
-        data2 = names_1.default.rootData;
+        data3 = names_1.default.rootData;
       } else {
         const matches = RELATIVE_JSON_POINTER.exec($data);
         if (!matches)
@@ -16897,16 +16897,16 @@ var require_validate = __commonJS({
         }
         if (up > dataLevel)
           throw new Error(errorMsg("data", up));
-        data2 = dataNames[dataLevel - up];
+        data3 = dataNames[dataLevel - up];
         if (!jsonPointer)
-          return data2;
+          return data3;
       }
-      let expr = data2;
+      let expr = data3;
       const segments = jsonPointer.split("/");
       for (const segment of segments) {
         if (segment) {
-          data2 = (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)((0, util_1.unescapeJsonPointer)(segment))}`;
-          expr = (0, codegen_1._)`${expr} && ${data2}`;
+          data3 = (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)((0, util_1.unescapeJsonPointer)(segment))}`;
+          expr = (0, codegen_1._)`${expr} && ${data3}`;
         }
       }
       return expr;
@@ -18535,7 +18535,7 @@ var require_core = __commonJS({
         const { meta, schemaId } = this.opts;
         return this.opts.defaultMeta = typeof meta == "object" ? meta[schemaId] || meta : void 0;
       }
-      validate(schemaKeyRef, data2) {
+      validate(schemaKeyRef, data3) {
         let v;
         if (typeof schemaKeyRef == "string") {
           v = this.getSchema(schemaKeyRef);
@@ -18544,7 +18544,7 @@ var require_core = __commonJS({
         } else {
           v = this.compile(schemaKeyRef);
         }
-        const valid = v(data2);
+        const valid = v(data3);
         if (!("$async" in v))
           this.errors = v.errors;
         return valid;
@@ -19173,8 +19173,8 @@ var require_limitNumber = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { keyword, data: data2, schemaCode } = cxt;
-        cxt.fail$data((0, codegen_1._)`${data2} ${KWDs[keyword].fail} ${schemaCode} || isNaN(${data2})`);
+        const { keyword, data: data3, schemaCode } = cxt;
+        cxt.fail$data((0, codegen_1._)`${data3} ${KWDs[keyword].fail} ${schemaCode} || isNaN(${data3})`);
       }
     };
     exports.default = def;
@@ -19198,11 +19198,11 @@ var require_multipleOf = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, schemaCode, it } = cxt;
+        const { gen, data: data3, schemaCode, it } = cxt;
         const prec = it.opts.multipleOfPrecision;
         const res = gen.let("res");
         const invalid = prec ? (0, codegen_1._)`Math.abs(Math.round(${res}) - ${res}) > 1e-${prec}` : (0, codegen_1._)`${res} !== parseInt(${res})`;
-        cxt.fail$data((0, codegen_1._)`(${schemaCode} === 0 || (${res} = ${data2}/${schemaCode}, ${invalid}))`);
+        cxt.fail$data((0, codegen_1._)`(${schemaCode} === 0 || (${res} = ${data3}/${schemaCode}, ${invalid}))`);
       }
     };
     exports.default = def;
@@ -19257,9 +19257,9 @@ var require_limitLength = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { keyword, data: data2, schemaCode, it } = cxt;
+        const { keyword, data: data3, schemaCode, it } = cxt;
         const op = keyword === "maxLength" ? codegen_1.operators.GT : codegen_1.operators.LT;
-        const len = it.opts.unicode === false ? (0, codegen_1._)`${data2}.length` : (0, codegen_1._)`${(0, util_1.useFunc)(cxt.gen, ucs2length_1.default)}(${data2})`;
+        const len = it.opts.unicode === false ? (0, codegen_1._)`${data3}.length` : (0, codegen_1._)`${(0, util_1.useFunc)(cxt.gen, ucs2length_1.default)}(${data3})`;
         cxt.fail$data((0, codegen_1._)`${len} ${op} ${schemaCode}`);
       }
     };
@@ -19286,17 +19286,17 @@ var require_pattern = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, $data, schema, schemaCode, it } = cxt;
+        const { gen, data: data3, $data, schema, schemaCode, it } = cxt;
         const u = it.opts.unicodeRegExp ? "u" : "";
         if ($data) {
           const { regExp } = it.opts.code;
           const regExpCode = regExp.code === "new RegExp" ? (0, codegen_1._)`new RegExp` : (0, util_1.useFunc)(gen, regExp);
           const valid = gen.let("valid");
-          gen.try(() => gen.assign(valid, (0, codegen_1._)`${regExpCode}(${schemaCode}, ${u}).test(${data2})`), () => gen.assign(valid, false));
+          gen.try(() => gen.assign(valid, (0, codegen_1._)`${regExpCode}(${schemaCode}, ${u}).test(${data3})`), () => gen.assign(valid, false));
           cxt.fail$data((0, codegen_1._)`!${valid}`);
         } else {
           const regExp = (0, code_1.usePattern)(cxt, schema);
-          cxt.fail$data((0, codegen_1._)`!${regExp}.test(${data2})`);
+          cxt.fail$data((0, codegen_1._)`!${regExp}.test(${data3})`);
         }
       }
     };
@@ -19324,9 +19324,9 @@ var require_limitProperties = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { keyword, data: data2, schemaCode } = cxt;
+        const { keyword, data: data3, schemaCode } = cxt;
         const op = keyword === "maxProperties" ? codegen_1.operators.GT : codegen_1.operators.LT;
-        cxt.fail$data((0, codegen_1._)`Object.keys(${data2}).length ${op} ${schemaCode}`);
+        cxt.fail$data((0, codegen_1._)`Object.keys(${data3}).length ${op} ${schemaCode}`);
       }
     };
     exports.default = def;
@@ -19352,7 +19352,7 @@ var require_required = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, schema, schemaCode, data: data2, $data, it } = cxt;
+        const { gen, schema, schemaCode, data: data3, $data, it } = cxt;
         const { opts } = it;
         if (!$data && schema.length === 0)
           return;
@@ -19396,13 +19396,13 @@ var require_required = __commonJS({
         function loopAllRequired() {
           gen.forOf("prop", schemaCode, (prop) => {
             cxt.setParams({ missingProperty: prop });
-            gen.if((0, code_1.noPropertyInData)(gen, data2, prop, opts.ownProperties), () => cxt.error());
+            gen.if((0, code_1.noPropertyInData)(gen, data3, prop, opts.ownProperties), () => cxt.error());
           });
         }
         function loopUntilMissing(missing2, valid) {
           cxt.setParams({ missingProperty: missing2 });
           gen.forOf(missing2, schemaCode, () => {
-            gen.assign(valid, (0, code_1.propertyInData)(gen, data2, missing2, opts.ownProperties));
+            gen.assign(valid, (0, code_1.propertyInData)(gen, data3, missing2, opts.ownProperties));
             gen.if((0, codegen_1.not)(valid), () => {
               cxt.error();
               gen.break();
@@ -19435,9 +19435,9 @@ var require_limitItems = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { keyword, data: data2, schemaCode } = cxt;
+        const { keyword, data: data3, schemaCode } = cxt;
         const op = keyword === "maxItems" ? codegen_1.operators.GT : codegen_1.operators.LT;
-        cxt.fail$data((0, codegen_1._)`${data2}.length ${op} ${schemaCode}`);
+        cxt.fail$data((0, codegen_1._)`${data3}.length ${op} ${schemaCode}`);
       }
     };
     exports.default = def;
@@ -19475,7 +19475,7 @@ var require_uniqueItems = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, $data, schema, parentSchema, schemaCode, it } = cxt;
+        const { gen, data: data3, $data, schema, parentSchema, schemaCode, it } = cxt;
         if (!$data && !schema)
           return;
         const valid = gen.let("valid");
@@ -19483,7 +19483,7 @@ var require_uniqueItems = __commonJS({
         cxt.block$data(valid, validateUniqueItems, (0, codegen_1._)`${schemaCode} === false`);
         cxt.ok(valid);
         function validateUniqueItems() {
-          const i = gen.let("i", (0, codegen_1._)`${data2}.length`);
+          const i = gen.let("i", (0, codegen_1._)`${data3}.length`);
           const j = gen.let("j");
           cxt.setParams({ i, j });
           gen.assign(valid, true);
@@ -19497,7 +19497,7 @@ var require_uniqueItems = __commonJS({
           const wrongType = (0, dataType_1.checkDataTypes)(itemTypes, item, it.opts.strictNumbers, dataType_1.DataType.Wrong);
           const indices = gen.const("indices", (0, codegen_1._)`{}`);
           gen.for((0, codegen_1._)`;${i}--;`, () => {
-            gen.let(item, (0, codegen_1._)`${data2}[${i}]`);
+            gen.let(item, (0, codegen_1._)`${data3}[${i}]`);
             gen.if(wrongType, (0, codegen_1._)`continue`);
             if (itemTypes.length > 1)
               gen.if((0, codegen_1._)`typeof ${item} == "string"`, (0, codegen_1._)`${item} += "_"`);
@@ -19511,7 +19511,7 @@ var require_uniqueItems = __commonJS({
         function loopN2(i, j) {
           const eql = (0, util_1.useFunc)(gen, equal_1.default);
           const outer = gen.name("outer");
-          gen.label(outer).for((0, codegen_1._)`;${i}--;`, () => gen.for((0, codegen_1._)`${j} = ${i}; ${j}--;`, () => gen.if((0, codegen_1._)`${eql}(${data2}[${i}], ${data2}[${j}])`, () => {
+          gen.label(outer).for((0, codegen_1._)`;${i}--;`, () => gen.for((0, codegen_1._)`${j} = ${i}; ${j}--;`, () => gen.if((0, codegen_1._)`${eql}(${data3}[${i}], ${data3}[${j}])`, () => {
             cxt.error();
             gen.assign(valid, false).break(outer);
           })));
@@ -19539,11 +19539,11 @@ var require_const = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, $data, schemaCode, schema } = cxt;
+        const { gen, data: data3, $data, schemaCode, schema } = cxt;
         if ($data || schema && typeof schema == "object") {
-          cxt.fail$data((0, codegen_1._)`!${(0, util_1.useFunc)(gen, equal_1.default)}(${data2}, ${schemaCode})`);
+          cxt.fail$data((0, codegen_1._)`!${(0, util_1.useFunc)(gen, equal_1.default)}(${data3}, ${schemaCode})`);
         } else {
-          cxt.fail((0, codegen_1._)`${schema} !== ${data2}`);
+          cxt.fail((0, codegen_1._)`${schema} !== ${data3}`);
         }
       }
     };
@@ -19569,7 +19569,7 @@ var require_enum = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, $data, schema, schemaCode, it } = cxt;
+        const { gen, data: data3, $data, schema, schemaCode, it } = cxt;
         if (!$data && schema.length === 0)
           throw new Error("enum must have non-empty array");
         const useLoop = schema.length >= it.opts.loopEnum;
@@ -19588,11 +19588,11 @@ var require_enum = __commonJS({
         cxt.pass(valid);
         function loopEnum() {
           gen.assign(valid, false);
-          gen.forOf("v", schemaCode, (v) => gen.if((0, codegen_1._)`${getEql()}(${data2}, ${v})`, () => gen.assign(valid, true).break()));
+          gen.forOf("v", schemaCode, (v) => gen.if((0, codegen_1._)`${getEql()}(${data3}, ${v})`, () => gen.assign(valid, true).break()));
         }
         function equalCode(vSchema, i) {
           const sch = schema[i];
-          return typeof sch === "object" && sch !== null ? (0, codegen_1._)`${getEql()}(${data2}, ${vSchema}[${i}])` : (0, codegen_1._)`${data2} === ${sch}`;
+          return typeof sch === "object" && sch !== null ? (0, codegen_1._)`${getEql()}(${data3}, ${vSchema}[${i}])` : (0, codegen_1._)`${data3} === ${sch}`;
         }
       }
     };
@@ -19667,9 +19667,9 @@ var require_additionalItems = __commonJS({
       }
     };
     function validateAdditionalItems(cxt, items) {
-      const { gen, schema, data: data2, keyword, it } = cxt;
+      const { gen, schema, data: data3, keyword, it } = cxt;
       it.items = true;
-      const len = gen.const("len", (0, codegen_1._)`${data2}.length`);
+      const len = gen.const("len", (0, codegen_1._)`${data3}.length`);
       if (schema === false) {
         cxt.setParams({ len: items.length });
         cxt.pass((0, codegen_1._)`${len} <= ${items.length}`);
@@ -19716,13 +19716,13 @@ var require_items = __commonJS({
       }
     };
     function validateTuple(cxt, extraItems, schArr = cxt.schema) {
-      const { gen, parentSchema, data: data2, keyword, it } = cxt;
+      const { gen, parentSchema, data: data3, keyword, it } = cxt;
       checkStrictTuple(parentSchema);
       if (it.opts.unevaluated && schArr.length && it.items !== true) {
         it.items = util_1.mergeEvaluated.items(gen, schArr.length, it.items);
       }
       const valid = gen.name("valid");
-      const len = gen.const("len", (0, codegen_1._)`${data2}.length`);
+      const len = gen.const("len", (0, codegen_1._)`${data3}.length`);
       schArr.forEach((sch, i) => {
         if ((0, util_1.alwaysValidSchema)(it, sch))
           return;
@@ -19819,7 +19819,7 @@ var require_contains = __commonJS({
       trackErrors: true,
       error,
       code(cxt) {
-        const { gen, schema, parentSchema, data: data2, it } = cxt;
+        const { gen, schema, parentSchema, data: data3, it } = cxt;
         let min;
         let max;
         const { minContains, maxContains } = parentSchema;
@@ -19829,7 +19829,7 @@ var require_contains = __commonJS({
         } else {
           min = 1;
         }
-        const len = gen.const("len", (0, codegen_1._)`${data2}.length`);
+        const len = gen.const("len", (0, codegen_1._)`${data3}.length`);
         cxt.setParams({ min, max });
         if (max === void 0 && min === 0) {
           (0, util_1.checkStrictMode)(it, `"minContains" == 0 without "maxContains": "contains" keyword ignored`);
@@ -19854,7 +19854,7 @@ var require_contains = __commonJS({
         } else if (min === 0) {
           gen.let(valid, true);
           if (max !== void 0)
-            gen.if((0, codegen_1._)`${data2}.length > 0`, validateItemsWithCount);
+            gen.if((0, codegen_1._)`${data3}.length > 0`, validateItemsWithCount);
         } else {
           gen.let(valid, false);
           validateItemsWithCount();
@@ -19937,7 +19937,7 @@ var require_dependencies = __commonJS({
       return [propertyDeps, schemaDeps];
     }
     function validatePropertyDeps(cxt, propertyDeps = cxt.schema) {
-      const { gen, data: data2, it } = cxt;
+      const { gen, data: data3, it } = cxt;
       if (Object.keys(propertyDeps).length === 0)
         return;
       const missing2 = gen.let("missing");
@@ -19945,7 +19945,7 @@ var require_dependencies = __commonJS({
         const deps = propertyDeps[prop];
         if (deps.length === 0)
           continue;
-        const hasProperty = (0, code_1.propertyInData)(gen, data2, prop, it.opts.ownProperties);
+        const hasProperty = (0, code_1.propertyInData)(gen, data3, prop, it.opts.ownProperties);
         cxt.setParams({
           property: prop,
           depsCount: deps.length,
@@ -19966,13 +19966,13 @@ var require_dependencies = __commonJS({
     }
     exports.validatePropertyDeps = validatePropertyDeps;
     function validateSchemaDeps(cxt, schemaDeps = cxt.schema) {
-      const { gen, data: data2, keyword, it } = cxt;
+      const { gen, data: data3, keyword, it } = cxt;
       const valid = gen.name("valid");
       for (const prop in schemaDeps) {
         if ((0, util_1.alwaysValidSchema)(it, schemaDeps[prop]))
           continue;
         gen.if(
-          (0, code_1.propertyInData)(gen, data2, prop, it.opts.ownProperties),
+          (0, code_1.propertyInData)(gen, data3, prop, it.opts.ownProperties),
           () => {
             const schCxt = cxt.subschema({ keyword, schemaProp: prop }, valid);
             cxt.mergeValidEvaluated(schCxt, valid);
@@ -20005,11 +20005,11 @@ var require_propertyNames = __commonJS({
       schemaType: ["object", "boolean"],
       error,
       code(cxt) {
-        const { gen, schema, data: data2, it } = cxt;
+        const { gen, schema, data: data3, it } = cxt;
         if ((0, util_1.alwaysValidSchema)(it, schema))
           return;
         const valid = gen.name("valid");
-        gen.forIn("key", data2, (key) => {
+        gen.forIn("key", data3, (key) => {
           cxt.setParams({ propertyName: key });
           cxt.subschema({
             keyword: "propertyNames",
@@ -20052,7 +20052,7 @@ var require_additionalProperties = __commonJS({
       trackErrors: true,
       error,
       code(cxt) {
-        const { gen, schema, parentSchema, data: data2, errsCount, it } = cxt;
+        const { gen, schema, parentSchema, data: data3, errsCount, it } = cxt;
         if (!errsCount)
           throw new Error("ajv implementation error");
         const { allErrors, opts } = it;
@@ -20064,7 +20064,7 @@ var require_additionalProperties = __commonJS({
         checkAdditionalProperties();
         cxt.ok((0, codegen_1._)`${errsCount} === ${names_1.default.errors}`);
         function checkAdditionalProperties() {
-          gen.forIn("key", data2, (key) => {
+          gen.forIn("key", data3, (key) => {
             if (!props.length && !patProps.length)
               additionalPropertyCode(key);
             else
@@ -20087,7 +20087,7 @@ var require_additionalProperties = __commonJS({
           return (0, codegen_1.not)(definedProp);
         }
         function deleteAdditional(key) {
-          gen.code((0, codegen_1._)`delete ${data2}[${key}]`);
+          gen.code((0, codegen_1._)`delete ${data3}[${key}]`);
         }
         function additionalPropertyCode(key) {
           if (opts.removeAdditional === "all" || opts.removeAdditional && schema === false) {
@@ -20151,7 +20151,7 @@ var require_properties = __commonJS({
       type: "object",
       schemaType: "object",
       code(cxt) {
-        const { gen, schema, parentSchema, data: data2, it } = cxt;
+        const { gen, schema, parentSchema, data: data3, it } = cxt;
         if (it.opts.removeAdditional === "all" && parentSchema.additionalProperties === void 0) {
           additionalProperties_1.default.code(new validate_1.KeywordCxt(it, additionalProperties_1.default, "additionalProperties"));
         }
@@ -20170,7 +20170,7 @@ var require_properties = __commonJS({
           if (hasDefault(prop)) {
             applyPropertySchema(prop);
           } else {
-            gen.if((0, code_1.propertyInData)(gen, data2, prop, it.opts.ownProperties));
+            gen.if((0, code_1.propertyInData)(gen, data3, prop, it.opts.ownProperties));
             applyPropertySchema(prop);
             if (!it.allErrors)
               gen.else().var(valid, true);
@@ -20209,7 +20209,7 @@ var require_patternProperties = __commonJS({
       type: "object",
       schemaType: "object",
       code(cxt) {
-        const { gen, schema, data: data2, parentSchema, it } = cxt;
+        const { gen, schema, data: data3, parentSchema, it } = cxt;
         const { opts } = it;
         const patterns = (0, code_1.allSchemaProperties)(schema);
         const alwaysValidPatterns = patterns.filter((p) => (0, util_1.alwaysValidSchema)(it, schema[p]));
@@ -20244,7 +20244,7 @@ var require_patternProperties = __commonJS({
           }
         }
         function validateProperties(pat) {
-          gen.forIn("key", data2, (key) => {
+          gen.forIn("key", data3, (key) => {
             gen.if((0, codegen_1._)`${(0, code_1.usePattern)(cxt, pat)}.test(${key})`, () => {
               const alwaysValid = alwaysValidPatterns.includes(pat);
               if (!alwaysValid) {
@@ -20554,7 +20554,7 @@ var require_format = __commonJS({
       $data: true,
       error,
       code(cxt, ruleType) {
-        const { gen, data: data2, $data, schema, schemaCode, it } = cxt;
+        const { gen, data: data3, $data, schema, schemaCode, it } = cxt;
         const { opts, errSchemaPath, schemaEnv, self: self2 } = it;
         if (!opts.validateFormats)
           return;
@@ -20578,8 +20578,8 @@ var require_format = __commonJS({
             return (0, codegen_1._)`${schemaCode} && !${format}`;
           }
           function invalidFmt() {
-            const callFormat = schemaEnv.$async ? (0, codegen_1._)`(${fDef}.async ? await ${format}(${data2}) : ${format}(${data2}))` : (0, codegen_1._)`${format}(${data2})`;
-            const validData = (0, codegen_1._)`(typeof ${format} == "function" ? ${callFormat} : ${format}.test(${data2}))`;
+            const callFormat = schemaEnv.$async ? (0, codegen_1._)`(${fDef}.async ? await ${format}(${data3}) : ${format}(${data3}))` : (0, codegen_1._)`${format}(${data3})`;
+            const validData = (0, codegen_1._)`(typeof ${format} == "function" ? ${callFormat} : ${format}.test(${data3}))`;
             return (0, codegen_1._)`${format} && ${format} !== true && ${fType} === ${ruleType} && !${validData}`;
           }
         }
@@ -20616,9 +20616,9 @@ var require_format = __commonJS({
             if (typeof formatDef == "object" && !(formatDef instanceof RegExp) && formatDef.async) {
               if (!schemaEnv.$async)
                 throw new Error("async format in sync schema");
-              return (0, codegen_1._)`await ${fmtRef}(${data2})`;
+              return (0, codegen_1._)`await ${fmtRef}(${data3})`;
             }
-            return typeof format == "function" ? (0, codegen_1._)`${fmtRef}(${data2})` : (0, codegen_1._)`${fmtRef}.test(${data2})`;
+            return typeof format == "function" ? (0, codegen_1._)`${fmtRef}(${data3})` : (0, codegen_1._)`${fmtRef}.test(${data3})`;
           }
         }
       }
@@ -20717,7 +20717,7 @@ var require_discriminator = __commonJS({
       schemaType: "object",
       error,
       code(cxt) {
-        const { gen, data: data2, schema, parentSchema, it } = cxt;
+        const { gen, data: data3, schema, parentSchema, it } = cxt;
         const { oneOf } = parentSchema;
         if (!it.opts.discriminator) {
           throw new Error("discriminator: requires discriminator option");
@@ -20730,7 +20730,7 @@ var require_discriminator = __commonJS({
         if (!oneOf)
           throw new Error("discriminator: requires oneOf keyword");
         const valid = gen.let("valid", false);
-        const tag = gen.const("tag", (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(tagName)}`);
+        const tag = gen.const("tag", (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(tagName)}`);
         gen.if((0, codegen_1._)`typeof ${tag} == "string"`, () => validateMapping(), () => cxt.error(false, { discrError: types_1.DiscrError.Tag, tag, tagName }));
         cxt.ok(valid);
         function validateMapping() {
@@ -21076,11 +21076,11 @@ var require_ref2 = __commonJS({
       schemaType: "string",
       code(cxt) {
         (0, metadata_1.checkMetadata)(cxt);
-        const { gen, data: data2, schema: ref4, parentSchema, it } = cxt;
+        const { gen, data: data3, schema: ref4, parentSchema, it } = cxt;
         const { schemaEnv: { root } } = it;
         const valid = gen.name("valid");
         if (parentSchema.nullable) {
-          gen.var(valid, (0, codegen_1._)`${data2} === null`);
+          gen.var(valid, (0, codegen_1._)`${data3} === null`);
           gen.if((0, codegen_1.not)(valid), validateJtdRef);
         } else {
           gen.var(valid, false);
@@ -21219,14 +21219,14 @@ var require_type = __commonJS({
       params: (cxt) => (0, error_1.typeErrorParams)(cxt, cxt.schema)
     };
     function timestampCode(cxt) {
-      const { gen, data: data2, it } = cxt;
+      const { gen, data: data3, it } = cxt;
       const { timestamp, allowDate } = it.opts;
       if (timestamp === "date")
-        return (0, codegen_1._)`${data2} instanceof Date `;
+        return (0, codegen_1._)`${data3} instanceof Date `;
       const vts = (0, util_1.useFunc)(gen, timestamp_1.default);
       const allowDateArg = allowDate ? (0, codegen_1._)`, true` : codegen_1.nil;
-      const validString = (0, codegen_1._)`typeof ${data2} == "string" && ${vts}(${data2}${allowDateArg})`;
-      return timestamp === "string" ? validString : (0, codegen_1.or)((0, codegen_1._)`${data2} instanceof Date`, validString);
+      const validString = (0, codegen_1._)`typeof ${data3} == "string" && ${vts}(${data3}${allowDateArg})`;
+      return timestamp === "string" ? validString : (0, codegen_1.or)((0, codegen_1._)`${data3} instanceof Date`, validString);
     }
     var def = {
       keyword: "type",
@@ -21234,12 +21234,12 @@ var require_type = __commonJS({
       error,
       code(cxt) {
         (0, metadata_1.checkMetadata)(cxt);
-        const { data: data2, schema, parentSchema, it } = cxt;
+        const { data: data3, schema, parentSchema, it } = cxt;
         let cond;
         switch (schema) {
           case "boolean":
           case "string":
-            cond = (0, codegen_1._)`typeof ${data2} == ${schema}`;
+            cond = (0, codegen_1._)`typeof ${data3} == ${schema}`;
             break;
           case "timestamp": {
             cond = timestampCode(cxt);
@@ -21247,21 +21247,21 @@ var require_type = __commonJS({
           }
           case "float32":
           case "float64":
-            cond = (0, codegen_1._)`typeof ${data2} == "number"`;
+            cond = (0, codegen_1._)`typeof ${data3} == "number"`;
             break;
           default: {
             const sch = schema;
-            cond = (0, codegen_1._)`typeof ${data2} == "number" && isFinite(${data2}) && !(${data2} % 1)`;
+            cond = (0, codegen_1._)`typeof ${data3} == "number" && isFinite(${data3}) && !(${data3} % 1)`;
             if (!it.opts.int32range && (sch === "int32" || sch === "uint32")) {
               if (sch === "uint32")
-                cond = (0, codegen_1._)`${cond} && ${data2} >= 0`;
+                cond = (0, codegen_1._)`${cond} && ${data3} >= 0`;
             } else {
               const [min, max] = exports.intRange[sch];
-              cond = (0, codegen_1._)`${cond} && ${data2} >= ${min} && ${data2} <= ${max}`;
+              cond = (0, codegen_1._)`${cond} && ${data3} >= ${min} && ${data3} <= ${max}`;
             }
           }
         }
-        cxt.pass(parentSchema.nullable ? (0, codegen_1.or)((0, codegen_1._)`${data2} === null`, cond) : cond);
+        cxt.pass(parentSchema.nullable ? (0, codegen_1.or)((0, codegen_1._)`${data3} === null`, cond) : cond);
       }
     };
     exports.default = def;
@@ -21275,10 +21275,10 @@ var require_nullable = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.checkNullableObject = exports.checkNullable = void 0;
     var codegen_1 = require_codegen();
-    function checkNullable({ gen, data: data2, parentSchema }, cond = codegen_1.nil) {
+    function checkNullable({ gen, data: data3, parentSchema }, cond = codegen_1.nil) {
       const valid = gen.name("valid");
       if (parentSchema.nullable) {
-        gen.let(valid, (0, codegen_1._)`${data2} === null`);
+        gen.let(valid, (0, codegen_1._)`${data3} === null`);
         cond = (0, codegen_1.not)(valid);
       } else {
         gen.let(valid, false);
@@ -21312,13 +21312,13 @@ var require_enum2 = __commonJS({
       error,
       code(cxt) {
         (0, metadata_1.checkMetadata)(cxt);
-        const { gen, data: data2, schema, schemaValue, parentSchema, it } = cxt;
+        const { gen, data: data3, schema, schemaValue, parentSchema, it } = cxt;
         if (schema.length === 0)
           throw new Error("enum must have non-empty array");
         if (schema.length !== new Set(schema).size)
           throw new Error("enum items must be unique");
         let valid;
-        const isString = (0, codegen_1._)`typeof ${data2} == "string"`;
+        const isString = (0, codegen_1._)`typeof ${data3} == "string"`;
         if (schema.length >= it.opts.loopEnum) {
           let cond;
           [valid, cond] = (0, nullable_1.checkNullable)(cxt, isString);
@@ -21326,13 +21326,13 @@ var require_enum2 = __commonJS({
         } else {
           if (!Array.isArray(schema))
             throw new Error("ajv implementation error");
-          valid = (0, codegen_1.and)(isString, (0, codegen_1.or)(...schema.map((value2) => (0, codegen_1._)`${data2} === ${value2}`)));
+          valid = (0, codegen_1.and)(isString, (0, codegen_1.or)(...schema.map((value2) => (0, codegen_1._)`${data3} === ${value2}`)));
           if (parentSchema.nullable)
-            valid = (0, codegen_1.or)((0, codegen_1._)`${data2} === null`, valid);
+            valid = (0, codegen_1.or)((0, codegen_1._)`${data3} === null`, valid);
         }
         cxt.pass(valid);
         function loopEnum() {
-          gen.forOf("v", schemaValue, (v) => gen.if((0, codegen_1._)`${valid} = ${data2} === ${v}`, () => gen.break()));
+          gen.forOf("v", schemaValue, (v) => gen.if((0, codegen_1._)`${valid} = ${data3} === ${v}`, () => gen.break()));
         }
       }
     };
@@ -21357,11 +21357,11 @@ var require_elements = __commonJS({
       error: (0, error_1.typeError)("array"),
       code(cxt) {
         (0, metadata_1.checkMetadata)(cxt);
-        const { gen, data: data2, schema, it } = cxt;
+        const { gen, data: data3, schema, it } = cxt;
         if ((0, util_1.alwaysValidSchema)(it, schema))
           return;
         const [valid] = (0, nullable_1.checkNullable)(cxt);
-        gen.if((0, codegen_1.not)(valid), () => gen.if((0, codegen_1._)`Array.isArray(${data2})`, () => gen.assign(valid, (0, code_1.validateArray)(cxt)), () => cxt.error()));
+        gen.if((0, codegen_1.not)(valid), () => gen.if((0, codegen_1._)`Array.isArray(${data3})`, () => gen.assign(valid, (0, code_1.validateArray)(cxt)), () => cxt.error()));
         cxt.ok(valid);
       }
     };
@@ -21404,7 +21404,7 @@ var require_properties2 = __commonJS({
     };
     function validateProperties(cxt) {
       (0, metadata_1.checkMetadata)(cxt);
-      const { gen, data: data2, parentSchema, it } = cxt;
+      const { gen, data: data3, parentSchema, it } = cxt;
       const { additionalProperties, nullable } = parentSchema;
       if (it.jtdDiscriminator && nullable)
         throw new Error("JTD: nullable inside discriminator mapping");
@@ -21416,7 +21416,7 @@ var require_properties2 = __commonJS({
       if (properties.length === 0 && optProperties.length === 0 && additionalProperties) {
         return;
       }
-      const [valid, cond] = it.jtdDiscriminator === void 0 ? (0, nullable_1.checkNullableObject)(cxt, data2) : [gen.let("valid", false), true];
+      const [valid, cond] = it.jtdDiscriminator === void 0 ? (0, nullable_1.checkNullableObject)(cxt, data3) : [gen.let("valid", false), true];
       gen.if(cond, () => gen.assign(valid, true).block(() => {
         validateProps(properties, "properties", true);
         validateProps(optProperties, "optionalProperties");
@@ -21447,7 +21447,7 @@ var require_properties2 = __commonJS({
       function validateProps(props, keyword, required) {
         const _valid = gen.var("valid");
         for (const prop of props) {
-          gen.if((0, code_1.propertyInData)(gen, data2, prop, it.opts.ownProperties), () => applyPropertySchema(prop, keyword, _valid), () => missingProperty(prop));
+          gen.if((0, code_1.propertyInData)(gen, data3, prop, it.opts.ownProperties), () => applyPropertySchema(prop, keyword, _valid), () => missingProperty(prop));
           cxt.ok(_valid);
         }
         function missingProperty(prop) {
@@ -21467,13 +21467,13 @@ var require_properties2 = __commonJS({
         }, _valid);
       }
       function validateAdditional() {
-        gen.forIn("key", data2, (key) => {
+        gen.forIn("key", data3, (key) => {
           const addProp = isAdditional(key, allProps, "properties", it.jtdDiscriminator);
           const addOptProp = isAdditional(key, allOptProps, "optionalProperties");
           const extra = addProp === true ? addOptProp : addOptProp === true ? addProp : (0, codegen_1.and)(addProp, addOptProp);
           gen.if(extra, () => {
             if (it.opts.removeAdditional) {
-              gen.code((0, codegen_1._)`delete ${data2}[${key}]`);
+              gen.code((0, codegen_1._)`delete ${data3}[${key}]`);
             } else {
               cxt.error(false, { propError: PropError.Additional, additionalProperty: key }, { instancePath: key, parentSchema: true });
               if (!it.opts.allErrors)
@@ -21551,8 +21551,8 @@ var require_discriminator2 = __commonJS({
       error,
       code(cxt) {
         (0, metadata_1.checkMetadata)(cxt);
-        const { gen, data: data2, schema, parentSchema } = cxt;
-        const [valid, cond] = (0, nullable_1.checkNullableObject)(cxt, data2);
+        const { gen, data: data3, schema, parentSchema } = cxt;
+        const [valid, cond] = (0, nullable_1.checkNullableObject)(cxt, data3);
         gen.if(cond);
         validateDiscriminator();
         gen.elseIf((0, codegen_1.not)(valid));
@@ -21560,7 +21560,7 @@ var require_discriminator2 = __commonJS({
         gen.endIf();
         cxt.ok(valid);
         function validateDiscriminator() {
-          const tag = gen.const("tag", (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(schema)}`);
+          const tag = gen.const("tag", (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(schema)}`);
           gen.if((0, codegen_1._)`${tag} === undefined`);
           cxt.error(false, { discrError: types_1.DiscrError.Tag, tag });
           gen.elseIf((0, codegen_1._)`typeof ${tag} == "string"`);
@@ -21610,8 +21610,8 @@ var require_values = __commonJS({
       error: (0, error_1.typeError)("object"),
       code(cxt) {
         (0, metadata_1.checkMetadata)(cxt);
-        const { gen, data: data2, schema, it } = cxt;
-        const [valid, cond] = (0, nullable_1.checkNullableObject)(cxt, data2);
+        const { gen, data: data3, schema, it } = cxt;
+        const [valid, cond] = (0, nullable_1.checkNullableObject)(cxt, data3);
         if ((0, util_1.alwaysValidSchema)(it, schema)) {
           gen.if((0, codegen_1.not)((0, codegen_1.or)(cond, valid)), () => cxt.error());
         } else {
@@ -21633,7 +21633,7 @@ var require_values = __commonJS({
           validateValues(() => gen.break());
           return _valid;
           function validateValues(notValid) {
-            gen.forIn("key", data2, (key) => {
+            gen.forIn("key", data3, (key) => {
               cxt.subschema({
                 keyword: "values",
                 dataProp: key,
@@ -21951,41 +21951,41 @@ var require_serialize = __commonJS({
       serializeNullable(cxt, form ? genSerialize[form] : serializeEmpty);
     }
     function serializeNullable(cxt, serializeForm) {
-      const { gen, schema, data: data2 } = cxt;
+      const { gen, schema, data: data3 } = cxt;
       if (!schema.nullable)
         return serializeForm(cxt);
-      gen.if((0, codegen_1._)`${data2} === undefined || ${data2} === null`, () => gen.add(names_1.default.json, (0, codegen_1._)`"null"`), () => serializeForm(cxt));
+      gen.if((0, codegen_1._)`${data3} === undefined || ${data3} === null`, () => gen.add(names_1.default.json, (0, codegen_1._)`"null"`), () => serializeForm(cxt));
     }
     function serializeElements(cxt) {
-      const { gen, schema, data: data2 } = cxt;
+      const { gen, schema, data: data3 } = cxt;
       gen.add(names_1.default.json, (0, codegen_1.str)`[`);
       const first = gen.let("first", true);
-      gen.forOf("el", data2, (el) => {
+      gen.forOf("el", data3, (el) => {
         addComma(cxt, first);
         serializeCode({ ...cxt, schema: schema.elements, data: el });
       });
       gen.add(names_1.default.json, (0, codegen_1.str)`]`);
     }
     function serializeValues(cxt) {
-      const { gen, schema, data: data2 } = cxt;
+      const { gen, schema, data: data3 } = cxt;
       gen.add(names_1.default.json, (0, codegen_1.str)`{`);
       const first = gen.let("first", true);
-      gen.forIn("key", data2, (key) => serializeKeyValue(cxt, key, schema.values, first));
+      gen.forIn("key", data3, (key) => serializeKeyValue(cxt, key, schema.values, first));
       gen.add(names_1.default.json, (0, codegen_1.str)`}`);
     }
     function serializeKeyValue(cxt, key, schema, first) {
-      const { gen, data: data2 } = cxt;
+      const { gen, data: data3 } = cxt;
       addComma(cxt, first);
       serializeString({ ...cxt, data: key });
       gen.add(names_1.default.json, (0, codegen_1.str)`:`);
-      const value2 = gen.const("value", (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(key)}`);
+      const value2 = gen.const("value", (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(key)}`);
       serializeCode({ ...cxt, schema, data: value2 });
     }
     function serializeDiscriminator(cxt) {
-      const { gen, schema, data: data2 } = cxt;
+      const { gen, schema, data: data3 } = cxt;
       const { discriminator } = schema;
       gen.add(names_1.default.json, (0, codegen_1.str)`{${JSON.stringify(discriminator)}:`);
-      const tag = gen.const("tag", (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(discriminator)}`);
+      const tag = gen.const("tag", (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(discriminator)}`);
       serializeString({ ...cxt, data: tag });
       gen.if(false);
       for (const tagValue in schema.mapping) {
@@ -22003,7 +22003,7 @@ var require_serialize = __commonJS({
       gen.add(names_1.default.json, (0, codegen_1.str)`}`);
     }
     function serializeSchemaProperties(cxt, discriminator) {
-      const { gen, schema, data: data2 } = cxt;
+      const { gen, schema, data: data3 } = cxt;
       const { properties, optionalProperties } = schema;
       const props = keys(properties);
       const optProps = keys(optionalProperties);
@@ -22021,13 +22021,13 @@ var require_serialize = __commonJS({
         firstProp = gen.let("first", true);
       for (const key of optProps) {
         const value2 = keyValue(key);
-        gen.if((0, codegen_1.and)((0, codegen_1._)`${value2} !== undefined`, (0, code_1.isOwnProperty)(gen, data2, key)), () => {
+        gen.if((0, codegen_1.and)((0, codegen_1._)`${value2} !== undefined`, (0, code_1.isOwnProperty)(gen, data3, key)), () => {
           addComma(cxt, firstProp);
           serializeProperty(key, optionalProperties[key], value2);
         });
       }
       if (schema.additionalProperties) {
-        gen.forIn("key", data2, (key) => gen.if(isAdditional(key, allProps), () => serializeKeyValue(cxt, key, {}, firstProp)));
+        gen.forIn("key", data3, (key) => gen.if(isAdditional(key, allProps), () => serializeKeyValue(cxt, key, {}, firstProp)));
       }
       function keys(ps) {
         return ps ? Object.keys(ps) : [];
@@ -22041,7 +22041,7 @@ var require_serialize = __commonJS({
         return ps;
       }
       function keyValue(key) {
-        return gen.const("value", (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(key)}`);
+        return gen.const("value", (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(key)}`);
       }
       function serializeProperty(key, propSchema, value2) {
         gen.add(names_1.default.json, (0, codegen_1.str)`${JSON.stringify(key)}:`);
@@ -22052,34 +22052,34 @@ var require_serialize = __commonJS({
       }
     }
     function serializeType(cxt) {
-      const { gen, schema, data: data2 } = cxt;
+      const { gen, schema, data: data3 } = cxt;
       switch (schema.type) {
         case "boolean":
-          gen.add(names_1.default.json, (0, codegen_1._)`${data2} ? "true" : "false"`);
+          gen.add(names_1.default.json, (0, codegen_1._)`${data3} ? "true" : "false"`);
           break;
         case "string":
           serializeString(cxt);
           break;
         case "timestamp":
-          gen.if((0, codegen_1._)`${data2} instanceof Date`, () => gen.add(names_1.default.json, (0, codegen_1._)`'"' + ${data2}.toISOString() + '"'`), () => serializeString(cxt));
+          gen.if((0, codegen_1._)`${data3} instanceof Date`, () => gen.add(names_1.default.json, (0, codegen_1._)`'"' + ${data3}.toISOString() + '"'`), () => serializeString(cxt));
           break;
         default:
           serializeNumber(cxt);
       }
     }
-    function serializeString({ gen, data: data2 }) {
-      gen.add(names_1.default.json, (0, codegen_1._)`${(0, util_1.useFunc)(gen, quote_1.default)}(${data2})`);
+    function serializeString({ gen, data: data3 }) {
+      gen.add(names_1.default.json, (0, codegen_1._)`${(0, util_1.useFunc)(gen, quote_1.default)}(${data3})`);
     }
-    function serializeNumber({ gen, data: data2, self: self2 }) {
-      const condition = (0, codegen_1._)`${data2} === Infinity || ${data2} === -Infinity || ${data2} !== ${data2}`;
+    function serializeNumber({ gen, data: data3, self: self2 }) {
+      const condition = (0, codegen_1._)`${data3} === Infinity || ${data3} === -Infinity || ${data3} !== ${data3}`;
       if (self2.opts.specialNumbers === void 0 || self2.opts.specialNumbers === "fast") {
-        gen.add(names_1.default.json, (0, codegen_1._)`"" + ${data2}`);
+        gen.add(names_1.default.json, (0, codegen_1._)`"" + ${data3}`);
       } else {
-        gen.if(condition, () => gen.add(names_1.default.json, (0, codegen_1._)`null`), () => gen.add(names_1.default.json, (0, codegen_1._)`"" + ${data2}`));
+        gen.if(condition, () => gen.add(names_1.default.json, (0, codegen_1._)`null`), () => gen.add(names_1.default.json, (0, codegen_1._)`"" + ${data3}`));
       }
     }
     function serializeRef(cxt) {
-      const { gen, self: self2, data: data2, definitions, schema, schemaEnv } = cxt;
+      const { gen, self: self2, data: data3, definitions, schema, schemaEnv } = cxt;
       const { ref: ref4 } = schema;
       const refSchema = definitions[ref4];
       if (!refSchema)
@@ -22088,13 +22088,13 @@ var require_serialize = __commonJS({
         return serializeCode({ ...cxt, schema: refSchema });
       const { root } = schemaEnv;
       const sch = compileSerializer.call(self2, new __1.SchemaEnv({ schema: refSchema, root }), definitions);
-      gen.add(names_1.default.json, (0, codegen_1._)`${getSerialize(gen, sch)}(${data2})`);
+      gen.add(names_1.default.json, (0, codegen_1._)`${getSerialize(gen, sch)}(${data3})`);
     }
     function getSerialize(gen, sch) {
       return sch.serialize ? gen.scopeValue("serialize", { ref: sch.serialize }) : (0, codegen_1._)`${gen.scopeValue("wrapper", { ref: sch })}.serialize`;
     }
-    function serializeEmpty({ gen, data: data2 }) {
-      gen.add(names_1.default.json, (0, codegen_1._)`JSON.stringify(${data2})`);
+    function serializeEmpty({ gen, data: data3 }) {
+      gen.add(names_1.default.json, (0, codegen_1._)`JSON.stringify(${data3})`);
     }
     function addComma({ gen }, first) {
       if (first) {
@@ -22386,26 +22386,26 @@ var require_parse = __commonJS({
     }
     var parseBoolean = parseBooleanToken(true, parseBooleanToken(false, jsonSyntaxError));
     function parseNullable(cxt, parseForm) {
-      const { gen, schema, data: data2 } = cxt;
+      const { gen, schema, data: data3 } = cxt;
       if (!schema.nullable)
         return parseForm(cxt);
-      tryParseToken(cxt, "null", parseForm, () => gen.assign(data2, null));
+      tryParseToken(cxt, "null", parseForm, () => gen.assign(data3, null));
     }
     function parseElements(cxt) {
-      const { gen, schema, data: data2 } = cxt;
+      const { gen, schema, data: data3 } = cxt;
       parseToken(cxt, "[");
       const ix = gen.let("i", 0);
-      gen.assign(data2, (0, codegen_1._)`[]`);
+      gen.assign(data3, (0, codegen_1._)`[]`);
       parseItems(cxt, "]", () => {
         const el = gen.let("el");
         parseCode({ ...cxt, schema: schema.elements, data: el });
-        gen.assign((0, codegen_1._)`${data2}[${ix}++]`, el);
+        gen.assign((0, codegen_1._)`${data3}[${ix}++]`, el);
       });
     }
     function parseValues(cxt) {
-      const { gen, schema, data: data2 } = cxt;
+      const { gen, schema, data: data3 } = cxt;
       parseToken(cxt, "{");
-      gen.assign(data2, (0, codegen_1._)`{}`);
+      gen.assign(data3, (0, codegen_1._)`{}`);
       parseItems(cxt, "}", () => parseKeyValue(cxt, schema.values));
     }
     function parseItems(cxt, endToken, block) {
@@ -22431,10 +22431,10 @@ var require_parse = __commonJS({
       parsePropertyValue(cxt, key, schema);
     }
     function parseDiscriminator(cxt) {
-      const { gen, data: data2, schema } = cxt;
+      const { gen, data: data3, schema } = cxt;
       const { discriminator, mapping } = schema;
       parseToken(cxt, "{");
-      gen.assign(data2, (0, codegen_1._)`{}`);
+      gen.assign(data3, (0, codegen_1._)`{}`);
       const startPos = gen.const("pos", names_1.default.jsonPos);
       const value2 = gen.let("value");
       const tag = gen.let("tag");
@@ -22446,7 +22446,7 @@ var require_parse = __commonJS({
           (0, codegen_1._)`${key} === ${discriminator}`,
           () => {
             parseString({ ...cxt, data: tag });
-            gen.assign((0, codegen_1._)`${data2}[${key}]`, tag);
+            gen.assign((0, codegen_1._)`${data3}[${key}]`, tag);
             gen.break();
           },
           () => parseEmpty({ ...cxt, data: value2 })
@@ -22465,13 +22465,13 @@ var require_parse = __commonJS({
       gen.endIf();
     }
     function parseProperties(cxt) {
-      const { gen, data: data2 } = cxt;
+      const { gen, data: data3 } = cxt;
       parseToken(cxt, "{");
-      gen.assign(data2, (0, codegen_1._)`{}`);
+      gen.assign(data3, (0, codegen_1._)`{}`);
       parseSchemaProperties(cxt);
     }
     function parseSchemaProperties(cxt, discriminator) {
-      const { gen, schema, data: data2 } = cxt;
+      const { gen, schema, data: data3 } = cxt;
       const { properties, optionalProperties, additionalProperties } = schema;
       parseItems(cxt, "}", () => {
         const key = gen.let("key");
@@ -22487,7 +22487,7 @@ var require_parse = __commonJS({
         }
         gen.else();
         if (additionalProperties) {
-          parseEmpty({ ...cxt, data: (0, codegen_1._)`${data2}[${key}]` });
+          parseEmpty({ ...cxt, data: (0, codegen_1._)`${data3}[${key}]` });
         } else {
           parsingError(cxt, (0, codegen_1.str)`property ${key} not allowed`);
         }
@@ -22495,7 +22495,7 @@ var require_parse = __commonJS({
       });
       if (properties) {
         const hasProp = (0, code_1.hasPropFunc)(gen);
-        const allProps = (0, codegen_1.and)(...Object.keys(properties).map((p) => (0, codegen_1._)`${hasProp}.call(${data2}, ${p})`));
+        const allProps = (0, codegen_1.and)(...Object.keys(properties).map((p) => (0, codegen_1._)`${hasProp}.call(${data3}, ${p})`));
         gen.if((0, codegen_1.not)(allProps), () => parsingError(cxt, (0, codegen_1.str)`missing required properties`));
       }
     }
@@ -22510,7 +22510,7 @@ var require_parse = __commonJS({
       parseCode({ ...cxt, schema, data: (0, codegen_1._)`${cxt.data}[${key}]` });
     }
     function parseType(cxt) {
-      const { gen, schema, data: data2, self: self2 } = cxt;
+      const { gen, schema, data: data3, self: self2 } = cxt;
       switch (schema.type) {
         case "boolean":
           parseBoolean(cxt);
@@ -22522,8 +22522,8 @@ var require_parse = __commonJS({
           parseString(cxt);
           const vts = (0, util_1.useFunc)(gen, timestamp_1.default);
           const { allowDate, parseDate } = self2.opts;
-          const notValid = allowDate ? (0, codegen_1._)`!${vts}(${data2}, true)` : (0, codegen_1._)`!${vts}(${data2})`;
-          const fail11 = parseDate ? (0, codegen_1.or)(notValid, (0, codegen_1._)`(${data2} = new Date(${data2}), false)`, (0, codegen_1._)`isNaN(${data2}.valueOf())`) : notValid;
+          const notValid = allowDate ? (0, codegen_1._)`!${vts}(${data3}, true)` : (0, codegen_1._)`!${vts}(${data3})`;
+          const fail11 = parseDate ? (0, codegen_1.or)(notValid, (0, codegen_1._)`(${data3} = new Date(${data3}), false)`, (0, codegen_1._)`isNaN(${data3}.valueOf())`) : notValid;
           gen.if(fail11, () => parsingError(cxt, (0, codegen_1.str)`invalid timestamp`));
           break;
         }
@@ -22536,12 +22536,12 @@ var require_parse = __commonJS({
           if (!self2.opts.int32range && (t === "int32" || t === "uint32")) {
             parseNumber(cxt, 16);
             if (t === "uint32") {
-              gen.if((0, codegen_1._)`${data2} < 0`, () => parsingError(cxt, (0, codegen_1.str)`integer out of range`));
+              gen.if((0, codegen_1._)`${data3} < 0`, () => parsingError(cxt, (0, codegen_1.str)`integer out of range`));
             }
           } else {
             const [min, max, maxDigits] = type_1.intRange[t];
             parseNumber(cxt, maxDigits);
-            gen.if((0, codegen_1._)`${data2} < ${min} || ${data2} > ${max}`, () => parsingError(cxt, (0, codegen_1.str)`integer out of range`));
+            gen.if((0, codegen_1._)`${data3} < ${min} || ${data3} > ${max}`, () => parsingError(cxt, (0, codegen_1.str)`integer out of range`));
           }
         }
       }
@@ -22551,14 +22551,14 @@ var require_parse = __commonJS({
       parseWith(cxt, parseJson_1.parseJsonString);
     }
     function parseEnum(cxt) {
-      const { gen, data: data2, schema } = cxt;
+      const { gen, data: data3, schema } = cxt;
       const enumSch = schema.enum;
       parseToken(cxt, '"');
       gen.if(false);
       for (const value2 of enumSch) {
         const valueStr = JSON.stringify(value2).slice(1);
         gen.elseIf((0, codegen_1._)`${jsonSlice(valueStr.length)} === ${valueStr}`);
-        gen.assign(data2, (0, codegen_1.str)`${value2}`);
+        gen.assign(data3, (0, codegen_1.str)`${value2}`);
         gen.add(names_1.default.jsonPos, valueStr.length);
       }
       gen.else();
@@ -22572,8 +22572,8 @@ var require_parse = __commonJS({
     }
     function parseBooleanToken(bool2, fail11) {
       return (cxt) => {
-        const { gen, data: data2 } = cxt;
-        tryParseToken(cxt, `${bool2}`, () => fail11(cxt), () => gen.assign(data2, bool2));
+        const { gen, data: data3 } = cxt;
+        tryParseToken(cxt, `${bool2}`, () => fail11(cxt), () => gen.assign(data3, bool2));
       };
     }
     function parseRef(cxt) {
@@ -22598,10 +22598,10 @@ var require_parse = __commonJS({
       partialParse(cxt, (0, util_1.useFunc)(cxt.gen, parseFunc), args);
     }
     function partialParse(cxt, parseFunc, args) {
-      const { gen, data: data2 } = cxt;
-      gen.assign(data2, (0, codegen_1._)`${parseFunc}(${names_1.default.json}, ${names_1.default.jsonPos}${args ? (0, codegen_1._)`, ${args}` : codegen_1.nil})`);
+      const { gen, data: data3 } = cxt;
+      gen.assign(data3, (0, codegen_1._)`${parseFunc}(${names_1.default.json}, ${names_1.default.jsonPos}${args ? (0, codegen_1._)`, ${args}` : codegen_1.nil})`);
       gen.assign(names_1.default.jsonPos, (0, codegen_1._)`${parseFunc}.position`);
-      gen.if((0, codegen_1._)`${data2} === undefined`, () => parsingError(cxt, (0, codegen_1._)`${parseFunc}.message`));
+      gen.if((0, codegen_1._)`${data3} === undefined`, () => parsingError(cxt, (0, codegen_1._)`${parseFunc}.message`));
     }
     function parseToken(cxt, tok) {
       tryParseToken(cxt, tok, jsonSyntaxError);
@@ -24480,7 +24480,7 @@ var require_limit = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, schemaCode, keyword, it } = cxt;
+        const { gen, data: data3, schemaCode, keyword, it } = cxt;
         const { opts, self: self2 } = it;
         if (!opts.validateFormats)
           return;
@@ -24513,7 +24513,7 @@ var require_limit = __commonJS({
           cxt.fail$data(compareCode(fmt));
         }
         function compareCode(fmt) {
-          return (0, codegen_1._)`${fmt}.compare(${data2}, ${schemaCode}) ${KWDs[keyword].fail} 0`;
+          return (0, codegen_1._)`${fmt}.compare(${data3}, ${schemaCode}) ${KWDs[keyword].fail} 0`;
         }
       },
       dependencies: ["format"]
@@ -25120,9 +25120,9 @@ var require_json_schema_ref_resolver = __commonJS({
         anchors[anchor] = schema;
       }
     };
-    function getDataByJSONPointer(data2, jsonPointer) {
+    function getDataByJSONPointer(data3, jsonPointer) {
       const parts = jsonPointer.split("/");
-      let current = data2;
+      let current = data3;
       for (const part of parts) {
         if (part === "" || part === "#") continue;
         if (typeof current !== "object" || current === null) {
@@ -26520,7 +26520,7 @@ var require_errors4 = __commonJS({
       gen.if((0, codegen_1._)`${names_1.default.vErrors} !== null`, () => gen.if(errsCount, () => gen.assign((0, codegen_1._)`${names_1.default.vErrors}.length`, errsCount), () => gen.assign(names_1.default.vErrors, null)));
     }
     exports.resetErrorsCount = resetErrorsCount;
-    function extendErrors({ gen, keyword, schemaValue, data: data2, errsCount, it }) {
+    function extendErrors({ gen, keyword, schemaValue, data: data3, errsCount, it }) {
       if (errsCount === void 0)
         throw new Error("ajv implementation error");
       const err = gen.name("err");
@@ -26530,7 +26530,7 @@ var require_errors4 = __commonJS({
         gen.assign((0, codegen_1._)`${err}.schemaPath`, (0, codegen_1.str)`${it.errSchemaPath}/${keyword}`);
         if (it.opts.verbose) {
           gen.assign((0, codegen_1._)`${err}.schema`, schemaValue);
-          gen.assign((0, codegen_1._)`${err}.data`, data2);
+          gen.assign((0, codegen_1._)`${err}.data`, data3);
         }
       });
     }
@@ -26586,14 +26586,14 @@ var require_errors4 = __commonJS({
       return [E.schemaPath, schPath];
     }
     function extraErrorProps(cxt, { params: params2, message: message2 }, keyValues) {
-      const { keyword, data: data2, schemaValue, it } = cxt;
+      const { keyword, data: data3, schemaValue, it } = cxt;
       const { opts, propertyName, topSchemaRef, schemaPath } = it;
       keyValues.push([E.keyword, keyword], [E.params, typeof params2 == "function" ? params2(cxt) : params2 || (0, codegen_1._)`{}`]);
       if (opts.messages) {
         keyValues.push([E.message, typeof message2 == "function" ? message2(cxt) : message2]);
       }
       if (opts.verbose) {
-        keyValues.push([E.schema, schemaValue], [E.parentSchema, (0, codegen_1._)`${topSchemaRef}${schemaPath}`], [names_1.default.data, data2]);
+        keyValues.push([E.schema, schemaValue], [E.parentSchema, (0, codegen_1._)`${topSchemaRef}${schemaPath}`], [names_1.default.data, data3]);
       }
       if (propertyName)
         keyValues.push([E.propertyName, propertyName]);
@@ -26636,11 +26636,11 @@ var require_boolSchema2 = __commonJS({
     }
     exports.boolOrEmptySchema = boolOrEmptySchema;
     function falseSchemaError(it, overrideAllErrors) {
-      const { gen, data: data2 } = it;
+      const { gen, data: data3 } = it;
       const cxt = {
         gen,
         keyword: "false schema",
-        data: data2,
+        data: data3,
         schema: false,
         schemaCode: false,
         schemaValue: false,
@@ -26746,11 +26746,11 @@ var require_dataType2 = __commonJS({
     }
     exports.getJSONTypes = getJSONTypes;
     function coerceAndCheckDataType(it, types) {
-      const { gen, data: data2, opts } = it;
+      const { gen, data: data3, opts } = it;
       const coerceTo = coerceToTypes(types, opts.coerceTypes);
       const checkTypes = types.length > 0 && !(coerceTo.length === 0 && types.length === 1 && (0, applicability_1.schemaHasRulesForType)(it, types[0]));
       if (checkTypes) {
-        const wrongType = checkDataTypes(types, data2, opts.strictNumbers, DataType.Wrong);
+        const wrongType = checkDataTypes(types, data3, opts.strictNumbers, DataType.Wrong);
         gen.if(wrongType, () => {
           if (coerceTo.length)
             coerceData(it, types, coerceTo);
@@ -26766,11 +26766,11 @@ var require_dataType2 = __commonJS({
       return coerceTypes ? types.filter((t) => COERCIBLE.has(t) || coerceTypes === "array" && t === "array") : [];
     }
     function coerceData(it, types, coerceTo) {
-      const { gen, data: data2, opts } = it;
-      const dataType = gen.let("dataType", (0, codegen_1._)`typeof ${data2}`);
+      const { gen, data: data3, opts } = it;
+      const dataType = gen.let("dataType", (0, codegen_1._)`typeof ${data3}`);
       const coerced = gen.let("coerced", (0, codegen_1._)`undefined`);
       if (opts.coerceTypes === "array") {
-        gen.if((0, codegen_1._)`${dataType} == 'object' && Array.isArray(${data2}) && ${data2}.length == 1`, () => gen.assign(data2, (0, codegen_1._)`${data2}[0]`).assign(dataType, (0, codegen_1._)`typeof ${data2}`).if(checkDataTypes(types, data2, opts.strictNumbers), () => gen.assign(coerced, data2)));
+        gen.if((0, codegen_1._)`${dataType} == 'object' && Array.isArray(${data3}) && ${data3}.length == 1`, () => gen.assign(data3, (0, codegen_1._)`${data3}[0]`).assign(dataType, (0, codegen_1._)`typeof ${data3}`).if(checkDataTypes(types, data3, opts.strictNumbers), () => gen.assign(coerced, data3)));
       }
       gen.if((0, codegen_1._)`${coerced} !== undefined`);
       for (const t of coerceTo) {
@@ -26782,74 +26782,74 @@ var require_dataType2 = __commonJS({
       reportTypeError(it);
       gen.endIf();
       gen.if((0, codegen_1._)`${coerced} !== undefined`, () => {
-        gen.assign(data2, coerced);
+        gen.assign(data3, coerced);
         assignParentData(it, coerced);
       });
       function coerceSpecificType(t) {
         switch (t) {
           case "string":
-            gen.elseIf((0, codegen_1._)`${dataType} == "number" || ${dataType} == "boolean"`).assign(coerced, (0, codegen_1._)`"" + ${data2}`).elseIf((0, codegen_1._)`${data2} === null`).assign(coerced, (0, codegen_1._)`""`);
+            gen.elseIf((0, codegen_1._)`${dataType} == "number" || ${dataType} == "boolean"`).assign(coerced, (0, codegen_1._)`"" + ${data3}`).elseIf((0, codegen_1._)`${data3} === null`).assign(coerced, (0, codegen_1._)`""`);
             return;
           case "number":
-            gen.elseIf((0, codegen_1._)`${dataType} == "boolean" || ${data2} === null
-              || (${dataType} == "string" && ${data2} && ${data2} == +${data2})`).assign(coerced, (0, codegen_1._)`+${data2}`);
+            gen.elseIf((0, codegen_1._)`${dataType} == "boolean" || ${data3} === null
+              || (${dataType} == "string" && ${data3} && ${data3} == +${data3})`).assign(coerced, (0, codegen_1._)`+${data3}`);
             return;
           case "integer":
-            gen.elseIf((0, codegen_1._)`${dataType} === "boolean" || ${data2} === null
-              || (${dataType} === "string" && ${data2} && ${data2} == +${data2} && !(${data2} % 1))`).assign(coerced, (0, codegen_1._)`+${data2}`);
+            gen.elseIf((0, codegen_1._)`${dataType} === "boolean" || ${data3} === null
+              || (${dataType} === "string" && ${data3} && ${data3} == +${data3} && !(${data3} % 1))`).assign(coerced, (0, codegen_1._)`+${data3}`);
             return;
           case "boolean":
-            gen.elseIf((0, codegen_1._)`${data2} === "false" || ${data2} === 0 || ${data2} === null`).assign(coerced, false).elseIf((0, codegen_1._)`${data2} === "true" || ${data2} === 1`).assign(coerced, true);
+            gen.elseIf((0, codegen_1._)`${data3} === "false" || ${data3} === 0 || ${data3} === null`).assign(coerced, false).elseIf((0, codegen_1._)`${data3} === "true" || ${data3} === 1`).assign(coerced, true);
             return;
           case "null":
-            gen.elseIf((0, codegen_1._)`${data2} === "" || ${data2} === 0 || ${data2} === false`);
+            gen.elseIf((0, codegen_1._)`${data3} === "" || ${data3} === 0 || ${data3} === false`);
             gen.assign(coerced, null);
             return;
           case "array":
             gen.elseIf((0, codegen_1._)`${dataType} === "string" || ${dataType} === "number"
-              || ${dataType} === "boolean" || ${data2} === null`).assign(coerced, (0, codegen_1._)`[${data2}]`);
+              || ${dataType} === "boolean" || ${data3} === null`).assign(coerced, (0, codegen_1._)`[${data3}]`);
         }
       }
     }
     function assignParentData({ gen, parentData, parentDataProperty }, expr) {
       gen.if((0, codegen_1._)`${parentData} !== undefined`, () => gen.assign((0, codegen_1._)`${parentData}[${parentDataProperty}]`, expr));
     }
-    function checkDataType(dataType, data2, strictNums, correct = DataType.Correct) {
+    function checkDataType(dataType, data3, strictNums, correct = DataType.Correct) {
       const EQ = correct === DataType.Correct ? codegen_1.operators.EQ : codegen_1.operators.NEQ;
       let cond;
       switch (dataType) {
         case "null":
-          return (0, codegen_1._)`${data2} ${EQ} null`;
+          return (0, codegen_1._)`${data3} ${EQ} null`;
         case "array":
-          cond = (0, codegen_1._)`Array.isArray(${data2})`;
+          cond = (0, codegen_1._)`Array.isArray(${data3})`;
           break;
         case "object":
-          cond = (0, codegen_1._)`${data2} && typeof ${data2} == "object" && !Array.isArray(${data2})`;
+          cond = (0, codegen_1._)`${data3} && typeof ${data3} == "object" && !Array.isArray(${data3})`;
           break;
         case "integer":
-          cond = numCond((0, codegen_1._)`!(${data2} % 1) && !isNaN(${data2})`);
+          cond = numCond((0, codegen_1._)`!(${data3} % 1) && !isNaN(${data3})`);
           break;
         case "number":
           cond = numCond();
           break;
         default:
-          return (0, codegen_1._)`typeof ${data2} ${EQ} ${dataType}`;
+          return (0, codegen_1._)`typeof ${data3} ${EQ} ${dataType}`;
       }
       return correct === DataType.Correct ? cond : (0, codegen_1.not)(cond);
       function numCond(_cond = codegen_1.nil) {
-        return (0, codegen_1.and)((0, codegen_1._)`typeof ${data2} == "number"`, _cond, strictNums ? (0, codegen_1._)`isFinite(${data2})` : codegen_1.nil);
+        return (0, codegen_1.and)((0, codegen_1._)`typeof ${data3} == "number"`, _cond, strictNums ? (0, codegen_1._)`isFinite(${data3})` : codegen_1.nil);
       }
     }
     exports.checkDataType = checkDataType;
-    function checkDataTypes(dataTypes, data2, strictNums, correct) {
+    function checkDataTypes(dataTypes, data3, strictNums, correct) {
       if (dataTypes.length === 1) {
-        return checkDataType(dataTypes[0], data2, strictNums, correct);
+        return checkDataType(dataTypes[0], data3, strictNums, correct);
       }
       let cond;
       const types = (0, util_1.toHash)(dataTypes);
       if (types.array && types.object) {
-        const notObj = (0, codegen_1._)`typeof ${data2} != "object"`;
-        cond = types.null ? notObj : (0, codegen_1._)`!${data2} || ${notObj}`;
+        const notObj = (0, codegen_1._)`typeof ${data3} != "object"`;
+        cond = types.null ? notObj : (0, codegen_1._)`!${data3} || ${notObj}`;
         delete types.null;
         delete types.array;
         delete types.object;
@@ -26859,7 +26859,7 @@ var require_dataType2 = __commonJS({
       if (types.number)
         delete types.integer;
       for (const t in types)
-        cond = (0, codegen_1.and)(cond, checkDataType(t, data2, strictNums, correct));
+        cond = (0, codegen_1.and)(cond, checkDataType(t, data3, strictNums, correct));
       return cond;
     }
     exports.checkDataTypes = checkDataTypes;
@@ -26873,12 +26873,12 @@ var require_dataType2 = __commonJS({
     }
     exports.reportTypeError = reportTypeError;
     function getTypeErrorContext(it) {
-      const { gen, data: data2, schema } = it;
+      const { gen, data: data3, schema } = it;
       const schemaCode = (0, util_1.schemaRefOrVal)(it, schema, "type");
       return {
         gen,
         keyword: "type",
-        data: data2,
+        data: data3,
         schema: schema.type,
         schemaCode,
         schemaValue: schemaCode,
@@ -26910,10 +26910,10 @@ var require_defaults2 = __commonJS({
     }
     exports.assignDefaults = assignDefaults;
     function assignDefault(it, prop, defaultValue) {
-      const { gen, compositeRule, data: data2, opts } = it;
+      const { gen, compositeRule, data: data3, opts } = it;
       if (defaultValue === void 0)
         return;
-      const childData = (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(prop)}`;
+      const childData = (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(prop)}`;
       if (compositeRule) {
         (0, util_1.checkStrictMode)(it, `default is ignored for: ${childData}`);
         return;
@@ -26938,15 +26938,15 @@ var require_code4 = __commonJS({
     var names_1 = require_names2();
     var util_2 = require_util2();
     function checkReportMissingProp(cxt, prop) {
-      const { gen, data: data2, it } = cxt;
-      gen.if(noPropertyInData(gen, data2, prop, it.opts.ownProperties), () => {
+      const { gen, data: data3, it } = cxt;
+      gen.if(noPropertyInData(gen, data3, prop, it.opts.ownProperties), () => {
         cxt.setParams({ missingProperty: (0, codegen_1._)`${prop}` }, true);
         cxt.error();
       });
     }
     exports.checkReportMissingProp = checkReportMissingProp;
-    function checkMissingProp({ gen, data: data2, it: { opts } }, properties, missing2) {
-      return (0, codegen_1.or)(...properties.map((prop) => (0, codegen_1.and)(noPropertyInData(gen, data2, prop, opts.ownProperties), (0, codegen_1._)`${missing2} = ${prop}`)));
+    function checkMissingProp({ gen, data: data3, it: { opts } }, properties, missing2) {
+      return (0, codegen_1.or)(...properties.map((prop) => (0, codegen_1.and)(noPropertyInData(gen, data3, prop, opts.ownProperties), (0, codegen_1._)`${missing2} = ${prop}`)));
     }
     exports.checkMissingProp = checkMissingProp;
     function reportMissingProp(cxt, missing2) {
@@ -26962,18 +26962,18 @@ var require_code4 = __commonJS({
       });
     }
     exports.hasPropFunc = hasPropFunc;
-    function isOwnProperty(gen, data2, property) {
-      return (0, codegen_1._)`${hasPropFunc(gen)}.call(${data2}, ${property})`;
+    function isOwnProperty(gen, data3, property) {
+      return (0, codegen_1._)`${hasPropFunc(gen)}.call(${data3}, ${property})`;
     }
     exports.isOwnProperty = isOwnProperty;
-    function propertyInData(gen, data2, property, ownProperties) {
-      const cond = (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(property)} !== undefined`;
-      return ownProperties ? (0, codegen_1._)`${cond} && ${isOwnProperty(gen, data2, property)}` : cond;
+    function propertyInData(gen, data3, property, ownProperties) {
+      const cond = (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(property)} !== undefined`;
+      return ownProperties ? (0, codegen_1._)`${cond} && ${isOwnProperty(gen, data3, property)}` : cond;
     }
     exports.propertyInData = propertyInData;
-    function noPropertyInData(gen, data2, property, ownProperties) {
-      const cond = (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(property)} === undefined`;
-      return ownProperties ? (0, codegen_1.or)(cond, (0, codegen_1.not)(isOwnProperty(gen, data2, property))) : cond;
+    function noPropertyInData(gen, data3, property, ownProperties) {
+      const cond = (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(property)} === undefined`;
+      return ownProperties ? (0, codegen_1.or)(cond, (0, codegen_1.not)(isOwnProperty(gen, data3, property))) : cond;
     }
     exports.noPropertyInData = noPropertyInData;
     function allSchemaProperties(schemaMap) {
@@ -26984,8 +26984,8 @@ var require_code4 = __commonJS({
       return allSchemaProperties(schemaMap).filter((p) => !(0, util_1.alwaysValidSchema)(it, schemaMap[p]));
     }
     exports.schemaProperties = schemaProperties;
-    function callValidateCode({ schemaCode, data: data2, it: { gen, topSchemaRef, schemaPath, errorPath }, it }, func, context, passSchema) {
-      const dataAndSchema = passSchema ? (0, codegen_1._)`${schemaCode}, ${data2}, ${topSchemaRef}${schemaPath}` : data2;
+    function callValidateCode({ schemaCode, data: data3, it: { gen, topSchemaRef, schemaPath, errorPath }, it }, func, context, passSchema) {
+      const dataAndSchema = passSchema ? (0, codegen_1._)`${schemaCode}, ${data3}, ${topSchemaRef}${schemaPath}` : data3;
       const valCxt = [
         [names_1.default.instancePath, (0, codegen_1.strConcat)(names_1.default.instancePath, errorPath)],
         [names_1.default.parentData, it.parentData],
@@ -27011,7 +27011,7 @@ var require_code4 = __commonJS({
     }
     exports.usePattern = usePattern;
     function validateArray(cxt) {
-      const { gen, data: data2, keyword, it } = cxt;
+      const { gen, data: data3, keyword, it } = cxt;
       const valid = gen.name("valid");
       if (it.allErrors) {
         const validArr = gen.let("valid", true);
@@ -27022,7 +27022,7 @@ var require_code4 = __commonJS({
       validateItems(() => gen.break());
       return valid;
       function validateItems(notValid) {
-        const len = gen.const("len", (0, codegen_1._)`${data2}.length`);
+        const len = gen.const("len", (0, codegen_1._)`${data3}.length`);
         gen.forRange("i", 0, len, (i) => {
           cxt.subschema({
             keyword,
@@ -27132,8 +27132,8 @@ var require_keyword2 = __commonJS({
     }
     exports.funcKeywordCode = funcKeywordCode;
     function modifyData(cxt) {
-      const { gen, data: data2, it } = cxt;
-      gen.if(it.parentData, () => gen.assign(data2, (0, codegen_1._)`${it.parentData}[${it.parentDataProperty}]`));
+      const { gen, data: data3, it } = cxt;
+      gen.if(it.parentData, () => gen.assign(data3, (0, codegen_1._)`${it.parentData}[${it.parentDataProperty}]`));
     }
     function addErrs(cxt, errs) {
       const { gen } = cxt;
@@ -27216,8 +27216,8 @@ var require_subschema2 = __commonJS({
       throw new Error('either "keyword" or "schema" must be passed');
     }
     exports.getSubschema = getSubschema;
-    function extendSubschemaData(subschema, it, { dataProp, dataPropType: dpType, data: data2, dataTypes, propertyName }) {
-      if (data2 !== void 0 && dataProp !== void 0) {
+    function extendSubschemaData(subschema, it, { dataProp, dataPropType: dpType, data: data3, dataTypes, propertyName }) {
+      if (data3 !== void 0 && dataProp !== void 0) {
         throw new Error('both "data" and "dataProp" passed, only one allowed');
       }
       const { gen } = it;
@@ -27229,8 +27229,8 @@ var require_subschema2 = __commonJS({
         subschema.parentDataProperty = (0, codegen_1._)`${dataProp}`;
         subschema.dataPathArr = [...dataPathArr, subschema.parentDataProperty];
       }
-      if (data2 !== void 0) {
-        const nextData = data2 instanceof codegen_1.Name ? data2 : gen.let("data", data2, true);
+      if (data3 !== void 0) {
+        const nextData = data3 instanceof codegen_1.Name ? data3 : gen.let("data", data3, true);
         dataContextProps(nextData);
         if (propertyName !== void 0)
           subschema.propertyName = propertyName;
@@ -27681,7 +27681,7 @@ var require_validate2 = __commonJS({
         gen.assign((0, codegen_1._)`${evaluated}.items`, items);
     }
     function schemaKeywords(it, types, typeErrors, errsCount) {
-      const { gen, schema, data: data2, allErrors, opts, self: self2 } = it;
+      const { gen, schema, data: data3, allErrors, opts, self: self2 } = it;
       const { RULES: RULES2 } = self2;
       if (schema.$ref && (opts.ignoreKeywordsWithRef || !(0, util_1.schemaHasRulesButRef)(schema, RULES2))) {
         gen.block(() => keywordCode(it, "$ref", RULES2.all.$ref.definition));
@@ -27698,7 +27698,7 @@ var require_validate2 = __commonJS({
         if (!(0, applicability_1.shouldUseGroup)(schema, group))
           return;
         if (group.type) {
-          gen.if((0, dataType_2.checkDataType)(group.type, data2, opts.strictNumbers));
+          gen.if((0, dataType_2.checkDataType)(group.type, data3, opts.strictNumbers));
           iterateKeywords(it, group);
           if (types.length === 1 && types[0] === group.type && typeErrors) {
             gen.else();
@@ -27971,14 +27971,14 @@ var require_validate2 = __commonJS({
     var RELATIVE_JSON_POINTER = /^([0-9]+)(#|\/(?:[^~]|~0|~1)*)?$/;
     function getData($data, { dataLevel, dataNames, dataPathArr }) {
       let jsonPointer;
-      let data2;
+      let data3;
       if ($data === "")
         return names_1.default.rootData;
       if ($data[0] === "/") {
         if (!JSON_POINTER.test($data))
           throw new Error(`Invalid JSON-pointer: ${$data}`);
         jsonPointer = $data;
-        data2 = names_1.default.rootData;
+        data3 = names_1.default.rootData;
       } else {
         const matches = RELATIVE_JSON_POINTER.exec($data);
         if (!matches)
@@ -27992,16 +27992,16 @@ var require_validate2 = __commonJS({
         }
         if (up > dataLevel)
           throw new Error(errorMsg("data", up));
-        data2 = dataNames[dataLevel - up];
+        data3 = dataNames[dataLevel - up];
         if (!jsonPointer)
-          return data2;
+          return data3;
       }
-      let expr = data2;
+      let expr = data3;
       const segments = jsonPointer.split("/");
       for (const segment of segments) {
         if (segment) {
-          data2 = (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)((0, util_1.unescapeJsonPointer)(segment))}`;
-          expr = (0, codegen_1._)`${expr} && ${data2}`;
+          data3 = (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)((0, util_1.unescapeJsonPointer)(segment))}`;
+          expr = (0, codegen_1._)`${expr} && ${data3}`;
         }
       }
       return expr;
@@ -29630,7 +29630,7 @@ var require_core3 = __commonJS({
         const { meta, schemaId } = this.opts;
         return this.opts.defaultMeta = typeof meta == "object" ? meta[schemaId] || meta : void 0;
       }
-      validate(schemaKeyRef, data2) {
+      validate(schemaKeyRef, data3) {
         let v;
         if (typeof schemaKeyRef == "string") {
           v = this.getSchema(schemaKeyRef);
@@ -29639,7 +29639,7 @@ var require_core3 = __commonJS({
         } else {
           v = this.compile(schemaKeyRef);
         }
-        const valid = v(data2);
+        const valid = v(data3);
         if (!("$async" in v))
           this.errors = v.errors;
         return valid;
@@ -30268,8 +30268,8 @@ var require_limitNumber2 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { keyword, data: data2, schemaCode } = cxt;
-        cxt.fail$data((0, codegen_1._)`${data2} ${KWDs[keyword].fail} ${schemaCode} || isNaN(${data2})`);
+        const { keyword, data: data3, schemaCode } = cxt;
+        cxt.fail$data((0, codegen_1._)`${data3} ${KWDs[keyword].fail} ${schemaCode} || isNaN(${data3})`);
       }
     };
     exports.default = def;
@@ -30293,11 +30293,11 @@ var require_multipleOf2 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, schemaCode, it } = cxt;
+        const { gen, data: data3, schemaCode, it } = cxt;
         const prec = it.opts.multipleOfPrecision;
         const res = gen.let("res");
         const invalid = prec ? (0, codegen_1._)`Math.abs(Math.round(${res}) - ${res}) > 1e-${prec}` : (0, codegen_1._)`${res} !== parseInt(${res})`;
-        cxt.fail$data((0, codegen_1._)`(${schemaCode} === 0 || (${res} = ${data2}/${schemaCode}, ${invalid}))`);
+        cxt.fail$data((0, codegen_1._)`(${schemaCode} === 0 || (${res} = ${data3}/${schemaCode}, ${invalid}))`);
       }
     };
     exports.default = def;
@@ -30352,9 +30352,9 @@ var require_limitLength2 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { keyword, data: data2, schemaCode, it } = cxt;
+        const { keyword, data: data3, schemaCode, it } = cxt;
         const op = keyword === "maxLength" ? codegen_1.operators.GT : codegen_1.operators.LT;
-        const len = it.opts.unicode === false ? (0, codegen_1._)`${data2}.length` : (0, codegen_1._)`${(0, util_1.useFunc)(cxt.gen, ucs2length_1.default)}(${data2})`;
+        const len = it.opts.unicode === false ? (0, codegen_1._)`${data3}.length` : (0, codegen_1._)`${(0, util_1.useFunc)(cxt.gen, ucs2length_1.default)}(${data3})`;
         cxt.fail$data((0, codegen_1._)`${len} ${op} ${schemaCode}`);
       }
     };
@@ -30381,17 +30381,17 @@ var require_pattern2 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, $data, schema, schemaCode, it } = cxt;
+        const { gen, data: data3, $data, schema, schemaCode, it } = cxt;
         const u = it.opts.unicodeRegExp ? "u" : "";
         if ($data) {
           const { regExp } = it.opts.code;
           const regExpCode = regExp.code === "new RegExp" ? (0, codegen_1._)`new RegExp` : (0, util_1.useFunc)(gen, regExp);
           const valid = gen.let("valid");
-          gen.try(() => gen.assign(valid, (0, codegen_1._)`${regExpCode}(${schemaCode}, ${u}).test(${data2})`), () => gen.assign(valid, false));
+          gen.try(() => gen.assign(valid, (0, codegen_1._)`${regExpCode}(${schemaCode}, ${u}).test(${data3})`), () => gen.assign(valid, false));
           cxt.fail$data((0, codegen_1._)`!${valid}`);
         } else {
           const regExp = (0, code_1.usePattern)(cxt, schema);
-          cxt.fail$data((0, codegen_1._)`!${regExp}.test(${data2})`);
+          cxt.fail$data((0, codegen_1._)`!${regExp}.test(${data3})`);
         }
       }
     };
@@ -30419,9 +30419,9 @@ var require_limitProperties2 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { keyword, data: data2, schemaCode } = cxt;
+        const { keyword, data: data3, schemaCode } = cxt;
         const op = keyword === "maxProperties" ? codegen_1.operators.GT : codegen_1.operators.LT;
-        cxt.fail$data((0, codegen_1._)`Object.keys(${data2}).length ${op} ${schemaCode}`);
+        cxt.fail$data((0, codegen_1._)`Object.keys(${data3}).length ${op} ${schemaCode}`);
       }
     };
     exports.default = def;
@@ -30447,7 +30447,7 @@ var require_required2 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, schema, schemaCode, data: data2, $data, it } = cxt;
+        const { gen, schema, schemaCode, data: data3, $data, it } = cxt;
         const { opts } = it;
         if (!$data && schema.length === 0)
           return;
@@ -30491,13 +30491,13 @@ var require_required2 = __commonJS({
         function loopAllRequired() {
           gen.forOf("prop", schemaCode, (prop) => {
             cxt.setParams({ missingProperty: prop });
-            gen.if((0, code_1.noPropertyInData)(gen, data2, prop, opts.ownProperties), () => cxt.error());
+            gen.if((0, code_1.noPropertyInData)(gen, data3, prop, opts.ownProperties), () => cxt.error());
           });
         }
         function loopUntilMissing(missing2, valid) {
           cxt.setParams({ missingProperty: missing2 });
           gen.forOf(missing2, schemaCode, () => {
-            gen.assign(valid, (0, code_1.propertyInData)(gen, data2, missing2, opts.ownProperties));
+            gen.assign(valid, (0, code_1.propertyInData)(gen, data3, missing2, opts.ownProperties));
             gen.if((0, codegen_1.not)(valid), () => {
               cxt.error();
               gen.break();
@@ -30530,9 +30530,9 @@ var require_limitItems2 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { keyword, data: data2, schemaCode } = cxt;
+        const { keyword, data: data3, schemaCode } = cxt;
         const op = keyword === "maxItems" ? codegen_1.operators.GT : codegen_1.operators.LT;
-        cxt.fail$data((0, codegen_1._)`${data2}.length ${op} ${schemaCode}`);
+        cxt.fail$data((0, codegen_1._)`${data3}.length ${op} ${schemaCode}`);
       }
     };
     exports.default = def;
@@ -30570,7 +30570,7 @@ var require_uniqueItems2 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, $data, schema, parentSchema, schemaCode, it } = cxt;
+        const { gen, data: data3, $data, schema, parentSchema, schemaCode, it } = cxt;
         if (!$data && !schema)
           return;
         const valid = gen.let("valid");
@@ -30578,7 +30578,7 @@ var require_uniqueItems2 = __commonJS({
         cxt.block$data(valid, validateUniqueItems, (0, codegen_1._)`${schemaCode} === false`);
         cxt.ok(valid);
         function validateUniqueItems() {
-          const i = gen.let("i", (0, codegen_1._)`${data2}.length`);
+          const i = gen.let("i", (0, codegen_1._)`${data3}.length`);
           const j = gen.let("j");
           cxt.setParams({ i, j });
           gen.assign(valid, true);
@@ -30592,7 +30592,7 @@ var require_uniqueItems2 = __commonJS({
           const wrongType = (0, dataType_1.checkDataTypes)(itemTypes, item, it.opts.strictNumbers, dataType_1.DataType.Wrong);
           const indices = gen.const("indices", (0, codegen_1._)`{}`);
           gen.for((0, codegen_1._)`;${i}--;`, () => {
-            gen.let(item, (0, codegen_1._)`${data2}[${i}]`);
+            gen.let(item, (0, codegen_1._)`${data3}[${i}]`);
             gen.if(wrongType, (0, codegen_1._)`continue`);
             if (itemTypes.length > 1)
               gen.if((0, codegen_1._)`typeof ${item} == "string"`, (0, codegen_1._)`${item} += "_"`);
@@ -30606,7 +30606,7 @@ var require_uniqueItems2 = __commonJS({
         function loopN2(i, j) {
           const eql = (0, util_1.useFunc)(gen, equal_1.default);
           const outer = gen.name("outer");
-          gen.label(outer).for((0, codegen_1._)`;${i}--;`, () => gen.for((0, codegen_1._)`${j} = ${i}; ${j}--;`, () => gen.if((0, codegen_1._)`${eql}(${data2}[${i}], ${data2}[${j}])`, () => {
+          gen.label(outer).for((0, codegen_1._)`;${i}--;`, () => gen.for((0, codegen_1._)`${j} = ${i}; ${j}--;`, () => gen.if((0, codegen_1._)`${eql}(${data3}[${i}], ${data3}[${j}])`, () => {
             cxt.error();
             gen.assign(valid, false).break(outer);
           })));
@@ -30634,11 +30634,11 @@ var require_const2 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, $data, schemaCode, schema } = cxt;
+        const { gen, data: data3, $data, schemaCode, schema } = cxt;
         if ($data || schema && typeof schema == "object") {
-          cxt.fail$data((0, codegen_1._)`!${(0, util_1.useFunc)(gen, equal_1.default)}(${data2}, ${schemaCode})`);
+          cxt.fail$data((0, codegen_1._)`!${(0, util_1.useFunc)(gen, equal_1.default)}(${data3}, ${schemaCode})`);
         } else {
-          cxt.fail((0, codegen_1._)`${schema} !== ${data2}`);
+          cxt.fail((0, codegen_1._)`${schema} !== ${data3}`);
         }
       }
     };
@@ -30664,7 +30664,7 @@ var require_enum3 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, $data, schema, schemaCode, it } = cxt;
+        const { gen, data: data3, $data, schema, schemaCode, it } = cxt;
         if (!$data && schema.length === 0)
           throw new Error("enum must have non-empty array");
         const useLoop = schema.length >= it.opts.loopEnum;
@@ -30683,11 +30683,11 @@ var require_enum3 = __commonJS({
         cxt.pass(valid);
         function loopEnum() {
           gen.assign(valid, false);
-          gen.forOf("v", schemaCode, (v) => gen.if((0, codegen_1._)`${getEql()}(${data2}, ${v})`, () => gen.assign(valid, true).break()));
+          gen.forOf("v", schemaCode, (v) => gen.if((0, codegen_1._)`${getEql()}(${data3}, ${v})`, () => gen.assign(valid, true).break()));
         }
         function equalCode(vSchema, i) {
           const sch = schema[i];
-          return typeof sch === "object" && sch !== null ? (0, codegen_1._)`${getEql()}(${data2}, ${vSchema}[${i}])` : (0, codegen_1._)`${data2} === ${sch}`;
+          return typeof sch === "object" && sch !== null ? (0, codegen_1._)`${getEql()}(${data3}, ${vSchema}[${i}])` : (0, codegen_1._)`${data3} === ${sch}`;
         }
       }
     };
@@ -30762,9 +30762,9 @@ var require_additionalItems2 = __commonJS({
       }
     };
     function validateAdditionalItems(cxt, items) {
-      const { gen, schema, data: data2, keyword, it } = cxt;
+      const { gen, schema, data: data3, keyword, it } = cxt;
       it.items = true;
-      const len = gen.const("len", (0, codegen_1._)`${data2}.length`);
+      const len = gen.const("len", (0, codegen_1._)`${data3}.length`);
       if (schema === false) {
         cxt.setParams({ len: items.length });
         cxt.pass((0, codegen_1._)`${len} <= ${items.length}`);
@@ -30811,13 +30811,13 @@ var require_items2 = __commonJS({
       }
     };
     function validateTuple(cxt, extraItems, schArr = cxt.schema) {
-      const { gen, parentSchema, data: data2, keyword, it } = cxt;
+      const { gen, parentSchema, data: data3, keyword, it } = cxt;
       checkStrictTuple(parentSchema);
       if (it.opts.unevaluated && schArr.length && it.items !== true) {
         it.items = util_1.mergeEvaluated.items(gen, schArr.length, it.items);
       }
       const valid = gen.name("valid");
-      const len = gen.const("len", (0, codegen_1._)`${data2}.length`);
+      const len = gen.const("len", (0, codegen_1._)`${data3}.length`);
       schArr.forEach((sch, i) => {
         if ((0, util_1.alwaysValidSchema)(it, sch))
           return;
@@ -30914,7 +30914,7 @@ var require_contains2 = __commonJS({
       trackErrors: true,
       error,
       code(cxt) {
-        const { gen, schema, parentSchema, data: data2, it } = cxt;
+        const { gen, schema, parentSchema, data: data3, it } = cxt;
         let min;
         let max;
         const { minContains, maxContains } = parentSchema;
@@ -30924,7 +30924,7 @@ var require_contains2 = __commonJS({
         } else {
           min = 1;
         }
-        const len = gen.const("len", (0, codegen_1._)`${data2}.length`);
+        const len = gen.const("len", (0, codegen_1._)`${data3}.length`);
         cxt.setParams({ min, max });
         if (max === void 0 && min === 0) {
           (0, util_1.checkStrictMode)(it, `"minContains" == 0 without "maxContains": "contains" keyword ignored`);
@@ -30949,7 +30949,7 @@ var require_contains2 = __commonJS({
         } else if (min === 0) {
           gen.let(valid, true);
           if (max !== void 0)
-            gen.if((0, codegen_1._)`${data2}.length > 0`, validateItemsWithCount);
+            gen.if((0, codegen_1._)`${data3}.length > 0`, validateItemsWithCount);
         } else {
           gen.let(valid, false);
           validateItemsWithCount();
@@ -31032,7 +31032,7 @@ var require_dependencies2 = __commonJS({
       return [propertyDeps, schemaDeps];
     }
     function validatePropertyDeps(cxt, propertyDeps = cxt.schema) {
-      const { gen, data: data2, it } = cxt;
+      const { gen, data: data3, it } = cxt;
       if (Object.keys(propertyDeps).length === 0)
         return;
       const missing2 = gen.let("missing");
@@ -31040,7 +31040,7 @@ var require_dependencies2 = __commonJS({
         const deps = propertyDeps[prop];
         if (deps.length === 0)
           continue;
-        const hasProperty = (0, code_1.propertyInData)(gen, data2, prop, it.opts.ownProperties);
+        const hasProperty = (0, code_1.propertyInData)(gen, data3, prop, it.opts.ownProperties);
         cxt.setParams({
           property: prop,
           depsCount: deps.length,
@@ -31061,13 +31061,13 @@ var require_dependencies2 = __commonJS({
     }
     exports.validatePropertyDeps = validatePropertyDeps;
     function validateSchemaDeps(cxt, schemaDeps = cxt.schema) {
-      const { gen, data: data2, keyword, it } = cxt;
+      const { gen, data: data3, keyword, it } = cxt;
       const valid = gen.name("valid");
       for (const prop in schemaDeps) {
         if ((0, util_1.alwaysValidSchema)(it, schemaDeps[prop]))
           continue;
         gen.if(
-          (0, code_1.propertyInData)(gen, data2, prop, it.opts.ownProperties),
+          (0, code_1.propertyInData)(gen, data3, prop, it.opts.ownProperties),
           () => {
             const schCxt = cxt.subschema({ keyword, schemaProp: prop }, valid);
             cxt.mergeValidEvaluated(schCxt, valid);
@@ -31100,11 +31100,11 @@ var require_propertyNames2 = __commonJS({
       schemaType: ["object", "boolean"],
       error,
       code(cxt) {
-        const { gen, schema, data: data2, it } = cxt;
+        const { gen, schema, data: data3, it } = cxt;
         if ((0, util_1.alwaysValidSchema)(it, schema))
           return;
         const valid = gen.name("valid");
-        gen.forIn("key", data2, (key) => {
+        gen.forIn("key", data3, (key) => {
           cxt.setParams({ propertyName: key });
           cxt.subschema({
             keyword: "propertyNames",
@@ -31147,7 +31147,7 @@ var require_additionalProperties2 = __commonJS({
       trackErrors: true,
       error,
       code(cxt) {
-        const { gen, schema, parentSchema, data: data2, errsCount, it } = cxt;
+        const { gen, schema, parentSchema, data: data3, errsCount, it } = cxt;
         if (!errsCount)
           throw new Error("ajv implementation error");
         const { allErrors, opts } = it;
@@ -31159,7 +31159,7 @@ var require_additionalProperties2 = __commonJS({
         checkAdditionalProperties();
         cxt.ok((0, codegen_1._)`${errsCount} === ${names_1.default.errors}`);
         function checkAdditionalProperties() {
-          gen.forIn("key", data2, (key) => {
+          gen.forIn("key", data3, (key) => {
             if (!props.length && !patProps.length)
               additionalPropertyCode(key);
             else
@@ -31182,7 +31182,7 @@ var require_additionalProperties2 = __commonJS({
           return (0, codegen_1.not)(definedProp);
         }
         function deleteAdditional(key) {
-          gen.code((0, codegen_1._)`delete ${data2}[${key}]`);
+          gen.code((0, codegen_1._)`delete ${data3}[${key}]`);
         }
         function additionalPropertyCode(key) {
           if (opts.removeAdditional === "all" || opts.removeAdditional && schema === false) {
@@ -31246,7 +31246,7 @@ var require_properties3 = __commonJS({
       type: "object",
       schemaType: "object",
       code(cxt) {
-        const { gen, schema, parentSchema, data: data2, it } = cxt;
+        const { gen, schema, parentSchema, data: data3, it } = cxt;
         if (it.opts.removeAdditional === "all" && parentSchema.additionalProperties === void 0) {
           additionalProperties_1.default.code(new validate_1.KeywordCxt(it, additionalProperties_1.default, "additionalProperties"));
         }
@@ -31265,7 +31265,7 @@ var require_properties3 = __commonJS({
           if (hasDefault(prop)) {
             applyPropertySchema(prop);
           } else {
-            gen.if((0, code_1.propertyInData)(gen, data2, prop, it.opts.ownProperties));
+            gen.if((0, code_1.propertyInData)(gen, data3, prop, it.opts.ownProperties));
             applyPropertySchema(prop);
             if (!it.allErrors)
               gen.else().var(valid, true);
@@ -31304,7 +31304,7 @@ var require_patternProperties2 = __commonJS({
       type: "object",
       schemaType: "object",
       code(cxt) {
-        const { gen, schema, data: data2, parentSchema, it } = cxt;
+        const { gen, schema, data: data3, parentSchema, it } = cxt;
         const { opts } = it;
         const patterns = (0, code_1.allSchemaProperties)(schema);
         const alwaysValidPatterns = patterns.filter((p) => (0, util_1.alwaysValidSchema)(it, schema[p]));
@@ -31339,7 +31339,7 @@ var require_patternProperties2 = __commonJS({
           }
         }
         function validateProperties(pat) {
-          gen.forIn("key", data2, (key) => {
+          gen.forIn("key", data3, (key) => {
             gen.if((0, codegen_1._)`${(0, code_1.usePattern)(cxt, pat)}.test(${key})`, () => {
               const alwaysValid = alwaysValidPatterns.includes(pat);
               if (!alwaysValid) {
@@ -31649,7 +31649,7 @@ var require_format3 = __commonJS({
       $data: true,
       error,
       code(cxt, ruleType) {
-        const { gen, data: data2, $data, schema, schemaCode, it } = cxt;
+        const { gen, data: data3, $data, schema, schemaCode, it } = cxt;
         const { opts, errSchemaPath, schemaEnv, self: self2 } = it;
         if (!opts.validateFormats)
           return;
@@ -31673,8 +31673,8 @@ var require_format3 = __commonJS({
             return (0, codegen_1._)`${schemaCode} && !${format}`;
           }
           function invalidFmt() {
-            const callFormat = schemaEnv.$async ? (0, codegen_1._)`(${fDef}.async ? await ${format}(${data2}) : ${format}(${data2}))` : (0, codegen_1._)`${format}(${data2})`;
-            const validData = (0, codegen_1._)`(typeof ${format} == "function" ? ${callFormat} : ${format}.test(${data2}))`;
+            const callFormat = schemaEnv.$async ? (0, codegen_1._)`(${fDef}.async ? await ${format}(${data3}) : ${format}(${data3}))` : (0, codegen_1._)`${format}(${data3})`;
+            const validData = (0, codegen_1._)`(typeof ${format} == "function" ? ${callFormat} : ${format}.test(${data3}))`;
             return (0, codegen_1._)`${format} && ${format} !== true && ${fType} === ${ruleType} && !${validData}`;
           }
         }
@@ -31711,9 +31711,9 @@ var require_format3 = __commonJS({
             if (typeof formatDef == "object" && !(formatDef instanceof RegExp) && formatDef.async) {
               if (!schemaEnv.$async)
                 throw new Error("async format in sync schema");
-              return (0, codegen_1._)`await ${fmtRef}(${data2})`;
+              return (0, codegen_1._)`await ${fmtRef}(${data3})`;
             }
-            return typeof format == "function" ? (0, codegen_1._)`${fmtRef}(${data2})` : (0, codegen_1._)`${fmtRef}.test(${data2})`;
+            return typeof format == "function" ? (0, codegen_1._)`${fmtRef}(${data3})` : (0, codegen_1._)`${fmtRef}.test(${data3})`;
           }
         }
       }
@@ -31812,7 +31812,7 @@ var require_discriminator3 = __commonJS({
       schemaType: "object",
       error,
       code(cxt) {
-        const { gen, data: data2, schema, parentSchema, it } = cxt;
+        const { gen, data: data3, schema, parentSchema, it } = cxt;
         const { oneOf } = parentSchema;
         if (!it.opts.discriminator) {
           throw new Error("discriminator: requires discriminator option");
@@ -31825,7 +31825,7 @@ var require_discriminator3 = __commonJS({
         if (!oneOf)
           throw new Error("discriminator: requires oneOf keyword");
         const valid = gen.let("valid", false);
-        const tag = gen.const("tag", (0, codegen_1._)`${data2}${(0, codegen_1.getProperty)(tagName)}`);
+        const tag = gen.const("tag", (0, codegen_1._)`${data3}${(0, codegen_1.getProperty)(tagName)}`);
         gen.if((0, codegen_1._)`typeof ${tag} == "string"`, () => validateMapping(), () => cxt.error(false, { discrError: types_1.DiscrError.Tag, tag, tagName }));
         cxt.ok(valid);
         function validateMapping() {
@@ -32353,7 +32353,7 @@ var require_limit2 = __commonJS({
       $data: true,
       error,
       code(cxt) {
-        const { gen, data: data2, schemaCode, keyword, it } = cxt;
+        const { gen, data: data3, schemaCode, keyword, it } = cxt;
         const { opts, self: self2 } = it;
         if (!opts.validateFormats)
           return;
@@ -32386,7 +32386,7 @@ var require_limit2 = __commonJS({
           cxt.fail$data(compareCode(fmt));
         }
         function compareCode(fmt) {
-          return (0, codegen_1._)`${fmt}.compare(${data2}, ${schemaCode}) ${KWDs[keyword].fail} 0`;
+          return (0, codegen_1._)`${fmt}.compare(${data3}, ${schemaCode}) ${KWDs[keyword].fail} 0`;
         }
       },
       dependencies: ["format"]
@@ -32463,8 +32463,8 @@ var require_validator = __commonJS({
           keyword: "fjs_type",
           type: "object",
           errors: false,
-          validate: (_type, data2) => {
-            return data2 && typeof data2.toJSON === "function";
+          validate: (_type, data3) => {
+            return data3 && typeof data3.toJSON === "function";
           }
         });
         this._ajvSchemas = {};
@@ -32482,8 +32482,8 @@ var require_validator = __commonJS({
           this._ajvSchemas[schemaKey] = schema;
         }
       }
-      validate(schemaRef, data2) {
-        return this.ajv.validate(schemaRef, data2);
+      validate(schemaRef, data3) {
+        return this.ajv.validate(schemaRef, data3);
       }
       // Ajv does not natively support JavaScript objects like Date or other types
       // that rely on a custom .toJSON() representation. To properly validate schemas
@@ -32560,17 +32560,17 @@ var require_schema_validator = __commonJS({
     var formats0 = /^(?:[a-z][a-z0-9+\-.]*:)?(?:\/?\/(?:(?:[a-z0-9\-._~!$&'()*+,;=:]|%[0-9a-f]{2})*@)?(?:\[(?:(?:(?:(?:[0-9a-f]{1,4}:){6}|::(?:[0-9a-f]{1,4}:){5}|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::)(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::)|[Vv][0-9a-f]+\.[a-z0-9\-._~!$&'()*+,;=:]+)\]|(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)|(?:[a-z0-9\-._~!$&'"()*+,;=]|%[0-9a-f]{2})*)(?::\d*)?(?:\/(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})*)*|\/(?:(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})+(?:\/(?:[a-z0-9\-._~!$&'"()*+,;=:@]|%[0-9a-f]{2})*)*)?(?:\?(?:[a-z0-9\-._~!$&'"()*+,;=:@/?]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9\-._~!$&'"()*+,;=:@/?]|%[0-9a-f]{2})*)?$/i;
     var formats2 = require_formats2().fullFormats.uri;
     var formats6 = require_formats2().fullFormats.regex;
-    function validate11(data2, { instancePath = "", parentData, parentDataProperty, rootData = data2 } = {}) {
+    function validate11(data3, { instancePath = "", parentData, parentDataProperty, rootData = data3 } = {}) {
       let vErrors = null;
       let errors = 0;
       const _errs1 = errors;
-      if (!(typeof data2 == "number" && (!(data2 % 1) && !isNaN(data2)) && isFinite(data2))) {
+      if (!(typeof data3 == "number" && (!(data3 % 1) && !isNaN(data3)) && isFinite(data3))) {
         validate11.errors = [{ instancePath, schemaPath: "#/definitions/nonNegativeInteger/type", keyword: "type", params: { type: "integer" }, message: "must be integer" }];
         return false;
       }
       if (errors === _errs1) {
-        if (typeof data2 == "number" && isFinite(data2)) {
-          if (data2 < 0 || isNaN(data2)) {
+        if (typeof data3 == "number" && isFinite(data3)) {
+          if (data3 < 0 || isNaN(data3)) {
             validate11.errors = [{ instancePath, schemaPath: "#/definitions/nonNegativeInteger/minimum", keyword: "minimum", params: { comparison: ">=", limit: 0 }, message: "must be >= 0" }];
             return false;
           }
@@ -32580,20 +32580,20 @@ var require_schema_validator = __commonJS({
       return errors === 0;
     }
     var root1 = { validate: validate10 };
-    function validate13(data2, { instancePath = "", parentData, parentDataProperty, rootData = data2 } = {}) {
+    function validate13(data3, { instancePath = "", parentData, parentDataProperty, rootData = data3 } = {}) {
       let vErrors = null;
       let errors = 0;
       if (errors === 0) {
-        if (Array.isArray(data2)) {
-          if (data2.length < 1) {
+        if (Array.isArray(data3)) {
+          if (data3.length < 1) {
             validate13.errors = [{ instancePath, schemaPath: "#/minItems", keyword: "minItems", params: { limit: 1 }, message: "must NOT have fewer than 1 items" }];
             return false;
           } else {
             var valid0 = true;
-            const len0 = data2.length;
+            const len0 = data3.length;
             for (let i0 = 0; i0 < len0; i0++) {
               const _errs1 = errors;
-              if (!root1.validate(data2[i0], { instancePath: instancePath + "/" + i0, parentData: data2, parentDataProperty: i0, rootData })) {
+              if (!root1.validate(data3[i0], { instancePath: instancePath + "/" + i0, parentData: data3, parentDataProperty: i0, rootData })) {
                 vErrors = vErrors === null ? root1.validate.errors : vErrors.concat(root1.validate.errors);
                 errors = vErrors.length;
               }
@@ -32612,18 +32612,18 @@ var require_schema_validator = __commonJS({
       return errors === 0;
     }
     var func0 = require_equal2().default;
-    function validate10(data2, { instancePath = "", parentData, parentDataProperty, rootData = data2 } = {}) {
+    function validate10(data3, { instancePath = "", parentData, parentDataProperty, rootData = data3 } = {}) {
       ;
       let vErrors = null;
       let errors = 0;
-      if (!(data2 && typeof data2 == "object" && !Array.isArray(data2)) && typeof data2 !== "boolean") {
+      if (!(data3 && typeof data3 == "object" && !Array.isArray(data3)) && typeof data3 !== "boolean") {
         validate10.errors = [{ instancePath, schemaPath: "#/type", keyword: "type", params: { type: schema11.type }, message: "must be object,boolean" }];
         return false;
       }
       if (errors === 0) {
-        if (data2 && typeof data2 == "object" && !Array.isArray(data2)) {
-          if (data2.$id !== void 0) {
-            let data0 = data2.$id;
+        if (data3 && typeof data3 == "object" && !Array.isArray(data3)) {
+          if (data3.$id !== void 0) {
+            let data0 = data3.$id;
             const _errs1 = errors;
             if (errors === _errs1) {
               if (errors === _errs1) {
@@ -32643,8 +32643,8 @@ var require_schema_validator = __commonJS({
             var valid0 = true;
           }
           if (valid0) {
-            if (data2.$schema !== void 0) {
-              let data1 = data2.$schema;
+            if (data3.$schema !== void 0) {
+              let data1 = data3.$schema;
               const _errs3 = errors;
               if (errors === _errs3) {
                 if (errors === _errs3) {
@@ -32664,8 +32664,8 @@ var require_schema_validator = __commonJS({
               var valid0 = true;
             }
             if (valid0) {
-              if (data2.$ref !== void 0) {
-                let data22 = data2.$ref;
+              if (data3.$ref !== void 0) {
+                let data22 = data3.$ref;
                 const _errs5 = errors;
                 if (errors === _errs5) {
                   if (errors === _errs5) {
@@ -32685,9 +32685,9 @@ var require_schema_validator = __commonJS({
                 var valid0 = true;
               }
               if (valid0) {
-                if (data2.$comment !== void 0) {
+                if (data3.$comment !== void 0) {
                   const _errs7 = errors;
-                  if (typeof data2.$comment !== "string") {
+                  if (typeof data3.$comment !== "string") {
                     validate10.errors = [{ instancePath: instancePath + "/$comment", schemaPath: "#/properties/%24comment/type", keyword: "type", params: { type: "string" }, message: "must be string" }];
                     return false;
                   }
@@ -32696,9 +32696,9 @@ var require_schema_validator = __commonJS({
                   var valid0 = true;
                 }
                 if (valid0) {
-                  if (data2.title !== void 0) {
+                  if (data3.title !== void 0) {
                     const _errs9 = errors;
-                    if (typeof data2.title !== "string") {
+                    if (typeof data3.title !== "string") {
                       validate10.errors = [{ instancePath: instancePath + "/title", schemaPath: "#/properties/title/type", keyword: "type", params: { type: "string" }, message: "must be string" }];
                       return false;
                     }
@@ -32707,9 +32707,9 @@ var require_schema_validator = __commonJS({
                     var valid0 = true;
                   }
                   if (valid0) {
-                    if (data2.description !== void 0) {
+                    if (data3.description !== void 0) {
                       const _errs11 = errors;
-                      if (typeof data2.description !== "string") {
+                      if (typeof data3.description !== "string") {
                         validate10.errors = [{ instancePath: instancePath + "/description", schemaPath: "#/properties/description/type", keyword: "type", params: { type: "string" }, message: "must be string" }];
                         return false;
                       }
@@ -32718,9 +32718,9 @@ var require_schema_validator = __commonJS({
                       var valid0 = true;
                     }
                     if (valid0) {
-                      if (data2.readOnly !== void 0) {
+                      if (data3.readOnly !== void 0) {
                         const _errs13 = errors;
-                        if (typeof data2.readOnly !== "boolean") {
+                        if (typeof data3.readOnly !== "boolean") {
                           validate10.errors = [{ instancePath: instancePath + "/readOnly", schemaPath: "#/properties/readOnly/type", keyword: "type", params: { type: "boolean" }, message: "must be boolean" }];
                           return false;
                         }
@@ -32729,10 +32729,10 @@ var require_schema_validator = __commonJS({
                         var valid0 = true;
                       }
                       if (valid0) {
-                        if (data2.examples !== void 0) {
+                        if (data3.examples !== void 0) {
                           const _errs15 = errors;
                           if (errors === _errs15) {
-                            if (!Array.isArray(data2.examples)) {
+                            if (!Array.isArray(data3.examples)) {
                               validate10.errors = [{ instancePath: instancePath + "/examples", schemaPath: "#/properties/examples/type", keyword: "type", params: { type: "array" }, message: "must be array" }];
                               return false;
                             }
@@ -32742,8 +32742,8 @@ var require_schema_validator = __commonJS({
                           var valid0 = true;
                         }
                         if (valid0) {
-                          if (data2.multipleOf !== void 0) {
-                            let data8 = data2.multipleOf;
+                          if (data3.multipleOf !== void 0) {
+                            let data8 = data3.multipleOf;
                             const _errs17 = errors;
                             if (errors === _errs17) {
                               if (typeof data8 == "number" && isFinite(data8)) {
@@ -32761,8 +32761,8 @@ var require_schema_validator = __commonJS({
                             var valid0 = true;
                           }
                           if (valid0) {
-                            if (data2.maximum !== void 0) {
-                              let data9 = data2.maximum;
+                            if (data3.maximum !== void 0) {
+                              let data9 = data3.maximum;
                               const _errs19 = errors;
                               if (!(typeof data9 == "number" && isFinite(data9))) {
                                 validate10.errors = [{ instancePath: instancePath + "/maximum", schemaPath: "#/properties/maximum/type", keyword: "type", params: { type: "number" }, message: "must be number" }];
@@ -32773,8 +32773,8 @@ var require_schema_validator = __commonJS({
                               var valid0 = true;
                             }
                             if (valid0) {
-                              if (data2.exclusiveMaximum !== void 0) {
-                                let data10 = data2.exclusiveMaximum;
+                              if (data3.exclusiveMaximum !== void 0) {
+                                let data10 = data3.exclusiveMaximum;
                                 const _errs21 = errors;
                                 if (!(typeof data10 == "number" && isFinite(data10))) {
                                   validate10.errors = [{ instancePath: instancePath + "/exclusiveMaximum", schemaPath: "#/properties/exclusiveMaximum/type", keyword: "type", params: { type: "number" }, message: "must be number" }];
@@ -32785,8 +32785,8 @@ var require_schema_validator = __commonJS({
                                 var valid0 = true;
                               }
                               if (valid0) {
-                                if (data2.minimum !== void 0) {
-                                  let data11 = data2.minimum;
+                                if (data3.minimum !== void 0) {
+                                  let data11 = data3.minimum;
                                   const _errs23 = errors;
                                   if (!(typeof data11 == "number" && isFinite(data11))) {
                                     validate10.errors = [{ instancePath: instancePath + "/minimum", schemaPath: "#/properties/minimum/type", keyword: "type", params: { type: "number" }, message: "must be number" }];
@@ -32797,8 +32797,8 @@ var require_schema_validator = __commonJS({
                                   var valid0 = true;
                                 }
                                 if (valid0) {
-                                  if (data2.exclusiveMinimum !== void 0) {
-                                    let data12 = data2.exclusiveMinimum;
+                                  if (data3.exclusiveMinimum !== void 0) {
+                                    let data12 = data3.exclusiveMinimum;
                                     const _errs25 = errors;
                                     if (!(typeof data12 == "number" && isFinite(data12))) {
                                       validate10.errors = [{ instancePath: instancePath + "/exclusiveMinimum", schemaPath: "#/properties/exclusiveMinimum/type", keyword: "type", params: { type: "number" }, message: "must be number" }];
@@ -32809,8 +32809,8 @@ var require_schema_validator = __commonJS({
                                     var valid0 = true;
                                   }
                                   if (valid0) {
-                                    if (data2.maxLength !== void 0) {
-                                      let data13 = data2.maxLength;
+                                    if (data3.maxLength !== void 0) {
+                                      let data13 = data3.maxLength;
                                       const _errs27 = errors;
                                       const _errs28 = errors;
                                       if (!(typeof data13 == "number" && (!(data13 % 1) && !isNaN(data13)) && isFinite(data13))) {
@@ -32830,9 +32830,9 @@ var require_schema_validator = __commonJS({
                                       var valid0 = true;
                                     }
                                     if (valid0) {
-                                      if (data2.minLength !== void 0) {
+                                      if (data3.minLength !== void 0) {
                                         const _errs30 = errors;
-                                        if (!validate11(data2.minLength, { instancePath: instancePath + "/minLength", parentData: data2, parentDataProperty: "minLength", rootData })) {
+                                        if (!validate11(data3.minLength, { instancePath: instancePath + "/minLength", parentData: data3, parentDataProperty: "minLength", rootData })) {
                                           vErrors = vErrors === null ? validate11.errors : vErrors.concat(validate11.errors);
                                           errors = vErrors.length;
                                         }
@@ -32841,8 +32841,8 @@ var require_schema_validator = __commonJS({
                                         var valid0 = true;
                                       }
                                       if (valid0) {
-                                        if (data2.pattern !== void 0) {
-                                          let data15 = data2.pattern;
+                                        if (data3.pattern !== void 0) {
+                                          let data15 = data3.pattern;
                                           const _errs31 = errors;
                                           if (errors === _errs31) {
                                             if (errors === _errs31) {
@@ -32862,9 +32862,9 @@ var require_schema_validator = __commonJS({
                                           var valid0 = true;
                                         }
                                         if (valid0) {
-                                          if (data2.additionalItems !== void 0) {
+                                          if (data3.additionalItems !== void 0) {
                                             const _errs33 = errors;
-                                            if (!validate10(data2.additionalItems, { instancePath: instancePath + "/additionalItems", parentData: data2, parentDataProperty: "additionalItems", rootData })) {
+                                            if (!validate10(data3.additionalItems, { instancePath: instancePath + "/additionalItems", parentData: data3, parentDataProperty: "additionalItems", rootData })) {
                                               vErrors = vErrors === null ? validate10.errors : vErrors.concat(validate10.errors);
                                               errors = vErrors.length;
                                             }
@@ -32873,13 +32873,13 @@ var require_schema_validator = __commonJS({
                                             var valid0 = true;
                                           }
                                           if (valid0) {
-                                            if (data2.items !== void 0) {
-                                              let data17 = data2.items;
+                                            if (data3.items !== void 0) {
+                                              let data17 = data3.items;
                                               const _errs34 = errors;
                                               const _errs35 = errors;
                                               let valid2 = false;
                                               const _errs36 = errors;
-                                              if (!validate10(data17, { instancePath: instancePath + "/items", parentData: data2, parentDataProperty: "items", rootData })) {
+                                              if (!validate10(data17, { instancePath: instancePath + "/items", parentData: data3, parentDataProperty: "items", rootData })) {
                                                 vErrors = vErrors === null ? validate10.errors : vErrors.concat(validate10.errors);
                                                 errors = vErrors.length;
                                               }
@@ -32887,7 +32887,7 @@ var require_schema_validator = __commonJS({
                                               valid2 = valid2 || _valid0;
                                               if (!valid2) {
                                                 const _errs37 = errors;
-                                                if (!validate13(data17, { instancePath: instancePath + "/items", parentData: data2, parentDataProperty: "items", rootData })) {
+                                                if (!validate13(data17, { instancePath: instancePath + "/items", parentData: data3, parentDataProperty: "items", rootData })) {
                                                   vErrors = vErrors === null ? validate13.errors : vErrors.concat(validate13.errors);
                                                   errors = vErrors.length;
                                                 }
@@ -32919,8 +32919,8 @@ var require_schema_validator = __commonJS({
                                               var valid0 = true;
                                             }
                                             if (valid0) {
-                                              if (data2.maxItems !== void 0) {
-                                                let data18 = data2.maxItems;
+                                              if (data3.maxItems !== void 0) {
+                                                let data18 = data3.maxItems;
                                                 const _errs38 = errors;
                                                 const _errs39 = errors;
                                                 if (!(typeof data18 == "number" && (!(data18 % 1) && !isNaN(data18)) && isFinite(data18))) {
@@ -32940,9 +32940,9 @@ var require_schema_validator = __commonJS({
                                                 var valid0 = true;
                                               }
                                               if (valid0) {
-                                                if (data2.minItems !== void 0) {
+                                                if (data3.minItems !== void 0) {
                                                   const _errs41 = errors;
-                                                  if (!validate11(data2.minItems, { instancePath: instancePath + "/minItems", parentData: data2, parentDataProperty: "minItems", rootData })) {
+                                                  if (!validate11(data3.minItems, { instancePath: instancePath + "/minItems", parentData: data3, parentDataProperty: "minItems", rootData })) {
                                                     vErrors = vErrors === null ? validate11.errors : vErrors.concat(validate11.errors);
                                                     errors = vErrors.length;
                                                   }
@@ -32951,9 +32951,9 @@ var require_schema_validator = __commonJS({
                                                   var valid0 = true;
                                                 }
                                                 if (valid0) {
-                                                  if (data2.uniqueItems !== void 0) {
+                                                  if (data3.uniqueItems !== void 0) {
                                                     const _errs42 = errors;
-                                                    if (typeof data2.uniqueItems !== "boolean") {
+                                                    if (typeof data3.uniqueItems !== "boolean") {
                                                       validate10.errors = [{ instancePath: instancePath + "/uniqueItems", schemaPath: "#/properties/uniqueItems/type", keyword: "type", params: { type: "boolean" }, message: "must be boolean" }];
                                                       return false;
                                                     }
@@ -32962,9 +32962,9 @@ var require_schema_validator = __commonJS({
                                                     var valid0 = true;
                                                   }
                                                   if (valid0) {
-                                                    if (data2.contains !== void 0) {
+                                                    if (data3.contains !== void 0) {
                                                       const _errs44 = errors;
-                                                      if (!validate10(data2.contains, { instancePath: instancePath + "/contains", parentData: data2, parentDataProperty: "contains", rootData })) {
+                                                      if (!validate10(data3.contains, { instancePath: instancePath + "/contains", parentData: data3, parentDataProperty: "contains", rootData })) {
                                                         vErrors = vErrors === null ? validate10.errors : vErrors.concat(validate10.errors);
                                                         errors = vErrors.length;
                                                       }
@@ -32973,8 +32973,8 @@ var require_schema_validator = __commonJS({
                                                       var valid0 = true;
                                                     }
                                                     if (valid0) {
-                                                      if (data2.maxProperties !== void 0) {
-                                                        let data22 = data2.maxProperties;
+                                                      if (data3.maxProperties !== void 0) {
+                                                        let data22 = data3.maxProperties;
                                                         const _errs45 = errors;
                                                         const _errs46 = errors;
                                                         if (!(typeof data22 == "number" && (!(data22 % 1) && !isNaN(data22)) && isFinite(data22))) {
@@ -32994,9 +32994,9 @@ var require_schema_validator = __commonJS({
                                                         var valid0 = true;
                                                       }
                                                       if (valid0) {
-                                                        if (data2.minProperties !== void 0) {
+                                                        if (data3.minProperties !== void 0) {
                                                           const _errs48 = errors;
-                                                          if (!validate11(data2.minProperties, { instancePath: instancePath + "/minProperties", parentData: data2, parentDataProperty: "minProperties", rootData })) {
+                                                          if (!validate11(data3.minProperties, { instancePath: instancePath + "/minProperties", parentData: data3, parentDataProperty: "minProperties", rootData })) {
                                                             vErrors = vErrors === null ? validate11.errors : vErrors.concat(validate11.errors);
                                                             errors = vErrors.length;
                                                           }
@@ -33005,8 +33005,8 @@ var require_schema_validator = __commonJS({
                                                           var valid0 = true;
                                                         }
                                                         if (valid0) {
-                                                          if (data2.required !== void 0) {
-                                                            let data24 = data2.required;
+                                                          if (data3.required !== void 0) {
+                                                            let data24 = data3.required;
                                                             const _errs49 = errors;
                                                             const _errs50 = errors;
                                                             if (errors === _errs50) {
@@ -33054,9 +33054,9 @@ var require_schema_validator = __commonJS({
                                                             var valid0 = true;
                                                           }
                                                           if (valid0) {
-                                                            if (data2.additionalProperties !== void 0) {
+                                                            if (data3.additionalProperties !== void 0) {
                                                               const _errs54 = errors;
-                                                              if (!validate10(data2.additionalProperties, { instancePath: instancePath + "/additionalProperties", parentData: data2, parentDataProperty: "additionalProperties", rootData })) {
+                                                              if (!validate10(data3.additionalProperties, { instancePath: instancePath + "/additionalProperties", parentData: data3, parentDataProperty: "additionalProperties", rootData })) {
                                                                 vErrors = vErrors === null ? validate10.errors : vErrors.concat(validate10.errors);
                                                                 errors = vErrors.length;
                                                               }
@@ -33065,8 +33065,8 @@ var require_schema_validator = __commonJS({
                                                               var valid0 = true;
                                                             }
                                                             if (valid0) {
-                                                              if (data2.definitions !== void 0) {
-                                                                let data27 = data2.definitions;
+                                                              if (data3.definitions !== void 0) {
+                                                                let data27 = data3.definitions;
                                                                 const _errs55 = errors;
                                                                 if (errors === _errs55) {
                                                                   if (data27 && typeof data27 == "object" && !Array.isArray(data27)) {
@@ -33091,8 +33091,8 @@ var require_schema_validator = __commonJS({
                                                                 var valid0 = true;
                                                               }
                                                               if (valid0) {
-                                                                if (data2.properties !== void 0) {
-                                                                  let data29 = data2.properties;
+                                                                if (data3.properties !== void 0) {
+                                                                  let data29 = data3.properties;
                                                                   const _errs59 = errors;
                                                                   if (errors === _errs59) {
                                                                     if (data29 && typeof data29 == "object" && !Array.isArray(data29)) {
@@ -33117,8 +33117,8 @@ var require_schema_validator = __commonJS({
                                                                   var valid0 = true;
                                                                 }
                                                                 if (valid0) {
-                                                                  if (data2.patternProperties !== void 0) {
-                                                                    let data31 = data2.patternProperties;
+                                                                  if (data3.patternProperties !== void 0) {
+                                                                    let data31 = data3.patternProperties;
                                                                     const _errs63 = errors;
                                                                     if (errors === _errs63) {
                                                                       if (data31 && typeof data31 == "object" && !Array.isArray(data31)) {
@@ -33174,8 +33174,8 @@ var require_schema_validator = __commonJS({
                                                                     var valid0 = true;
                                                                   }
                                                                   if (valid0) {
-                                                                    if (data2.dependencies !== void 0) {
-                                                                      let data33 = data2.dependencies;
+                                                                    if (data3.dependencies !== void 0) {
+                                                                      let data33 = data3.dependencies;
                                                                       const _errs68 = errors;
                                                                       if (errors === _errs68) {
                                                                         if (data33 && typeof data33 == "object" && !Array.isArray(data33)) {
@@ -33287,9 +33287,9 @@ var require_schema_validator = __commonJS({
                                                                       var valid0 = true;
                                                                     }
                                                                     if (valid0) {
-                                                                      if (data2.propertyNames !== void 0) {
+                                                                      if (data3.propertyNames !== void 0) {
                                                                         const _errs79 = errors;
-                                                                        if (!validate10(data2.propertyNames, { instancePath: instancePath + "/propertyNames", parentData: data2, parentDataProperty: "propertyNames", rootData })) {
+                                                                        if (!validate10(data3.propertyNames, { instancePath: instancePath + "/propertyNames", parentData: data3, parentDataProperty: "propertyNames", rootData })) {
                                                                           vErrors = vErrors === null ? validate10.errors : vErrors.concat(validate10.errors);
                                                                           errors = vErrors.length;
                                                                         }
@@ -33298,8 +33298,8 @@ var require_schema_validator = __commonJS({
                                                                         var valid0 = true;
                                                                       }
                                                                       if (valid0) {
-                                                                        if (data2.enum !== void 0) {
-                                                                          let data37 = data2.enum;
+                                                                        if (data3.enum !== void 0) {
+                                                                          let data37 = data3.enum;
                                                                           const _errs80 = errors;
                                                                           if (errors === _errs80) {
                                                                             if (Array.isArray(data37)) {
@@ -33332,8 +33332,8 @@ var require_schema_validator = __commonJS({
                                                                           var valid0 = true;
                                                                         }
                                                                         if (valid0) {
-                                                                          if (data2.type !== void 0) {
-                                                                            let data38 = data2.type;
+                                                                          if (data3.type !== void 0) {
+                                                                            let data38 = data3.type;
                                                                             const _errs82 = errors;
                                                                             const _errs83 = errors;
                                                                             let valid18 = false;
@@ -33441,9 +33441,9 @@ var require_schema_validator = __commonJS({
                                                                             var valid0 = true;
                                                                           }
                                                                           if (valid0) {
-                                                                            if (data2.format !== void 0) {
+                                                                            if (data3.format !== void 0) {
                                                                               const _errs90 = errors;
-                                                                              if (typeof data2.format !== "string") {
+                                                                              if (typeof data3.format !== "string") {
                                                                                 validate10.errors = [{ instancePath: instancePath + "/format", schemaPath: "#/properties/format/type", keyword: "type", params: { type: "string" }, message: "must be string" }];
                                                                                 return false;
                                                                               }
@@ -33452,9 +33452,9 @@ var require_schema_validator = __commonJS({
                                                                               var valid0 = true;
                                                                             }
                                                                             if (valid0) {
-                                                                              if (data2.contentMediaType !== void 0) {
+                                                                              if (data3.contentMediaType !== void 0) {
                                                                                 const _errs92 = errors;
-                                                                                if (typeof data2.contentMediaType !== "string") {
+                                                                                if (typeof data3.contentMediaType !== "string") {
                                                                                   validate10.errors = [{ instancePath: instancePath + "/contentMediaType", schemaPath: "#/properties/contentMediaType/type", keyword: "type", params: { type: "string" }, message: "must be string" }];
                                                                                   return false;
                                                                                 }
@@ -33463,9 +33463,9 @@ var require_schema_validator = __commonJS({
                                                                                 var valid0 = true;
                                                                               }
                                                                               if (valid0) {
-                                                                                if (data2.contentEncoding !== void 0) {
+                                                                                if (data3.contentEncoding !== void 0) {
                                                                                   const _errs94 = errors;
-                                                                                  if (typeof data2.contentEncoding !== "string") {
+                                                                                  if (typeof data3.contentEncoding !== "string") {
                                                                                     validate10.errors = [{ instancePath: instancePath + "/contentEncoding", schemaPath: "#/properties/contentEncoding/type", keyword: "type", params: { type: "string" }, message: "must be string" }];
                                                                                     return false;
                                                                                   }
@@ -33474,9 +33474,9 @@ var require_schema_validator = __commonJS({
                                                                                   var valid0 = true;
                                                                                 }
                                                                                 if (valid0) {
-                                                                                  if (data2.if !== void 0) {
+                                                                                  if (data3.if !== void 0) {
                                                                                     const _errs96 = errors;
-                                                                                    if (!validate10(data2.if, { instancePath: instancePath + "/if", parentData: data2, parentDataProperty: "if", rootData })) {
+                                                                                    if (!validate10(data3.if, { instancePath: instancePath + "/if", parentData: data3, parentDataProperty: "if", rootData })) {
                                                                                       vErrors = vErrors === null ? validate10.errors : vErrors.concat(validate10.errors);
                                                                                       errors = vErrors.length;
                                                                                     }
@@ -33485,9 +33485,9 @@ var require_schema_validator = __commonJS({
                                                                                     var valid0 = true;
                                                                                   }
                                                                                   if (valid0) {
-                                                                                    if (data2.then !== void 0) {
+                                                                                    if (data3.then !== void 0) {
                                                                                       const _errs97 = errors;
-                                                                                      if (!validate10(data2.then, { instancePath: instancePath + "/then", parentData: data2, parentDataProperty: "then", rootData })) {
+                                                                                      if (!validate10(data3.then, { instancePath: instancePath + "/then", parentData: data3, parentDataProperty: "then", rootData })) {
                                                                                         vErrors = vErrors === null ? validate10.errors : vErrors.concat(validate10.errors);
                                                                                         errors = vErrors.length;
                                                                                       }
@@ -33496,9 +33496,9 @@ var require_schema_validator = __commonJS({
                                                                                       var valid0 = true;
                                                                                     }
                                                                                     if (valid0) {
-                                                                                      if (data2.else !== void 0) {
+                                                                                      if (data3.else !== void 0) {
                                                                                         const _errs98 = errors;
-                                                                                        if (!validate10(data2.else, { instancePath: instancePath + "/else", parentData: data2, parentDataProperty: "else", rootData })) {
+                                                                                        if (!validate10(data3.else, { instancePath: instancePath + "/else", parentData: data3, parentDataProperty: "else", rootData })) {
                                                                                           vErrors = vErrors === null ? validate10.errors : vErrors.concat(validate10.errors);
                                                                                           errors = vErrors.length;
                                                                                         }
@@ -33507,9 +33507,9 @@ var require_schema_validator = __commonJS({
                                                                                         var valid0 = true;
                                                                                       }
                                                                                       if (valid0) {
-                                                                                        if (data2.allOf !== void 0) {
+                                                                                        if (data3.allOf !== void 0) {
                                                                                           const _errs99 = errors;
-                                                                                          if (!validate13(data2.allOf, { instancePath: instancePath + "/allOf", parentData: data2, parentDataProperty: "allOf", rootData })) {
+                                                                                          if (!validate13(data3.allOf, { instancePath: instancePath + "/allOf", parentData: data3, parentDataProperty: "allOf", rootData })) {
                                                                                             vErrors = vErrors === null ? validate13.errors : vErrors.concat(validate13.errors);
                                                                                             errors = vErrors.length;
                                                                                           }
@@ -33518,9 +33518,9 @@ var require_schema_validator = __commonJS({
                                                                                           var valid0 = true;
                                                                                         }
                                                                                         if (valid0) {
-                                                                                          if (data2.anyOf !== void 0) {
+                                                                                          if (data3.anyOf !== void 0) {
                                                                                             const _errs100 = errors;
-                                                                                            if (!validate13(data2.anyOf, { instancePath: instancePath + "/anyOf", parentData: data2, parentDataProperty: "anyOf", rootData })) {
+                                                                                            if (!validate13(data3.anyOf, { instancePath: instancePath + "/anyOf", parentData: data3, parentDataProperty: "anyOf", rootData })) {
                                                                                               vErrors = vErrors === null ? validate13.errors : vErrors.concat(validate13.errors);
                                                                                               errors = vErrors.length;
                                                                                             }
@@ -33529,9 +33529,9 @@ var require_schema_validator = __commonJS({
                                                                                             var valid0 = true;
                                                                                           }
                                                                                           if (valid0) {
-                                                                                            if (data2.oneOf !== void 0) {
+                                                                                            if (data3.oneOf !== void 0) {
                                                                                               const _errs101 = errors;
-                                                                                              if (!validate13(data2.oneOf, { instancePath: instancePath + "/oneOf", parentData: data2, parentDataProperty: "oneOf", rootData })) {
+                                                                                              if (!validate13(data3.oneOf, { instancePath: instancePath + "/oneOf", parentData: data3, parentDataProperty: "oneOf", rootData })) {
                                                                                                 vErrors = vErrors === null ? validate13.errors : vErrors.concat(validate13.errors);
                                                                                                 errors = vErrors.length;
                                                                                               }
@@ -33540,9 +33540,9 @@ var require_schema_validator = __commonJS({
                                                                                               var valid0 = true;
                                                                                             }
                                                                                             if (valid0) {
-                                                                                              if (data2.not !== void 0) {
+                                                                                              if (data3.not !== void 0) {
                                                                                                 const _errs102 = errors;
-                                                                                                if (!validate10(data2.not, { instancePath: instancePath + "/not", parentData: data2, parentDataProperty: "not", rootData })) {
+                                                                                                if (!validate10(data3.not, { instancePath: instancePath + "/not", parentData: data3, parentDataProperty: "not", rootData })) {
                                                                                                   vErrors = vErrors === null ? validate10.errors : vErrors.concat(validate10.errors);
                                                                                                   errors = vErrors.length;
                                                                                                 }
@@ -41992,7 +41992,7 @@ var require_parse_url = __commonJS({
 var require_form_data = __commonJS({
   "node_modules/light-my-request/lib/form-data.js"(exports, module) {
     "use strict";
-    var { randomUUID: randomUUID21 } = __require("node:crypto");
+    var { randomUUID: randomUUID23 } = __require("node:crypto");
     var { Readable } = __require("node:stream");
     var textEncoder;
     function isFormDataLike(payload) {
@@ -42000,7 +42000,7 @@ var require_form_data = __commonJS({
     }
     function formDataToStream(formdata) {
       textEncoder = textEncoder ?? new TextEncoder();
-      const boundary = `----formdata-${randomUUID21()}`;
+      const boundary = `----formdata-${randomUUID23()}`;
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
       const escape2 = (str8) => str8.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
@@ -42507,21 +42507,21 @@ var require_response = __commonJS({
       }
       return result;
     };
-    Response.prototype.write = function(data2, encoding, callback) {
+    Response.prototype.write = function(data3, encoding, callback) {
       if (this.timeoutHandle) {
         clearTimeout(this.timeoutHandle);
       }
-      http.ServerResponse.prototype.write.call(this, data2, encoding, callback);
+      http.ServerResponse.prototype.write.call(this, data3, encoding, callback);
       if (this._lightMyRequest.stream) {
-        return this._lightMyRequest.stream.push(Buffer.from(data2, encoding));
+        return this._lightMyRequest.stream.push(Buffer.from(data3, encoding));
       } else {
-        this._lightMyRequest.payloadChunks.push(Buffer.from(data2, encoding));
+        this._lightMyRequest.payloadChunks.push(Buffer.from(data3, encoding));
         return true;
       }
     };
-    Response.prototype.end = function(data2, encoding, callback) {
-      if (data2) {
-        this.write(data2, encoding);
+    Response.prototype.end = function(data3, encoding, callback) {
+      if (data3) {
+        this.write(data3, encoding);
       }
       http.ServerResponse.prototype.end.call(this, callback);
       this.emit("finish");
@@ -42618,16 +42618,16 @@ var require_config_validator2 = __commonJS({
     module.exports = validate10;
     module.exports.default = validate10;
     var schema11 = { "type": "object", "properties": { "url": { "oneOf": [{ "type": "string" }, { "type": "object", "properties": { "protocol": { "type": "string" }, "hostname": { "type": "string" }, "pathname": { "type": "string" } }, "additionalProperties": true, "required": ["pathname"] }] }, "path": { "oneOf": [{ "type": "string" }, { "type": "object", "properties": { "protocol": { "type": "string" }, "hostname": { "type": "string" }, "pathname": { "type": "string" } }, "additionalProperties": true, "required": ["pathname"] }] }, "cookies": { "type": "object", "additionalProperties": true }, "headers": { "type": "object", "additionalProperties": true }, "query": { "anyOf": [{ "type": "object", "additionalProperties": true }, { "type": "string" }] }, "simulate": { "type": "object", "properties": { "end": { "type": "boolean" }, "split": { "type": "boolean" }, "error": { "type": "boolean" }, "close": { "type": "boolean" } } }, "authority": { "type": "string" }, "remoteAddress": { "type": "string" }, "method": { "type": "string", "enum": ["ACL", "BIND", "CHECKOUT", "CONNECT", "COPY", "DELETE", "GET", "HEAD", "LINK", "LOCK", "M-SEARCH", "MERGE", "MKACTIVITY", "MKCALENDAR", "MKCOL", "MOVE", "NOTIFY", "OPTIONS", "PATCH", "POST", "PROPFIND", "PROPPATCH", "PURGE", "PUT", "QUERY", "REBIND", "REPORT", "SEARCH", "SOURCE", "SUBSCRIBE", "TRACE", "UNBIND", "UNLINK", "UNLOCK", "UNSUBSCRIBE", "acl", "bind", "checkout", "connect", "copy", "delete", "get", "head", "link", "lock", "m-search", "merge", "mkactivity", "mkcalendar", "mkcol", "move", "notify", "options", "patch", "post", "propfind", "proppatch", "purge", "put", "query", "rebind", "report", "search", "source", "subscribe", "trace", "unbind", "unlink", "unlock", "unsubscribe"] }, "validate": { "type": "boolean" } }, "additionalProperties": true, "oneOf": [{ "required": ["url"] }, { "required": ["path"] }] };
-    function validate10(data2, { instancePath = "", parentData, parentDataProperty, rootData = data2 } = {}) {
+    function validate10(data3, { instancePath = "", parentData, parentDataProperty, rootData = data3 } = {}) {
       let vErrors = null;
       let errors = 0;
       const _errs1 = errors;
       let valid0 = false;
       let passing0 = null;
       const _errs2 = errors;
-      if (data2 && typeof data2 == "object" && !Array.isArray(data2)) {
+      if (data3 && typeof data3 == "object" && !Array.isArray(data3)) {
         let missing0;
-        if (data2.url === void 0 && (missing0 = "url")) {
+        if (data3.url === void 0 && (missing0 = "url")) {
           const err0 = { instancePath, schemaPath: "#/oneOf/0/required", keyword: "required", params: { missingProperty: missing0 }, message: "must have required property '" + missing0 + "'" };
           if (vErrors === null) {
             vErrors = [err0];
@@ -42643,9 +42643,9 @@ var require_config_validator2 = __commonJS({
         passing0 = 0;
       }
       const _errs3 = errors;
-      if (data2 && typeof data2 == "object" && !Array.isArray(data2)) {
+      if (data3 && typeof data3 == "object" && !Array.isArray(data3)) {
         let missing1;
-        if (data2.path === void 0 && (missing1 = "path")) {
+        if (data3.path === void 0 && (missing1 = "path")) {
           const err1 = { instancePath, schemaPath: "#/oneOf/1/required", keyword: "required", params: { missingProperty: missing1 }, message: "must have required property '" + missing1 + "'" };
           if (vErrors === null) {
             vErrors = [err1];
@@ -42686,9 +42686,9 @@ var require_config_validator2 = __commonJS({
         }
       }
       if (errors === 0) {
-        if (data2 && typeof data2 == "object" && !Array.isArray(data2)) {
-          if (data2.url !== void 0) {
-            let data0 = data2.url;
+        if (data3 && typeof data3 == "object" && !Array.isArray(data3)) {
+          if (data3.url !== void 0) {
+            let data0 = data3.url;
             const _errs5 = errors;
             const _errs6 = errors;
             let valid2 = false;
@@ -42714,8 +42714,8 @@ var require_config_validator2 = __commonJS({
               }
               if (coerced0 !== void 0) {
                 data0 = coerced0;
-                if (data2 !== void 0) {
-                  data2["url"] = coerced0;
+                if (data3 !== void 0) {
+                  data3["url"] = coerced0;
                 }
               }
             }
@@ -42804,15 +42804,15 @@ var require_config_validator2 = __commonJS({
                     }
                     if (valid3) {
                       if (data0.pathname !== void 0) {
-                        let data3 = data0.pathname;
+                        let data32 = data0.pathname;
                         const _errs16 = errors;
-                        if (typeof data3 !== "string") {
-                          let dataType3 = typeof data3;
+                        if (typeof data32 !== "string") {
+                          let dataType3 = typeof data32;
                           let coerced3 = void 0;
                           if (!(coerced3 !== void 0)) {
                             if (dataType3 == "number" || dataType3 == "boolean") {
-                              coerced3 = "" + data3;
-                            } else if (data3 === null) {
+                              coerced3 = "" + data32;
+                            } else if (data32 === null) {
                               coerced3 = "";
                             } else {
                               const err7 = { instancePath: instancePath + "/url/pathname", schemaPath: "#/properties/url/oneOf/1/properties/pathname/type", keyword: "type", params: { type: "string" }, message: "must be string" };
@@ -42825,7 +42825,7 @@ var require_config_validator2 = __commonJS({
                             }
                           }
                           if (coerced3 !== void 0) {
-                            data3 = coerced3;
+                            data32 = coerced3;
                             if (data0 !== void 0) {
                               data0["pathname"] = coerced3;
                             }
@@ -42883,8 +42883,8 @@ var require_config_validator2 = __commonJS({
             var valid1 = true;
           }
           if (valid1) {
-            if (data2.path !== void 0) {
-              let data4 = data2.path;
+            if (data3.path !== void 0) {
+              let data4 = data3.path;
               const _errs18 = errors;
               const _errs19 = errors;
               let valid4 = false;
@@ -42910,8 +42910,8 @@ var require_config_validator2 = __commonJS({
                 }
                 if (coerced4 !== void 0) {
                   data4 = coerced4;
-                  if (data2 !== void 0) {
-                    data2["path"] = coerced4;
+                  if (data3 !== void 0) {
+                    data3["path"] = coerced4;
                   }
                 }
               }
@@ -43079,8 +43079,8 @@ var require_config_validator2 = __commonJS({
               var valid1 = true;
             }
             if (valid1) {
-              if (data2.cookies !== void 0) {
-                let data8 = data2.cookies;
+              if (data3.cookies !== void 0) {
+                let data8 = data3.cookies;
                 const _errs31 = errors;
                 if (errors === _errs31) {
                   if (!(data8 && typeof data8 == "object" && !Array.isArray(data8))) {
@@ -43093,8 +43093,8 @@ var require_config_validator2 = __commonJS({
                 var valid1 = true;
               }
               if (valid1) {
-                if (data2.headers !== void 0) {
-                  let data9 = data2.headers;
+                if (data3.headers !== void 0) {
+                  let data9 = data3.headers;
                   const _errs34 = errors;
                   if (errors === _errs34) {
                     if (!(data9 && typeof data9 == "object" && !Array.isArray(data9))) {
@@ -43107,8 +43107,8 @@ var require_config_validator2 = __commonJS({
                   var valid1 = true;
                 }
                 if (valid1) {
-                  if (data2.query !== void 0) {
-                    let data10 = data2.query;
+                  if (data3.query !== void 0) {
+                    let data10 = data3.query;
                     const _errs37 = errors;
                     const _errs38 = errors;
                     let valid6 = false;
@@ -43148,8 +43148,8 @@ var require_config_validator2 = __commonJS({
                         }
                         if (coerced8 !== void 0) {
                           data10 = coerced8;
-                          if (data2 !== void 0) {
-                            data2["query"] = coerced8;
+                          if (data3 !== void 0) {
+                            data3["query"] = coerced8;
                           }
                         }
                       }
@@ -43181,8 +43181,8 @@ var require_config_validator2 = __commonJS({
                     var valid1 = true;
                   }
                   if (valid1) {
-                    if (data2.simulate !== void 0) {
-                      let data11 = data2.simulate;
+                    if (data3.simulate !== void 0) {
+                      let data11 = data3.simulate;
                       const _errs44 = errors;
                       if (errors === _errs44) {
                         if (data11 && typeof data11 == "object" && !Array.isArray(data11)) {
@@ -43306,8 +43306,8 @@ var require_config_validator2 = __commonJS({
                       var valid1 = true;
                     }
                     if (valid1) {
-                      if (data2.authority !== void 0) {
-                        let data16 = data2.authority;
+                      if (data3.authority !== void 0) {
+                        let data16 = data3.authority;
                         const _errs54 = errors;
                         if (typeof data16 !== "string") {
                           let dataType13 = typeof data16;
@@ -43324,8 +43324,8 @@ var require_config_validator2 = __commonJS({
                           }
                           if (coerced13 !== void 0) {
                             data16 = coerced13;
-                            if (data2 !== void 0) {
-                              data2["authority"] = coerced13;
+                            if (data3 !== void 0) {
+                              data3["authority"] = coerced13;
                             }
                           }
                         }
@@ -43334,8 +43334,8 @@ var require_config_validator2 = __commonJS({
                         var valid1 = true;
                       }
                       if (valid1) {
-                        if (data2.remoteAddress !== void 0) {
-                          let data17 = data2.remoteAddress;
+                        if (data3.remoteAddress !== void 0) {
+                          let data17 = data3.remoteAddress;
                           const _errs56 = errors;
                           if (typeof data17 !== "string") {
                             let dataType14 = typeof data17;
@@ -43352,8 +43352,8 @@ var require_config_validator2 = __commonJS({
                             }
                             if (coerced14 !== void 0) {
                               data17 = coerced14;
-                              if (data2 !== void 0) {
-                                data2["remoteAddress"] = coerced14;
+                              if (data3 !== void 0) {
+                                data3["remoteAddress"] = coerced14;
                               }
                             }
                           }
@@ -43362,8 +43362,8 @@ var require_config_validator2 = __commonJS({
                           var valid1 = true;
                         }
                         if (valid1) {
-                          if (data2.method !== void 0) {
-                            let data18 = data2.method;
+                          if (data3.method !== void 0) {
+                            let data18 = data3.method;
                             const _errs58 = errors;
                             if (typeof data18 !== "string") {
                               let dataType15 = typeof data18;
@@ -43380,8 +43380,8 @@ var require_config_validator2 = __commonJS({
                               }
                               if (coerced15 !== void 0) {
                                 data18 = coerced15;
-                                if (data2 !== void 0) {
-                                  data2["method"] = coerced15;
+                                if (data3 !== void 0) {
+                                  data3["method"] = coerced15;
                                 }
                               }
                             }
@@ -43394,8 +43394,8 @@ var require_config_validator2 = __commonJS({
                             var valid1 = true;
                           }
                           if (valid1) {
-                            if (data2.validate !== void 0) {
-                              let data19 = data2.validate;
+                            if (data3.validate !== void 0) {
+                              let data19 = data3.validate;
                               const _errs60 = errors;
                               if (typeof data19 !== "boolean") {
                                 let coerced16 = void 0;
@@ -43411,8 +43411,8 @@ var require_config_validator2 = __commonJS({
                                 }
                                 if (coerced16 !== void 0) {
                                   data19 = coerced16;
-                                  if (data2 !== void 0) {
-                                    data2["validate"] = coerced16;
+                                  if (data3 !== void 0) {
+                                    data3["validate"] = coerced16;
                                   }
                                 }
                               }
@@ -48373,10 +48373,10 @@ var require_reporter = __commonJS({
       const state = this._reporterState;
       return { obj: state.obj, pathLen: state.path.length };
     };
-    Reporter.prototype.restore = function restore(data2) {
+    Reporter.prototype.restore = function restore(data3) {
       const state = this._reporterState;
-      state.obj = data2.obj;
-      state.path = state.path.slice(0, data2.pathLen);
+      state.obj = data3.obj;
+      state.path = state.path.slice(0, data3.pathLen);
     };
     Reporter.prototype.enterKey = function enterKey(key) {
       return this._reporterState.path.push(key);
@@ -48472,11 +48472,11 @@ var require_buffer = __commonJS({
     }
     inherits(DecoderBuffer, Reporter);
     exports.DecoderBuffer = DecoderBuffer;
-    DecoderBuffer.isDecoderBuffer = function isDecoderBuffer(data2) {
-      if (data2 instanceof DecoderBuffer) {
+    DecoderBuffer.isDecoderBuffer = function isDecoderBuffer(data3) {
+      if (data3 instanceof DecoderBuffer) {
         return true;
       }
-      const isCompatible = typeof data2 === "object" && Buffer2.isBuffer(data2.base) && data2.constructor.name === "DecoderBuffer" && typeof data2.offset === "number" && typeof data2.length === "number" && typeof data2.save === "function" && typeof data2.restore === "function" && typeof data2.isEmpty === "function" && typeof data2.readUInt8 === "function" && typeof data2.skip === "function" && typeof data2.raw === "function";
+      const isCompatible = typeof data3 === "object" && Buffer2.isBuffer(data3.base) && data3.constructor.name === "DecoderBuffer" && typeof data3.offset === "number" && typeof data3.length === "number" && typeof data3.save === "function" && typeof data3.restore === "function" && typeof data3.isEmpty === "function" && typeof data3.readUInt8 === "function" && typeof data3.skip === "function" && typeof data3.raw === "function";
       return isCompatible;
     };
     DecoderBuffer.prototype.save = function save() {
@@ -48537,11 +48537,11 @@ var require_buffer = __commonJS({
       }
     }
     exports.EncoderBuffer = EncoderBuffer;
-    EncoderBuffer.isEncoderBuffer = function isEncoderBuffer(data2) {
-      if (data2 instanceof EncoderBuffer) {
+    EncoderBuffer.isEncoderBuffer = function isEncoderBuffer(data3) {
+      if (data3 instanceof EncoderBuffer) {
         return true;
       }
-      const isCompatible = typeof data2 === "object" && data2.constructor.name === "EncoderBuffer" && typeof data2.length === "number" && typeof data2.join === "function";
+      const isCompatible = typeof data3 === "object" && data3.constructor.name === "EncoderBuffer" && typeof data3.length === "number" && typeof data3.join === "function";
       return isCompatible;
     };
     EncoderBuffer.prototype.join = function join(out, offset2) {
@@ -48920,8 +48920,8 @@ var require_node2 = __commonJS({
           });
         }
         if (state.contains && (state.tag === "octstr" || state.tag === "bitstr")) {
-          const data2 = new DecoderBuffer(result);
-          result = this._getUse(state.contains, input._reporterState.obj)._decode(data2, options);
+          const data3 = new DecoderBuffer(result);
+          result = this._getUse(state.contains, input._reporterState.obj)._decode(data3, options);
         }
       }
       if (state.obj && present)
@@ -48994,51 +48994,51 @@ var require_node2 = __commonJS({
         return input.error("Choice not matched");
       return result;
     };
-    Node.prototype._createEncoderBuffer = function createEncoderBuffer(data2) {
-      return new EncoderBuffer(data2, this.reporter);
+    Node.prototype._createEncoderBuffer = function createEncoderBuffer(data3) {
+      return new EncoderBuffer(data3, this.reporter);
     };
-    Node.prototype._encode = function encode(data2, reporter, parent) {
+    Node.prototype._encode = function encode(data3, reporter, parent) {
       const state = this._baseState;
-      if (state["default"] !== null && state["default"] === data2)
+      if (state["default"] !== null && state["default"] === data3)
         return;
-      const result = this._encodeValue(data2, reporter, parent);
+      const result = this._encodeValue(data3, reporter, parent);
       if (result === void 0)
         return;
       if (this._skipDefault(result, reporter, parent))
         return;
       return result;
     };
-    Node.prototype._encodeValue = function encode(data2, reporter, parent) {
+    Node.prototype._encodeValue = function encode(data3, reporter, parent) {
       const state = this._baseState;
       if (state.parent === null)
-        return state.children[0]._encode(data2, reporter || new Reporter());
+        return state.children[0]._encode(data3, reporter || new Reporter());
       let result = null;
       this.reporter = reporter;
-      if (state.optional && data2 === void 0) {
+      if (state.optional && data3 === void 0) {
         if (state["default"] !== null)
-          data2 = state["default"];
+          data3 = state["default"];
         else
           return;
       }
       let content = null;
       let primitive = false;
       if (state.any) {
-        result = this._createEncoderBuffer(data2);
+        result = this._createEncoderBuffer(data3);
       } else if (state.choice) {
-        result = this._encodeChoice(data2, reporter);
+        result = this._encodeChoice(data3, reporter);
       } else if (state.contains) {
-        content = this._getUse(state.contains, parent)._encode(data2, reporter);
+        content = this._getUse(state.contains, parent)._encode(data3, reporter);
         primitive = true;
       } else if (state.children) {
         content = state.children.map(function(child) {
           if (child._baseState.tag === "null_")
-            return child._encode(null, reporter, data2);
+            return child._encode(null, reporter, data3);
           if (child._baseState.key === null)
             return reporter.error("Child should have a key");
           const prevKey = reporter.enterKey(child._baseState.key);
-          if (typeof data2 !== "object")
+          if (typeof data3 !== "object")
             return reporter.error("Child expected, but input is not object");
-          const res = child._encode(data2[child._baseState.key], reporter, data2);
+          const res = child._encode(data3[child._baseState.key], reporter, data3);
           reporter.leaveKey(prevKey);
           return res;
         }, this).filter(function(child) {
@@ -49049,18 +49049,18 @@ var require_node2 = __commonJS({
         if (state.tag === "seqof" || state.tag === "setof") {
           if (!(state.args && state.args.length === 1))
             return reporter.error("Too many args for : " + state.tag);
-          if (!Array.isArray(data2))
+          if (!Array.isArray(data3))
             return reporter.error("seqof/setof, but data is not Array");
           const child = this.clone();
           child._baseState.implicit = null;
-          content = this._createEncoderBuffer(data2.map(function(item) {
+          content = this._createEncoderBuffer(data3.map(function(item) {
             const state2 = this._baseState;
-            return this._getUse(state2.args[0], data2)._encode(item, reporter);
+            return this._getUse(state2.args[0], data3)._encode(item, reporter);
           }, child));
         } else if (state.use !== null) {
-          result = this._getUse(state.use, parent)._encode(data2, reporter);
+          result = this._getUse(state.use, parent)._encode(data3, reporter);
         } else {
-          content = this._encodePrimitive(state.tag, data2);
+          content = this._encodePrimitive(state.tag, data3);
           primitive = true;
         }
       }
@@ -49079,35 +49079,35 @@ var require_node2 = __commonJS({
         result = this._encodeComposite(state.explicit, false, "context", result);
       return result;
     };
-    Node.prototype._encodeChoice = function encodeChoice(data2, reporter) {
+    Node.prototype._encodeChoice = function encodeChoice(data3, reporter) {
       const state = this._baseState;
-      const node = state.choice[data2.type];
+      const node = state.choice[data3.type];
       if (!node) {
         assert(
           false,
-          data2.type + " not found in " + JSON.stringify(Object.keys(state.choice))
+          data3.type + " not found in " + JSON.stringify(Object.keys(state.choice))
         );
       }
-      return node._encode(data2.value, reporter);
+      return node._encode(data3.value, reporter);
     };
-    Node.prototype._encodePrimitive = function encodePrimitive(tag, data2) {
+    Node.prototype._encodePrimitive = function encodePrimitive(tag, data3) {
       const state = this._baseState;
       if (/str$/.test(tag))
-        return this._encodeStr(data2, tag);
+        return this._encodeStr(data3, tag);
       else if (tag === "objid" && state.args)
-        return this._encodeObjid(data2, state.reverseArgs[0], state.args[1]);
+        return this._encodeObjid(data3, state.reverseArgs[0], state.args[1]);
       else if (tag === "objid")
-        return this._encodeObjid(data2, null, null);
+        return this._encodeObjid(data3, null, null);
       else if (tag === "gentime" || tag === "utctime")
-        return this._encodeTime(data2, tag);
+        return this._encodeTime(data3, tag);
       else if (tag === "null_")
         return this._encodeNull();
       else if (tag === "int" || tag === "enum")
-        return this._encodeInt(data2, state.args && state.reverseArgs[0]);
+        return this._encodeInt(data3, state.args && state.reverseArgs[0]);
       else if (tag === "bool")
-        return this._encodeBool(data2);
+        return this._encodeBool(data3);
       else if (tag === "objDesc")
-        return this._encodeStr(data2, tag);
+        return this._encodeStr(data3, tag);
       else
         throw new Error("Unsupported tag: " + tag);
     };
@@ -49192,8 +49192,8 @@ var require_der2 = __commonJS({
       this.tree._init(entity.body);
     }
     module.exports = DEREncoder;
-    DEREncoder.prototype.encode = function encode(data2, reporter) {
-      return this.tree._encode(data2, reporter).join();
+    DEREncoder.prototype.encode = function encode(data3, reporter) {
+      return this.tree._encode(data3, reporter).join();
     };
     function DERNode(parent) {
       Node.call(this, "der", parent);
@@ -49375,13 +49375,13 @@ var require_der2 = __commonJS({
       let i;
       if (state["default"] === null)
         return false;
-      const data2 = dataBuffer.join();
+      const data3 = dataBuffer.join();
       if (state.defaultBuffer === void 0)
         state.defaultBuffer = this._encodeValue(state["default"], reporter, parent).join();
-      if (data2.length !== state.defaultBuffer.length)
+      if (data3.length !== state.defaultBuffer.length)
         return false;
-      for (i = 0; i < data2.length; i++)
-        if (data2[i] !== state.defaultBuffer[i])
+      for (i = 0; i < data3.length; i++)
+        if (data3[i] !== state.defaultBuffer[i])
           return false;
       return true;
     };
@@ -49419,8 +49419,8 @@ var require_pem = __commonJS({
     }
     inherits(PEMEncoder, DEREncoder);
     module.exports = PEMEncoder;
-    PEMEncoder.prototype.encode = function encode(data2, options) {
-      const buf = DEREncoder.prototype.encode.call(this, data2);
+    PEMEncoder.prototype.encode = function encode(data3, options) {
+      const buf = DEREncoder.prototype.encode.call(this, data3);
       const p = buf.toString("base64");
       const out = ["-----BEGIN " + options.label + "-----"];
       for (let i = 0; i < p.length; i += 64)
@@ -49458,11 +49458,11 @@ var require_der3 = __commonJS({
       this.tree._init(entity.body);
     }
     module.exports = DERDecoder;
-    DERDecoder.prototype.decode = function decode(data2, options) {
-      if (!DecoderBuffer.isDecoderBuffer(data2)) {
-        data2 = new DecoderBuffer(data2, options);
+    DERDecoder.prototype.decode = function decode(data3, options) {
+      if (!DecoderBuffer.isDecoderBuffer(data3)) {
+        data3 = new DecoderBuffer(data3, options);
       }
-      return this.tree._decode(data2, options);
+      return this.tree._decode(data3, options);
     };
     function DERNode(parent) {
       Node.call(this, "der", parent);
@@ -49726,8 +49726,8 @@ var require_pem2 = __commonJS({
     }
     inherits(PEMDecoder, DERDecoder);
     module.exports = PEMDecoder;
-    PEMDecoder.prototype.decode = function decode(data2, options) {
-      const lines = data2.toString().split(/[\r\n]+/g);
+    PEMDecoder.prototype.decode = function decode(data3, options) {
+      const lines = data3.toString().split(/[\r\n]+/g);
       const label2 = options.label.toUpperCase();
       const re = /^-----(BEGIN|END) ([^-]+)-----$/;
       let start = -1;
@@ -49803,8 +49803,8 @@ var require_api = __commonJS({
         this.decoders[enc] = this._createNamed(decoders[enc]);
       return this.decoders[enc];
     };
-    Entity.prototype.decode = function decode(data2, enc, options) {
-      return this._getDecoder(enc).decode(data2, options);
+    Entity.prototype.decode = function decode(data3, enc, options) {
+      return this._getDecoder(enc).decode(data3, options);
     };
     Entity.prototype._getEncoder = function _getEncoder(enc) {
       enc = enc || "der";
@@ -49812,8 +49812,8 @@ var require_api = __commonJS({
         this.encoders[enc] = this._createNamed(encoders[enc]);
       return this.encoders[enc];
     };
-    Entity.prototype.encode = function encode(data2, enc, reporter) {
-      return this._getEncoder(enc).encode(data2, reporter);
+    Entity.prototype.encode = function encode(data3, enc, reporter) {
+      return this._getEncoder(enc).encode(data3, reporter);
     };
   }
 });
@@ -50415,7 +50415,7 @@ var require_crypto = __commonJS({
 var require_utils4 = __commonJS({
   "node_modules/fast-jwt/src/utils.js"(exports, module) {
     "use strict";
-    var { createHash: createHash11 } = __require("node:crypto");
+    var { createHash: createHash12 } = __require("node:crypto");
     var { TokenError } = require_error3();
     var algorithmMatcher = /"alg"\s*:\s*"[HERP]S(256|384)"/m;
     var edAlgorithmMatcher = /"alg"\s*:\s*"EdDSA"/m;
@@ -50452,10 +50452,10 @@ var require_utils4 = __commonJS({
       const header = Buffer.from(rawHeader, "base64").toString("utf-8");
       let hasher;
       if (header.match(edAlgorithmMatcher) && header.match(ed448CurveMatcher)) {
-        hasher = createHash11("shake256", { outputLength: 114 });
+        hasher = createHash12("shake256", { outputLength: 114 });
       } else {
         const mo = header.match(algorithmMatcher);
-        hasher = createHash11(`sha${mo ? mo[1] : "512"}`);
+        hasher = createHash12(`sha${mo ? mo[1] : "512"}`);
       }
       return hasher.update(token2).digest("hex");
     }
@@ -54419,9 +54419,9 @@ var require_bcrypt = __commonJS({
         lr[off + 1] = l;
         return lr;
       }
-      function _streamtoword(data2, offp) {
+      function _streamtoword(data3, offp) {
         for (var i = 0, word = 0; i < 4; ++i)
-          word = word << 8 | data2[offp] & 255, offp = (offp + 1) % data2.length;
+          word = word << 8 | data3[offp] & 255, offp = (offp + 1) % data3.length;
         return { key: word, offp };
       }
       function _key(key, P, S) {
@@ -54433,15 +54433,15 @@ var require_bcrypt = __commonJS({
         for (i = 0; i < slen; i += 2)
           lr = _encipher(lr, 0, P, S), S[i] = lr[0], S[i + 1] = lr[1];
       }
-      function _ekskey(data2, key, P, S) {
+      function _ekskey(data3, key, P, S) {
         var offp = 0, lr = [0, 0], plen = P.length, slen = S.length, sw;
         for (var i = 0; i < plen; i++)
           sw = _streamtoword(key, offp), offp = sw.offp, P[i] = P[i] ^ sw.key;
         offp = 0;
         for (i = 0; i < plen; i += 2)
-          sw = _streamtoword(data2, offp), offp = sw.offp, lr[0] ^= sw.key, sw = _streamtoword(data2, offp), offp = sw.offp, lr[1] ^= sw.key, lr = _encipher(lr, 0, P, S), P[i] = lr[0], P[i + 1] = lr[1];
+          sw = _streamtoword(data3, offp), offp = sw.offp, lr[0] ^= sw.key, sw = _streamtoword(data3, offp), offp = sw.offp, lr[1] ^= sw.key, lr = _encipher(lr, 0, P, S), P[i] = lr[0], P[i + 1] = lr[1];
         for (i = 0; i < slen; i += 2)
-          sw = _streamtoword(data2, offp), offp = sw.offp, lr[0] ^= sw.key, sw = _streamtoword(data2, offp), offp = sw.offp, lr[1] ^= sw.key, lr = _encipher(lr, 0, P, S), S[i] = lr[0], S[i + 1] = lr[1];
+          sw = _streamtoword(data3, offp), offp = sw.offp, lr[0] ^= sw.key, sw = _streamtoword(data3, offp), offp = sw.offp, lr[1] ^= sw.key, lr = _encipher(lr, 0, P, S), S[i] = lr[0], S[i + 1] = lr[1];
       }
       function _crypt(b, salt, rounds, callback, progressCallback) {
         var cdata = C_ORIG.slice(), clen = cdata.length, err;
@@ -54700,15 +54700,15 @@ var init_util = __esm({
       "map",
       "set"
     ]);
-    getParsedType = (data2) => {
-      const t = typeof data2;
+    getParsedType = (data3) => {
+      const t = typeof data3;
       switch (t) {
         case "undefined":
           return ZodParsedType.undefined;
         case "string":
           return ZodParsedType.string;
         case "number":
-          return Number.isNaN(data2) ? ZodParsedType.nan : ZodParsedType.number;
+          return Number.isNaN(data3) ? ZodParsedType.nan : ZodParsedType.number;
         case "boolean":
           return ZodParsedType.boolean;
         case "function":
@@ -54718,22 +54718,22 @@ var init_util = __esm({
         case "symbol":
           return ZodParsedType.symbol;
         case "object":
-          if (Array.isArray(data2)) {
+          if (Array.isArray(data3)) {
             return ZodParsedType.array;
           }
-          if (data2 === null) {
+          if (data3 === null) {
             return ZodParsedType.null;
           }
-          if (data2.then && typeof data2.then === "function" && data2.catch && typeof data2.catch === "function") {
+          if (data3.then && typeof data3.then === "function" && data3.catch && typeof data3.catch === "function") {
             return ZodParsedType.promise;
           }
-          if (typeof Map !== "undefined" && data2 instanceof Map) {
+          if (typeof Map !== "undefined" && data3 instanceof Map) {
             return ZodParsedType.map;
           }
-          if (typeof Set !== "undefined" && data2 instanceof Set) {
+          if (typeof Set !== "undefined" && data3 instanceof Set) {
             return ZodParsedType.set;
           }
-          if (typeof Date !== "undefined" && data2 instanceof Date) {
+          if (typeof Date !== "undefined" && data3 instanceof Date) {
             return ZodParsedType.date;
           }
           return ZodParsedType.object;
@@ -55019,7 +55019,7 @@ var init_parseUtil = __esm({
     init_errors();
     init_en();
     makeIssue = (params2) => {
-      const { data: data2, path, errorMaps, issueData } = params2;
+      const { data: data3, path, errorMaps, issueData } = params2;
       const fullPath = [...path, ...issueData.path || []];
       const fullIssue = {
         ...issueData,
@@ -55035,7 +55035,7 @@ var init_parseUtil = __esm({
       let errorMessage = "";
       const maps = errorMaps.filter((m) => !!m).slice().reverse();
       for (const map of maps) {
-        errorMessage = map(fullIssue, { data: data2, defaultError: errorMessage }).message;
+        errorMessage = map(fullIssue, { data: data3, defaultError: errorMessage }).message;
       }
       return {
         ...issueData,
@@ -55292,26 +55292,26 @@ function createZodEnum(values, params2) {
     ...processCreateParams(params2)
   });
 }
-function cleanParams(params2, data2) {
-  const p = typeof params2 === "function" ? params2(data2) : typeof params2 === "string" ? { message: params2 } : params2;
+function cleanParams(params2, data3) {
+  const p = typeof params2 === "function" ? params2(data3) : typeof params2 === "string" ? { message: params2 } : params2;
   const p2 = typeof p === "string" ? { message: p } : p;
   return p2;
 }
 function custom(check, _params = {}, fatal) {
   if (check)
-    return ZodAny.create().superRefine((data2, ctx) => {
-      const r = check(data2);
+    return ZodAny.create().superRefine((data3, ctx) => {
+      const r = check(data3);
       if (r instanceof Promise) {
         return r.then((r2) => {
           if (!r2) {
-            const params2 = cleanParams(_params, data2);
+            const params2 = cleanParams(_params, data3);
             const _fatal = params2.fatal ?? fatal ?? true;
             ctx.addIssue({ code: "custom", ...params2, fatal: _fatal });
           }
         });
       }
       if (!r) {
-        const params2 = cleanParams(_params, data2);
+        const params2 = cleanParams(_params, data3);
         const _fatal = params2.fatal ?? fatal ?? true;
         ctx.addIssue({ code: "custom", ...params2, fatal: _fatal });
       }
@@ -55406,13 +55406,13 @@ var init_types = __esm({
         const result = this._parse(input);
         return Promise.resolve(result);
       }
-      parse(data2, params2) {
-        const result = this.safeParse(data2, params2);
+      parse(data3, params2) {
+        const result = this.safeParse(data3, params2);
         if (result.success)
           return result.data;
         throw result.error;
       }
-      safeParse(data2, params2) {
+      safeParse(data3, params2) {
         const ctx = {
           common: {
             issues: [],
@@ -55422,13 +55422,13 @@ var init_types = __esm({
           path: params2?.path || [],
           schemaErrorMap: this._def.errorMap,
           parent: null,
-          data: data2,
-          parsedType: getParsedType(data2)
+          data: data3,
+          parsedType: getParsedType(data3)
         };
-        const result = this._parseSync({ data: data2, path: ctx.path, parent: ctx });
+        const result = this._parseSync({ data: data3, path: ctx.path, parent: ctx });
         return handleResult(ctx, result);
       }
-      "~validate"(data2) {
+      "~validate"(data3) {
         const ctx = {
           common: {
             issues: [],
@@ -55437,12 +55437,12 @@ var init_types = __esm({
           path: [],
           schemaErrorMap: this._def.errorMap,
           parent: null,
-          data: data2,
-          parsedType: getParsedType(data2)
+          data: data3,
+          parsedType: getParsedType(data3)
         };
         if (!this["~standard"].async) {
           try {
-            const result = this._parseSync({ data: data2, path: [], parent: ctx });
+            const result = this._parseSync({ data: data3, path: [], parent: ctx });
             return isValid(result) ? {
               value: result.value
             } : {
@@ -55458,19 +55458,19 @@ var init_types = __esm({
             };
           }
         }
-        return this._parseAsync({ data: data2, path: [], parent: ctx }).then((result) => isValid(result) ? {
+        return this._parseAsync({ data: data3, path: [], parent: ctx }).then((result) => isValid(result) ? {
           value: result.value
         } : {
           issues: ctx.common.issues
         });
       }
-      async parseAsync(data2, params2) {
-        const result = await this.safeParseAsync(data2, params2);
+      async parseAsync(data3, params2) {
+        const result = await this.safeParseAsync(data3, params2);
         if (result.success)
           return result.data;
         throw result.error;
       }
-      async safeParseAsync(data2, params2) {
+      async safeParseAsync(data3, params2) {
         const ctx = {
           common: {
             issues: [],
@@ -55480,10 +55480,10 @@ var init_types = __esm({
           path: params2?.path || [],
           schemaErrorMap: this._def.errorMap,
           parent: null,
-          data: data2,
-          parsedType: getParsedType(data2)
+          data: data3,
+          parsedType: getParsedType(data3)
         };
-        const maybeAsyncResult = this._parse({ data: data2, path: ctx.path, parent: ctx });
+        const maybeAsyncResult = this._parse({ data: data3, path: ctx.path, parent: ctx });
         const result = await (isAsync(maybeAsyncResult) ? maybeAsyncResult : Promise.resolve(maybeAsyncResult));
         return handleResult(ctx, result);
       }
@@ -55504,8 +55504,8 @@ var init_types = __esm({
             ...getIssueProperties(val)
           });
           if (typeof Promise !== "undefined" && result instanceof Promise) {
-            return result.then((data2) => {
-              if (!data2) {
+            return result.then((data3) => {
+              if (!data3) {
                 setError();
                 return false;
               } else {
@@ -55571,7 +55571,7 @@ var init_types = __esm({
         this["~standard"] = {
           version: 1,
           vendor: "zod",
-          validate: (data2) => this["~validate"](data2)
+          validate: (data3) => this["~validate"](data3)
         };
       }
       optional() {
@@ -55968,7 +55968,7 @@ var init_types = __esm({
         return { status: status.value, value: input.data };
       }
       _regex(regex, validation, message2) {
-        return this.refinement((data2) => regex.test(data2), {
+        return this.refinement((data3) => regex.test(data3), {
           validation,
           code: ZodIssueCode.invalid_string,
           ...errorUtil.errToObj(message2)
@@ -58105,8 +58105,8 @@ var init_types = __esm({
           return INVALID;
         }
         const promisified = ctx.parsedType === ZodParsedType.promise ? ctx.data : Promise.resolve(ctx.data);
-        return OK(promisified.then((data2) => {
-          return this._def.type.parseAsync(data2, {
+        return OK(promisified.then((data3) => {
+          return this._def.type.parseAsync(data3, {
             path: ctx.path,
             errorMap: ctx.common.contextualErrorMap
           });
@@ -58300,12 +58300,12 @@ var init_types = __esm({
     ZodDefault = class extends ZodType {
       _parse(input) {
         const { ctx } = this._processInputParams(input);
-        let data2 = ctx.data;
+        let data3 = ctx.data;
         if (ctx.parsedType === ZodParsedType.undefined) {
-          data2 = this._def.defaultValue();
+          data3 = this._def.defaultValue();
         }
         return this._def.innerType._parse({
-          data: data2,
+          data: data3,
           path: ctx.path,
           parent: ctx
         });
@@ -58400,9 +58400,9 @@ var init_types = __esm({
     ZodBranded = class extends ZodType {
       _parse(input) {
         const { ctx } = this._processInputParams(input);
-        const data2 = ctx.data;
+        const data3 = ctx.data;
         return this._def.type._parse({
-          data: data2,
+          data: data3,
           path: ctx.path,
           parent: ctx
         });
@@ -58469,13 +58469,13 @@ var init_types = __esm({
     ZodReadonly = class extends ZodType {
       _parse(input) {
         const result = this._def.innerType._parse(input);
-        const freeze = (data2) => {
-          if (isValid(data2)) {
-            data2.value = Object.freeze(data2.value);
+        const freeze = (data3) => {
+          if (isValid(data3)) {
+            data3.value = Object.freeze(data3.value);
           }
-          return data2;
+          return data3;
         };
-        return isAsync(result) ? result.then((data2) => freeze(data2)) : freeze(result);
+        return isAsync(result) ? result.then((data3) => freeze(data3)) : freeze(result);
       }
       unwrap() {
         return this._def.innerType;
@@ -58531,7 +58531,7 @@ var init_types = __esm({
     })(ZodFirstPartyTypeKind || (ZodFirstPartyTypeKind = {}));
     instanceOfType = (cls, params2 = {
       message: `Input not instance of ${cls.name}`
-    }) => custom((data2) => data2 instanceof cls, params2);
+    }) => custom((data3) => data3 instanceof cls, params2);
     stringType = ZodString.create;
     numberType = ZodNumber.create;
     nanType = ZodNaN.create;
@@ -60319,12 +60319,14 @@ function buildReason(status, remainingKm, remainingDays, effKm, effMonths) {
 }
 function latestLastService(lastServices, serviceId) {
   const matches = lastServices.filter((s) => s.serviceId === serviceId).sort((a, b) => {
+    const aDate = a.date ? toDate(a.date).getTime() : 0;
+    const bDate = b.date ? toDate(b.date).getTime() : 0;
+    if (aDate && bDate && aDate !== bDate)
+      return bDate - aDate;
     const aKm = a.km ?? 0;
     const bKm = b.km ?? 0;
     if (aKm !== bKm)
       return bKm - aKm;
-    const aDate = a.date ? toDate(a.date).getTime() : 0;
-    const bDate = b.date ? toDate(b.date).getTime() : 0;
     return bDate - aDate;
   });
   return matches[0];
@@ -60913,11 +60915,13 @@ var LOCAL_AGENT_TABLES, LOCAL_AGENT_STATEMENTS;
 var init_local_agent_statements = __esm({
   "packages/api/dist/infrastructure/schema-setup/local-agent-statements.js"() {
     "use strict";
-    LOCAL_AGENT_TABLES = ["LocalAgentReply", "WhatsAppIdentity", "WhatsAppLinkCode"];
+    LOCAL_AGENT_TABLES = ["LocalAgentReply", "WhatsAppIdentity", "WhatsAppLinkCode", "PilotIdempotencyReceipt", "LocalAgentTask"];
     LOCAL_AGENT_STATEMENTS = [
       { kind: "createTable", target: "LocalAgentReply", sql: "CREATE TABLE IF NOT EXISTS `LocalAgentReply` (wamid VARCHAR(191) COLLATE utf8mb4_bin PRIMARY KEY, userId VARCHAR(191) NOT NULL, leaseToken VARCHAR(36) NOT NULL, message TEXT NOT NULL, channel VARCHAR(20) NOT NULL, executedCommand BOOLEAN NOT NULL DEFAULT false, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX LocalAgentReply_user_idx(userId,createdAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+      { kind: "createTable", target: "LocalAgentTask", sql: "CREATE TABLE IF NOT EXISTS `LocalAgentTask` (id VARCHAR(191) PRIMARY KEY, type ENUM('responder_consulta','clasificar_mensaje','enviar_aviso_whatsapp','correr_pruebas','tomar_capturas','revisar_diff','reporte_estado') NOT NULL, status ENUM('queued','processing','done','failed') NOT NULL DEFAULT 'queued', payload JSON NULL, result TEXT NULL, errorCode VARCHAR(64) NULL, idempotencyKey VARCHAR(191) NOT NULL UNIQUE, createdBy VARCHAR(191) NOT NULL, leaseToken VARCHAR(64) NULL, leaseUntil DATETIME(3) NULL, attempts INT NOT NULL DEFAULT 0, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), updatedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), completedAt DATETIME(3) NULL, INDEX LocalAgentTask_status_created_idx(status,createdAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
       { kind: "createTable", target: "WhatsAppIdentity", sql: "CREATE TABLE IF NOT EXISTS `WhatsAppIdentity` (userId VARCHAR(191) PRIMARY KEY, phone VARCHAR(32) NOT NULL UNIQUE, confirmedAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
       { kind: "createTable", target: "WhatsAppLinkCode", sql: "CREATE TABLE IF NOT EXISTS `WhatsAppLinkCode` (codeHash VARCHAR(64) PRIMARY KEY, userId VARCHAR(191) NOT NULL, expiresAt DATETIME(3) NOT NULL, usedAt DATETIME(3) NULL, INDEX WhatsAppLinkCode_user_idx(userId)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+      { kind: "createTable", target: "PilotIdempotencyReceipt", sql: "CREATE TABLE IF NOT EXISTS `PilotIdempotencyReceipt` (userId VARCHAR(191) NOT NULL, idempotencyKey VARCHAR(120) COLLATE utf8mb4_bin NOT NULL, requestHash CHAR(64) NOT NULL, response JSON NOT NULL, expiresAt DATETIME(3) NOT NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY(userId,idempotencyKey), INDEX PilotIdempotencyReceipt_expiry_idx(expiresAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
       // Replies to contacts that do not have an account yet carry no userId.
       { kind: "modifyColumn", target: "LocalAgentReply.userId", sql: "ALTER TABLE `LocalAgentReply` MODIFY COLUMN `userId` VARCHAR(191) NULL" },
       { kind: "modifyColumn", target: "LocalAgentReply.wamid", sql: "ALTER TABLE `LocalAgentReply` MODIFY COLUMN `wamid` VARCHAR(191) COLLATE utf8mb4_bin NOT NULL" }
@@ -73256,10 +73260,10 @@ var require_auth_next_factor = __commonJS({
       static fromPacket(packet, encoding) {
         packet.readInt8();
         const name = packet.readNullTerminatedString(encoding);
-        const data2 = packet.readBuffer();
+        const data3 = packet.readBuffer();
         return new _AuthNextFactor({
           pluginName: name,
-          pluginData: data2
+          pluginData: data3
         });
       }
     };
@@ -73290,10 +73294,10 @@ var require_auth_switch_request = __commonJS({
       static fromPacket(packet) {
         packet.readInt8();
         const name = packet.readNullTerminatedString("cesu8");
-        const data2 = packet.readBuffer();
+        const data3 = packet.readBuffer();
         return new _AuthSwitchRequest({
           pluginName: name,
-          pluginData: data2
+          pluginData: data3
         });
       }
     };
@@ -73307,8 +73311,8 @@ var require_auth_switch_request_more_data = __commonJS({
     "use strict";
     var Packet = require_packet();
     var AuthSwitchRequestMoreData = class _AuthSwitchRequestMoreData {
-      constructor(data2) {
-        this.data = data2;
+      constructor(data3) {
+        this.data = data3;
       }
       toPacket() {
         const length = 5 + this.data.length;
@@ -73321,8 +73325,8 @@ var require_auth_switch_request_more_data = __commonJS({
       }
       static fromPacket(packet) {
         packet.readInt8();
-        const data2 = packet.readBuffer();
-        return new _AuthSwitchRequestMoreData(data2);
+        const data3 = packet.readBuffer();
+        return new _AuthSwitchRequestMoreData(data3);
       }
       static verifyMarker(packet) {
         return packet.peekByte() === 1;
@@ -73338,11 +73342,11 @@ var require_auth_switch_response = __commonJS({
     "use strict";
     var Packet = require_packet();
     var AuthSwitchResponse = class _AuthSwitchResponse {
-      constructor(data2) {
-        if (!Buffer.isBuffer(data2)) {
-          data2 = Buffer.from(data2);
+      constructor(data3) {
+        if (!Buffer.isBuffer(data3)) {
+          data3 = Buffer.from(data3);
         }
-        this.data = data2;
+        this.data = data3;
       }
       toPacket() {
         const length = 4 + this.data.length;
@@ -73353,8 +73357,8 @@ var require_auth_switch_response = __commonJS({
         return packet;
       }
       static fromPacket(packet) {
-        const data2 = packet.readBuffer();
-        return new _AuthSwitchResponse(data2);
+        const data3 = packet.readBuffer();
+        return new _AuthSwitchResponse(data3);
       }
     };
     module.exports = AuthSwitchResponse;
@@ -75028,13 +75032,13 @@ var require_handshake = __commonJS({
         this.mariadbExtendedCapabilityFlags = args.mariadbExtendedCapabilityFlags;
       }
       setScrambleData(cb) {
-        __require("crypto").randomBytes(20, (err, data2) => {
+        __require("crypto").randomBytes(20, (err, data3) => {
           if (err) {
             cb(err);
             return;
           }
-          this.authPluginData1 = data2.slice(0, 8);
-          this.authPluginData2 = data2.slice(8, 20);
+          this.authPluginData1 = data3.slice(0, 8);
+          this.authPluginData2 = data3.slice(8, 20);
           cb();
         });
       }
@@ -76020,13 +76024,13 @@ var require_sha256_password = __commonJS({
         state = STATE_FINAL;
         return _password;
       };
-      return (data2) => {
+      return (data3) => {
         switch (state) {
           case STATE_INITIAL:
             if (connection.stream instanceof Tls.TLSSocket && connection.stream.encrypted === true) {
               return Buffer.from(`${password}\0`, "utf8");
             }
-            scramble = data2.slice(0, 20);
+            scramble = data3.slice(0, 20);
             if (pluginOptions.serverPublicKey) {
               return authWithKey(pluginOptions.serverPublicKey);
             }
@@ -76034,9 +76038,9 @@ var require_sha256_password = __commonJS({
             return REQUEST_SERVER_KEY_PACKET;
           case STATE_WAIT_SERVER_KEY:
             if (pluginOptions.onServerPublicKey) {
-              pluginOptions.onServerPublicKey(data2);
+              pluginOptions.onServerPublicKey(data3);
             }
-            return authWithKey(data2);
+            return authWithKey(data3);
           case STATE_FINAL:
             throw new Error(
               `Unexpected data in AuthMoreData packet received by ${PLUGIN_NAME} plugin in STATE_FINAL state.`
@@ -76098,18 +76102,18 @@ var require_caching_sha2_password = __commonJS({
         state = STATE_FINAL;
         return _password;
       };
-      return (data2) => {
+      return (data3) => {
         switch (state) {
           case STATE_INITIAL:
-            scramble = data2.slice(0, 20);
+            scramble = data3.slice(0, 20);
             state = STATE_TOKEN_SENT;
             return calculateToken(password, scramble);
           case STATE_TOKEN_SENT:
-            if (FAST_AUTH_SUCCESS_PACKET.equals(data2)) {
+            if (FAST_AUTH_SUCCESS_PACKET.equals(data3)) {
               state = STATE_FINAL;
               return null;
             }
-            if (PERFORM_FULL_AUTHENTICATION_PACKET.equals(data2)) {
+            if (PERFORM_FULL_AUTHENTICATION_PACKET.equals(data3)) {
               const isSecureConnection = typeof pluginOptions.overrideIsSecure === "undefined" ? connection.config.ssl || connection.config.socketPath : pluginOptions.overrideIsSecure;
               if (isSecureConnection) {
                 state = STATE_FINAL;
@@ -76126,9 +76130,9 @@ var require_caching_sha2_password = __commonJS({
             );
           case STATE_WAIT_SERVER_KEY:
             if (pluginOptions.onServerPublicKey) {
-              pluginOptions.onServerPublicKey(data2);
+              pluginOptions.onServerPublicKey(data3);
             }
-            return authWithKey(data2);
+            return authWithKey(data3);
           case STATE_FINAL:
             throw new Error(
               `Unexpected data in AuthMoreData packet received by ${PLUGIN_NAME} plugin in STATE_FINAL state.`
@@ -76152,9 +76156,9 @@ var require_mysql_native_password = __commonJS({
     module.exports = (pluginOptions) => ({ connection, command }) => {
       const password = command.password || pluginOptions.password || connection.config.password;
       const passwordSha1 = command.passwordSha1 || pluginOptions.passwordSha1 || connection.config.passwordSha1;
-      return (data2) => {
-        const authPluginData1 = data2.slice(0, 8);
-        const authPluginData2 = data2.slice(8, 20);
+      return (data3) => {
+        const authPluginData1 = data3.slice(0, 8);
+        const authPluginData2 = data3.slice(8, 20);
         let authToken;
         if (passwordSha1) {
           authToken = auth41.calculateTokenFromPasswordSha(
@@ -76229,11 +76233,11 @@ var require_auth_switch = __commonJS({
       if (connection.config.authSwitchHandler && pluginName !== "mysql_native_password") {
         const legacySwitchHandler = connection.config.authSwitchHandler;
         warnLegacyAuthSwitch();
-        legacySwitchHandler({ pluginName, pluginData }, (err, data2) => {
+        legacySwitchHandler({ pluginName, pluginData }, (err, data3) => {
           if (err) {
             return authSwitchPluginError(err, command);
           }
-          connection.writePacket(new Packets.AuthSwitchResponse(data2).toPacket());
+          connection.writePacket(new Packets.AuthSwitchResponse(data3).toPacket());
         });
         return;
       }
@@ -76258,24 +76262,24 @@ var require_auth_switch = __commonJS({
         );
       }
       connection._authPlugin = authPlugin({ connection, command });
-      Promise.resolve(connection._authPlugin(pluginData)).then((data2) => {
-        if (data2) {
-          connection.writePacket(new Packets.AuthSwitchResponse(data2).toPacket());
+      Promise.resolve(connection._authPlugin(pluginData)).then((data3) => {
+        if (data3) {
+          connection.writePacket(new Packets.AuthSwitchResponse(data3).toPacket());
         }
       }).catch((err) => {
         authSwitchPluginError(err, command);
       });
     }
     function authSwitchRequestMoreData(packet, connection, command) {
-      const { data: data2 } = Packets.AuthSwitchRequestMoreData.fromPacket(packet);
+      const { data: data3 } = Packets.AuthSwitchRequestMoreData.fromPacket(packet);
       if (connection.config.authSwitchHandler) {
         const legacySwitchHandler = connection.config.authSwitchHandler;
         warnLegacyAuthSwitch();
-        legacySwitchHandler({ pluginData: data2 }, (err, data3) => {
+        legacySwitchHandler({ pluginData: data3 }, (err, data4) => {
           if (err) {
             return authSwitchPluginError(err, command);
           }
-          connection.writePacket(new Packets.AuthSwitchResponse(data3).toPacket());
+          connection.writePacket(new Packets.AuthSwitchResponse(data4).toPacket());
         });
         return;
       }
@@ -76284,9 +76288,9 @@ var require_auth_switch = __commonJS({
           "AuthPluginMoreData received but no auth plugin instance found"
         );
       }
-      Promise.resolve(connection._authPlugin(data2)).then((data3) => {
-        if (data3) {
-          connection.writePacket(new Packets.AuthSwitchResponse(data3).toPacket());
+      Promise.resolve(connection._authPlugin(data3)).then((data4) => {
+        if (data4) {
+          connection.writePacket(new Packets.AuthSwitchResponse(data4).toPacket());
         }
       }).catch((err) => {
         authSwitchPluginError(err, command);
@@ -76345,27 +76349,27 @@ var require_compressed_protocol = __commonJS({
           return;
         }
         if (deflatedLength <= MAX_SYNC_INFLATE_LENGTH) {
-          let data2;
+          let data3;
           try {
-            data2 = zlib.inflateSync(body, { maxOutputLength: deflatedLength });
+            data3 = zlib.inflateSync(body, { maxOutputLength: deflatedLength });
           } catch (err) {
             connection._handleNetworkError(err);
             return;
           }
           connection._bumpCompressedSequenceId(numPackets);
-          connection._inflatedPacketsParser.execute(data2);
+          connection._inflatedPacketsParser.execute(data3);
           return;
         }
       }
       if (deflatedLength !== 0) {
         connection.inflateQueue.push((task) => {
-          zlib.inflate(body, { maxOutputLength: deflatedLength }, (err, data2) => {
+          zlib.inflate(body, { maxOutputLength: deflatedLength }, (err, data3) => {
             if (err) {
               connection._handleNetworkError(err);
               return;
             }
             connection._bumpCompressedSequenceId(numPackets);
-            connection._inflatedPacketsParser.execute(data2);
+            connection._inflatedPacketsParser.execute(data3);
             task.done();
           });
         });
@@ -78478,9 +78482,9 @@ var require_query2 = __commonJS({
         const onPause = () => {
           this._localStream.pause();
         };
-        const onData = function(data2) {
-          const dataWithHeader = Buffer.allocUnsafe(data2.length + 4);
-          data2.copy(dataWithHeader, 4);
+        const onData = function(data3) {
+          const dataWithHeader = Buffer.allocUnsafe(data3.length + 4);
+          data3.copy(dataWithHeader, 4);
           connection.writePacket(
             new Packets.Packet(0, dataWithHeader, 0, dataWithHeader.length)
           );
@@ -80162,12 +80166,12 @@ var require_connection = __commonJS({
         this.packetParser = new PacketParser((p) => {
           this.handlePacket(p);
         });
-        this.stream.on("data", (data2) => {
+        this.stream.on("data", (data3) => {
           if (this.connectTimeout && this.config.isServer) {
             Timers.clearTimeout(this.connectTimeout);
             this.connectTimeout = null;
           }
-          this.packetParser.execute(data2);
+          this.packetParser.execute(data3);
         });
         this.stream.on("end", () => {
           this.emit("end");
@@ -80461,8 +80465,8 @@ var require_connection = __commonJS({
             onSecure(err);
           }
         });
-        secureSocket.on("data", (data2) => {
-          this.packetParser.execute(data2);
+        secureSocket.on("data", (data3) => {
+          this.packetParser.execute(data3);
         });
         this.stream = secureSocket;
       }
@@ -82849,6 +82853,76 @@ var init_registration_store = __esm({
   }
 });
 
+// packages/api/dist/interfaces/ui/sobrio.js
+function sobrioStyles(estilo = ESTILO) {
+  const p = PALETAS[estilo];
+  return `:root{${p.claro}}@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){${p.oscuro}}}:root[data-tema="oscuro"]{${p.oscuro}}${BASE}${p.extra}`;
+}
+var ESTILO, PALETAS, BASE, PANEL_CLARO, PANEL_OSCURO, PANEL_SOBRIO;
+var init_sobrio = __esm({
+  "packages/api/dist/interfaces/ui/sobrio.js"() {
+    "use strict";
+    ESTILO = "a";
+    PALETAS = {
+      a: { claro: "--v-bg:#f4f5f7;--v-surface:#ffffff;--v-sunk:#f0f2f5;--v-line:#d9dde3;--v-ink:#1c2430;--v-accent:#1f3a5f;--v-on-accent:#ffffff;--v-pill:#1f3a5f;--v-on-pill:#ffffff", oscuro: "--v-bg:#111418;--v-surface:#181c22;--v-sunk:#1e232a;--v-line:#2b313a;--v-ink:#e6e8eb;--v-accent:#9db8dc;--v-on-accent:#0f1622;--v-pill:#9db8dc;--v-on-pill:#0f1622", extra: "" },
+      b: { claro: "--v-bg:#f5f6f8;--v-surface:#ffffff;--v-sunk:#eef2f7;--v-line:#d8dee7;--v-ink:#1a2333;--v-accent:#1d4f91;--v-on-accent:#ffffff;--v-pill:#e06a1f;--v-on-pill:#ffffff", oscuro: "--v-bg:#10141b;--v-surface:#171d27;--v-sunk:#1d2532;--v-line:#2a3342;--v-ink:#e7eaf0;--v-accent:#86aee6;--v-on-accent:#0d1626;--v-pill:#f08a47;--v-on-pill:#1a0d04", extra: "" },
+      c: { claro: "--v-bg:#f6f7f8;--v-surface:#ffffff;--v-sunk:#f1f2f4;--v-line:#d9dce1;--v-ink:#16191e;--v-accent:#16191e;--v-on-accent:#ffffff;--v-pill:#16191e;--v-on-pill:#ffffff", oscuro: "--v-bg:#121315;--v-surface:#1a1c1f;--v-sunk:#202327;--v-line:#2d3036;--v-ink:#e9eaec;--v-accent:#e9eaec;--v-on-accent:#121315;--v-pill:#e9eaec;--v-on-pill:#121315", extra: "main a:not(.access-btn):not(.pill):not(.perfil):not(.logo){text-decoration-color:#d8cf00!important}" }
+    };
+    BASE = `
+/* Base sobria: sin rasgos "hechos por IA" (brillos, r\xF3tulos en may\xFAsculas espaciadas, barras de color, cristal, saltos). */
+header.cabecera h1,header.cabecera h1 em,.beneficios .ico,.cta,.access-btn,.board *,body::before{animation:none!important}
+.js-anim .aparece{opacity:1!important;transform:none!important}
+body{background:var(--v-bg)!important;color:var(--v-ink)}
+body::before{opacity:.06!important}
+body::after{display:none!important}
+header.cabecera h1{font:700 21px/1.25 var(--c-font)!important;letter-spacing:-.01em!important;color:var(--v-ink)!important}
+header.cabecera h1 em{font-style:normal;background:none!important;color:inherit!important;padding:0!important;text-shadow:none!important}
+@media (max-width:760px){header.cabecera h1{font-size:19px!important}}
+.section{font:600 14px/1.3 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important;color:var(--v-ink)!important;border-left:0!important;padding-left:0!important}
+.section::before{display:none!important}
+.hero,.beneficios li,.profile-card,main details.gestionar>summary,.board{background:var(--v-surface)!important;background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:1px solid var(--v-line)!important;border-radius:10px!important;box-shadow:none!important}
+.board{background:var(--v-sunk)!important}
+.beneficios li{border-top-width:1px!important}
+.beneficios b{font:600 15px/1.25 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important}
+.lead{color:var(--v-ink)!important;font-weight:500!important}
+.red a.perfil{border:1px solid var(--v-line)!important;background:var(--v-surface)!important;color:var(--v-ink)!important;box-shadow:none!important;font-weight:600!important}
+.red a.perfil .ico{color:var(--v-accent)!important}
+.red a.perfil:hover{border-color:var(--v-accent)!important;background:var(--v-surface)!important;transform:none!important}
+header .acciones a.pill{background:var(--v-pill)!important;color:var(--v-on-pill)!important;box-shadow:none!important;border-radius:8px!important}
+.access-btn.secondary,.profile-actions .access-btn.secondary{background:var(--v-accent)!important;color:var(--v-on-accent)!important;border-color:var(--v-accent)!important}
+.access-btn,.cta,.profile-actions .access-btn{border-radius:8px!important;box-shadow:none!important;background-image:none!important}
+main a:not(.access-btn):not(.pill):not(.perfil):not(.logo){text-decoration-color:var(--v-accent)!important}
+.code{background:var(--v-sunk)!important;border-color:var(--v-line)!important}
+:focus-visible{outline-color:var(--v-accent)!important}
+`;
+    PANEL_CLARO = "--c-bg:#f4f5f7;--c-surface:#ffffff;--c-sunk:#f0f2f5;--c-line:#d9dde3;--c-ink:#1c2430;--c-muted:#545e6b;--c-accent:#1f3a5f;--c-on-accent:#ffffff;--c-focus:#1f3a5f;--c-link-line:#1f3a5f";
+    PANEL_OSCURO = "--c-bg:#111418;--c-surface:#181c22;--c-sunk:#1e232a;--c-line:#2b313a;--c-ink:#e6e8eb;--c-muted:#a5adb8;--c-accent:#9db8dc;--c-on-accent:#0f1622;--c-focus:#9db8dc;--c-link-line:#9db8dc";
+    PANEL_SOBRIO = `
+:root{${PANEL_CLARO}}@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){${PANEL_OSCURO}}}:root[data-tema="oscuro"]{${PANEL_OSCURO}}
+body{background-image:none!important}
+main>h1{font-size:22px!important;font-weight:700!important;letter-spacing:-.01em!important}
+main h2,main h3,.pcard>h2,main section>h2,#login h2#entrar{font:600 15px/1.3 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important;border-left:0!important;padding-left:0!important;color:var(--c-ink)!important}
+section,.pcard,.kpi,details{border-radius:10px!important;box-shadow:none!important}
+#chat>.row2{background:var(--c-surface)!important;color:var(--c-ink)!important;border:1px solid var(--c-line)!important;box-shadow:none!important}
+#chat>.row2 h2#who{font:600 14px/1.3 var(--c-font)!important;letter-spacing:0!important;color:var(--c-ink)!important}
+#chat>.row2 h2#who::before{box-shadow:none!important;animation:none!important}
+#chat>.row2 #reloadPanel,#chat>.row2 #logout{color:var(--c-ink)!important;border-color:var(--c-line)!important}
+.pcard:has(.scan){${PANEL_CLARO};--c-ok:#0f7a3d;--c-ok-bg:#d9f2e3;--c-warn:#8a4b00;--c-warn-bg:#ffe9c2;--c-bad:#b3191b;--c-bad-bg:#ffdcd9;--c-cta:#13804a;--c-on-cta:#ffffff;background:var(--c-surface)!important;border:1px solid var(--c-line)!important;box-shadow:none!important}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) .pcard:has(.scan){${PANEL_OSCURO};--c-ok:#4fd08a;--c-ok-bg:#0f2e1c;--c-warn:#f5b84f;--c-warn-bg:#33240b;--c-bad:#ff7a70;--c-bad-bg:#3a1412;--c-cta:#3ccf7e;--c-on-cta:#06180e}}
+.pcard:has(.scan)::before,.pcard:has(.scan)::after{display:none!important}
+.pcard:has(.scan)>h2{color:var(--c-ink)!important}
+.scan .word{font-family:var(--c-font)!important}
+.scan .gauge,.scan .gauge svg{filter:none!important;animation:none!important}
+.led.st-urgente,.led.st-pronto,.led.st-al_dia{box-shadow:none!important;animation:none!important}
+.fill{box-shadow:none!important}
+.reco::before{display:none!important}
+.panel>*{animation:none!important}
+#login{border-top:1px solid var(--c-line)!important}
+.auth-tabs button[aria-selected="true"]{background:var(--c-accent)!important;color:var(--c-on-accent)!important;border-color:var(--c-accent)!important}
+`;
+  }
+});
+
 // packages/api/dist/infrastructure/settings/settings-store.js
 function cachedSetting(store, name, ttlMs = 6e4) {
   let value2 = null;
@@ -83013,12 +83087,12 @@ var init_theme = __esm({
 });
 
 // packages/api/dist/interfaces/ui/theme-layers.js
-var CARD_SURFACES, BASE, PILL_BUTTON, THEME_ENTRY_LAYER, THEME_ADMIN_LAYER, THEME_PILOT_LAYER, THEME_FLEET_LAYER, THEME_ASSISTANT_LAYER, THEME_LEGAL_LAYER;
+var CARD_SURFACES, BASE2, PILL_BUTTON, THEME_ENTRY_LAYER, THEME_ADMIN_LAYER, THEME_PILOT_LAYER, THEME_FLEET_LAYER, THEME_ASSISTANT_LAYER, THEME_LEGAL_LAYER;
 var init_theme_layers = __esm({
   "packages/api/dist/interfaces/ui/theme-layers.js"() {
     "use strict";
     CARD_SURFACES = ".card,.option,.pcard,.beneficios li,.board,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.line,.veh,.kpi,#login,#composer,#tools,details:not(.mobile-menu):not(.index-mobile)";
-    BASE = `
+    BASE2 = `
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--c-bg)}
 body{background:transparent;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 h1,h2,h3{text-wrap:balance}
@@ -83065,7 +83139,7 @@ ${CARD_SURFACES}{background:var(--c-surface);-webkit-backdrop-filter:none;backdr
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none;animation:none;transform:none}}
 `;
     PILL_BUTTON = "border-radius:10px;text-transform:none;letter-spacing:0;font-weight:600;font-size:15px";
-    THEME_ENTRY_LAYER = `${BASE}
+    THEME_ENTRY_LAYER = `${BASE2}
 .logo{gap:10px;align-items:center}
 .lema{display:block;max-width:20ch;font:400 13px/1.35 var(--c-font);color:var(--c-muted)}
 @media (max-width:420px){.lema{display:none}}
@@ -83148,7 +83222,7 @@ h1{font-family:var(--c-display);font-size:clamp(26px,7.4vw,32px)}
  .access-card,.profile-card{gap:8px}
 }
 `;
-    THEME_ADMIN_LAYER = `${BASE}
+    THEME_ADMIN_LAYER = `${BASE2}
 header{border-bottom:1px solid var(--c-head-line)}
 .brand{font-family:var(--c-display);font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
 header .logo-img{height:36px;padding:3px 8px}
@@ -83183,7 +83257,7 @@ table tbody tr:hover{background:var(--c-sunk)}
 td.num,th.num{text-align:right}
 .vacio{border:1px dashed var(--c-line);color:var(--c-muted);text-align:center;padding:24px}
 `;
-    THEME_PILOT_LAYER = `${BASE}
+    THEME_PILOT_LAYER = `${BASE2}
 main>.logo-img{margin:4px 0 8px}
 h1{font-family:var(--c-display);font-size:clamp(26px,7vw,34px)}
 h2,h3{font-family:var(--c-display);letter-spacing:-.015em}
@@ -83210,7 +83284,7 @@ details>summary{font-family:var(--c-display);font-weight:700}
  details>summary{min-height:44px;font-size:14px}
 }
 `;
-    THEME_FLEET_LAYER = `${BASE}
+    THEME_FLEET_LAYER = `${BASE2}
 header{border-bottom:1px solid var(--c-head-line)}
 header .brand{font-family:var(--c-display);letter-spacing:-.02em}
 header .logo-img{height:36px;padding:3px 8px;margin-bottom:8px}
@@ -83242,7 +83316,7 @@ td{font-size:14.5px}
 a.button{${PILL_BUTTON};padding:12px 22px}
 @media (max-width:560px){.tiles{grid-template-columns:1fr 1fr}.card{padding:16px}body>header{padding:12px}}
 `;
-    THEME_ASSISTANT_LAYER = `${BASE}
+    THEME_ASSISTANT_LAYER = `${BASE2}
 header .logo-img{margin-bottom:10px}
 .brand{font-family:var(--c-display);font-weight:800;letter-spacing:-.02em;color:var(--c-brand-ink)}
 h1{font-family:var(--c-display)}
@@ -83253,7 +83327,7 @@ button{${PILL_BUTTON}}
 .secondary{color:var(--c-link)}
 .message{border-radius:var(--c-r);line-height:1.5}
 `;
-    THEME_LEGAL_LAYER = `${BASE}
+    THEME_LEGAL_LAYER = `${BASE2}
 main{border:1px solid var(--c-line)}
 .brand{font-family:var(--c-display);font-weight:800;letter-spacing:-.02em}
 .brand{display:inline-block}
@@ -83309,7 +83383,7 @@ var init_brand = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/admin-alerts.js
-import { randomUUID as randomUUID3 } from "node:crypto";
+import { randomUUID as randomUUID4 } from "node:crypto";
 function adminAlertText(type, count3 = 1) {
   if (type === "data_request")
     return "AutoMantPro: lleg\xF3 una solicitud de eliminaci\xF3n de datos por chat. Rev\xEDsala en /admin/data-requests (plazo de 15 d\xEDas).";
@@ -83344,14 +83418,14 @@ var init_admin_alerts = __esm({
             const [found] = await conn.query("SELECT u.id FROM `User` u JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE u.role = 'admin' AND COALESCE(u.staffRole, 'admin') = 'admin' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND i.phone IS NOT NULL");
             const admins = found;
             if (!admins.length) {
-              await conn.query("INSERT INTO `AuditLog` (id,eventType,actorRole,reason,`after`,createdAt) VALUES (?, 'admin.alert.unrouted', 'system', ?, ?, UTC_TIMESTAMP(3))", [randomUUID3(), type, JSON.stringify({ type, count: count3 })]);
+              await conn.query("INSERT INTO `AuditLog` (id,eventType,actorRole,reason,`after`,createdAt) VALUES (?, 'admin.alert.unrouted', 'system', ?, ?, UTC_TIMESTAMP(3))", [randomUUID4(), type, JSON.stringify({ type, count: count3 })]);
               this.log(`Admin alert ${type}: no linked administrator`);
               return;
             }
             const message2 = adminAlertText(type, count3);
             for (const admin of admins)
-              await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'admin.alert',?) ON DUPLICATE KEY UPDATE id = id", [randomUUID3(), `${key}:${admin.id}`, admin.id, JSON.stringify({ message: message2, alertType: type })]);
-            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorRole,reason,`after`,createdAt) VALUES (?, 'admin.alert.queued', 'system', ?, ?, UTC_TIMESTAMP(3))", [randomUUID3(), type, JSON.stringify({ type, count: count3 })]);
+              await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'admin.alert',?) ON DUPLICATE KEY UPDATE id = id", [randomUUID4(), `${key}:${admin.id}`, admin.id, JSON.stringify({ message: message2, alertType: type })]);
+            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorRole,reason,`after`,createdAt) VALUES (?, 'admin.alert.queued', 'system', ?, ?, UTC_TIMESTAMP(3))", [randomUUID4(), type, JSON.stringify({ type, count: count3 })]);
           });
         } catch {
           this.log(`Admin alert ${type} could not be queued`);
@@ -83368,7 +83442,7 @@ var init_admin_alerts = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/inbound-webhook-store.js
-import { randomUUID as randomUUID4 } from "node:crypto";
+import { randomUUID as randomUUID5 } from "node:crypto";
 var MAX_ATTEMPTS, LEASE_SECONDS, affected, localParts, MysqlInboundWebhookStore;
 var init_inbound_webhook_store = __esm({
   "packages/api/dist/infrastructure/messaging/inbound-webhook-store.js"() {
@@ -83417,7 +83491,7 @@ var init_inbound_webhook_store = __esm({
                 const night = Number(local.hour) < 8 ? new Date(Date.now() - 864e5) : /* @__PURE__ */ new Date();
                 const day3 = localParts(night);
                 const key = `after-hours:${String(user.id)}:${day3.year}-${day3.month}-${day3.day}`;
-                await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'agent.after_hours', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID4(), key, String(user.id), JSON.stringify({ message: message2, allowedOutsideHours: true })]);
+                await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'agent.after_hours', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID5(), key, String(user.id), JSON.stringify({ message: message2, allowedOutsideHours: true })]);
               }
             }
             return true;
@@ -83438,7 +83512,7 @@ var init_inbound_webhook_store = __esm({
           for (const row of result) {
             const wamid = String(row.wamid);
             const payload = typeof row.payload === "string" ? JSON.parse(row.payload) : row.payload;
-            const leaseToken = randomUUID4();
+            const leaseToken = randomUUID5();
             const changed = await conn.query("UPDATE `InboundWebhook` SET status = 'processing', attempts = attempts + 1, leaseToken = ?, lockedAt = UTC_TIMESTAMP(3), updatedAt = UTC_TIMESTAMP(3) WHERE wamid = ? AND status = 'queued' AND attempts < ? AND nextAttemptAt <= UTC_TIMESTAMP(3)", [leaseToken, wamid, MAX_ATTEMPTS]);
             if (affected(changed) !== 1)
               continue;
@@ -84795,9 +84869,9 @@ async function loadCatalog(conn) {
     const [list7] = await conn.query("SELECT `key`, data FROM `PlanOffer`");
     const overrides = {};
     for (const row of Array.isArray(list7) ? list7 : []) {
-      const data2 = typeof row.data === "string" ? JSON.parse(row.data) : row.data;
-      if (data2 && typeof data2 === "object")
-        overrides[String(row.key)] = data2;
+      const data3 = typeof row.data === "string" ? JSON.parse(row.data) : row.data;
+      if (data3 && typeof data3 === "object")
+        overrides[String(row.key)] = data3;
     }
     return mergeOffers(DEFAULT_OFFERS, overrides);
   } catch {
@@ -85143,7 +85217,7 @@ var init_appointment_capacity = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/fleet-access.js
-import { randomUUID as randomUUID5 } from "node:crypto";
+import { randomUUID as randomUUID6 } from "node:crypto";
 async function fleetRoles(conn, userId) {
   const list7 = await rows6(conn, "SELECT f.id AS fleetId, 'owner' AS role, NULL AS memberId, f.ownerUserId, f.name, f.supervisorLimitUsd FROM `Fleet` f WHERE f.ownerUserId = ? AND f.status = 'activa' UNION ALL SELECT f.id, m.role, m.id, f.ownerUserId, f.name, f.supervisorLimitUsd FROM `FleetMember` m JOIN `Fleet` f ON f.id = m.fleetId WHERE m.userId = ? AND m.status = 'active' AND f.status = 'activa'", [userId, userId]);
   return list7.map((r) => ({ fleetId: String(r.fleetId), role: String(r.role), memberId: r.memberId ? String(r.memberId) : null, ownerUserId: String(r.ownerUserId), name: String(r.name), supervisorLimitUsd: r.supervisorLimitUsd === null || r.supervisorLimitUsd === void 0 ? null : Number(r.supervisorLimitUsd) }));
@@ -85158,17 +85232,17 @@ async function managedFleet(conn, userId, allowSupervisor = true) {
   return chosen;
 }
 async function myVehicles(conn, userId, includeAssigned = true) {
-  const own = await rows6(conn, "SELECT v.*, NULL AS fleetName, 'owner' AS access FROM `Vehicle` v WHERE v.userId = ? AND v.deletedAt IS NULL AND v.fleetId IS NULL ORDER BY v.createdAt, v.id FOR UPDATE", [userId]);
+  const own2 = await rows6(conn, "SELECT v.*, NULL AS fleetName, 'owner' AS access FROM `Vehicle` v WHERE v.userId = ? AND v.deletedAt IS NULL AND v.fleetId IS NULL ORDER BY v.createdAt, v.id FOR UPDATE", [userId]);
   if (!includeAssigned)
-    return own;
+    return own2;
   const assigned = await rows6(conn, "SELECT v.*, f.name AS fleetName, 'driver' AS access FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE m.userId = ? AND m.status = 'active' AND a.endsAt IS NULL AND v.deletedAt IS NULL AND f.status = 'activa' ORDER BY a.startsAt, v.id", [userId]);
-  return [...own, ...assigned];
+  return [...own2, ...assigned];
 }
 async function vehicleByPlate(conn, userId, plate2, use) {
   const key = plateKey(plate2);
-  const own = await rows6(conn, `SELECT v.* FROM \`Vehicle\` v WHERE v.userId = ? AND v.fleetId IS NULL AND v.deletedAt IS NULL AND ${PLATE_SQL} = ? LIMIT 1 FOR UPDATE`, [userId, key]);
-  if (own[0])
-    return { ...own[0], access: "owner" };
+  const own2 = await rows6(conn, `SELECT v.* FROM \`Vehicle\` v WHERE v.userId = ? AND v.fleetId IS NULL AND v.deletedAt IS NULL AND ${PLATE_SQL} = ? LIMIT 1 FOR UPDATE`, [userId, key]);
+  if (own2[0])
+    return { ...own2[0], access: "owner" };
   const roles = await fleetRoles(conn, userId);
   const managed = roles.filter((r) => r.role !== "conductor").map((r) => r.fleetId);
   if (managed.length) {
@@ -85210,7 +85284,7 @@ async function vehicleDriver(conn, vehicleId) {
   return row ? String(row.userId) : null;
 }
 async function logOdometer(conn, vehicleId, km9, source, createdBy) {
-  await conn.query("INSERT INTO `VehicleOdometerReading` (id, vehicleId, km, source, createdBy) VALUES (?, ?, ?, ?, ?)", [randomUUID5(), vehicleId, km9, source.slice(0, 20), createdBy]);
+  await conn.query("INSERT INTO `VehicleOdometerReading` (id, vehicleId, km, source, createdBy) VALUES (?, ?, ?, ?, ?)", [randomUUID6(), vehicleId, km9, source.slice(0, 20), createdBy]);
 }
 var rows6, FleetAccessError, fail, PLATE_SQL, plateKey;
 var init_fleet_access = __esm({
@@ -85233,7 +85307,7 @@ var init_fleet_access = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
-import { createHash as createHash2, randomUUID as randomUUID6 } from "node:crypto";
+import { createHash as createHash3, randomUUID as randomUUID7 } from "node:crypto";
 function matchService(text9) {
   const f = fold5(text9);
   const exact = SERVICES.find((s) => s.id === f || fold5(s.name) === f);
@@ -85318,7 +85392,7 @@ var init_vehicle_care_store = __esm({
       throw new VehicleCareError(code3);
     };
     fold5 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
-    createHashLike = (text9) => createHash2("sha256").update(text9).digest("hex").slice(0, 12);
+    createHashLike = (text9) => createHash3("sha256").update(text9).digest("hex").slice(0, 12);
     short2 = (prefix, id2) => `${prefix}-${id2.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf = (code3) => `${code3.slice(2).toLowerCase()}%`;
     CARD_ACTIONS = ["createCard", "cardPreview", "claimCard", "declineCard", "listCards", "cancelCard", "revokeShop"];
@@ -85560,7 +85634,7 @@ Observaci\xF3n del due\xF1o: ${note}`, order.id]);
         if (!at || at.getTime() <= Date.now() || at.getTime() > Date.now() + 365 * 864e5)
           fail2("INVALID_PROPOSED_DATE");
         await ensureShopSlot(conn, shop.id, at, 60, String(appointment.id));
-        const id2 = randomUUID6();
+        const id2 = randomUUID7();
         const code3 = short2("C", id2);
         await conn.query("UPDATE `Appointment` SET status = 'cancelled', cancelReason = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [`Reprogramada por el taller (${code3})`, appointment.id]);
         await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, createdAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, UTC_TIMESTAMP(3))", [id2, appointment.ownerId, appointment.vehicleId, shop.id, at, `Visita propuesta por el taller (reprograma ${command.appointmentRef}, ${shop.actor})`]);
@@ -85599,7 +85673,7 @@ Observaci\xF3n del due\xF1o: ${note}`, order.id]);
         if (pick.kind !== "one")
           return { userId, message: chooseDoneText(pick.items, pick.kind === "unknown") };
         const currentKm = Number(vehicle.currentKm) || 0;
-        await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID6(), vehicle.id, pick.item.serviceId, currentKm, /* @__PURE__ */ new Date(), userId]);
+        await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID7(), vehicle.id, pick.item.serviceId, currentKm, /* @__PURE__ */ new Date(), userId]);
         const next = planItemsFor(await this.planVehicle(conn, vehicle), level).find((i) => i.serviceId === pick.item.serviceId);
         return { userId, message: `Anotado: ${pick.item.serviceName} hecho hoy, a los ${currentKm.toLocaleString("es-EC")} km.${next ? ` Pr\xF3ximo: ${nextMilestone(next)}.` : ""} Ya no te recordaremos este.
 Si tu kilometraje cambi\xF3, actual\xEDzalo con: Kilometraje | km` };
@@ -85615,7 +85689,7 @@ Si tu kilometraje cambi\xF3, actual\xEDzalo con: Kilometraje | km` };
           const doneAt = command.month ? /* @__PURE__ */ new Date(`${command.month}-15T12:00:00Z`) : null;
           if (doneAt && doneAt.getTime() > Date.now())
             fail2("FUTURE_DATE");
-          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID6(), vehicle.id, serviceId, command.km, doneAt, userId]);
+          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID7(), vehicle.id, serviceId, command.km, doneAt, userId]);
           const summary = await this.ownerSummary(conn, vehicle);
           return { userId, message: `Anotado: ${serviceName(serviceId)} a los ${command.km.toLocaleString("es-EC")} km (declarado por ti).
 
@@ -85633,7 +85707,7 @@ ${summary ?? ""}`.trim() };
         }
         if (command.action === "symptom") {
           const diagnosis = guideDiagnosis({ symptoms: command.description });
-          await conn.query("INSERT INTO `VehicleSymptom` (id, vehicleId, `system`, risk, description, createdBy) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID6(), vehicle.id, diagnosis.systemLabel, diagnosis.risk, command.description, userId]);
+          await conn.query("INSERT INTO `VehicleSymptom` (id, vehicleId, `system`, risk, description, createdBy) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID7(), vehicle.id, diagnosis.systemLabel, diagnosis.risk, command.description, userId]);
           if (vehicle.fleetId) {
             const [fleet] = await rows7(conn, "SELECT ownerUserId, name FROM `Fleet` WHERE id = ?", [vehicle.fleetId]);
             const [who] = await rows7(conn, "SELECT name FROM `User` WHERE id = ?", [userId]);
@@ -85660,7 +85734,7 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revi
         const at = dueAt ? /* @__PURE__ */ new Date(`${dueAt}T13:00:00Z`) : null;
         if (at && (Number.isNaN(at.getTime()) || at.getTime() < Date.now() - 864e5))
           fail2("INVALID_ALERT_DATE");
-        await conn.query("INSERT INTO `Alert` (id, vehicleId, label, dueKm, dueAt, source, createdBy, shopId, createdAt) VALUES (?, ?, ?, ?, ?, 'manual', ?, ?, UTC_TIMESTAMP(3))", [randomUUID6(), vehicleId, label2, dueKm, at, createdBy, shopId]);
+        await conn.query("INSERT INTO `Alert` (id, vehicleId, label, dueKm, dueAt, source, createdBy, shopId, createdAt) VALUES (?, ?, ?, ?, ?, 'manual', ?, ?, UTC_TIMESTAMP(3))", [randomUUID7(), vehicleId, label2, dueKm, at, createdBy, shopId]);
       }
       async visitAnswer(conn, userId, role, ref4, accept) {
         if (role !== "dueno")
@@ -85687,7 +85761,7 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revi
         if (!approve && !reason)
           fail2("REASON_REQUIRED");
         await conn.query("UPDATE `WorkOrder` SET status = ?, rejectionReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [approve ? "aprobado" : "rechazado", approve ? null : reason, order.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID6(), userId, order.id, JSON.stringify({ status: approve ? "aprobado" : "rechazado", channel: "whatsapp" }), approve ? "Presupuesto aprobado por el titular por WhatsApp" : String(reason)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID7(), userId, order.id, JSON.stringify({ status: approve ? "aprobado" : "rechazado", channel: "whatsapp" }), approve ? "Presupuesto aprobado por el titular por WhatsApp" : String(reason)]);
         const code3 = workOrderCode(number);
         await this.notify(conn, String(order.shopUserId), `budget:${String(order.id)}:${approve}`, "care.budget", approve ? `\u2705 El cliente aprob\xF3 el presupuesto ${code3} por ${formatUsd2(Number(order.total))}. Puedes iniciar el trabajo.` : `\u274C El cliente no aprob\xF3 el presupuesto ${code3}: ${reason}.`);
         return { userId, message: approve ? `Aprobaste el presupuesto ${code3} por ${formatUsd2(Number(order.total))}. El taller puede empezar.` : `Registramos que no apruebas el presupuesto ${code3}. El taller no har\xE1 trabajos con costo sin tu aprobaci\xF3n.` };
@@ -85697,9 +85771,9 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revi
       async actingShop(conn, userId, role) {
         if (role !== "taller")
           fail2("FORBIDDEN");
-        const [own] = await rows7(conn, "SELECT id, name, userId FROM `Shop` WHERE userId = ? LIMIT 1", [userId]);
-        if (own)
-          return { id: String(own.id), name: String(own.name), ownerUserId: userId, isOwner: true, isAdmin: true, actor: String(own.name) };
+        const [own2] = await rows7(conn, "SELECT id, name, userId FROM `Shop` WHERE userId = ? LIMIT 1", [userId]);
+        if (own2)
+          return { id: String(own2.id), name: String(own2.name), ownerUserId: userId, isOwner: true, isAdmin: true, actor: String(own2.name) };
         const [member] = await rows7(conn, "SELECT s.id, s.name, s.userId, m.name AS memberName, m.role FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.userId = ? AND m.status = 'active' LIMIT 1", [userId]);
         if (!member)
           fail2("FORBIDDEN");
@@ -85726,7 +85800,7 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revi
           if (command.km < Number(vehicle.currentKm))
             fail2("KM_LOWER_THAN_CURRENT");
           const next = Number((await rows7(conn, "SELECT COALESCE(MAX(number), 0) + 1 AS next FROM `WorkOrder` FOR UPDATE"))[0]?.next ?? 1);
-          const id2 = randomUUID6();
+          const id2 = randomUUID7();
           const notes = [`Combustible: ${command.fuel}`, `Estado y da\xF1os: ${command.condition}`, `Inventario: ${command.inventory}`, `Servicios solicitados: ${command.requested}`, `Registrado por: ${shop.actor}`].join("\n");
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, Number(next), shop.id, owner, vehicle.id, vehicle.appointmentId, command.km, notes]);
           await conn.query("UPDATE `Vehicle` SET currentKm = GREATEST(currentKm, ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [command.km, vehicle.id]);
@@ -85748,7 +85822,7 @@ Responde: Confirmo ingreso ${code3} \xB7 Observo ingreso ${code3} | qu\xE9 no co
           if (command.km < Number(vehicle.currentKm) - 100)
             fail2("KM_LOWER_THAN_CURRENT");
           for (const serviceId of new Set(ids))
-            await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID6(), vehicle.id, serviceId, command.km, shop.id, userId]);
+            await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID7(), vehicle.id, serviceId, command.km, shop.id, userId]);
           const names = [...new Set(ids)].map(serviceName);
           await conn.query("INSERT INTO `Service` (id, vehicleId, shopId, appointmentId, description, cost, status, createdAt) VALUES (UUID(), ?, ?, ?, ?, NULL, 'done', CURRENT_TIMESTAMP(3))", [vehicle.id, shop.id, vehicle.appointmentId, `${names.join(", ")}${command.detail ? `. ${command.detail}` : ""} (registrado por ${shop.actor})`]);
           await conn.query("UPDATE `Vehicle` SET currentKm = GREATEST(currentKm, ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [command.km, vehicle.id]);
@@ -85765,7 +85839,7 @@ ${summary ?? ""}`.trim());
           if (!at || at.getTime() <= Date.now() || at.getTime() > Date.now() + 365 * 864e5)
             fail2("INVALID_PROPOSED_DATE");
           await ensureShopSlot(conn, shop.id, at, 60);
-          const id2 = randomUUID6();
+          const id2 = randomUUID7();
           await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, createdAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, UTC_TIMESTAMP(3))", [id2, owner, vehicle.id, shop.id, at, `Visita propuesta por el taller (${shop.actor})`]);
           const code3 = short2("C", id2);
           await this.notifyOwner(conn, owner, String(vehicle.id), `nextvisit:${id2}`, "care.visit", `\u{1F4C5} ${shop.name} te propone la pr\xF3xima visita para tu ${label2}: ${formatEcDateTime(at)}. Responde: Aceptar visita ${code3} \xB7 Rechazar visita ${code3}`);
@@ -85787,7 +85861,7 @@ ${summary ?? ""}`.trim());
         for (const l of command.lines) {
           const subtotal = Math.round(l.quantity * l.unitPrice * 100) / 100;
           total += subtotal;
-          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID6(), order.id, l.kind, l.description, l.brand, l.quality, l.quantity, l.unitPrice]);
+          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID7(), order.id, l.kind, l.description, l.brand, l.quality, l.quantity, l.unitPrice]);
           lines.push(`\u2022 ${l.kind === "mano_obra" ? "Mano de obra: " : "Repuesto: "}${l.description}${l.brand ? ` (${l.brand})` : ""}${l.quality && l.quality !== "nuevo" ? ` \xB7 ${l.quality.toUpperCase()}` : ""} \u2014 ${l.quantity} \xD7 ${formatUsd2(l.unitPrice)} = ${formatUsd2(subtotal)}`);
         }
         total = Math.round(total * 100) / 100;
@@ -85797,7 +85871,7 @@ ${summary ?? ""}`.trim());
           if (auto && total <= Number(auto.autoApproveUsd)) {
             await conn.query("UPDATE `WorkOrder` SET status = 'aprobado', total = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [total, order.id]);
             await this.audit(conn, userId, "care.budget.sent", "WorkOrder", String(order.id), { total, by: shop.actor });
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', NULL, NULL, 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID6(), order.id, JSON.stringify({ status: "aprobado", channel: "auto", limitUsd: Number(auto.autoApproveUsd) }), `Aprobado autom\xE1ticamente por la flota (hasta ${formatUsd2(Number(auto.autoApproveUsd))})`]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', NULL, NULL, 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID7(), order.id, JSON.stringify({ status: "aprobado", channel: "auto", limitUsd: Number(auto.autoApproveUsd) }), `Aprobado autom\xE1ticamente por la flota (hasta ${formatUsd2(Number(auto.autoApproveUsd))})`]);
             await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `budgetsent:${String(order.id)}:${total}`, "care.budget", `\u{1F9FE} Presupuesto ${code3} \u2014 ${shop.name}
 \u{1F697} ${order.make} ${order.model} ${order.year}
 ${lines.join("\n")}
@@ -85845,7 +85919,7 @@ El taller no har\xE1 ning\xFAn trabajo con costo sin tu aprobaci\xF3n.`);
           if (command.exitKm < Number(order.intakeKm ?? 0))
             fail2("KM_LOWER_THAN_CURRENT");
           const items = await rows7(conn, "SELECT kind, description, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [order.id]);
-          const id3 = randomUUID6();
+          const id3 = randomUUID7();
           await conn.query("INSERT INTO `WorkOrderChange` (id, workOrderId, kind, description, payload, total, createdBy) VALUES (?, ?, 'entrega', ?, ?, ?, ?)", [id3, order.id, command.workDone, JSON.stringify({ exitKm: command.exitKm, warrantyDays: command.warrantyDays }), order.total, userId]);
           await this.audit(conn, userId, "care.delivery.sent", "WorkOrder", String(order.id), { by: shop.actor });
           const lines2 = items.map((i) => `\u2022 ${i.kind === "mano_obra" ? "Mano de obra: " : "Repuesto: "}${i.description} \u2014 ${Number(i.quantity)} \xD7 ${formatUsd2(Number(i.unitPrice))}`);
@@ -85859,7 +85933,7 @@ Revisa el veh\xEDculo al recibirlo y responde: Acepto entrega ${code3} \xB7 Rech
         }
         const lines = command.lines.map((l) => this.lineText(l));
         const total = Math.round(lines.reduce((a, l) => a + l.subtotal, 0) * 100) / 100;
-        const id2 = randomUUID6();
+        const id2 = randomUUID7();
         const ref4 = short2("N", id2);
         await conn.query("INSERT INTO `WorkOrderChange` (id, workOrderId, kind, description, payload, total, createdBy) VALUES (?, ?, 'novedad', ?, ?, ?, ?)", [id2, order.id, command.description, JSON.stringify({ lines: command.lines }), total, userId]);
         await this.audit(conn, userId, "care.finding.sent", "WorkOrder", String(order.id), { change: id2, total, by: shop.actor });
@@ -85886,10 +85960,10 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref4} \xB7 Recha
         if (approve) {
           const payload = typeof change.payload === "string" ? JSON.parse(String(change.payload)) : change.payload;
           for (const l of payload.lines)
-            await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID6(), change.workOrderId, l.kind, `Adicional: ${String(l.description)}`, l.brand ?? null, l.quality ?? null, l.quantity, l.unitPrice]);
+            await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID7(), change.workOrderId, l.kind, `Adicional: ${String(l.description)}`, l.brand ?? null, l.quality ?? null, l.quantity, l.unitPrice]);
           await conn.query("UPDATE `WorkOrder` SET total = total + ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [change.total, change.workOrderId]);
         }
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.finding.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID6(), userId, change.workOrderId, JSON.stringify({ change: change.id, approved: approve }), reason]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.finding.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID7(), userId, change.workOrderId, JSON.stringify({ change: change.id, approved: approve }), reason]);
         const code3 = workOrderCode(Number(change.number));
         await this.notify(conn, String(change.shopUserId), `findingdecision:${String(change.id)}`, "care.finding", approve ? `\u2705 El cliente aprob\xF3 la novedad ${ref4} de ${code3} por ${formatUsd2(Number(change.total))}. Puedes ejecutarla.` : `\u274C El cliente no aprob\xF3 la novedad ${ref4} de ${code3}: ${reason}. No la ejecutes.`);
         return { userId, message: approve ? `Aprobaste la novedad ${ref4} por ${formatUsd2(Number(change.total))}; se sum\xF3 a la orden ${code3}.` : `Registramos que no apruebas la novedad ${ref4}. El taller no la har\xE1.` };
@@ -85905,7 +85979,7 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref4} \xB7 Recha
           fail2("REASON_REQUIRED");
         const code3 = workOrderCode(number);
         await conn.query("UPDATE `WorkOrderChange` SET status = ?, decidedBy = ?, reason = ?, decidedAt = UTC_TIMESTAMP(3) WHERE id = ?", [accept ? "approved" : "rejected", userId, reason, change.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.delivery.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID6(), userId, order.id, JSON.stringify({ accepted: accept }), reason]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.delivery.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID7(), userId, order.id, JSON.stringify({ accepted: accept }), reason]);
         if (!accept) {
           await this.notify(conn, String(order.shopUserId), `deliverydecision:${String(change.id)}`, "care.delivery", `\u274C El cliente no acept\xF3 la entrega de ${code3}: ${reason}. La orden sigue abierta.`);
           return { userId, message: `Registramos tu observaci\xF3n sobre ${code3}. El taller la revisar\xE1 y la orden sigue abierta.` };
@@ -85916,11 +85990,11 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref4} \xB7 Recha
         await conn.query("UPDATE `Vehicle` SET currentKm = GREATEST(currentKm, ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [payload.exitKm, order.vehicleId]);
         await logOdometer(conn, String(order.vehicleId), payload.exitKm, "entrega", userId);
         if (order.fleetId && Number(order.total) > 0)
-          await conn.query("INSERT INTO `VehicleExpense` (id, vehicleId, fleetId, kind, amountUsd, description, source, refId, createdBy, spentAt) VALUES (?, ?, ?, 'mantenimiento', ?, ?, 'orden', ?, ?, UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE amountUsd = VALUES(amountUsd)", [randomUUID6(), order.vehicleId, order.fleetId, order.total, `${code3} \xB7 ${String(order.shopName)}`.slice(0, 191), order.id, userId]);
+          await conn.query("INSERT INTO `VehicleExpense` (id, vehicleId, fleetId, kind, amountUsd, description, source, refId, createdBy, spentAt) VALUES (?, ?, ?, 'mantenimiento', ?, ?, 'orden', ?, ?, UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE amountUsd = VALUES(amountUsd)", [randomUUID7(), order.vehicleId, order.fleetId, order.total, `${code3} \xB7 ${String(order.shopName)}`.slice(0, 191), order.id, userId]);
         const items = await rows7(conn, "SELECT description FROM `WorkOrderItem` WHERE workOrderId = ?", [order.id]);
         const serviceIds = new Set([String(change.description), ...items.map((i) => String(i.description).replace(/^Adicional: /, ""))].flatMap((t) => t.split(/[,;]/)).map((t) => matchService(t.trim())).filter((x) => !!x));
         for (const serviceId of serviceIds)
-          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID6(), order.vehicleId, serviceId, payload.exitKm, order.shopId, userId]);
+          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID7(), order.vehicleId, serviceId, payload.exitKm, order.shopId, userId]);
         if (order.appointmentId)
           await conn.query("UPDATE `Appointment` SET status = 'completed', updatedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status IN ('pending','confirmed')", [order.appointmentId]);
         await this.notify(conn, String(order.shopUserId), `deliverydecision:${String(change.id)}`, "care.delivery", `\u2705 El cliente acept\xF3 la entrega de ${code3} por ${formatUsd2(Number(order.total))}. La orden qued\xF3 cerrada.`);
@@ -85928,7 +86002,7 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref4} \xB7 Recha
         const summary = vehicle ? await this.ownerSummary(conn, vehicle) : null;
         if (reason) {
           await this.notify(conn, String(order.shopUserId), `deliveryclaim:${String(change.id)}`, "care.claim", `\u{1F4DD} El cliente recibi\xF3 ${code3} con una observaci\xF3n: ${reason}. Queda registrada como reclamo; el equipo de AutoMantPro le dar\xE1 seguimiento.`);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.claim.opened', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID6(), userId, order.id, JSON.stringify({ source: "delivery" }), reason]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.claim.opened', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID7(), userId, order.id, JSON.stringify({ source: "delivery" }), reason]);
         }
         const rateAsk = `\xBFC\xF3mo te fue? Califica de 1 a 5: Calificar ${code3} | calidad | atenci\xF3n | plazo | costo | comentario`;
         return { userId, message: [`Entrega ${code3} ${reason ? "recibida con tu observaci\xF3n (abrimos un reclamo para darle seguimiento)" : "aceptada"}: ${formatUsd2(Number(order.total))}, garant\xEDa de ${payload.warrantyDays} d\xEDas. Actualizamos tu historial y tu plan.`, summary ?? "", rateAsk].filter(Boolean).join("\n\n") };
@@ -85980,12 +86054,12 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref4} \xB7 Recha
         }
         const values = Object.values(details).filter((v) => typeof v === "number");
         const overall = Math.max(1, Math.min(5, Math.round(values.reduce((a, b) => a + b, 0) / values.length - (details.piezaCorrecta === false ? 1 : 0))));
-        await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, details, localRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID6(), userId, toId, overall, command.comment || null, kind, workOrderId, JSON.stringify(details), localRequestId]);
+        await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, details, localRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID7(), userId, toId, overall, command.comment || null, kind, workOrderId, JSON.stringify(details), localRequestId]);
         for (const table of ["Shop", "Store"])
           await conn.query(`UPDATE \`${table}\` t SET t.ratingAvg = COALESCE((SELECT ROUND(AVG(r.score), 1) FROM \`Rating\` r WHERE r.toId = ? AND r.hiddenAt IS NULL), 0), t.ratingCount = (SELECT COUNT(*) FROM \`Rating\` r WHERE r.toId = ? AND r.hiddenAt IS NULL) WHERE t.userId = ?`, [toId, toId, toId]);
         await this.notify(conn, toId, `rated:${workOrderId ?? localRequestId}:${userId}`, "care.rating", `\u2B50 Recibiste una calificaci\xF3n de ${overall}/5 de un cliente${command.comment ? `: "${command.comment}"` : ""}. Consulta tu reporte con: Mi calificaci\xF3n`);
         if (overall <= 2)
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.rating.low', ?, 'dueno', 'Rating', ?, ?, UTC_TIMESTAMP(3))", [randomUUID6(), userId, workOrderId ?? localRequestId, JSON.stringify({ overall, kind })]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.rating.low', ?, 'dueno', 'Rating', ?, ?, UTC_TIMESTAMP(3))", [randomUUID7(), userId, workOrderId ?? localRequestId, JSON.stringify({ overall, kind })]);
         return { userId, message: overall <= 2 ? `Gracias por dec\xEDrnoslo (${overall}/5). Una persona del equipo revisar\xE1 el caso con ${name} y te escribir\xE1.` : `\xA1Gracias! Calificaste a ${name} con ${overall}/5. Tu opini\xF3n ayuda a otros a elegir.` };
       }
       /** Satisfaction report for the workshop or store owner: averages by dimension and recent comments. */
@@ -86022,7 +86096,7 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref4} \xB7 Recha
         const count3 = await rows7(conn, "SELECT COUNT(*) AS n FROM `ShopMember` WHERE shopId = ? AND status <> 'removed'", [shop.id]);
         if (Number(count3[0]?.n) >= 20)
           fail2("TECHNICIAN_LIMIT");
-        const id2 = randomUUID6();
+        const id2 = randomUUID7();
         const code3 = short2("T", id2);
         await conn.query("INSERT INTO `ShopMember` (id, shopId, name, status, invitedBy, role) VALUES (?, ?, ?, 'invited', ?, ?)", [id2, shop.id, command.name, userId, command.role]);
         await this.audit(conn, userId, "care.technician.invited", "ShopMember", id2, { shopId: shop.id });
@@ -86047,7 +86121,7 @@ Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Para quitarlo desp
         if (!existing.length) {
           if (Number(count3[0]?.n) >= 5)
             fail2("INVITATION_LIMIT");
-          await conn.query("INSERT INTO `LocalOffer` (id, requestId, businessId, businessUserId, businessName, referred) VALUES (?, ?, ?, ?, ?, TRUE)", [randomUUID6(), request.id, business.id, userId, business.name]);
+          await conn.query("INSERT INTO `LocalOffer` (id, requestId, businessId, businessUserId, businessName, referred) VALUES (?, ?, ?, ?, ?, TRUE)", [randomUUID7(), request.id, business.id, userId, business.name]);
         }
         return { userId, message: `Te invitaron a la solicitud ${ref4}: ${request.kind}, ${request.category}, sector ${request.zone}, ${request.city}. Necesidad: ${String(request.description).slice(0, 200)}.
 Puedes ofertar aunque tu registro siga en revisi\xF3n: Ofertar ${ref4} | precio USD | minutos | AAAA-MM-DD | HH:mm | notas
@@ -86061,7 +86135,7 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
         await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), repairNoticeKey(orderId), "care.repair", repairNoticeText(workOrderCode(Number(order.number)), String(order.shopName)));
       }
       async notify(conn, recipient, dedup, kind, message2) {
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID6(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID7(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
       }
       /**
        * A notice for the vehicle's owner. For a fleet vehicle the fleet's administrators and
@@ -86074,14 +86148,14 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
             await this.notify(conn, manager, `${dedup.slice(0, 150)}:${manager}`, kind, message2);
       }
       async audit(conn, userId, eventType, entityType, entityId, after) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID6(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID7(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
       }
     };
   }
 });
 
 // packages/api/dist/infrastructure/messaging/local-marketplace-store.js
-import { createHash as createHash3, randomUUID as randomUUID7 } from "node:crypto";
+import { createHash as createHash4, randomUUID as randomUUID8 } from "node:crypto";
 function isoDay(value2) {
   if (value2 instanceof Date)
     return Number.isNaN(value2.getTime()) ? "" : value2.toISOString().slice(0, 10);
@@ -86128,7 +86202,7 @@ var init_local_marketplace_store = __esm({
         if (!/^[A-Za-z0-9._:-]{8,120}$/.test(key))
           fail3("INVALID_IDEMPOTENCY_KEY");
         const conn = await this.connect();
-        const lock = `local:${createHash3("sha256").update(userId).digest("hex").slice(0, 50)}`;
+        const lock = `local:${createHash4("sha256").update(userId).digest("hex").slice(0, 50)}`;
         let locked = false;
         let transaction = false;
         try {
@@ -86140,8 +86214,8 @@ var init_local_marketplace_store = __esm({
           const user = (await rows8(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL FOR UPDATE", [userId]))[0];
           if (!user)
             fail3("CONSENT_OR_ACCOUNT_REQUIRED");
-          const receiptId = createHash3("sha256").update(`${userId}:${key}`).digest("hex");
-          const fingerprint = createHash3("sha256").update(JSON.stringify(command)).digest("hex");
+          const receiptId = createHash4("sha256").update(`${userId}:${key}`).digest("hex");
+          const fingerprint = createHash4("sha256").update(JSON.stringify(command)).digest("hex");
           const receipt = (await rows8(conn, "SELECT fingerprint, response FROM `LocalCommandReceipt` WHERE id = ?", [receiptId]))[0];
           if (receipt) {
             if (receipt.fingerprint !== fingerprint)
@@ -86153,7 +86227,7 @@ var init_local_marketplace_store = __esm({
           const result = await this.apply(conn, userId, String(user.role), command);
           await conn.query("INSERT INTO `LocalCommandReceipt` (id, userId, fingerprint, response) VALUES (?, ?, ?, ?)", [receiptId, userId, fingerprint, JSON.stringify(result)]);
           if (!READ_ONLY.has(command.action))
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, 'LocalRequest', ?, ?, UTC_TIMESTAMP(3))", [randomUUID7(), `local.${command.action}`, userId, user.role, result.requestId, JSON.stringify({ action: command.action, offerId: result.offerId ?? null })]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, 'LocalRequest', ?, ?, UTC_TIMESTAMP(3))", [randomUUID8(), `local.${command.action}`, userId, user.role, result.requestId, JSON.stringify({ action: command.action, offerId: result.offerId ?? null })]);
           await conn.query("COMMIT");
           transaction = false;
           return result;
@@ -86187,7 +86261,7 @@ O \xE1brelo directo: https://wa.me/?text=${encodeURIComponent(forward)}
 Tu solicitud queda abierta 48 horas.`;
       }
       async notify(conn, recipient, dedup, kind, message2) {
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?)", [randomUUID7(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?)", [randomUUID8(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
       }
       /** Turns WhatsApp short forms into the explicit commands; listings are answered directly. */
       async canonical(conn, userId, role, command) {
@@ -86297,10 +86371,10 @@ Para confirmar: Confirmar C-XXXXXX` : "No tienes citas de solicitudes del piloto
           const categoryField = command.kind === "servicio" ? "specialties" : "categories";
           const candidates = await rows8(conn, `SELECT b.id, b.userId, b.name, b.city, b.zone, b.${categoryField} AS categories FROM \`${table2}\` b JOIN \`User\` u ON u.id = b.userId WHERE b.verificationStatus = 'verified' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND u.role = ? AND LOWER(TRIM(b.city)) = LOWER(TRIM(?)) ${NOT_SANCTIONED("b")} ORDER BY b.id`, [command.kind === "servicio" ? "taller" : "almacen", command.city]);
           const nearby = nearbyCandidates(candidates.map((c) => ({ ...c, categories: list5(c.categories) })), command.city, command.zone, command.category);
-          const requestId = randomUUID7();
+          const requestId = randomUUID8();
           await conn.query("INSERT INTO `LocalRequest` (id, ownerId, vehicleId, kind, category, description, city, zone, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 48 HOUR))", [requestId, userId, command.vehicleId, command.kind, command.category, command.description, command.city, command.zone]);
           for (const business of nearby) {
-            await conn.query("INSERT INTO `LocalOffer` (id, requestId, businessId, businessUserId, businessName) VALUES (?, ?, ?, ?, ?)", [randomUUID7(), requestId, business.id, business.userId, business.name]);
+            await conn.query("INSERT INTO `LocalOffer` (id, requestId, businessId, businessUserId, businessName) VALUES (?, ?, ?, ?, ?)", [randomUUID8(), requestId, business.id, business.userId, business.name]);
             await this.notify(conn, business.userId, `invite:${requestId}:${business.id}`, "local.invitation", `Solicitud ${shortCode("S", requestId)} (${requestId}): ${command.kind}, ${command.category}. Sector ${command.zone}, ${command.city}. Veh\xEDculo: ${vehicle.make} ${vehicle.model} ${vehicle.year}. Necesidad: ${command.description}. Ofrece costo total USD, duraci\xF3n o plazo y fecha/hora disponible. La solicitud vence en 48 horas. Responde: Ofertar ${shortCode("S", requestId)} | precio USD | minutos | AAAA-MM-DD | HH:mm | notas`);
           }
           if (!nearby.length)
@@ -86425,7 +86499,7 @@ ${lines.join("\n")}${hint}` : `Todav\xEDa no hay ofertas para ${code3}.` };
           const vehicle = await rows8(conn, "SELECT id FROM `Vehicle` WHERE id = ? AND userId = ? AND deletedAt IS NULL", [request.vehicleId, userId]);
           if (!vehicle.length)
             fail3("VEHICLE_NOT_FOUND");
-          appointmentId = randomUUID7();
+          appointmentId = randomUUID8();
           await conn.query("DELETE FROM `VehicleShopBlock` WHERE vehicleId = ? AND shopId = ?", [request.vehicleId, selected2.businessId]).catch((err) => {
             if (err.code !== "ER_NO_SUCH_TABLE")
               throw err;
@@ -86946,7 +87020,7 @@ var init_commands = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/subscription-chat.js
-import { randomUUID as randomUUID8 } from "node:crypto";
+import { randomUUID as randomUUID9 } from "node:crypto";
 async function billingProfile(conn, userId, role) {
   if (role === "taller" || role === "almacen")
     return role;
@@ -87083,10 +87157,10 @@ ${await paymentInstructions(conn, open, catalog)}`;
 ${await paymentInstructions(conn, sub, catalog)}`;
       }
       async create(conn, userId, plan, period, price) {
-        const id2 = randomUUID8();
+        const id2 = randomUUID9();
         const [next] = await rows9(conn, "SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription` FOR UPDATE");
         await conn.query("INSERT INTO `Subscription` (id, `number`, userId, plan, status, active, months, amountUsd, method, reference, notes, startsAt, expiresAt, createdBy, createdAt, updatedAt, period, units, subtotalUsd, ivaUsd, source) VALUES (?, ?, ?, ?, 'solicitada', 0, ?, ?, 'transferencia', NULL, NULL, CURRENT_TIMESTAMP(3), NULL, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3), ?, ?, ?, ?, 'chat')", [id2, Number(next?.n ?? 1), userId, plan, price.months, price.total, userId, period, price.units, price.subtotal, price.iva]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'plan.requested', ?, NULL, 'Subscription', ?, ?, UTC_TIMESTAMP(3))", [randomUUID8(), userId, id2, JSON.stringify({ plan, period, units: price.units, total: price.total })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'plan.requested', ?, NULL, 'Subscription', ?, ?, UTC_TIMESTAMP(3))", [randomUUID9(), userId, id2, JSON.stringify({ plan, period, units: price.units, total: price.total })]);
         return id2;
       }
       async reportPayment(conn, userId, number, reference, note) {
@@ -87099,7 +87173,7 @@ ${await paymentInstructions(conn, sub, catalog)}`;
         if (sub.status !== "solicitada" && sub.status !== "pendiente")
           return `El contrato ${code3} ya no admite pagos. Para contratar de nuevo escribe: Planes`;
         await conn.query("UPDATE `Subscription` SET status = 'pendiente', reference = ?, notes = CONCAT_WS('\\n', notes, ?), reportedAt = UTC_TIMESTAMP(3), updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [reference, note ? `Cliente: ${note}` : null, sub.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'plan.payment.reported', ?, NULL, 'Subscription', ?, ?, UTC_TIMESTAMP(3))", [randomUUID8(), userId, sub.id, JSON.stringify({ reference })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'plan.payment.reported', ?, NULL, 'Subscription', ?, ?, UTC_TIMESTAMP(3))", [randomUUID9(), userId, sub.id, JSON.stringify({ reference })]);
         return `Recibido: comprobante ${reference} para ${code3}. Lo verificamos con el banco y te avisamos por aqu\xED cuando el plan quede activo. Si tienes la foto del comprobante, env\xEDala en este chat.`;
       }
       async renew(conn, userId, number, catalog) {
@@ -87126,7 +87200,7 @@ ${await paymentInstructions(conn, created, catalog)}`;
 });
 
 // packages/api/dist/infrastructure/messaging/vehicle-card-store.js
-import { createHash as createHash4, randomBytes as randomBytes2, randomUUID as randomUUID9 } from "node:crypto";
+import { createHash as createHash5, randomBytes as randomBytes2, randomUUID as randomUUID10 } from "node:crypto";
 function newSecretCode(prefix) {
   const bytes = randomBytes2(16);
   let out = "";
@@ -87157,7 +87231,7 @@ var init_vehicle_card_store = __esm({
     fail5 = (code3) => {
       throw new FleetAccessError(code3);
     };
-    hashCode = (code3) => createHash4("sha256").update(code3.toUpperCase()).digest("hex");
+    hashCode = (code3) => createHash5("sha256").update(code3.toUpperCase()).digest("hex");
     short3 = (prefix, id2) => `${prefix}-${id2.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     SERVICES2 = serviceTaxonomy.categories.flatMap((c) => c.subservices.map((s) => ({ id: s.id, name: s.name })));
     serviceName2 = (id2) => SERVICES2.find((s) => s.id === id2)?.name ?? id2;
@@ -87195,7 +87269,7 @@ var init_vehicle_card_store = __esm({
         if (Number(pending[0]?.n) >= PENDING_LIMIT)
           fail5("CARD_LIMIT");
         await conn.query("DELETE FROM `VehicleCard` WHERE shopId = ? AND status = 'pending' AND REPLACE(plate, '-', '') = ?", [shop.id, plateKey(command.plate)]);
-        const id2 = randomUUID9();
+        const id2 = randomUUID10();
         const code3 = newSecretCode("F");
         const services = [...new Set(ids)];
         await conn.query("INSERT INTO `VehicleCard` (id, codeHash, shopId, createdBy, plate, make, model, year, currentKm, vehicleClass, fuel, services, status, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? DAY))", [id2, hashCode(code3), shop.id, userId, command.plate, command.make, command.model, command.year, command.currentKm, command.vehicleClass, command.fuel, JSON.stringify(services), CARD_DAYS]);
@@ -87300,15 +87374,15 @@ ${list7.map((c) => `\u2022 ${c.plate} \xB7 ${c.make} ${c.model} ${c.year}: ${sta
           const count3 = await rows10(conn, fleetId ? "SELECT COUNT(*) AS n FROM `Vehicle` WHERE fleetId = ? AND deletedAt IS NULL" : "SELECT COUNT(*) AS n FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [fleetId ?? ownerId]);
           if (Number(count3[0]?.n) >= (fleetId ? FLEET_VEHICLE_LIMIT : OWN_VEHICLE_LIMIT))
             fail5(fleetId ? "FLEET_VEHICLE_LIMIT" : "VEHICLE_LIMIT");
-          vehicleId = randomUUID9();
+          vehicleId = randomUUID10();
           await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, selectedAt, fleetId, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'urbano', ?, UTC_TIMESTAMP(3), ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [vehicleId, ownerId, card.make, card.model, card.year, card.currentKm, card.vehicleClass, card.fuel, card.plate, !!fleetId, fleetId]);
         }
         const services = this.servicesOf(card);
         for (const serviceId of services)
-          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, ?, 'taller', ?, ?)", [randomUUID9(), vehicleId, serviceId, card.currentKm, card.createdAt, card.shopId, card.createdBy]);
+          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, ?, 'taller', ?, ?)", [randomUUID10(), vehicleId, serviceId, card.currentKm, card.createdAt, card.shopId, card.createdBy]);
         await logOdometer(conn, vehicleId, Number(card.currentKm), "ficha", actor);
         await conn.query("DELETE FROM `VehicleShopBlock` WHERE vehicleId = ? AND shopId = ?", [vehicleId, card.shopId]);
-        const appointmentId = randomUUID9();
+        const appointmentId = randomUUID10();
         await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, createdAt) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'confirmed', ?, UTC_TIMESTAMP(3))", [appointmentId, ownerId, vehicleId, card.shopId, `Atenci\xF3n sin cita: ficha creada por el taller`]);
         await conn.query("UPDATE `VehicleCard` SET status = 'claimed', claimedBy = ?, vehicleId = ?, claimedAt = UTC_TIMESTAMP(3) WHERE id = ?", [actor, vehicleId, card.id]);
         await this.audit(conn, actor, "dueno", "card.claimed", "VehicleCard", String(card.id), { vehicleId, shopId: card.shopId, consentVersion: CONSENT_VERSION, shopAccess: true, fleetId, newAccount: created, merged: !!existing });
@@ -87342,17 +87416,17 @@ ${list7.map((c) => `\u2022 ${c.plate} \xB7 ${c.make} ${c.model} ${c.year}: ${sta
         const open = await rows10(conn, "SELECT number FROM `WorkOrder` WHERE vehicleId = ? AND shopId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [card.vehicleId, card.shopId]);
         if (open.length)
           fail5("ORDER_OPEN");
-        await conn.query("INSERT INTO `VehicleShopBlock` (id, vehicleId, shopId, createdBy) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE createdBy = VALUES(createdBy)", [randomUUID9(), card.vehicleId, card.shopId, userId]);
+        await conn.query("INSERT INTO `VehicleShopBlock` (id, vehicleId, shopId, createdBy) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE createdBy = VALUES(createdBy)", [randomUUID10(), card.vehicleId, card.shopId, userId]);
         await conn.query("UPDATE `Appointment` SET status = 'cancelled', cancelReason = 'El due\xF1o retir\xF3 el acceso del taller', updatedAt = UTC_TIMESTAMP(3) WHERE vehicleId = ? AND shopId = ? AND status IN ('pending','confirmed')", [card.vehicleId, card.shopId]);
         await this.audit(conn, userId, "dueno", "card.shop.revoked", "Vehicle", String(card.vehicleId), { shopId: card.shopId });
         await this.notify(conn, String(card.shopUserId), `cardrevoked:${String(card.id)}`, "card.revoked", `El due\xF1o de un veh\xEDculo que registraste con ficha retir\xF3 el acceso de ${card.shopName} a su historial.`);
         return { userId, message: `Listo: ${card.shopName} ya no puede ver ni registrar nada en este veh\xEDculo. Si vuelves a elegirlo en una solicitud, recupera el acceso.` };
       }
       async notify(conn, recipient, dedup, kind, message2) {
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID9(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID10(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
       }
       async audit(conn, userId, role, eventType, entityType, entityId, after) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID9(), eventType, userId, role, entityType, entityId, JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID10(), eventType, userId, role, entityType, entityId, JSON.stringify(after)]);
       }
     };
     need = (userId) => userId ?? fail5("ACCOUNT_REQUIRED");
@@ -87403,7 +87477,7 @@ var init_rtv_calendar = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/fleet-store.js
-import { randomBytes as randomBytes3, randomUUID as randomUUID10 } from "node:crypto";
+import { randomBytes as randomBytes3, randomUUID as randomUUID11 } from "node:crypto";
 function ecMonthStart(now = /* @__PURE__ */ new Date()) {
   const local = new Date(now.getTime() - 5 * 36e5);
   return new Date(Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), 1, 5));
@@ -87565,7 +87639,7 @@ var init_fleet_store = __esm({
         const ownerId = userId ?? await createOwner(command.person, command.city);
         if ((await rows11(conn, "SELECT id FROM `Fleet` WHERE ownerUserId = ? FOR UPDATE", [ownerId])).length)
           fail6("FLEET_EXISTS");
-        const id2 = randomUUID10();
+        const id2 = randomUUID11();
         await conn.query("INSERT INTO `Fleet` (id, name, ruc, city, ownerUserId, status) VALUES (?, ?, ?, ?, ?, 'activa')", [id2, command.name, command.ruc, command.city, ownerId]);
         await this.audit(conn, ownerId, "fleet.registered", "Fleet", id2, { consentVersion: CONSENT_VERSION, newAccount: !userId });
         return { userId: ownerId, message: [
@@ -87586,7 +87660,7 @@ var init_fleet_store = __esm({
         const count3 = await rows11(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE fleetId = ? AND deletedAt IS NULL FOR UPDATE", [fleet.fleetId]);
         if (Number(count3[0]?.n) >= FLEET_VEHICLE_LIMIT)
           fail6("FLEET_VEHICLE_LIMIT");
-        const id2 = randomUUID10();
+        const id2 = randomUUID11();
         await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, fleetId, unitCode, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'severo', TRUE, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, fleet.ownerUserId, command.make, command.model, command.year, command.currentKm, command.vehicleClass, command.fuel, command.plate, fleet.fleetId, command.unitCode]);
         await logOdometer(conn, id2, command.currentKm, "flota", userId);
         await this.audit(conn, userId, "fleet.vehicle.added", "Vehicle", id2, { fleetId: fleet.fleetId });
@@ -87611,7 +87685,7 @@ Para asignarlo a un conductor: Asignar ${command.plate} | D-XXXXXX` };
         const count3 = await rows11(conn, "SELECT COUNT(*) AS n FROM `FleetMember` WHERE fleetId = ? AND status <> 'removed' FOR UPDATE", [fleet.fleetId]);
         if (Number(count3[0]?.n) >= MEMBER_LIMIT)
           fail6("MEMBER_LIMIT");
-        const id2 = randomUUID10();
+        const id2 = randomUUID11();
         const code3 = newSecretCode("J");
         await conn.query("INSERT INTO `FleetMember` (id, fleetId, userId, name, role, status, inviteHash, invitedBy) VALUES (?, ?, NULL, ?, ?, 'invited', ?, ?)", [id2, fleet.fleetId, command.name, command.role, secretHash(code3), userId]);
         await this.audit(conn, userId, "fleet.member.invited", "FleetMember", id2, { fleetId: fleet.fleetId, role: command.role });
@@ -87680,7 +87754,7 @@ Cuando te asignen un veh\xEDculo: Mi veh\xEDculo \xB7 Kilometraje | km \xB7 S\xE
         if (member.status !== "active")
           fail6("MEMBER_NOT_ACTIVE");
         await conn.query("UPDATE `FleetAssignment` SET endsAt = UTC_TIMESTAMP(3) WHERE vehicleId = ? AND endsAt IS NULL", [vehicle.id]);
-        await conn.query("INSERT INTO `FleetAssignment` (id, fleetId, vehicleId, memberId, createdBy) VALUES (?, ?, ?, ?, ?)", [randomUUID10(), fleet.fleetId, vehicle.id, member.id, userId]);
+        await conn.query("INSERT INTO `FleetAssignment` (id, fleetId, vehicleId, memberId, createdBy) VALUES (?, ?, ?, ?, ?)", [randomUUID11(), fleet.fleetId, vehicle.id, member.id, userId]);
         await this.audit(conn, userId, "fleet.vehicle.assigned", "Vehicle", String(vehicle.id), { memberId: member.id });
         const label2 = `${unitLabel(vehicle)} ${vehicle.make} ${vehicle.model}`;
         await this.notify(conn, String(member.userId), `fleetassigned:${String(vehicle.id)}:${String(member.id)}:${Date.now()}`, "fleet.assignment", `\u{1F69A} ${fleet.name} te asign\xF3 ${label2} (${km3(Number(vehicle.currentKm))}). Reporta el kilometraje cada semana: Kilometraje | km \xB7 Si notas algo: S\xEDntoma | qu\xE9 notas \xB7 Su plan: Mi veh\xEDculo`);
@@ -87719,7 +87793,7 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
         const at = command.date ? /* @__PURE__ */ new Date(`${command.date}T17:00:00Z`) : /* @__PURE__ */ new Date();
         if (Number.isNaN(at.getTime()) || at.getTime() > Date.now() + 864e5 || at.getTime() < Date.now() - 400 * 864e5)
           fail6("INVALID_EXPENSE_DATE");
-        const id2 = randomUUID10();
+        const id2 = randomUUID11();
         await conn.query("INSERT INTO `VehicleExpense` (id, vehicleId, fleetId, kind, amountUsd, description, source, refId, createdBy, spentAt) VALUES (?, ?, ?, 'otro', ?, ?, 'manual', ?, ?, ?)", [id2, vehicle.id, vehicle.fleetId ?? null, Math.round(command.amount * 100) / 100, command.description, id2, userId, at]);
         await this.audit(conn, userId, "fleet.expense.added", "Vehicle", String(vehicle.id), { amount: command.amount });
         return { userId, message: `Gasto anotado en ${unitLabel(vehicle)} ${vehicle.make} ${vehicle.model}: ${command.description}, ${formatUsd2(command.amount)}${command.date ? ` (${command.date})` : ""}. Ver: Costos ${vehicle.plate ?? ""}`.trim() };
@@ -87747,7 +87821,7 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
         const [existing] = await rows11(conn, "SELECT id, status FROM `FleetShop` WHERE fleetId = ? AND shopId = ? FOR UPDATE", [fleet.fleetId, shop.id]);
         if (existing && existing.status === "activo")
           fail6("AGREEMENT_EXISTS");
-        const id2 = existing ? String(existing.id) : randomUUID10();
+        const id2 = existing ? String(existing.id) : randomUUID11();
         if (existing)
           await conn.query("UPDATE `FleetShop` SET status = 'propuesto', createdBy = ?, decidedBy = NULL, decidedAt = NULL WHERE id = ?", [userId, id2]);
         else
@@ -87818,7 +87892,7 @@ ${list7.map((c) => `\u2022 ${short4("K", String(c.id))} ${c.name} \xB7 ${Number(
           fail6("INVALID_PROPOSED_DATE");
         await ensureShopSlot(conn, String(agreement.shopId), at, 60);
         await conn.query("DELETE FROM `VehicleShopBlock` WHERE vehicleId = ? AND shopId = ?", [vehicle.id, agreement.shopId]);
-        const id2 = randomUUID10();
+        const id2 = randomUUID11();
         const code3 = short4("C", id2);
         await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, createdAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, UTC_TIMESTAMP(3))", [id2, fleet.ownerUserId, vehicle.id, agreement.shopId, at, `Visita agendada por la flota ${fleet.name}: ${command.reason}`.slice(0, 191)]);
         await this.audit(conn, userId, "fleet.visit.scheduled", "Appointment", id2, { fleetId: fleet.fleetId });
@@ -87850,17 +87924,17 @@ Si no puedes: Reprogramar cita ${code3} | AAAA-MM-DD | HH:mm \xB7 Rechazar cita 
 ${site}/flota/${token2}` };
       }
       async notify(conn, recipient, dedup, kind, message2) {
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID10(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID11(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
       }
       async audit(conn, userId, eventType, entityType, entityId, after) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'dueno', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID10(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'dueno', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID11(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
       }
     };
   }
 });
 
 // packages/api/dist/infrastructure/map/workshop-map-store.js
-import { randomUUID as randomUUID11 } from "node:crypto";
+import { randomUUID as randomUUID12 } from "node:crypto";
 function stringList2(value2) {
   let parsed = value2;
   if (typeof value2 === "string") {
@@ -87896,11 +87970,11 @@ async function executeShopMapCommand(conn, userId, role, command, fail11) {
     return fail11("NOT_FOUND");
   if (command.action === "shopMapLeave") {
     await conn.query("UPDATE `Shop` SET mapListed = FALSE, mapConsentAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [shop.id]);
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.leave', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID11(), userId, shop.id, JSON.stringify({ source: "whatsapp" })]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.leave', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), userId, shop.id, JSON.stringify({ source: "whatsapp" })]);
     return `Listo: ${String(shop.name)} ya no aparece en el mapa de AutoMantPro. Para volver: Mapa | ubicaci\xF3n | ACEPTO`;
   }
   await conn.query("UPDATE `Shop` SET lat = ?, lng = ?, mapPrecision = ?, mapListed = TRUE, mapConsentAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [command.lat, command.lng, command.precision, shop.id]);
-  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.location', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID11(), userId, shop.id, JSON.stringify({ listed: true, precision: command.precision, hasPoint: true, source: "whatsapp" })]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.location', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), userId, shop.id, JSON.stringify({ listed: true, precision: command.precision, hasPoint: true, source: "whatsapp" })]);
   const where = command.precision === "sector" ? "Se ver\xE1 solo tu sector, sin el punto exacto." : "Se ver\xE1 el punto exacto de tu taller.";
   const pending = shop.verificationStatus === "verified" ? `Ya puedes verte en ${mapUrl(SITE_URL, { city: String(shop.city ?? "") })}` : "Aparecer\xE1s cuando terminemos de verificar tu taller.";
   return `Ubicaci\xF3n guardada para ${String(shop.name)}. ${where} ${pending}
@@ -87969,7 +88043,7 @@ var init_workshop_map_store = __esm({
           const [result] = await conn.query("UPDATE `Shop` SET lat = ?, lng = ?, mapPrecision = ?, mapListed = ?, mapConsentAt = CASE WHEN ? THEN COALESCE(mapConsentAt, CURRENT_TIMESTAMP(3)) ELSE NULL END, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.lat, input.lng, input.precision, input.listed, input.listed, shopId]);
           const changed = Number(result?.affectedRows ?? 0) > 0;
           if (changed) {
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.location', ?, 'admin', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID11(), actorUserId, shopId, JSON.stringify({ listed: input.listed, precision: input.precision, hasPoint: input.lat !== null, source: "admin" })]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.location', ?, 'admin', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), actorUserId, shopId, JSON.stringify({ listed: input.listed, precision: input.precision, hasPoint: input.lat !== null, source: "admin" })]);
           }
           return changed;
         });
@@ -87979,7 +88053,7 @@ var init_workshop_map_store = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/chat-account-store.js
-import { randomBytes as randomBytes4, randomUUID as randomUUID12 } from "node:crypto";
+import { randomBytes as randomBytes4, randomUUID as randomUUID13 } from "node:crypto";
 var rows13, ChatAccountError, fail7, ChatAccountStore;
 var init_chat_account_store = __esm({
   "packages/api/dist/infrastructure/messaging/chat-account-store.js"() {
@@ -88022,11 +88096,11 @@ var init_chat_account_store = __esm({
           fail7("PHONE_REGISTERED");
         if ((await rows13(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone])).length)
           fail7("ALREADY_REGISTERED");
-        const id2 = randomUUID12();
+        const id2 = randomUUID13();
         const passwordHash = await hashPassword(randomBytes4(24).toString("hex"));
         await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'dueno', ?, 'es', ?, CURRENT_TIMESTAMP(3), ?, 'whatsapp', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, `+${phone}`, passwordHash, name, city, CONSENT_VERSION]);
         await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id2, phone]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, 'dueno', 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), id2, id2, JSON.stringify({ role: "dueno", source: "whatsapp", via: source, consentVersion: CONSENT_VERSION })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, 'dueno', 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), id2, id2, JSON.stringify({ role: "dueno", source: "whatsapp", via: source, consentVersion: CONSENT_VERSION })]);
         return id2;
       }
       /** AutoMantPro's public WhatsApp number, for the links people share. */
@@ -88046,13 +88120,13 @@ var init_chat_account_store = __esm({
         const taken = await rows13(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [`+${phone}`, phone]);
         if (taken.length)
           fail7("PHONE_REGISTERED");
-        const id2 = randomUUID12();
+        const id2 = randomUUID13();
         const passwordHash = await hashPassword(randomBytes4(24).toString("hex"));
         await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'taller', ?, 'es', NULL, CURRENT_TIMESTAMP(3), ?, 'whatsapp', 'T\xE9cnico de taller', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, `+${phone}`, passwordHash, name, CONSENT_VERSION]);
         await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id2, phone]);
         await conn.query("UPDATE `ShopMember` SET status = 'active', userId = ?, name = ? WHERE id = ?", [id2, name, member.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.technician.joined', ?, 'taller', 'ShopMember', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), id2, member.id, JSON.stringify({ consentVersion: CONSENT_VERSION })]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'care.technician', ?)", [randomUUID12(), `techjoined:${String(member.id)}`, member.ownerUserId, JSON.stringify({ message: `${name} se uni\xF3 a ${member.shopName} como t\xE9cnico.` })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.technician.joined', ?, 'taller', 'ShopMember', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), id2, member.id, JSON.stringify({ consentVersion: CONSENT_VERSION })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'care.technician', ?)", [randomUUID13(), `techjoined:${String(member.id)}`, member.ownerUserId, JSON.stringify({ message: `${name} se uni\xF3 a ${member.shopName} como t\xE9cnico.` })]);
         return { userId: id2, message: `Bienvenido, ${name.split(/\s+/)[0]}: ya eres t\xE9cnico de ${member.shopName} en AutoMantPro y aceptaste el tratamiento de datos (versi\xF3n ${CONSENT_VERSION}). Comandos: Plan C-XXXXXX \xB7 Ingreso C-XXXXXX | \u2026 \xB7 Servicio C-XXXXXX | \u2026 \xB7 Pr\xF3xima visita C-XXXXXX | \u2026` };
       }
       /** A business without an account that arrives through an owner's link sees the case, never the owner. */
@@ -88078,17 +88152,17 @@ Luego escribe de nuevo: ${kind === "taller" ? "Taller" : "Almac\xE9n"} ${ref4}` 
           const linked = await rows13(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone]);
           if (linked.length)
             fail7("ALREADY_REGISTERED");
-          const id2 = randomUUID12();
+          const id2 = randomUUID13();
           const newRole = command.action === "registerOwner" ? "dueno" : command.action === "registerShop" ? "taller" : "almacen";
           const passwordHash = await hashPassword(randomBytes4(24).toString("hex"));
           await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, ?, ?, 'es', ?, CURRENT_TIMESTAMP(3), ?, 'whatsapp', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, stored, passwordHash, newRole, command.name, command.city, CONSENT_VERSION]);
           if (command.action === "registerShop") {
-            await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID12(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, JSON.stringify(command.services)]);
+            await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID13(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, JSON.stringify(command.services)]);
           } else if (command.action === "registerStore") {
-            await conn.query("INSERT INTO `Store` (id, userId, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, FALSE, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID12(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, command.categories]);
+            await conn.query("INSERT INTO `Store` (id, userId, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, FALSE, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID13(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, command.categories]);
           }
           await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id2, phone]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, ?, 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), id2, newRole, id2, JSON.stringify({ role: newRole, source: "whatsapp", consentVersion: CONSENT_VERSION })]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, ?, 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), id2, newRole, id2, JSON.stringify({ role: newRole, source: "whatsapp", consentVersion: CONSENT_VERSION })]);
           const message2 = newRole === "dueno" ? `Listo, ${command.name.split(/\s+/)[0]}: tu cuenta de AutoMantPro qued\xF3 creada y aceptaste el tratamiento de datos (versi\xF3n ${CONSENT_VERSION}). Ahora registra tu veh\xEDculo: Veh\xEDculo | clase | combustible | marca | modelo | a\xF1o | kilometraje` : `Listo: registramos ${command.name}. Queda en verificaci\xF3n; revisaremos el RUC y la direcci\xF3n y te avisaremos por aqu\xED. Aceptaste el tratamiento de datos (versi\xF3n ${CONSENT_VERSION}).`;
           return { message: message2, userId: id2 };
         }
@@ -88123,9 +88197,9 @@ Luego escribe de nuevo: ${kind === "taller" ? "Taller" : "Almac\xE9n"} ${ref4}` 
           if (Number(count3[0]?.n) >= plan.maxVehicles) {
             return { userId, message: `Tu plan ${plan.tier === "gratis" ? "Gratis" : "actual"} permite ${plan.maxVehicles} veh\xEDculo${plan.maxVehicles === 1 ? "" : "s"} y ya ${plan.maxVehicles === 1 ? "lo tienes registrado" : "los tienes registrados"}. Con Premium registras hasta 3 y ves el plan de mantenimiento Avanzado. Escribe Planes para ver precios.` };
           }
-          const id2 = randomUUID12();
+          const id2 = randomUUID13();
           await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, selectedAt, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL, 'urbano', FALSE, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, userId, command.make, command.model, command.year, command.currentKm, command.vehicleClass, command.fuel]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.vehicle.created', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), userId, id2, JSON.stringify({ source: "whatsapp" })]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.vehicle.created', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), userId, id2, JSON.stringify({ source: "whatsapp" })]);
           const summary = planSummaryFor({ make: command.make, model: command.model, year: command.year, currentKm: command.currentKm, vehicleClass: command.vehicleClass, fuel: command.fuel, usageProfile: "urbano" }, plan.level);
           const others = Number(count3[0]?.n) > 0 ? " Ahora es tu veh\xEDculo activo; para cambiar escribe Mis veh\xEDculos." : "";
           return { userId, message: summary ? `Veh\xEDculo registrado.${others} Este es tu plan de mantenimiento:
@@ -88296,8 +88370,8 @@ var init_domain = __esm({
 });
 
 // packages/api/dist/infrastructure/courses/courses-store.js
-import { randomUUID as randomUUID13 } from "node:crypto";
-import { createHash as createHash5 } from "node:crypto";
+import { randomUUID as randomUUID14 } from "node:crypto";
+import { createHash as createHash6 } from "node:crypto";
 async function isVerifiedExpert(conn, userId) {
   return rowsOf(await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId = ? AND verificationStatus = 'verificado' LIMIT 1", [userId])).length > 0;
 }
@@ -88364,7 +88438,7 @@ var init_courses_store = __esm({
         const [course] = rowsOf(await c.query("SELECT firstPublishedAt FROM `Course` WHERE id=?", [courseId]));
         if (!course?.firstPublishedAt || JSON.stringify(before) === JSON.stringify(after))
           return;
-        await c.query("INSERT INTO `CourseChange` (id,courseId,actorUserId,campo,antes,despues) VALUES (?,?,?,?,?,?)", [randomUUID13(), courseId, actorId, field2, JSON.stringify(before) ?? null, JSON.stringify(after) ?? null]);
+        await c.query("INSERT INTO `CourseChange` (id,courseId,actorUserId,campo,antes,despues) VALUES (?,?,?,?,?,?)", [randomUUID14(), courseId, actorId, field2, JSON.stringify(before) ?? null, JSON.stringify(after) ?? null]);
       }
       async listPublished(filters = {}) {
         return this.run(async (c) => rowsOf(await c.query("SELECT c.id,c.slug,c.code,c.titulo,c.especialidad,c.nivel,c.horas,c.precioUsd,c.notaMinima,c.altoVoltajeGas,u.name expertName FROM `Course` c JOIN `User` u ON u.id=c.expertId WHERE c.estado='publicado' AND (? IS NULL OR c.especialidad=?) AND (? IS NULL OR c.nivel=?) ORDER BY c.updatedAt DESC", [filters.especialidad ?? null, filters.especialidad ?? null, filters.nivel ?? null, filters.nivel ?? null])).map((r) => ({ ...r, id: String(r.id), slug: String(r.slug), code: String(r.code), titulo: String(r.titulo), especialidad: String(r.especialidad), nivel: String(r.nivel), horas: Number(r.horas), precioUsd: r.precioUsd === null ? null : Number(r.precioUsd), notaMinima: Number(r.notaMinima), altoVoltajeGas: Boolean(r.altoVoltajeGas), expertName: String(r.expertName) })));
@@ -88386,13 +88460,13 @@ var init_courses_store = __esm({
         return this.run(async (c) => rowsOf(await c.query("SELECT e.id,e.code,e.estado,e.comprobante,e.beca,e.createdAt,u.name studentName FROM `Enrollment` e JOIN `Course` c ON c.id=e.courseId JOIN `User` u ON u.id=e.userId WHERE c.expertId=? AND c.id=? ORDER BY e.createdAt DESC", [expertId, courseId])));
       }
       async issueExpertLink(userId, token2) {
-        const tokenHash = createHash5("sha256").update(token2).digest("hex");
+        const tokenHash = createHash6("sha256").update(token2).digest("hex");
         await this.run(async (c) => {
           await c.query("INSERT INTO `ExpertProfile` (userId,especialidades,verificationStatus,tokenHash,tokenExpiresAt,tokenUsedAt) VALUES (?,JSON_ARRAY(),'pendiente',?,DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 24 HOUR),NULL) ON DUPLICATE KEY UPDATE tokenHash=VALUES(tokenHash),tokenExpiresAt=VALUES(tokenExpiresAt),tokenUsedAt=NULL", [userId, tokenHash]);
         });
       }
       async submitExpertApplication(token2, specialties, mime, document2) {
-        const tokenHash = createHash5("sha256").update(token2).digest("hex");
+        const tokenHash = createHash6("sha256").update(token2).digest("hex");
         return this.run(async (c) => affected2(await c.query("UPDATE `ExpertProfile` SET especialidades=?,documento=?,documentoMime=?,verificationStatus='pendiente',motivo=NULL,tokenUsedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3) WHERE tokenHash=? AND tokenUsedAt IS NULL AND tokenExpiresAt>UTC_TIMESTAMP(3)", [JSON.stringify(specialties), document2, mime, tokenHash])) > 0);
       }
       async courseDetail(slug) {
@@ -88435,10 +88509,10 @@ var init_courses_store = __esm({
             return false;
           if (rowsOf(await c.query("SELECT id FROM `Enrollment` WHERE userId=? AND courseId=?", [studentId, course.id])).length)
             return false;
-          const id2 = randomUUID13();
+          const id2 = randomUUID14();
           const n = await this.nextNumber(c, "Enrollment");
           await c.query("INSERT INTO `Enrollment` (id,code,courseId,userId,estado,beca,compartirConTaller,consentVersion,consentAt) VALUES (?,?,?,?,'solicitada',FALSE,FALSE,'pending',UTC_TIMESTAMP(3))", [id2, enrollmentCode(n), course.id, studentId]);
-          await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.consent',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID13(), `course-consent:${id2}`, studentId, JSON.stringify({ message: `Tu taller solicita inscribirte en ${courseCodeValue}. Para aceptar: Inscribirme ${courseCodeValue} | ACEPTO. Para compartir avance, a\xF1ade | COMPARTIR; para certificado p\xFAblico, a\xF1ade | PUBLICO. Son elecciones independientes.` })]);
+          await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.consent',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID14(), `course-consent:${id2}`, studentId, JSON.stringify({ message: `Tu taller solicita inscribirte en ${courseCodeValue}. Para aceptar: Inscribirme ${courseCodeValue} | ACEPTO. Para compartir avance, a\xF1ade | COMPARTIR; para certificado p\xFAblico, a\xF1ade | PUBLICO. Son elecciones independientes.` })]);
           return true;
         });
       }
@@ -88456,7 +88530,7 @@ var init_courses_store = __esm({
           const [lesson] = rowsOf(await c.query("SELECT l.id lessonId FROM `Lesson` l WHERE l.courseId=(SELECT courseId FROM `Enrollment` WHERE id=?) AND NOT EXISTS(SELECT 1 FROM `LessonProgress` p WHERE p.enrollmentId=? AND p.lessonId=l.id) ORDER BY l.orden LIMIT 1", [enrollmentId, enrollmentId]));
           if (!lesson)
             return false;
-          await c.query("INSERT IGNORE INTO `LessonProgress` (id,enrollmentId,lessonId) VALUES (?,?,?)", [randomUUID13(), enrollmentId, lesson.lessonId]);
+          await c.query("INSERT IGNORE INTO `LessonProgress` (id,enrollmentId,lessonId) VALUES (?,?,?)", [randomUUID14(), enrollmentId, lesson.lessonId]);
           return true;
         });
       }
@@ -88474,7 +88548,7 @@ var init_courses_store = __esm({
       }
       async createCourse(expertId, input) {
         return this.run(async (c) => {
-          const id2 = randomUUID13();
+          const id2 = randomUUID14();
           const code3 = courseCode(await this.nextNumber(c, "Course"));
           await c.query("INSERT INTO `Course` (id, expertId, slug, code, titulo, especialidad, nivel, horas, precioUsd, notaMinima, inscripcionesAbiertas, altoVoltajeGas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [id2, expertId, input.slug, code3, input.titulo, input.especialidad, input.nivel, input.horas, input.precioUsd, input.notaMinima ?? 70, input.inscripcionesAbiertas ?? true, isHighVoltageOrGas(input.especialidad)]);
           return id2;
@@ -88499,7 +88573,7 @@ var init_courses_store = __esm({
             await c.query("UPDATE `Course` SET slug = COALESCE(?,slug), titulo = COALESCE(?,titulo), especialidad = COALESCE(?,especialidad), nivel = COALESCE(?,nivel), horas = COALESCE(?,horas), precioUsd = ?, notaMinima = COALESCE(?,notaMinima), inscripcionesAbiertas = COALESCE(?,inscripcionesAbiertas), altoVoltajeGas = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ? AND expertId = ?", [input.slug ?? null, input.titulo ?? null, input.especialidad ?? null, input.nivel ?? null, input.horas ?? null, input.precioUsd === void 0 ? before.precioUsd : input.precioUsd, input.notaMinima ?? null, input.inscripcionesAbiertas ?? null, isHighVoltageOrGas(input.especialidad ?? String(before.especialidad)), courseId, expertId]);
             if (before.estado === "publicado")
               for (const [field2, oldValue, newValue] of changed)
-                await c.query("INSERT INTO `CourseChange` (id, courseId, actorUserId, campo, antes, despues) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID13(), courseId, expertId, field2, oldValue === null ? null : String(oldValue), newValue === null ? null : String(newValue)]);
+                await c.query("INSERT INTO `CourseChange` (id, courseId, actorUserId, campo, antes, despues) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID14(), courseId, expertId, field2, oldValue === null ? null : String(oldValue), newValue === null ? null : String(newValue)]);
             return true;
           } catch (error) {
             throw error;
@@ -88531,7 +88605,7 @@ var init_courses_store = __esm({
           const state = approve ? "publicado" : "borrador";
           const changed = affected2(await c.query("UPDATE `Course` SET estado = ?, motivoRevision=?, firstPublishedAt = IF(?, COALESCE(firstPublishedAt, UTC_TIMESTAMP(3)), firstPublishedAt) WHERE id = ? AND estado = 'en_revision' AND firstPublishedAt IS NULL", [state, approve ? null : reason, approve, courseId]));
           if (changed)
-            await c.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'Course', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), approve ? "course.published" : "course.publication.rejected", adminId, courseId, JSON.stringify({ state, reason: approve ? null : reason })]);
+            await c.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'Course', ?, ?, UTC_TIMESTAMP(3))", [randomUUID14(), approve ? "course.published" : "course.publication.rejected", adminId, courseId, JSON.stringify({ state, reason: approve ? null : reason })]);
           return changed > 0;
         });
       }
@@ -88543,7 +88617,7 @@ var init_courses_store = __esm({
           const status = approve ? "verificado" : "rechazado";
           const changed = affected2(await c.query("UPDATE `ExpertProfile` SET verificationStatus=?,motivo=?,verifiedAt=IF(?,UTC_TIMESTAMP(3),NULL),tipoDocumentoRevisado=?,documento=NULL,documentoMime=NULL,updatedAt=UTC_TIMESTAMP(3) WHERE userId=? AND verificationStatus='pendiente'", [status, approve ? null : reason, approve, documentType, userId]));
           if (changed)
-            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?,? ,?,'admin','ExpertProfile',?,?,UTC_TIMESTAMP(3))", [randomUUID13(), approve ? "expert.verified" : "expert.rejected", adminId, userId, JSON.stringify({ status, reason: approve ? null : reason, documentType })]);
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?,? ,?,'admin','ExpertProfile',?,?,UTC_TIMESTAMP(3))", [randomUUID14(), approve ? "expert.verified" : "expert.rejected", adminId, userId, JSON.stringify({ status, reason: approve ? null : reason, documentType })]);
           return changed > 0;
         });
       }
@@ -88558,7 +88632,7 @@ var init_courses_store = __esm({
             await c.query("DELETE FROM `AppSetting` WHERE `name`=?", ["courses.commission"]);
           else
             await c.query("INSERT INTO `AppSetting` (`name`,`value`,`updatedBy`,`updatedAt`) VALUES (?,?,?,UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`),`updatedBy`=VALUES(`updatedBy`),`updatedAt`=UTC_TIMESTAMP(3)", ["courses.commission", value2, adminId]);
-          await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'course.commission.changed', ?,'admin','AppSetting','courses.commission',?,UTC_TIMESTAMP(3))", [randomUUID13(), adminId, JSON.stringify({ value: value2 })]);
+          await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'course.commission.changed', ?,'admin','AppSetting','courses.commission',?,UTC_TIMESTAMP(3))", [randomUUID14(), adminId, JSON.stringify({ value: value2 })]);
         });
       }
       async courseHistory() {
@@ -88585,11 +88659,11 @@ var init_courses_store = __esm({
             await c.query("UPDATE `Course` SET estado='oculto',updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [row.courseId]);
           else
             await c.query("UPDATE `Course` SET estado='publicado',updatedAt=UTC_TIMESTAMP(3) WHERE id=? AND firstPublishedAt IS NOT NULL", [row.courseId]);
-          await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?,? ,?,'admin','ContentReport',?,?,UTC_TIMESTAMP(3))", [randomUUID13(), hide ? "course.hidden" : "course.restored", adminId, reportId, JSON.stringify({ courseId: row.courseId, reason })]);
+          await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?,? ,?,'admin','ContentReport',?,?,UTC_TIMESTAMP(3))", [randomUUID14(), hide ? "course.hidden" : "course.restored", adminId, reportId, JSON.stringify({ courseId: row.courseId, reason })]);
           return true;
         });
       }
-      async saveLesson(expertId, courseId, input, id2 = randomUUID13()) {
+      async saveLesson(expertId, courseId, input, id2 = randomUUID14()) {
         validateLessonText(input.texto);
         assertHttpsUrl(input.videoUrl);
         assertHttpsUrl(input.pdfUrl);
@@ -88617,7 +88691,7 @@ var init_courses_store = __esm({
           return true;
         });
       }
-      async saveQuestion(expertId, courseId, input, id2 = randomUUID13()) {
+      async saveQuestion(expertId, courseId, input, id2 = randomUUID14()) {
         return this.run(async (c) => {
           if (!rowsOf(await c.query("SELECT id FROM `Course` WHERE id=? AND expertId=? FOR UPDATE", [courseId, expertId])).length)
             return fail8("FORBIDDEN_OR_NOT_FOUND");
@@ -88642,7 +88716,7 @@ var init_courses_store = __esm({
           return true;
         });
       }
-      async saveOption(expertId, questionId, input, id2 = randomUUID13()) {
+      async saveOption(expertId, questionId, input, id2 = randomUUID14()) {
         return this.run(async (c) => {
           const [question] = rowsOf(await c.query("SELECT q.id,q.courseId FROM `Question` q JOIN `Course` c ON c.id=q.courseId WHERE q.id=? AND c.expertId=? FOR UPDATE", [questionId, expertId]));
           if (!question)
@@ -88694,7 +88768,7 @@ var init_courses_store = __esm({
             await c.query("UPDATE `Enrollment` SET consentVersion=?,consentAt=UTC_TIMESTAMP(3),compartirConTaller=?,certificadoPublico=?,estado=? WHERE id=?", [input.consentVersion, Boolean(input.compartirConTaller), Boolean(input.certificadoPublico), active ? "activa" : "solicitada", existing.id]);
             return String(existing.id);
           }
-          const id2 = randomUUID13();
+          const id2 = randomUUID14();
           const code3 = enrollmentCode(await this.nextNumber(c, "Enrollment"));
           await c.query("INSERT INTO `Enrollment` (id,code,courseId,userId,estado,beca,compartirConTaller,certificadoPublico,consentVersion,consentAt) VALUES (?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [id2, code3, input.courseId, input.userId, active ? "activa" : "solicitada", Boolean(input.beca), Boolean(input.compartirConTaller), Boolean(input.certificadoPublico), input.consentVersion]);
           return id2;
@@ -88716,9 +88790,9 @@ var init_courses_store = __esm({
           transitionEnrollment(from, to);
           const changed = affected2(await c.query("UPDATE `Enrollment` SET estado = ? WHERE id = ? AND estado = ?", [to, enrollment2.id, from])) > 0;
           if (changed) {
-            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?,'dueno','Enrollment',?,?,UTC_TIMESTAMP(3))", [randomUUID13(), to === "activa" ? "enrollment.approved" : to === "rechazada" ? "enrollment.rejected" : "enrollment.revoked", expertId, String(enrollment2.id), JSON.stringify({ state: to })]);
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?,'dueno','Enrollment',?,?,UTC_TIMESTAMP(3))", [randomUUID14(), to === "activa" ? "enrollment.approved" : to === "rechazada" ? "enrollment.rejected" : "enrollment.revoked", expertId, String(enrollment2.id), JSON.stringify({ state: to })]);
             if (to === "activa" || to === "rechazada")
-              await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.enrollment',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID13(), `course-enrollment:${String(enrollment2.id)}:${to}`, String(enrollment2.userId), JSON.stringify({ message: to === "activa" ? `Tu inscripci\xF3n ${code3} al curso ${String(enrollment2.titulo)} fue aprobada.` : `Tu inscripci\xF3n ${code3} al curso ${String(enrollment2.titulo)} fue rechazada.` })]);
+              await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.enrollment',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID14(), `course-enrollment:${String(enrollment2.id)}:${to}`, String(enrollment2.userId), JSON.stringify({ message: to === "activa" ? `Tu inscripci\xF3n ${code3} al curso ${String(enrollment2.titulo)} fue aprobada.` : `Tu inscripci\xF3n ${code3} al curso ${String(enrollment2.titulo)} fue rechazada.` })]);
           }
           return changed;
         });
@@ -88727,16 +88801,16 @@ var init_courses_store = __esm({
         return this.run(async (c) => {
           const changed = affected2(await c.query("UPDATE `Enrollment` e JOIN `Course` c ON c.id = e.courseId SET e.beca = TRUE, e.estado = 'activa' WHERE e.code = ? AND c.expertId = ? AND e.estado = 'solicitada' AND e.consentVersion <> 'pending'", [code3, expertId])) > 0;
           if (changed)
-            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'enrollment.scholarship', ?,'dueno','Enrollment',?,'{\"state\":\"activa\"}',UTC_TIMESTAMP(3))", [randomUUID13(), expertId, code3]);
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'enrollment.scholarship', ?,'dueno','Enrollment',?,'{\"state\":\"activa\"}',UTC_TIMESTAMP(3))", [randomUUID14(), expertId, code3]);
           return changed;
         });
       }
       async markLessonComplete(userId, enrollmentId, lessonId) {
         return this.run(async (c) => {
-          const own = rowsOf(await c.query("SELECT e.id FROM `Enrollment` e JOIN `Lesson` l ON l.courseId = e.courseId WHERE e.id = ? AND e.userId = ? AND e.estado = 'activa' AND l.id = ?", [enrollmentId, userId, lessonId]));
-          if (!own.length)
+          const own2 = rowsOf(await c.query("SELECT e.id FROM `Enrollment` e JOIN `Lesson` l ON l.courseId = e.courseId WHERE e.id = ? AND e.userId = ? AND e.estado = 'activa' AND l.id = ?", [enrollmentId, userId, lessonId]));
+          if (!own2.length)
             return fail8("FORBIDDEN_OR_NOT_FOUND");
-          await c.query("INSERT IGNORE INTO `LessonProgress` (id, enrollmentId, lessonId) VALUES (?, ?, ?)", [randomUUID13(), enrollmentId, lessonId]);
+          await c.query("INSERT IGNORE INTO `LessonProgress` (id, enrollmentId, lessonId) VALUES (?, ?, ?)", [randomUUID14(), enrollmentId, lessonId]);
           return true;
         });
       }
@@ -88789,11 +88863,11 @@ var init_courses_store = __esm({
           const publicChoice = Boolean(row.certificadoPublico);
           if (!certificate) {
             const code3 = certificateCode(await this.nextNumber(c, "Certificate"));
-            await c.query("INSERT INTO `Certificate` (id,code,enrollmentId,publico) VALUES (?,?,?,?)", [randomUUID13(), code3, enrollmentId, publicChoice]);
+            await c.query("INSERT INTO `Certificate` (id,code,enrollmentId,publico) VALUES (?,?,?,?)", [randomUUID14(), code3, enrollmentId, publicChoice]);
             certificate = { code: code3 };
           } else
             await c.query("UPDATE `Certificate` SET publico=? WHERE enrollmentId=?", [publicChoice, enrollmentId]);
-          await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.certificate',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID13(), `course-certificate:${String(certificate.code)}`, String(row.userId), JSON.stringify({ message: `Tu certificado ${String(certificate.code)} fue emitido.${publicChoice ? ` Consulta: https://automantpro.app/certificados/${String(certificate.code)}` : ""}` })]);
+          await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.certificate',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID14(), `course-certificate:${String(certificate.code)}`, String(row.userId), JSON.stringify({ message: `Tu certificado ${String(certificate.code)} fue emitido.${publicChoice ? ` Consulta: https://automantpro.app/certificados/${String(certificate.code)}` : ""}` })]);
           return String(certificate.code);
         });
       }
@@ -88822,7 +88896,7 @@ var init_courses_store = __esm({
           if (!Number.isInteger(cupo) || cupo < 1)
             return fail8("INVALID_INVITE_CAPACITY");
           const code3 = `CI-${String(await this.nextNumber(c, "InviteCode")).padStart(4, "0")}`;
-          await c.query("INSERT INTO `InviteCode` (id, courseId, code, cupo, venceAt) SELECT ?, id, ?, ?, ? FROM `Course` WHERE id = ? AND expertId = ?", [randomUUID13(), code3, cupo, venceAt, courseId, expertId]);
+          await c.query("INSERT INTO `InviteCode` (id, courseId, code, cupo, venceAt) SELECT ?, id, ?, ?, ? FROM `Course` WHERE id = ? AND expertId = ?", [randomUUID14(), code3, cupo, venceAt, courseId, expertId]);
           if (!rowsOf(await c.query("SELECT id FROM `InviteCode` WHERE code = ?", [code3])).length)
             return fail8("FORBIDDEN_OR_NOT_FOUND");
           return code3;
@@ -88830,7 +88904,7 @@ var init_courses_store = __esm({
       }
       async submitReport(courseId, lessonId, reporterUserId, motivo) {
         return this.run(async (c) => {
-          const id2 = randomUUID13();
+          const id2 = randomUUID14();
           await c.query("INSERT INTO `ContentReport` (id, courseId, lessonId, reporterUserId, motivo) VALUES (?, ?, ?, ?, ?)", [id2, courseId, lessonId, reporterUserId, motivo]);
           return id2;
         });
@@ -89052,7 +89126,7 @@ var init_lopdp = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/local-agent-broker.js
-import { createHash as createHash6, randomBytes as randomBytes6 } from "node:crypto";
+import { createHash as createHash7, randomBytes as randomBytes6 } from "node:crypto";
 function fail9(code3) {
   throw new BrokerError(code3);
 }
@@ -89074,7 +89148,7 @@ var init_local_agent_broker = __esm({
     init_lopdp();
     init_admin_alerts();
     data = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
-    digest = (s) => createHash6("sha256").update(s).digest("hex");
+    digest = (s) => createHash7("sha256").update(s).digest("hex");
     BrokerError = class extends Error {
       code;
       constructor(code3) {
@@ -89524,7 +89598,7 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
 });
 
 // packages/api/dist/infrastructure/messaging/outbox-delivery-store.js
-import { randomUUID as randomUUID14 } from "node:crypto";
+import { randomUUID as randomUUID15 } from "node:crypto";
 function whatsappDelivery(env = process.env) {
   const value2 = env.WHATSAPP_DELIVERY?.trim();
   return value2 === "bridge" || value2 === "cloud" ? value2 : "off";
@@ -89556,7 +89630,7 @@ var init_outbox_delivery_store = __esm({
       async enqueueVerification(userId, businessId, decision, reason) {
         await this.run(async (conn) => {
           const message2 = decision === "verified" ? "Tu negocio fue aprobado. Comandos \xFAtiles: Invitaciones | Mapa | Planes." : `Tu negocio no fue aprobado. Motivo: ${reason.slice(0, 500)}`;
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID14(), `verification:${businessId}:${decision}`, userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID15(), `verification:${businessId}:${decision}`, userId, JSON.stringify({ message: message2 })]);
         });
       }
       claim(limit = 5) {
@@ -89582,7 +89656,7 @@ var init_outbox_delivery_store = __esm({
               await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'EMPTY_MESSAGE' WHERE id = ? AND status = 'pending'", [id2]);
               continue;
             }
-            const leaseToken = randomUUID14();
+            const leaseToken = randomUUID15();
             const changed = await conn.query("UPDATE `NotificationOutbox` SET status = 'sending', attempts = attempts + 1, leaseToken = ?, lockedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status = 'pending' AND attempts < ?", [leaseToken, id2, MAX_ATTEMPTS2]);
             if (affected3(changed) !== 1)
               continue;
@@ -89629,6 +89703,117 @@ var init_outbox_delivery_store = __esm({
           }
           return changed;
         });
+      }
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/messaging/local-agent-task-store.js
+import { randomBytes as randomBytes7, randomUUID as randomUUID17 } from "node:crypto";
+function validateTask(type, payload) {
+  if (typeof type !== "string" || !LOCAL_TASK_TYPES.includes(type) || !own(Object.fromEntries(LOCAL_TASK_TYPES.map((t) => [t, true])), type))
+    throw new BrokerError("TASK_TYPE_NOT_ALLOWED");
+  const needsMessage = type === "responder_consulta" || type === "clasificar_mensaje";
+  if (needsMessage) {
+    if (!payload || typeof payload !== "object" || Array.isArray(payload) || Object.keys(payload).length !== 1 || !own(payload, "message") || typeof payload.message !== "string" || !payload.message || payload.message.length > 2e3)
+      throw new BrokerError("INVALID_TASK_PAYLOAD");
+  } else if (payload !== void 0 && payload !== null && (!payload || typeof payload !== "object" || Array.isArray(payload) || Object.keys(payload).length !== 0))
+    throw new BrokerError("INVALID_TASK_PAYLOAD");
+  if (Buffer.byteLength(JSON.stringify(payload ?? {}), "utf8") > 4096)
+    throw new BrokerError("INVALID_TASK_PAYLOAD");
+}
+var LOCAL_TASK_TYPES, data2, own, MysqlLocalAgentTaskStore;
+var init_local_agent_task_store = __esm({
+  "packages/api/dist/infrastructure/messaging/local-agent-task-store.js"() {
+    "use strict";
+    init_apply();
+    init_local_agent_broker();
+    LOCAL_TASK_TYPES = ["responder_consulta", "clasificar_mensaje", "enviar_aviso_whatsapp", "correr_pruebas", "tomar_capturas", "revisar_diff", "reporte_estado"];
+    data2 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    own = (value2, key) => Object.prototype.hasOwnProperty.call(value2, key);
+    MysqlLocalAgentTaskStore = class {
+      connect;
+      constructor(connect = openConnection) {
+        this.connect = connect;
+      }
+      async run(fn) {
+        const c = await this.connect();
+        try {
+          return await fn(c);
+        } finally {
+          await c.end().catch(() => void 0);
+        }
+      }
+      async enqueue(input) {
+        validateTask(input.type, input.payload);
+        if (!/^[A-Za-z0-9_-]{8,191}$/.test(input.idempotencyKey))
+          throw new BrokerError("INVALID_IDEMPOTENCY_KEY");
+        const type = input.type;
+        const payload = input.payload == null ? null : JSON.stringify(input.payload);
+        return this.run(async (c) => {
+          const id2 = randomUUID17();
+          const [insert] = await c.query("INSERT INTO `LocalAgentTask` (id,type,status,payload,idempotencyKey,createdBy,createdAt,updatedAt) VALUES (?,?, 'queued', ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE id=id", [id2, type, payload, input.idempotencyKey, input.createdBy]);
+          const [row] = await data2(c, "SELECT * FROM `LocalAgentTask` WHERE idempotencyKey = ?", [input.idempotencyKey]);
+          if (Number(insert?.affectedRows) === 1)
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.task.enqueued', ?, 'LocalAgentTask', ?, ?, UTC_TIMESTAMP(3))", [randomBytes7(16).toString("hex"), input.createdBy, String(row.id), JSON.stringify({ type, status: row.status })]);
+          return row;
+        });
+      }
+      async claim(limit = 1) {
+        return this.run(async (c) => {
+          const max = Math.max(1, Math.min(1, Math.floor(limit) || 1));
+          await c.query("START TRANSACTION");
+          try {
+            const rows31 = await data2(c, "SELECT id,type,payload,attempts FROM `LocalAgentTask` WHERE status='queued' OR (status='processing' AND leaseUntil < UTC_TIMESTAMP(3)) ORDER BY createdAt,id LIMIT ? FOR UPDATE", [max]);
+            const out = [];
+            for (const row of rows31) {
+              if (Number(row.attempts) >= 3) {
+                await c.query("UPDATE `LocalAgentTask` SET status='failed',errorCode='MAX_ATTEMPTS',completedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [row.id]);
+                continue;
+              }
+              const leaseToken = randomBytes7(32).toString("hex");
+              await c.query("UPDATE `LocalAgentTask` SET status='processing',leaseToken=?,leaseUntil=DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 10 MINUTE),attempts=attempts+1,updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [leaseToken, row.id]);
+              out.push({ ...row, payload: typeof row.payload === "string" ? JSON.parse(row.payload) : row.payload, leaseToken });
+            }
+            await c.query("COMMIT");
+            return out;
+          } catch (error) {
+            await c.query("ROLLBACK").catch(() => void 0);
+            throw error;
+          }
+        });
+      }
+      async complete(id2, leaseToken, result) {
+        if (result.length > 8e3)
+          throw new BrokerError("INVALID_TASK_RESULT");
+        return this.finish(id2, leaseToken, "done", null, result);
+      }
+      async fail(id2, leaseToken, errorCode) {
+        if (!/^[A-Z_]{1,64}$/.test(errorCode))
+          throw new BrokerError("INVALID_TASK_ERROR");
+        return this.finish(id2, leaseToken, "failed", errorCode, null);
+      }
+      async finish(id2, leaseToken, status, errorCode, result) {
+        return this.run(async (c) => {
+          await c.query("START TRANSACTION");
+          try {
+            const [r] = await data2(c, "SELECT id FROM `LocalAgentTask` WHERE id=? AND leaseToken=? AND status='processing' AND leaseUntil>UTC_TIMESTAMP(3) FOR UPDATE", [id2, leaseToken]);
+            if (!r) {
+              await c.query("COMMIT");
+              return false;
+            }
+            await c.query("UPDATE `LocalAgentTask` SET status=?,result=?,errorCode=?,completedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3),leaseToken=NULL,leaseUntil=NULL WHERE id=? AND leaseToken=?", [status, result, errorCode, id2, leaseToken]);
+            await c.query("INSERT INTO `AuditLog` (id,eventType,entityType,entityId,`after`,createdAt) VALUES (?, ?, 'LocalAgentTask', ?, ?, UTC_TIMESTAMP(3))", [randomBytes7(16).toString("hex"), `local-agent.task.${status}`, id2, JSON.stringify({ status, errorCode })]);
+            await c.query("COMMIT");
+            return true;
+          } catch (error) {
+            await c.query("ROLLBACK").catch(() => void 0);
+            throw error;
+          }
+        });
+      }
+      async recent(limit = 20) {
+        return this.run((c) => data2(c, "SELECT id,type,status,attempts,createdAt,updatedAt,completedAt,errorCode,result FROM `LocalAgentTask` ORDER BY createdAt DESC,id DESC LIMIT ?", [Math.max(1, Math.min(20, Math.floor(limit) || 20))]));
       }
     };
   }
@@ -89791,8 +89976,8 @@ var init_openai = __esm({
           const text9 = await res.text().catch(() => "");
           throw classifyHttpError(res.status, text9);
         }
-        const data2 = await res.json();
-        return { content: data2.text ?? null };
+        const data3 = await res.json();
+        return { content: data3.text ?? null };
       }
       async complete(params2) {
         const model = this.resolveModel(params2.tier);
@@ -89830,15 +90015,15 @@ var init_openai = __esm({
           const text9 = await res.text().catch(() => "");
           throw classifyHttpError(res.status, text9);
         }
-        const data2 = await res.json();
-        const choice = data2.choices?.[0];
+        const data3 = await res.json();
+        const choice = data3.choices?.[0];
         if (!choice) {
           throw new AdapterError("Respuesta sin choices del proveedor.", "other");
         }
         return {
           content: choice.message?.content ?? null,
           tool_calls: choice.message?.tool_calls?.length ? mapToolCalls(choice.message.tool_calls) : void 0,
-          usage: mapUsage(data2.usage)
+          usage: mapUsage(data3.usage)
         };
       }
     };
@@ -89951,8 +90136,8 @@ var init_anthropic = __esm({
           const text9 = await res.text().catch(() => "");
           throw classifyHttpError2(res.status, text9);
         }
-        const data2 = await res.json();
-        const blocks = data2.content ?? [];
+        const data3 = await res.json();
+        const blocks = data3.content ?? [];
         const textBlocks = blocks.filter((b) => b.type === "text" && b.text).map((b) => b.text);
         const toolUse = blocks.filter((b) => b.type === "tool_use");
         const tool_calls = toolUse.length ? toolUse.map((b) => ({
@@ -89961,8 +90146,8 @@ var init_anthropic = __esm({
           function: { name: b.name ?? "", arguments: JSON.stringify(b.input ?? {}) }
         })) : void 0;
         const usage = {
-          inputTokens: data2.usage?.input_tokens,
-          outputTokens: data2.usage?.output_tokens
+          inputTokens: data3.usage?.input_tokens,
+          outputTokens: data3.usage?.output_tokens
         };
         return {
           content: textBlocks.length > 0 ? textBlocks.join("\n") : null,
@@ -91321,12 +91506,12 @@ var init_dist = __esm({
 });
 
 // packages/api/dist/infrastructure/agent/user-lock.js
-import { createHash as createHash8 } from "node:crypto";
+import { createHash as createHash9 } from "node:crypto";
 var agentUserLock;
 var init_user_lock = __esm({
   "packages/api/dist/infrastructure/agent/user-lock.js"() {
     "use strict";
-    agentUserLock = (userId) => `amp-agent:${createHash8("sha256").update(userId).digest("hex").slice(0, 48)}`;
+    agentUserLock = (userId) => `amp-agent:${createHash9("sha256").update(userId).digest("hex").slice(0, 48)}`;
   }
 });
 
@@ -91555,19 +91740,18 @@ function renderEntryPage(input) {
     <div class="access-actions"><a class="access-btn" href="${escapeHtml(links.wame)}" rel="noopener">Abrir WhatsApp</a><a class="access-btn secondary" href="/pruebas#entrar">Ingresar o crear cuenta</a></div>
     <p class="access-note"><b>WhatsApp:</b> Escribe y te atendemos en el chat. No instalas nada. <b>Web:</b> entra con un c\xF3digo que te llega por WhatsApp o crea tu cuenta.</p>
   </section>` : "";
-  const flota = masLink("flota", "\xBFTienes una flota? Saber m\xE1s");
-  const menu = links ? `${access}<p class="section">\xBFQu\xE9 quieres gestionar?</p>
-    <div class="menu perfiles">${ENTRY_PROFILES.map((profile) => profile.intent === null ? `<a class="option ghost" href="/?perfil=${escapeHtml(profile.key)}${refQuery}"><span class="badge">${icon(profile.icon)}</span><span><b>${escapeHtml(profile.label)}</b><i>${escapeHtml(profile.hint)}</i></span><span class="go" aria-hidden="true">\u203A</span></a>` : `<article class="profile-card">
+  const menu = links ? `${access}<details class="gestionar"><summary><span class="section">\xBFQu\xE9 quieres gestionar?</span><span class="ver">Saber m\xE1s</span></summary>
+    <div class="menu perfiles">${ENTRY_PROFILES.map((profile) => `<article class="profile-card">
           <span class="badge">${icon(profile.icon)}</span>
           <span><b>${escapeHtml(profile.label)}</b><i>${escapeHtml(profile.hint)}</i>${masLink(profile.key, "Saber m\xE1s")}</span>
-          <div class="profile-actions"><a class="access-btn" href="/?perfil=${escapeHtml(profile.key)}${refQuery}" rel="noopener">WhatsApp</a><a class="access-btn secondary" href="/pruebas#${profile.key === "cuenta" ? "entrar" : "crear"}">Web</a></div>
-        </article>`).join("")}</div>
-    ${flota ? `<p class="flota">${flota}</p>` : ""}
+          <div class="profile-actions"><a class="access-btn" href="/?perfil=${escapeHtml(profile.key)}${refQuery}" rel="noopener">WhatsApp</a><a class="access-btn secondary" href="${profile.key === "flota" ? "/planes" : "/pruebas#crear"}">Web</a></div>
+        </article>`).join("")}</div></details>
     ${contact}` : "";
-  const red = `<ul class="red" aria-label="Conecta a">
-      <li>${icon("auto")}Due\xF1os</li><li class="enlace" aria-hidden="true">\u21C4</li>
-      <li>${icon("taller")}Talleres</li><li class="enlace" aria-hidden="true">\u21C4</li>
-      <li>${icon("caja")}Almacenes</li>
+  const acceso = (key) => links ? `/?perfil=${key}${refQuery}` : "/pruebas#crear";
+  const red = `<ul class="red" aria-label="Entrar como">
+      <li><a class="perfil" href="${acceso("dueno")}">${icon("auto")}Due\xF1os</a></li><li class="enlace" aria-hidden="true">\u21C4</li>
+      <li><a class="perfil" href="${acceso("taller")}">${icon("taller")}Talleres</a></li><li class="enlace" aria-hidden="true">\u21C4</li>
+      <li><a class="perfil" href="${acceso("almacen")}">${icon("caja")}Almacenes</a></li>
     </ul>`;
   const beneficios = `<p class="section">Lo que ganas</p>
     <ul class="beneficios">${BENEFICIOS.map((b) => `<li class="luz-${b.icono}"><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span></li>`).join("")}</ul>`;
@@ -91589,7 +91773,7 @@ ${seoHead({
   })}
 <meta name="author" content="AutoMantPro">
 <script type="application/ld+json" nonce="${nonce2}">${structuredData(input)}</script>
-<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}</style>
+<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}</style>
 <script nonce="${nonce2}">${THEME_BOOT}</script>
 </head>
 <body>
@@ -91630,6 +91814,7 @@ var ENTRY_PROFILES, PERFIL_NOMBRE, BENEFICIOS, ICONS, icon, STYLES, THEME_BOOT, 
 var init_page = __esm({
   "packages/api/dist/interfaces/entry/page.js"() {
     "use strict";
+    init_sobrio();
     init_theme();
     init_theme_layers();
     init_head();
@@ -91661,28 +91846,20 @@ var init_page = __esm({
         icon: "caja",
         intent: "tengo un almac\xE9n de repuestos"
       },
+      // "Ya tengo cuenta" pasó a "Ingresar o crear cuenta" y "Solo quiero escribir" se quitó (Pedro, 31/10/2026).
       {
-        key: "cuenta",
-        label: "Ya tengo cuenta",
-        emoji: "\u{1F511}",
-        hint: "Retoma tu conversaci\xF3n",
-        icon: "llave",
-        intent: "ya tengo cuenta"
-      },
-      // Sin intención: abre el chat con el mensaje general, para quien solo quiere escribir.
-      {
-        key: "chat",
-        label: "Solo quiero escribir",
-        emoji: "\u{1F4AC}",
-        hint: "Cu\xE9ntanos con tus palabras",
-        icon: "chat",
-        intent: null
+        key: "flota",
+        label: "Gestionar flota",
+        emoji: "\u{1F69A}",
+        hint: "Veh\xEDculos, conductores y mantenimiento",
+        icon: "flota",
+        intent: "quiero gestionar una flota de veh\xEDculos"
       }
     ];
     PERFIL_NOMBRE = { dueno: "Due\xF1o de veh\xEDculo", taller: "Taller", almacen: "Almac\xE9n de repuestos", flota: "Flotas" };
     BENEFICIOS = [
       { icono: "alerta", titulo: "Evita fallas", texto: "Avisos de mantenimiento seg\xFAn el kilometraje de cada veh\xEDculo." },
-      { icono: "ahorro", titulo: "Gasta mejor", texto: "Mantenimiento preventivo y precios claros antes de pagar." },
+      { icono: "ahorro", titulo: "Ahorra", texto: "Mantenimiento preventivo y precios claros antes de pagar." },
       { icono: "agenda", titulo: "Clientes y citas en orden", texto: "Turnos coordinados y el historial de cada veh\xEDculo a mano." },
       { icono: "recursos", titulo: "Optimiza recursos", texto: "Menos llamadas y viajes: cada pedido llega claro desde el inicio." }
     ];
@@ -91701,6 +91878,7 @@ var init_page = __esm({
       ahorro: '<circle cx="12" cy="12" r="8"/><path d="M14.5 9.3c-.5-.8-1.4-1.3-2.5-1.3-1.5 0-2.5.8-2.5 1.9 0 2.6 5 1.4 5 4.1 0 1.1-1 2-2.5 2-1.2 0-2.2-.5-2.7-1.4M12 6.5V8M12 16v1.5"/>',
       agenda: '<rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4M8 14h3"/>',
       recursos: '<path d="M4 18h16M7 18v-5M12 18V8M17 18v-8"/>',
+      flota: '<path d="M2.5 7.5h11v8h-11zM13.5 10.5h4l3 3v2h-7z"/><circle cx="6.5" cy="16.5" r="1.6"/><circle cx="17" cy="16.5" r="1.6"/>',
       persona: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 20c.9-3.4 3.5-5 6.5-5s5.6 1.6 6.5 5"/>'
     };
     icon = (name, cls = "ico") => `<svg class="${cls}" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] ?? ICONS.chat}</svg>`;
@@ -92156,6 +92334,31 @@ header.cabecera h1 em{font-style:normal;background:linear-gradient(var(--amp-yel
 @media (max-width:640px){.hero .lead{font-size:16px;padding-right:0}}
 @media (prefers-reduced-motion:no-preference){header.cabecera h1{animation:amp-sube .6s .05s var(--amp-ease) both}header.cabecera h1 em{animation:amp-revela .8s .15s cubic-bezier(.6,0,.2,1) both,amp-subraya .7s .85s var(--amp-ease) both}}
 @media (min-width:700px) and (max-height:620px) and (orientation:landscape){header.cabecera h1{font-size:22px}}
+
+/* Due\xF1os \u21C4 Talleres \u21C4 Almacenes como botones de acceso (31/10). */
+.red li:not(.enlace){padding:0;background:none;border:0}
+.red a.perfil{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px 8px 10px;border-radius:999px;font:700 14px/1 var(--c-font);color:var(--c-ink)!important;text-decoration:none!important;background:var(--c-surface);border:1.5px solid var(--c-ink);box-shadow:0 1px 0 rgba(13,17,23,.06);transition:background-color .2s ease,color .2s ease,transform .2s var(--amp-ease)}
+.red a.perfil .ico{width:18px;height:18px;color:currentColor}
+.red a.perfil::after{content:"\u203A";margin-left:2px;font-weight:700;opacity:.7}
+.red a.perfil:hover,.red a.perfil:focus-visible{background:var(--amp-yellow);color:#111111!important;border-color:#111111;transform:translateY(-1px)}
+/* "\xBFQu\xE9 quieres gestionar?" queda plegado en "Saber m\xE1s". */
+main details.gestionar.gestionar{margin:10px 0 6px;padding:0;background:none;border:0;box-shadow:none}
+main details.gestionar>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;padding:8px 12px;border:1px solid var(--c-line);border-radius:12px;background:var(--c-surface);cursor:pointer}
+main details.gestionar>summary::-webkit-details-marker{display:none}
+main details.gestionar>summary .section{margin:0}
+main details.gestionar>summary .ver{font:600 13px/1 var(--c-font);color:var(--c-ink);white-space:nowrap}
+main details.gestionar>summary .ver::after{content:"\u25BE";margin-left:6px;display:inline-block;transition:transform .2s ease}
+main details.gestionar[open]>summary .ver::after{transform:rotate(180deg)}
+main details.gestionar>.menu{margin-top:8px}
+@media (max-width:480px){
+ .red{gap:6px;flex-wrap:nowrap}
+ .red .enlace{display:none}
+ .red li:not(.enlace){flex:1 1 0;min-width:0}
+ .red a.perfil{width:100%;justify-content:center;gap:5px;min-height:40px;padding:7px 6px;font-size:13px}
+ .red a.perfil .ico{width:16px;height:16px;flex:none}
+ .red a.perfil::after{display:none}
+}
+@media (max-width:350px){.red a.perfil .ico{display:none}}
 `;
     BOARD = `<div class="board" aria-label="Ejemplo del informe de tu veh\xEDculo">
   <p class="cap"><span>As\xED se ve el informe de tu veh\xEDculo</span><b>EJEMPLO</b></p>
@@ -92194,7 +92397,7 @@ header.cabecera h1 em{font-style:normal;background:linear-gradient(var(--amp-yel
 });
 
 // packages/api/dist/interfaces/entry/index.js
-import { randomBytes as randomBytes7, randomInt as randomInt2 } from "node:crypto";
+import { randomBytes as randomBytes8, randomInt as randomInt2 } from "node:crypto";
 function wantsHtml(accept) {
   if (!accept)
     return false;
@@ -92272,7 +92475,7 @@ async function entryRoutes(app2, options = {}) {
     if (request.method === "HEAD" || !wantsHtml(request.headers.accept) && !bot) {
       return reply.send(API_STATUS);
     }
-    const nonce2 = randomBytes7(16).toString("base64");
+    const nonce2 = randomBytes8(16).toString("base64");
     const query = request.query ?? {};
     const code3 = await uniqueVisitCode(options.codeTaken);
     const ref4 = sanitizeRef(query.ref);
@@ -92531,8 +92734,8 @@ var init_visit_store = __esm({
 function emptyLegalData() {
   return { razonSocial: null, ruc: null, domicilio: null, representante: null, correo: null };
 }
-function isLegalComplete(data2) {
-  return LEGAL_FIELDS.every((f) => !!data2[f.key]);
+function isLegalComplete(data3) {
+  return LEGAL_FIELDS.every((f) => !!data3[f.key]);
 }
 function validateLegalField(key, value2) {
   if (!value2)
@@ -92559,15 +92762,15 @@ function createLegalLoader(settings, ttlMs = 6e4) {
     async get() {
       if (cached && Date.now() - loadedAt < ttlMs)
         return cached;
-      const data2 = emptyLegalData();
+      const data3 = emptyLegalData();
       try {
         for (const field2 of LEGAL_FIELDS)
-          data2[field2.key] = await settings.get(legalSettingKey(field2.key));
+          data3[field2.key] = await settings.get(legalSettingKey(field2.key));
       } catch {
       }
-      cached = data2;
+      cached = data3;
       loadedAt = Date.now();
-      return data2;
+      return data3;
     },
     invalidate() {
       cached = null;
@@ -92575,17 +92778,17 @@ function createLegalLoader(settings, ttlMs = 6e4) {
     }
   };
 }
-function company(data2) {
+function company(data3) {
   return {
-    name: data2.razonSocial ?? PENDING,
-    ruc: data2.ruc ?? PENDING,
-    address: data2.domicilio ?? PENDING,
-    representative: data2.representante ?? PENDING,
-    email: data2.correo ?? PENDING
+    name: data3.razonSocial ?? PENDING,
+    ruc: data3.ruc ?? PENDING,
+    address: data3.domicilio ?? PENDING,
+    representative: data3.representante ?? PENDING,
+    email: data3.correo ?? PENDING
   };
 }
-function termsSections(data2) {
-  const c = company(data2);
+function termsSections(data3) {
+  const c = company(data3);
   return [
     {
       title: "Cursos y capacitaci\xF3n",
@@ -92673,7 +92876,8 @@ function termsSections(data2) {
     {
       title: "10. Uso de marca e informaci\xF3n comercial",
       paragraphs: [
-        "Los talleres y almacenes autorizan a AutoMantPro a mostrar su nombre comercial, logotipo, direcci\xF3n, especialidades y calificaciones dentro de la plataforma y en materiales promocionales digitales. Este uso es no exclusivo y no implica cesi\xF3n de derechos."
+        "Los talleres y almacenes autorizan a AutoMantPro a mostrar su nombre comercial, logotipo, direcci\xF3n, especialidades y calificaciones dentro de la plataforma y en materiales promocionales digitales. Este uso es no exclusivo y no implica cesi\xF3n de derechos.",
+        "Al subir im\xE1genes declaras que son tuyas o que tienes permiso para usarlas, y asumes la responsabilidad ante cualquier reclamo de derechos de autor."
       ]
     },
     {
@@ -92714,8 +92918,8 @@ function termsSections(data2) {
     }
   ];
 }
-function privacySections(data2) {
-  const c = company(data2);
+function privacySections(data3) {
+  const c = company(data3);
   return [
     {
       title: "Cursos y capacitaci\xF3n",
@@ -92929,7 +93133,7 @@ var init_permissions = __esm({
 });
 
 // packages/api/dist/application/admin/security.js
-import { createHmac as createHmac3, randomBytes as randomBytes15, timingSafeEqual as timingSafeEqual4 } from "node:crypto";
+import { createHmac as createHmac3, randomBytes as randomBytes16, timingSafeEqual as timingSafeEqual4 } from "node:crypto";
 function getAdminSessionSecret() {
   const secret2 = process.env.ADMIN_SESSION_SECRET?.trim();
   return secret2 && secret2.length >= 32 ? secret2 : null;
@@ -92938,12 +93142,12 @@ function allowInsecureAdminCookies() {
   return process.env.NODE_ENV !== "production" && process.env.ADMIN_INSECURE_COOKIES === "1";
 }
 function createCsrfToken() {
-  return randomBytes15(24).toString("base64url");
+  return randomBytes16(24).toString("base64url");
 }
 function createPendingSession(user) {
   const now = Date.now();
   const session = {
-    id: randomBytes15(24).toString("base64url"),
+    id: randomBytes16(24).toString("base64url"),
     userId: user.id,
     email: user.email,
     role: normalizeRole(user.role),
@@ -93094,7 +93298,7 @@ function safeEqual(a, b) {
   return left.length === right.length && timingSafeEqual4(left, right);
 }
 function generateTotpSecret(bytes = 20) {
-  return base32Encode(randomBytes15(bytes));
+  return base32Encode(randomBytes16(bytes));
 }
 function verifyTotp(secret2, code3, timestampMs = Date.now()) {
   if (!/^\d{6}$/.test(code3))
@@ -93231,8 +93435,8 @@ var require_sbmh = __commonJS({
       }
       return r;
     };
-    SBMH.prototype._sbmh_feed = function(data2) {
-      const len = data2.length;
+    SBMH.prototype._sbmh_feed = function(data3) {
+      const len = data3.length;
       const needle = this._needle;
       const needleLength = needle.length;
       const needleLastCharIndex = needleLength - 1;
@@ -93241,8 +93445,8 @@ var require_sbmh = __commonJS({
       let ch;
       if (pos < 0) {
         while (pos < 0 && pos <= len - needleLength) {
-          ch = data2[pos + needleLastCharIndex];
-          if (ch === needleLastChar && this._sbmh_memcmp(data2, pos, needleLastCharIndex)) {
+          ch = data3[pos + needleLastCharIndex];
+          if (ch === needleLastChar && this._sbmh_memcmp(data3, pos, needleLastCharIndex)) {
             this._lookbehind_size = 0;
             ++this.matches;
             this.emit("info", true);
@@ -93250,7 +93454,7 @@ var require_sbmh = __commonJS({
           }
           pos += this._occ[ch];
         }
-        while (pos < 0 && !this._sbmh_memcmp(data2, pos, len - pos)) {
+        while (pos < 0 && !this._sbmh_memcmp(data3, pos, len - pos)) {
           ++pos;
         }
         if (pos >= 0) {
@@ -93263,19 +93467,19 @@ var require_sbmh = __commonJS({
           }
           this._lookbehind_size -= bytesToCutOff;
           this._lookbehind.copy(this._lookbehind, 0, bytesToCutOff, this._lookbehind_size);
-          data2.copy(this._lookbehind, this._lookbehind_size);
+          data3.copy(this._lookbehind, this._lookbehind_size);
           this._lookbehind_size += len;
           this._bufpos = len;
           return len;
         }
       }
-      pos = data2.indexOf(needle, pos + this._bufpos);
+      pos = data3.indexOf(needle, pos + this._bufpos);
       if (pos !== -1) {
         ++this.matches;
         if (pos === 0) {
           this.emit("info", true);
         } else {
-          this.emit("info", true, data2, this._bufpos, pos);
+          this.emit("info", true, data3, this._bufpos, pos);
         }
         return this._bufpos = pos + needleLength;
       }
@@ -93283,28 +93487,28 @@ var require_sbmh = __commonJS({
       if (pos < 0) {
         pos = 0;
       }
-      while (pos !== len && (data2[pos] !== needle[0] || Buffer.compare(
-        data2.subarray(pos + 1, len),
+      while (pos !== len && (data3[pos] !== needle[0] || Buffer.compare(
+        data3.subarray(pos + 1, len),
         needle.subarray(1, len - pos)
       ) !== 0)) {
         ++pos;
       }
       if (pos !== len) {
-        data2.copy(this._lookbehind, 0, pos, len);
+        data3.copy(this._lookbehind, 0, pos, len);
         this._lookbehind_size = len - pos;
       }
       if (pos !== 0) {
-        this.emit("info", false, data2, this._bufpos, pos);
+        this.emit("info", false, data3, this._bufpos, pos);
       }
       this._bufpos = len;
       return len;
     };
-    SBMH.prototype._sbmh_lookup_char = function(data2, pos) {
-      return pos < 0 ? this._lookbehind[this._lookbehind_size + pos] : data2[pos];
+    SBMH.prototype._sbmh_lookup_char = function(data3, pos) {
+      return pos < 0 ? this._lookbehind[this._lookbehind_size + pos] : data3[pos];
     };
-    SBMH.prototype._sbmh_memcmp = function(data2, pos, len) {
+    SBMH.prototype._sbmh_memcmp = function(data3, pos, len) {
       for (var i = 0; i < len; ++i) {
-        if (this._sbmh_lookup_char(data2, pos + i) !== this._needle[i]) {
+        if (this._sbmh_lookup_char(data3, pos + i) !== this._needle[i]) {
           return false;
         }
       }
@@ -93369,20 +93573,20 @@ var require_HeaderParser = __commonJS({
       this.tail = "";
     }
     inherits(HeaderParser, EventEmitter);
-    HeaderParser.prototype.push = function(data2) {
-      if (!Buffer.isBuffer(data2)) {
-        data2 = Buffer.from(data2, "binary");
+    HeaderParser.prototype.push = function(data3) {
+      if (!Buffer.isBuffer(data3)) {
+        data3 = Buffer.from(data3, "binary");
       }
-      let end = data2.length;
-      let appendEnd = data2.length;
+      let end = data3.length;
+      let appendEnd = data3.length;
       let found = false;
       let splitTail = 0;
       const tail = this.tail;
       for (let i = tail.length; i > 0; --i) {
         if (tail.endsWith(S_DCRLF.slice(0, i))) {
-          let matched = data2.length >= S_DCRLF.length - i;
+          let matched = data3.length >= S_DCRLF.length - i;
           for (let j = i; matched && j < S_DCRLF.length; ++j) {
-            matched = data2[j - i] === S_DCRLF.charCodeAt(j);
+            matched = data3[j - i] === S_DCRLF.charCodeAt(j);
           }
           if (matched) {
             end = S_DCRLF.length - i;
@@ -93394,7 +93598,7 @@ var require_HeaderParser = __commonJS({
         }
       }
       if (!found) {
-        const pos = data2.indexOf(B_DCRLF);
+        const pos = data3.indexOf(B_DCRLF);
         if (pos !== -1) {
           end = pos + B_DCRLF.length;
           appendEnd = pos;
@@ -93402,18 +93606,18 @@ var require_HeaderParser = __commonJS({
         }
       }
       if (!found) {
-        this.tail = data2.length >= 3 ? data2.toString("binary", data2.length - 3) : (tail + data2.toString("binary")).slice(-3);
+        this.tail = data3.length >= 3 ? data3.toString("binary", data3.length - 3) : (tail + data3.toString("binary")).slice(-3);
       } else {
         this.tail = "";
       }
       if (appendEnd !== 0 && !this.maxed) {
         const remaining = this.maxHeaderSize - this.nread;
         if (appendEnd >= remaining) {
-          this.buffer += data2.toString("binary", 0, remaining);
+          this.buffer += data3.toString("binary", 0, remaining);
           this.nread = this.maxHeaderSize;
           this.maxed = true;
         } else {
-          this.buffer += data2.toString("binary", 0, appendEnd);
+          this.buffer += data3.toString("binary", 0, appendEnd);
           this.nread += appendEnd;
         }
       }
@@ -93565,7 +93769,7 @@ var require_Dicer = __commonJS({
         WritableStream.prototype.emit.apply(this, arguments);
       }
     };
-    Dicer.prototype._write = function(data2, encoding, cb) {
+    Dicer.prototype._write = function(data3, encoding, cb) {
       if (!this._hparser && !this._bparser) {
         return cb();
       }
@@ -93578,9 +93782,9 @@ var require_Dicer = __commonJS({
             this._ignore();
           }
         }
-        const r = this._hparser.push(data2);
-        if (!this._inHeader && r !== void 0 && r < data2.length) {
-          data2 = data2.slice(r);
+        const r = this._hparser.push(data3);
+        if (!this._inHeader && r !== void 0 && r < data3.length) {
+          data3 = data3.slice(r);
         } else {
           return cb();
         }
@@ -93589,7 +93793,7 @@ var require_Dicer = __commonJS({
         this._bparser.push(B_CRLF);
         this._firstWrite = false;
       }
-      this._bparser.push(data2);
+      this._bparser.push(data3);
       if (this._pause) {
         this._cb = cb;
       } else {
@@ -93604,8 +93808,8 @@ var require_Dicer = __commonJS({
     Dicer.prototype.setBoundary = function(boundary) {
       const self2 = this;
       this._bparser = new StreamSearch("\r\n--" + boundary);
-      this._bparser.on("info", function(isMatch, data2, start, end) {
-        self2._oninfo(isMatch, data2, start, end);
+      this._bparser.on("info", function(isMatch, data3, start, end) {
+        self2._oninfo(isMatch, data3, start, end);
       });
     };
     Dicer.prototype._ignore = function() {
@@ -93615,15 +93819,15 @@ var require_Dicer = __commonJS({
         this._part.resume();
       }
     };
-    Dicer.prototype._oninfo = function(isMatch, data2, start, end) {
+    Dicer.prototype._oninfo = function(isMatch, data3, start, end) {
       let buf;
       const self2 = this;
       let i = 0;
       let r;
       let shouldWriteMore = true;
-      if (!this._part && this._justMatched && data2) {
+      if (!this._part && this._justMatched && data3) {
         while (this._dashes < 2 && start + i < end) {
-          if (data2[start + i] === DASH) {
+          if (data3[start + i] === DASH) {
             ++i;
             ++this._dashes;
           } else {
@@ -93636,7 +93840,7 @@ var require_Dicer = __commonJS({
         }
         if (this._dashes === 2) {
           if (start + i < end && this.listenerCount("trailer") !== 0) {
-            this.emit("trailer", data2.slice(start + i, end));
+            this.emit("trailer", data3.slice(start + i, end));
           }
           this.reset();
           this._finished = true;
@@ -93669,12 +93873,12 @@ var require_Dicer = __commonJS({
           this._inHeader = true;
         }
       }
-      if (data2 && start < end && !this._ignoreData) {
+      if (data3 && start < end && !this._ignoreData) {
         if (this._isPreamble || !this._inHeader) {
           if (buf) {
             shouldWriteMore = this._part.push(buf);
           }
-          shouldWriteMore = this._part.push(data2.slice(start, end));
+          shouldWriteMore = this._part.push(data3.slice(start, end));
           if (!shouldWriteMore) {
             this._pause = true;
           }
@@ -93682,9 +93886,9 @@ var require_Dicer = __commonJS({
           if (buf) {
             this._hparser.push(buf);
           }
-          r = this._hparser.push(data2.slice(start, end));
+          r = this._hparser.push(data3.slice(start, end));
           if (!this._inHeader && r !== void 0 && r < end) {
-            this._oninfo(false, data2, start + r, end);
+            this._oninfo(false, data3, start + r, end);
           }
         }
       }
@@ -93776,68 +93980,68 @@ var require_decodeText = __commonJS({
         }
       }
     }
-    function isAscii(data2) {
-      for (var i = 0, len = data2.length; i < len; ++i) {
-        if (data2.charCodeAt(i) > 127) {
+    function isAscii(data3) {
+      for (var i = 0, len = data3.length; i < len; ++i) {
+        if (data3.charCodeAt(i) > 127) {
           return false;
         }
       }
       return true;
     }
     var decoders = {
-      utf8: (data2, sourceEncoding) => {
-        if (data2.length === 0) {
+      utf8: (data3, sourceEncoding) => {
+        if (data3.length === 0) {
           return "";
         }
-        if (typeof data2 === "string") {
-          if (isAscii(data2)) {
-            return data2;
+        if (typeof data3 === "string") {
+          if (isAscii(data3)) {
+            return data3;
           }
-          data2 = Buffer.from(data2, sourceEncoding);
+          data3 = Buffer.from(data3, sourceEncoding);
         }
-        return data2.utf8Slice(0, data2.length);
+        return data3.utf8Slice(0, data3.length);
       },
-      latin1: (data2, sourceEncoding) => {
-        if (data2.length === 0) {
+      latin1: (data3, sourceEncoding) => {
+        if (data3.length === 0) {
           return "";
         }
-        if (typeof data2 === "string") {
-          return data2;
+        if (typeof data3 === "string") {
+          return data3;
         }
-        return data2.latin1Slice(0, data2.length);
+        return data3.latin1Slice(0, data3.length);
       },
-      utf16le: (data2, sourceEncoding) => {
-        if (data2.length === 0) {
+      utf16le: (data3, sourceEncoding) => {
+        if (data3.length === 0) {
           return "";
         }
-        if (typeof data2 === "string") {
-          data2 = Buffer.from(data2, sourceEncoding);
+        if (typeof data3 === "string") {
+          data3 = Buffer.from(data3, sourceEncoding);
         }
-        return data2.ucs2Slice(0, data2.length);
+        return data3.ucs2Slice(0, data3.length);
       },
-      base64: (data2, sourceEncoding) => {
-        if (data2.length === 0) {
+      base64: (data3, sourceEncoding) => {
+        if (data3.length === 0) {
           return "";
         }
-        if (typeof data2 === "string") {
-          data2 = Buffer.from(data2, sourceEncoding);
+        if (typeof data3 === "string") {
+          data3 = Buffer.from(data3, sourceEncoding);
         }
-        return data2.base64Slice(0, data2.length);
+        return data3.base64Slice(0, data3.length);
       },
-      other: (data2, sourceEncoding) => {
-        if (data2.length === 0) {
+      other: (data3, sourceEncoding) => {
+        if (data3.length === 0) {
           return "";
         }
-        if (typeof data2 === "string") {
-          data2 = Buffer.from(data2, sourceEncoding);
+        if (typeof data3 === "string") {
+          data3 = Buffer.from(data3, sourceEncoding);
         }
         if (textDecoders.has(exports.toString())) {
           try {
-            return textDecoders.get(exports).decode(data2);
+            return textDecoders.get(exports).decode(data3);
           } catch {
           }
         }
-        return typeof data2 === "string" ? data2 : data2.toString();
+        return typeof data3 === "string" ? data3 : data3.toString();
       }
     };
     function decodeText(text9, sourceEncoding, destEncoding) {
@@ -94708,18 +94912,18 @@ var require_multipart = __commonJS({
               }
             };
             boy.emit("file", fieldname, file, filename, encoding, contype);
-            onData = function(data2) {
-              if ((nsize += data2.length) > fileSizeLimit) {
-                const extralen = fileSizeLimit - nsize + data2.length;
+            onData = function(data3) {
+              if ((nsize += data3.length) > fileSizeLimit) {
+                const extralen = fileSizeLimit - nsize + data3.length;
                 if (extralen > 0) {
-                  file.push(data2.slice(0, extralen));
+                  file.push(data3.slice(0, extralen));
                 }
                 file.truncated = true;
                 file.bytesRead = fileSizeLimit;
                 part.removeAllListeners("data");
                 file.emit("limit");
                 return;
-              } else if (!file.push(data2)) {
+              } else if (!file.push(data3)) {
                 self2._pause = true;
               }
               file.bytesRead = nsize;
@@ -94741,14 +94945,14 @@ var require_multipart = __commonJS({
             let buffer = "";
             let truncated = false;
             curField = part;
-            onData = function(data2) {
-              if ((nsize += data2.length) > fieldSizeLimit) {
-                const extralen = fieldSizeLimit - (nsize - data2.length);
-                buffer += data2.toString("binary", 0, extralen);
+            onData = function(data3) {
+              if ((nsize += data3.length) > fieldSizeLimit) {
+                const extralen = fieldSizeLimit - (nsize - data3.length);
+                buffer += data3.toString("binary", 0, extralen);
                 truncated = true;
                 part.removeAllListeners("data");
               } else {
-                buffer += data2.toString("binary");
+                buffer += data3.toString("binary");
               }
             };
             onEnd = function() {
@@ -95036,7 +95240,7 @@ var require_urlencoded = __commonJS({
       this._valTrunc = false;
       this._hitLimit = false;
     }
-    UrlEncoded.prototype.write = function(data2, cb) {
+    UrlEncoded.prototype.write = function(data3, cb) {
       if (this._fields === this.fieldsLimit) {
         if (!this.boy.hitFieldsLimit) {
           this.boy.hitFieldsLimit = true;
@@ -95048,7 +95252,7 @@ var require_urlencoded = __commonJS({
       let idxamp;
       let i;
       let p = 0;
-      const len = data2.length;
+      const len = data3.length;
       while (p < len) {
         if (this._state === "key") {
           idxeq = idxamp = void 0;
@@ -95056,10 +95260,10 @@ var require_urlencoded = __commonJS({
             if (!this._checkingBytes) {
               ++p;
             }
-            if (data2[i] === 61) {
+            if (data3[i] === 61) {
               idxeq = i;
               break;
-            } else if (data2[i] === 38) {
+            } else if (data3[i] === 38) {
               idxamp = i;
               break;
             }
@@ -95072,7 +95276,7 @@ var require_urlencoded = __commonJS({
           }
           if (idxeq !== void 0) {
             if (idxeq > p) {
-              this._key += this.decoder.write(data2.toString("binary", p, idxeq));
+              this._key += this.decoder.write(data3.toString("binary", p, idxeq));
             }
             this._state = "val";
             this._hitLimit = false;
@@ -95087,7 +95291,7 @@ var require_urlencoded = __commonJS({
             let key;
             const keyTrunc = this._keyTrunc;
             if (idxamp > p) {
-              key = this._key += this.decoder.write(data2.toString("binary", p, idxamp));
+              key = this._key += this.decoder.write(data3.toString("binary", p, idxamp));
             } else {
               key = this._key;
             }
@@ -95112,7 +95316,7 @@ var require_urlencoded = __commonJS({
             }
           } else if (this._hitLimit) {
             if (i > p) {
-              this._key += this.decoder.write(data2.toString("binary", p, i));
+              this._key += this.decoder.write(data3.toString("binary", p, i));
             }
             p = i;
             if ((this._bytesKey = this._key.length) === this.fieldNameSizeLimit) {
@@ -95121,7 +95325,7 @@ var require_urlencoded = __commonJS({
             }
           } else {
             if (p < len) {
-              this._key += this.decoder.write(data2.toString("binary", p));
+              this._key += this.decoder.write(data3.toString("binary", p));
             }
             p = len;
           }
@@ -95131,7 +95335,7 @@ var require_urlencoded = __commonJS({
             if (!this._checkingBytes) {
               ++p;
             }
-            if (data2[i] === 38) {
+            if (data3[i] === 38) {
               idxamp = i;
               break;
             }
@@ -95145,7 +95349,7 @@ var require_urlencoded = __commonJS({
           if (idxamp !== void 0) {
             ++this._fields;
             if (idxamp > p) {
-              this._val += this.decoder.write(data2.toString("binary", p, idxamp));
+              this._val += this.decoder.write(data3.toString("binary", p, idxamp));
             }
             this.boy.emit(
               "field",
@@ -95167,7 +95371,7 @@ var require_urlencoded = __commonJS({
             }
           } else if (this._hitLimit) {
             if (i > p) {
-              this._val += this.decoder.write(data2.toString("binary", p, i));
+              this._val += this.decoder.write(data3.toString("binary", p, i));
             }
             p = i;
             if (this._val === "" && this.fieldSizeLimit === 0 || (this._bytesVal = this._val.length) === this.fieldSizeLimit) {
@@ -95176,7 +95380,7 @@ var require_urlencoded = __commonJS({
             }
           } else {
             if (p < len) {
-              this._val += this.decoder.write(data2.toString("binary", p));
+              this._val += this.decoder.write(data3.toString("binary", p));
             }
             p = len;
           }
@@ -96706,11 +96910,11 @@ var require_utils5 = __commonJS({
     exports.getSymbolTotalCodewords = function getSymbolTotalCodewords(version) {
       return CODEWORDS_COUNT[version];
     };
-    exports.getBCHDigit = function(data2) {
+    exports.getBCHDigit = function(data3) {
       let digit = 0;
-      while (data2 !== 0) {
+      while (data3 !== 0) {
         digit++;
-        data2 >>>= 1;
+        data3 >>>= 1;
       }
       return digit;
     };
@@ -96917,8 +97121,8 @@ var require_mask_pattern = __commonJS({
     exports.from = function from(value2) {
       return exports.isValid(value2) ? parseInt(value2, 10) : void 0;
     };
-    exports.getPenaltyN1 = function getPenaltyN1(data2) {
-      const size = data2.size;
+    exports.getPenaltyN1 = function getPenaltyN1(data3) {
+      const size = data3.size;
       let points = 0;
       let sameCountCol = 0;
       let sameCountRow = 0;
@@ -96928,7 +97132,7 @@ var require_mask_pattern = __commonJS({
         sameCountCol = sameCountRow = 0;
         lastCol = lastRow = null;
         for (let col = 0; col < size; col++) {
-          let module2 = data2.get(row, col);
+          let module2 = data3.get(row, col);
           if (module2 === lastCol) {
             sameCountCol++;
           } else {
@@ -96936,7 +97140,7 @@ var require_mask_pattern = __commonJS({
             lastCol = module2;
             sameCountCol = 1;
           }
-          module2 = data2.get(col, row);
+          module2 = data3.get(col, row);
           if (module2 === lastRow) {
             sameCountRow++;
           } else {
@@ -96950,37 +97154,37 @@ var require_mask_pattern = __commonJS({
       }
       return points;
     };
-    exports.getPenaltyN2 = function getPenaltyN2(data2) {
-      const size = data2.size;
+    exports.getPenaltyN2 = function getPenaltyN2(data3) {
+      const size = data3.size;
       let points = 0;
       for (let row = 0; row < size - 1; row++) {
         for (let col = 0; col < size - 1; col++) {
-          const last = data2.get(row, col) + data2.get(row, col + 1) + data2.get(row + 1, col) + data2.get(row + 1, col + 1);
+          const last = data3.get(row, col) + data3.get(row, col + 1) + data3.get(row + 1, col) + data3.get(row + 1, col + 1);
           if (last === 4 || last === 0) points++;
         }
       }
       return points * PenaltyScores.N2;
     };
-    exports.getPenaltyN3 = function getPenaltyN3(data2) {
-      const size = data2.size;
+    exports.getPenaltyN3 = function getPenaltyN3(data3) {
+      const size = data3.size;
       let points = 0;
       let bitsCol = 0;
       let bitsRow = 0;
       for (let row = 0; row < size; row++) {
         bitsCol = bitsRow = 0;
         for (let col = 0; col < size; col++) {
-          bitsCol = bitsCol << 1 & 2047 | data2.get(row, col);
+          bitsCol = bitsCol << 1 & 2047 | data3.get(row, col);
           if (col >= 10 && (bitsCol === 1488 || bitsCol === 93)) points++;
-          bitsRow = bitsRow << 1 & 2047 | data2.get(col, row);
+          bitsRow = bitsRow << 1 & 2047 | data3.get(col, row);
           if (col >= 10 && (bitsRow === 1488 || bitsRow === 93)) points++;
         }
       }
       return points * PenaltyScores.N3;
     };
-    exports.getPenaltyN4 = function getPenaltyN4(data2) {
+    exports.getPenaltyN4 = function getPenaltyN4(data3) {
       let darkCount = 0;
-      const modulesCount = data2.data.length;
-      for (let i = 0; i < modulesCount; i++) darkCount += data2.data[i];
+      const modulesCount = data3.data.length;
+      for (let i = 0; i < modulesCount; i++) darkCount += data3.data[i];
       const k = Math.abs(Math.ceil(darkCount * 100 / modulesCount / 5) - 10);
       return k * PenaltyScores.N4;
     };
@@ -97006,24 +97210,24 @@ var require_mask_pattern = __commonJS({
           throw new Error("bad maskPattern:" + maskPattern);
       }
     }
-    exports.applyMask = function applyMask(pattern, data2) {
-      const size = data2.size;
+    exports.applyMask = function applyMask(pattern, data3) {
+      const size = data3.size;
       for (let col = 0; col < size; col++) {
         for (let row = 0; row < size; row++) {
-          if (data2.isReserved(row, col)) continue;
-          data2.xor(row, col, getMaskAt(pattern, row, col));
+          if (data3.isReserved(row, col)) continue;
+          data3.xor(row, col, getMaskAt(pattern, row, col));
         }
       }
     };
-    exports.getBestMask = function getBestMask(data2, setupFormatFunc) {
+    exports.getBestMask = function getBestMask(data3, setupFormatFunc) {
       const numPatterns = Object.keys(exports.Patterns).length;
       let bestPattern = 0;
       let lowerPenalty = Infinity;
       for (let p = 0; p < numPatterns; p++) {
         setupFormatFunc(p);
-        exports.applyMask(p, data2);
-        const penalty = exports.getPenaltyN1(data2) + exports.getPenaltyN2(data2) + exports.getPenaltyN3(data2) + exports.getPenaltyN4(data2);
-        exports.applyMask(p, data2);
+        exports.applyMask(p, data3);
+        const penalty = exports.getPenaltyN1(data3) + exports.getPenaltyN2(data3) + exports.getPenaltyN3(data3) + exports.getPenaltyN4(data3);
+        exports.applyMask(p, data3);
         if (penalty < lowerPenalty) {
           lowerPenalty = penalty;
           bestPattern = p;
@@ -97477,12 +97681,12 @@ var require_reed_solomon_encoder = __commonJS({
       this.degree = degree;
       this.genPoly = Polynomial.generateECPolynomial(this.degree);
     };
-    ReedSolomonEncoder.prototype.encode = function encode(data2) {
+    ReedSolomonEncoder.prototype.encode = function encode(data3) {
       if (!this.genPoly) {
         throw new Error("Encoder not initialized");
       }
-      const paddedData = new Uint8Array(data2.length + this.degree);
-      paddedData.set(data2);
+      const paddedData = new Uint8Array(data3.length + this.degree);
+      paddedData.set(data3);
       const remainder = Polynomial.mod(paddedData, this.genPoly);
       const start = this.degree - remainder.length;
       if (start > 0) {
@@ -97637,9 +97841,9 @@ var require_version = __commonJS({
     }
     function getTotalBitsFromDataArray(segments, version) {
       let totalBits = 0;
-      segments.forEach(function(data2) {
-        const reservedBits = getReservedBitsCount(data2.mode, version);
-        totalBits += reservedBits + data2.getBitsLength();
+      segments.forEach(function(data3) {
+        const reservedBits = getReservedBitsCount(data3.mode, version);
+        totalBits += reservedBits + data3.getBitsLength();
       });
       return totalBits;
     }
@@ -97680,19 +97884,19 @@ var require_version = __commonJS({
           return Math.floor(usableBits / 8);
       }
     };
-    exports.getBestVersionForData = function getBestVersionForData(data2, errorCorrectionLevel) {
+    exports.getBestVersionForData = function getBestVersionForData(data3, errorCorrectionLevel) {
       let seg;
       const ecl = ECLevel.from(errorCorrectionLevel, ECLevel.M);
-      if (Array.isArray(data2)) {
-        if (data2.length > 1) {
-          return getBestVersionForMixedData(data2, ecl);
+      if (Array.isArray(data3)) {
+        if (data3.length > 1) {
+          return getBestVersionForMixedData(data3, ecl);
         }
-        if (data2.length === 0) {
+        if (data3.length === 0) {
           return 1;
         }
-        seg = data2[0];
+        seg = data3[0];
       } else {
-        seg = data2;
+        seg = data3;
       }
       return getBestVersionForDataLength(seg.mode, seg.getLength(), ecl);
     };
@@ -97717,12 +97921,12 @@ var require_format_info = __commonJS({
     var G15_MASK = 1 << 14 | 1 << 12 | 1 << 10 | 1 << 4 | 1 << 1;
     var G15_BCH = Utils.getBCHDigit(G15);
     exports.getEncodedBits = function getEncodedBits(errorCorrectionLevel, mask) {
-      const data2 = errorCorrectionLevel.bit << 3 | mask;
-      let d = data2 << 10;
+      const data3 = errorCorrectionLevel.bit << 3 | mask;
+      let d = data3 << 10;
       while (Utils.getBCHDigit(d) - G15_BCH >= 0) {
         d ^= G15 << Utils.getBCHDigit(d) - G15_BCH;
       }
-      return (data2 << 10 | d) ^ G15_MASK;
+      return (data3 << 10 | d) ^ G15_MASK;
     };
   }
 });
@@ -97731,9 +97935,9 @@ var require_format_info = __commonJS({
 var require_numeric_data = __commonJS({
   "node_modules/qrcode/lib/core/numeric-data.js"(exports, module) {
     var Mode = require_mode();
-    function NumericData(data2) {
+    function NumericData(data3) {
       this.mode = Mode.NUMERIC;
-      this.data = data2.toString();
+      this.data = data3.toString();
     }
     NumericData.getBitsLength = function getBitsLength(length) {
       return 10 * Math.floor(length / 3) + (length % 3 ? length % 3 * 3 + 1 : 0);
@@ -97813,9 +98017,9 @@ var require_alphanumeric_data = __commonJS({
       "/",
       ":"
     ];
-    function AlphanumericData(data2) {
+    function AlphanumericData(data3) {
       this.mode = Mode.ALPHANUMERIC;
-      this.data = data2;
+      this.data = data3;
     }
     AlphanumericData.getBitsLength = function getBitsLength(length) {
       return 11 * Math.floor(length / 2) + 6 * (length % 2);
@@ -97845,12 +98049,12 @@ var require_alphanumeric_data = __commonJS({
 var require_byte_data = __commonJS({
   "node_modules/qrcode/lib/core/byte-data.js"(exports, module) {
     var Mode = require_mode();
-    function ByteData(data2) {
+    function ByteData(data3) {
       this.mode = Mode.BYTE;
-      if (typeof data2 === "string") {
-        this.data = new TextEncoder().encode(data2);
+      if (typeof data3 === "string") {
+        this.data = new TextEncoder().encode(data3);
       } else {
-        this.data = new Uint8Array(data2);
+        this.data = new Uint8Array(data3);
       }
     }
     ByteData.getBitsLength = function getBitsLength(length) {
@@ -97876,9 +98080,9 @@ var require_kanji_data = __commonJS({
   "node_modules/qrcode/lib/core/kanji-data.js"(exports, module) {
     var Mode = require_mode();
     var Utils = require_utils5();
-    function KanjiData(data2) {
+    function KanjiData(data3) {
       this.mode = Mode.KANJI;
-      this.data = data2;
+      this.data = data3;
     }
     KanjiData.getBitsLength = function getBitsLength(length) {
       return length * 13;
@@ -98147,25 +98351,25 @@ var require_segments = __commonJS({
       }
       return { map: graph, table };
     }
-    function buildSingleSegment(data2, modesHint) {
+    function buildSingleSegment(data3, modesHint) {
       let mode;
-      const bestMode = Mode.getBestModeForData(data2);
+      const bestMode = Mode.getBestModeForData(data3);
       mode = Mode.from(modesHint, bestMode);
       if (mode !== Mode.BYTE && mode.bit < bestMode.bit) {
-        throw new Error('"' + data2 + '" cannot be encoded with mode ' + Mode.toString(mode) + ".\n Suggested mode is: " + Mode.toString(bestMode));
+        throw new Error('"' + data3 + '" cannot be encoded with mode ' + Mode.toString(mode) + ".\n Suggested mode is: " + Mode.toString(bestMode));
       }
       if (mode === Mode.KANJI && !Utils.isKanjiModeEnabled()) {
         mode = Mode.BYTE;
       }
       switch (mode) {
         case Mode.NUMERIC:
-          return new NumericData(data2);
+          return new NumericData(data3);
         case Mode.ALPHANUMERIC:
-          return new AlphanumericData(data2);
+          return new AlphanumericData(data3);
         case Mode.KANJI:
-          return new KanjiData(data2);
+          return new KanjiData(data3);
         case Mode.BYTE:
-          return new ByteData(data2);
+          return new ByteData(data3);
       }
     }
     exports.fromArray = function fromArray(array) {
@@ -98178,8 +98382,8 @@ var require_segments = __commonJS({
         return acc;
       }, []);
     };
-    exports.fromString = function fromString(data2, version) {
-      const segs = getSegmentsFromString(data2, Utils.isKanjiModeEnabled());
+    exports.fromString = function fromString(data3, version) {
+      const segs = getSegmentsFromString(data3, Utils.isKanjiModeEnabled());
       const nodes = buildNodes(segs);
       const graph = buildGraph(nodes, version);
       const path = dijkstra.find_path(graph.map, "start", "end");
@@ -98189,9 +98393,9 @@ var require_segments = __commonJS({
       }
       return exports.fromArray(mergeSegments(optimizedSegs));
     };
-    exports.rawSplit = function rawSplit(data2) {
+    exports.rawSplit = function rawSplit(data3) {
       return exports.fromArray(
-        getSegmentsFromString(data2, Utils.isKanjiModeEnabled())
+        getSegmentsFromString(data3, Utils.isKanjiModeEnabled())
       );
     };
   }
@@ -98291,7 +98495,7 @@ var require_qrcode = __commonJS({
       }
       matrix.set(size - 8, 8, 1, true);
     }
-    function setupData(matrix, data2) {
+    function setupData(matrix, data3) {
       const size = matrix.size;
       let inc = -1;
       let row = size - 1;
@@ -98303,8 +98507,8 @@ var require_qrcode = __commonJS({
           for (let c = 0; c < 2; c++) {
             if (!matrix.isReserved(row, col - c)) {
               let dark = false;
-              if (byteIndex < data2.length) {
-                dark = (data2[byteIndex] >>> bitIndex & 1) === 1;
+              if (byteIndex < data3.length) {
+                dark = (data3[byteIndex] >>> bitIndex & 1) === 1;
               }
               matrix.set(row, col - c, dark);
               bitIndex--;
@@ -98325,10 +98529,10 @@ var require_qrcode = __commonJS({
     }
     function createData(version, errorCorrectionLevel, segments) {
       const buffer = new BitBuffer();
-      segments.forEach(function(data2) {
-        buffer.put(data2.mode.bit, 4);
-        buffer.put(data2.getLength(), Mode.getCharCountIndicator(data2.mode, version));
-        data2.write(buffer);
+      segments.forEach(function(data3) {
+        buffer.put(data3.mode.bit, 4);
+        buffer.put(data3.getLength(), Mode.getCharCountIndicator(data3.mode, version));
+        data3.write(buffer);
       });
       const totalCodewords = Utils.getSymbolTotalCodewords(version);
       const ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel);
@@ -98369,34 +98573,34 @@ var require_qrcode = __commonJS({
         offset2 += dataSize;
         maxDataSize = Math.max(maxDataSize, dataSize);
       }
-      const data2 = new Uint8Array(totalCodewords);
+      const data3 = new Uint8Array(totalCodewords);
       let index = 0;
       let i, r;
       for (i = 0; i < maxDataSize; i++) {
         for (r = 0; r < ecTotalBlocks; r++) {
           if (i < dcData[r].length) {
-            data2[index++] = dcData[r][i];
+            data3[index++] = dcData[r][i];
           }
         }
       }
       for (i = 0; i < ecCount; i++) {
         for (r = 0; r < ecTotalBlocks; r++) {
-          data2[index++] = ecData[r][i];
+          data3[index++] = ecData[r][i];
         }
       }
-      return data2;
+      return data3;
     }
-    function createSymbol(data2, version, errorCorrectionLevel, maskPattern) {
+    function createSymbol(data3, version, errorCorrectionLevel, maskPattern) {
       let segments;
-      if (Array.isArray(data2)) {
-        segments = Segments.fromArray(data2);
-      } else if (typeof data2 === "string") {
+      if (Array.isArray(data3)) {
+        segments = Segments.fromArray(data3);
+      } else if (typeof data3 === "string") {
         let estimatedVersion = version;
         if (!estimatedVersion) {
-          const rawSegments = Segments.rawSplit(data2);
+          const rawSegments = Segments.rawSplit(data3);
           estimatedVersion = Version.getBestVersionForData(rawSegments, errorCorrectionLevel);
         }
-        segments = Segments.fromString(data2, estimatedVersion || 40);
+        segments = Segments.fromString(data3, estimatedVersion || 40);
       } else {
         throw new Error("Invalid data");
       }
@@ -98438,8 +98642,8 @@ var require_qrcode = __commonJS({
         segments
       };
     }
-    exports.create = function create5(data2, options) {
-      if (typeof data2 === "undefined" || data2 === "") {
+    exports.create = function create5(data3, options) {
+      if (typeof data3 === "undefined" || data3 === "") {
         throw new Error("No input text");
       }
       let errorCorrectionLevel = ECLevel.M;
@@ -98453,7 +98657,7 @@ var require_qrcode = __commonJS({
           Utils.setToSJISFunction(options.toSJISFunc);
         }
       }
-      return createSymbol(data2, version, errorCorrectionLevel, mask);
+      return createSymbol(data3, version, errorCorrectionLevel, mask);
     };
   }
 });
@@ -98491,16 +98695,16 @@ var require_chunkstream = __commonJS({
         }.bind(this)
       );
     };
-    ChunkStream.prototype.write = function(data2, encoding) {
+    ChunkStream.prototype.write = function(data3, encoding) {
       if (!this.writable) {
         this.emit("error", new Error("Stream not writable"));
         return false;
       }
       let dataBuffer;
-      if (Buffer.isBuffer(data2)) {
-        dataBuffer = data2;
+      if (Buffer.isBuffer(data3)) {
+        dataBuffer = data3;
       } else {
-        dataBuffer = Buffer.from(data2, encoding || this._encoding);
+        dataBuffer = Buffer.from(data3, encoding || this._encoding);
       }
       this._buffers.push(dataBuffer);
       this._buffered += dataBuffer.length;
@@ -98510,9 +98714,9 @@ var require_chunkstream = __commonJS({
       }
       return this.writable && !this._paused;
     };
-    ChunkStream.prototype.end = function(data2, encoding) {
-      if (data2) {
-        this.write(data2, encoding);
+    ChunkStream.prototype.end = function(data3, encoding) {
+      if (data3) {
+        this.write(data3, encoding);
       }
       this.writable = false;
       if (!this._buffers) {
@@ -98558,11 +98762,11 @@ var require_chunkstream = __commonJS({
       this._reads.shift();
       let pos = 0;
       let count3 = 0;
-      let data2 = Buffer.alloc(read.length);
+      let data3 = Buffer.alloc(read.length);
       while (pos < read.length) {
         let buf = this._buffers[count3++];
         let len = Math.min(buf.length, read.length - pos);
-        buf.copy(data2, pos, 0, len);
+        buf.copy(data3, pos, 0, len);
         pos += len;
         if (len !== buf.length) {
           this._buffers[--count3] = buf.slice(len);
@@ -98572,7 +98776,7 @@ var require_chunkstream = __commonJS({
         this._buffers.splice(0, count3);
       }
       this._buffered -= read.length;
-      read.func.call(this, data2);
+      read.func.call(this, data3);
     };
     ChunkStream.prototype._process = function() {
       try {
@@ -98922,9 +99126,9 @@ var require_crc = __commonJS({
     var CrcCalculator = module.exports = function() {
       this._crc = -1;
     };
-    CrcCalculator.prototype.write = function(data2) {
-      for (let i = 0; i < data2.length; i++) {
-        this._crc = crcTable[(this._crc ^ data2[i]) & 255] ^ this._crc >>> 8;
+    CrcCalculator.prototype.write = function(data3) {
+      for (let i = 0; i < data3.length; i++) {
+        this._crc = crcTable[(this._crc ^ data3[i]) & 255] ^ this._crc >>> 8;
       }
       return true;
     };
@@ -98978,24 +99182,24 @@ var require_parser = __commonJS({
     Parser.prototype.start = function() {
       this.read(constants.PNG_SIGNATURE.length, this._parseSignature.bind(this));
     };
-    Parser.prototype._parseSignature = function(data2) {
+    Parser.prototype._parseSignature = function(data3) {
       let signature = constants.PNG_SIGNATURE;
       for (let i = 0; i < signature.length; i++) {
-        if (data2[i] !== signature[i]) {
+        if (data3[i] !== signature[i]) {
           this.error(new Error("Invalid file signature"));
           return;
         }
       }
       this.read(8, this._parseChunkBegin.bind(this));
     };
-    Parser.prototype._parseChunkBegin = function(data2) {
-      let length = data2.readUInt32BE(0);
-      let type = data2.readUInt32BE(4);
+    Parser.prototype._parseChunkBegin = function(data3) {
+      let length = data3.readUInt32BE(0);
+      let type = data3.readUInt32BE(4);
       let name = "";
       for (let i = 4; i < 8; i++) {
-        name += String.fromCharCode(data2[i]);
+        name += String.fromCharCode(data3[i]);
       }
-      let ancillary = Boolean(data2[4] & 32);
+      let ancillary = Boolean(data3[4] & 32);
       if (!this._hasIHDR && type !== constants.TYPE_IHDR) {
         this.error(new Error("Expected IHDR on beggining"));
         return;
@@ -99017,8 +99221,8 @@ var require_parser = __commonJS({
     Parser.prototype._handleChunkEnd = function() {
       this.read(4, this._parseChunkEnd.bind(this));
     };
-    Parser.prototype._parseChunkEnd = function(data2) {
-      let fileCrc = data2.readInt32BE(0);
+    Parser.prototype._parseChunkEnd = function(data3) {
+      let fileCrc = data3.readInt32BE(0);
       let calcCrc = this._crc.crc32();
       if (this._options.checkCRC && calcCrc !== fileCrc) {
         this.error(new Error("Crc error - " + fileCrc + " - " + calcCrc));
@@ -99031,15 +99235,15 @@ var require_parser = __commonJS({
     Parser.prototype._handleIHDR = function(length) {
       this.read(length, this._parseIHDR.bind(this));
     };
-    Parser.prototype._parseIHDR = function(data2) {
-      this._crc.write(data2);
-      let width = data2.readUInt32BE(0);
-      let height = data2.readUInt32BE(4);
-      let depth = data2[8];
-      let colorType = data2[9];
-      let compr = data2[10];
-      let filter = data2[11];
-      let interlace = data2[12];
+    Parser.prototype._parseIHDR = function(data3) {
+      this._crc.write(data3);
+      let width = data3.readUInt32BE(0);
+      let height = data3.readUInt32BE(4);
+      let depth = data3[8];
+      let colorType = data3[9];
+      let compr = data3[10];
+      let filter = data3[11];
+      let interlace = data3[12];
       if (depth !== 8 && depth !== 4 && depth !== 2 && depth !== 1 && depth !== 16) {
         this.error(new Error("Unsupported bit depth " + depth));
         return;
@@ -99079,11 +99283,11 @@ var require_parser = __commonJS({
     Parser.prototype._handlePLTE = function(length) {
       this.read(length, this._parsePLTE.bind(this));
     };
-    Parser.prototype._parsePLTE = function(data2) {
-      this._crc.write(data2);
-      let entries = Math.floor(data2.length / 3);
+    Parser.prototype._parsePLTE = function(data3) {
+      this._crc.write(data3);
+      let entries = Math.floor(data3.length / 3);
       for (let i = 0; i < entries; i++) {
-        this._palette.push([data2[i * 3], data2[i * 3 + 1], data2[i * 3 + 2], 255]);
+        this._palette.push([data3[i * 3], data3[i * 3 + 1], data3[i * 3 + 2], 255]);
       }
       this.palette(this._palette);
       this._handleChunkEnd();
@@ -99092,30 +99296,30 @@ var require_parser = __commonJS({
       this.simpleTransparency();
       this.read(length, this._parseTRNS.bind(this));
     };
-    Parser.prototype._parseTRNS = function(data2) {
-      this._crc.write(data2);
+    Parser.prototype._parseTRNS = function(data3) {
+      this._crc.write(data3);
       if (this._colorType === constants.COLORTYPE_PALETTE_COLOR) {
         if (this._palette.length === 0) {
           this.error(new Error("Transparency chunk must be after palette"));
           return;
         }
-        if (data2.length > this._palette.length) {
+        if (data3.length > this._palette.length) {
           this.error(new Error("More transparent colors than palette size"));
           return;
         }
-        for (let i = 0; i < data2.length; i++) {
-          this._palette[i][3] = data2[i];
+        for (let i = 0; i < data3.length; i++) {
+          this._palette[i][3] = data3[i];
         }
         this.palette(this._palette);
       }
       if (this._colorType === constants.COLORTYPE_GRAYSCALE) {
-        this.transColor([data2.readUInt16BE(0)]);
+        this.transColor([data3.readUInt16BE(0)]);
       }
       if (this._colorType === constants.COLORTYPE_COLOR) {
         this.transColor([
-          data2.readUInt16BE(0),
-          data2.readUInt16BE(2),
-          data2.readUInt16BE(4)
+          data3.readUInt16BE(0),
+          data3.readUInt16BE(2),
+          data3.readUInt16BE(4)
         ]);
       }
       this._handleChunkEnd();
@@ -99123,9 +99327,9 @@ var require_parser = __commonJS({
     Parser.prototype._handleGAMA = function(length) {
       this.read(length, this._parseGAMA.bind(this));
     };
-    Parser.prototype._parseGAMA = function(data2) {
-      this._crc.write(data2);
-      this.gamma(data2.readUInt32BE(0) / constants.GAMMA_DIVISION);
+    Parser.prototype._parseGAMA = function(data3) {
+      this._crc.write(data3);
+      this.gamma(data3.readUInt32BE(0) / constants.GAMMA_DIVISION);
       this._handleChunkEnd();
     };
     Parser.prototype._handleIDAT = function(length) {
@@ -99135,13 +99339,13 @@ var require_parser = __commonJS({
       }
       this.read(-length, this._parseIDAT.bind(this, length));
     };
-    Parser.prototype._parseIDAT = function(length, data2) {
-      this._crc.write(data2);
+    Parser.prototype._parseIDAT = function(length, data3) {
+      this._crc.write(data3);
       if (this._colorType === constants.COLORTYPE_PALETTE_COLOR && this._palette.length === 0) {
         throw new Error("Expected palette not found");
       }
-      this.inflateData(data2);
-      let leftOverLength = length - data2.length;
+      this.inflateData(data3);
+      let leftOverLength = length - data3.length;
       if (leftOverLength > 0) {
         this._handleIDAT(leftOverLength);
       } else {
@@ -99151,8 +99355,8 @@ var require_parser = __commonJS({
     Parser.prototype._handleIEND = function(length) {
       this.read(length, this._parseIEND.bind(this));
     };
-    Parser.prototype._parseIEND = function(data2) {
-      this._crc.write(data2);
+    Parser.prototype._parseIEND = function(data3) {
+      this._crc.write(data3);
       this._hasIEND = true;
       this._handleChunkEnd();
       if (this.finished) {
@@ -99173,11 +99377,11 @@ var require_bitmapper = __commonJS({
       },
       // 1 - L
       // 0: 0, 1: 0, 2: 0, 3: 0xff
-      function(pxData, data2, pxPos, rawPos) {
-        if (rawPos === data2.length) {
+      function(pxData, data3, pxPos, rawPos) {
+        if (rawPos === data3.length) {
           throw new Error("Ran out of data");
         }
-        let pixel = data2[rawPos];
+        let pixel = data3[rawPos];
         pxData[pxPos] = pixel;
         pxData[pxPos + 1] = pixel;
         pxData[pxPos + 2] = pixel;
@@ -99185,37 +99389,37 @@ var require_bitmapper = __commonJS({
       },
       // 2 - LA
       // 0: 0, 1: 0, 2: 0, 3: 1
-      function(pxData, data2, pxPos, rawPos) {
-        if (rawPos + 1 >= data2.length) {
+      function(pxData, data3, pxPos, rawPos) {
+        if (rawPos + 1 >= data3.length) {
           throw new Error("Ran out of data");
         }
-        let pixel = data2[rawPos];
+        let pixel = data3[rawPos];
         pxData[pxPos] = pixel;
         pxData[pxPos + 1] = pixel;
         pxData[pxPos + 2] = pixel;
-        pxData[pxPos + 3] = data2[rawPos + 1];
+        pxData[pxPos + 3] = data3[rawPos + 1];
       },
       // 3 - RGB
       // 0: 0, 1: 1, 2: 2, 3: 0xff
-      function(pxData, data2, pxPos, rawPos) {
-        if (rawPos + 2 >= data2.length) {
+      function(pxData, data3, pxPos, rawPos) {
+        if (rawPos + 2 >= data3.length) {
           throw new Error("Ran out of data");
         }
-        pxData[pxPos] = data2[rawPos];
-        pxData[pxPos + 1] = data2[rawPos + 1];
-        pxData[pxPos + 2] = data2[rawPos + 2];
+        pxData[pxPos] = data3[rawPos];
+        pxData[pxPos + 1] = data3[rawPos + 1];
+        pxData[pxPos + 2] = data3[rawPos + 2];
         pxData[pxPos + 3] = 255;
       },
       // 4 - RGBA
       // 0: 0, 1: 1, 2: 2, 3: 3
-      function(pxData, data2, pxPos, rawPos) {
-        if (rawPos + 3 >= data2.length) {
+      function(pxData, data3, pxPos, rawPos) {
+        if (rawPos + 3 >= data3.length) {
           throw new Error("Ran out of data");
         }
-        pxData[pxPos] = data2[rawPos];
-        pxData[pxPos + 1] = data2[rawPos + 1];
-        pxData[pxPos + 2] = data2[rawPos + 2];
-        pxData[pxPos + 3] = data2[rawPos + 3];
+        pxData[pxPos] = data3[rawPos];
+        pxData[pxPos + 1] = data3[rawPos + 1];
+        pxData[pxPos + 2] = data3[rawPos + 2];
+        pxData[pxPos + 3] = data3[rawPos + 3];
       }
     ];
     var pixelBppCustomMapper = [
@@ -99257,21 +99461,21 @@ var require_bitmapper = __commonJS({
         pxData[pxPos + 3] = pixelData[3];
       }
     ];
-    function bitRetriever(data2, depth) {
+    function bitRetriever(data3, depth) {
       let leftOver = [];
       let i = 0;
       function split2() {
-        if (i === data2.length) {
+        if (i === data3.length) {
           throw new Error("Ran out of data");
         }
-        let byte = data2[i];
+        let byte = data3[i];
         i++;
         let byte8, byte7, byte6, byte5, byte4, byte3, byte2, byte1;
         switch (depth) {
           default:
             throw new Error("unrecognised depth");
           case 16:
-            byte2 = data2[i];
+            byte2 = data3[i];
             i++;
             leftOver.push((byte << 8) + byte2);
             break;
@@ -99313,20 +99517,20 @@ var require_bitmapper = __commonJS({
           leftOver.length = 0;
         },
         end: function() {
-          if (i !== data2.length) {
+          if (i !== data3.length) {
             throw new Error("extra data found");
           }
         }
       };
     }
-    function mapImage8Bit(image, pxData, getPxPos, bpp, data2, rawPos) {
+    function mapImage8Bit(image, pxData, getPxPos, bpp, data3, rawPos) {
       let imageWidth = image.width;
       let imageHeight = image.height;
       let imagePass = image.index;
       for (let y = 0; y < imageHeight; y++) {
         for (let x = 0; x < imageWidth; x++) {
           let pxPos = getPxPos(x, y, imagePass);
-          pixelBppMapper[bpp](pxData, data2, pxPos, rawPos);
+          pixelBppMapper[bpp](pxData, data3, pxPos, rawPos);
           rawPos += bpp;
         }
       }
@@ -99345,7 +99549,7 @@ var require_bitmapper = __commonJS({
         bits.resetAfterLine();
       }
     }
-    exports.dataToBitMap = function(data2, bitmapInfo) {
+    exports.dataToBitMap = function(data3, bitmapInfo) {
       let width = bitmapInfo.width;
       let height = bitmapInfo.height;
       let depth = bitmapInfo.depth;
@@ -99353,7 +99557,7 @@ var require_bitmapper = __commonJS({
       let interlace = bitmapInfo.interlace;
       let bits;
       if (depth !== 8) {
-        bits = bitRetriever(data2, depth);
+        bits = bitRetriever(data3, depth);
       }
       let pxData;
       if (depth <= 8) {
@@ -99384,7 +99588,7 @@ var require_bitmapper = __commonJS({
             pxData,
             getPxPos,
             bpp,
-            data2,
+            data3,
             rawPos
           );
         } else {
@@ -99399,7 +99603,7 @@ var require_bitmapper = __commonJS({
         }
       }
       if (depth === 8) {
-        if (rawPos !== data2.length) {
+        if (rawPos !== data3.length) {
           throw new Error("extra data found");
         }
       } else {
@@ -99535,7 +99739,7 @@ var require_parser_async = __commonJS({
       }
       this.errord = true;
     };
-    ParserAsync.prototype._inflateData = function(data2) {
+    ParserAsync.prototype._inflateData = function(data3) {
       if (!this._inflate) {
         if (this._bitmapInfo.interlace) {
           this._inflate = zlib.createInflate();
@@ -99570,7 +99774,7 @@ var require_parser_async = __commonJS({
           this._inflate.on("end", this._filter.end.bind(this._filter));
         }
       }
-      this._inflate.write(data2);
+      this._inflate.write(data3);
     };
     ParserAsync.prototype._handleMetaData = function(metaData) {
       this._metaData = metaData;
@@ -99641,7 +99845,7 @@ var require_bitpacker = __commonJS({
           return dataIn;
         }
       }
-      let data2 = options.bitDepth !== 16 ? dataIn : new Uint16Array(dataIn.buffer);
+      let data3 = options.bitDepth !== 16 ? dataIn : new Uint16Array(dataIn.buffer);
       let maxValue = 255;
       let inBpp = constants.COLORTYPE_TO_BPP_MAP[options.inputColorType];
       if (inBpp === 4 && !options.inputHasAlpha) {
@@ -99672,24 +99876,24 @@ var require_bitpacker = __commonJS({
         let alpha = maxValue;
         switch (options.inputColorType) {
           case constants.COLORTYPE_COLOR_ALPHA:
-            alpha = data2[inIndex + 3];
-            red = data2[inIndex];
-            green = data2[inIndex + 1];
-            blue = data2[inIndex + 2];
+            alpha = data3[inIndex + 3];
+            red = data3[inIndex];
+            green = data3[inIndex + 1];
+            blue = data3[inIndex + 2];
             break;
           case constants.COLORTYPE_COLOR:
-            red = data2[inIndex];
-            green = data2[inIndex + 1];
-            blue = data2[inIndex + 2];
+            red = data3[inIndex];
+            green = data3[inIndex + 1];
+            blue = data3[inIndex + 2];
             break;
           case constants.COLORTYPE_ALPHA:
-            alpha = data2[inIndex + 1];
-            red = data2[inIndex];
+            alpha = data3[inIndex + 1];
+            red = data3[inIndex];
             green = red;
             blue = red;
             break;
           case constants.COLORTYPE_GRAYSCALE:
-            red = data2[inIndex];
+            red = data3[inIndex];
             green = red;
             blue = red;
             break;
@@ -99719,7 +99923,7 @@ var require_bitpacker = __commonJS({
       }
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
-          let rgba = getRGBA(data2, inIndex);
+          let rgba = getRGBA(data3, inIndex);
           switch (options.colorType) {
             case constants.COLORTYPE_COLOR_ALPHA:
             case constants.COLORTYPE_COLOR:
@@ -99964,19 +100168,19 @@ var require_packer = __commonJS({
     Packer.prototype.createDeflate = function() {
       return this._options.deflateFactory(this.getDeflateOptions());
     };
-    Packer.prototype.filterData = function(data2, width, height) {
-      let packedData = bitPacker(data2, width, height, this._options);
+    Packer.prototype.filterData = function(data3, width, height) {
+      let packedData = bitPacker(data3, width, height, this._options);
       let bpp = constants.COLORTYPE_TO_BPP_MAP[this._options.colorType];
       let filteredData = filter(packedData, width, height, this._options, bpp);
       return filteredData;
     };
-    Packer.prototype._packChunk = function(type, data2) {
-      let len = data2 ? data2.length : 0;
+    Packer.prototype._packChunk = function(type, data3) {
+      let len = data3 ? data3.length : 0;
       let buf = Buffer.alloc(len + 12);
       buf.writeUInt32BE(len, 0);
       buf.writeUInt32BE(type, 4);
-      if (data2) {
-        data2.copy(buf, 8);
+      if (data3) {
+        data3.copy(buf, 8);
       }
       buf.writeInt32BE(
         CrcStream.crc32(buf.slice(4, buf.length - 4)),
@@ -100000,8 +100204,8 @@ var require_packer = __commonJS({
       buf[12] = 0;
       return this._packChunk(constants.TYPE_IHDR, buf);
     };
-    Packer.prototype.packIDAT = function(data2) {
-      return this._packChunk(constants.TYPE_IDAT, data2);
+    Packer.prototype.packIDAT = function(data3) {
+      return this._packChunk(constants.TYPE_IDAT, data3);
     };
     Packer.prototype.packIEND = function() {
       return this._packChunk(constants.TYPE_IEND, null);
@@ -100025,13 +100229,13 @@ var require_packer_async = __commonJS({
       this.readable = true;
     };
     util2.inherits(PackerAsync, Stream);
-    PackerAsync.prototype.pack = function(data2, width, height, gamma) {
+    PackerAsync.prototype.pack = function(data3, width, height, gamma) {
       this.emit("data", Buffer.from(constants.PNG_SIGNATURE));
       this.emit("data", this._packer.packIHDR(width, height));
       if (gamma) {
         this.emit("data", this._packer.packGAMA(gamma));
       }
-      let filteredData = this._packer.filterData(data2, width, height);
+      let filteredData = this._packer.filterData(data3, width, height);
       this._deflate.on("error", this.emit.bind(this, "error"));
       this._deflate.on(
         "data",
@@ -100428,9 +100632,9 @@ var require_png = __commonJS({
       this._parser.on("gamma", this._gamma.bind(this));
       this._parser.on(
         "parsed",
-        function(data2) {
-          this.data = data2;
-          this.emit("parsed", data2);
+        function(data3) {
+          this.data = data3;
+          this.emit("parsed", data3);
         }.bind(this)
       );
       this._packer = new Packer(options);
@@ -100453,7 +100657,7 @@ var require_png = __commonJS({
       );
       return this;
     };
-    PNG.prototype.parse = function(data2, callback) {
+    PNG.prototype.parse = function(data3, callback) {
       if (callback) {
         let onParsed, onError;
         onParsed = function(parsedData) {
@@ -100468,15 +100672,15 @@ var require_png = __commonJS({
         this.once("parsed", onParsed);
         this.once("error", onError);
       }
-      this.end(data2);
+      this.end(data3);
       return this;
     };
-    PNG.prototype.write = function(data2) {
-      this._parser.write(data2);
+    PNG.prototype.write = function(data3) {
+      this._parser.write(data3);
       return true;
     };
-    PNG.prototype.end = function(data2) {
-      this._parser.end(data2);
+    PNG.prototype.end = function(data3) {
+      this._parser.end(data3);
     };
     PNG.prototype._metadata = function(metadata) {
       this.width = metadata.width;
@@ -100594,7 +100798,7 @@ var require_utils6 = __commonJS({
     };
     exports.qrToImageData = function qrToImageData(imgData, qr, opts) {
       const size = qr.modules.size;
-      const data2 = qr.modules.data;
+      const data3 = qr.modules.data;
       const scale = exports.getScale(size, opts);
       const symbolSize = Math.floor((size + opts.margin * 2) * scale);
       const scaledMargin = opts.margin * scale;
@@ -100606,7 +100810,7 @@ var require_utils6 = __commonJS({
           if (i >= scaledMargin && j >= scaledMargin && i < symbolSize - scaledMargin && j < symbolSize - scaledMargin) {
             const iSrc = Math.floor((i - scaledMargin) / scale);
             const jSrc = Math.floor((j - scaledMargin) / scale);
-            pxColor = palette[data2[iSrc * size + jSrc] ? 1 : 0];
+            pxColor = palette[data3[iSrc * size + jSrc] ? 1 : 0];
           }
           imgData[posDst++] = pxColor.r;
           imgData[posDst++] = pxColor.g;
@@ -100654,8 +100858,8 @@ var require_png2 = __commonJS({
       const png = exports.render(qrData, options);
       const buffer = [];
       png.on("error", cb);
-      png.on("data", function(data2) {
-        buffer.push(data2);
+      png.on("data", function(data3) {
+        buffer.push(data3);
       });
       png.on("end", function() {
         cb(null, Buffer.concat(buffer));
@@ -100714,7 +100918,7 @@ var require_utf8 = __commonJS({
         blocks = INVERTED_BLOCK_CHAR;
       }
       const size = qrData.modules.size;
-      const data2 = qrData.modules.data;
+      const data3 = qrData.modules.data;
       let output = "";
       let hMargin = Array(size + opts.margin * 2 + 1).join(blocks.WW);
       hMargin = Array(opts.margin / 2 + 1).join(hMargin + "\n");
@@ -100723,8 +100927,8 @@ var require_utf8 = __commonJS({
       for (let i = 0; i < size; i += 2) {
         output += vMargin;
         for (let j = 0; j < size; j++) {
-          const topModule = data2[i * size + j];
-          const bottomModule = data2[(i + 1) * size + j];
+          const topModule = data3[i * size + j];
+          const bottomModule = data3[(i + 1) * size + j];
           output += getBlockChar(topModule, bottomModule, blocks);
         }
         output += vMargin + "\n";
@@ -100752,7 +100956,7 @@ var require_terminal = __commonJS({
   "node_modules/qrcode/lib/renderer/terminal/terminal.js"(exports) {
     exports.render = function(qrData, options, cb) {
       const size = qrData.modules.size;
-      const data2 = qrData.modules.data;
+      const data3 = qrData.modules.data;
       const black = "\x1B[40m  \x1B[0m";
       const white = "\x1B[47m  \x1B[0m";
       let output = "";
@@ -100762,7 +100966,7 @@ var require_terminal = __commonJS({
       for (let i = 0; i < size; ++i) {
         output += white;
         for (let j = 0; j < size; j++) {
-          output += data2[i * size + j] ? black : white;
+          output += data3[i * size + j] ? black : white;
         }
         output += vMargin + "\n";
       }
@@ -100811,7 +101015,7 @@ var require_terminal_small = __commonJS({
     };
     exports.render = function(qrData, options, cb) {
       const size = qrData.modules.size;
-      const data2 = qrData.modules.data;
+      const data3 = qrData.modules.data;
       const inverse = !!(options && options.inverse);
       const lineSetup = options && options.inverse ? lineSetupInverse : lineSetupNormal;
       const white = inverse ? foregroundBlack : foregroundWhite;
@@ -100821,9 +101025,9 @@ var require_terminal_small = __commonJS({
       let output = lineSetup;
       for (let y = -1; y < size + 1; y += 2) {
         for (let x = -1; x < size; x++) {
-          output += palette[mkCode(data2, size, x, y)];
+          output += palette[mkCode(data3, size, x, y)];
         }
-        output += palette[mkCode(data2, size, size, y)] + newLine;
+        output += palette[mkCode(data3, size, size, y)] + newLine;
       }
       output += reset;
       if (typeof cb === "function") {
@@ -100862,23 +101066,23 @@ var require_svg_tag = __commonJS({
       if (typeof y !== "undefined") str8 += " " + y;
       return str8;
     }
-    function qrToPath(data2, size, margin) {
+    function qrToPath(data3, size, margin) {
       let path = "";
       let moveBy = 0;
       let newRow = false;
       let lineLength = 0;
-      for (let i = 0; i < data2.length; i++) {
+      for (let i = 0; i < data3.length; i++) {
         const col = Math.floor(i % size);
         const row = Math.floor(i / size);
         if (!col && !newRow) newRow = true;
-        if (data2[i]) {
+        if (data3[i]) {
           lineLength++;
-          if (!(i > 0 && col > 0 && data2[i - 1])) {
+          if (!(i > 0 && col > 0 && data3[i - 1])) {
             path += newRow ? svgCmd("M", col + margin, 0.5 + row + margin) : svgCmd("m", moveBy, 0);
             moveBy = 0;
             newRow = false;
           }
-          if (!(col + 1 < size && data2[i + 1])) {
+          if (!(col + 1 < size && data3[i + 1])) {
             path += svgCmd("h", lineLength);
             lineLength = 0;
           }
@@ -100891,10 +101095,10 @@ var require_svg_tag = __commonJS({
     exports.render = function render(qrData, options, cb) {
       const opts = Utils.getOptions(options);
       const size = qrData.modules.size;
-      const data2 = qrData.modules.data;
+      const data3 = qrData.modules.data;
       const qrcodesize = size + opts.margin * 2;
       const bg = !opts.color.light.a ? "" : "<path " + getColorAttrib(opts.color.light, "fill") + ' d="M0 0h' + qrcodesize + "v" + qrcodesize + 'H0z"/>';
-      const path = "<path " + getColorAttrib(opts.color.dark, "stroke") + ' d="' + qrToPath(data2, size, opts.margin) + '"/>';
+      const path = "<path " + getColorAttrib(opts.color.dark, "stroke") + ' d="' + qrToPath(data3, size, opts.margin) + '"/>';
       const viewBox = 'viewBox="0 0 ' + qrcodesize + " " + qrcodesize + '"';
       const width = !opts.width ? "" : 'width="' + opts.width + '" height="' + opts.width + '" ';
       const svgTag = '<svg xmlns="http://www.w3.org/2000/svg" ' + width + viewBox + ' shape-rendering="crispEdges">' + bg + path + "</svg>\n";
@@ -101024,16 +101228,16 @@ var require_browser = __commonJS({
         }
         return new Promise(function(resolve2, reject) {
           try {
-            const data2 = QRCode2.create(text9, opts);
-            resolve2(renderFunc(data2, canvas, opts));
+            const data3 = QRCode2.create(text9, opts);
+            resolve2(renderFunc(data3, canvas, opts));
           } catch (e9) {
             reject(e9);
           }
         });
       }
       try {
-        const data2 = QRCode2.create(text9, opts);
-        cb(null, renderFunc(data2, canvas, opts));
+        const data3 = QRCode2.create(text9, opts);
+        cb(null, renderFunc(data3, canvas, opts));
       } catch (e9) {
         cb(e9);
       }
@@ -101041,8 +101245,8 @@ var require_browser = __commonJS({
     exports.create = QRCode2.create;
     exports.toCanvas = renderCanvas.bind(null, CanvasRenderer.render);
     exports.toDataURL = renderCanvas.bind(null, CanvasRenderer.renderToDataURL);
-    exports.toString = renderCanvas.bind(null, function(data2, _, opts) {
-      return SvgRenderer.render(data2, opts);
+    exports.toString = renderCanvas.bind(null, function(data3, _, opts) {
+      return SvgRenderer.render(data3, opts);
     });
   }
 });
@@ -101108,9 +101312,9 @@ var require_server2 = __commonJS({
       if (!params2.cb) {
         return new Promise(function(resolve2, reject) {
           try {
-            const data2 = QRCode2.create(text9, params2.opts);
-            return renderFunc(data2, params2.opts, function(err, data3) {
-              return err ? reject(err) : resolve2(data3);
+            const data3 = QRCode2.create(text9, params2.opts);
+            return renderFunc(data3, params2.opts, function(err, data4) {
+              return err ? reject(err) : resolve2(data4);
             });
           } catch (e9) {
             reject(e9);
@@ -101118,8 +101322,8 @@ var require_server2 = __commonJS({
         });
       }
       try {
-        const data2 = QRCode2.create(text9, params2.opts);
-        return renderFunc(data2, params2.opts, params2.cb);
+        const data3 = QRCode2.create(text9, params2.opts);
+        return renderFunc(data3, params2.opts, params2.cb);
       } catch (e9) {
         params2.cb(e9);
       }
@@ -101252,7 +101456,7 @@ var init_views_setup = __esm({
 });
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
-import { randomBytes as randomBytes18 } from "node:crypto";
+import { randomBytes as randomBytes19 } from "node:crypto";
 function qrSvg(text9) {
   return QRCode.toString(text9, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
@@ -101284,7 +101488,7 @@ function registerSetupWizard(app2, deps) {
     return state;
   }
   function newState(reply) {
-    const state = { id: randomBytes18(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
+    const state = { id: randomBytes19(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
     states.set(state.id, state);
     reply.header("Set-Cookie", setupCookie(signSessionCookie(state.id, getAdminSessionSecret()), STATE_TTL_MS / 1e3));
     return state;
@@ -102950,7 +103154,7 @@ var init_views_data = __esm({
 
 // packages/api/dist/interfaces/admin/data.js
 function registerDataRoutes(app2, deps) {
-  const { data: data2 } = deps;
+  const { data: data3 } = deps;
   const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
@@ -102973,7 +103177,7 @@ function registerDataRoutes(app2, deps) {
   const str8 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
   async function renderRequests(request, reply, session, filter, flash, status = 200) {
     try {
-      const list7 = await data2.listRequests(filter, 1);
+      const list7 = await data3.listRequests(filter, 1);
       return deps.html(reply, request, "Solicitudes de datos", dataRequestsView({ csrf: session.csrfToken, filter, items: list7.items, flash }), session, status);
     } catch (err) {
       const m = dbError2(err);
@@ -102987,7 +103191,7 @@ function registerDataRoutes(app2, deps) {
     let counts = {};
     try {
       for (const dataset of DATASETS) {
-        counts[dataset.key] = (await data2.exportRows(dataset.key)).length;
+        counts[dataset.key] = (await data3.exportRows(dataset.key)).length;
       }
     } catch {
       counts = null;
@@ -103004,7 +103208,7 @@ function registerDataRoutes(app2, deps) {
       return errorPage(request, reply, session, "Respaldos", "Ese conjunto no existe.", 404);
     let rows31;
     try {
-      rows31 = await data2.exportRows(dataset.key);
+      rows31 = await data3.exportRows(dataset.key);
     } catch (err) {
       const m = dbError2(err);
       return errorPage(request, reply, session, "Respaldos", m.text, m.status);
@@ -103033,7 +103237,7 @@ function registerDataRoutes(app2, deps) {
       return errorPage(request, reply, session, "Solicitudes de datos", "Elige el tipo de solicitud.", 400);
     let id2;
     try {
-      id2 = await data2.createRequest({ userId, kind, channel: str8(body.channel, 30) || null, detail: str8(body.detail, 1e3) || null, createdBy: session.userId });
+      id2 = await data3.createRequest({ userId, kind, channel: str8(body.channel, 30) || null, detail: str8(body.detail, 1e3) || null, createdBy: session.userId });
     } catch (err) {
       const m = dbError2(err);
       return errorPage(request, reply, session, "Solicitudes de datos", m.text, m.status);
@@ -103051,13 +103255,13 @@ function registerDataRoutes(app2, deps) {
     let payload;
     let requestRow;
     try {
-      requestRow = await data2.getRequest(id2);
+      requestRow = await data3.getRequest(id2);
       if (!requestRow)
         return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
-      payload = await data2.personalExport(requestRow.userId);
+      payload = await data3.personalExport(requestRow.userId);
       if (!payload)
         return errorPage(request, reply, session, "Solicitudes de datos", "El titular ya no existe.", 404);
-      await data2.markExported(id2);
+      await data3.markExported(id2);
     } catch (err) {
       const m = dbError2(err);
       return errorPage(request, reply, session, "Solicitudes de datos", m.text, m.status);
@@ -103079,10 +103283,10 @@ function registerDataRoutes(app2, deps) {
       return renderRequests(request, reply, session, "recibida", { kind: "error", text: "Escribe qu\xE9 se hizo con la solicitud." }, 400);
     let requestRow;
     try {
-      requestRow = await data2.getRequest(id2);
+      requestRow = await data3.getRequest(id2);
       if (!requestRow)
         return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
-      const changed = await data2.setStatus(id2, next, resolution, session.userId);
+      const changed = await data3.setStatus(id2, next, resolution, session.userId);
       if (!changed)
         return renderRequests(request, reply, session, "todas", { kind: "error", text: "Ese caso ya estaba cerrado." }, 400);
     } catch (err) {
@@ -103105,13 +103309,13 @@ function registerDataRoutes(app2, deps) {
     }
     let requestRow;
     try {
-      requestRow = await data2.getRequest(id2);
+      requestRow = await data3.getRequest(id2);
       if (!requestRow)
         return errorPage(request, reply, session, "Solicitudes de datos", "Caso no encontrado.", 404);
       if (requestRow.kind !== "eliminacion") {
         return renderRequests(request, reply, session, "recibida", { kind: "error", text: "Solo se anonimiza en una solicitud de eliminaci\xF3n." }, 400);
       }
-      const done = await data2.anonymizeUser(requestRow.userId, id2);
+      const done = await data3.anonymizeUser(requestRow.userId, id2);
       if (!done) {
         return renderRequests(request, reply, session, "todas", { kind: "error", text: "No se pudo anonimizar: revisa si el titular ya estaba dado de baja." }, 400);
       }
@@ -103538,7 +103742,7 @@ var init_plans2 = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/billing-store.js
-import { randomUUID as randomUUID20 } from "node:crypto";
+import { randomUUID as randomUUID22 } from "node:crypto";
 function rowsOf2(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
@@ -103617,7 +103821,7 @@ var init_billing_store = __esm({
       }
       addAccount(input, by) {
         return this.run(async (conn) => {
-          const id2 = randomUUID20();
+          const id2 = randomUUID22();
           await conn.query("INSERT INTO `PaymentAccount` (id, bank, accountType, number, holder, holderId, active, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, TRUE, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, input.bank, input.accountType, input.number, input.holder, input.holderId, by]);
           return id2;
         });
@@ -103700,7 +103904,7 @@ var init_billing_store = __esm({
       }
       notify(userId, dedupKey, message2) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID20(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID22(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
         });
       }
       instructions(id2) {
@@ -105656,8 +105860,10 @@ var init_settings = __esm({
 });
 
 // packages/api/dist/interfaces/admin/local-agent.js
-import { createHash as createHash10, randomBytes as randomBytes19 } from "node:crypto";
+import { createHash as createHash11, randomBytes as randomBytes20 } from "node:crypto";
 function registerLocalAgentAdminRoutes(app2, deps) {
+  const tasks = deps.tasks ?? new MysqlLocalAgentTaskStore();
+  const recent = async () => tasks.recent(20).catch(() => []);
   function render(request, reply, session, input = {}) {
     reply.header("Cache-Control", "no-store").header("Pragma", "no-cache").header("Referrer-Policy", "no-referrer");
     const form = (action, label2) => `<form method="post" action="/admin/local-agent/${action}" autocomplete="off">
@@ -105670,6 +105876,8 @@ function registerLocalAgentAdminRoutes(app2, deps) {
       <p>El equipo Ubuntu consulta la cola por HTTPS y exige aprobaci\xF3n humana. Configurarlo no conecta WhatsApp ni env\xEDa mensajes autom\xE1ticamente.</p>
       ${input.token ? `<div class="card"><h2>Clave del equipo: se muestra una sola vez</h2><code id="local-agent-token">${escapeHtml(input.token)}</code>
       <p>Gu\xE1rdala en LOCAL_AGENT_TOKEN del .env privado del equipo (permiso 0600). No se puede recuperar desde el panel. La clave anterior ha quedado revocada.</p></div>` : ""}
+      <div class="card"><h2>Crear tarea local</h2><form method="post" action="/admin/local-agent/tasks"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><input type="hidden" name="idempotencyKey" value="${escapeHtml(randomBytes20(12).toString("hex"))}"><label>Tipo<select name="type">${LOCAL_TASK_TYPES.map((type) => `<option value="${type}"${type === "reporte_estado" ? " selected" : ""}>${type}</option>`).join("")}</select></label><label>Mensaje (obligatorio para responder o clasificar una consulta)<textarea name="message" maxlength="2000"></textarea></label><button type="submit">Encolar tarea</button></form></div>
+      <div class="card"><h2>20 tareas recientes</h2><table><thead><tr><th>Tipo</th><th>Estado</th><th>Intentos</th><th>Fechas</th><th>Error</th><th>Resultado</th></tr></thead><tbody>${(input.recent ?? []).map((row) => `<tr><td>${escapeHtml(String(row.type ?? ""))}</td><td>${escapeHtml(String(row.status ?? ""))}</td><td>${escapeHtml(String(row.attempts ?? ""))}</td><td>${escapeHtml([row.createdAt, row.completedAt].filter(Boolean).map(String).join(" / "))}</td><td>${escapeHtml(String(row.errorCode ?? ""))}</td><td>${escapeHtml(String(row.result ?? "").slice(0, 500))}</td></tr>`).join("")}</tbody></table></div>
       <div class="card">${form("rotate", "Habilitar equipo y generar nueva clave")}</div>
       <div class="card">${form("disable", "Revocar acceso del equipo")}</div>
       <p><a href="/admin/settings">Volver a ajustes</a></p></div>`;
@@ -105693,10 +105901,35 @@ function registerLocalAgentAdminRoutes(app2, deps) {
       const raw = await deps.settings.get(LOCAL_AGENT_CONFIG_KEY2);
       const config = raw ? JSON.parse(raw) : null;
       const enabled = config?.enabled === true && typeof config.tokenHash === "string" && /^[a-f0-9]{64}$/.test(config.tokenHash);
-      return render(request, reply, session, { enabled });
+      return render(request, reply, session, { enabled, recent: await recent() });
     } catch {
       return render(request, reply, session, { message: "No se pudo consultar la configuraci\xF3n del equipo.", status: 503 });
     }
+  });
+  app2.post("/local-agent/tasks", async (request, reply) => {
+    const session = authorize(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return render(request, reply, session, { message: "Solicitud inv\xE1lida. Abre de nuevo el panel.", status: 403 });
+    const key = request.headers["idempotency-key"] ?? body.idempotencyKey;
+    if (typeof key !== "string" || !/^[A-Za-z0-9_-]{8,191}$/.test(key))
+      return render(request, reply, session, { message: "Clave de idempotencia inv\xE1lida.", status: 422 });
+    const type = body.type;
+    const message2 = body.message;
+    const payload = message2 === "" || message2 === void 0 ? void 0 : { message: message2 };
+    try {
+      validateTask(type, payload);
+      await tasks.enqueue({ type, payload, idempotencyKey: key, createdBy: session.userId });
+    } catch (error) {
+      const code3 = error.code;
+      if (["TASK_TYPE_NOT_ALLOWED", "INVALID_TASK_PAYLOAD"].includes(String(code3)))
+        return render(request, reply, session, { message: "Tipo o contenido de tarea inv\xE1lido.", status: 422, recent: await recent() });
+      throw error;
+    }
+    await deps.audit("admin.localAgent.task.enqueued", session.userId, "Tarea local encolada.");
+    return render(request, reply, session, { message: "Tarea encolada.", recent: await recent() });
   });
   for (const action of ["rotate", "disable"]) {
     app2.post(`/local-agent/${action}`, async (request, reply) => {
@@ -105716,8 +105949,8 @@ function registerLocalAgentAdminRoutes(app2, deps) {
         recordLoginAttempt(account.email, request.ip, false);
         return render(request, reply, session, { message: "La contrase\xF1a actual no es correcta.", status: 400 });
       }
-      const token2 = action === "rotate" ? randomBytes19(32).toString("base64url") : void 0;
-      const value2 = JSON.stringify({ enabled: action === "rotate", tokenHash: token2 ? createHash10("sha256").update(token2).digest("hex") : null });
+      const token2 = action === "rotate" ? randomBytes20(32).toString("base64url") : void 0;
+      const value2 = JSON.stringify({ enabled: action === "rotate", tokenHash: token2 ? createHash11("sha256").update(token2).digest("hex") : null });
       try {
         await deps.settings.set(LOCAL_AGENT_CONFIG_KEY2, value2, account.id);
       } catch {
@@ -105740,6 +105973,7 @@ var init_local_agent = __esm({
     init_security();
     init_permissions();
     init_page();
+    init_local_agent_task_store();
     LOCAL_AGENT_CONFIG_KEY2 = "localAgent.config";
   }
 });
@@ -105762,18 +105996,18 @@ function registerWhatsAppQueueRoutes(app2, deps) {
     if (!session)
       return reply;
     reply.header("Cache-Control", "no-store");
-    let data2;
+    let data3;
     try {
-      data2 = await outbox().overview();
+      data3 = await outbox().overview();
     } catch {
       return deps.html(reply, request, "WhatsApp", `<div class="card"><p class="error">No se pudo consultar la cola. Revisa que la base est\xE9 actualizada en Ajustes.</p></div>`, session, 503);
     }
     const flash = request.query?.ok === "1" ? `<p class="ok">Aviso puesto de nuevo en la cola.</p>` : "";
-    const counts = Object.entries(LABELS2).map(([k, label2]) => `<li>${escapeHtml(label2)}: <strong>${data2.counts[k] ?? 0}</strong></li>`).join("");
-    const rows31 = data2.attention.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when7(r.nextAttemptAt))}`}</td></tr>`).join("");
-    const inbound = data2.inboundDead.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>\u2026${escapeHtml(String(r.phoneEnd))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td></tr>`).join("");
+    const counts = Object.entries(LABELS2).map(([k, label2]) => `<li>${escapeHtml(label2)}: <strong>${data3.counts[k] ?? 0}</strong></li>`).join("");
+    const rows31 = data3.attention.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when7(r.nextAttemptAt))}`}</td></tr>`).join("");
+    const inbound = data3.inboundDead.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>\u2026${escapeHtml(String(r.phoneEnd))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td></tr>`).join("");
     const alertLabels = { outbox_dead: "Mensajes salientes fallidos", inbound_dead: "Mensajes entrantes fallidos", reminders_failed: "Ciclo de recordatorios", database_not_ready: "Base de datos" };
-    const alerts = (data2.lastAlerts ?? []).map((r) => `<li>${escapeHtml(alertLabels[String(r.type)] ?? String(r.type))}: ${escapeHtml(when7(r.sentAt))}</li>`).join("");
+    const alerts = (data3.lastAlerts ?? []).map((r) => `<li>${escapeHtml(alertLabels[String(r.type)] ?? String(r.type))}: ${escapeHtml(when7(r.sentAt))}</li>`).join("");
     const body = `<div class="stack"><h1>Cola de WhatsApp</h1>${flash}
       <p>Canal activo: <strong>${escapeHtml({ off: "ninguno (no se env\xEDa nada)", bridge: "puente WhatsApp Web del equipo local", cloud: "API oficial de WhatsApp" }[whatsappDelivery()])}</strong>. Aqu\xED no se muestra el texto de los mensajes.</p>
       <div class="card"><h2>Avisos</h2><ul>${counts}</ul><h3>\xDAltima alerta enviada por tipo</h3>${alerts ? `<ul>${alerts}</ul>` : "<p>Ninguna alerta enviada.</p>"}</div>
@@ -106449,18 +106683,18 @@ function quoteDetailView(input) {
   ${orderCard}
   </div>`;
 }
-function userQuotesSection(data2) {
-  if (!data2)
+function userQuotesSection(data3) {
+  if (!data3)
     return "";
   const parts = [];
-  if (data2.requests.length > 0) {
-    parts.push(`<h2>Cotizaciones pedidas</h2>${data2.requests.map((r) => `<div><a href="/admin/quotes/${e6(r.id)}">${e6(quoteRequestCode(r.number))}</a> \xB7 ${e6(REQUEST_LABELS[r.status] ?? r.status)} \xB7 ${e6(r.partName)}</div>`).join("")}`);
+  if (data3.requests.length > 0) {
+    parts.push(`<h2>Cotizaciones pedidas</h2>${data3.requests.map((r) => `<div><a href="/admin/quotes/${e6(r.id)}">${e6(quoteRequestCode(r.number))}</a> \xB7 ${e6(REQUEST_LABELS[r.status] ?? r.status)} \xB7 ${e6(r.partName)}</div>`).join("")}`);
   }
-  if (data2.storeQuotes.length > 0) {
-    parts.push(`<h2>Cotizaciones recibidas como almac\xE9n</h2>${data2.storeQuotes.map((q) => `<div><a href="/admin/quotes/${e6(q.requestId)}">${e6(quoteRequestCode(q.requestNumber))}</a> \xB7 ${e6(QUOTE_LABELS[q.status] ?? q.status)} \xB7 ${e6(q.partName)}</div>`).join("")}`);
+  if (data3.storeQuotes.length > 0) {
+    parts.push(`<h2>Cotizaciones recibidas como almac\xE9n</h2>${data3.storeQuotes.map((q) => `<div><a href="/admin/quotes/${e6(q.requestId)}">${e6(quoteRequestCode(q.requestNumber))}</a> \xB7 ${e6(QUOTE_LABELS[q.status] ?? q.status)} \xB7 ${e6(q.partName)}</div>`).join("")}`);
   }
-  if (data2.orders.length > 0) {
-    parts.push(`<h2>Pedidos de repuestos</h2>${data2.orders.map((o) => `<div><a href="/admin/quotes/${e6(o.quoteRequestId)}">${e6(quoteRequestCode(o.requestNumber))}</a> \xB7 ${e6(ORDER_STAGE_LABELS[o.stage] ?? o.stage)} \xB7 ${e6(o.partName)} \xB7 ${e6(o.storeName)} \xB7 ${e6(formatUsd2(o.total))}</div>`).join("")}`);
+  if (data3.orders.length > 0) {
+    parts.push(`<h2>Pedidos de repuestos</h2>${data3.orders.map((o) => `<div><a href="/admin/quotes/${e6(o.quoteRequestId)}">${e6(quoteRequestCode(o.requestNumber))}</a> \xB7 ${e6(ORDER_STAGE_LABELS[o.stage] ?? o.stage)} \xB7 ${e6(o.partName)} \xB7 ${e6(o.storeName)} \xB7 ${e6(formatUsd2(o.total))}</div>`).join("")}`);
   }
   return parts.length > 0 ? `<div class="card">${parts.join("")}</div>` : "";
 }
@@ -106710,7 +106944,7 @@ var init_views_registrations = __esm({
 });
 
 // packages/api/dist/interfaces/admin/registrations.js
-import { randomBytes as randomBytes20 } from "node:crypto";
+import { randomBytes as randomBytes21 } from "node:crypto";
 function dbError(err) {
   const code3 = err.code;
   if (code3 === "ER_DUP_ENTRY")
@@ -106720,17 +106954,17 @@ function dbError(err) {
   }
   return { status: 502, text: `No se pudo completar la operaci\xF3n (${code3 ?? "base de datos no disponible"}).` };
 }
-function toVehicle(data2) {
+function toVehicle(data3) {
   return {
-    make: data2.make,
-    model: data2.model,
-    year: data2.year,
-    currentKm: data2.currentKm,
-    vehicleClass: data2.vehicleClass,
-    fuel: data2.fuel,
-    plate: data2.plate,
-    usageProfile: data2.usageProfile,
-    remindersOptIn: data2.reminders
+    make: data3.make,
+    model: data3.model,
+    year: data3.year,
+    currentKm: data3.currentKm,
+    vehicleClass: data3.vehicleClass,
+    fuel: data3.fuel,
+    plate: data3.plate,
+    usageProfile: data3.usageProfile,
+    remindersOptIn: data3.reminders
   };
 }
 function flashFrom(request) {
@@ -106880,16 +107114,16 @@ function registerRegistrationRoutes(app2, deps) {
     const { session, body } = ctx;
     const perfil = PERFILES.includes(body.perfil) ? body.perfil : "dueno";
     const invalid = (text9, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text9 }), session, status);
-    const userFrom = async (data2, keepEmail) => ({
-      phone: data2.phone,
-      name: data2.name,
-      city: data2.city,
-      email: keepEmail ? data2.email : null,
-      source: data2.source,
-      notes: data2.notes,
+    const userFrom = async (data3, keepEmail) => ({
+      phone: data3.phone,
+      name: data3.name,
+      city: data3.city,
+      email: keepEmail ? data3.email : null,
+      source: data3.source,
+      notes: data3.notes,
       consentVersion: CONSENT_VERSION,
       // Las cuentas creadas por el operador no inician sesión con contraseña: se guarda una aleatoria.
-      passwordHash: await hashPassword(randomBytes20(24).toString("hex"))
+      passwordHash: await hashPassword(randomBytes21(24).toString("hex"))
     });
     const operation = deps.platform ? await deps.platform() : null;
     if (operation && typeof body.city === "string" && body.city.trim() && !cityAllowed(body.city.trim(), operation.cities)) {
@@ -109523,7 +109757,7 @@ var init_views_visits = __esm({
     init_page();
     init_whatsapp_number();
     init_page();
-    PROFILE_LABELS2 = Object.fromEntries(ENTRY_PROFILES.map((p) => [p.key, p.label]));
+    PROFILE_LABELS2 = { cuenta: "Ya tengo cuenta", chat: "Solo quiero escribir", ...Object.fromEntries(ENTRY_PROFILES.map((p) => [p.key, p.label])) };
     WEEKLY_GOAL = 100;
   }
 });
@@ -109627,7 +109861,7 @@ __export(admin_exports, {
   default: () => admin_default,
   resetEnrollmentsForTests: () => resetEnrollmentsForTests
 });
-import { randomBytes as randomBytes21 } from "node:crypto";
+import { randomBytes as randomBytes22 } from "node:crypto";
 function resetEnrollmentsForTests() {
   enrollments.clear();
 }
@@ -109648,14 +109882,14 @@ async function adminPanelRoutes(app2, options = {}) {
   const visits = options.visits ?? new MysqlVisitStore(connect);
   const detailVisits = options.visits || options.connect || missingDbEnv().length === 0 ? visits : void 0;
   const relations = options.relations ?? new MysqlRelationStore(connect);
-  const data2 = options.data ?? new MysqlDataStore(connect);
+  const data3 = options.data ?? new MysqlDataStore(connect);
   const plans = options.plans ?? new MysqlPlanStore(connect);
   const billing = options.billing ?? (options.plans ? void 0 : new MysqlBillingStore(connect));
   const serviceRequests = options.serviceRequests ?? new MysqlServiceRequestStore(connect);
   const ratings = options.ratings ?? new MysqlRatingStore(connect);
   const detailRatings = options.ratings || options.connect || missingDbEnv().length === 0 ? ratings : void 0;
   const detailPlans = options.plans || options.connect || missingDbEnv().length === 0 ? plans : void 0;
-  const detailData = options.data || options.connect || missingDbEnv().length === 0 ? data2 : void 0;
+  const detailData = options.data || options.connect || missingDbEnv().length === 0 ? data3 : void 0;
   const detailRelations = options.relations || options.connect || missingDbEnv().length === 0 ? relations : void 0;
   const linker = detailRelations ? createRelationLinker(detailRelations) : void 0;
   const workshopMap2 = options.workshopMap ?? new MysqlWorkshopMapStore(connect);
@@ -109689,7 +109923,7 @@ async function adminPanelRoutes(app2, options = {}) {
     }
   });
   app2.addHook("onRequest", async (request, reply) => {
-    request.cspNonce = randomBytes21(16).toString("base64");
+    request.cspNonce = randomBytes22(16).toString("base64");
     reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${request.cspNonce}'; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`).header("X-Frame-Options", "DENY").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("Cache-Control", "no-store");
     if (!getAdminSessionSecret()) {
       return reply.code(503).type("text/html; charset=utf-8").send(layout({
@@ -109758,7 +109992,7 @@ async function adminPanelRoutes(app2, options = {}) {
     requireSession,
     html
   });
-  registerLocalAgentAdminRoutes(app2, { store, settings, requireSession, html, audit });
+  registerLocalAgentAdminRoutes(app2, { store, settings, requireSession, html, audit, tasks: new MysqlLocalAgentTaskStore(connect) });
   registerWhatsAppQueueRoutes(app2, { outbox: options.whatsappQueue, requireSession, html, audit });
   registerSettingsRoutes(app2, {
     store,
@@ -109776,7 +110010,7 @@ async function adminPanelRoutes(app2, options = {}) {
   });
   registerTeamRoutes(app2, { store, staff, requireSession, html, audit });
   registerRelationRoutes(app2, { relations, requireSession, html, audit });
-  registerDataRoutes(app2, { data: data2, requireSession, html, audit });
+  registerDataRoutes(app2, { data: data3, requireSession, html, audit });
   registerPlanRoutes(app2, { plans, billing, requireSession, html, audit });
   if (billing)
     registerBillingRoutes(app2, { billing, requireSession, html, audit });
@@ -109958,10 +110192,10 @@ async function adminPanelRoutes(app2, options = {}) {
     const session = requireSession(request, reply);
     if (!session)
       return reply;
-    let data3 = null;
+    let data4 = null;
     let dbError2;
     try {
-      data3 = await store.dashboard();
+      data4 = await store.dashboard();
     } catch (err) {
       dbError2 = err.code ?? "Base de datos no conectada";
     }
@@ -109976,7 +110210,7 @@ async function adminPanelRoutes(app2, options = {}) {
       }
     }
     return html(reply, request, "Tablero", dashboardView({
-      data: data3,
+      data: data4,
       recent,
       pendingVerifications: pending,
       version: process.env.APP_VERSION ?? "dev",
@@ -110053,6 +110287,7 @@ var init_admin = __esm({
     init_workshop_map_store();
     init_courses();
     init_courses_store();
+    init_local_agent_task_store();
     GENERIC_LOGIN_ERROR = "Correo, contrase\xF1a o c\xF3digo incorrectos.";
     ENROLL_TTL_MS = 10 * 60 * 1e3;
     enrollments = /* @__PURE__ */ new Map();
@@ -110172,20 +110407,20 @@ async function findUserById(id2) {
   });
 }
 async function updateOwnProfile(id2, input) {
-  const data2 = {};
+  const data3 = {};
   if (input.name !== void 0)
-    data2.name = input.name;
+    data3.name = input.name;
   if (input.email !== void 0)
-    data2.email = input.email;
+    data3.email = input.email;
   if (input.city !== void 0)
-    data2.city = input.city;
+    data3.city = input.city;
   if (input.consent !== void 0) {
-    data2.consentAt = input.consent ? /* @__PURE__ */ new Date() : null;
-    data2.consentVersion = input.consent ? CONSENT_VERSION : null;
+    data3.consentAt = input.consent ? /* @__PURE__ */ new Date() : null;
+    data3.consentVersion = input.consent ? CONSENT_VERSION : null;
   }
   return prisma.user.update({
     where: { id: id2 },
-    data: data2,
+    data: data3,
     select: { id: true, email: true, phone: true, role: true, name: true, city: true, consentAt: true, consentVersion: true }
   });
 }
@@ -110752,6 +110987,48 @@ var odometerSchema = external_exports.object({
 }).strict();
 
 // packages/api/dist/interfaces/vehicle.routes.js
+init_apply();
+init_zod();
+import { randomUUID as randomUUID3 } from "node:crypto";
+
+// packages/api/dist/application/offline/idempotency.js
+import { createHash } from "node:crypto";
+function canonical(value2) {
+  if (Array.isArray(value2))
+    return `[${value2.map(canonical).join(",")}]`;
+  if (value2 && typeof value2 === "object")
+    return `{${Object.keys(value2).sort().map((key) => `${JSON.stringify(key)}:${canonical(value2[key])}`).join(",")}}`;
+  return JSON.stringify(value2);
+}
+function requestFingerprint(body) {
+  return createHash("sha256").update(canonical(body)).digest("hex");
+}
+function validIdempotencyKey(key) {
+  return typeof key === "string" && /^[A-Za-z0-9._:-]{8,120}$/.test(key);
+}
+function recordedAtError(value2, now = Date.now()) {
+  if (value2 === void 0)
+    return null;
+  const time3 = Date.parse(value2);
+  return !Number.isFinite(time3) || time3 > now || time3 < now - 30 * 864e5 ? "INVALID_RECORDED_AT" : null;
+}
+async function runIdempotent(repository, userId, key, body, action) {
+  if (!validIdempotencyKey(key))
+    throw Object.assign(new Error("INVALID_IDEMPOTENCY_KEY"), { code: "INVALID_IDEMPOTENCY_KEY" });
+  const fingerprint = requestFingerprint(body);
+  const claim = await repository.claim(userId, key, fingerprint);
+  if (claim.status === "conflict")
+    throw Object.assign(new Error("IDEMPOTENCY_CONFLICT"), { code: "IDEMPOTENCY_CONFLICT" });
+  if (claim.status === "in_progress")
+    throw Object.assign(new Error("IDEMPOTENCY_IN_PROGRESS"), { code: "IDEMPOTENCY_IN_PROGRESS" });
+  if (claim.status === "saved")
+    return claim.response;
+  const response = await action();
+  await repository.complete(userId, key, response);
+  return response;
+}
+
+// packages/api/dist/interfaces/vehicle.routes.js
 async function vehicleRoutes(app2) {
   app2.addHook("preHandler", authenticate);
   app2.get("/vehicles", {
@@ -110800,17 +111077,55 @@ async function vehicleRoutes(app2) {
     preHandler: [requireRole("dueno")],
     handler: async (request, reply) => {
       const { id: id2 } = request.params;
-      const parsed = odometerSchema.safeParse(request.body);
+      const parsed = odometerSchema.extend({ recordedAt: external_exports.string().datetime().optional() }).safeParse(request.body);
       if (!parsed.success)
         return reply.code(422).send({ data: null, error: { code: "VALIDATION_ERROR", message: "Kilometraje inv\xE1lido", details: parsed.error.issues } });
+      const key = request.headers["idempotency-key"];
+      if (!validIdempotencyKey(key))
+        return reply.code(422).send({ data: null, error: { code: "INVALID_IDEMPOTENCY_KEY" } });
+      if (recordedAtError(parsed.data.recordedAt))
+        return reply.code(422).send({ data: null, error: { code: "INVALID_RECORDED_AT" } });
+      const hash2 = requestFingerprint(parsed.data);
+      const receipt = await openConnection();
       try {
-        const vehicle = await updateOdometer(request.userId, id2, parsed.data.currentKm);
+        const [renew] = await receipt.query("UPDATE `PilotIdempotencyReceipt` SET requestHash=?,response=JSON_OBJECT(),expiresAt=DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 30 DAY) WHERE userId=? AND idempotencyKey=? AND expiresAt<=UTC_TIMESTAMP(3)", [hash2, request.userId, key]);
+        const [insert] = Number(renew.affectedRows) === 1 ? [{ affectedRows: 1 }] : await receipt.query("INSERT IGNORE INTO `PilotIdempotencyReceipt` (userId,idempotencyKey,requestHash,response,expiresAt) VALUES (?,?,?,JSON_OBJECT(),DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 30 DAY))", [request.userId, key, hash2]);
+        const owns = Number(insert.affectedRows) === 1;
+        if (!owns) {
+          const [result] = await receipt.query("SELECT requestHash,response FROM `PilotIdempotencyReceipt` WHERE userId=? AND idempotencyKey=?", [request.userId, key]);
+          const row = Array.isArray(result) ? result[0] : void 0;
+          if (!row || row.requestHash !== hash2)
+            return reply.code(409).send({ data: null, error: { code: "IDEMPOTENCY_CONFLICT" } });
+          const saved = typeof row.response === "string" ? JSON.parse(row.response) : row.response;
+          if (!saved || !Object.keys(saved).length)
+            return reply.code(409).send({ data: null, error: { code: "IDEMPOTENCY_IN_PROGRESS" } });
+          return reply.send({ data: saved, error: null });
+        }
+        let vehicle;
+        const recordedAt = parsed.data.recordedAt ? new Date(parsed.data.recordedAt).toISOString().slice(0, 23).replace("T", " ") : (/* @__PURE__ */ new Date()).toISOString().slice(0, 23).replace("T", " ");
+        try {
+          vehicle = await updateOdometer(request.userId, id2, parsed.data.currentKm);
+        } catch (err) {
+          if (!(err instanceof OdometerError) || err.code !== "ODOMETER_REGRESSION")
+            throw err;
+          const current = await findByIdAndUser(id2, request.userId);
+          if (!current)
+            throw err;
+          await receipt.query("INSERT INTO `VehicleOdometerReading` (id,vehicleId,km,source,createdBy,createdAt) VALUES (?,?,?,'dueno_offline',?,?)", [randomUUID3(), id2, parsed.data.currentKm, request.userId, recordedAt]);
+          vehicle = { ...current, readingRecorded: true };
+        }
+        if (!("readingRecorded" in vehicle)) {
+          await receipt.query("INSERT INTO `VehicleOdometerReading` (id,vehicleId,km,source,createdBy,createdAt) VALUES (?,?,?,'dueno_web',?,?)", [randomUUID3(), id2, parsed.data.currentKm, request.userId, recordedAt]);
+        }
+        await receipt.query("UPDATE `PilotIdempotencyReceipt` SET response=? WHERE userId=? AND idempotencyKey=?", [JSON.stringify(vehicle), request.userId, key]);
         return reply.send({ data: vehicle, error: null });
       } catch (err) {
         if (err instanceof OdometerError) {
           return reply.code(err.code === "NOT_FOUND" ? 404 : 409).send({ data: null, error: { code: err.code, message: err.message } });
         }
         throw err;
+      } finally {
+        await receipt.end().catch(() => void 0);
       }
     }
   });
@@ -111277,7 +111592,7 @@ async function update3(userId, productId, input) {
   if (!existing)
     return null;
   const { vehicleIds, ...productData } = input;
-  const data2 = { ...productData };
+  const data3 = { ...productData };
   const product = await prisma.$transaction(async (tx) => {
     if (vehicleIds !== void 0) {
       await tx.productVehicle.deleteMany({ where: { productId } });
@@ -111289,7 +111604,7 @@ async function update3(userId, productId, input) {
     }
     return tx.product.update({
       where: { id: productId },
-      data: data2,
+      data: data3,
       include: {
         compat: { select: { vehicleId: true } }
       }
@@ -111635,13 +111950,16 @@ async function localAgentDownloadRoutes(app2) {
   for (const suffix of [".zip", ".zip.sha256"])
     app2.get(`/downloads/automantpro-local-agent${suffix}`, async (_request, reply) => {
       try {
-        const data2 = await readFile(resolve(process.cwd(), `public/automantpro-local-agent${suffix}`));
-        return reply.header("X-Content-Type-Options", "nosniff").header("Cache-Control", "no-cache").header("Content-Disposition", `attachment; filename="automantpro-local-agent${suffix}"`).type(suffix === ".zip" ? "application/zip" : "text/plain").send(data2);
+        const data3 = await readFile(resolve(process.cwd(), `public/automantpro-local-agent${suffix}`));
+        return reply.header("X-Content-Type-Options", "nosniff").header("Cache-Control", "no-cache").header("Content-Disposition", `attachment; filename="automantpro-local-agent${suffix}"`).type(suffix === ".zip" ? "application/zip" : "text/plain").send(data3);
       } catch {
         return reply.code(404).send({ error: { code: "PACKAGE_NOT_AVAILABLE" } });
       }
     });
 }
+
+// packages/api/dist/interfaces/pilot-page.js
+init_sobrio();
 
 // packages/api/dist/interfaces/ui/scanner-layer.js
 var PANTALLA = [
@@ -111727,7 +112045,7 @@ import { randomBytes } from "node:crypto";
 // packages/api/dist/application/local-agent/config.js
 init_apply();
 init_settings_store();
-import { createHash, timingSafeEqual as timingSafeEqual2 } from "node:crypto";
+import { createHash as createHash2, timingSafeEqual as timingSafeEqual2 } from "node:crypto";
 var LOCAL_AGENT_CONFIG_KEY = "localAgent.config";
 var LocalAgentConfig = class {
   settings;
@@ -111747,13 +112065,13 @@ var LocalAgentConfig = class {
       }
     }
     const token2 = this.env.LOCAL_AGENT_TOKEN;
-    return { enabled: this.env.LOCAL_AGENT_ENABLED === "true" && !!token2 && /^[A-Za-z0-9_-]{32,200}$/.test(token2), tokenHash: token2 ? createHash("sha256").update(token2).digest("hex") : null };
+    return { enabled: this.env.LOCAL_AGENT_ENABLED === "true" && !!token2 && /^[A-Za-z0-9_-]{32,200}$/.test(token2), tokenHash: token2 ? createHash2("sha256").update(token2).digest("hex") : null };
   }
   async authorized(token2) {
     if (!token2 || !/^[A-Za-z0-9_-]{32,200}$/.test(token2))
       return false;
     const config = await this.read();
-    return config.enabled && !!config.tokenHash && timingSafeEqual2(createHash("sha256").update(token2).digest(), Buffer.from(config.tokenHash, "hex"));
+    return config.enabled && !!config.tokenHash && timingSafeEqual2(createHash2("sha256").update(token2).digest(), Buffer.from(config.tokenHash, "hex"));
   }
 };
 
@@ -111905,7 +112223,7 @@ function card(title,aside,...kids){return h('section',{class:'pcard'},h('h2',{},
 function btn(label,cls,fn){return h('button',{type:'button',class:cls||'ghost',onclick:fn},label);}
 function chipGroup(values,current,onPick,cls){const g=h('div',{class:cls&&cls.includes('day')?'days':'chips',role:'group'});for(const v of values){const b=h('button',{type:'button',class:cls||'chip','aria-pressed':String(v.value===current),onclick:()=>{for(const x of g.children)x.setAttribute('aria-pressed','false');b.setAttribute('aria-pressed','true');onPick(v.value);}});if(v.top){b.append(h('span',{text:v.top}),h('b',{text:v.label}));}else b.textContent=v.label;g.append(b);}return g;}
 async function loadPanel(epoch,vehicleId){const data=await api('/pilot/panel'+(vehicleId?'?vehicleId='+encodeURIComponent(vehicleId):''));if(epoch!==generation||!token)return;panelData=data;panelVehicle=data.vehicleId||null;renderPanel();renderExpertCourses(Boolean(data.isVerifiedExpert));}
-function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);}
+function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);if(typeof renderOutbox==='function')renderOutbox();}
 function planEditCard(vehicle,label,services){const sec=card('Plan de mantenimiento',label);const list=h('div',{class:'list'});for(const it of services||[]){const row=h('div',{class:'reco'},h('div',{class:'rhead'},h('b',{text:it.serviceName}),h('span',{class:'state',text:it.intervalKm==null?'\u2014':km(it.intervalKm)+' / '+(it.intervalMonths??'\u2014')+' meses'})),h('p',{class:'detail',text:it.reason+(it.override?.disabled?' \xB7 no aplica a este veh\xEDculo':'')}),it.override&&!it.override.disabled?h('small',{class:'detail',text:it.override.actorRole==='taller'?'Ajustado por el taller':'Ajustado por ti'}):null);const edit=btn('Ajustar','ghost',()=>{const box=h('div',{class:'plan-edit'});const f=h('form',{});const kmIn=h('input',{type:'number',min:'500',max:'100000',placeholder:'Intervalo km',value:it.intervalKm??''});const moIn=h('input',{type:'number',min:'1',max:'60',placeholder:'Intervalo meses',value:it.intervalMonths??''});const note=h('textarea',{maxlength:'200',placeholder:'Nota (opcional)'});note.value=it.override?.nota||'';const disabled=h('label',{});const check=h('input',{type:'checkbox',checked:!!it.override?.disabled});disabled.append(check,' No aplica a este veh\xEDculo');const customName=h('input',{type:'text',maxlength:'100',placeholder:'Nombre del servicio propio',value:it.override?.customName||''});const fields=h('div',{class:'interval'},kmIn,moIn);if(String(it.serviceId).startsWith('custom-'))f.append(customName);f.append(fields,note,disabled,h('div',{class:'acts'},h('button',{class:'primary'},'Guardar'),btn('Volver al recomendado','ghost',async()=>{try{await api('/pilot/plan-overrides/reset',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId:it.serviceId})});await loadPanel(generation,panelVehicle);}catch(err){status(err.message);}})));f.onsubmit=async e=>{e.preventDefault();const k=kmIn.value.trim(),m=moIn.value.trim();if(!check.checked&&!k&&!m){status('Indica km o meses.');return;}try{await api('/pilot/plan-overrides',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId:it.serviceId,intervalKm:k?Number(k):null,intervalMonths:m?Number(m):null,disabled:check.checked,nota:note.value,customName:String(it.serviceId).startsWith('custom-')?customName.value:null})});await loadPanel(generation,panelVehicle);}catch(err){status(err.message);}};box.append(f);row.replaceChild(box,edit);});const last=btn('Registrar \xFAltima vez','ghost',()=>{const f=h('form',{class:'acts'});const kmDone=h('input',{type:'number',min:'0',max:'2000000',required:true,placeholder:'Km cuando se hizo','aria-label':'Km cuando se hizo'});const dateDone=h('input',{type:'date',required:true,'aria-label':'Fecha en que se hizo'});const save=h('button',{class:'ghost'},'Guardar registro');f.append(kmDone,dateDone,save);f.onsubmit=async e=>{e.preventDefault();try{await api('/pilot/plan-last-service',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId:it.serviceId,km:Number(kmDone.value),doneAt:dateDone.value})});await loadPanel(generation,panelVehicle);}catch(err){status(err.message);}};row.replaceChild(f,last);});row.append(edit,last);list.append(row);}const add=btn('Agregar servicio propio','ghost',()=>{const name=window.prompt('Nombre del servicio');if(!name||!name.trim())return;const kmValue=window.prompt('Intervalo en km (500 a 100 000)');const monthsValue=window.prompt('Intervalo en meses (opcional)');const serviceId='custom-'+crypto.randomUUID();api('/pilot/plan-overrides',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId,customName:name.trim(),intervalKm:kmValue?Number(kmValue):null,intervalMonths:monthsValue?Number(monthsValue):null,disabled:false,nota:''})}).then(()=>loadPanel(generation,panelVehicle)).catch(err=>status(err.message));});sec.append(list,add);return sec;}
 function lastServiceForm(name){const f=h('form',{class:'acts'});const kmIn=h('input',{type:'number',min:'0',max:'2000000',inputmode:'numeric',required:true,'aria-label':'Kilometraje cuando se hizo',placeholder:'Km cuando se hizo'});const month=h('input',{type:'month','aria-label':'Mes en que se hizo'});f.append(kmIn,month,h('button',{class:'ghost'},'Preparar registro'));f.onsubmit=e=>{e.preventDefault();prepare(['\xDAltimo servicio',name,String(Math.round(Number(kmIn.value))),...(month.value?[month.value]:[])]);};return f;}
 const ORDER={urgente:0,pronto:1,sin_dato:2,al_dia:3};
@@ -111935,7 +112253,7 @@ function renderOwner(root,d){
   root.append(card('Recomendaci\xF3n de hoy',null,gauge(r),meta,h('p',{class:'lead2',text:r.headline}),r.next?btn('Agendar '+r.next.serviceName.toLowerCase(),'primary full',()=>{booking.service=r.next.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}):null));}
  if(r){const due=r.items.filter(it=>it.state==='urgente'||it.state==='pronto'||it.state==='sin_dato').slice(0,5);if(due.length){const list=h('div',{class:'list'});for(const it of due)list.append(h('div',{class:'reco st-'+it.state},icon(it.state),h('div',{class:'rhead'},h('b',{},h('span',{class:'code',text:svcCode(it)}),it.serviceName),h('span',{class:'state',text:it.label}))));const see=r.items.filter(it=>it.state==='urgente'||it.state==='pronto'||it.state==='sin_dato').length>5?h('a',{href:'#plan',class:'note',text:'Ver todos'}):null;root.append(card('Pr\xF3ximos servicios',null,list,see));}}
  if(d.alerts&&d.alerts.length){const list=h('div',{class:'list'});for(const a of d.alerts)list.append(h('div',{class:'line st-'+a.state},h('div',{class:'who'},h('span',{class:'led st-'+a.state}),h('div',{},h('b',{text:a.title}),h('small',{text:a.detail})))));root.append(card('Alertas',null,list));}
- root.append(garage(d));
+ root.append(garage(d));if(v){const update=h('form',{class:'acts'});const current=h('input',{type:'number',min:'0',max:'2000000',required:true,inputmode:'numeric','aria-label':'Nuevo kilometraje',placeholder:'Actualizar kilometraje'});update.append(current,h('button',{class:'ghost'},'Guardar kilometraje'));update.onsubmit=async e=>{e.preventDefault();try{const result=await api('/vehicles/'+encodeURIComponent(v.id)+'/odometer',{method:'POST',body:JSON.stringify({currentKm:Number(current.value),recordedAt:new Date().toISOString()})});if(result.pending)status('Kilometraje guardado. Pendiente de subir.');else status(result.readingRecorded?'Lectura antigua guardada en el historial; se conserva el kilometraje mayor.':'Kilometraje actualizado.');await loadPanel(generation,v.id);}catch(err){status(err.message);}};root.append(card('Kilometraje',null,update));}
  if(r&&r.items.length)root.append(systemsCard(r));
  if(r&&r.items.length){const list=h('div',{class:'list'});const more=h('div',{class:'list'});let quiet=0;for(const it of r.items){const target=(it.state==='urgente'||it.state==='pronto'||quiet++<3)?list:more;const row=h('div',{class:'reco st-'+it.state},icon(it.state),h('div',{class:'rhead'},h('b',{},h('span',{class:'code',text:svcCode(it)}),it.serviceName),h('span',{class:'state',text:it.label})),h('p',{class:'detail',text:it.detail}));
   if(it.progress!==null){const p=Math.round(it.progress*100);const fill=h('div',{class:'fill'});fill.style.setProperty('width',p+'%');const needle=h('span',{class:'needle'});needle.style.setProperty('left',p+'%');row.append(h('div',{class:'meter'},h('div',{class:'track'},fill,needle),it.scale?h('div',{class:'scale'},h('span',{text:it.scale[0]}),h('span',{class:'pct',text:p+' %'}),h('span',{text:it.scale[1]})):null));}
@@ -112100,7 +112418,7 @@ function clearMenu(){el('accountMenu').hidden=true;el('mobileMenu').hidden=true;
 
 // packages/api/dist/interfaces/pilot-page.js
 function renderPilotPage(nonce2) {
-  return `<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Pruebas con operador \xB7 AutoMantPro</title>
+  return `<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#343a40"><title>Pruebas con operador \xB7 AutoMantPro</title>
 <style nonce="${nonce2}">${THEME_TOKENS}
 *{box-sizing:border-box}body{font:16px/1.5 var(--c-font);background:var(--c-bg);color:var(--c-ink);margin:0}main{max-width:760px;margin:auto;padding:20px 16px 40px}
 h1{font-size:26px;line-height:1.15;font-weight:800;letter-spacing:-.035em}h2{font-size:11px;font-weight:700}h3{font-size:11px;font-weight:700;margin-top:22px}main>p{color:var(--c-muted)}
@@ -112117,11 +112435,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.45 var(--c-mono)}article{border-bottom:1px solid var(--c-line);padding:8px 0}
 details{margin:12px 0;background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:0 14px}details[open]{padding-bottom:14px}
 details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;cursor:pointer}
-.hidden{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}</style>
+.hidden{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}</style>
 ${MENU_MARKUP}
 <main>${logoImg()}<h1>Pruebas con atenci\xF3n humana</h1><p>El operador revisa cada mensaje. Preparar un comando no ejecuta la operaci\xF3n: debes enviarlo y el operador debe aprobarlo.</p><p>Los avisos se muestran aqu\xED. El env\xEDo real por WhatsApp sigue pendiente.</p><p><a href="/admin/local-agent">Conectar o revocar equipo de atenci\xF3n</a></p>
 <section id="login"><h2 id="entrar">Entrar con tu cuenta</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true">Con c\xF3digo por WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">Con contrase\xF1a</button></nav><form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form><form id="codeVerifyForm" class="hidden"><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><form id="loginForm" class="hidden"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label><h3 id="crear">Crear cuenta</h3><form id="signupForm"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><div id="signupFields"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Pedir c\xF3digo y continuar</button></form><form id="signupVerifyForm" class="hidden"><label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></section>
-<div id="chat" class="hidden"><div class="row2"><h2 id="who">Conversaci\xF3n de prueba</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div>${PANEL_MARKUP}<section id="studentCourses"><h2>Mis cursos</h2><div id="courseEnrollment"></div><div id="studentCourseItems"></div></section><section id="composer"><h2>Mensaje al operador</h2><form id="sendForm"><label for="message">Comando o mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar para revisi\xF3n</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
+<div id="chat" class="hidden"><div class="row2"><h2 id="who">Conversaci\xF3n de prueba</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div><section id="offlineStatus" hidden><span id="offlineCount"></span><button id="syncNow" type="button">Subir ahora</button><div id="failedOutbox"></div></section>${PANEL_MARKUP}<section id="studentCourses"><h2>Mis cursos</h2><div id="courseEnrollment"></div><div id="studentCourseItems"></div></section><section id="composer"><h2>Mensaje al operador</h2><form id="sendForm"><label for="message">Comando o mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar para revisi\xF3n</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
 <section id="expertCourses" class="hidden"><h2>Mis cursos como experto</h2><p id="expertStatus"></p><div id="expertItems"></div><form id="expertCreate"><label>T\xEDtulo <input name="titulo" required maxlength="191"></label><label>Slug <input name="slug" required maxlength="191"></label><label>Especialidad <input name="especialidad" required maxlength="100"></label><label>Nivel <input name="nivel" required maxlength="40"></label><label>Horas <input name="horas" type="number" min="1" required></label><label>Precio USD (vac\xEDo = gratis) <input name="precioUsd" type="number" min="0" step="0.01"></label><label>Nota m\xEDnima <input name="notaMinima" type="number" min="0" max="100" value="70"></label><button>Crear curso</button></form><form id="expertLesson"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>T\xEDtulo de lecci\xF3n <input name="titulo" required maxlength="191"></label><label>Video URL HTTPS <input name="videoUrl" type="url"></label><label>PDF URL HTTPS <input name="pdfUrl" type="url"></label><label>Texto (m\xE1ximo 900 caracteres) <textarea name="texto" maxlength="900"></textarea></label><button>Guardar lecci\xF3n</button></form><form id="expertQuestion"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>Pregunta <input name="enunciado" required maxlength="2000"></label><label>Opci\xF3n A <input name="optionA" required></label><label>Opci\xF3n B <input name="optionB" required></label><label>Respuesta correcta <select name="correcta"><option>A</option><option>B</option></select></label><button>Guardar pregunta</button></form></section>
 <details id="requestTools"><summary>Buscar un servicio o repuesto</summary><form id="requestForm"><label for="vehicle">Veh\xEDculo</label><select id="vehicle" required></select><button type="button" id="loadVehicles">Cargar mis veh\xEDculos</button><label for="kind">Necesidad</label><select id="kind"><option value="servicio">Servicio</option><option value="repuesto">Repuesto</option></select><label for="category">Categor\xEDa registrada (por ejemplo frenos)</label><input id="category" required maxlength="120"><label for="city">Ciudad</label><input id="city" required maxlength="120"><label for="zone">Sector</label><input id="zone" required maxlength="120"><label for="description">Descripci\xF3n</label><input id="description" required minlength="5" maxlength="1000"><button>Preparar solicitud</button></form></details>
 <details id="offerTools"><summary>Preparar una oferta</summary><p>Copia el identificador de solicitud del aviso recibido.</p><form id="offerForm"><label for="offerRequest">Solicitud</label><input id="offerRequest" required maxlength="36"><label for="price">Costo total USD</label><input id="price" type="number" min="0" max="999999" step=".01" required><label for="duration">Duraci\xF3n del trabajo o plazo de entrega en minutos</label><input id="duration" type="number" min="1" max="43200" step="1" required><label for="date">Fecha disponible</label><input id="date" type="date" required><label for="time">Hora en Ecuador continental</label><input id="time" type="time" required><label for="notes">Condiciones</label><textarea id="notes" maxlength="300"></textarea><label for="brand">Marca del repuesto (opcional)</label><input id="brand" maxlength="120"><label for="quality">Calidad (opcional)</label><select id="quality"><option value="">Sin especificar</option><option value="original">Original</option><option value="alterno">Alterno</option><option value="usado">Usado</option></select><label for="warrantyDays">Garant\xEDa en d\xEDas (opcional)</label><input id="warrantyDays" type="number" min="0" max="3650" step="1"><button>Preparar oferta</button></form></details>
@@ -112132,11 +112450,26 @@ ${MENU_MARKUP}
 <h3 id="historial">Mensajes y respuestas recientes</h3><p>El historial se recupera al volver a entrar, incluso despu\xE9s de un corte.</p><div id="messages"></div>
 <details id="vincular"><summary>Vinculaci\xF3n futura con WhatsApp</summary><button id="link" type="button">Preparar v\xEDnculo de WhatsApp</button><pre id="linkCode"></pre></details></section></div><p id="status" role="status"></p></main>
 <script nonce="${nonce2}">
-const el=id=>document.getElementById(id);${PANEL_SCRIPT}${MENU_SCRIPT}let token=null;let generation=0;let role=null;let timer=null;let pendingSend=null;let sending=false;let cursor=null;let loadedOlder=false;let historyFingerprint='';const noticeItems=new Map();
-async function api(path,options={}){const sentToken=token;const sentGeneration=generation;const response=await fetch('/api/v1'+path,{...options,headers:{'Content-Type':'application/json',...(sentToken?{Authorization:'Bearer '+sentToken}:{}),...options.headers}});const body=await response.json();if(!response.ok){if(response.status===401&&sentToken&&token===sentToken&&generation===sentGeneration&&!options.renewed&&await renew()&&generation===sentGeneration)return api(path,{...options,renewed:true});if(sentToken&&token===sentToken&&generation===sentGeneration&&(response.status===401||(response.status===403&&['ACCOUNT_UNAVAILABLE','CONSENT_OR_ACCOUNT_REQUIRED'].includes(body.error?.code))))leave();throw new Error(body.error?.message||body.error?.code||'No se pudo completar la operaci\xF3n');}return body.data;}
+const el=id=>document.getElementById(id);${PANEL_SCRIPT}${MENU_SCRIPT}let token=null;let generation=0;let role=null;let timer=null;let pendingSend=null;let sending=false;let cursor=null;let loadedOlder=false;let historyFingerprint='';let userId=null;const noticeItems=new Map();
+const OFFLINE_DB='automantpro-offline';let offlineDb=null;if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(()=>{});
+function tokenUser(value){try{return JSON.parse(atob(value.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).sub||null;}catch{return null;}}
+function openOffline(){return new Promise((resolve,reject)=>{const req=indexedDB.open(OFFLINE_DB,1);req.onupgradeneeded=()=>{const db=req.result;db.createObjectStore('cache',{keyPath:'key'});db.createObjectStore('outbox',{keyPath:'id'});};req.onsuccess=()=>{offlineDb=req.result;resolve(offlineDb);};req.onerror=()=>reject(req.error);});}
+async function dbPut(store,value){const db=offlineDb||await openOffline();return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).put(value);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});}
+async function dbGet(store,key){const db=offlineDb||await openOffline();return new Promise((resolve,reject)=>{const req=db.transaction(store).objectStore(store).get(key);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
+async function dbAll(store){const db=offlineDb||await openOffline();return new Promise((resolve,reject)=>{const req=db.transaction(store).objectStore(store).getAll();req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
+async function dbDelete(store,key){const db=offlineDb||await openOffline();return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).delete(key);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});}
+function apiUrl(path){return '/api/v1'+path;}
+const cacheable=['/pilot/panel','/pilot/history','/pilot/notices','/pilot/appointments'];
+function expireSession(){token=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;clearMenu();el('chat').classList.add('hidden');el('login').classList.remove('hidden');status('La sesi\xF3n venci\xF3. Entra de nuevo para subir los registros pendientes.');}
+async function api(path,options={}){const sentToken=token;const sentGeneration=generation;const method=(options.method||'GET').toUpperCase();const headers={'Content-Type':'application/json',...(sentToken?{Authorization:'Bearer '+sentToken}:{}),...options.headers};if(method==='POST'&&isQueuePath(path)&&!headers['Idempotency-Key'])headers['Idempotency-Key']=crypto.randomUUID();if(method==='POST'&&path==='/pilot/plan-last-service'){const body=JSON.parse(options.body||'{}');if(!body.recordedAt)body.recordedAt=new Date().toISOString();options={...options,body:JSON.stringify(body)};}try{const response=await fetch(apiUrl(path),{...options,headers});const body=await response.json();if(!response.ok){if(response.status===401&&sentToken&&token===sentToken&&generation===sentGeneration&&!options.renewed&&await renew()&&generation===sentGeneration)return api(path,{...options,renewed:true});if(sentToken&&token===sentToken&&generation===sentGeneration){if(response.status===401)expireSession();else if(response.status===403&&['ACCOUNT_UNAVAILABLE','CONSENT_OR_ACCOUNT_REQUIRED'].includes(body.error?.code))void leave();}throw Object.assign(new Error(body.error?.message||body.error?.code||'No se pudo completar la operaci\xF3n'),{httpStatus:response.status});}if(method==='GET'&&cacheable.some(route=>path===route||path.startsWith(route+'?'))&&sentToken){await dbPut('cache',{key:userId+':'+path,data:body.data,savedAt:new Date().toISOString()}).catch(()=>undefined);}return body.data;}catch(error){if(method==='GET'&&!error.httpStatus&&cacheable.some(route=>path===route||path.startsWith(route+'?'))&&userId){const saved=await dbGet('cache',userId+':'+path).catch(()=>null);if(saved){offlineNotice(saved.savedAt);return saved.data;}}if(method==='POST'&&(sentToken||(userId&&!navigator.onLine))&&isQueuePath(path)&&!error.httpStatus){const registration=await navigator.serviceWorker?.ready.catch(()=>null);if(registration?.sync)registration.sync.register('automantpro-outbox').catch(()=>{});const item={id:crypto.randomUUID(),userId,path,body:JSON.parse(options.body||'{}'),createdAt:new Date().toISOString(),attempts:0,state:'pending',key:headers['Idempotency-Key']};await dbPut('outbox',item);renderPendingLocal(item);renderOutbox();return {saved:true,pending:true};}throw error;}}
+function isQueuePath(path){const parts=path.split('/');return ['/pilot/plan-last-service','/pilot/plan-overrides','/pilot/plan-overrides/reset','/pilot/messages'].includes(path)||(parts.length===4&&parts[1]==='vehicles'&&parts[3]==='odometer');}
+function offlineNotice(savedAt){status('Sin conexi\xF3n \xB7 datos guardados el '+new Date(savedAt).toLocaleString('es-EC',{timeZone:'America/Guayaquil'}));}
 function webSession(action,body){return fetch('/api/v1/auth/web/'+action,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-AMP-Web':'1'},body:JSON.stringify(body||{})});}
 async function renew(){try{const response=await webSession('resume');if(!response.ok)return false;const body=await response.json();if(!body.data)return false;token=body.data.accessToken;return true;}catch{return false;}}
 function remember(data){if(data&&data.refreshToken&&el('remember').checked)webSession('session',{refreshToken:data.refreshToken}).catch(()=>{});}
+async function renderOutbox(){if(!userId)return;const items=(await dbAll('outbox').catch(()=>[])).filter(x=>x.userId===userId);let box=el('offlineStatus');if(!box)return;const pending=items.filter(x=>x.state==='pending').length;el('offlineCount').textContent=pending?pending+' pendiente(s) de subir.':'';box.hidden=!items.length;const failed=el('failedOutbox');failed.replaceChildren();for(const item of items){if(item.state==='failed'){const row=document.createElement('p');row.textContent='No se pudo subir: '+item.reason+' ';const discard=document.createElement('button');discard.type='button';discard.textContent='Descartar';discard.onclick=async()=>{await dbDelete('outbox',item.id);document.querySelector('[data-outbox="'+item.id+'"]')?.remove();renderOutbox();};row.append(discard);failed.append(row);}else if(!document.querySelector('[data-outbox="'+item.id+'"]'))renderPendingLocal(item);}}
+async function syncOutbox(){if(!token||!userId||!navigator.onLine)return;const items=(await dbAll('outbox').catch(()=>[])).filter(x=>x.userId===userId&&x.state==='pending').sort((a,b)=>a.createdAt.localeCompare(b.createdAt));let refreshPanelAfter=false,refreshHistoryAfter=false;for(const item of items){try{const response=await fetch(apiUrl(item.path),{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token,'Idempotency-Key':item.key},body:JSON.stringify(item.body)});if(response.status===401){expireSession();return;}const payload=await response.json().catch(()=>({}));if(response.status>=500){item.attempts++;await dbPut('outbox',item);setTimeout(syncOutbox,Math.min(300000,1000*2**Math.min(item.attempts,8)));return;}if(!response.ok){item.state='failed';item.reason=payload.error?.message||payload.error?.code||'No se pudo subir';await dbPut('outbox',item);const pendingNode=document.querySelector('[data-outbox="'+item.id+'"]');if(pendingNode)pendingNode.textContent='No se pudo subir: '+item.reason;continue;}await dbDelete('outbox',item.id);document.querySelector('[data-outbox="'+item.id+'"]')?.remove();if(item.path==='/pilot/messages')refreshHistoryAfter=true;else refreshPanelAfter=true;}catch{item.attempts++;await dbPut('outbox',item);setTimeout(syncOutbox,Math.min(300000,1000*2**Math.min(item.attempts,8)));return;}}renderOutbox();if(token&&refreshPanelAfter)await loadPanel(generation,panelVehicle).catch(()=>{});if(token&&refreshHistoryAfter)await loadHistory(generation).catch(()=>{});}
+function renderPendingLocal(item){const target=item.path==='/pilot/messages'?'messages':isQueuePath(item.path)?'panel':null;if(target&&el(target)){const article=document.createElement('article');article.dataset.outbox=item.id;article.textContent=(item.body.message||item.body.serviceId||'Registro')+' \xB7 Pendiente de subir';el(target).prepend(article);}}
 const COURSE_CONSENT_VERSION='lopdp-2026-10-v1';
 function courseNode(tag,props={},...children){const node=document.createElement(tag);for(const [key,value] of Object.entries(props)){if(key==='text')node.textContent=value;else if(key==='class')node.className=value;else if(key==='href')node.href=value;else node.setAttribute(key,String(value));}for(const child of children)if(child)node.append(child);return node;}
 function renderStudentCourses(){const epoch=generation;const box=el('studentCourseItems');box.replaceChildren();const enrollmentBox=el('courseEnrollment');enrollmentBox.replaceChildren();const params=new URLSearchParams(location.search);const requested=params.get('curso');if(requested){const form=courseNode('form');const consent=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox',required:true}),document.createTextNode(' Acepto el tratamiento de datos personales (LOPDP), versi\xF3n '+COURSE_CONSENT_VERSION+'.'));const share=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox',name:'share'}),document.createTextNode(' Compartir mi avance con mi taller'));const visible=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox',name:'public'}),document.createTextNode(' Certificado p\xFAblico'));const invite=courseNode('input',{name:'invite',maxlength:'191','aria-label':'C\xF3digo de invitaci\xF3n (opcional)'});form.append(consent,share,visible,courseNode('label',{},document.createTextNode('C\xF3digo de invitaci\xF3n (opcional)'),invite));const submit=courseNode('button',{type:'submit',text:'Inscribirme'});form.append(submit);form.onsubmit=async event=>{event.preventDefault();if(!consent.querySelector('input').checked)return;submit.disabled=true;try{await api('/courses/'+encodeURIComponent(requested)+'/enroll',{method:'POST',body:JSON.stringify({consentVersion:COURSE_CONSENT_VERSION,compartirConTaller:share.querySelector('input').checked,certificadoPublico:visible.querySelector('input').checked,...(invite.value.trim()?{inviteCode:invite.value.trim()}:{})})});history.replaceState(null,'',location.pathname+'#cursos');status('Inscripci\xF3n enviada.');renderStudentCourses();}catch(error){status(error.message);}finally{submit.disabled=false;}};enrollmentBox.append(courseNode('h3',{text:'Inscripci\xF3n'}),form);}api('/courses/mine').then(data=>{if(epoch!==generation||!token)return;for(const enrollment of data.items){const article=courseNode('article',{class:'pcard'});article.append(courseNode('h3',{text:enrollment.titulo}),courseNode('p',{class:'pill',text:'Estado: '+enrollment.estado}),courseNode('p',{text:'Nota: '+(enrollment.nota??'Pendiente')}));for(const lesson of enrollment.lessons){const item=courseNode('section',{class:'reco'});item.append(courseNode('h4',{text:lesson.titulo}));if(lesson.texto)item.append(courseNode('p',{text:lesson.texto}));for(const [url,label] of [[lesson.videoUrl,'Ver video'],[lesson.pdfUrl,'Abrir PDF']])if(url){try{if(new URL(url).protocol==='https:')item.append(courseNode('p',{},courseNode('a',{href:url,target:'_blank',rel:'noopener',text:label})));}catch{}}if(enrollment.estado==='activa'){const done=courseNode('button',{type:'button',text:lesson.completada?'Listo':'Listo'});done.disabled=!!lesson.completada;done.onclick=async()=>{try{await api('/courses/enrollments/'+encodeURIComponent(enrollment.enrollmentId)+'/lessons/'+encodeURIComponent(lesson.id)+'/done',{method:'POST',body:'{}'});renderStudentCourses();}catch(error){status(error.message);}};item.append(done);}article.append(item);}if(enrollment.estado==='activa')for(const question of enrollment.questions){const q=courseNode('section',{class:'reco'},courseNode('p',{text:question.text}));for(const option of question.opts){const answer=courseNode('button',{type:'button',text:option.letra+' \xB7 '+option.texto});answer.onclick=async()=>{try{await api('/courses/enrollments/'+encodeURIComponent(enrollment.enrollmentId)+'/answers',{method:'POST',body:JSON.stringify({questionId:question.id,letra:option.letra})});renderStudentCourses();}catch(error){status(error.message);}};q.append(answer);}article.append(q);}if(enrollment.certificateCode)article.append(courseNode('p',{},courseNode('a',{href:'/certificados/'+encodeURIComponent(enrollment.certificateCode),text:'Ver certificado'})));const publicLabel=courseNode('label',{class:'consent'},courseNode('input',{type:'checkbox'}),document.createTextNode(' Certificado p\xFAblico'));const checkbox=publicLabel.querySelector('input');checkbox.checked=!!enrollment.certificatePublic;checkbox.onchange=async()=>{try{await api('/courses/enrollments/'+encodeURIComponent(enrollment.enrollmentId)+'/certificate-public',{method:'POST',body:JSON.stringify({publico:checkbox.checked})});}catch(error){status(error.message);checkbox.checked=!checkbox.checked;}};article.append(publicLabel);box.append(article);}if(!data.items.length)box.append(courseNode('p',{text:'A\xFAn no tienes inscripciones.'}));}).catch(error=>status(error.message));}
@@ -112145,8 +112478,11 @@ el('expertCreate').onsubmit=async event=>{event.preventDefault();const form=new 
 el('expertLesson').onsubmit=async event=>{event.preventDefault();const form=new FormData(event.target);try{await api('/expert/courses/'+encodeURIComponent(String(form.get('courseId')) )+'/lessons',{method:'POST',body:JSON.stringify({orden:Number(form.get('orden')),titulo:String(form.get('titulo')),videoUrl:String(form.get('videoUrl')||'').trim()||null,pdfUrl:String(form.get('pdfUrl')||'').trim()||null,texto:String(form.get('texto')||'').trim()||null})});event.target.reset();status('Lecci\xF3n guardada.');}catch(error){status(error.message);}};
 el('expertQuestion').onsubmit=async event=>{event.preventDefault();const form=new FormData(event.target);const correct=String(form.get('correcta'));try{await api('/expert/courses/'+encodeURIComponent(String(form.get('courseId')) )+'/questions',{method:'POST',body:JSON.stringify({orden:Number(form.get('orden')),enunciado:String(form.get('enunciado')),options:[{letra:'A',texto:String(form.get('optionA')),correcta:correct==='A'},{letra:'B',texto:String(form.get('optionB')),correcta:correct==='B'}]})});event.target.reset();status('Pregunta guardada.');}catch(error){status(error.message);}};
 function status(text){el('status').textContent=text;}function text(parent,value){const p=document.createElement('pre');p.textContent=value;parent.append(p);}
-function leave(){webSession('logout').catch(()=>{});token=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;cursor=null;loadedOlder=false;historyFingerprint='';noticeItems.clear();clearMenu();el('chat').classList.add('hidden');el('login').classList.remove('hidden');for(const id of ['messages','notices','appointments','appointment','vehicle','panel','studentCourseItems','courseEnrollment','expertItems'])el(id).replaceChildren();el('expertCourses').classList.add('hidden');panelData=null;panelVehicle=null;booking={service:'',day:'',time:''};el('linkCode').textContent='';el('message').value='';el('sendForm').querySelector('button').disabled=false;for(const id of ['sendForm','requestForm','offerForm','decisionForm','appointmentForm'])el(id).reset();status('Sesi\xF3n cerrada. Vuelve a entrar para continuar.');}
-el('logout').onclick=leave;
+async function clearOffline(){offlineDb?.close();offlineDb=null;await new Promise(resolve=>{const req=indexedDB.deleteDatabase(OFFLINE_DB);req.onsuccess=req.onerror=req.onblocked=resolve;});}
+async function leave(){const items=userId?(await dbAll('outbox').catch(()=>[])).filter(x=>x.userId===userId):[];if(items.length&&!window.confirm('Hay registros pendientes sin subir. Al salir se perder\xE1n. \xBFQuieres continuar?'))return;webSession('logout').catch(()=>{});await clearOffline();localStorage.removeItem('automantpro-offline-user');token=null;userId=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;cursor=null;loadedOlder=false;historyFingerprint='';noticeItems.clear();clearMenu();el('chat').classList.add('hidden');el('login').classList.remove('hidden');for(const id of ['messages','notices','appointments','appointment','vehicle','panel','studentCourseItems','courseEnrollment','expertItems'])el(id).replaceChildren();el('expertCourses').classList.add('hidden');panelData=null;panelVehicle=null;booking={service:'',day:'',time:''};el('linkCode').textContent='';el('message').value='';el('sendForm').querySelector('button').disabled=false;for(const id of ['sendForm','requestForm','offerForm','decisionForm','appointmentForm'])el(id).reset();status('Sesi\xF3n cerrada. Vuelve a entrar para continuar.');}
+el('logout').onclick=()=>{void leave();};async function restoreOfflineSession(){if(navigator.onLine)return;let saved;try{saved=JSON.parse(localStorage.getItem('automantpro-offline-user')||'null');}catch{return;}if(!saved?.id||!['dueno','taller','almacen'].includes(saved.role))return;userId=saved.id;role=saved.role;try{await openOffline();const historyData=await dbGet('cache',userId+':/pilot/history');const noticesData=await dbGet('cache',userId+':/pilot/notices');const appointmentData=await dbGet('cache',userId+':/pilot/appointments');const panel=await dbGet('cache',userId+':/pilot/panel');if(!historyData&&!noticesData&&!appointmentData&&!panel)return;const savedAt=[historyData,noticesData,appointmentData,panel].filter(Boolean).map(x=>x.savedAt).sort().at(-1);generation++;buildMenu(saved.name||'Cuenta');el('login').classList.add('hidden');el('chat').classList.remove('hidden');el('who').textContent='Sin conexi\xF3n: '+(saved.name||'Cuenta');status('Sin conexi\xF3n \xB7 se muestran los \xFAltimos datos guardados.');if(savedAt)offlineNotice(savedAt);if(historyData){for(const m of historyData.data.items||[]){const a=document.createElement('article');text(a,'T\xFA: '+m.message);text(a,m.reply?'Operador: '+m.reply:'Estado: '+m.status);el('messages').append(a);}offlineNotice(historyData.savedAt);}if(noticesData){for(const n of noticesData.data.items||[])noticeItems.set(n.id,n);showNotices();}if(appointmentData){for(const a of appointmentData.data.items||[])text(el('appointments'),'Cita '+a.id+' | '+a.shopName+' | '+new Date(a.scheduledAt).toLocaleString('es-EC')+' | '+a.status);}if(panel){panelData=panel.data;panelVehicle=panel.data.vehicleId||null;renderPanel();}renderOutbox();}catch{}}
+void restoreOfflineSession();
+el('syncNow').onclick=()=>void syncOutbox();navigator.serviceWorker?.addEventListener('message',event=>{if(event.data?.type==='SYNC_OUTBOX')void syncOutbox();});window.addEventListener('online',()=>void syncOutbox());document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')void syncOutbox();});
 function prepare(parts){if(parts.some(p=>String(p).includes('|'))){status('Escribe los datos sin el car\xE1cter |.');return;}el('message').value=parts.join(' | ');status('Comando preparado. Rev\xEDsalo y env\xEDalo al operador.');el('message').focus();}
 function showNotices(){el('notices').replaceChildren();const items=[...noticeItems.values()].sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))||String(b.id).localeCompare(String(a.id)));if(!items.length)text(el('notices'),'Todav\xEDa no hay avisos para tu cuenta.');for(const n of items){const article=document.createElement('article');text(article,n.message);el('notices').append(article);}el('older').classList.toggle('hidden',!cursor);}
 async function loadNotices(epoch,before){const data=await api('/pilot/notices'+(before?'?before='+encodeURIComponent(before):''));if(epoch!==generation||!token)return;for(const n of data.items)noticeItems.set(n.id,n);if(before||!loadedOlder)cursor=data.nextCursor;showNotices();}
@@ -112154,8 +112490,8 @@ async function loadHistory(epoch){const data=await api('/pilot/history');if(epoc
 async function loadAppointments(epoch){const data=await api('/pilot/appointments');if(epoch!==generation||!token)return;const previous=el('appointment').value;el('appointments').replaceChildren();el('appointment').replaceChildren();for(const a of data.items){const when=new Date(a.scheduledAt).toLocaleString('es-EC',{timeZone:'America/Guayaquil'});text(el('appointments'),'Cita '+a.id+' | '+a.shopName+' | '+when+' | '+a.status);if(role==='taller'&&a.status==='pending'){const option=document.createElement('option');option.value=a.requestId+':'+a.id;option.textContent=a.category+' | '+when;el('appointment').append(option);}}if([...el('appointment').options].some(o=>o.value===previous))el('appointment').value=previous;if(!data.items.length)text(el('appointments'),'No hay citas registradas en este piloto.');}
 async function refresh(epoch){await Promise.all([loadNotices(epoch),loadHistory(epoch),loadAppointments(epoch)]);}
 async function poll(epoch){if(epoch!==generation||!token)return;try{await refresh(epoch);}catch(err){if(epoch===generation)status(err.message);}finally{if(epoch===generation&&token)timer=setTimeout(()=>poll(epoch),5000);}}
-el('loginForm').onsubmit=async e=>{e.preventDefault();const epoch=++generation;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({phone:el('phone').value,password:el('password').value})});if(epoch!==generation)return;if(!['dueno','taller','almacen'].includes(data.user.role)){status('Las pruebas requieren una cuenta de due\xF1o, taller o almac\xE9n.');return;}remember(data);token=data.accessToken;role=data.user.role;buildMenu(data.user.name);el('password').value='';el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}catch(err){if(epoch===generation)status(err.message);}finally{button.disabled=false;}};
-function acceptLogin(data){remember(data);token=data.accessToken;role=data.user.role;buildMenu(data.user.name);el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');const epoch=generation;poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}
+el('loginForm').onsubmit=async e=>{e.preventDefault();const epoch=++generation;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({phone:el('phone').value,password:el('password').value})});if(epoch!==generation)return;if(!['dueno','taller','almacen'].includes(data.user.role)){status('Las pruebas requieren una cuenta de due\xF1o, taller o almac\xE9n.');return;}remember(data);token=data.accessToken;userId=tokenUser(token);localStorage.setItem('automantpro-offline-user',JSON.stringify({id:userId,role:data.user.role,name:data.user.name}));void openOffline().then(()=>{renderOutbox();syncOutbox();});role=data.user.role;buildMenu(data.user.name);el('password').value='';el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}catch(err){if(epoch===generation)status(err.message);}finally{button.disabled=false;}};
+function acceptLogin(data){remember(data);token=data.accessToken;userId=tokenUser(token);localStorage.setItem('automantpro-offline-user',JSON.stringify({id:userId,role:data.user.role,name:data.user.name}));void openOffline().then(()=>{renderOutbox();syncOutbox();});role=data.user.role;buildMenu(data.user.name);el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');const epoch=generation;poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}
 el('codeTab').onclick=()=>{el('codeTab').setAttribute('aria-selected','true');el('passwordTab').setAttribute('aria-selected','false');el('codeRequestForm').classList.remove('hidden');el('codeVerifyForm').classList.add('hidden');el('loginForm').classList.add('hidden');};
 el('passwordTab').onclick=()=>{el('codeTab').setAttribute('aria-selected','false');el('passwordTab').setAttribute('aria-selected','true');el('codeRequestForm').classList.add('hidden');el('codeVerifyForm').classList.add('hidden');el('loginForm').classList.remove('hidden');};
 el('codeRequestForm').onsubmit=async e=>{e.preventDefault();try{const phone=el('codePhone').value.trim();await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'login'})});el('verifyPhone').value=phone;el('codeRequestForm').classList.add('hidden');el('codeVerifyForm').classList.remove('hidden');status('Si el n\xFAmero est\xE1 registrado, llegar\xE1 un c\xF3digo por WhatsApp.');}catch(err){status(err.message);}};
@@ -112180,10 +112516,11 @@ el('link').onclick=async()=>{const epoch=generation;try{const data=await api('/p
 }
 async function pilotPageRoutes(app2, options = {}) {
   const config = options.config ?? new LocalAgentConfig();
+  app2.get("/sw.js", async (_request, reply) => reply.header("Cache-Control", "no-store").header("Service-Worker-Allowed", "/").header("Content-Security-Policy", "default-src 'none'; worker-src 'self'").type("application/javascript; charset=utf-8").send(`const CACHE='automantpro-static-v1';const STATIC=['/site.webmanifest','/favicon.ico','/favicon.svg','/apple-touch-icon.png','/icon-512.png','/logo.webp'];self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(STATIC))));self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(u.origin!==location.origin||u.pathname.startsWith('/api/'))return;if(e.request.mode==='navigate'&&u.pathname==='/pruebas'){e.respondWith(fetch(e.request).then(r=>{if(r.ok)caches.open(CACHE).then(c=>c.put(e.request,r.clone()));return r;}).catch(()=>caches.match(e.request)));return;}if(e.request.method==='GET'&&(u.pathname==='/site.webmanifest'||u.pathname.startsWith('/assets/')||/\\.(?:css|js|png|svg|ico|woff2?)$/.test(u.pathname))){e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(r=>{if(r.ok)caches.open(CACHE).then(c=>c.put(e.request,r.clone()));return r;})));}});self.addEventListener('sync',e=>{if(e.tag==='automantpro-outbox')e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(cs=>cs.forEach(c=>c.postMessage({type:'SYNC_OUTBOX'}))));});`));
   app2.get("/pruebas", async (_request, reply) => {
     const nonce2 = randomBytes(18).toString("base64");
     const enabled = await config.read().then((c) => c.enabled).catch(() => false);
-    reply.header("Cache-Control", "no-store").header("X-Robots-Tag", "noindex, nofollow").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`);
+    reply.header("Cache-Control", "no-store").header("X-Robots-Tag", "noindex, nofollow").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; connect-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`);
     return enabled ? reply.type("text/html").send(renderPilotPage(nonce2)) : reply.code(503).type("text/html").send('<h1>Pruebas pendientes de activar</h1><p>El administrador debe conectar el equipo de atenci\xF3n en <a href="/admin/local-agent">Administraci\xF3n</a>.</p>');
   });
 }
@@ -112201,7 +112538,7 @@ init_outbox_delivery_store();
 
 // packages/api/dist/infrastructure/messaging/imported-contact-store.js
 init_apply();
-import { createHash as createHash7, randomUUID as randomUUID15 } from "node:crypto";
+import { createHash as createHash8, randomUUID as randomUUID16 } from "node:crypto";
 var MysqlImportedContactStore = class {
   connect;
   constructor(connect = openConnection) {
@@ -112225,7 +112562,7 @@ var MysqlImportedContactStore = class {
           skipped++;
           continue;
         }
-        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID15(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
+        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID16(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
         if (Number(result.affectedRows) === 1)
           imported++;
         else
@@ -112248,14 +112585,17 @@ Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
           continue;
         }
         await conn.query("UPDATE `ImportedContact` SET status = 'approved', contactedAt = UTC_TIMESTAMP(3) WHERE id = ?", [contact.id]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID15(), `reactivation:${createHash7("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text9 })]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID15(), contact.id, JSON.stringify({ approvedBy })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID16(), `reactivation:${createHash8("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text9 })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID16(), contact.id, JSON.stringify({ approvedBy })]);
         queued++;
       }
       return { queued, skipped };
     });
   }
 };
+
+// packages/api/dist/interfaces/local-agent.routes.js
+init_local_agent_task_store();
 
 // packages/api/dist/infrastructure/messaging/pilot-panel-store.js
 init_apply();
@@ -112271,7 +112611,7 @@ init_reminder_done();
 // packages/api/dist/infrastructure/messaging/vehicle-plan-override-store.js
 init_apply();
 init_catalogs();
-import { randomUUID as randomUUID16 } from "node:crypto";
+import { randomUUID as randomUUID18 } from "node:crypto";
 var rows15 = async (c, sql, args = []) => (await c.query(sql, args))[0];
 var PlanOverrideError = class extends Error {
   code;
@@ -112317,7 +112657,7 @@ var VehiclePlanOverrideStore = class {
         if (!shop || !related)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      await c.query("INSERT INTO `VehicleServiceRecord` (id,vehicleId,serviceId,km,doneAt,source,shopId,createdBy) VALUES (?,?,?,?,? ,?, ?, ?)", [randomUUID16(), input.vehicleId, input.serviceId, input.km, `${input.doneAt} 12:00:00.000`, role === "taller" ? "taller" : "dueno", shopId, userId]);
+      await c.query("INSERT INTO `VehicleServiceRecord` (id,vehicleId,serviceId,km,doneAt,source,shopId,createdBy,createdAt) VALUES (?,?,?,?,?,?,?,?,?)", [randomUUID18(), input.vehicleId, input.serviceId, input.km, `${input.doneAt} 12:00:00.000`, role === "taller" ? "taller" : "dueno", shopId, userId, input.recordedAt ? new Date(input.recordedAt).toISOString().slice(0, 23).replace("T", " ") : /* @__PURE__ */ new Date()]);
     });
   }
   async save(userId, role, input) {
@@ -112346,15 +112686,15 @@ var VehiclePlanOverrideStore = class {
           throw new PlanOverrideError("FORBIDDEN");
       }
       const [old] = await rows15(c, "SELECT id,intervalKm,intervalMonths,disabled,nota,actorUserId,actorRole,shopId FROM `VehiclePlanOverride` WHERE vehicleId = ? AND serviceId = ?", [input.vehicleId, input.serviceId]);
-      const id2 = String(old?.id ?? randomUUID16());
+      const id2 = String(old?.id ?? randomUUID18());
       const after = { ...input, actorUserId: userId, actorRole: role, shopId };
       await c.query("INSERT INTO `VehiclePlanOverride` (id,vehicleId,serviceId,intervalKm,intervalMonths,disabled,customName,nota,actorUserId,actorRole,shopId,createdAt,updatedAt) VALUES (?,?,?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3),UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE intervalKm=VALUES(intervalKm),intervalMonths=VALUES(intervalMonths),disabled=VALUES(disabled),customName=VALUES(customName),nota=VALUES(nota),actorUserId=VALUES(actorUserId),actorRole=VALUES(actorRole),shopId=VALUES(shopId),updatedAt=UTC_TIMESTAMP(3)", [id2, input.vehicleId, input.serviceId, input.intervalKm, input.intervalMonths, input.disabled ? 1 : 0, input.customName?.trim() || null, input.nota || null, userId, role, shopId]);
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID16(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID16(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID18(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID18(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
       if (role === "taller" && (String(old?.intervalKm ?? "") !== String(input.intervalKm ?? "") || String(old?.intervalMonths ?? "") !== String(input.intervalMonths ?? ""))) {
         const [service] = await rows15(c, "SELECT name FROM `Service` WHERE vehicleId=? AND id=? LIMIT 1", [input.vehicleId, input.serviceId]);
         const serviceName3 = input.customName || String(service?.name || input.serviceId);
-        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID16(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName3} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
+        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID18(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName3} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
       }
     });
   }
@@ -112390,8 +112730,8 @@ var VehiclePlanOverrideStore = class {
         if (!shop || !rel)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID16(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID16(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID18(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID18(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
       await c.query("UPDATE `VehiclePlanOverride` SET intervalKm=NULL,intervalMonths=NULL,disabled=1,nota='Restaurado a f\xE1brica',actorUserId=?,actorRole=?,shopId=?,updatedAt=UTC_TIMESTAMP(3) WHERE vehicleId=? AND serviceId=?", [userId, role, shopId, vehicleId, serviceId]);
     });
   }
@@ -112619,16 +112959,47 @@ var PilotPanelStore = class {
 
 // packages/api/dist/interfaces/local-agent.routes.js
 init_error_messages();
+init_apply();
 var lease = external_exports.string().uuid();
 var params = external_exports.object({ wamid: external_exports.string().min(1).max(191) });
 async function localAgentRoutes(app2, options = {}) {
   const broker = options.broker ?? new MysqlLocalAgentBroker();
+  const tasks = options.tasks ?? new MysqlLocalAgentTaskStore();
   const env = options.env ?? process.env;
   const config = options.config ?? new LocalAgentConfig(void 0, env);
   const inbound = options.inbound ?? new MysqlInboundWebhookStore();
   const outbox = options.outbox ?? new MysqlOutboxDeliveryStore();
   const imports = new MysqlImportedContactStore();
   const panel = options.panel ?? new PilotPanelStore();
+  const idempotent = (userId, key, body, action) => runIdempotent({
+    async claim(owner, idempotencyKey, hash2) {
+      const conn = await openConnection();
+      try {
+        const [renew] = await conn.query("UPDATE `PilotIdempotencyReceipt` SET requestHash=?,response=JSON_OBJECT(),expiresAt=DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 30 DAY) WHERE userId=? AND idempotencyKey=? AND expiresAt<=UTC_TIMESTAMP(3)", [hash2, owner, idempotencyKey]);
+        if (Number(renew.affectedRows) === 1)
+          return { status: "new" };
+        const [insert] = await conn.query("INSERT IGNORE INTO `PilotIdempotencyReceipt` (userId,idempotencyKey,requestHash,response,expiresAt) VALUES (?,?,?,JSON_OBJECT(),DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 30 DAY))", [owner, idempotencyKey, hash2]);
+        if (Number(insert.affectedRows) === 1)
+          return { status: "new" };
+        const [rows31] = await conn.query("SELECT requestHash,response FROM `PilotIdempotencyReceipt` WHERE userId=? AND idempotencyKey=?", [owner, idempotencyKey]);
+        const receipt = Array.isArray(rows31) ? rows31[0] : void 0;
+        if (!receipt || receipt.requestHash !== hash2)
+          return { status: "conflict" };
+        const response = typeof receipt.response === "string" ? JSON.parse(receipt.response) : receipt.response;
+        return response && typeof response === "object" && Object.keys(response).length ? { status: "saved", response } : { status: "in_progress" };
+      } finally {
+        await conn.end().catch(() => void 0);
+      }
+    },
+    async complete(owner, idempotencyKey, response) {
+      const conn = await openConnection();
+      try {
+        await conn.query("UPDATE `PilotIdempotencyReceipt` SET response=? WHERE userId=? AND idempotencyKey=?", [JSON.stringify(response), owner, idempotencyKey]);
+      } finally {
+        await conn.end().catch(() => void 0);
+      }
+    }
+  }, userId, key, body, action);
   const enabled = async () => (await config.read()).enabled;
   const workerAuth = async (request, reply) => {
     reply.header("Cache-Control", "no-store");
@@ -112653,11 +113024,16 @@ async function localAgentRoutes(app2, options = {}) {
   app2.post("/pilot/messages", { preHandler: [pilot, authenticate] }, async (request, reply) => {
     const parsed = external_exports.object({ message: external_exports.string().trim().min(1).max(2e3) }).strict().safeParse(request.body);
     const key = request.headers["idempotency-key"];
-    if (!parsed.success || typeof key !== "string")
+    if (!parsed.success)
       return reply.code(422).send({ error: { code: "INVALID_MESSAGE" } });
     try {
-      return { data: await broker.submit(request.userId, key, parsed.data.message), error: null };
+      return { data: await idempotent(request.userId, key, parsed.data, () => broker.submit(request.userId, String(key), parsed.data.message)), error: null };
     } catch (err) {
+      if (err instanceof Error && "code" in err) {
+        const code3 = String(err.code);
+        if (code3.startsWith("IDEMPOTENCY_") || code3 === "INVALID_IDEMPOTENCY_KEY")
+          return reply.code(code3 === "IDEMPOTENCY_IN_PROGRESS" || code3 === "IDEMPOTENCY_CONFLICT" ? 409 : 422).send({ data: null, error: { code: code3 } });
+      }
       return error(err, reply);
     }
   });
@@ -112725,12 +113101,14 @@ async function localAgentRoutes(app2, options = {}) {
     if (!parsed.success)
       return reply.code(422).send({ data: null, error: { code: "INVALID_OVERRIDE" } });
     try {
-      await panel.savePlanOverride(request.userId, request.userRole, parsed.data);
-      return { data: { saved: true }, error: null };
+      return { data: await idempotent(request.userId, request.headers["idempotency-key"], parsed.data, async () => {
+        await panel.savePlanOverride(request.userId, request.userRole, parsed.data);
+        return { saved: true };
+      }), error: null };
     } catch (err) {
       if (err instanceof Error && "code" in err) {
         const code3 = String(err.code);
-        return reply.code(code3 === "FORBIDDEN" ? 403 : code3 === "NOT_FOUND" ? 404 : 422).send({ data: null, error: { code: code3 } });
+        return reply.code(code3 === "FORBIDDEN" ? 403 : code3 === "NOT_FOUND" ? 404 : code3 === "IDEMPOTENCY_CONFLICT" || code3 === "IDEMPOTENCY_IN_PROGRESS" ? 409 : 422).send({ data: null, error: { code: code3 } });
       }
       throw err;
     }
@@ -112742,12 +113120,14 @@ async function localAgentRoutes(app2, options = {}) {
     if (!parsed.success)
       return reply.code(422).send({ data: null, error: { code: "INVALID_OVERRIDE" } });
     try {
-      await panel.resetPlanOverride(request.userId, request.userRole, parsed.data.vehicleId, parsed.data.serviceId);
-      return { data: { saved: true }, error: null };
+      return { data: await idempotent(request.userId, request.headers["idempotency-key"], parsed.data, async () => {
+        await panel.resetPlanOverride(request.userId, request.userRole, parsed.data.vehicleId, parsed.data.serviceId);
+        return { saved: true };
+      }), error: null };
     } catch (err) {
       if (err instanceof Error && "code" in err) {
         const code3 = String(err.code);
-        return reply.code(code3 === "FORBIDDEN" ? 403 : code3 === "NOT_FOUND" ? 404 : 422).send({ data: null, error: { code: code3 } });
+        return reply.code(code3 === "FORBIDDEN" ? 403 : code3 === "NOT_FOUND" ? 404 : code3 === "IDEMPOTENCY_CONFLICT" || code3 === "IDEMPOTENCY_IN_PROGRESS" ? 409 : 422).send({ data: null, error: { code: code3 } });
       }
       throw err;
     }
@@ -112755,16 +113135,20 @@ async function localAgentRoutes(app2, options = {}) {
   app2.post("/pilot/plan-last-service", { preHandler: [pilot, authenticate] }, async (request, reply) => {
     if (request.userRole !== "dueno" && request.userRole !== "taller")
       return reply.code(403).send({ data: null, error: { code: "FORBIDDEN" } });
-    const parsed = external_exports.object({ vehicleId: external_exports.string().uuid(), serviceId: external_exports.string().min(1).max(100), km: external_exports.number().int().min(0).max(2e6), doneAt: external_exports.string().regex(/^\d{4}-\d{2}-\d{2}$/) }).strict().safeParse(request.body);
+    const parsed = external_exports.object({ vehicleId: external_exports.string().uuid(), serviceId: external_exports.string().min(1).max(100), km: external_exports.number().int().min(0).max(2e6), doneAt: external_exports.string().regex(/^\d{4}-\d{2}-\d{2}$/), recordedAt: external_exports.string().datetime().optional() }).strict().safeParse(request.body);
     if (!parsed.success)
       return reply.code(422).send({ data: null, error: { code: "INVALID_SERVICE_RECORD" } });
+    if (recordedAtError(parsed.data.recordedAt))
+      return reply.code(422).send({ data: null, error: { code: "INVALID_RECORDED_AT" } });
     try {
-      await panel.recordLastService(request.userId, request.userRole, parsed.data);
-      return { data: { saved: true }, error: null };
+      return { data: await idempotent(request.userId, request.headers["idempotency-key"], parsed.data, async () => {
+        await panel.recordLastService(request.userId, request.userRole, parsed.data);
+        return { saved: true };
+      }), error: null };
     } catch (err) {
       if (err instanceof Error && "code" in err) {
         const code3 = String(err.code);
-        return reply.code(code3 === "FORBIDDEN" ? 403 : code3 === "NOT_FOUND" ? 404 : 422).send({ data: null, error: { code: code3 } });
+        return reply.code(code3 === "FORBIDDEN" ? 403 : code3 === "NOT_FOUND" ? 404 : code3 === "IDEMPOTENCY_CONFLICT" || code3 === "IDEMPOTENCY_IN_PROGRESS" ? 409 : 422).send({ data: null, error: { code: code3 } });
       }
       throw err;
     }
@@ -112779,10 +113163,27 @@ async function localAgentRoutes(app2, options = {}) {
   app2.get("/local-agent/ping", { preHandler: [workerAuth] }, async () => ({ data: { ok: true, whatsappDelivery: whatsappDelivery(env) }, error: null }));
   app2.post("/local-agent/jobs/claim", { preHandler: [workerAuth] }, async (_request, reply) => {
     try {
-      return { data: { jobs: await broker.claim() }, error: null };
+      const jobs = await broker.claim();
+      const claimed = await tasks.claim(1).catch(() => []);
+      return { data: { jobs, tasks: claimed }, error: null };
     } catch (err) {
       return error(err, reply);
     }
+  });
+  app2.post("/local-agent/tasks/claim", { preHandler: [workerAuth] }, async () => ({ data: { tasks: await tasks.claim(1).catch(() => []) }, error: null }));
+  app2.post("/local-agent/tasks/:id/complete", { preHandler: [workerAuth] }, async (request, reply) => {
+    const p = external_exports.object({ id: external_exports.string().min(1).max(191) }).safeParse(request.params);
+    const b = external_exports.object({ leaseToken: external_exports.string().min(1).max(64), result: external_exports.string().max(8e3) }).strict().safeParse(request.body);
+    if (!p.success || !b.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_TASK_REQUEST" } });
+    return { data: { accepted: await tasks.complete(p.data.id, b.data.leaseToken, b.data.result) }, error: null };
+  });
+  app2.post("/local-agent/tasks/:id/fail", { preHandler: [workerAuth] }, async (request, reply) => {
+    const p = external_exports.object({ id: external_exports.string().min(1).max(191) }).safeParse(request.params);
+    const b = external_exports.object({ leaseToken: external_exports.string().min(1).max(64), errorCode: external_exports.string().regex(/^[A-Z_]{1,64}$/) }).strict().safeParse(request.body);
+    if (!p.success || !b.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_TASK_REQUEST" } });
+    return { data: { accepted: await tasks.fail(p.data.id, b.data.leaseToken, b.data.errorCode) }, error: null };
   });
   app2.post("/local-agent/jobs/:wamid/context", { preHandler: [workerAuth] }, async (request, reply) => {
     const parsedParams = params.safeParse(request.params);
@@ -113178,8 +113579,8 @@ var AgentStateError = class extends Error {
 // packages/api/dist/infrastructure/agent/turn-store.js
 init_user_lock();
 init_apply();
-import { createHash as createHash9, randomUUID as randomUUID17 } from "node:crypto";
-var digest2 = (text9) => createHash9("sha256").update(text9).digest("hex");
+import { createHash as createHash10, randomUUID as randomUUID19 } from "node:crypto";
+var digest2 = (text9) => createHash10("sha256").update(text9).digest("hex");
 var rows17 = (result) => result[0];
 var json = (value2) => typeof value2 === "string" ? JSON.parse(value2) : value2;
 var missing = () => new AgentStateError("NOT_FOUND", 404, "Propuesta no disponible.");
@@ -113227,7 +113628,7 @@ var MysqlAgentTurnStore = class {
     const next = rows17(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
     const start = new Date(next).getTime();
     for (const [index, message2] of messages.entries()) {
-      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID17(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
+      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID19(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
     }
     await conn.query("UPDATE `Conversation` SET turnCount = turnCount + ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [messages.length, conversationId]);
   }
@@ -113255,7 +113656,7 @@ var MysqlAgentTurnStore = class {
         await conn.query("INSERT INTO `AgentTurn` (id, userId, fingerprint) VALUES (?, ?, ?)", [turnId, userId, fingerprint]);
       let conversationId = rows17(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
       if (!conversationId) {
-        conversationId = randomUUID17();
+        conversationId = randomUUID19();
         await conn.query("INSERT INTO `Conversation` (id, userAId, agent, turnCount, createdAt, updatedAt) VALUES (?, ?, 1, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [conversationId, userId]);
       }
       const historyRows = rows17(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
@@ -113298,11 +113699,11 @@ var MysqlAgentTurnStore = class {
         if (Number(row.expired))
           throw new AgentStateError("PROPOSAL_EXPIRED", 410, "La propuesta caduc\xF3; solicita una nueva.");
         const vehicle = json(row.args);
-        const vehicleId = randomUUID17();
+        const vehicleId = randomUUID19();
         await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [vehicleId, userId, vehicle.brand, vehicle.model, vehicle.year, vehicle.mileage, vehicle.vehicleClass, vehicle.fuel, vehicle.plate, vehicle.usageProfile]);
         const result = JSON.stringify({ vehicleId });
         await conn.query("UPDATE `AgentAction` SET result = ? WHERE id = ? AND userId = ?", [result, id2, userId]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID17(), userId, vehicleId, JSON.stringify({ actionId: id2 })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID19(), userId, vehicleId, JSON.stringify({ actionId: id2 })]);
         const conversation = rows17(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
         if (conversation)
           await this.appendMessages(conn, String(conversation.id), userId, [{ role: "assistant", content: `Registro confirmado por el usuario. Veh\xEDculo: ${vehicle.brand} ${vehicle.model} ${vehicle.year}. ID: ${vehicleId}.` }]);
@@ -114181,7 +114582,7 @@ async function seoRoutes(app2, options = {}) {
 init_brand();
 
 // packages/api/dist/interfaces/content/index.js
-import { randomBytes as randomBytes8 } from "node:crypto";
+import { randomBytes as randomBytes9 } from "node:crypto";
 
 // packages/api/dist/interfaces/content/page.js
 init_page();
@@ -114404,7 +114805,7 @@ async function contentRoutes(app2, options = {}) {
   app2.get("/servicios", async (request, reply) => {
     const code3 = await visitCode("servicios", request.headers["user-agent"]);
     const lista = SERVICE_PAGES.map((page2) => `<li><a href="/servicios/${page2.slug}">${page2.name}</a>${page2.priceFrom === null ? "" : ` \u2014 desde US$ ${page2.priceFrom.toFixed(0)}`}</li>`).join("");
-    const nonce2 = randomBytes8(16).toString("base64");
+    const nonce2 = randomBytes9(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number(),
       code: code3,
@@ -114440,7 +114841,7 @@ async function contentRoutes(app2, options = {}) {
       return reply.callNotFound();
     const code3 = await visitCode(`servicio:${page2.id}`, request.headers["user-agent"]);
     const otros = SERVICE_PAGES.filter((p) => p.slug !== page2.slug).slice(0, 5);
-    const nonce2 = randomBytes8(16).toString("base64");
+    const nonce2 = randomBytes9(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number(),
       code: code3,
@@ -114469,7 +114870,7 @@ async function contentRoutes(app2, options = {}) {
   app2.get("/talleres", async (request, reply) => {
     const code3 = await visitCode("talleres", request.headers["user-agent"]);
     const lista = CITY_PAGES.map((city) => `<li><a href="/talleres/${city.slug}">Talleres mec\xE1nicos en ${city.name}</a> \u2014 ${city.province}</li>`).join("");
-    const nonce2 = randomBytes8(16).toString("base64");
+    const nonce2 = randomBytes9(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number(),
       code: code3,
@@ -114503,7 +114904,7 @@ async function contentRoutes(app2, options = {}) {
     if (!city)
       return reply.callNotFound();
     const code3 = await visitCode(`ciudad:${city.slug}`, request.headers["user-agent"]);
-    const nonce2 = randomBytes8(16).toString("base64");
+    const nonce2 = randomBytes9(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number(),
       code: code3,
@@ -114533,7 +114934,7 @@ async function contentRoutes(app2, options = {}) {
 }
 
 // packages/api/dist/interfaces/content/landing.js
-import { randomBytes as randomBytes9 } from "node:crypto";
+import { randomBytes as randomBytes10 } from "node:crypto";
 init_entry();
 init_page();
 init_head();
@@ -114627,7 +115028,7 @@ async function landingRoutes(app2, options = {}) {
   };
   app2.get("/soluciones", async (request, reply) => {
     const code3 = await visitCode(origin("lp:soluciones", request.query), null, request.headers["user-agent"]);
-    const nonce2 = randomBytes9(16).toString("base64");
+    const nonce2 = randomBytes10(16).toString("base64");
     const grupos = PROFILE_ORDER.map((profile) => {
       const pages = LANDING_PAGES.filter((p) => p.profile === profile);
       return `<div><h3>${escapeHtml(PROFILE_NAMES[profile])}</h3><ul class="enlaces">${pages.map((p) => `<li><a href="/${p.slug}">${escapeHtml(p.h1)}</a></li>`).join("")}</ul></div>`;
@@ -114664,7 +115065,7 @@ async function landingRoutes(app2, options = {}) {
     app2.get(`/${page2.slug}`, async (request, reply) => {
       const current = findLanding(page2.slug);
       const code3 = await visitCode(origin(current.ref, request.query), current.profile, request.headers["user-agent"]);
-      const nonce2 = randomBytes9(16).toString("base64");
+      const nonce2 = randomBytes10(16).toString("base64");
       const blocks = current.blocks.map((block) => ({ title: block.title, html: blockHtml(block) }));
       if (current.slug === "tabla-de-mantenimiento-por-kilometraje")
         blocks.push(...kmTablesBlocks());
@@ -114702,7 +115103,7 @@ init_theme();
 init_theme_layers();
 init_head();
 init_brand();
-import { randomBytes as randomBytes10 } from "node:crypto";
+import { randomBytes as randomBytes11 } from "node:crypto";
 
 // packages/api/dist/interfaces/map/leaflet-assets.js
 var LEAFLET_JS_HASH = "db49d009c841";
@@ -115433,7 +115834,7 @@ function renderMapPage(input) {
     <p><a href="${escapeHtml(google)}" rel="noopener" target="_blank">Ver talleres en Google Maps</a> (sin revisi\xF3n de AutoMantPro)
     o <a href="${escapeHtml(invite)}" rel="noopener">invita a tu taller de confianza</a> desde tu WhatsApp.</p></div>`;
   const list7 = shops.length ? `<ol class="lista" id="lista">${shops.map((s, i) => shopCard(s, input.number, i)).join("")}</ol>` : empty;
-  const data2 = JSON.stringify(shops.map((s) => ({ id: s.id, name: s.name, point: s.point, zone: s.zone, city: s.city }))).replace(/</g, "\\u003c");
+  const data3 = JSON.stringify(shops.map((s) => ({ id: s.id, name: s.name, point: s.point, zone: s.zone, city: s.city }))).replace(/</g, "\\u003c");
   const joinText = input.number ? `<a href="${escapeHtml(`https://wa.me/${input.number}?text=${encodeURIComponent("Hola AutoMantPro, quiero que mi taller aparezca en el mapa.")}`)}" rel="noopener">escr\xEDbenos</a>` : "escr\xEDbenos por WhatsApp";
   const title = city ? `Talleres en ${city} \xB7 mapa` : "Mapa de talleres en Ecuador";
   const description = `Busca talleres mec\xE1nicos por ciudad, sector y servicio${city ? ` en ${city}` : " en Ecuador"}, con el motivo de cada recomendaci\xF3n y calificaciones reales de trabajos terminados.`;
@@ -115472,7 +115873,7 @@ ${seoHead({ path: "/mapa", title, description, type: "website" })}
   </section>
   <p class="legal">Al usar el mapa aceptas los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP).</p>
 </main>
-<script type="application/json" id="datos" nonce="${nonce2}">${data2}</script>
+<script type="application/json" id="datos" nonce="${nonce2}">${data3}</script>
 <script src="${LEAFLET_PATH}" nonce="${nonce2}"></script>
 <script nonce="${nonce2}">${MAP_SCRIPT}</script>
 </body>
@@ -115593,7 +115994,7 @@ async function mapRoutes(app2, options = {}) {
   app2.get(LEAFLET_PATH, async (_request, reply) => reply.header("Cache-Control", "public, max-age=31536000, immutable").header("X-Content-Type-Options", "nosniff").header("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'").type("application/javascript; charset=utf-8").send(LEAFLET_JS));
   app2.get("/mapa", async (request, reply) => {
     const q = request.query ?? {};
-    const nonce2 = randomBytes10(16).toString("base64");
+    const nonce2 = randomBytes11(16).toString("base64");
     const html = renderMapPage({
       nonce: nonce2,
       number: await number(),
@@ -115615,7 +116016,7 @@ init_workshop_map_store();
 // packages/api/dist/interfaces/content/plans-page.js
 init_catalog();
 init_page();
-import { randomBytes as randomBytes11 } from "node:crypto";
+import { randomBytes as randomBytes12 } from "node:crypto";
 init_entry();
 init_marketing();
 var PROFILES = ["dueno", "taller", "almacen", "flota"];
@@ -115683,7 +116084,7 @@ async function plansPageRoutes(app2, options = {}) {
     return send(reply, renderContentPage({
       number: phone,
       code: code3,
-      nonce: randomBytes11(16).toString("base64"),
+      nonce: randomBytes12(16).toString("base64"),
       path: "/planes",
       title: "Contratar plan \xB7 AutoMantPro",
       description: "Contrata tu plan de AutoMantPro por WhatsApp: registro gratis con funciones b\xE1sicas sin costo, precios con IVA y pago por transferencia.",
@@ -115734,7 +116135,7 @@ init_documents();
 init_theme();
 init_theme_layers();
 init_brand();
-import { randomBytes as randomBytes12 } from "node:crypto";
+import { randomBytes as randomBytes13 } from "node:crypto";
 var STYLES2 = `${THEME_TOKENS}
 *{box-sizing:border-box}
 body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.6 var(--c-font);padding:24px 16px}
@@ -115797,14 +116198,14 @@ async function legalRoutes(app2, options = {}) {
   ];
   for (const page2 of pages) {
     app2.get(page2.path, async (_request, reply) => {
-      let data2;
+      let data3;
       try {
-        data2 = await load();
+        data3 = await load();
       } catch {
-        data2 = emptyLegalData();
+        data3 = emptyLegalData();
       }
-      const nonce2 = randomBytes12(16).toString("base64");
-      return reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-cache").type("text/html; charset=utf-8").send(renderLegalPage({ title: page2.title, path: page2.path, description: page2.description, sections: page2.sections(data2), complete: isLegalComplete(data2), nonce: nonce2 }));
+      const nonce2 = randomBytes13(16).toString("base64");
+      return reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-cache").type("text/html; charset=utf-8").send(renderLegalPage({ title: page2.title, path: page2.path, description: page2.description, sections: page2.sections(data3), complete: isLegalComplete(data3), nonce: nonce2 }));
     });
   }
 }
@@ -116023,12 +116424,12 @@ init_apply();
 init_plan_text();
 init_entitlements();
 init_catalog_store();
-import { randomUUID as randomUUID19 } from "node:crypto";
+import { randomUUID as randomUUID21 } from "node:crypto";
 
 // packages/api/dist/infrastructure/plans/renewal-notices.js
 init_catalog();
 init_plans();
-import { randomUUID as randomUUID18 } from "node:crypto";
+import { randomUUID as randomUUID20 } from "node:crypto";
 var rows19 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 function ecDate(value2) {
   return new Intl.DateTimeFormat("es-EC", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Guayaquil" }).format(value2);
@@ -116042,7 +116443,7 @@ function expiryText(plan, code3) {
 Para volver a ${plan}: Renovar ${code3}`;
 }
 async function notify(conn, userId, dedup, message2) {
-  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID18(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID20(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
   return Number(result.affectedRows ?? 0) === 1;
 }
 async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date()) {
@@ -116209,7 +116610,7 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
   }
   /** True when the reminder was new; the dedup key makes repeated runs harmless. */
   async notify(conn, recipient, dedup, message2, kind = "care.reminder") {
-    const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID19(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
+    const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID21(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
     return Number(result.affectedRows) === 1;
   }
   start(intervalMs = 36e5, onError = () => {
@@ -116282,7 +116683,7 @@ init_admin_alerts();
 init_theme();
 init_theme_layers();
 init_brand();
-import { randomBytes as randomBytes13 } from "node:crypto";
+import { randomBytes as randomBytes14 } from "node:crypto";
 function renderAssistantPage(nonce2) {
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Asistente \xB7 AutoMantPro</title>
 <style nonce="${nonce2}">${THEME_TOKENS}
@@ -116299,7 +116700,7 @@ async function assistantPageRoutes(app2, options = {}) {
   app2.get("/asistente", async (_request, reply) => {
     if (!enabled())
       return reply.code(404).send({ error: "Not found" });
-    const nonce2 = randomBytes13(16).toString("base64");
+    const nonce2 = randomBytes14(16).toString("base64");
     return reply.header("Content-Security-Policy", `default-src 'none'; img-src 'self'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(renderAssistantPage(nonce2));
   });
 }
@@ -116314,7 +116715,7 @@ init_vehicle_card_store();
 init_fleet_access();
 init_fleet_store();
 init_workflow();
-import { randomBytes as randomBytes14 } from "node:crypto";
+import { randomBytes as randomBytes15 } from "node:crypto";
 var rows21 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 var km6 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
@@ -116353,48 +116754,48 @@ function fleetGauge(okPct, cls) {
   return `<svg viewBox="0 0 104 104" width="96" height="96" role="img" aria-label="${okPct === null ? "Sin veh\xEDculos" : `${okPct} % de veh\xEDculos al d\xEDa`}"><circle cx="52" cy="52" r="44" fill="none" stroke="var(--c-sunk)" stroke-width="8" stroke-dasharray="${arc} 277" transform="rotate(135 52 52)" stroke-linecap="round"/>${val > 0 ? `<circle cx="52" cy="52" r="44" fill="none" stroke="${color}" stroke-width="8" stroke-dasharray="${val.toFixed(1)} 277" transform="rotate(135 52 52)" stroke-linecap="round"/>` : ""}<text x="52" y="58" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="22" font-weight="700" fill="var(--c-ink)">${okPct === null ? "--" : `${okPct}%`}</text><text x="52" y="76" text-anchor="middle" font-size="10" fill="var(--c-muted)">al d\xEDa</text></svg>`;
 }
 var stateOf = (v) => v.overdue.length ? { cls: "bad", text: "Vencido" } : v.soon.length ? { cls: "warn", text: "Por vencer" } : { cls: "ok", text: "Al d\xEDa" };
-function fleetCsv(data2) {
+function fleetCsv(data3) {
   const cell3 = (v) => {
     const raw = String(v ?? "").replace(/[\r\n\t]+/g, " ");
     const s = typeof v === "number" ? raw : /^[=+\-@]/.test(raw) ? `'${raw}` : raw;
     return /[;"]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
   const head = ["C\xF3digo", "Placa", "Marca", "Modelo", "A\xF1o", "Kilometraje", "Conductor", "Estado", "Servicios vencidos", "Por vencer", "Pr\xF3ximo servicio", "En taller", "Km del mes", "Costo del mes USD", "USD por km"];
-  const lines = data2.vehicles.map((v) => [v.unitCode, v.plate, v.make, v.model, v.year, v.currentKm, v.driver, stateOf(v).text, v.overdue.map((o) => o.serviceName).join(", "), v.soon.map((s) => `${s.serviceName} (${s.dueKm} km)`).join(", "), v.nextService ? `${v.nextService.serviceName} (${v.nextService.label})` : "", v.inShop, v.monthKm, v.monthCost.toFixed(2), v.monthKm > 0 ? (v.monthCost / v.monthKm).toFixed(3) : ""].map(cell3).join(";"));
+  const lines = data3.vehicles.map((v) => [v.unitCode, v.plate, v.make, v.model, v.year, v.currentKm, v.driver, stateOf(v).text, v.overdue.map((o) => o.serviceName).join(", "), v.soon.map((s) => `${s.serviceName} (${s.dueKm} km)`).join(", "), v.nextService ? `${v.nextService.serviceName} (${v.nextService.label})` : "", v.inShop, v.monthKm, v.monthCost.toFixed(2), v.monthKm > 0 ? (v.monthCost / v.monthKm).toFixed(3) : ""].map(cell3).join(";"));
   return `\uFEFF${[head.join(";"), ...lines].join("\r\n")}\r
 `;
 }
-function renderFleetPanel(data2, nonce2, csvHref) {
-  const list7 = data2.vehicles;
+function renderFleetPanel(data3, nonce2, csvHref) {
+  const list7 = data3.vehicles;
   const overdue = list7.filter((v) => v.overdue.length).length;
   const soon = list7.filter((v) => !v.overdue.length && v.soon.length).length;
   const inShop = list7.filter((v) => v.inShop).length;
   const cost = list7.reduce((a, v) => a + v.monthCost, 0);
   const kms = list7.reduce((a, v) => a + v.monthKm, 0);
-  const maxMonth = Math.max(1, ...data2.months.map((m) => m.total));
+  const maxMonth = Math.max(1, ...data3.months.map((m) => m.total));
   const row = (v) => {
     const st = stateOf(v);
     const next = v.nextService ? `<span class="pill ${v.nextService.state === "urgente" ? "bad" : "warn"}"><span class="code ${v.nextService.state === "urgente" ? "bad" : "warn"}">${esc(serviceCode(v.nextService.serviceName))}</span>${esc(v.nextService.serviceName)} <span class="mono">${esc(v.nextService.label)}</span></span>` : "\u2014";
     return `<tr><td><b class="mono">${esc(unitLabel(v))}</b></td><td>${esc(`${v.make} ${v.model} ${v.year}`)}</td><td class="num">${esc(km6(Number(v.currentKm)))}</td><td>${esc(v.driver ?? "\u2014")}</td><td><span class="pill ${st.cls}"><span class="led"></span>${st.text}</span></td><td>${[...v.overdue.map((o) => ({ cls: "bad", name: o.serviceName, note: "vencido" })), ...v.soon.map((s) => ({ cls: "warn", name: s.serviceName, note: `a ${km6(s.dueKm)}` }))].slice(0, 3).map((x) => `<div class="svc"><span class="code ${x.cls}">${esc(serviceCode(x.name))}</span>${esc(x.name)} <span class="muted mono">${esc(x.note)}</span></div>`).join("") || "\u2014"}</td><td>${next}</td><td>${esc(v.inShop ?? "\u2014")}</td><td class="num">${esc(formatUsd2(v.monthCost))}</td><td class="num">${v.monthKm > 0 ? esc(formatUsd2(v.monthCost / v.monthKm)) : "\u2014"}</td></tr>`;
   };
   const roleName = { admin: "Administrador", supervisor: "Supervisor", conductor: "Conductor" };
-  return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${esc(data2.fleet.name)} \xB7 Flota \xB7 AutoMantPro</title>
+  return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${esc(data3.fleet.name)} \xB7 Flota \xB7 AutoMantPro</title>
 <style nonce="${nonce2}">${THEME_TOKENS}
 *{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.45 var(--c-font)}header{background:var(--c-head);color:var(--c-head-ink);padding:16px max(16px,env(safe-area-inset-left))}header .brand{color:var(--c-head-brand);font-weight:800}header h1{margin:.2rem 0 0;font-size:clamp(1.3rem,4vw,1.8rem)}main{max-width:1180px;margin:auto;padding:18px max(16px,env(safe-area-inset-left)) 48px;display:grid;gap:18px}.muted{color:var(--c-muted)}.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.tile{background:var(--c-surface);border-radius:var(--c-r);padding:14px;box-shadow:var(--c-shadow)}.tile b{display:block;font-size:1.6rem;font-variant-numeric:tabular-nums}.tile.bad b{color:var(--c-bad)}.tile.warn b{color:var(--c-warn)}.tile.ok b{color:var(--c-ok)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:16px;box-shadow:var(--c-shadow);min-width:0}.card h2{margin:0 0 10px;font-size:1.05rem}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:860px}th,td{padding:8px 10px;border-bottom:1px solid var(--c-line);text-align:left;vertical-align:top}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--c-muted)}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.8rem;font-weight:600}.pill.ok{background:var(--c-ok-bg);color:var(--c-ok)}.pill.warn{background:var(--c-warn-bg);color:var(--c-warn)}.pill.bad{background:var(--c-bad-bg);color:var(--c-bad)}.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.bars{display:grid;gap:8px}.bar{display:grid;grid-template-columns:70px 1fr 90px;gap:8px;align-items:center;font-variant-numeric:tabular-nums}.bar span{display:block;height:12px;border-radius:6px;background:var(--c-accent)}ul{margin:0;padding-left:1.1em}a.button{display:inline-block;background:var(--c-cta);color:var(--c-on-cta);padding:10px 16px;border-radius:var(--c-r);text-decoration:none;font-weight:600}a.button:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.gap{margin-top:14px!important}.mono,.num,.tile b,.bar{font-family:var(--c-mono);font-variant-numeric:tabular-nums}.led{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:1px}.tile{display:grid;gap:4px}.tile .kh{display:flex;align-items:center;font-size:.85rem;color:var(--c-muted)}.tile.ok .led{background:var(--c-ok)}.tile.warn .led{background:var(--c-warn)}.tile.bad .led{background:var(--c-bad)}.tile.idle .led{background:transparent;border:1.5px solid var(--c-muted)}.tile.gauge{grid-template-columns:auto 1fr;align-items:center;gap:12px;grid-column:span 2}.pill{display:inline-flex;align-items:center;white-space:nowrap}th:first-child,td:first-child{min-width:140px}.tile.gauge strong{display:block;font-size:1.1rem}.svc{white-space:nowrap;margin:0 0 3px}.code{font:700 .72rem/1 var(--c-mono);padding:3px 5px;border-radius:5px;border:1px solid currentColor;margin-right:6px}.code.bad{color:var(--c-bad)}.code.warn{color:var(--c-warn)}.bar span{background:var(--c-muted)!important;border-radius:2px}.shell{display:flex;align-items:flex-start}.index{position:sticky;top:0;width:220px;flex:none;min-height:calc(100vh - 96px);background:var(--c-head);color:var(--c-head-ink);padding:20px 12px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box}.index-brand .logo-img{height:36px;padding:3px 8px}.index-fleet{padding:2px 10px 14px;font-size:14px;color:var(--c-head-ink);opacity:.75}.index-fleet b{display:block;font-family:var(--c-display);font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--c-head-ink)}.index-fleet span{display:block}.index nav{display:flex;flex-direction:column;gap:2px}.index nav a{display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:var(--c-pill);color:var(--c-head-ink);text-decoration:none;font-size:15px;font-weight:500}.index nav a:hover,.index nav a:focus-visible{background:var(--c-head-line);color:var(--c-head-ink)}.index-mobile{display:none}.index-mobile summary{list-style:none;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--c-head-line);border-radius:var(--c-pill);color:var(--c-head-ink);font-weight:600;cursor:pointer}.index-mobile summary::-webkit-details-marker{display:none}.index-mobile nav{margin-top:8px}
 .index-note{margin-top:auto;padding:14px 10px 0;font-size:13px;color:var(--c-head-ink);opacity:.55}.shell main{flex:1;min-width:0}section[id]{scroll-margin-top:16px}@media (max-width:900px){.shell{display:block}.index{position:static;width:auto;min-height:0;padding:10px 12px;gap:8px;border-bottom:1px solid var(--c-head-line)}.index-brand{display:none}.index-fleet{padding:0 2px;font-size:12px}.index-fleet b{font-size:15px}.index-desk{display:none!important}.index-mobile{display:block}.index-note{display:none}}${Array.from({ length: 20 }, (_, i) => `.w${(i + 1) * 5}{width:${(i + 1) * 5}%}`).join("")}${THEME_FLEET_LAYER}
-</style></head><body><header><div class="brand">${logoImg()}</div><h1>${esc(data2.fleet.name)}</h1><div>${esc(data2.fleet.city)} \xB7 ${list7.length} veh\xEDculos \xB7 solo lectura</div></header>
+</style></head><body><header><div class="brand">${logoImg()}</div><h1>${esc(data3.fleet.name)}</h1><div>${esc(data3.fleet.city)} \xB7 ${list7.length} veh\xEDculos \xB7 solo lectura</div></header>
 <div class="shell"><aside class="index" aria-label="\xCDndice de la p\xE1gina">
-<div class="index-fleet"><b>${esc(data2.fleet.name)}</b><span>${esc(data2.fleet.city)}</span></div>
+<div class="index-fleet"><b>${esc(data3.fleet.name)}</b><span>${esc(data3.fleet.city)}</span></div>
 <nav class="index-desk" aria-label="Secciones"><a href="#resumen">Resumen</a><a href="#vehiculos">Veh\xEDculos</a><a href="#costos">Costos</a><a href="#personas">Personas y talleres</a></nav>
 <details class="index-mobile"><summary>Secciones</summary><nav aria-label="Secciones de la p\xE1gina"><a href="#resumen">Resumen</a><a href="#vehiculos">Veh\xEDculos</a><a href="#costos">Costos</a><a href="#personas">Personas y talleres</a></nav></details>
 <div class="index-note">Solo lectura. Enlace temporal.</div>
 </aside><main>
 <section class="tiles" id="resumen" aria-label="Resumen"><div class="tile gauge">${fleetGauge(list7.length ? Math.round(100 * (list7.length - overdue - soon) / list7.length) : null, overdue ? "bad" : soon ? "warn" : "ok")}<div><span class="muted">Estado de la flota</span><strong>${overdue ? "Atenci\xF3n" : soon ? "Pronto" : "Al d\xEDa"}</strong><span class="muted">${list7.length} veh\xEDculos</span></div></div><div class="tile ${list7.length - overdue - soon ? "ok" : "idle"}"><b>${list7.length - overdue - soon}</b><span class="kh"><span class="led"></span>Al d\xEDa</span></div><div class="tile ${soon ? "warn" : "idle"}"><b>${soon}</b><span class="kh"><span class="led"></span>Por vencer</span></div><div class="tile ${overdue ? "bad" : "idle"}"><b>${overdue}</b><span class="kh"><span class="led"></span>Vencidos</span></div><div class="tile"><b>${inShop}</b><span class="kh">En taller</span></div><div class="tile"><b>${esc(formatUsd2(cost))}</b><span class="kh">Costo del mes</span></div><div class="tile"><b>${kms > 0 ? esc(formatUsd2(cost / kms)) : "\u2014"}</b><span class="kh">USD por km (${esc(km6(kms))})</span></div></section>
 <section class="card" id="vehiculos"><h2>Veh\xEDculos</h2><div class="scroll"><table><thead><tr><th>Unidad</th><th>Veh\xEDculo</th><th class="num">Km</th><th>Conductor</th><th>Estado</th><th>Servicios</th><th>Pr\xF3ximo servicio</th><th>En taller</th><th class="num">Costo mes</th><th class="num">USD/km</th></tr></thead><tbody>${list7.map(row).join("") || `<tr><td colspan="10" class="muted">Todav\xEDa no hay veh\xEDculos. Agr\xE9galos por WhatsApp: Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km</td></tr>`}</tbody></table></div><p><a class="button" href="${esc(csvHref)}">Descargar CSV</a></p></section>
-<section class="card" id="alertas"><h2>Alertas de la flota</h2><ul>${list7.flatMap((v) => [v.rtvMonth !== null && v.rtvMonth === new Date(data2.generatedAt.getTime() - 5 * 36e5).getUTCMonth() + 1 ? `<li class="bad"><span class="led"></span><b class="mono">${esc(unitLabel(v))}</b> \xB7 RTV y matr\xEDcula este mes; fecha referencial, confirma en la ANT o en tu agencia de matriculaci\xF3n</li>` : "", v.inShop ? `<li class="warn"><span class="led"></span><b class="mono">${esc(unitLabel(v))}</b> \xB7 ${esc(v.inShop)}</li>` : ""]).filter(Boolean).join("") || `<li class="muted">Sin alertas para la flota.</li>`}</ul></section>
-<div class="two"><section class="card" id="costos"><h2>Costos de los \xFAltimos meses</h2>${data2.months.length ? `<div class="bars">${data2.months.map((m) => `<div class="bar"><div>${esc(m.month)}</div><div><span class="w${Math.max(1, Math.round(m.total / maxMonth * 20)) * 5}"></span></div><div class="num">${esc(formatUsd2(m.total))}</div></div>`).join("")}</div>` : `<p class="muted">Sin gastos registrados. Llegan al cerrar \xF3rdenes en AutoMantPro o con: Gasto PLACA | concepto | USD</p>`}</section>
-<section class="card" id="personas"><h2>Personas y talleres</h2><ul>${data2.members.map((m) => `<li>${esc(m.name)} \xB7 ${esc(roleName[String(m.role)] ?? m.role)}${m.status === "invited" ? " (invitado)" : ""}</li>`).join("") || `<li class="muted">Sin conductores todav\xEDa.</li>`}</ul><h2 class="gap">Talleres con convenio</h2><ul>${data2.agreements.map((a) => `<li>${esc(a.name)} (${esc(a.city)})${Number(a.ratingAvg) ? ` \xB7 ${esc(Number(a.ratingAvg))}/5` : ""}</li>`).join("") || `<li class="muted">Sin convenios. Por WhatsApp: Convenio | RUC del taller</li>`}</ul></section></div>
-<p class="muted">Generado ${esc(new Intl.DateTimeFormat("es-EC", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Guayaquil" }).format(data2.generatedAt))}. Este enlace vence en una hora; pide otro con "Panel flota". Los datos de los conductores se tratan por encargo de la empresa.</p>
+<section class="card" id="alertas"><h2>Alertas de la flota</h2><ul>${list7.flatMap((v) => [v.rtvMonth !== null && v.rtvMonth === new Date(data3.generatedAt.getTime() - 5 * 36e5).getUTCMonth() + 1 ? `<li class="bad"><span class="led"></span><b class="mono">${esc(unitLabel(v))}</b> \xB7 RTV y matr\xEDcula este mes; fecha referencial, confirma en la ANT o en tu agencia de matriculaci\xF3n</li>` : "", v.inShop ? `<li class="warn"><span class="led"></span><b class="mono">${esc(unitLabel(v))}</b> \xB7 ${esc(v.inShop)}</li>` : ""]).filter(Boolean).join("") || `<li class="muted">Sin alertas para la flota.</li>`}</ul></section>
+<div class="two"><section class="card" id="costos"><h2>Costos de los \xFAltimos meses</h2>${data3.months.length ? `<div class="bars">${data3.months.map((m) => `<div class="bar"><div>${esc(m.month)}</div><div><span class="w${Math.max(1, Math.round(m.total / maxMonth * 20)) * 5}"></span></div><div class="num">${esc(formatUsd2(m.total))}</div></div>`).join("")}</div>` : `<p class="muted">Sin gastos registrados. Llegan al cerrar \xF3rdenes en AutoMantPro o con: Gasto PLACA | concepto | USD</p>`}</section>
+<section class="card" id="personas"><h2>Personas y talleres</h2><ul>${data3.members.map((m) => `<li>${esc(m.name)} \xB7 ${esc(roleName[String(m.role)] ?? m.role)}${m.status === "invited" ? " (invitado)" : ""}</li>`).join("") || `<li class="muted">Sin conductores todav\xEDa.</li>`}</ul><h2 class="gap">Talleres con convenio</h2><ul>${data3.agreements.map((a) => `<li>${esc(a.name)} (${esc(a.city)})${Number(a.ratingAvg) ? ` \xB7 ${esc(Number(a.ratingAvg))}/5` : ""}</li>`).join("") || `<li class="muted">Sin convenios. Por WhatsApp: Convenio | RUC del taller</li>`}</ul></section></div>
+<p class="muted">Generado ${esc(new Intl.DateTimeFormat("es-EC", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Guayaquil" }).format(data3.generatedAt))}. Este enlace vence en una hora; pide otro con "Panel flota". Los datos de los conductores se tratan por encargo de la empresa.</p>
 </main></div></body></html>`;
 }
 async function fleetPanelRoutes(app2, options = {}) {
@@ -116403,20 +116804,20 @@ async function fleetPanelRoutes(app2, options = {}) {
   const expired = '<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Enlace vencido</title><h1>Este enlace ya no es v\xE1lido</h1><p>Pide uno nuevo por WhatsApp escribiendo: Panel flota</p></html>';
   app2.get("/flota/:token", async (request, reply) => {
     const parsed = token.safeParse(request.params.token);
-    const nonce2 = randomBytes14(16).toString("base64");
+    const nonce2 = randomBytes15(16).toString("base64");
     headers(reply, nonce2);
-    const data2 = parsed.success ? await load(parsed.data) : null;
-    if (!data2)
+    const data3 = parsed.success ? await load(parsed.data) : null;
+    if (!data3)
       return reply.code(404).type("text/html; charset=utf-8").send(expired);
-    return reply.type("text/html; charset=utf-8").send(renderFleetPanel(data2, nonce2, `/flota/${parsed.data}/flota.csv`));
+    return reply.type("text/html; charset=utf-8").send(renderFleetPanel(data3, nonce2, `/flota/${parsed.data}/flota.csv`));
   });
   app2.get("/flota/:token/flota.csv", async (request, reply) => {
     const parsed = token.safeParse(request.params.token);
     headers(reply);
-    const data2 = parsed.success ? await load(parsed.data) : null;
-    if (!data2)
+    const data3 = parsed.success ? await load(parsed.data) : null;
+    if (!data3)
       return reply.code(404).type("text/html; charset=utf-8").send(expired);
-    return reply.type("text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="flota-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.csv"`).send(fleetCsv(data2));
+    return reply.type("text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="flota-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.csv"`).send(fleetCsv(data3));
   });
 }
 
@@ -116440,7 +116841,7 @@ var DEFAULT_RULES = {
   page: { max: 120, windowMs: 6e4 },
   "page-bot": { max: 600, windowMs: 6e4 }
 };
-var EXEMPT = /^\/(?:health|ready|robots\.txt|sitemap\.xml|llms\.txt|favicon[^/]*|og\.png|apple-touch-icon[^/]*|icon-[0-9]+\.png|site\.webmanifest)$|^\/wa\/webhook(?:\/|$)|^\/api\/v1\/local-agent\//;
+var EXEMPT = /^\/(?:health|ready|robots\.txt|sitemap\.xml|llms\.txt|favicon[^/]*|og\.png|apple-touch-icon[^/]*|icon-[0-9]+\.png|site\.webmanifest|sw\.js)$|^\/wa\/webhook(?:\/|$)|^\/api\/v1\/local-agent\//;
 var CATALOG = /^\/api\/v1\/(?:shops|products|marketplace\/products)(?:\/[^/]+)?$/;
 var SCRAPER_UA = /python-requests|python-urllib|aiohttp|httpx|scrapy|curl\/|wget\/|go-http-client|okhttp|java\/|apache-httpclient|libwww-perl|mechanize|headlesschrome|phantomjs|selenium|puppeteer|playwright|node-fetch|axios\/|colly|httrack|zgrab|masscan|nikto|sqlmap/i;
 function isScraperAgent(userAgent) {
@@ -116531,7 +116932,7 @@ function installSecurity(app2, options = {}) {
       set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
     const type = String(reply.getHeader("content-type") ?? "");
     if (!reply.hasHeader("Content-Security-Policy")) {
-      reply.header("Content-Security-Policy", type.includes("text/html") ? "frame-ancestors 'none'; base-uri 'none'; object-src 'none'" : "default-src 'none'; frame-ancestors 'none'");
+      reply.header("Content-Security-Policy", type.includes("text/html") ? "frame-ancestors 'none'; base-uri 'none'; object-src 'none'" : "default-src 'none'; worker-src 'self'; frame-ancestors 'none'");
     }
     reply.removeHeader("X-Powered-By");
     return payload;
@@ -116546,7 +116947,7 @@ init_domain();
 init_security();
 init_page();
 init_theme();
-import { randomBytes as randomBytes16 } from "node:crypto";
+import { randomBytes as randomBytes17 } from "node:crypto";
 var e3 = (value2) => escapeHtml(String(value2 ?? ""));
 var buckets = /* @__PURE__ */ new Map();
 function defaultSession(request, reply, required = true) {
@@ -116573,7 +116974,7 @@ function page(title, body, nonce2) {
   return `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>${e3(title)} \xB7 AutoMantPro</title><style nonce="${e3(nonce2)}">${THEME_TOKENS}*{box-sizing:border-box}body{max-width:1000px;margin:0 auto;padding:clamp(16px,4vw,36px);background:var(--c-bg);color:var(--c-ink);font:16px/1.55 var(--c-font)}a{color:var(--c-accent);overflow-wrap:anywhere}nav{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px}article,section{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:clamp(14px,3vw,22px);margin:12px 0;min-width:0}h1,h2,h3{overflow-wrap:anywhere}.notice{background:var(--c-warn-bg);color:var(--c-warn);border-left:4px solid var(--c-warn);padding:12px}form{margin:12px 0}label{display:block;margin:10px 0;overflow-wrap:anywhere}input,textarea,button{max-width:100%;font:inherit}input,textarea{width:100%;padding:10px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface);color:var(--c-ink)}input[type=checkbox],input[type=radio]{width:auto}button{padding:10px 16px;border:0;border-radius:var(--c-pill);background:var(--c-promo);color:var(--c-on-promo);cursor:pointer}.locked{color:var(--c-muted)}ol{padding-left:24px}li{overflow-wrap:anywhere}</style></head><body><nav aria-label="Capacitaci\xF3n"><a href="/cursos">Cursos</a><a href="/mis-cursos">Mis cursos</a></nav><main>${body}</main></body></html>`;
 }
 function nonce(request) {
-  return String(request.cspNonce ?? randomBytes16(16).toString("base64"));
+  return String(request.cspNonce ?? randomBytes17(16).toString("base64"));
 }
 async function courseWebRoutes(app2, options = {}) {
   const store = options.store ?? new MysqlCoursesStore(() => openConnection());
@@ -116758,7 +117159,7 @@ async function courseWebRoutes(app2, options = {}) {
 // packages/api/dist/interfaces/expert.routes.js
 var import_multipart = __toESM(require_multipart2(), 1);
 init_zod();
-import { randomBytes as randomBytes17 } from "node:crypto";
+import { randomBytes as randomBytes18 } from "node:crypto";
 init_courses_store();
 init_apply();
 init_page();
@@ -116781,7 +117182,7 @@ async function expertRoutes(app2, options = {}) {
     }
   };
   app2.post("/expert/apply", { preHandler: [pilot, authenticate] }, async (request, reply) => {
-    const token2 = randomBytes17(32).toString("base64url");
+    const token2 = randomBytes18(32).toString("base64url");
     try {
       await store.issueExpertLink(request.userId, token2);
     } catch {

@@ -586,6 +586,7 @@ model Enrollment {
   comprobante String? @db.VarChar(2048)
   beca Boolean @default(false)
   compartirConTaller Boolean @default(false)
+  certificadoPublico Boolean @default(false)
   consentVersion String
   consentAt DateTime
   respuestas Json?
@@ -842,6 +843,38 @@ model LocalAgentReply {
  executedCommand Boolean @default(false)
  createdAt DateTime @default(now()) @db.DateTime(3)
  @@index([userId,createdAt], map: "LocalAgentReply_user_idx")
+}
+enum LocalAgentTaskType {
+ responder_consulta
+ clasificar_mensaje
+ enviar_aviso_whatsapp
+ correr_pruebas
+ tomar_capturas
+ revisar_diff
+ reporte_estado
+}
+enum LocalAgentTaskStatus {
+ queued
+ processing
+ done
+ failed
+}
+model LocalAgentTask {
+ id String @id @db.VarChar(191)
+ type LocalAgentTaskType
+ status LocalAgentTaskStatus @default(queued)
+ payload Json?
+ result String? @db.Text
+ errorCode String? @db.VarChar(64)
+ idempotencyKey String @unique @db.VarChar(191)
+ createdBy String @db.VarChar(191)
+ leaseToken String? @db.VarChar(64)
+ leaseUntil DateTime? @db.DateTime(3)
+ attempts Int @default(0)
+ createdAt DateTime @default(now()) @db.DateTime(3)
+ updatedAt DateTime @default(now()) @db.DateTime(3)
+ completedAt DateTime? @db.DateTime(3)
+ @@index([status, createdAt], map: "LocalAgentTask_status_created_idx")
 }
 model WhatsAppIdentity {
  userId String @id @db.VarChar(191)
