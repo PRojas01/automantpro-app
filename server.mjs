@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='d0bfc3ca0b56a0c47a9bdd062880c5d84a605cf4'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='e8667ce403b0589c5a8406eac0529addc978f3a7'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -82864,7 +82864,7 @@ var init_sobrio = __esm({
     "use strict";
     ESTILO = "a";
     PALETAS = {
-      a: { claro: "--v-bg:#f4f5f7;--v-surface:#ffffff;--v-sunk:#f0f2f5;--v-line:#d9dde3;--v-ink:#1c2430;--v-accent:#1f3a5f;--v-on-accent:#ffffff;--v-pill:#1f3a5f;--v-on-pill:#ffffff", oscuro: "--v-bg:#111418;--v-surface:#181c22;--v-sunk:#1e232a;--v-line:#2b313a;--v-ink:#e6e8eb;--v-accent:#9db8dc;--v-on-accent:#0f1622;--v-pill:#9db8dc;--v-on-pill:#0f1622", extra: "" },
+      a: { claro: "--v-bg:#f2f2f7;--v-surface:#ffffff;--v-sunk:#f5f5f7;--v-line:#d1d1d6;--v-ink:#1d1d1f;--v-accent:#1f3a5f;--v-on-accent:#ffffff;--v-pill:#1f3a5f;--v-on-pill:#ffffff", oscuro: "--v-bg:#000000;--v-surface:#1c1c1e;--v-sunk:#2c2c2e;--v-line:#38383a;--v-ink:#f5f5f7;--v-accent:#9db8dc;--v-on-accent:#0f1622;--v-pill:#9db8dc;--v-on-pill:#0f1622", extra: "" },
       b: { claro: "--v-bg:#f5f6f8;--v-surface:#ffffff;--v-sunk:#eef2f7;--v-line:#d8dee7;--v-ink:#1a2333;--v-accent:#1d4f91;--v-on-accent:#ffffff;--v-pill:#e06a1f;--v-on-pill:#ffffff", oscuro: "--v-bg:#10141b;--v-surface:#171d27;--v-sunk:#1d2532;--v-line:#2a3342;--v-ink:#e7eaf0;--v-accent:#86aee6;--v-on-accent:#0d1626;--v-pill:#f08a47;--v-on-pill:#1a0d04", extra: "" },
       c: { claro: "--v-bg:#f6f7f8;--v-surface:#ffffff;--v-sunk:#f1f2f4;--v-line:#d9dce1;--v-ink:#16191e;--v-accent:#16191e;--v-on-accent:#ffffff;--v-pill:#16191e;--v-on-pill:#ffffff", oscuro: "--v-bg:#121315;--v-surface:#1a1c1f;--v-sunk:#202327;--v-line:#2d3036;--v-ink:#e9eaec;--v-accent:#e9eaec;--v-on-accent:#121315;--v-pill:#e9eaec;--v-on-pill:#121315", extra: "main a:not(.access-btn):not(.pill):not(.perfil):not(.logo){text-decoration-color:#d8cf00!important}" }
     };
@@ -82877,12 +82877,12 @@ header.cabecera h1,header.cabecera h1 em,.beneficios .ico,.cta,.access-btn,.boar
 body{background:var(--v-bg)!important;color:var(--v-ink)}
 body::before{opacity:.06!important}
 body::after{display:none!important}
-header.cabecera h1{font:700 21px/1.25 var(--c-font)!important;letter-spacing:-.01em!important;color:var(--v-ink)!important}
+header.cabecera h1{font:600 21px/1.25 var(--c-display)!important;letter-spacing:-.02em!important;color:var(--v-ink)!important}
 header.cabecera h1 em{font-style:normal;background:none!important;color:inherit!important;padding:0!important;text-shadow:none!important}
 @media (max-width:760px){header.cabecera h1{font-size:19px!important}}
-.section{font:600 14px/1.3 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important;color:var(--v-ink)!important;border-left:0!important;padding-left:0!important}
+.section{font:400 13px/1.3 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important;color:var(--c-muted)!important;border-left:0!important;padding-left:0!important}
 .section::before{display:none!important}
-.hero,.beneficios li,.profile-card,main details.gestionar>summary,.board{background:var(--v-surface)!important;background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:1px solid var(--v-line)!important;border-radius:10px!important;box-shadow:none!important}
+.hero,.beneficios li,.profile-card,main details.gestionar>summary,.board{background:var(--v-surface)!important;background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:1px solid transparent!important;border-radius:12px!important;box-shadow:none!important}
 .board{background:var(--v-sunk)!important}
 .beneficios li{border-top-width:1px!important}
 .beneficios b{font:600 15px/1.25 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important}
@@ -82890,9 +82890,9 @@ header.cabecera h1 em{font-style:normal;background:none!important;color:inherit!
 .red a.perfil{border:1px solid var(--v-line)!important;background:var(--v-surface)!important;color:var(--v-ink)!important;box-shadow:none!important;font-weight:600!important}
 .red a.perfil .ico{color:var(--v-accent)!important}
 .red a.perfil:hover{border-color:var(--v-accent)!important;background:var(--v-surface)!important;transform:none!important}
-header .acciones a.pill{background:var(--v-pill)!important;color:var(--v-on-pill)!important;box-shadow:none!important;border-radius:8px!important}
+header .acciones a.pill{background:var(--v-pill)!important;color:var(--v-on-pill)!important;box-shadow:none!important;border-radius:999px!important}
 .access-btn.secondary,.profile-actions .access-btn.secondary{background:var(--v-accent)!important;color:var(--v-on-accent)!important;border-color:var(--v-accent)!important}
-.access-btn,.cta,.profile-actions .access-btn{border-radius:8px!important;box-shadow:none!important;background-image:none!important}
+.access-btn,.cta,.profile-actions .access-btn{border-radius:10px!important;box-shadow:none!important;background-image:none!important}
 main a:not(.access-btn):not(.pill):not(.perfil):not(.logo){text-decoration-color:var(--v-accent)!important}
 .code{background:var(--v-sunk)!important;border-color:var(--v-line)!important}
 :focus-visible{outline-color:var(--v-accent)!important}
@@ -82905,8 +82905,8 @@ main a:not(.access-btn):not(.pill):not(.perfil):not(.logo){text-decoration-color
 .red a.perfil:focus-visible{background:var(--v-surface)!important;color:var(--v-ink)!important;border-color:var(--v-accent)!important}
 .board .cap b{font:600 12px/1 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important}
 `;
-    PANEL_CLARO = "--c-bg:#f4f5f7;--c-surface:#ffffff;--c-sunk:#f0f2f5;--c-line:#d9dde3;--c-ink:#1c2430;--c-muted:#545e6b;--c-accent:#1f3a5f;--c-on-accent:#ffffff;--c-focus:#1f3a5f;--c-link-line:#1f3a5f";
-    PANEL_OSCURO = "--c-bg:#111418;--c-surface:#181c22;--c-sunk:#1e232a;--c-line:#2b313a;--c-ink:#e6e8eb;--c-muted:#a5adb8;--c-accent:#9db8dc;--c-on-accent:#0f1622;--c-focus:#9db8dc;--c-link-line:#9db8dc";
+    PANEL_CLARO = "--c-bg:#f2f2f7;--c-surface:#ffffff;--c-sunk:#f5f5f7;--c-line:#d1d1d6;--c-ink:#1d1d1f;--c-muted:#6e6e73;--c-accent:#1f3a5f;--c-on-accent:#ffffff;--c-focus:#1f3a5f;--c-link-line:#1f3a5f";
+    PANEL_OSCURO = "--c-bg:#000000;--c-surface:#1c1c1e;--c-sunk:#2c2c2e;--c-line:#38383a;--c-ink:#f5f5f7;--c-muted:#a1a1a6;--c-accent:#9db8dc;--c-on-accent:#0f1622;--c-focus:#9db8dc;--c-link-line:#9db8dc";
     PANEL_SOBRIO = `
 :root{${PANEL_CLARO}}@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){${PANEL_OSCURO}}}:root[data-tema="oscuro"]{${PANEL_OSCURO}}
 body{background-image:none!important}
@@ -82942,20 +82942,20 @@ var init_sistema = __esm({
 body::before,body::after{content:none!important;display:none!important;background:none!important}
 *,*::before,*::after{animation:none!important}
 .js-anim .aparece,.aparece{opacity:1!important;transform:none!important}
-body{font-family:var(--c-font);line-height:1.55}
-h1,h2,h3,h4,.big,.word,.price,.kpi b,.tile b,.card .big{font-family:var(--c-font)!important;letter-spacing:0!important}
-h1{font-size:22px!important;font-weight:700!important;line-height:1.25!important;letter-spacing:-.01em!important}
+body{font-family:var(--c-font);line-height:1.47}
+h1,h2,h3,h4,.big,.word,.price,.kpi b,.tile b,.card .big{font-family:var(--c-display)!important;letter-spacing:0!important}
+h1{font-size:22px!important;font-weight:600!important;line-height:1.25!important;letter-spacing:-.02em!important}
 @media (max-width:640px){h1{font-size:20px!important}}
 h2{font-size:18px;font-weight:600!important;line-height:1.3}
 h3{font-weight:600!important;line-height:1.35}
 h1 em,h2 em{font-style:normal;background:none!important;color:inherit!important;padding:0!important}
 .big,.word,.price,.kpi b,.tile b,.card .big{font-weight:700!important}
-th,.section,p.section,.cap,.informe-cap,.nav-title,.kh,.card .kh,.card .kpi span,.card .tile span,.tile .kh,.board .details h3{text-transform:none!important;letter-spacing:0!important;font-variant-caps:normal!important;font-weight:600!important;font-size:13px!important}
-.section,p.section{border-left:0!important;padding-left:0!important;color:var(--c-ink)!important}
+th,.section,p.section,.cap,.informe-cap,.nav-title,.kh,.card .kh,.card .kpi span,.card .tile span,.tile .kh,.board .details h3{text-transform:none!important;letter-spacing:0!important;font-variant-caps:normal!important;font-weight:400!important;font-size:13px!important}
+.section,p.section{border-left:0!important;padding-left:0!important;color:var(--c-muted)!important}
 .section::before,.section::after{content:none!important}
-.card,.option,.pcard,.beneficios li,.board,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.line,.veh,.kpi,#login,#composer,#tools,.hero,.profile-card{box-shadow:none!important;background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-radius:10px}
+.card,.option,.pcard,.beneficios li,.board,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.line,.veh,.kpi,#login,#composer,#tools,.hero,.profile-card{box-shadow:none!important;background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-radius:12px}
 button,.btn,.access-btn,a.button,.cta,.pill-btn{box-shadow:none!important;background-image:none!important;letter-spacing:0!important;text-transform:none!important;font-weight:600}
-button,.btn,.access-btn,a.button,.cta{border-radius:8px}
+button,.btn,.access-btn,a.button,.cta{border-radius:10px}
 a,button,.btn,.access-btn,.cta,input,select,textarea,summary{transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out}
 main a:not(.button):not(.access-btn):not(.option):not(.menu-link):not(.side-link):not(.btn):not(.cta):not(.pill):not(.perfil):not(.logo){text-decoration-color:var(--c-link-line)!important;text-decoration-thickness:1px!important;text-underline-offset:3px}
 .code,code,kbd{font-family:var(--c-mono)}
@@ -82965,6 +82965,8 @@ main h3{font-size:15px!important}
 .titulo{font-size:17px!important;font-weight:600!important;letter-spacing:0!important}
 .cta:not(:disabled){background-color:var(--c-cta);color:var(--c-on-cta)!important}
 .cta:not(:disabled):hover{background-color:var(--c-cta-hover)}
+/* Como las listas agrupadas de iOS: el grupo se separa del fondo por el color, sin l\xEDnea. */
+.card,.option,.pcard,.beneficios li,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.line,.veh,.kpi,#login,#composer,#tools,.hero,.profile-card,section{border-color:transparent!important}
 :focus-visible{outline-color:var(--c-focus)!important}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
 `;
@@ -83045,12 +83047,12 @@ var init_theme = __esm({
   "packages/api/dist/interfaces/ui/theme.js"() {
     "use strict";
     LIGHT = [
-      "--c-bg:#f4f5f7",
+      "--c-bg:#f2f2f7",
       "--c-surface:#ffffff",
-      "--c-sunk:#f0f2f5",
-      "--c-ink:#1c2430",
-      "--c-muted:#545e6b",
-      "--c-line:#d9dde3",
+      "--c-sunk:#f5f5f7",
+      "--c-ink:#1d1d1f",
+      "--c-muted:#6e6e73",
+      "--c-line:#d1d1d6",
       "--c-field:#ffffff",
       "--c-accent:#1f3a5f",
       "--c-on-accent:#ffffff",
@@ -83072,12 +83074,12 @@ var init_theme = __esm({
       "--c-head-line:#2f4c74",
       "--c-head-brand:#ffffff",
       "--c-hero:#ffffff",
-      "--c-hero-ink:#1c2430",
-      "--c-hero-muted:#545e6b",
-      "--c-hero-line:#d9dde3",
+      "--c-hero-ink:#1d1d1f",
+      "--c-hero-muted:#6e6e73",
+      "--c-hero-line:#d1d1d6",
       "--c-link:#1f3a5f",
       "--c-link-line:#1f3a5f",
-      "--c-brand-ink:#1c2430",
+      "--c-brand-ink:#1d1d1f",
       "--c-brand-bg:none",
       "--c-focus:#1f3a5f",
       "--c-glow:0 0 0 transparent",
@@ -83085,13 +83087,13 @@ var init_theme = __esm({
       "color-scheme:light"
     ].join(";");
     DARK = [
-      "--c-bg:#111418",
-      "--c-surface:#181c22",
-      "--c-sunk:#1e232a",
-      "--c-ink:#e6e8eb",
-      "--c-muted:#a5adb8",
-      "--c-line:#2b313a",
-      "--c-field:#101318",
+      "--c-bg:#000000",
+      "--c-surface:#1c1c1e",
+      "--c-sunk:#2c2c2e",
+      "--c-ink:#f5f5f7",
+      "--c-muted:#a1a1a6",
+      "--c-line:#38383a",
+      "--c-field:#1c1c1e",
       "--c-accent:#9db8dc",
       "--c-on-accent:#0f1622",
       "--c-cta:#3ccf7e",
@@ -83106,32 +83108,32 @@ var init_theme = __esm({
       "--c-warn-bg:#33240b",
       "--c-bad:#ff7a70",
       "--c-bad-bg:#3a1412",
-      "--c-on-bad:#111418",
-      "--c-head:#0f1622",
-      "--c-head-ink:#e6e8eb",
-      "--c-head-line:#2b313a",
-      "--c-head-brand:#e6e8eb",
-      "--c-hero:#181c22",
-      "--c-hero-ink:#e6e8eb",
-      "--c-hero-muted:#b4bcc6",
-      "--c-hero-line:#2b313a",
-      "--c-link:#e6e8eb",
+      "--c-on-bad:#000000",
+      "--c-head:#1c1c1e",
+      "--c-head-ink:#f5f5f7",
+      "--c-head-line:#38383a",
+      "--c-head-brand:#f5f5f7",
+      "--c-hero:#1c1c1e",
+      "--c-hero-ink:#f5f5f7",
+      "--c-hero-muted:#a1a1a6",
+      "--c-hero-line:#38383a",
+      "--c-link:#f5f5f7",
       "--c-link-line:#9db8dc",
-      "--c-brand-ink:#e6e8eb",
+      "--c-brand-ink:#f5f5f7",
       "--c-brand-bg:none",
       "--c-focus:#9db8dc",
       "--c-glow:0 0 0 transparent",
       "--c-shadow:none",
       "color-scheme:dark"
     ].join(";");
-    FONTS = '--c-font:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;--c-display:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;--c-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
+    FONTS = '--c-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--c-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--c-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
     THEME_TOKENS = `
-:root{${LIGHT};${FONTS};--c-r:10px;--c-r-sm:8px;--c-pill:999px}
+:root{${LIGHT};${FONTS};--c-r:12px;--c-r-sm:10px;--c-pill:999px}
 @media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){${DARK}}}
 :root[data-tema="oscuro"]{${DARK}}
 `;
-    THEME_COLOR = "#0f1115";
-    THEME_COLOR_LIGHT = "#f4f5f7";
+    THEME_COLOR = "#000000";
+    THEME_COLOR_LIGHT = "#f2f2f7";
     THEME_COLOR_META = `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${THEME_COLOR_LIGHT}"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="${THEME_COLOR}">`;
   }
 });
