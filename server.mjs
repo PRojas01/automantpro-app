@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='25ff2e2b0702a569dd1c2e80b04536b1b2fc28ab'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='33415349ae66e9e7e267ad17cbc221e59d9d01ab'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -88067,6 +88067,7 @@ async function fleetSnapshot(conn, fleetId, now = /* @__PURE__ */ new Date(), ci
       ...v,
       overdue: items.filter((i) => i.status === "vencido").map((i) => ({ serviceName: i.serviceName, reason: i.reason })),
       soon: items.filter((i) => i.status === "proximo").map((i) => ({ serviceName: i.serviceName, dueKm: i.dueKm })),
+      unknown: items.filter((i) => i.status === "sin_registro").map((i) => ({ serviceName: i.serviceName })),
       nextService: recommendation ? { serviceName: recommendation.serviceName, label: recommendation.label, state: recommendation.state } : null,
       rtvMonth: rtvMonth(v.plate ? String(v.plate) : null, city),
       inShop: order ? `OT-${String(order.number).padStart(5, "0")} en ${order.name}` : null,
@@ -88082,16 +88083,17 @@ async function fleetSummaryText(conn, fleetId, fleetName, now = /* @__PURE__ */ 
   if (!list7.length)
     return `\u{1F69A} ${fleetName}: todav\xEDa no tiene veh\xEDculos. Agrega el primero: Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km (| c\xF3digo interno)`;
   const overdue = list7.filter((v) => v.overdue.length);
-  const soon = list7.filter((v) => !v.overdue.length && v.soon.length);
+  const unknown = list7.filter((v) => !v.overdue.length && v.unknown.length);
+  const soon = list7.filter((v) => !v.overdue.length && !v.unknown.length && v.soon.length);
   const inShop = list7.filter((v) => v.inShop);
-  const ok = list7.length - overdue.length - soon.length;
+  const ok = list7.length - overdue.length - unknown.length - soon.length;
   const cost = list7.reduce((a, v) => a + v.monthCost, 0);
   const kms = list7.reduce((a, v) => a + v.monthKm, 0);
   const month = new Intl.DateTimeFormat("es-EC", { month: "long", timeZone: "America/Guayaquil" }).format(now);
   const lines = overdue.slice(0, 5).map((v) => `\u2022 ${unitLabel(v)} ${v.make} ${v.model}: ${v.overdue.map((o) => o.serviceName).join(", ")}`);
   return [
     `\u{1F69A} ${fleetName} \xB7 ${list7.length} veh\xEDculo${list7.length === 1 ? "" : "s"}`,
-    `\u2705 Al d\xEDa: ${ok} \xB7 \u23F3 Por vencer: ${soon.length} \xB7 \u26A0\uFE0F Vencidos: ${overdue.length} \xB7 \u{1F527} En taller: ${inShop.length}`,
+    `\u2705 Al d\xEDa: ${ok} \xB7 \u23F3 Por vencer: ${soon.length} \xB7 \u{1F7E0} Sin historial: ${unknown.length} \xB7 \u26A0\uFE0F Vencidos: ${overdue.length} \xB7 \u{1F527} En taller: ${inShop.length}`,
     ...lines.length ? ["Vencidos:", ...lines, ...overdue.length > 5 ? [`y ${overdue.length - 5} m\xE1s: Vencidos`] : []] : [],
     `\u{1F4B5} Costo de ${month}: ${formatUsd2(cost)}${kms > 0 ? ` \xB7 ${formatUsd2(cost / kms)}/km en ${km3(kms)}` : ""}`,
     "Detalle: Vencidos \xB7 Costos mes \xB7 Conductores \xB7 Plan PLACA \xB7 Panel flota"
@@ -88348,12 +88350,12 @@ ${list7.map((m) => `\u2022 ${short4("D", String(m.id))} ${m.name} \xB7 ${ROLE_NA
 Asignar: Asignar PLACA | D-XXXXXX \xB7 Quitar: Quitar D-XXXXXX` };
       }
       async overdue(conn, userId, fleet) {
-        const list7 = (await fleetSnapshot(conn, fleet.fleetId)).filter((v) => v.overdue.length || v.soon.length);
+        const list7 = (await fleetSnapshot(conn, fleet.fleetId)).filter((v) => v.overdue.length || v.soon.length || v.unknown.length);
         if (!list7.length)
-          return { userId, message: `\u2705 Ning\xFAn veh\xEDculo de ${fleet.name} tiene servicios vencidos ni por vencer.` };
+          return { userId, message: `\u2705 Ning\xFAn veh\xEDculo de ${fleet.name} tiene servicios vencidos, por vencer ni sin registro.` };
         const lines = list7.slice(0, 20).map((v) => `\u2022 ${unitLabel(v)} ${v.make} ${v.model} (${km3(Number(v.currentKm))})${v.driver ? ` \xB7 ${v.driver}` : ""}${v.inShop ? ` \xB7 en taller ${v.inShop}` : ""}
-  ${[...v.overdue.map((o) => `\u26A0\uFE0F ${o.serviceName}: ${o.reason.replace(/^Vencido /, "vencido ")}`), ...v.soon.map((s) => `\u23F3 ${s.serviceName} a los ${km3(s.dueKm)}`)].slice(0, 4).join(" \xB7 ")}`);
-        return { userId, message: `\u{1F527} ${fleet.name}: servicios vencidos y por vencer
+  ${[...v.overdue.map((o) => `\u26A0\uFE0F ${o.serviceName}: ${o.reason.replace(/^Vencido /, "vencido ")}`), ...v.soon.map((s) => `\u23F3 ${s.serviceName} a los ${km3(s.dueKm)}`)].slice(0, 4).concat(v.unknown.length ? [`\u{1F7E0} Sin registro: ${v.unknown.length} servicio${v.unknown.length === 1 ? "" : "s"} (Plan ${v.plate})`] : []).join(" \xB7 ")}`);
+        return { userId, message: `\u{1F527} ${fleet.name}: servicios vencidos, por vencer y sin registro
 ${lines.join("\n")}${list7.length > 20 ? `
 y ${list7.length - 20} veh\xEDculos m\xE1s en el panel: Panel flota` : ""}
 Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD | HH:mm | motivo` };
@@ -92660,7 +92662,7 @@ ${seoHead({
   })}
 <meta name="author" content="AutoMantPro">
 <script type="application/ld+json" nonce="${nonce2}">${structuredData(input)}</script>
-<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}${ESCANER_STYLES}${TITULO_REFERENCIA}</style>
+<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}${ESCANER_STYLES}${TITULO_REFERENCIA}${HOME_UNA_PANTALLA}</style>
 <script nonce="${nonce2}">${THEME_BOOT}</script>
 </head>
 <body>
@@ -92698,7 +92700,7 @@ ${seoHead({
 </body>
 </html>`;
 }
-var ENTRY_PROFILES, PERFIL_NOMBRE, BENEFICIOS, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, HOME_TITLE, HOME_DESCRIPTION, TITULO_REFERENCIA, SCAN_STYLES, PORTADA_STYLES, COMPACTO_STYLES, BOARD;
+var ENTRY_PROFILES, PERFIL_NOMBRE, BENEFICIOS, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, HOME_TITLE, HOME_DESCRIPTION, TITULO_REFERENCIA, HOME_UNA_PANTALLA, SCAN_STYLES, PORTADA_STYLES, COMPACTO_STYLES, BOARD;
 var init_page = __esm({
   "packages/api/dist/interfaces/entry/page.js"() {
     "use strict";
@@ -92960,7 +92962,72 @@ h1 em{font-style:normal;color:var(--c-accent)}
     TITULO_REFERENCIA = `
 header.cabecera h1{grid-column:1/-1!important;grid-row:2!important;justify-self:center;text-align:center;margin:14px 0 4px!important;font-size:clamp(28px,3.3vw,45px)!important;font-weight:750!important;line-height:1.12!important;letter-spacing:-.038em!important;text-wrap:balance}
 header.cabecera h1 em{background:none!important;padding:0!important}
-@media (max-width:650px){header.cabecera h1{font-size:29px!important;letter-spacing:-.034em!important;margin-top:10px!important}}
+@media (max-width:650px){header.cabecera h1{font-size:27px!important;letter-spacing:-.034em!important;margin-top:10px!important}}
+`;
+    HOME_UNA_PANTALLA = `
+@media (min-width:651px){
+ main{max-width:1240px}
+ header.cabecera{grid-template-columns:auto minmax(0,1fr) auto;margin:0 0 8px}
+ header.cabecera .acciones{grid-column:3}
+ header.cabecera h1{grid-column:2!important;grid-row:1!important;margin:0!important;font-size:min(clamp(24px,3.3vw,45px),5vh)!important}
+ .home{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-rows:auto auto 1fr auto auto;gap:0 20px;align-items:start}
+ .col-a{display:contents}
+ .hero{grid-column:1;grid-row:1/span 3;align-self:stretch;margin:0;padding:14px 16px}
+ .hero .board{margin-top:10px}
+ .col-b{grid-column:2;grid-row:1}
+ .col-a>p.section:first-of-type{grid-column:2;grid-row:2;margin:6px 0 4px}
+ .escaner{grid-column:2;grid-row:3;align-self:stretch;margin:0}
+ .col-a>p.section:last-of-type{grid-column:1/-1;grid-row:4;margin:8px 0 4px}
+ .beneficios{grid-column:1/-1;grid-row:5;margin:0}
+ .pie{margin-top:8px;padding-top:6px}
+ .red{flex-wrap:nowrap;gap:4px}
+ .red li{font-size:12.5px;padding:6px 9px 6px 7px;gap:5px}
+ .escaner{gap:6px;padding:10px 12px}
+ .escaner .leyenda{gap:0 10px}
+ .escaner .leyenda li{padding:2px 0;font-size:12.5px}
+ .escaner .leyenda b{font-size:11.5px}
+ .beneficios{gap:8px}
+ .beneficios li{padding:8px 12px}
+ .beneficios b{margin-bottom:2px;font-size:15px}
+ .beneficios span{font-size:13px;line-height:1.35}
+ .pie .redes a{min-height:30px;padding:3px 10px}
+}
+@media (min-width:1000px){
+ .home{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}
+ .escaner{grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:4px 12px;align-items:center}
+ .escaner .cap{grid-column:1/-1}
+ .beneficios{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .pie .legal{flex-basis:auto;margin:0}
+}
+@media (min-width:1000px) and (max-width:1199px){
+ .escaner{grid-template-columns:minmax(0,.62fr) minmax(0,1fr);gap:4px 8px}
+ .escaner .leyenda{gap:0 8px}
+ .escaner .leyenda li{font-size:12px;gap:4px}
+ .escaner .leyenda b{font-size:11px}
+}
+@media (min-width:1000px) and (max-height:800px){
+ body{padding-top:6px;padding-bottom:6px}
+ header.cabecera{margin-bottom:4px}
+ header.cabecera h1{font-size:min(3.3vw,4.4vh)!important}
+ .escaner .auto{max-width:240px}
+ .escaner .cap{font-size:12.5px}
+ .access-note{font-size:12.5px;line-height:1.3}
+ .col-a>p.section:last-of-type{margin:4px 0 2px}
+ .pie{margin-top:2px;padding-top:2px}
+ .pie .legal{line-height:1.2}
+ .hero .board{row-gap:0}
+ .hero{padding:10px 14px}
+ .hero .lead{max-width:none;font-size:15px;line-height:1.35}
+ .hero .silueta{display:none}
+ .red{margin-top:8px}
+ .hero .board{margin-top:8px;padding:8px 12px;gap:2px 12px}
+ .access-note{margin-bottom:4px}
+}
+@media (max-width:650px){
+ .hero .lead{font-size:14px}
+ .escaner .leyenda{gap:0 12px}
+ .escaner .leyenda li{padding:1px 0;line-height:1.2}
+}
 `;
     SCAN_STYLES = `
 .board{position:relative;z-index:1;color:var(--c-ink);display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:center;margin:12px 0 0;padding:12px;border:1px solid var(--c-line);border-radius:12px;background:var(--c-bg)}
@@ -93203,7 +93270,7 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
  header{margin-bottom:8px}
  .hero{padding:14px 16px}
  .hero h1{font-size:28px}
- .hero .lead{font-size:14.5px}
+ .hero .lead{font-size:14px}
  .hero .silueta{display:none}
  .board{margin-top:8px}
  .board svg{width:68px;height:68px}
