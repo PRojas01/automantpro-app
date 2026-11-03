@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2cdeefbc628ca29550148f894ba7f90dc5207c7c'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='d0bfc3ca0b56a0c47a9bdd062880c5d84a605cf4'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -82896,6 +82896,14 @@ header .acciones a.pill{background:var(--v-pill)!important;color:var(--v-on-pill
 main a:not(.access-btn):not(.pill):not(.perfil):not(.logo){text-decoration-color:var(--v-accent)!important}
 .code{background:var(--v-sunk)!important;border-color:var(--v-line)!important}
 :focus-visible{outline-color:var(--v-accent)!important}
+/* Ejemplo del informe con el mismo gr\xE1fico de estado que el panel: medidor, palabra y conteo. */
+.board .estado{grid-column:1/-1;display:flex;align-items:center;gap:16px}
+.board .estado small{display:block;font-size:13px;line-height:1.35;color:var(--c-muted)}
+.board .estado .word{display:block;font:700 20px/1.2 var(--c-font);color:var(--v-ink);margin:2px 0}
+.board>ul{grid-column:1/-1}
+:root{--amp-yellow:var(--v-sunk);--amp-bar:var(--v-accent);--amp-wash:transparent}
+.red a.perfil:focus-visible{background:var(--v-surface)!important;color:var(--v-ink)!important;border-color:var(--v-accent)!important}
+.board .cap b{font:600 12px/1 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important}
 `;
     PANEL_CLARO = "--c-bg:#f4f5f7;--c-surface:#ffffff;--c-sunk:#f0f2f5;--c-line:#d9dde3;--c-ink:#1c2430;--c-muted:#545e6b;--c-accent:#1f3a5f;--c-on-accent:#ffffff;--c-focus:#1f3a5f;--c-link-line:#1f3a5f";
     PANEL_OSCURO = "--c-bg:#111418;--c-surface:#181c22;--c-sunk:#1e232a;--c-line:#2b313a;--c-ink:#e6e8eb;--c-muted:#a5adb8;--c-accent:#9db8dc;--c-on-accent:#0f1622;--c-focus:#9db8dc;--c-link-line:#9db8dc";
@@ -82921,6 +82929,44 @@ section,.pcard,.kpi,details{border-radius:10px!important;box-shadow:none!importa
 .panel>*{animation:none!important}
 #login{border-top:1px solid var(--c-line)!important}
 .auth-tabs button[aria-selected="true"]{background:var(--c-accent)!important;color:var(--c-on-accent)!important;border-color:var(--c-accent)!important}
+`;
+  }
+});
+
+// packages/api/dist/interfaces/ui/sistema.js
+var SISTEMA;
+var init_sistema = __esm({
+  "packages/api/dist/interfaces/ui/sistema.js"() {
+    "use strict";
+    SISTEMA = `
+body::before,body::after{content:none!important;display:none!important;background:none!important}
+*,*::before,*::after{animation:none!important}
+.js-anim .aparece,.aparece{opacity:1!important;transform:none!important}
+body{font-family:var(--c-font);line-height:1.55}
+h1,h2,h3,h4,.big,.word,.price,.kpi b,.tile b,.card .big{font-family:var(--c-font)!important;letter-spacing:0!important}
+h1{font-size:22px!important;font-weight:700!important;line-height:1.25!important;letter-spacing:-.01em!important}
+@media (max-width:640px){h1{font-size:20px!important}}
+h2{font-size:18px;font-weight:600!important;line-height:1.3}
+h3{font-weight:600!important;line-height:1.35}
+h1 em,h2 em{font-style:normal;background:none!important;color:inherit!important;padding:0!important}
+.big,.word,.price,.kpi b,.tile b,.card .big{font-weight:700!important}
+th,.section,p.section,.cap,.informe-cap,.nav-title,.kh,.card .kh,.card .kpi span,.card .tile span,.tile .kh,.board .details h3{text-transform:none!important;letter-spacing:0!important;font-variant-caps:normal!important;font-weight:600!important;font-size:13px!important}
+.section,p.section{border-left:0!important;padding-left:0!important;color:var(--c-ink)!important}
+.section::before,.section::after{content:none!important}
+.card,.option,.pcard,.beneficios li,.board,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.line,.veh,.kpi,#login,#composer,#tools,.hero,.profile-card{box-shadow:none!important;background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-radius:10px}
+button,.btn,.access-btn,a.button,.cta,.pill-btn{box-shadow:none!important;background-image:none!important;letter-spacing:0!important;text-transform:none!important;font-weight:600}
+button,.btn,.access-btn,a.button,.cta{border-radius:8px}
+a,button,.btn,.access-btn,.cta,input,select,textarea,summary{transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out}
+main a:not(.button):not(.access-btn):not(.option):not(.menu-link):not(.side-link):not(.btn):not(.cta):not(.pill):not(.perfil):not(.logo){text-decoration-color:var(--c-link-line)!important;text-decoration-thickness:1px!important;text-underline-offset:3px}
+.code,code,kbd{font-family:var(--c-mono)}
+main h2,main h3{text-transform:none!important;letter-spacing:0!important;border-left:0!important;padding-left:0!important}
+main h2{font-size:16px!important}
+main h3{font-size:15px!important}
+.titulo{font-size:17px!important;font-weight:600!important;letter-spacing:0!important}
+.cta:not(:disabled){background-color:var(--c-cta);color:var(--c-on-cta)!important}
+.cta:not(:disabled):hover{background-color:var(--c-cta-hover)}
+:focus-visible{outline-color:var(--c-focus)!important}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
 `;
   }
 });
@@ -82999,21 +83045,21 @@ var init_theme = __esm({
   "packages/api/dist/interfaces/ui/theme.js"() {
     "use strict";
     LIGHT = [
-      "--c-bg:#eceef2",
+      "--c-bg:#f4f5f7",
       "--c-surface:#ffffff",
-      "--c-sunk:#f3f4f7",
-      "--c-ink:#0d1117",
-      "--c-muted:#4f5663",
-      "--c-line:#d5d9e0",
+      "--c-sunk:#f0f2f5",
+      "--c-ink:#1c2430",
+      "--c-muted:#545e6b",
+      "--c-line:#d9dde3",
       "--c-field:#ffffff",
-      "--c-accent:#111111",
+      "--c-accent:#1f3a5f",
       "--c-on-accent:#ffffff",
       "--c-cta:#13804a",
       "--c-on-cta:#ffffff",
       "--c-cta-hover:#0f6d3e",
-      "--c-promo:#111111",
+      "--c-promo:#1f3a5f",
       "--c-on-promo:#ffffff",
-      "--c-grid:rgba(17,19,24,.04)",
+      "--c-grid:rgba(0,0,0,0)",
       "--c-ok:#0f7a3d",
       "--c-ok-bg:#d9f2e3",
       "--c-warn:#8a4b00",
@@ -83021,66 +83067,66 @@ var init_theme = __esm({
       "--c-bad:#b3191b",
       "--c-bad-bg:#ffdcd9",
       "--c-on-bad:#ffffff",
-      "--c-head:#0f1115",
+      "--c-head:#1f3a5f",
       "--c-head-ink:#ffffff",
-      "--c-head-line:#2a2e35",
-      "--c-head-brand:#fcf622",
+      "--c-head-line:#2f4c74",
+      "--c-head-brand:#ffffff",
       "--c-hero:#ffffff",
-      "--c-hero-ink:#0d1117",
-      "--c-hero-muted:#4f5663",
-      "--c-hero-line:#d5d9e0",
-      "--c-link:#14161b",
-      "--c-link-line:#b09f00",
-      "--c-brand-ink:#14161b",
-      "--c-brand-bg:linear-gradient(transparent 82%,#fcf622 82%)",
-      "--c-focus:#0d1117",
+      "--c-hero-ink:#1c2430",
+      "--c-hero-muted:#545e6b",
+      "--c-hero-line:#d9dde3",
+      "--c-link:#1f3a5f",
+      "--c-link-line:#1f3a5f",
+      "--c-brand-ink:#1c2430",
+      "--c-brand-bg:none",
+      "--c-focus:#1f3a5f",
       "--c-glow:0 0 0 transparent",
-      "--c-shadow:0 1px 2px rgba(13,17,23,.06),0 6px 18px rgba(13,17,23,.06)",
+      "--c-shadow:none",
       "color-scheme:light"
     ].join(";");
     DARK = [
-      "--c-bg:#07080a",
-      "--c-surface:#161a20",
-      "--c-sunk:#1d222a",
-      "--c-ink:#f2f4f7",
-      "--c-muted:#a3abb7",
-      "--c-line:#2e3540",
-      "--c-field:#101114",
-      "--c-accent:#eceef1",
-      "--c-on-accent:#07080a",
+      "--c-bg:#111418",
+      "--c-surface:#181c22",
+      "--c-sunk:#1e232a",
+      "--c-ink:#e6e8eb",
+      "--c-muted:#a5adb8",
+      "--c-line:#2b313a",
+      "--c-field:#101318",
+      "--c-accent:#9db8dc",
+      "--c-on-accent:#0f1622",
       "--c-cta:#3ccf7e",
       "--c-on-cta:#06180e",
       "--c-cta-hover:#5bd994",
-      "--c-promo:#eceef1",
-      "--c-on-promo:#0c0d0f",
-      "--c-grid:rgba(255,255,255,.035)",
+      "--c-promo:#9db8dc",
+      "--c-on-promo:#0f1622",
+      "--c-grid:rgba(0,0,0,0)",
       "--c-ok:#4fd08a",
       "--c-ok-bg:#0f2e1c",
       "--c-warn:#f5b84f",
       "--c-warn-bg:#33240b",
       "--c-bad:#ff7a70",
       "--c-bad-bg:#3a1412",
-      "--c-on-bad:#07080a",
-      "--c-head:#0a0b0d",
-      "--c-head-ink:#ffffff",
-      "--c-head-line:#2c323b",
-      "--c-head-brand:#fcf622",
-      "--c-hero:#161a20",
-      "--c-hero-ink:#ffffff",
-      "--c-hero-muted:#b4b9c1",
-      "--c-hero-line:#2e3540",
-      "--c-link:#eceef1",
-      "--c-link-line:#fcf622",
-      "--c-brand-ink:#eceef1",
+      "--c-on-bad:#111418",
+      "--c-head:#0f1622",
+      "--c-head-ink:#e6e8eb",
+      "--c-head-line:#2b313a",
+      "--c-head-brand:#e6e8eb",
+      "--c-hero:#181c22",
+      "--c-hero-ink:#e6e8eb",
+      "--c-hero-muted:#b4bcc6",
+      "--c-hero-line:#2b313a",
+      "--c-link:#e6e8eb",
+      "--c-link-line:#9db8dc",
+      "--c-brand-ink:#e6e8eb",
       "--c-brand-bg:none",
-      "--c-focus:#fcf622",
+      "--c-focus:#9db8dc",
       "--c-glow:0 0 0 transparent",
-      "--c-shadow:0 0 0 1px rgba(255,255,255,.04),0 10px 28px rgba(0,0,0,.5)",
+      "--c-shadow:none",
       "color-scheme:dark"
     ].join(";");
-    FONTS = '--c-font:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;--c-display:"Inter Tight","Inter",system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;--c-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
+    FONTS = '--c-font:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;--c-display:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;--c-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
     THEME_TOKENS = `
-:root{${LIGHT};${FONTS};--c-r:16px;--c-r-sm:12px;--c-pill:999px}
+:root{${LIGHT};${FONTS};--c-r:10px;--c-r-sm:8px;--c-pill:999px}
 @media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){${DARK}}}
 :root[data-tema="oscuro"]{${DARK}}
 `;
@@ -91926,7 +91972,7 @@ ${seoHead({
   })}
 <meta name="author" content="AutoMantPro">
 <script type="application/ld+json" nonce="${nonce2}">${structuredData(input)}</script>
-<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}</style>
+<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}</style>
 <script nonce="${nonce2}">${THEME_BOOT}</script>
 </head>
 <body>
@@ -91968,6 +92014,7 @@ var init_page = __esm({
   "packages/api/dist/interfaces/entry/page.js"() {
     "use strict";
     init_sobrio();
+    init_sistema();
     init_theme();
     init_theme_layers();
     init_head();
@@ -92514,13 +92561,16 @@ main details.gestionar>.menu{margin-top:8px}
 @media (max-width:350px){.red a.perfil .ico{display:none}}
 `;
     BOARD = `<div class="board" aria-label="Ejemplo del informe de tu veh\xEDculo">
-  <p class="cap"><span>As\xED se ve el informe de tu veh\xEDculo</span><b>EJEMPLO</b></p>
-  <svg viewBox="0 0 104 104" width="84" height="84" aria-hidden="true">
+  <p class="cap"><span>As\xED se ve el informe de tu veh\xEDculo</span><b>Ejemplo</b></p>
+  <div class="estado">
+  <svg viewBox="0 0 104 104" width="96" height="96" role="img" aria-label="Puntaje del plan: 78 de 100">
     <circle cx="52" cy="52" r="44" fill="none" stroke="var(--c-sunk)" stroke-width="8" stroke-dasharray="207.3 277" transform="rotate(135 52 52)" stroke-linecap="round"/>
-    <circle cx="52" cy="52" r="44" fill="none" stroke="var(--c-warn)" stroke-width="8" stroke-dasharray="161.7 277" transform="rotate(135 52 52)" stroke-linecap="round"/>
+    <circle cx="52" cy="52" r="44" fill="none" stroke="var(--c-bad)" stroke-width="8" stroke-dasharray="161.7 277" transform="rotate(135 52 52)" stroke-linecap="round"/>
     <text x="52" y="58" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="22" font-weight="700" fill="var(--c-ink)">78</text>
     <text x="52" y="76" text-anchor="middle" font-size="10" fill="var(--c-muted)">de 100</text>
   </svg>
+  <div><small>Estado del veh\xEDculo</small><b class="word">Atenci\xF3n</b><small>1 urgente \xB7 1 pronto \xB7 1 al d\xEDa</small></div>
+  </div>
   <ul>
     <li class="bad"><span class="led"></span><span>Motor y lubricaci\xF3n</span><span class="pill">Urgente</span></li>
     <li class="warn"><span class="led"></span><span>Frenos</span><span class="pill">Pronto</span></li>
@@ -96778,7 +96828,7 @@ function layout(input) {
 <main>${input.body}</main></div>` : `<main>${input.body}</main>`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>${escapeHtml(input.title)} \xB7 AutoMantPro Admin</title>
-<style nonce="${nonce2}">${STYLES3}${THEME_ADMIN_LAYER}</style></head><body>${shell}</body></html>`;
+<style nonce="${nonce2}">${STYLES3}${THEME_ADMIN_LAYER}${SISTEMA}</style></head><body>${shell}</body></html>`;
 }
 function loginView(error) {
   return `<form class="login" method="post" action="/admin/login" autocomplete="on">
@@ -96848,6 +96898,7 @@ var init_views = __esm({
   "packages/api/dist/interfaces/admin/views.js"() {
     "use strict";
     init_page();
+    init_sistema();
     init_theme();
     init_theme_layers();
     init_brand();
@@ -112113,6 +112164,7 @@ async function localAgentDownloadRoutes(app2) {
 
 // packages/api/dist/interfaces/pilot-page.js
 init_sobrio();
+init_sistema();
 
 // packages/api/dist/interfaces/ui/scanner-layer.js
 var PANTALLA = [
@@ -112394,8 +112446,8 @@ function gauge(r){const total=r.items.length;const known=total-r.counts.sin_dato
  const ring={cx:52,cy:52,r:44,fill:'none','stroke-width':8,transform:'rotate(135 52 52)','stroke-linecap':'round'};
  svg.append(sv('circle',{...ring,stroke:'var(--c-sunk)','stroke-dasharray':arc+' 277'}));
  if(val>0)svg.append(sv('circle',{...ring,stroke:color,'stroke-dasharray':val.toFixed(1)+' 277'}));
- svg.append(sv('text',{x:52,y:58,'text-anchor':'middle','font-family':'ui-monospace,Menlo,Consolas,monospace','font-size':22,'font-weight':700,fill:'var(--c-ink)'},pct===null?'--':pct+'%'));
- svg.append(sv('text',{x:52,y:76,'text-anchor':'middle','font-size':10,fill:'var(--c-muted)'},Number.isFinite(r.score)?'puntaje':'al d\xEDa'));
+ svg.append(sv('text',{x:52,y:58,'text-anchor':'middle','font-family':'ui-monospace,Menlo,Consolas,monospace','font-size':22,'font-weight':700,fill:'var(--c-ink)'},pct===null?'--':(Number.isFinite(r.score)?String(pct):pct+'%')));
+ svg.append(sv('text',{x:52,y:76,'text-anchor':'middle','font-size':10,fill:'var(--c-muted)'},Number.isFinite(r.score)?'de 100':'al d\xEDa'));
  g.append(svg);
  const word={urgente:'Atenci\xF3n',pronto:'Pronto',al_dia:'Al d\xEDa',sin_dato:'Sin datos'}[worst];
  return h('div',{class:'scan'},g,h('div',{},h('small',{text:'Estado del plan'}),h('div',{class:'word',text:word}),h('small',{text:r.counts.urgente+' urgente \xB7 '+r.counts.pronto+' pronto \xB7 '+r.counts.al_dia+' al d\xEDa \xB7 '+r.counts.sin_dato+' sin dato'})));}
@@ -112616,7 +112668,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.45 var(--c-mono)}article{border-bottom:1px solid var(--c-line);padding:8px 0}
 details{margin:12px 0;background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:0 14px}details[open]{padding-bottom:14px}
 details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;cursor:pointer}
-.hidden{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}</style>
+.hidden{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}${SISTEMA}</style>
 ${MENU_MARKUP}
 <main>${logoImg()}<h1>Pruebas con atenci\xF3n humana</h1><p>El operador revisa cada mensaje. Preparar un comando no ejecuta la operaci\xF3n: debes enviarlo y el operador debe aprobarlo.</p><p>Los avisos se muestran aqu\xED. El env\xEDo real por WhatsApp sigue pendiente.</p><p><a href="/admin/local-agent">Conectar o revocar equipo de atenci\xF3n</a></p>
 <section id="login"><h2 id="entrar">Entrar con tu cuenta</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true">Con c\xF3digo por WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">Con contrase\xF1a</button></nav><form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form><form id="codeVerifyForm" class="hidden"><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><form id="loginForm" class="hidden"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label><h3 id="crear">Crear cuenta</h3><form id="signupForm"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><div id="signupFields"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Pedir c\xF3digo y continuar</button></form><form id="signupVerifyForm" class="hidden"><label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></section>
@@ -114771,6 +114823,7 @@ import { randomBytes as randomBytes9 } from "node:crypto";
 
 // packages/api/dist/interfaces/content/page.js
 init_page();
+init_sistema();
 init_theme();
 init_theme_layers();
 init_head();
@@ -114850,7 +114903,7 @@ function renderContentPage(input) {
 ${THEME_COLOR_META}
 <title>${escapeHtml(input.title)}</title>
 ${seoHead({ path: input.path, title: input.title, description: input.description, type: "website", noindex: input.noindex })}
-<style nonce="${nonce2}">${STYLES}${EXTRA}${THEME_ENTRY_LAYER}</style>
+<style nonce="${nonce2}">${STYLES}${EXTRA}${THEME_ENTRY_LAYER}${SISTEMA}</style>
 <script type="application/ld+json" nonce="${nonce2}">${structuredData2(input)}</script>
 </head>
 <body>
@@ -115281,6 +115334,7 @@ async function landingRoutes(app2, options = {}) {
 }
 
 // packages/api/dist/interfaces/map/index.js
+init_sistema();
 init_page();
 init_entry();
 init_theme();
@@ -116030,7 +116084,7 @@ function renderMapPage(input) {
 ${THEME_COLOR_META}
 <title>${escapeHtml(title)}</title>
 ${seoHead({ path: "/mapa", title, description, type: "website" })}
-<style nonce="${nonce2}">${STYLES}${THEME_ENTRY_LAYER}${LEAFLET_CSS}${MAP_STYLES}</style>
+<style nonce="${nonce2}">${STYLES}${THEME_ENTRY_LAYER}${LEAFLET_CSS}${MAP_STYLES}${SISTEMA}</style>
 </head>
 <body>
 <main>
@@ -116198,6 +116252,7 @@ async function mapRoutes(app2, options = {}) {
 init_workshop_map_store();
 
 // packages/api/dist/interfaces/content/plans-page.js
+init_sistema();
 init_catalog();
 init_page();
 import { randomBytes as randomBytes12 } from "node:crypto";
@@ -116285,13 +116340,13 @@ async function plansPageRoutes(app2, options = {}) {
         { href: "/planes", label: "Contratar plan" }
       ],
       chatText: "Planes"
-    }).replace("</style>", `${PLAN_STYLES}${SITE_LINKS_STYLES}</style>`));
+    }).replace("</style>", `${PLAN_STYLES}${SITE_LINKS_STYLES}${SISTEMA}</style>`));
   });
 }
 var PLAN_STYLES = `
 .plan .incluye{margin:6px 0 8px;padding-left:18px;font-size:14.5px}
 .plan .sello{font:600 12px/1 var(--c-font);background:var(--c-ok-bg);color:var(--c-ok);padding:4px 7px;border-radius:6px;vertical-align:middle}
-.plan.recomendado{border-left:3px solid var(--c-accent);padding-left:10px}
+.plan.recomendado{border-top:1px solid var(--c-line);padding-top:12px}
 .contratar{display:inline-block;font-weight:700;color:var(--c-accent);text-decoration:underline;text-underline-offset:2px;margin:2px 0 4px}
 .nota-plan{font-size:13px;color:var(--c-muted)}
 @media (max-width:640px){
@@ -116313,6 +116368,7 @@ init_visit_store();
 init_documents();
 
 // packages/api/dist/interfaces/legal/index.js
+init_sistema();
 init_page();
 init_head();
 init_documents();
@@ -116349,7 +116405,7 @@ function renderLegalPage(input) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(input.title)} \xB7 AutoMantPro</title>
 ${input.path ? seoHead({ path: input.path, title: `${input.title} \xB7 AutoMantPro`, description: input.description ?? input.title }) : ICON_LINKS}
-<style nonce="${nonce2}">${STYLES2}${THEME_LEGAL_LAYER}</style>
+<style nonce="${nonce2}">${STYLES2}${THEME_LEGAL_LAYER}${SISTEMA}</style>
 </head>
 <body>
 <main>
@@ -116864,6 +116920,7 @@ async function readinessRoutes(app2, options = {}) {
 init_admin_alerts();
 
 // packages/api/dist/interfaces/assistant/index.js
+init_sistema();
 init_theme();
 init_theme_layers();
 init_brand();
@@ -116872,7 +116929,7 @@ function renderAssistantPage(nonce2) {
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Asistente \xB7 AutoMantPro</title>
 <style nonce="${nonce2}">${THEME_TOKENS}
 :root{--ink:var(--c-ink);--muted:var(--c-muted);--brand:var(--c-accent);--bg:var(--c-bg);--card:var(--c-surface);--line:var(--c-line);--danger:var(--c-bad);--ok:var(--c-ok)}*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.45 var(--c-font)}.shell{max-width:920px;margin:auto;padding:24px 16px 48px}header{margin-bottom:18px}.brand{color:var(--c-accent);font-weight:700;letter-spacing:-.01em}h1{font-size:clamp(1.55rem,4vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin:.25rem 0}h2{font-size:1.05rem;margin:0 0 8px}.muted{color:var(--c-muted)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:18px;box-shadow:var(--c-shadow)}.hidden{display:none!important}label{display:block;font-weight:600;margin:12px 0 5px}input,textarea,button{font:inherit}input,textarea{width:100%;min-height:48px;border:1px solid var(--c-line);border-radius:10px;padding:11px;background:var(--c-field);color:var(--c-ink)}textarea{min-height:88px;resize:vertical}button{min-height:48px;border:0;border-radius:var(--c-r);background:var(--c-accent);color:var(--c-on-accent);font-weight:600;padding:11px 18px;cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.secondary{background:transparent;color:var(--c-accent);border:1px solid var(--c-line)}.danger{color:var(--c-bad)}.notice{min-height:1.5em;margin:10px 0}.chat{display:grid;gap:12px;margin:18px 0}.message{max-width:82%;padding:11px 13px;border-radius:13px;background:var(--c-sunk);white-space:pre-wrap}.message.user{justify-self:end;background:var(--c-ok-bg)}.message.assistant{justify-self:start}.proposal{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:14px;margin:12px 0}.proposal dl{display:grid;grid-template-columns:minmax(120px,1fr) 2fr;gap:5px 12px;margin:12px 0}.proposal dt{color:var(--c-muted)}.proposal dd{margin:0;font-weight:600}.confirm{display:flex;gap:9px;align-items:flex-start;margin:13px 0}.confirm input{width:20px;height:20px;min-height:0;flex:0 0 auto;margin-top:2px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row button{margin-left:auto}@media(max-width:560px){.shell{padding:18px 12px}.card{padding:14px}.message{max-width:92%}.proposal dl{grid-template-columns:1fr}.proposal dt{margin-top:6px}.row button{width:100%;margin-left:0}}${THEME_ASSISTANT_LAYER}
-</style></head><body><main class="shell"><header><div class="brand">${logoImg()}</div><h1>Asistente de mantenimiento</h1><p class="muted">Las propuestas se revisan antes de registrar cualquier veh\xEDculo.</p></header>
+${SISTEMA}</style></head><body><main class="shell"><header><div class="brand">${logoImg()}</div><h1>Asistente de mantenimiento</h1><p class="muted">Las propuestas se revisan antes de registrar cualquier veh\xEDculo.</p></header>
 <section id="login" class="card"><h2>Ingresar</h2><p class="muted">Usa las credenciales de tu cuenta de due\xF1o.</p><form id="login-form"><label for="phone">Tel\xE9fono</label><input id="phone" name="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" name="password" type="password" autocomplete="current-password" required><p id="login-notice" class="notice" role="status"></p><button type="submit">Continuar</button></form></section>
 <section id="workspace" class="hidden"><div class="card"><div id="chat" class="chat" aria-live="polite"></div><form id="chat-form"><label for="message">\xBFEn qu\xE9 necesitas ayuda?</label><textarea id="message" maxlength="2000" required placeholder="Describe tu veh\xEDculo o la consulta de mantenimiento."></textarea><p id="chat-notice" class="notice" role="status"></p><div class="row"><button id="send" type="submit">Enviar</button><button id="logout" class="secondary" type="button">Salir</button></div></form></div><section id="proposals" aria-live="polite"></section></section>
 </main><script nonce="${nonce2}">
@@ -116890,6 +116947,7 @@ async function assistantPageRoutes(app2, options = {}) {
 }
 
 // packages/api/dist/interfaces/fleet-panel/index.js
+init_sistema();
 init_zod();
 init_theme();
 init_theme_layers();
@@ -116967,7 +117025,7 @@ function renderFleetPanel(data3, nonce2, csvHref) {
 <style nonce="${nonce2}">${THEME_TOKENS}
 *{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.45 var(--c-font)}header{background:var(--c-head);color:var(--c-head-ink);padding:16px max(16px,env(safe-area-inset-left))}header .brand{color:var(--c-head-brand);font-weight:800}header h1{margin:.2rem 0 0;font-size:clamp(1.3rem,4vw,1.8rem)}main{max-width:1180px;margin:auto;padding:18px max(16px,env(safe-area-inset-left)) 48px;display:grid;gap:18px}.muted{color:var(--c-muted)}.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.tile{background:var(--c-surface);border-radius:var(--c-r);padding:14px;box-shadow:var(--c-shadow)}.tile b{display:block;font-size:1.6rem;font-variant-numeric:tabular-nums}.tile.bad b{color:var(--c-bad)}.tile.warn b{color:var(--c-warn)}.tile.ok b{color:var(--c-ok)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:16px;box-shadow:var(--c-shadow);min-width:0}.card h2{margin:0 0 10px;font-size:1.05rem}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:860px}th,td{padding:8px 10px;border-bottom:1px solid var(--c-line);text-align:left;vertical-align:top}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--c-muted)}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.8rem;font-weight:600}.pill.ok{background:var(--c-ok-bg);color:var(--c-ok)}.pill.warn{background:var(--c-warn-bg);color:var(--c-warn)}.pill.bad{background:var(--c-bad-bg);color:var(--c-bad)}.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.bars{display:grid;gap:8px}.bar{display:grid;grid-template-columns:70px 1fr 90px;gap:8px;align-items:center;font-variant-numeric:tabular-nums}.bar span{display:block;height:12px;border-radius:6px;background:var(--c-accent)}ul{margin:0;padding-left:1.1em}a.button{display:inline-block;background:var(--c-cta);color:var(--c-on-cta);padding:10px 16px;border-radius:var(--c-r);text-decoration:none;font-weight:600}a.button:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.gap{margin-top:14px!important}.mono,.num,.tile b,.bar{font-family:var(--c-mono);font-variant-numeric:tabular-nums}.led{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:1px}.tile{display:grid;gap:4px}.tile .kh{display:flex;align-items:center;font-size:.85rem;color:var(--c-muted)}.tile.ok .led{background:var(--c-ok)}.tile.warn .led{background:var(--c-warn)}.tile.bad .led{background:var(--c-bad)}.tile.idle .led{background:transparent;border:1.5px solid var(--c-muted)}.tile.gauge{grid-template-columns:auto 1fr;align-items:center;gap:12px;grid-column:span 2}.pill{display:inline-flex;align-items:center;white-space:nowrap}th:first-child,td:first-child{min-width:140px}.tile.gauge strong{display:block;font-size:1.1rem}.svc{white-space:nowrap;margin:0 0 3px}.code{font:700 .72rem/1 var(--c-mono);padding:3px 5px;border-radius:5px;border:1px solid currentColor;margin-right:6px}.code.bad{color:var(--c-bad)}.code.warn{color:var(--c-warn)}.bar span{background:var(--c-muted)!important;border-radius:2px}.shell{display:flex;align-items:flex-start}.index{position:sticky;top:0;width:220px;flex:none;min-height:calc(100vh - 96px);background:var(--c-head);color:var(--c-head-ink);padding:20px 12px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box}.index-brand .logo-img{height:36px;padding:3px 8px}.index-fleet{padding:2px 10px 14px;font-size:14px;color:var(--c-head-ink);opacity:.75}.index-fleet b{display:block;font-family:var(--c-display);font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--c-head-ink)}.index-fleet span{display:block}.index nav{display:flex;flex-direction:column;gap:2px}.index nav a{display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:var(--c-pill);color:var(--c-head-ink);text-decoration:none;font-size:15px;font-weight:500}.index nav a:hover,.index nav a:focus-visible{background:var(--c-head-line);color:var(--c-head-ink)}.index-mobile{display:none}.index-mobile summary{list-style:none;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--c-head-line);border-radius:var(--c-pill);color:var(--c-head-ink);font-weight:600;cursor:pointer}.index-mobile summary::-webkit-details-marker{display:none}.index-mobile nav{margin-top:8px}
 .index-note{margin-top:auto;padding:14px 10px 0;font-size:13px;color:var(--c-head-ink);opacity:.55}.shell main{flex:1;min-width:0}section[id]{scroll-margin-top:16px}@media (max-width:900px){.shell{display:block}.index{position:static;width:auto;min-height:0;padding:10px 12px;gap:8px;border-bottom:1px solid var(--c-head-line)}.index-brand{display:none}.index-fleet{padding:0 2px;font-size:12px}.index-fleet b{font-size:15px}.index-desk{display:none!important}.index-mobile{display:block}.index-note{display:none}}${Array.from({ length: 20 }, (_, i) => `.w${(i + 1) * 5}{width:${(i + 1) * 5}%}`).join("")}${THEME_FLEET_LAYER}
-</style></head><body><header><div class="brand">${logoImg()}</div><h1>${esc(data3.fleet.name)}</h1><div>${esc(data3.fleet.city)} \xB7 ${list7.length} veh\xEDculos \xB7 solo lectura</div></header>
+${SISTEMA}</style></head><body><header><div class="brand">${logoImg()}</div><h1>${esc(data3.fleet.name)}</h1><div>${esc(data3.fleet.city)} \xB7 ${list7.length} veh\xEDculos \xB7 solo lectura</div></header>
 <div class="shell"><aside class="index" aria-label="\xCDndice de la p\xE1gina">
 <div class="index-fleet"><b>${esc(data3.fleet.name)}</b><span>${esc(data3.fleet.city)}</span></div>
 <nav class="index-desk" aria-label="Secciones"><a href="#resumen">Resumen</a><a href="#vehiculos">Veh\xEDculos</a><a href="#costos">Costos</a><a href="#personas">Personas y talleres</a></nav>
@@ -117125,6 +117183,7 @@ function installSecurity(app2, options = {}) {
 }
 
 // packages/api/dist/interfaces/courses/index.js
+init_sistema();
 init_courses_store();
 init_apply();
 init_domain();
@@ -117155,7 +117214,7 @@ function defaultSession(request, reply, required = true) {
   return null;
 }
 function page(title, body, nonce2) {
-  return `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>${e3(title)} \xB7 AutoMantPro</title><style nonce="${e3(nonce2)}">${THEME_TOKENS}*{box-sizing:border-box}body{max-width:1000px;margin:0 auto;padding:clamp(16px,4vw,36px);background:var(--c-bg);color:var(--c-ink);font:16px/1.55 var(--c-font)}a{color:var(--c-accent);overflow-wrap:anywhere}nav{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px}article,section{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:clamp(14px,3vw,22px);margin:12px 0;min-width:0}h1,h2,h3{overflow-wrap:anywhere}.notice{background:var(--c-warn-bg);color:var(--c-warn);border-left:4px solid var(--c-warn);padding:12px}form{margin:12px 0}label{display:block;margin:10px 0;overflow-wrap:anywhere}input,textarea,button{max-width:100%;font:inherit}input,textarea{width:100%;padding:10px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface);color:var(--c-ink)}input[type=checkbox],input[type=radio]{width:auto}button{padding:10px 16px;border:0;border-radius:var(--c-pill);background:var(--c-promo);color:var(--c-on-promo);cursor:pointer}.locked{color:var(--c-muted)}ol{padding-left:24px}li{overflow-wrap:anywhere}</style></head><body><nav aria-label="Capacitaci\xF3n"><a href="/cursos">Cursos</a><a href="/mis-cursos">Mis cursos</a></nav><main>${body}</main></body></html>`;
+  return `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>${e3(title)} \xB7 AutoMantPro</title><style nonce="${e3(nonce2)}">${THEME_TOKENS}*{box-sizing:border-box}body{max-width:1000px;margin:0 auto;padding:clamp(16px,4vw,36px);background:var(--c-bg);color:var(--c-ink);font:16px/1.55 var(--c-font)}a{color:var(--c-accent);overflow-wrap:anywhere}nav{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px}article,section{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:clamp(14px,3vw,22px);margin:12px 0;min-width:0}h1,h2,h3{overflow-wrap:anywhere}.notice{background:var(--c-warn-bg);color:var(--c-warn);border-left:4px solid var(--c-warn);padding:12px}form{margin:12px 0}label{display:block;margin:10px 0;overflow-wrap:anywhere}input,textarea,button{max-width:100%;font:inherit}input,textarea{width:100%;padding:10px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface);color:var(--c-ink)}input[type=checkbox],input[type=radio]{width:auto}button{padding:10px 16px;border:0;border-radius:var(--c-pill);background:var(--c-promo);color:var(--c-on-promo);cursor:pointer}.locked{color:var(--c-muted)}ol{padding-left:24px}li{overflow-wrap:anywhere}${SISTEMA}</style></head><body><nav aria-label="Capacitaci\xF3n"><a href="/cursos">Cursos</a><a href="/mis-cursos">Mis cursos</a></nav><main>${body}</main></body></html>`;
 }
 function nonce(request) {
   return String(request.cspNonce ?? randomBytes17(16).toString("base64"));
