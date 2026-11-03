@@ -22056,6 +22056,13 @@ var PLAN_OVERRIDE_STATEMENTS = [
   { kind: "createTable", target: "VehiclePlanOverrideLog", sql: "CREATE TABLE IF NOT EXISTS `VehiclePlanOverrideLog` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `serviceId` VARCHAR(191) NOT NULL, `before` JSON NULL, `after` JSON NOT NULL, `actorUserId` VARCHAR(191) NOT NULL, `actorRole` ENUM('dueno','taller') NOT NULL, `shopId` VARCHAR(191) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehiclePlanOverrideLog_vehicleId_serviceId_createdAt_idx` (`vehicleId`,`serviceId`,`createdAt`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
 ];
 
+// packages/api/src/infrastructure/schema-setup/inspection-statements.ts
+var INSPECTION_TABLES = ["VehicleInspection", "VehicleInspectionItem"];
+var INSPECTION_STATEMENTS = [
+  { kind: "createTable", target: "VehicleInspection", sql: "CREATE TABLE IF NOT EXISTS `VehicleInspection` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `appointmentId` VARCHAR(191) NULL, `actorUserId` VARCHAR(191) NOT NULL, `km` INT NULL, `note` VARCHAR(300) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehicleInspection_vehicleId_createdAt_idx` (`vehicleId`, `createdAt`), INDEX `VehicleInspection_shopId_idx` (`shopId`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "createTable", target: "VehicleInspectionItem", sql: "CREATE TABLE IF NOT EXISTS `VehicleInspectionItem` (`inspectionId` VARCHAR(191) NOT NULL, `code` VARCHAR(8) NOT NULL, `status` ENUM('ok','observar','cambiar','no_aplica') NOT NULL, `measure` DECIMAL(8,2) NULL, `unit` VARCHAR(8) NULL, PRIMARY KEY (`inspectionId`, `code`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+];
+
 // packages/api/src/infrastructure/schema-setup/courses-statements.ts
 var T3 = "CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 var COURSES_TABLES = ["ExpertProfile", "Course", "Lesson", "Question", "Option", "Enrollment", "LessonProgress", "Certificate", "InviteCode", "CourseChange", "ContentReport"];
@@ -22080,8 +22087,8 @@ var COURSES_STATEMENTS = [
 ];
 
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...COURSES_STATEMENTS];
-var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...COURSES_TABLES];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
+var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));
   let conn2;

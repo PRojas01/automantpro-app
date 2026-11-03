@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='b34ae22d57845856650ed5e23bc5444d6bc06d0c'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='25ff2e2b0702a569dd1c2e80b04536b1b2fc28ab'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -9706,8 +9706,8 @@ var require_safe_stable_stringify = __commonJS({
     }
     function configure(options) {
       options = { ...options };
-      const fail11 = getStrictOption(options);
-      if (fail11) {
+      const fail12 = getStrictOption(options);
+      if (fail12) {
         if (options.bigint === void 0) {
           options.bigint = false;
         }
@@ -9818,7 +9818,7 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value2) ? String(value2) : fail11 ? fail11(value2) : "null";
+            return isFinite(value2) ? String(value2) : fail12 ? fail12(value2) : "null";
           case "boolean":
             return value2 === true ? "true" : "false";
           case "undefined":
@@ -9829,7 +9829,7 @@ ${originalIndentation}`;
             }
           // fallthrough
           default:
-            return fail11 ? fail11(value2) : void 0;
+            return fail12 ? fail12(value2) : void 0;
         }
       }
       function stringifyArrayReplacer(key, value2, stack, replacer, spacer, indentation) {
@@ -9909,7 +9909,7 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value2) ? String(value2) : fail11 ? fail11(value2) : "null";
+            return isFinite(value2) ? String(value2) : fail12 ? fail12(value2) : "null";
           case "boolean":
             return value2 === true ? "true" : "false";
           case "undefined":
@@ -9920,7 +9920,7 @@ ${originalIndentation}`;
             }
           // fallthrough
           default:
-            return fail11 ? fail11(value2) : void 0;
+            return fail12 ? fail12(value2) : void 0;
         }
       }
       function stringifyIndent(key, value2, stack, spacer, indentation) {
@@ -10021,7 +10021,7 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value2) ? String(value2) : fail11 ? fail11(value2) : "null";
+            return isFinite(value2) ? String(value2) : fail12 ? fail12(value2) : "null";
           case "boolean":
             return value2 === true ? "true" : "false";
           case "undefined":
@@ -10032,7 +10032,7 @@ ${originalIndentation}`;
             }
           // fallthrough
           default:
-            return fail11 ? fail11(value2) : void 0;
+            return fail12 ? fail12(value2) : void 0;
         }
       }
       function stringifySimple(key, value2, stack) {
@@ -10117,7 +10117,7 @@ ${originalIndentation}`;
             return `{${res}}`;
           }
           case "number":
-            return isFinite(value2) ? String(value2) : fail11 ? fail11(value2) : "null";
+            return isFinite(value2) ? String(value2) : fail12 ? fail12(value2) : "null";
           case "boolean":
             return value2 === true ? "true" : "false";
           case "undefined":
@@ -10128,7 +10128,7 @@ ${originalIndentation}`;
             }
           // fallthrough
           default:
-            return fail11 ? fail11(value2) : void 0;
+            return fail12 ? fail12(value2) : void 0;
         }
       }
       function stringify2(value2, replacer, space) {
@@ -13655,13 +13655,13 @@ var require_context = __commonJS({
       this.server = server;
     }
     function defaultSchemaErrorFormatter(errors, dataVar) {
-      let text9 = "";
+      let text10 = "";
       const separator = ", ";
       for (let i = 0; i !== errors.length; ++i) {
         const e9 = errors[i];
-        text9 += dataVar + (e9.instancePath || "") + " " + e9.message + separator;
+        text10 += dataVar + (e9.instancePath || "") + " " + e9.message + separator;
       }
-      return new Error(text9.slice(0, -separator.length));
+      return new Error(text10.slice(0, -separator.length));
     }
     module.exports = Context;
   }
@@ -13674,20 +13674,20 @@ var require_secure_json_parse = __commonJS({
     var hasBuffer = typeof Buffer !== "undefined";
     var suspectProtoRx = /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
     var suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
-    function _parse(text9, reviver, options) {
+    function _parse(text10, reviver, options) {
       if (options == null) {
         if (reviver !== null && typeof reviver === "object") {
           options = reviver;
           reviver = void 0;
         }
       }
-      if (hasBuffer && Buffer.isBuffer(text9)) {
-        text9 = text9.toString();
+      if (hasBuffer && Buffer.isBuffer(text10)) {
+        text10 = text10.toString();
       }
-      if (text9 && text9.charCodeAt(0) === 65279) {
-        text9 = text9.slice(1);
+      if (text10 && text10.charCodeAt(0) === 65279) {
+        text10 = text10.slice(1);
       }
-      const obj = JSON.parse(text9, reviver);
+      const obj = JSON.parse(text10, reviver);
       if (obj === null || typeof obj !== "object") {
         return obj;
       }
@@ -13697,15 +13697,15 @@ var require_secure_json_parse = __commonJS({
         return obj;
       }
       if (protoAction !== "ignore" && constructorAction !== "ignore") {
-        if (suspectProtoRx.test(text9) === false && suspectConstructorRx.test(text9) === false) {
+        if (suspectProtoRx.test(text10) === false && suspectConstructorRx.test(text10) === false) {
           return obj;
         }
       } else if (protoAction !== "ignore" && constructorAction === "ignore") {
-        if (suspectProtoRx.test(text9) === false) {
+        if (suspectProtoRx.test(text10) === false) {
           return obj;
         }
       } else {
-        if (suspectConstructorRx.test(text9) === false) {
+        if (suspectConstructorRx.test(text10) === false) {
           return obj;
         }
       }
@@ -13743,21 +13743,21 @@ var require_secure_json_parse = __commonJS({
       }
       return obj;
     }
-    function parse(text9, reviver, options) {
+    function parse(text10, reviver, options) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text9, reviver, options);
+        return _parse(text10, reviver, options);
       } finally {
         Error.stackTraceLimit = stackTraceLimit;
       }
     }
-    function safeParse(text9, reviver) {
+    function safeParse(text10, reviver) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       let result;
       try {
-        result = _parse(text9, reviver, { safe: true });
+        result = _parse(text10, reviver, { safe: true });
       } catch {
         result = void 0;
       } finally {
@@ -18772,7 +18772,7 @@ var require_core = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e9) => `${dataVar}${e9.instancePath} ${e9.message}`).reduce((text9, msg) => text9 + separator + msg);
+        return errors.map((e9) => `${dataVar}${e9.instancePath} ${e9.message}`).reduce((text10, msg) => text10 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -22523,8 +22523,8 @@ var require_parse = __commonJS({
           const vts = (0, util_1.useFunc)(gen, timestamp_1.default);
           const { allowDate, parseDate } = self2.opts;
           const notValid = allowDate ? (0, codegen_1._)`!${vts}(${data3}, true)` : (0, codegen_1._)`!${vts}(${data3})`;
-          const fail11 = parseDate ? (0, codegen_1.or)(notValid, (0, codegen_1._)`(${data3} = new Date(${data3}), false)`, (0, codegen_1._)`isNaN(${data3}.valueOf())`) : notValid;
-          gen.if(fail11, () => parsingError(cxt, (0, codegen_1.str)`invalid timestamp`));
+          const fail12 = parseDate ? (0, codegen_1.or)(notValid, (0, codegen_1._)`(${data3} = new Date(${data3}), false)`, (0, codegen_1._)`isNaN(${data3}.valueOf())`) : notValid;
+          gen.if(fail12, () => parsingError(cxt, (0, codegen_1.str)`invalid timestamp`));
           break;
         }
         case "float32":
@@ -22570,10 +22570,10 @@ var require_parse = __commonJS({
       skipWhitespace(cxt);
       gen.if((0, codegen_1._)`"-0123456789".indexOf(${jsonSlice(1)}) < 0`, () => jsonSyntaxError(cxt), () => parseWith(cxt, parseJson_1.parseJsonNumber, maxDigits));
     }
-    function parseBooleanToken(bool2, fail11) {
+    function parseBooleanToken(bool2, fail12) {
       return (cxt) => {
         const { gen, data: data3 } = cxt;
-        tryParseToken(cxt, `${bool2}`, () => fail11(cxt), () => gen.assign(data3, bool2));
+        tryParseToken(cxt, `${bool2}`, () => fail12(cxt), () => gen.assign(data3, bool2));
       };
     }
     function parseRef(cxt) {
@@ -22606,14 +22606,14 @@ var require_parse = __commonJS({
     function parseToken(cxt, tok) {
       tryParseToken(cxt, tok, jsonSyntaxError);
     }
-    function tryParseToken(cxt, tok, fail11, success) {
+    function tryParseToken(cxt, tok, fail12, success) {
       const { gen } = cxt;
       const n = tok.length;
       skipWhitespace(cxt);
       gen.if((0, codegen_1._)`${jsonSlice(n)} === ${tok}`, () => {
         gen.add(names_1.default.jsonPos, n);
         success === null || success === void 0 ? void 0 : success(cxt);
-      }, () => fail11(cxt));
+      }, () => fail12(cxt));
     }
     function skipWhitespace({ gen, char: c }) {
       gen.code((0, codegen_1._)`while((${c}=${names_1.default.json}[${names_1.default.jsonPos}],${c}===" "||${c}==="\\n"||${c}==="\\r"||${c}==="\\t"))${names_1.default.jsonPos}++;`);
@@ -29867,7 +29867,7 @@ var require_core3 = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e9) => `${dataVar}${e9.instancePath} ${e9.message}`).reduce((text9, msg) => text9 + separator + msg);
+        return errors.map((e9) => `${dataVar}${e9.instancePath} ${e9.message}`).reduce((text10, msg) => text10 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -41992,7 +41992,7 @@ var require_parse_url = __commonJS({
 var require_form_data = __commonJS({
   "../codigo/node_modules/light-my-request/lib/form-data.js"(exports, module) {
     "use strict";
-    var { randomUUID: randomUUID23 } = __require("node:crypto");
+    var { randomUUID: randomUUID24 } = __require("node:crypto");
     var { Readable } = __require("node:stream");
     var textEncoder;
     function isFormDataLike(payload) {
@@ -42000,7 +42000,7 @@ var require_form_data = __commonJS({
     }
     function formDataToStream(formdata) {
       textEncoder = textEncoder ?? new TextEncoder();
-      const boundary = `----formdata-${randomUUID23()}`;
+      const boundary = `----formdata-${randomUUID24()}`;
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
       const escape2 = (str8) => str8.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
@@ -48493,15 +48493,15 @@ var require_buffer = __commonJS({
     DecoderBuffer.prototype.isEmpty = function isEmpty() {
       return this.offset === this.length;
     };
-    DecoderBuffer.prototype.readUInt8 = function readUInt8(fail11) {
+    DecoderBuffer.prototype.readUInt8 = function readUInt8(fail12) {
       if (this.offset + 1 <= this.length)
         return this.base.readUInt8(this.offset++, true);
       else
-        return this.error(fail11 || "DecoderBuffer overrun");
+        return this.error(fail12 || "DecoderBuffer overrun");
     };
-    DecoderBuffer.prototype.skip = function skip(bytes, fail11) {
+    DecoderBuffer.prototype.skip = function skip(bytes, fail12) {
       if (!(this.offset + bytes <= this.length))
-        return this.error(fail11 || "DecoderBuffer overrun");
+        return this.error(fail12 || "DecoderBuffer overrun");
       const res = new DecoderBuffer(this.base);
       res._reporterState = this._reporterState;
       res.offset = this.offset;
@@ -49508,19 +49508,19 @@ var require_der3 = __commonJS({
       buffer.restore(state);
       return buffer.skip(len, 'Failed to match body of: "' + tag + '"');
     };
-    DERNode.prototype._skipUntilEnd = function skipUntilEnd(buffer, fail11) {
+    DERNode.prototype._skipUntilEnd = function skipUntilEnd(buffer, fail12) {
       for (; ; ) {
-        const tag = derDecodeTag(buffer, fail11);
+        const tag = derDecodeTag(buffer, fail12);
         if (buffer.isError(tag))
           return tag;
-        const len = derDecodeLen(buffer, tag.primitive, fail11);
+        const len = derDecodeLen(buffer, tag.primitive, fail12);
         if (buffer.isError(len))
           return len;
         let res;
         if (tag.primitive || len !== null)
           res = buffer.skip(len);
         else
-          res = this._skipUntilEnd(buffer, fail11);
+          res = this._skipUntilEnd(buffer, fail12);
         if (buffer.isError(res))
           return res;
         if (tag.tagStr === "end")
@@ -49661,8 +49661,8 @@ var require_der3 = __commonJS({
         entity = entity(obj);
       return entity._getDecoder("der").tree;
     };
-    function derDecodeTag(buf, fail11) {
-      let tag = buf.readUInt8(fail11);
+    function derDecodeTag(buf, fail12) {
+      let tag = buf.readUInt8(fail12);
       if (buf.isError(tag))
         return tag;
       const cls = der.tagClass[tag >> 6];
@@ -49671,7 +49671,7 @@ var require_der3 = __commonJS({
         let oct = tag;
         tag = 0;
         while ((oct & 128) === 128) {
-          oct = buf.readUInt8(fail11);
+          oct = buf.readUInt8(fail12);
           if (buf.isError(oct))
             return oct;
           tag <<= 7;
@@ -49688,8 +49688,8 @@ var require_der3 = __commonJS({
         tagStr
       };
     }
-    function derDecodeLen(buf, primitive, fail11) {
-      let len = buf.readUInt8(fail11);
+    function derDecodeLen(buf, primitive, fail12) {
+      let len = buf.readUInt8(fail12);
       if (buf.isError(len))
         return len;
       if (!primitive && len === 128)
@@ -49703,7 +49703,7 @@ var require_der3 = __commonJS({
       len = 0;
       for (let i = 0; i < num5; i++) {
         len <<= 8;
-        const j = buf.readUInt8(fail11);
+        const j = buf.readUInt8(fail12);
         if (buf.isError(j))
           return j;
         len |= j;
@@ -53191,7 +53191,7 @@ var require_bcrypt = __commonJS({
           }
         };
         utfx2.decodeUTF8 = function(src, dst) {
-          var a, b, c, d, fail11 = function(b2) {
+          var a, b, c, d, fail12 = function(b2) {
             b2 = b2.slice(0, b2.indexOf(null));
             var err = Error(b2.toString());
             err.name = "TruncatedError";
@@ -53202,11 +53202,11 @@ var require_bcrypt = __commonJS({
             if ((a & 128) === 0)
               dst(a);
             else if ((a & 224) === 192)
-              (b = src()) === null && fail11([a, b]), dst((a & 31) << 6 | b & 63);
+              (b = src()) === null && fail12([a, b]), dst((a & 31) << 6 | b & 63);
             else if ((a & 240) === 224)
-              ((b = src()) === null || (c = src()) === null) && fail11([a, b, c]), dst((a & 15) << 12 | (b & 63) << 6 | c & 63);
+              ((b = src()) === null || (c = src()) === null) && fail12([a, b, c]), dst((a & 15) << 12 | (b & 63) << 6 | c & 63);
             else if ((a & 248) === 240)
-              ((b = src()) === null || (c = src()) === null || (d = src()) === null) && fail11([a, b, c, d]), dst((a & 7) << 18 | (b & 63) << 12 | (c & 63) << 6 | d & 63);
+              ((b = src()) === null || (c = src()) === null || (d = src()) === null) && fail12([a, b, c, d]), dst((a & 7) << 18 | (b & 63) << 12 | (c & 63) << 6 | d & 63);
             else throw RangeError("Illegal starting byte: " + a);
           }
         };
@@ -58950,16 +58950,29 @@ var init_service_taxonomy = __esm({
             },
             {
               id: "motor_correa",
-              name: "Revisi\xF3n / cambio de correas",
-              detail: "Inspecci\xF3n y cambio de correa(s) de distribuci\xF3n o de accesorios seg\xFAn especificaci\xF3n.",
+              name: "Revisi\xF3n / cambio de banda de accesorios",
+              detail: "Inspecci\xF3n de tensi\xF3n y grietas de la banda de accesorios (alternador, direcci\xF3n, A/C) y cambio seg\xFAn desgaste.",
               periodic: true,
               appliesTo: {
                 classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
                 fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
               },
-              durationMin: 180,
-              costRefUsd: 250,
-              costNote: "Referencial; 150\u2013400 USD seg\xFAn motor. Cat\xE1logo conservador de manuales t\xEDpicos."
+              durationMin: 60,
+              costRefUsd: 60,
+              costNote: "Referencial; 40\u2013120 USD seg\xFAn motor."
+            },
+            {
+              id: "motor_distribucion",
+              name: "Cambio de kit de distribuci\xF3n",
+              detail: "Correa o cadena de distribuci\xF3n, tensores y bomba de agua seg\xFAn el manual. Si el motor usa cadena sin mantenimiento, m\xE1rcalo como \xABno aplica\xBB.",
+              periodic: true,
+              appliesTo: {
+                classes: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+                fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
+              },
+              durationMin: 240,
+              costRefUsd: 350,
+              costNote: "Referencial; 200\u2013600 USD seg\xFAn motor. Cat\xE1logo conservador de manuales t\xEDpicos."
             }
           ]
         },
@@ -58987,7 +59000,14 @@ var init_service_taxonomy = __esm({
               detail: "Limpieza del sistema de inyecci\xF3n (banco o aditivo de limpieza).",
               periodic: true,
               appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                classes: [
+                  "liviano",
+                  "van",
+                  "comercial_liviano",
+                  "camion",
+                  "bus",
+                  "maquinaria_liviana"
+                ],
                 fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
               },
               durationMin: 90,
@@ -59017,7 +59037,14 @@ var init_service_taxonomy = __esm({
               detail: "Lavado del circuito de refrigeraci\xF3n y revisi\xF3n de mangueras.",
               periodic: true,
               appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                classes: [
+                  "liviano",
+                  "van",
+                  "comercial_liviano",
+                  "camion",
+                  "bus",
+                  "maquinaria_liviana"
+                ],
                 fuels: ["*"]
               },
               durationMin: 90,
@@ -59043,13 +59070,23 @@ var init_service_taxonomy = __esm({
             },
             {
               id: "freno_pastillas",
-              name: "Inspecci\xF3n / cambio de pastillas y discos",
-              detail: "Inspecci\xF3n de espesor de pastillas y discos; reposici\xF3n seg\xFAn desgaste.",
+              name: "Inspecci\xF3n / cambio de pastillas",
+              detail: "Medici\xF3n del material de fricci\xF3n (cambiar bajo 3 mm) y reposici\xF3n seg\xFAn desgaste.",
               periodic: true,
               appliesTo: { classes: ["*"], fuels: ["*"] },
               durationMin: 90,
               costRefUsd: 90,
               costNote: "Referencial (juego delantero); 60\u2013160 USD seg\xFAn veh\xEDculo."
+            },
+            {
+              id: "freno_discos",
+              name: "Inspecci\xF3n / rectificaci\xF3n de discos",
+              detail: "Espesor, ceja y alabeo de los discos; rectificaci\xF3n o cambio seg\xFAn medida.",
+              periodic: true,
+              appliesTo: { classes: ["*"], fuels: ["*"] },
+              durationMin: 90,
+              costRefUsd: 110,
+              costNote: "Referencial (par delantero); 60\u2013220 USD seg\xFAn veh\xEDculo."
             },
             {
               id: "freno_regulacion",
@@ -59130,7 +59167,15 @@ var init_service_taxonomy = __esm({
               detail: "Inspecci\xF3n del desgaste del embrague y ajuste seg\xFAn el caso.",
               periodic: true,
               appliesTo: {
-                classes: ["motocicleta", "cuadron", "liviano", "van", "comercial_liviano", "camion", "bus"],
+                classes: [
+                  "motocicleta",
+                  "cuadron",
+                  "liviano",
+                  "van",
+                  "comercial_liviano",
+                  "camion",
+                  "bus"
+                ],
                 fuels: ["gasolina", "diesel", "hev", "phev", "glp_gnv"]
               },
               durationMin: 60,
@@ -59406,7 +59451,14 @@ var init_service_taxonomy = __esm({
               detail: "Limpieza profunda de asientos, alfombras y tablero.",
               periodic: false,
               appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                classes: [
+                  "liviano",
+                  "van",
+                  "comercial_liviano",
+                  "camion",
+                  "bus",
+                  "maquinaria_liviana"
+                ],
                 fuels: ["*"]
               },
               durationMin: 120,
@@ -59452,10 +59504,7 @@ var init_service_taxonomy = __esm({
               name: "Revisi\xF3n de turbo / admisi\xF3n",
               detail: "Inspecci\xF3n del turbocompresor y del sistema de admisi\xF3n.",
               periodic: true,
-              appliesTo: {
-                classes: ["comercial_liviano", "camion", "bus"],
-                fuels: ["diesel"]
-              },
+              appliesTo: { classes: ["comercial_liviano", "camion", "bus"], fuels: ["diesel"] },
               durationMin: 90,
               costRefUsd: 90,
               costNote: "Referencial (revisi\xF3n); 60\u2013140 USD."
@@ -59466,7 +59515,14 @@ var init_service_taxonomy = __esm({
               detail: "Prueba en banco y ajuste / reemplazo de inyectores di\xE9sel.",
               periodic: true,
               appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano", "camion", "bus", "maquinaria_liviana"],
+                classes: [
+                  "liviano",
+                  "van",
+                  "comercial_liviano",
+                  "camion",
+                  "bus",
+                  "maquinaria_liviana"
+                ],
                 fuels: ["diesel"]
               },
               durationMin: 120,
@@ -59478,10 +59534,7 @@ var init_service_taxonomy = __esm({
               name: "Limpieza de filtro de part\xEDculas (DPF)",
               detail: "Limpieza / regeneraci\xF3n del filtro de part\xEDculas di\xE9sel.",
               periodic: true,
-              appliesTo: {
-                classes: ["comercial_liviano", "camion", "bus"],
-                fuels: ["diesel"]
-              },
+              appliesTo: { classes: ["comercial_liviano", "camion", "bus"], fuels: ["diesel"] },
               durationMin: 120,
               costRefUsd: 130,
               costNote: "Referencial; 90\u2013200 USD."
@@ -59531,10 +59584,7 @@ var init_service_taxonomy = __esm({
               name: "Inspecci\xF3n peri\xF3dica del sistema de gas",
               detail: "Inspecci\xF3n reglamentaria del sistema GLP/GNV (comprobaci\xF3n de fugas y v\xE1lvulas).",
               periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["glp_gnv"]
-              },
+              appliesTo: { classes: ["liviano", "van", "comercial_liviano"], fuels: ["glp_gnv"] },
               durationMin: 60,
               costRefUsd: 45,
               costNote: "Referencial; 30\u201360 USD. Solo veh\xEDculos con sistema de gas."
@@ -59544,10 +59594,7 @@ var init_service_taxonomy = __esm({
               name: "Cambio de filtro de gas",
               detail: "Reemplazo del filtro del sistema de gas licuado / natural vehicular.",
               periodic: true,
-              appliesTo: {
-                classes: ["liviano", "van", "comercial_liviano"],
-                fuels: ["glp_gnv"]
-              },
+              appliesTo: { classes: ["liviano", "van", "comercial_liviano"], fuels: ["glp_gnv"] },
               durationMin: 60,
               costRefUsd: 40,
               costNote: "Referencial; 30\u201355 USD."
@@ -59738,35 +59785,48 @@ var init_maintenance_rules = __esm({
         },
         {
           serviceId: "motor_correa",
+          classId: ["liviano", "van", "comercial_liviano", "camion", "bus"],
+          fuelId: ["gasolina", "diesel", "hev", "phev", "glp_gnv"],
+          intervalKm: 4e4,
+          intervalMonths: 36,
+          severeFactor: 0.8,
+          note: "Inspecci\xF3n de la banda de accesorios; el cambio depende del desgaste."
+        },
+        {
+          serviceId: "motor_distribucion",
           classId: ["liviano", "van", "comercial_liviano"],
           fuelId: ["gasolina", "glp_gnv"],
           intervalKm: 6e4,
           intervalMonths: 48,
-          severeFactor: 0.8
+          severeFactor: 0.8,
+          note: "Correa: 60.000\u2013100.000 km seg\xFAn manual; ajusta el intervalo con la ficha del fabricante."
         },
         {
-          serviceId: "motor_correa",
+          serviceId: "motor_distribucion",
           classId: ["liviano", "van", "comercial_liviano"],
           fuelId: ["hev", "phev", "diesel"],
           intervalKm: 8e4,
           intervalMonths: 48,
-          severeFactor: 0.8
+          severeFactor: 0.8,
+          note: "Correa: 60.000\u2013100.000 km seg\xFAn manual; ajusta el intervalo con la ficha del fabricante."
         },
         {
-          serviceId: "motor_correa",
+          serviceId: "motor_distribucion",
           classId: ["camion", "bus"],
           fuelId: ["gasolina", "glp_gnv"],
           intervalKm: 6e4,
           intervalMonths: 48,
-          severeFactor: 0.8
+          severeFactor: 0.8,
+          note: "Correa: 60.000\u2013100.000 km seg\xFAn manual; ajusta el intervalo con la ficha del fabricante."
         },
         {
-          serviceId: "motor_correa",
+          serviceId: "motor_distribucion",
           classId: ["camion", "bus"],
           fuelId: ["hev", "phev", "diesel"],
           intervalKm: 8e4,
           intervalMonths: 48,
-          severeFactor: 0.8
+          severeFactor: 0.8,
+          note: "Correa: 60.000\u2013100.000 km seg\xFAn manual; ajusta el intervalo con la ficha del fabricante."
         },
         {
           serviceId: "iny_filtro_combustible",
@@ -59874,6 +59934,15 @@ var init_maintenance_rules = __esm({
           intervalMonths: 24,
           severeFactor: 0.7,
           note: "Inspecci\xF3n; la reposici\xF3n depende del desgaste real."
+        },
+        {
+          serviceId: "freno_discos",
+          classId: ["*"],
+          fuelId: ["*"],
+          intervalKm: 4e4,
+          intervalMonths: 36,
+          severeFactor: 0.7,
+          note: "Inspecci\xF3n; rectificar o cambiar seg\xFAn espesor m\xEDnimo del fabricante."
         },
         {
           serviceId: "freno_regulacion",
@@ -60525,14 +60594,14 @@ function alDiaLine(items, budget) {
   }
   const names = items.map((i) => i.serviceName);
   const candidate = (shownCount) => {
-    const shown = names.slice(0, shownCount).join(", ");
+    const shown2 = names.slice(0, shownCount).join(", ");
     const extra = names.length - shownCount;
     const suffix = extra > 0 ? ` y ${extra} m\xE1s` : "";
-    return `\u{1F7E2} Al d\xEDa: ${shown}${suffix}`;
+    return `\u{1F7E2} Al d\xEDa: ${shown2}${suffix}`;
   };
   if (budget !== void 0) {
-    for (let shown = names.length; shown >= 1; shown -= 1) {
-      const line = candidate(shown);
+    for (let shown2 = names.length; shown2 >= 1; shown2 -= 1) {
+      const line = candidate(shown2);
       if (line.length <= budget)
         return line;
     }
@@ -60611,7 +60680,7 @@ var init_plan_formatter = __esm({
   "packages/api/dist/domain/maintenance/plan-formatter.js"() {
     "use strict";
     DEFAULT_MAX_LENGTH = 1024;
-    SAFETY_ORDER = ["freno_liquido", "freno_pastillas", "freno_regulacion", "aceite_motor", "ref_antifreeze", "motor_correa", "llanta_presion", "llanta_cambio", "susp_direccion", "susp_amortiguadores", "elec_bateria", "hv_inspeccion", "hv_bateria_traccion", "glp_inspeccion", "trans_aceite_caja", "trans_cadena"];
+    SAFETY_ORDER = ["freno_liquido", "freno_pastillas", "freno_discos", "freno_regulacion", "aceite_motor", "ref_antifreeze", "motor_distribucion", "motor_correa", "llanta_presion", "llanta_cambio", "susp_direccion", "susp_amortiguadores", "elec_bateria", "hv_inspeccion", "hv_bateria_traccion", "glp_inspeccion", "trans_aceite_caja", "trans_cadena"];
     safetyRank = (id2) => {
       const i = SAFETY_ORDER.indexOf(id2);
       return i < 0 ? SAFETY_ORDER.length : i;
@@ -60660,6 +60729,7 @@ var init_levels = __esm({
     INTERMEDIO = /* @__PURE__ */ new Set([
       "motor_bujias",
       "motor_correa",
+      "motor_distribucion",
       "trans_aceite_caja",
       "trans_embrague",
       "trans_filtro_caja",
@@ -61763,6 +61833,19 @@ var init_plan_override_statements = __esm({
       { kind: "createTable", target: "VehiclePlanOverride", sql: "CREATE TABLE IF NOT EXISTS `VehiclePlanOverride` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `serviceId` VARCHAR(191) NOT NULL, `intervalKm` INT NULL, `intervalMonths` INT NULL, `disabled` TINYINT(1) NOT NULL DEFAULT 0, `nota` VARCHAR(200) NULL, `actorUserId` VARCHAR(191) NOT NULL, `actorRole` ENUM('dueno','taller') NOT NULL, `shopId` VARCHAR(191) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), UNIQUE INDEX `VehiclePlanOverride_vehicleId_serviceId_key` (`vehicleId`,`serviceId`), INDEX `VehiclePlanOverride_actorUserId_idx` (`actorUserId`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
       { kind: "addColumn", target: "VehiclePlanOverride.customName", sql: "ALTER TABLE `VehiclePlanOverride` ADD COLUMN `customName` VARCHAR(100) NULL" },
       { kind: "createTable", target: "VehiclePlanOverrideLog", sql: "CREATE TABLE IF NOT EXISTS `VehiclePlanOverrideLog` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `serviceId` VARCHAR(191) NOT NULL, `before` JSON NULL, `after` JSON NOT NULL, `actorUserId` VARCHAR(191) NOT NULL, `actorRole` ENUM('dueno','taller') NOT NULL, `shopId` VARCHAR(191) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehiclePlanOverrideLog_vehicleId_serviceId_createdAt_idx` (`vehicleId`,`serviceId`,`createdAt`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+    ];
+  }
+});
+
+// packages/api/dist/infrastructure/schema-setup/inspection-statements.js
+var INSPECTION_TABLES, INSPECTION_STATEMENTS;
+var init_inspection_statements = __esm({
+  "packages/api/dist/infrastructure/schema-setup/inspection-statements.js"() {
+    "use strict";
+    INSPECTION_TABLES = ["VehicleInspection", "VehicleInspectionItem"];
+    INSPECTION_STATEMENTS = [
+      { kind: "createTable", target: "VehicleInspection", sql: "CREATE TABLE IF NOT EXISTS `VehicleInspection` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `appointmentId` VARCHAR(191) NULL, `actorUserId` VARCHAR(191) NOT NULL, `km` INT NULL, `note` VARCHAR(300) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehicleInspection_vehicleId_createdAt_idx` (`vehicleId`, `createdAt`), INDEX `VehicleInspection_shopId_idx` (`shopId`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+      { kind: "createTable", target: "VehicleInspectionItem", sql: "CREATE TABLE IF NOT EXISTS `VehicleInspectionItem` (`inspectionId` VARCHAR(191) NOT NULL, `code` VARCHAR(8) NOT NULL, `status` ENUM('ok','observar','cambiar','no_aplica') NOT NULL, `measure` DECIMAL(8,2) NULL, `unit` VARCHAR(8) NULL, PRIMARY KEY (`inspectionId`, `code`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
     ];
   }
 });
@@ -71940,12 +72023,12 @@ var require_helpers = __commonJS({
       const REQUIRE_TERMINATOR = "";
       highlightFn = __require(`cardinal${REQUIRE_TERMINATOR}`).highlight;
     } catch {
-      highlightFn = (text9) => {
+      highlightFn = (text10) => {
         if (!cardinalRecommended) {
           console.log("For nicer debug output consider install cardinal@^2.0.0");
           cardinalRecommended = true;
         }
-        return text9;
+        return text10;
       };
     }
     function printDebugWithCode(msg, code3) {
@@ -78403,21 +78486,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows32, fields;
+          let rows33, fields;
           if (this._resultIndex === 0) {
-            rows32 = this._rows[0];
+            rows33 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows32 = this._rows;
+            rows33 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows32, fields);
+              this.onResult(null, rows33, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows32);
+              this.onResult(null, rows33);
             });
           }
         }
@@ -80974,9 +81057,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows32, columns, binary = false) {
+      writeTextResult(rows33, columns, binary = false) {
         this.writeColumns(columns);
-        rows32.forEach((row) => {
+        rows33.forEach((row) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column) => {
             arrayRow.push(row[column.name]);
@@ -81086,12 +81169,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve2, reject, stackHolder) {
-      return function(err, rows32, fields) {
+      return function(err, rows33, fields) {
         if (err) {
           applyCapturedStack(err, stackHolder);
           reject(err);
         } else {
-          resolve2([rows32, fields]);
+          resolve2([rows33, fields]);
         }
       };
     }
@@ -81699,9 +81782,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err2, rows32, fields) {
+              cmdQuery.onResult = function(err2, rows33, fields) {
                 queryError = err2 || null;
-                origOnResult(err2, rows32, fields);
+                origOnResult(err2, rows33, fields);
               };
             } else {
               cmdQuery.once("error", (err2) => {
@@ -81736,11 +81819,11 @@ var require_pool = __commonJS({
             return cb(err);
           }
           try {
-            conn.execute(sql, values, (err2, rows32, fields) => {
+            conn.execute(sql, values, (err2, rows33, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
-              cb(err2, rows32, fields);
+              cb(err2, rows33, fields);
             }).once("end", () => {
               conn.release();
             });
@@ -82581,8 +82664,8 @@ async function openConnection(env = process.env) {
   }
 }
 function firstRow(result) {
-  const rows32 = result[0];
-  return Array.isArray(rows32) ? rows32[0] : void 0;
+  const rows33 = result[0];
+  return Array.isArray(rows33) ? rows33[0] : void 0;
 }
 async function count(conn, sql, params2) {
   const row = firstRow(await conn.query(sql, params2));
@@ -82611,8 +82694,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows32] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows32) ? rows32.map((r) => String(r.name)) : [];
+  const [rows33] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows33) ? rows33.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -82689,9 +82772,10 @@ var init_apply = __esm({
     init_map_statements();
     init_web_login_statements();
     init_plan_override_statements();
+    init_inspection_statements();
     init_courses_statements();
-    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...COURSES_STATEMENTS];
-    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...COURSES_TABLES];
+    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
+    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES];
     DB_ENV = ["DB_HOST", "DB_PORT", "DB_NAME", "DB_USER", "DB_PASSWORD"];
     tableExists = (conn, table) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?", [table]);
     columnExists = (conn, table, column) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ?", [table, column]);
@@ -82911,7 +82995,7 @@ main a:not(.access-btn):not(.pill):not(.perfil):not(.logo){text-decoration-color
 .red a.perfil:focus-visible{background:var(--v-surface)!important;color:var(--v-ink)!important;border-color:var(--v-accent)!important}
 .board .cap b{font:600 12px/1 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important}
 `;
-    PANEL_CLARO = "--c-bg:#f2f2f7;--c-surface:#ffffff;--c-sunk:#f5f5f7;--c-line:#d1d1d6;--c-ink:#1d1d1f;--c-muted:#6e6e73;--c-accent:#1f3a5f;--c-on-accent:#ffffff;--c-focus:#1f3a5f;--c-link-line:#1f3a5f";
+    PANEL_CLARO = "--c-bg:#f2f2f7;--c-surface:#ffffff;--c-sunk:#f5f5f7;--c-line:#d1d1d6;--c-ink:#1d1d1f;--c-muted:#636366;--c-accent:#1f3a5f;--c-on-accent:#ffffff;--c-focus:#1f3a5f;--c-link-line:#1f3a5f";
     PANEL_OSCURO = "--c-bg:#000000;--c-surface:#1c1c1e;--c-sunk:#2c2c2e;--c-line:#38383a;--c-ink:#f5f5f7;--c-muted:#a1a1a6;--c-accent:#9db8dc;--c-on-accent:#0f1622;--c-focus:#9db8dc;--c-link-line:#9db8dc";
     PANEL_SOBRIO = `
 :root{${PANEL_CLARO}}@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){${PANEL_OSCURO}}}:root[data-tema="oscuro"]{${PANEL_OSCURO}}
@@ -82939,12 +83023,28 @@ section,.pcard,.kpi,details{border-radius:10px!important;box-shadow:none!importa
   }
 });
 
+// packages/api/dist/interfaces/ui/auto-escaner-asset.js
+var AUTO_ESCANER_PATH, AUTO_ESCANER_WEBP_B64;
+var init_auto_escaner_asset = __esm({
+  "packages/api/dist/interfaces/ui/auto-escaner-asset.js"() {
+    "use strict";
+    AUTO_ESCANER_PATH = "/img/auto-escaner-v2.webp";
+    AUTO_ESCANER_WEBP_B64 = "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";
+  }
+});
+
 // packages/api/dist/interfaces/ui/sistema.js
 var SISTEMA;
 var init_sistema = __esm({
   "packages/api/dist/interfaces/ui/sistema.js"() {
     "use strict";
+    init_auto_escaner_asset();
     SISTEMA = `
+/* Fondo (3/11/2026): la ilustraci\xF3n del auto, muy tenue arriba a la derecha y desvanecida hacia abajo.
+   Encima va el color de fondo del tema al 92 %, as\xED funciona igual en claro y oscuro y el texto
+   conserva su contraste; las tarjetas tienen fondo propio y lo tapan. */
+html{background-color:var(--c-bg)}
+body{background:linear-gradient(180deg,color-mix(in srgb,var(--c-bg) 92%,transparent) 0,color-mix(in srgb,var(--c-bg) 95%,transparent) 320px,var(--c-bg) 620px) no-repeat,url("${AUTO_ESCANER_PATH}") right -8vw top 56px/min(980px,86vw) auto no-repeat,var(--c-bg)!important}
 body::before,body::after{content:none!important;display:none!important;background:none!important}
 *,*::before,*::after{animation:none!important}
 .js-anim .aparece,.aparece{opacity:1!important;transform:none!important}
@@ -83030,8 +83130,8 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows32] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row = Array.isArray(rows32) ? rows32[0] : void 0;
+          const [rows33] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row = Array.isArray(rows33) ? rows33[0] : void 0;
           return row?.value === void 0 || row.value === null ? null : String(row.value);
         });
       }
@@ -83059,7 +83159,7 @@ var init_theme = __esm({
       "--c-surface:#ffffff",
       "--c-sunk:#f5f5f7",
       "--c-ink:#1d1d1f",
-      "--c-muted:#6e6e73",
+      "--c-muted:#636366",
       "--c-line:#d1d1d6",
       "--c-field:#ffffff",
       "--c-accent:#1f3a5f",
@@ -83084,7 +83184,7 @@ var init_theme = __esm({
       "--c-head-brand:#ffffff",
       "--c-hero:#ffffff",
       "--c-hero-ink:#1d1d1f",
-      "--c-hero-muted:#6e6e73",
+      "--c-hero-muted:#636366",
       "--c-hero-line:#d1d1d6",
       "--c-link:#1f3a5f",
       "--c-link-line:#1f3a5f",
@@ -83599,8 +83699,8 @@ var init_inbound_webhook_store = __esm({
         return this.run(async (conn) => {
           const changed = affected(await conn.query("UPDATE `InboundWebhook` SET status = IF(attempts >= ?, 'dead', 'queued'), nextAttemptAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? SECOND), lastError = ?, leaseToken = NULL, lockedAt = NULL, updatedAt = UTC_TIMESTAMP(3) WHERE wamid = ? AND status = 'processing' AND leaseToken = ? AND lockedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ? SECOND)", [MAX_ATTEMPTS, delaySeconds, safeCode, wamid, leaseToken, LEASE_SECONDS])) === 1;
           if (changed) {
-            const [rows32] = await conn.query("SELECT status FROM `InboundWebhook` WHERE wamid = ?", [wamid]);
-            if (rows32[0]?.status === "dead")
+            const [rows33] = await conn.query("SELECT status FROM `InboundWebhook` WHERE wamid = ?", [wamid]);
+            if (rows33[0]?.status === "dead")
               void new MysqlAdminAlerts().notify("inbound_dead", 1);
           }
           return changed;
@@ -84100,11 +84200,11 @@ function planTextFor(vehicle, level) {
     return null;
   const label2 = [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" ");
   const corrective = Array.isArray(vehicle.corrective) ? vehicle.corrective : [];
-  const text9 = formatPlanWhatsApp({ label: label2, plan, maxLength: 3300, source: sourceLine(vehicle, plan), corrective })[0] ?? null;
+  const text10 = formatPlanWhatsApp({ label: label2, plan, maxLength: 3300, source: sourceLine(vehicle, plan), corrective })[0] ?? null;
   const note = levelNote(vehicle, level);
-  return text9 && note ? `${text9}
+  return text10 && note ? `${text10}
 
-${note}` : text9;
+${note}` : text10;
 }
 function planSummaryFor(vehicle, level) {
   const plan = atLevel(planFor(vehicle), level);
@@ -84112,11 +84212,11 @@ function planSummaryFor(vehicle, level) {
     return null;
   const label2 = [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" ");
   const corrective = Array.isArray(vehicle.corrective) ? vehicle.corrective : [];
-  const text9 = formatPlanSummary({ label: label2, plan, source: sourceLine(vehicle, plan), corrective });
+  const text10 = formatPlanSummary({ label: label2, plan, source: sourceLine(vehicle, plan), corrective });
   const note = levelNote(vehicle, level);
-  return text9 && note ? `${text9}
+  return text10 && note ? `${text10}
 
-${note}` : text9;
+${note}` : text10;
 }
 var USAGE;
 var init_plan_text = __esm({
@@ -84285,9 +84385,9 @@ ${ICON.sin_dato} Sin dato: todav\xEDa no tenemos la ficha de mantenimiento de es
       lines.push(`${ICON.al_dia} ${TITLE.al_dia}: ${items.length} ${items.length === 1 ? "servicio" : "servicios"}`);
       continue;
     }
-    const shown = items.slice(0, SHOWN).map((r) => state === "sin_dato" ? r.serviceName : `${r.serviceName} (${r.label.toLowerCase()})`);
+    const shown2 = items.slice(0, SHOWN).map((r) => state === "sin_dato" ? r.serviceName : `${r.serviceName} (${r.label.toLowerCase()})`);
     const more = items.length > SHOWN ? ` y ${items.length - SHOWN} m\xE1s` : "";
-    lines.push(`${ICON[state]} ${TITLE[state]}: ${shown.join(", ")}${more}`);
+    lines.push(`${ICON[state]} ${TITLE[state]}: ${shown2.join(", ")}${more}`);
   }
   return `${head}
 ${lines.join("\n")}
@@ -84401,8 +84501,8 @@ function offersFor(profile, catalog, includeHidden = false) {
 function findOfferByKey(key, catalog) {
   return catalog.find((o) => o.key === key) ?? null;
 }
-function findOfferByName(text9, catalog, profile) {
-  const wanted = fold3(text9).replace(/^plan /, "");
+function findOfferByName(text10, catalog, profile) {
+  const wanted = fold3(text10).replace(/^plan /, "");
   if (!wanted)
     return null;
   const paid = catalog.filter((o) => !isFreeOffer(o) && o.visible);
@@ -84643,11 +84743,11 @@ function categoryOfService(serviceId) {
 function categoryName(id2) {
   return CATEGORIES.find((c) => c.id === id2)?.name ?? id2;
 }
-function fold4(text9) {
-  return text9.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+function fold4(text10) {
+  return text10.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
 }
-function placeLabel(text9) {
-  const clean = text9.replace(/\s+/g, " ").trim();
+function placeLabel(text10) {
+  const clean = text10.replace(/\s+/g, " ").trim();
   if (!clean)
     return "";
   return clean.toLowerCase().split(" ").map((w, i) => i > 0 && ["de", "del", "la", "las", "los", "el", "y", "a"].includes(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
@@ -84674,8 +84774,8 @@ function categoriesOf(services) {
 function insideEcuador(lat, lng) {
   return Number.isFinite(lat) && Number.isFinite(lng) && lat >= ECUADOR.minLat && lat <= ECUADOR.maxLat && lng >= ECUADOR.minLng && lng <= ECUADOR.maxLng;
 }
-function parsePoint(text9) {
-  const numbers = String(text9).match(/-?\d+(?:[.,]\d+)?/g) ?? [];
+function parsePoint(text10) {
+  const numbers = String(text10).match(/-?\d+(?:[.,]\d+)?/g) ?? [];
   if (numbers.length !== 2)
     return null;
   const [lat, lng] = numbers.map((s) => Math.round(Number(s.replace(",", ".")) * 1e6) / 1e6);
@@ -85071,6 +85171,200 @@ var init_diagnosis = __esm({
   }
 });
 
+// packages/api/dist/domain/maintenance/inspection-checklist.js
+function checklistFor(vehicle) {
+  const cls = String(vehicle.vehicleClass ?? ""), fuel2 = String(vehicle.fuel ?? "");
+  return INSPECTION_ITEMS.filter((i) => !(i.fourWheels && TWO_WHEELS.has(cls)) && !(i.combustion && fuel2 === "bev") && !(i.sparkIgnition && fuel2 && !SPARK.has(fuel2)));
+}
+function parseInspection(text10, items) {
+  const byCode = new Map(items.map((i) => [i.code, i]));
+  const all = new Map(INSPECTION_ITEMS.map((i) => [i.code, i]));
+  const entries = /* @__PURE__ */ new Map();
+  let restOk = false;
+  for (const raw of text10.split(/[;\n]+/).map((s) => s.trim()).filter(Boolean)) {
+    const token2 = fold5(raw);
+    if (token2 === "resto ok" || token2 === "todo lo demas ok" || token2 === "demas ok") {
+      restOk = true;
+      continue;
+    }
+    const m = token2.match(/^([a-z])\s*-?\s*(\d)\b\s*(.*)$/);
+    if (!m)
+      throw new InspectionParseError("INVALID_INSPECTION", raw);
+    const code3 = `${m[1].toUpperCase()}${m[2]}`;
+    if (!all.has(code3))
+      throw new InspectionParseError("INVALID_INSPECTION", raw);
+    const item = byCode.get(code3);
+    let rest = m[3].trim();
+    let status = null;
+    for (const [word, value2] of Object.entries(STATUS_WORDS).sort((a, b) => b[0].length - a[0].length)) {
+      if (rest === word || rest.startsWith(`${word} `)) {
+        status = value2;
+        rest = rest.slice(word.length).trim();
+        break;
+      }
+    }
+    if (!item) {
+      if (status === "no_aplica")
+        continue;
+      throw new InspectionParseError("INSPECTION_ITEM_NOT_APPLICABLE", code3);
+    }
+    let measure = null;
+    const num5 = rest.match(/^(\d+(?:[.,]\d+)?)\s*(mm|v|%|psi)?$/);
+    if (rest && !num5)
+      throw new InspectionParseError("INVALID_INSPECTION", raw);
+    if (num5) {
+      if (!item.unit)
+        throw new InspectionParseError("INVALID_INSPECTION", raw);
+      measure = Number(num5[1].replace(",", "."));
+      if (!Number.isFinite(measure) || measure < 0 || measure > 1e3)
+        throw new InspectionParseError("INVALID_INSPECTION", raw);
+    }
+    if (status === null) {
+      if (measure === null || !item.thresholds)
+        throw new InspectionParseError("INVALID_INSPECTION", raw);
+      status = item.thresholds.cambiar(measure) ? "cambiar" : item.thresholds.observar(measure) ? "observar" : "ok";
+    }
+    entries.set(code3, { code: code3, status, measure, unit: measure === null ? null : item.unit ?? null });
+  }
+  if (restOk) {
+    for (const item of items)
+      if (!entries.has(item.code))
+        entries.set(item.code, { code: item.code, status: "ok", measure: null, unit: null });
+  }
+  if (!entries.size)
+    throw new InspectionParseError("INVALID_INSPECTION", text10);
+  return [...entries.values()].sort((a, b) => INSPECTION_ITEMS.findIndex((i) => i.code === a.code) - INSPECTION_ITEMS.findIndex((i) => i.code === b.code));
+}
+function checklistText(label2, items, ref4) {
+  const lines = [`\u{1F4CB} Checklist de inspecci\xF3n \xB7 ${label2}`];
+  for (const area of INSPECTION_AREAS) {
+    const list7 = items.filter((i) => i.area === area.id);
+    if (list7.length)
+      lines.push(`${area.name}: ${list7.map((i) => `${i.code} ${i.name}${i.unit ? ` (${i.unit})` : ""}`).join(" \xB7 ")}`);
+  }
+  lines.push(`Registra: Inspecci\xF3n ${ref4} | M1 ok; F2 2,5 mm; N2 observar 2 mm; T4 no aplica; resto ok (| nota)`);
+  lines.push("Estados: ok, observar, cambiar, no aplica. Con una medida (mm, V, %) el estado se calcula solo.");
+  return lines.join("\n");
+}
+function inspectionSummary(label2, shopName, entries, note) {
+  const name = (code3) => INSPECTION_ITEMS.find((i) => i.code === code3)?.name ?? code3;
+  const pick = (s) => entries.filter((e9) => e9.status === s);
+  const change = pick("cambiar"), watch = pick("observar"), ok = pick("ok");
+  const lines = [`\u{1F50E} Inspecci\xF3n de tu ${label2} en ${shopName}`];
+  if (change.length)
+    lines.push(`${STATUS_ICON.cambiar} Cambiar: ${change.map((e9) => name(e9.code) + formatMeasure(e9)).join(", ")}`);
+  if (watch.length)
+    lines.push(`${STATUS_ICON.observar} Observar: ${watch.map((e9) => name(e9.code) + formatMeasure(e9)).join(", ")}`);
+  lines.push(`${STATUS_ICON.ok} Bien: ${ok.length} de ${entries.filter((e9) => e9.status !== "no_aplica").length} revisados`);
+  if (note)
+    lines.push(`Nota del taller: ${note}`);
+  if (change.length || watch.length)
+    lines.push("Creamos alertas para lo que hay que cambiar u observar. Para agendar: Buscar servicio | categor\xEDa | ciudad | sector | descripci\xF3n");
+  return lines.join("\n");
+}
+function servicesCoveredBy(entries, items) {
+  const covered = [];
+  for (const serviceId of INSPECTION_SERVICES) {
+    const related = items.filter((i) => i.serviceId === serviceId);
+    if (!related.length)
+      continue;
+    if (related.every((i) => {
+      const e9 = entries.find((x) => x.code === i.code);
+      return e9 && (e9.status === "ok" || e9.status === "observar");
+    }))
+      covered.push(serviceId);
+  }
+  const inspected = (areaId) => entries.some((e9) => e9.status !== "no_aplica" && items.some((i) => i.area === areaId && i.code === e9.code));
+  if (INSPECTION_AREAS.every((a) => !items.some((i) => i.area === a.id) || inspected(a.id)))
+    covered.push("prep_inspeccion");
+  return covered;
+}
+function areaStates(entries, items) {
+  return INSPECTION_AREAS.map((area) => {
+    const list7 = items.filter((i) => i.area === area.id);
+    const done = entries.filter((e9) => list7.some((i) => i.code === e9.code) && e9.status !== "no_aplica");
+    const state = done.some((e9) => e9.status === "cambiar") ? "urgente" : done.some((e9) => e9.status === "observar") ? "pronto" : done.length ? "al_dia" : "sin_dato";
+    return { id: area.id, name: area.name, state, inspected: done.length, total: list7.length };
+  }).filter((a) => a.total > 0);
+}
+var INSPECTION_AREAS, INSPECTION_ITEMS, TWO_WHEELS, SPARK, InspectionParseError, fold5, STATUS_WORDS, STATUS_ICON, formatMeasure, INSPECTION_SERVICES;
+var init_inspection_checklist = __esm({
+  "packages/api/dist/domain/maintenance/inspection-checklist.js"() {
+    "use strict";
+    INSPECTION_AREAS = [
+      { id: "motor", name: "Motor y propulsi\xF3n" },
+      { id: "frenos", name: "Frenos y seguridad activa" },
+      { id: "suspension", name: "Suspensi\xF3n y direcci\xF3n" },
+      { id: "transmision", name: "Transmisi\xF3n y tren motriz" },
+      { id: "refrigeracion", name: "Enfriamiento" },
+      { id: "electrico", name: "El\xE9ctrico y electr\xF3nica" },
+      { id: "llantas", name: "Llantas y ruedas" },
+      { id: "carroceria", name: "Carrocer\xEDa, confort y visibilidad" }
+    ];
+    INSPECTION_ITEMS = [
+      { code: "M1", area: "motor", name: "Aceite de motor", hint: "nivel, estado y viscosidad del manual", serviceId: "aceite_motor", combustion: true },
+      { code: "M2", area: "motor", name: "Filtro de aceite", hint: "se cambia con cada aceite", serviceId: "aceite_motor", combustion: true },
+      { code: "M3", area: "motor", name: "Filtro de aire del motor", hint: "limpieza o cambio", serviceId: "motor_filtro_aire", combustion: true },
+      { code: "M4", area: "motor", name: "Buj\xEDas de encendido", hint: "convencionales ~20.000 km; iridio o platino hasta 80.000 km", serviceId: "motor_bujias", sparkIgnition: true },
+      { code: "M5", area: "motor", name: "Filtro de combustible", hint: "externo o en el tanque", serviceId: "iny_filtro_combustible", combustion: true },
+      { code: "M6", area: "motor", name: "Banda de accesorios", hint: "tensi\xF3n y grietas (alternador, direcci\xF3n, A/C)", serviceId: "motor_correa", fourWheels: true },
+      { code: "M7", area: "motor", name: "Kit de distribuci\xF3n", hint: "correa o cadena, tensores y bomba de agua seg\xFAn manual", serviceId: "motor_distribucion", combustion: true },
+      { code: "M8", area: "motor", name: "Soportes de motor y transmisi\xF3n", hint: "gomas y holguras", fourWheels: true },
+      { code: "F1", area: "frenos", name: "L\xEDquido de frenos", hint: "nivel y humedad (cambiar desde 3 %)", unit: "%", thresholds: { cambiar: (v) => v >= 3, observar: (v) => v >= 2 }, serviceId: "freno_liquido" },
+      { code: "F2", area: "frenos", name: "Pastillas de freno", hint: "grosor del material (cambiar bajo 3 mm)", unit: "mm", thresholds: { cambiar: (v) => v < 3, observar: (v) => v < 4 }, serviceId: "freno_pastillas" },
+      { code: "F3", area: "frenos", name: "Discos de freno", hint: "desgaste, ceja o alabeo", serviceId: "freno_discos" },
+      { code: "F4", area: "frenos", name: "Balatas y tambores traseros", hint: "limpieza, regulaci\xF3n y desgaste", fourWheels: true },
+      { code: "F5", area: "frenos", name: "L\xEDneas y mangueras de freno", hint: "fugas, grietas o deformaciones" },
+      { code: "F6", area: "frenos", name: "Freno de mano", hint: "tensi\xF3n del cable o calibraci\xF3n electr\xF3nica", fourWheels: true },
+      { code: "S1", area: "suspension", name: "Amortiguadores y puntales", hint: "fugas y rebote", serviceId: "susp_amortiguadores" },
+      { code: "S2", area: "suspension", name: "Terminales y r\xF3tulas", hint: "juego mec\xE1nico y guardapolvos", serviceId: "susp_direccion", fourWheels: true },
+      { code: "S3", area: "suspension", name: "Bujes y barras estabilizadoras", hint: "desgaste del caucho", serviceId: "susp_direccion", fourWheels: true },
+      { code: "S4", area: "suspension", name: "L\xEDquido de direcci\xF3n hidr\xE1ulica", hint: "nivel y estado, si aplica", fourWheels: true },
+      { code: "S5", area: "suspension", name: "Alineaci\xF3n y balanceo", hint: "geometr\xEDa y equilibrado de ruedas", serviceId: "llanta_alineacion", fourWheels: true },
+      { code: "T1", area: "transmision", name: "Aceite de caja de cambios", hint: "manual, ATF, CVT o DSG seg\xFAn manual", serviceId: "trans_aceite_caja" },
+      { code: "T2", area: "transmision", name: "Filtro de transmisi\xF3n autom\xE1tica", hint: "con el fluido, si el dise\xF1o lo permite", serviceId: "trans_filtro_caja", fourWheels: true },
+      { code: "T3", area: "transmision", name: "Semiejes y juntas homocin\xE9ticas", hint: "fuelles y grasa", fourWheels: true },
+      { code: "T4", area: "transmision", name: "Diferencial y caja de transferencia", hint: "aceite en 4WD o AWD", fourWheels: true },
+      { code: "T5", area: "transmision", name: "Card\xE1n y crucetas", hint: "engrase y holguras en tracci\xF3n trasera", fourWheels: true },
+      { code: "R1", area: "refrigeracion", name: "L\xEDquido refrigerante", hint: "nivel, punto de congelaci\xF3n y ebullici\xF3n", serviceId: "ref_antifreeze" },
+      { code: "R2", area: "refrigeracion", name: "Radiador y tapa", hint: "panal limpio y prueba de presi\xF3n de la tapa", serviceId: "ref_radiador" },
+      { code: "R3", area: "refrigeracion", name: "Mangueras y abrazaderas", hint: "rigidez, fugas o cuarteaduras" },
+      { code: "R4", area: "refrigeracion", name: "Termostato y motoventilador", hint: "apertura y encendido del ventilador" },
+      { code: "E1", area: "electrico", name: "Bater\xEDa", hint: "bornes y voltaje en reposo (observar bajo 12,4 V)", unit: "V", thresholds: { cambiar: (v) => v < 12, observar: (v) => v < 12.4 }, serviceId: "elec_bateria" },
+      { code: "E2", area: "electrico", name: "Alternador y motor de arranque", hint: "carga y consumo", serviceId: "elec_alternador" },
+      { code: "E3", area: "electrico", name: "Sistema de luces", hint: "altas, bajas, direccionales, stop, reversa y sal\xF3n", serviceId: "elec_luces" },
+      { code: "E4", area: "electrico", name: "Fusibles y rel\xE9s", hint: "continuidad en la caja de fusibles" },
+      { code: "E5", area: "electrico", name: "Escaneo electr\xF3nico (OBD-II)", hint: "c\xF3digos de error en la ECU", serviceId: "escaner_diagnostico" },
+      { code: "N1", area: "llantas", name: "Presi\xF3n de inflado", hint: "seg\xFAn la etiqueta, incluida la de emergencia", unit: "psi", serviceId: "llanta_presion" },
+      { code: "N2", area: "llantas", name: "Profundidad de labrado", hint: "m\xEDnimo legal 1,6 mm", unit: "mm", thresholds: { cambiar: (v) => v < 1.6, observar: (v) => v < 3 }, serviceId: "llanta_presion" },
+      { code: "N3", area: "llantas", name: "Desgaste irregular", hint: "se\xF1al de alineaci\xF3n o presi\xF3n incorrecta", serviceId: "llanta_presion" },
+      { code: "N4", area: "llantas", name: "Rotaci\xF3n de neum\xE1ticos", hint: "cada 5.000 a 10.000 km", serviceId: "llanta_rotacion", fourWheels: true },
+      { code: "C1", area: "carroceria", name: "Filtro de cabina", hint: "aire del habit\xE1culo", serviceId: "clima_filtro_cabina", fourWheels: true },
+      { code: "C2", area: "carroceria", name: "Plumas limpiaparabrisas", hint: "gomas de barrido", serviceId: "vidrio_limpiadores", fourWheels: true },
+      { code: "C3", area: "carroceria", name: "L\xEDquido limpiaparabrisas", hint: "dep\xF3sito con aditivo", fourWheels: true },
+      { code: "C4", area: "carroceria", name: "Cerraduras y bisagras", hint: "lubricaci\xF3n de puertas, cap\xF3 y maletero", fourWheels: true },
+      { code: "C5", area: "carroceria", name: "Cinturones y airbags", hint: "anclajes y testigos del tablero", fourWheels: true },
+      { code: "C6", area: "carroceria", name: "Escape y catalizador", hint: "corrosi\xF3n, fugas o soportes rotos", serviceId: "escape_gases", combustion: true }
+    ];
+    TWO_WHEELS = /* @__PURE__ */ new Set(["motocicleta", "cuadron"]);
+    SPARK = /* @__PURE__ */ new Set(["gasolina", "glp_gnv", "hev", "phev"]);
+    InspectionParseError = class extends Error {
+      code;
+      detail;
+      constructor(code3, detail = "") {
+        super(code3);
+        this.code = code3;
+        this.detail = detail;
+      }
+    };
+    fold5 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
+    STATUS_WORDS = { ok: "ok", bien: "ok", bueno: "ok", observar: "observar", revisar: "observar", pronto: "observar", cambiar: "cambiar", cambio: "cambiar", urgente: "cambiar", na: "no_aplica", "n/a": "no_aplica", "no aplica": "no_aplica" };
+    STATUS_ICON = { ok: "\u{1F7E2}", observar: "\u{1F7E0}", cambiar: "\u{1F534}", no_aplica: "\u26AA" };
+    formatMeasure = (e9) => e9.measure === null ? "" : ` (${String(e9.measure).replace(".", ",")} ${e9.unit ?? ""})`.replace(" )", ")");
+    INSPECTION_SERVICES = /* @__PURE__ */ new Set(["freno_pastillas", "freno_discos", "susp_direccion", "susp_amortiguadores", "llanta_presion", "motor_correa", "elec_bateria", "elec_alternador", "elec_luces", "escaner_diagnostico", "escape_gases"]);
+  }
+});
+
 // packages/api/dist/application/work-orders/workflow.js
 function parseAmount2(input) {
   if (typeof input !== "string")
@@ -85370,15 +85664,15 @@ var init_fleet_access = __esm({
 
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
 import { createHash as createHash3, randomUUID as randomUUID7 } from "node:crypto";
-function matchService(text9) {
-  const f = fold5(text9);
-  const exact = SERVICES.find((s) => s.id === f || fold5(s.name) === f);
+function matchService(text10) {
+  const f = fold6(text10);
+  const exact = SERVICES.find((s) => s.id === f || fold6(s.name) === f);
   if (exact)
     return exact.id;
   for (const [pattern, id2] of SYNONYMS)
     if (pattern.test(f))
       return id2;
-  return SERVICES.find((s) => fold5(s.name).includes(f) && f.length >= 5)?.id ?? null;
+  return SERVICES.find((s) => fold6(s.name).includes(f) && f.length >= 5)?.id ?? null;
 }
 async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ new Date()) {
   const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 5));
@@ -85427,7 +85721,7 @@ async function activeVehicle(conn, userId, includeAssigned = false) {
     fail2("VEHICLE_REQUIRED");
   return list7[0];
 }
-var rows7, VehicleCareError, fail2, fold5, createHashLike, short2, prefixOf, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES, serviceName, ORDER_STATUS, repairNoticeKey, VehicleCareStore;
+var rows7, VehicleCareError, fail2, fold6, createHashLike, short2, prefixOf, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES, serviceName, ORDER_STATUS, repairNoticeKey, VehicleCareStore;
 var init_vehicle_care_store = __esm({
   "packages/api/dist/infrastructure/messaging/vehicle-care-store.js"() {
     "use strict";
@@ -85438,6 +85732,7 @@ var init_vehicle_care_store = __esm({
     init_entitlements();
     init_diagnosis();
     init_catalogs();
+    init_inspection_checklist();
     init_workflow();
     init_messages();
     init_appointment_capacity();
@@ -85453,8 +85748,8 @@ var init_vehicle_care_store = __esm({
     fail2 = (code3) => {
       throw new VehicleCareError(code3);
     };
-    fold5 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
-    createHashLike = (text9) => createHash3("sha256").update(text9).digest("hex").slice(0, 12);
+    fold6 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    createHashLike = (text10) => createHash3("sha256").update(text10).digest("hex").slice(0, 12);
     short2 = (prefix, id2) => `${prefix}-${id2.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf = (code3) => `${code3.slice(2).toLowerCase()}%`;
     CARD_ACTIONS = ["createCard", "cardPreview", "claimCard", "declineCard", "listCards", "cancelCard", "revokeShop"];
@@ -85462,12 +85757,14 @@ var init_vehicle_care_store = __esm({
     SYNONYMS = [
       [/^(cambio de )?aceite|filtro de aceite/, "aceite_motor"],
       [/liquido de frenos/, "freno_liquido"],
-      [/pastillas|discos|frenos/, "freno_pastillas"],
+      [/discos|rectificacion/, "freno_discos"],
+      [/pastillas|frenos/, "freno_pastillas"],
       [/rotacion/, "llanta_rotacion"],
       [/alineacion|balanceo/, "llanta_alineacion"],
       [/neumaticos|llantas/, "llanta_cambio"],
       [/bujias/, "motor_bujias"],
       [/filtro de aire/, "motor_filtro_aire"],
+      [/distribucion/, "motor_distribucion"],
       [/correa|banda/, "motor_correa"],
       [/refrigerante|anticongelante/, "ref_antifreeze"],
       [/radiador/, "ref_radiador"],
@@ -85560,6 +85857,16 @@ var init_vehicle_care_store = __esm({
             const list7 = await rows7(conn, "SELECT id, scheduledAt, status FROM `Appointment` WHERE shopId = ? AND scheduledAt >= ? AND scheduledAt < ? AND status NOT IN ('cancelled','rejected') ORDER BY scheduledAt, id", [shop.id, start, end]);
             const lines = list7.map((a) => `${short2("C", String(a.id))} | ${formatAgendaDate(a.scheduledAt)} | ${a.status === "pending" ? "Pendiente" : a.status === "confirmed" ? "Confirmada" : a.status}`);
             return { userId, message: lines.length ? `Agenda ${command.date} | ${lines.join(" | ")}` : `Agenda ${command.date} | Sin citas.` };
+          }
+          case "checklist":
+          case "inspection":
+          case "lastInspection": {
+            const run = command.action === "lastInspection" ? this.lastInspection(conn, userId, role, command.plate) : this.inspection(conn, userId, role, command);
+            return run.catch((err) => {
+              if (err.code === "ER_NO_SUCH_TABLE")
+                fail2("INSPECTION_UNAVAILABLE");
+              throw err;
+            });
           }
           case "shopReport": {
             const shop = await this.actingShop(conn, userId, role);
@@ -85720,8 +86027,8 @@ Observaci\xF3n del due\xF1o: ${note}`, order.id]);
       async ownerPlan(conn, userId, role, full, plate2) {
         const vehicle = await this.planVehicle(conn, await this.ownerVehicle(conn, userId, role, plate2, "read"));
         const level = await vehicleLevel(conn, vehicle);
-        const text9 = full ? planTextFor(vehicle, level) : planSummaryFor(vehicle, level);
-        return { userId, message: text9 ?? "Todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo; una persona del equipo te ayudar\xE1." };
+        const text10 = full ? planTextFor(vehicle, level) : planSummaryFor(vehicle, level);
+        return { userId, message: text10 ?? "Todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo; una persona del equipo te ayudar\xE1." };
       }
       /** "Hecho": records the reminded service today at the current km; the plan then moves to the next milestone. */
       async reminderDone(conn, userId, role, service) {
@@ -85783,7 +86090,7 @@ Lo agregu\xE9 a la atenci\xF3n de ${label2} y avisamos a los responsables de ${S
           }
           return { userId, message: `${diagnosis.message}
 
-Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revise: Buscar servicio | ${fold5(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
+Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revise: Buscar servicio | ${fold6(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
         }
         if (command.action === "reminders") {
           await conn.query("UPDATE `Vehicle` SET remindersOptIn = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [command.on, userId]);
@@ -85855,8 +86162,8 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revi
         const label2 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
         const owner = String(vehicle.ownerId);
         if (command.action === "shopPlan") {
-          const text9 = planSummaryFor(await this.planVehicle(conn, vehicle));
-          return { userId, message: text9 ?? `${label2}: todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo.` };
+          const text10 = planSummaryFor(await this.planVehicle(conn, vehicle));
+          return { userId, message: text10 ?? `${label2}: todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo.` };
         }
         if (command.action === "checkIn") {
           if (command.km < Number(vehicle.currentKm))
@@ -85908,7 +86215,7 @@ ${summary ?? ""}`.trim());
           return { userId, message: `Propuesta enviada al due\xF1o: visita ${code3} para ${formatEcDateTime(at)}. Te avisaremos cuando responda.` };
         }
         await this.insertAlert(conn, String(vehicle.id), command.label, command.dueAt, command.dueKm, userId, shop.id);
-        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold5(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label2}: "${command.label}" ${command.dueAt ? `el ${command.dueAt}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
+        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold6(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label2}: "${command.label}" ${command.dueAt ? `el ${command.dueAt}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
         return { userId, message: `Alerta creada para el ${label2}. El due\xF1o y tu taller la recibir\xE1n por WhatsApp cuando llegue el momento.` };
       }
       async budget(conn, userId, shop, command) {
@@ -86162,8 +86469,8 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref4} \xB7 Recha
         const code3 = short2("T", id2);
         await conn.query("INSERT INTO `ShopMember` (id, shopId, name, status, invitedBy, role) VALUES (?, ?, ?, 'invited', ?, ?)", [id2, shop.id, command.name, userId, command.role]);
         await this.audit(conn, userId, "care.technician.invited", "ShopMember", id2, { shopId: shop.id });
-        const text9 = encodeURIComponent(`T\xE9cnico ${code3} | ${command.name} | ACEPTO`);
-        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${text9}` : null;
+        const text10 = encodeURIComponent(`T\xE9cnico ${code3} | ${command.name} | ACEPTO`);
+        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${text10}` : null;
         return { userId, message: `Listo. Comparte este enlace con ${command.name} para que se una a ${shop.name} como ${command.role === "admin" ? "administrador (recibir\xE1 el reporte diario)" : "t\xE9cnico"} desde su propio WhatsApp:
 ${link ?? `escribe al WhatsApp de AutoMantPro: T\xE9cnico ${code3} | ${command.name} | ACEPTO`}
 Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Para quitarlo despu\xE9s: Quitar t\xE9cnico ${code3}` };
@@ -86203,6 +86510,54 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
        * A notice for the vehicle's owner. For a fleet vehicle the fleet's administrators and
        * supervisors get the same notice, so any of them can answer it.
        */
+      // ---------- inspection checklist by systems ----------
+      /** "Checklist C-…" shows the items for this vehicle; "Inspección C-… | M1 ok; F2 2,5 mm; resto ok" records them. */
+      async inspection(conn, userId, role, command) {
+        const shop = await this.actingShop(conn, userId, role);
+        const vehicle = await this.shopVehicle(conn, shop.id, command.appointmentRef);
+        const label2 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
+        const items = checklistFor(vehicle);
+        if (command.action === "checklist")
+          return { userId, message: checklistText(label2, items, command.appointmentRef) };
+        let entries;
+        try {
+          entries = parseInspection(command.items, items);
+        } catch (err) {
+          if (err instanceof InspectionParseError)
+            fail2(err.code);
+          throw err;
+        }
+        const id2 = randomUUID7();
+        await conn.query("INSERT INTO `VehicleInspection` (id, vehicleId, shopId, appointmentId, actorUserId, km, note, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [id2, vehicle.id, shop.id, vehicle.appointmentId, userId, Number(vehicle.currentKm) || null, command.note]);
+        for (const e9 of entries)
+          await conn.query("INSERT INTO `VehicleInspectionItem` (inspectionId, code, status, measure, unit) VALUES (?, ?, ?, ?, ?)", [id2, e9.code, e9.status, e9.measure, e9.unit]);
+        const covered = servicesCoveredBy(entries, items);
+        for (const serviceId of covered)
+          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID7(), vehicle.id, serviceId, Number(vehicle.currentKm) || 0, shop.id, userId]);
+        const name = (code3) => INSPECTION_ITEMS.find((i) => i.code === code3)?.name ?? code3;
+        const soon = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
+        const today = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+        for (const e9 of entries.filter((x) => x.status === "cambiar" || x.status === "observar")) {
+          await this.insertAlert(conn, String(vehicle.id), `${e9.status === "cambiar" ? "Cambiar" : "Revisar"}: ${name(e9.code)} (inspecci\xF3n de ${shop.name})`.slice(0, 191), e9.status === "cambiar" ? today : soon, null, userId, String(shop.id));
+        }
+        await this.audit(conn, userId, "care.inspection", "VehicleInspection", id2, { shopId: shop.id, by: shop.actor, items: entries.length });
+        await this.notifyOwner(conn, String(vehicle.ownerId), String(vehicle.id), `inspection:${id2}`, "care.inspection", inspectionSummary(label2, String(shop.name), entries, command.note));
+        const count3 = (st) => entries.filter((e9) => e9.status === st).length;
+        const missing2 = items.filter((i) => !entries.some((e9) => e9.code === i.code)).length;
+        return { userId, message: `Inspecci\xF3n registrada para el ${label2}: ${count3("ok")} bien, ${count3("observar")} observar, ${count3("cambiar")} cambiar${count3("no_aplica") ? `, ${count3("no_aplica")} no aplica` : ""}${missing2 ? `; ${missing2} sin revisar` : ""}.${covered.length ? ` El plan qued\xF3 al d\xEDa en ${covered.length} revisiones.` : ""} El due\xF1o recibi\xF3 el resumen y sus alertas.` };
+      }
+      /** Owner: the last inspection of the active vehicle (or by plate), grouped by area. */
+      async lastInspection(conn, userId, role, plate2) {
+        const vehicle = await this.ownerVehicle(conn, userId, role, plate2, "read");
+        const label2 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
+        const [last] = await rows7(conn, "SELECT i.id, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 1", [vehicle.id]);
+        if (!last)
+          return { userId, message: `Tu ${label2} todav\xEDa no tiene una inspecci\xF3n por sistemas. P\xEDdela en tu pr\xF3xima visita al taller: revisa 8 sistemas y te avisamos qu\xE9 cambiar.` };
+        const entries = (await rows7(conn, "SELECT code, status, measure, unit FROM `VehicleInspectionItem` WHERE inspectionId = ?", [last.id])).map((r) => ({ code: String(r.code), status: r.status, measure: r.measure === null ? null : Number(r.measure), unit: r.unit === null ? null : String(r.unit) }));
+        const when9 = new Date(last.createdAt).toLocaleDateString("es-EC", { timeZone: "America/Guayaquil", day: "numeric", month: "long", year: "numeric" });
+        return { userId, message: `${inspectionSummary(label2, String(last.shopName), entries, last.note ? String(last.note) : null)}
+Fecha: ${when9}.` };
+      }
       async notifyOwner(conn, owner, vehicleId, dedup, kind, message2) {
         await this.notify(conn, owner, dedup, kind, message2);
         for (const manager of await fleetManagers(conn, vehicleId))
@@ -86227,9 +86582,9 @@ function fail3(code3) {
   throw new LocalMarketplaceError(code3);
 }
 function positions(offers) {
-  return new Map([...offers].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime() || String(a.id).localeCompare(String(b.id))).map((o, i) => [String(o.id), i + 1]));
+  return new Map([...offers].filter((o) => NUMBERED_OFFER_STATUSES.has(String(o.status))).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime() || String(a.id).localeCompare(String(b.id))).map((o, i) => [String(o.id), i + 1]));
 }
-var rows8, list5, READ_ONLY, ACCEPT_RECEIPT_MATCH, MysqlLocalMarketplaceStore;
+var rows8, list5, NUMBERED_OFFER_STATUSES, READ_ONLY, ACCEPT_RECEIPT_MATCH, MysqlLocalMarketplaceStore;
 var init_local_marketplace_store = __esm({
   "packages/api/dist/infrastructure/messaging/local-marketplace-store.js"() {
     "use strict";
@@ -86253,6 +86608,7 @@ var init_local_marketplace_store = __esm({
         return value2.split(",").map((x) => x.trim());
       }
     };
+    NUMBERED_OFFER_STATUSES = /* @__PURE__ */ new Set(["offered", "chosen"]);
     READ_ONLY = /* @__PURE__ */ new Set(["list", "listMine", "invitations", "appointmentsMine"]);
     ACCEPT_RECEIPT_MATCH = "(a.localOfferId = ? OR (a.localOfferId IS NULL AND EXISTS (SELECT 1 FROM `LocalCommandReceipt` r WHERE r.userId = ? AND JSON_UNQUOTE(JSON_EXTRACT(r.response, '$.requestId')) COLLATE utf8mb4_unicode_ci = ? AND JSON_UNQUOTE(JSON_EXTRACT(r.response, '$.offerId')) COLLATE utf8mb4_unicode_ci = ? AND JSON_UNQUOTE(JSON_EXTRACT(r.response, '$.appointmentId')) COLLATE utf8mb4_unicode_ci = a.id)))";
     MysqlLocalMarketplaceStore = class {
@@ -86341,8 +86697,9 @@ Tu solicitud queda abierta 48 horas.`;
             return { action: "cancel", requestId: await this.ownRequest(conn, userId, role, command.requestRef, true) };
           case "acceptPosition": {
             const requestId = await this.ownRequest(conn, userId, role, command.requestRef, true);
-            const invited = await rows8(conn, "SELECT id FROM `LocalOffer` WHERE requestId = ? ORDER BY createdAt, id", [requestId]);
-            const chosen = invited[command.position - 1];
+            const offers = await rows8(conn, "SELECT id, status, createdAt FROM `LocalOffer` WHERE requestId = ? ORDER BY createdAt, id", [requestId]);
+            const position = positions(offers);
+            const chosen = offers.find((o) => position.get(String(o.id)) === command.position);
             if (!chosen)
               fail3("OFFER_NOT_AVAILABLE");
             return { action: "accept", requestId, offerId: String(chosen.id) };
@@ -86476,7 +86833,7 @@ Para confirmar: Confirmar C-XXXXXX` : "No tienes citas de solicitudes del piloto
           return { requestId: command.requestId, offerId: mine.id, message: command.available ? "Stock y fecha registrados; se avis\xF3 al due\xF1o." : "Sin stock registrado; se avis\xF3 al due\xF1o." };
         }
         if (command.action === "list") {
-          const visible = request.ownerId === userId ? offers.filter((o) => ["offered", "chosen"].includes(String(o.status))) : mine ? [mine] : [];
+          const visible = offers.filter((o) => NUMBERED_OFFER_STATUSES.has(String(o.status)) && (request.ownerId === userId || o.businessUserId === userId));
           const code3 = shortCode("S", command.requestId);
           const position = positions(offers);
           const lines = visible.map((o) => `${position.get(String(o.id))}) ${o.businessName}: USD ${o.priceUsd}, ${o.durationMin} min, ${o.proposedAt ? formatEcDateTime(o.proposedAt) : "por proponer"}${o.brand ? `, marca ${o.brand}` : ""}${o.quality ? `, calidad ${o.quality}` : ""}${o.warrantyDays != null ? `, garant\xEDa ${o.warrantyDays} d\xEDas` : ""}${o.status === "chosen" ? " (elegida)" : ""}. Oferta ${o.id}.`);
@@ -86522,6 +86879,7 @@ ${lines.join("\n")}${hint}` : `Todav\xEDa no hay ofertas para ${code3}.` };
           if (proposed.getTime() <= Date.now() || proposed.getTime() > Date.now() + 90 * 864e5)
             fail3("INVALID_PROPOSED_DATE");
           await conn.query("UPDATE `LocalOffer` SET status = 'offered', priceUsd = ?, durationMin = ?, proposedAt = ?, notes = ?, brand = ?, quality = ?, warrantyDays = ? WHERE id = ?", [command.priceUsd, command.durationMin, proposed, command.notes, request.kind === "repuesto" ? command.brand ?? null : null, request.kind === "repuesto" ? command.quality ?? null : null, request.kind === "repuesto" ? command.warrantyDays ?? null : null, mine.id]);
+          mine.status = "offered";
           const code3 = shortCode("S", command.requestId);
           const number = positions(offers).get(String(mine.id));
           const details = request.kind === "repuesto" ? `${command.brand ? ` Marca ${command.brand}.` : ""}${command.quality ? ` Calidad ${command.quality}.` : ""}${command.warrantyDays !== void 0 ? ` Garant\xEDa ${command.warrantyDays} d\xEDas.` : ""}` : "";
@@ -86581,8 +86939,8 @@ ${lines.join("\n")}${hint}` : `Todav\xEDa no hay ofertas para ${code3}.` };
 });
 
 // packages/api/dist/application/local-marketplace/chat.js
-function parseLocalChat(text9) {
-  const parts = text9.split("|").map((s) => s.trim());
+function parseLocalChat(text10) {
+  const parts = text10.split("|").map((s) => s.trim());
   const verb = parts[0]?.toLowerCase();
   let command;
   if ((verb === "buscar servicio" || verb === "buscar repuesto") && parts.length === 6)
@@ -86597,14 +86955,14 @@ function parseLocalChat(text9) {
   else if (verb === "confirmar cita" && parts.length === 3)
     command = { action: "confirm", requestId: parts[1], appointmentId: parts[2] };
   if (command === void 0)
-    command = parseShort(text9);
+    command = parseShort(text10);
   const result = localCommandSchema.safeParse(command);
   if (!result.success)
     throw new LocalMarketplaceError("INVALID_CHAT_COMMAND");
   return result.data;
 }
-function parseShort(text9) {
-  const normalized2 = text9.trim().replace(/\s+/g, " ");
+function parseShort(text10) {
+  const normalized2 = text10.trim().replace(/\s+/g, " ");
   const parts = normalized2.split("|").map((s) => s.trim());
   const words = (parts[0] ?? "").split(" ");
   const verb = words[0]?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -86675,12 +87033,12 @@ var init_chat = __esm({
 function budgetLines(value2) {
   return value2.split(";").map((chunk) => chunk.trim()).filter(Boolean).map((chunk) => {
     const [head = "", ...rest] = chunk.split(":");
-    const kind = fold6(head) === "repuesto" ? "repuesto" : fold6(head) === "mano de obra" ? "mano_obra" : head;
+    const kind = fold7(head) === "repuesto" ? "repuesto" : fold7(head) === "mano de obra" ? "mano_obra" : head;
     const f = rest.join(":").split(/,\s+/).map((x) => x.trim());
     const price = (x) => Number(String(x ?? "").replace(/[$\s]/g, "").replace(/\.(?=\d{3}\b)/g, "").replace(",", "."));
     if (kind === "mano_obra")
       return { kind, description: f[0], brand: null, quantity: Number(f[1]), unitPrice: price(f[2]), quality: null };
-    return { kind, description: f[0], brand: f[1] || null, quantity: Number(f[2]), unitPrice: price(f[3]), quality: f[4] ? fold6(f[4]) : "nuevo" };
+    return { kind, description: f[0], brand: f[1] || null, quantity: Number(f[2]), unitPrice: price(f[3]), quality: f[4] ? fold7(f[4]) : "nuevo" };
   });
 }
 function normalizePlate2(value2) {
@@ -86691,7 +87049,7 @@ function normalizePlate2(value2) {
 function parseAccountCommand(raw) {
   const message2 = raw.replace(VISIT_SUFFIX, "");
   const parts = message2.split("|").map((s) => s.trim());
-  const verb = fold6(parts[0] ?? "");
+  const verb = fold7(parts[0] ?? "");
   let command = null;
   if (verb === "registrarme" && parts.length === 4 && accepted(parts[3]))
     command = { action: "registerOwner", name: parts[1], city: parts[2] };
@@ -86700,7 +87058,7 @@ function parseAccountCommand(raw) {
   else if (verb === "registrar almacen" && parts.length === 8 && accepted(parts[7]))
     command = { action: "registerStore", name: parts[1], ruc: parts[2], city: parts[3], zone: parts[4], address: parts[5], categories: parts[6] };
   else if (verb === "vehiculo" && parts.length === 7)
-    command = { action: "addVehicle", vehicleClass: fold6(parts[1] ?? "").replace(/\s+/g, "_"), fuel: fold6(parts[2] ?? "").replace(/\s+/g, "_"), make: parts[3], model: parts[4], year: Number(parts[5]), currentKm: Number((parts[6] ?? "").replace(/[.\s,]/g, "")) };
+    command = { action: "addVehicle", vehicleClass: fold7(parts[1] ?? "").replace(/\s+/g, "_"), fuel: fold7(parts[2] ?? "").replace(/\s+/g, "_"), make: parts[3], model: parts[4], year: Number(parts[5]), currentKm: Number((parts[6] ?? "").replace(/[.\s,]/g, "")) };
   else if ((withPlate(verb, "plan") || withPlate(verb, "plan completo")) && parts.length === 1)
     command = { action: "plan", full: verb.startsWith("plan completo"), ...withPlate(verb, "plan") ?? withPlate(verb, "plan completo") };
   else if ((verb === "mi vehiculo" || verb === "mi vehiculo asignado") && parts.length === 1)
@@ -86719,14 +87077,30 @@ function parseAccountCommand(raw) {
     command = { action: "visitAnswer", appointmentRef: ref2(verb), accept: verb.startsWith("aceptar") };
   else if (/^plan [cC]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 1)
     command = { action: "shopPlan", appointmentRef: ref2(verb) };
+  else if (/^checklist [cC]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 1)
+    command = { action: "checklist", appointmentRef: ref2(verb) };
+  else if (/^inspeccion [cC]-[0-9a-fA-F]{6}$/.test(verb) && (parts.length === 2 || parts.length === 3))
+    command = { action: "inspection", appointmentRef: ref2(verb), items: parts[1], note: parts[2] ? parts[2] : null };
+  else if ((withPlate(verb, "inspeccion") || withPlate(verb, "ultima inspeccion")) && parts.length === 1)
+    command = { action: "lastInspection", ...withPlate(verb, "inspeccion") ?? withPlate(verb, "ultima inspeccion") };
   else if (/^ingreso [cC]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 6)
-    command = { action: "checkIn", appointmentRef: ref2(verb), km: kmOf(parts[1]), fuel: fold6(parts[2] ?? ""), condition: parts[3], inventory: parts[4], requested: parts[5] };
+    command = { action: "checkIn", appointmentRef: ref2(verb), km: kmOf(parts[1]), fuel: fold7(parts[2] ?? ""), condition: parts[3], inventory: parts[4], requested: parts[5] };
   else if (/^presupuesto ot-\d{1,7}$/.test(verb) && parts.length === 2)
     command = { action: "budget", orderNumber: orderOf(verb), lines: budgetLines(parts[1] ?? "") };
   else if (/^calificar ot-\d{1,7}$/.test(verb) && (parts.length === 5 || parts.length === 6))
     command = { action: "rateShop", orderNumber: orderOf(verb), quality: Number(parts[1]), service: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), comment: parts[5] ?? "" };
   else if (/^calificar s-[0-9a-f]{6}$/.test(verb) && (parts.length === 6 || parts.length === 7))
-    command = { action: "rateStore", requestRef: ref2(verb), rightPart: fold6(parts[1] ?? "") === "si", quality: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), service: Number(parts[5]), comment: parts[6] ?? "" };
+    command = { action: "rateStore", requestRef: ref2(verb), rightPart: fold7(parts[1] ?? "") === "si", quality: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), service: Number(parts[5]), comment: parts[6] ?? "" };
+  else if ((verb === "mis datos" || verb === "mi perfil") && parts.length === 1)
+    command = { action: "myProfile" };
+  else if ((verb === "mis datos" || verb === "mi perfil") && parts.length === 3)
+    command = { action: "editProfile", field: parts[1], value: parts[2] };
+  else if (withPlate(verb, "corregir vehiculo") && parts.length === 3)
+    command = { action: "editVehicle", field: parts[1], value: parts[2], ...withPlate(verb, "corregir vehiculo") };
+  else if (["mi taller", "mi almacen", "mi negocio"].includes(verb) && parts.length === 1)
+    command = { action: "myBusiness" };
+  else if (["editar taller", "editar almacen", "editar negocio"].includes(verb) && parts.length === 3)
+    command = { action: "editBusiness", field: parts[1], value: parts[2] };
   else if ((verb === "mi calificacion" || verb === "mi valoracion" || verb === "reporte de calificacion") && parts.length === 1)
     command = { action: "myRating" };
   else if (/^novedad ot-\d{1,7}$/.test(verb) && parts.length === 3)
@@ -86780,12 +87154,12 @@ function parseAccountCommand(raw) {
   else if (/^rechazar cita c-[0-9a-f]{6}$/.test(verb) && parts.length === 2)
     command = { action: "declineAppointment", appointmentRef: ref2(verb), reason: parts[1] };
   else if (verb === "ficha" && (parts.length === 8 || parts.length === 9))
-    command = { action: "createCard", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold6(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold6(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), services: (parts[8] ?? "").split(",").map((x) => x.trim()).filter(Boolean) };
+    command = { action: "createCard", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold7(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold7(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), services: (parts[8] ?? "").split(",").map((x) => x.trim()).filter(Boolean) };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 1)
     command = { action: "cardPreview", cardCode: secretOf(verb) };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 2 && accepted(parts[1]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: null, city: null, intoFleet: false };
-  else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 3 && fold6(parts[1] ?? "") === "flota" && accepted(parts[2]))
+  else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 3 && fold7(parts[1] ?? "") === "flota" && accepted(parts[2]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: null, city: null, intoFleet: true };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 4 && accepted(parts[3]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: parts[1], city: parts[2], intoFleet: false };
@@ -86800,7 +87174,7 @@ function parseAccountCommand(raw) {
   else if (verb === "registrar flota" && parts.length === 6 && accepted(parts[5]))
     command = { action: "registerFleet", name: parts[1], ruc: parts[2], city: parts[3], person: parts[4] };
   else if (verb === "vehiculo flota" && (parts.length === 8 || parts.length === 9))
-    command = { action: "fleetVehicle", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold6(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold6(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), unitCode: parts[8] ? parts[8] : null };
+    command = { action: "fleetVehicle", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold7(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold7(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), unitCode: parts[8] ? parts[8] : null };
   else if (plateAfter(verb, "retirar") && parts.length === 1)
     command = { action: "retireVehicle", plate: plateAfter(verb, "retirar") };
   else if (["agregar conductor", "agregar chofer", "agregar supervisor", "agregar administrador de flota"].includes(verb) && parts.length === 2)
@@ -86850,7 +87224,7 @@ function parseAccountCommand(raw) {
   else if (verb === "panel flota" && parts.length === 1)
     command = { action: "panelLink" };
   else if (verb === "mapa" && (parts.length === 3 || parts.length === 4) && accepted(parts[parts.length - 1])) {
-    const sector = parts.length === 4 && fold6(parts[1] ?? "") === "sector";
+    const sector = parts.length === 4 && fold7(parts[1] ?? "") === "sector";
     const point = parsePoint(parts[sector ? 2 : 1] ?? "");
     if ((parts.length === 3 || sector) && point)
       command = { action: "shopMap", lat: point.lat, lng: point.lng, precision: sector ? "sector" : "exacta" };
@@ -86863,7 +87237,7 @@ function parseAccountCommand(raw) {
   else if (["mi suscripcion", "suscripcion", "mi plan pagado"].includes(verb) && parts.length === 1)
     command = { action: "mySubscription" };
   else if (/^(quiero|contratar) (el )?plan .{2,40}$/.test(verb) && parts.length <= 3) {
-    const extras = parts.slice(1).map((p) => fold6(p));
+    const extras = parts.slice(1).map((p) => fold7(p));
     const period = extras.includes("anual") ? "anual" : "mensual";
     const unitsText = extras.find((p) => /^\d{1,3}( vehiculos?)?$/.test(p));
     if (extras.every((p) => p === "anual" || p === "mensual" || p === unitsText))
@@ -86878,8 +87252,8 @@ function parseAccountCommand(raw) {
     command = { action: "courseList" };
   else if (/^curso cu-\d{4}$/.test(verb) && parts.length === 1)
     command = { action: "courseDetail", code: verb.toUpperCase().slice(6) };
-  else if (/^inscribirme cu-\d{4}$/.test(verb) && (parts.length === 1 || accepted(parts[1]) && parts.slice(2).every((p) => ["compartir", "publico"].includes(fold6(p)))))
-    command = { action: "courseEnroll", code: verb.toUpperCase().match(/CU-\d{4}/)[0], consent: parts.length > 1, share: parts.slice(2).some((p) => fold6(p) === "compartir"), publicCertificate: parts.slice(2).some((p) => fold6(p) === "publico") };
+  else if (/^inscribirme cu-\d{4}$/.test(verb) && (parts.length === 1 || accepted(parts[1]) && parts.slice(2).every((p) => ["compartir", "publico"].includes(fold7(p)))))
+    command = { action: "courseEnroll", code: verb.toUpperCase().match(/CU-\d{4}/)[0], consent: parts.length > 1, share: parts.slice(2).some((p) => fold7(p) === "compartir"), publicCertificate: parts.slice(2).some((p) => fold7(p) === "publico") };
   else if (/^pago in-\d{4}$/.test(verb) && parts.length === 1)
     command = { action: "coursePayment", code: verb.toUpperCase().replace("PAGO ", "") };
   else if (verb === "listo" && parts.length === 1)
@@ -86902,7 +87276,7 @@ function parseAccountCommand(raw) {
     command = { action: "courseEnrollmentDecision", code: verb.toUpperCase().match(/IN-\d{4}/)[0], approve: verb.startsWith("aprobar") };
   else if (/^(curso|inscribirme|pago in-|certificado|inscribir tecnicos|avance tecnicos|soy experto|aprobar in-|rechazar in-|listo|mis cursos|[abc]$)/.test(verb))
     command = { action: "trainingNoop", key: "invalid" };
-  else if (["registrarme", "registrar taller", "registrar almacen", "registrar flota", "vehiculo", "vehiculo flota", "ficha", "ultimo servicio", "kilometraje", "sintoma", "alerta", "agregar tecnico", "agregar conductor", "agregar supervisor", "convenio", "aprobacion automatica", "limite supervisor", "gasto", ...FUEL_VERBS].includes(verb) || /^(ingreso|servicio|proxima visita|alerta|tecnico|presupuesto|aprobar|rechazar|novedad|entrega|acepto entrega|rechazo entrega|aprobar novedad|rechazar novedad|llamar novedad|calificar) [a-z]{1,2}-/.test(verb) || /^(ficha|no es mio|anular ficha|quitar taller) f-|^unirme (a )?(la )?flota j-|^(aceptar|rechazar|terminar) convenio k-/.test(verb) || new RegExp(`^(agendar|gasto|asignar|retirar|liberar) ${PLATE}$`).test(verb) || /^pago sb-?\d/.test(verb))
+  else if (["registrarme", "registrar taller", "registrar almacen", "registrar flota", "vehiculo", "vehiculo flota", "ficha", "ultimo servicio", "kilometraje", "sintoma", "alerta", "agregar tecnico", "agregar conductor", "agregar supervisor", "convenio", "aprobacion automatica", "limite supervisor", "gasto", "corregir vehiculo", "editar taller", "editar almacen", "editar negocio", ...FUEL_VERBS].includes(verb) || /^(inspeccion|checklist|ingreso|servicio|proxima visita|alerta|tecnico|presupuesto|aprobar|rechazar|novedad|entrega|acepto entrega|rechazo entrega|aprobar novedad|rechazar novedad|llamar novedad|calificar) [a-z]{1,2}-/.test(verb) || /^(ficha|no es mio|anular ficha|quitar taller) f-|^unirme (a )?(la )?flota j-|^(aceptar|rechazar|terminar) convenio k-/.test(verb) || new RegExp(`^(agendar|gasto|asignar|retirar|liberar) ${PLATE}$`).test(verb) || /^pago sb-?\d/.test(verb))
     return { invalid: true };
   if (command === null)
     return null;
@@ -86912,7 +87286,7 @@ function parseAccountCommand(raw) {
 function isInvalidAccountCommand(value2) {
   return !!value2 && "invalid" in value2;
 }
-var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref6, plate, vehicleClass, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold6, accepted, orderOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, gallonsOf, FUEL_VERBS, money2, VISIT_SUFFIX;
+var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref6, plate, vehicleClass, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold7, accepted, orderOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, gallonsOf, FUEL_VERBS, money2, VISIT_SUFFIX;
 var init_commands = __esm({
   "packages/api/dist/application/chat-account/commands.js"() {
     "use strict";
@@ -86950,6 +87324,10 @@ var init_commands = __esm({
       external_exports.object({ action: external_exports.literal("visitAnswer"), appointmentRef: code2("C"), accept: external_exports.boolean() }).strict(),
       // Workshop owner or technician, always on the vehicle of one of the workshop's appointments.
       external_exports.object({ action: external_exports.literal("shopPlan"), appointmentRef: code2("C") }).strict(),
+      // Inspection checklist by systems (domain/maintenance/inspection-checklist.ts).
+      external_exports.object({ action: external_exports.literal("checklist"), appointmentRef: code2("C") }).strict(),
+      external_exports.object({ action: external_exports.literal("inspection"), appointmentRef: code2("C"), items: external_exports.string().trim().min(2).max(1500), note: external_exports.string().trim().min(1).max(300).nullable() }).strict(),
+      external_exports.object({ action: external_exports.literal("lastInspection"), plate: plate.optional() }).strict(),
       // Reception form: odometer, fuel, condition and damage, inventory and the services requested.
       external_exports.object({ action: external_exports.literal("checkIn"), appointmentRef: code2("C"), km: external_exports.number().int().min(0).max(2e6), fuel: external_exports.enum(["reserva", "1/4", "1/2", "3/4", "lleno"]), condition: text2(3, 500), inventory: text2(2, 300), requested: text2(3, 500) }).strict(),
       // Budget with the detail the consumer law requires: each line with quantity, unit price and part quality.
@@ -87044,7 +87422,13 @@ var init_commands = __esm({
       external_exports.object({ action: external_exports.literal("trainingNoop"), key: text2(1, 30) }).strict(),
       // Mapa de talleres: el taller comparte su ubicación y acepta aparecer, o sale del mapa.
       external_exports.object({ action: external_exports.literal("shopMap"), lat: external_exports.number().min(-5.1).max(1.7), lng: external_exports.number().min(-92.2).max(-75.1), precision: external_exports.enum(["exacta", "sector"]) }).strict(),
-      external_exports.object({ action: external_exports.literal("shopMapLeave") }).strict()
+      external_exports.object({ action: external_exports.literal("shopMapLeave") }).strict(),
+      // Any account: see and correct its own data, the vehicle and the business it owns.
+      external_exports.object({ action: external_exports.literal("myProfile") }).strict(),
+      external_exports.object({ action: external_exports.literal("editProfile"), field: text2(2, 30), value: external_exports.string().trim().min(1).max(300) }).strict(),
+      external_exports.object({ action: external_exports.literal("editVehicle"), field: text2(2, 30), value: external_exports.string().trim().min(1).max(300), plate: plate.optional() }).strict(),
+      external_exports.object({ action: external_exports.literal("myBusiness") }).strict(),
+      external_exports.object({ action: external_exports.literal("editBusiness"), field: text2(2, 30), value: external_exports.string().trim().min(1).max(300) }).strict()
     ]);
     ACCOUNT_CHAT_HELP = [
       "Registrarme | nombre y apellido | ciudad | ACEPTO",
@@ -87052,24 +87436,25 @@ var init_commands = __esm({
       "Registrar almac\xE9n | nombre comercial | RUC | ciudad | sector | direcci\xF3n | categor\xEDas | ACEPTO",
       `Veh\xEDculo | clase (${classIds.join(", ")}) | combustible (${fuelIds.join(", ")}) | marca | modelo | a\xF1o | kilometraje`,
       "Plan (resumen) \xB7 Plan completo \xB7 Mis veh\xEDculos \xB7 Usar veh\xEDculo 2 \xB7 Hecho \xB7 Hecho cambio de aceite \xB7 Estado \xB7 Estado auto \xB7 Estado ABC-1234 \xB7 Estado OT-00012 \xB7 Confirmo ingreso OT-00012 \xB7 Observo ingreso OT-00012 | qu\xE9 no coincide",
-      "\xDAltimo servicio | servicio | km | AAAA-MM \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n",
+      "\xDAltimo servicio | servicio | km | AAAA-MM \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n \xB7 Inspecci\xF3n (la \xFAltima que hizo tu taller, por sistemas)",
       "Gastos: Combustible | USD | km (| galones) \xB7 Gasto | concepto | USD (| AAAA-MM-DD) \xB7 Mis gastos",
       "Alerta | texto | AAAA-MM-DD o km \xB7 Alertas s\xED \xB7 Alertas no \xB7 Aceptar visita C-XXXXXX \xB7 Rechazar visita C-XXXXXX",
       "Aprobar OT-00012 \xB7 Rechazar OT-00012 | motivo \xB7 Aprobar novedad N-XXXXXX \xB7 Rechazar novedad N-XXXXXX | motivo \xB7 Llamar novedad N-XXXXXX \xB7 Acepto entrega OT-00012 (| observaci\xF3n) \xB7 Rechazo entrega OT-00012 | motivo",
       "Calificar OT-00012 | calidad 1-5 | atenci\xF3n 1-5 | plazo 1-5 | costo 1-5 | comentario \xB7 Calificar S-XXXXXX | pieza correcta s\xED/no | calidad | plazo | precio | atenci\xF3n | comentario \xB7 Taller o almac\xE9n: Mi calificaci\xF3n",
       "Taller: Novedad OT-00012 | qu\xE9 se encontr\xF3 | repuesto: \u2026; mano de obra: \u2026 \xB7 Entrega OT-00012 | km de salida | trabajos realizados | d\xEDas de garant\xEDa",
-      "Taller y t\xE9cnicos: Plan C-XXXXXX \xB7 Ingreso C-XXXXXX | km | combustible (reserva, 1/4, 1/2, 3/4, lleno) | estado y da\xF1os | inventario | servicios a realizar \xB7 Presupuesto OT-00012 | repuesto: descripci\xF3n, marca, cantidad, precio unitario, calidad; mano de obra: descripci\xF3n, cantidad, precio \xB7 Servicio C-XXXXXX | servicios | km | detalle \xB7 Pr\xF3xima visita C-XXXXXX | AAAA-MM-DD | HH:mm \xB7 Alerta C-XXXXXX | texto | AAAA-MM-DD o km \xB7 Reprogramar cita C-XXXXXX | AAAA-MM-DD | HH:mm \xB7 Rechazar cita C-XXXXXX | motivo",
+      "Taller y t\xE9cnicos: Plan C-XXXXXX \xB7 Checklist C-XXXXXX \xB7 Inspecci\xF3n C-XXXXXX | M1 ok; F2 2,5 mm; N2 observar 2 mm; resto ok (| nota) \xB7 Ingreso C-XXXXXX | km | combustible (reserva, 1/4, 1/2, 3/4, lleno) | estado y da\xF1os | inventario | servicios a realizar \xB7 Presupuesto OT-00012 | repuesto: descripci\xF3n, marca, cantidad, precio unitario, calidad; mano de obra: descripci\xF3n, cantidad, precio \xB7 Servicio C-XXXXXX | servicios | km | detalle \xB7 Pr\xF3xima visita C-XXXXXX | AAAA-MM-DD | HH:mm \xB7 Alerta C-XXXXXX | texto | AAAA-MM-DD o km \xB7 Reprogramar cita C-XXXXXX | AAAA-MM-DD | HH:mm \xB7 Rechazar cita C-XXXXXX | motivo",
       "Mapa de talleres: Mapa | ubicaci\xF3n (comparte tu ubicaci\xF3n o escribe -0.18065, -78.46784) | ACEPTO \xB7 Mapa | sector | ubicaci\xF3n | ACEPTO (muestra solo tu sector) \xB7 Salir del mapa",
       "Due\xF1o del taller: Agregar t\xE9cnico | nombre \xB7 Agregar administrador | nombre \xB7 Resumen hoy \xB7 Resumen semana \xB7 Quitar t\xE9cnico T-XXXXXX \xB7 T\xE9cnico: T\xE9cnico T-XXXXXX | nombre | ACEPTO",
       "Ficha creada por el taller: Ficha | placa | clase | combustible | marca | modelo | a\xF1o | km (| servicios de hoy separados por coma) \xB7 Mis fichas \xB7 Anular ficha F-XXXXXXXX \xB7 Due\xF1o: Ficha F-XXXXXXXX (ver) \xB7 Ficha F-XXXXXXXX | ACEPTO \xB7 Ficha F-XXXXXXXX | nombre y apellido | ciudad | ACEPTO \xB7 Ficha F-XXXXXXXX | flota | ACEPTO \xB7 No es m\xEDo F-XXXXXXXX \xB7 Quitar taller F-XXXXXXXX",
       "Flota: Registrar flota | raz\xF3n social | RUC | ciudad | tu nombre y apellido | ACEPTO \xB7 Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km (| c\xF3digo interno) \xB7 Retirar PCD-4521 \xB7 Agregar conductor | nombre \xB7 Agregar supervisor | nombre \xB7 Conductores \xB7 Quitar D-XXXXXX \xB7 Asignar PCD-4521 | D-XXXXXX \xB7 Liberar PCD-4521 \xB7 Flota \xB7 Vencidos \xB7 Plan PCD-4521 \xB7 Kilometraje PCD-4521 | km \xB7 Gasto PCD-4521 | concepto | USD (| AAAA-MM-DD) \xB7 Costos mes \xB7 Costos PCD-4521 \xB7 Convenio | RUC del taller \xB7 Convenios \xB7 Terminar convenio K-XXXXXX \xB7 Agendar PCD-4521 | K-XXXXXX | AAAA-MM-DD | HH:mm | motivo \xB7 Aprobaci\xF3n autom\xE1tica | USD \xB7 L\xEDmite supervisor | USD \xB7 Panel flota",
       "Planes: Planes \xB7 Mi suscripci\xF3n \xB7 Quiero plan Premium (| anual) \xB7 Quiero plan Flota | 12 veh\xEDculos \xB7 Pago SB-0042 | n\xFAmero de comprobante (| banco) \xB7 Renovar SB-0042",
       "Capacitaci\xF3n: Cursos \xB7 Curso CU-0001 \xB7 Inscribirme CU-0001 \xB7 Pago IN-0001 + foto \xB7 Listo \xB7 A/B/C \xB7 Mis cursos \xB7 Certificado CU-0001 \xB7 Taller: Inscribir t\xE9cnicos CU-0001 \xB7 Avance t\xE9cnicos \xB7 Experto: Soy experto \xB7 Aprobar/Rechazar IN-0001",
+      "Mis datos: Mis datos \xB7 Mis datos | nombre, ciudad o correo | valor \xB7 Corregir veh\xEDculo (o Corregir veh\xEDculo ABC-1234) | marca, modelo, a\xF1o, placa, clase, combustible o uso | valor \xB7 Mi taller \xB7 Mi almac\xE9n \xB7 Editar taller | nombre, horario, direcci\xF3n, sector, ciudad, servicios, contacto o correo | valor \xB7 Editar almac\xE9n | \u2026 categor\xEDas, entregas s\xED/no \u2026 | valor",
       "Baja y privacidad: BAJA (dejar de recibir avisos por WhatsApp) \xB7 ALTA (volver a recibirlos) \xB7 Eliminar mi cuenta (pide borrar tus datos personales)",
       "Conductor: Unirme flota J-XXXXXXXX | nombre | ACEPTO \xB7 Mi veh\xEDculo \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n \xB7 Salir de flota \xB7 Taller: Mis flotas \xB7 Aceptar convenio K-XXXXXX \xB7 Rechazar convenio K-XXXXXX"
     ].join("\n");
-    fold6 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
-    accepted = (value2) => fold6(value2 ?? "") === "acepto";
+    fold7 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+    accepted = (value2) => fold7(value2 ?? "") === "acepto";
     orderOf = (verb) => Number(verb.match(/ot-(\d+)$/)?.[1]);
     kmOf = (value2) => Number(String(value2 ?? "").replace(/km/i, "").replace(/[.\s,]/g, ""));
     ref2 = (verb) => (verb.match(/[a-z]-[0-9a-f]{6}$/i)?.[0] ?? "").toUpperCase();
@@ -87350,13 +87735,13 @@ var init_vehicle_card_store = __esm({
         await this.audit(conn, userId, "taller", "card.created", "VehicleCard", id2, { shopId: shop.id, by: shop.actor, services: services.length });
         const [verified] = await rows10(conn, "SELECT verificationStatus FROM `Shop` WHERE id = ?", [shop.id]);
         const label2 = `${command.make} ${command.model} ${command.year} (${command.plate})`;
-        const text9 = `Ficha ${code3}`;
-        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${encodeURIComponent(text9)}` : null;
+        const text10 = `Ficha ${code3}`;
+        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${encodeURIComponent(text10)}` : null;
         const until = new Date(Date.now() + CARD_DAYS * 864e5);
         return { userId, message: [
           `Ficha ${code3} creada para ${label2}${services.length ? ` con ${services.map(serviceName2).join(", ")} a los ${command.currentKm.toLocaleString("es-EC")} km` : ""}.`,
           `Reenv\xEDa este enlace al due\xF1o desde tu WhatsApp:
-${link ?? `que escriba al WhatsApp de AutoMantPro: ${text9}`}`,
+${link ?? `que escriba al WhatsApp de AutoMantPro: ${text10}`}`,
           `Al abrirlo ver\xE1 el veh\xEDculo y qu\xE9 acepta. Vence el ${formatEcDateTime(until).split(",")[0]}; si no la acepta, se borra.${verified?.verificationStatus === "verified" ? "" : " Tu taller sigue en verificaci\xF3n: se lo diremos al due\xF1o."}`,
           `Cuando la acepte te enviaremos el c\xF3digo de cita para registrar el ingreso. Para ver tus fichas: Mis fichas`
         ].join("\n") };
@@ -87615,7 +88000,7 @@ var init_vehicle_costs_store = __esm({
 
 // packages/api/dist/application/panel/rtv-calendar.js
 function calendarFor(city, calendars = RTV_CALENDARS) {
-  return calendars[fold7(city ?? "")] ?? calendars.nacional ?? NATIONAL_RTV_CALENDAR;
+  return calendars[fold8(city ?? "")] ?? calendars.nacional ?? NATIONAL_RTV_CALENDAR;
 }
 function rtvMonth(plate2, city, calendars) {
   const digits = String(plate2 ?? "").match(/\d/g);
@@ -87641,7 +88026,7 @@ function rtvNotice(vehicle, now, label2) {
     message: `\u{1F5D3}\uFE0F Este mes (${MONTH_NAMES[month - 1]}) le toca la revisi\xF3n t\xE9cnica vehicular (RTV) y la matr\xEDcula a tu ${label2}, placa ${vehicle.plate}. El valor a pagar por la matr\xEDcula incluye el SOAT. Este calendario es referencial: confirma la fecha en la ANT o en tu agencia de matriculaci\xF3n. Para dejar de recibir avisos: Alertas no`
   };
 }
-var NATIONAL_RTV_CALENDAR, RTV_CALENDARS, MONTH_NAMES, fold7;
+var NATIONAL_RTV_CALENDAR, RTV_CALENDARS, MONTH_NAMES, fold8;
 var init_rtv_calendar = __esm({
   "packages/api/dist/application/panel/rtv-calendar.js"() {
     "use strict";
@@ -87652,7 +88037,7 @@ var init_rtv_calendar = __esm({
       guayaquil: NATIONAL_RTV_CALENDAR
     };
     MONTH_NAMES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-    fold7 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+    fold8 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
   }
 });
 
@@ -87875,12 +88260,12 @@ Para asignarlo a un conductor: Asignar ${command.plate} | D-XXXXXX` };
         const code3 = newSecretCode("J");
         await conn.query("INSERT INTO `FleetMember` (id, fleetId, userId, name, role, status, inviteHash, invitedBy) VALUES (?, ?, NULL, ?, ?, 'invited', ?, ?)", [id2, fleet.fleetId, command.name, command.role, secretHash(code3), userId]);
         await this.audit(conn, userId, "fleet.member.invited", "FleetMember", id2, { fleetId: fleet.fleetId, role: command.role });
-        const text9 = `Unirme flota ${code3} | ${command.name} | ACEPTO`;
-        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${encodeURIComponent(text9)}` : null;
+        const text10 = `Unirme flota ${code3} | ${command.name} | ACEPTO`;
+        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${encodeURIComponent(text10)}` : null;
         const ref4 = short4("D", id2);
         const what = command.role === "conductor" ? "conductor (reportar\xE1 kilometraje y novedades del veh\xEDculo que le asignes)" : command.role === "supervisor" ? "supervisor (ver\xE1 la flota y aprobar\xE1 gastos hasta el l\xEDmite que fijes)" : "administrador de la flota";
         return { userId, message: `Listo. Comparte este enlace con ${command.name} para que se una a ${fleet.name} como ${what} desde su propio WhatsApp:
-${link ?? `que escriba al WhatsApp de AutoMantPro: ${text9}`}
+${link ?? `que escriba al WhatsApp de AutoMantPro: ${text10}`}
 Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Su c\xF3digo en tu flota es ${ref4}${command.role === "conductor" ? `; para asignarle un veh\xEDculo: Asignar PLACA | ${ref4}` : ""}. Para quitarlo: Quitar ${ref4}` };
       }
       async join(conn, userId, role, command, createOwner) {
@@ -88145,8 +88530,211 @@ ${site}/flota/${token2}` };
   }
 });
 
-// packages/api/dist/infrastructure/map/workshop-map-store.js
+// packages/api/dist/infrastructure/messaging/profile-edit-store.js
 import { randomUUID as randomUUID12 } from "node:crypto";
+function normalizePlate3(value2) {
+  const compact = value2.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const m = compact.match(/^([A-Z]{2,3})(\d{3,4})([A-Z]?)$/);
+  return m ? `${m[1]}-${m[2]}${m[3]}` : value2.toUpperCase();
+}
+function text3(value2, min, max) {
+  const v = value2.trim().replace(/\s+/g, " ");
+  if (v.length < min || v.length > max)
+    fail7("INVALID_EDIT_VALUE");
+  return v;
+}
+var rows13, ProfileEditError, fail7, PROFILE_ACTIONS, fold9, PROFILE_FIELDS, VEHICLE_FIELDS, BUSINESS_FIELDS, REVIEWED_BUSINESS_FIELDS, WITH_ARTICLE, PLATE2, shown, ProfileEditStore;
+var init_profile_edit_store = __esm({
+  "packages/api/dist/infrastructure/messaging/profile-edit-store.js"() {
+    "use strict";
+    init_maintenance();
+    init_vehicle_care_store();
+    init_fleet_access();
+    rows13 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    ProfileEditError = class extends Error {
+      code;
+      constructor(code3) {
+        super(code3);
+        this.code = code3;
+      }
+    };
+    fail7 = (code3) => {
+      throw new ProfileEditError(code3);
+    };
+    PROFILE_ACTIONS = ["myProfile", "editProfile", "editVehicle", "myBusiness", "editBusiness"];
+    fold9 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
+    PROFILE_FIELDS = { nombre: "name", ciudad: "city", correo: "email", email: "email" };
+    VEHICLE_FIELDS = { marca: "make", modelo: "model", ano: "year", a\u00F1o: "year", placa: "plate", clase: "vehicleClass", combustible: "fuel", uso: "usageProfile" };
+    BUSINESS_FIELDS = { nombre: "name", "nombre comercial": "name", horario: "hours", direccion: "address", sector: "zone", ciudad: "city", servicios: "specialties", categorias: "categories", entregas: "delivery", correo: "email", contacto: "contactName" };
+    REVIEWED_BUSINESS_FIELDS = /* @__PURE__ */ new Set(["name", "address", "city"]);
+    WITH_ARTICLE = { name: "el nombre", city: "la ciudad", email: "el correo", make: "la marca", model: "el modelo", year: "el a\xF1o", plate: "la placa", vehicleClass: "la clase", fuel: "el combustible", usageProfile: "el uso", hours: "el horario", address: "la direcci\xF3n", zone: "el sector", specialties: "los servicios", categories: "las categor\xEDas", delivery: "las entregas", contactName: "el contacto" };
+    PLATE2 = /^[A-Z]{2,3}-\d{3,4}[A-Z]?$/;
+    shown = (v) => v === null || v === void 0 || v === "" ? "\u2014" : String(v);
+    ProfileEditStore = class {
+      async execute(conn, userId, role, command) {
+        switch (command.action) {
+          case "myProfile":
+            return this.myProfile(conn, userId, role);
+          case "editProfile":
+            return this.editProfile(conn, userId, role, command.field, command.value);
+          case "editVehicle":
+            return this.editVehicle(conn, userId, role, command);
+          case "myBusiness":
+            return this.myBusiness(conn, userId, role);
+          case "editBusiness":
+            return this.editBusiness(conn, userId, role, command.field, command.value);
+        }
+      }
+      /** Data the web panel shows in "Mis datos": profile, own vehicles and the business the user owns. */
+      async account(conn, userId, role) {
+        const [user] = await rows13(conn, "SELECT name, city, email, role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+        if (!user)
+          fail7("ACCOUNT_UNAVAILABLE");
+        const vehicles = role === "dueno" ? await rows13(conn, "SELECT id, make, model, year, plate, vehicleClass, fuel, usageProfile, currentKm FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL ORDER BY createdAt, id", [userId]) : [];
+        return { profile: user, vehicles, business: await this.business(conn, userId, role) };
+      }
+      async business(conn, userId, role) {
+        if (role === "taller") {
+          const [shop] = await rows13(conn, "SELECT id, name, ruc, address, city, zone, hours, contactName, email, specialties, verificationStatus FROM `Shop` WHERE userId = ?", [userId]);
+          if (!shop)
+            return null;
+          const list7 = typeof shop.specialties === "string" ? JSON.parse(shop.specialties) : shop.specialties;
+          return { kind: "taller", ...shop, specialties: Array.isArray(list7) ? list7 : [] };
+        }
+        if (role === "almacen") {
+          const [store] = await rows13(conn, "SELECT id, name, ruc, address, city, zone, hours, contactName, email, categories, delivery, verificationStatus FROM `Store` WHERE userId = ?", [userId]);
+          return store ? { kind: "almacen", ...store, delivery: Boolean(store.delivery) } : null;
+        }
+        return null;
+      }
+      async audit(conn, userId, role, eventType, entityType, entityId, before, after) {
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), eventType, userId, role, entityType, entityId, JSON.stringify(before), JSON.stringify(after)]);
+      }
+      async myProfile(conn, userId, role) {
+        const { profile, vehicles, business } = await this.account(conn, userId, role);
+        const lines = [`\u{1F464} Tus datos`, `Nombre: ${shown(profile.name)} \xB7 Ciudad: ${shown(profile.city)} \xB7 Correo: ${shown(profile.email)}`];
+        vehicles.forEach((v, i) => lines.push(`${i + 1}. ${v.make} ${v.model} ${v.year}${v.plate ? ` (${v.plate})` : ""} \xB7 ${v.vehicleClass ?? "\u2014"} \xB7 ${v.fuel ?? "\u2014"}`));
+        if (business)
+          lines.push(`${business.kind === "taller" ? "\u{1F527} Taller" : "\u{1F4E6} Almac\xE9n"}: ${business.name}. Ver y editar: ${business.kind === "taller" ? "Mi taller" : "Mi almac\xE9n"}`);
+        lines.push("Corregir: Mis datos | nombre, ciudad o correo | valor");
+        if (vehicles.length)
+          lines.push("Veh\xEDculo activo: Corregir veh\xEDculo | marca, modelo, a\xF1o, placa, clase, combustible o uso | valor");
+        return { userId, message: lines.join("\n"), data: { profile, vehicles, business } };
+      }
+      async editProfile(conn, userId, role, rawField, rawValue) {
+        const column = PROFILE_FIELDS[fold9(rawField)] ?? fail7("INVALID_EDIT_FIELD");
+        let value2;
+        if (column === "email") {
+          value2 = ["ninguno", "no", "-"].includes(fold9(rawValue)) ? null : rawValue.trim().toLowerCase();
+          if (value2 !== null && !/^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/.test(value2))
+            fail7("INVALID_EDIT_VALUE");
+          if (value2 !== null && (await rows13(conn, "SELECT id FROM `User` WHERE email = ? AND id <> ? LIMIT 1", [value2, userId])).length)
+            fail7("EMAIL_TAKEN");
+        } else
+          value2 = text3(rawValue, column === "name" ? 3 : 2, column === "name" ? 120 : 120);
+        const [before] = await rows13(conn, `SELECT ${column} AS v FROM \`User\` WHERE id = ? FOR UPDATE`, [userId]);
+        await conn.query(`UPDATE \`User\` SET ${column} = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?`, [value2, userId]);
+        await this.audit(conn, userId, role, "account.profile.edited", "User", userId, { [column]: before?.v ?? null }, { [column]: value2 });
+        return { userId, message: `Listo: actualizamos ${WITH_ARTICLE[column]}: ${shown(value2)}. Ver todo: Mis datos`, data: { field: column, value: value2 } };
+      }
+      async editVehicle(conn, userId, role, command) {
+        if (role !== "dueno")
+          fail7("FORBIDDEN");
+        const column = VEHICLE_FIELDS[fold9(command.field)] ?? fail7("INVALID_EDIT_FIELD");
+        let vehicle;
+        if (command.vehicleId) {
+          const [own2] = await rows13(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND deletedAt IS NULL FOR UPDATE", [command.vehicleId, userId]);
+          vehicle = own2 ?? fail7("VEHICLE_NOT_FOUND");
+        } else
+          vehicle = command.plate ? await vehicleByPlate(conn, userId, command.plate, "manage") : await activeVehicle(conn, userId, true);
+        if (vehicle.access === "driver")
+          fail7("FORBIDDEN");
+        let value2;
+        if (column === "year") {
+          value2 = Number(command.value.trim());
+          if (!Number.isInteger(value2) || value2 < 1970 || value2 > (/* @__PURE__ */ new Date()).getFullYear() + 1)
+            fail7("INVALID_EDIT_VALUE");
+        } else if (column === "plate") {
+          value2 = normalizePlate3(command.value);
+          if (!PLATE2.test(value2))
+            fail7("INVALID_EDIT_VALUE");
+          const taken = await rows13(conn, `SELECT v.id FROM \`Vehicle\` v WHERE v.deletedAt IS NULL AND v.id <> ? AND ${PLATE_SQL} = ? LIMIT 1`, [vehicle.id, plateKey(value2)]);
+          if (taken.length)
+            fail7("PLATE_TAKEN");
+        } else if (column === "vehicleClass" || column === "fuel") {
+          value2 = fold9(command.value).replace(/\s+/g, "_");
+          if (!(column === "vehicleClass" ? classIds : fuelIds).includes(value2))
+            fail7("INVALID_EDIT_VALUE");
+        } else if (column === "usageProfile") {
+          value2 = fold9(command.value);
+          if (!["urbano", "carretera", "severo"].includes(value2))
+            fail7("INVALID_EDIT_VALUE");
+        } else
+          value2 = text3(command.value, 1, 60);
+        await conn.query(`UPDATE \`Vehicle\` SET ${column} = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?`, [value2, vehicle.id]);
+        await this.audit(conn, userId, role, "account.vehicle.edited", "Vehicle", String(vehicle.id), { [column]: vehicle[column] ?? null }, { [column]: value2 });
+        const after = { ...vehicle, [column]: value2 };
+        const replan = ["make", "model", "year", "vehicleClass", "fuel", "usageProfile"].includes(column) ? " El plan se recalcula con el dato nuevo: escribe Plan para verlo." : "";
+        return { userId, message: `Listo: corregimos ${WITH_ARTICLE[column]}. Tu veh\xEDculo: ${after.make} ${after.model} ${after.year}${after.plate ? ` (${after.plate})` : ""}.${replan}`, data: { vehicleId: vehicle.id, field: column, value: value2 } };
+      }
+      async myBusiness(conn, userId, role) {
+        const business = await this.business(conn, userId, role) ?? fail7("BUSINESS_NOT_FOUND");
+        const isShop = business.kind === "taller";
+        const status = business.verificationStatus === "verified" ? "verificado" : business.verificationStatus === "rejected" ? "rechazado" : "en verificaci\xF3n";
+        const list7 = isShop ? business.specialties.join(", ") : shown(business.categories);
+        const lines = [
+          `${isShop ? "\u{1F527}" : "\u{1F4E6}"} ${business.name} (${status})`,
+          `RUC: ${shown(business.ruc)} \xB7 Ciudad: ${shown(business.city)} \xB7 Sector: ${shown(business.zone)}`,
+          `Direcci\xF3n: ${shown(business.address)} \xB7 Horario: ${shown(business.hours)}`,
+          `${isShop ? "Servicios" : "Categor\xEDas"}: ${list7 || "\u2014"}${isShop ? "" : ` \xB7 Entregas: ${business.delivery ? "s\xED" : "no"}`}`,
+          `Contacto: ${shown(business.contactName)} \xB7 Correo: ${shown(business.email)}`,
+          `Editar: ${isShop ? "Editar taller" : "Editar almac\xE9n"} | nombre, horario, direcci\xF3n, sector, ciudad, ${isShop ? "servicios" : "categor\xEDas, entregas"}, contacto o correo | valor`,
+          "El RUC no se cambia por aqu\xED: p\xEDdelo al equipo."
+        ];
+        return { userId, message: lines.join("\n"), data: business };
+      }
+      async editBusiness(conn, userId, role, rawField, rawValue) {
+        if (role !== "taller" && role !== "almacen")
+          fail7("FORBIDDEN");
+        const table = role === "taller" ? "Shop" : "Store";
+        const field2 = fold9(rawField);
+        if (field2 === "ruc")
+          fail7("RUC_LOCKED");
+        const column = BUSINESS_FIELDS[field2] ?? fail7("INVALID_EDIT_FIELD");
+        if (column === "specialties" && table !== "Shop" || (column === "categories" || column === "delivery") && table !== "Store")
+          fail7("INVALID_EDIT_FIELD");
+        const [business] = await rows13(conn, `SELECT * FROM \`${table}\` WHERE userId = ? FOR UPDATE`, [userId]);
+        if (!business)
+          fail7("BUSINESS_NOT_FOUND");
+        let value2;
+        if (column === "specialties") {
+          const list7 = rawValue.split(",").map((s) => s.trim()).filter(Boolean);
+          if (!list7.length || list7.length > 15 || list7.some((s) => s.length < 2 || s.length > 60))
+            fail7("INVALID_EDIT_VALUE");
+          value2 = JSON.stringify(list7);
+        } else if (column === "delivery") {
+          const v = fold9(rawValue);
+          if (!["si", "no"].includes(v))
+            fail7("INVALID_EDIT_VALUE");
+          value2 = v === "si";
+        } else if (column === "email") {
+          value2 = ["ninguno", "no", "-"].includes(fold9(rawValue)) ? null : rawValue.trim().toLowerCase();
+          if (value2 !== null && !/^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/.test(value2))
+            fail7("INVALID_EDIT_VALUE");
+        } else
+          value2 = text3(rawValue, column === "address" ? 5 : 2, column === "categories" ? 300 : column === "address" ? 200 : 120);
+        await conn.query(`UPDATE \`${table}\` SET ${column} = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?`, [value2, business.id]);
+        const review = REVIEWED_BUSINESS_FIELDS.has(column) && business.verificationStatus === "verified";
+        await this.audit(conn, userId, role, review ? "business.profile.review" : "business.profile.edited", table, String(business.id), { [column]: business[column] ?? null }, { [column]: value2, ...review ? { needsReview: true } : {} });
+        const shownValue = column === "specialties" ? JSON.parse(value2).join(", ") : column === "delivery" ? value2 ? "s\xED" : "no" : shown(value2);
+        return { userId, message: `Listo: actualizamos ${WITH_ARTICLE[column]} de ${business.name}: ${shownValue}.${review ? " El equipo revisar\xE1 este cambio; tu negocio sigue activo mientras tanto." : ""} Ver todo: ${table === "Shop" ? "Mi taller" : "Mi almac\xE9n"}`, data: { field: column, value: column === "specialties" ? JSON.parse(value2) : value2, review } };
+      }
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/map/workshop-map-store.js
+import { randomUUID as randomUUID13 } from "node:crypto";
 function stringList2(value2) {
   let parsed = value2;
   if (typeof value2 === "string") {
@@ -88164,8 +88752,8 @@ function toRecord(r) {
     name: String(r.name),
     address: String(r.address ?? ""),
     city: String(r.city ?? ""),
-    zone: text3(r.zone),
-    hours: text3(r.hours),
+    zone: text4(r.zone),
+    hours: text4(r.hours),
     lat: num(r.lat),
     lng: num(r.lng),
     precision: r.mapPrecision === "sector" ? "sector" : "exacta",
@@ -88174,32 +88762,32 @@ function toRecord(r) {
     ratingCount: Number(r.ratingCount ?? 0)
   };
 }
-async function executeShopMapCommand(conn, userId, role, command, fail11) {
+async function executeShopMapCommand(conn, userId, role, command, fail12) {
   if (role !== "taller")
-    fail11("FORBIDDEN");
-  const [shop] = rows13(await conn.query("SELECT id, name, verificationStatus, city, zone FROM `Shop` WHERE userId = ? LIMIT 1 FOR UPDATE", [userId]));
+    fail12("FORBIDDEN");
+  const [shop] = rows14(await conn.query("SELECT id, name, verificationStatus, city, zone FROM `Shop` WHERE userId = ? LIMIT 1 FOR UPDATE", [userId]));
   if (!shop)
-    return fail11("NOT_FOUND");
+    return fail12("NOT_FOUND");
   if (command.action === "shopMapLeave") {
     await conn.query("UPDATE `Shop` SET mapListed = FALSE, mapConsentAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [shop.id]);
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.leave', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), userId, shop.id, JSON.stringify({ source: "whatsapp" })]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.leave', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), userId, shop.id, JSON.stringify({ source: "whatsapp" })]);
     return `Listo: ${String(shop.name)} ya no aparece en el mapa de AutoMantPro. Para volver: Mapa | ubicaci\xF3n | ACEPTO`;
   }
   await conn.query("UPDATE `Shop` SET lat = ?, lng = ?, mapPrecision = ?, mapListed = TRUE, mapConsentAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [command.lat, command.lng, command.precision, shop.id]);
-  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.location', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), userId, shop.id, JSON.stringify({ listed: true, precision: command.precision, hasPoint: true, source: "whatsapp" })]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.location', ?, 'taller', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), userId, shop.id, JSON.stringify({ listed: true, precision: command.precision, hasPoint: true, source: "whatsapp" })]);
   const where = command.precision === "sector" ? "Se ver\xE1 solo tu sector, sin el punto exacto." : "Se ver\xE1 el punto exacto de tu taller.";
   const pending = shop.verificationStatus === "verified" ? `Ya puedes verte en ${mapUrl(SITE_URL, { city: String(shop.city ?? "") })}` : "Aparecer\xE1s cuando terminemos de verificar tu taller.";
   return `Ubicaci\xF3n guardada para ${String(shop.name)}. ${where} ${pending}
 Para salir del mapa cuando quieras: Salir del mapa`;
 }
-var rows13, text3, num, missingColumn, LISTED_SQL, MysqlWorkshopMapStore;
+var rows14, text4, num, missingColumn, LISTED_SQL, MysqlWorkshopMapStore;
 var init_workshop_map_store = __esm({
   "packages/api/dist/infrastructure/map/workshop-map-store.js"() {
     "use strict";
     init_appointment_store();
     init_workshop_map();
-    rows13 = (result) => result[0];
-    text3 = (v) => v === null || v === void 0 || String(v).trim() === "" ? null : String(v);
+    rows14 = (result) => result[0];
+    text4 = (v) => v === null || v === void 0 || String(v).trim() === "" ? null : String(v);
     num = (v) => v === null || v === void 0 || v === "" ? null : Number(v);
     missingColumn = (err) => ["ER_BAD_FIELD_ERROR", "ER_NO_SUCH_TABLE"].includes(String(err.code));
     LISTED_SQL = "SELECT sh.id, sh.name, sh.address, sh.city, sh.zone, sh.hours, sh.lat, sh.lng, sh.mapPrecision, sh.specialties, sh.ratingAvg, sh.ratingCount FROM `Shop` sh JOIN `User` u ON u.id = sh.userId AND u.deletedAt IS NULL WHERE sh.verificationStatus = 'verified' AND sh.mapListed = TRUE AND sh.mapConsentAt IS NOT NULL ";
@@ -88224,7 +88812,7 @@ var init_workshop_map_store = __esm({
                 throw err;
               return conn.query(`${LISTED_SQL}ORDER BY sh.city, sh.name LIMIT 2000`);
             });
-            return rows13(result).map(toRecord);
+            return rows14(result).map(toRecord);
           } catch (err) {
             if (missingColumn(err))
               return [];
@@ -88235,7 +88823,7 @@ var init_workshop_map_store = __esm({
       locationOf(shopId) {
         return this.run(async (conn) => {
           try {
-            const [r] = rows13(await conn.query("SELECT lat, lng, mapListed, mapPrecision, mapConsentAt FROM `Shop` WHERE id = ? LIMIT 1", [shopId]));
+            const [r] = rows14(await conn.query("SELECT lat, lng, mapListed, mapPrecision, mapConsentAt FROM `Shop` WHERE id = ? LIMIT 1", [shopId]));
             if (!r)
               return null;
             return { lat: num(r.lat), lng: num(r.lng), listed: Boolean(Number(r.mapListed)), precision: r.mapPrecision === "sector" ? "sector" : "exacta", consentAt: r.mapConsentAt ?? null };
@@ -88255,7 +88843,7 @@ var init_workshop_map_store = __esm({
           const [result] = await conn.query("UPDATE `Shop` SET lat = ?, lng = ?, mapPrecision = ?, mapListed = ?, mapConsentAt = CASE WHEN ? THEN COALESCE(mapConsentAt, CURRENT_TIMESTAMP(3)) ELSE NULL END, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.lat, input.lng, input.precision, input.listed, input.listed, shopId]);
           const changed = Number(result?.affectedRows ?? 0) > 0;
           if (changed) {
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.location', ?, 'admin', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID12(), actorUserId, shopId, JSON.stringify({ listed: input.listed, precision: input.precision, hasPoint: input.lat !== null, source: "admin" })]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'map.shop.location', ?, 'admin', 'Shop', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), actorUserId, shopId, JSON.stringify({ listed: input.listed, precision: input.precision, hasPoint: input.lat !== null, source: "admin" })]);
           }
           return changed;
         });
@@ -88265,8 +88853,8 @@ var init_workshop_map_store = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/chat-account-store.js
-import { randomBytes as randomBytes4, randomUUID as randomUUID13 } from "node:crypto";
-var rows14, ChatAccountError, fail7, ChatAccountStore;
+import { randomBytes as randomBytes4, randomUUID as randomUUID14 } from "node:crypto";
+var rows15, ChatAccountError, fail8, ChatAccountStore;
 var init_chat_account_store = __esm({
   "packages/api/dist/infrastructure/messaging/chat-account-store.js"() {
     "use strict";
@@ -88278,9 +88866,10 @@ var init_chat_account_store = __esm({
     init_vehicle_care_store();
     init_vehicle_card_store();
     init_fleet_store();
+    init_profile_edit_store();
     init_whatsapp_number();
     init_workshop_map_store();
-    rows14 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    rows15 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     ChatAccountError = class extends Error {
       code;
       constructor(code3) {
@@ -88288,7 +88877,7 @@ var init_chat_account_store = __esm({
         this.code = code3;
       }
     };
-    fail7 = (code3) => {
+    fail8 = (code3) => {
       throw new ChatAccountError(code3);
     };
     ChatAccountStore = class {
@@ -88296,56 +88885,57 @@ var init_chat_account_store = __esm({
       cards = new VehicleCardStore();
       fleets = new FleetStore();
       subscriptions = new SubscriptionChat();
+      profiles = new ProfileEditStore();
       /**
        * An owner account for a contact who accepted in the same message (claiming a vehicle file,
        * registering a fleet or joining one as a driver). Same checks and shape as "Registrarme".
        */
       async createOwnerAccount(conn, phone, name, city, source) {
         if (!/^\d{8,15}$/.test(phone))
-          fail7("INVALID_PHONE");
-        const taken = await rows14(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [`+${phone}`, phone]);
+          fail8("INVALID_PHONE");
+        const taken = await rows15(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [`+${phone}`, phone]);
         if (taken.length)
-          fail7("PHONE_REGISTERED");
-        if ((await rows14(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone])).length)
-          fail7("ALREADY_REGISTERED");
-        const id2 = randomUUID13();
+          fail8("PHONE_REGISTERED");
+        if ((await rows15(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone])).length)
+          fail8("ALREADY_REGISTERED");
+        const id2 = randomUUID14();
         const passwordHash = await hashPassword(randomBytes4(24).toString("hex"));
         await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'dueno', ?, 'es', ?, CURRENT_TIMESTAMP(3), ?, 'whatsapp', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, `+${phone}`, passwordHash, name, city, CONSENT_VERSION]);
         await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id2, phone]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, 'dueno', 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), id2, id2, JSON.stringify({ role: "dueno", source: "whatsapp", via: source, consentVersion: CONSENT_VERSION })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, 'dueno', 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID14(), id2, id2, JSON.stringify({ role: "dueno", source: "whatsapp", via: source, consentVersion: CONSENT_VERSION })]);
         return id2;
       }
       /** AutoMantPro's public WhatsApp number, for the links people share. */
       async publicNumber(conn) {
-        const [setting] = await rows14(conn, "SELECT value FROM `AppSetting` WHERE name = ?", [WHATSAPP_NUMBER_KEY]);
+        const [setting] = await rows15(conn, "SELECT value FROM `AppSetting` WHERE name = ?", [WHATSAPP_NUMBER_KEY]);
         return normalizeWhatsappNumber(String(setting?.value ?? process.env.WA_PUBLIC_NUMBER ?? ""));
       }
       /** A technician joins a workshop with the code the workshop owner shared, from their own phone. */
       async joinTechnician(conn, phone, userId, ref4, name) {
         if (userId)
-          fail7("ALREADY_REGISTERED");
+          fail8("ALREADY_REGISTERED");
         if (!/^\d{8,15}$/.test(phone))
-          fail7("INVALID_PHONE");
-        const [member] = await rows14(conn, "SELECT m.id, s.name AS shopName, s.userId AS ownerUserId FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.status = 'invited' AND REPLACE(m.id, '-', '') LIKE ? LIMIT 2 FOR UPDATE", [`${ref4.slice(2).toLowerCase()}%`]);
+          fail8("INVALID_PHONE");
+        const [member] = await rows15(conn, "SELECT m.id, s.name AS shopName, s.userId AS ownerUserId FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.status = 'invited' AND REPLACE(m.id, '-', '') LIKE ? LIMIT 2 FOR UPDATE", [`${ref4.slice(2).toLowerCase()}%`]);
         if (!member)
-          fail7("NOT_FOUND");
-        const taken = await rows14(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [`+${phone}`, phone]);
+          fail8("NOT_FOUND");
+        const taken = await rows15(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [`+${phone}`, phone]);
         if (taken.length)
-          fail7("PHONE_REGISTERED");
-        const id2 = randomUUID13();
+          fail8("PHONE_REGISTERED");
+        const id2 = randomUUID14();
         const passwordHash = await hashPassword(randomBytes4(24).toString("hex"));
         await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'taller', ?, 'es', NULL, CURRENT_TIMESTAMP(3), ?, 'whatsapp', 'T\xE9cnico de taller', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, `+${phone}`, passwordHash, name, CONSENT_VERSION]);
         await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id2, phone]);
         await conn.query("UPDATE `ShopMember` SET status = 'active', userId = ?, name = ? WHERE id = ?", [id2, name, member.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.technician.joined', ?, 'taller', 'ShopMember', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), id2, member.id, JSON.stringify({ consentVersion: CONSENT_VERSION })]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'care.technician', ?)", [randomUUID13(), `techjoined:${String(member.id)}`, member.ownerUserId, JSON.stringify({ message: `${name} se uni\xF3 a ${member.shopName} como t\xE9cnico.` })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.technician.joined', ?, 'taller', 'ShopMember', ?, ?, UTC_TIMESTAMP(3))", [randomUUID14(), id2, member.id, JSON.stringify({ consentVersion: CONSENT_VERSION })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'care.technician', ?)", [randomUUID14(), `techjoined:${String(member.id)}`, member.ownerUserId, JSON.stringify({ message: `${name} se uni\xF3 a ${member.shopName} como t\xE9cnico.` })]);
         return { userId: id2, message: `Bienvenido, ${name.split(/\s+/)[0]}: ya eres t\xE9cnico de ${member.shopName} en AutoMantPro y aceptaste el tratamiento de datos (versi\xF3n ${CONSENT_VERSION}). Comandos: Plan C-XXXXXX \xB7 Ingreso C-XXXXXX | \u2026 \xB7 Servicio C-XXXXXX | \u2026 \xB7 Pr\xF3xima visita C-XXXXXX | \u2026` };
       }
       /** A business without an account that arrives through an owner's link sees the case, never the owner. */
       async referralPreview(conn, ref4) {
-        const [request] = await rows14(conn, "SELECT kind, category, zone, city FROM `LocalRequest` WHERE status = 'open' AND expiresAt > UTC_TIMESTAMP(3) AND REPLACE(id, '-', '') LIKE ? LIMIT 1", [`${ref4.slice(2).toLowerCase()}%`]);
+        const [request] = await rows15(conn, "SELECT kind, category, zone, city FROM `LocalRequest` WHERE status = 'open' AND expiresAt > UTC_TIMESTAMP(3) AND REPLACE(id, '-', '') LIKE ? LIMIT 1", [`${ref4.slice(2).toLowerCase()}%`]);
         if (!request)
-          fail7("REQUEST_CLOSED_OR_EXPIRED");
+          fail8("REQUEST_CLOSED_OR_EXPIRED");
         const kind = request.kind === "servicio" ? "taller" : "almac\xE9n";
         return { userId: "", message: `Un cliente de AutoMantPro busca ${request.kind === "servicio" ? "un taller" : "un repuesto"}: ${request.category}, sector ${request.zone}, ${request.city}. Para recibir su solicitud y ofertar, reg\xEDstrate gratis (tu primer cliente no tiene costo):
 Registrar ${kind} | nombre comercial | RUC | ciudad | sector | direcci\xF3n | ${kind === "taller" ? "servicios separados por coma" : "categor\xEDas"} | ACEPTO
@@ -88354,27 +88944,27 @@ Luego escribe de nuevo: ${kind === "taller" ? "Taller" : "Almac\xE9n"} ${ref4}` 
       async execute(conn, phone, userId, role, command) {
         if (command.action === "registerOwner" || command.action === "registerShop" || command.action === "registerStore") {
           if (userId)
-            fail7("ALREADY_REGISTERED");
+            fail8("ALREADY_REGISTERED");
           if (!/^\d{8,15}$/.test(phone))
-            fail7("INVALID_PHONE");
+            fail8("INVALID_PHONE");
           const stored = `+${phone}`;
-          const taken = await rows14(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [stored, phone]);
+          const taken = await rows15(conn, "SELECT id FROM `User` WHERE phone = ? OR phone = ? LIMIT 1 FOR UPDATE", [stored, phone]);
           if (taken.length)
-            fail7("PHONE_REGISTERED");
-          const linked = await rows14(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone]);
+            fail8("PHONE_REGISTERED");
+          const linked = await rows15(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone]);
           if (linked.length)
-            fail7("ALREADY_REGISTERED");
-          const id2 = randomUUID13();
+            fail8("ALREADY_REGISTERED");
+          const id2 = randomUUID14();
           const newRole = command.action === "registerOwner" ? "dueno" : command.action === "registerShop" ? "taller" : "almacen";
           const passwordHash = await hashPassword(randomBytes4(24).toString("hex"));
           await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, ?, ?, 'es', ?, CURRENT_TIMESTAMP(3), ?, 'whatsapp', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, stored, passwordHash, newRole, command.name, command.city, CONSENT_VERSION]);
           if (command.action === "registerShop") {
-            await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID13(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, JSON.stringify(command.services)]);
+            await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID14(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, JSON.stringify(command.services)]);
           } else if (command.action === "registerStore") {
-            await conn.query("INSERT INTO `Store` (id, userId, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, FALSE, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID13(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, command.categories]);
+            await conn.query("INSERT INTO `Store` (id, userId, name, address, city, zone, ruc, hours, contactName, email, categories, delivery, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, FALSE, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID14(), id2, command.name, command.address, command.city, command.zone, command.ruc, command.name, command.categories]);
           }
           await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id2, phone]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, ?, 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), id2, newRole, id2, JSON.stringify({ role: newRole, source: "whatsapp", consentVersion: CONSENT_VERSION })]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, ?, 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID14(), id2, newRole, id2, JSON.stringify({ role: newRole, source: "whatsapp", consentVersion: CONSENT_VERSION })]);
           const message2 = newRole === "dueno" ? `Listo, ${command.name.split(/\s+/)[0]}: tu cuenta de AutoMantPro qued\xF3 creada y aceptaste el tratamiento de datos (versi\xF3n ${CONSENT_VERSION}). Ahora registra tu veh\xEDculo: Veh\xEDculo | clase | combustible | marca | modelo | a\xF1o | kilometraje` : `Listo: registramos ${command.name}. Queda en verificaci\xF3n; revisaremos el RUC y la direcci\xF3n y te avisaremos por aqu\xED. Aceptaste el tratamiento de datos (versi\xF3n ${CONSENT_VERSION}).`;
           return { message: message2, userId: id2 };
         }
@@ -88392,26 +88982,28 @@ Luego escribe de nuevo: ${kind === "taller" ? "Taller" : "Almac\xE9n"} ${ref4}` 
         if (command.action === "referral" && !userId)
           return this.referralPreview(conn, command.requestRef);
         if (!userId)
-          return fail7("ACCOUNT_REQUIRED");
+          return fail8("ACCOUNT_REQUIRED");
+        if (PROFILE_ACTIONS.includes(command.action))
+          return this.profiles.execute(conn, userId, role ?? "", command);
         if (command.action === "shopMap" || command.action === "shopMapLeave")
-          return { userId, message: await executeShopMapCommand(conn, userId, role ?? "", command, fail7) };
+          return { userId, message: await executeShopMapCommand(conn, userId, role ?? "", command, fail8) };
         if (command.action !== "addVehicle" && !(command.action === "courseList" || command.action === "courseDetail" || command.action === "courseEnroll" || command.action === "coursePayment" || command.action === "courseDone" || command.action === "courseAnswer" || command.action === "myCourses" || command.action === "courseCertificate" || command.action === "courseTechnicianEnroll" || command.action === "courseTechnicianProgress" || command.action === "becomeExpert" || command.action === "courseEnrollmentDecision" || command.action === "trainingNoop"))
           return this.care.execute(conn, userId, role ?? "", command, await this.publicNumber(conn));
         if (command.action !== "addVehicle")
-          return fail7("UNSUPPORTED_ACCOUNT_COMMAND");
+          return fail8("UNSUPPORTED_ACCOUNT_COMMAND");
         if (role !== "dueno")
-          fail7("FORBIDDEN");
+          fail8("FORBIDDEN");
         {
-          const count3 = await rows14(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [userId]);
+          const count3 = await rows15(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [userId]);
           if (Number(count3[0]?.n) >= 5)
-            fail7("VEHICLE_LIMIT");
+            fail8("VEHICLE_LIMIT");
           const plan = await ownerEntitlement(conn, userId);
           if (Number(count3[0]?.n) >= plan.maxVehicles) {
             return { userId, message: `Tu plan ${plan.tier === "gratis" ? "Gratis" : "actual"} permite ${plan.maxVehicles} veh\xEDculo${plan.maxVehicles === 1 ? "" : "s"} y ya ${plan.maxVehicles === 1 ? "lo tienes registrado" : "los tienes registrados"}. Con Premium registras hasta 3 y ves el plan de mantenimiento Avanzado. Escribe Planes para ver precios.` };
           }
-          const id2 = randomUUID13();
+          const id2 = randomUUID14();
           await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, selectedAt, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL, 'urbano', FALSE, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, userId, command.make, command.model, command.year, command.currentKm, command.vehicleClass, command.fuel]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.vehicle.created', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID13(), userId, id2, JSON.stringify({ source: "whatsapp" })]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.vehicle.created', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID14(), userId, id2, JSON.stringify({ source: "whatsapp" })]);
           const summary = planSummaryFor({ make: command.make, model: command.model, year: command.year, currentKm: command.currentKm, vehicleClass: command.vehicleClass, fuel: command.fuel, usageProfile: "urbano" }, plan.level);
           const others = Number(count3[0]?.n) > 0 ? " Ahora es tu veh\xEDculo activo; para cambiar escribe Mis veh\xEDculos." : "";
           return { userId, message: summary ? `Veh\xEDculo registrado.${others} Este es tu plan de mantenimiento:
@@ -88439,6 +89031,14 @@ var init_error_messages = __esm({
     "use strict";
     CHAT_ERROR_MESSAGES = {
       ACCOUNT_REQUIRED: "Vincula o registra una cuenta antes de continuar. Escribe: Registrarme | nombre y apellido | ciudad | ACEPTO.",
+      BUSINESS_NOT_FOUND: "No encontramos un taller o almac\xE9n a tu nombre. Si lo registraste con otro n\xFAmero, pide al equipo que lo vincule.",
+      EMAIL_TAKEN: "Ese correo ya est\xE1 en otra cuenta. Usa otro correo o escribe: Mis datos | correo | ninguno.",
+      INVALID_EDIT_FIELD: "Ese dato no se puede editar as\xED. Escribe Mis datos, Mi taller o Mi almac\xE9n para ver qu\xE9 puedes cambiar.",
+      INVALID_EDIT_VALUE: "El valor no es v\xE1lido para ese dato. Revisa el formato del ejemplo y vuelve a enviarlo.",
+      RUC_LOCKED: "El RUC no se cambia por aqu\xED porque identifica a tu negocio. Pide el cambio al equipo y lo verificaremos.",
+      INSPECTION_UNAVAILABLE: "La inspecci\xF3n por sistemas todav\xEDa no est\xE1 activa en esta instalaci\xF3n. Pide al equipo que la active.",
+      INSPECTION_ITEM_NOT_APPLICABLE: "Ese c\xF3digo no aplica a este veh\xEDculo. Revisa la lista con: Checklist C-XXXXXX.",
+      INVALID_INSPECTION: "No entendimos la inspecci\xF3n. Usa c\xF3digos y estados separados por punto y coma, por ejemplo: M1 ok; F2 2,5 mm; N2 observar 2 mm; resto ok.",
       ACCOUNT_UNAVAILABLE: "No encontramos una cuenta activa para este chat. Pide al equipo que revise el acceso de tu cuenta.",
       ALREADY_MEMBER: "Esta persona ya pertenece a la flota. Revisa la lista de integrantes antes de enviar otra invitaci\xF3n.",
       ALREADY_RATED: "Esta atenci\xF3n ya tiene una calificaci\xF3n. Puedes calificar otra atenci\xF3n cuando termine.",
@@ -88582,12 +89182,12 @@ var init_domain = __esm({
 });
 
 // packages/api/dist/infrastructure/courses/courses-store.js
-import { randomUUID as randomUUID14 } from "node:crypto";
+import { randomUUID as randomUUID15 } from "node:crypto";
 import { createHash as createHash6 } from "node:crypto";
 async function isVerifiedExpert(conn, userId) {
   return rowsOf(await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId = ? AND verificationStatus = 'verificado' LIMIT 1", [userId])).length > 0;
 }
-var courseCode, enrollmentCode, certificateCode, rowsOf, affected2, fail8, MysqlCoursesStore;
+var courseCode, enrollmentCode, certificateCode, rowsOf, affected2, fail9, MysqlCoursesStore;
 var init_courses_store = __esm({
   "packages/api/dist/infrastructure/courses/courses-store.js"() {
     "use strict";
@@ -88597,7 +89197,7 @@ var init_courses_store = __esm({
     certificateCode = (n) => `C-${String(n).padStart(4, "0")}`;
     rowsOf = (r) => Array.isArray(r[0]) ? r[0] : [];
     affected2 = (r) => Number(r[0].affectedRows ?? 0);
-    fail8 = (code3) => {
+    fail9 = (code3) => {
       throw new Error(code3);
     };
     MysqlCoursesStore = class _MysqlCoursesStore {
@@ -88650,7 +89250,7 @@ var init_courses_store = __esm({
         const [course] = rowsOf(await c.query("SELECT firstPublishedAt FROM `Course` WHERE id=?", [courseId]));
         if (!course?.firstPublishedAt || JSON.stringify(before) === JSON.stringify(after))
           return;
-        await c.query("INSERT INTO `CourseChange` (id,courseId,actorUserId,campo,antes,despues) VALUES (?,?,?,?,?,?)", [randomUUID14(), courseId, actorId, field2, JSON.stringify(before) ?? null, JSON.stringify(after) ?? null]);
+        await c.query("INSERT INTO `CourseChange` (id,courseId,actorUserId,campo,antes,despues) VALUES (?,?,?,?,?,?)", [randomUUID15(), courseId, actorId, field2, JSON.stringify(before) ?? null, JSON.stringify(after) ?? null]);
       }
       async listPublished(filters = {}) {
         return this.run(async (c) => rowsOf(await c.query("SELECT c.id,c.slug,c.code,c.titulo,c.especialidad,c.nivel,c.horas,c.precioUsd,c.notaMinima,c.altoVoltajeGas,u.name expertName FROM `Course` c JOIN `User` u ON u.id=c.expertId WHERE c.estado='publicado' AND (? IS NULL OR c.especialidad=?) AND (? IS NULL OR c.nivel=?) ORDER BY c.updatedAt DESC", [filters.especialidad ?? null, filters.especialidad ?? null, filters.nivel ?? null, filters.nivel ?? null])).map((r) => ({ ...r, id: String(r.id), slug: String(r.slug), code: String(r.code), titulo: String(r.titulo), especialidad: String(r.especialidad), nivel: String(r.nivel), horas: Number(r.horas), precioUsd: r.precioUsd === null ? null : Number(r.precioUsd), notaMinima: Number(r.notaMinima), altoVoltajeGas: Boolean(r.altoVoltajeGas), expertName: String(r.expertName) })));
@@ -88721,10 +89321,10 @@ var init_courses_store = __esm({
             return false;
           if (rowsOf(await c.query("SELECT id FROM `Enrollment` WHERE userId=? AND courseId=?", [studentId, course.id])).length)
             return false;
-          const id2 = randomUUID14();
+          const id2 = randomUUID15();
           const n = await this.nextNumber(c, "Enrollment");
           await c.query("INSERT INTO `Enrollment` (id,code,courseId,userId,estado,beca,compartirConTaller,consentVersion,consentAt) VALUES (?,?,?,?,'solicitada',FALSE,FALSE,'pending',UTC_TIMESTAMP(3))", [id2, enrollmentCode(n), course.id, studentId]);
-          await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.consent',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID14(), `course-consent:${id2}`, studentId, JSON.stringify({ message: `Tu taller solicita inscribirte en ${courseCodeValue}. Para aceptar: Inscribirme ${courseCodeValue} | ACEPTO. Para compartir avance, a\xF1ade | COMPARTIR; para certificado p\xFAblico, a\xF1ade | PUBLICO. Son elecciones independientes.` })]);
+          await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.consent',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID15(), `course-consent:${id2}`, studentId, JSON.stringify({ message: `Tu taller solicita inscribirte en ${courseCodeValue}. Para aceptar: Inscribirme ${courseCodeValue} | ACEPTO. Para compartir avance, a\xF1ade | COMPARTIR; para certificado p\xFAblico, a\xF1ade | PUBLICO. Son elecciones independientes.` })]);
           return true;
         });
       }
@@ -88742,7 +89342,7 @@ var init_courses_store = __esm({
           const [lesson] = rowsOf(await c.query("SELECT l.id lessonId FROM `Lesson` l WHERE l.courseId=(SELECT courseId FROM `Enrollment` WHERE id=?) AND NOT EXISTS(SELECT 1 FROM `LessonProgress` p WHERE p.enrollmentId=? AND p.lessonId=l.id) ORDER BY l.orden LIMIT 1", [enrollmentId, enrollmentId]));
           if (!lesson)
             return false;
-          await c.query("INSERT IGNORE INTO `LessonProgress` (id,enrollmentId,lessonId) VALUES (?,?,?)", [randomUUID14(), enrollmentId, lesson.lessonId]);
+          await c.query("INSERT IGNORE INTO `LessonProgress` (id,enrollmentId,lessonId) VALUES (?,?,?)", [randomUUID15(), enrollmentId, lesson.lessonId]);
           return true;
         });
       }
@@ -88760,7 +89360,7 @@ var init_courses_store = __esm({
       }
       async createCourse(expertId, input) {
         return this.run(async (c) => {
-          const id2 = randomUUID14();
+          const id2 = randomUUID15();
           const code3 = courseCode(await this.nextNumber(c, "Course"));
           await c.query("INSERT INTO `Course` (id, expertId, slug, code, titulo, especialidad, nivel, horas, precioUsd, notaMinima, inscripcionesAbiertas, altoVoltajeGas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [id2, expertId, input.slug, code3, input.titulo, input.especialidad, input.nivel, input.horas, input.precioUsd, input.notaMinima ?? 70, input.inscripcionesAbiertas ?? true, isHighVoltageOrGas(input.especialidad)]);
           return id2;
@@ -88772,7 +89372,7 @@ var init_courses_store = __esm({
           try {
             const [before] = rowsOf(await c.query("SELECT * FROM `Course` WHERE id = ? AND expertId = ? LIMIT 1", [courseId, expertId]));
             if (!before)
-              return fail8("FORBIDDEN_OR_NOT_FOUND");
+              return fail9("FORBIDDEN_OR_NOT_FOUND");
             if (before.estado === "publicado")
               assertPublishable(input.precioUsd === void 0 ? before.precioUsd === null ? null : Number(before.precioUsd) : input.precioUsd, await this.commissionValue(c));
             const changed = [];
@@ -88785,7 +89385,7 @@ var init_courses_store = __esm({
             await c.query("UPDATE `Course` SET slug = COALESCE(?,slug), titulo = COALESCE(?,titulo), especialidad = COALESCE(?,especialidad), nivel = COALESCE(?,nivel), horas = COALESCE(?,horas), precioUsd = ?, notaMinima = COALESCE(?,notaMinima), inscripcionesAbiertas = COALESCE(?,inscripcionesAbiertas), altoVoltajeGas = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ? AND expertId = ?", [input.slug ?? null, input.titulo ?? null, input.especialidad ?? null, input.nivel ?? null, input.horas ?? null, input.precioUsd === void 0 ? before.precioUsd : input.precioUsd, input.notaMinima ?? null, input.inscripcionesAbiertas ?? null, isHighVoltageOrGas(input.especialidad ?? String(before.especialidad)), courseId, expertId]);
             if (before.estado === "publicado")
               for (const [field2, oldValue, newValue] of changed)
-                await c.query("INSERT INTO `CourseChange` (id, courseId, actorUserId, campo, antes, despues) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID14(), courseId, expertId, field2, oldValue === null ? null : String(oldValue), newValue === null ? null : String(newValue)]);
+                await c.query("INSERT INTO `CourseChange` (id, courseId, actorUserId, campo, antes, despues) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID15(), courseId, expertId, field2, oldValue === null ? null : String(oldValue), newValue === null ? null : String(newValue)]);
             return true;
           } catch (error) {
             throw error;
@@ -88795,12 +89395,12 @@ var init_courses_store = __esm({
       async publishCourse(expertId, courseId) {
         return this.run(async (c) => {
           if (!await isVerifiedExpert(c, expertId))
-            return fail8("EXPERT_NOT_VERIFIED");
+            return fail9("EXPERT_NOT_VERIFIED");
           const [course] = rowsOf(await c.query("SELECT estado, firstPublishedAt, precioUsd FROM `Course` WHERE id = ? AND expertId = ? FOR UPDATE", [courseId, expertId]));
           if (!course)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           if (course.estado === "oculto")
-            return fail8("COURSE_HIDDEN");
+            return fail9("COURSE_HIDDEN");
           assertPublishable(course.precioUsd === null ? null : Number(course.precioUsd), await this.commissionValue(c));
           const state = course.firstPublishedAt ? "publicado" : publicationStatus(String(course.estado), course.firstPublishedAt);
           await c.query("UPDATE `Course` SET estado = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [state, courseId]);
@@ -88817,7 +89417,7 @@ var init_courses_store = __esm({
           const state = approve ? "publicado" : "borrador";
           const changed = affected2(await c.query("UPDATE `Course` SET estado = ?, motivoRevision=?, firstPublishedAt = IF(?, COALESCE(firstPublishedAt, UTC_TIMESTAMP(3)), firstPublishedAt) WHERE id = ? AND estado = 'en_revision' AND firstPublishedAt IS NULL", [state, approve ? null : reason, approve, courseId]));
           if (changed)
-            await c.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'Course', ?, ?, UTC_TIMESTAMP(3))", [randomUUID14(), approve ? "course.published" : "course.publication.rejected", adminId, courseId, JSON.stringify({ state, reason: approve ? null : reason })]);
+            await c.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'Course', ?, ?, UTC_TIMESTAMP(3))", [randomUUID15(), approve ? "course.published" : "course.publication.rejected", adminId, courseId, JSON.stringify({ state, reason: approve ? null : reason })]);
           return changed > 0;
         });
       }
@@ -88829,7 +89429,7 @@ var init_courses_store = __esm({
           const status = approve ? "verificado" : "rechazado";
           const changed = affected2(await c.query("UPDATE `ExpertProfile` SET verificationStatus=?,motivo=?,verifiedAt=IF(?,UTC_TIMESTAMP(3),NULL),tipoDocumentoRevisado=?,documento=NULL,documentoMime=NULL,updatedAt=UTC_TIMESTAMP(3) WHERE userId=? AND verificationStatus='pendiente'", [status, approve ? null : reason, approve, documentType, userId]));
           if (changed)
-            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?,? ,?,'admin','ExpertProfile',?,?,UTC_TIMESTAMP(3))", [randomUUID14(), approve ? "expert.verified" : "expert.rejected", adminId, userId, JSON.stringify({ status, reason: approve ? null : reason, documentType })]);
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?,? ,?,'admin','ExpertProfile',?,?,UTC_TIMESTAMP(3))", [randomUUID15(), approve ? "expert.verified" : "expert.rejected", adminId, userId, JSON.stringify({ status, reason: approve ? null : reason, documentType })]);
           return changed > 0;
         });
       }
@@ -88844,7 +89444,7 @@ var init_courses_store = __esm({
             await c.query("DELETE FROM `AppSetting` WHERE `name`=?", ["courses.commission"]);
           else
             await c.query("INSERT INTO `AppSetting` (`name`,`value`,`updatedBy`,`updatedAt`) VALUES (?,?,?,UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`),`updatedBy`=VALUES(`updatedBy`),`updatedAt`=UTC_TIMESTAMP(3)", ["courses.commission", value2, adminId]);
-          await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'course.commission.changed', ?,'admin','AppSetting','courses.commission',?,UTC_TIMESTAMP(3))", [randomUUID14(), adminId, JSON.stringify({ value: value2 })]);
+          await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'course.commission.changed', ?,'admin','AppSetting','courses.commission',?,UTC_TIMESTAMP(3))", [randomUUID15(), adminId, JSON.stringify({ value: value2 })]);
         });
       }
       async courseHistory() {
@@ -88871,20 +89471,20 @@ var init_courses_store = __esm({
             await c.query("UPDATE `Course` SET estado='oculto',updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [row.courseId]);
           else
             await c.query("UPDATE `Course` SET estado='publicado',updatedAt=UTC_TIMESTAMP(3) WHERE id=? AND firstPublishedAt IS NOT NULL", [row.courseId]);
-          await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?,? ,?,'admin','ContentReport',?,?,UTC_TIMESTAMP(3))", [randomUUID14(), hide ? "course.hidden" : "course.restored", adminId, reportId, JSON.stringify({ courseId: row.courseId, reason })]);
+          await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?,? ,?,'admin','ContentReport',?,?,UTC_TIMESTAMP(3))", [randomUUID15(), hide ? "course.hidden" : "course.restored", adminId, reportId, JSON.stringify({ courseId: row.courseId, reason })]);
           return true;
         });
       }
-      async saveLesson(expertId, courseId, input, id2 = randomUUID14()) {
+      async saveLesson(expertId, courseId, input, id2 = randomUUID15()) {
         validateLessonText(input.texto);
         assertHttpsUrl(input.videoUrl);
         assertHttpsUrl(input.pdfUrl);
         return this.run(async (c) => {
           if (!rowsOf(await c.query("SELECT id FROM `Course` WHERE id=? AND expertId=? FOR UPDATE", [courseId, expertId])).length)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           const [before] = rowsOf(await c.query("SELECT * FROM `Lesson` WHERE id=? FOR UPDATE", [id2]));
           if (before && before.courseId !== courseId)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           if (before)
             await c.query("UPDATE `Lesson` SET orden=?,titulo=?,videoUrl=?,pdfUrl=?,texto=? WHERE id=? AND courseId=?", [input.orden, input.titulo, input.videoUrl ?? null, input.pdfUrl ?? null, input.texto ?? null, id2, courseId]);
           else
@@ -88903,13 +89503,13 @@ var init_courses_store = __esm({
           return true;
         });
       }
-      async saveQuestion(expertId, courseId, input, id2 = randomUUID14()) {
+      async saveQuestion(expertId, courseId, input, id2 = randomUUID15()) {
         return this.run(async (c) => {
           if (!rowsOf(await c.query("SELECT id FROM `Course` WHERE id=? AND expertId=? FOR UPDATE", [courseId, expertId])).length)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           const [before] = rowsOf(await c.query("SELECT * FROM `Question` WHERE id=? FOR UPDATE", [id2]));
           if (before && before.courseId !== courseId)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           if (before)
             await c.query("UPDATE `Question` SET enunciado=?,orden=? WHERE id=? AND courseId=?", [input.enunciado, input.orden, id2, courseId]);
           else
@@ -88928,14 +89528,14 @@ var init_courses_store = __esm({
           return true;
         });
       }
-      async saveOption(expertId, questionId, input, id2 = randomUUID14()) {
+      async saveOption(expertId, questionId, input, id2 = randomUUID15()) {
         return this.run(async (c) => {
           const [question] = rowsOf(await c.query("SELECT q.id,q.courseId FROM `Question` q JOIN `Course` c ON c.id=q.courseId WHERE q.id=? AND c.expertId=? FOR UPDATE", [questionId, expertId]));
           if (!question)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           const [byId] = rowsOf(await c.query("SELECT * FROM `Option` WHERE id=? FOR UPDATE", [id2]));
           if (byId && byId.questionId !== questionId)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           const [byLetter] = rowsOf(await c.query("SELECT * FROM `Option` WHERE questionId=? AND letra=? FOR UPDATE", [questionId, input.letra]));
           const before = byId ?? byLetter;
           const effectiveId = before ? String(before.id) : id2;
@@ -88959,11 +89559,11 @@ var init_courses_store = __esm({
       }
       async enroll(input) {
         if (!input.consentVersion.trim() || input.consentVersion === "pending")
-          return fail8("CONSENT_REQUIRED");
+          return fail9("CONSENT_REQUIRED");
         return this.run(async (c) => {
           const [course] = rowsOf(await c.query("SELECT precioUsd,inscripcionesAbiertas FROM `Course` WHERE id=? AND estado='publicado' FOR UPDATE", [input.courseId]));
           if (!course || !course.inscripcionesAbiertas)
-            return fail8("COURSE_CLOSED");
+            return fail9("COURSE_CLOSED");
           const [existing] = rowsOf(await c.query("SELECT id,consentVersion FROM `Enrollment` WHERE courseId=? AND userId=? FOR UPDATE", [input.courseId, input.userId]));
           if (existing && existing.consentVersion !== "pending")
             return String(existing.id);
@@ -88971,16 +89571,16 @@ var init_courses_store = __esm({
           if (input.inviteCode) {
             const [invite] = rowsOf(await c.query("SELECT id FROM `InviteCode` WHERE courseId=? AND code=? AND usados<cupo AND (venceAt IS NULL OR venceAt>UTC_TIMESTAMP(3)) FOR UPDATE", [input.courseId, input.inviteCode]));
             if (!invite)
-              return fail8("INVALID_INVITE_CODE");
+              return fail9("INVALID_INVITE_CODE");
             if (affected2(await c.query("UPDATE `InviteCode` SET usados=usados+1 WHERE id=? AND usados<cupo", [invite.id])) === 0)
-              return fail8("INVITE_CODE_EXHAUSTED");
+              return fail9("INVITE_CODE_EXHAUSTED");
             active = true;
           }
           if (existing) {
             await c.query("UPDATE `Enrollment` SET consentVersion=?,consentAt=UTC_TIMESTAMP(3),compartirConTaller=?,certificadoPublico=?,estado=? WHERE id=?", [input.consentVersion, Boolean(input.compartirConTaller), Boolean(input.certificadoPublico), active ? "activa" : "solicitada", existing.id]);
             return String(existing.id);
           }
-          const id2 = randomUUID14();
+          const id2 = randomUUID15();
           const code3 = enrollmentCode(await this.nextNumber(c, "Enrollment"));
           await c.query("INSERT INTO `Enrollment` (id,code,courseId,userId,estado,beca,compartirConTaller,certificadoPublico,consentVersion,consentAt) VALUES (?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [id2, code3, input.courseId, input.userId, active ? "activa" : "solicitada", Boolean(input.beca), Boolean(input.compartirConTaller), Boolean(input.certificadoPublico), input.consentVersion]);
           return id2;
@@ -88993,18 +89593,18 @@ var init_courses_store = __esm({
         return this.run(async (c) => {
           const [enrollment2] = rowsOf(await c.query("SELECT e.id, e.estado, e.userId, e.consentVersion, c.titulo FROM `Enrollment` e JOIN `Course` c ON c.id = e.courseId WHERE e.code = ? AND c.expertId = ? FOR UPDATE", [code3, expertId]));
           if (!enrollment2)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           if (enrollment2.consentVersion === "pending")
-            return fail8("CONSENT_REQUIRED");
+            return fail9("CONSENT_REQUIRED");
           const from = String(enrollment2.estado);
           if (from === to)
             return true;
           transitionEnrollment(from, to);
           const changed = affected2(await c.query("UPDATE `Enrollment` SET estado = ? WHERE id = ? AND estado = ?", [to, enrollment2.id, from])) > 0;
           if (changed) {
-            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?,'dueno','Enrollment',?,?,UTC_TIMESTAMP(3))", [randomUUID14(), to === "activa" ? "enrollment.approved" : to === "rechazada" ? "enrollment.rejected" : "enrollment.revoked", expertId, String(enrollment2.id), JSON.stringify({ state: to })]);
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?,'dueno','Enrollment',?,?,UTC_TIMESTAMP(3))", [randomUUID15(), to === "activa" ? "enrollment.approved" : to === "rechazada" ? "enrollment.rejected" : "enrollment.revoked", expertId, String(enrollment2.id), JSON.stringify({ state: to })]);
             if (to === "activa" || to === "rechazada")
-              await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.enrollment',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID14(), `course-enrollment:${String(enrollment2.id)}:${to}`, String(enrollment2.userId), JSON.stringify({ message: to === "activa" ? `Tu inscripci\xF3n ${code3} al curso ${String(enrollment2.titulo)} fue aprobada.` : `Tu inscripci\xF3n ${code3} al curso ${String(enrollment2.titulo)} fue rechazada.` })]);
+              await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.enrollment',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID15(), `course-enrollment:${String(enrollment2.id)}:${to}`, String(enrollment2.userId), JSON.stringify({ message: to === "activa" ? `Tu inscripci\xF3n ${code3} al curso ${String(enrollment2.titulo)} fue aprobada.` : `Tu inscripci\xF3n ${code3} al curso ${String(enrollment2.titulo)} fue rechazada.` })]);
           }
           return changed;
         });
@@ -89013,7 +89613,7 @@ var init_courses_store = __esm({
         return this.run(async (c) => {
           const changed = affected2(await c.query("UPDATE `Enrollment` e JOIN `Course` c ON c.id = e.courseId SET e.beca = TRUE, e.estado = 'activa' WHERE e.code = ? AND c.expertId = ? AND e.estado = 'solicitada' AND e.consentVersion <> 'pending'", [code3, expertId])) > 0;
           if (changed)
-            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'enrollment.scholarship', ?,'dueno','Enrollment',?,'{\"state\":\"activa\"}',UTC_TIMESTAMP(3))", [randomUUID14(), expertId, code3]);
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'enrollment.scholarship', ?,'dueno','Enrollment',?,'{\"state\":\"activa\"}',UTC_TIMESTAMP(3))", [randomUUID15(), expertId, code3]);
           return changed;
         });
       }
@@ -89021,8 +89621,8 @@ var init_courses_store = __esm({
         return this.run(async (c) => {
           const own2 = rowsOf(await c.query("SELECT e.id FROM `Enrollment` e JOIN `Lesson` l ON l.courseId = e.courseId WHERE e.id = ? AND e.userId = ? AND e.estado = 'activa' AND l.id = ?", [enrollmentId, userId, lessonId]));
           if (!own2.length)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
-          await c.query("INSERT IGNORE INTO `LessonProgress` (id, enrollmentId, lessonId) VALUES (?, ?, ?)", [randomUUID14(), enrollmentId, lessonId]);
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
+          await c.query("INSERT IGNORE INTO `LessonProgress` (id, enrollmentId, lessonId) VALUES (?, ?, ?)", [randomUUID15(), enrollmentId, lessonId]);
           return true;
         });
       }
@@ -89053,7 +89653,7 @@ var init_courses_store = __esm({
         return this.run(async (c) => {
           const [r] = rowsOf(await c.query("SELECT (SELECT COUNT(*) FROM `LessonProgress` p WHERE p.enrollmentId=e.id) completedLessons, (SELECT COUNT(*) FROM `Lesson` l WHERE l.courseId=e.courseId) totalLessons, e.nota grade FROM `Enrollment` e WHERE e.id = ? AND e.userId = ?", [enrollmentId, userId]));
           if (!r)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           return { completedLessons: Number(r.completedLessons), totalLessons: Number(r.totalLessons), grade: r.grade === null ? null : Number(r.grade) };
         });
       }
@@ -89069,17 +89669,17 @@ var init_courses_store = __esm({
         return this.run(async (c) => {
           const [row] = rowsOf(await c.query("SELECT e.id,e.userId,e.nota,e.certificadoPublico,c.notaMinima,(SELECT COUNT(*) FROM `Lesson` WHERE courseId=c.id) lessonCount,(SELECT COUNT(*) FROM `LessonProgress` WHERE enrollmentId=e.id) completedCount FROM `Enrollment` e JOIN `Course` c ON c.id=e.courseId WHERE e.id=? AND e.estado='activa' AND e.consentVersion<>'pending' FOR UPDATE", [enrollmentId]));
           if (!row || row.nota === null || Number(row.nota) !== grade || grade < Number(row.notaMinima) || Number(row.completedCount) < Number(row.lessonCount))
-            return fail8("COURSE_NOT_PASSED");
+            return fail9("COURSE_NOT_PASSED");
           await c.query("UPDATE `Enrollment` SET aprobadoAt=COALESCE(aprobadoAt,UTC_TIMESTAMP(3)) WHERE id=?", [enrollmentId]);
           let [certificate] = rowsOf(await c.query("SELECT id,code,publico FROM `Certificate` WHERE enrollmentId=? FOR UPDATE", [enrollmentId]));
           const publicChoice = Boolean(row.certificadoPublico);
           if (!certificate) {
             const code3 = certificateCode(await this.nextNumber(c, "Certificate"));
-            await c.query("INSERT INTO `Certificate` (id,code,enrollmentId,publico) VALUES (?,?,?,?)", [randomUUID14(), code3, enrollmentId, publicChoice]);
+            await c.query("INSERT INTO `Certificate` (id,code,enrollmentId,publico) VALUES (?,?,?,?)", [randomUUID15(), code3, enrollmentId, publicChoice]);
             certificate = { code: code3 };
           } else
             await c.query("UPDATE `Certificate` SET publico=? WHERE enrollmentId=?", [publicChoice, enrollmentId]);
-          await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.certificate',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID14(), `course-certificate:${String(certificate.code)}`, String(row.userId), JSON.stringify({ message: `Tu certificado ${String(certificate.code)} fue emitido.${publicChoice ? ` Consulta: https://automantpro.app/certificados/${String(certificate.code)}` : ""}` })]);
+          await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,'course.certificate',?) ON DUPLICATE KEY UPDATE id=id", [randomUUID15(), `course-certificate:${String(certificate.code)}`, String(row.userId), JSON.stringify({ message: `Tu certificado ${String(certificate.code)} fue emitido.${publicChoice ? ` Consulta: https://automantpro.app/certificados/${String(certificate.code)}` : ""}` })]);
           return String(certificate.code);
         });
       }
@@ -89087,10 +89687,10 @@ var init_courses_store = __esm({
         return this.run(async (c) => {
           const owned = rowsOf(await c.query("SELECT e.id FROM `Enrollment` e JOIN `Question` q ON q.courseId=e.courseId WHERE e.id=? AND e.userId=? AND e.estado='activa' AND q.id=?", [enrollmentId, userId, questionId]));
           if (!owned.length)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           const [answer] = rowsOf(await c.query("SELECT o.id, o.correcta FROM `Option` o WHERE o.questionId=? AND o.letra=?", [questionId, letter]));
           if (!answer)
-            return fail8("INVALID_ANSWER");
+            return fail9("INVALID_ANSWER");
           const previous = rowsOf(await c.query("SELECT respuestas FROM `Enrollment` WHERE id=? FOR UPDATE", [enrollmentId]))[0]?.respuestas;
           const answers = typeof previous === "string" ? JSON.parse(previous) : previous ?? {};
           answers[questionId] = letter;
@@ -89106,17 +89706,17 @@ var init_courses_store = __esm({
       async createInvite(expertId, courseId, cupo, venceAt) {
         return this.run(async (c) => {
           if (!Number.isInteger(cupo) || cupo < 1)
-            return fail8("INVALID_INVITE_CAPACITY");
+            return fail9("INVALID_INVITE_CAPACITY");
           const code3 = `CI-${String(await this.nextNumber(c, "InviteCode")).padStart(4, "0")}`;
-          await c.query("INSERT INTO `InviteCode` (id, courseId, code, cupo, venceAt) SELECT ?, id, ?, ?, ? FROM `Course` WHERE id = ? AND expertId = ?", [randomUUID14(), code3, cupo, venceAt, courseId, expertId]);
+          await c.query("INSERT INTO `InviteCode` (id, courseId, code, cupo, venceAt) SELECT ?, id, ?, ?, ? FROM `Course` WHERE id = ? AND expertId = ?", [randomUUID15(), code3, cupo, venceAt, courseId, expertId]);
           if (!rowsOf(await c.query("SELECT id FROM `InviteCode` WHERE code = ?", [code3])).length)
-            return fail8("FORBIDDEN_OR_NOT_FOUND");
+            return fail9("FORBIDDEN_OR_NOT_FOUND");
           return code3;
         });
       }
       async submitReport(courseId, lessonId, reporterUserId, motivo) {
         return this.run(async (c) => {
-          const id2 = randomUUID14();
+          const id2 = randomUUID15();
           await c.query("INSERT INTO `ContentReport` (id, courseId, lessonId, reporterUserId, motivo) VALUES (?, ?, ?, ?, ?)", [id2, courseId, lessonId, reporterUserId, motivo]);
           return id2;
         });
@@ -89127,29 +89727,29 @@ var init_courses_store = __esm({
 
 // packages/api/dist/application/courses/whatsapp.js
 import { randomBytes as randomBytes5 } from "node:crypto";
-async function handleCourseCommand(conn, uid, role, text9, mediaId) {
-  const command = parseAccountCommand(text9);
-  const numeric = role === "taller" && /^\s*\d+(?:[ ,]+\d+)*\s*$/.test(text9);
+async function handleCourseCommand(conn, uid, role, text10, mediaId) {
+  const command = parseAccountCommand(text10);
+  const numeric = role === "taller" && /^\s*\d+(?:[ ,]+\d+)*\s*$/.test(text10);
   if (!numeric && (!command || !("action" in command) || !(command.action.startsWith("course") || ["myCourses", "becomeExpert"].includes(command.action))))
     return null;
-  const [rate] = await rows15(conn, "SELECT COUNT(*) n FROM `InboundWebhook` WHERE phone=(SELECT phone FROM `WhatsAppIdentity` WHERE userId=?) AND status='completed' AND completedAt>DATE_SUB(UTC_TIMESTAMP(3),INTERVAL 60 SECOND)", [uid]);
+  const [rate] = await rows16(conn, "SELECT COUNT(*) n FROM `InboundWebhook` WHERE phone=(SELECT phone FROM `WhatsAppIdentity` WHERE userId=?) AND status='completed' AND completedAt>DATE_SUB(UTC_TIMESTAMP(3),INTERVAL 60 SECOND)", [uid]);
   if (Number(rate?.n ?? 0) >= 30)
     return "Has alcanzado el l\xEDmite de capacitaci\xF3n por tel\xE9fono. Espera un minuto e intenta de nuevo.";
   const id2 = `courses:${uid}`;
-  const [saved] = await rows15(conn, "SELECT summary FROM `Conversation` WHERE id=? AND userAId=? FOR UPDATE", [id2, uid]);
+  const [saved] = await rows16(conn, "SELECT summary FROM `Conversation` WHERE id=? AND userAId=? FOR UPDATE", [id2, uid]);
   const state = typeof saved?.summary === "string" ? JSON.parse(saved.summary) : saved?.summary ?? {};
   const save = async () => {
     await conn.query("INSERT INTO `Conversation` (id,userAId,agent,summary,updatedAt) VALUES (?,?,TRUE,?,UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE summary=VALUES(summary),updatedAt=UTC_TIMESTAMP(3)", [id2, uid, JSON.stringify(state)]);
   };
   const store = new MysqlCoursesStore(async () => conn, void 0, conn);
   const question = async (enrollmentId) => {
-    const [q] = await rows15(conn, "SELECT q.id,q.enunciado FROM `Question` q JOIN `Enrollment` e ON e.courseId=q.courseId WHERE e.id=? AND e.userId=? AND e.estado='activa' AND JSON_EXTRACT(COALESCE(e.respuestas,JSON_OBJECT()),CONCAT('$.\"',q.id,'\"')) IS NULL ORDER BY q.orden,q.id LIMIT 1", [enrollmentId, uid]);
+    const [q] = await rows16(conn, "SELECT q.id,q.enunciado FROM `Question` q JOIN `Enrollment` e ON e.courseId=q.courseId WHERE e.id=? AND e.userId=? AND e.estado='activa' AND JSON_EXTRACT(COALESCE(e.respuestas,JSON_OBJECT()),CONCAT('$.\"',q.id,'\"')) IS NULL ORDER BY q.orden,q.id LIMIT 1", [enrollmentId, uid]);
     if (!q) {
       delete state.question;
       await save();
       return "No hay m\xE1s preguntas pendientes.";
     }
-    const options = await rows15(conn, "SELECT letra,texto FROM `Option` WHERE questionId=? ORDER BY letra", [q.id]);
+    const options = await rows16(conn, "SELECT letra,texto FROM `Option` WHERE questionId=? ORDER BY letra", [q.id]);
     state.question = { enrollmentId, questionId: q.id, expiresAt: Date.now() + 30 * 60 * 1e3 };
     await save();
     return `${q.enunciado}
@@ -89159,7 +89759,7 @@ ${options.map((o) => `${o.letra}. ${o.texto}`).join("\n")}`;
     const selection = state.selection;
     if (!selection || selection.expiresAt <= Date.now())
       return null;
-    const selected2 = [...new Set(text9.trim().split(/[ ,]+/).map(Number))];
+    const selected2 = [...new Set(text10.trim().split(/[ ,]+/).map(Number))];
     if (selected2.some((n) => n < 1 || n > selection.technicians.length))
       return "Selecciona \xFAnicamente n\xFAmeros de la lista de t\xE9cnicos de tu taller.";
     let count3 = 0;
@@ -89259,32 +89859,32 @@ El enlace es de un solo uso y vence en 24 horas. Los documentos se reciben \xFAn
       return null;
   }
 }
-var rows15;
+var rows16;
 var init_whatsapp = __esm({
   "packages/api/dist/application/courses/whatsapp.js"() {
     "use strict";
     init_courses_store();
     init_commands();
-    rows15 = async (c, sql, args = []) => (await c.query(sql, args))[0];
+    rows16 = async (c, sql, args = []) => (await c.query(sql, args))[0];
   }
 });
 
 // packages/api/dist/application/chat-account/self-service.js
 function parseSelfService(message2) {
-  const text9 = fold8(String(message2 ?? "").slice(0, 200));
-  if (BAJA.test(text9))
+  const text10 = fold10(String(message2 ?? "").slice(0, 200));
+  if (BAJA.test(text10))
     return "baja";
-  if (ALTA.test(text9))
+  if (ALTA.test(text10))
     return "alta";
-  if (DELETE.test(text9))
+  if (DELETE.test(text10))
     return "eliminar_cuenta";
   return null;
 }
-var fold8, BAJA, ALTA, DELETE, OPT_OUT_ALLOWED_KINDS, SELF_SERVICE_MESSAGES;
+var fold10, BAJA, ALTA, DELETE, OPT_OUT_ALLOWED_KINDS, SELF_SERVICE_MESSAGES;
 var init_self_service = __esm({
   "packages/api/dist/application/chat-account/self-service.js"() {
     "use strict";
-    fold8 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[.!¡¿?]+/g, " ").replace(/\s+/g, " ").trim();
+    fold10 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[.!¡¿?]+/g, " ").replace(/\s+/g, " ").trim();
     BAJA = /^(baja|stop|darme de baja|dar de baja|no quiero recibir (mas )?mensajes)$/;
     ALTA = /^(alta|darme de alta)$/;
     DELETE = /^(eliminar|borrar|cerrar) (mi cuenta|mis datos|mi cuenta y mis datos)$/;
@@ -89339,7 +89939,7 @@ var init_lopdp = __esm({
 
 // packages/api/dist/infrastructure/messaging/local-agent-broker.js
 import { createHash as createHash7, randomBytes as randomBytes6 } from "node:crypto";
-function fail9(code3) {
+function fail10(code3) {
   throw new BrokerError(code3);
 }
 var data, digest, BrokerError, WELCOME_MESSAGES, MysqlLocalAgentBroker;
@@ -89373,7 +89973,7 @@ var init_local_agent_broker = __esm({
       "\xA1Hola! Recibimos tu mensaje en AutoMantPro. A\xFAn no tienes cuenta con este n\xFAmero; en breve alguien del equipo te escribe para registrarte y pedir tu autorizaci\xF3n de datos. Ante una emergencia en la v\xEDa, llama al 911.",
       "Hola, soy AutoMantPro. Tu n\xFAmero todav\xEDa no est\xE1 registrado con nosotros. Una persona del equipo te contactar\xE1 por este chat para crear tu cuenta y pedirte el consentimiento de datos. Si est\xE1s en una emergencia en la v\xEDa, llama al 911.",
       "Gracias por contactar a AutoMantPro. Este n\xFAmero a\xFAn no tiene cuenta. Alguien del equipo te escribir\xE1 aqu\xED para registrarte y pedir tu consentimiento sobre tus datos. En caso de emergencia en la v\xEDa, llama al 911."
-    ].map((text9) => `${text9}
+    ].map((text10) => `${text10}
 Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrarme | nombre y apellido | ciudad | ACEPTO (ACEPTO confirma que aceptas los t\xE9rminos y el tratamiento de tus datos).`);
     MysqlLocalAgentBroker = class {
       connect;
@@ -89396,12 +89996,12 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
       async account(conn, userId) {
         const user = (await data(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]))[0];
         if (!user || !["dueno", "taller", "almacen"].includes(String(user.role)))
-          fail9("ACCOUNT_UNAVAILABLE");
+          fail10("ACCOUNT_UNAVAILABLE");
         return user;
       }
       async submit(userId, key, message2) {
         if (!/^[A-Za-z0-9._:-]{8,120}$/.test(key))
-          fail9("INVALID_IDEMPOTENCY_KEY");
+          fail10("INVALID_IDEMPOTENCY_KEY");
         const wamid = `pilot_${digest(`${userId}:${key}`)}`;
         await this.run(async (conn) => {
           await this.account(conn, userId);
@@ -89409,17 +90009,17 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
           if (existing) {
             const payload = typeof existing.payload === "string" ? JSON.parse(existing.payload) : existing.payload;
             if (payload.message !== message2 || payload.userId !== userId)
-              fail9("IDEMPOTENCY_CONFLICT");
+              fail10("IDEMPOTENCY_CONFLICT");
             return;
           }
           const [pending] = await data(conn, "SELECT COUNT(*) AS n FROM `InboundWebhook` WHERE status IN ('queued','processing') AND JSON_UNQUOTE(JSON_EXTRACT(payload, '$.userId')) = ?", [userId]);
           if (Number(pending?.n) >= 10)
-            fail9("PENDING_LIMIT");
+            fail10("PENDING_LIMIT");
           await this.queue.enqueue({ wamid, phone: "000000", payload: { channel: "pilot", userId, message: message2 } });
           const [persisted] = await data(conn, "SELECT payload FROM `InboundWebhook` WHERE wamid = ?", [wamid]);
           const value2 = typeof persisted?.payload === "string" ? JSON.parse(persisted.payload) : persisted?.payload;
           if (value2?.message !== message2)
-            fail9("IDEMPOTENCY_CONFLICT");
+            fail10("IDEMPOTENCY_CONFLICT");
         });
         return { wamid };
       }
@@ -89428,7 +90028,7 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
           await this.account(conn, userId);
           const [job] = await data(conn, "SELECT q.status, r.message AS reply, r.executedCommand FROM `InboundWebhook` q LEFT JOIN `LocalAgentReply` r ON r.wamid = q.wamid WHERE q.wamid = ? AND JSON_UNQUOTE(JSON_EXTRACT(q.payload, '$.userId')) = ?", [wamid, userId]);
           if (!job)
-            fail9("NOT_FOUND");
+            fail10("NOT_FOUND");
           return job;
         });
       }
@@ -89447,16 +90047,16 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
         if (before) {
           try {
             if (!/^[A-Za-z0-9_-]{1,256}$/.test(before))
-              fail9("INVALID_CURSOR");
+              fail10("INVALID_CURSOR");
             const value2 = JSON.parse(Buffer.from(before, "base64url").toString("utf8"));
             if (typeof value2.id !== "string" || !/^[a-f0-9-]{36}$/.test(value2.id) || typeof value2.at !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value2.at))
-              fail9("INVALID_CURSOR");
+              fail10("INVALID_CURSOR");
             const at = new Date(value2.at);
             if (!Number.isFinite(at.getTime()) || at.toISOString() !== value2.at)
-              fail9("INVALID_CURSOR");
+              fail10("INVALID_CURSOR");
             cursor = { id: value2.id, at };
           } catch {
-            fail9("INVALID_CURSOR");
+            fail10("INVALID_CURSOR");
           }
         }
         return this.run(async (conn) => {
@@ -89549,13 +90149,13 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
           try {
             const [user] = await data(conn, "SELECT id, phone FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL AND role IN ('dueno','taller','almacen') FOR UPDATE", [userId]);
             if (!user)
-              fail9("ACCOUNT_UNAVAILABLE");
+              fail10("ACCOUNT_UNAVAILABLE");
             const phone = String(user.phone ?? "").replace(/\D/g, "");
             if (!/^\d{8,15}$/.test(phone))
-              fail9("INVALID_PHONE");
+              fail10("INVALID_PHONE");
             const bindings = await data(conn, "SELECT userId, phone FROM `WhatsAppIdentity` WHERE userId = ? OR phone = ? FOR UPDATE", [userId, phone]);
             if (bindings.some((b) => b.userId !== userId || b.phone !== phone))
-              fail9("PHONE_ALREADY_LINKED");
+              fail10("PHONE_ALREADY_LINKED");
             if (!bindings.length)
               await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [userId, phone]);
             await conn.query("COMMIT");
@@ -89687,11 +90287,11 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
         return this.run(async (conn) => {
           const [job] = await data(conn, "SELECT wamid, phone, payload, attempts FROM `InboundWebhook` WHERE wamid = ? AND leaseToken = ? AND status = 'processing'", [wamid, leaseToken]);
           if (!job)
-            fail9("NOT_FOUND");
+            fail10("NOT_FOUND");
           const payload = typeof job.payload === "string" ? JSON.parse(job.payload) : job.payload;
           const user = await this.resolve({ wamid, phone: String(job.phone), payload, attempts: Number(job.attempts), leaseToken });
           if (!user)
-            fail9("ACCOUNT_UNAVAILABLE");
+            fail10("ACCOUNT_UNAVAILABLE");
           const id2 = String(user.id);
           const role = String(user.role);
           const [profile] = await data(conn, "SELECT name, city FROM `User` WHERE id = ?", [id2]);
@@ -89746,13 +90346,13 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
             const payload = incoming.payload;
             const user = await this.resolve(incoming);
             if (!user && payload.channel !== "whatsapp")
-              fail9("ACCOUNT_UNAVAILABLE");
+              fail10("ACCOUNT_UNAVAILABLE");
             if (executeCommand && command !== null && command !== payload.message)
-              fail9("COMMAND_MISMATCH");
+              fail10("COMMAND_MISMATCH");
             const commandText = payload.message;
             const accountCommand = executeCommand ? parseAccountCommand(commandText) : null;
             if (isInvalidAccountCommand(accountCommand))
-              fail9("INVALID_ACCOUNT_COMMAND");
+              fail10("INVALID_ACCOUNT_COMMAND");
             let recipient = user ? String(user.id) : null;
             let message2 = reply;
             let executed = false;
@@ -89777,10 +90377,10 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
               executed = !!result;
               message2 = result?.message ?? reply;
             } else if (executeCommand)
-              fail9("ACCOUNT_REQUIRED");
+              fail10("ACCOUNT_REQUIRED");
             const [active] = recipient ? await data(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL FOR UPDATE", [recipient]) : [];
             if (recipient && (!active || !["dueno", "taller", "almacen"].includes(String(active.role))))
-              fail9("ACCOUNT_UNAVAILABLE");
+              fail10("ACCOUNT_UNAVAILABLE");
             await conn.query("INSERT INTO `LocalAgentReply` (wamid,userId,leaseToken,message,channel,executedCommand) VALUES (?, ?, ?, ?, ?, ?)", [wamid, recipient, leaseToken, message2, payload.channel, executed]);
             if (payload.channel === "whatsapp") {
               if (recipient)
@@ -89810,7 +90410,7 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
 });
 
 // packages/api/dist/infrastructure/messaging/outbox-delivery-store.js
-import { randomUUID as randomUUID15 } from "node:crypto";
+import { randomUUID as randomUUID16 } from "node:crypto";
 function whatsappDelivery(env = process.env) {
   const value2 = env.WHATSAPP_DELIVERY?.trim();
   return value2 === "bridge" || value2 === "cloud" ? value2 : "off";
@@ -89842,7 +90442,7 @@ var init_outbox_delivery_store = __esm({
       async enqueueVerification(userId, businessId, decision, reason) {
         await this.run(async (conn) => {
           const message2 = decision === "verified" ? "Tu negocio fue aprobado. Comandos \xFAtiles: Invitaciones | Mapa | Planes." : `Tu negocio no fue aprobado. Motivo: ${reason.slice(0, 500)}`;
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID15(), `verification:${businessId}:${decision}`, userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID16(), `verification:${businessId}:${decision}`, userId, JSON.stringify({ message: message2 })]);
         });
       }
       claim(limit = 5) {
@@ -89868,7 +90468,7 @@ var init_outbox_delivery_store = __esm({
               await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'EMPTY_MESSAGE' WHERE id = ? AND status = 'pending'", [id2]);
               continue;
             }
-            const leaseToken = randomUUID15();
+            const leaseToken = randomUUID16();
             const changed = await conn.query("UPDATE `NotificationOutbox` SET status = 'sending', attempts = attempts + 1, leaseToken = ?, lockedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status = 'pending' AND attempts < ?", [leaseToken, id2, MAX_ATTEMPTS2]);
             if (affected3(changed) !== 1)
               continue;
@@ -89908,8 +90508,8 @@ var init_outbox_delivery_store = __esm({
         return this.run(async (conn) => {
           const changed = affected3(await conn.query("UPDATE `NotificationOutbox` SET status = IF(attempts >= ?, 'dead', 'pending'), nextAttemptAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? SECOND), lastError = ?, leaseToken = NULL, lockedAt = NULL WHERE id = ? AND status = 'sending' AND leaseToken = ?", [MAX_ATTEMPTS2, delaySeconds, code3, id2, leaseToken])) === 1;
           if (changed) {
-            const [rows32] = await conn.query("SELECT kind,status FROM `NotificationOutbox` WHERE id = ?", [id2]);
-            const row = rows32[0];
+            const [rows33] = await conn.query("SELECT kind,status FROM `NotificationOutbox` WHERE id = ?", [id2]);
+            const row = rows33[0];
             if (row?.status === "dead" && row.kind !== "admin.alert")
               void new MysqlAdminAlerts().notify("outbox_dead", 1);
           }
@@ -89921,7 +90521,7 @@ var init_outbox_delivery_store = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/local-agent-task-store.js
-import { randomBytes as randomBytes7, randomUUID as randomUUID17 } from "node:crypto";
+import { randomBytes as randomBytes7, randomUUID as randomUUID18 } from "node:crypto";
 function validateTask(type, payload) {
   if (typeof type !== "string" || !LOCAL_TASK_TYPES.includes(type) || !own(Object.fromEntries(LOCAL_TASK_TYPES.map((t) => [t, true])), type))
     throw new BrokerError("TASK_TYPE_NOT_ALLOWED");
@@ -89963,7 +90563,7 @@ var init_local_agent_task_store = __esm({
         const type = input.type;
         const payload = input.payload == null ? null : JSON.stringify(input.payload);
         return this.run(async (c) => {
-          const id2 = randomUUID17();
+          const id2 = randomUUID18();
           const [insert] = await c.query("INSERT INTO `LocalAgentTask` (id,type,status,payload,idempotencyKey,createdBy,createdAt,updatedAt) VALUES (?,?, 'queued', ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE id=id", [id2, type, payload, input.idempotencyKey, input.createdBy]);
           const [row] = await data2(c, "SELECT * FROM `LocalAgentTask` WHERE idempotencyKey = ?", [input.idempotencyKey]);
           if (Number(insert?.affectedRows) === 1)
@@ -89976,9 +90576,9 @@ var init_local_agent_task_store = __esm({
           const max = Math.max(1, Math.min(1, Math.floor(limit) || 1));
           await c.query("START TRANSACTION");
           try {
-            const rows32 = await data2(c, "SELECT id,type,payload,attempts FROM `LocalAgentTask` WHERE status='queued' OR (status='processing' AND leaseUntil < UTC_TIMESTAMP(3)) ORDER BY createdAt,id LIMIT ? FOR UPDATE", [max]);
+            const rows33 = await data2(c, "SELECT id,type,payload,attempts FROM `LocalAgentTask` WHERE status='queued' OR (status='processing' AND leaseUntil < UTC_TIMESTAMP(3)) ORDER BY createdAt,id LIMIT ? FOR UPDATE", [max]);
             const out = [];
-            for (const row of rows32) {
+            for (const row of rows33) {
               if (Number(row.attempts) >= 3) {
                 await c.query("UPDATE `LocalAgentTask` SET status='failed',errorCode='MAX_ATTEMPTS',completedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [row.id]);
                 continue;
@@ -90101,14 +90701,14 @@ function mapUsage(usage) {
     cachedTokens: usage?.prompt_tokens_details?.cached_tokens
   };
 }
-function classifyHttpError(status, text9) {
+function classifyHttpError(status, text10) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text9}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text10}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text9}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text10}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text9}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text9}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text10}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text10}`, "other", status);
 }
 function message(err) {
   return err instanceof Error ? err.message : String(err);
@@ -90185,8 +90785,8 @@ var init_openai = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
         }
         if (!res.ok) {
-          const text9 = await res.text().catch(() => "");
-          throw classifyHttpError(res.status, text9);
+          const text10 = await res.text().catch(() => "");
+          throw classifyHttpError(res.status, text10);
         }
         const data3 = await res.json();
         return { content: data3.text ?? null };
@@ -90224,8 +90824,8 @@ var init_openai = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err)}`, "network");
         }
         if (!res.ok) {
-          const text9 = await res.text().catch(() => "");
-          throw classifyHttpError(res.status, text9);
+          const text10 = await res.text().catch(() => "");
+          throw classifyHttpError(res.status, text10);
         }
         const data3 = await res.json();
         const choice = data3.choices?.[0];
@@ -90279,14 +90879,14 @@ function parseArgs(raw) {
     return { _raw: raw };
   }
 }
-function classifyHttpError2(status, text9) {
+function classifyHttpError2(status, text10) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text9}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text10}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text9}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text10}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text9}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text9}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text10}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text10}`, "other", status);
 }
 var ANTHROPIC_VERSION, AnthropicAdapter;
 var init_anthropic = __esm({
@@ -90345,8 +90945,8 @@ var init_anthropic = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${err instanceof Error ? err.message : String(err)}`, "network");
         }
         if (!res.ok) {
-          const text9 = await res.text().catch(() => "");
-          throw classifyHttpError2(res.status, text9);
+          const text10 = await res.text().catch(() => "");
+          throw classifyHttpError2(res.status, text10);
         }
         const data3 = await res.json();
         const blocks = data3.content ?? [];
@@ -90584,8 +91184,8 @@ var init_fallback = __esm({
 });
 
 // ../codigo/packages/agent/dist/llm-gateway/redact.js
-function redactPii(text9) {
-  return text9.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
+function redactPii(text10) {
+  return text10.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
 }
 function redactValue(value2, key) {
   if (typeof value2 === "string") {
@@ -90689,23 +91289,23 @@ var init_authorization = __esm({
 });
 
 // ../codigo/packages/agent/dist/llm-gateway/guard.js
-function sanitizeUntrusted(text9, maxLength = 4e3) {
-  return String(text9 ?? "").normalize("NFKC").replace(INVISIBLE, "").replace(ROLE_MARKERS, " ").replace(/\r\n?/g, "\n").replace(/\n{4,}/g, "\n\n\n").slice(0, maxLength);
+function sanitizeUntrusted(text10, maxLength = 4e3) {
+  return String(text10 ?? "").normalize("NFKC").replace(INVISIBLE, "").replace(ROLE_MARKERS, " ").replace(/\r\n?/g, "\n").replace(/\n{4,}/g, "\n\n\n").slice(0, maxLength);
 }
-function detectInjection(text9) {
-  const raw = String(text9 ?? "");
+function detectInjection(text10) {
+  const raw = String(text10 ?? "");
   const clean = raw.normalize("NFKC").replace(INVISIBLE, "");
   const signals = INJECTION_PATTERNS.filter(([, re]) => re.test(clean)).map(([name]) => name);
   if (raw.length - clean.length >= 5)
     signals.push("caracteres-ocultos");
   return { suspicious: signals.length > 0, signals };
 }
-function normalizeForLeak(text9) {
-  return text9.toLowerCase().replace(/\s+/g, " ").trim();
+function normalizeForLeak(text10) {
+  return text10.toLowerCase().replace(/\s+/g, " ").trim();
 }
-function guardOutput(text9, options = {}) {
+function guardOutput(text10, options = {}) {
   const signals = [];
-  let out = String(text9 ?? "").replace(INVISIBLE, "");
+  let out = String(text10 ?? "").replace(INVISIBLE, "");
   if (options.systemPrompt) {
     const prompt = normalizeForLeak(options.systemPrompt);
     const answer = normalizeForLeak(out);
@@ -91727,6 +92327,82 @@ var init_user_lock = __esm({
   }
 });
 
+// packages/api/dist/interfaces/ui/escaner.js
+function escanerHtml(nonce2) {
+  const puntos = SISTEMAS.map((s) => `<span class="pt p${s.n} e-${s.estado}">${s.n}</span>`).join("");
+  const leyenda = SISTEMAS.map((s) => `<li class="e-${s.estado}"><span class="n">${s.n}</span><span class="nm">${s.nombre}</span><b>${ETIQUETA[s.estado]}</b></li>`).join("");
+  return `<p class="section">Inspecci\xF3n por sistemas</p>
+    <section class="escaner" aria-label="Ejemplo de inspecci\xF3n por sistemas">
+      <p class="cap"><span>Tu taller revisa 8 sistemas y te avisa qu\xE9 cambiar</span><b>Ejemplo</b></p>
+      <div class="auto" aria-hidden="true"><img src="${AUTO_ESCANER_PATH}" alt="" width="1400" height="700" decoding="async" loading="lazy"><span class="mascara"><span class="haz"></span></span>${puntos}</div>
+      <ol class="leyenda">${leyenda}</ol>
+    </section>
+    <script nonce="${nonce2}">(function(){var b=document.querySelector('.escaner');if(!b)return;var visible=true;function up(){b.classList.toggle('corre',visible&&!document.hidden);}if('IntersectionObserver' in window){new IntersectionObserver(function(e){visible=e[0].isIntersecting;up();}).observe(b);}document.addEventListener('visibilitychange',up);up();})();</script>`;
+}
+var SISTEMAS, ETIQUETA, PUNTOS, CICLO, ESCANER_STYLES;
+var init_escaner = __esm({
+  "packages/api/dist/interfaces/ui/escaner.js"() {
+    "use strict";
+    init_auto_escaner_asset();
+    SISTEMAS = [
+      { n: 1, nombre: "Motor", estado: "ok" },
+      { n: 2, nombre: "Frenos", estado: "cambiar" },
+      { n: 3, nombre: "Suspensi\xF3n", estado: "ok" },
+      { n: 4, nombre: "Transmisi\xF3n", estado: "ok" },
+      { n: 5, nombre: "Enfriamiento", estado: "observar" },
+      { n: 6, nombre: "El\xE9ctrico", estado: "ok" },
+      { n: 7, nombre: "Llantas", estado: "observar" },
+      { n: 8, nombre: "Carrocer\xEDa", estado: "ok" }
+    ];
+    ETIQUETA = { ok: "Bien", observar: "Observar", cambiar: "Cambiar" };
+    PUNTOS = [
+      // n, x %, y %  (sobre la ilustración 1400×700, frente a la izquierda)
+      [1, 21, 45],
+      [2, 16, 70],
+      [3, 72, 56],
+      [4, 33, 61],
+      [5, 12, 50],
+      [6, 25, 57],
+      [7, 74, 81],
+      [8, 50, 28]
+    ];
+    CICLO = 6.4;
+    ESCANER_STYLES = `
+.escaner{background:var(--c-surface);border-radius:12px;padding:12px;margin:0 0 6px;display:grid;gap:10px}
+.escaner .cap{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0;font-size:13px;color:var(--c-muted)}
+.escaner .cap b{font:600 11px/1 var(--c-mono);border:1px solid var(--c-line);border-radius:5px;padding:3px 6px;color:var(--c-muted)}
+.escaner .auto{position:relative;aspect-ratio:2/1;width:100%;max-width:720px;justify-self:center}
+.escaner .auto img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.escaner .mascara{position:absolute;inset:0;overflow:hidden;-webkit-mask:url("${AUTO_ESCANER_PATH}") center/contain no-repeat;mask:url("${AUTO_ESCANER_PATH}") center/contain no-repeat}
+.escaner .haz{position:absolute;top:0;bottom:0;left:-16%;width:16%;background:linear-gradient(90deg,transparent,rgba(64,200,208,.10) 30%,rgba(64,200,208,.38) 88%,rgba(220,255,255,.75) 98%,transparent);border-right:2px solid rgba(220,255,255,.8);opacity:0}
+.escaner .pt{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;display:grid;place-items:center;font:600 11px/1 var(--c-font);color:var(--c-surface);background:var(--c-muted);border:2px solid var(--c-surface);opacity:.55}
+.escaner .pt.e-ok{background:var(--c-ok)}.escaner .pt.e-observar{background:var(--c-warn)}.escaner .pt.e-cambiar{background:var(--c-bad)}
+${PUNTOS.map(([n, x, y]) => `.escaner .p${n}{left:${x}%;top:${y}%}.escaner.corre .p${n}{animation:esc-punto ${CICLO}s ${(CICLO * x / 145).toFixed(2)}s linear infinite!important}`).join("\n")}
+.escaner.corre .haz{animation:esc-haz ${CICLO}s linear infinite!important}
+@keyframes esc-haz{0%{left:-16%;opacity:0}6%{opacity:1}74%{opacity:1}80%{left:100%;opacity:0}100%{left:100%;opacity:0}}
+@keyframes esc-punto{0%{opacity:.55;transform:scale(1)}3%{opacity:1;transform:scale(1.25)}8%{opacity:1;transform:scale(1)}70%{opacity:1}100%{opacity:.55}}
+.escaner .leyenda{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 12px}
+.escaner .leyenda li{display:flex;align-items:center;gap:6px;min-width:0;padding:5px 0;font-size:13px;color:var(--c-ink)}
+.escaner .leyenda .n{flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font:600 10px/1 var(--c-font);color:var(--c-surface);background:var(--c-ok)}
+.escaner .leyenda .e-observar .n{background:var(--c-warn)}.escaner .leyenda .e-cambiar .n{background:var(--c-bad)}
+.escaner .leyenda .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.escaner .leyenda b{font-size:12px;font-weight:600;color:var(--c-muted)}
+.escaner .leyenda .e-cambiar b{color:var(--c-bad)}
+@media (prefers-reduced-motion:reduce){.escaner .haz{display:none}.escaner .pt,.escaner.corre .pt{opacity:1;animation:none!important}}
+
+/* Botones de acceso Due\xF1os \u21C4 Talleres \u21C4 Almacenes: entran en orden y las flechas laten suave (opci\xF3n C). */
+@keyframes acc-entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes acc-flujo{0%,100%{color:var(--c-muted);transform:none}50%{color:var(--c-title);transform:translateX(2px)}}
+.hero .red li:not(.enlace){animation:acc-entra .45s cubic-bezier(.2,.7,.2,1) both!important}
+.hero .red li:nth-child(1){animation-delay:.1s!important}.hero .red li:nth-child(3){animation-delay:.25s!important}.hero .red li:nth-child(5){animation-delay:.4s!important}
+.hero .red .enlace{animation:acc-flujo 2.4s 1s ease-in-out infinite!important}
+.hero .red a.perfil{transition:background-color .15s ease-out,border-color .15s ease-out,transform .15s ease-out!important}
+.hero .red a.perfil:hover,.hero .red a.perfil:focus-visible{transform:translateY(-1px)}
+@media (prefers-reduced-motion:reduce){.hero .red li:not(.enlace),.hero .red li:nth-child(n),.hero .red .enlace{animation:none!important}.hero .red a.perfil:hover,.hero .red a.perfil:focus-visible{transform:none}}
+`;
+  }
+});
+
 // packages/api/dist/interfaces/seo/head.js
 function seoHead(input) {
   const url = `${SITE}${input.path}`;
@@ -91862,10 +92538,10 @@ function escapeHtml(value2) {
 }
 function buildLinks(number, code3, ref4, profile = null) {
   const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent ?? null;
-  const text9 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code3}${ref4 ? ` (ref: ${ref4})` : ""}`;
-  const encoded = encodeURIComponent(text9);
+  const text10 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code3}${ref4 ? ` (ref: ${ref4})` : ""}`;
+  const encoded = encodeURIComponent(text10);
   return {
-    text: text9,
+    text: text10,
     app: `whatsapp://send?phone=${number}&text=${encoded}`,
     wame: `https://wa.me/${number}?text=${encoded}`,
     web: `https://web.whatsapp.com/send?phone=${number}&text=${encoded}`
@@ -91984,13 +92660,13 @@ ${seoHead({
   })}
 <meta name="author" content="AutoMantPro">
 <script type="application/ld+json" nonce="${nonce2}">${structuredData(input)}</script>
-<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}</style>
+<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}${ESCANER_STYLES}${TITULO_REFERENCIA}</style>
 <script nonce="${nonce2}">${THEME_BOOT}</script>
 </head>
 <body>
 <main>
   <header class="cabecera">${logo}
-    <h1>Asistente Inteligente de <em>Mantenimiento Automotriz</em></h1>
+    <h1>Asistente Inteligente de<br> <em>Mantenimiento Automotriz</em></h1>
     <span class="acciones">
       <a class="pill" href="/pruebas#crear">Registro gratis</a>
       <button id="tema" class="tema" type="button" aria-label="Cambiar de tema">${icon("sol", "sol")}${icon("luna", "luna")}</button>
@@ -92004,6 +92680,7 @@ ${seoHead({
     ${red}
     ${BOARD}
   </section>
+  ${escanerHtml(nonce2)}
   ${beneficios}
   </div>
   <div class="col-b">
@@ -92021,12 +92698,13 @@ ${seoHead({
 </body>
 </html>`;
 }
-var ENTRY_PROFILES, PERFIL_NOMBRE, BENEFICIOS, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, HOME_TITLE, HOME_DESCRIPTION, SCAN_STYLES, PORTADA_STYLES, COMPACTO_STYLES, BOARD;
+var ENTRY_PROFILES, PERFIL_NOMBRE, BENEFICIOS, ICONS, icon, STYLES, THEME_BOOT, SCRIPT, HOME_TITLE, HOME_DESCRIPTION, TITULO_REFERENCIA, SCAN_STYLES, PORTADA_STYLES, COMPACTO_STYLES, BOARD;
 var init_page = __esm({
   "packages/api/dist/interfaces/entry/page.js"() {
     "use strict";
     init_sobrio();
     init_sistema();
+    init_escaner();
     init_theme();
     init_theme_layers();
     init_head();
@@ -92279,6 +92957,11 @@ h1 em{font-style:normal;color:var(--c-accent)}
 `;
     HOME_TITLE = "AutoMantPro \xB7 Mantenimiento, talleres y repuestos por WhatsApp en Ecuador";
     HOME_DESCRIPTION = "Mantenimiento de tu veh\xEDculo por WhatsApp en Ecuador: plan de mantenimiento por kilometraje, diagn\xF3stico con IA, talleres mec\xE1nicos con orden de trabajo y cotizaci\xF3n de repuestos. Sin instalar nada.";
+    TITULO_REFERENCIA = `
+header.cabecera h1{grid-column:1/-1!important;grid-row:2!important;justify-self:center;text-align:center;margin:14px 0 4px!important;font-size:clamp(28px,3.3vw,45px)!important;font-weight:750!important;line-height:1.12!important;letter-spacing:-.038em!important;text-wrap:balance}
+header.cabecera h1 em{background:none!important;padding:0!important}
+@media (max-width:650px){header.cabecera h1{font-size:29px!important;letter-spacing:-.034em!important;margin-top:10px!important}}
+`;
     SCAN_STYLES = `
 .board{position:relative;z-index:1;color:var(--c-ink);display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:center;margin:12px 0 0;padding:12px;border:1px solid var(--c-line);border-radius:12px;background:var(--c-bg)}
 .board .cap{grid-column:1/-1;display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--c-muted);margin:0}
@@ -92826,17 +93509,17 @@ var init_platform = __esm({
 });
 
 // packages/api/dist/infrastructure/visits/visit-store.js
-function rows19(result) {
+function rows20(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
-var MAX_AGE_MS, PAGE_SIZE3, text4, MysqlVisitStore;
+var MAX_AGE_MS, PAGE_SIZE3, text5, MysqlVisitStore;
 var init_visit_store = __esm({
   "packages/api/dist/infrastructure/visits/visit-store.js"() {
     "use strict";
     MAX_AGE_MS = 7 * 24 * 60 * 60 * 1e3;
     PAGE_SIZE3 = 50;
-    text4 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text5 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     MysqlVisitStore = class {
       connect;
       constructor(connect) {
@@ -92858,22 +93541,22 @@ var init_visit_store = __esm({
       }
       exists(code3) {
         return this.run(async (conn) => {
-          const row = rows19(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code3]))[0];
+          const row = rows20(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code3]))[0];
           return !!row;
         });
       }
       find(code3, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const row = rows19(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code3, new Date(now.getTime() - MAX_AGE_MS)]))[0];
+          const row = rows20(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code3, new Date(now.getTime() - MAX_AGE_MS)]))[0];
           if (!row)
             return null;
           return {
             code: String(row.code),
-            ref: text4(row.ref),
-            profile: text4(row.profile),
-            phone: text4(row.phone),
-            userId: text4(row.userId),
-            userName: text4(row.userName),
+            ref: text5(row.ref),
+            profile: text5(row.profile),
+            phone: text5(row.phone),
+            userId: text5(row.userId),
+            userName: text5(row.userName),
             claimedAt: row.claimedAt ?? null,
             linkedAt: row.linkedAt ?? null,
             createdAt: row.createdAt
@@ -92893,13 +93576,13 @@ var init_visit_store = __esm({
       list(page2) {
         const offset2 = (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE3;
         return this.run(async (conn) => {
-          const items = rows19(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`)).map((row) => ({
+          const items = rows20(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE3} OFFSET ${offset2}`)).map((row) => ({
             code: String(row.code),
-            ref: text4(row.ref),
-            profile: text4(row.profile),
-            phone: text4(row.phone),
-            userId: text4(row.userId),
-            userName: text4(row.userName),
+            ref: text5(row.ref),
+            profile: text5(row.profile),
+            phone: text5(row.phone),
+            userId: text5(row.userId),
+            userName: text5(row.userName),
             claimedAt: row.claimedAt ?? null,
             linkedAt: row.linkedAt ?? null,
             createdAt: row.createdAt
@@ -92909,9 +93592,9 @@ var init_visit_store = __esm({
       }
       stats(days2) {
         const window2 = Math.max(1, Math.floor(days2));
-        return this.run(async (conn) => rows19(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window2} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row) => ({
-          ref: text4(row.ref),
-          profile: text4(row.profile),
+        return this.run(async (conn) => rows20(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window2} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row) => ({
+          ref: text5(row.ref),
+          profile: text5(row.profile),
           visitas: Number(row.visitas ?? 0),
           escribieron: Number(row.escribieron ?? 0),
           registrados: Number(row.registrados ?? 0)
@@ -92922,8 +93605,8 @@ var init_visit_store = __esm({
         const monday = (column) => `DATE_FORMAT(DATE_SUB(DATE(${column}), INTERVAL WEEKDAY(${column}) DAY), '%Y-%m-%d')`;
         return this.run(async (conn) => {
           const since = `DATE_SUB(DATE_SUB(UTC_DATE(), INTERVAL WEEKDAY(UTC_DATE()) DAY), INTERVAL ${window2 - 1} WEEK)`;
-          const users = rows19(await conn.query(`SELECT ${monday("createdAt")} AS week, COUNT(*) AS n FROM \`User\` WHERE createdAt >= ${since} GROUP BY week`));
-          const visits = rows19(await conn.query(`SELECT ${monday("linkedAt")} AS week, COUNT(*) AS web, SUM(ref LIKE 'lp:%' OR ref LIKE 'servicio:%' OR ref LIKE 'ciudad:%' OR ref IN ('servicios', 'talleres')) AS busqueda FROM \`Visit\` WHERE userId IS NOT NULL AND linkedAt >= ${since} GROUP BY week`));
+          const users = rows20(await conn.query(`SELECT ${monday("createdAt")} AS week, COUNT(*) AS n FROM \`User\` WHERE createdAt >= ${since} GROUP BY week`));
+          const visits = rows20(await conn.query(`SELECT ${monday("linkedAt")} AS week, COUNT(*) AS web, SUM(ref LIKE 'lp:%' OR ref LIKE 'servicio:%' OR ref LIKE 'ciudad:%' OR ref IN ('servicios', 'talleres')) AS busqueda FROM \`Visit\` WHERE userId IS NOT NULL AND linkedAt >= ${since} GROUP BY week`));
           const byWeek = /* @__PURE__ */ new Map();
           const entry = (week) => {
             let item = byWeek.get(week);
@@ -94259,11 +94942,11 @@ var require_decodeText = __commonJS({
         return typeof data3 === "string" ? data3 : data3.toString();
       }
     };
-    function decodeText(text9, sourceEncoding, destEncoding) {
-      if (text9) {
-        return getDecoder(destEncoding)(text9, sourceEncoding);
+    function decodeText(text10, sourceEncoding, destEncoding) {
+      if (text10) {
+        return getDecoder(destEncoding)(text10, sourceEncoding);
       }
-      return text9;
+      return text10;
     }
     module.exports = decodeText;
   }
@@ -94764,13 +95447,13 @@ var require_parseParams = __commonJS({
     function encodedReplacer(match) {
       return EncodedLookup[match];
     }
-    function decodeUtf8Text(text9) {
-      for (var i = 0, len = text9.length; i < len; ++i) {
-        if (text9.charCodeAt(i) > 127) {
-          return decodeText(text9, "binary", "utf8");
+    function decodeUtf8Text(text10) {
+      for (var i = 0, len = text10.length; i < len; ++i) {
+        if (text10.charCodeAt(i) > 127) {
+          return decodeText(text10, "binary", "utf8");
         }
       }
-      return text9;
+      return text10;
     }
     var STATE_KEY = 0;
     var STATE_VALUE = 1;
@@ -96659,11 +97342,11 @@ var require_multipart2 = __commonJS({
 });
 
 // packages/api/dist/infrastructure/admin/admin-store.js
-function rows23(result) {
+function rows24(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 async function scalar(conn, sql, params2 = []) {
-  const row = rows23(await conn.query(sql, params2))[0];
+  const row = rows24(await conn.query(sql, params2))[0];
   return Number(row?.n ?? 0);
 }
 function grouped(list7) {
@@ -96695,7 +97378,7 @@ var init_admin_store = __esm({
       }
       findAdminByEmail(email) {
         return this.run(async (conn) => {
-          const row = rows23(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
+          const row = rows24(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
           if (!row)
             return null;
           return {
@@ -96711,13 +97394,13 @@ var init_admin_store = __esm({
       upsertAdmin(input) {
         return this.run(async (conn) => {
           const email = input.email.toLowerCase();
-          const existing = rows23(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
+          const existing = rows24(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
           let id2;
           if (existing) {
             id2 = String(existing.id);
             await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', staffRole = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id2]);
           } else {
-            const created = rows23(await conn.query("SELECT UUID() AS id"))[0];
+            const created = rows24(await conn.query("SELECT UUID() AS id"))[0];
             id2 = String(created?.id);
             await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, staffRole, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, email, input.phone, input.passwordHash, input.name]);
           }
@@ -96727,7 +97410,7 @@ var init_admin_store = __esm({
       }
       findAdminById(id2) {
         return this.run(async (conn) => {
-          const row = rows23(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id2]))[0];
+          const row = rows24(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id2]))[0];
           if (!row)
             return null;
           return {
@@ -96765,9 +97448,9 @@ var init_admin_store = __esm({
       }
       dashboard() {
         return this.run(async (conn) => ({
-          usersByRole: grouped(rows23(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
+          usersByRole: grouped(rows24(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
           vehicles: await scalar(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE deletedAt IS NULL"),
-          shopsByStatus: grouped(rows23(await conn.query("SELECT verificationStatus AS k, COUNT(*) AS n FROM `Shop` GROUP BY verificationStatus"))),
+          shopsByStatus: grouped(rows24(await conn.query("SELECT verificationStatus AS k, COUNT(*) AS n FROM `Shop` GROUP BY verificationStatus"))),
           stores: await scalar(conn, "SELECT COUNT(*) AS n FROM `Store`"),
           appointmentsToday: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE scheduledAt >= CURDATE() AND scheduledAt < CURDATE() + INTERVAL 1 DAY"),
           appointmentsPending: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE status = 'pending'"),
@@ -96777,28 +97460,28 @@ var init_admin_store = __esm({
       }
       listUsers(page2) {
         return this.run(async (conn) => ({
-          items: rows23(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
+          items: rows24(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
           page: page2,
           pageSize: PAGE_SIZE4
         }));
       }
       listVehicles(page2) {
         return this.run(async (conn) => ({
-          items: rows23(await conn.query("SELECT id, make, model, year, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
+          items: rows24(await conn.query("SELECT id, make, model, year, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
           page: page2,
           pageSize: PAGE_SIZE4
         }));
       }
       listShops(page2) {
         return this.run(async (conn) => ({
-          items: rows23(await conn.query("SELECT id, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
+          items: rows24(await conn.query("SELECT id, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
           page: page2,
           pageSize: PAGE_SIZE4
         }));
       }
       listAudit(page2) {
         return this.run(async (conn) => ({
-          items: rows23(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
+          items: rows24(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE4, offset(page2)])),
           page: page2,
           pageSize: PAGE_SIZE4
         }));
@@ -96857,8 +97540,8 @@ function twoFactorView(error) {
   <label for="code">C\xF3digo</label><input id="code" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="one-time-code">
   <button class="full" type="submit">Entrar</button></form>`;
 }
-function messageView(title, text9) {
-  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text9)}</p></div>`;
+function messageView(title, text10) {
+  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text10)}</p></div>`;
 }
 function kv(record) {
   const entries = Object.entries(record);
@@ -101404,7 +102087,7 @@ var require_browser = __commonJS({
     var QRCode2 = require_qrcode();
     var CanvasRenderer = require_canvas();
     var SvgRenderer = require_svg_tag();
-    function renderCanvas(renderFunc, canvas, text9, opts, cb) {
+    function renderCanvas(renderFunc, canvas, text10, opts, cb) {
       const args = [].slice.call(arguments, 1);
       const argsNum = args.length;
       const isLastArgCb = typeof args[argsNum - 1] === "function";
@@ -101416,8 +102099,8 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 2) {
-          cb = text9;
-          text9 = canvas;
+          cb = text10;
+          text10 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 3) {
           if (canvas.getContext && typeof cb === "undefined") {
@@ -101425,8 +102108,8 @@ var require_browser = __commonJS({
             opts = void 0;
           } else {
             cb = opts;
-            opts = text9;
-            text9 = canvas;
+            opts = text10;
+            text10 = canvas;
             canvas = void 0;
           }
         }
@@ -101435,16 +102118,16 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 1) {
-          text9 = canvas;
+          text10 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 2 && !canvas.getContext) {
-          opts = text9;
-          text9 = canvas;
+          opts = text10;
+          text10 = canvas;
           canvas = void 0;
         }
         return new Promise(function(resolve2, reject) {
           try {
-            const data3 = QRCode2.create(text9, opts);
+            const data3 = QRCode2.create(text10, opts);
             resolve2(renderFunc(data3, canvas, opts));
           } catch (e9) {
             reject(e9);
@@ -101452,7 +102135,7 @@ var require_browser = __commonJS({
         });
       }
       try {
-        const data3 = QRCode2.create(text9, opts);
+        const data3 = QRCode2.create(text10, opts);
         cb(null, renderFunc(data3, canvas, opts));
       } catch (e9) {
         cb(e9);
@@ -101476,8 +102159,8 @@ var require_server2 = __commonJS({
     var Utf8Renderer = require_utf8();
     var TerminalRenderer = require_terminal2();
     var SvgRenderer = require_svg();
-    function checkParams(text9, opts, cb) {
-      if (typeof text9 === "undefined") {
+    function checkParams(text10, opts, cb) {
+      if (typeof text10 === "undefined") {
         throw new Error("String required as first argument");
       }
       if (typeof cb === "undefined") {
@@ -101524,11 +102207,11 @@ var require_server2 = __commonJS({
           return Utf8Renderer;
       }
     }
-    function render(renderFunc, text9, params2) {
+    function render(renderFunc, text10, params2) {
       if (!params2.cb) {
         return new Promise(function(resolve2, reject) {
           try {
-            const data3 = QRCode2.create(text9, params2.opts);
+            const data3 = QRCode2.create(text10, params2.opts);
             return renderFunc(data3, params2.opts, function(err, data4) {
               return err ? reject(err) : resolve2(data4);
             });
@@ -101538,7 +102221,7 @@ var require_server2 = __commonJS({
         });
       }
       try {
-        const data3 = QRCode2.create(text9, params2.opts);
+        const data3 = QRCode2.create(text10, params2.opts);
         return renderFunc(data3, params2.opts, params2.cb);
       } catch (e9) {
         params2.cb(e9);
@@ -101546,43 +102229,43 @@ var require_server2 = __commonJS({
     }
     exports.create = QRCode2.create;
     exports.toCanvas = require_browser().toCanvas;
-    exports.toString = function toString2(text9, opts, cb) {
-      const params2 = checkParams(text9, opts, cb);
+    exports.toString = function toString2(text10, opts, cb) {
+      const params2 = checkParams(text10, opts, cb);
       const type = params2.opts ? params2.opts.type : void 0;
       const renderer = getStringRendererFromType(type);
-      return render(renderer.render, text9, params2);
+      return render(renderer.render, text10, params2);
     };
-    exports.toDataURL = function toDataURL(text9, opts, cb) {
-      const params2 = checkParams(text9, opts, cb);
+    exports.toDataURL = function toDataURL(text10, opts, cb) {
+      const params2 = checkParams(text10, opts, cb);
       const renderer = getRendererFromType(params2.opts.type);
-      return render(renderer.renderToDataURL, text9, params2);
+      return render(renderer.renderToDataURL, text10, params2);
     };
-    exports.toBuffer = function toBuffer(text9, opts, cb) {
-      const params2 = checkParams(text9, opts, cb);
+    exports.toBuffer = function toBuffer(text10, opts, cb) {
+      const params2 = checkParams(text10, opts, cb);
       const renderer = getRendererFromType(params2.opts.type);
-      return render(renderer.renderToBuffer, text9, params2);
+      return render(renderer.renderToBuffer, text10, params2);
     };
-    exports.toFile = function toFile(path, text9, opts, cb) {
-      if (typeof path !== "string" || !(typeof text9 === "string" || typeof text9 === "object")) {
+    exports.toFile = function toFile(path, text10, opts, cb) {
+      if (typeof path !== "string" || !(typeof text10 === "string" || typeof text10 === "object")) {
         throw new Error("Invalid argument");
       }
       if (arguments.length < 3 && !canPromise()) {
         throw new Error("Too few arguments provided");
       }
-      const params2 = checkParams(text9, opts, cb);
+      const params2 = checkParams(text10, opts, cb);
       const type = params2.opts.type || getTypeFromFilename(path);
       const renderer = getRendererFromType(type);
       const renderToFile = renderer.renderToFile.bind(null, path);
-      return render(renderToFile, text9, params2);
+      return render(renderToFile, text10, params2);
     };
-    exports.toFileStream = function toFileStream(stream, text9, opts) {
+    exports.toFileStream = function toFileStream(stream, text10, opts) {
       if (arguments.length < 2) {
         throw new Error("Too few arguments provided");
       }
-      const params2 = checkParams(text9, opts, stream.emit.bind(stream, "error"));
+      const params2 = checkParams(text10, opts, stream.emit.bind(stream, "error"));
       const renderer = getRendererFromType("png");
       const renderToFileStream = renderer.renderToFileStream.bind(null, stream);
-      render(renderToFileStream, text9, params2);
+      render(renderToFileStream, text10, params2);
     };
   }
 });
@@ -101673,8 +102356,8 @@ var init_views_setup = __esm({
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
 import { randomBytes as randomBytes19 } from "node:crypto";
-function qrSvg(text9) {
-  return QRCode.toString(text9, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
+function qrSvg(text10) {
+  return QRCode.toString(text10, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
 async function adminCount(store) {
   try {
@@ -102118,8 +102801,8 @@ function toMember(row) {
   };
 }
 function list6(result) {
-  const [rows32] = result;
-  return Array.isArray(rows32) ? rows32 : [];
+  const [rows33] = result;
+  return Array.isArray(rows33) ? rows33 : [];
 }
 var SELECT, MysqlStaffStore;
 var init_staff_store = __esm({
@@ -102291,7 +102974,7 @@ function tabs(current, base, options) {
   return `<div class="tabs">${options.map(([key, label2]) => `<a class="${key === current ? "active" : ""}" href="${base}?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("")}</div>`;
 }
 function relationsListView(input) {
-  const rows32 = input.page.items.map((r) => {
+  const rows33 = input.page.items.map((r) => {
     const waiting = waitingHours(r.waitingSince);
     const late2 = waiting !== null && waiting >= input.waitingHours;
     return `<tr><td><a href="/admin/relations/${escapeHtml(r.id)}">${escapeHtml(relationCode(r.number))}</a></td>
@@ -102308,7 +102991,7 @@ function relationsListView(input) {
   <p class="muted">Las partes hablan solo con AutoMantPro: aqu\xED registras lo que dice cada una y el texto listo para reenviar. El tel\xE9fono de una parte se muestra solo si autoriz\xF3 compartirlo.</p>
   ${empty}
   <div class="scroll"><table><thead><tr><th>V\xEDnculo</th><th>Tipo</th><th>Partes</th><th>Estado</th><th>Canal</th><th>\xDAltimo mensaje</th><th>Espera</th></tr></thead>
-  <tbody>${rows32}</tbody></table></div>
+  <tbody>${rows33}</tbody></table></div>
   <div class="pager">${input.page.page > 1 ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page - 1}">\u2190 Anteriores</a>` : ""}
   ${input.page.items.length === input.page.pageSize ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page + 1}">Siguientes \u2192</a>` : ""}</div></div>`;
 }
@@ -102401,7 +103084,7 @@ function relationDetailView(input) {
   </div>`;
 }
 function disputesListView(input) {
-  const rows32 = input.page.items.map((d) => {
+  const rows33 = input.page.items.map((d) => {
     const resolve2 = input.canResolve && (d.status === "abierta" || d.status === "en_revision") ? `<form method="post" action="/admin/disputes/${escapeHtml(d.id)}/resolve">${csrfField2(input.csrf)}
             <label for="res-${escapeHtml(d.id)}">Resoluci\xF3n</label><textarea id="res-${escapeHtml(d.id)}" name="resolution" rows="2" maxlength="2000" required></textarea>
             <select name="status"><option value="resuelta">Resuelta</option><option value="en_revision">En revisi\xF3n</option><option value="rechazada">Rechazada</option></select>
@@ -102417,10 +103100,10 @@ function disputesListView(input) {
   ${tabs(input.filter, "/admin/disputes", DISPUTE_FILTERS)}
   ${input.page.items.length === 0 ? `<p class="muted">No hay disputas con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Caso</th><th>V\xEDnculo</th><th>Partes</th><th>Motivo</th><th>Estado</th><th>Resoluci\xF3n</th></tr></thead>
-  <tbody>${rows32}</tbody></table></div></div>`;
+  <tbody>${rows33}</tbody></table></div></div>`;
 }
 function sanctionsListView(input) {
-  const rows32 = input.page.items.map((s) => {
+  const rows33 = input.page.items.map((s) => {
     const state = s.liftedAt ? `<span class="muted">levantada ${escapeHtml(when2(s.liftedAt))}</span>` : isActive(s) ? `<span class="error">vigente${s.endsAt ? ` hasta ${escapeHtml(when2(s.endsAt))}` : ""}</span>` : `<span class="muted">vencida</span>`;
     const lift = input.canLift && !s.liftedAt && isActive(s) ? `<form method="post" action="/admin/sanctions/${escapeHtml(s.id)}/lift">${csrfField2(input.csrf)}
             <label for="lift-${escapeHtml(s.id)}">Motivo para levantarla</label><input id="lift-${escapeHtml(s.id)}" name="reason" maxlength="191" required>
@@ -102435,7 +103118,7 @@ function sanctionsListView(input) {
   <p class="muted">Siempre con motivo, aviso a la entidad y registro en la auditor\xEDa. Se aplican desde el v\xEDnculo o desde la ficha de la persona.</p></div>
   ${input.page.items.length === 0 ? `<p class="muted">Todav\xEDa no hay sanciones registradas.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Entidad</th><th>Paso</th><th>Motivo</th><th>Vigencia</th><th>Levantar</th></tr></thead>
-  <tbody>${rows32}</tbody></table></div></div>`;
+  <tbody>${rows33}</tbody></table></div></div>`;
 }
 var FILTERS, DISPUTE_FILTERS, flashHtml2, csrfField2;
 var init_views_relations = __esm({
@@ -102467,7 +103150,7 @@ var init_views_relations = __esm({
 function registerRelationRoutes(app2, deps) {
   const { relations } = deps;
   const lateAfter = deps.waitingHours ?? 24;
-  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text10, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text10)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
     if (code3 === "ER_NO_SUCH_TABLE" || code3 === "ER_BAD_FIELD_ERROR") {
@@ -102546,8 +103229,8 @@ function registerRelationRoutes(app2, deps) {
     const { id: id2 } = request.params;
     if (!UUID.test(id2))
       return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
-    const text9 = str8(body.body, 2e3);
-    if (text9.length < 2)
+    const text10 = str8(body.body, 2e3);
+    if (text10.length < 2)
       return renderDetail(request, reply, session, id2, { flash: { kind: "error", text: "Escribe el mensaje." }, status: 400 });
     let detail;
     try {
@@ -102575,7 +103258,7 @@ function registerRelationRoutes(app2, deps) {
         relationshipId: id2,
         fromUserId,
         toUserId: isNote ? null : target?.userId ?? null,
-        body: text9,
+        body: text10,
         kind: isNote ? "nota" : "reenvio",
         relayed,
         createdBy: session.userId
@@ -102596,7 +103279,7 @@ function registerRelationRoutes(app2, deps) {
         fromName: source?.name ?? "AutoMantPro",
         code: relationCode(detail.relation.number),
         subject: detail.relation.subject,
-        body: text9
+        body: text10
       })
     };
     const flash = detail.relation.relayPaused ? { kind: "error", text: "El reenv\xEDo est\xE1 en pausa: el mensaje qued\xF3 registrado pero no lo env\xEDes todav\xEDa." } : { kind: "ok", text: "Mensaje registrado. Copia el texto y env\xEDalo por WhatsApp." };
@@ -102880,14 +103563,14 @@ var init_relations = __esm({
 function cell2(value2) {
   if (value2 === null || value2 === void 0)
     return "";
-  const text9 = value2 instanceof Date ? value2.toISOString() : String(value2);
-  const clean = text9.replace(/\r?\n/g, " ").replace(/\t/g, " ");
+  const text10 = value2 instanceof Date ? value2.toISOString() : String(value2);
+  const clean = text10.replace(/\r?\n/g, " ").replace(/\t/g, " ");
   const safe = /^[=+\-@]/.test(clean) ? `'${clean}` : clean;
   return `"${safe.replace(/"/g, '""')}"`;
 }
-function toCsv(columns, rows32) {
+function toCsv(columns, rows33) {
   const head = columns.map(([, label2]) => cell2(label2)).join(SEPARATOR);
-  const body = rows32.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
+  const body = rows33.map((row) => columns.map(([key]) => cell2(row[key])).join(SEPARATOR));
   return `\uFEFF${[head, ...body].join("\r\n")}\r
 `;
 }
@@ -102904,7 +103587,7 @@ var init_csv = __esm({
 });
 
 // packages/api/dist/infrastructure/data/data-store.js
-function rows24(result) {
+function rows25(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -103126,13 +103809,13 @@ var init_data_store = __esm({
         if (!found)
           return Promise.resolve([]);
         const cap = Math.min(Math.max(1, Math.floor(limit)), MAX_ROWS);
-        return this.run(async (conn) => rows24(await conn.query(`${found.sql} LIMIT ${cap}`)));
+        return this.run(async (conn) => rows25(await conn.query(`${found.sql} LIMIT ${cap}`)));
       }
       createRequest(input) {
         return this.run(async (conn) => {
-          const created = rows24(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows25(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
-          const next = rows24(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest`"))[0];
+          const next = rows25(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest`"))[0];
           await conn.query("INSERT INTO `DataRequest` (id, `number`, userId, kind, status, channel, detail, dueAt, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'recibida', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, Number(next?.n ?? 1), input.userId, input.kind, input.channel, input.detail, dueDate(), input.createdBy]);
           return id2;
         });
@@ -103142,18 +103825,18 @@ var init_data_store = __esm({
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params2 = status === "todas" ? [] : [status];
-          const items = rows24(await conn.query(`${SELECT_REQUESTS} ${where} ORDER BY d.dueAt ASC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params2)).map(toRequest);
+          const items = rows25(await conn.query(`${SELECT_REQUESTS} ${where} ORDER BY d.dueAt ASC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params2)).map(toRequest);
           return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE5 };
         });
       }
       getRequest(id2) {
         return this.run(async (conn) => {
-          const row = rows24(await conn.query(`${SELECT_REQUESTS} WHERE d.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows25(await conn.query(`${SELECT_REQUESTS} WHERE d.id = ? LIMIT 1`, [id2]))[0];
           return row ? toRequest(row) : null;
         });
       }
       requestsForUser(userId) {
-        return this.run(async (conn) => rows24(await conn.query(`${SELECT_REQUESTS} WHERE d.userId = ? ORDER BY d.createdAt DESC LIMIT 20`, [userId])).map(toRequest));
+        return this.run(async (conn) => rows25(await conn.query(`${SELECT_REQUESTS} WHERE d.userId = ? ORDER BY d.createdAt DESC LIMIT 20`, [userId])).map(toRequest));
       }
       setStatus(id2, status, resolution, resolvedBy) {
         return this.run(async (conn) => {
@@ -103169,21 +103852,21 @@ var init_data_store = __esm({
       }
       personalExport(userId) {
         return this.run(async (conn) => {
-          const user = rows24(await conn.query("SELECT id, role, name, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? LIMIT 1", [userId]))[0];
+          const user = rows25(await conn.query("SELECT id, role, name, phone, email, city, consentAt, consentVersion, source, notes, createdAt FROM `User` WHERE id = ? LIMIT 1", [userId]))[0];
           if (!user)
             return null;
           const [vehicles, appointments, workOrders, quotes, relations, sanctions, agentMessages, agentActions, agentTurns] = await Promise.all([
-            conn.query("SELECT make, model, year, plate, currentKm, vehicleClass, fuel, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL", [userId]).then(rows24),
-            conn.query("SELECT a.scheduledAt, a.status, a.summary, s.name AS shopName, a.createdAt FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId = ?", [userId]).then(rows24),
-            conn.query("SELECT w.number, w.status, w.intakeKm, w.exitKm, w.total, w.warrantyDays, s.name AS shopName, w.createdAt, w.closedAt FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.ownerId = ?", [userId]).then(rows24),
-            conn.query("SELECT `number`, status, partName, quantity, city, createdAt FROM `QuoteRequest` WHERE requesterId = ?", [userId]).then(rows24),
-            conn.query("SELECT r.`number`, r.kind, r.status, r.channel, r.createdAt FROM `Relationship` r JOIN `RelationshipParty` p ON p.relationshipId = r.id WHERE p.userId = ?", [userId]).then(rows24).catch(() => []),
-            conn.query("SELECT level, reason, startsAt, endsAt, liftedAt FROM `Sanction` WHERE userId = ?", [userId]).then(rows24).catch(() => []),
-            conn.query("SELECT m.direction, m.body, m.createdAt FROM `Message` m JOIN `Conversation` c ON c.id = m.conversationId WHERE c.userAId = ? AND c.agent = 1 ORDER BY m.createdAt, m.id", [userId]).then(rows24),
-            conn.query("SELECT id, kind, args, result, expiresAt, createdAt FROM `AgentAction` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows24),
-            conn.query("SELECT id, response, createdAt FROM `AgentTurn` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows24)
+            conn.query("SELECT make, model, year, plate, currentKm, vehicleClass, fuel, createdAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL", [userId]).then(rows25),
+            conn.query("SELECT a.scheduledAt, a.status, a.summary, s.name AS shopName, a.createdAt FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.ownerId = ?", [userId]).then(rows25),
+            conn.query("SELECT w.number, w.status, w.intakeKm, w.exitKm, w.total, w.warrantyDays, s.name AS shopName, w.createdAt, w.closedAt FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.ownerId = ?", [userId]).then(rows25),
+            conn.query("SELECT `number`, status, partName, quantity, city, createdAt FROM `QuoteRequest` WHERE requesterId = ?", [userId]).then(rows25),
+            conn.query("SELECT r.`number`, r.kind, r.status, r.channel, r.createdAt FROM `Relationship` r JOIN `RelationshipParty` p ON p.relationshipId = r.id WHERE p.userId = ?", [userId]).then(rows25).catch(() => []),
+            conn.query("SELECT level, reason, startsAt, endsAt, liftedAt FROM `Sanction` WHERE userId = ?", [userId]).then(rows25).catch(() => []),
+            conn.query("SELECT m.direction, m.body, m.createdAt FROM `Message` m JOIN `Conversation` c ON c.id = m.conversationId WHERE c.userAId = ? AND c.agent = 1 ORDER BY m.createdAt, m.id", [userId]).then(rows25),
+            conn.query("SELECT id, kind, args, result, expiresAt, createdAt FROM `AgentAction` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows25),
+            conn.query("SELECT id, response, createdAt FROM `AgentTurn` WHERE userId = ? ORDER BY createdAt, id", [userId]).then(rows25)
           ]);
-          const optional3 = (sql, args) => conn.query(sql, args).then(rows24).catch(() => []);
+          const optional3 = (sql, args) => conn.query(sql, args).then(rows25).catch(() => []);
           const [identity, requests, offers, notices, replies, records, symptoms, alerts, ratingsGiven, ratingsReceived, memberships, changes, imported, webLoginCodes] = await Promise.all([
             optional3("SELECT phone, confirmedAt FROM `WhatsAppIdentity` WHERE userId = ?", [userId]),
             optional3("SELECT kind, category, description, city, zone, status, createdAt, expiresAt FROM `LocalRequest` WHERE ownerId = ? ORDER BY createdAt", [userId]),
@@ -103257,13 +103940,13 @@ var init_data_store = __esm({
       anonymizeUser(userId, requestId) {
         return this.run(async (conn) => {
           const lock = agentUserLock(userId);
-          const acquired = Number(rows24(await conn.query("SELECT GET_LOCK(?, 5) AS acquired", [lock]))[0]?.acquired) === 1;
+          const acquired = Number(rows25(await conn.query("SELECT GET_LOCK(?, 5) AS acquired", [lock]))[0]?.acquired) === 1;
           if (!acquired)
             throw new Error("La conversaci\xF3n tiene una operaci\xF3n en curso; reintenta la anonimizaci\xF3n.");
           try {
             await conn.query("START TRANSACTION");
             const values = anonymizedValues(userId);
-            const user = rows24(await conn.query("SELECT phone FROM `User` WHERE id = ? FOR UPDATE", [userId]))[0];
+            const user = rows25(await conn.query("SELECT phone FROM `User` WHERE id = ? FOR UPDATE", [userId]))[0];
             const [result] = await conn.query("UPDATE `User` SET name = ?, phone = ?, email = NULL, notes = NULL, deletedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role <> 'admin' AND deletedAt IS NULL", [values.name, values.phone, userId]);
             const changed = Number(result.affectedRows ?? 0) > 0;
             if (changed) {
@@ -103298,7 +103981,7 @@ function when3(value2) {
   return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeZone: "America/Guayaquil" }).format(date2);
 }
 function exportsView(input) {
-  const rows32 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
+  const rows33 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
     <td>${input.counts ? String(input.counts[d.key] ?? 0) : "\u2014"}</td>
     <td>${d.personal ? '<span class="error">datos personales</span>' : '<span class="muted">sin datos personales</span>'}</td>
     <td><a href="/admin/exports/${escapeHtml(d.key)}.csv">Descargar CSV</a></td></tr>`).join("");
@@ -103306,11 +103989,11 @@ function exportsView(input) {
   <div class="card"><h2>C\xF3mo usarlo</h2>
     <p class="muted">Cada archivo se abre en Excel o en Google Sheets. Guarda los respaldos en un lugar cifrado y b\xF3rralos cuando ya no los necesites: los archivos marcados contienen datos personales y su descarga queda en la auditor\xEDa.</p>
     <p class="muted">La descarga trae hasta 5.000 filas por archivo, las m\xE1s recientes primero.</p></div>
-  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows32}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows33}</tbody></table></div></div>`;
 }
 function dataRequestsView(input) {
   const tabs2 = STATUS_FILTERS.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/data-requests?f=${escapeHtml(key)}">${escapeHtml(label2)}</a>`).join("");
-  const rows32 = input.items.map((r) => {
+  const rows33 = input.items.map((r) => {
     const left = daysLeft2(r.dueAt);
     const plazo = isOverdue(r) ? `<span class="error">vencido hace ${Math.abs(left)} d\xEDas</span>` : r.status === "atendida" || r.status === "rechazada" ? `<span class="muted">cerrado ${when3(r.resolvedAt)}</span>` : `<span class="${left <= 3 ? "error" : "muted"}">${left} d\xEDas</span>`;
     const actions = r.status === "recibida" || r.status === "en_proceso" ? `<a href="/admin/data-requests/${escapeHtml(r.id)}/export.json">Descargar sus datos</a>
@@ -103335,7 +104018,7 @@ function dataRequestsView(input) {
     <ul>${REQUEST_KINDS.map((k) => `<li><strong>${escapeHtml(k.label)}:</strong> ${escapeHtml(k.description)}</li>`).join("")}</ul>
     <p class="muted">Las solicitudes se abren desde la ficha del titular.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay solicitudes con ese filtro.</p>` : ""}
-  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows32}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows33}</tbody></table></div></div>`;
 }
 function userDataRequestsCard(userId, items, csrf) {
   const list7 = items.length ? `<ul>${items.map((r) => `<li>${escapeHtml(dataRequestCode(r.number))} \xB7 ${escapeHtml(kindLabel(r.kind))} \xB7 ${escapeHtml(REQUEST_STATUS_LABELS[r.status] ?? r.status)}${isOverdue(r) ? ' <span class="error">vencido</span>' : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin solicitudes de datos.</p>`;
@@ -103371,7 +104054,7 @@ var init_views_data = __esm({
 // packages/api/dist/interfaces/admin/data.js
 function registerDataRoutes(app2, deps) {
   const { data: data3 } = deps;
-  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text10, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text10)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
     if (code3 === "ER_NO_SUCH_TABLE" || code3 === "ER_BAD_FIELD_ERROR") {
@@ -103422,15 +104105,15 @@ function registerDataRoutes(app2, deps) {
     const dataset = DATASETS.find((d) => d.key === raw);
     if (!dataset)
       return errorPage(request, reply, session, "Respaldos", "Ese conjunto no existe.", 404);
-    let rows32;
+    let rows33;
     try {
-      rows32 = await data3.exportRows(dataset.key);
+      rows33 = await data3.exportRows(dataset.key);
     } catch (err) {
       const m = dbError2(err);
       return errorPage(request, reply, session, "Respaldos", m.text, m.status);
     }
-    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows32.length} filas${dataset.personal ? ", con datos personales" : ""})`);
-    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows32));
+    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows33.length} filas${dataset.personal ? ", con datos personales" : ""})`);
+    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows33));
   });
   app2.get("/data-requests", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -103614,7 +104297,7 @@ function contractView(input) {
   </div>`;
 }
 function catalogView(input) {
-  const rows32 = input.catalog.map((o) => {
+  const rows33 = input.catalog.map((o) => {
     const id2 = escapeHtml(o.key);
     const lim = (k) => o.limits[k] === void 0 ? "" : String(o.limits[k]);
     return `<div class="card"><h2>${escapeHtml(PROFILE_LABELS[o.profile])} \xB7 ${escapeHtml(o.name)}</h2>
@@ -103639,7 +104322,7 @@ function catalogView(input) {
   }).join("");
   return `<div class="stack wide"><h1>Cat\xE1logo y precios</h1>${billingTabs("catalogo")}${flashHtml4(input.flash)}
   <div class="card"><p class="muted">Los precios se guardan sin IVA y se muestran con IVA incluido (${escapeHtml(formatUsd(withIva(1)))} por cada US$ 1). Un cambio de precio vale para contratos nuevos y renovaciones; nunca cambia un per\xEDodo ya pagado. Un tope vac\xEDo significa sin tope.</p></div>
-  ${rows32}</div>`;
+  ${rows33}</div>`;
 }
 function accountsView(input) {
   const list7 = input.accounts.length ? `<div class="scroll"><table><thead><tr><th>Banco</th><th>Cuenta</th><th>Titular</th><th>Estado</th><th></th></tr></thead><tbody>${input.accounts.map((a) => `<tr><td>${escapeHtml(a.bank)}</td><td>${escapeHtml(a.accountType)} N\xB0 ${escapeHtml(a.number)}</td><td>${escapeHtml(a.holder)}<br><span class="muted">${escapeHtml(a.holderId)}</span></td>
@@ -103659,7 +104342,7 @@ function accountsView(input) {
 }
 function revenueView(input) {
   const r = input.report;
-  const rows32 = r.rows.map((x) => `<tr><td>SB-${escapeHtml(String(x.number).padStart(4, "0"))}</td><td>${escapeHtml(when4(x.verifiedAt))}</td><td>${escapeHtml(x.userName ?? "")}</td><td>${escapeHtml(planName(x.plan, input.catalog))}${x.period ? `<br><span class="muted">${escapeHtml(x.period)}</span>` : ""}</td>
+  const rows33 = r.rows.map((x) => `<tr><td>SB-${escapeHtml(String(x.number).padStart(4, "0"))}</td><td>${escapeHtml(when4(x.verifiedAt))}</td><td>${escapeHtml(x.userName ?? "")}</td><td>${escapeHtml(planName(x.plan, input.catalog))}${x.period ? `<br><span class="muted">${escapeHtml(x.period)}</span>` : ""}</td>
       <td>${escapeHtml(money4(x.subtotalUsd))}</td><td>${escapeHtml(money4(x.ivaUsd))}</td><td><strong>${escapeHtml(money4(x.amountUsd))}</strong></td><td>${escapeHtml(x.invoiceNumber ?? "\u2014")}</td></tr>`).join("");
   const [y, m] = r.month.split("-").map(Number);
   const prev = `${m === 1 ? y - 1 : y}-${String(m === 1 ? 12 : m - 1).padStart(2, "0")}`;
@@ -103672,7 +104355,7 @@ function revenueView(input) {
     <div class="card"><h2>Por verificar</h2><div class="big">${escapeHtml(String(r.toVerify))}</div><p class="muted">pagos informados \xB7 <a href="/admin/plans?f=pendiente">ver</a></p></div>
     <div class="card"><h2>Sin renovar</h2><div class="big">${escapeHtml(String(r.lapsed))}</div><p class="muted">planes que vencieron este mes</p></div>
   </div>
-  ${r.rows.length ? `<div class="scroll"><table><thead><tr><th>Contrato</th><th>Verificado</th><th>Cliente</th><th>Plan</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Factura</th></tr></thead><tbody>${rows32}</tbody></table></div>` : `<p class="muted">No hay pagos verificados en este mes.</p>`}
+  ${r.rows.length ? `<div class="scroll"><table><thead><tr><th>Contrato</th><th>Verificado</th><th>Cliente</th><th>Plan</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Factura</th></tr></thead><tbody>${rows33}</tbody></table></div>` : `<p class="muted">No hay pagos verificados en este mes.</p>`}
   </div>`;
 }
 var flashHtml4, csrfField4, money4, statusLabel;
@@ -103706,7 +104389,7 @@ function planBadge(plan, endsAt) {
 function plansListView(input) {
   const catalog = input.catalog ?? DEFAULT_OFFERS;
   const tabs2 = FILTERS3.map(([key, label2]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/plans?f=${escapeHtml(key)}">${escapeHtml(label2)}${key === "pendiente" && input.pending > 0 ? ` (${input.pending})` : ""}</a>`).join("");
-  const rows32 = input.items.map((s) => {
+  const rows33 = input.items.map((s) => {
     const left = daysLeft(s.endsAt);
     const vigencia = s.status === "activa" ? s.endsAt ? `${when5(s.startsAt)} \u2192 ${when5(s.endsAt)}<br><span class="${left !== null && left <= 7 ? "error" : "muted"}">${left} d\xEDas</span>` : `desde ${when5(s.startsAt)}<br><span class="muted">sin vencimiento</span>` : `<span class="muted">${when5(s.createdAt)}</span>`;
     const acciones = input.canDecide && (s.status === "pendiente" || s.status === "solicitada") ? `<form method="post" action="/admin/subscriptions/${escapeHtml(s.id)}/verify">${csrfField5(input.csrf)}
@@ -103731,7 +104414,7 @@ function plansListView(input) {
     <p class="muted">Premium habilita: ${Object.values(FEATURE_LABELS).slice(2).map((f) => escapeHtml(f)).join(" \xB7 ")}.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay suscripciones con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Titular</th><th>Plan</th><th>Pago</th><th>Vigencia</th><th>Acciones</th></tr></thead>
-  <tbody>${rows32}</tbody></table></div></div>`;
+  <tbody>${rows33}</tbody></table></div></div>`;
 }
 function userPlanCard(userId, subs, csrf, canRegister, role = "dueno", usage = {}) {
   const plan = effectivePlan(subs);
@@ -103783,7 +104466,7 @@ var init_views_plans = __esm({
 // packages/api/dist/interfaces/admin/plans.js
 function registerPlanRoutes(app2, deps) {
   const { plans } = deps;
-  const errorPage = (request, reply, session, text9, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text10, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text10)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
     if (code3 === "ER_NO_SUCH_TABLE" || code3 === "ER_BAD_FIELD_ERROR") {
@@ -103804,10 +104487,10 @@ function registerPlanRoutes(app2, deps) {
   }
   const str8 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
   const whole = (value2, max) => {
-    const text9 = str8(value2, 6);
-    if (!text9)
+    const text10 = str8(value2, 6);
+    if (!text10)
       return null;
-    const n = Number(text9);
+    const n = Number(text10);
     return Number.isFinite(n) && n >= 1 && n <= max ? Math.floor(n) : null;
   };
   async function render(request, reply, session, filter, flash, status = 200) {
@@ -103958,7 +104641,7 @@ var init_plans2 = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/billing-store.js
-import { randomUUID as randomUUID22 } from "node:crypto";
+import { randomUUID as randomUUID23 } from "node:crypto";
 function rowsOf2(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
@@ -103973,8 +104656,8 @@ function monthRange(month) {
 }
 function revenueCsv(report, planLabel) {
   const cell3 = (v) => {
-    const text9 = v === null || v === void 0 ? "" : String(v);
-    const safe = /^[=+\-@\t\r]/.test(text9) ? `'${text9}` : text9;
+    const text10 = v === null || v === void 0 ? "" : String(v);
+    const safe = /^[=+\-@\t\r]/.test(text10) ? `'${text10}` : text10;
     return /[;"\n]/.test(safe) ? `"${safe.replace(/"/g, '""')}"` : safe;
   };
   const money7 = (n) => n.toFixed(2).replace(".", ",");
@@ -104037,7 +104720,7 @@ var init_billing_store = __esm({
       }
       addAccount(input, by) {
         return this.run(async (conn) => {
-          const id2 = randomUUID22();
+          const id2 = randomUUID23();
           await conn.query("INSERT INTO `PaymentAccount` (id, bank, accountType, number, holder, holderId, active, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, TRUE, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, input.bank, input.accountType, input.number, input.holder, input.holderId, by]);
           return id2;
         });
@@ -104120,7 +104803,7 @@ var init_billing_store = __esm({
       }
       notify(userId, dedupKey, message2) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID22(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID23(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
         });
       }
       instructions(id2) {
@@ -104141,7 +104824,7 @@ function currentMonth(now = /* @__PURE__ */ new Date()) {
 }
 function registerBillingRoutes(app2, deps) {
   const { billing } = deps;
-  const errorPage = (request, reply, session, text9, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text10, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text10)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
     if (code3 === "ER_NO_SUCH_TABLE" || code3 === "ER_BAD_FIELD_ERROR") {
@@ -104605,7 +105288,7 @@ var init_views_service_requests = __esm({
 // packages/api/dist/interfaces/admin/service-requests.js
 function registerServiceRequestRoutes(app2, deps) {
   const store = deps.serviceRequests;
-  const errorPage = (request, reply, session, text9, status) => deps.html(reply, request, "Solicitudes", `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text10, status) => deps.html(reply, request, "Solicitudes", `<div class="card"><p class="error">${escapeHtml(text10)}</p></div>`, session, status);
   function dbError2(err) {
     const code3 = err.code;
     if (code3 === "ER_NO_SUCH_TABLE" || code3 === "ER_BAD_FIELD_ERROR") {
@@ -104627,10 +105310,10 @@ function registerServiceRequestRoutes(app2, deps) {
   const str8 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
   const list7 = (value2) => Array.isArray(value2) ? value2.map(String) : typeof value2 === "string" && value2 ? [value2] : [];
   const whole = (value2, max) => {
-    const text9 = str8(value2, 6);
-    if (!text9)
+    const text10 = str8(value2, 6);
+    if (!text10)
       return null;
-    const n = Number(text9);
+    const n = Number(text10);
     return Number.isFinite(n) && n >= 0 && n <= max ? Math.floor(n) : null;
   };
   async function renderDetail(request, reply, session, id2, flash, status = 200) {
@@ -104855,7 +105538,7 @@ var init_service_requests = __esm({
 });
 
 // packages/api/dist/infrastructure/service-requests/service-request-store.js
-function rows25(result) {
+function rows26(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -104881,15 +105564,15 @@ function toRequest2(row) {
     ownerId: String(row.ownerId),
     ownerName: String(row.ownerName ?? ""),
     ownerPhone: String(row.ownerPhone ?? ""),
-    vehicleId: text5(row.vehicleId),
+    vehicleId: text6(row.vehicleId),
     vehicleLabel: label2,
     category: String(row.category),
     description: String(row.description ?? ""),
-    city: text5(row.city),
-    zone: text5(row.zone),
+    city: text6(row.city),
+    zone: text6(row.zone),
     status: String(row.status),
-    chosenOfferId: text5(row.chosenOfferId),
-    closeReason: text5(row.closeReason),
+    chosenOfferId: text6(row.chosenOfferId),
+    closeReason: text6(row.closeReason),
     createdAt: row.createdAt,
     respuestas: Number(row.respuestas ?? 0)
   };
@@ -104902,23 +105585,23 @@ function toOffer(row) {
     shopName: String(row.shopName ?? ""),
     shopUserId: String(row.shopUserId ?? ""),
     shopCity: String(row.shopCity ?? ""),
-    shopZone: text5(row.shopZone),
+    shopZone: text6(row.shopZone),
     status: String(row.status),
     priceUsd: numberOrNull(row.priceUsd),
     durationMin: numberOrNull(row.durationMin),
-    availability: text5(row.availability),
+    availability: text6(row.availability),
     warrantyDays: numberOrNull(row.warrantyDays),
-    notes: text5(row.notes),
+    notes: text6(row.notes),
     respondedAt: row.respondedAt ?? null
   };
 }
-var PAGE_SIZE6, text5, numberOrNull, SELECT_REQUESTS2, MysqlServiceRequestStore;
+var PAGE_SIZE6, text6, numberOrNull, SELECT_REQUESTS2, MysqlServiceRequestStore;
 var init_service_request_store = __esm({
   "packages/api/dist/infrastructure/service-requests/service-request-store.js"() {
     "use strict";
     init_appointment_store();
     PAGE_SIZE6 = 25;
-    text5 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text6 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     numberOrNull = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     SELECT_REQUESTS2 = "SELECT r.*, u.name AS ownerName, u.phone AS ownerPhone, v.make, v.model, v.year, (SELECT COUNT(*) FROM `ServiceOffer` o WHERE o.requestId = r.id AND o.status = 'ofertado') AS respuestas FROM `ServiceRequest` r JOIN `User` u ON u.id = r.ownerId LEFT JOIN `Vehicle` v ON v.id = r.vehicleId";
     MysqlServiceRequestStore = class {
@@ -104936,7 +105619,7 @@ var init_service_request_store = __esm({
       }
       candidates(city) {
         const base = "SELECT sh.id, sh.name, sh.city, sh.zone, sh.specialties, sh.ratingAvg FROM `Shop` sh WHERE sh.verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(sh.city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows25(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows26(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY sh.name LIMIT 100`, [city.trim(), city.trim()]);
@@ -104944,16 +105627,16 @@ var init_service_request_store = __esm({
           id: String(row.id),
           name: String(row.name),
           city: String(row.city),
-          zone: text5(row.zone),
+          zone: text6(row.zone),
           services: stringList3(row.specialties),
           ratingAvg: Number(row.ratingAvg ?? 0)
         })));
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows25(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows26(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
-          const next = rows25(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
+          const next = rows26(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
           await conn.query("INSERT INTO `ServiceRequest` (id, `number`, ownerId, vehicleId, category, description, city, zone, status, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'abierta', ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, Number(next?.n ?? 1), input.ownerId, input.vehicleId, input.category, input.description, input.city, input.zone, input.createdBy]);
           for (const shopId of input.shopIds) {
             await conn.query("INSERT INTO `ServiceOffer` (id, requestId, shopId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id2, shopId]);
@@ -104971,21 +105654,21 @@ var init_service_request_store = __esm({
             where = "WHERE r.status = 'abierta' AND (SELECT COUNT(*) FROM `ServiceOffer` o WHERE o.requestId = r.id AND o.status = 'ofertado') = 0";
           else if (filter === "cerradas")
             where = "WHERE r.status IN ('cerrada', 'cancelada')";
-          const items = rows25(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`)).map(toRequest2);
+          const items = rows26(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`)).map(toRequest2);
           return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE6 };
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows25(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows26(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
           if (!row)
             return null;
-          const offers = rows25(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id2])).map(toOffer);
+          const offers = rows26(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id2])).map(toOffer);
           return { request: toRequest2(row), offers };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows25(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
+        return this.run(async (conn) => rows26(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
       }
       saveOffer(requestId, offerId, response) {
         return this.run(async (conn) => {
@@ -105015,7 +105698,7 @@ var init_service_request_store = __esm({
 });
 
 // packages/api/dist/infrastructure/ratings/rating-store.js
-function rows26(result) {
+function rows27(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -105023,22 +105706,22 @@ function toRow(row) {
   return {
     id: String(row.id),
     fromId: String(row.fromId),
-    fromName: text6(row.fromName),
+    fromName: text7(row.fromName),
     toId: String(row.toId),
     score: Number(row.score ?? 0),
-    comment: text6(row.comment),
-    kind: text6(row.kind),
-    workOrderId: text6(row.workOrderId),
+    comment: text7(row.comment),
+    kind: text7(row.kind),
+    workOrderId: text7(row.workOrderId),
     hiddenAt: row.hiddenAt ?? null,
-    hiddenReason: text6(row.hiddenReason),
+    hiddenReason: text7(row.hiddenReason),
     createdAt: row.createdAt
   };
 }
-var text6, SELECT2, MysqlRatingStore;
+var text7, SELECT2, MysqlRatingStore;
 var init_rating_store = __esm({
   "packages/api/dist/infrastructure/ratings/rating-store.js"() {
     "use strict";
-    text6 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text7 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     SELECT2 = "SELECT r.*, u.name AS fromName FROM `Rating` r LEFT JOIN `User` u ON u.id = r.fromId";
     MysqlRatingStore = class {
       connect;
@@ -105061,7 +105744,7 @@ var init_rating_store = __esm({
       }
       add(input) {
         return this.run(async (conn) => {
-          const created = rows26(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows27(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [id2, input.fromId, input.toId, input.score, input.comment, input.kind, input.workOrderId, input.quoteRequestId]);
           await this.refresh(conn, input.toId);
@@ -105070,23 +105753,23 @@ var init_rating_store = __esm({
       }
       forUser(userId, limit = 20) {
         const cap = Math.min(Math.max(1, Math.floor(limit)), 100);
-        return this.run(async (conn) => rows26(await conn.query(`${SELECT2} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow));
+        return this.run(async (conn) => rows27(await conn.query(`${SELECT2} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow));
       }
       forWorkOrder(workOrderId) {
         return this.run(async (conn) => {
-          const row = rows26(await conn.query(`${SELECT2} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
+          const row = rows27(await conn.query(`${SELECT2} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
           return row ? toRow(row) : null;
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows26(await conn.query(`${SELECT2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows27(await conn.query(`${SELECT2} WHERE r.id = ? LIMIT 1`, [id2]))[0];
           return row ? toRow(row) : null;
         });
       }
       hide(id2, reason, hiddenBy) {
         return this.run(async (conn) => {
-          const row = rows26(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
+          const row = rows27(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
           if (!row)
             return false;
           const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = CURRENT_TIMESTAMP(3), hiddenBy = ?, hiddenReason = ? WHERE id = ? AND hiddenAt IS NULL", [hiddenBy, reason, id2]);
@@ -105098,7 +105781,7 @@ var init_rating_store = __esm({
       }
       show(id2) {
         return this.run(async (conn) => {
-          const row = rows26(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
+          const row = rows27(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id2]))[0];
           if (!row)
             return false;
           const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = NULL, hiddenBy = NULL, hiddenReason = NULL WHERE id = ? AND hiddenAt IS NOT NULL", [id2]);
@@ -105113,7 +105796,7 @@ var init_rating_store = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/plan-store.js
-function rows27(result) {
+function rows28(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -105169,9 +105852,9 @@ var init_plan_store = __esm({
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows27(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows28(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
-          const next = rows27(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
+          const next = rows28(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
           await conn.query(
             // `active` se mantiene en falso mientras el pago no esté verificado, para que cualquier
             // lectura antigua de esa columna vea lo mismo que el estado nuevo.
@@ -105197,25 +105880,25 @@ var init_plan_store = __esm({
             params2.push(Math.max(1, Math.floor(soonDays)));
           } else if (filter === "vencida")
             where = "WHERE s.status = 'vencida' OR (s.status = 'activa' AND s.expiresAt IS NOT NULL AND s.expiresAt <= UTC_TIMESTAMP(3))";
-          const items = rows27(await conn.query(`${SELECT3} ${where} ORDER BY s.status = 'pendiente' DESC, s.status = 'solicitada' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`, params2)).map(toRow2);
+          const items = rows28(await conn.query(`${SELECT3} ${where} ORDER BY s.status = 'pendiente' DESC, s.status = 'solicitada' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE7} OFFSET ${offset2}`, params2)).map(toRow2);
           return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE7 };
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows27(await conn.query(`${SELECT3} WHERE s.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows28(await conn.query(`${SELECT3} WHERE s.id = ? LIMIT 1`, [id2]))[0];
           return row ? toRow2(row) : null;
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows27(await conn.query(`${SELECT3} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
+        return this.run(async (conn) => rows28(await conn.query(`${SELECT3} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
       }
       verify(id2, months2, verifiedBy) {
         return this.run(async (conn) => {
-          const [self2] = rows27(await conn.query("SELECT userId, plan FROM `Subscription` WHERE id = ? AND status IN ('pendiente','solicitada')", [id2]));
+          const [self2] = rows28(await conn.query("SELECT userId, plan FROM `Subscription` WHERE id = ? AND status IN ('pendiente','solicitada')", [id2]));
           if (!self2)
             return false;
-          const [running] = rows27(await conn.query("SELECT MAX(expiresAt) AS until FROM `Subscription` WHERE userId = ? AND plan = ? AND id <> ? AND status = 'activa' AND expiresAt > UTC_TIMESTAMP(3)", [self2.userId, self2.plan, id2]));
+          const [running] = rows28(await conn.query("SELECT MAX(expiresAt) AS until FROM `Subscription` WHERE userId = ? AND plan = ? AND id <> ? AND status = 'activa' AND expiresAt > UTC_TIMESTAMP(3)", [self2.userId, self2.plan, id2]));
           const from = running?.until ? "?" : "CURRENT_TIMESTAMP(3)";
           const fromParams = running?.until ? [running.until] : [];
           const vence = months2 === null ? "NULL" : `DATE_ADD(${from}, INTERVAL ? MONTH)`;
@@ -105244,7 +105927,7 @@ var init_plan_store = __esm({
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const row = rows27(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status IN ('pendiente','solicitada')"))[0];
+          const row = rows28(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status IN ('pendiente','solicitada')"))[0];
           return Number(row?.n ?? 0);
         });
       }
@@ -105252,7 +105935,7 @@ var init_plan_store = __esm({
         return this.run(async (conn) => {
           const cuenta = async (sql, params2) => {
             try {
-              const row = rows27(await conn.query(sql, params2))[0];
+              const row = rows28(await conn.query(sql, params2))[0];
               return Number(row?.n ?? 0);
             } catch {
               return 0;
@@ -105270,7 +105953,7 @@ var init_plan_store = __esm({
       }
       planForUser(userId) {
         return this.run(async (conn) => {
-          const list7 = rows27(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
+          const list7 = rows28(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
             plan: String(r.plan),
             status: String(r.status),
             startsAt: r.startsAt,
@@ -105284,7 +105967,7 @@ var init_plan_store = __esm({
 });
 
 // packages/api/dist/infrastructure/relations/relation-store.js
-function rows28(result) {
+function rows29(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -105365,15 +106048,15 @@ var init_relation_store = __esm({
         }
       }
       async nextNumber(conn, table) {
-        const row = rows28(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
+        const row = rows29(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table}\``))[0];
         return Number(row?.n ?? 1);
       }
       ensureForOrigin(input) {
         return this.run(async (conn) => {
-          const existing = rows28(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
+          const existing = rows29(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
           if (existing)
             return String(existing.id);
-          const created = rows28(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows29(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           const number = await this.nextNumber(conn, "Relationship");
           await conn.query("INSERT INTO `Relationship` (id, `number`, kind, status, channel, originType, originId, subject, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, 'activa', 'mediado', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, number, input.kind, input.originType, input.originId, input.subject, input.createdBy]);
@@ -105399,16 +106082,16 @@ var init_relation_store = __esm({
           } else if (filter === "cerradas") {
             where = "WHERE r.status IN ('cerrada', 'bloqueada')";
           }
-          const items = rows28(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`, params2)).map(toRelation);
+          const items = rows29(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`, params2)).map(toRelation);
           return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE8 };
         });
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows28(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows29(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id2]))[0];
           if (!row)
             return null;
-          const parties = rows28(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id2])).map((p) => ({
+          const parties = rows29(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id2])).map((p) => ({
             id: String(p.id),
             userId: String(p.userId),
             role: String(p.role),
@@ -105418,7 +106101,7 @@ var init_relation_store = __esm({
             consentAt: p.consentAt ?? null,
             mutedAt: p.mutedAt ?? null
           }));
-          const messages = rows28(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id2])).map((m) => ({
+          const messages = rows29(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id2])).map((m) => ({
             id: String(m.id),
             fromUserId: str5(m.fromUserId),
             toUserId: str5(m.toUserId),
@@ -105430,16 +106113,16 @@ var init_relation_store = __esm({
             flagged: bool(m.flagged),
             createdAt: m.createdAt
           }));
-          const disputes = rows28(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id2])).map(toDispute);
+          const disputes = rows29(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id2])).map(toDispute);
           return { relation: toRelation(row), parties, messages, disputes };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows28(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
+        return this.run(async (conn) => rows29(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
       }
       addMessage(input) {
         return this.run(async (conn) => {
-          const created = rows28(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows29(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           await conn.query(`INSERT INTO \`RelationshipMessage\` (id, relationshipId, fromUserId, toUserId, body, kind, relayedAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ${input.relayed ? "CURRENT_TIMESTAMP(3)" : "NULL"}, ?, CURRENT_TIMESTAMP(3))`, [id2, input.relationshipId, input.fromUserId, input.toUserId, input.body, input.kind, input.createdBy]);
           await conn.query("UPDATE `Relationship` SET lastMessageAt = CURRENT_TIMESTAMP(3), waitingSince = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.toUserId ? /* @__PURE__ */ new Date() : null, input.relationshipId]);
@@ -105470,7 +106153,7 @@ var init_relation_store = __esm({
       }
       openDispute(input) {
         return this.run(async (conn) => {
-          const created = rows28(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows29(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           const number = await this.nextNumber(conn, "Dispute");
           await conn.query("INSERT INTO `Dispute` (id, `number`, relationshipId, openedBy, claimantUserId, againstUserId, reason, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, number, input.relationshipId, input.openedBy, input.claimantUserId, input.againstUserId, input.reason]);
@@ -105485,13 +106168,13 @@ var init_relation_store = __esm({
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params2 = status === "todas" ? [] : [status];
-          const items = rows28(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`, params2)).map(toDispute);
+          const items = rows29(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`, params2)).map(toDispute);
           return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE8 };
         });
       }
       getDispute(id2) {
         return this.run(async (conn) => {
-          const row = rows28(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id2]))[0];
+          const row = rows29(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id2]))[0];
           return row ? toDispute(row) : null;
         });
       }
@@ -105507,7 +106190,7 @@ var init_relation_store = __esm({
       }
       addSanction(input) {
         return this.run(async (conn) => {
-          const created = rows28(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows29(await conn.query("SELECT UUID() AS id"))[0];
           const id2 = String(created?.id);
           await conn.query("INSERT INTO `Sanction` (id, userId, level, reason, relationshipId, disputeId, startsAt, endsAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3), ?, ?, CURRENT_TIMESTAMP(3))", [id2, input.userId, input.level, input.reason, input.relationshipId, input.disputeId, input.endsAt, input.createdBy]);
           return id2;
@@ -105516,12 +106199,12 @@ var init_relation_store = __esm({
       listSanctions(page2) {
         const offset2 = (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE8;
         return this.run(async (conn) => {
-          const items = rows28(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`)).map(toSanction);
+          const items = rows29(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`)).map(toSanction);
           return { items, page: Math.max(1, Math.floor(page2)), pageSize: PAGE_SIZE8 };
         });
       }
       sanctionsForUser(userId) {
-        return this.run(async (conn) => rows28(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
+        return this.run(async (conn) => rows29(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
       }
       liftSanction(id2, reason, liftedBy) {
         return this.run(async (conn) => {
@@ -105530,7 +106213,7 @@ var init_relation_store = __esm({
         });
       }
       searchBlockedUserIds() {
-        return this.run(async (conn) => rows28(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
+        return this.run(async (conn) => rows29(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
       }
     };
   }
@@ -106220,14 +106903,14 @@ function registerWhatsAppQueueRoutes(app2, deps) {
     }
     const flash = request.query?.ok === "1" ? `<p class="ok">Aviso puesto de nuevo en la cola.</p>` : "";
     const counts = Object.entries(LABELS2).map(([k, label2]) => `<li>${escapeHtml(label2)}: <strong>${data3.counts[k] ?? 0}</strong></li>`).join("");
-    const rows32 = data3.attention.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when7(r.nextAttemptAt))}`}</td></tr>`).join("");
+    const rows33 = data3.attention.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when7(r.nextAttemptAt))}`}</td></tr>`).join("");
     const inbound = data3.inboundDead.map((r) => `<tr><td>${escapeHtml(when7(r.createdAt))}</td><td>\u2026${escapeHtml(String(r.phoneEnd))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td></tr>`).join("");
     const alertLabels = { outbox_dead: "Mensajes salientes fallidos", inbound_dead: "Mensajes entrantes fallidos", reminders_failed: "Ciclo de recordatorios", database_not_ready: "Base de datos" };
     const alerts = (data3.lastAlerts ?? []).map((r) => `<li>${escapeHtml(alertLabels[String(r.type)] ?? String(r.type))}: ${escapeHtml(when7(r.sentAt))}</li>`).join("");
     const body = `<div class="stack"><h1>Cola de WhatsApp</h1>${flash}
       <p>Canal activo: <strong>${escapeHtml({ off: "ninguno (no se env\xEDa nada)", bridge: "puente WhatsApp Web del equipo local", cloud: "API oficial de WhatsApp" }[whatsappDelivery()])}</strong>. Aqu\xED no se muestra el texto de los mensajes.</p>
       <div class="card"><h2>Avisos</h2><ul>${counts}</ul><h3>\xDAltima alerta enviada por tipo</h3>${alerts ? `<ul>${alerts}</ul>` : "<p>Ninguna alerta enviada.</p>"}</div>
-      <div class="card"><h2>Necesitan atenci\xF3n</h2>${rows32 ? `<table><thead><tr><th>Creado</th><th>Para</th><th>Tipo</th><th>Estado</th><th>Intentos</th><th>\xDAltimo error</th><th></th></tr></thead><tbody>${rows32}</tbody></table>` : "<p>Nada pendiente de revisi\xF3n.</p>"}
+      <div class="card"><h2>Necesitan atenci\xF3n</h2>${rows33 ? `<table><thead><tr><th>Creado</th><th>Para</th><th>Tipo</th><th>Estado</th><th>Intentos</th><th>\xDAltimo error</th><th></th></tr></thead><tbody>${rows33}</tbody></table>` : "<p>Nada pendiente de revisi\xF3n.</p>"}
       <p class="muted">TEMPLATE_REQUIRED: la API oficial necesita una plantilla aprobada porque pasaron m\xE1s de 24 horas desde el \xFAltimo mensaje del contacto. PACING: el puente esper\xF3 por el ritmo humano. CHAT_NOT_AVAILABLE: WhatsApp Web no abri\xF3 el chat de ese n\xFAmero.</p></div>
       <div class="card"><h2>Mensajes entrantes sin procesar</h2>${inbound ? `<table><thead><tr><th>Recibido</th><th>Tel\xE9fono</th><th>Intentos</th><th>\xDAltimo error</th></tr></thead><tbody>${inbound}</tbody></table>` : "<p>Ninguno.</p>"}</div></div>`;
     return deps.html(reply, request, "WhatsApp", body, session);
@@ -106273,8 +106956,8 @@ function chatLink(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e4(digits)}" target="_blank" rel="noopener">${e4(label2)} (${e4(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox(id2, label2, content, rows32 = 8) {
-  return `<label for="${id2}">${e4(label2)}</label><textarea id="${id2}" readonly rows="${rows32}">${e4(content)}</textarea>`;
+function copyBox(id2, label2, content, rows33 = 8) {
+  return `<label for="${id2}">${e4(label2)}</label><textarea id="${id2}" readonly rows="${rows33}">${e4(content)}</textarea>`;
 }
 function appointmentsListView(input) {
   const tabs2 = FILTERS7.map(([id2, label2]) => `<a href="/admin/appointments?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e4(label2)}</a>`).join("");
@@ -106478,8 +107161,8 @@ function chatLink2(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e5(digits)}" target="_blank" rel="noopener">${e5(label2)} (${e5(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox2(id2, label2, content, rows32 = 9) {
-  return `<label for="${id2}">${e5(label2)}</label><textarea id="${id2}" readonly rows="${rows32}">${e5(content)}</textarea>`;
+function copyBox2(id2, label2, content, rows33 = 9) {
+  return `<label for="${id2}">${e5(label2)}</label><textarea id="${id2}" readonly rows="${rows33}">${e5(content)}</textarea>`;
 }
 function workOrdersListView(input) {
   const tabs2 = FILTERS8.map(([id2, label2]) => `<a href="/admin/work-orders?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e5(label2)}</a>`).join("");
@@ -106799,8 +107482,8 @@ function chatLink3(phone, label2) {
     return "";
   return `<a href="https://wa.me/${e6(digits)}" target="_blank" rel="noopener">${e6(label2)} (${e6(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox3(id2, label2, content, rows32 = 8) {
-  return `<label for="${id2}">${e6(label2)}</label><textarea id="${id2}" readonly rows="${rows32}">${e6(content)}</textarea>`;
+function copyBox3(id2, label2, content, rows33 = 8) {
+  return `<label for="${id2}">${e6(label2)}</label><textarea id="${id2}" readonly rows="${rows33}">${e6(content)}</textarea>`;
 }
 function quotesListView(input) {
   const tabs2 = FILTERS9.map(([id2, label2]) => `<a href="/admin/quotes?f=${id2}"${id2 === input.filter ? ' class="active"' : ""}>${e6(label2)}</a>`).join("");
@@ -106944,9 +107627,9 @@ function day2(value2) {
   return date2 && !Number.isNaN(date2.getTime()) ? date2.toISOString().slice(0, 10) : "\u2014";
 }
 function phoneLabel(value2) {
-  const text9 = String(value2 ?? "");
-  const digits = text9.replace(/\D/g, "");
-  return text9.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text9;
+  const text10 = String(value2 ?? "");
+  const digits = text10.replace(/\D/g, "");
+  return text10.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text10;
 }
 function value(values, key) {
   const v = values[key];
@@ -106957,7 +107640,7 @@ function field(values, name, label2, attrs = "") {
 }
 function select(values, name, label2, options, placeholder) {
   const selected2 = String(values[name] ?? "");
-  const opts = options.map(([id2, text9]) => `<option value="${e7(id2)}"${id2 === selected2 ? " selected" : ""}>${e7(text9)}</option>`).join("");
+  const opts = options.map(([id2, text10]) => `<option value="${e7(id2)}"${id2 === selected2 ? " selected" : ""}>${e7(text10)}</option>`).join("");
   const empty = placeholder ? `<option value="">${e7(placeholder)}</option>` : "";
   return `<label for="f-${name}">${e7(label2)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
 }
@@ -107189,7 +107872,7 @@ function flashFrom(request) {
 }
 function registerRegistrationRoutes(app2, deps) {
   const { registrations } = deps;
-  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text10, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text10)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -107329,7 +108012,7 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const perfil = PERFILES.includes(body.perfil) ? body.perfil : "dueno";
-    const invalid = (text9, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text9 }), session, status);
+    const invalid = (text10, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text10 }), session, status);
     const userFrom = async (data3, keepEmail) => ({
       phone: data3.phone,
       name: data3.name,
@@ -107447,8 +108130,8 @@ function registerRegistrationRoutes(app2, deps) {
     } catch (err) {
       if (!(err instanceof BrokerError))
         throw err;
-      const text9 = err.code === "PHONE_ALREADY_LINKED" ? "Ese n\xFAmero o esta cuenta ya est\xE1 vinculado a otra cuenta. Rev\xEDsalo antes de continuar." : err.code === "INVALID_PHONE" ? "El tel\xE9fono de la cuenta no es v\xE1lido para WhatsApp." : "La cuenta no est\xE1 activa o no tiene consentimiento registrado.";
-      return renderDetail(request, reply, session, id2, { error: text9, status: 409 });
+      const text10 = err.code === "PHONE_ALREADY_LINKED" ? "Ese n\xFAmero o esta cuenta ya est\xE1 vinculado a otra cuenta. Rev\xEDsalo antes de continuar." : err.code === "INVALID_PHONE" ? "El tel\xE9fono de la cuenta no es v\xE1lido para WhatsApp." : "La cuenta no est\xE1 activa o no tiene consentimiento registrado.";
+      return renderDetail(request, reply, session, id2, { error: text10, status: 409 });
     }
     await deps.audit("admin.whatsapp.link", session.userId, `WhatsApp vinculado al usuario ${id2} tras confirmar el chat con ese n\xFAmero`);
     return reply.redirect(`/admin/users/${id2}?ok=whatsapp`, 302);
@@ -107514,21 +108197,21 @@ function registerRegistrationRoutes(app2, deps) {
     const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "";
     const returnTo = typeof body.returnTo === "string" && UUID6.test(body.returnTo) ? body.returnTo : null;
-    const fail11 = (text9, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text9 }, status }) : errorPage(request, reply, session, "Verificaciones", text9, status);
+    const fail12 = (text10, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text10 }, status }) : errorPage(request, reply, session, "Verificaciones", text10, status);
     if (!decision)
-      return fail11("Elige aprobar o rechazar.", 400);
+      return fail12("Elige aprobar o rechazar.", 400);
     if (decision === "rejected" && reason.length < 5)
-      return fail11("Para rechazar escribe la observaci\xF3n que recibir\xE1 la entidad.", 400);
+      return fail12("Para rechazar escribe la observaci\xF3n que recibir\xE1 la entidad.", 400);
     try {
       const business = (await registrations.pendingVerifications()).find((item) => item.kind === kind && item.id === id2);
       const updated = await registrations.setVerification(kind, id2, decision);
       if (!updated)
-        return fail11("Registro no encontrado.", 404);
+        return fail12("Registro no encontrado.", 404);
       if (business)
         await (deps.verificationNotices ?? new MysqlOutboxDeliveryStore()).enqueueVerification(business.userId, id2, decision, reason).catch(() => app2.log.warn("verification notice could not be queued"));
     } catch (err) {
       const m = dbError(err);
-      return fail11(m.text, m.status);
+      return fail12(m.text, m.status);
     }
     const label2 = kind === "shop" ? "Taller" : "Almac\xE9n";
     await deps.audit(`admin.verification.${decision}`, session.userId, `${label2} ${id2}: ${reason || "sin observaciones"}`);
@@ -107589,7 +108272,7 @@ function dbErrorText(err) {
 }
 function registerAppointmentRoutes(app2, deps) {
   const { appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text10, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text10)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -107667,33 +108350,33 @@ function registerAppointmentRoutes(app2, deps) {
     const shopId = typeof body.shopId === "string" && UUID7.test(body.shopId) ? body.shopId : null;
     const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, 500) || null : null;
     const scheduledAt = parseEcDateTime(body.date, body.time);
-    const fail11 = (error, status = 400) => renderSchedule(request, reply, session, ownerId, vehicleId, services, { error, values: body, status });
+    const fail12 = (error, status = 400) => renderSchedule(request, reply, session, ownerId, vehicleId, services, { error, values: body, status });
     const operation = deps.platform ? await deps.platform() : null;
     const paused = operation ? featurePaused(operation, "appointments") : null;
     if (paused)
-      return fail11(paused);
+      return fail12(paused);
     if (services.length === 0)
-      return fail11("Elige al menos un servicio.");
+      return fail12("Elige al menos un servicio.");
     if (!shopId)
-      return fail11("Elige un taller.");
+      return fail12("Elige un taller.");
     if (!scheduledAt)
-      return fail11("Fecha u hora no v\xE1lida.");
+      return fail12("Fecha u hora no v\xE1lida.");
     const now = Date.now();
     if (scheduledAt.getTime() < now - 5 * 60 * 1e3)
-      return fail11("La fecha y hora ya pasaron: elige un horario futuro.");
+      return fail12("La fecha y hora ya pasaron: elige un horario futuro.");
     if (scheduledAt.getTime() > now + MAX_AHEAD_MS)
-      return fail11("Solo se agendan turnos dentro de los pr\xF3ximos 6 meses.");
+      return fail12("Solo se agendan turnos dentro de los pr\xF3ximos 6 meses.");
     let id2;
     let shopName;
     try {
       const detail = await registrations.getUserDetail(ownerId);
       if (!detail || String(detail.user.role) !== "dueno")
-        return fail11("Solo se agendan turnos para due\xF1os de veh\xEDculo registrados.", 404);
+        return fail12("Solo se agendan turnos para due\xF1os de veh\xEDculo registrados.", 404);
       if (!detail.vehicles.some((v) => String(v.id) === vehicleId))
-        return fail11("El veh\xEDculo no pertenece a este due\xF1o.");
+        return fail12("El veh\xEDculo no pertenece a este due\xF1o.");
       const shop = (await appointments.verifiedShops("")).find((s) => s.id === shopId);
       if (!shop)
-        return fail11("El taller elegido no est\xE1 verificado.");
+        return fail12("El taller elegido no est\xE1 verificado.");
       shopName = shop.name;
       id2 = await appointments.createAppointment({
         ownerId,
@@ -107721,7 +108404,7 @@ function registerAppointmentRoutes(app2, deps) {
       }
     } catch (err) {
       const m = dbErrorText(err);
-      return fail11(m.text, m.status);
+      return fail12(m.text, m.status);
     }
     await deps.audit("admin.appointment.create", session.userId, `Turno ${id2} en ${shopName} para el usuario ${ownerId}`);
     return reply.redirect(`/admin/appointments/${id2}?ok=creado`, 302);
@@ -107958,21 +108641,21 @@ function welcomeMessage(ctx, options = {}) {
   return `${intro}${parts.join("\n\n")}`;
 }
 function detectProfileIntent(input) {
-  const text9 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text9))
+  const text10 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text10))
     return "cuenta";
-  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text9))
+  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text10))
     return "almacen";
-  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text9))
+  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text10))
     return "taller";
-  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text9))
+  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text10))
     return "dueno";
   return null;
 }
 function parseContactInput(input) {
-  const text9 = input.slice(0, 2e3);
-  const code3 = /\bAMP-[A-HJ-NP-Z2-9]{4,6}\b/i.exec(text9)?.[0]?.toUpperCase() ?? null;
-  const rest = code3 ? text9.split(new RegExp(code3, "i")).join(" ") : text9;
+  const text10 = input.slice(0, 2e3);
+  const code3 = /\bAMP-[A-HJ-NP-Z2-9]{4,6}\b/i.exec(text10)?.[0]?.toUpperCase() ?? null;
+  const rest = code3 ? text10.split(new RegExp(code3, "i")).join(" ") : text10;
   for (const candidate of rest.match(/\+?\d[\d\s().-]{6,}\d/g) ?? []) {
     const digits = normalizeWhatsappNumber(candidate);
     if (digits)
@@ -108324,7 +109007,7 @@ function dbErrorText2(err) {
 }
 function registerWorkOrderRoutes(app2, deps) {
   const { workOrders, appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text10, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text10)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -108507,15 +109190,15 @@ function registerWorkOrderRoutes(app2, deps) {
       const description = str6(body.description, 191);
       const quantity = parseAmount2(body.quantity);
       const unitPrice = parseAmount2(body.unitPrice);
-      const fail11 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
+      const fail12 = (text10) => renderOrder(request, reply, session, id2, { kind: "error", text: text10 }, 400);
       if (!kind)
-        return fail11("Elige si es repuesto o mano de obra.");
+        return fail12("Elige si es repuesto o mano de obra.");
       if (description.length < 2)
-        return fail11("Escribe la descripci\xF3n del \xEDtem.");
+        return fail12("Escribe la descripci\xF3n del \xEDtem.");
       if (quantity === null || quantity <= 0 || quantity > 999)
-        return fail11("Cantidad no v\xE1lida.");
+        return fail12("Cantidad no v\xE1lida.");
       if (unitPrice === null || unitPrice > 1e5)
-        return fail11("Precio unitario no v\xE1lido.");
+        return fail12("Precio unitario no v\xE1lido.");
       await workOrders.addItem(id2, { kind, description, brand: optional(body.brand, 60), partCode: optional(body.partCode, 60), quantity, unitPrice });
     } catch (err) {
       const m = dbErrorText2(err);
@@ -108575,19 +109258,19 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail11 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
+      const fail12 = (text10) => renderOrder(request, reply, session, id2, { kind: "error", text: text10 }, 400);
       if (next === "cerrada" || !(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes(next))
-        return fail11("Ese cambio de estado no es posible.");
+        return fail12("Ese cambio de estado no es posible.");
       if (next === "presupuesto_enviado" && found.items.length === 0)
-        return fail11("Agrega al menos un \xEDtem antes de enviar el presupuesto.");
+        return fail12("Agrega al menos un \xEDtem antes de enviar el presupuesto.");
       if ((next === "rechazado" || next === "cancelada") && reason.length < 5)
-        return fail11("Escribe el motivo.");
+        return fail12("Escribe el motivo.");
       const updated = await workOrders.setStatus(id2, order.status, next, {
         rejectionReason: next === "rechazado" ? reason : void 0,
         cancelReason: next === "cancelada" ? reason : void 0
       });
       if (!updated)
-        return fail11("La orden cambi\xF3 mientras tanto: revisa su estado actual.");
+        return fail12("La orden cambi\xF3 mientras tanto: revisa su estado actual.");
     } catch (err) {
       const m = dbErrorText2(err);
       return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
@@ -108655,17 +109338,17 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail11 = (text9) => renderOrder(request, reply, session, id2, { kind: "error", text: text9 }, 400);
+      const fail12 = (text10) => renderOrder(request, reply, session, id2, { kind: "error", text: text10 }, 400);
       if (!(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes("cerrada"))
-        return fail11("Solo se cierra una orden en ejecuci\xF3n o esperando repuesto.");
+        return fail12("Solo se cierra una orden en ejecuci\xF3n o esperando repuesto.");
       const exitKm = wholeNumber(body.exitKm, 0, 2e6);
       if (exitKm === null)
-        return fail11("Kilometraje de salida no v\xE1lido.");
+        return fail12("Kilometraje de salida no v\xE1lido.");
       if (order.intakeKm !== null && exitKm < order.intakeKm)
-        return fail11("El kilometraje de salida no puede ser menor que el de ingreso.");
+        return fail12("El kilometraje de salida no puede ser menor que el de ingreso.");
       const warrantyDays = wholeNumber(body.warrantyDays, 0, 3650);
       if (warrantyDays === null)
-        return fail11("D\xEDas de garant\xEDa no v\xE1lidos.");
+        return fail12("D\xEDas de garant\xEDa no v\xE1lidos.");
       const diagnosisOutcome = DIAGNOSIS_OUTCOMES.some(([k]) => k === body.diagnosisOutcome) ? String(body.diagnosisOutcome) : "no_aplica";
       const nextService = optional(body.nextService, 191);
       const closed = await workOrders.close(id2, {
@@ -108677,7 +109360,7 @@ function registerWorkOrderRoutes(app2, deps) {
         historyDescription: historyDescription({ ...order, warrantyDays, nextService }, found.items)
       });
       if (!closed)
-        return fail11("La orden cambi\xF3 mientras tanto: revisa su estado actual.");
+        return fail12("La orden cambi\xF3 mientras tanto: revisa su estado actual.");
     } catch (err) {
       const m = dbErrorText2(err);
       return errorPage(request, reply, session, "Orden de trabajo", m.text, m.status);
@@ -108731,7 +109414,7 @@ function dbErrorText3(err) {
 }
 function registerQuoteRoutes(app2, deps) {
   const { quotes, registrations, appointments } = deps;
-  const errorPage = (request, reply, session, title, text9, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text9)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text10, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text10)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -108910,20 +109593,20 @@ function registerQuoteRoutes(app2, deps) {
     const { id: id2, quoteId } = request.params;
     if (!UUID10.test(id2) || !UUID10.test(quoteId))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
-    const fail11 = (text9) => renderRequest(request, reply, session, id2, { kind: "error", text: text9 }, 400);
+    const fail12 = (text10) => renderRequest(request, reply, session, id2, { kind: "error", text: text10 }, 400);
     const action = body.action === "sin_stock" ? "sin_stock" : "cotizado";
     let unitPrice = null;
     if (action === "cotizado") {
       unitPrice = parseAmount2(body.unitPrice);
       if (unitPrice === null || unitPrice <= 0 || unitPrice > 1e5)
-        return fail11("Escribe un precio unitario v\xE1lido.");
+        return fail12("Escribe un precio unitario v\xE1lido.");
     }
     const warrantyDays = smallInt(body.warrantyDays, 0, 3650);
     const validDays = smallInt(body.validDays, 0, 365);
     if (warrantyDays === null)
-      return fail11("D\xEDas de garant\xEDa no v\xE1lidos.");
+      return fail12("D\xEDas de garant\xEDa no v\xE1lidos.");
     if (validDays === null)
-      return fail11("D\xEDas de validez no v\xE1lidos.");
+      return fail12("D\xEDas de validez no v\xE1lidos.");
     try {
       const saved = await quotes.saveQuote(id2, quoteId, {
         status: action,
@@ -108936,7 +109619,7 @@ function registerQuoteRoutes(app2, deps) {
         notes: optional2(body.notes, 191)
       });
       if (!saved)
-        return fail11("La solicitud ya no est\xE1 abierta o el almac\xE9n no fue invitado.");
+        return fail12("La solicitud ya no est\xE1 abierta o el almac\xE9n no fue invitado.");
     } catch (err) {
       const m = dbErrorText3(err);
       return errorPage(request, reply, session, "Cotizaci\xF3n", m.text, m.status);
@@ -109072,7 +109755,7 @@ var init_quotes = __esm({
 });
 
 // packages/api/dist/infrastructure/quotes/quote-store.js
-function rows29(result) {
+function rows30(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toRequest3(r) {
@@ -109084,16 +109767,16 @@ function toRequest3(r) {
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
     requesterRole: String(r.requesterRole),
-    vehicleId: text7(r.vehicleId),
+    vehicleId: text8(r.vehicleId),
     vehicleLabel: label(r),
-    plate: text7(r.plate),
-    workOrderId: text7(r.workOrderId),
+    plate: text8(r.plate),
+    workOrderId: text8(r.workOrderId),
     partName: String(r.partName),
-    partCode: text7(r.partCode),
+    partCode: text8(r.partCode),
     quantity: Number(r.quantity ?? 1),
     city: String(r.city),
-    notes: text7(r.notes),
-    closeReason: text7(r.closeReason),
+    notes: text8(r.notes),
+    closeReason: text8(r.closeReason),
     createdAt: r.createdAt
   };
 }
@@ -109108,13 +109791,13 @@ function toQuote(r) {
     storePhone: String(r.storePhone),
     status: String(r.status),
     unitPrice: num4(r.unitPrice),
-    brand: text7(r.brand),
-    availability: text7(r.availability),
+    brand: text8(r.brand),
+    availability: text8(r.availability),
     warrantyDays: num4(r.warrantyDays),
-    deliveryTime: text7(r.deliveryTime),
+    deliveryTime: text8(r.deliveryTime),
     validDays: num4(r.validDays),
-    notes: text7(r.notes),
-    lossReason: text7(r.lossReason),
+    notes: text8(r.notes),
+    lossReason: text8(r.lossReason),
     respondedAt: r.respondedAt ?? null
   };
 }
@@ -109124,10 +109807,10 @@ function toOrder(r) {
     stage: String(r.stage ?? "confirmado"),
     status: String(r.status),
     total: Number(r.total ?? 0),
-    cancelReason: text7(r.cancelReason),
+    cancelReason: text8(r.cancelReason),
     createdAt: r.createdAt,
     quoteRequestId: String(r.quoteRequestId),
-    quoteId: text7(r.quoteId),
+    quoteId: text8(r.quoteId),
     requestNumber: Number(r.requestNumber),
     partName: String(r.partName),
     quantity: Number(r.quantity ?? 1),
@@ -109139,11 +109822,11 @@ function toOrder(r) {
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
     unitPrice: num4(r.unitPrice),
-    brand: text7(r.brand),
-    deliveryTime: text7(r.deliveryTime)
+    brand: text8(r.brand),
+    deliveryTime: text8(r.deliveryTime)
   };
 }
-var PAGE_SIZE9, SELECT_REQUESTS3, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text7, num4, label, MysqlQuoteStore;
+var PAGE_SIZE9, SELECT_REQUESTS3, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text8, num4, label, MysqlQuoteStore;
 var init_quote_store = __esm({
   "packages/api/dist/infrastructure/quotes/quote-store.js"() {
     "use strict";
@@ -109156,7 +109839,7 @@ var init_quote_store = __esm({
     LIST_OPEN = `${SELECT_REQUESTS3} WHERE q.status = 'abierta' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_ORDERED = `${SELECT_REQUESTS3} WHERE q.status = 'con_pedido' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_ALL2 = `${SELECT_REQUESTS3} ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
-    text7 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text8 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     num4 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     label = (r) => {
       const parts = [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "");
@@ -109190,7 +109873,7 @@ var init_quote_store = __esm({
       }
       verifiedStores(city) {
         const base = "SELECT id, name, city, zone, categories, delivery FROM `Store` st WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows29(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows30(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
@@ -109198,15 +109881,15 @@ var init_quote_store = __esm({
           id: String(r.id),
           name: String(r.name),
           city: String(r.city),
-          zone: text7(r.zone),
-          categories: text7(r.categories),
+          zone: text8(r.zone),
+          categories: text8(r.categories),
           delivery: !!Number(r.delivery ?? 0)
         })));
       }
       async createRequest(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id2 = String(rows29(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows29(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
+          const id2 = String(rows30(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows30(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `QuoteRequest` (id, number, requesterId, vehicleId, workOrderId, partName, partCode, quantity, city, notes, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, next, input.requesterId, input.vehicleId, input.workOrderId, input.partName, input.partCode, input.quantity, input.city, input.notes]);
           for (const storeId of input.storeIds) {
             await conn.query("INSERT INTO `Quote` (id, requestId, storeId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id2, storeId]);
@@ -109223,26 +109906,26 @@ var init_quote_store = __esm({
       }
       getRequest(id2) {
         return this.run(async (conn) => {
-          const row = rows29(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id2]))[0];
+          const row = rows30(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id2]))[0];
           if (!row)
             return null;
-          const quotes = rows29(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id2])).map(toQuote);
-          const order = rows29(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id2]))[0];
+          const quotes = rows30(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id2])).map(toQuote);
+          const order = rows30(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id2]))[0];
           return { request: toRequest3(row), quotes, order: order ? toOrder(order) : null };
         });
       }
       listRequests(filter, page2) {
         return this.run(async (conn) => {
           const sql = filter === "abiertas" ? LIST_OPEN : filter === "con_pedido" ? LIST_ORDERED : LIST_ALL2;
-          const items = rows29(await conn.query(sql, [PAGE_SIZE9, (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE9])).map(toRequest3);
+          const items = rows30(await conn.query(sql, [PAGE_SIZE9, (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE9])).map(toRequest3);
           return { items, page: page2, pageSize: PAGE_SIZE9 };
         });
       }
       listForUser(userId) {
         return this.run(async (conn) => {
-          const requests = rows29(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
-          const storeQuotes = rows29(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
-          const orders = rows29(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
+          const requests = rows30(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
+          const storeQuotes = rows30(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
+          const orders = rows30(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
           return { requests, storeQuotes, orders };
         });
       }
@@ -109265,16 +109948,16 @@ var init_quote_store = __esm({
       }
       choose(requestId, quoteId) {
         return this.transaction(async (conn) => {
-          const request = rows29(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
+          const request = rows30(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
           if (!request || request.status !== "abierta")
             return null;
-          const quote2 = rows29(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
+          const quote2 = rows30(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
           if (!quote2 || quote2.status !== "cotizado" || quote2.unitPrice === null)
             return null;
           const quantity = Number(request.quantity ?? 1);
           const unitPrice = Number(quote2.unitPrice);
           const total = Math.round(unitPrice * quantity * 100) / 100;
-          const orderId = String(rows29(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const orderId = String(rows30(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("UPDATE `Quote` SET status = 'elegida' WHERE id = ?", [quoteId]);
           await conn.query("UPDATE `Quote` SET status = 'descartada' WHERE requestId = ? AND id <> ? AND status IN ('invitado', 'cotizado')", [requestId, quoteId]);
           await conn.query("UPDATE `QuoteRequest` SET status = 'con_pedido', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [requestId]);
@@ -109402,8 +110085,8 @@ ${redactPii(sanitizeUntrusted(customerText, 2e3))}`];
 ${redactPii(sanitizeUntrusted(instruction, 300))}`);
   return parts.join("\n\n");
 }
-function parseDraft(text9) {
-  const clean = text9.trim();
+function parseDraft(text10) {
+  const clean = text10.trim();
   const match = /RESPUESTA:\s*([\s\S]*?)(?:\n\s*NOTA PARA EL OPERADOR:\s*([\s\S]*))?$/i.exec(clean);
   if (!match)
     return { reply: clean.slice(0, 1500), note: null };
@@ -109667,7 +110350,7 @@ ${input.instruction ?? ""}`);
 });
 
 // packages/api/dist/infrastructure/copilot/copilot-store.js
-function rows30(result) {
+function rows31(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 var MysqlCopilotStore;
@@ -109689,7 +110372,7 @@ var init_copilot_store = __esm({
       }
       recordUsage(usage) {
         return this.run(async (conn) => {
-          const id2 = String(rows30(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const id2 = String(rows31(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("INSERT INTO `LlmUsage` (id, agent, `function`, provider, model, promptVersion, inputTokens, outputTokens, cachedTokens, costUsd, latencyMs, outcome, createdAt) VALUES (?, 'copilot', 'draft_reply', ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [
             id2,
             usage.provider,
@@ -109707,7 +110390,7 @@ var init_copilot_store = __esm({
       }
       spentBetween(start, end) {
         return this.run(async (conn) => {
-          const row = rows30(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
+          const row = rows31(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
           return Number(row?.n ?? 0);
         });
       }
@@ -109718,7 +110401,7 @@ var init_copilot_store = __esm({
       }
       feedbackSummary(since) {
         return this.run(async (conn) => {
-          const row = rows30(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS approved, COALESCE(SUM(score = 3), 0) AS edited, COALESCE(SUM(score <= 2), 0) AS rejected FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
+          const row = rows31(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS approved, COALESCE(SUM(score = 3), 0) AS edited, COALESCE(SUM(score <= 2), 0) AS rejected FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
           return { approved: Number(row?.approved ?? 0), edited: Number(row?.edited ?? 0), rejected: Number(row?.rejected ?? 0) };
         });
       }
@@ -109727,7 +110410,7 @@ var init_copilot_store = __esm({
 });
 
 // packages/api/dist/infrastructure/work-orders/work-order-store.js
-function rows31(result) {
+function rows32(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toOrder2(r) {
@@ -109744,19 +110427,19 @@ function toOrder2(r) {
     ownerPhone: String(r.ownerPhone),
     vehicleId: String(r.vehicleId),
     vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
-    plate: text8(r.plate),
+    plate: text9(r.plate),
     vehicleKm: Number(r.currentKm ?? 0),
-    appointmentId: text8(r.appointmentId),
+    appointmentId: text9(r.appointmentId),
     intakeKm: int(r.intakeKm),
-    intakeNotes: text8(r.intakeNotes),
-    diagnosis: text8(r.diagnosis),
-    rejectionReason: text8(r.rejectionReason),
-    cancelReason: text8(r.cancelReason),
+    intakeNotes: text9(r.intakeNotes),
+    diagnosis: text9(r.diagnosis),
+    rejectionReason: text9(r.rejectionReason),
+    cancelReason: text9(r.cancelReason),
     exitKm: int(r.exitKm),
     warrantyDays: int(r.warrantyDays),
-    nextService: text8(r.nextService),
-    diagnosisOutcome: text8(r.diagnosisOutcome),
-    outcomeNote: text8(r.outcomeNote),
+    nextService: text9(r.nextService),
+    diagnosisOutcome: text9(r.diagnosisOutcome),
+    outcomeNote: text9(r.outcomeNote),
     total: Number(r.total ?? 0),
     createdAt: r.createdAt,
     closedAt: r.closedAt ?? null
@@ -109767,13 +110450,13 @@ function toItem(r) {
     id: String(r.id),
     kind: String(r.kind),
     description: String(r.description),
-    brand: text8(r.brand),
-    partCode: text8(r.partCode),
+    brand: text9(r.brand),
+    partCode: text9(r.partCode),
     quantity: Number(r.quantity),
     unitPrice: Number(r.unitPrice)
   };
 }
-var PAGE_SIZE10, care, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL, text8, int, MysqlWorkOrderStore;
+var PAGE_SIZE10, care, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL, text9, int, MysqlWorkOrderStore;
 var init_work_order_store = __esm({
   "packages/api/dist/infrastructure/work-orders/work-order-store.js"() {
     "use strict";
@@ -109789,7 +110472,7 @@ var init_work_order_store = __esm({
     GET_ONE2 = `${SELECT_ORDERS2} WHERE w.id = ? LIMIT 1`;
     FOR_USER2 = `${SELECT_ORDERS2} WHERE w.ownerId = ? OR su.id = ? ORDER BY w.createdAt DESC LIMIT 20`;
     RECALCULATE_TOTAL = "UPDATE `WorkOrder` SET total = (SELECT COALESCE(SUM(ROUND(quantity * unitPrice, 2)), 0) FROM `WorkOrderItem` WHERE workOrderId = ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?";
-    text8 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text9 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     int = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     MysqlWorkOrderStore = class {
       connect;
@@ -109819,8 +110502,8 @@ var init_work_order_store = __esm({
       }
       async create(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id2 = String(rows31(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows31(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
+          const id2 = String(rows32(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows32(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, diagnosis, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id2, next, input.shopId, input.ownerId, input.vehicleId, input.appointmentId, input.intakeKm, input.intakeNotes, input.diagnosis]);
           return id2;
         });
@@ -109834,10 +110517,10 @@ var init_work_order_store = __esm({
       }
       get(id2) {
         return this.run(async (conn) => {
-          const row = rows31(await conn.query(GET_ONE2, [id2]))[0];
+          const row = rows32(await conn.query(GET_ONE2, [id2]))[0];
           if (!row)
             return null;
-          const items = rows31(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id2])).map(toItem);
+          const items = rows32(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id2])).map(toItem);
           return { order: toOrder2(row), items };
         });
       }
@@ -109845,15 +110528,15 @@ var init_work_order_store = __esm({
         return this.run(async (conn) => {
           const params2 = [PAGE_SIZE10, (Math.max(1, Math.floor(page2)) - 1) * PAGE_SIZE10];
           const sql = filter === "abiertas" ? LIST_OPEN2 : filter === "por_aprobar" ? LIST_TO_APPROVE : filter === "en_taller" ? LIST_IN_SHOP : filter === "cerradas" ? LIST_CLOSED : LIST_ALL3;
-          return { items: rows31(await conn.query(sql, params2)).map(toOrder2), page: page2, pageSize: PAGE_SIZE10 };
+          return { items: rows32(await conn.query(sql, params2)).map(toOrder2), page: page2, pageSize: PAGE_SIZE10 };
         });
       }
       listForUser(userId) {
-        return this.run(async (conn) => rows31(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
+        return this.run(async (conn) => rows32(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
       }
       findByAppointment(appointmentId) {
         return this.run(async (conn) => {
-          const row = rows31(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
+          const row = rows32(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
           return row ? String(row.id) : null;
         });
       }
@@ -109885,7 +110568,7 @@ var init_work_order_store = __esm({
       }
       close(id2, input) {
         return this.transaction(async (conn) => {
-          const order = rows31(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id2]))[0];
+          const order = rows32(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id2]))[0];
           if (!order)
             return false;
           await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', exitKm = ?, warrantyDays = ?, nextService = ?, diagnosisOutcome = ?, outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.exitKm, input.warrantyDays, input.nextService, input.diagnosisOutcome, input.outcomeNote, id2]);
@@ -109898,7 +110581,7 @@ var init_work_order_store = __esm({
         });
       }
       historyForUser(userId) {
-        return this.run(async (conn) => rows31(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
+        return this.run(async (conn) => rows32(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
           createdAt: r.createdAt,
           shopName: String(r.shopName),
           vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
@@ -109981,13 +110664,13 @@ var init_views_visits = __esm({
 // packages/api/dist/interfaces/admin/courses.js
 function registerCourseAdminRoutes(app2, deps) {
   const { store, requireSession, html } = deps;
-  const text9 = (value2) => String(value2 ?? "");
+  const text10 = (value2) => String(value2 ?? "");
   app2.get("/expertos", async (request, reply) => {
     const session = requireSession(request, reply);
     if (!session)
       return reply;
-    const rows32 = await store.adminExperts();
-    const content = rows32.map((row) => `<article><h2>${escapeHtml(text9(row.name))}</h2><p>${escapeHtml(text9(row.verificationStatus))} \xB7 ${escapeHtml(text9(row.especialidades))}</p><form method="post" action="/admin/expertos/${encodeURIComponent(String(row.userId))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Tipo de documento revisado <input name="documentType" required maxlength="80"></label><label>Motivo (requerido para rechazar) <input name="reason" maxlength="500"></label><button name="decision" value="verificar">Verificar y borrar documento</button><button name="decision" value="rechazar">Rechazar y borrar documento</button></form></article>`).join("");
+    const rows33 = await store.adminExperts();
+    const content = rows33.map((row) => `<article><h2>${escapeHtml(text10(row.name))}</h2><p>${escapeHtml(text10(row.verificationStatus))} \xB7 ${escapeHtml(text10(row.especialidades))}</p><form method="post" action="/admin/expertos/${encodeURIComponent(String(row.userId))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Tipo de documento revisado <input name="documentType" required maxlength="80"></label><label>Motivo (requerido para rechazar) <input name="reason" maxlength="500"></label><button name="decision" value="verificar">Verificar y borrar documento</button><button name="decision" value="rechazar">Rechazar y borrar documento</button></form></article>`).join("");
     return html(reply, request, "Expertos", `<h1>Expertos</h1>${content || "<p>No hay solicitudes.</p>"}`, session);
   });
   app2.post("/expertos/:id", async (request, reply) => {
@@ -110011,10 +110694,10 @@ function registerCourseAdminRoutes(app2, deps) {
     const reports = await store.adminReports();
     const history = await store.courseHistory();
     const commission = await store.commission();
-    const cRows = courses.map((row) => `<article><h2>${escapeHtml(text9(row.titulo))}</h2><p>${escapeHtml(text9(row.expertName))} \xB7 ${escapeHtml(text9(row.estado))} \xB7 ${escapeHtml(text9(row.precioUsd ?? "Gratis"))}</p>${row.estado === "en_revision" && row.firstPublishedAt == null ? `<form method="post" action="/admin/cursos/${encodeURIComponent(String(row.id))}/publicacion"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Motivo de devoluci\xF3n <input name="reason" maxlength="500"></label><button name="decision" value="aprobar">Aprobar primera publicaci\xF3n</button><button name="decision" value="devolver">Devolver con motivo</button></form>` : ""}</article>`).join("");
-    const rRows = reports.map((row) => `<article><h3>${escapeHtml(text9(row.titulo))}</h3><p>${escapeHtml(text9(row.motivo))}</p><form method="post" action="/admin/cursos/denuncias/${encodeURIComponent(String(row.id))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Motivo <input name="reason" maxlength="500"></label><button name="decision" value="ocultar">Ocultar curso</button><button name="decision" value="restaurar">Restaurar curso</button></form></article>`).join("");
-    const hist = history.map((row) => `<li>${escapeHtml(text9(row.titulo))} \xB7 ${escapeHtml(text9(row.campo))}: ${escapeHtml(text9(row.antes))} \u2192 ${escapeHtml(text9(row.despues))}</li>`).join("");
-    const commissionForm = session.role === "admin" ? `<form method="post" action="/admin/cursos/comision"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Comisi\xF3n (%) <input name="commission" inputmode="decimal" value="${escapeHtml(text9(commission ?? ""))}"></label><p>Mientras est\xE9 vac\xEDo, solo se publican cursos gratis. Los cursos de pago requieren una comisi\xF3n num\xE9rica.</p><button>Guardar comisi\xF3n</button></form>` : `<p>Comisi\xF3n actual: ${escapeHtml(text9(commission ?? "Vac\xEDa"))}. Mientras est\xE9 vac\xEDa, solo se publican cursos gratis.</p>`;
+    const cRows = courses.map((row) => `<article><h2>${escapeHtml(text10(row.titulo))}</h2><p>${escapeHtml(text10(row.expertName))} \xB7 ${escapeHtml(text10(row.estado))} \xB7 ${escapeHtml(text10(row.precioUsd ?? "Gratis"))}</p>${row.estado === "en_revision" && row.firstPublishedAt == null ? `<form method="post" action="/admin/cursos/${encodeURIComponent(String(row.id))}/publicacion"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Motivo de devoluci\xF3n <input name="reason" maxlength="500"></label><button name="decision" value="aprobar">Aprobar primera publicaci\xF3n</button><button name="decision" value="devolver">Devolver con motivo</button></form>` : ""}</article>`).join("");
+    const rRows = reports.map((row) => `<article><h3>${escapeHtml(text10(row.titulo))}</h3><p>${escapeHtml(text10(row.motivo))}</p><form method="post" action="/admin/cursos/denuncias/${encodeURIComponent(String(row.id))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Motivo <input name="reason" maxlength="500"></label><button name="decision" value="ocultar">Ocultar curso</button><button name="decision" value="restaurar">Restaurar curso</button></form></article>`).join("");
+    const hist = history.map((row) => `<li>${escapeHtml(text10(row.titulo))} \xB7 ${escapeHtml(text10(row.campo))}: ${escapeHtml(text10(row.antes))} \u2192 ${escapeHtml(text10(row.despues))}</li>`).join("");
+    const commissionForm = session.role === "admin" ? `<form method="post" action="/admin/cursos/comision"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Comisi\xF3n (%) <input name="commission" inputmode="decimal" value="${escapeHtml(text10(commission ?? ""))}"></label><p>Mientras est\xE9 vac\xEDo, solo se publican cursos gratis. Los cursos de pago requieren una comisi\xF3n num\xE9rica.</p><button>Guardar comisi\xF3n</button></form>` : `<p>Comisi\xF3n actual: ${escapeHtml(text10(commission ?? "Vac\xEDa"))}. Mientras est\xE9 vac\xEDa, solo se publican cursos gratis.</p>`;
     return html(reply, request, "Cursos", `<h1>Cursos</h1>${commissionForm}<h2>Primera publicaci\xF3n</h2>${cRows || "<p>Sin cursos.</p>"}<h2>Denuncias</h2>${rRows || "<p>Sin denuncias pendientes.</p>"}<h2>Historial</h2><ul>${hist}</ul>`, session);
   });
   app2.post("/cursos/:id/publicacion", async (request, reply) => {
@@ -110257,8 +110940,8 @@ async function adminPanelRoutes(app2, options = {}) {
       return html(reply, request, "Rese\xF1as", messageView("Rese\xF1as", "Solicitud inv\xE1lida."), session, 403);
     const { id: id2 } = request.params;
     const rating = await ratings.get(id2).catch(() => null);
-    const shown = rating ? await ratings.show(id2).catch(() => false) : false;
-    if (shown)
+    const shown2 = rating ? await ratings.show(id2).catch(() => false) : false;
+    if (shown2)
       await audit("admin.rating.show", session.userId, `Rese\xF1a ${id2} visible otra vez`);
     return reply.redirect(rating?.workOrderId ? `/admin/work-orders/${rating.workOrderId}` : "/admin", 302);
   });
@@ -110279,8 +110962,8 @@ async function adminPanelRoutes(app2, options = {}) {
       return html(reply, request, "Origen", visitsView({ items: list7.items, stats, days: days2, weekly }), session);
     } catch (err) {
       const code3 = err.code;
-      const text9 = code3 === "ER_NO_SUCH_TABLE" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : `No se pudo consultar el origen de los contactos (${code3 ?? "base de datos no disponible"}).`;
-      return html(reply, request, "Origen", messageView("Origen", text9), session, 503);
+      const text10 = code3 === "ER_NO_SUCH_TABLE" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : `No se pudo consultar el origen de los contactos (${code3 ?? "base de datos no disponible"}).`;
+      return html(reply, request, "Origen", messageView("Origen", text10), session, 503);
     }
   });
   app2.get("/login", async (request, reply) => {
@@ -112318,6 +113001,10 @@ var PANEL_STYLES = `
 .reco:first-child{border-top:0}
 .ic{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--st-bg);color:var(--st)}
 .ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 12px;padding:10px 14px;border-top:1px solid var(--c-line);background:var(--c-surface)}
+.kv:first-child{border-top:0}.kv small{grid-column:1;color:var(--c-muted);font-size:13px}.kv span{grid-column:1;font-size:15px;overflow-wrap:anywhere}
+.kv>button{grid-column:2;grid-row:1/span 2;min-height:36px;padding:0 12px;font-size:14px}.kv form{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}.kv form input,.kv form select{flex:1 1 180px;min-width:0}
+.kv p{grid-column:2;grid-row:1/span 2;margin:0;font-size:13px;color:var(--c-muted);max-width:16ch;text-align:right}
 .rhead{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
 .rhead b{font-size:15px;font-weight:600}
 .state{font-size:13px;font-weight:600;color:var(--st);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -112386,7 +113073,7 @@ var PANEL_STYLES = `
 .meses{list-style:none;margin:8px 0 0;padding:0}.meses li{display:grid;grid-template-columns:34px 1fr 76px 72px;gap:8px;align-items:center;font-size:13px;padding:4px 0}
 .meses .barra{display:flex;height:6px;border-radius:3px;background:var(--c-sunk);overflow:hidden}.meses .comb{background:var(--c-accent)}.meses .mant{background:var(--c-accent);opacity:.45}
 .meses .num{font-family:var(--c-mono);text-align:right}
-.sys li:last-child{border-bottom:0}.sys .nm{flex:1;min-width:0}.sys .cnt{font:12px var(--c-mono);color:var(--c-muted)}
+.sys li:last-child{border-bottom:0}.sys li:has(+li.sub){border-bottom:0}.sys li.sub{padding:0 0 9px 18px;margin-top:-4px;color:var(--c-muted);font-size:13px}.sys .nm{flex:1;min-width:0}.sys .cnt{font:12px var(--c-mono);color:var(--c-muted)}
 .pill{font-size:12px;font-weight:600;padding:2px 8px;border-radius:6px;color:var(--st);background:var(--st-bg);white-space:nowrap}
 .code{font:700 12px/1 var(--c-mono);letter-spacing:.02em;padding:3px 6px;border-radius:6px;border:1px solid currentColor;color:var(--st);white-space:nowrap;margin-right:8px;vertical-align:1px}
 .counts b,.scale,.pct{font-family:var(--c-mono);font-variant-numeric:tabular-nums}
@@ -112443,7 +113130,7 @@ function card(title,aside,...kids){return h('section',{class:'pcard'},h('h2',{},
 function btn(label,cls,fn){return h('button',{type:'button',class:cls||'ghost',onclick:fn},label);}
 function chipGroup(values,current,onPick,cls){const g=h('div',{class:cls&&cls.includes('day')?'days':'chips',role:'group'});for(const v of values){const b=h('button',{type:'button',class:cls||'chip','aria-pressed':String(v.value===current),onclick:()=>{for(const x of g.children)x.setAttribute('aria-pressed','false');b.setAttribute('aria-pressed','true');onPick(v.value);}});if(v.top){b.append(h('span',{text:v.top}),h('b',{text:v.label}));}else b.textContent=v.label;g.append(b);}return g;}
 async function loadPanel(epoch,vehicleId){const data=await api('/pilot/panel'+(vehicleId?'?vehicleId='+encodeURIComponent(vehicleId):''));if(epoch!==generation||!token)return;panelData=data;panelVehicle=data.vehicleId||null;renderPanel();renderExpertCourses(Boolean(data.isVerifiedExpert));}
-function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);if(typeof renderOutbox==='function')renderOutbox();}
+function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);root.append(accountCard());if(typeof renderOutbox==='function')renderOutbox();}
 function planEditCard(vehicle,label,services){const sec=card('Plan de mantenimiento',label);const list=h('div',{class:'list'});for(const it of services||[]){const row=h('div',{class:'reco'},h('div',{class:'rhead'},h('b',{text:it.serviceName}),h('span',{class:'state',text:it.intervalKm==null?'\u2014':km(it.intervalKm)+' / '+(it.intervalMonths??'\u2014')+' meses'})),h('p',{class:'detail',text:it.reason+(it.override?.disabled?' \xB7 no aplica a este veh\xEDculo':'')}),it.override&&!it.override.disabled?h('small',{class:'detail',text:it.override.actorRole==='taller'?'Ajustado por el taller':'Ajustado por ti'}):null);const edit=btn('Ajustar','ghost',()=>{const box=h('div',{class:'plan-edit'});const f=h('form',{});const kmIn=h('input',{type:'number',min:'500',max:'100000',placeholder:'Intervalo km',value:it.intervalKm??''});const moIn=h('input',{type:'number',min:'1',max:'60',placeholder:'Intervalo meses',value:it.intervalMonths??''});const note=h('textarea',{maxlength:'200',placeholder:'Nota (opcional)'});note.value=it.override?.nota||'';const disabled=h('label',{});const check=h('input',{type:'checkbox',checked:!!it.override?.disabled});disabled.append(check,' No aplica a este veh\xEDculo');const customName=h('input',{type:'text',maxlength:'100',placeholder:'Nombre del servicio propio',value:it.override?.customName||''});const fields=h('div',{class:'interval'},kmIn,moIn);if(String(it.serviceId).startsWith('custom-'))f.append(customName);f.append(fields,note,disabled,h('div',{class:'acts'},h('button',{class:'primary'},'Guardar'),btn('Volver al recomendado','ghost',async()=>{try{await api('/pilot/plan-overrides/reset',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId:it.serviceId})});await loadPanel(generation,panelVehicle);}catch(err){status(err.message);}})));f.onsubmit=async e=>{e.preventDefault();const k=kmIn.value.trim(),m=moIn.value.trim();if(!check.checked&&!k&&!m){status('Indica km o meses.');return;}try{await api('/pilot/plan-overrides',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId:it.serviceId,intervalKm:k?Number(k):null,intervalMonths:m?Number(m):null,disabled:check.checked,nota:note.value,customName:String(it.serviceId).startsWith('custom-')?customName.value:null})});await loadPanel(generation,panelVehicle);}catch(err){status(err.message);}};box.append(f);row.replaceChild(box,edit);});const last=btn('Registrar \xFAltima vez','ghost',()=>{const f=h('form',{class:'acts'});const kmDone=h('input',{type:'number',min:'0',max:'2000000',required:true,placeholder:'Km cuando se hizo','aria-label':'Km cuando se hizo'});const dateDone=h('input',{type:'date',required:true,'aria-label':'Fecha en que se hizo'});const save=h('button',{class:'ghost'},'Guardar registro');f.append(kmDone,dateDone,save);f.onsubmit=async e=>{e.preventDefault();try{await api('/pilot/plan-last-service',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId:it.serviceId,km:Number(kmDone.value),doneAt:dateDone.value})});await loadPanel(generation,panelVehicle);}catch(err){status(err.message);}};row.replaceChild(f,last);});row.append(edit,last);list.append(row);}const add=btn('Agregar servicio propio','ghost',()=>{const name=window.prompt('Nombre del servicio');if(!name||!name.trim())return;const kmValue=window.prompt('Intervalo en km (500 a 100 000)');const monthsValue=window.prompt('Intervalo en meses (opcional)');const serviceId='custom-'+crypto.randomUUID();api('/pilot/plan-overrides',{method:'POST',body:JSON.stringify({vehicleId:vehicle,serviceId,customName:name.trim(),intervalKm:kmValue?Number(kmValue):null,intervalMonths:monthsValue?Number(monthsValue):null,disabled:false,nota:''})}).then(()=>loadPanel(generation,panelVehicle)).catch(err=>status(err.message));});sec.append(list,add);return sec;}
 function lastServiceForm(name){const f=h('form',{class:'acts'});const kmIn=h('input',{type:'number',min:'0',max:'2000000',inputmode:'numeric',required:true,'aria-label':'Kilometraje cuando se hizo',placeholder:'Km cuando se hizo'});const month=h('input',{type:'month','aria-label':'Mes en que se hizo'});f.append(kmIn,month,h('button',{class:'ghost'},'Preparar registro'));f.onsubmit=e=>{e.preventDefault();prepare(['\xDAltimo servicio',name,String(Math.round(Number(kmIn.value))),...(month.value?[month.value]:[])]);};return f;}
 const ORDER={urgente:0,pronto:1,sin_dato:2,al_dia:3};
@@ -112451,7 +113138,7 @@ function svcCode(it){const plain=x=>String(x||'').normalize('NFD').replace(/[\u0
  const words=plain(it.serviceName).toLowerCase().split(/[^a-z]+/).filter(w=>w&&!['de','del','y','la','el','los','las','a','por','con','o','en','al'].includes(w));
  let code=words.slice(0,3).map(w=>w.charAt(0)).join('');const last=words[words.length-1]||'gen';let i=1;while(code.length<3&&i<last.length)code+=last.charAt(i++);return c+'-'+(code||'GEN').toUpperCase();}
 function gauge(r){const total=r.items.length;const known=total-r.counts.sin_dato;const pct=Number.isFinite(r.score)?r.score:(known?Math.round(100*r.counts.al_dia/known):null);
- const worst=r.counts.urgente?'urgente':r.counts.pronto?'pronto':known?'al_dia':'sin_dato';const color={urgente:'var(--c-bad)',pronto:'var(--c-warn)',al_dia:'var(--c-ok)',sin_dato:'var(--c-muted)'}[worst];
+ const worst=r.counts.urgente?'urgente':r.counts.pronto?'pronto':r.counts.sin_dato?'sin_dato':'al_dia';const color={urgente:'var(--c-bad)',pronto:'var(--c-warn)',al_dia:'var(--c-ok)',sin_dato:'var(--c-muted)'}[worst];
  const arc=207.3,val=pct===null?0:arc*pct/100;const g=h('span',{class:'gauge'});
  const NS='http://www.w3.org/2000/svg';const sv=(tag,attrs,txt)=>{const n=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));if(txt!==undefined)n.textContent=txt;return n;};
  const svg=sv('svg',{viewBox:'0 0 104 104',width:104,height:104,role:'img','aria-label':pct===null?'Sin datos':(Number.isFinite(r.score)?'Puntaje del plan: '+pct+' de 100':pct+' % de servicios al d\xEDa')});
@@ -112461,7 +113148,7 @@ function gauge(r){const total=r.items.length;const known=total-r.counts.sin_dato
  svg.append(sv('text',{x:52,y:58,'text-anchor':'middle','font-family':'ui-monospace,Menlo,Consolas,monospace','font-size':22,'font-weight':700,fill:'var(--c-ink)'},pct===null?'--':(Number.isFinite(r.score)?String(pct):pct+'%')));
  svg.append(sv('text',{x:52,y:76,'text-anchor':'middle','font-size':10,fill:'var(--c-muted)'},Number.isFinite(r.score)?'de 100':'al d\xEDa'));
  g.append(svg);
- const word={urgente:'Atenci\xF3n',pronto:'Pronto',al_dia:'Al d\xEDa',sin_dato:'Sin datos'}[worst];
+ const word={urgente:'Atenci\xF3n',pronto:'Pronto',al_dia:'Al d\xEDa',sin_dato:'Sin historial'}[worst];
  return h('div',{class:'scan'},g,h('div',{},h('small',{text:'Estado del plan'}),h('div',{class:'word',text:word}),h('small',{text:r.counts.urgente+' urgente \xB7 '+r.counts.pronto+' pronto \xB7 '+r.counts.al_dia+' al d\xEDa \xB7 '+r.counts.sin_dato+' sin dato'})));}
 function systemsCard(r){const rows=r.systems||[];
  const ul=h('ul',{class:'sys'});for(const x of rows)ul.append(h('li',{class:'st-'+x.state},h('span',{class:'led st-'+x.state}),h('span',{class:'nm',text:x.categoryName}),h('span',{class:'cnt',text:String(x.count)}),h('span',{class:'pill',text:STATE_NAME[x.state]})));
@@ -112490,6 +113177,12 @@ function costsCard(c,v){const months=c.months||[];const cur=months[months.length
  const form=h('form',{class:'acts'});const amount=h('input',{type:'number',min:'0.01',step:'0.01',required:true,inputmode:'decimal','aria-label':'Valor de la carga en USD',placeholder:'USD'});const odo=h('input',{type:'number',min:'0',max:'2000000',required:true,inputmode:'numeric','aria-label':'Kilometraje al cargar',placeholder:'Km al cargar'});
  form.append(amount,odo,h('button',{class:'ghost'},'Preparar carga'));form.onsubmit=e=>{e.preventDefault();prepare(['Combustible',String(Number(amount.value)),String(Math.round(Number(odo.value)))]);};
  return card('Gasto y recorrido',v?v.label:null,head,more,form);}
+// Last inspection by systems (checklist of the workshop): worst state per area, items on demand.
+const INSPECTION_STATE={urgente:'Cambiar',pronto:'Observar',al_dia:'Bien',sin_dato:'Sin revisar'};const ITEM_NAME={ok:'Bien',observar:'Observar',cambiar:'Cambiar',no_aplica:'No aplica'};
+function inspectionCard(x){if(!x)return card('Inspecci\xF3n por sistemas',null,h('p',{class:'note',text:'Todav\xEDa no hay una inspecci\xF3n de tu taller. P\xEDdela en tu pr\xF3xima visita: revisa 8 sistemas y te avisamos qu\xE9 cambiar.'}));
+ const ul=h('ul',{class:'sys'});for(const a of x.areas){const li=h('li',{class:'st-'+a.state},h('span',{class:'led st-'+a.state}),h('span',{class:'nm',text:a.name}),h('span',{class:'cnt',text:a.inspected+'/'+a.total}),h('span',{class:'pill',text:INSPECTION_STATE[a.state]}));ul.append(li);
+  const bad=a.items.filter(i=>i.status==='cambiar'||i.status==='observar');if(bad.length)ul.append(h('li',{class:'sub st-'+a.state},h('span',{text:bad.map(i=>ITEM_NAME[i.status]+': '+i.name+(i.measure!==null?' ('+String(i.measure).replace('.',',')+' '+(i.unit||'')+')':'')).join(' \xB7 ')})));}
+ return card('Inspecci\xF3n por sistemas',ecDate(x.date,{day:'numeric',month:'short',year:'numeric'})+' \xB7 '+x.shopName,ul,x.note?h('p',{class:'note',text:'Nota del taller: '+x.note}):null);}
 function renderOwner(root,d){
  const r=d.recommendations;const v=d.vehicles.find(x=>x.id===d.vehicleId);
  if(!d.vehicles.length){root.append(card('Tu garaje',null,h('p',{class:'note',text:'Todav\xEDa no tienes veh\xEDculos. Agrega el primero para calcular tu plan de mantenimiento.'}),vehicleForm()));return;}
@@ -112500,6 +113193,7 @@ function renderOwner(root,d){
  if(d.costs)root.append(costsCard(d.costs,v));
  root.append(garage(d));if(v){const update=h('form',{class:'acts'});const current=h('input',{type:'number',min:'0',max:'2000000',required:true,inputmode:'numeric','aria-label':'Nuevo kilometraje',placeholder:'Actualizar kilometraje'});update.append(current,h('button',{class:'ghost'},'Guardar kilometraje'));update.onsubmit=async e=>{e.preventDefault();try{const result=await api('/vehicles/'+encodeURIComponent(v.id)+'/odometer',{method:'POST',body:JSON.stringify({currentKm:Number(current.value),recordedAt:new Date().toISOString()})});if(result.pending)status('Kilometraje guardado. Pendiente de subir.');else status(result.readingRecorded?'Lectura antigua guardada en el historial; se conserva el kilometraje mayor.':'Kilometraje actualizado.');await loadPanel(generation,v.id);}catch(err){status(err.message);}};root.append(card('Kilometraje',null,update));}
  if(r&&r.items.length)root.append(systemsCard(r));
+ if(v)root.append(inspectionCard(d.inspection));
  if(r&&r.items.length){const list=h('div',{class:'list'});const more=h('div',{class:'list'});let quiet=0;for(const it of r.items){const target=(it.state==='urgente'||it.state==='pronto'||quiet++<3)?list:more;const row=h('div',{class:'reco st-'+it.state},icon(it.state),h('div',{class:'rhead'},h('b',{},h('span',{class:'code',text:svcCode(it)}),it.serviceName),h('span',{class:'state',text:it.label})),h('p',{class:'detail',text:it.detail}));
   if(it.progress!==null){const p=Math.round(it.progress*100);const fill=h('div',{class:'fill'});fill.style.setProperty('width',p+'%');const needle=h('span',{class:'needle'});needle.style.setProperty('left',p+'%');row.append(h('div',{class:'meter'},h('div',{class:'track'},fill,needle),it.scale?h('div',{class:'scale'},h('span',{text:it.scale[0]}),h('span',{class:'pct',text:p+' %'}),h('span',{text:it.scale[1]})):null));}
   const acts=h('div',{class:'acts'});if(it.state==='urgente'||it.state==='pronto')acts.append(btn('Agendar','ghost',()=>{booking.service=it.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}));
@@ -112563,6 +113257,20 @@ function renderShop(root,d){
  else root.append(card('Escribir hoy',null,h('p',{class:'note',text:'Ning\xFAn cliente del \xFAltimo a\xF1o tiene servicios pendientes.'})));
  if(d.vehicles?.length)for(const vehicle of d.vehicles)if(vehicle.planServices?.length)root.append(planEditCard(vehicle.id,vehicle.label,vehicle.planServices));
  root.append(requestsCard(d,'Solicitudes por responder'));}
+// "Mis datos": the same corrections as WhatsApp (Mis datos | \u2026, Corregir veh\xEDculo | \u2026, Editar taller | \u2026).
+function editRow(label,value,save,opts){const row=h('div',{class:'kv'});const show=()=>{row.replaceChildren(h('small',{text:label}),h('span',{text:value===null||value===undefined||value===''?'\u2014':String(value)}),opts&&opts.locked?h('p',{text:opts.locked}):btn('Editar','ghost',edit));};
+ const edit=()=>{const f=h('form',{class:'acts'});const input=opts&&opts.choices?h('select',{'aria-label':label},...opts.choices.map(c=>h('option',{value:c[0],selected:String(c[0])===String(value)},c[1]))):h('input',{type:opts&&opts.type||'text',value:value??'','aria-label':label,required:true,maxlength:'300'});f.append(input,h('button',{class:'ghost'},'Guardar'),btn('Cancelar','ghost',show));f.onsubmit=async e=>{e.preventDefault();const b=f.querySelector('button');b.disabled=true;try{const r=await save(input.value.trim());status(r.message);value=r.value!==undefined?(Array.isArray(r.value)?r.value.join(', '):r.value===true?'s\xED':r.value===false?'no':r.value):input.value.trim();show();if(opts&&opts.reload){const epoch=generation;loadPanel(epoch,panelVehicle).catch(()=>{});}}catch(err){status(err.message);b.disabled=false;}};row.replaceChildren(h('small',{text:label}),f);input.focus();};
+ show();return row;}
+function accountCard(){const sec=card('Mis datos',null,h('p',{class:'note',text:'Cargando tus datos\u2026'}));
+ const send=(target,field,value,vehicleId)=>api('/pilot/account/edit',{method:'POST',body:JSON.stringify(Object.assign({target,field,value},vehicleId?{vehicleId}:{}))});
+ api('/pilot/account').then(a=>{const kids=[];const p=a.profile;
+  kids.push(h('div',{class:'list'},editRow('Nombre',p.name,v=>send('perfil','nombre',v)),editRow('Ciudad',p.city,v=>send('perfil','ciudad',v)),editRow('Correo',p.email,v=>send('perfil','correo',v||'ninguno'),{type:'email'})));
+  for(const v of a.vehicles||[]){kids.push(h('h3',{text:v.make+' '+v.model+' '+v.year}));kids.push(h('div',{class:'list'},editRow('Marca',v.make,x=>send('vehiculo','marca',x,v.id),{reload:true}),editRow('Modelo',v.model,x=>send('vehiculo','modelo',x,v.id),{reload:true}),editRow('A\xF1o',v.year,x=>send('vehiculo','a\xF1o',x,v.id),{type:'number',reload:true}),editRow('Placa',v.plate,x=>send('vehiculo','placa',x,v.id),{reload:true}),editRow('Uso',v.usageProfile,x=>send('vehiculo','uso',x,v.id),{reload:true,choices:[['urbano','Urbano'],['carretera','Carretera'],['severo','Severo']]})));}
+  const b=a.business;if(b){const shop=b.kind==='taller';kids.push(h('h3',{text:(shop?'Mi taller \xB7 ':'Mi almac\xE9n \xB7 ')+b.name}));const e=(label,field,value,o)=>editRow(label,value,x=>send('negocio',field,x),o);
+   kids.push(h('div',{class:'list'},editRow('RUC',b.ruc,null,{locked:'Para cambiarlo, p\xEDdelo al equipo.'}),e('Nombre comercial','nombre',b.name),e('Horario','horario',b.hours),e('Direcci\xF3n','direccion',b.address),e('Sector','sector',b.zone),e('Ciudad','ciudad',b.city),shop?e('Servicios','servicios',(b.specialties||[]).join(', ')):e('Categor\xEDas','categorias',b.categories),shop?null:e('Entregas','entregas',b.delivery?'si':'no',{choices:[['si','S\xED'],['no','No']]}),e('Contacto','contacto',b.contactName),e('Correo del negocio','correo',b.email,{type:'email'})));
+   kids.push(h('p',{class:'note',text:'Si cambias el nombre, la direcci\xF3n o la ciudad, el equipo revisa el cambio; tu negocio sigue activo.'}));}
+  sec.replaceChildren(sec.firstChild,...kids);}).catch(err=>{sec.replaceChildren(sec.firstChild,h('p',{class:'note',text:err.message}));});
+ return sec;}
 function renderStore(root,d){root.append(requestsCard(d,'Pedidos de repuestos'+(d.storeName?' \xB7 '+d.storeName:'')));}
 `;
 
@@ -112777,13 +113485,14 @@ init_contracts();
 init_chat_account_store();
 init_vehicle_care_store();
 init_fleet_access();
+init_profile_edit_store();
 init_appointment_capacity();
 init_inbound_webhook_store();
 init_outbox_delivery_store();
 
 // packages/api/dist/infrastructure/messaging/imported-contact-store.js
 init_apply();
-import { createHash as createHash8, randomUUID as randomUUID16 } from "node:crypto";
+import { createHash as createHash8, randomUUID as randomUUID17 } from "node:crypto";
 var MysqlImportedContactStore = class {
   connect;
   constructor(connect = openConnection) {
@@ -112807,7 +113516,7 @@ var MysqlImportedContactStore = class {
           skipped++;
           continue;
         }
-        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID16(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
+        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID17(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
         if (Number(result.affectedRows) === 1)
           imported++;
         else
@@ -112820,7 +113529,7 @@ var MysqlImportedContactStore = class {
     return this.run(async (conn) => {
       let queued = 0;
       let skipped = 0;
-      const text9 = `${message2}
+      const text10 = `${message2}
 
 Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
       for (const phone of phones) {
@@ -112830,8 +113539,8 @@ Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
           continue;
         }
         await conn.query("UPDATE `ImportedContact` SET status = 'approved', contactedAt = UTC_TIMESTAMP(3) WHERE id = ?", [contact.id]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID16(), `reactivation:${createHash8("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text9 })]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID16(), contact.id, JSON.stringify({ approvedBy })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID17(), `reactivation:${createHash8("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text10 })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID17(), contact.id, JSON.stringify({ approvedBy })]);
         queued++;
       }
       return { queued, skipped };
@@ -112850,6 +113559,7 @@ init_entitlements();
 init_fleet_access();
 init_vehicle_care_store();
 init_vehicle_costs_store();
+init_inspection_checklist();
 init_vehicle_costs();
 init_local_agent_broker();
 init_rtv_calendar();
@@ -112858,8 +113568,8 @@ init_reminder_done();
 // packages/api/dist/infrastructure/messaging/vehicle-plan-override-store.js
 init_apply();
 init_catalogs();
-import { randomUUID as randomUUID18 } from "node:crypto";
-var rows16 = async (c, sql, args = []) => (await c.query(sql, args))[0];
+import { randomUUID as randomUUID19 } from "node:crypto";
+var rows17 = async (c, sql, args = []) => (await c.query(sql, args))[0];
 var PlanOverrideError = class extends Error {
   code;
   constructor(code3) {
@@ -112881,16 +113591,16 @@ var VehiclePlanOverrideStore = class {
     }
   }
   async list(vehicleId) {
-    return this.run(async (c) => rows16(c, "SELECT o.*, s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id = o.shopId WHERE o.vehicleId = ?", [vehicleId]));
+    return this.run(async (c) => rows17(c, "SELECT o.*, s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id = o.shopId WHERE o.vehicleId = ?", [vehicleId]));
   }
   async recordLastService(userId, role, input) {
     if (!Number.isInteger(input.km) || input.km < 0 || input.km > 2e6 || !/^\d{4}-\d{2}-\d{2}$/.test(input.doneAt) || !input.serviceId.startsWith("custom-") && !serviceTaxonomy.categories.some((c) => c.subservices.some((s) => s.id === input.serviceId)))
       throw new PlanOverrideError("INVALID_SERVICE_RECORD");
     await this.run(async (c) => {
-      const [actor] = await rows16(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows17(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
-      const [vehicle] = await rows16(c, "SELECT id,userId FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [input.vehicleId]);
+      const [vehicle] = await rows17(c, "SELECT id,userId FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [input.vehicleId]);
       if (!vehicle)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -112898,13 +113608,13 @@ var VehiclePlanOverrideStore = class {
         if (String(vehicle.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows16(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
+        const [shop] = await rows17(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
         shopId = shop ? String(shop.id) : null;
-        const [related] = await rows16(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [input.vehicleId, shopId, shopId]);
+        const [related] = await rows17(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [input.vehicleId, shopId, shopId]);
         if (!shop || !related)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      await c.query("INSERT INTO `VehicleServiceRecord` (id,vehicleId,serviceId,km,doneAt,source,shopId,createdBy,createdAt) VALUES (?,?,?,?,?,?,?,?,?)", [randomUUID18(), input.vehicleId, input.serviceId, input.km, `${input.doneAt} 12:00:00.000`, role === "taller" ? "taller" : "dueno", shopId, userId, input.recordedAt ? new Date(input.recordedAt).toISOString().slice(0, 23).replace("T", " ") : /* @__PURE__ */ new Date()]);
+      await c.query("INSERT INTO `VehicleServiceRecord` (id,vehicleId,serviceId,km,doneAt,source,shopId,createdBy,createdAt) VALUES (?,?,?,?,?,?,?,?,?)", [randomUUID19(), input.vehicleId, input.serviceId, input.km, `${input.doneAt} 12:00:00.000`, role === "taller" ? "taller" : "dueno", shopId, userId, input.recordedAt ? new Date(input.recordedAt).toISOString().slice(0, 23).replace("T", " ") : /* @__PURE__ */ new Date()]);
     });
   }
   async save(userId, role, input) {
@@ -112913,10 +113623,10 @@ var VehiclePlanOverrideStore = class {
     if (!custom2 && !names.includes(input.serviceId) || custom2 && (!input.customName?.trim() || input.customName.trim().length > 100) || input.nota.length > 200 || input.intervalKm !== null && (!Number.isInteger(input.intervalKm) || input.intervalKm < 500 || input.intervalKm > 1e5) || input.intervalMonths !== null && (!Number.isInteger(input.intervalMonths) || input.intervalMonths < 1 || input.intervalMonths > 60) || !input.disabled && input.intervalKm === null && input.intervalMonths === null)
       throw new PlanOverrideError("INVALID_OVERRIDE");
     await this.run(async (c) => {
-      const [actor] = await rows16(c, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows17(c, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
-      const [vehicle] = await rows16(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL", [input.vehicleId]);
+      const [vehicle] = await rows17(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL", [input.vehicleId]);
       if (!vehicle)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -112924,46 +113634,46 @@ var VehiclePlanOverrideStore = class {
         if (String(vehicle.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows16(c, "SELECT id FROM `Shop` WHERE userId = ? LIMIT 1", [userId]);
+        const [shop] = await rows17(c, "SELECT id FROM `Shop` WHERE userId = ? LIMIT 1", [userId]);
         if (!shop)
           throw new PlanOverrideError("FORBIDDEN");
         shopId = String(shop.id);
-        const [rel] = await rows16(c, "SELECT v.id FROM `Vehicle` v WHERE v.id = ? AND (EXISTS (SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status <> 'cancelled') OR EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [input.vehicleId, shopId, shopId]);
+        const [rel] = await rows17(c, "SELECT v.id FROM `Vehicle` v WHERE v.id = ? AND (EXISTS (SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status <> 'cancelled') OR EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [input.vehicleId, shopId, shopId]);
         if (!rel)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      const [old] = await rows16(c, "SELECT id,intervalKm,intervalMonths,disabled,nota,actorUserId,actorRole,shopId FROM `VehiclePlanOverride` WHERE vehicleId = ? AND serviceId = ?", [input.vehicleId, input.serviceId]);
-      const id2 = String(old?.id ?? randomUUID18());
+      const [old] = await rows17(c, "SELECT id,intervalKm,intervalMonths,disabled,nota,actorUserId,actorRole,shopId FROM `VehiclePlanOverride` WHERE vehicleId = ? AND serviceId = ?", [input.vehicleId, input.serviceId]);
+      const id2 = String(old?.id ?? randomUUID19());
       const after = { ...input, actorUserId: userId, actorRole: role, shopId };
       await c.query("INSERT INTO `VehiclePlanOverride` (id,vehicleId,serviceId,intervalKm,intervalMonths,disabled,customName,nota,actorUserId,actorRole,shopId,createdAt,updatedAt) VALUES (?,?,?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3),UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE intervalKm=VALUES(intervalKm),intervalMonths=VALUES(intervalMonths),disabled=VALUES(disabled),customName=VALUES(customName),nota=VALUES(nota),actorUserId=VALUES(actorUserId),actorRole=VALUES(actorRole),shopId=VALUES(shopId),updatedAt=UTC_TIMESTAMP(3)", [id2, input.vehicleId, input.serviceId, input.intervalKm, input.intervalMonths, input.disabled ? 1 : 0, input.customName?.trim() || null, input.nota || null, userId, role, shopId]);
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID18(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID18(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID19(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID19(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
       if (role === "taller" && (String(old?.intervalKm ?? "") !== String(input.intervalKm ?? "") || String(old?.intervalMonths ?? "") !== String(input.intervalMonths ?? ""))) {
-        const [service] = await rows16(c, "SELECT name FROM `Service` WHERE vehicleId=? AND id=? LIMIT 1", [input.vehicleId, input.serviceId]);
+        const [service] = await rows17(c, "SELECT name FROM `Service` WHERE vehicleId=? AND id=? LIMIT 1", [input.vehicleId, input.serviceId]);
         const serviceName3 = input.customName || String(service?.name || input.serviceId);
-        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID18(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName3} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
+        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID19(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName3} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
       }
     });
   }
   async reset(userId, role, vehicleId, serviceId) {
     await this.run(async (c) => {
-      const [old] = await rows16(c, "SELECT * FROM `VehiclePlanOverride` WHERE vehicleId=? AND serviceId=?", [vehicleId, serviceId]);
+      const [old] = await rows17(c, "SELECT * FROM `VehiclePlanOverride` WHERE vehicleId=? AND serviceId=?", [vehicleId, serviceId]);
       if (!old)
         return;
-      const [actor] = await rows16(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows17(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
       if (role === "dueno") {
-        const [v] = await rows16(c, "SELECT id FROM `Vehicle` WHERE id=? AND userId=? AND deletedAt IS NULL", [vehicleId, userId]);
+        const [v] = await rows17(c, "SELECT id FROM `Vehicle` WHERE id=? AND userId=? AND deletedAt IS NULL", [vehicleId, userId]);
         if (!v)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows16(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
-        const [v] = await rows16(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [vehicleId, shop?.id, shop?.id]);
+        const [shop] = await rows17(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
+        const [v] = await rows17(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [vehicleId, shop?.id, shop?.id]);
         if (!shop || !v)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      const [vrow] = await rows16(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id=? AND v.deletedAt IS NULL", [vehicleId]);
+      const [vrow] = await rows17(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id=? AND v.deletedAt IS NULL", [vehicleId]);
       if (!vrow)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -112971,14 +113681,14 @@ var VehiclePlanOverrideStore = class {
         if (String(vrow.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows16(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
+        const [shop] = await rows17(c, "SELECT id FROM `Shop` WHERE userId=? LIMIT 1", [userId]);
         shopId = shop ? String(shop.id) : null;
-        const [rel] = await rows16(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [vehicleId, shopId, shopId]);
+        const [rel] = await rows17(c, "SELECT v.id FROM `Vehicle` v WHERE v.id=? AND (EXISTS(SELECT 1 FROM `Appointment` a WHERE a.vehicleId=v.id AND a.shopId=? AND a.status<>'cancelled') OR EXISTS(SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId=v.id AND w.shopId=?))", [vehicleId, shopId, shopId]);
         if (!shop || !rel)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID18(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID18(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID19(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID19(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
       await c.query("UPDATE `VehiclePlanOverride` SET intervalKm=NULL,intervalMonths=NULL,disabled=1,nota='Restaurado a f\xE1brica',actorUserId=?,actorRole=?,shopId=?,updatedAt=UTC_TIMESTAMP(3) WHERE vehicleId=? AND serviceId=?", [userId, role, shopId, vehicleId, serviceId]);
     });
   }
@@ -112986,7 +113696,7 @@ var VehiclePlanOverrideStore = class {
 
 // packages/api/dist/infrastructure/messaging/pilot-panel-store.js
 init_catalogs();
-var rows17 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows18 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var ref3 = (prefix, id2) => `${prefix}-${String(id2).replace(/-/g, "").slice(0, 6).toUpperCase()}`;
 var orderCode = (n) => `OT-${String(n).padStart(5, "0")}`;
 var vehicleLabel = (v) => [v.make, v.model, v.year].filter(Boolean).join(" ");
@@ -113035,7 +113745,7 @@ var PilotPanelStore = class {
   }
   async panel(userId, vehicleId) {
     return this.run(async (conn) => {
-      const [user] = await rows17(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
+      const [user] = await rows18(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
       const role = String(user?.role ?? "");
       if (role === "dueno")
         return this.owner(conn, userId, vehicleId);
@@ -113084,10 +113794,10 @@ var PilotPanelStore = class {
           alerts.push({ kind: "rtv", title: "RTV y matr\xEDcula", detail: `${month === current ? `Este mes (${MES[month - 1]})` : `El pr\xF3ximo mes (${MES[month - 1]})`}, seg\xFAn el \xFAltimo d\xEDgito de la placa; calendario referencial, confirma la fecha en la ANT o en tu agencia de matriculaci\xF3n. El valor a pagar por la matr\xEDcula incluye el SOAT`, state: month === current ? "pronto" : "al_dia", when: String(month) });
         }
       }
-      const scheduled = await rows17(conn, "SELECT label, dueKm, dueAt FROM `Alert` WHERE vehicleId = ? AND triggeredAt IS NULL ORDER BY createdAt DESC", [chosen.id]);
+      const scheduled = await rows18(conn, "SELECT label, dueKm, dueAt FROM `Alert` WHERE vehicleId = ? AND triggeredAt IS NULL ORDER BY createdAt DESC", [chosen.id]);
       for (const a of scheduled)
         alerts.push({ kind: "programada", title: String(a.label), detail: a.dueKm !== null ? `A los ${Number(a.dueKm).toLocaleString("es-EC")} km` : a.dueAt ? `El ${new Date(String(a.dueAt)).toLocaleDateString("es-EC", { timeZone: "America/Guayaquil" })}` : "", state: "pronto", when: String(a.dueAt ?? a.dueKm ?? "") });
-      const repairing = await rows17(conn, "SELECT w.number, w.status, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.vehicleId = ? AND w.status IN ('en_ejecucion','esperando_repuesto') ORDER BY w.number DESC", [chosen.id]);
+      const repairing = await rows18(conn, "SELECT w.number, w.status, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.vehicleId = ? AND w.status IN ('en_ejecucion','esperando_repuesto') ORDER BY w.number DESC", [chosen.id]);
       for (const o of repairing)
         alerts.push({ kind: "reparacion", title: `OT-${String(o.number).padStart(5, "0")} en taller`, detail: String(o.shopName), state: "urgente", when: String(o.number) });
       const due = recommendations?.items.filter((i) => i.state === "urgente" || i.state === "pronto") ?? [];
@@ -113097,10 +113807,15 @@ var PilotPanelStore = class {
       alerts.sort((a, b) => rank[a.state] - rank[b.state]);
     }
     const ids = list7.map((v) => String(v.id));
-    const orders = ids.length ? await rows17(conn, "SELECT w.number, w.status, w.intakeKm, w.total, w.updatedAt, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY))) ORDER BY w.number DESC LIMIT 5", [ids]) : [];
-    const parts = chosen ? await rows17(conn, "SELECT p.id, p.name, p.price, p.stock, st.name AS storeName, st.city FROM `ProductVehicle` pv JOIN `Product` p ON p.id = pv.productId JOIN `Store` st ON st.id = p.storeId WHERE pv.vehicleId = ? ORDER BY p.updatedAt DESC LIMIT 6", [chosen.id]).catch(() => []) : [];
+    const orders = ids.length ? await rows18(conn, "SELECT w.number, w.status, w.intakeKm, w.total, w.updatedAt, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY))) ORDER BY w.number DESC LIMIT 5", [ids]) : [];
+    const parts = chosen ? await rows18(conn, "SELECT p.id, p.name, p.price, p.stock, st.name AS storeName, st.city FROM `ProductVehicle` pv JOIN `Product` p ON p.id = pv.productId JOIN `Store` st ON st.id = p.storeId WHERE pv.vehicleId = ? ORDER BY p.updatedAt DESC LIMIT 6", [chosen.id]).catch(() => []) : [];
     const planServices = chosen ? await this.planServices(conn, chosen) : [];
     const costMonths = chosen ? await loadCostMonths(conn, String(chosen.id)) : null;
+    const inspection = chosen ? await this.lastInspection(conn, chosen).catch((err) => {
+      if (err.code === "ER_NO_SUCH_TABLE")
+        return null;
+      throw err;
+    }) : null;
     return {
       role: "dueno",
       vehicles,
@@ -113108,6 +113823,7 @@ var PilotPanelStore = class {
       needsChoice: list7.length > 1 && !selected2,
       recommendations,
       costs: costMonths ? { months: costMonths, fuel: fuelIndicator(costMonths) } : null,
+      inspection,
       alerts,
       orders: orders.map((o) => ({
         code: orderCode(o.number),
@@ -113127,7 +113843,7 @@ var PilotPanelStore = class {
     };
   }
   async requests(conn, userId) {
-    const list7 = await rows17(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.city, lr.zone, lr.expiresAt, o.status, v.make, v.model, v.year, v.fuel FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
+    const list7 = await rows18(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.city, lr.zone, lr.expiresAt, o.status, v.make, v.model, v.year, v.fuel FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
     return list7.map((r) => ({
       requestId: String(r.id),
       ref: ref3("S", r.id),
@@ -113146,11 +113862,11 @@ var PilotPanelStore = class {
     const shop = await this.care.actingShop(conn, userId, "taller");
     const start = ecDayStart(now);
     const end = new Date(start.getTime() + 864e5);
-    const count3 = async (sql, args) => Number((await rows17(conn, sql, args))[0]?.n ?? 0);
-    const today = await rows17(conn, "SELECT a.id, a.scheduledAt, a.status, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt LIMIT 20", [shop.id, start, end]);
+    const count3 = async (sql, args) => Number((await rows18(conn, sql, args))[0]?.n ?? 0);
+    const today = await rows18(conn, "SELECT a.id, a.scheduledAt, a.status, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt LIMIT 20", [shop.id, start, end]);
     const openOrders = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status NOT IN ('cerrada','cancelada')", [shop.id]);
     const budgetsWaiting = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status = 'presupuesto_enviado'", [shop.id]);
-    const clients = await rows17(conn, "SELECT a.id AS appointmentId, a.vehicleId, u.name AS ownerName, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = a.ownerId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) AND a.scheduledAt = (SELECT MAX(a2.scheduledAt) FROM `Appointment` a2 WHERE a2.shopId = a.shopId AND a2.vehicleId = a.vehicleId AND a2.status <> 'cancelled') ORDER BY a.scheduledAt DESC LIMIT 60", [shop.id]);
+    const clients = await rows18(conn, "SELECT a.id AS appointmentId, a.vehicleId, u.name AS ownerName, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = a.ownerId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) AND a.scheduledAt = (SELECT MAX(a2.scheduledAt) FROM `Appointment` a2 WHERE a2.shopId = a.shopId AND a2.vehicleId = a.vehicleId AND a2.status <> 'cancelled') ORDER BY a.scheduledAt DESC LIMIT 60", [shop.id]);
     const reminders = [];
     for (const c of clients) {
       const items = planItemsFor(await this.care.planVehicle(conn, c));
@@ -113171,7 +113887,7 @@ var PilotPanelStore = class {
     }
     const rank = { urgente: 0, pronto: 1, sin_dato: 2, al_dia: 3 };
     reminders.sort((a, b) => rank[a.state] - rank[b.state]);
-    const vehicles = await rows17(conn, "SELECT DISTINCT v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id=a.vehicleId WHERE a.shopId=? AND a.status<>'cancelled' AND v.deletedAt IS NULL UNION SELECT DISTINCT v.* FROM `WorkOrder` w JOIN `Vehicle` v ON v.id=w.vehicleId WHERE w.shopId=? AND v.deletedAt IS NULL ORDER BY make,model LIMIT 60", [shop.id, shop.id]);
+    const vehicles = await rows18(conn, "SELECT DISTINCT v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id=a.vehicleId WHERE a.shopId=? AND a.status<>'cancelled' AND v.deletedAt IS NULL UNION SELECT DISTINCT v.* FROM `WorkOrder` w JOIN `Vehicle` v ON v.id=w.vehicleId WHERE w.shopId=? AND v.deletedAt IS NULL ORDER BY make,model LIMIT 60", [shop.id, shop.id]);
     return {
       role: "taller",
       shopName: shop.name,
@@ -113182,10 +113898,24 @@ var PilotPanelStore = class {
       vehicles: await Promise.all(vehicles.map(async (v) => ({ id: String(v.id), label: vehicleLabel(v), plate: v.plate ? String(v.plate) : null, planServices: await this.planServices(conn, v) })))
     };
   }
+  async lastInspection(conn, vehicle) {
+    const [last] = await rows18(conn, "SELECT i.id, i.km, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 1", [vehicle.id]);
+    if (!last)
+      return null;
+    const entries = (await rows18(conn, "SELECT code, status, measure, unit FROM `VehicleInspectionItem` WHERE inspectionId = ?", [last.id])).map((r) => ({ code: String(r.code), status: r.status, measure: r.measure === null ? null : Number(r.measure), unit: r.unit === null ? null : String(r.unit) }));
+    const items = checklistFor(vehicle);
+    return {
+      date: new Date(last.createdAt).toISOString(),
+      shopName: String(last.shopName),
+      km: last.km === null ? null : Number(last.km),
+      note: last.note ? String(last.note) : null,
+      areas: areaStates(entries, items).map((a) => ({ ...a, items: entries.filter((e9) => items.some((i) => i.area === a.id && i.code === e9.code)).map((e9) => ({ ...e9, name: INSPECTION_ITEMS.find((i) => i.code === e9.code)?.name ?? e9.code })) }))
+    };
+  }
   async planServices(conn, vehicle) {
     const planned = await this.care.planVehicle(conn, vehicle);
     const items = planItemsFor(planned);
-    const overrides = await rows17(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]);
+    const overrides = await rows18(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]);
     const byId = new Map(overrides.map((o) => [String(o.serviceId), o]));
     const visible = new Set(items.map((i) => i.serviceId));
     const result = items.map((i) => ({ serviceId: i.serviceId, serviceName: i.serviceName, intervalKm: i.intervalKm ?? null, intervalMonths: i.intervalMonths ?? null, reason: i.reason, override: byId.get(i.serviceId) ?? null }));
@@ -113201,7 +113931,7 @@ var PilotPanelStore = class {
     return result;
   }
   async store(conn, userId) {
-    const [store] = await rows17(conn, "SELECT name FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
+    const [store] = await rows18(conn, "SELECT name FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
     return { role: "almacen", storeName: store ? String(store.name) : null, requests: await this.requests(conn, userId) };
   }
 };
@@ -113230,8 +113960,8 @@ async function localAgentRoutes(app2, options = {}) {
         const [insert] = await conn.query("INSERT IGNORE INTO `PilotIdempotencyReceipt` (userId,idempotencyKey,requestHash,response,expiresAt) VALUES (?,?,?,JSON_OBJECT(),DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 30 DAY))", [owner, idempotencyKey, hash2]);
         if (Number(insert.affectedRows) === 1)
           return { status: "new" };
-        const [rows32] = await conn.query("SELECT requestHash,response FROM `PilotIdempotencyReceipt` WHERE userId=? AND idempotencyKey=?", [owner, idempotencyKey]);
-        const receipt = Array.isArray(rows32) ? rows32[0] : void 0;
+        const [rows33] = await conn.query("SELECT requestHash,response FROM `PilotIdempotencyReceipt` WHERE userId=? AND idempotencyKey=?", [owner, idempotencyKey]);
+        const receipt = Array.isArray(rows33) ? rows33[0] : void 0;
         if (!receipt || receipt.requestHash !== hash2)
           return { status: "conflict" };
         const response = typeof receipt.response === "string" ? JSON.parse(receipt.response) : receipt.response;
@@ -113259,7 +113989,7 @@ async function localAgentRoutes(app2, options = {}) {
       return reply.code(401).send({ error: { code: "UNAUTHORIZED" } });
   };
   const error = (err, reply) => {
-    if (!(err instanceof BrokerError) && !(err instanceof LocalMarketplaceError) && !(err instanceof ChatAccountError) && !(err instanceof VehicleCareError) && !(err instanceof FleetAccessError) && !(err instanceof AppointmentCapacityError))
+    if (!(err instanceof BrokerError) && !(err instanceof LocalMarketplaceError) && !(err instanceof ChatAccountError) && !(err instanceof VehicleCareError) && !(err instanceof FleetAccessError) && !(err instanceof ProfileEditError) && !(err instanceof AppointmentCapacityError))
       throw err;
     const code3 = err.code;
     const capacity = err instanceof AppointmentCapacityError ? err : void 0;
@@ -113330,8 +114060,8 @@ async function localAgentRoutes(app2, options = {}) {
       try {
         const conn = await (await Promise.resolve().then(() => (init_apply(), apply_exports))).openConnection();
         try {
-          const [rows32] = await conn.query("SELECT verificationStatus FROM `ExpertProfile` WHERE userId=? LIMIT 1", [request.userId]);
-          const profile = Array.isArray(rows32) ? rows32[0] : void 0;
+          const [rows33] = await conn.query("SELECT verificationStatus FROM `ExpertProfile` WHERE userId=? LIMIT 1", [request.userId]);
+          const profile = Array.isArray(rows33) ? rows33[0] : void 0;
           isVerifiedExpert2 = profile?.verificationStatus === "verificado";
         } finally {
           await conn.end().catch(() => void 0);
@@ -113341,6 +114071,36 @@ async function localAgentRoutes(app2, options = {}) {
       return { data: { ...result, isVerifiedExpert: isVerifiedExpert2 }, error: null };
     } catch (err) {
       return error(err, reply);
+    }
+  });
+  const profiles = new ProfileEditStore();
+  app2.get("/pilot/account", { preHandler: [pilot, authenticate] }, async (request, reply) => {
+    const conn = await openConnection();
+    try {
+      return { data: await profiles.account(conn, request.userId, String(request.userRole)), error: null };
+    } catch (err) {
+      return error(err, reply);
+    } finally {
+      await conn.end().catch(() => void 0);
+    }
+  });
+  app2.post("/pilot/account/edit", { preHandler: [pilot, authenticate] }, async (request, reply) => {
+    const parsed = external_exports.object({ target: external_exports.enum(["perfil", "vehiculo", "negocio"]), field: external_exports.string().trim().min(2).max(30), value: external_exports.string().trim().min(1).max(300), vehicleId: external_exports.string().uuid().optional() }).strict().safeParse(request.body);
+    if (!parsed.success || parsed.data.target === "vehiculo" !== Boolean(parsed.data.vehicleId))
+      return reply.code(422).send({ data: null, error: { code: "INVALID_EDIT_VALUE", message: chatErrorMessage("INVALID_EDIT_VALUE") } });
+    const { target, field: field2, value: value2, vehicleId } = parsed.data;
+    const command = target === "perfil" ? { action: "editProfile", field: field2, value: value2 } : target === "vehiculo" ? { action: "editVehicle", field: field2, value: value2, vehicleId } : { action: "editBusiness", field: field2, value: value2 };
+    const conn = await openConnection();
+    try {
+      await conn.query("START TRANSACTION");
+      const result = await profiles.execute(conn, request.userId, String(request.userRole), command);
+      await conn.query("COMMIT");
+      return { data: { message: result.message, ...result.data }, error: null };
+    } catch (err) {
+      await conn.query("ROLLBACK").catch(() => void 0);
+      return error(err, reply);
+    } finally {
+      await conn.end().catch(() => void 0);
     }
   });
   app2.post("/pilot/plan-overrides", { preHandler: [pilot, authenticate] }, async (request, reply) => {
@@ -113692,34 +114452,34 @@ init_plan_text();
 var ownedVehicle = external_exports.object({ vehicleId: external_exports.string().min(1).max(100) });
 var shopsQuery = external_exports.object({ city: external_exports.string().trim().min(1).max(100) });
 var partsQuery = external_exports.object({ query: external_exports.string().trim().min(1).max(120), vehicleId: external_exports.string().min(1).max(100).optional() });
-var fail10 = (toolName, error) => ({ toolName, success: false, data: null, error });
+var fail11 = (toolName, error) => ({ toolName, success: false, data: null, error });
 function registerRealReadTools(agent, userId) {
   agent.registerTool("get_maintenance_plan", async (args) => {
     const parsed = ownedVehicle.safeParse(args);
     if (!parsed.success)
-      return fail10("get_maintenance_plan", "Selecciona un veh\xEDculo registrado antes de consultar su plan.");
+      return fail11("get_maintenance_plan", "Selecciona un veh\xEDculo registrado antes de consultar su plan.");
     const vehicle = await prisma.vehicle.findFirst({ where: { id: parsed.data.vehicleId, userId, deletedAt: null } });
     if (!vehicle)
-      return fail10("get_maintenance_plan", "Veh\xEDculo no disponible para este usuario.");
-    const text9 = planTextFor(vehicle);
-    if (!text9)
-      return fail10("get_maintenance_plan", "Completa clase y combustible del veh\xEDculo con el operador para generar el plan.");
-    return { toolName: "get_maintenance_plan", success: true, data: { vehicleId: vehicle.id, text: text9, source: "maintenance_catalog", manufacturerSpecific: false } };
+      return fail11("get_maintenance_plan", "Veh\xEDculo no disponible para este usuario.");
+    const text10 = planTextFor(vehicle);
+    if (!text10)
+      return fail11("get_maintenance_plan", "Completa clase y combustible del veh\xEDculo con el operador para generar el plan.");
+    return { toolName: "get_maintenance_plan", success: true, data: { vehicleId: vehicle.id, text: text10, source: "maintenance_catalog", manufacturerSpecific: false } };
   });
   agent.registerTool("get_alerts", async (args) => {
     const parsed = ownedVehicle.safeParse(args);
     if (!parsed.success)
-      return fail10("get_alerts", "Selecciona un veh\xEDculo registrado.");
+      return fail11("get_alerts", "Selecciona un veh\xEDculo registrado.");
     const vehicle = await prisma.vehicle.findFirst({ where: { id: parsed.data.vehicleId, userId, deletedAt: null }, select: { id: true } });
     if (!vehicle)
-      return fail10("get_alerts", "Veh\xEDculo no disponible para este usuario.");
+      return fail11("get_alerts", "Veh\xEDculo no disponible para este usuario.");
     const alerts = await prisma.alert.findMany({ where: { vehicleId: vehicle.id }, take: 20, orderBy: { createdAt: "desc" }, select: { id: true, label: true, dueKm: true, dueAt: true } });
     return { toolName: "get_alerts", success: true, data: { alerts } };
   });
   agent.registerTool("search_shops", async (args) => {
     const parsed = shopsQuery.safeParse(args);
     if (!parsed.success)
-      return fail10("search_shops", "Indica una ciudad v\xE1lida.");
+      return fail11("search_shops", "Indica una ciudad v\xE1lida.");
     const shops = await prisma.shop.findMany({
       where: { city: { equals: parsed.data.city }, verificationStatus: "verified", user: { deletedAt: null } },
       take: 20,
@@ -113731,10 +114491,10 @@ function registerRealReadTools(agent, userId) {
   agent.registerTool("search_parts", async (args) => {
     const parsed = partsQuery.safeParse(args);
     if (!parsed.success)
-      return fail10("search_parts", "Indica el repuesto que buscas.");
+      return fail11("search_parts", "Indica el repuesto que buscas.");
     const { query, vehicleId } = parsed.data;
     if (vehicleId && !await prisma.vehicle.findFirst({ where: { id: vehicleId, userId, deletedAt: null }, select: { id: true } })) {
-      return fail10("search_parts", "Veh\xEDculo no disponible para este usuario.");
+      return fail11("search_parts", "Veh\xEDculo no disponible para este usuario.");
     }
     const parts = await prisma.product.findMany({
       where: { name: { contains: query }, store: { verificationStatus: "verified", user: { deletedAt: null } }, ...vehicleId ? { compat: { some: { vehicleId } } } : {} },
@@ -113828,9 +114588,9 @@ var AgentStateError = class extends Error {
 // packages/api/dist/infrastructure/agent/turn-store.js
 init_user_lock();
 init_apply();
-import { createHash as createHash10, randomUUID as randomUUID19 } from "node:crypto";
-var digest2 = (text9) => createHash10("sha256").update(text9).digest("hex");
-var rows18 = (result) => result[0];
+import { createHash as createHash10, randomUUID as randomUUID20 } from "node:crypto";
+var digest2 = (text10) => createHash10("sha256").update(text10).digest("hex");
+var rows19 = (result) => result[0];
 var json = (value2) => typeof value2 === "string" ? JSON.parse(value2) : value2;
 var missing = () => new AgentStateError("NOT_FOUND", 404, "Propuesta no disponible.");
 var MysqlAgentTurnStore = class {
@@ -113843,10 +114603,10 @@ var MysqlAgentTurnStore = class {
     const lock = agentUserLock(userId);
     let acquired = false;
     try {
-      acquired = Number(rows18(await conn.query("SELECT GET_LOCK(?, 0) AS acquired", [lock]))[0]?.acquired) === 1;
+      acquired = Number(rows19(await conn.query("SELECT GET_LOCK(?, 0) AS acquired", [lock]))[0]?.acquired) === 1;
       if (!acquired)
         throw new AgentStateError("AGENT_BUSY", 409, "Hay una solicitud en curso. Reintenta con el mismo identificador.");
-      const user = rows18(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL", [userId]))[0];
+      const user = rows19(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL", [userId]))[0];
       if (!user)
         throw new AgentStateError("CONSENT_REQUIRED", 403, "Se requiere una cuenta activa de due\xF1o con consentimiento registrado.");
       return await fn(conn);
@@ -113868,16 +114628,16 @@ var MysqlAgentTurnStore = class {
     };
   }
   async readProposal(conn, userId, id2) {
-    const row = rows18(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE id = ? AND userId = ? AND kind = 'register_vehicle'", [id2, userId]))[0];
+    const row = rows19(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE id = ? AND userId = ? AND kind = 'register_vehicle'", [id2, userId]))[0];
     if (!row)
       throw missing();
     return row;
   }
   async appendMessages(conn, conversationId, userId, messages) {
-    const next = rows18(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
+    const next = rows19(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
     const start = new Date(next).getTime();
     for (const [index, message2] of messages.entries()) {
-      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID19(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
+      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID20(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
     }
     await conn.query("UPDATE `Conversation` SET turnCount = turnCount + ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [messages.length, conversationId]);
   }
@@ -113886,9 +114646,9 @@ var MysqlAgentTurnStore = class {
   }
   async getState(userId) {
     return this.withUser(userId, async (conn) => {
-      const conversation = rows18(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY updatedAt DESC, id DESC LIMIT 1", [userId]))[0];
-      const history = conversation ? rows18(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversation.id])).reverse().map((row) => ({ role: row.direction === "incoming" ? "user" : "assistant", content: String(row.body ?? "") })) : [];
-      const actions = rows18(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND kind = 'register_vehicle' ORDER BY createdAt DESC, id DESC LIMIT 20", [userId]));
+      const conversation = rows19(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY updatedAt DESC, id DESC LIMIT 1", [userId]))[0];
+      const history = conversation ? rows19(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversation.id])).reverse().map((row) => ({ role: row.direction === "incoming" ? "user" : "assistant", content: String(row.body ?? "") })) : [];
+      const actions = rows19(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND kind = 'register_vehicle' ORDER BY createdAt DESC, id DESC LIMIT 20", [userId]));
       return { history, proposals: actions.map((row) => this.proposal(row)) };
     });
   }
@@ -113896,19 +114656,19 @@ var MysqlAgentTurnStore = class {
     return this.withUser(userId, async (conn) => {
       const turnId = digest2(`${userId}:${requestId}`);
       const fingerprint = digest2(message2);
-      const prior = rows18(await conn.query("SELECT fingerprint, response FROM `AgentTurn` WHERE id = ? AND userId = ?", [turnId, userId]))[0];
+      const prior = rows19(await conn.query("SELECT fingerprint, response FROM `AgentTurn` WHERE id = ? AND userId = ?", [turnId, userId]))[0];
       if (prior && prior.fingerprint !== fingerprint)
         throw new AgentStateError("IDEMPOTENCY_CONFLICT", 409, "Ese identificador ya se us\xF3 con otro mensaje.");
       if (prior?.response)
         return json(prior.response);
       if (!prior)
         await conn.query("INSERT INTO `AgentTurn` (id, userId, fingerprint) VALUES (?, ?, ?)", [turnId, userId, fingerprint]);
-      let conversationId = rows18(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
+      let conversationId = rows19(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
       if (!conversationId) {
-        conversationId = randomUUID19();
+        conversationId = randomUUID20();
         await conn.query("INSERT INTO `Conversation` (id, userAId, agent, turnCount, createdAt, updatedAt) VALUES (?, ?, 1, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [conversationId, userId]);
       }
-      const historyRows = rows18(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
+      const historyRows = rows19(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
       const history = historyRows.reverse().map((row) => ({ role: row.direction === "incoming" ? "user" : "assistant", content: String(row.body ?? "") }));
       const reply = await respond({ history, proposeVehicle: async (args) => {
         const parsed = proposedVehicleSchema.safeParse(args);
@@ -113919,7 +114679,7 @@ var MysqlAgentTurnStore = class {
         await conn.query("INSERT IGNORE INTO `AgentAction` (id, userId, turnId, kind, args, expiresAt) VALUES (?, ?, ?, 'register_vehicle', ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 15 MINUTE))", [id2, userId, turnId, encoded]);
         return this.proposal(await this.readProposal(conn, userId, id2));
       } });
-      const actions = rows18(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND turnId = ? ORDER BY createdAt, id", [userId, turnId]));
+      const actions = rows19(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND turnId = ? ORDER BY createdAt, id", [userId, turnId]));
       const response = { reply, proposals: actions.map((row) => this.proposal(row)) };
       await conn.query("START TRANSACTION");
       try {
@@ -113937,7 +114697,7 @@ var MysqlAgentTurnStore = class {
     return this.withUser(userId, async (conn) => {
       await conn.query("START TRANSACTION");
       try {
-        const user = rows18(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL FOR UPDATE", [userId]))[0];
+        const user = rows19(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL FOR UPDATE", [userId]))[0];
         if (!user)
           throw new AgentStateError("CONSENT_REQUIRED", 403, "La cuenta no est\xE1 habilitada para esta operaci\xF3n.");
         const row = await this.readProposal(conn, userId, id2);
@@ -113948,12 +114708,12 @@ var MysqlAgentTurnStore = class {
         if (Number(row.expired))
           throw new AgentStateError("PROPOSAL_EXPIRED", 410, "La propuesta caduc\xF3; solicita una nueva.");
         const vehicle = json(row.args);
-        const vehicleId = randomUUID19();
+        const vehicleId = randomUUID20();
         await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [vehicleId, userId, vehicle.brand, vehicle.model, vehicle.year, vehicle.mileage, vehicle.vehicleClass, vehicle.fuel, vehicle.plate, vehicle.usageProfile]);
         const result = JSON.stringify({ vehicleId });
         await conn.query("UPDATE `AgentAction` SET result = ? WHERE id = ? AND userId = ?", [result, id2, userId]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID19(), userId, vehicleId, JSON.stringify({ actionId: id2 })]);
-        const conversation = rows18(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID20(), userId, vehicleId, JSON.stringify({ actionId: id2 })]);
+        const conversation = rows19(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
         if (conversation)
           await this.appendMessages(conn, String(conversation.id), userId, [{ role: "assistant", content: `Registro confirmado por el usuario. Veh\xEDculo: ${vehicle.brand} ${vehicle.model} ${vehicle.year}. ID: ${vehicleId}.` }]);
         await conn.query("COMMIT");
@@ -114137,8 +114897,8 @@ init_entry();
 
 // packages/api/dist/application/content/catalog.js
 init_maintenance();
-function slugify(text9) {
-  return text9.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+function slugify(text10) {
+  return text10.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 var money3 = (value2) => `US$ ${value2.toFixed(0)}`;
 function buildServicePages() {
@@ -114607,22 +115367,25 @@ var findLanding = (slug) => LANDING_PAGES.find((p) => p.slug === slug) ?? null;
 var SUBSERVICE_NAMES = new Map(serviceTaxonomy.categories.flatMap((category) => category.subservices.map((sub) => [sub.id, sub.name])));
 function kmTable(fuelId) {
   const seen = /* @__PURE__ */ new Set();
-  const rows32 = [];
+  const rows33 = [];
   for (const rule of resolveRules("liviano", fuelId)) {
     if (seen.has(rule.serviceId))
       continue;
     seen.add(rule.serviceId);
     const km9 = typeof rule.intervalKm === "number" ? rule.intervalKm : null;
     const factor = typeof rule.severeFactor === "number" ? rule.severeFactor : null;
-    rows32.push({
+    rows33.push({
       name: SUBSERVICE_NAMES.get(rule.serviceId) ?? rule.serviceId,
       km: km9,
       months: typeof rule.intervalMonths === "number" ? rule.intervalMonths : null,
       severeKm: km9 !== null && factor !== null ? Math.round(km9 * factor / 500) * 500 : null
     });
   }
-  return rows32.sort((a, b) => (a.km ?? Number.MAX_SAFE_INTEGER) - (b.km ?? Number.MAX_SAFE_INTEGER) || a.name.localeCompare(b.name, "es"));
+  return rows33.sort((a, b) => (a.km ?? Number.MAX_SAFE_INTEGER) - (b.km ?? Number.MAX_SAFE_INTEGER) || a.name.localeCompare(b.name, "es"));
 }
+
+// packages/api/dist/interfaces/seo/index.js
+init_auto_escaner_asset();
 
 // packages/api/dist/interfaces/seo/assets.js
 var ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="#0a6e80" d="M32 2 59.7 18v28L32 62 4.3 46V18z"/><g transform="translate(12 12) scale(1.6667)" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5a3.5 3.5 0 0 0 4.6 4.6L21 12l-9 9-3-3 9-9-2.1-1.9a3.5 3.5 0 0 1-1.4-1.6z"/><path d="M7 4l2.5 2.5L7.5 8.5 5 6z"/></g></svg>';
@@ -114804,7 +115567,8 @@ var IMAGES = [
   { path: "/favicon.svg", type: "image/svg+xml", body: ICON_SVG },
   { path: "/apple-touch-icon.png", type: "image/png", body: Buffer.from(APPLE_TOUCH_ICON_B64, "base64") },
   { path: "/icon-512.png", type: "image/png", body: Buffer.from(ICON_512_B64, "base64") },
-  { path: "/og.png", type: "image/png", body: Buffer.from(OG_IMAGE_B64, "base64") }
+  { path: "/og.png", type: "image/png", body: Buffer.from(OG_IMAGE_B64, "base64") },
+  { path: AUTO_ESCANER_PATH, type: "image/webp", body: Buffer.from(AUTO_ESCANER_WEBP_B64, "base64") }
 ];
 async function seoRoutes(app2, options = {}) {
   const site = (options.site ?? process.env.PUBLIC_SITE_URL ?? DEFAULT_SITE).replace(/\/+$/, "");
@@ -115200,8 +115964,8 @@ var km4 = (value2) => value2 === null ? "\u2014" : value2.toLocaleString("es-EC"
 var months = (value2) => value2 === null ? "\u2014" : value2 % 12 === 0 ? `${value2 / 12} ${value2 === 12 ? "a\xF1o" : "a\xF1os"}` : `${value2} m`;
 function blockHtml(block) {
   const parts = [];
-  for (const text9 of block.text ?? [])
-    parts.push(`<p class="texto">${escapeHtml(text9)}</p>`);
+  for (const text10 of block.text ?? [])
+    parts.push(`<p class="texto">${escapeHtml(text10)}</p>`);
   if (block.list?.length)
     parts.push(`<ul class="puntos">${block.list.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`);
   if (block.steps?.length)
@@ -116676,13 +117440,13 @@ init_apply();
 init_plan_text();
 init_entitlements();
 init_catalog_store();
-import { randomUUID as randomUUID21 } from "node:crypto";
+import { randomUUID as randomUUID22 } from "node:crypto";
 
 // packages/api/dist/infrastructure/plans/renewal-notices.js
 init_catalog();
 init_plans();
-import { randomUUID as randomUUID20 } from "node:crypto";
-var rows20 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomUUID as randomUUID21 } from "node:crypto";
+var rows21 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 function ecDate(value2) {
   return new Intl.DateTimeFormat("es-EC", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Guayaquil" }).format(value2);
 }
@@ -116695,14 +117459,14 @@ function expiryText(plan, code3) {
 Para volver a ${plan}: Renovar ${code3}`;
 }
 async function notify(conn, userId, dedup, message2) {
-  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID20(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID21(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
   return Number(result.affectedRows ?? 0) === 1;
 }
 async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date()) {
   let renewals = 0;
   let expired = 0;
   const soon = new Date(now.getTime() + RENEWAL_NOTICE_DAYS * 864e5);
-  const ending = await rows20(conn, "SELECT s.id, s.userId, s.plan, s.number, s.expiresAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'activa' AND s.renewalNoticeAt IS NULL AND s.expiresAt > ? AND s.expiresAt <= ? AND u.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND (n.status IN ('solicitada','pendiente') OR (n.status = 'activa' AND n.expiresAt > s.expiresAt))) LIMIT 500", [now, soon]);
+  const ending = await rows21(conn, "SELECT s.id, s.userId, s.plan, s.number, s.expiresAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'activa' AND s.renewalNoticeAt IS NULL AND s.expiresAt > ? AND s.expiresAt <= ? AND u.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND (n.status IN ('solicitada','pendiente') OR (n.status = 'activa' AND n.expiresAt > s.expiresAt))) LIMIT 500", [now, soon]);
   for (const sub of ending) {
     const code3 = subscriptionCode(Number(sub.number ?? 0));
     if (await notify(conn, String(sub.userId), `plan-renewal:${String(sub.id)}`, renewalText(planName(String(sub.plan), catalog), code3, new Date(String(sub.expiresAt)))))
@@ -116710,9 +117474,9 @@ async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date
     await conn.query("UPDATE `Subscription` SET renewalNoticeAt = ? WHERE id = ?", [now, sub.id]);
   }
   await conn.query("UPDATE `Subscription` SET status = 'vencida', active = 0, updatedAt = CURRENT_TIMESTAMP(3) WHERE status = 'activa' AND expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
-  const lapsed = await rows20(conn, "SELECT s.id, s.userId, s.plan, s.number FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'vencida' AND s.expiryNoticeAt IS NULL AND s.expiresAt > DATE_SUB(?, INTERVAL 7 DAY) AND u.deletedAt IS NULL LIMIT 500", [now]);
+  const lapsed = await rows21(conn, "SELECT s.id, s.userId, s.plan, s.number FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'vencida' AND s.expiryNoticeAt IS NULL AND s.expiresAt > DATE_SUB(?, INTERVAL 7 DAY) AND u.deletedAt IS NULL LIMIT 500", [now]);
   for (const sub of lapsed) {
-    const [still] = await rows20(conn, "SELECT 1 AS x FROM `Subscription` WHERE userId = ? AND status = 'activa' AND expiresAt > ? LIMIT 1", [sub.userId, now]);
+    const [still] = await rows21(conn, "SELECT 1 AS x FROM `Subscription` WHERE userId = ? AND status = 'activa' AND expiresAt > ? LIMIT 1", [sub.userId, now]);
     if (!still) {
       const code3 = subscriptionCode(Number(sub.number ?? 0));
       if (await notify(conn, String(sub.userId), `plan-expired:${String(sub.id)}`, expiryText(planName(String(sub.plan), catalog), code3)))
@@ -116730,7 +117494,7 @@ init_fleet_store();
 init_workshop_map();
 init_reminder_done();
 init_rtv_calendar();
-var rows21 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows22 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var km5 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
 var VehicleReminders = class {
   connect;
@@ -116757,7 +117521,7 @@ var VehicleReminders = class {
         await subscriptionNotices(conn, await loadCatalog(conn), now);
       } catch {
       }
-      const vehicles = await rows21(conn, "SELECT v.*, u.city AS ownerCity FROM `Vehicle` v JOIN `User` u ON u.id = v.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE v.remindersOptIn = TRUE AND v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ORDER BY v.id LIMIT 1000");
+      const vehicles = await rows22(conn, "SELECT v.*, u.city AS ownerCity FROM `Vehicle` v JOIN `User` u ON u.id = v.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE v.remindersOptIn = TRUE AND v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ORDER BY v.id LIMIT 1000");
       const levels = /* @__PURE__ */ new Map();
       for (const vehicle of vehicles) {
         const owner = String(vehicle.userId);
@@ -116801,14 +117565,14 @@ Para pedir talleres: Buscar servicio | categor\xEDa | ciudad | sector | descripc
         if (!created)
           continue;
         planReminders++;
-        const [shop] = await rows21(conn, "SELECT s.userId, a.id AS appointmentId FROM `Service` sv JOIN `Shop` s ON s.id = sv.shopId LEFT JOIN `Appointment` a ON a.shopId = s.id AND a.vehicleId = sv.vehicleId WHERE sv.vehicleId = ? AND sv.createdAt > DATE_SUB(?, INTERVAL 365 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = sv.vehicleId AND b.shopId = s.id) ORDER BY sv.createdAt DESC, a.scheduledAt DESC LIMIT 1", [vehicle.id, now]);
+        const [shop] = await rows22(conn, "SELECT s.userId, a.id AS appointmentId FROM `Service` sv JOIN `Shop` s ON s.id = sv.shopId LEFT JOIN `Appointment` a ON a.shopId = s.id AND a.vehicleId = sv.vehicleId WHERE sv.vehicleId = ? AND sv.createdAt > DATE_SUB(?, INTERVAL 365 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = sv.vehicleId AND b.shopId = s.id) ORDER BY sv.createdAt DESC, a.scheduledAt DESC LIMIT 1", [vehicle.id, now]);
         if (shop) {
           const ref4 = shop.appointmentId ? ` Puedes proponer la visita: Pr\xF3xima visita C-${String(shop.appointmentId).replace(/-/g, "").slice(0, 6).toUpperCase()} | AAAA-MM-DD | HH:mm` : "";
           await this.notify(conn, String(shop.userId), `reminder-shop:${String(vehicle.id)}:${key}`.slice(0, 191), `\u{1F514} Tu cliente con ${label2} tiene mantenimiento pr\xF3ximo:
 ${lines.join("\n")}${ref4}`);
         }
       }
-      const dueAlerts = await rows21(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
+      const dueAlerts = await rows22(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
       for (const a of dueAlerts) {
         const label2 = `${a.make} ${a.model} ${a.year}`;
         await this.notify(conn, String(a.ownerId), `alert:${String(a.id)}`, `\u{1F514} Alerta de tu ${label2}: ${a.label}`);
@@ -116824,7 +117588,7 @@ ${lines.join("\n")}${ref4}`);
         alerts++;
       }
       const week = Math.floor((now.getTime() - 5 * 36e5) / (7 * 864e5));
-      const silent = await rows21(conn, "SELECT a.vehicleId, m.userId, v.make, v.model, v.plate, v.unitCode FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL AND v.deletedAt IS NULL AND f.status = 'activa' AND a.startsAt < DATE_SUB(?, INTERVAL 14 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleOdometerReading` r WHERE r.vehicleId = a.vehicleId AND r.createdAt > DATE_SUB(?, INTERVAL 14 DAY)) LIMIT 500", [now, now]);
+      const silent = await rows22(conn, "SELECT a.vehicleId, m.userId, v.make, v.model, v.plate, v.unitCode FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL AND v.deletedAt IS NULL AND f.status = 'activa' AND a.startsAt < DATE_SUB(?, INTERVAL 14 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleOdometerReading` r WHERE r.vehicleId = a.vehicleId AND r.createdAt > DATE_SUB(?, INTERVAL 14 DAY)) LIMIT 500", [now, now]);
       for (const d of silent) {
         if (await this.notify(conn, String(d.userId), `kmask:${String(d.vehicleId)}:${week}`, `\u{1F4CF} \xBFCu\xE1ntos kil\xF3metros marca ${unitLabel(d)} ${d.make} ${d.model}? Responde: Kilometraje | km. Con ese dato sabemos cu\xE1ndo le toca mantenimiento.`))
           kmReminders++;
@@ -116833,23 +117597,23 @@ ${lines.join("\n")}${ref4}`);
       if (local.getUTCDate() === 1 && local.getUTCHours() >= 8) {
         const monthEnd = new Date(ecMonthStart(now).getTime() - 1);
         const label2 = new Intl.DateTimeFormat("es-EC", { month: "long", year: "numeric", timeZone: "America/Guayaquil" }).format(monthEnd);
-        const fleets = await rows21(conn, "SELECT f.id, f.name, f.ownerUserId FROM `Fleet` f JOIN `User` u ON u.id = f.ownerUserId WHERE f.status = 'activa' AND u.deletedAt IS NULL LIMIT 500");
+        const fleets = await rows22(conn, "SELECT f.id, f.name, f.ownerUserId FROM `Fleet` f JOIN `User` u ON u.id = f.ownerUserId WHERE f.status = 'activa' AND u.deletedAt IS NULL LIMIT 500");
         for (const f of fleets) {
-          const text9 = `\u{1F4CA} Reporte de ${label2}
+          const text10 = `\u{1F4CA} Reporte de ${label2}
 ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
-          const managers = await rows21(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role IN ('admin','supervisor') AND status = 'active' AND userId IS NOT NULL", [f.id]);
+          const managers = await rows22(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role IN ('admin','supervisor') AND status = 'active' AND userId IS NOT NULL", [f.id]);
           for (const recipient of /* @__PURE__ */ new Set([String(f.ownerUserId), ...managers.map((m) => String(m.userId))]))
-            if (await this.notify(conn, recipient, `fleetreport:${String(f.id)}:${local.toISOString().slice(0, 7)}:${recipient}`.slice(0, 191), text9))
+            if (await this.notify(conn, recipient, `fleetreport:${String(f.id)}:${local.toISOString().slice(0, 7)}:${recipient}`.slice(0, 191), text10))
               fleetReports++;
         }
       }
       const ecHour = (now.getUTCHours() + 19) % 24;
       if (ecHour >= 19) {
         const day3 = new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
-        const shops = await rows21(conn, "SELECT s.id, s.name, s.userId FROM `Shop` s JOIN `User` u ON u.id = s.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE s.verificationStatus IN ('verified','pending') AND u.deletedAt IS NULL AND EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.shopId = s.id AND (w.createdAt >= DATE_SUB(?, INTERVAL 1 DAY) OR w.status NOT IN ('cerrada','cancelada'))) LIMIT 500", [now]);
+        const shops = await rows22(conn, "SELECT s.id, s.name, s.userId FROM `Shop` s JOIN `User` u ON u.id = s.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE s.verificationStatus IN ('verified','pending') AND u.deletedAt IS NULL AND EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.shopId = s.id AND (w.createdAt >= DATE_SUB(?, INTERVAL 1 DAY) OR w.status NOT IN ('cerrada','cancelada'))) LIMIT 500", [now]);
         for (const shop of shops) {
           const report = await shopReport(conn, String(shop.id), String(shop.name), "hoy", now);
-          const admins = await rows21(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shop.id]);
+          const admins = await rows22(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shop.id]);
           for (const recipient of /* @__PURE__ */ new Set([String(shop.userId), ...admins.map((a) => String(a.userId))]))
             await this.notify(conn, recipient, `shopreport:${String(shop.id)}:${day3}:${recipient}`.slice(0, 191), report);
           reports++;
@@ -116862,7 +117626,7 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
   }
   /** True when the reminder was new; the dedup key makes repeated runs harmless. */
   async notify(conn, recipient, dedup, message2, kind = "care.reminder") {
-    const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID21(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
+    const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID22(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
     return Number(result.affectedRows) === 1;
   }
   start(intervalMs = 36e5, onError = () => {
@@ -116899,8 +117663,8 @@ var REQUIRED_RUNTIME_COLUMNS = {
 async function checkDatabaseReady(connect = openConnection) {
   const conn = await connect();
   try {
-    const [rows32] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-    const present = new Set(rows32.map((row) => row.name));
+    const [rows33] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+    const present = new Set(rows33.map((row) => row.name));
     if (!EXPECTED_TABLES2.every((table) => present.has(table)))
       return false;
     const [columns] = await conn.query("SELECT table_name AS tbl, column_name AS col FROM information_schema.columns WHERE table_schema = DATABASE()");
@@ -116970,14 +117734,14 @@ init_fleet_access();
 init_fleet_store();
 init_workflow();
 import { randomBytes as randomBytes15 } from "node:crypto";
-var rows22 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows23 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 var km6 = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
 var token = external_exports.string().regex(/^[A-Za-z0-9_-]{32}$/);
 async function loadFleetPanel(value2, connect = openConnection) {
   const conn = await connect();
   try {
-    const [link] = await rows22(conn, "SELECT t.fleetId, t.userId, f.name, f.city FROM `FleetPanelToken` t JOIN `Fleet` f ON f.id = t.fleetId WHERE t.tokenHash = ? AND t.expiresAt > UTC_TIMESTAMP(3) AND f.status = 'activa'", [secretHash(value2)]);
+    const [link] = await rows23(conn, "SELECT t.fleetId, t.userId, f.name, f.city FROM `FleetPanelToken` t JOIN `Fleet` f ON f.id = t.fleetId WHERE t.tokenHash = ? AND t.expiresAt > UTC_TIMESTAMP(3) AND f.status = 'activa'", [secretHash(value2)]);
     if (!link)
       return null;
     const roles = await fleetRoles(conn, String(link.userId));
@@ -116985,9 +117749,9 @@ async function loadFleetPanel(value2, connect = openConnection) {
       return null;
     const fleetId = String(link.fleetId);
     const vehicles = await fleetSnapshot(conn, fleetId, /* @__PURE__ */ new Date(), String(link.city));
-    const months2 = (await rows22(conn, "SELECT DATE_FORMAT(DATE_SUB(spentAt, INTERVAL 5 HOUR), '%Y-%m') AS month, SUM(amountUsd) AS total FROM `VehicleExpense` WHERE fleetId = ? AND spentAt >= DATE_SUB(?, INTERVAL 5 MONTH) GROUP BY month ORDER BY month", [fleetId, ecMonthStart()])).map((m) => ({ month: String(m.month), total: Number(m.total) }));
-    const members = await rows22(conn, "SELECT m.id, m.name, m.role, m.status FROM `FleetMember` m WHERE m.fleetId = ? AND m.status <> 'removed' ORDER BY m.role, m.name", [fleetId]);
-    const agreements = await rows22(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status = 'activo' ORDER BY s.name", [fleetId]);
+    const months2 = (await rows23(conn, "SELECT DATE_FORMAT(DATE_SUB(spentAt, INTERVAL 5 HOUR), '%Y-%m') AS month, SUM(amountUsd) AS total FROM `VehicleExpense` WHERE fleetId = ? AND spentAt >= DATE_SUB(?, INTERVAL 5 MONTH) GROUP BY month ORDER BY month", [fleetId, ecMonthStart()])).map((m) => ({ month: String(m.month), total: Number(m.total) }));
+    const members = await rows23(conn, "SELECT m.id, m.name, m.role, m.status FROM `FleetMember` m WHERE m.fleetId = ? AND m.status <> 'removed' ORDER BY m.role, m.name", [fleetId]);
+    const agreements = await rows23(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status = 'activo' ORDER BY s.name", [fleetId]);
     return { fleet: { name: String(link.name), city: String(link.city) }, vehicles, months: months2, members, agreements, generatedAt: /* @__PURE__ */ new Date() };
   } finally {
     await conn.end().catch(() => void 0);
@@ -117238,15 +118002,15 @@ async function courseWebRoutes(app2, options = {}) {
   const send = (reply, request, title, body, status = 200) => reply.code(status).type("text/html; charset=utf-8").header("Cache-Control", "no-store").send(page(title, body, nonce(request)));
   app2.get("/cursos", async (req2, reply) => {
     const q = req2.query;
-    let rows32 = [];
+    let rows33 = [];
     try {
       if (!options.store && missingDbEnv().length)
         return send(reply, req2, "Cursos", "<h1>Cursos</h1><p>Cat\xE1logo no disponible por el momento.</p>", 503);
-      rows32 = await store.listPublished({ especialidad: q.esp, nivel: q.nivel });
+      rows33 = await store.listPublished({ especialidad: q.esp, nivel: q.nivel });
     } catch {
       return send(reply, req2, "Cursos", "<h1>Cursos</h1><p>Cat\xE1logo no disponible por el momento.</p>", 503);
     }
-    const cards = rows32.map((c) => `<article><h2><a href="/cursos/${e3(c.slug)}">${e3(c.titulo)}</a></h2><p>${e3(c.especialidad)} \xB7 ${e3(c.nivel)} \xB7 ${e3(c.horas)} horas \xB7 ${c.precioUsd == null || c.precioUsd === 0 ? "Gratis" : `$${e3(c.precioUsd)} USD`}</p><p>Experto: ${e3(c.expertName)}</p>${c.altoVoltajeGas ? `<p class="notice">${e3(HIGH_VOLTAGE_GAS_NOTICE)}</p>` : ""}</article>`).join("");
+    const cards = rows33.map((c) => `<article><h2><a href="/cursos/${e3(c.slug)}">${e3(c.titulo)}</a></h2><p>${e3(c.especialidad)} \xB7 ${e3(c.nivel)} \xB7 ${e3(c.horas)} horas \xB7 ${c.precioUsd == null || c.precioUsd === 0 ? "Gratis" : `$${e3(c.precioUsd)} USD`}</p><p>Experto: ${e3(c.expertName)}</p>${c.altoVoltajeGas ? `<p class="notice">${e3(HIGH_VOLTAGE_GAS_NOTICE)}</p>` : ""}</article>`).join("");
     return send(reply, req2, "Cursos", `<h1>Cursos publicados</h1><form method="get"><label>Especialidad <input name="esp" value="${e3(q.esp ?? "")}"></label><label>Nivel <input name="nivel" value="${e3(q.nivel ?? "")}"></label><button>Filtrar</button></form>${cards || "<p>No hay cursos para estos filtros.</p>"}`);
   });
   app2.get("/cursos/:slug", async (req2, reply) => {
@@ -117329,9 +118093,9 @@ async function courseWebRoutes(app2, options = {}) {
     if (!s)
       return reply;
     try {
-      const rows32 = await store.studentCourses(s.userId);
+      const rows33 = await store.studentCourses(s.userId);
       const cards = [];
-      for (const r of rows32) {
+      for (const r of rows33) {
         const id2 = String(r.enrollmentId), lessons = await store.lessonRecords(String(r.courseId), id2), questions = await store.questionRecords(String(r.courseId));
         const qs = /* @__PURE__ */ new Map();
         for (const q of questions) {
@@ -117418,6 +118182,15 @@ import { randomBytes as randomBytes18 } from "node:crypto";
 init_courses_store();
 init_apply();
 init_page();
+init_sistema();
+init_theme();
+var EXPERT_STYLES = `${THEME_TOKENS}
+*{box-sizing:border-box}body{margin:0;color:var(--c-ink);font:16px/1.5 var(--c-font);padding:24px 16px}
+main{max-width:560px;margin:0 auto;background:var(--c-surface);border-radius:12px;padding:24px}
+form{display:grid;gap:14px;margin-top:12px}label{display:grid;gap:6px;font-size:14px;color:var(--c-muted)}
+input{font:inherit;color:var(--c-ink);background:var(--c-sunk);border:1px solid var(--c-line);border-radius:10px;padding:10px 12px}
+button{font:600 16px/1 var(--c-font);color:var(--c-on-accent);background:var(--c-accent);border:0;border-radius:10px;padding:14px;cursor:pointer}
+${SISTEMA}`;
 async function expertRoutes(app2, options = {}) {
   const store = options.store ?? new MysqlCoursesStore(() => openConnection());
   const config = options.config ?? new LocalAgentConfig();
@@ -117429,8 +118202,8 @@ async function expertRoutes(app2, options = {}) {
   const verified = async (request, reply) => {
     const conn = await openConnection();
     try {
-      const [rows32] = await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId=? AND verificationStatus='verificado' LIMIT 1", [request.userId]);
-      if (!Array.isArray(rows32) || !rows32.length)
+      const [rows33] = await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId=? AND verificationStatus='verificado' LIMIT 1", [request.userId]);
+      if (!Array.isArray(rows33) || !rows33.length)
         return reply.code(403).send({ data: null, error: { code: "EXPERT_NOT_VERIFIED" } });
     } finally {
       await conn.end().catch(() => void 0);
@@ -117539,7 +118312,7 @@ async function expertRegistrationRoutes(app2, options = {}) {
   });
   app2.get("/experto/registro/:token", async (request, reply) => {
     const safe = escapeHtml(request.params.token);
-    return reply.type("text/html; charset=utf-8").send(`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Registro de experto</title><body><main><h1>Registro de experto</h1><form method="post" action="/experto/registro/${safe}" enctype="multipart/form-data"><label>Especialidades <input name="especialidades" required maxlength="500"></label><label>Documento (imagen o PDF, m\xE1ximo 5 MB) <input name="documento" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required></label><button>Enviar para revisi\xF3n</button></form></main></body></html>`);
+    return reply.type("text/html; charset=utf-8").send(`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">${THEME_COLOR_META}<title>Registro de experto</title><style>${EXPERT_STYLES}</style><body><main><h1>Registro de experto</h1><form method="post" action="/experto/registro/${safe}" enctype="multipart/form-data"><label>Especialidades <input name="especialidades" required maxlength="500"></label><label>Documento (imagen o PDF, m\xE1ximo 5 MB) <input name="documento" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required></label><button>Enviar para revisi\xF3n</button></form></main></body></html>`);
   });
   app2.post("/experto/registro/:token", async (request, reply) => {
     let file;
