@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='e8667ce403b0589c5a8406eac0529addc978f3a7'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='b34ae22d57845856650ed5e23bc5444d6bc06d0c'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -82901,6 +82901,12 @@ main a:not(.access-btn):not(.pill):not(.perfil):not(.logo){text-decoration-color
 .board .estado small{display:block;font-size:13px;line-height:1.35;color:var(--c-muted)}
 .board .estado .word{display:block;font:700 20px/1.2 var(--c-font);color:var(--v-ink);margin:2px 0}
 .board>ul{grid-column:1/-1}
+/* Beneficios como botones de WhatsApp: toda la tarjeta abre el chat. */
+.beneficios li{position:relative}
+.beneficios a.beneficio{display:block;color:inherit!important;text-decoration:none!important}
+.beneficios a.beneficio::after{content:"";position:absolute;inset:0;border-radius:inherit}
+.beneficios li:has(a.beneficio:hover),.beneficios li:has(a.beneficio:focus-visible){border-color:var(--v-accent)!important}
+.beneficios .ir{display:block;margin-top:8px;font:600 13px/1.2 var(--c-font);color:var(--c-cta)}
 :root{--amp-yellow:var(--v-sunk);--amp-bar:var(--v-accent);--amp-wash:transparent}
 .red a.perfil:focus-visible{background:var(--v-surface)!important;color:var(--v-ink)!important;border-color:var(--v-accent)!important}
 .board .cap b{font:600 12px/1 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important}
@@ -82967,6 +82973,8 @@ main h3{font-size:15px!important}
 .cta:not(:disabled):hover{background-color:var(--c-cta-hover)}
 /* Como las listas agrupadas de iOS: el grupo se separa del fondo por el color, sin l\xEDnea. */
 .card,.option,.pcard,.beneficios li,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.line,.veh,.kpi,#login,#composer,#tools,.hero,.profile-card,section{border-color:transparent!important}
+/* T\xEDtulos en verde petr\xF3leo para separarlos del texto (Pedro, 3/11/2026). */
+header.cabecera h1,h1,h2,.titulo{color:var(--c-title)!important}
 :focus-visible{outline-color:var(--c-focus)!important}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
 `;
@@ -83055,6 +83063,7 @@ var init_theme = __esm({
       "--c-line:#d1d1d6",
       "--c-field:#ffffff",
       "--c-accent:#1f3a5f",
+      "--c-title:#0b6e74",
       "--c-on-accent:#ffffff",
       "--c-cta:#13804a",
       "--c-on-cta:#ffffff",
@@ -83095,6 +83104,7 @@ var init_theme = __esm({
       "--c-line:#38383a",
       "--c-field:#1c1c1e",
       "--c-accent:#9db8dc",
+      "--c-title:#40c8d0",
       "--c-on-accent:#0f1622",
       "--c-cta:#3ccf7e",
       "--c-on-cta:#06180e",
@@ -91956,7 +91966,7 @@ function renderEntryPage(input) {
       <li><a class="perfil" href="${acceso("almacen")}">${icon("caja")}Almacenes</a></li>
     </ul>`;
   const beneficios = `<p class="section">Lo que ganas</p>
-    <ul class="beneficios">${BENEFICIOS.map((b) => `<li class="luz-${b.icono}"><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span></li>`).join("")}</ul>`;
+    <ul class="beneficios">${BENEFICIOS.map((b) => links ? `<li class="luz-${b.icono}"><a class="beneficio" href="${acceso(b.perfil)}" rel="noopener"><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span><span class="ir">Escribir por WhatsApp \u203A</span></a></li>` : `<li class="luz-${b.icono}"><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span></li>`).join("")}</ul>`;
   const button = links ? `<button id="abrir" class="cta" type="button" data-app="${escapeHtml(links.app)}" data-wame="${escapeHtml(links.wame)}" data-web="${escapeHtml(links.web)}">Abrir WhatsApp</button>
     <p class="small spaced">Escr\xEDbenos al <strong>${number}</strong> \xB7 <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> \xB7 <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a> \xB7 <a href="${escapeHtml(links.web)}" rel="noopener">WhatsApp Web</a></p>` : `<button id="abrir" class="cta" type="button" disabled>Abrir WhatsApp</button>
     <p class="soon">Muy pronto disponible por WhatsApp</p>`;
@@ -91990,7 +92000,7 @@ ${seoHead({
   <div class="col-a">
   <section class="hero">
     <svg class="silueta" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS.auto_hero}</svg>
-    <p class="lead">Plan, recordatorios, talleres y repuestos en un solo chat de WhatsApp.</p>
+    <p class="lead">Plan de mantenimiento, recordatorios, talleres y repuestos en un solo chat de WhatsApp.</p>
     ${red}
     ${BOARD}
   </section>
@@ -92060,10 +92070,10 @@ var init_page = __esm({
     ];
     PERFIL_NOMBRE = { dueno: "Due\xF1o de veh\xEDculo", taller: "Taller", almacen: "Almac\xE9n de repuestos", flota: "Flotas" };
     BENEFICIOS = [
-      { icono: "alerta", titulo: "Evita fallas", texto: "Avisos de mantenimiento seg\xFAn el kilometraje de cada veh\xEDculo." },
-      { icono: "ahorro", titulo: "Ahorra", texto: "Mantenimiento preventivo y precios claros antes de pagar." },
-      { icono: "agenda", titulo: "Clientes y citas en orden", texto: "Turnos coordinados y el historial de cada veh\xEDculo a mano." },
-      { icono: "recursos", titulo: "Optimiza recursos", texto: "Menos llamadas y viajes: cada pedido llega claro desde el inicio." }
+      { icono: "alerta", titulo: "Evita fallas", texto: "Avisos de mantenimiento seg\xFAn el kilometraje de cada veh\xEDculo.", perfil: "dueno" },
+      { icono: "ahorro", titulo: "Ahorra", texto: "Mantenimiento preventivo y precios claros antes de pagar.", perfil: "dueno" },
+      { icono: "agenda", titulo: "Clientes y citas en orden", texto: "Turnos coordinados y el historial de cada veh\xEDculo a mano.", perfil: "taller" },
+      { icono: "recursos", titulo: "Optimiza recursos", texto: "Menos llamadas y viajes: cada pedido llega claro desde el inicio.", perfil: "almacen" }
     ];
     ICONS = {
       auto: '<path d="M4 15h16M6 15l1.6-5.2A2 2 0 0 1 9.5 8.4h5a2 2 0 0 1 1.9 1.4L18 15M4 15v3h3v-3M17 15v3h3v-3"/><circle cx="8" cy="15" r="1.4"/><circle cx="16" cy="15" r="1.4"/>',

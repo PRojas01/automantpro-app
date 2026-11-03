@@ -1,10 +1,10 @@
 {
-  "sourceSha": "e8667ce403b0589c5a8406eac0529addc978f3a7",
+  "sourceSha": "b34ae22d57845856650ed5e23bc5444d6bc06d0c",
   "sourceDirty": false,
   "channel": "pilot",
   "nodeMajor": 22,
   "esbuildVersion": "0.28.2",
-  "serverSha256": "d67521d1686c0d2cfa36811a4ce38963059ff0cbfafd69d7d528d16de7c4a205",
+  "serverSha256": "aa6ab27028d360bf7159f094a8ac26e3ca47296697d170523d56b998aead4ba7",
   "schemaCommand": "npm run db:deploy",
   "whatsappConnection": "requires-final-configuration",
   "localAgentApproval": "human"
