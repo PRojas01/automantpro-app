@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='33415349ae66e9e7e267ad17cbc221e59d9d01ab'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='4218b9f2281559afecbdfa77e2fb3deb4b91716b'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -92962,7 +92962,7 @@ h1 em{font-style:normal;color:var(--c-accent)}
     TITULO_REFERENCIA = `
 header.cabecera h1{grid-column:1/-1!important;grid-row:2!important;justify-self:center;text-align:center;margin:14px 0 4px!important;font-size:clamp(28px,3.3vw,45px)!important;font-weight:750!important;line-height:1.12!important;letter-spacing:-.038em!important;text-wrap:balance}
 header.cabecera h1 em{background:none!important;padding:0!important}
-@media (max-width:650px){header.cabecera h1{font-size:27px!important;letter-spacing:-.034em!important;margin-top:10px!important}}
+@media (max-width:650px){header.cabecera h1{font-size:25px!important;letter-spacing:-.034em!important;margin-top:10px!important}}
 `;
     HOME_UNA_PANTALLA = `
 @media (min-width:651px){
@@ -93024,9 +93024,28 @@ header.cabecera h1 em{background:none!important;padding:0!important}
  .access-note{margin-bottom:4px}
 }
 @media (max-width:650px){
- .hero .lead{font-size:14px}
+ .hero .lead{font-size:12px}
  .escaner .leyenda{gap:0 12px}
  .escaner .leyenda li{padding:1px 0;line-height:1.2}
+ /* El auto escaneado entra en la primera pantalla y sigue justo antes de \xABLo que ganas\xBB; el informe de ejemplo baja. */
+ header.cabecera{margin-bottom:6px}
+ header.cabecera h1{margin:6px 0 0!important}
+ .col-a{display:flex;flex-direction:column}
+ .hero{display:contents}
+ .hero .silueta{display:none}
+ .hero>.lead{order:1;max-width:none;line-height:1.35}
+ .hero>.red{order:2;margin:8px 0 0}
+ .col-a>p.section:first-of-type{order:3;margin:10px 0 4px}
+ .escaner{order:4;gap:6px;padding:8px 12px;margin:0}
+ .col-a>p.section:last-of-type{order:5}
+ .beneficios{order:6}
+ .hero>.board{order:7;margin:0 0 12px;background:var(--c-surface)}
+}
+@media (max-width:380px){
+ .escaner{padding:6px 10px}
+ .escaner .leyenda{gap:0 8px}
+ .escaner .leyenda li{font-size:12px;gap:4px}
+ .escaner .leyenda b{font-size:11px}
 }
 `;
     SCAN_STYLES = `
@@ -93270,7 +93289,7 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
  header{margin-bottom:8px}
  .hero{padding:14px 16px}
  .hero h1{font-size:28px}
- .hero .lead{font-size:14px}
+ .hero .lead{font-size:12px}
  .hero .silueta{display:none}
  .board{margin-top:8px}
  .board svg{width:68px;height:68px}
