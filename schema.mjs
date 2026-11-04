@@ -22059,6 +22059,7 @@ var PLAN_OVERRIDE_STATEMENTS = [
 // packages/api/src/infrastructure/schema-setup/inspection-statements.ts
 var INSPECTION_TABLES = ["VehicleInspection", "VehicleInspectionItem"];
 var INSPECTION_STATEMENTS = [
+  { kind: "addColumn", target: "Vehicle.bodyStyle", sql: "ALTER TABLE `Vehicle` ADD COLUMN `bodyStyle` VARCHAR(30) NULL" },
   { kind: "createTable", target: "VehicleInspection", sql: "CREATE TABLE IF NOT EXISTS `VehicleInspection` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `appointmentId` VARCHAR(191) NULL, `actorUserId` VARCHAR(191) NOT NULL, `km` INT NULL, `note` VARCHAR(300) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehicleInspection_vehicleId_createdAt_idx` (`vehicleId`, `createdAt`), INDEX `VehicleInspection_shopId_idx` (`shopId`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
   { kind: "createTable", target: "VehicleInspectionItem", sql: "CREATE TABLE IF NOT EXISTS `VehicleInspectionItem` (`inspectionId` VARCHAR(191) NOT NULL, `code` VARCHAR(8) NOT NULL, `status` ENUM('ok','observar','cambiar','no_aplica') NOT NULL, `measure` DECIMAL(8,2) NULL, `unit` VARCHAR(8) NULL, PRIMARY KEY (`inspectionId`, `code`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
 ];
