@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='99a49232db5441dd26d324fb2dca5a4767308f4c'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='bdf2e1c433f6888de91f4029fa19d0817fdf5d98'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -83181,6 +83181,20 @@ main h3{font-size:15px!important}
 header.cabecera h1,h1,h2,.titulo{color:var(--c-title)!important}
 :focus-visible{outline-color:var(--c-focus)!important}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
+/* Franja azul en los t\xEDtulos de secci\xF3n y botones de una sola forma, con movimiento al pasar o tocar (Pedro, 3/11/2026). */
+.section,p.section,.board .cap{display:flex!important;align-items:center;gap:8px;background:var(--c-accent)!important;color:var(--c-on-accent)!important;font:600 13px/1.3 var(--c-font)!important;padding:4px 10px!important;border-radius:3px}
+.board .cap{justify-content:space-between}
+.board .cap>span{color:inherit!important}
+.board .cap>b{color:inherit!important;border-color:currentColor!important;background:none!important}
+main details.gestionar>summary{background:var(--c-accent)!important;color:var(--c-on-accent)!important;border-radius:3px!important;padding:6px 10px!important}
+main details.gestionar>summary .section{background:none!important;padding:0!important}
+main details.gestionar>summary .ver{color:inherit!important}
+button,.btn,.access-btn,a.button,.button,.cta,a.pill,.tema,.perfil,.hero .red li:not(.enlace),.option,.redes a{border-radius:3px!important}
+header .acciones a.pill{border-radius:3px!important}
+button,.btn,.access-btn,a.button,.button,.cta,a.pill,.tema,.perfil,.option,.redes a{transition:transform .15s ease-out,box-shadow .15s ease-out,background-color .15s ease-out!important}
+button:not(:disabled):active,.btn:active,.access-btn:active,a.button:active,.button:active,.cta:not(:disabled):active,a.pill:active,.tema:active,.perfil:active,.option:active,.redes a:active{transform:translateY(1px) scale(.98)!important}
+@media (hover:hover){button:not(:disabled):hover,.btn:hover,.access-btn:hover,a.button:hover,.button:hover,.cta:not(:disabled):hover,a.pill:hover,.tema:hover,.hero .red a.perfil:hover,.option:hover,.redes a:hover{transform:translateY(-2px)!important;box-shadow:0 4px 10px rgba(0,0,0,.18)!important}}
+@media (prefers-reduced-motion:reduce){button,.btn,.access-btn,a.button,.button,.cta,a.pill,.tema,.hero .red a.perfil,.hero .red a.perfil:hover,.option,.redes a{transform:none!important}}
 /* Cabecera, men\xFA y pie comunes (ui/navegacion.ts). */
 .cabecera-sitio{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:8px 0;margin:0 0 8px}
 .cabecera-sitio .marca{display:inline-flex;line-height:0}
@@ -93018,7 +93032,7 @@ header.cabecera h1 em{background:none!important;padding:0!important}
  .escaner{grid-column:2;grid-row:3;align-self:stretch;margin:0}
  .col-a>p.section:last-of-type{grid-column:1/-1;grid-row:4;margin:8px 0 4px}
  .beneficios{grid-column:1/-1;grid-row:5;margin:0}
- .pie{margin-top:8px;padding-top:6px}
+ .pie{margin-top:4px;padding-top:4px}
  .red{flex-wrap:nowrap;gap:4px}
  .red li{font-size:12.5px;padding:6px 9px 6px 7px;gap:5px}
  .escaner{gap:6px;padding:10px 12px}
@@ -93048,14 +93062,17 @@ header.cabecera h1 em{background:none!important;padding:0!important}
  body{padding-top:6px;padding-bottom:6px}
  header.cabecera{margin-bottom:4px}
  header.cabecera h1{font-size:min(3.3vw,4.4vh)!important}
- .escaner .auto{max-width:240px}
+ .escaner .auto{max-width:200px}
+ .hero .board .cap{margin-bottom:0}
+ .access-actions{margin-top:2px}
+ .beneficios li{padding:5px 12px}
  .escaner .cap{font-size:12.5px}
  .access-note{font-size:12.5px;line-height:1.3}
  .col-a>p.section:last-of-type{margin:4px 0 2px}
  .pie{margin-top:2px;padding-top:2px}
  .pie .legal{line-height:1.2}
  .hero .board{row-gap:0}
- .hero{padding:10px 14px}
+ .hero{padding:8px 14px}
  .hero .lead{max-width:none;font-size:15px;line-height:1.35}
  .hero .silueta{display:none}
  .red{margin-top:8px}
