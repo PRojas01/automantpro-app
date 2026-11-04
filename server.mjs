@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='bdf2e1c433f6888de91f4029fa19d0817fdf5d98'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='58119bc740d0aa538c53213c8eceeb52e2909c05'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -92721,7 +92721,7 @@ ${seoHead({
 <body>
 <main>
   <header class="cabecera">${logo}
-    <h1>Asistente Inteligente de<br> <em>Mantenimiento Automotriz</em></h1>
+    <h1>Asistente Inteligente de <em>Mantenimiento Automotriz</em></h1>
     <span class="acciones">
       <a class="pill" href="/pruebas#crear">Registro gratis</a>
       <button id="tema" class="tema" type="button" aria-label="Cambiar de tema">${icon("sol", "sol")}${icon("luna", "luna")}</button>
@@ -93013,16 +93013,17 @@ h1 em{font-style:normal;color:var(--c-accent)}
     HOME_TITLE = "AutoMantPro \xB7 Mantenimiento, talleres y repuestos por WhatsApp en Ecuador";
     HOME_DESCRIPTION = "Mantenimiento de tu veh\xEDculo por WhatsApp en Ecuador: plan de mantenimiento por kilometraje, diagn\xF3stico con IA, talleres mec\xE1nicos con orden de trabajo y cotizaci\xF3n de repuestos. Sin instalar nada.";
     TITULO_REFERENCIA = `
-header.cabecera h1{grid-column:1/-1!important;grid-row:2!important;justify-self:center;text-align:center;margin:14px 0 4px!important;font-size:clamp(28px,3.3vw,45px)!important;font-weight:750!important;line-height:1.12!important;letter-spacing:-.038em!important;text-wrap:balance}
-header.cabecera h1 em{background:none!important;padding:0!important}
-@media (max-width:650px){header.cabecera h1{font-size:25px!important;letter-spacing:-.034em!important;margin-top:10px!important}}
+header.cabecera h1{grid-column:1/-1!important;grid-row:2!important;justify-self:center;text-align:center;white-space:nowrap;margin:6px 0 2px!important;font:600 min(21px,calc((100vw - 28px) / 24))/1.25 var(--c-display)!important;letter-spacing:0!important;color:var(--c-accent)!important;animation:titulo-entra .6s cubic-bezier(.2,.7,.2,1) .1s both!important}
+header.cabecera h1 em{background:none!important;padding:0!important;font-style:normal;animation:none!important}
+.hero .lead{font-family:var(--c-display)!important}
+@keyframes titulo-entra{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){header.cabecera h1{animation:none!important}}
 `;
     HOME_UNA_PANTALLA = `
 @media (min-width:651px){
  main{max-width:1240px}
  header.cabecera{grid-template-columns:auto minmax(0,1fr) auto;margin:0 0 8px}
  header.cabecera .acciones{grid-column:3}
- header.cabecera h1{grid-column:2!important;grid-row:1!important;margin:0!important;font-size:min(clamp(24px,3.3vw,45px),5vh)!important}
  .home{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-rows:auto auto 1fr auto auto;gap:0 20px;align-items:start}
  .col-a{display:contents}
  .hero{grid-column:1;grid-row:1/span 3;align-self:stretch;margin:0;padding:14px 16px}
@@ -93045,7 +93046,14 @@ header.cabecera h1 em{background:none!important;padding:0!important}
  .beneficios span{font-size:13px;line-height:1.35}
  .pie .redes a{min-height:30px;padding:3px 10px}
 }
+@media (min-width:651px) and (max-width:999px){
+ header.cabecera{margin-bottom:4px}
+ .escaner .auto{max-width:270px}
+ .escaner{gap:4px;padding:8px 12px}
+ .hero{padding:10px 14px}
+}
 @media (min-width:1000px){
+ header.cabecera h1{grid-column:2!important;grid-row:1!important;margin:0!important}
  .home{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}
  .escaner{grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:4px 12px;align-items:center}
  .escaner .cap{grid-column:1/-1}
@@ -93061,7 +93069,6 @@ header.cabecera h1 em{background:none!important;padding:0!important}
 @media (min-width:1000px) and (max-height:800px){
  body{padding-top:6px;padding-bottom:6px}
  header.cabecera{margin-bottom:4px}
- header.cabecera h1{font-size:min(3.3vw,4.4vh)!important}
  .escaner .auto{max-width:200px}
  .hero .board .cap{margin-bottom:0}
  .access-actions{margin-top:2px}
@@ -93085,7 +93092,6 @@ header.cabecera h1 em{background:none!important;padding:0!important}
  .escaner .leyenda li{padding:1px 0;line-height:1.2}
  /* El auto escaneado entra en la primera pantalla y sigue justo antes de \xABLo que ganas\xBB; el informe de ejemplo baja. */
  header.cabecera{margin-bottom:6px}
- header.cabecera h1{margin:6px 0 0!important}
  .col-a{display:flex;flex-direction:column}
  .hero{display:contents}
  .hero .silueta{display:none}
