@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='33e8956605bf9ed338a630f2e841770eb74e4c61'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='fc4cc293234ecda3bf7d36075ac84f87ac241af9'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -83317,7 +83317,7 @@ var init_theme = __esm({
 
 // packages/api/dist/interfaces/ui/navegacion.js
 function menuSitio() {
-  return `<nav class="menu-sitio" aria-label="Men\xFA del sitio"><a href="/">Inicio</a><a href="/soluciones">Soluciones</a><a href="/planes">Planes</a><a href="/servicios">Servicios</a><a href="/talleres">Talleres</a><a href="/pruebas#entrar">Ingresar</a></nav>`;
+  return `<nav class="menu-sitio" aria-label="Men\xFA del sitio"><a href="/">Inicio</a><a href="/soluciones">Soluciones</a><a href="/planes">Planes</a><a href="/servicios">Servicios</a><a href="/talleres">Talleres</a><a href="/cuenta#entrar">Ingresar</a></nav>`;
 }
 function cabeceraSitio() {
   return `<header class="cabecera-sitio"><a class="marca" href="/" aria-label="AutoMantPro, inicio">${logoImg()}</a>${menuSitio()}</header>`;
@@ -83828,17 +83828,17 @@ function renderEntryPage(input) {
   const contact = links ? `<p class="small linea"><a href="${escapeHtml(links.wame)}" rel="noopener">${number}</a></p>` : "";
   const access = links ? `<section class="access" aria-labelledby="access-title">
     <p class="section" id="access-title">C\xF3mo quieres entrar</p>
-    <div class="access-actions"><a class="access-btn" href="${escapeHtml(links.wame)}" rel="noopener">Abrir WhatsApp</a><a class="access-btn secondary" href="/pruebas#entrar">Ingresar o crear cuenta</a></div>
+    <div class="access-actions"><a class="access-btn" href="${escapeHtml(links.wame)}" rel="noopener">Abrir WhatsApp</a><a class="access-btn secondary" href="/cuenta#entrar">Ingresar o crear cuenta</a></div>
     <p class="access-note"><b>WhatsApp:</b> Escribe y te atendemos en el chat. No instalas nada. <b>Web:</b> entra con un c\xF3digo que te llega por WhatsApp o crea tu cuenta.</p>
   </section>` : "";
   const menu = links ? `${access}<details class="gestionar"><summary><span class="section">\xBFQu\xE9 quieres gestionar?</span><span class="ver">Saber m\xE1s</span></summary>
     <div class="menu perfiles">${ENTRY_PROFILES.map((profile) => `<article class="profile-card">
           <span class="badge">${icon(profile.icon)}</span>
           <span><b>${escapeHtml(profile.label)}</b><i>${escapeHtml(profile.hint)}</i>${masLink(profile.key, "Saber m\xE1s")}</span>
-          <div class="profile-actions"><a class="access-btn" href="/?perfil=${escapeHtml(profile.key)}${refQuery}" rel="noopener">WhatsApp</a><a class="access-btn secondary" href="${profile.key === "flota" ? "/planes" : "/pruebas#crear"}">Web</a></div>
+          <div class="profile-actions"><a class="access-btn" href="/?perfil=${escapeHtml(profile.key)}${refQuery}" rel="noopener">WhatsApp</a><a class="access-btn secondary" href="${profile.key === "flota" ? "/planes" : "/cuenta#crear"}">Web</a></div>
         </article>`).join("")}</div></details>
     ${contact}` : "";
-  const acceso = (key) => links ? `/?perfil=${key}${refQuery}` : "/pruebas#crear";
+  const acceso = (key) => links ? `/?perfil=${key}${refQuery}` : "/cuenta#crear";
   const red = `<ul class="red" aria-label="Entrar como">
       <li><a class="perfil" href="${acceso("dueno")}">${icon("auto")}Due\xF1os</a></li><li class="enlace" aria-hidden="true">\u21C4</li>
       <li><a class="perfil" href="${acceso("taller")}">${icon("taller")}Talleres</a></li><li class="enlace" aria-hidden="true">\u21C4</li>
@@ -83871,7 +83871,7 @@ ${seoHead({
   <header class="cabecera">${logo}
     <h1>Asistente Inteligente de <em>Mantenimiento Automotriz</em></h1>
     <span class="acciones">
-      <a class="pill" href="/pruebas#crear">Registro gratis</a>
+      <a class="pill" href="/cuenta#crear">Registro gratis</a>
       <button id="tema" class="tema" type="button" aria-label="Cambiar de tema">${icon("sol", "sol")}${icon("luna", "luna")}</button>
     </span>
   </header>
@@ -83888,7 +83888,7 @@ ${seoHead({
   </div>
   <div class="col-b">
   ${input.menu && links ? menu : `${button}
-  <a class="access-btn secondary entrar" href="/pruebas#entrar">Ingresar o crear cuenta</a>`}
+  <a class="access-btn secondary entrar" href="/cuenta#entrar">Ingresar o crear cuenta</a>`}
   </div>
   </div>
   <footer class="pie">
@@ -85241,15 +85241,15 @@ function validateSpecs(list7) {
 }
 function specFor(vehicle, list7 = SPECS) {
   const year2 = Number(vehicle.year);
-  const fits2 = (s) => fold(s.make) === fold(vehicle.make) && year2 >= s.yearFrom && year2 <= s.yearTo && (!s.fuel || s.fuel === vehicle.fuel);
-  return list7.find((s) => fits2(s) && fold(s.model) === fold(vehicle.model)) ?? list7.find((s) => fits2(s) && s.model === "*") ?? null;
+  const fits2 = (s) => fold2(s.make) === fold2(vehicle.make) && year2 >= s.yearFrom && year2 <= s.yearTo && (!s.fuel || s.fuel === vehicle.fuel);
+  return list7.find((s) => fits2(s) && fold2(s.model) === fold2(vehicle.model)) ?? list7.find((s) => fits2(s) && s.model === "*") ?? null;
 }
-var fold, SPECS;
+var fold2, SPECS;
 var init_vehicle_specs2 = __esm({
   "packages/api/dist/domain/maintenance/vehicle-specs.js"() {
     "use strict";
     init_vehicle_specs();
-    fold = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    fold2 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
     SPECS = validateSpecs(vehicle_specs_default);
   }
 });
@@ -85561,10 +85561,10 @@ function doneHint(items) {
 function pickDone(open, query, matchedId = null) {
   if (!open.length)
     return { kind: "none" };
-  const q = query ? fold2(query) : "";
+  const q = query ? fold3(query) : "";
   if (!q)
     return open.length === 1 ? { kind: "one", item: open[0] } : { kind: "choose", items: [...open] };
-  const found = open.filter((i) => i.serviceId === matchedId || fold2(i.serviceName) === q || q.length >= 4 && fold2(i.serviceName).includes(q));
+  const found = open.filter((i) => i.serviceId === matchedId || fold3(i.serviceName) === q || q.length >= 4 && fold3(i.serviceName).includes(q));
   if (found.length === 1)
     return { kind: "one", item: found[0] };
   if (found.length > 1)
@@ -85580,13 +85580,13 @@ function nextMilestone(item) {
   const byDate = (item.intervalMonths ?? null) !== null ? `en ${formatMonth(new Date(item.dueDate))}` : null;
   return [byKm, byDate].filter(Boolean).join(" o ") || "sin fecha calculada";
 }
-var km, fold2;
+var km, fold3;
 var init_reminder_done = __esm({
   "packages/api/dist/application/panel/reminder-done.js"() {
     "use strict";
     init_recommendations();
     km = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
-    fold2 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    fold3 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
   }
 });
 
@@ -85641,12 +85641,12 @@ function findOfferByKey(key, catalog) {
   return catalog.find((o) => o.key === key) ?? null;
 }
 function findOfferByName(text10, catalog, profile) {
-  const wanted = fold3(text10).replace(/^plan /, "");
+  const wanted = fold4(text10).replace(/^plan /, "");
   if (!wanted)
     return null;
   const paid = catalog.filter((o) => !isFreeOffer(o) && o.visible);
-  const exact = (list7) => list7.filter((o) => fold3(o.name) === wanted || fold3(o.key.replace("_", " ")) === wanted);
-  const loose = (list7) => list7.filter((o) => fold3(o.name).split(" ").includes(wanted) || fold3(o.name).endsWith(wanted));
+  const exact = (list7) => list7.filter((o) => fold4(o.name) === wanted || fold4(o.key.replace("_", " ")) === wanted);
+  const loose = (list7) => list7.filter((o) => fold4(o.name).split(" ").includes(wanted) || fold4(o.name).endsWith(wanted));
   const mine = profile ? paid.filter((o) => o.profile === profile) : [];
   for (const finder of [exact, loose]) {
     const inProfile = finder(mine);
@@ -85711,7 +85711,7 @@ function plansChatMessage(profile, catalog, current) {
     "Detalle completo: https://automantpro.app/planes"
   ].join("\n");
 }
-var IVA_RATE, TRIAL_DAYS, RENEWAL_NOTICE_DAYS, PROFILE_LABELS, PERIOD_LABELS, GARANTIA, DEFAULT_OFFERS, round2, isFreeOffer, money, count2, fold3;
+var IVA_RATE, TRIAL_DAYS, RENEWAL_NOTICE_DAYS, PROFILE_LABELS, PERIOD_LABELS, GARANTIA, DEFAULT_OFFERS, round2, isFreeOffer, money, count2, fold4;
 var init_catalog = __esm({
   "packages/api/dist/application/plans/catalog.js"() {
     "use strict";
@@ -85871,7 +85871,7 @@ var init_catalog = __esm({
     isFreeOffer = (offer) => offer.priceMonthly === 0 && offer.priceYearly === 0;
     money = (v) => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= 99999 ? round2(v) : void 0;
     count2 = (v) => typeof v === "number" && Number.isInteger(v) && v >= 0 && v <= 1e5 ? v : void 0;
-    fold3 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    fold4 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
   }
 });
 
@@ -85882,7 +85882,7 @@ function categoryOfService(serviceId) {
 function categoryName(id2) {
   return CATEGORIES.find((c) => c.id === id2)?.name ?? id2;
 }
-function fold4(text10) {
+function fold5(text10) {
   return text10.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
 }
 function placeLabel(text10) {
@@ -85894,10 +85894,10 @@ function placeLabel(text10) {
 function categoriesOf(services) {
   const found = /* @__PURE__ */ new Set();
   for (const raw of services) {
-    const value2 = fold4(String(raw));
+    const value2 = fold5(String(raw));
     if (!value2)
       continue;
-    const byId = CATEGORIES.find((c) => c.id === value2 || fold4(c.name) === value2);
+    const byId = CATEGORIES.find((c) => c.id === value2 || fold5(c.name) === value2);
     if (byId) {
       found.add(byId.id);
       continue;
@@ -85936,26 +85936,26 @@ function googleMapsSearchUrl(parts) {
 function placesOf(shops) {
   const byCity = /* @__PURE__ */ new Map();
   for (const shop of shops) {
-    const key = fold4(shop.city);
+    const key = fold5(shop.city);
     if (!key)
       continue;
     const entry = byCity.get(key) ?? { city: placeLabel(shop.city), zones: /* @__PURE__ */ new Map() };
-    if (shop.zone && fold4(shop.zone))
-      entry.zones.set(fold4(shop.zone), placeLabel(shop.zone));
+    if (shop.zone && fold5(shop.zone))
+      entry.zones.set(fold5(shop.zone), placeLabel(shop.zone));
     byCity.set(key, entry);
   }
   return [...byCity.values()].map((e9) => ({ city: e9.city, zones: [...e9.zones.values()].sort((a, b) => a.localeCompare(b, "es")) })).sort((a, b) => a.city.localeCompare(b.city, "es"));
 }
 function searchShops(records, query) {
-  const city = fold4(query.city ?? "");
-  const zone = fold4(query.zone ?? "");
+  const city = fold5(query.city ?? "");
+  const zone = fold5(query.zone ?? "");
   const service = query.service && CATEGORIES.some((c) => c.id === query.service) ? query.service : "";
   const origin = query.origin && insideEcuador(query.origin.lat, query.origin.lng) ? query.origin : null;
-  const scored = records.filter((r) => !city || fold4(r.city) === city).map((r) => {
+  const scored = records.filter((r) => !city || fold5(r.city) === city).map((r) => {
     const categories = categoriesOf(r.services);
     const point = r.precision === "exacta" && r.lat !== null && r.lng !== null && insideEcuador(r.lat, r.lng) ? { lat: r.lat, lng: r.lng } : null;
     const offers = !service || categories.includes(service);
-    const inZone = !!zone && fold4(r.zone ?? "") === zone;
+    const inZone = !!zone && fold5(r.zone ?? "") === zone;
     const distance = origin && point ? Math.round(distanceKm(origin, point) * 10) / 10 : null;
     const rating = r.ratingCount >= MIN_RATINGS ? { avg: Math.round(r.ratingAvg * 10) / 10, count: r.ratingCount } : null;
     const reasons = [];
@@ -86321,7 +86321,7 @@ function parseInspection(text10, items) {
   const entries = /* @__PURE__ */ new Map();
   let restOk = false;
   for (const raw of text10.split(/[;\n]+/).map((s) => s.trim()).filter(Boolean)) {
-    const token2 = fold5(raw);
+    const token2 = fold6(raw);
     if (token2 === "resto ok" || token2 === "todo lo demas ok" || token2 === "demas ok") {
       restOk = true;
       continue;
@@ -86451,7 +86451,7 @@ function areaStates(entries, items) {
     return { id: area.id, name: area.name, state, inspected: done.length, total: list7.length };
   }).filter((a) => a.total > 0);
 }
-var INSPECTION_AREAS, INSPECTION_ITEMS, TWO_WHEELS, SPARK, InspectionParseError, statusFromMeasure, fold5, STATUS_WORDS, STATUS_ICON, formatMeasure, INSPECTION_SERVICES;
+var INSPECTION_AREAS, INSPECTION_ITEMS, TWO_WHEELS, SPARK, InspectionParseError, statusFromMeasure, fold6, STATUS_WORDS, STATUS_ICON, formatMeasure, INSPECTION_SERVICES;
 var init_inspection_checklist = __esm({
   "packages/api/dist/domain/maintenance/inspection-checklist.js"() {
     "use strict";
@@ -86522,7 +86522,7 @@ var init_inspection_checklist = __esm({
       }
     };
     statusFromMeasure = (item, measure) => item.thresholds.cambiar(measure) ? "cambiar" : item.thresholds.observar(measure) ? "observar" : "ok";
-    fold5 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
+    fold6 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
     STATUS_WORDS = { ok: "ok", bien: "ok", bueno: "ok", observar: "observar", revisar: "observar", pronto: "observar", cambiar: "cambiar", cambio: "cambiar", urgente: "cambiar", na: "no_aplica", "n/a": "no_aplica", "no aplica": "no_aplica" };
     STATUS_ICON = { ok: "\u{1F7E2}", observar: "\u{1F7E0}", cambiar: "\u{1F534}", no_aplica: "\u26AA" };
     formatMeasure = (e9) => e9.measure === null ? "" : ` (${String(e9.measure).replace(".", ",")} ${e9.unit ?? ""})`.replace(" )", ")");
@@ -86830,14 +86830,14 @@ var init_fleet_access = __esm({
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
 import { createHash as createHash3, randomUUID as randomUUID7 } from "node:crypto";
 function matchService(text10) {
-  const f = fold6(text10);
-  const exact = SERVICES.find((s) => s.id === f || fold6(s.name) === f);
+  const f = fold7(text10);
+  const exact = SERVICES.find((s) => s.id === f || fold7(s.name) === f);
   if (exact)
     return exact.id;
   for (const [pattern, id2] of SYNONYMS)
     if (pattern.test(f))
       return id2;
-  return SERVICES.find((s) => fold6(s.name).includes(f) && f.length >= 5)?.id ?? null;
+  return SERVICES.find((s) => fold7(s.name).includes(f) && f.length >= 5)?.id ?? null;
 }
 async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ new Date()) {
   const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 5));
@@ -86886,7 +86886,7 @@ async function activeVehicle(conn, userId, includeAssigned = false) {
     fail2("VEHICLE_REQUIRED");
   return list7[0];
 }
-var rows7, VehicleCareError, fail2, fold6, createHashLike, short2, prefixOf, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES, serviceName, ORDER_STATUS, repairNoticeKey, VehicleCareStore;
+var rows7, VehicleCareError, fail2, fold7, createHashLike, short2, prefixOf, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES, serviceName, ORDER_STATUS, repairNoticeKey, VehicleCareStore;
 var init_vehicle_care_store = __esm({
   "packages/api/dist/infrastructure/messaging/vehicle-care-store.js"() {
     "use strict";
@@ -86914,7 +86914,7 @@ var init_vehicle_care_store = __esm({
     fail2 = (code3) => {
       throw new VehicleCareError(code3);
     };
-    fold6 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    fold7 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
     createHashLike = (text10) => createHash3("sha256").update(text10).digest("hex").slice(0, 12);
     short2 = (prefix, id2) => `${prefix}-${id2.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf = (code3) => `${code3.slice(2).toLowerCase()}%`;
@@ -87256,7 +87256,7 @@ Lo agregu\xE9 a la atenci\xF3n de ${label2} y avisamos a los responsables de ${S
           }
           return { userId, message: `${diagnosis.message}
 
-Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revise: Buscar servicio | ${fold6(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
+Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revise: Buscar servicio | ${fold7(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
         }
         if (command.action === "reminders") {
           await conn.query("UPDATE `Vehicle` SET remindersOptIn = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [command.on, userId]);
@@ -87381,7 +87381,7 @@ ${summary ?? ""}`.trim());
           return { userId, message: `Propuesta enviada al due\xF1o: visita ${code3} para ${formatEcDateTime(at)}. Te avisaremos cuando responda.` };
         }
         await this.insertAlert(conn, String(vehicle.id), command.label, command.dueAt, command.dueKm, userId, shop.id);
-        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold6(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label2}: "${command.label}" ${command.dueAt ? `el ${command.dueAt}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
+        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold7(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label2}: "${command.label}" ${command.dueAt ? `el ${command.dueAt}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
         return { userId, message: `Alerta creada para el ${label2}. El due\xF1o y tu taller la recibir\xE1n por WhatsApp cuando llegue el momento.` };
       }
       async budget(conn, userId, shop, command) {
@@ -88226,12 +88226,12 @@ var init_chat = __esm({
 function budgetLines(value2) {
   return value2.split(";").map((chunk) => chunk.trim()).filter(Boolean).map((chunk) => {
     const [head = "", ...rest] = chunk.split(":");
-    const kind = fold7(head) === "repuesto" ? "repuesto" : fold7(head) === "mano de obra" ? "mano_obra" : head;
+    const kind = fold8(head) === "repuesto" ? "repuesto" : fold8(head) === "mano de obra" ? "mano_obra" : head;
     const f = rest.join(":").split(/,\s+/).map((x) => x.trim());
     const price = (x) => Number(String(x ?? "").replace(/[$\s]/g, "").replace(/\.(?=\d{3}\b)/g, "").replace(",", "."));
     if (kind === "mano_obra")
       return { kind, description: f[0], brand: null, quantity: Number(f[1]), unitPrice: price(f[2]), quality: null };
-    return { kind, description: f[0], brand: f[1] || null, quantity: Number(f[2]), unitPrice: price(f[3]), quality: f[4] ? fold7(f[4]) : "nuevo" };
+    return { kind, description: f[0], brand: f[1] || null, quantity: Number(f[2]), unitPrice: price(f[3]), quality: f[4] ? fold8(f[4]) : "nuevo" };
   });
 }
 function normalizePlate2(value2) {
@@ -88242,7 +88242,7 @@ function normalizePlate2(value2) {
 function parseAccountCommand(raw) {
   const message2 = raw.replace(VISIT_SUFFIX, "");
   const parts = message2.split("|").map((s) => s.trim());
-  const verb = fold7(parts[0] ?? "");
+  const verb = fold8(parts[0] ?? "");
   let command = null;
   if (verb === "registrarme" && parts.length === 4 && accepted(parts[3]))
     command = { action: "registerOwner", name: parts[1], city: parts[2] };
@@ -88251,7 +88251,7 @@ function parseAccountCommand(raw) {
   else if (verb === "registrar almacen" && parts.length === 8 && accepted(parts[7]))
     command = { action: "registerStore", name: parts[1], ruc: parts[2], city: parts[3], zone: parts[4], address: parts[5], categories: parts[6] };
   else if (verb === "vehiculo" && parts.length === 7)
-    command = { action: "addVehicle", vehicleClass: fold7(parts[1] ?? "").replace(/\s+/g, "_"), fuel: fold7(parts[2] ?? "").replace(/\s+/g, "_"), make: parts[3], model: parts[4], year: Number(parts[5]), currentKm: Number((parts[6] ?? "").replace(/[.\s,]/g, "")) };
+    command = { action: "addVehicle", vehicleClass: fold8(parts[1] ?? "").replace(/\s+/g, "_"), fuel: fold8(parts[2] ?? "").replace(/\s+/g, "_"), make: parts[3], model: parts[4], year: Number(parts[5]), currentKm: Number((parts[6] ?? "").replace(/[.\s,]/g, "")) };
   else if ((withPlate(verb, "plan") || withPlate(verb, "plan completo")) && parts.length === 1)
     command = { action: "plan", full: verb.startsWith("plan completo"), ...withPlate(verb, "plan") ?? withPlate(verb, "plan completo") };
   else if ((verb === "mi vehiculo" || verb === "mi vehiculo asignado") && parts.length === 1)
@@ -88277,13 +88277,13 @@ function parseAccountCommand(raw) {
   else if ((withPlate(verb, "inspeccion") || withPlate(verb, "ultima inspeccion")) && parts.length === 1)
     command = { action: "lastInspection", ...withPlate(verb, "inspeccion") ?? withPlate(verb, "ultima inspeccion") };
   else if (/^ingreso [cC]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 6)
-    command = { action: "checkIn", appointmentRef: ref2(verb), km: kmOf(parts[1]), fuel: fold7(parts[2] ?? ""), condition: parts[3], inventory: parts[4], requested: parts[5] };
+    command = { action: "checkIn", appointmentRef: ref2(verb), km: kmOf(parts[1]), fuel: fold8(parts[2] ?? ""), condition: parts[3], inventory: parts[4], requested: parts[5] };
   else if (/^presupuesto ot-\d{1,7}$/.test(verb) && parts.length === 2)
     command = { action: "budget", orderNumber: orderOf(verb), lines: budgetLines(parts[1] ?? "") };
   else if (/^calificar ot-\d{1,7}$/.test(verb) && (parts.length === 5 || parts.length === 6))
     command = { action: "rateShop", orderNumber: orderOf(verb), quality: Number(parts[1]), service: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), comment: parts[5] ?? "" };
   else if (/^calificar s-[0-9a-f]{6}$/.test(verb) && (parts.length === 6 || parts.length === 7))
-    command = { action: "rateStore", requestRef: ref2(verb), rightPart: fold7(parts[1] ?? "") === "si", quality: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), service: Number(parts[5]), comment: parts[6] ?? "" };
+    command = { action: "rateStore", requestRef: ref2(verb), rightPart: fold8(parts[1] ?? "") === "si", quality: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), service: Number(parts[5]), comment: parts[6] ?? "" };
   else if ((verb === "mis datos" || verb === "mi perfil") && parts.length === 1)
     command = { action: "myProfile" };
   else if ((verb === "mis datos" || verb === "mi perfil") && parts.length === 3)
@@ -88347,12 +88347,12 @@ function parseAccountCommand(raw) {
   else if (/^rechazar cita c-[0-9a-f]{6}$/.test(verb) && parts.length === 2)
     command = { action: "declineAppointment", appointmentRef: ref2(verb), reason: parts[1] };
   else if (verb === "ficha" && (parts.length === 8 || parts.length === 9))
-    command = { action: "createCard", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold7(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold7(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), services: (parts[8] ?? "").split(",").map((x) => x.trim()).filter(Boolean) };
+    command = { action: "createCard", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold8(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold8(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), services: (parts[8] ?? "").split(",").map((x) => x.trim()).filter(Boolean) };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 1)
     command = { action: "cardPreview", cardCode: secretOf(verb) };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 2 && accepted(parts[1]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: null, city: null, intoFleet: false };
-  else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 3 && fold7(parts[1] ?? "") === "flota" && accepted(parts[2]))
+  else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 3 && fold8(parts[1] ?? "") === "flota" && accepted(parts[2]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: null, city: null, intoFleet: true };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 4 && accepted(parts[3]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: parts[1], city: parts[2], intoFleet: false };
@@ -88367,7 +88367,7 @@ function parseAccountCommand(raw) {
   else if (verb === "registrar flota" && parts.length === 6 && accepted(parts[5]))
     command = { action: "registerFleet", name: parts[1], ruc: parts[2], city: parts[3], person: parts[4] };
   else if (verb === "vehiculo flota" && (parts.length === 8 || parts.length === 9))
-    command = { action: "fleetVehicle", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold7(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold7(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), unitCode: parts[8] ? parts[8] : null };
+    command = { action: "fleetVehicle", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold8(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold8(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), unitCode: parts[8] ? parts[8] : null };
   else if (plateAfter(verb, "retirar") && parts.length === 1)
     command = { action: "retireVehicle", plate: plateAfter(verb, "retirar") };
   else if (["agregar conductor", "agregar chofer", "agregar supervisor", "agregar administrador de flota"].includes(verb) && parts.length === 2)
@@ -88417,7 +88417,7 @@ function parseAccountCommand(raw) {
   else if (verb === "panel flota" && parts.length === 1)
     command = { action: "panelLink" };
   else if (verb === "mapa" && (parts.length === 3 || parts.length === 4) && accepted(parts[parts.length - 1])) {
-    const sector = parts.length === 4 && fold7(parts[1] ?? "") === "sector";
+    const sector = parts.length === 4 && fold8(parts[1] ?? "") === "sector";
     const point = parsePoint(parts[sector ? 2 : 1] ?? "");
     if ((parts.length === 3 || sector) && point)
       command = { action: "shopMap", lat: point.lat, lng: point.lng, precision: sector ? "sector" : "exacta" };
@@ -88430,7 +88430,7 @@ function parseAccountCommand(raw) {
   else if (["mi suscripcion", "suscripcion", "mi plan pagado"].includes(verb) && parts.length === 1)
     command = { action: "mySubscription" };
   else if (/^(quiero|contratar) (el )?plan .{2,40}$/.test(verb) && parts.length <= 3) {
-    const extras = parts.slice(1).map((p) => fold7(p));
+    const extras = parts.slice(1).map((p) => fold8(p));
     const period = extras.includes("anual") ? "anual" : "mensual";
     const unitsText = extras.find((p) => /^\d{1,3}( vehiculos?)?$/.test(p));
     if (extras.every((p) => p === "anual" || p === "mensual" || p === unitsText))
@@ -88445,8 +88445,8 @@ function parseAccountCommand(raw) {
     command = { action: "courseList" };
   else if (/^curso cu-\d{4}$/.test(verb) && parts.length === 1)
     command = { action: "courseDetail", code: verb.toUpperCase().slice(6) };
-  else if (/^inscribirme cu-\d{4}$/.test(verb) && (parts.length === 1 || accepted(parts[1]) && parts.slice(2).every((p) => ["compartir", "publico"].includes(fold7(p)))))
-    command = { action: "courseEnroll", code: verb.toUpperCase().match(/CU-\d{4}/)[0], consent: parts.length > 1, share: parts.slice(2).some((p) => fold7(p) === "compartir"), publicCertificate: parts.slice(2).some((p) => fold7(p) === "publico") };
+  else if (/^inscribirme cu-\d{4}$/.test(verb) && (parts.length === 1 || accepted(parts[1]) && parts.slice(2).every((p) => ["compartir", "publico"].includes(fold8(p)))))
+    command = { action: "courseEnroll", code: verb.toUpperCase().match(/CU-\d{4}/)[0], consent: parts.length > 1, share: parts.slice(2).some((p) => fold8(p) === "compartir"), publicCertificate: parts.slice(2).some((p) => fold8(p) === "publico") };
   else if (/^pago in-\d{4}$/.test(verb) && parts.length === 1)
     command = { action: "coursePayment", code: verb.toUpperCase().replace("PAGO ", "") };
   else if (verb === "listo" && parts.length === 1)
@@ -88479,7 +88479,7 @@ function parseAccountCommand(raw) {
 function isInvalidAccountCommand(value2) {
   return !!value2 && "invalid" in value2;
 }
-var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref6, plate, vehicleClass, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold7, accepted, orderOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, gallonsOf, FUEL_VERBS, money2, VISIT_SUFFIX;
+var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref6, plate, vehicleClass, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold8, accepted, orderOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, gallonsOf, FUEL_VERBS, money2, VISIT_SUFFIX;
 var init_commands = __esm({
   "packages/api/dist/application/chat-account/commands.js"() {
     "use strict";
@@ -88646,8 +88646,8 @@ var init_commands = __esm({
       "Baja y privacidad: BAJA (dejar de recibir avisos por WhatsApp) \xB7 ALTA (volver a recibirlos) \xB7 Eliminar mi cuenta (pide borrar tus datos personales)",
       "Conductor: Unirme flota J-XXXXXXXX | nombre | ACEPTO \xB7 Mi veh\xEDculo \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n \xB7 Salir de flota \xB7 Taller: Mis flotas \xB7 Aceptar convenio K-XXXXXX \xB7 Rechazar convenio K-XXXXXX"
     ].join("\n");
-    fold7 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
-    accepted = (value2) => fold7(value2 ?? "") === "acepto";
+    fold8 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+    accepted = (value2) => fold8(value2 ?? "") === "acepto";
     orderOf = (verb) => Number(verb.match(/ot-(\d+)$/)?.[1]);
     kmOf = (value2) => Number(String(value2 ?? "").replace(/km/i, "").replace(/[.\s,]/g, ""));
     ref2 = (verb) => (verb.match(/[a-z]-[0-9a-f]{6}$/i)?.[0] ?? "").toUpperCase();
@@ -89193,7 +89193,7 @@ var init_vehicle_costs_store = __esm({
 
 // packages/api/dist/application/panel/rtv-calendar.js
 function calendarFor(city, calendars = RTV_CALENDARS) {
-  return calendars[fold8(city ?? "")] ?? calendars.nacional ?? NATIONAL_RTV_CALENDAR;
+  return calendars[fold9(city ?? "")] ?? calendars.nacional ?? NATIONAL_RTV_CALENDAR;
 }
 function rtvMonth(plate2, city, calendars) {
   const digits = String(plate2 ?? "").match(/\d/g);
@@ -89219,7 +89219,7 @@ function rtvNotice(vehicle, now, label2) {
     message: `\u{1F5D3}\uFE0F Este mes (${MONTH_NAMES[month - 1]}) le toca la revisi\xF3n t\xE9cnica vehicular (RTV) y la matr\xEDcula a tu ${label2}, placa ${vehicle.plate}. El valor a pagar por la matr\xEDcula incluye el SOAT. Este calendario es referencial: confirma la fecha en la ANT o en tu agencia de matriculaci\xF3n. Para dejar de recibir avisos: Alertas no`
   };
 }
-var NATIONAL_RTV_CALENDAR, RTV_CALENDARS, MONTH_NAMES, fold8;
+var NATIONAL_RTV_CALENDAR, RTV_CALENDARS, MONTH_NAMES, fold9;
 var init_rtv_calendar = __esm({
   "packages/api/dist/application/panel/rtv-calendar.js"() {
     "use strict";
@@ -89230,7 +89230,7 @@ var init_rtv_calendar = __esm({
       guayaquil: NATIONAL_RTV_CALENDAR
     };
     MONTH_NAMES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-    fold8 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+    fold9 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
   }
 });
 
@@ -89734,7 +89734,7 @@ function bodyStyleFor(vehicle) {
     return null;
   if (cls === "camion")
     return "camion-liviano";
-  const name = fold9(`${String(vehicle.make ?? "")} ${String(vehicle.model ?? "")}`);
+  const name = fold10(`${String(vehicle.make ?? "")} ${String(vehicle.model ?? "")}`);
   for (const [style, words] of KEYWORDS2)
     if (words.test(name))
       return style;
@@ -89758,7 +89758,7 @@ function fichaSystems(items, inspection) {
   });
   return { systems, otros };
 }
-var BODY_STYLES, isBodyStyle, fold9, KEYWORDS2, SYSTEM_POINTS, SYSTEMS, SYSTEM_OF_SERVICE, RANK;
+var BODY_STYLES, isBodyStyle, fold10, KEYWORDS2, SYSTEM_POINTS, SYSTEMS, SYSTEM_OF_SERVICE, RANK;
 var init_ficha = __esm({
   "packages/api/dist/application/panel/ficha.js"() {
     "use strict";
@@ -89776,7 +89776,7 @@ var init_ficha = __esm({
       { id: "camion-liviano", label: "Cami\xF3n liviano" }
     ];
     isBodyStyle = (value2) => BODY_STYLES.some((b) => b.id === value2);
-    fold9 = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+    fold10 = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
     KEYWORDS2 = [
       ["pickup-doble", /\b(hilux|d-?max|dmax|bt-?50|ranger|frontier|np300|navara|l200|amarok|tacoma|f-?150|poer|wingle|t60|doble cabina)\b/],
       ["pickup-sencilla", /\b(cabina sencilla|cabina simple|saveiro|strada)\b/],
@@ -89833,7 +89833,7 @@ function text3(value2, min, max) {
     fail7("INVALID_EDIT_VALUE");
   return v;
 }
-var rows13, ProfileEditError, fail7, PROFILE_ACTIONS, fold10, PROFILE_FIELDS, VEHICLE_FIELDS, BUSINESS_FIELDS, REVIEWED_BUSINESS_FIELDS, WITH_ARTICLE, PLATE2, shown, ProfileEditStore;
+var rows13, ProfileEditError, fail7, PROFILE_ACTIONS, fold11, PROFILE_FIELDS, VEHICLE_FIELDS, BUSINESS_FIELDS, REVIEWED_BUSINESS_FIELDS, WITH_ARTICLE, PLATE2, shown, ProfileEditStore;
 var init_profile_edit_store = __esm({
   "packages/api/dist/infrastructure/messaging/profile-edit-store.js"() {
     "use strict";
@@ -89854,7 +89854,7 @@ var init_profile_edit_store = __esm({
       throw new ProfileEditError(code3);
     };
     PROFILE_ACTIONS = ["myProfile", "editProfile", "editVehicle", "myBusiness", "editBusiness"];
-    fold10 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
+    fold11 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
     PROFILE_FIELDS = { nombre: "name", ciudad: "city", correo: "email", email: "email" };
     VEHICLE_FIELDS = { marca: "make", modelo: "model", ano: "year", a\u00F1o: "year", placa: "plate", clase: "vehicleClass", combustible: "fuel", uso: "usageProfile" };
     BUSINESS_FIELDS = { nombre: "name", "nombre comercial": "name", horario: "hours", direccion: "address", sector: "zone", ciudad: "city", servicios: "specialties", categorias: "categories", entregas: "delivery", correo: "email", contacto: "contactName" };
@@ -89914,10 +89914,10 @@ var init_profile_edit_store = __esm({
         return { userId, message: lines.join("\n"), data: { profile, vehicles, business } };
       }
       async editProfile(conn, userId, role, rawField, rawValue) {
-        const column = PROFILE_FIELDS[fold10(rawField)] ?? fail7("INVALID_EDIT_FIELD");
+        const column = PROFILE_FIELDS[fold11(rawField)] ?? fail7("INVALID_EDIT_FIELD");
         let value2;
         if (column === "email") {
-          value2 = ["ninguno", "no", "-"].includes(fold10(rawValue)) ? null : rawValue.trim().toLowerCase();
+          value2 = ["ninguno", "no", "-"].includes(fold11(rawValue)) ? null : rawValue.trim().toLowerCase();
           if (value2 !== null && !/^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/.test(value2))
             fail7("INVALID_EDIT_VALUE");
           if (value2 !== null && (await rows13(conn, "SELECT id FROM `User` WHERE email = ? AND id <> ? LIMIT 1", [value2, userId])).length)
@@ -89932,7 +89932,7 @@ var init_profile_edit_store = __esm({
       async editVehicle(conn, userId, role, command) {
         if (role !== "dueno")
           fail7("FORBIDDEN");
-        const column = VEHICLE_FIELDS[fold10(command.field)] ?? fail7("INVALID_EDIT_FIELD");
+        const column = VEHICLE_FIELDS[fold11(command.field)] ?? fail7("INVALID_EDIT_FIELD");
         let vehicle;
         if (command.vehicleId) {
           const [own2] = await rows13(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND deletedAt IS NULL FOR UPDATE", [command.vehicleId, userId]);
@@ -89957,11 +89957,11 @@ var init_profile_edit_store = __esm({
           if (taken.length)
             fail7("PLATE_TAKEN");
         } else if (column === "vehicleClass" || column === "fuel") {
-          value2 = fold10(command.value).replace(/\s+/g, "_");
+          value2 = fold11(command.value).replace(/\s+/g, "_");
           if (!(column === "vehicleClass" ? classIds : fuelIds).includes(value2))
             fail7("INVALID_EDIT_VALUE");
         } else if (column === "usageProfile") {
-          value2 = fold10(command.value);
+          value2 = fold11(command.value);
           if (!["urbano", "carretera", "severo"].includes(value2))
             fail7("INVALID_EDIT_VALUE");
         } else if (column === "bodyStyle") {
@@ -89991,7 +89991,7 @@ var init_profile_edit_store = __esm({
         } else
           fail7("FORBIDDEN");
         let result;
-        const key = fold10(field2);
+        const key = fold11(field2);
         if (key === "kilometraje") {
           const km9 = Number(value2.trim());
           if (!Number.isInteger(km9) || km9 < 0 || km9 > 2e6)
@@ -90030,7 +90030,7 @@ var init_profile_edit_store = __esm({
         if (role !== "taller" && role !== "almacen")
           fail7("FORBIDDEN");
         const table = role === "taller" ? "Shop" : "Store";
-        const field2 = fold10(rawField);
+        const field2 = fold11(rawField);
         if (field2 === "ruc")
           fail7("RUC_LOCKED");
         const column = BUSINESS_FIELDS[field2] ?? fail7("INVALID_EDIT_FIELD");
@@ -90046,12 +90046,12 @@ var init_profile_edit_store = __esm({
             fail7("INVALID_EDIT_VALUE");
           value2 = JSON.stringify(list7);
         } else if (column === "delivery") {
-          const v = fold10(rawValue);
+          const v = fold11(rawValue);
           if (!["si", "no"].includes(v))
             fail7("INVALID_EDIT_VALUE");
           value2 = v === "si";
         } else if (column === "email") {
-          value2 = ["ninguno", "no", "-"].includes(fold10(rawValue)) ? null : rawValue.trim().toLowerCase();
+          value2 = ["ninguno", "no", "-"].includes(fold11(rawValue)) ? null : rawValue.trim().toLowerCase();
           if (value2 !== null && !/^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/.test(value2))
             fail7("INVALID_EDIT_VALUE");
         } else
@@ -91205,7 +91205,7 @@ var init_whatsapp = __esm({
 
 // packages/api/dist/application/chat-account/self-service.js
 function parseSelfService(message2) {
-  const text10 = fold11(String(message2 ?? "").slice(0, 200));
+  const text10 = fold12(String(message2 ?? "").slice(0, 200));
   if (BAJA.test(text10))
     return "baja";
   if (ALTA.test(text10))
@@ -91214,11 +91214,11 @@ function parseSelfService(message2) {
     return "eliminar_cuenta";
   return null;
 }
-var fold11, BAJA, ALTA, DELETE, OPT_OUT_ALLOWED_KINDS, SELF_SERVICE_MESSAGES;
+var fold12, BAJA, ALTA, DELETE, OPT_OUT_ALLOWED_KINDS, SELF_SERVICE_MESSAGES;
 var init_self_service = __esm({
   "packages/api/dist/application/chat-account/self-service.js"() {
     "use strict";
-    fold11 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[.!¡¿?]+/g, " ").replace(/\s+/g, " ").trim();
+    fold12 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[.!¡¿?]+/g, " ").replace(/\s+/g, " ").trim();
     BAJA = /^(baja|stop|darme de baja|dar de baja|no quiero recibir (mas )?mensajes)$/;
     ALTA = /^(alta|darme de alta)$/;
     DELETE = /^(eliminar|borrar|cerrar) (mi cuenta|mis datos|mi cuenta y mis datos)$/;
@@ -106901,7 +106901,7 @@ function platformCard(platform, csrf) {
     <label for="quietTo">Hasta</label>
     <input id="quietTo" name="quietTo" placeholder="07:00" value="${escapeHtml(platform.quietTo ?? "")}">
     <label for="welcomeIntro">L\xEDnea extra en la bienvenida (opcional)</label>
-    <input id="welcomeIntro" name="welcomeIntro" maxlength="300" value="${escapeHtml(platform.welcomeIntro ?? "")}" placeholder="Estamos en pruebas gratuitas hasta diciembre.">
+    <input id="welcomeIntro" name="welcomeIntro" maxlength="300" value="${escapeHtml(platform.welcomeIntro ?? "")}" placeholder="Reg\xEDstrate gratis y lleva el control de tu veh\xEDculo.">
     <label for="afterHoursMessage">Respuesta fuera de horario</label>
     <input id="afterHoursMessage" name="afterHoursMessage" maxlength="1000" value="${escapeHtml(platform.afterHoursMessage)}">
     <p class="muted">Funciones encendidas:</p><div class="checks">${switches}</div>
@@ -108171,7 +108171,7 @@ function userDetailView(input) {
       <div class="muted">Uso ${e7(v.usageProfile ?? "urbano")} \xB7 Recordatorios: ${v.remindersOptIn ? "s\xED" : "no"}</div>
       ${plan ? `<label for="plan-${e7(v.id)}">Plan listo para copiar y pegar en WhatsApp</label><textarea id="plan-${e7(v.id)}" readonly rows="12">${e7(plan)}</textarea>` : `<p class="muted">Sin plan: faltan la clase o el combustible, o no hay reglas para esa combinaci\xF3n.</p>`}${String(user.role) === "dueno" ? `<p><a class="button" href="/admin/users/${e7(user.id)}/schedule?vehicleId=${e7(v.id)}">Agendar turno</a> \xB7 <a href="/admin/work-orders/new?ownerId=${e7(user.id)}&amp;vehicleId=${e7(v.id)}">Orden de trabajo sin cita</a> \xB7 <a href="/admin/quotes/new?ownerId=${e7(user.id)}&amp;vehicleId=${e7(v.id)}">Cotizar repuesto</a> \xB7 <a href="/admin/service-requests/new?ownerId=${e7(user.id)}">Buscar especialista</a></p>` : ""}</div>`;
   }).join("");
-  const whatsappLink = ["dueno", "taller", "almacen"].includes(String(user.role)) && user.consentAt ? `<div class="card"><h2>WhatsApp del piloto</h2><p>Vincula este n\xFAmero solo si la persona te escribi\xF3 desde \xE9l. As\xED recibe por WhatsApp las respuestas y avisos de su cuenta.</p>
+  const whatsappLink = ["dueno", "taller", "almacen"].includes(String(user.role)) && user.consentAt ? `<div class="card"><h2>WhatsApp de la cuenta</h2><p>Vincula este n\xFAmero solo si la persona te escribi\xF3 desde \xE9l. As\xED recibe por WhatsApp las respuestas y avisos de su cuenta.</p>
       <form method="post" action="/admin/users/${e7(user.id)}/whatsapp-link">${csrfField10(input.csrf)}
       <label><input type="checkbox" name="confirm" value="si" required> Confirmo que esta persona me escribi\xF3 desde ${e7(phoneLabel(user.phone))}</label>
       <button class="full" type="submit">Vincular WhatsApp</button></form></div>` : "";
@@ -108670,7 +108670,7 @@ var init_registrations = __esm({
       sancion: "Sanci\xF3n registrada: queda el motivo y el aviso a la entidad.",
       lopdp: "Solicitud de datos registrada con su plazo de respuesta.",
       plan: "Pago registrado: queda pendiente hasta que un administrador lo verifique.",
-      whatsapp: "WhatsApp vinculado: este n\xFAmero ya recibe por el canal del piloto las respuestas y avisos de su cuenta."
+      whatsapp: "WhatsApp vinculado: este n\xFAmero ya recibe por este canal las respuestas y avisos de su cuenta."
     };
   }
 });
@@ -109120,7 +109120,7 @@ function resultCard(result, csrf) {
   if (!result.phone) {
     return `<div class="card">${visitLine(result)}<p class="error">No encontr\xE9 un celular de Ecuador en lo que pegaste. Pega el n\xFAmero del contacto (por ejemplo 099 123 4567).</p></div>`;
   }
-  const digits = phoneDigits(result.phone);
+  const digits = phoneDigits2(result.phone);
   const chat = `<a href="https://wa.me/${e8(digits)}" target="_blank" rel="noopener">Abrir chat</a>`;
   const message2 = `<label for="welcome">Mensaje para enviar</label><textarea id="welcome" readonly rows="10">${e8(result.message)}</textarea>`;
   if (!result.detail) {
@@ -109184,7 +109184,7 @@ function attendView(input) {
   ${input.result ? resultCard(input.result, input.csrf) : ""}
   ${input.result?.phone && input.copilot ? copilotCard({ csrf: input.csrf, query: input.query, copilot: input.copilot, draft: input.draft, customerText: input.customerText ?? input.query, instruction: input.instruction ?? "" }) : ""}</div>`;
 }
-var e8, csrfField11, phoneDigits, INTENT_LABELS;
+var e8, csrfField11, phoneDigits2, INTENT_LABELS;
 var init_views_attend = __esm({
   "packages/api/dist/interfaces/admin/views-attend.js"() {
     "use strict";
@@ -109196,7 +109196,7 @@ var init_views_attend = __esm({
     init_views_plans();
     e8 = (value2) => escapeHtml(value2 === null || value2 === void 0 ? "" : String(value2));
     csrfField11 = (token2) => `<input type="hidden" name="csrf" value="${e8(token2)}">`;
-    phoneDigits = (phone) => phone.replace(/\D/g, "");
+    phoneDigits2 = (phone) => phone.replace(/\D/g, "");
     INTENT_LABELS = {
       dueno: "Dijo que tiene un veh\xEDculo",
       taller: "Dijo que tiene un taller",
@@ -111806,6 +111806,16 @@ init_rate_limit();
 // packages/api/dist/infrastructure/auth/login-codes.js
 init_apply();
 import { createHmac, randomInt, randomUUID, timingSafeEqual } from "node:crypto";
+
+// packages/api/dist/application/auth/code-request.js
+var phoneDigits = (phone) => {
+  const d = phone.replace(/\D/g, "");
+  return /^0\d{9}$/.test(d) ? `593${d.slice(1)}` : d;
+};
+var fold = (text10) => text10.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+var isCodeRequest = (text10) => text10.length <= 80 && /codigo de acceso/.test(fold(text10)) && /automantpro/.test(fold(text10));
+
+// packages/api/dist/infrastructure/auth/login-codes.js
 var rows = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var secret = () => {
   const key = process.env.LOGIN_CODE_SECRET ?? process.env.JWT_SECRET;
@@ -111834,14 +111844,14 @@ var LoginCodes = class {
   constructor(connect = openConnection) {
     this.connect = connect;
   }
-  async create(phone, purpose) {
-    const digits = phone.replace(/\D/g, "");
+  async create(phone, purpose, answersInbound = false) {
+    const digits = phoneDigits(phone);
     const code3 = String(randomInt(0, 1e6)).padStart(6, "0");
     const id2 = randomUUID();
     const conn = await this.connect();
     try {
       await conn.query("INSERT INTO `WebLoginCode` (id, phone, purpose, codeHash, attempts, expiresAt) VALUES (?, ?, ?, ?, 0, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 10 MINUTE))", [id2, digits, purpose, hash(code3)]);
-      await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'auth.login_code', ?)", [randomUUID(), `web-code:${id2}`, digits, JSON.stringify({ message: `Tu c\xF3digo de AutoMantPro es ${code3}. Vence en 10 minutos. No lo compartas.` })]);
+      await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'auth.login_code', ?)", [randomUUID(), `web-code:${id2}`, digits, JSON.stringify({ message: `Tu c\xF3digo de AutoMantPro es ${code3}. Vence en 10 minutos. No lo compartas.`, ...answersInbound ? { allowedOutsideHours: true } : {} })]);
     } finally {
       await conn.end().catch(() => void 0);
     }
@@ -111850,7 +111860,7 @@ var LoginCodes = class {
     const conn = await this.connect();
     try {
       await conn.query("START TRANSACTION");
-      const found = await rows(conn, "SELECT id, codeHash, attempts FROM `WebLoginCode` WHERE phone = ? AND purpose = ? AND usedAt IS NULL AND expiresAt > UTC_TIMESTAMP(3) AND attempts < 5 ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [phone.replace(/\D/g, ""), purpose]);
+      const found = await rows(conn, "SELECT id, codeHash, attempts FROM `WebLoginCode` WHERE phone = ? AND purpose = ? AND usedAt IS NULL AND expiresAt > UTC_TIMESTAMP(3) AND attempts < 5 ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [phoneDigits(phone), purpose]);
       const row = found[0];
       if (!row) {
         await conn.query("COMMIT");
@@ -111874,6 +111884,10 @@ var LoginCodes = class {
   }
 };
 var loginCodes = new LoginCodes();
+async function answerCodeRequest(phone) {
+  const user = await findActiveUserByPhone(phone);
+  await loginCodes.create(phone, user ? "login" : "signup", true);
+}
 
 // packages/api/dist/interfaces/auth.routes.js
 init_password();
@@ -111979,7 +111993,7 @@ async function authRoutes(app2) {
     const parsed = codeRequestSchema.safeParse(request.body);
     if (!parsed.success)
       return reply.send({ data: { sent: true } });
-    const phone = parsed.data.phone.replace(/\D/g, "");
+    const phone = phoneDigits(parsed.data.phone);
     const ip = request.ip;
     const minute = loginCodePerMinute.hit(phone);
     const hour2 = loginCodePerHour.hit(phone);
@@ -112002,7 +112016,7 @@ async function authRoutes(app2) {
     const parsed = external_exports.object({ phone: external_exports.string().min(8).max(20), code: external_exports.string().regex(/^\d{6}$/) }).safeParse(request.body);
     if (!parsed.success)
       return reply.code(401).send({ data: null, error: { code: "UNAUTHORIZED", message: "C\xF3digo inv\xE1lido o vencido" } });
-    const phoneKey = parsed.data.phone.replace(/\D/g, "");
+    const phoneKey = phoneDigits(parsed.data.phone);
     const lock = loginLock.peek(phoneKey, request.ip);
     if (!lock.allowed)
       return reply.header("Retry-After", String(lock.retryAfter)).code(429).send({ data: null, error: { code: "RATE_LIMITED", message: "Demasiados intentos. Espera unos minutos." } });
@@ -112022,7 +112036,7 @@ async function authRoutes(app2) {
     if (!parsed.success)
       return reply.code(422).send({ data: null, error: { code: "VALIDATION_ERROR", message: "Datos no v\xE1lidos", details: parsed.error.issues } });
     const p = parsed.data;
-    const digits = p.phone.replace(/\D/g, "");
+    const digits = phoneDigits(p.phone);
     const phone = `+${digits}`;
     const profile = { ...p, phone, consent: "on" };
     const schema = p.role === "dueno" ? ownerSchema : p.role === "taller" ? shopSchema : storeSchema;
@@ -113858,8 +113872,10 @@ function clearMenu(){el('accountMenu').hidden=true;el('mobileMenu').hidden=true;
 `;
 
 // packages/api/dist/interfaces/pilot-page.js
-function renderPilotPage(nonce2) {
-  return `<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#343a40"><title>Pruebas con operador \xB7 AutoMantPro</title>
+var CODE_REQUEST_TEXT = "Quiero mi c\xF3digo de acceso a AutoMantPro";
+var codeLink = (number, id2) => number ? `<a id="${id2}" class="cod-wa" href="https://wa.me/${number}?text=${encodeURIComponent(CODE_REQUEST_TEXT)}" target="_blank" rel="noopener">Pedir c\xF3digo por WhatsApp</a><p>Se abre WhatsApp con el mensaje listo. Env\xEDalo y te respondemos con tu c\xF3digo de 6 d\xEDgitos.</p>` : "";
+function renderPilotPage(nonce2, number = null) {
+  return `<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#343a40"><title>Mi cuenta \xB7 AutoMantPro</title>
 <style nonce="${nonce2}">${THEME_TOKENS}
 *{box-sizing:border-box}body{font:16px/1.5 var(--c-font);background:var(--c-bg);color:var(--c-ink);margin:0}main{max-width:760px;margin:auto;padding:20px 16px 40px}
 h1{font-size:26px;line-height:1.15;font-weight:800;letter-spacing:-.035em}h2{font-size:11px;font-weight:700}h3{font-size:11px;font-weight:700;margin-top:22px}main>p{color:var(--c-muted)}
@@ -113876,20 +113892,20 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.45 var(--c-mono)}article{border-bottom:1px solid var(--c-line);padding:8px 0}
 details{margin:12px 0;background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:0 14px}details[open]{padding-bottom:14px}
 details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;cursor:pointer}
-.hidden{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}${SCAN_STYLES}${SISTEMA}${ESCANER_STYLES}</style>
+.hidden{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}main a.cod-wa{display:flex;align-items:center;justify-content:center;min-height:44px;margin:8px 0;background:var(--c-accent);color:var(--c-on-accent)!important;border-radius:3px;text-decoration:none;font-weight:600}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}${SCAN_STYLES}${SISTEMA}${ESCANER_STYLES}</style>
 ${MENU_MARKUP}
-<main>${cabeceraSitio()}<h1>Pruebas con atenci\xF3n humana</h1><p>El operador revisa cada mensaje. Preparar un comando no ejecuta la operaci\xF3n: debes enviarlo y el operador debe aprobarlo.</p><p>Los avisos se muestran aqu\xED. El env\xEDo real por WhatsApp sigue pendiente.</p><p><a href="/admin/local-agent">Conectar o revocar equipo de atenci\xF3n</a></p>
-<section id="login"><h2 id="entrar">Entrar con tu cuenta</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true">Con c\xF3digo por WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">Con contrase\xF1a</button></nav><form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form><form id="codeVerifyForm" class="hidden"><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><form id="loginForm" class="hidden"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label><h3 id="crear">Crear cuenta</h3><form id="signupForm"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><div id="signupFields"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Pedir c\xF3digo y continuar</button></form><form id="signupVerifyForm" class="hidden"><label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></section>
-<div id="chat" class="hidden"><div class="row2"><h2 id="who">Conversaci\xF3n de prueba</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div><section id="offlineStatus" hidden><span id="offlineCount"></span><button id="syncNow" type="button">Subir ahora</button><div id="failedOutbox"></div></section>${PANEL_MARKUP}<section id="studentCourses"><h2>Mis cursos</h2><div id="courseEnrollment"></div><div id="studentCourseItems"></div></section><section id="composer"><h2>Mensaje al operador</h2><form id="sendForm"><label for="message">Comando o mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar para revisi\xF3n</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
+<main>${cabeceraSitio()}<h1>Mi cuenta</h1><p>Entra o crea tu cuenta gratis. Tus veh\xEDculos, citas y avisos est\xE1n aqu\xED.</p>
+<section id="login"><h2 id="entrar">Entrar con tu cuenta</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true">Con c\xF3digo por WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">Con contrase\xF1a</button></nav>${number ? `<div id="codeRequestForm">${codeLink(number, "codeLink")}</div>` : `<form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form>`}<form id="codeVerifyForm"${number ? "" : ' class="hidden"'}><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><form id="loginForm" class="hidden"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label><h3 id="crear">Crear cuenta</h3><form id="signupForm"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><div id="signupFields"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Continuar</button></form><form id="signupVerifyForm" class="hidden">${codeLink(number, "signupCodeLink")}<label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></section>
+<div id="chat" class="hidden"><div class="row2"><h2 id="who">Mi cuenta</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div><section id="offlineStatus" hidden><span id="offlineCount"></span><button id="syncNow" type="button">Subir ahora</button><div id="failedOutbox"></div></section>${PANEL_MARKUP}<section id="studentCourses"><h2>Mis cursos</h2><div id="courseEnrollment"></div><div id="studentCourseItems"></div></section><section id="composer"><h2>Mensaje a AutoMantPro</h2><form id="sendForm"><label for="message">Tu mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
 <section id="expertCourses" class="hidden"><h2>Mis cursos como experto</h2><p id="expertStatus"></p><div id="expertItems"></div><form id="expertCreate"><label>T\xEDtulo <input name="titulo" required maxlength="191"></label><label>Slug <input name="slug" required maxlength="191"></label><label>Especialidad <input name="especialidad" required maxlength="100"></label><label>Nivel <input name="nivel" required maxlength="40"></label><label>Horas <input name="horas" type="number" min="1" required></label><label>Precio USD (vac\xEDo = gratis) <input name="precioUsd" type="number" min="0" step="0.01"></label><label>Nota m\xEDnima <input name="notaMinima" type="number" min="0" max="100" value="70"></label><button>Crear curso</button></form><form id="expertLesson"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>T\xEDtulo de lecci\xF3n <input name="titulo" required maxlength="191"></label><label>Video URL HTTPS <input name="videoUrl" type="url"></label><label>PDF URL HTTPS <input name="pdfUrl" type="url"></label><label>Texto (m\xE1ximo 900 caracteres) <textarea name="texto" maxlength="900"></textarea></label><button>Guardar lecci\xF3n</button></form><form id="expertQuestion"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>Pregunta <input name="enunciado" required maxlength="2000"></label><label>Opci\xF3n A <input name="optionA" required></label><label>Opci\xF3n B <input name="optionB" required></label><label>Respuesta correcta <select name="correcta"><option>A</option><option>B</option></select></label><button>Guardar pregunta</button></form></section>
 <details id="requestTools"><summary>Buscar un servicio o repuesto</summary><form id="requestForm"><label for="vehicle">Veh\xEDculo</label><select id="vehicle" required></select><button type="button" id="loadVehicles">Cargar mis veh\xEDculos</button><label for="kind">Necesidad</label><select id="kind"><option value="servicio">Servicio</option><option value="repuesto">Repuesto</option></select><label for="category">Categor\xEDa registrada (por ejemplo frenos)</label><input id="category" required maxlength="120"><label for="city">Ciudad</label><input id="city" required maxlength="120"><label for="zone">Sector</label><input id="zone" required maxlength="120"><label for="description">Descripci\xF3n</label><input id="description" required minlength="5" maxlength="1000"><button>Preparar solicitud</button></form></details>
 <details id="offerTools"><summary>Preparar una oferta</summary><p>Copia el identificador de solicitud del aviso recibido.</p><form id="offerForm"><label for="offerRequest">Solicitud</label><input id="offerRequest" required maxlength="36"><label for="price">Costo total USD</label><input id="price" type="number" min="0" max="999999" step=".01" required><label for="duration">Duraci\xF3n del trabajo o plazo de entrega en minutos</label><input id="duration" type="number" min="1" max="43200" step="1" required><label for="date">Fecha disponible</label><input id="date" type="date" required><label for="time">Hora en Ecuador continental</label><input id="time" type="time" required><label for="notes">Condiciones</label><textarea id="notes" maxlength="300"></textarea><label for="brand">Marca del repuesto (opcional)</label><input id="brand" maxlength="120"><label for="quality">Calidad (opcional)</label><select id="quality"><option value="">Sin especificar</option><option value="original">Original</option><option value="alterno">Alterno</option><option value="usado">Usado</option></select><label for="warrantyDays">Garant\xEDa en d\xEDas (opcional)</label><input id="warrantyDays" type="number" min="0" max="3650" step="1"><button>Preparar oferta</button></form></details>
 <details id="decisionTools"><summary>Comparar, elegir o cancelar</summary><form id="decisionForm"><label for="requestId">Solicitud</label><input id="requestId" required maxlength="36"><label for="decision">Operaci\xF3n</label><select id="decision"><option value="Ofertas">Comparar ofertas</option><option value="Aceptar">Aceptar una oferta</option><option value="Cancelar">Cancelar solicitud abierta</option></select><label for="offerId">Oferta que deseas aceptar</label><input id="offerId" maxlength="36"><button>Preparar operaci\xF3n</button></form><p>Aceptar un servicio solicita una cita; el taller confirma despu\xE9s de revisar su agenda. Al aceptar un repuesto, el almac\xE9n confirma stock y fecha de entrega o retiro.</p></details>
-<details id="appointmentTools"><summary>Confirmar una cita solicitada</summary><form id="appointmentForm"><label for="appointment">Cita pendiente</label><select id="appointment" required></select><p>Antes de confirmar, el taller y el operador deben revisar disponibilidad y posibles conflictos en la agenda.</p><button>Preparar confirmaci\xF3n</button></form></details>
-<h3 id="citas">Citas del piloto</h3><div id="appointments"></div>
+<details id="appointmentTools"><summary>Confirmar una cita solicitada</summary><form id="appointmentForm"><label for="appointment">Cita pendiente</label><select id="appointment" required></select><p>Antes de confirmar, revisa disponibilidad y posibles conflictos en tu agenda.</p><button>Preparar confirmaci\xF3n</button></form></details>
+<h3 id="citas">Citas</h3><div id="appointments"></div>
 <h3 id="avisos">Avisos para tu cuenta</h3><button id="refresh" type="button">Actualizar avisos y respuestas</button><div id="notices"></div><button id="older" type="button" class="hidden">Ver avisos anteriores</button>
 <h3 id="historial">Mensajes y respuestas recientes</h3><p>El historial se recupera al volver a entrar, incluso despu\xE9s de un corte.</p><div id="messages"></div>
-<details id="vincular"><summary>Vinculaci\xF3n futura con WhatsApp</summary><button id="link" type="button">Preparar v\xEDnculo de WhatsApp</button><pre id="linkCode"></pre></details></section></div><p id="status" role="status"></p>${pieSitio()}</main>
+<details id="vincular"><summary>Vincular mi WhatsApp</summary><button id="link" type="button">Generar c\xF3digo de v\xEDnculo</button><pre id="linkCode"></pre></details></section></div><p id="status" role="status"></p>${pieSitio()}</main>
 <script nonce="${nonce2}">
 const el=id=>document.getElementById(id);${PANEL_SCRIPT}${MENU_SCRIPT}let token=null;let generation=0;let role=null;let timer=null;let pendingSend=null;let sending=false;let cursor=null;let loadedOlder=false;let historyFingerprint='';let userId=null;const noticeItems=new Map();
 const OFFLINE_DB='automantpro-offline';let offlineDb=null;if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(()=>{});
@@ -113921,28 +113937,28 @@ el('expertQuestion').onsubmit=async event=>{event.preventDefault();const form=ne
 function status(text){el('status').textContent=text;}function text(parent,value){const p=document.createElement('pre');p.textContent=value;parent.append(p);}
 async function clearOffline(){offlineDb?.close();offlineDb=null;await new Promise(resolve=>{const req=indexedDB.deleteDatabase(OFFLINE_DB);req.onsuccess=req.onerror=req.onblocked=resolve;});}
 async function leave(){const items=userId?(await dbAll('outbox').catch(()=>[])).filter(x=>x.userId===userId):[];if(items.length&&!window.confirm('Hay registros pendientes sin subir. Al salir se perder\xE1n. \xBFQuieres continuar?'))return;webSession('logout').catch(()=>{});await clearOffline();localStorage.removeItem('automantpro-offline-user');token=null;userId=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;cursor=null;loadedOlder=false;historyFingerprint='';noticeItems.clear();clearMenu();el('chat').classList.add('hidden');el('login').classList.remove('hidden');for(const id of ['messages','notices','appointments','appointment','vehicle','panel','studentCourseItems','courseEnrollment','expertItems'])el(id).replaceChildren();el('expertCourses').classList.add('hidden');panelData=null;panelVehicle=null;booking={service:'',day:'',time:''};el('linkCode').textContent='';el('message').value='';el('sendForm').querySelector('button').disabled=false;for(const id of ['sendForm','requestForm','offerForm','decisionForm','appointmentForm'])el(id).reset();status('Sesi\xF3n cerrada. Vuelve a entrar para continuar.');}
-el('logout').onclick=()=>{void leave();};async function restoreOfflineSession(){if(navigator.onLine)return;let saved;try{saved=JSON.parse(localStorage.getItem('automantpro-offline-user')||'null');}catch{return;}if(!saved?.id||!['dueno','taller','almacen'].includes(saved.role))return;userId=saved.id;role=saved.role;try{await openOffline();const historyData=await dbGet('cache',userId+':/pilot/history');const noticesData=await dbGet('cache',userId+':/pilot/notices');const appointmentData=await dbGet('cache',userId+':/pilot/appointments');const panel=await dbGet('cache',userId+':/pilot/panel');if(!historyData&&!noticesData&&!appointmentData&&!panel)return;const savedAt=[historyData,noticesData,appointmentData,panel].filter(Boolean).map(x=>x.savedAt).sort().at(-1);generation++;buildMenu(saved.name||'Cuenta');el('login').classList.add('hidden');el('chat').classList.remove('hidden');el('who').textContent='Sin conexi\xF3n: '+(saved.name||'Cuenta');status('Sin conexi\xF3n \xB7 se muestran los \xFAltimos datos guardados.');if(savedAt)offlineNotice(savedAt);if(historyData){for(const m of historyData.data.items||[]){const a=document.createElement('article');text(a,'T\xFA: '+m.message);text(a,m.reply?'Operador: '+m.reply:'Estado: '+m.status);el('messages').append(a);}offlineNotice(historyData.savedAt);}if(noticesData){for(const n of noticesData.data.items||[])noticeItems.set(n.id,n);showNotices();}if(appointmentData){for(const a of appointmentData.data.items||[])text(el('appointments'),'Cita '+a.id+' | '+a.shopName+' | '+new Date(a.scheduledAt).toLocaleString('es-EC')+' | '+a.status);}if(panel){panelData=panel.data;panelVehicle=panel.data.vehicleId||null;renderPanel();}renderOutbox();}catch{}}
+el('logout').onclick=()=>{void leave();};async function restoreOfflineSession(){if(navigator.onLine)return;let saved;try{saved=JSON.parse(localStorage.getItem('automantpro-offline-user')||'null');}catch{return;}if(!saved?.id||!['dueno','taller','almacen'].includes(saved.role))return;userId=saved.id;role=saved.role;try{await openOffline();const historyData=await dbGet('cache',userId+':/pilot/history');const noticesData=await dbGet('cache',userId+':/pilot/notices');const appointmentData=await dbGet('cache',userId+':/pilot/appointments');const panel=await dbGet('cache',userId+':/pilot/panel');if(!historyData&&!noticesData&&!appointmentData&&!panel)return;const savedAt=[historyData,noticesData,appointmentData,panel].filter(Boolean).map(x=>x.savedAt).sort().at(-1);generation++;buildMenu(saved.name||'Cuenta');el('login').classList.add('hidden');el('chat').classList.remove('hidden');el('who').textContent='Sin conexi\xF3n: '+(saved.name||'Cuenta');status('Sin conexi\xF3n \xB7 se muestran los \xFAltimos datos guardados.');if(savedAt)offlineNotice(savedAt);if(historyData){for(const m of historyData.data.items||[]){const a=document.createElement('article');text(a,'T\xFA: '+m.message);text(a,m.reply?'AutoMantPro: '+m.reply:'Estado: '+m.status);el('messages').append(a);}offlineNotice(historyData.savedAt);}if(noticesData){for(const n of noticesData.data.items||[])noticeItems.set(n.id,n);showNotices();}if(appointmentData){for(const a of appointmentData.data.items||[])text(el('appointments'),'Cita '+a.id+' | '+a.shopName+' | '+new Date(a.scheduledAt).toLocaleString('es-EC')+' | '+a.status);}if(panel){panelData=panel.data;panelVehicle=panel.data.vehicleId||null;renderPanel();}renderOutbox();}catch{}}
 void restoreOfflineSession();
 el('syncNow').onclick=()=>void syncOutbox();navigator.serviceWorker?.addEventListener('message',event=>{if(event.data?.type==='SYNC_OUTBOX')void syncOutbox();});window.addEventListener('online',()=>void syncOutbox());document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')void syncOutbox();});
-function prepare(parts){if(parts.some(p=>String(p).includes('|'))){status('Escribe los datos sin el car\xE1cter |.');return;}el('message').value=parts.join(' | ');status('Comando preparado. Rev\xEDsalo y env\xEDalo al operador.');el('message').focus();}
+function prepare(parts){if(parts.some(p=>String(p).includes('|'))){status('Escribe los datos sin el car\xE1cter |.');return;}el('message').value=parts.join(' | ');status('Mensaje listo. Rev\xEDsalo y env\xEDalo.');el('message').focus();}
 function showNotices(){el('notices').replaceChildren();const items=[...noticeItems.values()].sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))||String(b.id).localeCompare(String(a.id)));if(!items.length)text(el('notices'),'Todav\xEDa no hay avisos para tu cuenta.');for(const n of items){const article=document.createElement('article');text(article,n.message);el('notices').append(article);}el('older').classList.toggle('hidden',!cursor);}
 async function loadNotices(epoch,before){const data=await api('/pilot/notices'+(before?'?before='+encodeURIComponent(before):''));if(epoch!==generation||!token)return;for(const n of data.items)noticeItems.set(n.id,n);if(before||!loadedOlder)cursor=data.nextCursor;showNotices();}
-async function loadHistory(epoch){const data=await api('/pilot/history');if(epoch!==generation||!token)return;const fingerprint=JSON.stringify(data.items);if(fingerprint===historyFingerprint)return;historyFingerprint=fingerprint;el('messages').replaceChildren();for(const m of data.items){const article=document.createElement('article');text(article,'T\xFA: '+m.message);text(article,m.reply?'Operador: '+m.reply:m.status==='dead'?'Necesita revisi\xF3n manual':'Estado: '+m.status+'; respuesta pendiente');el('messages').append(article);}if(!data.items.length)text(el('messages'),'Todav\xEDa no hay mensajes.');}
-async function loadAppointments(epoch){const data=await api('/pilot/appointments');if(epoch!==generation||!token)return;const previous=el('appointment').value;el('appointments').replaceChildren();el('appointment').replaceChildren();for(const a of data.items){const when=new Date(a.scheduledAt).toLocaleString('es-EC',{timeZone:'America/Guayaquil'});text(el('appointments'),'Cita '+a.id+' | '+a.shopName+' | '+when+' | '+a.status);if(role==='taller'&&a.status==='pending'){const option=document.createElement('option');option.value=a.requestId+':'+a.id;option.textContent=a.category+' | '+when;el('appointment').append(option);}}if([...el('appointment').options].some(o=>o.value===previous))el('appointment').value=previous;if(!data.items.length)text(el('appointments'),'No hay citas registradas en este piloto.');}
+async function loadHistory(epoch){const data=await api('/pilot/history');if(epoch!==generation||!token)return;const fingerprint=JSON.stringify(data.items);if(fingerprint===historyFingerprint)return;historyFingerprint=fingerprint;el('messages').replaceChildren();for(const m of data.items){const article=document.createElement('article');text(article,'T\xFA: '+m.message);text(article,m.reply?'AutoMantPro: '+m.reply:m.status==='dead'?'Nuestro equipo lo est\xE1 revisando':'Estado: '+m.status+'; te respondemos pronto');el('messages').append(article);}if(!data.items.length)text(el('messages'),'Todav\xEDa no hay mensajes.');}
+async function loadAppointments(epoch){const data=await api('/pilot/appointments');if(epoch!==generation||!token)return;const previous=el('appointment').value;el('appointments').replaceChildren();el('appointment').replaceChildren();for(const a of data.items){const when=new Date(a.scheduledAt).toLocaleString('es-EC',{timeZone:'America/Guayaquil'});text(el('appointments'),'Cita '+a.id+' | '+a.shopName+' | '+when+' | '+a.status);if(role==='taller'&&a.status==='pending'){const option=document.createElement('option');option.value=a.requestId+':'+a.id;option.textContent=a.category+' | '+when;el('appointment').append(option);}}if([...el('appointment').options].some(o=>o.value===previous))el('appointment').value=previous;if(!data.items.length)text(el('appointments'),'No hay citas registradas.');}
 async function refresh(epoch){await Promise.all([loadNotices(epoch),loadHistory(epoch),loadAppointments(epoch)]);}
 async function poll(epoch){if(epoch!==generation||!token)return;try{await refresh(epoch);}catch(err){if(epoch===generation)status(err.message);}finally{if(epoch===generation&&token)timer=setTimeout(()=>poll(epoch),5000);}}
-el('loginForm').onsubmit=async e=>{e.preventDefault();const epoch=++generation;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({phone:el('phone').value,password:el('password').value})});if(epoch!==generation)return;if(!['dueno','taller','almacen'].includes(data.user.role)){status('Las pruebas requieren una cuenta de due\xF1o, taller o almac\xE9n.');return;}remember(data);token=data.accessToken;userId=tokenUser(token);localStorage.setItem('automantpro-offline-user',JSON.stringify({id:userId,role:data.user.role,name:data.user.name}));void openOffline().then(()=>{renderOutbox();syncOutbox();});role=data.user.role;buildMenu(data.user.name);el('password').value='';el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}catch(err){if(epoch===generation)status(err.message);}finally{button.disabled=false;}};
-function acceptLogin(data){remember(data);token=data.accessToken;userId=tokenUser(token);localStorage.setItem('automantpro-offline-user',JSON.stringify({id:userId,role:data.user.role,name:data.user.name}));void openOffline().then(()=>{renderOutbox();syncOutbox();});role=data.user.role;buildMenu(data.user.name);el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent='Prueba: '+data.user.name+' ('+role+')';el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');const epoch=generation;poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}
-el('codeTab').onclick=()=>{el('codeTab').setAttribute('aria-selected','true');el('passwordTab').setAttribute('aria-selected','false');el('codeRequestForm').classList.remove('hidden');el('codeVerifyForm').classList.add('hidden');el('loginForm').classList.add('hidden');};
+el('loginForm').onsubmit=async e=>{e.preventDefault();const epoch=++generation;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({phone:el('phone').value,password:el('password').value})});if(epoch!==generation)return;if(!['dueno','taller','almacen'].includes(data.user.role)){status('Esta p\xE1gina es para cuentas de due\xF1o, taller o almac\xE9n.');return;}remember(data);token=data.accessToken;userId=tokenUser(token);localStorage.setItem('automantpro-offline-user',JSON.stringify({id:userId,role:data.user.role,name:data.user.name}));void openOffline().then(()=>{renderOutbox();syncOutbox();});role=data.user.role;buildMenu(data.user.name);el('password').value='';el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent=data.user.name;el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}catch(err){if(epoch===generation)status(err.message);}finally{button.disabled=false;}};
+function acceptLogin(data){remember(data);token=data.accessToken;userId=tokenUser(token);localStorage.setItem('automantpro-offline-user',JSON.stringify({id:userId,role:data.user.role,name:data.user.name}));void openOffline().then(()=>{renderOutbox();syncOutbox();});role=data.user.role;buildMenu(data.user.name);el('login').classList.add('hidden');el('chat').classList.remove('hidden');renderStudentCourses();el('who').textContent=data.user.name;el('requestTools').classList.toggle('hidden',role!=='dueno');el('decisionTools').classList.toggle('hidden',role!=='dueno');el('offerTools').classList.toggle('hidden',!['taller','almacen'].includes(role));el('appointmentTools').classList.toggle('hidden',role!=='taller');status('Sesi\xF3n iniciada.');const epoch=generation;poll(epoch);loadPanel(epoch).catch(err=>{if(epoch===generation)status(err.message);});}
+el('codeTab').onclick=()=>{el('codeTab').setAttribute('aria-selected','true');el('passwordTab').setAttribute('aria-selected','false');el('codeRequestForm').classList.remove('hidden');el('codeVerifyForm').classList.toggle('hidden',!el('codeLink'));el('loginForm').classList.add('hidden');};
 el('passwordTab').onclick=()=>{el('codeTab').setAttribute('aria-selected','false');el('passwordTab').setAttribute('aria-selected','true');el('codeRequestForm').classList.add('hidden');el('codeVerifyForm').classList.add('hidden');el('loginForm').classList.remove('hidden');};
 el('codeRequestForm').onsubmit=async e=>{e.preventDefault();try{const phone=el('codePhone').value.trim();await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'login'})});el('verifyPhone').value=phone;el('codeRequestForm').classList.add('hidden');el('codeVerifyForm').classList.remove('hidden');status('Si el n\xFAmero est\xE1 registrado, llegar\xE1 un c\xF3digo por WhatsApp.');}catch(err){status(err.message);}};
-el('codeVerifyForm').onsubmit=async e=>{e.preventDefault();const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/code/verify',{method:'POST',body:JSON.stringify({phone:el('verifyPhone').value.trim(),code:el('loginCode').value.trim()})});if(!['dueno','taller','almacen'].includes(data.user.role)){status('Esta cuenta no puede entrar al piloto.');return;}acceptLogin(data);}catch(err){status(err.message);}finally{button.disabled=false;}};
+el('codeVerifyForm').onsubmit=async e=>{e.preventDefault();const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/code/verify',{method:'POST',body:JSON.stringify({phone:el('verifyPhone').value.trim(),code:el('loginCode').value.trim()})});if(!['dueno','taller','almacen'].includes(data.user.role)){status('Esta p\xE1gina es para cuentas de due\xF1o, taller o almac\xE9n.');return;}acceptLogin(data);}catch(err){status(err.message);}finally{button.disabled=false;}};
 const signupValues={};function field(parent,id,label,type='text',required=true,options=null){const l=document.createElement('label');l.htmlFor=id;l.textContent=label;parent.append(l);const input=options?document.createElement('select'):document.createElement('input');input.id=id;input.name=id;input.required=required;if(type==='number'){input.type='number';}else if(!options)input.type=type;if(options){for(const [value,title] of options){const o=document.createElement('option');o.value=value;o.textContent=title;input.append(o);}}parent.append(input);return input;}
 function rebuildSignup(){const box=el('signupFields');box.replaceChildren();const profile=el('signupRole').value;if(!profile)return;field(box,'signupName','Tu nombre');field(box,'signupPhone','Celular de WhatsApp','tel');field(box,'signupCity','Ciudad');field(box,'signupEmail','Correo (opcional)','email',false);if(profile==='dueno'){field(box,'signupClass','Clase de veh\xEDculo','text',true,[['','Elige'],['liviano','Liviano'],['van','Van'],['comercial_liviano','Comercial liviano'],['camion','Cami\xF3n'],['bus','Bus'],['maquinaria_liviana','Maquinaria liviana']]);field(box,'signupFuel','Combustible','text',true,[['','Elige'],['gasolina','Gasolina'],['diesel','Di\xE9sel'],['hev','H\xEDbrido'],['phev','H\xEDbrido enchufable'],['bev','El\xE9ctrico'],['glp_gnv','GLP / GNV']]);field(box,'signupMake','Marca');field(box,'signupModel','Modelo');field(box,'signupYear','A\xF1o','number');field(box,'signupKm','Kilometraje','number');field(box,'signupPlate','Placa (opcional)','text',false);field(box,'signupUsage','Uso','text',false,[['urbano','Urbano'],['carretera','Carretera'],['severo','Severo']]);}else{field(box,'signupBusiness','Nombre comercial');field(box,'signupRuc','RUC');field(box,'signupAddress','Direcci\xF3n');field(box,'signupZone','Sector','text',false);field(box,'signupHours','Horario','text',false);if(profile==='taller'){field(box,'signupServices','Servicios (separa con coma)');}else{field(box,'signupCategories','Categor\xEDas','text',false);const d=field(box,'signupDelivery','\xBFHaces entregas?','checkbox',false);d.type='checkbox';}}}
 el('signupRole').onchange=rebuildSignup;
-el('signupForm').onsubmit=async e=>{e.preventDefault();if(!el('signupForm').reportValidity())return;const profile=el('signupRole').value;const phone=el('signupPhone').value.trim();try{const result=await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'signup'})});void result;signupValues.profile=profile;signupValues.phone=phone;signupValues.fields={};for(const input of el('signupFields').querySelectorAll('input,select'))signupValues.fields[input.id]=input.type==='checkbox'?(input.checked?'on':''):input.value.trim();signupValues.name=el('signupName').value.trim();signupValues.city=el('signupCity').value.trim();signupValues.email=el('signupEmail').value.trim();el('signupForm').classList.add('hidden');el('signupVerifyForm').classList.remove('hidden');status('Revisa WhatsApp para ver tu c\xF3digo.');}catch(err){status(err.message);}};
+el('signupForm').onsubmit=async e=>{e.preventDefault();if(!el('signupForm').reportValidity())return;const profile=el('signupRole').value;const phone=el('signupPhone').value.trim();try{if(!el('signupCodeLink'))await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'signup'})});signupValues.profile=profile;signupValues.phone=phone;signupValues.fields={};for(const input of el('signupFields').querySelectorAll('input,select'))signupValues.fields[input.id]=input.type==='checkbox'?(input.checked?'on':''):input.value.trim();signupValues.name=el('signupName').value.trim();signupValues.city=el('signupCity').value.trim();signupValues.email=el('signupEmail').value.trim();el('signupForm').classList.add('hidden');el('signupVerifyForm').classList.remove('hidden');status(el('signupCodeLink')?'Pide tu c\xF3digo por WhatsApp y escr\xEDbelo aqu\xED.':'Revisa WhatsApp para ver tu c\xF3digo.');}catch(err){status(err.message);}};
 el('signupVerifyForm').onsubmit=async e=>{e.preventDefault();const f=signupValues.fields;const payload={phone:signupValues.phone,code:el('signupCode').value.trim(),role:signupValues.profile,name:signupValues.name,city:signupValues.city,email:signupValues.email||undefined,consent:true};if(payload.role==='dueno')Object.assign(payload,{vehicleClass:f.signupClass,fuel:f.signupFuel,make:f.signupMake,model:f.signupModel,year:f.signupYear,currentKm:f.signupKm,plate:f.signupPlate,usageProfile:f.signupUsage,reminders:false});else{Object.assign(payload,{businessName:f.signupBusiness,ruc:f.signupRuc,address:f.signupAddress,zone:f.signupZone,hours:f.signupHours});if(payload.role==='taller')payload.services=f.signupServices.split(',').map(x=>x.trim()).filter(Boolean);else Object.assign(payload,{categories:f.signupCategories,delivery:f.signupDelivery==='on'});}const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/web-signup',{method:'POST',body:JSON.stringify(payload)});acceptLogin(data);}catch(err){status(err.message);}finally{button.disabled=false;}};
-el('sendForm').onsubmit=async e=>{e.preventDefault();if(sending||!token)return;const message=el('message').value.trim();if(!message){status('Escribe un mensaje.');return;}const epoch=generation;if(!pendingSend||pendingSend.message!==message)pendingSend={key:crypto.randomUUID(),message};const submission=pendingSend;const button=e.target.querySelector('button');sending=true;button.disabled=true;try{await api('/pilot/messages',{method:'POST',headers:{'Idempotency-Key':submission.key},body:JSON.stringify({message})});if(epoch!==generation)return;pendingSend=null;el('message').value='';status('En cola para revisi\xF3n humana.');await loadHistory(epoch);}catch(err){if(epoch===generation)status(err.message+'. Si la conexi\xF3n fall\xF3, vuelve a enviar el mismo texto para recuperar la solicitud sin duplicarla.');}finally{if(epoch===generation){sending=false;button.disabled=false;}}};
+el('sendForm').onsubmit=async e=>{e.preventDefault();if(sending||!token)return;const message=el('message').value.trim();if(!message){status('Escribe un mensaje.');return;}const epoch=generation;if(!pendingSend||pendingSend.message!==message)pendingSend={key:crypto.randomUUID(),message};const submission=pendingSend;const button=e.target.querySelector('button');sending=true;button.disabled=true;try{await api('/pilot/messages',{method:'POST',headers:{'Idempotency-Key':submission.key},body:JSON.stringify({message})});if(epoch!==generation)return;pendingSend=null;el('message').value='';status('Mensaje enviado. Te respondemos aqu\xED.');await loadHistory(epoch);}catch(err){if(epoch===generation)status(err.message+'. Si la conexi\xF3n fall\xF3, vuelve a enviar el mismo texto para recuperar la solicitud sin duplicarla.');}finally{if(epoch===generation){sending=false;button.disabled=false;}}};
 el('refresh').onclick=()=>{const epoch=generation;refresh(epoch).catch(err=>{if(epoch===generation)status(err.message);});};
 el('older').onclick=async()=>{if(!cursor)return;const epoch=generation;const before=cursor;try{await loadNotices(epoch,before);if(epoch===generation)loadedOlder=true;}catch(err){if(epoch===generation)status(err.message);}};
 el('loadVehicles').onclick=async()=>{const epoch=generation;try{const data=await api('/vehicles');if(epoch!==generation)return;const items=Array.isArray(data)?data:(data.items||data.vehicles||[]);el('vehicle').replaceChildren();for(const v of items){const option=document.createElement('option');option.value=v.id;option.textContent=[v.make,v.model,v.year].filter(Boolean).join(' ');el('vehicle').append(option);}status(items.length?'Veh\xEDculos cargados.':'No hay veh\xEDculos registrados.');}catch(err){if(epoch===generation)status(err.message);}};
@@ -113957,12 +113973,18 @@ el('link').onclick=async()=>{const epoch=generation;try{const data=await api('/p
 }
 async function pilotPageRoutes(app2, options = {}) {
   const config = options.config ?? new LocalAgentConfig();
-  app2.get("/sw.js", async (_request, reply) => reply.header("Cache-Control", "no-store").header("Service-Worker-Allowed", "/").header("Content-Security-Policy", "default-src 'none'; worker-src 'self'").type("application/javascript; charset=utf-8").send(`const CACHE='automantpro-static-v1';const STATIC=['/site.webmanifest','/favicon.ico','/favicon.svg','/apple-touch-icon.png','/icon-512.png','/logo.webp'];self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(STATIC))));self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(u.origin!==location.origin||u.pathname.startsWith('/api/'))return;if(e.request.mode==='navigate'&&u.pathname==='/pruebas'){e.respondWith(fetch(e.request).then(r=>{if(r.ok)caches.open(CACHE).then(c=>c.put(e.request,r.clone()));return r;}).catch(()=>caches.match(e.request)));return;}if(e.request.method==='GET'&&(u.pathname==='/site.webmanifest'||u.pathname.startsWith('/assets/')||/\\.(?:css|js|png|svg|ico|woff2?)$/.test(u.pathname))){e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(r=>{if(r.ok)caches.open(CACHE).then(c=>c.put(e.request,r.clone()));return r;})));}});self.addEventListener('sync',e=>{if(e.tag==='automantpro-outbox')e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(cs=>cs.forEach(c=>c.postMessage({type:'SYNC_OUTBOX'}))));});`));
-  app2.get("/pruebas", async (_request, reply) => {
+  app2.get("/sw.js", async (_request, reply) => reply.header("Cache-Control", "no-store").header("Service-Worker-Allowed", "/").header("Content-Security-Policy", "default-src 'none'; worker-src 'self'").type("application/javascript; charset=utf-8").send(`const CACHE='automantpro-static-v1';const STATIC=['/site.webmanifest','/favicon.ico','/favicon.svg','/apple-touch-icon.png','/icon-512.png','/logo.webp'];self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(STATIC))));self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(u.origin!==location.origin||u.pathname.startsWith('/api/'))return;if(e.request.mode==='navigate'&&u.pathname==='/cuenta'){e.respondWith(fetch(e.request).then(r=>{if(r.ok)caches.open(CACHE).then(c=>c.put(e.request,r.clone()));return r;}).catch(()=>caches.match(e.request)));return;}if(e.request.method==='GET'&&(u.pathname==='/site.webmanifest'||u.pathname.startsWith('/assets/')||/\\.(?:css|js|png|svg|ico|woff2?)$/.test(u.pathname))){e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(r=>{if(r.ok)caches.open(CACHE).then(c=>c.put(e.request,r.clone()));return r;})));}});self.addEventListener('sync',e=>{if(e.tag==='automantpro-outbox')e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(cs=>cs.forEach(c=>c.postMessage({type:'SYNC_OUTBOX'}))));});`));
+  app2.get("/pruebas", async (request, reply) => {
+    const q = request.url.indexOf("?");
+    return reply.redirect(`/cuenta${q < 0 ? "" : request.url.slice(q)}`, 301);
+  });
+  app2.get("/cuenta", async (_request, reply) => {
     const nonce2 = randomBytes(18).toString("base64");
     const enabled = await config.read().then((c) => c.enabled).catch(() => false);
     reply.header("Cache-Control", "no-store").header("X-Robots-Tag", "noindex, nofollow").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; connect-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`);
-    return enabled ? reply.type("text/html").send(renderPilotPage(nonce2)) : reply.code(503).type("text/html").send('<h1>Pruebas pendientes de activar</h1><p>El administrador debe conectar el equipo de atenci\xF3n en <a href="/admin/local-agent">Administraci\xF3n</a>.</p>');
+    const configured = await options.resolveNumber?.().catch(() => null);
+    const digits = (configured ?? process.env.WA_PUBLIC_NUMBER ?? "").replace(/\D/g, "");
+    return enabled ? reply.type("text/html").send(renderPilotPage(nonce2, digits.length >= 8 && digits.length <= 15 ? digits : null)) : reply.code(503).type("text/html").send('<h1>Volvemos enseguida</h1><p>Tu cuenta no est\xE1 disponible en este momento. Intenta de nuevo en unos minutos.</p><p><a href="/">Ir al inicio</a></p>');
   });
 }
 
@@ -114533,6 +114555,7 @@ var PilotPanelStore = class {
 // packages/api/dist/interfaces/local-agent.routes.js
 init_error_messages();
 init_apply();
+init_rate_limit();
 var lease = external_exports.string().uuid();
 var params = external_exports.object({ wamid: external_exports.string().min(1).max(191) });
 async function localAgentRoutes(app2, options = {}) {
@@ -114544,6 +114567,7 @@ async function localAgentRoutes(app2, options = {}) {
   const outbox = options.outbox ?? new MysqlOutboxDeliveryStore();
   const imports = new MysqlImportedContactStore();
   const panel = options.panel ?? new PilotPanelStore();
+  const answerCode = options.answerCode ?? answerCodeRequest;
   const idempotent = (userId, key, body, action) => runIdempotent({
     async claim(owner, idempotencyKey, hash2) {
       const conn = await openConnection();
@@ -114878,6 +114902,12 @@ async function localAgentRoutes(app2, options = {}) {
     const parsed = external_exports.object({ id: external_exports.string().regex(/^[A-Za-z0-9_.:@=+-]{8,150}$/), phone: external_exports.string().regex(/^\d{6,32}$/), text: external_exports.string().trim().min(1).max(2e3), category: external_exports.enum(["automantpro", "negocio", "personal", "notificacion", "sin_clasificar"]).optional() }).strict().safeParse(request.body);
     if (!parsed.success)
       return reply.code(422).send({ data: null, error: { code: "INVALID_INBOUND_MESSAGE" } });
+    if (isCodeRequest(parsed.data.text)) {
+      const digits = phoneDigits(parsed.data.phone);
+      if (loginCodePerMinute.hit(digits).allowed && loginCodePerHour.hit(digits).allowed)
+        await answerCode(digits);
+      return { data: { accepted: true, duplicate: false }, error: null };
+    }
     const created = await inbound.enqueue({ wamid: `wweb:${parsed.data.id}`, phone: parsed.data.phone, payload: { channel: "whatsapp", message: parsed.data.text, ...parsed.data.category ? { category: parsed.data.category } : {} } });
     return { data: { accepted: true, duplicate: !created }, error: null };
   });
@@ -115388,7 +115418,7 @@ function commandReply(command) {
     case "profile":
       return "Puedes consultar o actualizar tus datos desde Mi perfil. El cambio de tipo de cuenta y la verificaci\xF3n comercial los revisa el equipo para proteger tus operaciones.";
     case "human":
-      return "La atenci\xF3n humana est\xE1 disponible en el piloto guiado. Tu solicitud no se ha enviado autom\xE1ticamente; usa el canal de soporte indicado por AutoMantPro o pide al operador que registre el caso.";
+      return "La atenci\xF3n humana est\xE1 disponible. Tu solicitud no se ha enviado autom\xE1ticamente; cu\xE9ntanos tu caso por este chat y lo revisamos.";
     case "diagnosis":
       return "Para orientarte, describe lo que notas o indica un sistema: Motor, Frenos, Neum\xE1ticos, El\xE9ctrico, Suspensi\xF3n, Transmisi\xF3n, Climatizaci\xF3n, Carrocer\xEDa o Escape. Si hay p\xE9rdida de control, humo intenso, fuga de combustible o frenos que fallan, no conduzcas y busca ayuda profesional.";
   }
@@ -116066,6 +116096,7 @@ Disallow: /admin
 Disallow: /wa/
 Disallow: /flota/
 Disallow: /api/
+Disallow: /cuenta
 Disallow: /pruebas
 Disallow: /asistente
 
@@ -117449,7 +117480,7 @@ var HEADERS3 = {
 };
 var clip = (value2, max) => typeof value2 === "string" ? value2.replace(/\s+/g, " ").trim().slice(0, max) : "";
 function selected(a, b) {
-  return fold4(a) === fold4(b) ? " selected" : "";
+  return fold5(a) === fold5(b) ? " selected" : "";
 }
 function shopCard(shop, number, index) {
   const tags = [
@@ -117471,9 +117502,9 @@ function shopCard(shop, number, index) {
 function renderMapPage(input) {
   const nonce2 = escapeHtml(input.nonce);
   const places = placesOf(input.records);
-  const cityEntry = places.find((p) => fold4(p.city) === fold4(input.city)) ?? null;
+  const cityEntry = places.find((p) => fold5(p.city) === fold5(input.city)) ?? null;
   const city = cityEntry?.city ?? "";
-  const zone = cityEntry?.zones.find((z) => fold4(z) === fold4(input.zone)) ?? "";
+  const zone = cityEntry?.zones.find((z) => fold5(z) === fold5(input.zone)) ?? "";
   const service = CATEGORIES.some((c) => c.id === input.service) ? input.service : "";
   const shops = searchShops(input.records, { city, zone, service });
   const google = googleMapsSearchUrl({ service, zone, city: city || "Ecuador" });
@@ -118633,7 +118664,7 @@ async function courseWebRoutes(app2, options = {}) {
     const s = options.session ? options.session(req2, reply) : defaultSession(req2, reply, false);
     const lessons = c.lessons.map((l) => `<li>${e3(l.titulo)} ${s ? `<span class="locked">(inscr\xEDbete para acceder a las lecciones)</span>` : '<span class="locked">Bloqueada hasta inscribirte</span>'}</li>`).join("");
     const paid = !!c.precioUsd && c.precioUsd > 0;
-    const form = `<p><a href="/pruebas?curso=${encodeURIComponent(c.slug)}#cursos">Inscribirme</a>${s ? "" : " \xB7 Inicia sesi\xF3n o crea tu cuenta en la p\xE1gina siguiente."}</p>`;
+    const form = `<p><a href="/cuenta?curso=${encodeURIComponent(c.slug)}#cursos">Inscribirme</a>${s ? "" : " \xB7 Inicia sesi\xF3n o crea tu cuenta en la p\xE1gina siguiente."}</p>`;
     return send(reply, req2, "Curso", `<h1>${e3(c.titulo)}</h1><p>${e3(c.especialidad)} \xB7 ${e3(c.nivel)} \xB7 ${e3(c.horas)} horas \xB7 ${paid ? `$${e3(c.precioUsd)} USD` : "Gratis"}</p><p>Experto: ${e3(c.expertName)}</p>${c.altoVoltajeGas ? `<p class="notice">${e3(HIGH_VOLTAGE_GAS_NOTICE)}</p>` : ""}<h2>Lecciones</h2><ol>${lessons || "<li>Contenido pr\xF3ximamente.</li>"}</ol>${paid ? `<section><h2>Pago por transferencia</h2><p>${e3(options.transferInstructions ?? "Solicita al experto los datos para transferir. Luego env\xEDa el comprobante por WhatsApp con el texto Pago IN-XXXX.")}</p></section>` : ""}${form}<section><h2>Reportar contenido</h2><form method="post" action="/cursos/${e3(c.slug)}/reportar"><label>Motivo <textarea name="motivo" minlength="8" maxlength="1000" required></textarea></label><button>Enviar reporte</button></form></section>`);
   });
   app2.post("/cursos/:slug/inscribirme", async (req2, reply) => {
@@ -119100,7 +119131,7 @@ await app.register(marketplaceRoutes, { prefix: apiPrefix });
 await app.register(workOrderRoutes, { prefix: apiPrefix });
 await app.register(localMarketplaceRoutes, { prefix: apiPrefix });
 await app.register(localAgentRoutes, { prefix: apiPrefix });
-await app.register(pilotPageRoutes);
+await app.register(pilotPageRoutes, { resolveNumber: () => whatsappNumber.get() });
 await app.register(fleetPanelRoutes);
 await app.register(localAgentDownloadRoutes);
 await app.register(adminRoutes, { prefix: apiPrefix });
