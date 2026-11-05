@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='a329605cbb25e25bf8ce42b41f35efd3afbb64f2'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='f0164d59d2308154c6ab94f197ba106f457c137e'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -91874,7 +91874,7 @@ var init_outbox_delivery_store = __esm({
             if (err.code !== "ER_BAD_FIELD_ERROR")
               throw err;
           }
-          const [found] = await conn.query("SELECT o.id, o.kind, o.payload, COALESCE(i.phone, o.recipientPhone) AS phone FROM `NotificationOutbox` o LEFT JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId LEFT JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts < ? AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND ((o.recipientUserId IS NOT NULL AND i.phone IS NOT NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND (o.kind <> 'admin.alert' OR u.role = 'admin')" + optOut + ") OR (o.recipientUserId IS NULL AND o.recipientPhone IS NOT NULL AND (o.kind IN ('contact.welcome', 'contact.reply') OR (o.kind = 'contact.reactivation' AND EXISTS (SELECT 1 FROM `ImportedContact` c WHERE c.phone = o.recipientPhone AND c.status = 'approved'))))) ORDER BY o.createdAt, o.id LIMIT ?", [MAX_ATTEMPTS2, limit]);
+          const [found] = await conn.query("SELECT o.id, o.kind, o.payload, COALESCE(i.phone, o.recipientPhone) AS phone FROM `NotificationOutbox` o LEFT JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId LEFT JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts < ? AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND ((o.recipientUserId IS NOT NULL AND i.phone IS NOT NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND (o.kind <> 'admin.alert' OR u.role = 'admin')" + optOut + ") OR (o.recipientUserId IS NULL AND o.recipientPhone IS NOT NULL AND (o.kind IN ('contact.welcome', 'contact.reply') OR (o.kind = 'auth.login_code' AND JSON_EXTRACT(o.payload, '$.allowedOutsideHours') = TRUE) OR (o.kind = 'contact.reactivation' AND EXISTS (SELECT 1 FROM `ImportedContact` c WHERE c.phone = o.recipientPhone AND c.status = 'approved'))))) ORDER BY o.createdAt, o.id LIMIT ?", [MAX_ATTEMPTS2, limit]);
           const claimed = [];
           for (const row of found) {
             const payload = typeof row.payload === "string" ? JSON.parse(row.payload) : row.payload;
