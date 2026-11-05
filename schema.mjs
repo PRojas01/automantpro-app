@@ -22056,6 +22056,12 @@ var PLAN_OVERRIDE_STATEMENTS = [
   { kind: "createTable", target: "VehiclePlanOverrideLog", sql: "CREATE TABLE IF NOT EXISTS `VehiclePlanOverrideLog` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `serviceId` VARCHAR(191) NOT NULL, `before` JSON NULL, `after` JSON NOT NULL, `actorUserId` VARCHAR(191) NOT NULL, `actorRole` ENUM('dueno','taller') NOT NULL, `shopId` VARCHAR(191) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehiclePlanOverrideLog_vehicleId_serviceId_createdAt_idx` (`vehicleId`,`serviceId`,`createdAt`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
 ];
 
+// packages/api/src/infrastructure/schema-setup/model-plan-statements.ts
+var MODEL_PLAN_TABLES = ["VehicleModelPlan"];
+var MODEL_PLAN_STATEMENTS = [
+  { kind: "createTable", target: "VehicleModelPlan", sql: "CREATE TABLE IF NOT EXISTS `VehicleModelPlan` (`id` VARCHAR(191) NOT NULL, `marca` VARCHAR(80) NOT NULL, `modelo` VARCHAR(80) NOT NULL, `anioDesde` INT NOT NULL, `anioHasta` INT NOT NULL, `combustible` VARCHAR(20) NULL, `serviceId` VARCHAR(80) NOT NULL, `intervalKm` INT NULL, `intervalMonths` INT NULL, `fuente` VARCHAR(1000) NOT NULL, `verificado` TINYINT(1) NOT NULL DEFAULT 0, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), INDEX `VehicleModelPlan_marca_modelo_anio_idx` (`marca`, `modelo`, `anioDesde`, `anioHasta`)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+];
+
 // packages/api/src/infrastructure/schema-setup/inspection-statements.ts
 var INSPECTION_TABLES = ["VehicleInspection", "VehicleInspectionItem"];
 var INSPECTION_STATEMENTS = [
@@ -22088,8 +22094,8 @@ var COURSES_STATEMENTS = [
 ];
 
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
-var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
+var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));
   let conn2;

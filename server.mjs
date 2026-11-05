@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='fc4cc293234ecda3bf7d36075ac84f87ac241af9'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='a329605cbb25e25bf8ce42b41f35efd3afbb64f2'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -61837,6 +61837,18 @@ var init_plan_override_statements = __esm({
   }
 });
 
+// packages/api/dist/infrastructure/schema-setup/model-plan-statements.js
+var MODEL_PLAN_TABLES, MODEL_PLAN_STATEMENTS;
+var init_model_plan_statements = __esm({
+  "packages/api/dist/infrastructure/schema-setup/model-plan-statements.js"() {
+    "use strict";
+    MODEL_PLAN_TABLES = ["VehicleModelPlan"];
+    MODEL_PLAN_STATEMENTS = [
+      { kind: "createTable", target: "VehicleModelPlan", sql: "CREATE TABLE IF NOT EXISTS `VehicleModelPlan` (`id` VARCHAR(191) NOT NULL, `marca` VARCHAR(80) NOT NULL, `modelo` VARCHAR(80) NOT NULL, `anioDesde` INT NOT NULL, `anioHasta` INT NOT NULL, `combustible` VARCHAR(20) NULL, `serviceId` VARCHAR(80) NOT NULL, `intervalKm` INT NULL, `intervalMonths` INT NULL, `fuente` VARCHAR(1000) NOT NULL, `verificado` TINYINT(1) NOT NULL DEFAULT 0, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), INDEX `VehicleModelPlan_marca_modelo_anio_idx` (`marca`, `modelo`, `anioDesde`, `anioHasta`)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+    ];
+  }
+});
+
 // packages/api/dist/infrastructure/schema-setup/inspection-statements.js
 var INSPECTION_TABLES, INSPECTION_STATEMENTS;
 var init_inspection_statements = __esm({
@@ -82773,10 +82785,11 @@ var init_apply = __esm({
     init_map_statements();
     init_web_login_statements();
     init_plan_override_statements();
+    init_model_plan_statements();
     init_inspection_statements();
     init_courses_statements();
-    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
-    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES];
+    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
+    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES];
     DB_ENV = ["DB_HOST", "DB_PORT", "DB_NAME", "DB_USER", "DB_PASSWORD"];
     tableExists = (conn, table) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?", [table]);
     columnExists = (conn, table, column) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ?", [table, column]);
@@ -85254,6 +85267,67 @@ var init_vehicle_specs2 = __esm({
   }
 });
 
+// packages/api/dist/domain/maintenance/model-plan.js
+function matchModelPlanRows(rows33, vehicle) {
+  const year2 = Number(vehicle.year);
+  if (!Number.isFinite(year2))
+    return [];
+  const make = fold3(vehicle.make);
+  const model = fold3(vehicle.model);
+  const fuel2 = fold3(vehicle.fuel);
+  if (!make || !model)
+    return [];
+  const out = [];
+  for (const raw of rows33) {
+    const r = raw;
+    if (!truthy(r.verificado))
+      continue;
+    if (fold3(r.marca) !== make || fold3(r.modelo) !== model && fold3(r.modelo) !== GENERIC)
+      continue;
+    const from = Number(r.anioDesde);
+    const to = Number(r.anioHasta);
+    if (!Number.isFinite(from) || !Number.isFinite(to) || year2 < from || year2 > to)
+      continue;
+    const combust = r.combustible === null || r.combustible === void 0 ? null : fold3(r.combustible);
+    if (combust && combust !== fuel2)
+      continue;
+    const intervalKm = r.intervalKm === null || r.intervalKm === void 0 ? null : positiveInt(r.intervalKm);
+    const intervalMonths = r.intervalMonths === null || r.intervalMonths === void 0 ? null : positiveNum(r.intervalMonths);
+    if (intervalKm === null && intervalMonths === null)
+      continue;
+    const serviceId = String(r.serviceId ?? "").trim();
+    if (!serviceId)
+      continue;
+    out.push({ marca: String(r.marca), modelo: String(r.modelo), anioDesde: from, anioHasta: to, combustible: combust, serviceId, intervalKm, intervalMonths, verificado: true });
+  }
+  return out;
+}
+function modelPlanIntervals(rows33, vehicle) {
+  const intervals = {};
+  const matched = matchModelPlanRows(rows33, vehicle);
+  for (const row of [...matched.filter((r) => fold3(r.modelo) === GENERIC), ...matched.filter((r) => fold3(r.modelo) !== GENERIC)]) {
+    intervals[row.serviceId] = { km: row.intervalKm, months: row.intervalMonths };
+  }
+  return intervals;
+}
+var fold3, truthy, positiveInt, positiveNum, GENERIC;
+var init_model_plan = __esm({
+  "packages/api/dist/domain/maintenance/model-plan.js"() {
+    "use strict";
+    fold3 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    truthy = (v) => v === true || v === 1 || v === "1" || String(v ?? "").trim().toLowerCase() === "true";
+    positiveInt = (v) => {
+      const n = Number(v);
+      return Number.isFinite(n) && n > 0 ? Math.round(n) : null;
+    };
+    positiveNum = (v) => {
+      const n = Number(v);
+      return Number.isFinite(n) && n > 0 ? n : null;
+    };
+    GENERIC = "generico";
+  }
+});
+
 // packages/api/dist/application/registration/plan-text.js
 function overrideIntervals(overrides) {
   const intervals = {};
@@ -85292,7 +85366,8 @@ function planFor(vehicle) {
     const spec = specFor(vehicle);
     const overrides = Array.isArray(vehicle.planOverrides) ? vehicle.planOverrides : [];
     const converted = overrideIntervals(overrides);
-    const baseIntervals = { ...spec?.intervals ?? {}, ...converted.intervals };
+    const modelIntervals = modelPlanIntervals(Array.isArray(vehicle.modelPlan) ? vehicle.modelPlan : [], vehicle);
+    const baseIntervals = { ...spec?.intervals ?? {}, ...modelIntervals, ...converted.intervals };
     const plan = buildPlan({ vehicle: { classId, fuelId }, odometerKm: Number(vehicle.currentKm) || 0, usageProfile: usage, lastServices, intervals: baseIntervals });
     plan.items = plan.items.filter((item) => !converted.disabled.has(item.serviceId)).map((item) => {
       const override = overrides.find((entry) => entry.serviceId === item.serviceId);
@@ -85350,6 +85425,7 @@ var init_plan_text = __esm({
     init_maintenance();
     init_levels();
     init_vehicle_specs2();
+    init_model_plan();
     USAGE = ["urbano", "carretera", "severo"];
   }
 });
@@ -85561,10 +85637,10 @@ function doneHint(items) {
 function pickDone(open, query, matchedId = null) {
   if (!open.length)
     return { kind: "none" };
-  const q = query ? fold3(query) : "";
+  const q = query ? fold4(query) : "";
   if (!q)
     return open.length === 1 ? { kind: "one", item: open[0] } : { kind: "choose", items: [...open] };
-  const found = open.filter((i) => i.serviceId === matchedId || fold3(i.serviceName) === q || q.length >= 4 && fold3(i.serviceName).includes(q));
+  const found = open.filter((i) => i.serviceId === matchedId || fold4(i.serviceName) === q || q.length >= 4 && fold4(i.serviceName).includes(q));
   if (found.length === 1)
     return { kind: "one", item: found[0] };
   if (found.length > 1)
@@ -85580,13 +85656,13 @@ function nextMilestone(item) {
   const byDate = (item.intervalMonths ?? null) !== null ? `en ${formatMonth(new Date(item.dueDate))}` : null;
   return [byKm, byDate].filter(Boolean).join(" o ") || "sin fecha calculada";
 }
-var km, fold3;
+var km, fold4;
 var init_reminder_done = __esm({
   "packages/api/dist/application/panel/reminder-done.js"() {
     "use strict";
     init_recommendations();
     km = (n) => `${Math.round(n).toLocaleString("es-EC")} km`;
-    fold3 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    fold4 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
   }
 });
 
@@ -85641,12 +85717,12 @@ function findOfferByKey(key, catalog) {
   return catalog.find((o) => o.key === key) ?? null;
 }
 function findOfferByName(text10, catalog, profile) {
-  const wanted = fold4(text10).replace(/^plan /, "");
+  const wanted = fold5(text10).replace(/^plan /, "");
   if (!wanted)
     return null;
   const paid = catalog.filter((o) => !isFreeOffer(o) && o.visible);
-  const exact = (list7) => list7.filter((o) => fold4(o.name) === wanted || fold4(o.key.replace("_", " ")) === wanted);
-  const loose = (list7) => list7.filter((o) => fold4(o.name).split(" ").includes(wanted) || fold4(o.name).endsWith(wanted));
+  const exact = (list7) => list7.filter((o) => fold5(o.name) === wanted || fold5(o.key.replace("_", " ")) === wanted);
+  const loose = (list7) => list7.filter((o) => fold5(o.name).split(" ").includes(wanted) || fold5(o.name).endsWith(wanted));
   const mine = profile ? paid.filter((o) => o.profile === profile) : [];
   for (const finder of [exact, loose]) {
     const inProfile = finder(mine);
@@ -85711,7 +85787,7 @@ function plansChatMessage(profile, catalog, current) {
     "Detalle completo: https://automantpro.app/planes"
   ].join("\n");
 }
-var IVA_RATE, TRIAL_DAYS, RENEWAL_NOTICE_DAYS, PROFILE_LABELS, PERIOD_LABELS, GARANTIA, DEFAULT_OFFERS, round2, isFreeOffer, money, count2, fold4;
+var IVA_RATE, TRIAL_DAYS, RENEWAL_NOTICE_DAYS, PROFILE_LABELS, PERIOD_LABELS, GARANTIA, DEFAULT_OFFERS, round2, isFreeOffer, money, count2, fold5;
 var init_catalog = __esm({
   "packages/api/dist/application/plans/catalog.js"() {
     "use strict";
@@ -85871,7 +85947,7 @@ var init_catalog = __esm({
     isFreeOffer = (offer) => offer.priceMonthly === 0 && offer.priceYearly === 0;
     money = (v) => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= 99999 ? round2(v) : void 0;
     count2 = (v) => typeof v === "number" && Number.isInteger(v) && v >= 0 && v <= 1e5 ? v : void 0;
-    fold4 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    fold5 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
   }
 });
 
@@ -85882,7 +85958,7 @@ function categoryOfService(serviceId) {
 function categoryName(id2) {
   return CATEGORIES.find((c) => c.id === id2)?.name ?? id2;
 }
-function fold5(text10) {
+function fold6(text10) {
   return text10.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
 }
 function placeLabel(text10) {
@@ -85894,10 +85970,10 @@ function placeLabel(text10) {
 function categoriesOf(services) {
   const found = /* @__PURE__ */ new Set();
   for (const raw of services) {
-    const value2 = fold5(String(raw));
+    const value2 = fold6(String(raw));
     if (!value2)
       continue;
-    const byId = CATEGORIES.find((c) => c.id === value2 || fold5(c.name) === value2);
+    const byId = CATEGORIES.find((c) => c.id === value2 || fold6(c.name) === value2);
     if (byId) {
       found.add(byId.id);
       continue;
@@ -85936,26 +86012,26 @@ function googleMapsSearchUrl(parts) {
 function placesOf(shops) {
   const byCity = /* @__PURE__ */ new Map();
   for (const shop of shops) {
-    const key = fold5(shop.city);
+    const key = fold6(shop.city);
     if (!key)
       continue;
     const entry = byCity.get(key) ?? { city: placeLabel(shop.city), zones: /* @__PURE__ */ new Map() };
-    if (shop.zone && fold5(shop.zone))
-      entry.zones.set(fold5(shop.zone), placeLabel(shop.zone));
+    if (shop.zone && fold6(shop.zone))
+      entry.zones.set(fold6(shop.zone), placeLabel(shop.zone));
     byCity.set(key, entry);
   }
   return [...byCity.values()].map((e9) => ({ city: e9.city, zones: [...e9.zones.values()].sort((a, b) => a.localeCompare(b, "es")) })).sort((a, b) => a.city.localeCompare(b.city, "es"));
 }
 function searchShops(records, query) {
-  const city = fold5(query.city ?? "");
-  const zone = fold5(query.zone ?? "");
+  const city = fold6(query.city ?? "");
+  const zone = fold6(query.zone ?? "");
   const service = query.service && CATEGORIES.some((c) => c.id === query.service) ? query.service : "";
   const origin = query.origin && insideEcuador(query.origin.lat, query.origin.lng) ? query.origin : null;
-  const scored = records.filter((r) => !city || fold5(r.city) === city).map((r) => {
+  const scored = records.filter((r) => !city || fold6(r.city) === city).map((r) => {
     const categories = categoriesOf(r.services);
     const point = r.precision === "exacta" && r.lat !== null && r.lng !== null && insideEcuador(r.lat, r.lng) ? { lat: r.lat, lng: r.lng } : null;
     const offers = !service || categories.includes(service);
-    const inZone = !!zone && fold5(r.zone ?? "") === zone;
+    const inZone = !!zone && fold6(r.zone ?? "") === zone;
     const distance = origin && point ? Math.round(distanceKm(origin, point) * 10) / 10 : null;
     const rating = r.ratingCount >= MIN_RATINGS ? { avg: Math.round(r.ratingAvg * 10) / 10, count: r.ratingCount } : null;
     const reasons = [];
@@ -86321,7 +86397,7 @@ function parseInspection(text10, items) {
   const entries = /* @__PURE__ */ new Map();
   let restOk = false;
   for (const raw of text10.split(/[;\n]+/).map((s) => s.trim()).filter(Boolean)) {
-    const token2 = fold6(raw);
+    const token2 = fold7(raw);
     if (token2 === "resto ok" || token2 === "todo lo demas ok" || token2 === "demas ok") {
       restOk = true;
       continue;
@@ -86451,7 +86527,7 @@ function areaStates(entries, items) {
     return { id: area.id, name: area.name, state, inspected: done.length, total: list7.length };
   }).filter((a) => a.total > 0);
 }
-var INSPECTION_AREAS, INSPECTION_ITEMS, TWO_WHEELS, SPARK, InspectionParseError, statusFromMeasure, fold6, STATUS_WORDS, STATUS_ICON, formatMeasure, INSPECTION_SERVICES;
+var INSPECTION_AREAS, INSPECTION_ITEMS, TWO_WHEELS, SPARK, InspectionParseError, statusFromMeasure, fold7, STATUS_WORDS, STATUS_ICON, formatMeasure, INSPECTION_SERVICES;
 var init_inspection_checklist = __esm({
   "packages/api/dist/domain/maintenance/inspection-checklist.js"() {
     "use strict";
@@ -86522,7 +86598,7 @@ var init_inspection_checklist = __esm({
       }
     };
     statusFromMeasure = (item, measure) => item.thresholds.cambiar(measure) ? "cambiar" : item.thresholds.observar(measure) ? "observar" : "ok";
-    fold6 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
+    fold7 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
     STATUS_WORDS = { ok: "ok", bien: "ok", bueno: "ok", observar: "observar", revisar: "observar", pronto: "observar", cambiar: "cambiar", cambio: "cambiar", urgente: "cambiar", na: "no_aplica", "n/a": "no_aplica", "no aplica": "no_aplica" };
     STATUS_ICON = { ok: "\u{1F7E2}", observar: "\u{1F7E0}", cambiar: "\u{1F534}", no_aplica: "\u26AA" };
     formatMeasure = (e9) => e9.measure === null ? "" : ` (${String(e9.measure).replace(".", ",")} ${e9.unit ?? ""})`.replace(" )", ")");
@@ -86830,14 +86906,14 @@ var init_fleet_access = __esm({
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
 import { createHash as createHash3, randomUUID as randomUUID7 } from "node:crypto";
 function matchService(text10) {
-  const f = fold7(text10);
-  const exact = SERVICES.find((s) => s.id === f || fold7(s.name) === f);
+  const f = fold8(text10);
+  const exact = SERVICES.find((s) => s.id === f || fold8(s.name) === f);
   if (exact)
     return exact.id;
   for (const [pattern, id2] of SYNONYMS)
     if (pattern.test(f))
       return id2;
-  return SERVICES.find((s) => fold7(s.name).includes(f) && f.length >= 5)?.id ?? null;
+  return SERVICES.find((s) => fold8(s.name).includes(f) && f.length >= 5)?.id ?? null;
 }
 async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ new Date()) {
   const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 5));
@@ -86886,7 +86962,7 @@ async function activeVehicle(conn, userId, includeAssigned = false) {
     fail2("VEHICLE_REQUIRED");
   return list7[0];
 }
-var rows7, VehicleCareError, fail2, fold7, createHashLike, short2, prefixOf, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES, serviceName, ORDER_STATUS, repairNoticeKey, VehicleCareStore;
+var rows7, VehicleCareError, fail2, fold8, createHashLike, short2, prefixOf, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES, serviceName, ORDER_STATUS, repairNoticeKey, VehicleCareStore;
 var init_vehicle_care_store = __esm({
   "packages/api/dist/infrastructure/messaging/vehicle-care-store.js"() {
     "use strict";
@@ -86914,7 +86990,7 @@ var init_vehicle_care_store = __esm({
     fail2 = (code3) => {
       throw new VehicleCareError(code3);
     };
-    fold7 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    fold8 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
     createHashLike = (text10) => createHash3("sha256").update(text10).digest("hex").slice(0, 12);
     short2 = (prefix, id2) => `${prefix}-${id2.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf = (code3) => `${code3.slice(2).toLowerCase()}%`;
@@ -87184,7 +87260,13 @@ Observaci\xF3n del due\xF1o: ${note}`, order.id]);
         const symptoms = await rows7(conn, "SELECT `system`, risk, description FROM `VehicleSymptom` WHERE vehicleId = ? AND resolvedAt IS NULL ORDER BY createdAt DESC LIMIT 3", [vehicle.id]);
         const corrective = symptoms.map((s) => `${s.risk === "no_conducir" ? "No conducir hasta revisar: " : "Revisar "}${String(s.system)} (${String(s.description).slice(0, 80)})`);
         const overrides = await rows7(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]).catch(() => []);
-        return { ...vehicle, lastServices, corrective, planOverrides: overrides };
+        const year2 = Number(vehicle.year);
+        const modelPlan = Number.isFinite(year2) ? await rows7(conn, "SELECT marca, modelo, anioDesde, anioHasta, combustible, serviceId, intervalKm, intervalMonths, fuente, verificado FROM `VehicleModelPlan` WHERE verificado = 1 AND anioDesde <= ? AND anioHasta >= ? AND marca = ? AND modelo IN (?, 'GENERICO') AND (combustible IS NULL OR combustible = ?)", [year2, year2, String(vehicle.make ?? ""), String(vehicle.model ?? ""), String(vehicle.fuel ?? "")]).catch((err) => {
+          if (err.code === "ER_NO_SUCH_TABLE")
+            return [];
+          throw err;
+        }) : [];
+        return { ...vehicle, lastServices, corrective, planOverrides: overrides, modelPlan };
       }
       /** Resumen del plan con el nivel que tiene contratado el titular del vehículo. */
       async ownerSummary(conn, vehicle) {
@@ -87256,7 +87338,7 @@ Lo agregu\xE9 a la atenci\xF3n de ${label2} y avisamos a los responsables de ${S
           }
           return { userId, message: `${diagnosis.message}
 
-Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revise: Buscar servicio | ${fold7(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
+Lo agregu\xE9 a la atenci\xF3n de tu ${label2}. Si quieres que un taller lo revise: Buscar servicio | ${fold8(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
         }
         if (command.action === "reminders") {
           await conn.query("UPDATE `Vehicle` SET remindersOptIn = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [command.on, userId]);
@@ -87381,7 +87463,7 @@ ${summary ?? ""}`.trim());
           return { userId, message: `Propuesta enviada al due\xF1o: visita ${code3} para ${formatEcDateTime(at)}. Te avisaremos cuando responda.` };
         }
         await this.insertAlert(conn, String(vehicle.id), command.label, command.dueAt, command.dueKm, userId, shop.id);
-        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold7(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label2}: "${command.label}" ${command.dueAt ? `el ${command.dueAt}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
+        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold8(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label2}: "${command.label}" ${command.dueAt ? `el ${command.dueAt}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
         return { userId, message: `Alerta creada para el ${label2}. El due\xF1o y tu taller la recibir\xE1n por WhatsApp cuando llegue el momento.` };
       }
       async budget(conn, userId, shop, command) {
@@ -88226,12 +88308,12 @@ var init_chat = __esm({
 function budgetLines(value2) {
   return value2.split(";").map((chunk) => chunk.trim()).filter(Boolean).map((chunk) => {
     const [head = "", ...rest] = chunk.split(":");
-    const kind = fold8(head) === "repuesto" ? "repuesto" : fold8(head) === "mano de obra" ? "mano_obra" : head;
+    const kind = fold9(head) === "repuesto" ? "repuesto" : fold9(head) === "mano de obra" ? "mano_obra" : head;
     const f = rest.join(":").split(/,\s+/).map((x) => x.trim());
     const price = (x) => Number(String(x ?? "").replace(/[$\s]/g, "").replace(/\.(?=\d{3}\b)/g, "").replace(",", "."));
     if (kind === "mano_obra")
       return { kind, description: f[0], brand: null, quantity: Number(f[1]), unitPrice: price(f[2]), quality: null };
-    return { kind, description: f[0], brand: f[1] || null, quantity: Number(f[2]), unitPrice: price(f[3]), quality: f[4] ? fold8(f[4]) : "nuevo" };
+    return { kind, description: f[0], brand: f[1] || null, quantity: Number(f[2]), unitPrice: price(f[3]), quality: f[4] ? fold9(f[4]) : "nuevo" };
   });
 }
 function normalizePlate2(value2) {
@@ -88242,7 +88324,7 @@ function normalizePlate2(value2) {
 function parseAccountCommand(raw) {
   const message2 = raw.replace(VISIT_SUFFIX, "");
   const parts = message2.split("|").map((s) => s.trim());
-  const verb = fold8(parts[0] ?? "");
+  const verb = fold9(parts[0] ?? "");
   let command = null;
   if (verb === "registrarme" && parts.length === 4 && accepted(parts[3]))
     command = { action: "registerOwner", name: parts[1], city: parts[2] };
@@ -88251,7 +88333,7 @@ function parseAccountCommand(raw) {
   else if (verb === "registrar almacen" && parts.length === 8 && accepted(parts[7]))
     command = { action: "registerStore", name: parts[1], ruc: parts[2], city: parts[3], zone: parts[4], address: parts[5], categories: parts[6] };
   else if (verb === "vehiculo" && parts.length === 7)
-    command = { action: "addVehicle", vehicleClass: fold8(parts[1] ?? "").replace(/\s+/g, "_"), fuel: fold8(parts[2] ?? "").replace(/\s+/g, "_"), make: parts[3], model: parts[4], year: Number(parts[5]), currentKm: Number((parts[6] ?? "").replace(/[.\s,]/g, "")) };
+    command = { action: "addVehicle", vehicleClass: fold9(parts[1] ?? "").replace(/\s+/g, "_"), fuel: fold9(parts[2] ?? "").replace(/\s+/g, "_"), make: parts[3], model: parts[4], year: Number(parts[5]), currentKm: Number((parts[6] ?? "").replace(/[.\s,]/g, "")) };
   else if ((withPlate(verb, "plan") || withPlate(verb, "plan completo")) && parts.length === 1)
     command = { action: "plan", full: verb.startsWith("plan completo"), ...withPlate(verb, "plan") ?? withPlate(verb, "plan completo") };
   else if ((verb === "mi vehiculo" || verb === "mi vehiculo asignado") && parts.length === 1)
@@ -88277,13 +88359,13 @@ function parseAccountCommand(raw) {
   else if ((withPlate(verb, "inspeccion") || withPlate(verb, "ultima inspeccion")) && parts.length === 1)
     command = { action: "lastInspection", ...withPlate(verb, "inspeccion") ?? withPlate(verb, "ultima inspeccion") };
   else if (/^ingreso [cC]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 6)
-    command = { action: "checkIn", appointmentRef: ref2(verb), km: kmOf(parts[1]), fuel: fold8(parts[2] ?? ""), condition: parts[3], inventory: parts[4], requested: parts[5] };
+    command = { action: "checkIn", appointmentRef: ref2(verb), km: kmOf(parts[1]), fuel: fold9(parts[2] ?? ""), condition: parts[3], inventory: parts[4], requested: parts[5] };
   else if (/^presupuesto ot-\d{1,7}$/.test(verb) && parts.length === 2)
     command = { action: "budget", orderNumber: orderOf(verb), lines: budgetLines(parts[1] ?? "") };
   else if (/^calificar ot-\d{1,7}$/.test(verb) && (parts.length === 5 || parts.length === 6))
     command = { action: "rateShop", orderNumber: orderOf(verb), quality: Number(parts[1]), service: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), comment: parts[5] ?? "" };
   else if (/^calificar s-[0-9a-f]{6}$/.test(verb) && (parts.length === 6 || parts.length === 7))
-    command = { action: "rateStore", requestRef: ref2(verb), rightPart: fold8(parts[1] ?? "") === "si", quality: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), service: Number(parts[5]), comment: parts[6] ?? "" };
+    command = { action: "rateStore", requestRef: ref2(verb), rightPart: fold9(parts[1] ?? "") === "si", quality: Number(parts[2]), timeliness: Number(parts[3]), price: Number(parts[4]), service: Number(parts[5]), comment: parts[6] ?? "" };
   else if ((verb === "mis datos" || verb === "mi perfil") && parts.length === 1)
     command = { action: "myProfile" };
   else if ((verb === "mis datos" || verb === "mi perfil") && parts.length === 3)
@@ -88347,12 +88429,12 @@ function parseAccountCommand(raw) {
   else if (/^rechazar cita c-[0-9a-f]{6}$/.test(verb) && parts.length === 2)
     command = { action: "declineAppointment", appointmentRef: ref2(verb), reason: parts[1] };
   else if (verb === "ficha" && (parts.length === 8 || parts.length === 9))
-    command = { action: "createCard", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold8(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold8(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), services: (parts[8] ?? "").split(",").map((x) => x.trim()).filter(Boolean) };
+    command = { action: "createCard", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold9(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold9(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), services: (parts[8] ?? "").split(",").map((x) => x.trim()).filter(Boolean) };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 1)
     command = { action: "cardPreview", cardCode: secretOf(verb) };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 2 && accepted(parts[1]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: null, city: null, intoFleet: false };
-  else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 3 && fold8(parts[1] ?? "") === "flota" && accepted(parts[2]))
+  else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 3 && fold9(parts[1] ?? "") === "flota" && accepted(parts[2]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: null, city: null, intoFleet: true };
   else if (/^ficha f-[2-9a-hjkmnp-z]{8}$/.test(verb) && parts.length === 4 && accepted(parts[3]))
     command = { action: "claimCard", cardCode: secretOf(verb), name: parts[1], city: parts[2], intoFleet: false };
@@ -88367,7 +88449,7 @@ function parseAccountCommand(raw) {
   else if (verb === "registrar flota" && parts.length === 6 && accepted(parts[5]))
     command = { action: "registerFleet", name: parts[1], ruc: parts[2], city: parts[3], person: parts[4] };
   else if (verb === "vehiculo flota" && (parts.length === 8 || parts.length === 9))
-    command = { action: "fleetVehicle", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold8(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold8(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), unitCode: parts[8] ? parts[8] : null };
+    command = { action: "fleetVehicle", plate: normalizePlate2(parts[1] ?? ""), vehicleClass: fold9(parts[2] ?? "").replace(/\s+/g, "_"), fuel: fold9(parts[3] ?? "").replace(/\s+/g, "_"), make: parts[4], model: parts[5], year: Number(parts[6]), currentKm: kmOf(parts[7]), unitCode: parts[8] ? parts[8] : null };
   else if (plateAfter(verb, "retirar") && parts.length === 1)
     command = { action: "retireVehicle", plate: plateAfter(verb, "retirar") };
   else if (["agregar conductor", "agregar chofer", "agregar supervisor", "agregar administrador de flota"].includes(verb) && parts.length === 2)
@@ -88417,7 +88499,7 @@ function parseAccountCommand(raw) {
   else if (verb === "panel flota" && parts.length === 1)
     command = { action: "panelLink" };
   else if (verb === "mapa" && (parts.length === 3 || parts.length === 4) && accepted(parts[parts.length - 1])) {
-    const sector = parts.length === 4 && fold8(parts[1] ?? "") === "sector";
+    const sector = parts.length === 4 && fold9(parts[1] ?? "") === "sector";
     const point = parsePoint(parts[sector ? 2 : 1] ?? "");
     if ((parts.length === 3 || sector) && point)
       command = { action: "shopMap", lat: point.lat, lng: point.lng, precision: sector ? "sector" : "exacta" };
@@ -88430,7 +88512,7 @@ function parseAccountCommand(raw) {
   else if (["mi suscripcion", "suscripcion", "mi plan pagado"].includes(verb) && parts.length === 1)
     command = { action: "mySubscription" };
   else if (/^(quiero|contratar) (el )?plan .{2,40}$/.test(verb) && parts.length <= 3) {
-    const extras = parts.slice(1).map((p) => fold8(p));
+    const extras = parts.slice(1).map((p) => fold9(p));
     const period = extras.includes("anual") ? "anual" : "mensual";
     const unitsText = extras.find((p) => /^\d{1,3}( vehiculos?)?$/.test(p));
     if (extras.every((p) => p === "anual" || p === "mensual" || p === unitsText))
@@ -88445,8 +88527,8 @@ function parseAccountCommand(raw) {
     command = { action: "courseList" };
   else if (/^curso cu-\d{4}$/.test(verb) && parts.length === 1)
     command = { action: "courseDetail", code: verb.toUpperCase().slice(6) };
-  else if (/^inscribirme cu-\d{4}$/.test(verb) && (parts.length === 1 || accepted(parts[1]) && parts.slice(2).every((p) => ["compartir", "publico"].includes(fold8(p)))))
-    command = { action: "courseEnroll", code: verb.toUpperCase().match(/CU-\d{4}/)[0], consent: parts.length > 1, share: parts.slice(2).some((p) => fold8(p) === "compartir"), publicCertificate: parts.slice(2).some((p) => fold8(p) === "publico") };
+  else if (/^inscribirme cu-\d{4}$/.test(verb) && (parts.length === 1 || accepted(parts[1]) && parts.slice(2).every((p) => ["compartir", "publico"].includes(fold9(p)))))
+    command = { action: "courseEnroll", code: verb.toUpperCase().match(/CU-\d{4}/)[0], consent: parts.length > 1, share: parts.slice(2).some((p) => fold9(p) === "compartir"), publicCertificate: parts.slice(2).some((p) => fold9(p) === "publico") };
   else if (/^pago in-\d{4}$/.test(verb) && parts.length === 1)
     command = { action: "coursePayment", code: verb.toUpperCase().replace("PAGO ", "") };
   else if (verb === "listo" && parts.length === 1)
@@ -88479,7 +88561,7 @@ function parseAccountCommand(raw) {
 function isInvalidAccountCommand(value2) {
   return !!value2 && "invalid" in value2;
 }
-var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref6, plate, vehicleClass, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold8, accepted, orderOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, gallonsOf, FUEL_VERBS, money2, VISIT_SUFFIX;
+var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref6, plate, vehicleClass, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold9, accepted, orderOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, gallonsOf, FUEL_VERBS, money2, VISIT_SUFFIX;
 var init_commands = __esm({
   "packages/api/dist/application/chat-account/commands.js"() {
     "use strict";
@@ -88646,8 +88728,8 @@ var init_commands = __esm({
       "Baja y privacidad: BAJA (dejar de recibir avisos por WhatsApp) \xB7 ALTA (volver a recibirlos) \xB7 Eliminar mi cuenta (pide borrar tus datos personales)",
       "Conductor: Unirme flota J-XXXXXXXX | nombre | ACEPTO \xB7 Mi veh\xEDculo \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n \xB7 Salir de flota \xB7 Taller: Mis flotas \xB7 Aceptar convenio K-XXXXXX \xB7 Rechazar convenio K-XXXXXX"
     ].join("\n");
-    fold8 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
-    accepted = (value2) => fold8(value2 ?? "") === "acepto";
+    fold9 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+    accepted = (value2) => fold9(value2 ?? "") === "acepto";
     orderOf = (verb) => Number(verb.match(/ot-(\d+)$/)?.[1]);
     kmOf = (value2) => Number(String(value2 ?? "").replace(/km/i, "").replace(/[.\s,]/g, ""));
     ref2 = (verb) => (verb.match(/[a-z]-[0-9a-f]{6}$/i)?.[0] ?? "").toUpperCase();
@@ -89193,7 +89275,7 @@ var init_vehicle_costs_store = __esm({
 
 // packages/api/dist/application/panel/rtv-calendar.js
 function calendarFor(city, calendars = RTV_CALENDARS) {
-  return calendars[fold9(city ?? "")] ?? calendars.nacional ?? NATIONAL_RTV_CALENDAR;
+  return calendars[fold10(city ?? "")] ?? calendars.nacional ?? NATIONAL_RTV_CALENDAR;
 }
 function rtvMonth(plate2, city, calendars) {
   const digits = String(plate2 ?? "").match(/\d/g);
@@ -89219,7 +89301,7 @@ function rtvNotice(vehicle, now, label2) {
     message: `\u{1F5D3}\uFE0F Este mes (${MONTH_NAMES[month - 1]}) le toca la revisi\xF3n t\xE9cnica vehicular (RTV) y la matr\xEDcula a tu ${label2}, placa ${vehicle.plate}. El valor a pagar por la matr\xEDcula incluye el SOAT. Este calendario es referencial: confirma la fecha en la ANT o en tu agencia de matriculaci\xF3n. Para dejar de recibir avisos: Alertas no`
   };
 }
-var NATIONAL_RTV_CALENDAR, RTV_CALENDARS, MONTH_NAMES, fold9;
+var NATIONAL_RTV_CALENDAR, RTV_CALENDARS, MONTH_NAMES, fold10;
 var init_rtv_calendar = __esm({
   "packages/api/dist/application/panel/rtv-calendar.js"() {
     "use strict";
@@ -89230,7 +89312,7 @@ var init_rtv_calendar = __esm({
       guayaquil: NATIONAL_RTV_CALENDAR
     };
     MONTH_NAMES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-    fold9 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+    fold10 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
   }
 });
 
@@ -89734,7 +89816,7 @@ function bodyStyleFor(vehicle) {
     return null;
   if (cls === "camion")
     return "camion-liviano";
-  const name = fold10(`${String(vehicle.make ?? "")} ${String(vehicle.model ?? "")}`);
+  const name = fold11(`${String(vehicle.make ?? "")} ${String(vehicle.model ?? "")}`);
   for (const [style, words] of KEYWORDS2)
     if (words.test(name))
       return style;
@@ -89758,7 +89840,7 @@ function fichaSystems(items, inspection) {
   });
   return { systems, otros };
 }
-var BODY_STYLES, isBodyStyle, fold10, KEYWORDS2, SYSTEM_POINTS, SYSTEMS, SYSTEM_OF_SERVICE, RANK;
+var BODY_STYLES, isBodyStyle, fold11, KEYWORDS2, SYSTEM_POINTS, SYSTEMS, SYSTEM_OF_SERVICE, RANK;
 var init_ficha = __esm({
   "packages/api/dist/application/panel/ficha.js"() {
     "use strict";
@@ -89776,7 +89858,7 @@ var init_ficha = __esm({
       { id: "camion-liviano", label: "Cami\xF3n liviano" }
     ];
     isBodyStyle = (value2) => BODY_STYLES.some((b) => b.id === value2);
-    fold10 = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+    fold11 = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
     KEYWORDS2 = [
       ["pickup-doble", /\b(hilux|d-?max|dmax|bt-?50|ranger|frontier|np300|navara|l200|amarok|tacoma|f-?150|poer|wingle|t60|doble cabina)\b/],
       ["pickup-sencilla", /\b(cabina sencilla|cabina simple|saveiro|strada)\b/],
@@ -89833,7 +89915,7 @@ function text3(value2, min, max) {
     fail7("INVALID_EDIT_VALUE");
   return v;
 }
-var rows13, ProfileEditError, fail7, PROFILE_ACTIONS, fold11, PROFILE_FIELDS, VEHICLE_FIELDS, BUSINESS_FIELDS, REVIEWED_BUSINESS_FIELDS, WITH_ARTICLE, PLATE2, shown, ProfileEditStore;
+var rows13, ProfileEditError, fail7, PROFILE_ACTIONS, fold12, PROFILE_FIELDS, VEHICLE_FIELDS, BUSINESS_FIELDS, REVIEWED_BUSINESS_FIELDS, WITH_ARTICLE, PLATE2, shown, ProfileEditStore;
 var init_profile_edit_store = __esm({
   "packages/api/dist/infrastructure/messaging/profile-edit-store.js"() {
     "use strict";
@@ -89854,7 +89936,7 @@ var init_profile_edit_store = __esm({
       throw new ProfileEditError(code3);
     };
     PROFILE_ACTIONS = ["myProfile", "editProfile", "editVehicle", "myBusiness", "editBusiness"];
-    fold11 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
+    fold12 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
     PROFILE_FIELDS = { nombre: "name", ciudad: "city", correo: "email", email: "email" };
     VEHICLE_FIELDS = { marca: "make", modelo: "model", ano: "year", a\u00F1o: "year", placa: "plate", clase: "vehicleClass", combustible: "fuel", uso: "usageProfile" };
     BUSINESS_FIELDS = { nombre: "name", "nombre comercial": "name", horario: "hours", direccion: "address", sector: "zone", ciudad: "city", servicios: "specialties", categorias: "categories", entregas: "delivery", correo: "email", contacto: "contactName" };
@@ -89914,10 +89996,10 @@ var init_profile_edit_store = __esm({
         return { userId, message: lines.join("\n"), data: { profile, vehicles, business } };
       }
       async editProfile(conn, userId, role, rawField, rawValue) {
-        const column = PROFILE_FIELDS[fold11(rawField)] ?? fail7("INVALID_EDIT_FIELD");
+        const column = PROFILE_FIELDS[fold12(rawField)] ?? fail7("INVALID_EDIT_FIELD");
         let value2;
         if (column === "email") {
-          value2 = ["ninguno", "no", "-"].includes(fold11(rawValue)) ? null : rawValue.trim().toLowerCase();
+          value2 = ["ninguno", "no", "-"].includes(fold12(rawValue)) ? null : rawValue.trim().toLowerCase();
           if (value2 !== null && !/^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/.test(value2))
             fail7("INVALID_EDIT_VALUE");
           if (value2 !== null && (await rows13(conn, "SELECT id FROM `User` WHERE email = ? AND id <> ? LIMIT 1", [value2, userId])).length)
@@ -89932,7 +90014,7 @@ var init_profile_edit_store = __esm({
       async editVehicle(conn, userId, role, command) {
         if (role !== "dueno")
           fail7("FORBIDDEN");
-        const column = VEHICLE_FIELDS[fold11(command.field)] ?? fail7("INVALID_EDIT_FIELD");
+        const column = VEHICLE_FIELDS[fold12(command.field)] ?? fail7("INVALID_EDIT_FIELD");
         let vehicle;
         if (command.vehicleId) {
           const [own2] = await rows13(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND deletedAt IS NULL FOR UPDATE", [command.vehicleId, userId]);
@@ -89957,11 +90039,11 @@ var init_profile_edit_store = __esm({
           if (taken.length)
             fail7("PLATE_TAKEN");
         } else if (column === "vehicleClass" || column === "fuel") {
-          value2 = fold11(command.value).replace(/\s+/g, "_");
+          value2 = fold12(command.value).replace(/\s+/g, "_");
           if (!(column === "vehicleClass" ? classIds : fuelIds).includes(value2))
             fail7("INVALID_EDIT_VALUE");
         } else if (column === "usageProfile") {
-          value2 = fold11(command.value);
+          value2 = fold12(command.value);
           if (!["urbano", "carretera", "severo"].includes(value2))
             fail7("INVALID_EDIT_VALUE");
         } else if (column === "bodyStyle") {
@@ -89991,7 +90073,7 @@ var init_profile_edit_store = __esm({
         } else
           fail7("FORBIDDEN");
         let result;
-        const key = fold11(field2);
+        const key = fold12(field2);
         if (key === "kilometraje") {
           const km9 = Number(value2.trim());
           if (!Number.isInteger(km9) || km9 < 0 || km9 > 2e6)
@@ -90030,7 +90112,7 @@ var init_profile_edit_store = __esm({
         if (role !== "taller" && role !== "almacen")
           fail7("FORBIDDEN");
         const table = role === "taller" ? "Shop" : "Store";
-        const field2 = fold11(rawField);
+        const field2 = fold12(rawField);
         if (field2 === "ruc")
           fail7("RUC_LOCKED");
         const column = BUSINESS_FIELDS[field2] ?? fail7("INVALID_EDIT_FIELD");
@@ -90046,12 +90128,12 @@ var init_profile_edit_store = __esm({
             fail7("INVALID_EDIT_VALUE");
           value2 = JSON.stringify(list7);
         } else if (column === "delivery") {
-          const v = fold11(rawValue);
+          const v = fold12(rawValue);
           if (!["si", "no"].includes(v))
             fail7("INVALID_EDIT_VALUE");
           value2 = v === "si";
         } else if (column === "email") {
-          value2 = ["ninguno", "no", "-"].includes(fold11(rawValue)) ? null : rawValue.trim().toLowerCase();
+          value2 = ["ninguno", "no", "-"].includes(fold12(rawValue)) ? null : rawValue.trim().toLowerCase();
           if (value2 !== null && !/^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/.test(value2))
             fail7("INVALID_EDIT_VALUE");
         } else
@@ -91205,7 +91287,7 @@ var init_whatsapp = __esm({
 
 // packages/api/dist/application/chat-account/self-service.js
 function parseSelfService(message2) {
-  const text10 = fold12(String(message2 ?? "").slice(0, 200));
+  const text10 = fold13(String(message2 ?? "").slice(0, 200));
   if (BAJA.test(text10))
     return "baja";
   if (ALTA.test(text10))
@@ -91214,11 +91296,11 @@ function parseSelfService(message2) {
     return "eliminar_cuenta";
   return null;
 }
-var fold12, BAJA, ALTA, DELETE, OPT_OUT_ALLOWED_KINDS, SELF_SERVICE_MESSAGES;
+var fold13, BAJA, ALTA, DELETE, OPT_OUT_ALLOWED_KINDS, SELF_SERVICE_MESSAGES;
 var init_self_service = __esm({
   "packages/api/dist/application/chat-account/self-service.js"() {
     "use strict";
-    fold12 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[.!¡¿?]+/g, " ").replace(/\s+/g, " ").trim();
+    fold13 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[.!¡¿?]+/g, " ").replace(/\s+/g, " ").trim();
     BAJA = /^(baja|stop|darme de baja|dar de baja|no quiero recibir (mas )?mensajes)$/;
     ALTA = /^(alta|darme de alta)$/;
     DELETE = /^(eliminar|borrar|cerrar) (mi cuenta|mis datos|mi cuenta y mis datos)$/;
@@ -94303,7 +94385,7 @@ async function databaseReadinessIssues(connect = openConnection) {
   try {
     const [rows33] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
     const present = new Set(rows33.map((row) => row.name));
-    const missingTables = EXPECTED_TABLES2.filter((table) => !present.has(table));
+    const missingTables = EXPECTED_TABLES2.filter((table) => table !== "VehicleModelPlan" && !present.has(table));
     if (missingTables.length)
       return missingTables.map((table) => `tabla ${table}`);
     const [columns] = await conn.query("SELECT table_name AS tbl, column_name AS col FROM information_schema.columns WHERE table_schema = DATABASE()");
@@ -117480,7 +117562,7 @@ var HEADERS3 = {
 };
 var clip = (value2, max) => typeof value2 === "string" ? value2.replace(/\s+/g, " ").trim().slice(0, max) : "";
 function selected(a, b) {
-  return fold5(a) === fold5(b) ? " selected" : "";
+  return fold6(a) === fold6(b) ? " selected" : "";
 }
 function shopCard(shop, number, index) {
   const tags = [
@@ -117502,9 +117584,9 @@ function shopCard(shop, number, index) {
 function renderMapPage(input) {
   const nonce2 = escapeHtml(input.nonce);
   const places = placesOf(input.records);
-  const cityEntry = places.find((p) => fold5(p.city) === fold5(input.city)) ?? null;
+  const cityEntry = places.find((p) => fold6(p.city) === fold6(input.city)) ?? null;
   const city = cityEntry?.city ?? "";
-  const zone = cityEntry?.zones.find((z) => fold5(z) === fold5(input.zone)) ?? "";
+  const zone = cityEntry?.zones.find((z) => fold6(z) === fold6(input.zone)) ?? "";
   const service = CATEGORIES.some((c) => c.id === input.service) ? input.service : "";
   const shops = searchShops(input.records, { city, zone, service });
   const google = googleMapsSearchUrl({ service, zone, city: city || "Ecuador" });
