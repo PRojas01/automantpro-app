@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='a4ca871c93f5f1441eca20043d3599b99b6b3971'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='882504d4aba5e79950f16ec28c6de34061fdea94'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -60652,6 +60652,8 @@ function formatPlanWhatsApp(ctx) {
   const footer = [
     "",
     ctx.source ? `Fuente: ${ctx.source}` : "Plan referencial: todav\xEDa no tenemos la ficha del fabricante para este modelo.",
+    PLAN_TECH_NOTICE,
+    PLAN_TERMS_NOTICE,
     "Para afinarlo: \xDAltimo servicio | servicio | km | AAAA-MM \xB7 Kilometraje | km \xB7 Alertas s\xED"
   ];
   return paginateText([header], blocks, footer, maxLength);
@@ -60676,14 +60678,18 @@ function formatPlanSummary(ctx) {
     lines.push(`\u{1F4C5} A los ${formatKm(km9)} km: ${names.slice(0, 4).join(", ")}${names.length > 4 ? ` y ${names.length - 4} m\xE1s` : ""}`);
   }
   lines.push(ctx.source ? `Fuente: ${ctx.source}` : "Plan referencial: a\xFAn no tenemos la ficha del fabricante para este modelo.");
+  lines.push(PLAN_TECH_NOTICE);
+  lines.push(PLAN_TERMS_NOTICE);
   lines.push("Plan completo \xB7 \xDAltimo servicio | servicio | km | AAAA-MM \xB7 Kilometraje | km");
   return lines.join("\n");
 }
-var DEFAULT_MAX_LENGTH, SAFETY_ORDER, safetyRank;
+var DEFAULT_MAX_LENGTH, PLAN_TECH_NOTICE, PLAN_TERMS_NOTICE, SAFETY_ORDER, safetyRank;
 var init_plan_formatter = __esm({
   "packages/api/dist/domain/maintenance/plan-formatter.js"() {
     "use strict";
     DEFAULT_MAX_LENGTH = 1024;
+    PLAN_TECH_NOTICE = "Importante: un t\xE9cnico debe revisar y validar este plan antes de hacer cualquier trabajo.";
+    PLAN_TERMS_NOTICE = "AutoMantPro no responde por su mala aplicaci\xF3n o incumplimiento. T\xE9rminos: automantpro.app/terminos";
     SAFETY_ORDER = ["freno_liquido", "freno_pastillas", "freno_discos", "freno_regulacion", "aceite_motor", "ref_antifreeze", "motor_distribucion", "motor_correa", "llanta_presion", "llanta_cambio", "susp_direccion", "susp_amortiguadores", "elec_bateria", "hv_inspeccion", "hv_bateria_traccion", "glp_inspeccion", "trans_aceite_caja", "trans_cadena"];
     safetyRank = (id2) => {
       const i = SAFETY_ORDER.indexOf(id2);
@@ -95270,6 +95276,7 @@ function termsSections(data3) {
       title: "9. Limitaci\xF3n de responsabilidad",
       paragraphs: [
         "Las orientaciones ante s\xEDntomas, los planes de mantenimiento y los costos que muestra AutoMantPro son referenciales y no reemplazan la inspecci\xF3n presencial de un profesional.",
+        "Un t\xE9cnico debe revisar y validar el plan de mantenimiento antes de cualquier trabajo. AutoMantPro no responde por da\xF1os derivados de la mala aplicaci\xF3n o del incumplimiento del plan.",
         "AutoMantPro no es responsable por fallas t\xE9cnicas, da\xF1os, p\xE9rdidas, demoras o mala ejecuci\xF3n atribuibles a los talleres o almacenes, ni garantiza el resultado del servicio contratado con ellos. Sin embargo, verifica previamente sus permisos, seguros y reputaci\xF3n, y atiende los reclamos que se le presenten."
       ]
     },
@@ -114227,6 +114234,7 @@ import { randomBytes } from "node:crypto";
 
 // packages/api/dist/interfaces/pilot-panel-view.js
 init_catalogs();
+init_plan_formatter();
 var option = (id2, name) => `<option value="${id2}">${name.replace(/[<>&"]/g, "")}</option>`;
 var PANEL_STYLES = `
 .board.ficha{display:block;margin:0;padding:12px;background:var(--c-surface);--st:var(--c-muted);--st-bg:var(--c-sunk)}
@@ -114438,7 +114446,7 @@ function inspectionForm(s,reload){const c=s.checklist;const key='amp-inspeccion-
  const note=h('textarea',{maxlength:'300',placeholder:'Nota para el due\xF1o (opcional)','aria-label':'Nota para el due\xF1o'});const rest=btn('Marcar el resto como bien','ghost',()=>{for(const it of c.items){const d=entry(it.code);if(!d.status&&!(it.auto&&d.measure!==''))d.status='ok';}keep();refresh();});const save=h('button',{class:'primary'},'Guardar inspecci\xF3n');form.append(h('div',{class:'ins-pie'},counter,rest),note,h('p',{class:'note',text:'Al guardar, el due\xF1o recibe el resumen y se crean las alertas de lo que hay que cambiar u observar.'}),save);
  form.onsubmit=async e=>{e.preventDefault();const entries=[];for(const it of c.items){const d=draft[it.code];if(!d||(!d.status&&d.measure===''))continue;if(!d.status&&!it.auto){status('Indica el estado de '+it.name+'.');return;}entries.push({code:it.code,status:d.status,measure:d.measure===''||d.status==='no_aplica'?null:Number(d.measure)});}if(!entries.length){status('Marca al menos un elemento.');return;}save.disabled=true;try{const r=await api('/pilot/vehicle-sheet/inspection',{method:'POST',body:JSON.stringify({vehicleId:s.id,entries,note:note.value.trim()||null})});try{sessionStorage.removeItem(key);}catch{}status(r.message);await reload();}catch(err){status(err.message);save.disabled=false;}};refresh();return form;}
 function sheetBoard(s,reload){const r=s.recommendations;const b=h('div',{class:'board ficha','aria-label':'Ficha de '+s.label});
- b.append(h('p',{class:'cap'},h('span',{text:'Ficha de '+s.label+(s.ownerName?' \xB7 '+s.ownerName:'')}),h('b',{text:s.plate||'Sin placa'})),gauge(r));
+ b.append(h('p',{class:'cap'},h('span',{text:'Ficha de '+s.label+(s.ownerName?' \xB7 '+s.ownerName:'')}),h('b',{text:s.plate||'Sin placa'})),gauge(r),h('p',{class:'note'},'${PLAN_TECH_NOTICE} AutoMantPro no responde por su mala aplicaci\xF3n o incumplimiento, seg\xFAn los ',h('a',{href:'/terminos',target:'_blank',rel:'noopener',text:'t\xE9rminos y condiciones'}),'.'));
  if(r.headline)b.append(h('p',{class:'lead2',text:r.headline}));if(r.next&&s.editor==='dueno')b.append(btn('Agendar '+r.next.serviceName.toLowerCase(),'primary full',()=>{booking.service=r.next.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}));
  const order={urgente:0,pronto:1,sin_dato:2,al_dia:3};let selected=sheetSelected[s.id]||[...s.systems].sort((x,y)=>order[x.state]-order[y.state])[0]?.n||1;const det=h('div',{class:'fic-det sec-fic'});const pts=[],rowsBtn=[];
  const show=()=>{sheetSelected[s.id]=selected;pts.forEach(x=>x.el.classList.toggle('sel',x.n===selected));rowsBtn.forEach(x=>x.el.classList.toggle('sel',x.n===selected));const sys=s.systems.find(x=>x.n===selected);det.replaceChildren(h('h3',{text:sys.n+' \xB7 '+sys.name+' \xB7 '+STATE_NAME[sys.state]}));for(const f of sys.findings||[])det.append(h('p',{class:'note',text:f}));if(sys.services.length){const ul=h('ul',{});for(const it of sys.services)ul.append(...svcRow(s,it,reload));det.append(ul);}else det.append(h('p',{class:'note',text:'El plan de este veh\xEDculo no tiene servicios en este sistema.'}));};
