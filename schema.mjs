@@ -872,10 +872,10 @@ var require_lib = __commonJS({
       }
     };
     exports.escape = escape;
-    var format = (sql, values, stringifyObjects, timezone) => {
-      if (values === void 0 || values === null)
+    var format = (sql, values2, stringifyObjects, timezone) => {
+      if (values2 === void 0 || values2 === null)
         return sql;
-      const valuesArray = Array.isArray(values) ? values : [values];
+      const valuesArray = Array.isArray(values2) ? values2 : [values2];
       const length = valuesArray.length;
       let setIndex = -2;
       let nextSetIndex = -1;
@@ -13594,26 +13594,26 @@ var require_execute = __commonJS({
           }
         }
         packet.skip(1);
-        const values = [];
+        const values2 = [];
         for (let i2 = 0; i2 < types.length; i2++) {
           if (types[i2] === Types.VAR_STRING) {
-            values.push(packet.readLengthCodedString(encoding));
+            values2.push(packet.readLengthCodedString(encoding));
           } else if (types[i2] === Types.BLOB) {
-            values.push(packet.readLengthCodedBuffer());
+            values2.push(packet.readLengthCodedBuffer());
           } else if (types[i2] === Types.DOUBLE) {
-            values.push(packet.readDouble());
+            values2.push(packet.readDouble());
           } else if (types[i2] === Types.TINY) {
-            values.push(packet.readInt8());
+            values2.push(packet.readInt8());
           } else if (types[i2] === Types.DATETIME) {
-            values.push(packet.readDateTime());
+            values2.push(packet.readDateTime());
           } else if (types[i2] === Types.JSON) {
-            values.push(JSON.parse(packet.readLengthCodedString(encoding)));
+            values2.push(JSON.parse(packet.readLengthCodedString(encoding)));
           }
           if (types[i2] === Types.NULL) {
-            values.push(null);
+            values2.push(null);
           }
         }
-        return { stmtId, flags, iterationCount, values };
+        return { stmtId, flags, iterationCount, values: values2 };
       }
       toPacket() {
         const useQueryAttributes = this.clientFlags & ClientConstants.CLIENT_QUERY_ATTRIBUTES;
@@ -15549,13 +15549,13 @@ var require_server_handshake = __commonJS({
             break;
           case CommandCode.STMT_EXECUTE:
             if (connection.listeners("stmt_execute").length) {
-              const { stmtId, flags, iterationCount, values } = Packets.Execute.fromPacket(packet, encoding);
+              const { stmtId, flags, iterationCount, values: values2 } = Packets.Execute.fromPacket(packet, encoding);
               connection.emit(
                 "stmt_execute",
                 stmtId,
                 flags,
                 iterationCount,
-                values
+                values2
               );
             } else {
               connection.writeError({
@@ -19287,18 +19287,18 @@ var require_connection = __commonJS({
         }
         return cmd;
       }
-      format(sql, values, namedPlaceholders) {
+      format(sql, values2, namedPlaceholders) {
         if (typeof this.config.queryFormat === "function") {
           return this.config.queryFormat.call(
             this,
             sql,
-            values,
+            values2,
             this.config.timezone
           );
         }
         const opts = {
           sql,
-          values
+          values: values2
         };
         if (typeof namedPlaceholders !== "undefined") {
           opts.namedPlaceholders = namedPlaceholders;
@@ -19337,12 +19337,12 @@ var require_connection = __commonJS({
           options.values = unnamed[1];
         }
       }
-      query(sql, values, cb) {
+      query(sql, values2, cb) {
         let cmdQuery;
         if (sql.constructor === Commands.Query) {
           cmdQuery = sql;
         } else {
-          cmdQuery = _BaseConnection.createQuery(sql, values, cb, this.config);
+          cmdQuery = _BaseConnection.createQuery(sql, values2, cb, this.config);
         }
         this._resolveNamedPlaceholders(cmdQuery);
         const rawSql = this.format(
@@ -19434,7 +19434,7 @@ var require_connection = __commonJS({
         }
         return stmt;
       }
-      execute(sql, values, cb) {
+      execute(sql, values2, cb) {
         let options = {
           infileStreamFactory: this.config.infileStreamFactory
         };
@@ -19445,18 +19445,18 @@ var require_connection = __commonJS({
             sql: sql.sql,
             values: sql.values
           };
-          if (typeof values === "function") {
-            cb = values;
+          if (typeof values2 === "function") {
+            cb = values2;
           } else {
-            options.values = options.values || values;
+            options.values = options.values || values2;
           }
-        } else if (typeof values === "function") {
-          cb = values;
+        } else if (typeof values2 === "function") {
+          cb = values2;
           options.sql = sql;
           options.values = void 0;
         } else {
           options.sql = sql;
-          options.values = values;
+          options.values = values2;
         }
         this._resolveNamedPlaceholders(options);
         if (options.values) {
@@ -19736,7 +19736,7 @@ var require_connection = __commonJS({
         this.addCommand = this._addCommandClosedState;
         return quitCmd;
       }
-      static createQuery(sql, values, cb, config) {
+      static createQuery(sql, values2, cb, config) {
         let options = {
           rowsAsArray: config.rowsAsArray,
           infileStreamFactory: config.infileStreamFactory
@@ -19748,18 +19748,18 @@ var require_connection = __commonJS({
             sql: sql.sql,
             values: sql.values
           };
-          if (typeof values === "function") {
-            cb = values;
-          } else if (values !== void 0) {
-            options.values = values;
+          if (typeof values2 === "function") {
+            cb = values2;
+          } else if (values2 !== void 0) {
+            options.values = values2;
           }
-        } else if (typeof values === "function") {
-          cb = values;
+        } else if (typeof values2 === "function") {
+          cb = values2;
           options.sql = sql;
           options.values = void 0;
         } else {
           options.sql = sql;
-          options.values = values;
+          options.values = values2;
         }
         return new Commands.Query(options, cb);
       }
@@ -20387,10 +20387,10 @@ var require_pool = __commonJS({
           connection._realEnd(endCB);
         }
       }
-      query(sql, values, cb) {
+      query(sql, values2, cb) {
         const cmdQuery = BaseConnection.createQuery(
           sql,
-          values,
+          values2,
           cb,
           this.config.connectionConfig
         );
@@ -20437,17 +20437,17 @@ var require_pool = __commonJS({
         });
         return cmdQuery;
       }
-      execute(sql, values, cb) {
-        if (typeof values === "function") {
-          cb = values;
-          values = [];
+      execute(sql, values2, cb) {
+        if (typeof values2 === "function") {
+          cb = values2;
+          values2 = [];
         }
         this.getConnection((err, conn2) => {
           if (err) {
             return cb(err);
           }
           try {
-            conn2.execute(sql, values, (err2, rows, fields) => {
+            conn2.execute(sql, values2, (err2, rows, fields) => {
               if (isReadOnlyError(err2)) {
                 conn2.destroy();
               }
@@ -20484,10 +20484,10 @@ var require_pool = __commonJS({
           }
         }, 1e3);
       }
-      format(sql, values) {
+      format(sql, values2) {
         return SqlString.format(
           sql,
-          values,
+          values2,
           this.config.connectionConfig.stringifyObjects,
           this.config.connectionConfig.timezone
         );
@@ -20728,8 +20728,8 @@ var require_pool_cluster = __commonJS({
        * @param {*} cb
        * @returns query
        */
-      query(sql, values, cb) {
-        const query = Connection.createQuery(sql, values, cb, {});
+      query(sql, values2, cb) {
+        const query = Connection.createQuery(sql, values2, cb, {});
         this.getConnection((err, conn2) => {
           if (err) {
             if (typeof query.onResult === "function") {
@@ -20756,17 +20756,17 @@ var require_pool_cluster = __commonJS({
        * @param {*} values
        * @param {*} cb
        */
-      execute(sql, values, cb) {
-        if (typeof values === "function") {
-          cb = values;
-          values = [];
+      execute(sql, values2, cb) {
+        if (typeof values2 === "function") {
+          cb = values2;
+          values2 = [];
         }
         this.getConnection((err, conn2) => {
           if (err) {
             return cb(err);
           }
           try {
-            conn2.execute(sql, values, cb).once("end", () => {
+            conn2.execute(sql, values2, cb).once("end", () => {
               conn2.release();
             });
           } catch (e) {
@@ -21037,30 +21037,30 @@ var require_pool_cluster2 = __commonJS({
           });
         });
       }
-      query(sql, values) {
+      query(sql, values2) {
         const corePoolNamespace = this.poolNamespace;
         const stackHolder = corePoolNamespace.trace ? captureStackHolder(_PromisePoolNamespace.prototype.query) : void 0;
-        if (typeof values === "function") {
+        if (typeof values2 === "function") {
           throw new Error(
             "Callback function is not available with promise clients."
           );
         }
         return new this.Promise((resolve, reject) => {
           const done = makeDoneCb(resolve, reject, stackHolder);
-          corePoolNamespace.query(sql, values, done);
+          corePoolNamespace.query(sql, values2, done);
         });
       }
-      execute(sql, values) {
+      execute(sql, values2) {
         const corePoolNamespace = this.poolNamespace;
         const stackHolder = corePoolNamespace.trace ? captureStackHolder(_PromisePoolNamespace.prototype.execute) : void 0;
-        if (typeof values === "function") {
+        if (typeof values2 === "function") {
           throw new Error(
             "Callback function is not available with promise clients."
           );
         }
         return new this.Promise((resolve, reject) => {
           const done = makeDoneCb(resolve, reject, stackHolder);
-          corePoolNamespace.execute(sql, values, done);
+          corePoolNamespace.execute(sql, values2, done);
         });
       }
     };
@@ -22062,6 +22062,1001 @@ var MODEL_PLAN_STATEMENTS = [
   { kind: "createTable", target: "VehicleModelPlan", sql: "CREATE TABLE IF NOT EXISTS `VehicleModelPlan` (`id` VARCHAR(191) NOT NULL, `marca` VARCHAR(80) NOT NULL, `modelo` VARCHAR(80) NOT NULL, `anioDesde` INT NOT NULL, `anioHasta` INT NOT NULL, `combustible` VARCHAR(20) NULL, `serviceId` VARCHAR(80) NOT NULL, `intervalKm` INT NULL, `intervalMonths` INT NULL, `fuente` VARCHAR(1000) NOT NULL, `verificado` TINYINT(1) NOT NULL DEFAULT 0, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), INDEX `VehicleModelPlan_marca_modelo_anio_idx` (`marca`, `modelo`, `anioDesde`, `anioHasta`)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
 ];
 
+// packages/api/src/infrastructure/schema-setup/model-plan-seed.ts
+import { createHash } from "node:crypto";
+
+// packages/api/src/infrastructure/schema-setup/model-plan-seed.json
+var model_plan_seed_default = [
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "aceite_motor",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_filtro_aire",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "clima_filtro_cabina",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "iny_limpieza",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "escaner_diagnostico",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "llanta_rotacion",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "llanta_alineacion",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "susp_direccion",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "freno_pastillas",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf; limpieza o cambio de frenos; no incluye pastillas"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "elec_luces",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_bujias",
+    intervalKm: 2e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf; buj\xEDas de cobre; platino o iridio a 100.000 km"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "freno_liquido",
+    intervalKm: 2e4,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_correa",
+    intervalKm: 1e5,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "iny_filtro_combustible",
+    intervalKm: 1e5,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "ref_antifreeze",
+    intervalKm: 1e5,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "trans_aceite_caja",
+    intervalKm: 1e5,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "KIA",
+    modelo: "GENERICO",
+    anioDesde: 2017,
+    anioHasta: 2026,
+    combustible: "diesel",
+    serviceId: "aceite_motor",
+    intervalKm: 5e3,
+    intervalMonths: null,
+    fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+  },
+  {
+    marca: "SUZUKI",
+    modelo: "VITARA",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "aceite_motor",
+    intervalKm: 5e3,
+    intervalMonths: 3,
+    fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+  },
+  {
+    marca: "SUZUKI",
+    modelo: "VITARA",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_bujias",
+    intervalKm: 2e4,
+    intervalMonths: null,
+    fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+  },
+  {
+    marca: "SUZUKI",
+    modelo: "VITARA",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_filtro_aire",
+    intervalKm: 2e4,
+    intervalMonths: null,
+    fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+  },
+  {
+    marca: "SUZUKI",
+    modelo: "VITARA",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "clima_filtro_cabina",
+    intervalKm: 2e4,
+    intervalMonths: null,
+    fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+  },
+  {
+    marca: "SUZUKI",
+    modelo: "VITARA",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "iny_limpieza",
+    intervalKm: 2e4,
+    intervalMonths: null,
+    fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+  },
+  {
+    marca: "SUZUKI",
+    modelo: "VITARA",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "iny_filtro_combustible",
+    intervalKm: 4e4,
+    intervalMonths: null,
+    fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+  },
+  {
+    marca: "SUZUKI",
+    modelo: "VITARA",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "freno_liquido",
+    intervalKm: 4e4,
+    intervalMonths: null,
+    fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+  },
+  {
+    marca: "SUZUKI",
+    modelo: "VITARA",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "trans_aceite_caja",
+    intervalKm: 4e4,
+    intervalMonths: null,
+    fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+  },
+  {
+    marca: "SUZUKI",
+    modelo: "VITARA",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "ref_antifreeze",
+    intervalKm: 5e4,
+    intervalMonths: null,
+    fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+  },
+  {
+    marca: "MG",
+    modelo: "ZS",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "ref_antifreeze",
+    intervalKm: 6e4,
+    intervalMonths: 36,
+    fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf"
+  },
+  {
+    marca: "MG",
+    modelo: "ZS",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "trans_aceite_caja",
+    intervalKm: 6e4,
+    intervalMonths: null,
+    fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf (aceite CVT)"
+  },
+  {
+    marca: "MG",
+    modelo: "ZS",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "freno_liquido",
+    intervalKm: null,
+    intervalMonths: 24,
+    fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf"
+  },
+  {
+    marca: "MG",
+    modelo: "ZS",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "iny_filtro_combustible",
+    intervalKm: 1e5,
+    intervalMonths: 96,
+    fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf"
+  },
+  {
+    marca: "MG",
+    modelo: "ZS",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_bujias",
+    intervalKm: 4e4,
+    intervalMonths: null,
+    fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf"
+  },
+  {
+    marca: "MG",
+    modelo: "ZS",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_correa",
+    intervalKm: 6e4,
+    intervalMonths: 36,
+    fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf (correa de transmision auxiliar)"
+  },
+  {
+    marca: "CHANGAN",
+    modelo: "CS35 PLUS",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "trans_aceite_caja",
+    intervalKm: 6e4,
+    intervalMonths: 36,
+    fuente: "Changan Peru (mercado Peru, no Ecuador; documento del fabricante), Manual de usuario CS35-PLUS, seccion Mantenimiento periodico, Horario de mantenimiento normal (p.229): aceite de transmision manual/automatica/doble embrague segun equipamiento. Anios no indicados en el documento; el manual dice que la cartilla puede cambiar segun la localidad. URL https://www.changan.com.pe/media/ae5dv2nv/cs35-plus.pdf"
+  },
+  {
+    marca: "JAC",
+    modelo: "JS2 PRO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "clima_filtro_cabina",
+    intervalKm: 5e3,
+    intervalMonths: 6,
+    fuente: "JAC Chile (mercado Chile, no Ecuador; documento del fabricante), JS2 PRO Manual de usuario, seccion Sistema de aire acondicionado > Filtro de aire del compartimiento de pasajeros (cerca de p.150): frase recomienda reemplazo cada 5000 km o cada medio ano, lo primero que ocurra. Anios no indicados. Otros intervalos remiten al Manual de garantia y mantenimiento (no hallado). URL https://www.jacautoschile.cl/content/uploads/2025/06/JS2-PRO-Manual-de-usuario.pdf"
+  },
+  {
+    marca: "Chevrolet",
+    modelo: "D-MAX 3.0 DURAMAX",
+    anioDesde: 2026,
+    anioHasta: 2026,
+    combustible: "diesel",
+    serviceId: "aceite_motor",
+    intervalKm: 1e4,
+    intervalMonths: 12,
+    fuente: "Chevrolet Ecuador, Manual del propietario D-Max 2026 (suplemento motor diesel Duramax 3.0L), Servicio y mantenimiento pp.43-44, mercado Ecuador, explicito; anios segun titulo del manual; se omite refrigerante/correa de bomba sin serviceId. URL https://www.chevrolet.com.ec/content/dam/chevrolet/south-america/ecuador/espanol/index/manuales/camionetas/d-max/manual-propietario-dmax-2026.pdf"
+  },
+  {
+    marca: "Chevrolet",
+    modelo: "D-MAX 3.0 DURAMAX",
+    anioDesde: 2026,
+    anioHasta: 2026,
+    combustible: "diesel",
+    serviceId: "iny_filtro_combustible",
+    intervalKm: 4e4,
+    intervalMonths: 24,
+    fuente: "Chevrolet Ecuador, Manual del propietario D-Max 2026 (suplemento motor diesel Duramax 3.0L), Servicio y mantenimiento pp.43-44, mercado Ecuador, explicito; anios segun titulo del manual; se omite refrigerante/correa de bomba sin serviceId. URL https://www.chevrolet.com.ec/content/dam/chevrolet/south-america/ecuador/espanol/index/manuales/camionetas/d-max/manual-propietario-dmax-2026.pdf"
+  },
+  {
+    marca: "Chevrolet",
+    modelo: "D-MAX 3.0 DURAMAX",
+    anioDesde: 2026,
+    anioHasta: 2026,
+    combustible: "diesel",
+    serviceId: "ref_antifreeze",
+    intervalKm: 24e4,
+    intervalMonths: 72,
+    fuente: "Chevrolet Ecuador, Manual del propietario D-Max 2026 (suplemento motor diesel Duramax 3.0L), Servicio y mantenimiento pp.43-44, mercado Ecuador, explicito; anios segun titulo del manual; se omite refrigerante/correa de bomba sin serviceId. URL https://www.chevrolet.com.ec/content/dam/chevrolet/south-america/ecuador/espanol/index/manuales/camionetas/d-max/manual-propietario-dmax-2026.pdf"
+  },
+  {
+    marca: "Hyundai",
+    modelo: "GRAND I10",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "aceite_motor",
+    intervalKm: 15e3,
+    intervalMonths: 12,
+    fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13 a 7-16 (calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), explicito; anios no indicados; en el calendario Mexico el aceite es 10000 km o 6 meses. URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf"
+  },
+  {
+    marca: "Hyundai",
+    modelo: "GRAND I10",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_bujias",
+    intervalKm: 16e4,
+    intervalMonths: 120,
+    fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13 a 7-16 (calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), explicito; anios no indicados; en el calendario Mexico el aceite es 10000 km o 6 meses. URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf"
+  },
+  {
+    marca: "Hyundai",
+    modelo: "GRAND I10",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "ref_antifreeze",
+    intervalKm: 21e4,
+    intervalMonths: 120,
+    fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13 a 7-16 (calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), explicito; anios no indicados; en el calendario Mexico el aceite es 10000 km o 6 meses. URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf; primer cambio; luego cada 30.000 km o 24 meses"
+  },
+  {
+    marca: "Mazda",
+    modelo: "GENERICO",
+    anioDesde: 2024,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_bujias",
+    intervalKm: 12e4,
+    intervalMonths: null,
+    fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento pp.6-5 a 6-13, tabla segun pais (guia mal extraida: Ecuador y Peru figuran con tabla 1 o 4; el valor es igual en ambas salvo filtro de combustible, tabla 4 SKYACTIV-G), explicito; mercado Peru (documento generico Mazda, no por modelo). URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf"
+  },
+  {
+    marca: "Mazda",
+    modelo: "GENERICO",
+    anioDesde: 2024,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "iny_filtro_combustible",
+    intervalKm: 6e4,
+    intervalMonths: null,
+    fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento pp.6-5 a 6-13, tabla segun pais (guia mal extraida: Ecuador y Peru figuran con tabla 1 o 4; el valor es igual en ambas salvo filtro de combustible, tabla 4 SKYACTIV-G), explicito; mercado Peru (documento generico Mazda, no por modelo). URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf"
+  },
+  {
+    marca: "Mazda",
+    modelo: "GENERICO",
+    anioDesde: 2024,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "ref_antifreeze",
+    intervalKm: 2e5,
+    intervalMonths: 120,
+    fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento pp.6-5 a 6-13, tabla segun pais (guia mal extraida: Ecuador y Peru figuran con tabla 1 o 4; el valor es igual en ambas salvo filtro de combustible, tabla 4 SKYACTIV-G), explicito; mercado Peru (documento generico Mazda, no por modelo). URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf; primer cambio; luego cada 100.000 km o 5 a\xF1os"
+  },
+  {
+    marca: "Mazda",
+    modelo: "GENERICO",
+    anioDesde: 2024,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "llanta_rotacion",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento pp.6-5 a 6-13, tabla segun pais (guia mal extraida: Ecuador y Peru figuran con tabla 1 o 4; el valor es igual en ambas salvo filtro de combustible, tabla 4 SKYACTIV-G), explicito; mercado Peru (documento generico Mazda, no por modelo). URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "freno_liquido",
+    intervalKm: 4e4,
+    intervalMonths: 24,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-28, mercado Chile, explicito ('Cambio de liquido de freno en 2 anios o 40.000 km'); modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad. URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "aceite_motor",
+    intervalKm: 1e4,
+    intervalMonths: 12,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_filtro_aire",
+    intervalKm: 2e4,
+    intervalMonths: 24,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de filtro de aire' (marcas en 10.000, 30.000, 50.000...)"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "clima_filtro_cabina",
+    intervalKm: 2e4,
+    intervalMonths: 24,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de filtro polen' (reemplazo en 20.000, 40.000...; inspeccion en 10.000, 30.000...)"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_bujias",
+    intervalKm: 3e4,
+    intervalMonths: 36,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "iny_filtro_combustible",
+    intervalKm: 3e4,
+    intervalMonths: 36,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; solo si aplica al modelo"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_correa",
+    intervalKm: 5e4,
+    intervalMonths: 60,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Sustituir correa de accesorios'"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "ref_antifreeze",
+    intervalKm: 5e4,
+    intervalMonths: 60,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; excepto Tiggo 9 (fila propia)"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO CAJA MT",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "trans_aceite_caja",
+    intervalKm: 3e4,
+    intervalMonths: 36,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de aceite de transmision MT'"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "llanta_rotacion",
+    intervalKm: 1e4,
+    intervalMonths: 12,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Realizar rotacion, balanceo y aprendizaje'"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "freno_pastillas",
+    intervalKm: 1e4,
+    intervalMonths: 12,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Aseo e inspeccion de sistema de frenos' (serviceId de inspeccion)"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "susp_direccion",
+    intervalKm: 3e4,
+    intervalMonths: 36,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Verificar tren delantero' (serviceId de inspeccion)"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "escaner_diagnostico",
+    intervalKm: 1e4,
+    intervalMonths: 12,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Diagnosticar via escaner X431'"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "elec_luces",
+    intervalKm: 1e4,
+    intervalMonths: 12,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf"
+  },
+  {
+    marca: "Chery",
+    modelo: "TIGGO 9",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "ref_antifreeze",
+    intervalKm: 4e4,
+    intervalMonths: 48,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio liquido refrigerante (Tiggo 9)' (marcas en 40.000, 80.000...)"
+  },
+  {
+    marca: "Chery",
+    modelo: "TIGGO 2",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_distribucion",
+    intervalKm: 5e4,
+    intervalMonths: 60,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de correa de distribucion (Solo Tiggo 2)'"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO CAJA 7DCT",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "trans_aceite_caja",
+    intervalKm: 6e4,
+    intervalMonths: 72,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de aceite de transmision 7DCT' (marcas en 60.000, 120.000, 180.000)"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO CAJA 7DCT",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "trans_filtro_caja",
+    intervalKm: 6e4,
+    intervalMonths: 72,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de filtro de transmision 7DCT' (solo si aplica al modelo)"
+  },
+  {
+    marca: "Chery",
+    modelo: "GENERICO TRANSFER Y DIFERENCIAL",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "trans_aceite_caja",
+    intervalKm: 5e4,
+    intervalMonths: 60,
+    fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; filas 'Cambio de aceite Transfer' y 'Diferencial trasero' (solo si aplica al modelo; marcas en 50.000, 100.000, 150.000, 200.000)"
+  },
+  {
+    marca: "Hyundai",
+    modelo: "GRAND I10",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_filtro_aire",
+    intervalKm: 45e3,
+    intervalMonths: 36,
+    fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13, 7-14 y 7-16 (PDF 273, 274, 276; calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), mercado Ecuador (manual alojado por Hyundai Ecuador); anios no indicados; lectura por imagen, derivado de tabla por kilometraje (marcas R en columnas de 15.000 km). URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf; filtro del purificador de aire, 'Excepto Oriente Medio': I,I,R,I,I,R (R en 45.000 y 90.000 km: solo 2 marcas con separacion igual al primer valor)"
+  },
+  {
+    marca: "Hyundai",
+    modelo: "GRAND I10",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "iny_filtro_combustible",
+    intervalKm: 6e4,
+    intervalMonths: 48,
+    fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13, 7-14 y 7-16 (PDF 273, 274, 276; calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), mercado Ecuador (manual alojado por Hyundai Ecuador); anios no indicados; lectura por imagen, derivado de tabla por kilometraje (marcas R en columnas de 15.000 km). URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf; filtro de combustible: R en 60.000 y 120.000 km (solo 2 marcas; el manual lo considera pieza sin mantenimiento con revision periodica)"
+  },
+  {
+    marca: "Hyundai",
+    modelo: "GRAND I10",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "clima_filtro_cabina",
+    intervalKm: 15e3,
+    intervalMonths: 12,
+    fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13, 7-14 y 7-16 (PDF 273, 274, 276; calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), mercado Ecuador (manual alojado por Hyundai Ecuador); anios no indicados; lectura por imagen, derivado de tabla por kilometraje (marcas R en columnas de 15.000 km). URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf; filtro de aire del control climatico: R en cada columna"
+  },
+  {
+    marca: "Mazda",
+    modelo: "GENERICO",
+    anioDesde: 2024,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "aceite_motor",
+    intervalKm: 1e4,
+    intervalMonths: 6,
+    fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento, Tabla 4 (guia p.6-5 PDF 523: ECUADOR y PERU = tabla 4) pp.6-11 a 6-13 (PDF 529-531), mercado Ecuador/Peru (documento generico Mazda, no por modelo); SKYACTIV-G; lectura por imagen, derivado de tabla por kilometraje. URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf; aceite y filtro de aceite: R en las 16 columnas (excepto Georgia, Camboya, Gabon, Ghana, Camerun, Burundi, Mozambique, Mongolia, Tanzania y Paraguay, donde son 5.000 km o 6 meses)"
+  },
+  {
+    marca: "Mazda",
+    modelo: "GENERICO",
+    anioDesde: 2024,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "freno_liquido",
+    intervalKm: 4e4,
+    intervalMonths: 24,
+    fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento, Tabla 4 (guia p.6-5 PDF 523: ECUADOR y PERU = tabla 4) pp.6-11 a 6-13 (PDF 529-531), mercado Ecuador/Peru (documento generico Mazda, no por modelo); SKYACTIV-G; lectura por imagen, derivado de tabla por kilometraje. URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf; liquido de frenos: R en 40.000, 80.000, 120.000 y 160.000 km (24, 48, 72, 96 meses); severas: cada ano"
+  },
+  {
+    marca: "Mazda",
+    modelo: "GENERICO",
+    anioDesde: 2024,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "motor_filtro_aire",
+    intervalKm: 6e4,
+    intervalMonths: 36,
+    fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento, Tabla 4 (guia p.6-5 PDF 523: ECUADOR y PERU = tabla 4) pp.6-11 a 6-13 (PDF 529-531), mercado Ecuador/Peru (documento generico Mazda, no por modelo); SKYACTIV-G; lectura por imagen, derivado de tabla por kilometraje. URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf; filtro de aire: R en 60.000 y 120.000 km (entre medias C = limpiar; solo 2 marcas R)"
+  },
+  {
+    marca: "Mazda",
+    modelo: "GENERICO",
+    anioDesde: 2024,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "clima_filtro_cabina",
+    intervalKm: 2e4,
+    intervalMonths: 12,
+    fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento, Tabla 4 (guia p.6-5 PDF 523: ECUADOR y PERU = tabla 4) pp.6-11 a 6-13 (PDF 529-531), mercado Ecuador/Peru (documento generico Mazda, no por modelo); SKYACTIV-G; lectura por imagen, derivado de tabla por kilometraje. URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf; filtro de aire de la cabina: R cada 20.000 km"
+  },
+  {
+    marca: "Dongfeng",
+    modelo: "AX7 MACH 1.5T 7DCT",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "aceite_motor",
+    intervalKm: 5e3,
+    intervalMonths: null,
+    fuente: "Dongfeng Ecuador (MARESA), AX7 MACH 1.5T 7DCT tabla de operaciones (precios desde julio 2025), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen: el punto aparece en visitas EXPRESS (5.000, 15.000, 25.000) y PREVENTIVO (10.000, 20.000), derivado de tabla por kilometraje; el pie dice que las actividades no se hacen necesariamente en todas las visitas. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-AX7-MACH.pdf; fila sustitucion aceite y filtro motor"
+  },
+  {
+    marca: "Dongfeng",
+    modelo: "AX7 MACH 1.5T 7DCT",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "prep_inspeccion",
+    intervalKm: 5e3,
+    intervalMonths: null,
+    fuente: "Dongfeng Ecuador (MARESA), AX7 MACH 1.5T 7DCT tabla de operaciones (precios desde julio 2025), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen: el punto aparece en visitas EXPRESS (5.000, 15.000, 25.000) y PREVENTIVO (10.000, 20.000), derivado de tabla por kilometraje; el pie dice que las actividades no se hacen necesariamente en todas las visitas. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-AX7-MACH.pdf; fila inspeccion 20 puntos de seguridad (serviceId de inspeccion)"
+  },
+  {
+    marca: "Dongfeng",
+    modelo: "AX7 MACH 1.5T 7DCT",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "gasolina",
+    serviceId: "escaner_diagnostico",
+    intervalKm: 5e3,
+    intervalMonths: null,
+    fuente: "Dongfeng Ecuador (MARESA), AX7 MACH 1.5T 7DCT tabla de operaciones (precios desde julio 2025), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen: el punto aparece en visitas EXPRESS (5.000, 15.000, 25.000) y PREVENTIVO (10.000, 20.000), derivado de tabla por kilometraje; el pie dice que las actividades no se hacen necesariamente en todas las visitas. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-AX7-MACH.pdf; fila diagnostico computarizado DFMDS"
+  },
+  {
+    marca: "Dongfeng",
+    modelo: "MAGE EV",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "bev",
+    serviceId: "trans_aceite_caja",
+    intervalKm: 5e4,
+    intervalMonths: null,
+    fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila sustitucion de aceite de caja reductora"
+  },
+  {
+    marca: "Dongfeng",
+    modelo: "MAGE EV",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "bev",
+    serviceId: "prep_inspeccion",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila inspeccion 20 puntos de seguridad (serviceId de inspeccion)"
+  },
+  {
+    marca: "Dongfeng",
+    modelo: "MAGE EV",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "bev",
+    serviceId: "escaner_diagnostico",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila diagnostico computarizado DFM"
+  },
+  {
+    marca: "Dongfeng",
+    modelo: "MAGE EV",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "bev",
+    serviceId: "clima_recarga",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila mantenimiento del sistema A/C"
+  },
+  {
+    marca: "Dongfeng",
+    modelo: "MAGE EV",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "bev",
+    serviceId: "llanta_rotacion",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila alineacion, balanceo y rotacion de neumaticos"
+  },
+  {
+    marca: "Dongfeng",
+    modelo: "MAGE EV",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "bev",
+    serviceId: "llanta_alineacion",
+    intervalKm: 1e4,
+    intervalMonths: null,
+    fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila alineacion, balanceo y rotacion de neumaticos"
+  },
+  {
+    marca: "Ford",
+    modelo: "Fiesta",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: null,
+    serviceId: "motor_distribucion",
+    intervalKm: 16e4,
+    intervalMonths: 60,
+    fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) ford/fiesta/base.json; sin manual citado"
+  },
+  {
+    marca: "Ford",
+    modelo: "Focus",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: null,
+    serviceId: "motor_distribucion",
+    intervalKm: 16e4,
+    intervalMonths: 60,
+    fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) ford/focus/base.json; sin manual citado"
+  },
+  {
+    marca: "Honda",
+    modelo: "Civic",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: null,
+    serviceId: "motor_bujias",
+    intervalKm: 1e5,
+    intervalMonths: null,
+    fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) honda/civic/base.json; sin manual citado"
+  },
+  {
+    marca: "Mazda",
+    modelo: "CX-5",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: null,
+    serviceId: "motor_bujias",
+    intervalKm: 12e4,
+    intervalMonths: null,
+    fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) mazda/cx-5/base.json; sin manual citado"
+  },
+  {
+    marca: "Mazda",
+    modelo: "Mazda3",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: null,
+    serviceId: "motor_bujias",
+    intervalKm: 12e4,
+    intervalMonths: null,
+    fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) mazda/mazda3/base.json; sin manual citado"
+  },
+  {
+    marca: "Toyota",
+    modelo: "Corolla",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "bev",
+    serviceId: "aceite_motor",
+    intervalKm: 15e3,
+    intervalMonths: 12,
+    fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) toyota/corolla/e210-1-8-hybrid.json; sin manual citado"
+  },
+  {
+    marca: "Toyota",
+    modelo: "Corolla",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "bev",
+    serviceId: "motor_bujias",
+    intervalKm: 12e4,
+    intervalMonths: null,
+    fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) toyota/corolla/e210-1-8-hybrid.json; sin manual citado"
+  },
+  {
+    marca: "Toyota",
+    modelo: "Corolla",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "bev",
+    serviceId: "ref_antifreeze",
+    intervalKm: 16e4,
+    intervalMonths: 96,
+    fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) toyota/corolla/e210-1-8-hybrid.json; sin manual citado"
+  },
+  {
+    marca: "Volkswagen",
+    modelo: "Golf",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "diesel",
+    serviceId: "motor_distribucion",
+    intervalKm: 21e4,
+    intervalMonths: null,
+    fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) volkswagen/golf/mk7-1-6tdi.json; sin manual citado"
+  },
+  {
+    marca: "Volkswagen",
+    modelo: "Golf",
+    anioDesde: 2011,
+    anioHasta: 2026,
+    combustible: "diesel",
+    serviceId: "aceite_motor",
+    intervalKm: 15e3,
+    intervalMonths: 12,
+    fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) volkswagen/golf/mk7-1-6tdi.json; sin manual citado"
+  }
+];
+
+// packages/api/src/infrastructure/schema-setup/model-plan-seed.ts
+var literal = (value) => value === null ? "NULL" : typeof value === "number" ? String(Math.trunc(value)) : `'${value.replace(/\\/g, "\\\\").replace(/'/g, "''")}'`;
+var idFor = (r) => createHash("sha256").update([r.marca, r.modelo, r.anioDesde, r.anioHasta, r.combustible ?? "", r.serviceId].join("|").toLowerCase()).digest("hex").slice(0, 36);
+var values = model_plan_seed_default.map((r) => `(${[idFor(r), r.marca, r.modelo, r.anioDesde, r.anioHasta, r.combustible, r.serviceId, r.intervalKm, r.intervalMonths, r.fuente].map((v) => literal(v)).join(", ")}, 1)`).join(", ");
+var MODEL_PLAN_SEED_COUNT = model_plan_seed_default.length;
+var MODEL_PLAN_SEED = [
+  { kind: "update", target: "VehicleModelPlan.verificado", sql: `INSERT IGNORE INTO \`VehicleModelPlan\` (id, marca, modelo, anioDesde, anioHasta, combustible, serviceId, intervalKm, intervalMonths, fuente, verificado) VALUES ${values}` }
+];
+
 // packages/api/src/infrastructure/schema-setup/inspection-statements.ts
 var INSPECTION_TABLES = ["VehicleInspection", "VehicleInspectionItem"];
 var INSPECTION_STATEMENTS = [
@@ -22094,7 +23089,7 @@ var COURSES_STATEMENTS = [
 ];
 
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
 var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));

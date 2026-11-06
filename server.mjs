@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='882504d4aba5e79950f16ec28c6de34061fdea94'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='abfe72a26975692e78b4399bd5a384148a235d80'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -9202,23 +9202,23 @@ var require_levels = __commonJS({
       }
     }
     function setLevel(level) {
-      const { labels: labels2, values } = this.levels;
+      const { labels: labels2, values: values2 } = this.levels;
       if (typeof level === "number") {
         if (labels2[level] === void 0) throw Error("unknown level value" + level);
         level = labels2[level];
       }
-      if (values[level] === void 0) throw Error("unknown level " + level);
+      if (values2[level] === void 0) throw Error("unknown level " + level);
       const preLevelVal = this[levelValSym];
-      const levelVal = this[levelValSym] = values[level];
+      const levelVal = this[levelValSym] = values2[level];
       const useOnlyCustomLevelsVal = this[useOnlyCustomLevelsSym];
       const levelComparison = this[levelCompSym];
       const hook = this[hooksSym].logMethod;
-      for (const key in values) {
-        if (levelComparison(values[key], levelVal) === false) {
+      for (const key in values2) {
+        if (levelComparison(values2[key], levelVal) === false) {
           this[key] = noop;
           continue;
         }
-        this[key] = isStandardLevel(key, useOnlyCustomLevelsVal) ? levelMethods[key](hook) : genLog(values[key], hook);
+        this[key] = isStandardLevel(key, useOnlyCustomLevelsVal) ? levelMethods[key](hook) : genLog(values2[key], hook);
       }
       this.emit(
         "level-change",
@@ -9234,8 +9234,8 @@ var require_levels = __commonJS({
       return levels && levels.labels ? levels.labels[levelVal] : "";
     }
     function isLevelEnabled(logLevel) {
-      const { values } = this.levels;
-      const logLevelVal = values[logLevel];
+      const { values: values2 } = this.levels;
+      const logLevelVal = values2[logLevel];
       return logLevelVal !== void 0 && this[levelCompSym](logLevelVal, this[levelValSym]);
     }
     function compareLevel(direction, current, expected) {
@@ -9260,21 +9260,21 @@ var require_levels = __commonJS({
         useOnlyCustomLevels ? null : nums,
         customNums
       );
-      const values = Object.assign(
+      const values2 = Object.assign(
         Object.create(Object.prototype, { silent: { value: Infinity } }),
         useOnlyCustomLevels ? null : DEFAULT_LEVELS,
         customLevels
       );
-      return { labels: labels2, values };
+      return { labels: labels2, values: values2 };
     }
     function assertDefaultLevelFound(defaultLevel, customLevels, useOnlyCustomLevels) {
       if (typeof defaultLevel === "number") {
-        const values = [].concat(
+        const values2 = [].concat(
           Object.keys(customLevels || {}).map((key) => customLevels[key]),
           useOnlyCustomLevels ? [] : Object.keys(nums).map((level) => +level),
           Infinity
         );
-        if (!values.includes(defaultLevel)) {
+        if (!values2.includes(defaultLevel)) {
           throw Error(`default level:${defaultLevel} must be included in custom levels`);
         }
         return;
@@ -9289,9 +9289,9 @@ var require_levels = __commonJS({
       }
     }
     function assertNoLevelCollisions(levels, customLevels) {
-      const { labels: labels2, values } = levels;
+      const { labels: labels2, values: values2 } = levels;
       for (const k in customLevels) {
-        if (k in values) {
+        if (k in values2) {
           throw Error("levels cannot be overridden");
         }
         if (customLevels[k] in labels2) {
@@ -13295,8 +13295,8 @@ var require_request = __commonJS({
         };
       }
       if (typeof tp === "string") {
-        const values = tp.split(",").map((it) => it.trim());
-        return proxyAddr.compile(values);
+        const values2 = tp.split(",").map((it) => it.trim());
+        return proxyAddr.compile(values2);
       }
       return proxyAddr.compile(tp);
     }
@@ -14379,24 +14379,24 @@ var require_scope = __commonJS({
           return;
         return vs.get(keyOrRef);
       }
-      scopeRefs(scopeName, values = this._values) {
-        return this._reduceValues(values, (name) => {
+      scopeRefs(scopeName, values2 = this._values) {
+        return this._reduceValues(values2, (name) => {
           if (name.scopePath === void 0)
             throw new Error(`CodeGen: name "${name}" has no value`);
           return (0, code_1._)`${scopeName}${name.scopePath}`;
         });
       }
-      scopeCode(values = this._values, usedValues, getCode) {
-        return this._reduceValues(values, (name) => {
+      scopeCode(values2 = this._values, usedValues, getCode) {
+        return this._reduceValues(values2, (name) => {
           if (name.value === void 0)
             throw new Error(`CodeGen: name "${name}" has no value`);
           return name.value.code;
         }, usedValues, getCode);
       }
-      _reduceValues(values, valueCode, usedValues = {}, getCode) {
+      _reduceValues(values2, valueCode, usedValues = {}, getCode) {
         let code3 = code_1.nil;
-        for (const prefix in values) {
-          const vs = values[prefix];
+        for (const prefix in values2) {
+          const vs = values2[prefix];
           if (!vs)
             continue;
           const nameSet = usedValues[prefix] = usedValues[prefix] || /* @__PURE__ */ new Map();
@@ -25509,24 +25509,24 @@ var require_scope2 = __commonJS({
           return;
         return vs.get(keyOrRef);
       }
-      scopeRefs(scopeName, values = this._values) {
-        return this._reduceValues(values, (name) => {
+      scopeRefs(scopeName, values2 = this._values) {
+        return this._reduceValues(values2, (name) => {
           if (name.scopePath === void 0)
             throw new Error(`CodeGen: name "${name}" has no value`);
           return (0, code_1._)`${scopeName}${name.scopePath}`;
         });
       }
-      scopeCode(values = this._values, usedValues, getCode) {
-        return this._reduceValues(values, (name) => {
+      scopeCode(values2 = this._values, usedValues, getCode) {
+        return this._reduceValues(values2, (name) => {
           if (name.value === void 0)
             throw new Error(`CodeGen: name "${name}" has no value`);
           return name.value.code;
         }, usedValues, getCode);
       }
-      _reduceValues(values, valueCode, usedValues = {}, getCode) {
+      _reduceValues(values2, valueCode, usedValues = {}, getCode) {
         let code3 = code_1.nil;
-        for (const prefix in values) {
-          const vs = values[prefix];
+        for (const prefix in values2) {
+          const vs = values2[prefix];
           if (!vs)
             continue;
           const nameSet = usedValues[prefix] = usedValues[prefix] || /* @__PURE__ */ new Map();
@@ -33653,22 +33653,22 @@ var require_resolvers = __commonJS({
       }
       return intersection;
     }
-    function arraysIntersection(keyword, values, mergedSchema) {
-      const intersection = _arraysIntersection(values);
+    function arraysIntersection(keyword, values2, mergedSchema) {
+      const intersection = _arraysIntersection(values2);
       if (intersection.length === 0) {
-        throw new MergeError(keyword, values);
+        throw new MergeError(keyword, values2);
       }
       mergedSchema[keyword] = intersection;
     }
-    function hybridArraysIntersection(keyword, values, mergedSchema) {
-      for (let i = 0; i < values.length; i++) {
-        if (!Array.isArray(values[i])) {
-          values[i] = [values[i]];
+    function hybridArraysIntersection(keyword, values2, mergedSchema) {
+      for (let i = 0; i < values2.length; i++) {
+        if (!Array.isArray(values2[i])) {
+          values2[i] = [values2[i]];
         }
       }
-      const intersection = _arraysIntersection(values);
+      const intersection = _arraysIntersection(values2);
       if (intersection.length === 0) {
-        throw new MergeError(keyword, values);
+        throw new MergeError(keyword, values2);
       }
       if (intersection.length === 1) {
         mergedSchema[keyword] = intersection[0];
@@ -33676,9 +33676,9 @@ var require_resolvers = __commonJS({
         mergedSchema[keyword] = intersection;
       }
     }
-    function arraysUnion(keyword, values, mergedSchema) {
+    function arraysUnion(keyword, values2, mergedSchema) {
       const union = [];
-      for (const array of values) {
+      for (const array of values2) {
         for (const value2 of array) {
           if (!union.includes(value2)) {
             union.push(value2);
@@ -33687,40 +33687,40 @@ var require_resolvers = __commonJS({
       }
       mergedSchema[keyword] = union;
     }
-    function minNumber(keyword, values, mergedSchema) {
-      mergedSchema[keyword] = Math.min(...values);
+    function minNumber(keyword, values2, mergedSchema) {
+      mergedSchema[keyword] = Math.min(...values2);
     }
-    function maxNumber(keyword, values, mergedSchema) {
-      mergedSchema[keyword] = Math.max(...values);
+    function maxNumber(keyword, values2, mergedSchema) {
+      mergedSchema[keyword] = Math.max(...values2);
     }
-    function commonMultiple(keyword, values, mergedSchema) {
+    function commonMultiple(keyword, values2, mergedSchema) {
       const gcd = (a, b) => !b ? a : gcd(b, a % b);
       const lcm = (a, b) => a * b / gcd(a, b);
       let scale = 1;
-      for (const value2 of values) {
+      for (const value2 of values2) {
         while (value2 * scale % 1 !== 0) {
           scale *= 10;
         }
       }
-      let multiple = values[0] * scale;
-      for (const value2 of values) {
+      let multiple = values2[0] * scale;
+      for (const value2 of values2) {
         multiple = lcm(multiple, value2 * scale);
       }
       mergedSchema[keyword] = multiple / scale;
     }
-    function allEqual(keyword, values, mergedSchema) {
-      const firstValue = values[0];
-      for (let i = 1; i < values.length; i++) {
-        if (!deepEqual(values[i], firstValue)) {
-          throw new MergeError(keyword, values);
+    function allEqual(keyword, values2, mergedSchema) {
+      const firstValue = values2[0];
+      for (let i = 1; i < values2.length; i++) {
+        if (!deepEqual(values2[i], firstValue)) {
+          throw new MergeError(keyword, values2);
         }
       }
       mergedSchema[keyword] = firstValue;
     }
     function skip() {
     }
-    function booleanAnd(keyword, values, mergedSchema) {
-      for (const value2 of values) {
+    function booleanAnd(keyword, values2, mergedSchema) {
+      for (const value2 of values2) {
         if (value2 === false) {
           mergedSchema[keyword] = false;
           return;
@@ -33728,8 +33728,8 @@ var require_resolvers = __commonJS({
       }
       mergedSchema[keyword] = true;
     }
-    function booleanOr(keyword, values, mergedSchema) {
-      for (const value2 of values) {
+    function booleanOr(keyword, values2, mergedSchema) {
+      for (const value2 of values2) {
         if (value2 === true) {
           mergedSchema[keyword] = true;
           return;
@@ -33800,8 +33800,8 @@ var require_merge_json_schemas = __commonJS({
       uniqueItems: resolvers.booleanOr,
       contains: mergeSchemasResolver
     };
-    function mergeSchemasResolver(keyword, values, mergedSchema, _schemas, options) {
-      mergedSchema[keyword] = _mergeSchemas(values, options);
+    function mergeSchemasResolver(keyword, values2, mergedSchema, _schemas, options) {
+      mergedSchema[keyword] = _mergeSchemas(values2, options);
     }
     function cartesianProduct(arrays) {
       let result = [[]];
@@ -33816,12 +33816,12 @@ var require_merge_json_schemas = __commonJS({
       }
       return result;
     }
-    function mergeOneOf(keyword, values, mergedSchema, _schemas, options) {
-      if (values.length === 1) {
-        mergedSchema[keyword] = values[0];
+    function mergeOneOf(keyword, values2, mergedSchema, _schemas, options) {
+      if (values2.length === 1) {
+        mergedSchema[keyword] = values2[0];
         return;
       }
-      const product = cartesianProduct(values);
+      const product = cartesianProduct(values2);
       const mergedOneOf = [];
       for (const combination of product) {
         try {
@@ -33849,15 +33849,15 @@ var require_merge_json_schemas = __commonJS({
       }
       return additionalItems;
     }
-    function mergeItems(keyword, values, mergedSchema, schemas, options) {
+    function mergeItems(keyword, values2, mergedSchema, schemas, options) {
       let maxArrayItemsLength = 0;
-      for (const itemsSchema of values) {
+      for (const itemsSchema of values2) {
         if (Array.isArray(itemsSchema)) {
           maxArrayItemsLength = Math.max(maxArrayItemsLength, itemsSchema.length);
         }
       }
       if (maxArrayItemsLength === 0) {
-        mergedSchema[keyword] = _mergeSchemas(values, options);
+        mergedSchema[keyword] = _mergeSchemas(values2, options);
         return;
       }
       const mergedItemsSchemas = [];
@@ -33873,7 +33873,7 @@ var require_merge_json_schemas = __commonJS({
       }
       mergedSchema[keyword] = mergedItemsSchemas;
     }
-    function mergeAdditionalItems(keyword, values, mergedSchema, schemas, options) {
+    function mergeAdditionalItems(keyword, values2, mergedSchema, schemas, options) {
       let hasArrayItems = false;
       for (const schema of schemas) {
         if (Array.isArray(schema.items)) {
@@ -33882,7 +33882,7 @@ var require_merge_json_schemas = __commonJS({
         }
       }
       if (!hasArrayItems) {
-        mergedSchema[keyword] = _mergeSchemas(values, options);
+        mergedSchema[keyword] = _mergeSchemas(values2, options);
         return;
       }
       const mergedAdditionalItemsSchemas = [];
@@ -33934,9 +33934,9 @@ var require_merge_json_schemas = __commonJS({
       }
       mergedSchema[keyword] = mergedProperties;
     }
-    function mergeObjects(keyword, values, mergedSchema, _schemas, options) {
+    function mergeObjects(keyword, values2, mergedSchema, _schemas, options) {
       const objectsProperties = {};
-      for (const properties of values) {
+      for (const properties of values2) {
         for (const propertyName of Object.keys(properties)) {
           if (objectsProperties[propertyName] === void 0) {
             objectsProperties[propertyName] = [];
@@ -33978,9 +33978,9 @@ var require_merge_json_schemas = __commonJS({
         }
       }
     }
-    function mergeDependencies(keyword, values, mergedSchema) {
+    function mergeDependencies(keyword, values2, mergedSchema) {
       const mergedDependencies = {};
-      for (const dependencies of values) {
+      for (const dependencies of values2) {
         for (const propertyName of Object.keys(dependencies)) {
           if (mergedDependencies[propertyName] === void 0) {
             mergedDependencies[propertyName] = [];
@@ -34020,25 +34020,25 @@ var require_merge_json_schemas = __commonJS({
       }
       return mergedSchema;
     }
-    function defaultResolver(keyword, values, mergedSchema, _schemas, options) {
+    function defaultResolver(keyword, values2, mergedSchema, _schemas, options) {
       const onConflict = options.onConflict ?? "throw";
-      if (values.length === 1 || onConflict === "first") {
-        mergedSchema[keyword] = values[0];
+      if (values2.length === 1 || onConflict === "first") {
+        mergedSchema[keyword] = values2[0];
         return;
       }
       let allValuesEqual = true;
-      for (let i = 1; i < values.length; i++) {
-        if (!deepEqual(values[i], values[0])) {
+      for (let i = 1; i < values2.length; i++) {
+        if (!deepEqual(values2[i], values2[0])) {
           allValuesEqual = false;
           break;
         }
       }
       if (allValuesEqual) {
-        mergedSchema[keyword] = values[0];
+        mergedSchema[keyword] = values2[0];
         return;
       }
       if (onConflict === "throw") {
-        throw new errors.ResolverNotFoundError(keyword, values);
+        throw new errors.ResolverNotFoundError(keyword, values2);
       }
       if (onConflict === "skip") {
         return;
@@ -45328,9 +45328,9 @@ var require_lru_cache = __commonJS({
     LRUCache.prototype.forEach = function(callback, scope) {
       scope = arguments.length > 1 ? scope : this;
       var i = 0, l = this.size;
-      var pointer = this.head, keys = this.K, values = this.V, forward = this.forward;
+      var pointer = this.head, keys = this.K, values2 = this.V, forward = this.forward;
       while (i < l) {
-        callback.call(scope, values[pointer], keys[pointer], this);
+        callback.call(scope, values2[pointer], keys[pointer], this);
         pointer = forward[pointer];
         i++;
       }
@@ -45353,11 +45353,11 @@ var require_lru_cache = __commonJS({
     };
     LRUCache.prototype.values = function() {
       var i = 0, l = this.size;
-      var pointer = this.head, values = this.V, forward = this.forward;
+      var pointer = this.head, values2 = this.V, forward = this.forward;
       return new Iterator(function() {
         if (i >= l)
           return { done: true };
-        var value2 = values[pointer];
+        var value2 = values2[pointer];
         i++;
         if (i < l)
           pointer = forward[pointer];
@@ -45369,11 +45369,11 @@ var require_lru_cache = __commonJS({
     };
     LRUCache.prototype.entries = function() {
       var i = 0, l = this.size;
-      var pointer = this.head, keys = this.K, values = this.V, forward = this.forward;
+      var pointer = this.head, keys = this.K, values2 = this.V, forward = this.forward;
       return new Iterator(function() {
         if (i >= l)
           return { done: true };
-        var key = keys[pointer], value2 = values[pointer];
+        var key = keys[pointer], value2 = values2[pointer];
         i++;
         if (i < l)
           pointer = forward[pointer];
@@ -49244,13 +49244,13 @@ var require_der2 = __commonJS({
         return this.reporter.error("Encoding of string type: " + tag + " unsupported");
       }
     };
-    DERNode.prototype._encodeObjid = function encodeObjid(id2, values, relative) {
+    DERNode.prototype._encodeObjid = function encodeObjid(id2, values2, relative) {
       if (typeof id2 === "string") {
-        if (!values)
+        if (!values2)
           return this.reporter.error("string objid given, but no values map found");
-        if (!values.hasOwnProperty(id2))
+        if (!values2.hasOwnProperty(id2))
           return this.reporter.error("objid not found in values map");
-        id2 = values[id2].split(/[\s.]+/g);
+        id2 = values2[id2].split(/[\s.]+/g);
         for (let i = 0; i < id2.length; i++)
           id2[i] |= 0;
       } else if (Array.isArray(id2)) {
@@ -49319,14 +49319,14 @@ var require_der2 = __commonJS({
     DERNode.prototype._encodeNull = function encodeNull() {
       return this._createEncoderBuffer("");
     };
-    DERNode.prototype._encodeInt = function encodeInt(num5, values) {
+    DERNode.prototype._encodeInt = function encodeInt(num5, values2) {
       if (typeof num5 === "string") {
-        if (!values)
+        if (!values2)
           return this.reporter.error("String int or enum given, but no values map");
-        if (!values.hasOwnProperty(num5)) {
+        if (!values2.hasOwnProperty(num5)) {
           return this.reporter.error("Values map doesn't contain: " + JSON.stringify(num5));
         }
-        num5 = values[num5];
+        num5 = values2[num5];
       }
       if (typeof num5 !== "number" && !Buffer2.isBuffer(num5)) {
         const numArray = num5.toArray();
@@ -49577,7 +49577,7 @@ var require_der3 = __commonJS({
         return buffer.error("Decoding of string type: " + tag + " unsupported");
       }
     };
-    DERNode.prototype._decodeObjid = function decodeObjid(buffer, values, relative) {
+    DERNode.prototype._decodeObjid = function decodeObjid(buffer, values2, relative) {
       let result;
       const identifiers = [];
       let ident = 0;
@@ -49599,10 +49599,10 @@ var require_der3 = __commonJS({
         result = identifiers;
       else
         result = [first, second].concat(identifiers.slice(1));
-      if (values) {
-        let tmp = values[result.join(" ")];
+      if (values2) {
+        let tmp = values2[result.join(" ")];
         if (tmp === void 0)
-          tmp = values[result.join(".")];
+          tmp = values2[result.join(".")];
         if (tmp !== void 0)
           result = tmp;
       }
@@ -49649,11 +49649,11 @@ var require_der3 = __commonJS({
       else
         return res !== 0;
     };
-    DERNode.prototype._decodeInt = function decodeInt(buffer, values) {
+    DERNode.prototype._decodeInt = function decodeInt(buffer, values2) {
       const raw = buffer.raw();
       let res = new bignum(raw);
-      if (values)
-        res = values[res.toString(10)] || res;
+      if (values2)
+        res = values2[res.toString(10)] || res;
       return res;
     };
     DERNode.prototype._use = function use(entity, obj) {
@@ -50415,7 +50415,7 @@ var require_crypto = __commonJS({
 var require_utils4 = __commonJS({
   "node_modules/fast-jwt/src/utils.js"(exports, module) {
     "use strict";
-    var { createHash: createHash12 } = __require("node:crypto");
+    var { createHash: createHash13 } = __require("node:crypto");
     var { TokenError } = require_error3();
     var algorithmMatcher = /"alg"\s*:\s*"[HERP]S(256|384)"/m;
     var edAlgorithmMatcher = /"alg"\s*:\s*"EdDSA"/m;
@@ -50452,10 +50452,10 @@ var require_utils4 = __commonJS({
       const header = Buffer.from(rawHeader, "base64").toString("utf-8");
       let hasher;
       if (header.match(edAlgorithmMatcher) && header.match(ed448CurveMatcher)) {
-        hasher = createHash12("shake256", { outputLength: 114 });
+        hasher = createHash13("shake256", { outputLength: 114 });
       } else {
         const mo = header.match(algorithmMatcher);
-        hasher = createHash12(`sha${mo ? mo[1] : "512"}`);
+        hasher = createHash13(`sha${mo ? mo[1] : "512"}`);
       }
       return hasher.update(token2).digest("hex");
     }
@@ -50610,18 +50610,18 @@ var require_verifier = __commonJS({
         throw new TokenError(TokenError.codes.invalidSignature, "The token signature is invalid.");
       }
     }
-    function validateClaimType(values, claim, allowArray, isArray, type) {
+    function validateClaimType(values2, claim, allowArray, isArray, type) {
       const typeFailureMessage = allowArray ? `The ${claim} claim must be a ${type} or an array of ${type}s.` : `The ${claim} claim must be a ${type}.`;
       if (isArray && !allowArray) {
         throw new TokenError(TokenError.codes.invalidClaimValue, typeFailureMessage);
       }
-      if (values.map((v) => typeof v).some((t) => t !== type)) {
+      if (values2.map((v) => typeof v).some((t) => t !== type)) {
         throw new TokenError(TokenError.codes.invalidClaimType, typeFailureMessage);
       }
     }
-    function validateClaimValues(values, claim, allowed, isArray) {
+    function validateClaimValues(values2, claim, allowed, isArray) {
       const failureMessage = isArray ? `None of ${claim} claim values are allowed.` : `The ${claim} claim value is not allowed.`;
-      if (!values.some((v) => allowed.some((a) => a.test(v)))) {
+      if (!values2.some((v) => allowed.some((a) => a.test(v)))) {
         throw new TokenError(TokenError.codes.invalidClaimValue, failureMessage);
       }
     }
@@ -50699,15 +50699,15 @@ var require_verifier = __commonJS({
       for (const { type, claim, allowed, array, modifier, greater, errorCode, errorVerb } of validators) {
         const value2 = payload[claim];
         const isArray = Array.isArray(value2);
-        const values = isArray ? value2 : [value2];
+        const values2 = isArray ? value2 : [value2];
         if (!(claim in payload)) {
           continue;
         }
-        validateClaimType(values, claim, array, isArray, type === "date" ? "number" : "string");
+        validateClaimType(values2, claim, array, isArray, type === "date" ? "number" : "string");
         if (type === "date") {
           validateClaimDateValue(value2, modifier, now, greater, errorCode, errorVerb);
         } else {
-          validateClaimValues(values, claim, allowed, isArray);
+          validateClaimValues(values2, claim, allowed, isArray);
         }
       }
     }
@@ -55285,9 +55285,9 @@ function mergeValues(a, b) {
     return { valid: false };
   }
 }
-function createZodEnum(values, params2) {
+function createZodEnum(values2, params2) {
   return new ZodEnum({
-    values,
+    values: values2,
     typeName: ZodFirstPartyTypeKind.ZodEnum,
     ...processCreateParams(params2)
   });
@@ -58038,14 +58038,14 @@ var init_types = __esm({
         }
         return enumValues;
       }
-      extract(values, newDef = this._def) {
-        return _ZodEnum.create(values, {
+      extract(values2, newDef = this._def) {
+        return _ZodEnum.create(values2, {
           ...this._def,
           ...newDef
         });
       }
-      exclude(values, newDef = this._def) {
-        return _ZodEnum.create(this.options.filter((opt) => !values.includes(opt)), {
+      exclude(values2, newDef = this._def) {
+        return _ZodEnum.create(this.options.filter((opt) => !values2.includes(opt)), {
           ...this._def,
           ...newDef
         });
@@ -58083,9 +58083,9 @@ var init_types = __esm({
         return this._def.values;
       }
     };
-    ZodNativeEnum.create = (values, params2) => {
+    ZodNativeEnum.create = (values2, params2) => {
       return new ZodNativeEnum({
-        values,
+        values: values2,
         typeName: ZodFirstPartyTypeKind.ZodNativeEnum,
         ...processCreateParams(params2)
       });
@@ -61859,6 +61859,1011 @@ var init_model_plan_statements = __esm({
   }
 });
 
+// packages/api/dist/infrastructure/schema-setup/model-plan-seed.json
+var model_plan_seed_default;
+var init_model_plan_seed = __esm({
+  "packages/api/dist/infrastructure/schema-setup/model-plan-seed.json"() {
+    model_plan_seed_default = [
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "aceite_motor",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_filtro_aire",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "clima_filtro_cabina",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "iny_limpieza",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "escaner_diagnostico",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "llanta_rotacion",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "llanta_alineacion",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "susp_direccion",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "freno_pastillas",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf; limpieza o cambio de frenos; no incluye pastillas"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "elec_luces",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_bujias",
+        intervalKm: 2e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf; buj\xEDas de cobre; platino o iridio a 100.000 km"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "freno_liquido",
+        intervalKm: 2e4,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_correa",
+        intervalKm: 1e5,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "iny_filtro_combustible",
+        intervalKm: 1e5,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "ref_antifreeze",
+        intervalKm: 1e5,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "trans_aceite_caja",
+        intervalKm: 1e5,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "KIA",
+        modelo: "GENERICO",
+        anioDesde: 2017,
+        anioHasta: 2026,
+        combustible: "diesel",
+        serviceId: "aceite_motor",
+        intervalKm: 5e3,
+        intervalMonths: null,
+        fuente: "Kia Ecuador, Manual de garantia y mantenimiento 2026, p.22 (todos los modelos no electricos; gasolina desde nov-2017) https://www.kia.com/content/dam/kwcms/ec/es/files/manual/Manual_de_garant\xEDa_y_mantenimiento_2026.pdf"
+      },
+      {
+        marca: "SUZUKI",
+        modelo: "VITARA",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "aceite_motor",
+        intervalKm: 5e3,
+        intervalMonths: 3,
+        fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+      },
+      {
+        marca: "SUZUKI",
+        modelo: "VITARA",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_bujias",
+        intervalKm: 2e4,
+        intervalMonths: null,
+        fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+      },
+      {
+        marca: "SUZUKI",
+        modelo: "VITARA",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_filtro_aire",
+        intervalKm: 2e4,
+        intervalMonths: null,
+        fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+      },
+      {
+        marca: "SUZUKI",
+        modelo: "VITARA",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "clima_filtro_cabina",
+        intervalKm: 2e4,
+        intervalMonths: null,
+        fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+      },
+      {
+        marca: "SUZUKI",
+        modelo: "VITARA",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "iny_limpieza",
+        intervalKm: 2e4,
+        intervalMonths: null,
+        fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+      },
+      {
+        marca: "SUZUKI",
+        modelo: "VITARA",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "iny_filtro_combustible",
+        intervalKm: 4e4,
+        intervalMonths: null,
+        fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+      },
+      {
+        marca: "SUZUKI",
+        modelo: "VITARA",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "freno_liquido",
+        intervalKm: 4e4,
+        intervalMonths: null,
+        fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+      },
+      {
+        marca: "SUZUKI",
+        modelo: "VITARA",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "trans_aceite_caja",
+        intervalKm: 4e4,
+        intervalMonths: null,
+        fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+      },
+      {
+        marca: "SUZUKI",
+        modelo: "VITARA",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "ref_antifreeze",
+        intervalKm: 5e4,
+        intervalMonths: null,
+        fuente: "Suzuki Ecuador, Plan de mantenimiento New Vitara 1.6 TM 4x2 (PDF 2023, Ecuador; intervalos deducidos de la tabla por km) https://suzukiecuador.com/wp-content/uploads/2023/07/SU_PLAN-DE-MANTENIMIENTO_NEW-VITARA-1.6-TM-4x2-1.pdf"
+      },
+      {
+        marca: "MG",
+        modelo: "ZS",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "ref_antifreeze",
+        intervalKm: 6e4,
+        intervalMonths: 36,
+        fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf"
+      },
+      {
+        marca: "MG",
+        modelo: "ZS",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "trans_aceite_caja",
+        intervalKm: 6e4,
+        intervalMonths: null,
+        fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf (aceite CVT)"
+      },
+      {
+        marca: "MG",
+        modelo: "ZS",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "freno_liquido",
+        intervalKm: null,
+        intervalMonths: 24,
+        fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf"
+      },
+      {
+        marca: "MG",
+        modelo: "ZS",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "iny_filtro_combustible",
+        intervalKm: 1e5,
+        intervalMonths: 96,
+        fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf"
+      },
+      {
+        marca: "MG",
+        modelo: "ZS",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_bujias",
+        intervalKm: 4e4,
+        intervalMonths: null,
+        fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf"
+      },
+      {
+        marca: "MG",
+        modelo: "ZS",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_correa",
+        intervalKm: 6e4,
+        intervalMonths: 36,
+        fuente: "MG Chile (mercado Chile, no Ecuador; documento del fabricante), Manual de garantia MG ZS, seccion Mantenimientos > Elementos de mantenimiento especial (p.15). Anios no indicados en el documento. URL https://mgmotor.cl/warrantys/cl/Manual_Garantia_ZS.pdf (correa de transmision auxiliar)"
+      },
+      {
+        marca: "CHANGAN",
+        modelo: "CS35 PLUS",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "trans_aceite_caja",
+        intervalKm: 6e4,
+        intervalMonths: 36,
+        fuente: "Changan Peru (mercado Peru, no Ecuador; documento del fabricante), Manual de usuario CS35-PLUS, seccion Mantenimiento periodico, Horario de mantenimiento normal (p.229): aceite de transmision manual/automatica/doble embrague segun equipamiento. Anios no indicados en el documento; el manual dice que la cartilla puede cambiar segun la localidad. URL https://www.changan.com.pe/media/ae5dv2nv/cs35-plus.pdf"
+      },
+      {
+        marca: "JAC",
+        modelo: "JS2 PRO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "clima_filtro_cabina",
+        intervalKm: 5e3,
+        intervalMonths: 6,
+        fuente: "JAC Chile (mercado Chile, no Ecuador; documento del fabricante), JS2 PRO Manual de usuario, seccion Sistema de aire acondicionado > Filtro de aire del compartimiento de pasajeros (cerca de p.150): frase recomienda reemplazo cada 5000 km o cada medio ano, lo primero que ocurra. Anios no indicados. Otros intervalos remiten al Manual de garantia y mantenimiento (no hallado). URL https://www.jacautoschile.cl/content/uploads/2025/06/JS2-PRO-Manual-de-usuario.pdf"
+      },
+      {
+        marca: "Chevrolet",
+        modelo: "D-MAX 3.0 DURAMAX",
+        anioDesde: 2026,
+        anioHasta: 2026,
+        combustible: "diesel",
+        serviceId: "aceite_motor",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet Ecuador, Manual del propietario D-Max 2026 (suplemento motor diesel Duramax 3.0L), Servicio y mantenimiento pp.43-44, mercado Ecuador, explicito; anios segun titulo del manual; se omite refrigerante/correa de bomba sin serviceId. URL https://www.chevrolet.com.ec/content/dam/chevrolet/south-america/ecuador/espanol/index/manuales/camionetas/d-max/manual-propietario-dmax-2026.pdf"
+      },
+      {
+        marca: "Chevrolet",
+        modelo: "D-MAX 3.0 DURAMAX",
+        anioDesde: 2026,
+        anioHasta: 2026,
+        combustible: "diesel",
+        serviceId: "iny_filtro_combustible",
+        intervalKm: 4e4,
+        intervalMonths: 24,
+        fuente: "Chevrolet Ecuador, Manual del propietario D-Max 2026 (suplemento motor diesel Duramax 3.0L), Servicio y mantenimiento pp.43-44, mercado Ecuador, explicito; anios segun titulo del manual; se omite refrigerante/correa de bomba sin serviceId. URL https://www.chevrolet.com.ec/content/dam/chevrolet/south-america/ecuador/espanol/index/manuales/camionetas/d-max/manual-propietario-dmax-2026.pdf"
+      },
+      {
+        marca: "Chevrolet",
+        modelo: "D-MAX 3.0 DURAMAX",
+        anioDesde: 2026,
+        anioHasta: 2026,
+        combustible: "diesel",
+        serviceId: "ref_antifreeze",
+        intervalKm: 24e4,
+        intervalMonths: 72,
+        fuente: "Chevrolet Ecuador, Manual del propietario D-Max 2026 (suplemento motor diesel Duramax 3.0L), Servicio y mantenimiento pp.43-44, mercado Ecuador, explicito; anios segun titulo del manual; se omite refrigerante/correa de bomba sin serviceId. URL https://www.chevrolet.com.ec/content/dam/chevrolet/south-america/ecuador/espanol/index/manuales/camionetas/d-max/manual-propietario-dmax-2026.pdf"
+      },
+      {
+        marca: "Hyundai",
+        modelo: "GRAND I10",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "aceite_motor",
+        intervalKm: 15e3,
+        intervalMonths: 12,
+        fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13 a 7-16 (calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), explicito; anios no indicados; en el calendario Mexico el aceite es 10000 km o 6 meses. URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf"
+      },
+      {
+        marca: "Hyundai",
+        modelo: "GRAND I10",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_bujias",
+        intervalKm: 16e4,
+        intervalMonths: 120,
+        fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13 a 7-16 (calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), explicito; anios no indicados; en el calendario Mexico el aceite es 10000 km o 6 meses. URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf"
+      },
+      {
+        marca: "Hyundai",
+        modelo: "GRAND I10",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "ref_antifreeze",
+        intervalKm: 21e4,
+        intervalMonths: 120,
+        fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13 a 7-16 (calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), explicito; anios no indicados; en el calendario Mexico el aceite es 10000 km o 6 meses. URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf; primer cambio; luego cada 30.000 km o 24 meses"
+      },
+      {
+        marca: "Mazda",
+        modelo: "GENERICO",
+        anioDesde: 2024,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_bujias",
+        intervalKm: 12e4,
+        intervalMonths: null,
+        fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento pp.6-5 a 6-13, tabla segun pais (guia mal extraida: Ecuador y Peru figuran con tabla 1 o 4; el valor es igual en ambas salvo filtro de combustible, tabla 4 SKYACTIV-G), explicito; mercado Peru (documento generico Mazda, no por modelo). URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf"
+      },
+      {
+        marca: "Mazda",
+        modelo: "GENERICO",
+        anioDesde: 2024,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "iny_filtro_combustible",
+        intervalKm: 6e4,
+        intervalMonths: null,
+        fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento pp.6-5 a 6-13, tabla segun pais (guia mal extraida: Ecuador y Peru figuran con tabla 1 o 4; el valor es igual en ambas salvo filtro de combustible, tabla 4 SKYACTIV-G), explicito; mercado Peru (documento generico Mazda, no por modelo). URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf"
+      },
+      {
+        marca: "Mazda",
+        modelo: "GENERICO",
+        anioDesde: 2024,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "ref_antifreeze",
+        intervalKm: 2e5,
+        intervalMonths: 120,
+        fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento pp.6-5 a 6-13, tabla segun pais (guia mal extraida: Ecuador y Peru figuran con tabla 1 o 4; el valor es igual en ambas salvo filtro de combustible, tabla 4 SKYACTIV-G), explicito; mercado Peru (documento generico Mazda, no por modelo). URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf; primer cambio; luego cada 100.000 km o 5 a\xF1os"
+      },
+      {
+        marca: "Mazda",
+        modelo: "GENERICO",
+        anioDesde: 2024,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "llanta_rotacion",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento pp.6-5 a 6-13, tabla segun pais (guia mal extraida: Ecuador y Peru figuran con tabla 1 o 4; el valor es igual en ambas salvo filtro de combustible, tabla 4 SKYACTIV-G), explicito; mercado Peru (documento generico Mazda, no por modelo). URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "freno_liquido",
+        intervalKm: 4e4,
+        intervalMonths: 24,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-28, mercado Chile, explicito ('Cambio de liquido de freno en 2 anios o 40.000 km'); modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad. URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "aceite_motor",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_filtro_aire",
+        intervalKm: 2e4,
+        intervalMonths: 24,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de filtro de aire' (marcas en 10.000, 30.000, 50.000...)"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "clima_filtro_cabina",
+        intervalKm: 2e4,
+        intervalMonths: 24,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de filtro polen' (reemplazo en 20.000, 40.000...; inspeccion en 10.000, 30.000...)"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_bujias",
+        intervalKm: 3e4,
+        intervalMonths: 36,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "iny_filtro_combustible",
+        intervalKm: 3e4,
+        intervalMonths: 36,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; solo si aplica al modelo"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_correa",
+        intervalKm: 5e4,
+        intervalMonths: 60,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Sustituir correa de accesorios'"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "ref_antifreeze",
+        intervalKm: 5e4,
+        intervalMonths: 60,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; excepto Tiggo 9 (fila propia)"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO CAJA MT",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "trans_aceite_caja",
+        intervalKm: 3e4,
+        intervalMonths: 36,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de aceite de transmision MT'"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "llanta_rotacion",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Realizar rotacion, balanceo y aprendizaje'"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "freno_pastillas",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Aseo e inspeccion de sistema de frenos' (serviceId de inspeccion)"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "susp_direccion",
+        intervalKm: 3e4,
+        intervalMonths: 36,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Verificar tren delantero' (serviceId de inspeccion)"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "escaner_diagnostico",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Diagnosticar via escaner X431'"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "elec_luces",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf"
+      },
+      {
+        marca: "Chery",
+        modelo: "TIGGO 9",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "ref_antifreeze",
+        intervalKm: 4e4,
+        intervalMonths: 48,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio liquido refrigerante (Tiggo 9)' (marcas en 40.000, 80.000...)"
+      },
+      {
+        marca: "Chery",
+        modelo: "TIGGO 2",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_distribucion",
+        intervalKm: 5e4,
+        intervalMonths: 60,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de correa de distribucion (Solo Tiggo 2)'"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO CAJA 7DCT",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "trans_aceite_caja",
+        intervalKm: 6e4,
+        intervalMonths: 72,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de aceite de transmision 7DCT' (marcas en 60.000, 120.000, 180.000)"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO CAJA 7DCT",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "trans_filtro_caja",
+        intervalKm: 6e4,
+        intervalMonths: 72,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; fila 'Cambio de filtro de transmision 7DCT' (solo si aplica al modelo)"
+      },
+      {
+        marca: "Chery",
+        modelo: "GENERICO TRANSFER Y DIFERENCIAL",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "trans_aceite_caja",
+        intervalKm: 5e4,
+        intervalMonths: 60,
+        fuente: "Chery Chile, Manual de Garantia SUV (jun-2026), Plan de Mantencion pp.26-27 (tabla por kilometraje), mercado Chile; modelos SUV Tiggo 2/7 Pro/8 Pro/9; anios no indicados; combustible no indicado; severas: reducir periodos a la mitad; lectura por imagen, derivado de tabla por kilometraje (marcas regulares). URL https://chery.cl/wp-content/uploads/2026/06/Manual-Garantia-SUV.pdf; filas 'Cambio de aceite Transfer' y 'Diferencial trasero' (solo si aplica al modelo; marcas en 50.000, 100.000, 150.000, 200.000)"
+      },
+      {
+        marca: "Hyundai",
+        modelo: "GRAND I10",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_filtro_aire",
+        intervalKm: 45e3,
+        intervalMonths: 36,
+        fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13, 7-14 y 7-16 (PDF 273, 274, 276; calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), mercado Ecuador (manual alojado por Hyundai Ecuador); anios no indicados; lectura por imagen, derivado de tabla por kilometraje (marcas R en columnas de 15.000 km). URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf; filtro del purificador de aire, 'Excepto Oriente Medio': I,I,R,I,I,R (R en 45.000 y 90.000 km: solo 2 marcas con separacion igual al primer valor)"
+      },
+      {
+        marca: "Hyundai",
+        modelo: "GRAND I10",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "iny_filtro_combustible",
+        intervalKm: 6e4,
+        intervalMonths: 48,
+        fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13, 7-14 y 7-16 (PDF 273, 274, 276; calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), mercado Ecuador (manual alojado por Hyundai Ecuador); anios no indicados; lectura por imagen, derivado de tabla por kilometraje (marcas R en columnas de 15.000 km). URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf; filtro de combustible: R en 60.000 y 120.000 km (solo 2 marcas; el manual lo considera pieza sin mantenimiento con revision periodica)"
+      },
+      {
+        marca: "Hyundai",
+        modelo: "GRAND I10",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "clima_filtro_cabina",
+        intervalKm: 15e3,
+        intervalMonths: 12,
+        fuente: "Hyundai Motor India / Hyundai Ecuador (kerner.hyundai.com.ec), Manual del propietario Grand i10 (edicion 2019), Mantenimiento pp.7-13, 7-14 y 7-16 (PDF 273, 274, 276; calendario normal EXCEPTO MEXICO; Ecuador no figura entre las excepciones), mercado Ecuador (manual alojado por Hyundai Ecuador); anios no indicados; lectura por imagen, derivado de tabla por kilometraje (marcas R en columnas de 15.000 km). URL https://kerner.hyundai.com.ec/documentos/manuales/manual-propietario-grand10.pdf; filtro de aire del control climatico: R en cada columna"
+      },
+      {
+        marca: "Mazda",
+        modelo: "GENERICO",
+        anioDesde: 2024,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "aceite_motor",
+        intervalKm: 1e4,
+        intervalMonths: 6,
+        fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento, Tabla 4 (guia p.6-5 PDF 523: ECUADOR y PERU = tabla 4) pp.6-11 a 6-13 (PDF 529-531), mercado Ecuador/Peru (documento generico Mazda, no por modelo); SKYACTIV-G; lectura por imagen, derivado de tabla por kilometraje. URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf; aceite y filtro de aceite: R en las 16 columnas (excepto Georgia, Camboya, Gabon, Ghana, Camerun, Burundi, Mozambique, Mongolia, Tanzania y Paraguay, donde son 5.000 km o 6 meses)"
+      },
+      {
+        marca: "Mazda",
+        modelo: "GENERICO",
+        anioDesde: 2024,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "freno_liquido",
+        intervalKm: 4e4,
+        intervalMonths: 24,
+        fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento, Tabla 4 (guia p.6-5 PDF 523: ECUADOR y PERU = tabla 4) pp.6-11 a 6-13 (PDF 529-531), mercado Ecuador/Peru (documento generico Mazda, no por modelo); SKYACTIV-G; lectura por imagen, derivado de tabla por kilometraje. URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf; liquido de frenos: R en 40.000, 80.000, 120.000 y 160.000 km (24, 48, 72, 96 meses); severas: cada ano"
+      },
+      {
+        marca: "Mazda",
+        modelo: "GENERICO",
+        anioDesde: 2024,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "motor_filtro_aire",
+        intervalKm: 6e4,
+        intervalMonths: 36,
+        fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento, Tabla 4 (guia p.6-5 PDF 523: ECUADOR y PERU = tabla 4) pp.6-11 a 6-13 (PDF 529-531), mercado Ecuador/Peru (documento generico Mazda, no por modelo); SKYACTIV-G; lectura por imagen, derivado de tabla por kilometraje. URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf; filtro de aire: R en 60.000 y 120.000 km (entre medias C = limpiar; solo 2 marcas R)"
+      },
+      {
+        marca: "Mazda",
+        modelo: "GENERICO",
+        anioDesde: 2024,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "clima_filtro_cabina",
+        intervalKm: 2e4,
+        intervalMonths: 12,
+        fuente: "Mazda (Peru), Manual del propietario modelo 2024 en adelante, cap.6 Programa de mantenimiento, Tabla 4 (guia p.6-5 PDF 523: ECUADOR y PERU = tabla 4) pp.6-11 a 6-13 (PDF 529-531), mercado Ecuador/Peru (documento generico Mazda, no por modelo); SKYACTIV-G; lectura por imagen, derivado de tabla por kilometraje. URL https://www.pdn.mazda.pe/media/1mtlp1zg/modelo-2024-en-adelante.pdf; filtro de aire de la cabina: R cada 20.000 km"
+      },
+      {
+        marca: "Dongfeng",
+        modelo: "AX7 MACH 1.5T 7DCT",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "aceite_motor",
+        intervalKm: 5e3,
+        intervalMonths: null,
+        fuente: "Dongfeng Ecuador (MARESA), AX7 MACH 1.5T 7DCT tabla de operaciones (precios desde julio 2025), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen: el punto aparece en visitas EXPRESS (5.000, 15.000, 25.000) y PREVENTIVO (10.000, 20.000), derivado de tabla por kilometraje; el pie dice que las actividades no se hacen necesariamente en todas las visitas. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-AX7-MACH.pdf; fila sustitucion aceite y filtro motor"
+      },
+      {
+        marca: "Dongfeng",
+        modelo: "AX7 MACH 1.5T 7DCT",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "prep_inspeccion",
+        intervalKm: 5e3,
+        intervalMonths: null,
+        fuente: "Dongfeng Ecuador (MARESA), AX7 MACH 1.5T 7DCT tabla de operaciones (precios desde julio 2025), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen: el punto aparece en visitas EXPRESS (5.000, 15.000, 25.000) y PREVENTIVO (10.000, 20.000), derivado de tabla por kilometraje; el pie dice que las actividades no se hacen necesariamente en todas las visitas. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-AX7-MACH.pdf; fila inspeccion 20 puntos de seguridad (serviceId de inspeccion)"
+      },
+      {
+        marca: "Dongfeng",
+        modelo: "AX7 MACH 1.5T 7DCT",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "gasolina",
+        serviceId: "escaner_diagnostico",
+        intervalKm: 5e3,
+        intervalMonths: null,
+        fuente: "Dongfeng Ecuador (MARESA), AX7 MACH 1.5T 7DCT tabla de operaciones (precios desde julio 2025), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen: el punto aparece en visitas EXPRESS (5.000, 15.000, 25.000) y PREVENTIVO (10.000, 20.000), derivado de tabla por kilometraje; el pie dice que las actividades no se hacen necesariamente en todas las visitas. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-AX7-MACH.pdf; fila diagnostico computarizado DFMDS"
+      },
+      {
+        marca: "Dongfeng",
+        modelo: "MAGE EV",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "bev",
+        serviceId: "trans_aceite_caja",
+        intervalKm: 5e4,
+        intervalMonths: null,
+        fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila sustitucion de aceite de caja reductora"
+      },
+      {
+        marca: "Dongfeng",
+        modelo: "MAGE EV",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "bev",
+        serviceId: "prep_inspeccion",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila inspeccion 20 puntos de seguridad (serviceId de inspeccion)"
+      },
+      {
+        marca: "Dongfeng",
+        modelo: "MAGE EV",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "bev",
+        serviceId: "escaner_diagnostico",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila diagnostico computarizado DFM"
+      },
+      {
+        marca: "Dongfeng",
+        modelo: "MAGE EV",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "bev",
+        serviceId: "clima_recarga",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila mantenimiento del sistema A/C"
+      },
+      {
+        marca: "Dongfeng",
+        modelo: "MAGE EV",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "bev",
+        serviceId: "llanta_rotacion",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila alineacion, balanceo y rotacion de neumaticos"
+      },
+      {
+        marca: "Dongfeng",
+        modelo: "MAGE EV",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "bev",
+        serviceId: "llanta_alineacion",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Dongfeng Ecuador (MARESA), MAGE EV tabla de operaciones por miles de km (precios desde enero 2026), PDF p.2, mercado Ecuador; anios no indicados (2011-2026); lectura por imagen, derivado de tabla por kilometraje (marcas cada 10.000 km, o cada 50.000 km en aceite de caja reductora: 50.000 y 100.000); el pie dice que las actividades no se hacen necesariamente en todos los mantenimientos. URL https://dongfeng.ec/wp-content/uploads/2026/05/MARESA-DONGFENG-MAGE-EV-MNT-19012026.pdf; fila alineacion, balanceo y rotacion de neumaticos"
+      },
+      {
+        marca: "Ford",
+        modelo: "Fiesta",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: null,
+        serviceId: "motor_distribucion",
+        intervalKm: 16e4,
+        intervalMonths: 60,
+        fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) ford/fiesta/base.json; sin manual citado"
+      },
+      {
+        marca: "Ford",
+        modelo: "Focus",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: null,
+        serviceId: "motor_distribucion",
+        intervalKm: 16e4,
+        intervalMonths: 60,
+        fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) ford/focus/base.json; sin manual citado"
+      },
+      {
+        marca: "Honda",
+        modelo: "Civic",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: null,
+        serviceId: "motor_bujias",
+        intervalKm: 1e5,
+        intervalMonths: null,
+        fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) honda/civic/base.json; sin manual citado"
+      },
+      {
+        marca: "Mazda",
+        modelo: "CX-5",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: null,
+        serviceId: "motor_bujias",
+        intervalKm: 12e4,
+        intervalMonths: null,
+        fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) mazda/cx-5/base.json; sin manual citado"
+      },
+      {
+        marca: "Mazda",
+        modelo: "Mazda3",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: null,
+        serviceId: "motor_bujias",
+        intervalKm: 12e4,
+        intervalMonths: null,
+        fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) mazda/mazda3/base.json; sin manual citado"
+      },
+      {
+        marca: "Toyota",
+        modelo: "Corolla",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "bev",
+        serviceId: "aceite_motor",
+        intervalKm: 15e3,
+        intervalMonths: 12,
+        fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) toyota/corolla/e210-1-8-hybrid.json; sin manual citado"
+      },
+      {
+        marca: "Toyota",
+        modelo: "Corolla",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "bev",
+        serviceId: "motor_bujias",
+        intervalKm: 12e4,
+        intervalMonths: null,
+        fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) toyota/corolla/e210-1-8-hybrid.json; sin manual citado"
+      },
+      {
+        marca: "Toyota",
+        modelo: "Corolla",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "bev",
+        serviceId: "ref_antifreeze",
+        intervalKm: 16e4,
+        intervalMonths: 96,
+        fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) toyota/corolla/e210-1-8-hybrid.json; sin manual citado"
+      },
+      {
+        marca: "Volkswagen",
+        modelo: "Golf",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "diesel",
+        serviceId: "motor_distribucion",
+        intervalKm: 21e4,
+        intervalMonths: null,
+        fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) volkswagen/golf/mk7-1-6tdi.json; sin manual citado"
+      },
+      {
+        marca: "Volkswagen",
+        modelo: "Golf",
+        anioDesde: 2011,
+        anioHasta: 2026,
+        combustible: "diesel",
+        serviceId: "aceite_motor",
+        intervalKm: 15e3,
+        intervalMonths: 12,
+        fuente: "karter (abrahdev, AGPL-3.0, 0a9c9ec) volkswagen/golf/mk7-1-6tdi.json; sin manual citado"
+      }
+    ];
+  }
+});
+
+// packages/api/dist/infrastructure/schema-setup/model-plan-seed.js
+import { createHash } from "node:crypto";
+var literal, idFor, values, MODEL_PLAN_SEED_COUNT, MODEL_PLAN_SEED;
+var init_model_plan_seed2 = __esm({
+  "packages/api/dist/infrastructure/schema-setup/model-plan-seed.js"() {
+    "use strict";
+    init_model_plan_seed();
+    literal = (value2) => value2 === null ? "NULL" : typeof value2 === "number" ? String(Math.trunc(value2)) : `'${value2.replace(/\\/g, "\\\\").replace(/'/g, "''")}'`;
+    idFor = (r) => createHash("sha256").update([r.marca, r.modelo, r.anioDesde, r.anioHasta, r.combustible ?? "", r.serviceId].join("|").toLowerCase()).digest("hex").slice(0, 36);
+    values = model_plan_seed_default.map((r) => `(${[idFor(r), r.marca, r.modelo, r.anioDesde, r.anioHasta, r.combustible, r.serviceId, r.intervalKm, r.intervalMonths, r.fuente].map((v) => literal(v)).join(", ")}, 1)`).join(", ");
+    MODEL_PLAN_SEED_COUNT = model_plan_seed_default.length;
+    MODEL_PLAN_SEED = [
+      { kind: "update", target: "VehicleModelPlan.verificado", sql: `INSERT IGNORE INTO \`VehicleModelPlan\` (id, marca, modelo, anioDesde, anioHasta, combustible, serviceId, intervalKm, intervalMonths, fuente, verificado) VALUES ${values}` }
+    ];
+  }
+});
+
 // packages/api/dist/infrastructure/schema-setup/inspection-statements.js
 var INSPECTION_TABLES, INSPECTION_STATEMENTS;
 var init_inspection_statements = __esm({
@@ -62335,10 +63340,10 @@ var require_lib2 = __commonJS({
       }
     };
     exports.escape = escape2;
-    var format = (sql, values, stringifyObjects, timezone) => {
-      if (values === void 0 || values === null)
+    var format = (sql, values2, stringifyObjects, timezone) => {
+      if (values2 === void 0 || values2 === null)
         return sql;
-      const valuesArray = Array.isArray(values) ? values : [values];
+      const valuesArray = Array.isArray(values2) ? values2 : [values2];
       const length = valuesArray.length;
       let setIndex = -2;
       let nextSetIndex = -1;
@@ -74989,26 +75994,26 @@ var require_execute = __commonJS({
           }
         }
         packet.skip(1);
-        const values = [];
+        const values2 = [];
         for (let i2 = 0; i2 < types.length; i2++) {
           if (types[i2] === Types.VAR_STRING) {
-            values.push(packet.readLengthCodedString(encoding));
+            values2.push(packet.readLengthCodedString(encoding));
           } else if (types[i2] === Types.BLOB) {
-            values.push(packet.readLengthCodedBuffer());
+            values2.push(packet.readLengthCodedBuffer());
           } else if (types[i2] === Types.DOUBLE) {
-            values.push(packet.readDouble());
+            values2.push(packet.readDouble());
           } else if (types[i2] === Types.TINY) {
-            values.push(packet.readInt8());
+            values2.push(packet.readInt8());
           } else if (types[i2] === Types.DATETIME) {
-            values.push(packet.readDateTime());
+            values2.push(packet.readDateTime());
           } else if (types[i2] === Types.JSON) {
-            values.push(JSON.parse(packet.readLengthCodedString(encoding)));
+            values2.push(JSON.parse(packet.readLengthCodedString(encoding)));
           }
           if (types[i2] === Types.NULL) {
-            values.push(null);
+            values2.push(null);
           }
         }
-        return { stmtId, flags, iterationCount, values };
+        return { stmtId, flags, iterationCount, values: values2 };
       }
       toPacket() {
         const useQueryAttributes = this.clientFlags & ClientConstants.CLIENT_QUERY_ATTRIBUTES;
@@ -76944,13 +77949,13 @@ var require_server_handshake = __commonJS({
             break;
           case CommandCode.STMT_EXECUTE:
             if (connection.listeners("stmt_execute").length) {
-              const { stmtId, flags, iterationCount, values } = Packets.Execute.fromPacket(packet, encoding);
+              const { stmtId, flags, iterationCount, values: values2 } = Packets.Execute.fromPacket(packet, encoding);
               connection.emit(
                 "stmt_execute",
                 stmtId,
                 flags,
                 iterationCount,
-                values
+                values2
               );
             } else {
               connection.writeError({
@@ -80682,18 +81687,18 @@ var require_connection = __commonJS({
         }
         return cmd;
       }
-      format(sql, values, namedPlaceholders) {
+      format(sql, values2, namedPlaceholders) {
         if (typeof this.config.queryFormat === "function") {
           return this.config.queryFormat.call(
             this,
             sql,
-            values,
+            values2,
             this.config.timezone
           );
         }
         const opts = {
           sql,
-          values
+          values: values2
         };
         if (typeof namedPlaceholders !== "undefined") {
           opts.namedPlaceholders = namedPlaceholders;
@@ -80732,12 +81737,12 @@ var require_connection = __commonJS({
           options.values = unnamed[1];
         }
       }
-      query(sql, values, cb) {
+      query(sql, values2, cb) {
         let cmdQuery;
         if (sql.constructor === Commands.Query) {
           cmdQuery = sql;
         } else {
-          cmdQuery = _BaseConnection.createQuery(sql, values, cb, this.config);
+          cmdQuery = _BaseConnection.createQuery(sql, values2, cb, this.config);
         }
         this._resolveNamedPlaceholders(cmdQuery);
         const rawSql = this.format(
@@ -80829,7 +81834,7 @@ var require_connection = __commonJS({
         }
         return stmt;
       }
-      execute(sql, values, cb) {
+      execute(sql, values2, cb) {
         let options = {
           infileStreamFactory: this.config.infileStreamFactory
         };
@@ -80840,18 +81845,18 @@ var require_connection = __commonJS({
             sql: sql.sql,
             values: sql.values
           };
-          if (typeof values === "function") {
-            cb = values;
+          if (typeof values2 === "function") {
+            cb = values2;
           } else {
-            options.values = options.values || values;
+            options.values = options.values || values2;
           }
-        } else if (typeof values === "function") {
-          cb = values;
+        } else if (typeof values2 === "function") {
+          cb = values2;
           options.sql = sql;
           options.values = void 0;
         } else {
           options.sql = sql;
-          options.values = values;
+          options.values = values2;
         }
         this._resolveNamedPlaceholders(options);
         if (options.values) {
@@ -81131,7 +82136,7 @@ var require_connection = __commonJS({
         this.addCommand = this._addCommandClosedState;
         return quitCmd;
       }
-      static createQuery(sql, values, cb, config) {
+      static createQuery(sql, values2, cb, config) {
         let options = {
           rowsAsArray: config.rowsAsArray,
           infileStreamFactory: config.infileStreamFactory
@@ -81143,18 +82148,18 @@ var require_connection = __commonJS({
             sql: sql.sql,
             values: sql.values
           };
-          if (typeof values === "function") {
-            cb = values;
-          } else if (values !== void 0) {
-            options.values = values;
+          if (typeof values2 === "function") {
+            cb = values2;
+          } else if (values2 !== void 0) {
+            options.values = values2;
           }
-        } else if (typeof values === "function") {
-          cb = values;
+        } else if (typeof values2 === "function") {
+          cb = values2;
           options.sql = sql;
           options.values = void 0;
         } else {
           options.sql = sql;
-          options.values = values;
+          options.values = values2;
         }
         return new Commands.Query(options, cb);
       }
@@ -81782,10 +82787,10 @@ var require_pool = __commonJS({
           connection._realEnd(endCB);
         }
       }
-      query(sql, values, cb) {
+      query(sql, values2, cb) {
         const cmdQuery = BaseConnection.createQuery(
           sql,
-          values,
+          values2,
           cb,
           this.config.connectionConfig
         );
@@ -81832,17 +82837,17 @@ var require_pool = __commonJS({
         });
         return cmdQuery;
       }
-      execute(sql, values, cb) {
-        if (typeof values === "function") {
-          cb = values;
-          values = [];
+      execute(sql, values2, cb) {
+        if (typeof values2 === "function") {
+          cb = values2;
+          values2 = [];
         }
         this.getConnection((err, conn) => {
           if (err) {
             return cb(err);
           }
           try {
-            conn.execute(sql, values, (err2, rows33, fields) => {
+            conn.execute(sql, values2, (err2, rows33, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
@@ -81879,10 +82884,10 @@ var require_pool = __commonJS({
           }
         }, 1e3);
       }
-      format(sql, values) {
+      format(sql, values2) {
         return SqlString.format(
           sql,
-          values,
+          values2,
           this.config.connectionConfig.stringifyObjects,
           this.config.connectionConfig.timezone
         );
@@ -82123,8 +83128,8 @@ var require_pool_cluster = __commonJS({
        * @param {*} cb
        * @returns query
        */
-      query(sql, values, cb) {
-        const query = Connection.createQuery(sql, values, cb, {});
+      query(sql, values2, cb) {
+        const query = Connection.createQuery(sql, values2, cb, {});
         this.getConnection((err, conn) => {
           if (err) {
             if (typeof query.onResult === "function") {
@@ -82151,17 +83156,17 @@ var require_pool_cluster = __commonJS({
        * @param {*} values
        * @param {*} cb
        */
-      execute(sql, values, cb) {
-        if (typeof values === "function") {
-          cb = values;
-          values = [];
+      execute(sql, values2, cb) {
+        if (typeof values2 === "function") {
+          cb = values2;
+          values2 = [];
         }
         this.getConnection((err, conn) => {
           if (err) {
             return cb(err);
           }
           try {
-            conn.execute(sql, values, cb).once("end", () => {
+            conn.execute(sql, values2, cb).once("end", () => {
               conn.release();
             });
           } catch (e9) {
@@ -82432,30 +83437,30 @@ var require_pool_cluster2 = __commonJS({
           });
         });
       }
-      query(sql, values) {
+      query(sql, values2) {
         const corePoolNamespace = this.poolNamespace;
         const stackHolder = corePoolNamespace.trace ? captureStackHolder(_PromisePoolNamespace.prototype.query) : void 0;
-        if (typeof values === "function") {
+        if (typeof values2 === "function") {
           throw new Error(
             "Callback function is not available with promise clients."
           );
         }
         return new this.Promise((resolve2, reject) => {
           const done = makeDoneCb(resolve2, reject, stackHolder);
-          corePoolNamespace.query(sql, values, done);
+          corePoolNamespace.query(sql, values2, done);
         });
       }
-      execute(sql, values) {
+      execute(sql, values2) {
         const corePoolNamespace = this.poolNamespace;
         const stackHolder = corePoolNamespace.trace ? captureStackHolder(_PromisePoolNamespace.prototype.execute) : void 0;
-        if (typeof values === "function") {
+        if (typeof values2 === "function") {
           throw new Error(
             "Callback function is not available with promise clients."
           );
         }
         return new this.Promise((resolve2, reject) => {
           const done = makeDoneCb(resolve2, reject, stackHolder);
-          corePoolNamespace.execute(sql, values, done);
+          corePoolNamespace.execute(sql, values2, done);
         });
       }
     };
@@ -82796,9 +83801,10 @@ var init_apply = __esm({
     init_web_login_statements();
     init_plan_override_statements();
     init_model_plan_statements();
+    init_model_plan_seed2();
     init_inspection_statements();
     init_courses_statements();
-    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
+    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
     EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES];
     DB_ENV = ["DB_HOST", "DB_PORT", "DB_NAME", "DB_USER", "DB_PASSWORD"];
     tableExists = (conn, table) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?", [table]);
@@ -84714,7 +85720,7 @@ var init_settings_store = __esm({
 });
 
 // packages/api/dist/application/local-agent/config.js
-import { createHash as createHash2, timingSafeEqual as timingSafeEqual2 } from "node:crypto";
+import { createHash as createHash3, timingSafeEqual as timingSafeEqual2 } from "node:crypto";
 var LOCAL_AGENT_CONFIG_KEY, LocalAgentConfig;
 var init_config = __esm({
   "packages/api/dist/application/local-agent/config.js"() {
@@ -84740,7 +85746,7 @@ var init_config = __esm({
           }
         }
         const token2 = this.env.LOCAL_AGENT_TOKEN;
-        return { enabled: this.env.LOCAL_AGENT_ENABLED === "true" && !!token2 && /^[A-Za-z0-9_-]{32,200}$/.test(token2), tokenHash: token2 ? createHash2("sha256").update(token2).digest("hex") : null };
+        return { enabled: this.env.LOCAL_AGENT_ENABLED === "true" && !!token2 && /^[A-Za-z0-9_-]{32,200}$/.test(token2), tokenHash: token2 ? createHash3("sha256").update(token2).digest("hex") : null };
       }
       /**
        * El panel, los avisos y el chat web de los usuarios: una clave revocada corta al equipo local,
@@ -84762,19 +85768,19 @@ var init_config = __esm({
         if (!token2 || !/^[A-Za-z0-9_-]{32,200}$/.test(token2))
           return false;
         const config = await this.read();
-        return config.enabled && !!config.tokenHash && timingSafeEqual2(createHash2("sha256").update(token2).digest(), Buffer.from(config.tokenHash, "hex"));
+        return config.enabled && !!config.tokenHash && timingSafeEqual2(createHash3("sha256").update(token2).digest(), Buffer.from(config.tokenHash, "hex"));
       }
     };
   }
 });
 
 // packages/api/dist/infrastructure/agent/user-lock.js
-import { createHash as createHash3 } from "node:crypto";
+import { createHash as createHash4 } from "node:crypto";
 var agentUserLock;
 var init_user_lock = __esm({
   "packages/api/dist/infrastructure/agent/user-lock.js"() {
     "use strict";
-    agentUserLock = (userId) => `amp-agent:${createHash3("sha256").update(userId).digest("hex").slice(0, 48)}`;
+    agentUserLock = (userId) => `amp-agent:${createHash4("sha256").update(userId).digest("hex").slice(0, 48)}`;
   }
 });
 
@@ -85176,9 +86182,9 @@ var init_data_store = __esm({
             throw new Error("La conversaci\xF3n tiene una operaci\xF3n en curso; reintenta la anonimizaci\xF3n.");
           try {
             await conn.query("START TRANSACTION");
-            const values = anonymizedValues(userId);
+            const values2 = anonymizedValues(userId);
             const user = rows3(await conn.query("SELECT phone FROM `User` WHERE id = ? FOR UPDATE", [userId]))[0];
-            const [result] = await conn.query("UPDATE `User` SET name = ?, phone = ?, email = NULL, notes = NULL, deletedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role <> 'admin' AND deletedAt IS NULL", [values.name, values.phone, userId]);
+            const [result] = await conn.query("UPDATE `User` SET name = ?, phone = ?, email = NULL, notes = NULL, deletedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND role <> 'admin' AND deletedAt IS NULL", [values2.name, values2.phone, userId]);
             const changed = Number(result.affectedRows ?? 0) > 0;
             if (changed) {
               await conn.query("UPDATE `Vehicle` SET plate = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ?", [userId]);
@@ -85186,7 +86192,7 @@ var init_data_store = __esm({
               await conn.query("UPDATE `AgentTurn` SET response = NULL, fingerprint = '' WHERE userId = ?", [userId]);
               await conn.query("UPDATE `Message` m JOIN `Conversation` c ON c.id = m.conversationId SET m.body = NULL, m.payload = NULL WHERE c.userAId = ? AND c.agent = 1", [userId]);
               await conn.query("UPDATE `Conversation` SET summary = NULL WHERE userAId = ? AND agent = 1", [userId]);
-              await this.anonymizePilot(conn, userId, String(user?.phone ?? ""), values.name);
+              await this.anonymizePilot(conn, userId, String(user?.phone ?? ""), values2.name);
               if (requestId)
                 await conn.query("UPDATE `DataRequest` SET anonymizedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [requestId]);
             }
@@ -87569,7 +88575,7 @@ var init_fleet_access = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
-import { createHash as createHash4, randomUUID as randomUUID9 } from "node:crypto";
+import { createHash as createHash5, randomUUID as randomUUID9 } from "node:crypto";
 function matchService(text10) {
   const f = fold9(text10);
   const exact = SERVICES.find((s) => s.id === f || fold9(s.name) === f);
@@ -87657,7 +88663,7 @@ var init_vehicle_care_store = __esm({
       throw new VehicleCareError(code3);
     };
     fold9 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
-    createHashLike = (text10) => createHash4("sha256").update(text10).digest("hex").slice(0, 12);
+    createHashLike = (text10) => createHash5("sha256").update(text10).digest("hex").slice(0, 12);
     short2 = (prefix, id2) => `${prefix}-${id2.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf = (code3) => `${code3.slice(2).toLowerCase()}%`;
     CARD_ACTIONS = ["createCard", "cardPreview", "claimCard", "declineCard", "listCards", "cancelCard", "revokeShop"];
@@ -88462,8 +89468,8 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref4} \xB7 Recha
           if ((await rows8(conn, "SELECT id FROM `Rating` WHERE localRequestId = ? AND fromId = ?", [localRequestId, userId])).length)
             fail2("ALREADY_RATED");
         }
-        const values = Object.values(details).filter((v) => typeof v === "number");
-        const overall = Math.max(1, Math.min(5, Math.round(values.reduce((a, b) => a + b, 0) / values.length - (details.piezaCorrecta === false ? 1 : 0))));
+        const values2 = Object.values(details).filter((v) => typeof v === "number");
+        const overall = Math.max(1, Math.min(5, Math.round(values2.reduce((a, b) => a + b, 0) / values2.length - (details.piezaCorrecta === false ? 1 : 0))));
         await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, details, localRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID9(), userId, toId, overall, command.comment || null, kind, workOrderId, JSON.stringify(details), localRequestId]);
         for (const table of ["Shop", "Store"])
           await conn.query(`UPDATE \`${table}\` t SET t.ratingAvg = COALESCE((SELECT ROUND(AVG(r.score), 1) FROM \`Rating\` r WHERE r.toId = ? AND r.hiddenAt IS NULL), 0), t.ratingCount = (SELECT COUNT(*) FROM \`Rating\` r WHERE r.toId = ? AND r.hiddenAt IS NULL) WHERE t.userId = ?`, [toId, toId, toId]);
@@ -88680,7 +89686,7 @@ Fecha: ${when9}.` };
 });
 
 // packages/api/dist/infrastructure/messaging/local-marketplace-store.js
-import { createHash as createHash5, randomUUID as randomUUID10 } from "node:crypto";
+import { createHash as createHash6, randomUUID as randomUUID10 } from "node:crypto";
 function isoDay(value2) {
   if (value2 instanceof Date)
     return Number.isNaN(value2.getTime()) ? "" : value2.toISOString().slice(0, 10);
@@ -88729,7 +89735,7 @@ var init_local_marketplace_store = __esm({
         if (!/^[A-Za-z0-9._:-]{8,120}$/.test(key))
           fail3("INVALID_IDEMPOTENCY_KEY");
         const conn = await this.connect();
-        const lock = `local:${createHash5("sha256").update(userId).digest("hex").slice(0, 50)}`;
+        const lock = `local:${createHash6("sha256").update(userId).digest("hex").slice(0, 50)}`;
         let locked = false;
         let transaction = false;
         try {
@@ -88741,8 +89747,8 @@ var init_local_marketplace_store = __esm({
           const user = (await rows9(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL FOR UPDATE", [userId]))[0];
           if (!user)
             fail3("CONSENT_OR_ACCOUNT_REQUIRED");
-          const receiptId = createHash5("sha256").update(`${userId}:${key}`).digest("hex");
-          const fingerprint = createHash5("sha256").update(JSON.stringify(command)).digest("hex");
+          const receiptId = createHash6("sha256").update(`${userId}:${key}`).digest("hex");
+          const fingerprint = createHash6("sha256").update(JSON.stringify(command)).digest("hex");
           const receipt = (await rows9(conn, "SELECT fingerprint, response FROM `LocalCommandReceipt` WHERE id = ?", [receiptId]))[0];
           if (receipt) {
             if (receipt.fingerprint !== fingerprint)
@@ -89899,7 +90905,7 @@ ${await paymentInstructions(conn, created, catalog)}`;
 });
 
 // packages/api/dist/infrastructure/messaging/vehicle-card-store.js
-import { createHash as createHash6, randomBytes as randomBytes2, randomUUID as randomUUID12 } from "node:crypto";
+import { createHash as createHash7, randomBytes as randomBytes2, randomUUID as randomUUID12 } from "node:crypto";
 function newSecretCode(prefix) {
   const bytes = randomBytes2(16);
   let out = "";
@@ -89930,7 +90936,7 @@ var init_vehicle_card_store = __esm({
     fail5 = (code3) => {
       throw new FleetAccessError(code3);
     };
-    hashCode = (code3) => createHash6("sha256").update(code3.toUpperCase()).digest("hex");
+    hashCode = (code3) => createHash7("sha256").update(code3.toUpperCase()).digest("hex");
     short3 = (prefix, id2) => `${prefix}-${id2.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     SERVICES2 = serviceTaxonomy.categories.flatMap((c) => c.subservices.map((s) => ({ id: s.id, name: s.name })));
     serviceName2 = (id2) => SERVICES2.find((s) => s.id === id2)?.name ?? id2;
@@ -91638,7 +92644,7 @@ var init_domain = __esm({
 
 // packages/api/dist/infrastructure/courses/courses-store.js
 import { randomUUID as randomUUID17 } from "node:crypto";
-import { createHash as createHash7 } from "node:crypto";
+import { createHash as createHash8 } from "node:crypto";
 async function isVerifiedExpert(conn, userId) {
   return rowsOf(await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId = ? AND verificationStatus = 'verificado' LIMIT 1", [userId])).length > 0;
 }
@@ -91727,13 +92733,13 @@ var init_courses_store = __esm({
         return this.run(async (c) => rowsOf(await c.query("SELECT e.id,e.code,e.estado,e.comprobante,e.beca,e.createdAt,u.name studentName FROM `Enrollment` e JOIN `Course` c ON c.id=e.courseId JOIN `User` u ON u.id=e.userId WHERE c.expertId=? AND c.id=? ORDER BY e.createdAt DESC", [expertId, courseId])));
       }
       async issueExpertLink(userId, token2) {
-        const tokenHash = createHash7("sha256").update(token2).digest("hex");
+        const tokenHash = createHash8("sha256").update(token2).digest("hex");
         await this.run(async (c) => {
           await c.query("INSERT INTO `ExpertProfile` (userId,especialidades,verificationStatus,tokenHash,tokenExpiresAt,tokenUsedAt) VALUES (?,JSON_ARRAY(),'pendiente',?,DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 24 HOUR),NULL) ON DUPLICATE KEY UPDATE tokenHash=VALUES(tokenHash),tokenExpiresAt=VALUES(tokenExpiresAt),tokenUsedAt=NULL", [userId, tokenHash]);
         });
       }
       async submitExpertApplication(token2, specialties, mime, document2) {
-        const tokenHash = createHash7("sha256").update(token2).digest("hex");
+        const tokenHash = createHash8("sha256").update(token2).digest("hex");
         return this.run(async (c) => affected2(await c.query("UPDATE `ExpertProfile` SET especialidades=?,documento=?,documentoMime=?,verificationStatus='pendiente',motivo=NULL,tokenUsedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3) WHERE tokenHash=? AND tokenUsedAt IS NULL AND tokenExpiresAt>UTC_TIMESTAMP(3) AND verificationStatus<>'verificado'", [JSON.stringify(specialties), document2, mime, tokenHash])) > 0);
       }
       async courseDetail(slug) {
@@ -92416,7 +93422,7 @@ var init_self_service = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/local-agent-broker.js
-import { createHash as createHash8, randomBytes as randomBytes6 } from "node:crypto";
+import { createHash as createHash9, randomBytes as randomBytes6 } from "node:crypto";
 function fail10(code3) {
   throw new BrokerError(code3);
 }
@@ -92439,7 +93445,7 @@ var init_local_agent_broker = __esm({
     init_lopdp();
     init_admin_alerts();
     data = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
-    digest = (s) => createHash8("sha256").update(s).digest("hex");
+    digest = (s) => createHash9("sha256").update(s).digest("hex");
     BrokerError = class extends Error {
       code;
       constructor(code3) {
@@ -94980,14 +95986,14 @@ async function loadPlatformSettings(settings) {
   }
   return result;
 }
-async function savePlatformSettings(settings, values, updatedBy) {
-  await settings.set(PLATFORM_KEYS.entryMode, values.entryMode, updatedBy);
-  await settings.set(PLATFORM_KEYS.cities, values.cities.join(", "), updatedBy);
-  await settings.set(PLATFORM_KEYS.quietFrom, values.quietFrom ?? "", updatedBy);
-  await settings.set(PLATFORM_KEYS.quietTo, values.quietTo ?? "", updatedBy);
-  await settings.set(PLATFORM_KEYS.welcomeIntro, values.welcomeIntro ?? "", updatedBy);
-  await settings.set(PLATFORM_KEYS.afterHoursMessage, values.afterHoursMessage, updatedBy);
-  const off = FEATURES.filter((f) => !values.features[f.key]).map((f) => f.key);
+async function savePlatformSettings(settings, values2, updatedBy) {
+  await settings.set(PLATFORM_KEYS.entryMode, values2.entryMode, updatedBy);
+  await settings.set(PLATFORM_KEYS.cities, values2.cities.join(", "), updatedBy);
+  await settings.set(PLATFORM_KEYS.quietFrom, values2.quietFrom ?? "", updatedBy);
+  await settings.set(PLATFORM_KEYS.quietTo, values2.quietTo ?? "", updatedBy);
+  await settings.set(PLATFORM_KEYS.welcomeIntro, values2.welcomeIntro ?? "", updatedBy);
+  await settings.set(PLATFORM_KEYS.afterHoursMessage, values2.afterHoursMessage, updatedBy);
+  const off = FEATURES.filter((f) => !values2.features[f.key]).map((f) => f.key);
   await settings.set(PLATFORM_KEYS.features, off.join(","), updatedBy);
 }
 function featurePaused(settings, key) {
@@ -96140,8 +97146,8 @@ var require_HeaderParser = __commonJS({
         if (buffer[valueStart] === " " || buffer[valueStart] === "	") {
           ++valueStart;
         }
-        const values = this.header[h] || (this.header[h] = []);
-        values.push(buffer.slice(valueStart, lineEnd));
+        const values2 = this.header[h] || (this.header[h] = []);
+        values2.push(buffer.slice(valueStart, lineEnd));
         if (++this.npairs === this.maxHeaderPairs) {
           break;
         }
@@ -98578,20 +99584,20 @@ var require_multipart2 = __commonJS({
           throw new InvalidMultipartContentTypeError();
         }
         this.log.debug("starting multipart parsing");
-        let values = [];
+        let values2 = [];
         let pendingHandler = null;
         const ch = (val) => {
           if (pendingHandler) {
             pendingHandler(val);
             pendingHandler = null;
           } else {
-            values.push(val);
+            values2.push(val);
           }
         };
         const handle = (handler) => {
-          if (values.length > 0) {
-            const value2 = values[0];
-            values = values.slice(1);
+          if (values2.length > 0) {
+            const value2 = values2[0];
+            values2 = values2.slice(1);
             handler(value2);
           } else {
             pendingHandler = handler;
@@ -98773,10 +99779,10 @@ var require_multipart2 = __commonJS({
           return this[kSavedRequestFilesResult];
         }
         let parts;
-        let values = {};
+        let values2 = {};
         if (attachFieldsToBody === true || attachFieldsToBody === "keyValues") {
           parts = this.body ? filesFromFields.call(this, this.body) : [];
-          values = this.body || {};
+          values2 = this.body || {};
         } else {
           parts = this.parts(options2);
         }
@@ -98787,7 +99793,7 @@ var require_multipart2 = __commonJS({
         let target;
         try {
           for await (const part of parts) {
-            values = part.fields;
+            values2 = part.fields;
             if (!part.file) {
               continue;
             }
@@ -98809,7 +99815,7 @@ var require_multipart2 = __commonJS({
         }
         this[kSavedRequestFilesResult] = {
           files: this.savedRequestFiles,
-          values
+          values: values2
         };
         return this[kSavedRequestFilesResult];
       }
@@ -107890,14 +108896,14 @@ function registerSettingsRoutes(app2, deps) {
       recordLoginAttempt(account.email, request.ip, false);
       return render(request, reply, session, { kind: "error", text: "La contrase\xF1a actual no es correcta." }, 400);
     }
-    const values = LEGAL_FIELDS.map((field2) => ({ field: field2, value: typeof body[field2.key] === "string" ? String(body[field2.key]).trim() : "" }));
-    for (const { field: field2, value: value2 } of values) {
+    const values2 = LEGAL_FIELDS.map((field2) => ({ field: field2, value: typeof body[field2.key] === "string" ? String(body[field2.key]).trim() : "" }));
+    for (const { field: field2, value: value2 } of values2) {
       const error = validateLegalField(field2.key, value2);
       if (error)
         return render(request, reply, session, { kind: "error", text: error }, 400);
     }
     try {
-      for (const { field: field2, value: value2 } of values) {
+      for (const { field: field2, value: value2 } of values2) {
         if (value2)
           await deps.settings.set(legalSettingKey(field2.key), value2, account.id);
         else
@@ -107907,7 +108913,7 @@ function registerSettingsRoutes(app2, deps) {
       return render(request, reply, session, { kind: "error", text: "Base de datos no disponible." }, 503);
     }
     deps.onChanged();
-    const filled = values.filter((v) => v.value).map((v) => v.field.label).join(", ") || "ninguno";
+    const filled = values2.filter((v) => v.value).map((v) => v.field.label).join(", ") || "ninguno";
     await deps.audit("admin.settings.legal", account.id, `Datos legales actualizados (completos: ${filled})`);
     return render(request, reply, session, { kind: "ok", text: "Datos de la empresa guardados. Las p\xE1ginas de t\xE9rminos y privacidad ya los muestran." });
   });
@@ -107974,7 +108980,7 @@ var init_settings = __esm({
 });
 
 // packages/api/dist/interfaces/admin/local-agent.js
-import { createHash as createHash11, randomBytes as randomBytes20 } from "node:crypto";
+import { createHash as createHash12, randomBytes as randomBytes20 } from "node:crypto";
 function registerLocalAgentAdminRoutes(app2, deps) {
   const tasks = deps.tasks ?? new MysqlLocalAgentTaskStore();
   const recent = async () => tasks.recent(20).catch(() => []);
@@ -108062,7 +109068,7 @@ function registerLocalAgentAdminRoutes(app2, deps) {
         return render(request, reply, session, { message: "La contrase\xF1a actual no es correcta.", status: 400 });
       }
       const token2 = action === "rotate" ? randomBytes20(32).toString("base64url") : void 0;
-      const value2 = JSON.stringify({ enabled: action === "rotate", tokenHash: token2 ? createHash11("sha256").update(token2).digest("hex") : null });
+      const value2 = JSON.stringify({ enabled: action === "rotate", tokenHash: token2 ? createHash12("sha256").update(token2).digest("hex") : null });
       try {
         await deps.settings.set(LOCAL_AGENT_CONFIG_KEY2, value2, account.id);
       } catch {
@@ -108226,7 +109232,7 @@ function appointmentDetailView(input) {
 function scheduleView(input) {
   const ownerId = e4(input.owner.id);
   const vehicleId = e4(input.vehicle.id);
-  const values = input.values ?? {};
+  const values2 = input.values ?? {};
   const vehicleTabs = input.vehicles.length > 1 ? `<div class="tabs">${input.vehicles.map((v) => `<a href="/admin/users/${ownerId}/schedule?vehicleId=${e4(v.id)}"${String(v.id) === String(input.vehicle.id) ? ' class="active"' : ""}>${e4(v.make)} ${e4(v.model)}</a>`).join("")}</div>` : "";
   const defaults = input.items.filter((i) => i.status !== "al_dia").map((i) => i.serviceId);
   const checked = input.selected.length > 0 ? input.selected : defaults;
@@ -108239,16 +109245,16 @@ function scheduleView(input) {
     } else {
       const notice = input.sameCity ? "" : `<p class="muted">No hay talleres verificados en ${e4(input.owner.city ?? "su ciudad")}; se muestran los de otras ciudades.</p>`;
       const hidden = input.selected.map((id2) => `<input type="hidden" name="services" value="${e4(id2)}">`).join("");
-      const options = input.shops.map((shop, i) => `<label class="choice"><input type="radio" name="shopId" value="${e4(shop.id)}"${String(values.shopId ?? "") === shop.id || i === 0 && !values.shopId ? " checked" : ""} required>
+      const options = input.shops.map((shop, i) => `<label class="choice"><input type="radio" name="shopId" value="${e4(shop.id)}"${String(values2.shopId ?? "") === shop.id || i === 0 && !values2.shopId ? " checked" : ""} required>
           <span><strong>${e4(shop.name)}</strong> \xB7 ${e4(shop.city)}${shop.zone ? ` (${e4(shop.zone)})` : ""}<br><span class="muted">${shop.covered === shop.needed ? "Cubre todo" : `Cubre ${shop.covered} de ${shop.needed}`}${shop.hours ? ` \xB7 ${e4(shop.hours)}` : ""}</span></span></label>`).join("");
       results = `<div class="card"><h2>Talleres</h2>${notice}${summary}
         ${copyBox("msg-shops", "Lista de talleres para el due\xF1o", shopListMessage(input.shops))}
         <form method="post" action="/admin/appointments">${csrfField7(input.csrf)}
         <input type="hidden" name="ownerId" value="${ownerId}"><input type="hidden" name="vehicleId" value="${vehicleId}">${hidden}
         ${options}
-        <div class="row"><span><label for="date">D\xEDa</label><input id="date" name="date" type="date" value="${e4(values.date)}" required></span>
-        <span><label for="time">Hora (Ecuador)</label><input id="time" name="time" type="time" value="${e4(values.time)}" required></span></div>
-        <label for="notes">Notas para el taller (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e4(values.notes)}</textarea>
+        <div class="row"><span><label for="date">D\xEDa</label><input id="date" name="date" type="date" value="${e4(values2.date)}" required></span>
+        <span><label for="time">Hora (Ecuador)</label><input id="time" name="time" type="time" value="${e4(values2.time)}" required></span></div>
+        <label for="notes">Notas para el taller (opcional)</label><textarea id="notes" name="notes" maxlength="500" rows="2">${e4(values2.notes)}</textarea>
         <button class="full" type="submit">Solicitar turno</button></form></div>`;
     }
   }
@@ -108845,32 +109851,32 @@ function phoneLabel(value2) {
   const digits = text10.replace(/\D/g, "");
   return text10.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text10;
 }
-function value(values, key) {
-  const v = values[key];
+function value(values2, key) {
+  const v = values2[key];
   return Array.isArray(v) ? "" : e7(v);
 }
-function field(values, name, label2, attrs = "") {
-  return `<label for="f-${name}">${e7(label2)}</label><input id="f-${name}" name="${name}" value="${value(values, name)}" ${attrs}>`;
+function field(values2, name, label2, attrs = "") {
+  return `<label for="f-${name}">${e7(label2)}</label><input id="f-${name}" name="${name}" value="${value(values2, name)}" ${attrs}>`;
 }
-function select(values, name, label2, options, placeholder) {
-  const selected2 = String(values[name] ?? "");
+function select(values2, name, label2, options, placeholder) {
+  const selected2 = String(values2[name] ?? "");
   const opts = options.map(([id2, text10]) => `<option value="${e7(id2)}"${id2 === selected2 ? " selected" : ""}>${e7(text10)}</option>`).join("");
   const empty = placeholder ? `<option value="">${e7(placeholder)}</option>` : "";
   return `<label for="f-${name}">${e7(label2)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
 }
-function checkbox(values, name, label2) {
-  return `<div class="checks"><label><input type="checkbox" name="${name}"${values[name] === "on" ? " checked" : ""}> ${e7(label2)}</label></div>`;
+function checkbox(values2, name, label2) {
+  return `<div class="checks"><label><input type="checkbox" name="${name}"${values2[name] === "on" ? " checked" : ""}> ${e7(label2)}</label></div>`;
 }
-function vehicleFields2(values) {
-  return `${select(values, "vehicleClass", "Clase de veh\xEDculo", vehicleClasses.classes.map((c) => [c.id, c.name]), "Elige\u2026")}
-    ${select(values, "fuel", "Combustible", vehicleClasses.fuels.map((f) => [f.id, f.name]), "Elige\u2026")}
-    ${field(values, "make", "Marca", 'required maxlength="60" placeholder="Toyota"')}
-    ${field(values, "model", "Modelo", 'required maxlength="60" placeholder="Corolla"')}
-    ${field(values, "year", "A\xF1o", 'required inputmode="numeric" maxlength="4" placeholder="2020"')}
-    ${field(values, "currentKm", "Kilometraje actual", 'required inputmode="numeric" placeholder="45000"')}
-    ${field(values, "plate", "Placa (opcional)", 'maxlength="9" placeholder="ABC-1234"')}
-    ${select(values, "usageProfile", "Uso", USAGE_OPTIONS)}
-    ${checkbox(values, "reminders", "Acepta recordatorios por WhatsApp")}`;
+function vehicleFields2(values2) {
+  return `${select(values2, "vehicleClass", "Clase de veh\xEDculo", vehicleClasses.classes.map((c) => [c.id, c.name]), "Elige\u2026")}
+    ${select(values2, "fuel", "Combustible", vehicleClasses.fuels.map((f) => [f.id, f.name]), "Elige\u2026")}
+    ${field(values2, "make", "Marca", 'required maxlength="60" placeholder="Toyota"')}
+    ${field(values2, "model", "Modelo", 'required maxlength="60" placeholder="Corolla"')}
+    ${field(values2, "year", "A\xF1o", 'required inputmode="numeric" maxlength="4" placeholder="2020"')}
+    ${field(values2, "currentKm", "Kilometraje actual", 'required inputmode="numeric" placeholder="45000"')}
+    ${field(values2, "plate", "Placa (opcional)", 'maxlength="9" placeholder="ABC-1234"')}
+    ${select(values2, "usageProfile", "Uso", USAGE_OPTIONS)}
+    ${checkbox(values2, "reminders", "Acepta recordatorios por WhatsApp")}`;
 }
 function usersListView(input) {
   const rowsHtml = input.page.items.length === 0 ? `<tr><td colspan="5" class="muted">Sin registros</td></tr>` : input.page.items.map((u) => `<tr><td><a href="/admin/users/${e7(u.id)}">${e7(u.name)}</a></td><td>${e7(ROLE_LABELS[String(u.role)] ?? u.role)}</td>
@@ -108924,8 +109930,8 @@ function newUserView(input) {
   ${common}${specific}
   <button class="full" type="submit">Guardar registro</button></form></div>`;
 }
-function input_phone(values) {
-  return field(values, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567" class="mono"');
+function input_phone(values2) {
+  return field(values2, "phone", "Tel\xE9fono de WhatsApp", 'required inputmode="tel" placeholder="099 123 4567" class="mono"');
 }
 function verificationForm(kind, id2, userId, csrf) {
   return `<form method="post" action="/admin/verifications/${kind}/${e7(id2)}">${csrfField10(csrf)}
@@ -108991,15 +109997,15 @@ function moderationSection(userId, relations, sanctions, csrf, canSanction) {
     <h2>V\xEDnculos</h2>${links}
     <h2>Sanciones</h2>${history}${form}</div>`;
 }
-function shopMapCard(userId, state, csrf, values) {
+function shopMapCard(userId, state, csrf, values2) {
   if (state === void 0)
     return "";
   if (state === null) {
     return `<div class="card"><h2>Mapa de talleres</h2><p class="muted">Para guardar la ubicaci\xF3n, aplica las actualizaciones de la base en Ajustes.</p></div>`;
   }
-  const point = values?.point !== void 0 ? String(values.point) : state.lat !== null && state.lng !== null ? `${state.lat}, ${state.lng}` : "";
-  const listed = values ? values.listed === "si" : state.listed;
-  const sector = (values?.precision ?? state.precision) === "sector";
+  const point = values2?.point !== void 0 ? String(values2.point) : state.lat !== null && state.lng !== null ? `${state.lat}, ${state.lng}` : "";
+  const listed = values2 ? values2.listed === "si" : state.listed;
+  const sector = (values2?.precision ?? state.precision) === "sector";
   const status = state.listed ? `<strong>Aparece en el mapa</strong>${state.consentAt ? ` \xB7 acept\xF3 el ${day2(state.consentAt)}` : ""} \xB7 ${state.precision === "sector" ? "solo su sector" : "punto exacto"}` : "No aparece en el mapa";
   return `<div class="card"><h2>Mapa de talleres</h2>
     <div>${status}. Solo se ve si adem\xE1s est\xE1 verificado.</div>
@@ -113165,7 +114171,7 @@ init_zod();
 import { randomUUID as randomUUID4 } from "node:crypto";
 
 // packages/api/dist/application/offline/idempotency.js
-import { createHash } from "node:crypto";
+import { createHash as createHash2 } from "node:crypto";
 function canonical(value2) {
   if (Array.isArray(value2))
     return `[${value2.map(canonical).join(",")}]`;
@@ -113174,7 +114180,7 @@ function canonical(value2) {
   return JSON.stringify(value2);
 }
 function requestFingerprint(body) {
-  return createHash("sha256").update(canonical(body)).digest("hex");
+  return createHash2("sha256").update(canonical(body)).digest("hex");
 }
 function validIdempotencyKey(key) {
   return typeof key === "string" && /^[A-Za-z0-9._:-]{8,120}$/.test(key);
@@ -114965,7 +115971,7 @@ init_outbox_delivery_store();
 
 // packages/api/dist/infrastructure/messaging/imported-contact-store.js
 init_apply();
-import { createHash as createHash9, randomUUID as randomUUID19 } from "node:crypto";
+import { createHash as createHash10, randomUUID as randomUUID19 } from "node:crypto";
 var MysqlImportedContactStore = class {
   connect;
   constructor(connect = openConnection) {
@@ -115012,7 +116018,7 @@ Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
           continue;
         }
         await conn.query("UPDATE `ImportedContact` SET status = 'approved', contactedAt = UTC_TIMESTAMP(3) WHERE id = ?", [contact.id]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID19(), `reactivation:${createHash9("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text10 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID19(), `reactivation:${createHash10("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text10 })]);
         await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID19(), contact.id, JSON.stringify({ approvedBy })]);
         queued++;
       }
@@ -116304,8 +117310,8 @@ var AgentStateError = class extends Error {
 // packages/api/dist/infrastructure/agent/turn-store.js
 init_user_lock();
 init_apply();
-import { createHash as createHash10, randomUUID as randomUUID22 } from "node:crypto";
-var digest2 = (text10) => createHash10("sha256").update(text10).digest("hex");
+import { createHash as createHash11, randomUUID as randomUUID22 } from "node:crypto";
+var digest2 = (text10) => createHash11("sha256").update(text10).digest("hex");
 var rows20 = (result) => result[0];
 var json = (value2) => typeof value2 === "string" ? JSON.parse(value2) : value2;
 var missing = () => new AgentStateError("NOT_FOUND", 404, "Propuesta no disponible.");
