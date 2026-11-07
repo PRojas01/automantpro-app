@@ -13017,30 +13017,30 @@ var require_column_definition = __commonJS({
         }
         return `\`${this.name}\` ${[typeName, ...flagNames].join(" ")}`;
       }
-      static toPacket(column, sequenceId) {
+      static toPacket(column2, sequenceId) {
         let length = 17;
         fields.forEach((field) => {
           length += Packet.lengthCodedStringLength(
-            column[field],
-            CharsetToEncoding[column.characterSet]
+            column2[field],
+            CharsetToEncoding[column2.characterSet]
           );
         });
         const buffer = Buffer.allocUnsafe(length);
         const packet = new Packet(sequenceId, buffer, 0, length);
         function writeField(name) {
           packet.writeLengthCodedString(
-            column[name],
-            CharsetToEncoding[column.characterSet]
+            column2[name],
+            CharsetToEncoding[column2.characterSet]
           );
         }
         packet.offset = 4;
         fields.forEach(writeField);
         packet.writeInt8(12);
-        packet.writeInt16(column.characterSet);
-        packet.writeInt32(column.columnLength);
-        packet.writeInt8(column.columnType);
-        packet.writeInt16(column.flags);
-        packet.writeInt8(column.decimals);
+        packet.writeInt16(column2.characterSet);
+        packet.writeInt32(column2.columnLength);
+        packet.writeInt8(column2.columnType);
+        packet.writeInt16(column2.flags);
+        packet.writeInt8(column2.decimals);
         packet.writeInt16(0);
         return packet;
       }
@@ -19667,30 +19667,30 @@ var require_connection = __commonJS({
       // ===================================
       writeColumns(columns) {
         this.writePacket(Packets.ResultSetHeader.toPacket(columns.length));
-        columns.forEach((column) => {
+        columns.forEach((column2) => {
           this.writePacket(
-            Packets.ColumnDefinition.toPacket(column, this.serverConfig.encoding)
+            Packets.ColumnDefinition.toPacket(column2, this.serverConfig.encoding)
           );
         });
         this.writeEof();
       }
       // row is array of columns, not hash
-      writeTextRow(column) {
+      writeTextRow(column2) {
         this.writePacket(
-          Packets.TextRow.toPacket(column, this.serverConfig.encoding)
+          Packets.TextRow.toPacket(column2, this.serverConfig.encoding)
         );
       }
-      writeBinaryRow(column) {
+      writeBinaryRow(column2) {
         this.writePacket(
-          Packets.BinaryRow.toPacket(column, this.serverConfig.encoding)
+          Packets.BinaryRow.toPacket(column2, this.serverConfig.encoding)
         );
       }
       writeTextResult(rows, columns, binary = false) {
         this.writeColumns(columns);
         rows.forEach((row) => {
           const arrayRow = new Array(columns.length);
-          columns.forEach((column) => {
-            arrayRow.push(row[column.name]);
+          columns.forEach((column2) => {
+            arrayRow.push(row[column2.name]);
           });
           if (binary) {
             this.writeBinaryRow(arrayRow);
@@ -21312,7 +21312,10 @@ var LOCAL_MARKETPLACE_STATEMENTS = [
   { kind: "addForeignKey", target: "LocalOffer.LocalOffer_requestId_fkey", sql: "ALTER TABLE `LocalOffer` ADD CONSTRAINT `LocalOffer_requestId_fkey` FOREIGN KEY (`requestId`) REFERENCES `LocalRequest` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
   { kind: "addForeignKey", target: "LocalOffer.LocalOffer_businessUserId_fkey", sql: "ALTER TABLE `LocalOffer` ADD CONSTRAINT `LocalOffer_businessUserId_fkey` FOREIGN KEY (`businessUserId`) REFERENCES `User` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
   { kind: "addForeignKey", target: "NotificationOutbox.NotificationOutbox_recipientUserId_fkey", sql: "ALTER TABLE `NotificationOutbox` ADD CONSTRAINT `NotificationOutbox_recipientUserId_fkey` FOREIGN KEY (`recipientUserId`) REFERENCES `User` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
-  { kind: "addForeignKey", target: "LocalCommandReceipt.LocalCommandReceipt_userId_fkey", sql: "ALTER TABLE `LocalCommandReceipt` ADD CONSTRAINT `LocalCommandReceipt_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" }
+  { kind: "addForeignKey", target: "LocalCommandReceipt.LocalCommandReceipt_userId_fkey", sql: "ALTER TABLE `LocalCommandReceipt` ADD CONSTRAINT `LocalCommandReceipt_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE" },
+  // Cita pedida directo desde el perfil del taller: la llave (dueño, taller, vehículo y hora) evita duplicados y marca la cita como directa.
+  { kind: "addColumn", target: "Appointment.directKey", sql: "ALTER TABLE `Appointment` ADD COLUMN `directKey` VARCHAR(64) NULL" },
+  { kind: "createIndex", target: "Appointment.Appointment_directKey_key", sql: "CREATE UNIQUE INDEX `Appointment_directKey_key` ON `Appointment` (`directKey`)" }
 ];
 
 // packages/api/src/infrastructure/schema-setup/statements.ts
@@ -21686,8 +21689,8 @@ var EXTRA_TABLES = [
   "InboundWebhook"
 ];
 var APP_SETTING_TABLE_SQL = "CREATE TABLE IF NOT EXISTS `AppSetting` (\n    `name` VARCHAR(191) NOT NULL,\n    `value` TEXT NOT NULL,\n    `updatedBy` VARCHAR(191) NULL,\n    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n\n    PRIMARY KEY (`name`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
-function addColumn(table, column, definition) {
-  return { kind: "addColumn", target: `${table}.${column}`, sql: `ALTER TABLE \`${table}\` ADD COLUMN \`${column}\` ${definition}` };
+function addColumn(table, column2, definition) {
+  return { kind: "addColumn", target: `${table}.${column2}`, sql: `ALTER TABLE \`${table}\` ADD COLUMN \`${column2}\` ${definition}` };
 }
 var EXTRA_STATEMENTS = [
   // Cola durable para mensajes de proveedor: wamid único evita doble procesamiento tras reintentos.
@@ -22012,10 +22015,10 @@ var FLEET_STATEMENTS = [
 
 // packages/api/src/infrastructure/schema-setup/billing-statements.ts
 var T2 = "CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
-var addColumn2 = (table, column, definition) => ({
+var addColumn2 = (table, column2, definition) => ({
   kind: "addColumn",
-  target: `${table}.${column}`,
-  sql: `ALTER TABLE \`${table}\` ADD COLUMN \`${column}\` ${definition}`
+  target: `${table}.${column2}`,
+  sql: `ALTER TABLE \`${table}\` ADD COLUMN \`${column2}\` ${definition}`
 });
 var BILLING_TABLES = ["PlanOffer", "PaymentAccount"];
 var BILLING_STATEMENTS = [
@@ -23057,12 +23060,72 @@ var MODEL_PLAN_SEED = [
   { kind: "update", target: "VehicleModelPlan.verificado", sql: `INSERT IGNORE INTO \`VehicleModelPlan\` (id, marca, modelo, anioDesde, anioHasta, combustible, serviceId, intervalKm, intervalMonths, fuente, verificado) VALUES ${values}` }
 ];
 
+// packages/api/src/infrastructure/schema-setup/work-order-records-statements.ts
+var WORK_ORDER_RECORD_TABLES = ["VehicleIntake", "WorkOrderPayment", "WorkOrderPhoto", "WorkOrderPromise", "WorkOrderPartialApproval", "AccountRecovery", "WorkOrderWarranty"];
+var WORK_ORDER_RECORD_STATEMENTS = [
+  { kind: "createTable", target: "VehicleIntake", sql: "CREATE TABLE IF NOT EXISTS `VehicleIntake` (`id` VARCHAR(191) NOT NULL, `workOrderId` VARCHAR(191) NOT NULL, `receivedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `km` INT NOT NULL, `fuel` VARCHAR(10) NOT NULL, `requested` VARCHAR(500) NOT NULL, `damages` JSON NOT NULL, `inventory` JSON NOT NULL, `notes` VARCHAR(500) NULL, `receivedBy` VARCHAR(191) NOT NULL, `ownerAnswer` VARCHAR(20) NULL, `ownerAnsweredAt` DATETIME(3) NULL, `ownerNote` VARCHAR(300) NULL, PRIMARY KEY (`id`), UNIQUE KEY `VehicleIntake_workOrderId_key` (`workOrderId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "createTable", target: "WorkOrderPayment", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderPayment` (`id` VARCHAR(191) NOT NULL, `workOrderId` VARCHAR(191) NOT NULL, `amount` DECIMAL(10,2) NOT NULL, `method` VARCHAR(20) NOT NULL, `reference` VARCHAR(120) NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'informado', `ownerNote` VARCHAR(300) NULL, `reportedBy` VARCHAR(191) NOT NULL, `answeredAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `WorkOrderPayment_workOrderId_idx` (`workOrderId`, `status`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "createTable", target: "WorkOrderPhoto", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderPhoto` (`id` VARCHAR(191) NOT NULL, `workOrderId` VARCHAR(191) NOT NULL, `kind` VARCHAR(20) NOT NULL, `mime` VARCHAR(20) NOT NULL, `data` MEDIUMBLOB NOT NULL, `createdBy` VARCHAR(191) NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `WorkOrderPhoto_workOrderId_idx` (`workOrderId`, `kind`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "createTable", target: "WorkOrderPromise", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderPromise` (`workOrderId` VARCHAR(191) NOT NULL, `promisedDate` DATE NOT NULL, `reason` VARCHAR(191) NULL, `changes` INT NOT NULL DEFAULT 0, `setBy` VARCHAR(191) NOT NULL, `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`workOrderId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "createTable", target: "WorkOrderPartialApproval", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderPartialApproval` (`workOrderId` VARCHAR(191) NOT NULL, `quotedTotal` DECIMAL(10,2) NOT NULL, `approvedTotal` DECIMAL(10,2) NOT NULL, `rejected` JSON NOT NULL, `decidedBy` VARCHAR(191) NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`workOrderId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "createTable", target: "AccountRecovery", sql: "CREATE TABLE IF NOT EXISTS `AccountRecovery` (`id` VARCHAR(191) NOT NULL, `userId` VARCHAR(191) NOT NULL, `newPhone` VARCHAR(20) NOT NULL, `claimantName` VARCHAR(120) NOT NULL, `detail` VARCHAR(500) NOT NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'recibida', `resolutionNote` VARCHAR(300) NULL, `resolvedBy` VARCHAR(191) NULL, `resolvedAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `AccountRecovery_status_idx` (`status`, `createdAt`), KEY `AccountRecovery_userId_idx` (`userId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "createTable", target: "WorkOrderWarranty", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderWarranty` (`id` VARCHAR(191) NOT NULL, `workOrderId` VARCHAR(191) NOT NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'abierta', `reason` VARCHAR(300) NOT NULL, `shopNote` VARCHAR(300) NULL, `requestedBy` VARCHAR(191) NOT NULL, `decidedBy` VARCHAR(191) NULL, `decidedAt` DATETIME(3) NULL, `reentryOrderId` VARCHAR(191) NULL, `resolvedAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `WorkOrderWarranty_workOrderId_idx` (`workOrderId`, `status`), KEY `WorkOrderWarranty_reentryOrderId_idx` (`reentryOrderId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "addColumn", target: "User.sessionsValidFrom", sql: "ALTER TABLE `User` ADD COLUMN `sessionsValidFrom` DATETIME(3) NULL" }
+];
+
+// packages/api/src/infrastructure/schema-setup/work-order-claims-statements.ts
+var WORK_ORDER_CLAIM_TABLES = ["WorkOrderClaim"];
+var WORK_ORDER_CLAIM_STATEMENTS = [
+  { kind: "createTable", target: "WorkOrderClaim", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderClaim` (`id` VARCHAR(191) NOT NULL, `workOrderId` VARCHAR(191) NOT NULL, `activeKey` VARCHAR(191) NULL, `source` VARCHAR(20) NOT NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'abierto', `ownerReason` VARCHAR(500) NOT NULL, `openedBy` VARCHAR(191) NOT NULL, `dueAt` DATETIME(3) NOT NULL, `shopResponse` VARCHAR(500) NULL, `shopRespondedBy` VARCHAR(191) NULL, `shopRespondedAt` DATETIME(3) NULL, `agreedAt` DATETIME(3) NULL, `escalatedAt` DATETIME(3) NULL, `escalatedBy` VARCHAR(191) NULL, `escalationReason` VARCHAR(500) NULL, `adminNote` VARCHAR(1000) NULL, `resolvedBy` VARCHAR(191) NULL, `resolvedAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), UNIQUE KEY `WorkOrderClaim_activeKey_key` (`activeKey`), KEY `WorkOrderClaim_workOrderId_idx` (`workOrderId`, `createdAt`), KEY `WorkOrderClaim_status_idx` (`status`, `dueAt`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+];
+
 // packages/api/src/infrastructure/schema-setup/inspection-statements.ts
 var INSPECTION_TABLES = ["VehicleInspection", "VehicleInspectionItem"];
 var INSPECTION_STATEMENTS = [
   { kind: "addColumn", target: "Vehicle.bodyStyle", sql: "ALTER TABLE `Vehicle` ADD COLUMN `bodyStyle` VARCHAR(30) NULL" },
   { kind: "createTable", target: "VehicleInspection", sql: "CREATE TABLE IF NOT EXISTS `VehicleInspection` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `appointmentId` VARCHAR(191) NULL, `actorUserId` VARCHAR(191) NOT NULL, `km` INT NULL, `note` VARCHAR(300) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehicleInspection_vehicleId_createdAt_idx` (`vehicleId`, `createdAt`), INDEX `VehicleInspection_shopId_idx` (`shopId`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
   { kind: "createTable", target: "VehicleInspectionItem", sql: "CREATE TABLE IF NOT EXISTS `VehicleInspectionItem` (`inspectionId` VARCHAR(191) NOT NULL, `code` VARCHAR(8) NOT NULL, `status` ENUM('ok','observar','cambiar','no_aplica') NOT NULL, `measure` DECIMAL(8,2) NULL, `unit` VARCHAR(8) NULL, PRIMARY KEY (`inspectionId`, `code`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+];
+
+// packages/api/src/infrastructure/schema-setup/part-order-statements.ts
+var PART_ORDER_TABLES = ["PartOrderLink", "PartPayment", "PartReturn"];
+var PART_ORDER_STATEMENTS = [
+  // La solicitud de repuesto queda ligada a la orden con un dato real, no solo con el código en el texto.
+  { kind: "addColumn", target: "LocalRequest.workOrderId", sql: "ALTER TABLE `LocalRequest` ADD COLUMN `workOrderId` VARCHAR(191) NULL" },
+  { kind: "createIndex", target: "LocalRequest.LocalRequest_workOrderId_idx", sql: "CREATE INDEX `LocalRequest_workOrderId_idx` ON `LocalRequest` (`workOrderId`)" },
+  // Qué hizo la oferta elegida en la orden: un renglón del presupuesto o una novedad por aprobar. Una fila por solicitud: no se duplica.
+  { kind: "createTable", target: "PartOrderLink", sql: "CREATE TABLE IF NOT EXISTS `PartOrderLink` (`requestId` VARCHAR(191) NOT NULL, `workOrderId` VARCHAR(191) NOT NULL, `offerId` VARCHAR(191) NOT NULL, `effect` VARCHAR(20) NOT NULL, `itemId` VARCHAR(191) NULL, `changeId` VARCHAR(191) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`requestId`), KEY `PartOrderLink_workOrderId_idx` (`workOrderId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  // Cobro del repuesto: lo registra el almacén y lo confirma u observa quien compró. La plataforma no mueve dinero.
+  { kind: "createTable", target: "PartPayment", sql: "CREATE TABLE IF NOT EXISTS `PartPayment` (`id` VARCHAR(191) NOT NULL, `requestId` VARCHAR(191) NOT NULL, `offerId` VARCHAR(191) NOT NULL, `amount` DECIMAL(10,2) NOT NULL, `method` VARCHAR(20) NOT NULL, `reference` VARCHAR(120) NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'informado', `buyerNote` VARCHAR(300) NULL, `reportedBy` VARCHAR(191) NOT NULL, `answeredAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `PartPayment_requestId_idx` (`requestId`, `status`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  // Devolución del repuesto: la pide quien compró después de recibirlo; el almacén la acepta o la rechaza.
+  { kind: "createTable", target: "PartReturn", sql: "CREATE TABLE IF NOT EXISTS `PartReturn` (`id` VARCHAR(191) NOT NULL, `requestId` VARCHAR(191) NOT NULL, `offerId` VARCHAR(191) NOT NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'solicitada', `reason` VARCHAR(300) NOT NULL, `storeNote` VARCHAR(300) NULL, `requestedBy` VARCHAR(191) NOT NULL, `decidedBy` VARCHAR(191) NULL, `decidedAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `PartReturn_requestId_idx` (`requestId`, `status`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+];
+
+// packages/api/src/infrastructure/schema-setup/catalog-tariff-statements.ts
+var CATALOG_TARIFF_TABLES = ["ShopTariff", "ProductFitment"];
+var CATALOG_TARIFF_STATEMENTS = [
+  { kind: "addColumn", target: "Product.active", sql: "ALTER TABLE `Product` ADD COLUMN `active` TINYINT(1) NOT NULL DEFAULT 1" },
+  { kind: "createTable", target: "ProductFitment", sql: "CREATE TABLE IF NOT EXISTS `ProductFitment` (`id` VARCHAR(191) NOT NULL, `productId` VARCHAR(191) NOT NULL, `make` VARCHAR(60) NOT NULL, `model` VARCHAR(60) NULL, `yearFrom` INT NULL, `yearTo` INT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `ProductFitment_productId_idx` (`productId`), KEY `ProductFitment_make_idx` (`make`, `model`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "createTable", target: "ShopTariff", sql: "CREATE TABLE IF NOT EXISTS `ShopTariff` (`id` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `name` VARCHAR(120) NOT NULL, `priceFromUsd` DECIMAL(10,2) NOT NULL, `durationMin` INT NULL, `active` TINYINT(1) NOT NULL DEFAULT 1, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `ShopTariff_shopId_idx` (`shopId`, `active`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "addColumn", target: "Shop.weeklyHours", sql: "ALTER TABLE `Shop` ADD COLUMN `weeklyHours` JSON NULL" },
+  { kind: "addColumn", target: "Shop.offersPickup", sql: "ALTER TABLE `Shop` ADD COLUMN `offersPickup` TINYINT(1) NOT NULL DEFAULT 0" },
+  { kind: "addColumn", target: "Appointment.pickupNote", sql: "ALTER TABLE `Appointment` ADD COLUMN `pickupNote` VARCHAR(160) NULL" }
+];
+
+// packages/api/src/infrastructure/schema-setup/recontact-statements.ts
+var RECONTACT_TABLES = ["ShopRecontact", "AppointmentWaitlist"];
+var column = (table, name, definition) => ({ kind: "addColumn", target: `${table}.${name}`, sql: `ALTER TABLE \`${table}\` ADD COLUMN \`${name}\` ${definition}` });
+var RECONTACT_STATEMENTS = [
+  // Cada recordatorio que un taller envía a un cliente vencido: de aquí sale el máximo de uno cada 30 días por vehículo y taller.
+  { kind: "createTable", target: "ShopRecontact", sql: "CREATE TABLE IF NOT EXISTS `ShopRecontact` (`id` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `sentBy` VARCHAR(191) NOT NULL, `service` VARCHAR(120) NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `ShopRecontact_shop_vehicle_idx` (`shopId`, `vehicleId`, `createdAt`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  // «Avísame si se libera»: no reserva nada; sale de la lista al avisar (notifiedAt).
+  { kind: "createTable", target: "AppointmentWaitlist", sql: "CREATE TABLE IF NOT EXISTS `AppointmentWaitlist` (`id` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `ownerUserId` VARCHAR(191) NOT NULL, `wantedDate` DATE NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `notifiedAt` DATETIME(3) NULL, PRIMARY KEY (`id`), KEY `AppointmentWaitlist_shop_date_idx` (`shopId`, `wantedDate`, `notifiedAt`), KEY `AppointmentWaitlist_owner_idx` (`ownerUserId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  // Fecha de vencimiento del SOAT que escribe el dueño; sin dato no hay aviso.
+  column("Vehicle", "soatExpiresAt", "DATE NULL"),
+  // Avisos por tipo: 1 = se envían (valor por defecto), 0 = el usuario los apagó.
+  column("User", "notifyMaintenance", "TINYINT(1) NOT NULL DEFAULT 1"),
+  column("User", "notifyDeadlines", "TINYINT(1) NOT NULL DEFAULT 1"),
+  column("User", "notifyOffers", "TINYINT(1) NOT NULL DEFAULT 1")
 ];
 
 // packages/api/src/infrastructure/schema-setup/courses-statements.ts
@@ -23088,9 +23151,17 @@ var COURSES_STATEMENTS = [
   { kind: "addColumn", target: "Course.motivoRevision", sql: "ALTER TABLE `Course` ADD COLUMN `motivoRevision` TEXT NULL" }
 ];
 
+// packages/api/src/infrastructure/schema-setup/comprobante-statements.ts
+var COMPROBANTE_TABLES = ["WorkOrderAssignment", "VehicleTransfer"];
+var T4 = "DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+var COMPROBANTE_STATEMENTS = [
+  { kind: "createTable", target: "WorkOrderAssignment", sql: `CREATE TABLE IF NOT EXISTS \`WorkOrderAssignment\` (\`workOrderId\` VARCHAR(191) NOT NULL, \`memberUserId\` VARCHAR(191) NOT NULL, \`assignedBy\` VARCHAR(191) NOT NULL, \`assignedAt\` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (\`workOrderId\`), KEY \`WorkOrderAssignment_member_idx\` (\`memberUserId\`, \`assignedAt\`)) ${T4}` },
+  { kind: "createTable", target: "VehicleTransfer", sql: `CREATE TABLE IF NOT EXISTS \`VehicleTransfer\` (\`id\` VARCHAR(191) NOT NULL, \`codeHash\` VARCHAR(64) NOT NULL, \`vehicleId\` VARCHAR(191) NOT NULL, \`fromUserId\` VARCHAR(191) NOT NULL, \`status\` VARCHAR(20) NOT NULL DEFAULT 'pending', \`expiresAt\` DATETIME(3) NOT NULL, \`toUserId\` VARCHAR(191) NULL, \`usedAt\` DATETIME(3) NULL, \`createdAt\` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (\`id\`), UNIQUE KEY \`VehicleTransfer_codeHash_key\` (\`codeHash\`), KEY \`VehicleTransfer_vehicle_idx\` (\`vehicleId\`, \`status\`)) ${T4}` }
+];
+
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS];
-var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...WORK_ORDER_RECORD_STATEMENTS, ...WORK_ORDER_CLAIM_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS, ...PART_ORDER_STATEMENTS, ...CATALOG_TARIFF_STATEMENTS, ...RECONTACT_STATEMENTS, ...COMPROBANTE_STATEMENTS];
+var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...WORK_ORDER_RECORD_TABLES, ...WORK_ORDER_CLAIM_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES, ...PART_ORDER_TABLES, ...CATALOG_TARIFF_TABLES, ...RECONTACT_TABLES, ...COMPROBANTE_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));
   let conn2;
@@ -23125,10 +23196,10 @@ function split(target) {
   return dot < 0 ? [target, ""] : [target.slice(0, dot), target.slice(dot + 1)];
 }
 var tableExists = (conn2, table) => count(conn2, "SELECT COUNT(*) AS n FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?", [table]);
-var columnExists = (conn2, table, column) => count(
+var columnExists = (conn2, table, column2) => count(
   conn2,
   "SELECT COUNT(*) AS n FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ?",
-  [table, column]
+  [table, column2]
 );
 var indexExists = (conn2, table, index) => count(
   conn2,
