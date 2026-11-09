@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='28f9a200424ef6694bea398b2238b8b30ff97070'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='c5f57df6766bd82ef8d6ba1977cee830290fa687'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -9674,11 +9674,11 @@ var require_safe_stable_stringify = __commonJS({
       }
       return value2 === void 0 ? Infinity : value2;
     }
-    function getItemCount(number) {
-      if (number === 1) {
+    function getItemCount(number2) {
+      if (number2 === 1) {
         return "1 item";
       }
-      return `${number} items`;
+      return `${number2} items`;
     }
     function getUniqueReplacerSet(replacerArray) {
       const replacerSet = /* @__PURE__ */ new Set();
@@ -10395,8 +10395,8 @@ var require_pino = __commonJS({
         bindings(bindings) {
           return bindings;
         },
-        level(label5, number) {
-          return { level: number };
+        level(label5, number2) {
+          return { level: number2 };
         }
       }),
       hooks: {
@@ -35895,11 +35895,11 @@ var require_clean = __commonJS({
   "node_modules/semver/functions/clean.js"(exports, module) {
     "use strict";
     var parse2 = require_parse2();
-    var clean2 = (version, options) => {
+    var clean3 = (version, options) => {
       const s = parse2(version.trim().replace(/^[=v]+/, ""), options);
       return s ? s.version : null;
     };
-    module.exports = clean2;
+    module.exports = clean3;
   }
 });
 
@@ -37296,7 +37296,7 @@ var require_semver2 = __commonJS({
     var identifiers = require_identifiers();
     var parse2 = require_parse2();
     var valid = require_valid();
-    var clean2 = require_clean();
+    var clean3 = require_clean();
     var inc = require_inc();
     var diff = require_diff();
     var major = require_major();
@@ -37335,7 +37335,7 @@ var require_semver2 = __commonJS({
     module.exports = {
       parse: parse2,
       valid,
-      clean: clean2,
+      clean: clean3,
       inc,
       diff,
       major,
@@ -45434,20 +45434,20 @@ var require_bn = __commonJS({
         ctor.prototype = new TempCtor();
         ctor.prototype.constructor = ctor;
       }
-      function BN(number, base, endian) {
-        if (BN.isBN(number)) {
-          return number;
+      function BN(number2, base, endian) {
+        if (BN.isBN(number2)) {
+          return number2;
         }
         this.negative = 0;
         this.words = null;
         this.length = 0;
         this.red = null;
-        if (number !== null) {
+        if (number2 !== null) {
           if (base === "le" || base === "be") {
             endian = base;
             base = 10;
           }
-          this._init(number || 0, base || 10, endian || "be");
+          this._init(number2 || 0, base || 10, endian || "be");
         }
       }
       if (typeof module2 === "object") {
@@ -45480,53 +45480,53 @@ var require_bn = __commonJS({
         if (left.cmp(right) < 0) return left;
         return right;
       };
-      BN.prototype._init = function init(number, base, endian) {
-        if (typeof number === "number") {
-          return this._initNumber(number, base, endian);
+      BN.prototype._init = function init(number2, base, endian) {
+        if (typeof number2 === "number") {
+          return this._initNumber(number2, base, endian);
         }
-        if (typeof number === "object") {
-          return this._initArray(number, base, endian);
+        if (typeof number2 === "object") {
+          return this._initArray(number2, base, endian);
         }
         if (base === "hex") {
           base = 16;
         }
         assert(base === (base | 0) && base >= 2 && base <= 36);
-        number = number.toString().replace(/\s+/g, "");
+        number2 = number2.toString().replace(/\s+/g, "");
         var start = 0;
-        if (number[0] === "-") {
+        if (number2[0] === "-") {
           start++;
           this.negative = 1;
         }
-        if (start < number.length) {
+        if (start < number2.length) {
           if (base === 16) {
-            this._parseHex(number, start, endian);
+            this._parseHex(number2, start, endian);
           } else {
-            this._parseBase(number, base, start);
+            this._parseBase(number2, base, start);
             if (endian === "le") {
               this._initArray(this.toArray(), base, endian);
             }
           }
         }
       };
-      BN.prototype._initNumber = function _initNumber(number, base, endian) {
-        if (number < 0) {
+      BN.prototype._initNumber = function _initNumber(number2, base, endian) {
+        if (number2 < 0) {
           this.negative = 1;
-          number = -number;
+          number2 = -number2;
         }
-        if (number < 67108864) {
-          this.words = [number & 67108863];
+        if (number2 < 67108864) {
+          this.words = [number2 & 67108863];
           this.length = 1;
-        } else if (number < 4503599627370496) {
+        } else if (number2 < 4503599627370496) {
           this.words = [
-            number & 67108863,
-            number / 67108864 & 67108863
+            number2 & 67108863,
+            number2 / 67108864 & 67108863
           ];
           this.length = 2;
         } else {
-          assert(number < 9007199254740992);
+          assert(number2 < 9007199254740992);
           this.words = [
-            number & 67108863,
-            number / 67108864 & 67108863,
+            number2 & 67108863,
+            number2 / 67108864 & 67108863,
             1
           ];
           this.length = 3;
@@ -45534,14 +45534,14 @@ var require_bn = __commonJS({
         if (endian !== "le") return;
         this._initArray(this.toArray(), base, endian);
       };
-      BN.prototype._initArray = function _initArray(number, base, endian) {
-        assert(typeof number.length === "number");
-        if (number.length <= 0) {
+      BN.prototype._initArray = function _initArray(number2, base, endian) {
+        assert(typeof number2.length === "number");
+        if (number2.length <= 0) {
           this.words = [0];
           this.length = 1;
           return this;
         }
-        this.length = Math.ceil(number.length / 3);
+        this.length = Math.ceil(number2.length / 3);
         this.words = new Array(this.length);
         for (var i = 0; i < this.length; i++) {
           this.words[i] = 0;
@@ -45549,8 +45549,8 @@ var require_bn = __commonJS({
         var j, w;
         var off2 = 0;
         if (endian === "be") {
-          for (i = number.length - 1, j = 0; i >= 0; i -= 3) {
-            w = number[i] | number[i - 1] << 8 | number[i - 2] << 16;
+          for (i = number2.length - 1, j = 0; i >= 0; i -= 3) {
+            w = number2[i] | number2[i - 1] << 8 | number2[i - 2] << 16;
             this.words[j] |= w << off2 & 67108863;
             this.words[j + 1] = w >>> 26 - off2 & 67108863;
             off2 += 24;
@@ -45560,8 +45560,8 @@ var require_bn = __commonJS({
             }
           }
         } else if (endian === "le") {
-          for (i = 0, j = 0; i < number.length; i += 3) {
-            w = number[i] | number[i + 1] << 8 | number[i + 2] << 16;
+          for (i = 0, j = 0; i < number2.length; i += 3) {
+            w = number2[i] | number2[i + 1] << 8 | number2[i + 2] << 16;
             this.words[j] |= w << off2 & 67108863;
             this.words[j + 1] = w >>> 26 - off2 & 67108863;
             off2 += 24;
@@ -45590,8 +45590,8 @@ var require_bn = __commonJS({
         }
         return r;
       }
-      BN.prototype._parseHex = function _parseHex(number, start, endian) {
-        this.length = Math.ceil((number.length - start) / 6);
+      BN.prototype._parseHex = function _parseHex(number2, start, endian) {
+        this.length = Math.ceil((number2.length - start) / 6);
         this.words = new Array(this.length);
         for (var i = 0; i < this.length; i++) {
           this.words[i] = 0;
@@ -45600,8 +45600,8 @@ var require_bn = __commonJS({
         var j = 0;
         var w;
         if (endian === "be") {
-          for (i = number.length - 1; i >= start; i -= 2) {
-            w = parseHexByte(number, start, i) << off2;
+          for (i = number2.length - 1; i >= start; i -= 2) {
+            w = parseHexByte(number2, start, i) << off2;
             this.words[j] |= w & 67108863;
             if (off2 >= 18) {
               off2 -= 18;
@@ -45612,9 +45612,9 @@ var require_bn = __commonJS({
             }
           }
         } else {
-          var parseLength = number.length - start;
-          for (i = parseLength % 2 === 0 ? start + 1 : start; i < number.length; i += 2) {
-            w = parseHexByte(number, start, i) << off2;
+          var parseLength = number2.length - start;
+          for (i = parseLength % 2 === 0 ? start + 1 : start; i < number2.length; i += 2) {
+            w = parseHexByte(number2, start, i) << off2;
             this.words[j] |= w & 67108863;
             if (off2 >= 18) {
               off2 -= 18;
@@ -45643,7 +45643,7 @@ var require_bn = __commonJS({
         }
         return r;
       }
-      BN.prototype._parseBase = function _parseBase(number, base, start) {
+      BN.prototype._parseBase = function _parseBase(number2, base, start) {
         this.words = [0];
         this.length = 1;
         for (var limbLen = 0, limbPow = 1; limbPow <= 67108863; limbPow *= base) {
@@ -45651,12 +45651,12 @@ var require_bn = __commonJS({
         }
         limbLen--;
         limbPow = limbPow / base | 0;
-        var total = number.length - start;
+        var total = number2.length - start;
         var mod = total % limbLen;
         var end = Math.min(total, total - mod) + start;
         var word = 0;
         for (var i = start; i < end; i += limbLen) {
-          word = parseBase(number, i, i + limbLen, base);
+          word = parseBase(number2, i, i + limbLen, base);
           this.imuln(limbPow);
           if (this.words[0] + word < 67108864) {
             this.words[0] += word;
@@ -45666,7 +45666,7 @@ var require_bn = __commonJS({
         }
         if (mod !== 0) {
           var pow = 1;
-          word = parseBase(number, i, number.length, base);
+          word = parseBase(number2, i, number2.length, base);
           for (i = 0; i < mod; i++) {
             pow *= base;
           }
@@ -63715,8 +63715,8 @@ var require_lib3 = __commonJS({
           return true;
         },
         /** Evicts the oldest item or the specified number of the oldest items from the cache. */
-        evict: (number) => {
-          let toPrune = Math.min(number, size);
+        evict: (number2) => {
+          let toPrune = Math.min(number2, size);
           while (toPrune > 0) {
             const evictHead = head;
             const key = keyList[evictHead];
@@ -85122,22 +85122,22 @@ function sanitizeProfile(value2) {
 function escapeHtml(value2) {
   return value2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
-function buildLinks(number, code5, ref4, profile = null) {
+function buildLinks(number2, code5, ref4, profile = null) {
   const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent ?? null;
   const text12 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code5}${ref4 ? ` (ref: ${ref4})` : ""}`;
   const encoded = encodeURIComponent(text12);
   return {
     text: text12,
-    app: `whatsapp://send?phone=${number}&text=${encoded}`,
-    wame: `https://wa.me/${number}?text=${encoded}`,
-    web: `https://web.whatsapp.com/send?phone=${number}&text=${encoded}`
+    app: `whatsapp://send?phone=${number2}&text=${encoded}`,
+    wame: `https://wa.me/${number2}?text=${encoded}`,
+    web: `https://web.whatsapp.com/send?phone=${number2}&text=${encoded}`
   };
 }
-function formatNumber(number) {
-  if (number.startsWith("593") && number.length === 12) {
-    return `+593 ${number.slice(3, 5)} ${number.slice(5, 8)} ${number.slice(8)}`;
+function formatNumber(number2) {
+  if (number2.startsWith("593") && number2.length === 12) {
+    return `+593 ${number2.slice(3, 5)} ${number2.slice(5, 8)} ${number2.slice(8)}`;
   }
-  return `+${number}`;
+  return `+${number2}`;
 }
 function structuredData(input) {
   const site = SITE;
@@ -85200,7 +85200,7 @@ function renderEntryPage(input) {
   const nonce2 = escapeHtml(input.nonce);
   const available = input.number !== null;
   const links = available ? buildLinks(input.number, input.code, input.ref) : null;
-  const number = available ? escapeHtml(formatNumber(input.number)) : "";
+  const number2 = available ? escapeHtml(formatNumber(input.number)) : "";
   const refQuery = input.ref ? `&amp;ref=${escapeHtml(input.ref)}` : "";
   const site = input.marketing ?? null;
   const masLink = (key, label5) => {
@@ -85208,7 +85208,7 @@ function renderEntryPage(input) {
     return href ? `<a class="mas" href="${escapeHtml(href)}"${href.startsWith("http") ? ' rel="noopener"' : ""}>${label5}<span class="sr"> \xB7 ${escapeHtml(PERFIL_NOMBRE[key] ?? key)}</span></a>` : "";
   };
   const logo = `<a class="logo" href="/?pagina=1" aria-label="AutoMantPro, inicio">${logoImg()}</a>`;
-  const contact = links ? `<p class="small linea"><a href="${escapeHtml(links.wame)}" rel="noopener">${number}</a></p>` : "";
+  const contact = links ? `<p class="small linea"><a href="${escapeHtml(links.wame)}" rel="noopener">${number2}</a></p>` : "";
   const access = links ? `<section class="access" aria-labelledby="access-title">
     <p class="section" id="access-title">C\xF3mo quieres entrar</p>
     <div class="access-actions"><a class="access-btn" href="${escapeHtml(links.wame)}" rel="noopener">Abrir WhatsApp</a><a class="access-btn secondary" href="/cuenta#entrar">Ingresar o crear cuenta</a></div>
@@ -85230,7 +85230,7 @@ function renderEntryPage(input) {
   const beneficios = `<p class="section">Lo que ganas</p>
     <ul class="beneficios">${BENEFICIOS.map((b) => links ? `<li class="luz-${b.icono}"><a class="beneficio" href="${acceso(b.perfil)}" rel="noopener"><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span><span class="ir">Escribir por WhatsApp \u203A</span></a></li>` : `<li class="luz-${b.icono}"><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span></li>`).join("")}</ul>`;
   const button = links ? `<button id="abrir" class="cta" type="button" data-app="${escapeHtml(links.app)}" data-wame="${escapeHtml(links.wame)}" data-web="${escapeHtml(links.web)}">Abrir WhatsApp</button>
-    <p class="small spaced">Escr\xEDbenos al <strong>${number}</strong> \xB7 <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> \xB7 <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a> \xB7 <a href="${escapeHtml(links.web)}" rel="noopener">WhatsApp Web</a></p>` : `<button id="abrir" class="cta" type="button" disabled>Abrir WhatsApp</button>
+    <p class="small spaced">Escr\xEDbenos al <strong>${number2}</strong> \xB7 <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> \xB7 <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a> \xB7 <a href="${escapeHtml(links.web)}" rel="noopener">WhatsApp Web</a></p>` : `<button id="abrir" class="cta" type="button" disabled>Abrir WhatsApp</button>
     <p class="soon">Muy pronto disponible por WhatsApp</p>`;
   return `<!doctype html>
 <html lang="es-EC">
@@ -86141,7 +86141,7 @@ var init_lopdp = __esm({
       rechazada: "Rechazada"
     };
     RESPONSE_DAYS = 15;
-    dataRequestCode = (number) => `LP-${String(number).padStart(4, "0")}`;
+    dataRequestCode = (number2) => `LP-${String(number2).padStart(4, "0")}`;
   }
 });
 
@@ -86704,7 +86704,7 @@ var init_workflow = __esm({
       ["incorrecto", "La causa era otra"],
       ["no_aplica", "No hubo diagn\xF3stico previo"]
     ];
-    workOrderCode = (number) => `OT-${String(number).padStart(5, "0")}`;
+    workOrderCode = (number2) => `OT-${String(number2).padStart(5, "0")}`;
     lineTotal = (item) => Math.round(item.quantity * item.unitPrice * 100) / 100;
     km = (value2) => `${Number(value2).toLocaleString("es-EC")} km`;
     vehicleText = (o) => `${o.vehicleLabel}${o.plate ? ` \xB7 ${o.plate}` : ""}`;
@@ -86924,6 +86924,22 @@ async function escalateExpired(conn, claimId, now = /* @__PURE__ */ new Date()) 
   await alertAdmin(conn);
   return true;
 }
+async function escalateUnanswered(conn, claimId, now = /* @__PURE__ */ new Date()) {
+  const [claim] = await rows7(conn, "SELECT c.id, c.status, c.workOrderId, c.shopRespondedAt, w.number, w.ownerId, w.vehicleId, s.userId AS shopUserId FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.id = ? FOR UPDATE", [claimId]);
+  if (!claim || claim.status !== "respondido" || !claim.shopRespondedAt)
+    return false;
+  if (new Date(claim.shopRespondedAt).getTime() + CLAIM_HOURS * 36e5 > now.getTime())
+    return false;
+  const [changed] = await conn.query("UPDATE `WorkOrderClaim` SET status = 'en_admin', escalatedAt = ?, escalationReason = 'El due\xF1o no respondi\xF3 a la soluci\xF3n del taller en 48 horas.', updatedAt = ? WHERE id = ? AND status = 'respondido'", [now, now, claimId]);
+  if (Number(changed.affectedRows) !== 1)
+    return false;
+  const code5 = workOrderCode(Number(claim.number));
+  await audit(conn, "care.claim.unanswered", null, null, String(claim.workOrderId), { claim: claimId });
+  await notifyOwnerSide(conn, claim, `claim-unanswered:${claimId}`, `\u23F0 Pasaron 48 horas sin tu respuesta a la soluci\xF3n del taller para el reclamo de ${code5}. El equipo de AutoMantPro revisar\xE1 el caso y decidir\xE1. Te avisaremos por aqu\xED.`);
+  await notify(conn, String(claim.shopUserId), `claim-unanswered:${claimId}:${String(claim.shopUserId)}`, `\u23F0 El cliente no respondi\xF3 en 48 horas a tu soluci\xF3n del reclamo de ${code5}. El equipo de AutoMantPro revisar\xE1 el caso y decidir\xE1.`);
+  await alertAdmin(conn);
+  return true;
+}
 async function activeClaim(conn, orderId, ctx) {
   const [claim] = await rows7(conn, "SELECT * FROM `WorkOrderClaim` WHERE activeKey = ? FOR UPDATE", [orderId]).catch(whenTableMissing2([]));
   if (!claim)
@@ -86953,7 +86969,8 @@ async function executeClaimCommand(conn, userId, role, command, ctx) {
     await audit(conn, "care.claim.responded", userId, "taller", String(order2.id), { claim: claim2.id });
     await notifyOwnerSide(conn, order2, `claim-response:${String(claim2.id)}`, `\u{1F4AC} ${shop.name} respondi\xF3 tu reclamo de ${code5}: ${command.response}
 Si est\xE1s de acuerdo con la soluci\xF3n, escribe: Acepto soluci\xF3n ${code5}
-Si no, escribe: Escalar reclamo ${code5} | motivo, y lo revisar\xE1 el equipo de AutoMantPro.`);
+Si no, escribe: Escalar reclamo ${code5} | motivo, y lo revisar\xE1 el equipo de AutoMantPro.
+Si no respondes en 48 horas, el caso pasa al equipo de AutoMantPro.`);
     return { userId, message: `Registramos tu respuesta al reclamo de ${code5} y se la enviamos al due\xF1o. Si acepta tu soluci\xF3n, el reclamo queda acordado; si no, lo revisa AutoMantPro.` };
   }
   if (role !== "dueno")
@@ -87761,7 +87778,7 @@ var init_order_technician_store = __esm({
         this.connect = connect;
       }
       /** `memberId` es el id del técnico en el equipo del taller; null deja la orden sin técnico. */
-      async assign(userId, role, number, memberId) {
+      async assign(userId, role, number2, memberId) {
         const conn = await this.connect();
         try {
           await conn.query("START TRANSACTION");
@@ -87769,10 +87786,10 @@ var init_order_technician_store = __esm({
             const shop = await this.care.actingShop(conn, userId, role);
             if (!shop.isOwner && !shop.isAdmin)
               throw new BrokerError("FORBIDDEN");
-            const [order] = await rows10(conn, "SELECT w.id, w.status, v.make, v.model, v.year FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.number = ? AND w.shopId = ? FOR UPDATE", [number, shop.id]);
+            const [order] = await rows10(conn, "SELECT w.id, w.status, v.make, v.model, v.year FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.number = ? AND w.shopId = ? FOR UPDATE", [number2, shop.id]);
             if (!order)
               throw new BrokerError("NOT_FOUND");
-            const code5 = workOrderCode(number);
+            const code5 = workOrderCode(number2);
             let member;
             if (memberId) {
               [member] = await rows10(conn, "SELECT userId, name FROM `ShopMember` WHERE id = ? AND shopId = ? AND status = 'active' AND userId IS NOT NULL AND role = 'tecnico'", [memberId, shop.id]);
@@ -88637,10 +88654,10 @@ function fold7(text12) {
   return text12.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
 }
 function placeLabel(text12) {
-  const clean2 = text12.replace(/\s+/g, " ").trim();
-  if (!clean2)
+  const clean3 = text12.replace(/\s+/g, " ").trim();
+  if (!clean3)
     return "";
-  return clean2.toLowerCase().split(" ").map((w, i) => i > 0 && ["de", "del", "la", "las", "los", "el", "y", "a"].includes(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+  return clean3.toLowerCase().split(" ").map((w, i) => i > 0 && ["de", "del", "la", "las", "los", "el", "y", "a"].includes(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 function categoriesOf(services) {
   const found = /* @__PURE__ */ new Set();
@@ -88912,7 +88929,7 @@ var init_plans = __esm({
     };
     time = (value2) => value2 instanceof Date ? value2.getTime() : new Date(value2).getTime();
     CLOCK_SKEW_MS = 6e4;
-    subscriptionCode = (number) => `SB-${String(number).padStart(4, "0")}`;
+    subscriptionCode = (number2) => `SB-${String(number2).padStart(4, "0")}`;
   }
 });
 
@@ -89917,12 +89934,12 @@ var init_vehicle_care_store = __esm({
 ${lines.join("\n")}${list7.length > 1 ? "\nPara elegir con cu\xE1l trabajar: Usar veh\xEDculo 2" : ""}` };
       }
       /** Open work orders of the owner (or one of them): where the vehicle is and what waits for them. */
-      async orderStatus(conn, userId, role, number) {
+      async orderStatus(conn, userId, role, number2) {
         if (role !== "dueno")
           fail3("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const orders = await rows14(conn, `SELECT w.id, w.number, w.status, w.total, w.updatedAt, v.make, v.model, v.year, s.name AS shopName FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId JOIN \`Shop\` s ON s.id = w.shopId WHERE ${scope.where("w")} AND ${number === null ? "w.status NOT IN ('cerrada','cancelada')" : "w.number = ?"} ORDER BY w.number DESC LIMIT ${number === null ? 10 : 5}`, number === null ? scope.args : [...scope.args, number]);
-        if (!orders.length && number !== null)
+        const orders = await rows14(conn, `SELECT w.id, w.number, w.status, w.total, w.updatedAt, v.make, v.model, v.year, s.name AS shopName FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId JOIN \`Shop\` s ON s.id = w.shopId WHERE ${scope.where("w")} AND ${number2 === null ? "w.status NOT IN ('cerrada','cancelada')" : "w.number = ?"} ORDER BY w.number DESC LIMIT ${number2 === null ? 10 : 5}`, number2 === null ? scope.args : [...scope.args, number2]);
+        if (!orders.length && number2 !== null)
           return { userId, message: "No encontramos esa orden en tu cuenta." };
         if (!orders.length) {
           try {
@@ -89971,10 +89988,10 @@ Responde: Usar veh\xEDculo 2${example ? ` \xB7 Estado ${String(example)}` : ""}`
         return { userId, message: vehicleStatusText(label5, items.length ? buildRecommendations(items) : null) };
       }
       /** The owner confirms the reception form, or says what does not match; the workshop is told either way. */
-      async checkInAnswer(conn, userId, role, number, confirm, note) {
+      async checkInAnswer(conn, userId, role, number2, confirm, note) {
         if (role !== "dueno")
           fail3("FORBIDDEN");
-        const order = await this.openOrder(conn, number, { scope: await decisionScope(conn, userId) });
+        const order = await this.openOrder(conn, number2, { scope: await decisionScope(conn, userId) });
         if (["cerrada", "cancelada"].includes(String(order.status)))
           fail3("ORDER_CLOSED");
         if (!confirm && !note)
@@ -89987,7 +90004,7 @@ Responde: Usar veh\xEDculo 2${example ? ` \xB7 Estado ${String(example)}` : ""}`
 Observaci\xF3n del due\xF1o: ${note}`, order.id]);
         await answerIntake(conn, String(order.id), confirm, note);
         await this.audit(conn, userId, confirm ? "care.checkin.confirmed" : "care.checkin.observed", "WorkOrder", String(order.id), { channel: "whatsapp", ...note ? { note } : {} });
-        const code5 = workOrderCode(number);
+        const code5 = workOrderCode(number2);
         await this.notify(conn, String(order.shopUserId), `checkinanswer:${String(order.id)}`, "care.checkin", confirm ? `\u2705 El cliente confirm\xF3 la ficha de ingreso de ${code5}.` : `\u26A0\uFE0F El cliente observ\xF3 la ficha de ingreso de ${code5}: ${note}. Rev\xEDsalo con \xE9l antes de empezar.`);
         return { userId, message: confirm ? `Confirmaste la ficha de ingreso de ${code5}.` : `Anotamos tu observaci\xF3n en la orden ${code5} y avisamos a ${order.shopName}.` };
       }
@@ -90015,10 +90032,10 @@ Observaci\xF3n del due\xF1o: ${note}`, order.id]);
 Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide`);
         return { userId, message: `Cobro de ${formatUsd(command.amount)} registrado en ${code5}. Saldo: ${formatUsd(balance - command.amount)}. Avisamos al due\xF1o para que lo confirme.` };
       }
-      async paymentAnswer(conn, userId, role, number, confirm, note) {
+      async paymentAnswer(conn, userId, role, number2, confirm, note) {
         if (role !== "dueno")
           fail3("FORBIDDEN");
-        const order = await this.openOrder(conn, number, { scope: await decisionScope(conn, userId) });
+        const order = await this.openOrder(conn, number2, { scope: await decisionScope(conn, userId) });
         if (!confirm && !note)
           fail3("REASON_REQUIRED");
         const [payment] = await rows14(conn, "SELECT id, amount FROM `WorkOrderPayment` WHERE workOrderId = ? AND status = 'informado' ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [order.id]);
@@ -90026,7 +90043,7 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
           fail3("NO_PAYMENT_PENDING");
         await conn.query("UPDATE `WorkOrderPayment` SET status = ?, ownerNote = ?, answeredAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [confirm ? "pagado" : "observado", note, payment.id]);
         await this.audit(conn, userId, confirm ? "care.payment.confirmed" : "care.payment.observed", "WorkOrder", String(order.id), { paymentId: payment.id, ...note ? { note } : {} });
-        const code5 = workOrderCode(number);
+        const code5 = workOrderCode(number2);
         const amount = formatUsd(Number(payment.amount));
         await this.notify(conn, String(order.shopUserId), `paymentanswer:${String(payment.id)}`, "care.payment", confirm ? `\u2705 El cliente confirm\xF3 el pago de ${amount} en ${code5}.` : `\u26A0\uFE0F El cliente observ\xF3 el cobro de ${amount} en ${code5}: ${note}. Rev\xEDsalo con \xE9l.`);
         const totals = await paymentTotals(conn, String(order.id));
@@ -90034,10 +90051,10 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
         return { userId, message: confirm ? `Confirmaste el pago de ${amount} en ${code5}. Saldo: ${formatUsd(Math.max(balance, 0))}.` : `Anotamos tu observaci\xF3n sobre el cobro de ${code5} y avisamos a ${order.shopName}.` };
       }
       /** Workshop: its open work orders, or one of them (with its pending answers), and the next step of each. */
-      async shopOrders(conn, userId, role, number) {
+      async shopOrders(conn, userId, role, number2) {
         const shop = await this.actingShop(conn, userId, role);
-        const orders = await rows14(conn, `SELECT w.id, w.number, w.status, w.total, w.intakeKm, w.intakeNotes, v.make, v.model, v.year, v.plate FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId WHERE w.shopId = ? AND ${number === null ? "w.status NOT IN ('cerrada','cancelada')" : "w.number = ?"} ORDER BY w.number DESC LIMIT 20`, number === null ? [shop.id] : [shop.id, number]);
-        if (number !== null && !orders.length)
+        const orders = await rows14(conn, `SELECT w.id, w.number, w.status, w.total, w.intakeKm, w.intakeNotes, v.make, v.model, v.year, v.plate FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId WHERE w.shopId = ? AND ${number2 === null ? "w.status NOT IN ('cerrada','cancelada')" : "w.number = ?"} ORDER BY w.number DESC LIMIT 20`, number2 === null ? [shop.id] : [shop.id, number2]);
+        if (number2 !== null && !orders.length)
           fail3("NOT_FOUND");
         if (!orders.length)
           return { userId, message: `${shop.name} no tiene \xF3rdenes abiertas.` };
@@ -90046,23 +90063,23 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
           const code5 = workOrderCode(Number(o.number));
           const pending = await rows14(conn, "SELECT id, kind FROM `WorkOrderChange` WHERE workOrderId = ? AND status = 'pending' ORDER BY createdAt", [o.id]);
           const waits = pending.map((c) => c.kind === "novedad" ? `novedad ${short2("N", String(c.id))} espera al due\xF1o` : "entrega espera al due\xF1o");
-          out.push(`\u2022 ${code5} \xB7 ${o.make} ${o.model} ${o.year}${o.plate ? ` (${o.plate})` : ""} \xB7 ${SHOP_ORDER_STATUS[String(o.status)] ?? String(o.status)}${Number(o.total) ? ` \xB7 ${formatUsd(Number(o.total))}` : ""}${waits.length ? ` \xB7 ${waits.join(", ")}` : ""}${pending.length ? "" : SHOP_ORDER_NEXT[String(o.status)]?.(code5) ?? ""}${number !== null && o.intakeNotes ? `
+          out.push(`\u2022 ${code5} \xB7 ${o.make} ${o.model} ${o.year}${o.plate ? ` (${o.plate})` : ""} \xB7 ${SHOP_ORDER_STATUS[String(o.status)] ?? String(o.status)}${Number(o.total) ? ` \xB7 ${formatUsd(Number(o.total))}` : ""}${waits.length ? ` \xB7 ${waits.join(", ")}` : ""}${pending.length ? "" : SHOP_ORDER_NEXT[String(o.status)]?.(code5) ?? ""}${number2 !== null && o.intakeNotes ? `
 ${String(o.intakeNotes)}` : ""}`);
         }
-        return { userId, message: number === null ? `\xD3rdenes abiertas de ${shop.name}:
+        return { userId, message: number2 === null ? `\xD3rdenes abiertas de ${shop.name}:
 ${out.join("\n")}` : out.join("\n") };
       }
       /** The workshop moves its own order: starts the approved work, waits for parts or resumes. The owner is told. */
-      async orderStage(conn, userId, role, number, stage) {
+      async orderStage(conn, userId, role, number2, stage) {
         const shop = await this.actingShop(conn, userId, role);
-        const order = await this.openOrder(conn, number, { shopId: shop.id });
+        const order = await this.openOrder(conn, number2, { shopId: shop.id });
         const from = stage === "iniciar" ? "aprobado" : stage === "esperando" ? "en_ejecucion" : "esperando_repuesto";
         if (order.status !== from)
           fail3("ORDER_STAGE_INVALID");
         const next = stage === "esperando" ? "esperando_repuesto" : "en_ejecucion";
         await conn.query("UPDATE `WorkOrder` SET status = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [next, order.id]);
         await this.audit(conn, userId, "care.order.stage", "WorkOrder", String(order.id), { from, to: next, by: shop.actor });
-        const code5 = workOrderCode(number);
+        const code5 = workOrderCode(number2);
         if (stage === "iniciar") {
           await this.repairStarted(conn, String(order.id));
           return { userId, message: `Orden ${code5} en reparaci\xF3n. Avisamos al due\xF1o. Si encuentras algo m\xE1s: Novedad ${code5} | qu\xE9 se encontr\xF3 | repuesto: \u2026; mano de obra: \u2026` };
@@ -90250,17 +90267,17 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revi
 ${lines.join("\n")}
 Gastos: Mis gastos` };
       }
-      async budgetAnswer(conn, userId, role, number, approve, reason, lines) {
+      async budgetAnswer(conn, userId, role, number2, approve, reason, lines) {
         if (role !== "dueno")
           fail3("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [order] = await rows14(conn, "SELECT w.id, w.status, w.total, w.ownerId, w.vehicleId, s.userId AS shopUserId FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " FOR UPDATE", [number, ...scope.args]);
+        const [order] = await rows14(conn, "SELECT w.id, w.status, w.total, w.ownerId, w.vehicleId, s.userId AS shopUserId FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " FOR UPDATE", [number2, ...scope.args]);
         if (!order)
           fail3("NOT_FOUND");
         if (order.status !== "presupuesto_enviado")
           fail3("BUDGET_NOT_PENDING");
         if (approve && lines?.length) {
-          const partial = await this.partialApproval(conn, userId, scope, order, number, lines);
+          const partial = await this.partialApproval(conn, userId, scope, order, number2, lines);
           if (partial)
             return partial;
         }
@@ -90269,7 +90286,7 @@ Gastos: Mis gastos` };
           fail3("REASON_REQUIRED");
         await conn.query("UPDATE `WorkOrder` SET status = ?, rejectionReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [approve ? "aprobado" : "rechazado", approve ? null : reason, order.id]);
         await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID15(), userId, order.id, JSON.stringify({ status: approve ? "aprobado" : "rechazado", channel: "whatsapp" }), approve ? "Presupuesto aprobado por el titular por WhatsApp" : String(reason)]);
-        const code5 = workOrderCode(number);
+        const code5 = workOrderCode(number2);
         const [decided] = await rows14(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'workorder.budget.decided'", [order.id]);
         await this.notify(conn, String(order.shopUserId), `budget:${String(order.id)}:${approve}:${Number(decided?.n ?? 1)}`, "care.budget", approve ? `\u2705 El cliente aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}. Puedes iniciar el trabajo.` : `\u274C El cliente no aprob\xF3 el presupuesto ${code5}: ${reason}.`);
         await this.notifyFleetTeam(conn, String(order.vehicleId), userId, `budget-team:${String(order.id)}:${approve}`, "care.budget", approve ? `aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}.` : `no aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}: ${reason}.`);
@@ -90280,7 +90297,7 @@ Gastos: Mis gastos` };
        * rechazados y guardados aparte, y el total de la orden pasa a ser el de los aprobados. Devuelve null si
        * eligió todos los renglones: entonces es una aprobación completa de siempre.
        */
-      async partialApproval(conn, userId, scope, order, number, lines) {
+      async partialApproval(conn, userId, scope, order, number2, lines) {
         const items = await rows14(conn, "SELECT id, kind, description, brand, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt, id", [order.id]);
         const wanted = [...new Set(lines)].sort((a, b) => a - b);
         if (!items.length || wanted.some((n3) => n3 < 1 || n3 > items.length))
@@ -90304,7 +90321,7 @@ Gastos: Mis gastos` };
         await conn.query("DELETE FROM `WorkOrderItem` WHERE workOrderId = ? AND id IN (?)", [order.id, dropped.map(({ item }) => item.id)]);
         await conn.query("UPDATE `WorkOrder` SET status = 'aprobado', rejectionReason = NULL, total = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [approvedTotal, order.id]);
         await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID15(), userId, order.id, JSON.stringify({ status: "aprobado", channel: "whatsapp", partial: true, approvedLines: wanted, rejectedLines: dropped.map((d) => d.n), quotedTotal, approvedTotal }), "Presupuesto aprobado en parte por el titular por WhatsApp"]);
-        const code5 = workOrderCode(number);
+        const code5 = workOrderCode(number2);
         const describe = (i) => `${i.kind === "mano_obra" ? "Mano de obra: " : ""}${String(i.description)}${i.brand ? ` (${String(i.brand)})` : ""} \u2014 ${formatUsd(subtotal(i))}`;
         const approvedText = items.flatMap((i, index) => wanted.includes(index + 1) ? [`${index + 1}. ${describe(i)}`] : []).join("\n");
         const rejectedText = dropped.map(({ item, n: n3 }) => `${n3}. ${describe(item)}`).join("\n");
@@ -90376,11 +90393,11 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
         return { userId, message: `Cita ${ref4} marcada como \xABNo asisti\xF3\xBB. Qued\xF3 libre el cupo del ${when11} y avisamos al due\xF1o. No se aplica ninguna penalizaci\xF3n.` };
       }
       /** Dueño o administrador del taller cancela una orden que no está cerrada ni entregada. Los pagos registrados no se revierten. */
-      async cancelOrder(conn, userId, role, number, reason) {
+      async cancelOrder(conn, userId, role, number2, reason) {
         const shop = await this.actingShop(conn, userId, role);
         if (!shop.isOwner && !shop.isAdmin)
           fail3("FORBIDDEN");
-        const order = await this.openOrder(conn, number, { shopId: shop.id });
+        const order = await this.openOrder(conn, number2, { shopId: shop.id });
         if (["cerrada", "cancelada"].includes(String(order.status)))
           fail3("ORDER_CLOSED");
         if (!reason)
@@ -90395,7 +90412,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
         await conn.query("UPDATE `WorkOrder` SET status = 'cancelada', cancelReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [reason, order.id]);
         await conn.query("UPDATE `WorkOrderChange` SET status = 'rejected', decidedBy = ?, reason = 'Orden cancelada por el taller', decidedAt = UTC_TIMESTAMP(3) WHERE workOrderId = ? AND status = 'pending'", [userId, order.id]);
         await this.audit(conn, userId, "care.order.cancelled", "WorkOrder", String(order.id), { from: order.status, reason, by: shop.actor, paidUsd: payments.paid, informedUsd: payments.informed });
-        const code5 = workOrderCode(number);
+        const code5 = workOrderCode(number2);
         const label5 = `${order.make} ${order.model} ${order.year}`;
         await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `ordercancelled:${String(order.id)}`, "care.order", `\u274C ${shop.name} cancel\xF3 tu orden ${code5} (${label5}): ${reason}. Si tienes dudas, habla con el taller.`);
         await this.notifyDriver(conn, String(order.vehicleId), `ordercancelled-driver:${String(order.id)}`, `\u274C ${shop.name} cancel\xF3 la orden ${code5} de ${label5}: ${reason}. Tu flota te avisar\xE1 los siguientes pasos.`);
@@ -90404,11 +90421,11 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
       }
       // ---------- garantía ----------
       /** Dueño: hasta cuándo vale la garantía de una orden cerrada, contada desde que aceptó la entrega, y cómo va su reclamo. */
-      async warrantyStatus(conn, userId, role, number) {
+      async warrantyStatus(conn, userId, role, number2) {
         if (role !== "dueno")
           fail3("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [order] = await rows14(conn, "SELECT w.id, w.status, w.warrantyDays, w.closedAt, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " LIMIT 1", [number, ...scope.args]);
+        const [order] = await rows14(conn, "SELECT w.id, w.status, w.warrantyDays, w.closedAt, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " LIMIT 1", [number2, ...scope.args]);
         if (!order)
           fail3("NOT_FOUND");
         if (order.status !== "cerrada")
@@ -90416,7 +90433,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
         const window3 = warrantyWindow(order.closedAt, order.warrantyDays);
         if (!window3)
           fail3("WARRANTY_NONE");
-        const code5 = workOrderCode(number);
+        const code5 = workOrderCode(number2);
         const [claim] = await rows14(conn, "SELECT g.id, g.status, g.shopNote, r.number AS reentryNumber FROM `WorkOrderWarranty` g LEFT JOIN `WorkOrder` r ON r.id = g.reentryOrderId WHERE g.workOrderId = ? ORDER BY g.createdAt DESC, g.id DESC LIMIT 1", [order.id]).catch((err) => {
           if (err.code === "ER_NO_SUCH_TABLE")
             return [];
@@ -90435,10 +90452,10 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
         return { userId, message: `\u{1F6E1}\uFE0F La garant\xEDa de ${code5} (${order.shopName}) vale hasta el ${longDay(window3.until)} (${left}).${claimLine}${claim && ["abierta", "aceptada"].includes(String(claim.status)) ? "" : ` Si algo falla con el trabajo: Reclamar garant\xEDa ${code5} | motivo`}` };
       }
       /** Dueño: reclama la garantía de una orden cerrada dentro de la vigencia. Un solo reclamo abierto por orden; el taller recibe el aviso. */
-      async warrantyClaim(conn, userId, role, number, reason) {
+      async warrantyClaim(conn, userId, role, number2, reason) {
         if (role !== "dueno")
           fail3("FORBIDDEN");
-        const order = await this.openOrder(conn, number, { scope: await decisionScope(conn, userId) });
+        const order = await this.openOrder(conn, number2, { scope: await decisionScope(conn, userId) });
         if (order.status !== "cerrada")
           fail3("WARRANTY_NOT_CLOSED");
         if (!order.fleetId) {
@@ -90467,7 +90484,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
           fail3("REASON_REQUIRED");
         const id3 = randomUUID15();
         const ref4 = warrantyRef(id3);
-        const code5 = workOrderCode(number);
+        const code5 = workOrderCode(number2);
         await conn.query("INSERT INTO `WorkOrderWarranty` (id, workOrderId, status, reason, requestedBy) VALUES (?, ?, 'abierta', ?, ?)", [id3, order.id, reason, userId]);
         await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.claimed', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID15(), userId, order.id, JSON.stringify({ claim: id3, until: window3.until }), reason]);
         const label5 = `${order.make} ${order.model} ${order.year}`;
@@ -90477,11 +90494,11 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
         return { userId, message: `Registramos tu reclamo de garant\xEDa de ${code5} (${ref4}) y avisamos a ${order.shopName}. Te respondemos aqu\xED cuando el taller decida.` };
       }
       /** Taller (dueño o administrador): acepta o rechaza el reclamo abierto. Al aceptar se abre la orden de reingreso, sin cobro. */
-      async warrantyAnswer(conn, userId, role, number, accept, note) {
+      async warrantyAnswer(conn, userId, role, number2, accept, note) {
         const shop = await this.actingShop(conn, userId, role);
         if (!shop.isOwner && !shop.isAdmin)
           fail3("FORBIDDEN");
-        const order = await this.openOrder(conn, number, { shopId: shop.id });
+        const order = await this.openOrder(conn, number2, { shopId: shop.id });
         let claim;
         try {
           [claim] = await rows14(conn, "SELECT id, reason FROM `WorkOrderWarranty` WHERE workOrderId = ? AND status = 'abierta' LIMIT 1 FOR UPDATE", [order.id]);
@@ -90494,7 +90511,7 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
           fail3("WARRANTY_NOT_PENDING");
         if (!accept && !note)
           fail3("REASON_REQUIRED");
-        const code5 = workOrderCode(number);
+        const code5 = workOrderCode(number2);
         const ref4 = warrantyRef(claim.id);
         const label5 = `${order.make} ${order.model} ${order.year}`;
         if (!accept) {
@@ -90675,8 +90692,8 @@ El taller no har\xE1 ning\xFAn trabajo con costo sin tu aprobaci\xF3n.`);
         const subtotal = Math.round(l.quantity * l.unitPrice * 100) / 100;
         return { subtotal, text: `\u2022 ${l.kind === "mano_obra" ? "Mano de obra: " : "Repuesto: "}${l.description}${l.brand ? ` (${l.brand})` : ""}${l.quality && l.quality !== "nuevo" ? ` \xB7 ${l.quality.toUpperCase()}` : ""} \u2014 ${l.quantity} \xD7 ${formatUsd(l.unitPrice)} = ${formatUsd(subtotal)}` };
       }
-      async openOrder(conn, number, where) {
-        const [order] = await rows14(conn, `SELECT w.*, v.make, v.model, v.year, v.currentKm, v.fleetId, s.name AS shopName, s.userId AS shopUserId FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId JOIN \`Shop\` s ON s.id = w.shopId WHERE w.number = ? AND ${where.shopId ? "w.shopId = ?" : where.scope.where("w")} FOR UPDATE`, where.shopId ? [number, where.shopId] : [number, ...where.scope.args]);
+      async openOrder(conn, number2, where) {
+        const [order] = await rows14(conn, `SELECT w.*, v.make, v.model, v.year, v.currentKm, v.fleetId, s.name AS shopName, s.userId AS shopUserId FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId JOIN \`Shop\` s ON s.id = w.shopId WHERE w.number = ? AND ${where.shopId ? "w.shopId = ?" : where.scope.where("w")} FOR UPDATE`, where.shopId ? [number2, where.shopId] : [number2, ...where.scope.args]);
         if (!order)
           fail3("NOT_FOUND");
         return order;
@@ -90747,16 +90764,16 @@ No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${ref4} \xB7 Recha
         await this.notifyFleetTeam(conn, String(change.vehicleId), userId, `finding-team:${String(change.id)}`, "care.finding", approve ? `aprob\xF3 la novedad ${ref4} de ${code5} por ${formatUsd(Number(change.total))}.` : `no aprob\xF3 la novedad ${ref4} de ${code5}: ${reason}.`);
         return { userId, message: approve ? `Aprobaste la novedad ${ref4} por ${formatUsd(Number(change.total))}; se sum\xF3 a la orden ${code5}.` : `Registramos que no apruebas la novedad ${ref4}. El taller no la har\xE1.` };
       }
-      async deliveryAnswer(conn, userId, role, number, accept, reason) {
+      async deliveryAnswer(conn, userId, role, number2, accept, reason) {
         if (role !== "dueno")
           fail3("FORBIDDEN");
-        const order = await this.openOrder(conn, number, { scope: await decisionScope(conn, userId) });
+        const order = await this.openOrder(conn, number2, { scope: await decisionScope(conn, userId) });
         const [change] = await rows14(conn, "SELECT id, description, payload FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status = 'pending' FOR UPDATE", [order.id]);
         if (!change)
           fail3("NOT_FOUND");
         if (!accept && !reason)
           fail3("REASON_REQUIRED");
-        const code5 = workOrderCode(number);
+        const code5 = workOrderCode(number2);
         await conn.query("UPDATE `WorkOrderChange` SET status = ?, decidedBy = ?, reason = ?, decidedAt = UTC_TIMESTAMP(3) WHERE id = ?", [accept ? "approved" : "rejected", userId, reason, change.id]);
         await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.delivery.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID15(), userId, order.id, JSON.stringify({ accepted: accept }), reason]);
         if (!accept) {
@@ -91173,10 +91190,10 @@ var init_local_marketplace_store = __esm({
       async inviteMessage(conn, requestId, kind, category, vehicle, zone) {
         const code5 = shortCode("S", requestId);
         const [setting] = await rows15(conn, "SELECT value FROM `AppSetting` WHERE name = ?", [WHATSAPP_NUMBER_KEY]);
-        const number = normalizeWhatsappNumber(String(setting?.value ?? process.env.WA_PUBLIC_NUMBER ?? ""));
+        const number2 = normalizeWhatsappNumber(String(setting?.value ?? process.env.WA_PUBLIC_NUMBER ?? ""));
         const business = kind === "servicio" ? "Taller" : "Almac\xE9n";
         const reply = `${business} ${code5}`;
-        const ours = number ? `https://wa.me/${number}?text=${encodeURIComponent(reply)}` : `el WhatsApp de AutoMantPro con el texto "${reply}"`;
+        const ours = number2 ? `https://wa.me/${number2}?text=${encodeURIComponent(reply)}` : `el WhatsApp de AutoMantPro con el texto "${reply}"`;
         const forward = `Hola, soy cliente y necesito ${kind === "servicio" ? "un servicio" : "un repuesto"} de ${category} para mi ${vehicle} en el sector ${zone}. Lo coordino por AutoMantPro: si quieres atenderme, escr\xEDbeles aqu\xED (el registro es gratis y tu primer cliente no tiene costo): ${ours}`;
         return `Solicitud ${code5} registrada. Todav\xEDa no tenemos ${kind === "servicio" ? "talleres" : "almacenes"} revisados de ${category} en tu sector. Si tienes uno de confianza, reenv\xEDale este mensaje desde tu WhatsApp:
 
@@ -91194,6 +91211,10 @@ Tu solicitud queda abierta 48 horas.`;
       }
       async notify(conn, recipient, dedup, kind, message2) {
         await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?)", [randomUUID16(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
+      }
+      /** Como notify, pero repetir el mismo aviso (misma clave) no falla ni lo duplica. */
+      async notifyOnce(conn, recipient, dedup, kind, message2) {
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID16(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
       }
       /** Turns WhatsApp short forms into the explicit commands; listings are answered directly. */
       async canonical(conn, userId, role, command) {
@@ -91467,17 +91488,22 @@ ${lines.join("\n")}${toConfirm ? "\nPara confirmar: Confirmar C-XXXXXX" : ""}` :
           if (request.kind !== "repuesto" || !byStore && !byOwner)
             fail4("FORBIDDEN");
           const code5 = shortCode("S", command.requestId);
-          if (request.status === "delivered")
+          const rating = `Calificar ${code5} | pieza correcta s\xED/no | calidad 1-5 | plazo 1-5 | precio 1-5 | atenci\xF3n 1-5 | comentario`;
+          if (request.status === "delivered") {
+            if (byOwner && chosen) {
+              await this.notifyOnce(conn, String(chosen.businessUserId), `received:${command.requestId}`, "local.delivered", `El cliente confirm\xF3 que recibi\xF3 el repuesto de ${code5}.`);
+              return { requestId: command.requestId, offerId: chosen.id, message: `Gracias: registramos que recibiste el repuesto de ${code5}. Califica al almac\xE9n: ${rating}` };
+            }
             return { requestId: command.requestId, offerId: chosen?.id, message: `Ya registramos la entrega de ${code5}.` };
+          }
           if (request.status !== "accepted" || chosen?.stockStatus !== "confirmed")
             fail4("STOCK_NOT_CONFIRMED");
           await conn.query("UPDATE `LocalRequest` SET status = 'delivered' WHERE id = ?", [command.requestId]);
-          const rating = `Calificar ${code5} | pieza correcta s\xED/no | calidad 1-5 | plazo 1-5 | precio 1-5 | atenci\xF3n 1-5 | comentario`;
           if (byStore) {
             await this.notify(conn, String(request.ownerId), `delivered:${command.requestId}`, "local.delivered", `El almac\xE9n ${chosen.businessName} marc\xF3 como entregado el repuesto de ${code5}. Si lo recibiste, calif\xEDcalo: ${rating}. Si no te lleg\xF3, escr\xEDbele al equipo.`);
             return { requestId: command.requestId, offerId: chosen.id, message: `Entrega de ${code5} registrada; se avis\xF3 al due\xF1o y le pedimos su calificaci\xF3n.` };
           }
-          await this.notify(conn, String(chosen.businessUserId), `delivered:${command.requestId}`, "local.delivered", `El cliente confirm\xF3 que recibi\xF3 el repuesto de ${code5}.`);
+          await this.notify(conn, String(chosen.businessUserId), `received:${command.requestId}`, "local.delivered", `El cliente confirm\xF3 que recibi\xF3 el repuesto de ${code5}.`);
           return { requestId: command.requestId, offerId: chosen.id, message: `Listo: registramos que recibiste el repuesto de ${code5}. Califica al almac\xE9n: ${rating}` };
         }
         if (command.action === "list") {
@@ -91529,9 +91555,9 @@ ${lines.join("\n")}${hint}` : `Todav\xEDa no hay ofertas para ${code5}.` };
             fail4("INVALID_PROPOSED_DATE");
           await conn.query("UPDATE `LocalOffer` SET status = 'offered', createdAt = UTC_TIMESTAMP(3), priceUsd = ?, durationMin = ?, proposedAt = ?, notes = ?, brand = ?, quality = ?, warrantyDays = ? WHERE id = ?", [command.priceUsd, command.durationMin, proposed, command.notes, request.kind === "repuesto" ? command.brand ?? null : null, request.kind === "repuesto" ? command.quality ?? null : null, request.kind === "repuesto" ? command.warrantyDays ?? null : null, mine.id]);
           const code5 = shortCode("S", command.requestId);
-          const number = positions(await rows15(conn, "SELECT id, status, createdAt FROM `LocalOffer` WHERE requestId = ?", [command.requestId])).get(String(mine.id));
+          const number2 = positions(await rows15(conn, "SELECT id, status, createdAt FROM `LocalOffer` WHERE requestId = ?", [command.requestId])).get(String(mine.id));
           const details = request.kind === "repuesto" ? `${command.brand ? ` Marca ${command.brand}.` : ""}${command.quality ? ` Calidad ${command.quality}.` : ""}${command.warrantyDays !== void 0 ? ` Garant\xEDa ${command.warrantyDays} d\xEDas.` : ""}` : "";
-          const message3 = `Oferta ${number} para ${code5}: ${mine.businessName} propone USD ${command.priceUsd.toFixed(2)}, ${command.durationMin} min, ${formatEcDateTime(proposed)}.${details} ${command.notes} Para aceptarla responde: Aceptar ${code5} ${number}.`;
+          const message3 = `Oferta ${number2} para ${code5}: ${mine.businessName} propone USD ${command.priceUsd.toFixed(2)}, ${command.durationMin} min, ${formatEcDateTime(proposed)}.${details} ${command.notes} Para aceptarla responde: Aceptar ${code5} ${number2}.`;
           await this.notify(conn, String(request.ownerId), `offer:${mine.id}`, "local.offer", message3);
           return { requestId: command.requestId, offerId: mine.id, message: `Oferta registrada para ${shortCode("S", command.requestId)}; se avis\xF3 al due\xF1o.` };
         }
@@ -92403,9 +92429,9 @@ ${await paymentInstructions(conn, sub, catalog)}`;
         await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'plan.requested', ?, NULL, 'Subscription', ?, ?, UTC_TIMESTAMP(3))", [randomUUID17(), userId, id3, JSON.stringify({ plan, period, units: price.units, total: price.total })]);
         return id3;
       }
-      async reportPayment(conn, userId, number, reference, note) {
-        const [sub] = await rows16(conn, "SELECT id, `number`, status FROM `Subscription` WHERE userId = ? AND `number` = ? LIMIT 1 FOR UPDATE", [userId, number]);
-        const code5 = subscriptionCode(number);
+      async reportPayment(conn, userId, number2, reference, note) {
+        const [sub] = await rows16(conn, "SELECT id, `number`, status FROM `Subscription` WHERE userId = ? AND `number` = ? LIMIT 1 FOR UPDATE", [userId, number2]);
+        const code5 = subscriptionCode(number2);
         if (!sub)
           return `No encuentro el contrato ${code5} en tu cuenta. Revisa el n\xFAmero en: Mi suscripci\xF3n`;
         if (sub.status === "activa")
@@ -92416,10 +92442,10 @@ ${await paymentInstructions(conn, sub, catalog)}`;
         await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'plan.payment.reported', ?, NULL, 'Subscription', ?, ?, UTC_TIMESTAMP(3))", [randomUUID17(), userId, sub.id, JSON.stringify({ reference })]);
         return `Recibido: comprobante ${reference} para ${code5}. Lo verificamos con el banco y te avisamos por aqu\xED cuando el plan quede activo. Si tienes la foto del comprobante, env\xEDala en este chat.`;
       }
-      async renew(conn, userId, number, catalog) {
-        const [sub] = await rows16(conn, "SELECT * FROM `Subscription` WHERE userId = ? AND `number` = ? LIMIT 1", [userId, number]);
+      async renew(conn, userId, number2, catalog) {
+        const [sub] = await rows16(conn, "SELECT * FROM `Subscription` WHERE userId = ? AND `number` = ? LIMIT 1", [userId, number2]);
         if (!sub || !["activa", "vencida"].includes(String(sub.status)))
-          return `No encuentro un plan para renovar con ${subscriptionCode(number)}. Revisa: Mi suscripci\xF3n`;
+          return `No encuentro un plan para renovar con ${subscriptionCode(number2)}. Revisa: Mi suscripci\xF3n`;
         const offer = findOfferByKey(String(sub.plan), catalog);
         if (!offer || isFreeOffer(offer))
           return "Ese plan ya no se ofrece. Para ver los vigentes escribe: Planes";
@@ -94234,6 +94260,7 @@ var init_error_messages = __esm({
       TARIFF_LIMIT: "Llegaste al m\xE1ximo de servicios del tarifario. Desactiva alguno que ya no ofrezcas.",
       INVALID_FITMENT: "Revisa la compatibilidad: marca de 2 a 60 caracteres, modelo opcional y a\xF1os entre 1950 y 2100, con el a\xF1o inicial menor o igual al final.",
       FITMENT_DUPLICATE: "Esa compatibilidad ya est\xE1 en el producto.",
+      INVALID_CSV: "Revisa el archivo: no se carg\xF3 ning\xFAn producto. Corrige las l\xEDneas indicadas y vuelve a subirlo.",
       FITMENT_LIMIT: "El producto lleg\xF3 al m\xE1ximo de compatibilidades. Quita alguna que ya no aplique.",
       INVALID_PRODUCT: "No entendimos el cambio del producto. Vuelve a intentarlo.",
       INVALID_PAGE: "Esa p\xE1gina del cat\xE1logo no existe. Vuelve a la primera."
@@ -94360,9 +94387,9 @@ var init_courses_store = __esm({
         await c.query("INSERT INTO `AppSetting` (name,value,updatedAt) VALUES (?,'0',UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE name=name", [key]);
         const [counter] = rowsOf(await c.query("SELECT value FROM `AppSetting` WHERE name=? FOR UPDATE", [key]));
         const [existing] = rowsOf(await c.query(sql[kind]));
-        const number = Math.max(Number(counter?.value ?? 0), Number(existing?.n ?? 0)) + 1;
-        await c.query("UPDATE `AppSetting` SET value=?,updatedAt=UTC_TIMESTAMP(3) WHERE name=?", [String(number), key]);
-        return number;
+        const number2 = Math.max(Number(counter?.value ?? 0), Number(existing?.n ?? 0)) + 1;
+        await c.query("UPDATE `AppSetting` SET value=?,updatedAt=UTC_TIMESTAMP(3) WHERE name=?", [String(number2), key]);
+        return number2;
       }
       async commissionValue(c) {
         if (this.settings)
@@ -95436,9 +95463,9 @@ Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrar
                   message2 = SELF_SERVICE_MESSAGES.eliminarAbierta(requestCode);
                 } else {
                   const [next] = await data(conn, "SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest` FOR UPDATE");
-                  const number = Number(next?.n ?? 1);
-                  await conn.query("INSERT INTO `DataRequest` (id, `number`, userId, kind, status, channel, detail, dueAt, createdBy, createdAt, updatedAt) VALUES (UUID(), ?, ?, 'eliminacion', 'recibida', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [number, userId, channel === "whatsapp" ? "whatsapp" : "web", "Pedida por la misma persona desde el chat: \xABEliminar mi cuenta\xBB.", dueDate(), userId]);
-                  requestCode = dataRequestCode(number);
+                  const number2 = Number(next?.n ?? 1);
+                  await conn.query("INSERT INTO `DataRequest` (id, `number`, userId, kind, status, channel, detail, dueAt, createdBy, createdAt, updatedAt) VALUES (UUID(), ?, ?, 'eliminacion', 'recibida', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [number2, userId, channel === "whatsapp" ? "whatsapp" : "web", "Pedida por la misma persona desde el chat: \xABEliminar mi cuenta\xBB.", dueDate(), userId]);
+                  requestCode = dataRequestCode(number2);
                   message2 = SELF_SERVICE_MESSAGES.eliminar(requestCode, RESPONSE_DAYS);
                   newRequest = true;
                 }
@@ -96521,9 +96548,9 @@ function sanitizeUntrusted(text12, maxLength = 4e3) {
 }
 function detectInjection(text12) {
   const raw = String(text12 ?? "");
-  const clean2 = raw.normalize("NFKC").replace(INVISIBLE, "");
-  const signals = INJECTION_PATTERNS.filter(([, re]) => re.test(clean2)).map(([name]) => name);
-  if (raw.length - clean2.length >= 5)
+  const clean3 = raw.normalize("NFKC").replace(INVISIBLE, "");
+  const signals = INJECTION_PATTERNS.filter(([, re]) => re.test(clean3)).map(([name]) => name);
+  if (raw.length - clean3.length >= 5)
     signals.push("caracteres-ocultos");
   return { suspicious: signals.length > 0, signals };
 }
@@ -97628,7 +97655,7 @@ async function entryRoutes(app2, options = {}) {
     const code5 = await uniqueVisitCode(options.codeTaken);
     const ref4 = sanitizeRef(query.ref);
     const profile = sanitizeProfile(query.perfil);
-    const number = await effectiveNumber(options);
+    const number2 = await effectiveNumber(options);
     if (!bot && options.onVisit && allowVisit(request.ip)) {
       Promise.resolve().then(() => options.onVisit?.(code5, ref4, profile)).catch(() => void 0);
     }
@@ -97640,10 +97667,10 @@ async function entryRoutes(app2, options = {}) {
         mode = "menu";
       }
     }
-    if (number && !bot && !("pagina" in query) && (mode === "directo" || profile)) {
-      return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number, code5, ref4, profile).wame, 302);
+    if (number2 && !bot && !("pagina" in query) && (mode === "directo" || profile)) {
+      return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number2, code5, ref4, profile).wame, 302);
     }
-    const html = renderEntryPage({ number, code: code5, ref: ref4, nonce: nonce2, menu: mode === "menu", marketing });
+    const html = renderEntryPage({ number: number2, code: code5, ref: ref4, nonce: nonce2, menu: mode === "menu", marketing });
     return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
   });
 }
@@ -98239,8 +98266,8 @@ var init_readiness = __esm({
 function normalizeRole(value2) {
   if (value2 === null || value2 === void 0 || value2 === "")
     return "admin";
-  const clean2 = String(value2).trim().toLowerCase();
-  return KNOWN.has(clean2) ? clean2 : "lectura";
+  const clean3 = String(value2).trim().toLowerCase();
+  return KNOWN.has(clean3) ? clean3 : "lectura";
 }
 function roleLabel(role) {
   return STAFF_ROLES.find((r) => r.key === role)?.label ?? role;
@@ -98252,12 +98279,12 @@ function can(role, capability) {
   return capabilitiesOf(normalizeRole(role)).includes(capability);
 }
 function requiredCapability(method, path) {
-  const clean2 = (path.split("?")[0] || "/").replace(/\/+$/, "") || "/";
-  if (EXEMPT2.some((r) => r.test(clean2)))
+  const clean3 = (path.split("?")[0] || "/").replace(/\/+$/, "") || "/";
+  if (EXEMPT2.some((r) => r.test(clean3)))
     return null;
   const verb = method.toUpperCase() === "POST" ? "POST" : "GET";
   for (const rule of RULES) {
-    if (rule.method === verb && rule.pattern.test(clean2))
+    if (rule.method === verb && rule.pattern.test(clean3))
       return rule.capability;
   }
   return verb === "POST" ? "settings" : "read";
@@ -98561,12 +98588,12 @@ function base32Encode(input) {
   return output;
 }
 function base32Decode(input) {
-  const clean2 = input.toUpperCase().replace(/[\s=]/g, "");
+  const clean3 = input.toUpperCase().replace(/[\s=]/g, "");
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
   let bits = 0;
   let value2 = 0;
   const output = [];
-  for (const char of clean2) {
+  for (const char of clean3) {
     const index = alphabet.indexOf(char);
     if (index < 0)
       throw new Error("Invalid base32 secret");
@@ -107272,8 +107299,8 @@ var init_workflow2 = __esm({
       bloqueada: ["activa"]
     };
     RELATION_OPEN_STATUSES = ["propuesta", "activa", "en_disputa"];
-    relationCode = (number) => `VN-${String(number).padStart(5, "0")}`;
-    disputeCode = (number) => `DS-${String(number).padStart(4, "0")}`;
+    relationCode = (number2) => `VN-${String(number2).padStart(5, "0")}`;
+    disputeCode = (number2) => `DS-${String(number2).padStart(4, "0")}`;
     SANCTION_LEVELS = [
       { key: "advertencia", label: "Advertencia", step: 1, defaultDays: null, blocksSearch: false, blocksService: false, description: "Queda el aviso y el motivo; no limita nada todav\xEDa." },
       { key: "suspension_busquedas", label: "Suspensi\xF3n de b\xFAsquedas", step: 2, defaultDays: 15, blocksSearch: true, blocksService: false, description: "Deja de aparecer en las b\xFAsquedas de talleres o almacenes." },
@@ -108675,8 +108702,8 @@ function cell2(value2) {
   if (value2 === null || value2 === void 0)
     return "";
   const text12 = value2 instanceof Date ? value2.toISOString() : String(value2);
-  const clean2 = text12.replace(/\r?\n/g, " ").replace(/\t/g, " ");
-  const safe = /^[=+\-@]/.test(clean2) ? `'${clean2}` : clean2;
+  const clean3 = text12.replace(/\r?\n/g, " ").replace(/\t/g, " ");
+  const safe = /^[=+\-@]/.test(clean3) ? `'${clean3}` : clean3;
   return `"${safe.replace(/"/g, '""')}"`;
 }
 function toCsv(columns, rows49) {
@@ -109942,7 +109969,7 @@ var init_workflow3 = __esm({
       descartado: "No elegido"
     };
     MAX_SHOPS_PER_REQUEST = 5;
-    serviceRequestCode = (number) => `SS-${String(number).padStart(4, "0")}`;
+    serviceRequestCode = (number2) => `SS-${String(number2).padStart(4, "0")}`;
     CATEGORIES2 = serviceTaxonomy.categories.map((c) => ({ id: c.id, name: c.name }));
     normalize3 = (value2) => value2.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
   }
@@ -110841,8 +110868,8 @@ var init_relation_store = __esm({
             return String(existing.id);
           const created = rows45(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
-          const number = await this.nextNumber(conn, "Relationship");
-          await conn.query("INSERT INTO `Relationship` (id, `number`, kind, status, channel, originType, originId, subject, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, 'activa', 'mediado', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, number, input.kind, input.originType, input.originId, input.subject, input.createdBy]);
+          const number2 = await this.nextNumber(conn, "Relationship");
+          await conn.query("INSERT INTO `Relationship` (id, `number`, kind, status, channel, originType, originId, subject, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, 'activa', 'mediado', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, number2, input.kind, input.originType, input.originId, input.subject, input.createdBy]);
           for (const party of input.parties) {
             await conn.query("INSERT INTO `RelationshipParty` (id, relationshipId, userId, role, createdAt) VALUES (UUID(), ?, ?, ?, CURRENT_TIMESTAMP(3))", [id3, party.userId, party.role]);
           }
@@ -110938,8 +110965,8 @@ var init_relation_store = __esm({
         return this.run(async (conn) => {
           const created = rows45(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
-          const number = await this.nextNumber(conn, "Dispute");
-          await conn.query("INSERT INTO `Dispute` (id, `number`, relationshipId, openedBy, claimantUserId, againstUserId, reason, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, number, input.relationshipId, input.openedBy, input.claimantUserId, input.againstUserId, input.reason]);
+          const number2 = await this.nextNumber(conn, "Dispute");
+          await conn.query("INSERT INTO `Dispute` (id, `number`, relationshipId, openedBy, claimantUserId, againstUserId, reason, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, number2, input.relationshipId, input.openedBy, input.claimantUserId, input.againstUserId, input.reason]);
           if (input.relationshipId) {
             await conn.query("UPDATE `Relationship` SET status = 'en_disputa', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND status IN ('propuesta', 'activa')", [input.relationshipId]);
           }
@@ -111408,16 +111435,16 @@ function registerSettingsRoutes(app2, deps) {
       await deps.audit("admin.settings.whatsapp", account.id, `N\xFAmero p\xFAblico de WhatsApp: ${before ?? "\u2014"} \u2192 secreto de la plataforma`);
       return render(request, reply, session, { kind: "ok", text: "N\xFAmero quitado. La p\xE1gina usa el secreto de GoDaddy." });
     }
-    const number = normalizeWhatsappNumber(body.number);
-    if (!number) {
+    const number2 = normalizeWhatsappNumber(body.number);
+    if (!number2) {
       return render(request, reply, session, { kind: "error", text: "N\xFAmero no v\xE1lido. Un celular de Ecuador tiene 9 d\xEDgitos despu\xE9s de +593 (por ejemplo +593 99 123 4567 o 099 123 4567). Revisa que no falte ning\xFAn d\xEDgito." }, 400);
     }
-    await deps.settings.set(WHATSAPP_NUMBER_KEY, number, account.id);
+    await deps.settings.set(WHATSAPP_NUMBER_KEY, number2, account.id);
     deps.onChanged();
-    await deps.audit("admin.settings.whatsapp", account.id, `N\xFAmero p\xFAblico de WhatsApp: ${before ?? "\u2014"} \u2192 ${number}`);
+    await deps.audit("admin.settings.whatsapp", account.id, `N\xFAmero p\xFAblico de WhatsApp: ${before ?? "\u2014"} \u2192 ${number2}`);
     return render(request, reply, session, {
       kind: "ok",
-      text: `N\xFAmero actualizado a ${formatWhatsappNumber(number)}. La p\xE1gina de inicio ya lo usa.`
+      text: `N\xFAmero actualizado a ${formatWhatsappNumber(number2)}. La p\xE1gina de inicio ya lo usa.`
     });
   });
   app2.post("/settings/platform", async (request, reply) => {
@@ -112265,7 +112292,7 @@ var init_workflow5 = __esm({
       ["otro", "Otro"]
     ];
     MAX_STORES_PER_REQUEST = 5;
-    quoteRequestCode = (number) => `CQ-${String(number).padStart(5, "0")}`;
+    quoteRequestCode = (number2) => `CQ-${String(number2).padStart(5, "0")}`;
     round = (value2) => Math.round(value2 * 100) / 100;
     partText = (r) => `${r.partName}${r.quantity > 1 ? ` x${r.quantity}` : ""}`;
   }
@@ -114912,13 +114939,13 @@ ${redactPii(sanitizeUntrusted(instruction, 300))}`);
   return parts.join("\n\n");
 }
 function parseDraft(text12) {
-  const clean2 = text12.trim();
-  const match = /RESPUESTA:\s*([\s\S]*?)(?:\n\s*NOTA PARA EL OPERADOR:\s*([\s\S]*))?$/i.exec(clean2);
+  const clean3 = text12.trim();
+  const match = /RESPUESTA:\s*([\s\S]*?)(?:\n\s*NOTA PARA EL OPERADOR:\s*([\s\S]*))?$/i.exec(clean3);
   if (!match)
-    return { reply: clean2.slice(0, 1500), note: null };
+    return { reply: clean3.slice(0, 1500), note: null };
   const reply = (match[1] ?? "").trim().slice(0, 1500);
   const note = (match[2] ?? "").trim();
-  return { reply: reply || clean2.slice(0, 1500), note: note && !/^«?ninguna»?\.?$/i.test(note) ? note.slice(0, 400) : null };
+  return { reply: reply || clean3.slice(0, 1500), note: note && !/^«?ninguna»?\.?$/i.test(note) ? note.slice(0, 400) : null };
 }
 function applyName(reply, firstName2) {
   if (firstName2)
@@ -118668,7 +118695,16 @@ function catalogCard(){
   if(data.updatePending)intro.textContent+=' Para desactivar productos y cargar compatibilidades, el equipo debe activar esta funci\xF3n.';
   for(const it of data.items)list.append(productRow(it,()=>load(page)));
   if(data.page>1||data.hasMore)pager.append(data.page>1?btn('Anteriores','ghost',()=>load(page-1)):null,data.hasMore?btn('Ver m\xE1s productos','ghost',()=>load(page+1)):null,h('span',{class:'note',text:'P\xE1gina '+data.page+' de '+Math.max(1,Math.ceil(data.total/data.pageSize))}));};
- c.append(productAddForm(()=>load(1)));void load(1);return c;}
+ c.append(productAddForm(()=>load(1)),productImportForm(()=>load(1)));void load(1);return c;}
+function productImportForm(done){
+ const file=h('input',{type:'file',accept:'.csv,text/csv,text/plain','aria-label':'Archivo CSV del cat\xE1logo',required:true});
+ const send=h('button',{class:'ghost full'},'Cargar archivo');
+ const f=h('form',{class:'stack'},h('p',{class:'sub',text:'Cargar varios productos con un archivo CSV'}),h('p',{class:'note',text:'Columnas en este orden: nombre, precio, stock, marca, modelo, a\xF1o desde, a\xF1o hasta. Solo nombre y precio son obligatorios. Sirve el CSV que guarda Excel. Si un producto ya existe con el mismo nombre, se actualizan su precio y su stock. Si hay un error, no se carga nada y te decimos en qu\xE9 l\xEDnea.'}),file,send);
+ f.onsubmit=async e=>{e.preventDefault();const picked=file.files&&file.files[0];if(!picked){status('Elige el archivo CSV.');return;}if(picked.size>200000){status('El archivo es muy grande. Divide el cat\xE1logo en partes de hasta 500 productos.');return;}
+  send.disabled=true;
+  try{const csv=await picked.text();const r=await api('/pilot/catalog/import',{method:'POST',body:JSON.stringify({csv})});f.reset();status('Carga lista: '+r.created+(r.created===1?' producto nuevo, ':' productos nuevos, ')+r.updated+(r.updated===1?' actualizado y ':' actualizados y ')+r.fitments+(r.fitments===1?' compatibilidad agregada.':' compatibilidades agregadas.'));await done();}
+  catch(err){status(err.message);}finally{send.disabled=false;}};
+ return f;}
 function productAddForm(done){
  const name=inp('Nombre del producto',{required:true,maxlength:'191'});
  const price=inp('Precio en USD',{type:'number',required:true,min:'0.01',max:'99999999',step:'0.01',inputmode:'decimal'});
@@ -118788,8 +118824,8 @@ function pickupBody(f){const x=pickupFields.get(f);return x&&x.on.checked&&x.not
 
 // packages/api/dist/interfaces/pilot-page.js
 var CODE_REQUEST_TEXT = "Quiero mi c\xF3digo de acceso a AutoMantPro";
-var codeLink = (number, id3) => number ? `<a id="${id3}" class="cod-wa" href="https://wa.me/${number}?text=${encodeURIComponent(CODE_REQUEST_TEXT)}" target="_blank" rel="noopener">Pedir c\xF3digo por WhatsApp</a><p>Se abre WhatsApp con el mensaje listo. Env\xEDalo y te respondemos con tu c\xF3digo de 6 d\xEDgitos.</p>` : "";
-function renderPilotPage(nonce2, number = null) {
+var codeLink = (number2, id3) => number2 ? `<a id="${id3}" class="cod-wa" href="https://wa.me/${number2}?text=${encodeURIComponent(CODE_REQUEST_TEXT)}" target="_blank" rel="noopener">Pedir c\xF3digo por WhatsApp</a><p>Se abre WhatsApp con el mensaje listo. Env\xEDalo y te respondemos con tu c\xF3digo de 6 d\xEDgitos.</p>` : "";
+function renderPilotPage(nonce2, number2 = null) {
   return `<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#343a40"><title>Mi cuenta \xB7 AutoMantPro</title>
 <style nonce="${nonce2}">${THEME_TOKENS}
 #resultBox{position:fixed;left:16px;right:16px;bottom:16px;max-width:560px;margin:0 auto;max-height:60vh;overflow:auto;background:var(--c-surface);border:1px solid var(--c-line);border-radius:12px;padding:16px;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.25)}
@@ -118813,7 +118849,7 @@ details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;
 .hidden{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}main a.cod-wa{display:flex;align-items:center;justify-content:center;min-height:44px;margin:8px 0;background:var(--c-accent);color:var(--c-on-accent)!important;border-radius:3px;text-decoration:none;font-weight:600}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}${SCAN_STYLES}${SISTEMA}${ESCANER_STYLES}</style>
 ${MENU_MARKUP}
 <main>${cabeceraSitio()}<h1>Mi cuenta</h1><p>Entra o crea tu cuenta gratis. Tus veh\xEDculos, citas y avisos est\xE1n aqu\xED.</p>
-<section id="login"><h2 id="entrar">Entrar con tu cuenta</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true">Con c\xF3digo por WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">Con contrase\xF1a</button></nav>${number ? `<div id="codeRequestForm">${codeLink(number, "codeLink")}</div>` : `<form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form>`}<form id="codeVerifyForm"${number ? "" : ' class="hidden"'}><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><details id="recuperar"><summary>Perd\xED mi n\xFAmero</summary><form id="recoveryForm"><p>Comprueba tu n\xFAmero nuevo. Revisaremos tu solicitud y te contactaremos por ese n\xFAmero para confirmar tu identidad.</p><label for="recOld">N\xFAmero anterior</label><input id="recOld" inputmode="tel" required minlength="8" maxlength="20"><label for="recNew">N\xFAmero nuevo</label><input id="recNew" inputmode="tel" required minlength="8" maxlength="20"><button id="recSend" type="button">Enviarme el c\xF3digo</button><label for="recCode">C\xF3digo de WhatsApp</label><input id="recCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required><label for="recName">Tu nombre completo</label><input id="recName" required minlength="3" maxlength="120"><label for="recDetail">Cu\xE9ntanos qu\xE9 pas\xF3</label><textarea id="recDetail" required minlength="10" maxlength="500"></textarea><button>Enviar solicitud</button></form></details><form id="loginForm" class="hidden"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label><h3 id="crear">Crear cuenta</h3><form id="signupForm"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><div id="signupFields"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Continuar</button></form><form id="signupVerifyForm" class="hidden">${codeLink(number, "signupCodeLink")}<label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></section>
+<section id="login"><h2 id="entrar">Entrar con tu cuenta</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true">Con c\xF3digo por WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">Con contrase\xF1a</button></nav>${number2 ? `<div id="codeRequestForm">${codeLink(number2, "codeLink")}</div>` : `<form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form>`}<form id="codeVerifyForm"${number2 ? "" : ' class="hidden"'}><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><details id="recuperar"><summary>Perd\xED mi n\xFAmero</summary><form id="recoveryForm"><p>Comprueba tu n\xFAmero nuevo. Revisaremos tu solicitud y te contactaremos por ese n\xFAmero para confirmar tu identidad.</p><label for="recOld">N\xFAmero anterior</label><input id="recOld" inputmode="tel" required minlength="8" maxlength="20"><label for="recNew">N\xFAmero nuevo</label><input id="recNew" inputmode="tel" required minlength="8" maxlength="20"><button id="recSend" type="button">Enviarme el c\xF3digo</button><label for="recCode">C\xF3digo de WhatsApp</label><input id="recCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required><label for="recName">Tu nombre completo</label><input id="recName" required minlength="3" maxlength="120"><label for="recDetail">Cu\xE9ntanos qu\xE9 pas\xF3</label><textarea id="recDetail" required minlength="10" maxlength="500"></textarea><button>Enviar solicitud</button></form></details><form id="loginForm" class="hidden"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label><h3 id="crear">Crear cuenta</h3><form id="signupForm"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><div id="signupFields"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Continuar</button></form><form id="signupVerifyForm" class="hidden">${codeLink(number2, "signupCodeLink")}<label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></section>
 <div id="chat" class="hidden"><div class="row2"><h2 id="who">Mi cuenta</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div><section id="offlineStatus" hidden><span id="offlineCount"></span><button id="syncNow" type="button">Subir ahora</button><div id="failedOutbox"></div></section>${PANEL_MARKUP}<section id="studentCourses"><h2>Mis cursos</h2><div id="courseEnrollment"></div><div id="studentCourseItems"></div></section><section id="composer"><h2>Mensaje a AutoMantPro</h2><form id="sendForm"><label for="message">Tu mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
 <section id="expertCourses" class="hidden"><h2>Mis cursos como experto</h2><p id="expertStatus"></p><div id="expertItems"></div><form id="expertCreate"><label>T\xEDtulo <input name="titulo" required maxlength="191"></label><label>Slug <input name="slug" required maxlength="191"></label><label>Especialidad <input name="especialidad" required maxlength="100"></label><label>Nivel <input name="nivel" required maxlength="40"></label><label>Horas <input name="horas" type="number" min="1" required></label><label>Precio USD (vac\xEDo = gratis) <input name="precioUsd" type="number" min="0" step="0.01"></label><label>Nota m\xEDnima <input name="notaMinima" type="number" min="0" max="100" value="70"></label><button>Crear curso</button></form><form id="expertLesson"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>T\xEDtulo de lecci\xF3n <input name="titulo" required maxlength="191"></label><label>Video URL HTTPS <input name="videoUrl" type="url"></label><label>PDF URL HTTPS <input name="pdfUrl" type="url"></label><label>Texto (m\xE1ximo 900 caracteres) <textarea name="texto" maxlength="900"></textarea></label><button>Guardar lecci\xF3n</button></form><form id="expertQuestion"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>Pregunta <input name="enunciado" required maxlength="2000"></label><label>Opci\xF3n A <input name="optionA" required></label><label>Opci\xF3n B <input name="optionB" required></label><label>Respuesta correcta <select name="correcta"><option>A</option><option>B</option></select></label><button>Guardar pregunta</button></form></section>
 <details id="requestTools"><summary>Buscar un servicio o repuesto</summary><form id="requestForm"><label for="vehicle">Veh\xEDculo</label><select id="vehicle" required></select><button type="button" id="loadVehicles">Cargar mis veh\xEDculos</button><label for="kind">Necesidad</label><select id="kind"><option value="servicio">Servicio</option><option value="repuesto">Repuesto</option></select><label for="category">Categor\xEDa registrada (por ejemplo frenos)</label><input id="category" required maxlength="120"><label for="city">Ciudad</label><input id="city" required maxlength="120"><label for="zone">Sector</label><input id="zone" required maxlength="120"><label for="description">Descripci\xF3n</label><input id="description" required minlength="5" maxlength="1000"><button>Enviar solicitud</button></form></details>
@@ -119262,8 +119298,8 @@ async function assertShopOpen(conn, shopId, date2, time3) {
 async function resolvePickup(conn, shopId, note) {
   if (note === void 0)
     return null;
-  const clean2 = note.replace(/\s+/g, " ").trim();
-  if (clean2.length < 3 || (clean2.match(/\d/g) ?? []).length > 7)
+  const clean3 = note.replace(/\s+/g, " ").trim();
+  if (clean3.length < 3 || (clean3.match(/\d/g) ?? []).length > 7)
     fail12("INVALID_PICKUP_NOTE");
   const [shop] = await rows25(conn, "SELECT offersPickup FROM `Shop` WHERE id = ?", [shopId]).catch((err) => {
     if (missing(err))
@@ -119272,7 +119308,7 @@ async function resolvePickup(conn, shopId, note) {
   });
   if (Number(shop?.offersPickup ?? 0) !== 1)
     fail12("PICKUP_NOT_OFFERED");
-  return clean2;
+  return clean3;
 }
 var pickupText = (note) => note ? `
 \u{1F697} Pidi\xF3 retiro y entrega a domicilio. Sector o referencia: ${note}.` : "";
@@ -119823,6 +119859,56 @@ var CatalogStore = class {
       return { id: id3, make, model, yearFrom, yearTo };
     });
   }
+  /**
+   * Carga por CSV, todo o nada: crea los productos nuevos y actualiza precio y stock de los que ya
+   * existen con el mismo nombre (sin distinguir mayúsculas). Si la fila trae marca, agrega esa
+   * compatibilidad cuando no exista. Un producto desactivado sigue desactivado.
+   */
+  importCsv(userId, products) {
+    return this.run(async (conn) => {
+      let open = false;
+      try {
+        const store = await this.myStore(conn, userId);
+        await conn.query("START TRANSACTION");
+        open = true;
+        const existing = await rows27(conn, "SELECT id, name FROM `Product` WHERE storeId = ? FOR UPDATE", [store.id]);
+        const byName = new Map(existing.map((p) => [String(p.name).toLowerCase(), String(p.id)]));
+        const summary = { created: 0, updated: 0, fitments: 0 };
+        for (const item of products) {
+          let productId = byName.get(item.name.toLowerCase());
+          if (productId) {
+            await conn.query("UPDATE `Product` SET price = ?, stock = COALESCE(?, stock), updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [item.price, item.stock, productId]);
+            summary.updated++;
+          } else {
+            productId = randomUUID29();
+            await conn.query("INSERT INTO `Product` (id, storeId, name, price, stock, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [productId, store.id, item.name, item.price, item.stock ?? 0]);
+            byName.set(item.name.toLowerCase(), productId);
+            summary.created++;
+          }
+          if (!item.make)
+            continue;
+          const fits2 = await rows27(conn, "SELECT make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId = ?", [productId]);
+          const same = fits2.some((f) => String(f.make).toLowerCase() === item.make.toLowerCase() && String(f.model ?? "").toLowerCase() === (item.model ?? "").toLowerCase() && (f.yearFrom ?? null) === item.yearFrom && (f.yearTo ?? null) === item.yearTo);
+          if (same)
+            continue;
+          if (fits2.length >= FITMENT_LIMIT)
+            fail14("FITMENT_LIMIT");
+          await conn.query("INSERT INTO `ProductFitment` (id, productId, make, model, yearFrom, yearTo) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID29(), productId, item.make, item.model, item.yearFrom, item.yearTo]);
+          summary.fitments++;
+        }
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'catalog.import', ?, 'almacen', 'Store', ?, ?, UTC_TIMESTAMP(3))", [randomUUID29(), userId, store.id, JSON.stringify(summary)]);
+        await conn.query("COMMIT");
+        open = false;
+        return summary;
+      } catch (err) {
+        if (open)
+          await conn.query("ROLLBACK").catch(() => void 0);
+        if (missing2(err))
+          fail14("FEATURE_UPDATE_PENDING");
+        throw err;
+      }
+    });
+  }
   removeFitment(userId, productId, fitmentId) {
     return this.write(userId, productId, async (conn) => {
       const [fitment] = await rows27(conn, "SELECT id, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE id = ? AND productId = ? FOR UPDATE", [fitmentId, productId]);
@@ -119834,6 +119920,95 @@ var CatalogStore = class {
     });
   }
 };
+
+// packages/api/dist/infrastructure/messaging/catalog-csv.js
+var CSV_MAX_ROWS = 500;
+var CSV_MAX_CHARS = 2e5;
+var clean2 = (v) => v.replace(/\s+/g, " ").trim();
+function splitLine(line, sep) {
+  const out = [];
+  let cur = "", quoted2 = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (quoted2) {
+      if (ch === '"' && line[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else if (ch === '"')
+        quoted2 = false;
+      else
+        cur += ch;
+    } else if (ch === '"')
+      quoted2 = true;
+    else if (ch === sep) {
+      out.push(cur);
+      cur = "";
+    } else
+      cur += ch;
+  }
+  out.push(cur);
+  return out;
+}
+function number(raw, sep) {
+  let t = raw.trim().replace(/^\$/, "").replace(/\s/g, "");
+  if (t === "")
+    return null;
+  if (sep === ";")
+    t = t.replace(/\.(?=\d{3}(\D|$))/g, "").replace(",", ".");
+  if (!/^-?\d+(\.\d+)?$/.test(t))
+    return NaN;
+  return Number(t);
+}
+function parseCatalogCsv(text12) {
+  const problems = [];
+  if (text12.length > CSV_MAX_CHARS)
+    return { rows: [], problems: [{ line: 0, reason: "El archivo es muy grande. Divide el cat\xE1logo en partes de hasta 500 productos." }] };
+  const lines = text12.replace(/^﻿/, "").split(/\r?\n/);
+  const firstData = lines.find((l) => l.trim() !== "") ?? "";
+  const sep = (firstData.match(/;/g)?.length ?? 0) >= (firstData.match(/,/g)?.length ?? 0) && firstData.includes(";") ? ";" : ",";
+  const rows49 = [];
+  const seen = /* @__PURE__ */ new Map();
+  let headerChecked = false;
+  lines.forEach((raw, index) => {
+    const line = index + 1;
+    if (raw.trim() === "")
+      return;
+    const cells = splitLine(raw, sep).map(clean2);
+    if (!headerChecked) {
+      headerChecked = true;
+      if (Number.isNaN(number(cells[1] ?? "", sep)))
+        return;
+    }
+    const [name = "", priceRaw = "", stockRaw = "", make = "", model = "", fromRaw = "", toRaw = ""] = cells;
+    const price = number(priceRaw, sep), stock = number(stockRaw, sep), yearFrom = number(fromRaw, sep), yearTo = number(toRaw, sep);
+    const bad = (reason) => problems.push({ line, reason });
+    if (name.length < 2 || name.length > 191)
+      return void bad("El nombre debe tener de 2 a 191 caracteres.");
+    if (price === null || Number.isNaN(price) || price <= 0 || price > 99999999 || Math.abs(price * 100 - Math.round(price * 100)) > 1e-6)
+      return void bad("El precio debe ser mayor que cero, con hasta dos decimales.");
+    if (stock !== null && (Number.isNaN(stock) || !Number.isInteger(stock) || stock < 0 || stock > 1e6))
+      return void bad("El stock debe ser un n\xFAmero entero, desde cero.");
+    const year3 = (y) => y === null || Number.isInteger(y) && y >= 1950 && y <= 2100;
+    if (!year3(yearFrom) || !year3(yearTo) || yearFrom !== null && yearTo !== null && yearFrom > yearTo)
+      return void bad("Los a\xF1os van de 1950 a 2100 y el inicial no puede ser mayor que el final.");
+    if (!make && (model || yearFrom !== null || yearTo !== null))
+      return void bad("Para indicar modelo o a\xF1os, escribe tambi\xE9n la marca.");
+    if (make && (make.length < 2 || make.length > 60))
+      return void bad("La marca debe tener de 2 a 60 caracteres.");
+    if (model.length > 60)
+      return void bad("El modelo puede tener hasta 60 caracteres.");
+    const key = name.toLowerCase();
+    if (seen.has(key))
+      return void bad(`El producto ya aparece en la l\xEDnea ${seen.get(key)}. Cada producto va una sola vez.`);
+    seen.set(key, line);
+    rows49.push({ line, name, price, stock, make: make || null, model: model || null, yearFrom, yearTo });
+  });
+  if (rows49.length > CSV_MAX_ROWS)
+    problems.push({ line: 0, reason: `M\xE1ximo ${CSV_MAX_ROWS} productos por carga. Divide el archivo.` });
+  if (!rows49.length && !problems.length)
+    problems.push({ line: 0, reason: "El archivo no tiene productos." });
+  return { rows: rows49, problems };
+}
 
 // packages/api/dist/interfaces/catalog-tariff.routes.js
 init_error_messages();
@@ -119862,6 +120037,22 @@ function registerCatalogTariffRoutes(app2, deps) {
       return invalid2(reply, "INVALID_PAGE");
     try {
       return { data: await catalog.list(request.userId, query.data.page), error: null };
+    } catch (err) {
+      return error(err, reply);
+    }
+  });
+  app2.post("/pilot/catalog/import", guard, async (request, reply) => {
+    const body = external_exports.object({ csv: external_exports.string().max(CSV_MAX_CHARS + 1) }).strict().safeParse(request.body);
+    if (!body.success)
+      return invalid2(reply, "INVALID_CSV");
+    const parsed = parseCatalogCsv(body.data.csv);
+    if (parsed.problems.length) {
+      const shown3 = parsed.problems.slice(0, 5).map((p) => (p.line ? `L\xEDnea ${p.line}: ` : "") + p.reason).join(" ");
+      const more = parsed.problems.length > 5 ? ` Y ${parsed.problems.length - 5} m\xE1s.` : "";
+      return reply.code(422).send({ data: null, error: { code: "INVALID_CSV", message: `${chatErrorMessage("INVALID_CSV")} ${shown3}${more}`, problems: parsed.problems.slice(0, 20), totalProblems: parsed.problems.length } });
+    }
+    try {
+      return { data: await catalog.importCsv(request.userId, parsed.rows), error: null };
     } catch (err) {
       return error(err, reply);
     }
@@ -119986,26 +120177,26 @@ var whenTableMissing6 = (value2) => (err) => {
 };
 var serviceName3 = (id3) => serviceTaxonomy.categories.flatMap((c) => c.subservices).find((s) => s.id === id3)?.name ?? id3;
 var iso2 = (value2) => value2 ? new Date(value2).toISOString() : null;
-async function receiptOrder(conn, userId, role, number) {
+async function receiptOrder(conn, userId, role, number2) {
   const select2 = "SELECT w.*, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, s.ruc AS shopRuc, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.number = ?";
   if (role === "taller") {
     const shop = await new VehicleCareStore().actingShop(conn, userId, role);
-    const [order] = await rows28(conn, `${select2} AND w.shopId = ?`, [number, shop.id]);
+    const [order] = await rows28(conn, `${select2} AND w.shopId = ?`, [number2, shop.id]);
     if (order)
       return { order, viewer: "taller" };
   } else if (role === "dueno") {
     const scope = await decisionScope(conn, userId);
-    const [order] = await rows28(conn, `${select2} AND ${scope.where("w")}`, [number, ...scope.args]);
+    const [order] = await rows28(conn, `${select2} AND ${scope.where("w")}`, [number2, ...scope.args]);
     if (order)
       return { order, viewer: "dueno" };
-    const [assigned] = await rows28(conn, `${select2} AND EXISTS (SELECT 1 FROM \`FleetAssignment\` a JOIN \`FleetMember\` m ON m.id = a.memberId WHERE a.vehicleId = w.vehicleId AND m.userId = ? AND m.status = 'active' AND a.endsAt IS NULL)`, [number, userId]);
+    const [assigned] = await rows28(conn, `${select2} AND EXISTS (SELECT 1 FROM \`FleetAssignment\` a JOIN \`FleetMember\` m ON m.id = a.memberId WHERE a.vehicleId = w.vehicleId AND m.userId = ? AND m.status = 'active' AND a.endsAt IS NULL)`, [number2, userId]);
     if (assigned)
       return { order: assigned, viewer: "conductor" };
   }
   throw new BrokerError("NOT_FOUND");
 }
-async function orderReceipt(conn, userId, role, number) {
-  const { order, viewer } = await receiptOrder(conn, userId, role, number);
+async function orderReceipt(conn, userId, role, number2) {
+  const { order, viewer } = await receiptOrder(conn, userId, role, number2);
   const id3 = String(order.id);
   const records = (await orderRecords(conn, [id3])).get(id3);
   const rejected = new Set((records?.partial?.rejected ?? []).map((r) => r.n));
@@ -120505,8 +120696,8 @@ var VehicleSoatStore = class {
   }
   /** `date` null borra la fecha: sin dato no se avisa. */
   async set(userId, role, vehicleId, date2) {
-    const clean2 = date2 === null ? null : parseSoatDate(date2);
-    if (date2 !== null && !clean2)
+    const clean3 = date2 === null ? null : parseSoatDate(date2);
+    if (date2 !== null && !clean3)
       fail16("INVALID_SOAT_DATE", "Escribe la fecha de vencimiento del SOAT como d\xEDa, mes y a\xF1o v\xE1lidos.", 422);
     return withConnection(this.connect, (conn) => inTransaction(conn, async () => {
       if (role !== "dueno")
@@ -120517,9 +120708,9 @@ var VehicleSoatStore = class {
       if (String(vehicle.userId) !== userId)
         return fail16("FORBIDDEN", "Solo el due\xF1o del veh\xEDculo puede cambiar la fecha del SOAT.", 403);
       const before = parseSoatDate(vehicle.soatExpiresAt);
-      await conn.query("UPDATE `Vehicle` SET soatExpiresAt = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [clean2, vehicleId]);
-      await audit3(conn, "account.vehicle.soat", userId, "dueno", "Vehicle", vehicleId, { soatExpiresAt: before }, { soatExpiresAt: clean2 });
-      return { message: clean2 ? "Listo: guardamos la fecha de vencimiento del SOAT. Te avisaremos a los 30 y a los 7 d\xEDas, y cuando venza, si tienes activadas las alertas." : "Listo: quitamos la fecha del SOAT. No te avisaremos sobre el SOAT de este veh\xEDculo.", value: clean2 };
+      await conn.query("UPDATE `Vehicle` SET soatExpiresAt = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [clean3, vehicleId]);
+      await audit3(conn, "account.vehicle.soat", userId, "dueno", "Vehicle", vehicleId, { soatExpiresAt: before }, { soatExpiresAt: clean3 });
+      return { message: clean3 ? "Listo: guardamos la fecha de vencimiento del SOAT. Te avisaremos a los 30 y a los 7 d\xEDas, y cuando venza, si tienes activadas las alertas." : "Listo: quitamos la fecha del SOAT. No te avisaremos sobre el SOAT de este veh\xEDculo.", value: clean3 };
     }));
   }
 };
@@ -121134,28 +121325,28 @@ var PilotPanelStore = class {
     });
   }
   /** La orden, si esta persona participa en ella: el taller que la atiende o quien decide por el vehículo. */
-  async photoOrder(conn, userId, role, number) {
+  async photoOrder(conn, userId, role, number2) {
     if (role === "taller") {
       const shop = await this.care.actingShop(conn, userId, role);
-      const [order] = await rows33(conn, "SELECT id FROM `WorkOrder` WHERE number = ? AND shopId = ?", [number, shop.id]);
+      const [order] = await rows33(conn, "SELECT id FROM `WorkOrder` WHERE number = ? AND shopId = ?", [number2, shop.id]);
       if (order)
         return String(order.id);
     } else if (role === "dueno") {
       const scope = await decisionScope(conn, userId);
-      const [order] = await rows33(conn, "SELECT w.id FROM `WorkOrder` w WHERE w.number = ? AND " + scope.where("w"), [number, ...scope.args]);
+      const [order] = await rows33(conn, "SELECT w.id FROM `WorkOrder` w WHERE w.number = ? AND " + scope.where("w"), [number2, ...scope.args]);
       if (order)
         return String(order.id);
     }
     throw new BrokerError("NOT_FOUND");
   }
-  async addOrderPhoto(userId, role, number, kind, dataUrl) {
+  async addOrderPhoto(userId, role, number2, kind, dataUrl) {
     const photo = photoFromDataUrl(dataUrl);
     if (!photo)
       throw new BrokerError("PHOTO_INVALID");
     if (kind === "avance" && role !== "taller")
       throw new BrokerError("FORBIDDEN");
     return this.run(async (conn) => {
-      const orderId = await this.photoOrder(conn, userId, role, number);
+      const orderId = await this.photoOrder(conn, userId, role, number2);
       const [count3] = await rows33(conn, "SELECT COUNT(*) AS n FROM `WorkOrderPhoto` WHERE workOrderId = ? AND kind = ?", [orderId, kind]);
       if (Number(count3?.n) >= MAX_PHOTOS_PER_KIND)
         throw new BrokerError("PHOTO_LIMIT");
@@ -121166,15 +121357,15 @@ var PilotPanelStore = class {
       return { id: id3 };
     });
   }
-  async orderPhotos(userId, role, number) {
+  async orderPhotos(userId, role, number2) {
     return this.run(async (conn) => {
-      const orderId = await this.photoOrder(conn, userId, role, number);
+      const orderId = await this.photoOrder(conn, userId, role, number2);
       return (await rows33(conn, "SELECT id, kind FROM `WorkOrderPhoto` WHERE workOrderId = ? ORDER BY createdAt", [orderId])).map((p) => ({ id: String(p.id), kind: String(p.kind) }));
     });
   }
-  async orderPhoto(userId, role, number, photoId) {
+  async orderPhoto(userId, role, number2, photoId) {
     return this.run(async (conn) => {
-      const orderId = await this.photoOrder(conn, userId, role, number);
+      const orderId = await this.photoOrder(conn, userId, role, number2);
       const [photo] = await rows33(conn, "SELECT mime, data FROM `WorkOrderPhoto` WHERE id = ? AND workOrderId = ?", [photoId, orderId]);
       if (!photo)
         throw new BrokerError("NOT_FOUND");
@@ -123548,7 +123739,7 @@ async function contentRoutes(app2, options = {}) {
     });
     return;
   }
-  async function number() {
+  async function number2() {
     try {
       const digits = (await options.resolveNumber?.() ?? "").replace(/\D/g, "");
       if (digits.length >= 8 && digits.length <= 15)
@@ -123575,7 +123766,7 @@ async function contentRoutes(app2, options = {}) {
     const lista = SERVICE_PAGES.map((page2) => `<li><a href="/servicios/${page2.slug}">${page2.name}</a>${page2.priceFrom === null ? "" : ` \u2014 desde US$ ${page2.priceFrom.toFixed(0)}`}</li>`).join("");
     const nonce2 = randomBytes11(16).toString("base64");
     return send(reply, renderContentPage({
-      number: await number(),
+      number: await number2(),
       code: code5,
       nonce: nonce2,
       path: "/servicios",
@@ -123611,7 +123802,7 @@ async function contentRoutes(app2, options = {}) {
     const otros = SERVICE_PAGES.filter((p) => p.slug !== page2.slug).slice(0, 5);
     const nonce2 = randomBytes11(16).toString("base64");
     return send(reply, renderContentPage({
-      number: await number(),
+      number: await number2(),
       code: code5,
       nonce: nonce2,
       path: `/servicios/${page2.slug}`,
@@ -123640,7 +123831,7 @@ async function contentRoutes(app2, options = {}) {
     const lista = CITY_PAGES.map((city) => `<li><a href="/talleres/${city.slug}">Talleres mec\xE1nicos en ${city.name}</a> \u2014 ${city.province}</li>`).join("");
     const nonce2 = randomBytes11(16).toString("base64");
     return send(reply, renderContentPage({
-      number: await number(),
+      number: await number2(),
       code: code5,
       nonce: nonce2,
       path: "/talleres",
@@ -123674,7 +123865,7 @@ async function contentRoutes(app2, options = {}) {
     const code5 = await visitCode(`ciudad:${city.slug}`, request.headers["user-agent"]);
     const nonce2 = randomBytes11(16).toString("base64");
     return send(reply, renderContentPage({
-      number: await number(),
+      number: await number2(),
       code: code5,
       nonce: nonce2,
       path: `/talleres/${city.slug}`,
@@ -123768,7 +123959,7 @@ function webPageSchema(page2) {
   };
 }
 async function landingRoutes(app2, options = {}) {
-  async function number() {
+  async function number2() {
     try {
       const digits = (await options.resolveNumber?.() ?? "").replace(/\D/g, "");
       if (digits.length >= 8 && digits.length <= 15)
@@ -123802,7 +123993,7 @@ async function landingRoutes(app2, options = {}) {
       return `<div><h3>${escapeHtml(PROFILE_NAMES[profile])}</h3><ul class="enlaces">${pages.map((p) => `<li><a href="/${p.slug}">${escapeHtml(p.h1)}</a></li>`).join("")}</ul></div>`;
     }).join("");
     return send(reply, renderContentPage({
-      number: await number(),
+      number: await number2(),
       code: code5,
       nonce: nonce2,
       path: "/soluciones",
@@ -123839,7 +124030,7 @@ async function landingRoutes(app2, options = {}) {
         blocks.push(...kmTablesBlocks());
       const related = current.related.map((slug) => findLanding(slug)).filter((p) => p !== null).map((p) => ({ href: `/${p.slug}`, label: p.h1 }));
       return send(reply, renderContentPage({
-        number: await number(),
+        number: await number2(),
         code: code5,
         nonce: nonce2,
         path: `/${current.slug}`,
@@ -124564,7 +124755,7 @@ var clip = (value2, max) => typeof value2 === "string" ? value2.replace(/\s+/g, 
 function selected(a, b) {
   return fold7(a) === fold7(b) ? " selected" : "";
 }
-function shopCard(shop, number, index) {
+function shopCard(shop, number2, index) {
   const tags = [
     `<span class="tag ok">Revisado</span>`,
     ...shop.categories.slice(0, 4).map((c) => `<span class="tag">${escapeHtml(categoryName(c))}</span>`),
@@ -124572,7 +124763,7 @@ function shopCard(shop, number, index) {
   ].join("");
   const where = [shop.address, shop.zone, shop.city].filter(Boolean).join(" \xB7 ");
   const route = shop.point ? `<a href="${escapeHtml(`https://www.google.com/maps/dir/?api=1&destination=${shop.point.lat},${shop.point.lng}`)}" rel="noopener" target="_blank">C\xF3mo llegar</a>` : `<span class="muted">Muestra solo su sector</span>`;
-  const turno = number ? `<a class="pedir" href="${escapeHtml(`https://wa.me/${number}?text=${encodeURIComponent(`Hola AutoMantPro, quiero un turno en ${shop.name} (${shop.city}).`)}`)}" rel="noopener">Pedir turno por WhatsApp</a>` : "";
+  const turno = number2 ? `<a class="pedir" href="${escapeHtml(`https://wa.me/${number2}?text=${encodeURIComponent(`Hola AutoMantPro, quiero un turno en ${shop.name} (${shop.city}).`)}`)}" rel="noopener">Pedir turno por WhatsApp</a>` : "";
   return `<li class="taller" data-id="${escapeHtml(shop.id)}"${shop.point ? ` data-lat="${shop.point.lat}" data-lng="${shop.point.lng}"` : ""}>
     <div class="fila"><h3><span class="num">${index + 1}</span> ${escapeHtml(shop.name)}</h3><span class="dist">${shop.distanceKm === null ? "" : `${escapeHtml(shop.distanceKm.toLocaleString("es-EC"))} km`}</span></div>
     <div class="tags">${tags}</div>
@@ -124753,7 +124944,7 @@ async function mapRoutes(app2, options = {}) {
       return cache?.records ?? [];
     }
   }
-  async function number() {
+  async function number2() {
     try {
       const digits = (await options.resolveNumber?.() ?? "").replace(/\D/g, "");
       if (digits.length >= 8 && digits.length <= 15)
@@ -124768,7 +124959,7 @@ async function mapRoutes(app2, options = {}) {
     const nonce2 = randomBytes13(16).toString("base64");
     const html = renderMapPage({
       nonce: nonce2,
-      number: await number(),
+      number: await number2(),
       city: clip(q.ciudad, 80),
       zone: clip(q.sector, 80),
       service: clip(q.servicio, 40),
@@ -124797,8 +124988,8 @@ var HEADERS4 = {
   "Referrer-Policy": "no-referrer",
   "Cache-Control": "public, max-age=600"
 };
-function planBlocks(catalog, number, code5) {
-  const chat = (offer) => number ? `https://wa.me/${number}?text=${encodeURIComponent(`Quiero plan ${offer.name} C\xF3digo: ${code5}`)}` : null;
+function planBlocks(catalog, number2, code5) {
+  const chat = (offer) => number2 ? `https://wa.me/${number2}?text=${encodeURIComponent(`Quiero plan ${offer.name} C\xF3digo: ${code5}`)}` : null;
   return PROFILES.map((profile) => {
     const list7 = offersFor(profile, catalog);
     const items = list7.map((offer) => {
@@ -124823,7 +125014,7 @@ var HOW = {
 };
 async function plansPageRoutes(app2, options = {}) {
   const marketing = options.marketingSite === void 0 ? marketingSite() : options.marketingSite;
-  async function number() {
+  async function number2() {
     try {
       const digits = (await options.resolveNumber?.() ?? "").replace(/\D/g, "");
       if (digits.length >= 8 && digits.length <= 15)
@@ -124851,7 +125042,7 @@ async function plansPageRoutes(app2, options = {}) {
     if (options.onVisit) {
       Promise.resolve().then(() => options.onVisit?.(code5, "planes", null)).catch(() => void 0);
     }
-    const phone = await number();
+    const phone = await number2();
     const offers = await catalog();
     return send(reply, renderContentPage({
       number: phone,
@@ -125734,10 +125925,12 @@ var ClaimDeadlines = class {
           return { escalated: 0 };
         throw err;
       }
-      for (const row2 of due) {
+      const unanswered = (await conn.query("SELECT id FROM `WorkOrderClaim` WHERE status = 'respondido' AND shopRespondedAt <= ? ORDER BY shopRespondedAt LIMIT 50", [new Date(now.getTime() - CLAIM_HOURS * 36e5)]))[0];
+      const work = [...due.map((r) => ({ id: String(r.id), step: escalateExpired })), ...unanswered.map((r) => ({ id: String(r.id), step: escalateUnanswered }))];
+      for (const row2 of work) {
         await conn.query("START TRANSACTION");
         try {
-          if (await escalateExpired(conn, String(row2.id), now))
+          if (await row2.step(conn, row2.id, now))
             escalated++;
           await conn.query("COMMIT");
         } catch (err) {
