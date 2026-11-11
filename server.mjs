@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='6112c3b064cd600bf74a8eb86d2501ea2622f108'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='eedf5a7c2ba5ede84a117bb344d3bc362b331983'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -60680,7 +60680,7 @@ function formatPlanSummary(ctx) {
   lines.push(ctx.source ? `Fuente: ${ctx.source}` : "Plan referencial: a\xFAn no tenemos la ficha del fabricante para este modelo.");
   lines.push(PLAN_TECH_NOTICE);
   lines.push(PLAN_TERMS_NOTICE);
-  lines.push("Plan completo \xB7 \xDAltimo servicio | servicio | km | AAAA-MM \xB7 Kilometraje | km");
+  lines.push("Para ver todo, escribe: Plan completo. Para registrar un servicio que ya hiciste: \xDAltimo servicio | servicio | km | AAAA-MM. Para actualizar el kilometraje: Kilometraje | km");
   return lines.join("\n");
 }
 var DEFAULT_MAX_LENGTH, PLAN_TECH_NOTICE, PLAN_TERMS_NOTICE, SAFETY_ORDER, safetyRank;
@@ -87099,7 +87099,7 @@ async function orderRecords(conn, orderIds) {
   if (!orderIds.length)
     return result;
   for (const id3 of orderIds)
-    result.set(id3, { intake: null, payment: { paidUsd: 0, informedUsd: 0, pending: null, observed: null }, promised: null, budgetLines: [], partial: null, warranty: null, claim: null });
+    result.set(id3, { intake: null, payment: { paidUsd: 0, informedUsd: 0, pending: null, observed: null, refundedUsd: 0, refundPending: null }, promised: null, budgetLines: [], partial: null, warranty: null, claim: null, invoices: [] });
   const parse2 = (value2, fallback) => {
     if (typeof value2 !== "string")
       return value2 ?? fallback;
@@ -87125,7 +87125,13 @@ async function orderRecords(conn, orderIds) {
     }
     if (p.status === "observado")
       target.observed = p.ownerNote ? String(p.ownerNote) : "Observado";
+    if (p.status === "reembolso_confirmado")
+      target.refundedUsd += amount;
+    if (p.status === "reembolso_informado")
+      target.refundPending = { amountUsd: amount, method: String(p.method) };
   }
+  for (const f of await rows8(conn, "SELECT id, workOrderId FROM `WorkOrderPhoto` WHERE workOrderId IN (?) AND kind = 'factura' ORDER BY createdAt", [orderIds]).catch(whenTableMissing3([])))
+    result.get(String(f.workOrderId)).invoices.push(String(f.id));
   const promises = await rows8(conn, "SELECT workOrderId, DATE_FORMAT(promisedDate, '%Y-%m-%d') AS promisedDate, reason, changes FROM `WorkOrderPromise` WHERE workOrderId IN (?)", [orderIds]).catch(whenTableMissing3([]));
   for (const p of promises)
     result.get(String(p.workOrderId)).promised = { date: String(p.promisedDate), reason: p.reason ? String(p.reason) : null, changes: Number(p.changes) };
@@ -87146,7 +87152,7 @@ async function orderRecords(conn, orderIds) {
     result.get(id3).claim = claim;
   return result;
 }
-function photoFromDataUrl(dataUrl) {
+function photoFromDataUrl(dataUrl, allowPdf = false) {
   const comma = dataUrl.indexOf(",");
   if (comma < 0 || !dataUrl.slice(0, comma).endsWith(";base64"))
     return null;
@@ -87157,6 +87163,8 @@ function photoFromDataUrl(dataUrl) {
     return { mime: "image/jpeg", data: data3 };
   if (data3[0] === 137 && data3[1] === 80 && data3[2] === 78 && data3[3] === 71)
     return { mime: "image/png", data: data3 };
+  if (allowPdf && data3.subarray(0, 5).toString("latin1") === "%PDF-")
+    return { mime: "application/pdf", data: data3 };
   return null;
 }
 var rows8, whenTableMissing3, PHOTO_KINDS, MAX_PHOTOS_PER_KIND, MAX_PHOTO_BYTES;
@@ -87171,7 +87179,7 @@ var init_work_order_records = __esm({
         return value2;
       throw err;
     };
-    PHOTO_KINDS = ["ingreso", "comprobante", "avance"];
+    PHOTO_KINDS = ["ingreso", "comprobante", "avance", "factura"];
     MAX_PHOTOS_PER_KIND = 6;
     MAX_PHOTO_BYTES = 500 * 1024;
   }
@@ -88234,7 +88242,7 @@ function detailOf(item, state) {
 function headlineOf(first) {
   if (!first)
     return "Todav\xEDa no hay plan para este veh\xEDculo. Completa clase y combustible para calcularlo.";
-  const name = first.serviceName.toLowerCase();
+  const name = first.serviceName.toLowerCase().replace(/\b(rtv|soat|abs|a\/c)\b/g, (m) => m.toUpperCase());
   switch (first.state) {
     case "urgente":
       return `Agenda ${name} esta semana. ${first.label}.`;
@@ -89466,10 +89474,7 @@ async function attachOfferToOrder(conn, request, offer) {
     return "";
   const code5 = workOrderCode(n(order.number));
   const ref4 = shortCode("S", requestId);
-  if (await isWarrantyReentry(conn, workOrderId)) {
-    await notify2(conn, actor, `partwarranty:${requestId}:${offer.id}`, "care.finding", `\u2139\uFE0F El repuesto del pedido ${ref4} no se suma a la orden ${code5}, que es un reingreso por garant\xEDa y no se cobra. El pedido sigue su curso; si hay un trabajo con costo, p\xEDdelo como novedad.`);
-    return `La orden ${code5} es un reingreso por garant\xEDa: el repuesto no se sum\xF3 a ella (no se cobra). El pedido sigue su curso.`;
-  }
+  const reentry = await isWarrantyReentry(conn, workOrderId);
   const previous = await linkOf(conn, requestId);
   if (previous && previous.offerId === String(offer.id))
     return `El repuesto ya estaba en la orden ${code5}; no lo repetimos.`;
@@ -89484,7 +89489,7 @@ async function attachOfferToOrder(conn, request, offer) {
   const quality = offer.quality ? String(offer.quality) : null;
   const label5 = `${order.make} ${order.model} ${order.year}`;
   const notNew = quality !== null && NOT_NEW.includes(quality);
-  if (BEFORE_APPROVAL.includes(String(order.status))) {
+  if (!reentry && BEFORE_APPROVAL.includes(String(order.status))) {
     const itemId = randomUUID14();
     await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, 'repuesto', ?, ?, ?, 1, ?, CURRENT_TIMESTAMP(3))", [itemId, workOrderId, description, brand, quality, price]);
     await conn.query(RECALCULATE_TOTAL, [workOrderId, workOrderId]);
@@ -89510,6 +89515,8 @@ Trabajo adicional propuesto:
 \u2022 Repuesto: ${description} \u2014 1 \xD7 ${formatUsd(price)} = ${formatUsd(price)}
 Total adicional: ${formatUsd(price)}${notNew ? "\nEl repuesto no es nuevo: al aprobar, aceptas esa calidad." : ""}
 No se har\xE1 sin tu aprobaci\xF3n. Responde: Aprobar novedad ${changeRef2} \xB7 Rechazar novedad ${changeRef2} | motivo`);
+  if (reentry)
+    return `La orden ${code5} es un reingreso por garant\xEDa: lo cubierto no se cobra. Enviamos el repuesto (${formatUsd(price)}) como novedad ${changeRef2} al due\xF1o; solo se cobra si la aprueba.`;
   return `Como el presupuesto de ${code5} ya est\xE1 aprobado, el repuesto (${formatUsd(price)}) no se sum\xF3 solo: enviamos la novedad ${changeRef2} al due\xF1o. No se cobra sin su aprobaci\xF3n.`;
 }
 async function takeLinkedPartLines(conn, workOrderId) {
@@ -89924,6 +89931,10 @@ var init_vehicle_care_store = __esm({
             return this.shopPayment(conn, userId, role, command);
           case "paymentAnswer":
             return this.paymentAnswer(conn, userId, role, command.orderNumber, command.confirm, command.note);
+          case "shopRefund":
+            return this.shopRefund(conn, userId, role, command);
+          case "refundAnswer":
+            return this.refundAnswer(conn, userId, role, command.orderNumber, command.confirm, command.note);
           case "checkInAnswer":
             return this.checkInAnswer(conn, userId, role, command.orderNumber, command.confirm, command.note);
           case "reschedule":
@@ -90117,6 +90128,44 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
         const totals = await paymentTotals(conn, String(order.id));
         const balance = Number(order.total ?? 0) - totals.paid - totals.informed;
         return { userId, message: confirm ? `Confirmaste el pago de ${amount} en ${code5}. Saldo: ${formatUsd(Math.max(balance, 0))}.` : `Anotamos tu observaci\xF3n sobre el cobro de ${code5} y avisamos a ${order.shopName}.` };
+      }
+      /**
+       * X5 y C1 (regla de Pedro): el taller registra lo que devolvió de una orden con pagos y el dueño lo confirma u
+       * observa, como un cobro al revés. AutoMantPro no mueve dinero: solo deja el registro. No supera lo pagado.
+       */
+      async shopRefund(conn, userId, role, command) {
+        const shop = await this.actingShop(conn, userId, role);
+        if (!shop.isOwner && !shop.isAdmin)
+          fail3("FORBIDDEN");
+        const order = await this.openOrder(conn, command.orderNumber, { shopId: shop.id });
+        const [sums] = await rows14(conn, "SELECT COALESCE(SUM(CASE WHEN status = 'pagado' THEN amount END), 0) AS paid, COALESCE(SUM(CASE WHEN status IN ('reembolso_informado','reembolso_confirmado') THEN amount END), 0) AS refunded FROM `WorkOrderPayment` WHERE workOrderId = ?", [order.id]);
+        const available = Math.round((Number(sums?.paid ?? 0) - Number(sums?.refunded ?? 0)) * 100) / 100;
+        if (available <= 0)
+          fail3("NO_PAYMENT_TO_REFUND");
+        if (command.amount > available + 1e-3)
+          fail3("REFUND_EXCEEDS_PAID");
+        const id3 = randomUUID15();
+        await conn.query("INSERT INTO `WorkOrderPayment` (id, workOrderId, amount, method, reference, status, reportedBy) VALUES (?, ?, ?, ?, ?, 'reembolso_informado', ?)", [id3, order.id, command.amount, command.method, command.reference, shop.actor]);
+        await this.audit(conn, userId, "care.refund.reported", "WorkOrder", String(order.id), { paymentId: id3, amount: command.amount, method: command.method, by: shop.actor });
+        const code5 = workOrderCode(command.orderNumber);
+        await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `refund:${id3}`, "care.payment", `\u21A9\uFE0F ${shop.name} registr\xF3 que te devolvi\xF3 ${formatUsd(command.amount)} por ${command.method} de la orden ${code5}.${command.reference ? ` Referencia: ${command.reference}.` : ""}
+Responde: Confirmo reembolso ${code5} \xB7 Observo reembolso ${code5} | motivo`);
+        return { userId, message: `Reembolso de ${formatUsd(command.amount)} registrado en ${code5}. Avisamos al due\xF1o para que lo confirme. AutoMantPro no mueve dinero.` };
+      }
+      async refundAnswer(conn, userId, role, number2, confirm, note) {
+        if (role !== "dueno")
+          fail3("FORBIDDEN");
+        const order = await this.openOrder(conn, number2, { scope: await decisionScope(conn, userId) });
+        if (!confirm && !note)
+          fail3("REASON_REQUIRED");
+        const [refund] = await rows14(conn, "SELECT id, amount FROM `WorkOrderPayment` WHERE workOrderId = ? AND status = 'reembolso_informado' ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [order.id]);
+        if (!refund)
+          fail3("NO_REFUND_PENDING");
+        await conn.query("UPDATE `WorkOrderPayment` SET status = ?, ownerNote = ?, answeredAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [confirm ? "reembolso_confirmado" : "reembolso_observado", note, refund.id]);
+        await this.audit(conn, userId, confirm ? "care.refund.confirmed" : "care.refund.observed", "WorkOrder", String(order.id), { paymentId: refund.id, ...note ? { note } : {} });
+        const code5 = workOrderCode(number2), amount = formatUsd(Number(refund.amount));
+        await this.notify(conn, String(order.shopUserId), `refundanswer:${String(refund.id)}`, "care.payment", confirm ? `\u2705 El cliente confirm\xF3 que recibi\xF3 el reembolso de ${amount} de ${code5}.` : `\u26A0\uFE0F El cliente observ\xF3 el reembolso de ${amount} de ${code5}: ${note}. Rev\xEDsalo con \xE9l.`);
+        return { userId, message: confirm ? `Confirmaste el reembolso de ${amount} de ${code5}.` : `Anotamos tu observaci\xF3n sobre el reembolso de ${code5} y avisamos a ${order.shopName}.` };
       }
       /** Workshop: its open work orders, or one of them (with its pending answers), and the next step of each. */
       async shopOrders(conn, userId, role, number2) {
@@ -90484,7 +90533,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
         const label5 = `${order.make} ${order.model} ${order.year}`;
         await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `ordercancelled:${String(order.id)}`, "care.order", `\u274C ${shop.name} cancel\xF3 tu orden ${code5} (${label5}): ${reason}. Si tienes dudas, habla con el taller.`);
         await this.notifyDriver(conn, String(order.vehicleId), `ordercancelled-driver:${String(order.id)}`, `\u274C ${shop.name} cancel\xF3 la orden ${code5} de ${label5}: ${reason}. Tu flota te avisar\xE1 los siguientes pasos.`);
-        const paid = payments.paid + payments.informed > 0 ? ` Ojo: tiene pagos registrados (pagado ${formatUsd(payments.paid)}${payments.informed ? `, por confirmar ${formatUsd(payments.informed)}` : ""}). AutoMantPro no los revierte: arregla la devoluci\xF3n directamente con el cliente.` : "";
+        const paid = payments.paid + payments.informed > 0 ? ` Ojo: tiene pagos registrados (pagado ${formatUsd(payments.paid)}${payments.informed ? `, por confirmar ${formatUsd(payments.informed)}` : ""}). AutoMantPro no mueve dinero: si devuelves algo, reg\xEDstralo con Reembolso ${code5} | valor | forma para que el cliente lo confirme.` : "";
         return { userId, message: `Orden ${code5} cancelada. Avisamos al due\xF1o con tu motivo.${paid}` };
       }
       /**
@@ -90733,8 +90782,10 @@ Responde: Confirmo ingreso ${code5} \xB7 Observo ingreso ${code5} | qu\xE9 no co
             fail3("UNKNOWN_SERVICE");
           if (command.km < Number(vehicle.currentKm) - 100)
             fail3("KM_LOWER_THAN_CURRENT");
+          const recent = new Set((await rows14(conn, "SELECT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY)", [vehicle.id, shop.id])).map((r) => String(r.serviceId)));
           for (const serviceId of new Set(ids))
-            await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID15(), vehicle.id, serviceId, command.km, shop.id, userId]);
+            if (!recent.has(serviceId))
+              await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID15(), vehicle.id, serviceId, command.km, shop.id, userId]);
           const names = [...new Set(ids)].map(serviceName);
           await conn.query("INSERT INTO `Service` (id, vehicleId, shopId, appointmentId, description, cost, status, createdAt) VALUES (UUID(), ?, ?, ?, ?, NULL, 'done', CURRENT_TIMESTAMP(3))", [vehicle.id, shop.id, vehicle.appointmentId, `${names.join(", ")}${command.detail ? `. ${command.detail}` : ""} (registrado por ${shop.actor})`]);
           await conn.query("UPDATE `Vehicle` SET currentKm = GREATEST(currentKm, ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [command.km, vehicle.id]);
@@ -90758,7 +90809,7 @@ ${summary ?? ""}`.trim());
           return { userId, message: `Propuesta enviada al due\xF1o: visita ${code5} para ${formatEcDateTime(at)}. Te avisaremos cuando responda.` };
         }
         await this.insertAlert(conn, String(vehicle.id), command.label, command.dueAt, command.dueKm, userId, shop.id);
-        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold9(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label5}: "${command.label}" ${command.dueAt ? `el ${command.dueAt}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
+        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold9(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label5}: "${command.label}" ${command.dueAt ? `el ${(/* @__PURE__ */ new Date(`${command.dueAt}T12:00:00Z`)).toLocaleDateString("es-EC", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
         return { userId, message: `Alerta creada para el ${label5}. El due\xF1o y tu taller la recibir\xE1n por WhatsApp cuando llegue el momento.` };
       }
       async budget(conn, userId, shop, command) {
@@ -90917,8 +90968,10 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
           await conn.query("INSERT INTO `VehicleExpense` (id, vehicleId, fleetId, kind, amountUsd, description, source, refId, createdBy, spentAt) VALUES (?, ?, ?, 'mantenimiento', ?, ?, 'orden', ?, ?, UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE amountUsd = VALUES(amountUsd)", [randomUUID15(), order.vehicleId, order.fleetId, order.total, `${code5} \xB7 ${String(order.shopName)}`.slice(0, 191), order.id, userId]);
         const items = await rows14(conn, "SELECT description FROM `WorkOrderItem` WHERE workOrderId = ?", [order.id]);
         const serviceIds = new Set([String(change.description), ...items.map((i) => String(i.description).replace(/^Adicional: /, ""))].flatMap((t) => t.split(/[,;]/)).map((t) => matchService(t.trim())).filter((x) => !!x));
+        const already = new Set((await rows14(conn, "SELECT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND createdAt >= ?", [order.vehicleId, order.shopId, order.createdAt])).map((r) => String(r.serviceId)));
         for (const serviceId of serviceIds)
-          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID15(), order.vehicleId, serviceId, payload.exitKm, order.shopId, userId]);
+          if (!already.has(serviceId))
+            await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID15(), order.vehicleId, serviceId, payload.exitKm, order.shopId, userId]);
         if (order.appointmentId)
           await conn.query("UPDATE `Appointment` SET status = 'completed', updatedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status IN ('pending','confirmed')", [order.appointmentId]);
         await this.notify(conn, String(order.shopUserId), `deliverydecision:${String(change.id)}`, "care.delivery", `\u2705 El cliente acept\xF3 la entrega de ${code5} por ${formatUsd(Number(order.total))}. La orden qued\xF3 cerrada.`);
@@ -92051,6 +92104,10 @@ function parseAccountCommand(raw) {
     command = { action: "shopPayment", orderNumber: orderOf(verb), amount: money2(parts[1]), method: fold11(parts[2] ?? ""), reference: parts[3] || null };
   else if (/^(confirmo|observo) pago ot-[0-9]{1,7}$/.test(verb) && parts.length <= 2)
     command = { action: "paymentAnswer", orderNumber: orderOf(verb), confirm: verb.startsWith("confirmo"), note: parts[1] || null };
+  else if (/^reembolso ot-[0-9]{1,7}$/.test(verb) && (parts.length === 3 || parts.length === 4))
+    command = { action: "shopRefund", orderNumber: orderOf(verb), amount: money2(parts[1]), method: fold11(parts[2] ?? ""), reference: parts[3] || null };
+  else if (/^(confirmo|observo) reembolso ot-[0-9]{1,7}$/.test(verb) && parts.length <= 2)
+    command = { action: "refundAnswer", orderNumber: orderOf(verb), confirm: verb.startsWith("confirmo"), note: parts[1] || null };
   else if (/^(confirmo|observo) ingreso ot-\d{1,7}$/.test(verb) && parts.length <= 2)
     command = { action: "checkInAnswer", orderNumber: orderOf(verb), confirm: verb.startsWith("confirmo"), note: parts[1] ? parts[1] : null };
   else if (["ordenes", "mis ordenes", "ordenes abiertas"].includes(verb) && parts.length === 1)
@@ -92245,6 +92302,8 @@ var init_commands = __esm({
       // El taller informa un cobro; AutoMantPro solo lo registra. El dueño lo confirma u observa.
       external_exports.object({ action: external_exports.literal("shopPayment"), orderNumber: external_exports.number().int().min(1), amount: external_exports.number().positive().max(1e6), method: external_exports.enum(PAYMENT_METHODS), reference: external_exports.string().trim().max(120).nullable() }).strict(),
       external_exports.object({ action: external_exports.literal("paymentAnswer"), orderNumber: external_exports.number().int().min(1), confirm: external_exports.boolean(), note: external_exports.string().trim().max(300).nullable() }).strict(),
+      external_exports.object({ action: external_exports.literal("shopRefund"), orderNumber: external_exports.number().int().min(1), amount: external_exports.number().positive().max(1e6), method: external_exports.enum(PAYMENT_METHODS), reference: external_exports.string().trim().max(120).nullable() }).strict(),
+      external_exports.object({ action: external_exports.literal("refundAnswer"), orderNumber: external_exports.number().int().min(1), confirm: external_exports.boolean(), note: external_exports.string().trim().max(300).nullable() }).strict(),
       // Budget with the detail the consumer law requires: each line with quantity, unit price and part quality.
       external_exports.object({ action: external_exports.literal("budget"), orderNumber: external_exports.number().int().min(1), lines: external_exports.array(budgetLine).min(1).max(20) }).strict(),
       // Hidden damage found during the job: extra work that waits for the owner's approval.
@@ -92380,6 +92439,7 @@ var init_commands = __esm({
       "Calificar OT-00012 | calidad 1-5 | atenci\xF3n 1-5 | plazo 1-5 | costo 1-5 | comentario \xB7 Calificar S-XXXXXX | pieza correcta s\xED/no | calidad | plazo | precio | atenci\xF3n | comentario \xB7 Taller o almac\xE9n: Mi calificaci\xF3n",
       "Cobro: Taller: Cobro OT-00012 | USD | efectivo, transferencia, tarjeta u otra (| referencia) \xB7 Due\xF1o: Confirmo pago OT-00012 \xB7 Observo pago OT-00012 | qu\xE9 no coincide",
       "Taller: Fecha entrega OT-00012 | AAAA-MM-DD (| motivo) \xB7 No asisti\xF3 C-XXXXXX \xB7 Due\xF1o o administrador del taller: Cancelar orden OT-00012 | motivo",
+      "Orden cancelada con pagos: el taller registra lo que devolvi\xF3 con Reembolso OT-00012 | valor | forma (| referencia) \xB7 Due\xF1o: Confirmo reembolso OT-00012 \xB7 Observo reembolso OT-00012 | motivo",
       "Presupuesto rechazado: el taller puede avisar el diagn\xF3stico al recibir el veh\xEDculo (Ingreso C-XXXXXX | \u2026 | diagn\xF3stico 15). Taller: Salida sin trabajo OT-00012 | motivo (cobra el diagn\xF3stico solo si lo avis\xF3) \xB7 Due\xF1o: Objetar diagn\xF3stico OT-00012 | motivo",
       "Taller: Novedad OT-00012 | qu\xE9 se encontr\xF3 | repuesto: \u2026; mano de obra: \u2026 \xB7 Entrega OT-00012 | km de salida | trabajos realizados | d\xEDas de garant\xEDa",
       "Taller y t\xE9cnicos: Plan C-XXXXXX \xB7 Checklist C-XXXXXX \xB7 Inspecci\xF3n C-XXXXXX | M1 ok; F2 2,5 mm; N2 observar 2 mm; resto ok (| nota) \xB7 Ingreso C-XXXXXX | km | combustible (reserva, 1/4, 1/2, 3/4, lleno) | estado y da\xF1os | inventario | servicios a realizar \xB7 Presupuesto OT-00012 | repuesto: descripci\xF3n, marca, cantidad, precio unitario, calidad; mano de obra: descripci\xF3n, cantidad, precio \xB7 Servicio C-XXXXXX | servicios | km | detalle \xB7 Pr\xF3xima visita C-XXXXXX | AAAA-MM-DD | HH:mm \xB7 Alerta C-XXXXXX | texto | AAAA-MM-DD o km \xB7 Reprogramar cita C-XXXXXX | AAAA-MM-DD | HH:mm \xB7 Rechazar cita C-XXXXXX | motivo \xB7 \xD3rdenes \xB7 Estado OT-00012 \xB7 Iniciar OT-00012 \xB7 Esperando repuesto OT-00012 \xB7 Reanudar OT-00012",
@@ -93610,7 +93670,7 @@ function fichaSystems(items, inspection) {
       states2.push(area.state);
     const state = states2.length ? [...states2].sort((a, b) => RANK[a] - RANK[b])[0] : "sin_dato";
     const findings = (area?.items ?? []).filter((i) => i.status === "cambiar" || i.status === "observar").map((i) => `${i.status === "cambiar" ? "Cambiar" : "Observar"}: ${i.name}`);
-    return { n: system.n, id: system.id, name: system.name, state, services, findings };
+    return { n: system.n, id: system.id, name: system.name, state, services, findings, upToDate: services.filter((s) => s.state === "al_dia").length };
   });
   return { systems, otros };
 }
@@ -94334,6 +94394,9 @@ var init_error_messages = __esm({
       EXIT_NEEDS_REJECTED_BUDGET: "La salida sin trabajo se registra cuando el cliente rechaz\xF3 el presupuesto. Si quieres cerrar la orden por otra raz\xF3n, usa: Cancelar orden OT-00012 | motivo",
       NO_DIAGNOSIS_CHARGE: "Esta orden no tiene un cobro de diagn\xF3stico para objetar. Si tienes otro problema con la orden, escribe al taller o al equipo de AutoMantPro.",
       PART_RETURN_NOT_REJECTED: "Solo puedes escalar una devoluci\xF3n que el almac\xE9n rechaz\xF3. Si todav\xEDa no responde, tiene 48 horas; despu\xE9s decide el equipo de AutoMantPro.",
+      NO_PAYMENT_TO_REFUND: "Esta orden no tiene pagos confirmados para devolver.",
+      REFUND_EXCEEDS_PAID: "El reembolso no puede superar lo que el cliente pag\xF3 y confirm\xF3, menos lo ya devuelto.",
+      NO_REFUND_PENDING: "No hay un reembolso por confirmar en esta orden.",
       ORDER_CLOSED: "La orden ya est\xE1 cerrada o cancelada. Consulta su estado con el taller.",
       ORDER_NOT_IN_PROGRESS: "La orden todav\xEDa no est\xE1 lista para cerrarse. Consulta su estado con el taller.",
       ORDER_STAGE_INVALID: "La orden no est\xE1 en ese paso: se inicia cuando el due\xF1o aprueba el presupuesto. Revisa d\xF3nde va con: Estado OT-00012.",
@@ -108259,7 +108322,7 @@ var init_views_claims = __esm({
       resuelto_taller: "A favor del taller",
       resuelto_parcial: "Resuelto en parte"
     };
-    PAYMENT_STATUS = { informado: "Informado por el taller", pagado: "Confirmado por el due\xF1o", observado: "Observado por el due\xF1o" };
+    PAYMENT_STATUS = { informado: "Informado por el taller", pagado: "Confirmado por el due\xF1o", observado: "Observado por el due\xF1o", reembolso_informado: "Reembolso informado por el taller", reembolso_confirmado: "Reembolso confirmado por el due\xF1o", reembolso_observado: "Reembolso observado por el due\xF1o" };
     flashHtml3 = (flash) => flash ? `<p class="${flash.kind === "ok" ? "ok" : "error"}" role="status">${escapeHtml(flash.text)}</p>` : "";
     ORDER_STATUS_TEXT = { recepcion: "En recepci\xF3n", presupuesto_enviado: "Presupuesto enviado", aprobado: "Aprobada", rechazado: "Presupuesto rechazado", en_ejecucion: "En reparaci\xF3n", esperando_repuesto: "Esperando repuesto", cerrada: "Cerrada", cancelada: "Cancelada" };
     csrfField3 = (csrf) => `<input type="hidden" name="csrf" value="${escapeHtml(csrf)}">`;
@@ -118273,14 +118336,17 @@ function partMoneyCard(d){const list=h('div',{class:'list'});
 // packages/api/dist/interfaces/comprobante-panel-script.js
 var COMPROBANTE_SCRIPT = `
 let ordersMine=false;
-function photoAlt(kind){return kind==='ingreso'?'Foto del ingreso':kind==='avance'?'Foto del avance del trabajo':'Comprobante de pago';}
+function photoAlt(kind){return kind==='ingreso'?'Foto del ingreso':kind==='avance'?'Foto del avance del trabajo':kind==='factura'?'Factura del taller':'Comprobante de pago';}
+function invoiceBtn(o){const ids=(o.records&&o.records.invoices)||[];if(!ids.length)return null;const b=btn(ids.length>1?'Ver facturas':'Ver factura','ghost',async()=>{b.disabled=true;try{for(const id of ids){const r=await fetch(apiUrl('/pilot/orders/'+o.code+'/photos/'+id),{headers:{Authorization:'Bearer '+token}});if(!r.ok)throw new Error('No pudimos abrir la factura.');window.open(URL.createObjectURL(await r.blob()),'_blank','noopener');}}catch(err){showResult(err.message);}finally{b.disabled=false;}});return b;}
+function readAsDataUrl(file){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result));r.onerror=()=>no(new Error('No pudimos leer el archivo'));r.readAsDataURL(file);});}
+function invoiceForm(o){const b=btn('Subir factura','ghost',()=>{const f=h('form',{class:'acts'});const input=h('input',{type:'file',accept:'image/jpeg,image/png,application/pdf','aria-label':'Factura (foto o PDF)'});const send=h('button',{class:'primary'},'Subir factura');f.append(h('p',{class:'note',text:'Sube la factura que emitiste con tu sistema, en foto o PDF (hasta 500 KB). Avisaremos al cliente para que la vea en su panel.'}),input,send);f.onsubmit=async e=>{e.preventDefault();const file=input.files&&input.files[0];if(!file){showResult('Elige el archivo de la factura.');return;}send.disabled=true;try{const dataUrl=file.type==='application/pdf'?await readAsDataUrl(file):await shrinkPhoto(file);await api('/pilot/orders/'+o.code+'/photos',{method:'POST',body:JSON.stringify({kind:'factura',dataUrl})});showResult('Listo: subimos la factura y avisamos al cliente.');loadPanel(generation,panelVehicle).catch(()=>{});}catch(err){showResult(err.message);send.disabled=false;}};b.replaceWith(f);});return b;}
 // Las p\xE1ginas imprimibles se abren con un enlace firmado de 10 minutos que pide el servidor.
 async function openPrint(path,b){b.disabled=true;const w=window.open('about:blank','_blank');if(w)w.opener=null;try{const r=await api(path,{method:'POST',body:'{}'});if(w)w.location.href=r.url;else showResult('Abre este enlace para ver el documento: '+location.origin+r.url);}catch(err){if(w)w.close();showResult(err.message);}finally{b.disabled=false;}}
 function receiptBtn(o){return btn('Comprobante','ghost',ev=>void openPrint('/pilot/orders/'+o.code+'/comprobante-link',ev.currentTarget));}
-function ownerOrderExtras(o){const out=[receiptBtn(o)];if(o.canDecide!==false&&!(o.records&&o.records.intake))out.push(photosBox(o.code));return out;}
+function ownerOrderExtras(o){const out=[receiptBtn(o),invoiceBtn(o)].filter(Boolean);if(o.canDecide!==false&&!(o.records&&o.records.intake))out.push(photosBox(o.code));return out;}
 function progressPhotoForm(o){const b=btn('Subir fotos de avance','ghost',()=>{const f=h('form',{class:'acts'});const photos=photoInput('Fotos del avance (hasta 6 por orden)');const send=h('button',{class:'primary'},'Subir fotos');f.append(photos,send);f.onsubmit=async e=>{e.preventDefault();const files=photos.querySelector('input').files;if(!files.length){showResult('Elige al menos una foto.');return;}send.disabled=true;const failed=await uploadPhotos(o.code,'avance',files);send.disabled=false;showResult(failed?'No pudimos subir '+failed+' foto(s). Deben ser JPG o PNG, y cada orden admite hasta 6 fotos de avance.':'Listo: subimos las fotos. El due\xF1o las ve con \xABVer fotos\xBB.');if(!failed)loadPanel(generation,panelVehicle).catch(()=>{});};b.replaceWith(f);});return b;}
 function assignTechForm(o,d){const b=btn('Asignar t\xE9cnico','ghost',()=>{const f=h('form',{class:'acts'});const sel=h('select',{'aria-label':'T\xE9cnico de la orden'},h('option',{value:'',text:'Sin t\xE9cnico'}),...d.team.technicians.map(t=>h('option',{value:t.id,text:t.name})));const send=h('button',{class:'ghost'},'Guardar');f.append(sel,send);f.onsubmit=async e=>{e.preventDefault();send.disabled=true;try{const res=await api('/pilot/orders/'+o.code+'/technician',{method:'POST',body:JSON.stringify({memberId:sel.value||null})});showResult(res.message);loadPanel(generation,panelVehicle).catch(()=>{});}catch(err){showResult(err.message);send.disabled=false;}};b.replaceWith(f);});return b;}
-function shopOrderExtras(o,d){const out=[receiptBtn(o)];const open=o.status!=='cerrada'&&o.status!=='cancelada';if(open)out.push(progressPhotoForm(o));if(!(o.records&&o.records.intake))out.push(photosBox(o.code));if(open&&d.canManage&&d.team&&d.team.technicians.length)out.push(assignTechForm(o,d));return out;}
+function shopOrderExtras(o,d){const out=[receiptBtn(o),invoiceBtn(o)].filter(Boolean);const open=o.status!=='cerrada'&&o.status!=='cancelada';if(o.status!=='cancelada'&&d.canManage)out.push(invoiceForm(o));if(open)out.push(progressPhotoForm(o));if(!(o.records&&o.records.intake))out.push(photosBox(o.code));if(open&&d.canManage&&d.team&&d.team.technicians.length)out.push(assignTechForm(o,d));return out;}
 function assignmentNote(o,d){const a=d.team&&d.team.assignments[o.code];if(!a)return h('span');return a.mine?h('p',{class:'note'},h('span',{class:'tag st-al_dia',text:'Tuya'}),' T\xE9cnico asignado: t\xFA'):h('p',{class:'note',text:'T\xE9cnico asignado: '+a.name});}
 function ordersView(d){if(!ordersMine||!d.team)return d;return Object.assign({},d,{orders:d.orders.filter(o=>d.team.assignments[o.code]&&d.team.assignments[o.code].mine)});}
 function ordersFilterBar(d){if(!d.team||!d.team.me.isTechnician)return null;const pick=v=>()=>{ordersMine=v;renderPanel();};return h('div',{class:'chips'},btn('Todas las \xF3rdenes',ordersMine?'ghost':'primary',pick(false)),btn('Mis \xF3rdenes',ordersMine?'primary':'ghost',pick(true)));}
@@ -118479,6 +118545,7 @@ var PANEL_MARKUP = `<div id="panel" class="panel" aria-live="polite"></div>
 var PANEL_SCRIPT_BASE = `
 const ICON={urgente:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 2.8 19.5h18.4L12 3.5z"/><path d="M12 10v4.2"/><path d="M12 17.2v.1"/></svg>',pronto:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>',al_dia:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.5 4 4 9-9"/></svg>',sin_dato:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.6a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><path d="M12 16.8v.1"/></svg>'};
 const STATE_NAME={urgente:'Urgente',pronto:'Pronto',al_dia:'Al d\xEDa',sin_dato:'Sin dato'};
+function sysState(sys){return STATE_NAME[sys.state]+(sys.state==='sin_dato'&&sys.upToDate?' \xB7 '+sys.upToDate+' de '+sys.services.length+' al d\xEDa':'');}
 let panelData=null;let panelVehicle=null;let booking={service:'',day:'',time:''};
 function h(tag,attrs,...kids){const n=document.createElement(tag);for(const [k,v] of Object.entries(attrs||{})){if(v===null||v===undefined||v===false)continue;if(k==='class')n.className=v;else if(k==='text')n.textContent=v;else if(k.startsWith('on'))n.addEventListener(k.slice(2),v);else n.setAttribute(k,v===true?'':String(v));}for(const kid of kids.flat()){if(kid===null||kid===undefined||kid===false)continue;n.append(kid instanceof Node?kid:document.createTextNode(String(kid)));}return n;}
 function icon(state){const s=h('span',{class:'ic'});s.innerHTML=ICON[state]||ICON.sin_dato;return s;}
@@ -118507,8 +118574,8 @@ function sheetBoard(s,reload){const r=s.recommendations;const b=h('div',{class:'
  b.append(h('p',{class:'cap'},h('span',{text:'Ficha de '+s.label+(s.ownerName?' \xB7 '+s.ownerName:'')}),h('b',{text:s.plate||'Sin placa'})),gauge(r),h('p',{class:'note'},'${PLAN_TECH_NOTICE} AutoMantPro no responde por su mala aplicaci\xF3n o incumplimiento, seg\xFAn los ',h('a',{href:'/terminos',target:'_blank',rel:'noopener',text:'t\xE9rminos y condiciones'}),'.'));
  if(r.headline)b.append(h('p',{class:'lead2',text:r.headline}));if(r.next&&s.editor==='dueno')b.append(btn('Agendar '+r.next.serviceName.toLowerCase(),'primary full',()=>{booking.service=r.next.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}));
  const order={urgente:0,pronto:1,sin_dato:2,al_dia:3};let selected=sheetSelected[s.id]||[...s.systems].sort((x,y)=>order[x.state]-order[y.state])[0]?.n||1;const det=h('div',{class:'fic-det sec-fic'});const pts=[],rowsBtn=[];
- const show=()=>{sheetSelected[s.id]=selected;pts.forEach(x=>x.el.classList.toggle('sel',x.n===selected));rowsBtn.forEach(x=>x.el.classList.toggle('sel',x.n===selected));const sys=s.systems.find(x=>x.n===selected);det.replaceChildren(h('h3',{text:sys.n+' \xB7 '+sys.name+' \xB7 '+STATE_NAME[sys.state]}));for(const f of sys.findings||[])det.append(h('p',{class:'note',text:f}));if(sys.services.length){const ul=h('ul',{});for(const it of sys.services)ul.append(...svcRow(s,it,reload));det.append(ul);}else det.append(h('p',{class:'note',text:'El plan de este veh\xEDculo no tiene servicios en este sistema.'}));};
- const pick=n=>{selected=n;show();};const leg=h('ol',{class:'leyenda'});const NOW=s.systems;for(const sys of NOW){const row=h('button',{type:'button',onclick:()=>pick(sys.n)},h('span',{class:'n',text:String(sys.n)}),h('span',{class:'nm',text:sys.name}),h('b',{text:STATE_NAME[sys.state]}));rowsBtn.push({n:sys.n,el:row});leg.append(h('li',{class:SHEET_PT[sys.state]},row));}
+ const show=()=>{sheetSelected[s.id]=selected;pts.forEach(x=>x.el.classList.toggle('sel',x.n===selected));rowsBtn.forEach(x=>x.el.classList.toggle('sel',x.n===selected));const sys=s.systems.find(x=>x.n===selected);det.replaceChildren(h('h3',{text:sys.n+' \xB7 '+sys.name+' \xB7 '+sysState(sys)}));for(const f of sys.findings||[])det.append(h('p',{class:'note',text:f}));if(sys.services.length){const ul=h('ul',{});for(const it of sys.services)ul.append(...svcRow(s,it,reload));det.append(ul);}else det.append(h('p',{class:'note',text:'El plan de este veh\xEDculo no tiene servicios en este sistema.'}));};
+ const pick=n=>{selected=n;show();};const leg=h('ol',{class:'leyenda'});const NOW=s.systems;for(const sys of NOW){const row=h('button',{type:'button',onclick:()=>pick(sys.n)},h('span',{class:'n',text:String(sys.n)}),h('span',{class:'nm',text:sys.name}),h('b',{text:sysState(sys)}));rowsBtn.push({n:sys.n,el:row});leg.append(h('li',{class:SHEET_PT[sys.state]},row));}
  const scan=h('section',{class:'escaner ficha-auto','aria-label':'Sistemas de '+s.label});if(s.image){const car=h('div',{class:'auto'},h('img',{src:s.image,alt:'',width:'1000',height:'500',decoding:'async'}));const mask=h('span',{class:'mascara'},h('span',{class:'haz'}));const url='url("'+s.image+'")';mask.style.setProperty('mask-image',url);mask.style.setProperty('-webkit-mask-image',url);car.append(mask);NOW.forEach((sys,i)=>{const at=s.points[i];if(!at)return;const pt=h('button',{type:'button',class:'pt '+SHEET_PT[sys.state],'aria-label':sys.n+' '+sys.name+': '+STATE_NAME[sys.state],onclick:()=>pick(sys.n)},String(sys.n));pt.style.setProperty('left',at[0]+'%');pt.style.setProperty('top',at[1]+'%');pt.style.setProperty('--d',(6.4*at[0]/145).toFixed(2)+'s');pts.push({n:sys.n,el:pt});car.append(pt);});scan.append(car);if('IntersectionObserver' in window)new IntersectionObserver(e=>scan.classList.toggle('corre',e[0].isIntersecting&&!document.hidden)).observe(scan);}
  scan.append(h('h3',{text:'Informe por sistemas'}),leg);b.append(scan,det);show();
  const more=h('details',{class:'informe-mas',open:true},h('summary',{text:'Informe completo'}));
@@ -118651,6 +118718,7 @@ function ordersCard(d){
   if(o.status==='presupuesto_enviado'&&o.canDecide!==false){acts.append(abtn('Aprobar presupuesto','primary',['Aprobar '+o.code],'\xBFAprobar el presupuesto'+(o.totalUsd?' de '+usd(o.totalUsd):'')+' de '+o.shopName+'? El taller podr\xE1 comenzar el trabajo.'));const no=btn('No aprobar','ghost',()=>{const f=h('form',{class:'acts'});const why=h('input',{required:true,maxlength:'200','aria-label':'Motivo',placeholder:'Motivo'});f.append(why,h('button',{class:'ghost'},'Enviar'));f.onsubmit=e=>{e.preventDefault();void act(['Rechazar '+o.code,why.value.trim()],{btn:sub(e),ask:'\xBFNo aprobar el presupuesto? Se enviar\xE1 tu motivo al taller.'});};no.replaceWith(f);});acts.append(no);}
   if(o.status==='presupuesto_enviado'&&o.canDecide!==false){const part=partialForm(o);if(part)acts.append(part);}
   if(o.canDecide!==false&&o.records&&o.records.payment.pending){const q=o.records.payment.pending;acts.append(abtn('Confirmar pago de '+usd(q.amountUsd),'primary',['Confirmo pago '+o.code],'\xBFConfirmar que pagaste '+usd(q.amountUsd)+' por '+q.method+'?'),reasonBtn('Observar cobro',(why,b)=>act(['Observo pago '+o.code,why],{btn:b,ask:'\xBFEnviar tu observaci\xF3n sobre este cobro al taller?'})));}
+  if(o.canDecide!==false&&o.records&&o.records.payment.refundPending){const r=o.records.payment.refundPending;acts.append(abtn('Confirmar reembolso de '+usd(r.amountUsd),'primary',['Confirmo reembolso '+o.code],'\xBFConfirmar que recibiste '+usd(r.amountUsd)+' de vuelta por '+r.method+'?'),reasonBtn('Observar reembolso',(why,b)=>act(['Observo reembolso '+o.code,why],{btn:b,ask:'\xBFEnviar tu observaci\xF3n sobre este reembolso al taller?'})));}
   if(o.canDecide!==false&&o.checkInPending)acts.append(abtn('Confirmar ingreso','ghost',['Confirmo ingreso '+o.code],'\xBFConfirmar que dejaste tu veh\xEDculo en '+o.shopName+'?'),reasonBtn('Observar ingreso',(why,b)=>act(['Observo ingreso '+o.code,why],{btn:b,ask:'\xBFEnviar tu observaci\xF3n sobre el ingreso del veh\xEDculo?'})));
   for(const c of o.canDecide===false?[]:o.pending){if(c.kind==='novedad')acts.append(abtn('Aprobar novedad '+c.ref,'primary',['Aprobar novedad '+c.ref],'\xBFAprobar el trabajo adicional por '+usd(c.totalUsd)+'?'),reasonBtn('No aprobar '+c.ref,(why,b)=>act(['Rechazar novedad '+c.ref,why],{btn:b,ask:'\xBFNo aprobar el trabajo adicional? Se enviar\xE1 tu motivo al taller.'})),abtn('Pedir llamada','ghost',['Llamar novedad '+c.ref]));else acts.append(abtn('Aceptar entrega','primary',['Acepto entrega '+o.code],'\xBFAceptar la entrega de tu veh\xEDculo? Se cerrar\xE1 la orden.'),reasonBtn('No aceptar entrega',(why,b)=>act(['Rechazo entrega '+o.code,why],{btn:b,ask:'\xBFNo aceptar la entrega? Se enviar\xE1 tu motivo al taller.'})));}
   if(o.canDecide!==false&&o.noWork&&o.status==='cerrada'&&o.totalUsd>0&&!(o.records&&o.records.claim&&['abierto','respondido','en_admin'].includes(o.records.claim.status)))acts.append(reasonBtn('Objetar diagn\xF3stico',(why,b)=>act(['Objetar diagn\xF3stico '+o.code,why],{btn:b,ask:'\xBFObjetar el cobro del diagn\xF3stico? El taller tendr\xE1 48 horas para responder.'})));
@@ -118676,7 +118744,7 @@ function kpi(value,label,cls){return h('div',{class:'kpi '+cls},h('b',{text:Stri
 // Fotos de la orden: se reducen en el tel\xE9fono antes de subirlas y se muestran solo a quien participa en ella.
 function shrinkPhoto(file){const url=URL.createObjectURL(file);return new Promise((ok,no)=>{const i=new Image();i.onload=()=>{const k=Math.min(1,1280/Math.max(i.width,i.height));const c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(url);ok(c.toDataURL('image/jpeg',0.7));};i.onerror=()=>{URL.revokeObjectURL(url);no(new Error('No pudimos leer la foto'));};i.src=url;});}
 async function uploadPhotos(code,kind,files){let failed=0;for(const f of [...files].slice(0,6)){try{await api('/pilot/orders/'+code+'/photos',{method:'POST',body:JSON.stringify({kind,dataUrl:await shrinkPhoto(f)})});}catch{failed++;}}return failed;}
-function photosBox(code){const box=h('div',{class:'chips'});const b=btn('Ver fotos','ghost',async()=>{b.disabled=true;try{const data=await api('/pilot/orders/'+code+'/photos');if(!data.items.length){box.replaceChildren(h('p',{class:'note',text:'Esta orden no tiene fotos.'}));return;}box.replaceChildren();for(const p of data.items){const r=await fetch(apiUrl('/pilot/orders/'+code+'/photos/'+p.id),{headers:{Authorization:'Bearer '+token}});if(r.ok)box.append(h('img',{class:'ot-photo',alt:photoAlt(p.kind),src:URL.createObjectURL(await r.blob())}));}}catch(err){showResult(err.message);b.disabled=false;}});box.append(b);return box;}
+function photosBox(code){const box=h('div',{class:'chips'});const b=btn('Ver fotos','ghost',async()=>{b.disabled=true;try{const data=await api('/pilot/orders/'+code+'/photos');const items=data.items.filter(p=>p.kind!=='factura');if(!items.length){box.replaceChildren(h('p',{class:'note',text:'Esta orden no tiene fotos.'}));return;}box.replaceChildren();for(const p of items){const r=await fetch(apiUrl('/pilot/orders/'+code+'/photos/'+p.id),{headers:{Authorization:'Bearer '+token}});if(r.ok)box.append(h('img',{class:'ot-photo',alt:photoAlt(p.kind),src:URL.createObjectURL(await r.blob())}));}}catch(err){showResult(err.message);b.disabled=false;}});box.append(b);return box;}
 function photoInput(label){return h('label',{class:'note'},label,h('input',{type:'file',accept:'image/jpeg,image/png',multiple:true}));}
 const INTAKE_ZONE_LABELS=[['frente','Frente'],['atras','Atr\xE1s'],['izquierda','Lado izquierdo'],['derecha','Lado derecho'],['techo','Techo'],['interior','Interior']];
 const INTAKE_ITEM_LABELS=['llanta de repuesto','gata','herramientas','radio','documentos','objetos de valor'];
@@ -118693,7 +118761,8 @@ function intakeDetails(o){const i=o.records&&o.records.intake;if(!i)return null;
 function partialForm(o){const lines=(o.records&&o.records.budgetLines)||[];if(lines.length<2)return null;const b=btn('Aprobar solo una parte','ghost',()=>{const f=h('form',{class:'acts'});const boxes=lines.map(l=>({n:l.n,input:h('input',{type:'checkbox','aria-label':l.description})}));f.append(...lines.map((l,i)=>h('label',{class:'note'},boxes[i].input,' '+l.n+'. '+l.description+' \xB7 '+usd(l.totalUsd))),h('button',{class:'primary'},'Aprobar los elegidos'));f.onsubmit=e=>{e.preventDefault();const list=boxes.filter(x=>x.input.checked).map(x=>x.n);if(!list.length){showResult('Elige al menos un rengl\xF3n.');return;}void act(['Aprobar '+o.code,list.join(',')],{btn:sub(e),ask:'\xBFAprobar solo los renglones elegidos? El taller no har\xE1 los dem\xE1s.'});};b.replaceWith(f);});return b;}
 function shopOrdersCard(d){const list=h('div',{class:'list'});for(const o of d.orders){const st=o.status==='rechazado'?'urgente':o.status==='en_ejecucion'?'al_dia':'pronto';const acts=h('div',{class:'chips'},abtn('Ver detalle','ghost',['Estado '+o.code]));
   if(!o.waiting&&o.status!=='cerrada'){if(o.status==='recepcion'||o.status==='rechazado')acts.append(inlineAct('Enviar presupuesto',[{label:'Trabajo (mano de obra)'},{label:'Cantidad',type:'number'},{label:'Precio USD',type:'number'}],v=>['Presupuesto '+o.code,'mano de obra: '+v[0]+', '+v[1]+', '+v[2]],'\xBFEnviar el presupuesto al cliente? \xC9l deber\xE1 aprobarlo.'));if(o.status==='aprobado')acts.append(abtn('Iniciar','ghost',['Iniciar '+o.code],'\xBFMarcar el trabajo como iniciado? El cliente ver\xE1 el avance.'));if(o.status==='en_ejecucion')acts.append(abtn('Esperando repuesto','ghost',['Esperando repuesto '+o.code],'\xBFAvisar que el trabajo espera un repuesto?'),inlineAct('Enviar entrega',[{label:'Km de salida',type:'number'},{label:'Trabajos realizados'},{label:'D\xEDas de garant\xEDa',type:'number'}],v=>['Entrega '+o.code,v[0],v[1],v[2]],'\xBFEnviar la entrega del veh\xEDculo al cliente? \xC9l deber\xE1 aceptarla.'));if(o.status==='esperando_repuesto')acts.append(abtn('Reanudar','ghost',['Reanudar '+o.code],'\xBFReanudar el trabajo?'));if(o.status==='aprobado'||o.status==='en_ejecucion'||o.status==='esperando_repuesto')acts.append(inlineAct('Pedir repuesto',[{label:'Categor\xEDa'},{label:'Qu\xE9 necesitas'}],v=>['Repuesto '+o.code,v[0],v[1]],'\xBFEnviar el pedido de repuesto a los almacenes?'));if(o.status==='aprobado'||o.status==='en_ejecucion'||o.status==='esperando_repuesto')acts.append(inlineAct('Registrar novedad',[{label:'Qu\xE9 encontraste'},{label:'Trabajo adicional'},{label:'Cantidad',type:'number'},{label:'Precio USD',type:'number'}],v=>['Novedad '+o.code,v[0],'mano de obra: '+v[1]+', '+v[2]+', '+v[3]],'\xBFEnviar la novedad al cliente? No hagas ese trabajo hasta que \xE9l lo apruebe.'));}
-  if(o.status==='cerrada'){acts.append(...shopWarrantyActs(o,d));if(d.canManage&&o.totalUsd&&balanceOf(o)>0)acts.append(paymentForm(o));}else{acts.append(inlineAct('Fecha de entrega',[{label:'Fecha',type:'date',raw:true},{label:'Motivo (opcional)',optional:true}],v=>['Fecha entrega '+o.code,v[0],...(v[1]?[v[1]]:[])],'\xBFFijar esta fecha de entrega? Avisaremos al cliente.'));if(d.canManage){if(o.totalUsd&&balanceOf(o)>0)acts.append(paymentForm(o));if(o.status==='rechazado')acts.append(reasonBtn('Salida sin trabajo',(why,b)=>act(['Salida sin trabajo '+o.code,why],{btn:b,ask:'\xBFRegistrar que el veh\xEDculo sale sin trabajo? Si avisaste un diagn\xF3stico al recibirlo, se cobra; si no, sale sin costo.'})));acts.append(reasonBtn('Cancelar orden',(why,b)=>act(['Cancelar orden '+o.code,why],{btn:b,ask:'\xBFCancelar esta orden? Avisaremos al cliente con tu motivo.'})));}}
+  if(o.status==='cancelada'){const p=o.records&&o.records.payment;const left=p?Math.max(0,p.paidUsd-p.refundedUsd-(p.refundPending?p.refundPending.amountUsd:0)):0;if(d.canManage&&left>0)acts.append(inlineAct('Registrar reembolso',[{label:'Valor devuelto en USD',type:'number'},{label:'Forma (efectivo, transferencia, tarjeta u otra)'},{label:'Referencia (opcional)',optional:true}],v=>['Reembolso '+o.code,v[0],v[1],...(v[2]?[v[2]]:[])],'\xBFRegistrar este reembolso? El cliente lo confirmar\xE1.'));}
+  else if(o.status==='cerrada'){acts.append(...shopWarrantyActs(o,d));if(d.canManage&&o.totalUsd&&balanceOf(o)>0)acts.append(paymentForm(o));}else{acts.append(inlineAct('Fecha de entrega',[{label:'Fecha',type:'date',raw:true},{label:'Motivo (opcional)',optional:true}],v=>['Fecha entrega '+o.code,v[0],...(v[1]?[v[1]]:[])],'\xBFFijar esta fecha de entrega? Avisaremos al cliente.'));if(d.canManage){if(o.totalUsd&&balanceOf(o)>0)acts.append(paymentForm(o));if(o.status==='rechazado')acts.append(reasonBtn('Salida sin trabajo',(why,b)=>act(['Salida sin trabajo '+o.code,why],{btn:b,ask:'\xBFRegistrar que el veh\xEDculo sale sin trabajo? Si avisaste un diagn\xF3stico al recibirlo, se cobra; si no, sale sin costo.'})));acts.append(reasonBtn('Cancelar orden',(why,b)=>act(['Cancelar orden '+o.code,why],{btn:b,ask:'\xBFCancelar esta orden? Avisaremos al cliente con tu motivo.'})));}}
   acts.append(...shopOrderExtras(o,d));
   list.append(...[h('div',{class:'row2'},h('b',{text:o.vehicle+(o.plate?' \xB7 '+o.plate:'')}),h('span',{class:'tag st-'+st,text:o.waiting?'Espera al due\xF1o':o.statusText})),h('p',{class:'note',text:o.code+(o.totalUsd?' \xB7 '+usd(o.totalUsd):'')}),promisedLine(o),assignmentNote(o,d),claimBlock(o,'taller'),warrantyLine(o),paymentLine(o),intakeDetails(o),acts].filter(Boolean));if(o.records&&o.records.partial)list.append(h('p',{class:'note',text:'Aprobado en parte: '+usd(o.records.partial.approvedUsd)+' de '+usd(o.records.partial.quotedUsd)}));}
  return card('\xD3rdenes abiertas',d.orders.length+(d.orders.length===1?' orden':' \xF3rdenes'),list);}
@@ -120449,7 +120518,7 @@ var whenTableMissing6 = (value2) => (err) => {
 var serviceName3 = (id3) => serviceTaxonomy.categories.flatMap((c) => c.subservices).find((s) => s.id === id3)?.name ?? id3;
 var iso2 = (value2) => value2 ? new Date(value2).toISOString() : null;
 async function receiptOrder(conn, userId, role, number2) {
-  const select2 = "SELECT w.*, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, s.ruc AS shopRuc, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.number = ?";
+  const select2 = "SELECT w.*, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, s.ruc AS shopRuc, v.make, v.model, v.year, v.plate, u.name AS clientName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId LEFT JOIN `User` u ON u.id = w.ownerId WHERE w.number = ?";
   if (role === "taller") {
     const shop = await new VehicleCareStore().actingShop(conn, userId, role);
     const [order] = await rows28(conn, `${select2} AND w.shopId = ?`, [number2, shop.id]);
@@ -120487,6 +120556,7 @@ async function orderReceipt(conn, userId, role, number2) {
     closedAt: iso2(order.closedAt),
     shop: { name: String(order.shopName), address: String(order.shopAddress ?? ""), city: String(order.shopCity ?? ""), ruc: order.shopRuc ? String(order.shopRuc) : null },
     vehicle: { label: [order.make, order.model, order.year].filter(Boolean).join(" "), plate: order.plate ? String(order.plate) : null },
+    clientName: order.clientName ? String(order.clientName) : null,
     intakeKm: order.intakeKm === null || order.intakeKm === void 0 ? null : Number(order.intakeKm),
     exitKm: order.exitKm === null || order.exitKm === void 0 ? null : Number(order.exitKm),
     warranty: days2 > 0 ? { days: days2, until: window3?.until ?? null } : null,
@@ -120736,7 +120806,7 @@ function renderReceiptPage(r, nonce2) {
 <p class="muted">${escapeHtml(STATUS[r.status] ?? r.status)}${r.status === "cerrada" ? "" : " \xB7 la orden sigue abierta: los valores pueden cambiar"}</p>
 <p class="notice">Este comprobante resume lo hecho y lo cobrado en la orden. No es una factura ni un documento tributario autorizado por el SRI.</p>
 <h2>Taller</h2><dl><dt>Nombre</dt><dd>${escapeHtml(r.shop.name)}</dd>${r.shop.ruc ? `<dt>RUC</dt><dd>${escapeHtml(r.shop.ruc)}</dd>` : ""}<dt>Direcci\xF3n</dt><dd>${escapeHtml([r.shop.address, r.shop.city].filter(Boolean).join(", "))}</dd></dl>
-<h2>Veh\xEDculo</h2><dl><dt>Veh\xEDculo</dt><dd>${escapeHtml(r.vehicle.label)}</dd>${r.vehicle.plate ? `<dt>Placa</dt><dd>${escapeHtml(r.vehicle.plate)}</dd>` : ""}<dt>Km de ingreso</dt><dd>${r.intakeKm === null ? "\u2014" : escapeHtml(km4(r.intakeKm))}</dd><dt>Km de salida</dt><dd>${r.exitKm === null ? "\u2014" : escapeHtml(km4(r.exitKm))}</dd><dt>Ingreso</dt><dd>${escapeHtml(when2(r.createdAt))}</dd><dt>Entrega</dt><dd>${escapeHtml(when2(r.closedAt))}</dd><dt>Garant\xEDa</dt><dd>${warranty}</dd></dl>
+<h2>Veh\xEDculo</h2><dl>${r.clientName ? `<dt>Cliente</dt><dd>${escapeHtml(r.clientName)}</dd>` : ""}<dt>Veh\xEDculo</dt><dd>${escapeHtml(r.vehicle.label)}</dd>${r.vehicle.plate ? `<dt>Placa</dt><dd>${escapeHtml(r.vehicle.plate)}</dd>` : ""}<dt>Km de ingreso</dt><dd>${r.intakeKm === null ? "\u2014" : escapeHtml(km4(r.intakeKm))}</dd><dt>Km de salida</dt><dd>${r.exitKm === null ? "\u2014" : escapeHtml(km4(r.exitKm))}</dd><dt>Ingreso</dt><dd>${escapeHtml(when2(r.createdAt))}</dd><dt>Entrega</dt><dd>${escapeHtml(when2(r.closedAt))}</dd><dt>Garant\xEDa</dt><dd>${warranty}</dd></dl>
 <h2>Trabajos</h2>${r.worksDone ? `<p>${escapeHtml(r.worksDone)}</p>` : ""}${r.lines.length ? `<table><thead><tr><th>Detalle</th><th class="n">Cant.</th>${money7 ? '<th class="n">Precio</th><th class="n">Total</th>' : ""}</tr></thead><tbody>${lines}</tbody></table>` : '<p class="muted">Todav\xEDa no hay renglones registrados.</p>'}
 ${money7 ? `<h2>Valores</h2><table><tbody>${money7.partial ? `<tr><td>Presupuesto original</td><td class="n">${escapeHtml(usd3(money7.partial.quotedUsd))}</td></tr><tr><td>Aprobado por el due\xF1o</td><td class="n">${escapeHtml(usd3(money7.partial.approvedUsd))}</td></tr>` : ""}<tr class="tot"><td>Total de la orden</td><td class="n">${escapeHtml(usd3(money7.totalUsd))}</td></tr><tr><td>Cobrado y confirmado</td><td class="n">${escapeHtml(usd3(money7.paidUsd))}</td></tr>${money7.toConfirmUsd ? `<tr><td>Por confirmar</td><td class="n">${escapeHtml(usd3(money7.toConfirmUsd))}</td></tr>` : ""}<tr><td>Saldo</td><td class="n">${escapeHtml(usd3(money7.balanceUsd))}</td></tr></tbody></table>${payments}` : '<p class="muted">Los valores y cobros de esta orden los ven el due\xF1o y el taller.</p>'}
 <p class="muted">Emitido el ${escapeHtml(when2((/* @__PURE__ */ new Date()).toISOString(), true))} por AutoMantPro a partir de los datos de la orden. Documento sin validez tributaria.</p>`;
@@ -121611,10 +121681,10 @@ var PilotPanelStore = class {
     throw new BrokerError("NOT_FOUND");
   }
   async addOrderPhoto(userId, role, number2, kind, dataUrl) {
-    const photo = photoFromDataUrl(dataUrl);
+    const photo = photoFromDataUrl(dataUrl, kind === "factura");
     if (!photo)
       throw new BrokerError("PHOTO_INVALID");
-    if (kind === "avance" && role !== "taller")
+    if ((kind === "avance" || kind === "factura") && role !== "taller")
       throw new BrokerError("FORBIDDEN");
     return this.run(async (conn) => {
       const orderId = await this.photoOrder(conn, userId, role, number2);
@@ -121625,6 +121695,8 @@ var PilotPanelStore = class {
       await conn.query("INSERT INTO `WorkOrderPhoto` (id, workOrderId, kind, mime, data, createdBy) VALUES (?, ?, ?, ?, ?, ?)", [id3, orderId, kind, photo.mime, photo.data, userId]);
       if (kind === "avance")
         await this.progressNotice(conn, orderId);
+      if (kind === "factura")
+        await this.invoiceNotice(conn, orderId, id3);
       return { id: id3 };
     });
   }
@@ -121670,7 +121742,7 @@ var PilotPanelStore = class {
     const recommendations = chosen ? await this.planSummary(conn, chosen) : null;
     const alerts = chosen && recommendations ? await this.vehicleAlerts(conn, chosen, recommendations) : [];
     const ids = list7.map((v) => String(v.id));
-    const orders = ids.length ? await rows33(conn, "SELECT w.id, w.number, w.status, w.intakeKm, w.total, w.updatedAt, w.vehicleId, w.diagnosisOutcome, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY)) OR (w.status = 'cerrada' AND w.warrantyDays > 0 AND DATE_ADD(w.closedAt, INTERVAL w.warrantyDays DAY) > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY))) ORDER BY w.status = 'cerrada', w.number DESC LIMIT 8", [ids]) : [];
+    const orders = ids.length ? await rows33(conn, "SELECT w.id, w.number, w.status, w.intakeKm, w.total, w.updatedAt, w.vehicleId, w.diagnosisOutcome, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND EXISTS (SELECT 1 FROM `WorkOrderPhoto` fp WHERE fp.workOrderId = w.id AND fp.kind = 'factura' AND fp.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY))) OR (w.status = 'cancelada' AND w.updatedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND EXISTS (SELECT 1 FROM `WorkOrderPayment` rp WHERE rp.workOrderId = w.id AND rp.status IN ('pagado','reembolso_informado'))) OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY)) OR (w.status = 'cerrada' AND w.warrantyDays > 0 AND DATE_ADD(w.closedAt, INTERVAL w.warrantyDays DAY) > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY))) ORDER BY w.status = 'cerrada', w.number DESC LIMIT 8", [ids]) : [];
     orders.push(...await ordersWithActiveClaim(conn, "vehicle", ids, orders.map((o) => String(o.id))));
     await hideOrdersBeforeTransfer(conn, orders);
     const upcoming = ids.length ? await rows33(conn, "SELECT a.id, a.status, a.scheduledAt, a.vehicleId, a.summary, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.vehicleId IN (?) AND a.status IN ('pending','confirmed') AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY) AND NOT EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id) ORDER BY a.scheduledAt LIMIT 5", [ids]) : [];
@@ -121929,6 +122001,14 @@ var PilotPanelStore = class {
     return panel;
   }
   /** Un aviso por orden y por día al dueño cuando el taller sube fotos de avance (no uno por foto). */
+  /** C3: el taller subió su factura; el dueño la ve y la descarga desde su panel. */
+  async invoiceNotice(conn, orderId, photoId) {
+    const [order] = await rows33(conn, "SELECT w.number, w.ownerId, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.id = ?", [orderId]);
+    if (!order)
+      return;
+    const message2 = `\u{1F9FE} ${String(order.shopName)} subi\xF3 la factura de tu orden ${orderCode(order.number)}. M\xEDrala o desc\xE1rgala en tu panel con \xABVer factura\xBB: automantpro.app/cuenta`;
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'order.invoice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID35(), `invoice:${photoId}`, String(order.ownerId), JSON.stringify({ message: message2 })]);
+  }
   async progressNotice(conn, orderId) {
     const [order] = await rows33(conn, "SELECT w.number, w.ownerId, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.id = ?", [orderId]);
     if (!order)
@@ -121956,16 +122036,34 @@ var PilotPanelStore = class {
         return [];
       throw err;
     });
-    const unpaid = await rows33(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.diagnosisOutcome = 'sin_trabajo' AND w.total > 0 AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND w.total > COALESCE((SELECT SUM(p.amount) FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status IN ('informado','pagado')), 0) ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err) => {
+    const unpaid = await rows33(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.total > 0 AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND w.total > COALESCE((SELECT SUM(p.amount) FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status = 'pagado'), 0) ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err) => {
+      if (err.code === "ER_NO_SUCH_TABLE")
+        return [];
+      throw err;
+    });
+    const toRefund = await rows33(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cancelada' AND w.updatedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND EXISTS (SELECT 1 FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status = 'pagado') ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err) => {
       if (err.code === "ER_NO_SUCH_TABLE")
         return [];
       throw err;
     });
     const orders = [...claimed, ...open];
-    for (const o of unpaid)
+    for (const o of [...unpaid, ...toRefund])
       if (!orders.some((x) => x.id === o.id))
         orders.push(o);
     orders.push(...await ordersWithActiveClaim(conn, "shop", [shop.id], orders.map((o) => String(o.id))));
+    if (!shop.isOwner && !shop.isAdmin && orders.length) {
+      const assigned = await rows33(conn, "SELECT workOrderId, memberUserId FROM `WorkOrderAssignment` WHERE workOrderId IN (?)", [orders.map((o) => String(o.id))]).catch((err) => {
+        if (err.code === "ER_NO_SUCH_TABLE")
+          return [];
+        throw err;
+      });
+      const owner = new Map(assigned.map((a) => [String(a.workOrderId), String(a.memberUserId)]));
+      for (let i = orders.length - 1; i >= 0; i--) {
+        const who = owner.get(String(orders[i].id));
+        if (who && who !== userId)
+          orders.splice(i, 1);
+      }
+    }
     const clients = await rows33(conn, "SELECT a.id AS appointmentId, a.vehicleId, u.name AS ownerName, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = a.ownerId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) AND a.scheduledAt = (SELECT MAX(a2.scheduledAt) FROM `Appointment` a2 WHERE a2.shopId = a.shopId AND a2.vehicleId = a.vehicleId AND a2.status <> 'cancelled') ORDER BY a.scheduledAt DESC LIMIT 60", [shop.id]);
     const reminders = [];
     for (const c of clients) {
@@ -126363,13 +126461,14 @@ var CareDeadlines = class {
   }
   async run(now = /* @__PURE__ */ new Date()) {
     const conn = await this.connect();
-    const result = { findingReminders: 0, findingsExpired: 0, balanceReminders: 0, returnsEscalated: 0, visitReminders: 0 };
+    const result = { findingReminders: 0, findingsExpired: 0, balanceReminders: 0, returnsEscalated: 0, visitReminders: 0, promisesOverdue: 0 };
     try {
       await this.findings(conn, now, result);
       await this.balances(conn, now, result);
       await this.partBalances(conn, now, result);
       await this.returns(conn, now, result);
       await this.visits(conn, now, result);
+      await this.promises(conn, now, result);
       return result;
     } finally {
       await conn.end().catch(() => void 0);
@@ -126462,6 +126561,18 @@ var CareDeadlines = class {
       const text12 = a.status === "confirmed" ? `\u{1F4C5} Recordatorio: tu pr\xF3xima visita en ${String(a.shopName)} es el ${when12} (${code5}). Si no puedes ir, av\xEDsale al taller.` : `\u{1F4C5} ${String(a.shopName)} te propuso la pr\xF3xima visita para el ${when12} y todav\xEDa no respondes. Responde: Aceptar visita ${code5} \xB7 Rechazar visita ${code5}`;
       if (await this.once(conn, String(a.ownerId), `nextvisit-7d:${String(a.id)}`, "care.visit", text12))
         result.visitReminders++;
+    }
+  }
+  // ---------- X4: fecha prometida vencida ----------
+  async promises(conn, now, result) {
+    const today = new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
+    const due = await rows40(conn, "SELECT p.workOrderId, DATE_FORMAT(p.promisedDate, '%Y-%m-%d') AS promised, w.number, w.ownerId, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderPromise` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE p.promisedDate < ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY p.promisedDate LIMIT 200", [today]).catch(skipMissing);
+    for (const p of due) {
+      const code5 = workOrderCode(Number(p.number)), key = `${String(p.workOrderId)}:${String(p.promised)}`;
+      if (await this.once(conn, String(p.shopUserId), `promise-overdue:${key}`, "care.promise", `\u23F0 Venci\xF3 la fecha de entrega prometida (${String(p.promised)}) de ${code5} y la orden sigue abierta. Fija la nueva fecha con: Fecha entrega ${code5} | AAAA-MM-DD | motivo`)) {
+        await this.once(conn, String(p.ownerId), `promise-overdue-owner:${key}`, "care.promise", `\u23F0 Pas\xF3 la fecha de entrega prometida (${String(p.promised)}) de tu orden ${code5} en ${String(p.shopName)}. Pedimos al taller que te confirme la nueva fecha.`);
+        result.promisesOverdue++;
+      }
     }
   }
   start(intervalMs = 36e5, onError = () => {
