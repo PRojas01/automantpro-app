@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='eedf5a7c2ba5ede84a117bb344d3bc362b331983'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='eb3766846087f0027adb4f7f8b1059ab1dc14006'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -62930,6 +62930,9 @@ var init_part_order_statements = __esm({
       { kind: "createTable", target: "PartPayment", sql: "CREATE TABLE IF NOT EXISTS `PartPayment` (`id` VARCHAR(191) NOT NULL, `requestId` VARCHAR(191) NOT NULL, `offerId` VARCHAR(191) NOT NULL, `amount` DECIMAL(10,2) NOT NULL, `method` VARCHAR(20) NOT NULL, `reference` VARCHAR(120) NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'informado', `buyerNote` VARCHAR(300) NULL, `reportedBy` VARCHAR(191) NOT NULL, `answeredAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `PartPayment_requestId_idx` (`requestId`, `status`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
       // Devolución del repuesto: la pide quien compró después de recibirlo; el almacén la acepta o la rechaza.
       { kind: "createTable", target: "PartReturn", sql: "CREATE TABLE IF NOT EXISTS `PartReturn` (`id` VARCHAR(191) NOT NULL, `requestId` VARCHAR(191) NOT NULL, `offerId` VARCHAR(191) NOT NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'solicitada', `reason` VARCHAR(300) NOT NULL, `storeNote` VARCHAR(300) NULL, `requestedBy` VARCHAR(191) NOT NULL, `decidedBy` VARCHAR(191) NULL, `decidedAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `PartReturn_requestId_idx` (`requestId`, `status`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+      // R4: foto del comprobante que el almacén adjunta a su cobro (igual que en el cobro del taller).
+      { kind: "addColumn", target: "PartPayment.photoMime", sql: "ALTER TABLE `PartPayment` ADD COLUMN `photoMime` VARCHAR(20) NULL" },
+      { kind: "addColumn", target: "PartPayment.photoData", sql: "ALTER TABLE `PartPayment` ADD COLUMN `photoData` MEDIUMBLOB NULL" },
       // R2: devolución sin respuesta del almacén en 48 horas, o rechazada y escalada por quien compró: decide el administrador.
       { kind: "addColumn", target: "PartReturn.escalatedAt", sql: "ALTER TABLE `PartReturn` ADD COLUMN `escalatedAt` DATETIME(3) NULL" },
       { kind: "addColumn", target: "PartReturn.escalationReason", sql: "ALTER TABLE `PartReturn` ADD COLUMN `escalationReason` VARCHAR(300) NULL" },
@@ -89550,6 +89553,32 @@ async function load(conn, userId, role, side, requestRef) {
     fail2("FORBIDDEN");
   return { request, offer };
 }
+async function savePartProof(conn, userId, role, requestRef, photo) {
+  const { request } = await load(conn, userId, role, "store", requestRef);
+  const ref4 = shortCode("S", String(request.id));
+  const [payment] = await rows13(conn, "SELECT id FROM `PartPayment` WHERE requestId = ? AND status = 'informado' ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [request.id]);
+  if (!payment)
+    fail2("PART_NO_PAYMENT_PENDING");
+  try {
+    await conn.query("UPDATE `PartPayment` SET photoMime = ?, photoData = ? WHERE id = ?", [photo.mime, photo.data, payment.id]);
+  } catch (err) {
+    if (MISSING.includes(String(err.code)))
+      fail2("FEATURE_UPDATE_PENDING");
+    throw err;
+  }
+  await audit2(conn, "part.payment.proof", userId, "almacen", "LocalRequest", String(request.id), { paymentId: String(payment.id) });
+  await notify2(conn, String(request.ownerId), `partproof:${String(payment.id)}`, "local.payment", `\u{1F9FE} El almac\xE9n adjunt\xF3 el comprobante del cobro del repuesto ${ref4}. M\xEDralo en tu panel con \xABVer comprobante\xBB antes de confirmar el pago.`);
+  return { message: `Adjuntamos el comprobante al cobro de ${ref4} y avisamos a quien compr\xF3.` };
+}
+async function partProof(conn, userId, role, requestRef) {
+  const { request } = await load(conn, userId, role, role === "almacen" ? "store" : "buyer", requestRef);
+  if (role !== "almacen" && request.ownerId !== userId)
+    fail2("FORBIDDEN");
+  const [row2] = await rows13(conn, "SELECT photoMime, photoData FROM `PartPayment` WHERE requestId = ? AND photoMime IS NOT NULL ORDER BY createdAt DESC LIMIT 1", [request.id]).catch(whenMissing([]));
+  if (!row2)
+    return fail2("NOT_FOUND");
+  return { mime: String(row2.photoMime), data: row2.photoData };
+}
 async function paymentSummary(conn, requestId) {
   const list7 = await rows13(conn, "SELECT status, COALESCE(SUM(amount), 0) AS total FROM `PartPayment` WHERE requestId = ? GROUP BY status", [requestId]);
   const of = (status) => n(list7.find((r) => r.status === status)?.total);
@@ -89933,6 +89962,8 @@ var init_vehicle_care_store = __esm({
             return this.paymentAnswer(conn, userId, role, command.orderNumber, command.confirm, command.note);
           case "shopRefund":
             return this.shopRefund(conn, userId, role, command);
+          case "voidService":
+            return this.voidService(conn, userId, role, command);
           case "refundAnswer":
             return this.refundAnswer(conn, userId, role, command.orderNumber, command.confirm, command.note);
           case "checkInAnswer":
@@ -90128,6 +90159,25 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
         const totals = await paymentTotals(conn, String(order.id));
         const balance = Number(order.total ?? 0) - totals.paid - totals.informed;
         return { userId, message: confirm ? `Confirmaste el pago de ${amount} en ${code5}. Saldo: ${formatUsd(Math.max(balance, 0))}.` : `Anotamos tu observaci\xF3n sobre el cobro de ${code5} y avisamos a ${order.shopName}.` };
+      }
+      /**
+       * X2: el taller corrige un servicio que registró por error en los últimos 7 días. El registro sale del historial
+       * y del plan; queda en la auditoría con sus datos y el motivo, y el dueño recibe el aviso.
+       */
+      async voidService(conn, userId, role, command) {
+        const shop = await this.actingShop(conn, userId, role);
+        const vehicle = await this.shopVehicle(conn, shop.id, command.appointmentRef);
+        const serviceId = matchService(command.service);
+        if (!serviceId)
+          fail3("UNKNOWN_SERVICE");
+        const found = await rows14(conn, "SELECT id, km, doneAt, createdBy FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND serviceId = ? AND createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY createdAt DESC FOR UPDATE", [vehicle.id, shop.id, serviceId]);
+        if (!found.length)
+          fail3("SERVICE_NOT_VOIDABLE");
+        await conn.query("DELETE FROM `VehicleServiceRecord` WHERE id IN (?)", [found.map((r) => r.id)]);
+        await this.audit(conn, userId, "care.service.voided", "Vehicle", String(vehicle.id), { serviceId, reason: command.reason, records: found.map((r) => ({ km: r.km, doneAt: r.doneAt, createdBy: r.createdBy })), by: shop.actor });
+        const label5 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`, name = serviceName(serviceId);
+        await this.notifyOwner(conn, String(vehicle.ownerId), String(vehicle.id), `servicevoid:${String(vehicle.id)}:${serviceId}:${Date.now()}`, "care.service", `\u270F\uFE0F ${shop.name} corrigi\xF3 el historial de tu ${label5}: quit\xF3 \xAB${name}\xBB, que registr\xF3 por error. Motivo: ${command.reason}. Tu plan se actualiz\xF3.`);
+        return { userId, message: `Quitamos \xAB${name}\xBB del historial del ${label5} y avisamos al due\xF1o. El plan vuelve a calcularse sin ese registro.` };
       }
       /**
        * X5 y C1 (regla de Pedro): el taller registra lo que devolvió de una orden con pagos y el dueño lo confirma u
@@ -90348,11 +90398,13 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revi
           fail3("NOT_FOUND");
         await conn.query(accept ? "UPDATE `Appointment` SET status = 'confirmed', updatedAt = UTC_TIMESTAMP(3) WHERE id = ?" : "UPDATE `Appointment` SET status = 'cancelled', cancelReason = 'Rechazada por el due\xF1o', updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [visit.id]);
         const when12 = formatEcDateTime(visit.scheduledAt);
-        await this.notify(conn, String(visit.shopUserId), `visit:${String(visit.id)}:${accept}`, "care.visit", accept ? `El cliente confirm\xF3 la visita ${ref4} para ${when12}.` : `El cliente no puede asistir a la visita ${ref4} del ${when12}.`);
+        const [previous] = accept ? [] : await rows14(conn, "SELECT a.id FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.vehicleId = ? AND s.userId = ? AND a.status <> 'cancelled' AND a.id <> ? ORDER BY a.scheduledAt DESC LIMIT 1", [visit.vehicleId, visit.shopUserId, visit.id]);
+        const again = previous ? ` Si quieres proponer otra fecha: Pr\xF3xima visita ${short2("C", String(previous.id))} | AAAA-MM-DD | HH:mm` : "";
+        await this.notify(conn, String(visit.shopUserId), `visit:${String(visit.id)}:${accept}`, "care.visit", accept ? `El cliente confirm\xF3 la visita ${ref4} para ${when12}.` : `El cliente no puede asistir a la visita ${ref4} del ${when12}.${again}`);
         const label5 = `${visit.make} ${visit.model} ${visit.year}`;
         await this.notifyDriver(conn, String(visit.vehicleId), `visit-driver:${String(visit.id)}`, accept ? `\u{1F4C5} Lleva ${label5} a ${visit.shopName} (${visit.address}) el ${when12}. La visita qued\xF3 confirmada.` : `\u{1F6AB} La visita de ${label5} del ${when12} en ${visit.shopName} no se har\xE1: no lo lleves. Tu flota te avisar\xE1 la nueva fecha.`);
         await this.notifyFleetTeam(conn, String(visit.vehicleId), userId, `visit-team:${String(visit.id)}`, "care.visit", accept ? `confirm\xF3 la visita ${ref4} de ${label5} en ${visit.shopName} para ${when12}.` : `rechaz\xF3 la visita ${ref4} de ${label5} en ${visit.shopName} del ${when12}.`);
-        return { userId, message: accept ? `Visita ${ref4} confirmada con ${visit.shopName} para ${when12}.` : `Listo, avisamos a ${visit.shopName} que no puedes asistir.` };
+        return { userId, message: accept ? `Visita ${ref4} confirmada con ${visit.shopName} para ${when12}.` : `Listo, avisamos a ${visit.shopName} que no puedes asistir. Si prefieres otra fecha, p\xEDdela desde tu panel en \xABAgendar cita\xBB o espera la nueva propuesta del taller.` };
       }
       /** El dueño retira una cita pendiente o confirmada. Con una orden abierta el vehículo ya está en el taller: no se cancela por aquí. */
       async cancelAppointment(conn, userId, role, ref4, reason) {
@@ -92066,6 +92118,8 @@ function parseAccountCommand(raw) {
     command = { action: "warrantyAnswer", orderNumber: orderOf(verb), accept: verb.startsWith("aceptar"), note: parts[1] ? parts[1] : null };
   else if (/^(aprobar|rechazar) ot-\d{1,7}$/.test(verb) && parts.length <= 2)
     command = { action: "budgetAnswer", orderNumber: orderOf(verb), approve: verb.startsWith("aprobar"), reason: parts[1] ? parts[1] : null };
+  else if (/^anular servicio [cC]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 3)
+    command = { action: "voidService", appointmentRef: ref2(verb), service: parts[1] ?? "", reason: parts[2] ?? "" };
   else if (/^servicio [cC]-[0-9a-fA-F]{6}$/.test(verb) && (parts.length === 3 || parts.length === 4))
     command = { action: "shopService", appointmentRef: ref2(verb), services: (parts[1] ?? "").split(",").map((x) => x.trim()).filter(Boolean), km: kmOf(parts[2]), detail: parts[3] ?? "" };
   else if (/^proxima visita [cC]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 3)
@@ -92329,6 +92383,7 @@ var init_commands = __esm({
       external_exports.object({ action: external_exports.literal("warrantyStatus"), orderNumber: external_exports.number().int().min(1) }).strict(),
       external_exports.object({ action: external_exports.literal("warrantyClaim"), orderNumber: external_exports.number().int().min(1), reason: external_exports.string().trim().max(300).nullable() }).strict(),
       external_exports.object({ action: external_exports.literal("warrantyAnswer"), orderNumber: external_exports.number().int().min(1), accept: external_exports.boolean(), note: external_exports.string().trim().max(300).nullable() }).strict(),
+      external_exports.object({ action: external_exports.literal("voidService"), appointmentRef: code2("C"), service: text2(3, 80), reason: text2(3, 191) }).strict(),
       external_exports.object({ action: external_exports.literal("shopService"), appointmentRef: code2("C"), services: external_exports.array(text2(3, 80)).min(1).max(15), km: external_exports.number().int().min(0).max(2e6), detail: external_exports.string().trim().max(500) }).strict(),
       external_exports.object({ action: external_exports.literal("nextVisit"), appointmentRef: code2("C"), date: external_exports.string().regex(/^\d{4}-\d{2}-\d{2}$/), time: external_exports.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/) }).strict(),
       external_exports.object({ action: external_exports.literal("shopAlert"), appointmentRef: code2("C"), label: text2(3, 120), dueAt: external_exports.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(), dueKm: external_exports.number().int().min(1).max(2e6).nullable() }).strict(),
@@ -92439,6 +92494,7 @@ var init_commands = __esm({
       "Calificar OT-00012 | calidad 1-5 | atenci\xF3n 1-5 | plazo 1-5 | costo 1-5 | comentario \xB7 Calificar S-XXXXXX | pieza correcta s\xED/no | calidad | plazo | precio | atenci\xF3n | comentario \xB7 Taller o almac\xE9n: Mi calificaci\xF3n",
       "Cobro: Taller: Cobro OT-00012 | USD | efectivo, transferencia, tarjeta u otra (| referencia) \xB7 Due\xF1o: Confirmo pago OT-00012 \xB7 Observo pago OT-00012 | qu\xE9 no coincide",
       "Taller: Fecha entrega OT-00012 | AAAA-MM-DD (| motivo) \xB7 No asisti\xF3 C-XXXXXX \xB7 Due\xF1o o administrador del taller: Cancelar orden OT-00012 | motivo",
+      "Servicio mal registrado (hasta 7 d\xEDas): Anular servicio C-XXXXXX | servicio | motivo",
       "Orden cancelada con pagos: el taller registra lo que devolvi\xF3 con Reembolso OT-00012 | valor | forma (| referencia) \xB7 Due\xF1o: Confirmo reembolso OT-00012 \xB7 Observo reembolso OT-00012 | motivo",
       "Presupuesto rechazado: el taller puede avisar el diagn\xF3stico al recibir el veh\xEDculo (Ingreso C-XXXXXX | \u2026 | diagn\xF3stico 15). Taller: Salida sin trabajo OT-00012 | motivo (cobra el diagn\xF3stico solo si lo avis\xF3) \xB7 Due\xF1o: Objetar diagn\xF3stico OT-00012 | motivo",
       "Taller: Novedad OT-00012 | qu\xE9 se encontr\xF3 | repuesto: \u2026; mano de obra: \u2026 \xB7 Entrega OT-00012 | km de salida | trabajos realizados | d\xEDas de garant\xEDa",
@@ -94397,6 +94453,7 @@ var init_error_messages = __esm({
       NO_PAYMENT_TO_REFUND: "Esta orden no tiene pagos confirmados para devolver.",
       REFUND_EXCEEDS_PAID: "El reembolso no puede superar lo que el cliente pag\xF3 y confirm\xF3, menos lo ya devuelto.",
       NO_REFUND_PENDING: "No hay un reembolso por confirmar en esta orden.",
+      SERVICE_NOT_VOIDABLE: "No hay un registro de ese servicio hecho por tu taller en los \xFAltimos 7 d\xEDas. Si el error es m\xE1s antiguo, p\xEDdelo al equipo de AutoMantPro.",
       ORDER_CLOSED: "La orden ya est\xE1 cerrada o cancelada. Consulta su estado con el taller.",
       ORDER_NOT_IN_PROGRESS: "La orden todav\xEDa no est\xE1 lista para cerrarse. Consulta su estado con el taller.",
       ORDER_STAGE_INVALID: "La orden no est\xE1 en ese paso: se inicia cuando el due\xF1o aprueba el presupuesto. Revisa d\xF3nde va con: Estado OT-00012.",
@@ -118316,8 +118373,12 @@ var PART_MONEY_SCRIPT = `
 const PART_RETURN_TEXT={solicitada:'pedida, espera al almac\xE9n',aceptada:'aceptada',rechazada:'rechazada'};
 const PART_METHODS=[['efectivo','Efectivo'],['transferencia','Transferencia'],['tarjeta','Tarjeta'],['otra','Otra']];
 function partChargeBtn(p){const b=btn('Registrar cobro','ghost',()=>{const f=h('form',{class:'acts'});const amount=h('input',{type:'number',required:true,min:'0',step:'any',inputmode:'decimal','aria-label':'Valor cobrado en USD',placeholder:'Valor USD'});const how=h('select',{'aria-label':'Forma de pago'},...PART_METHODS.map(m=>h('option',{value:m[0],text:m[1]})));const ref=h('input',{maxlength:'120','aria-label':'Referencia',placeholder:'Referencia (opcional)'});f.append(amount,how,ref,h('button',{class:'ghost'},'Enviar'));f.onsubmit=e=>{e.preventDefault();void act(['Cobro '+p.ref,amount.value.trim(),how.value,...(ref.value.trim()?[ref.value.trim()]:[])],{btn:sub(e),ask:'\xBFRegistrar este cobro? Quien compr\xF3 deber\xE1 confirmarlo. AutoMantPro no mueve dinero.'});};b.replaceWith(f);amount.focus();});return b;}
+function partProofForm(p){const b=btn('Adjuntar comprobante','ghost',()=>{const f=h('form',{class:'acts'});const input=h('input',{type:'file',accept:'image/jpeg,image/png','aria-label':'Foto del comprobante'});f.append(input,h('button',{class:'primary'},'Subir'));f.onsubmit=async e=>{e.preventDefault();const file=input.files&&input.files[0];if(!file){showResult('Elige la foto del comprobante.');return;}try{const r=await api('/pilot/part-payments/proof',{method:'POST',body:JSON.stringify({ref:p.ref,dataUrl:await shrinkPhoto(file)})});showResult(r.message);loadPanel(generation,panelVehicle).catch(()=>{});}catch(err){showResult(err.message);}};b.replaceWith(f);});return b;}
+function partProofBtn(p){const b=btn('Ver comprobante','ghost',async()=>{b.disabled=true;try{const r=await fetch(apiUrl('/pilot/part-payments/proof?ref='+encodeURIComponent(p.ref)),{headers:{Authorization:'Bearer '+token}});if(!r.ok)throw new Error('No pudimos abrir el comprobante.');window.open(URL.createObjectURL(await r.blob()),'_blank','noopener');}catch(err){showResult(err.message);}finally{b.disabled=false;}});return b;}
 function partMoneyActs(p){const acts=h('div',{class:'chips'});
  if(p.can.charge)acts.append(partChargeBtn(p));
+ if(p.can.uploadProof&&!p.payment.hasProof)acts.append(partProofForm(p));
+ if(p.payment.hasProof)acts.append(partProofBtn(p));
  if(p.can.answerPayment){const q=p.payment.pending;acts.append(abtn('Confirmar pago de '+usd(q.amountUsd),'primary',['Confirmo pago '+p.ref],'\xBFConfirmar que pagaste '+usd(q.amountUsd)+' por '+q.method+'?'),reasonBtn('Observar pago',(why,b)=>act(['Observo pago '+p.ref,why],{btn:b,ask:'\xBFEnviar tu observaci\xF3n sobre este cobro?'})));}
  if(p.can.requestReturn)acts.append(reasonBtn('Devolver repuesto',(why,b)=>act(['Devolver '+p.ref,why],{btn:b,ask:'\xBFPedir al almac\xE9n que acepte la devoluci\xF3n? AutoMantPro no mueve dinero ni revierte cobros.'})));
  if(p.can.answerReturn)acts.append(abtn('Aceptar devoluci\xF3n','primary',['Aceptar devoluci\xF3n '+p.ref],'\xBFAceptar la devoluci\xF3n? Se le avisar\xE1 a quien compr\xF3.'),reasonBtn('Rechazar devoluci\xF3n',(why,b)=>act(['Rechazar devoluci\xF3n '+p.ref,why],{btn:b,ask:'\xBFRechazar la devoluci\xF3n? Se le avisar\xE1 a quien compr\xF3 con tu motivo.'})));
@@ -121321,6 +121382,7 @@ function registerPilotExtrasRoutes(app2, deps) {
 }
 
 // packages/api/dist/infrastructure/messaging/pilot-panel-store.js
+init_part_order_records();
 init_work_order_records();
 init_work_order_claims();
 init_fleet_access();
@@ -121350,6 +121412,7 @@ async function partMoneyFor(conn, userId, role) {
     const ids = list7.map((r) => String(r.id));
     const payments = await rows31(conn, "SELECT requestId, amount, method, reference, status, buyerNote FROM `PartPayment` WHERE requestId IN (?) ORDER BY createdAt", [ids]);
     const returns = await rows31(conn, "SELECT requestId, status, reason, storeNote FROM `PartReturn` WHERE requestId IN (?) ORDER BY createdAt DESC", [ids]);
+    const proofs = new Set((await rows31(conn, "SELECT DISTINCT requestId FROM `PartPayment` WHERE requestId IN (?) AND photoMime IS NOT NULL", [ids]).catch(whenMissing2([]))).map((p) => String(p.requestId)));
     const links = await rows31(conn, "SELECT l.requestId, l.effect, l.changeId, w.number, c.status AS changeStatus FROM `PartOrderLink` l JOIN `WorkOrder` w ON w.id = l.workOrderId LEFT JOIN `WorkOrderChange` c ON c.id = l.changeId WHERE l.requestId IN (?)", [ids]).catch(whenMissing2([]));
     const orderIds = [...new Set(list7.map((r) => r.workOrderId ? String(r.workOrderId) : "").filter(Boolean))];
     const orders = orderIds.length ? await rows31(conn, "SELECT id, number FROM `WorkOrder` WHERE id IN (?)", [orderIds]).catch(whenMissing2([])) : [];
@@ -121386,10 +121449,11 @@ async function partMoneyFor(conn, userId, role) {
         state: delivered ? "entregado" : "por_entregar",
         // Lo que pasó en la orden es del taller y de quien compra; el almacén no lo ve.
         orderText: side === "buyer" ? orderText : null,
-        payment: { paidUsd: paid, informedUsd: pend, balanceUsd: balance, pending: last ? { amountUsd: n2(last.amount), method: String(last.method), reference: last.reference ? String(last.reference) : null } : null, observed: lastObserved?.buyerNote ? String(lastObserved.buyerNote) : null },
+        payment: { paidUsd: paid, informedUsd: pend, balanceUsd: balance, pending: last ? { amountUsd: n2(last.amount), method: String(last.method), reference: last.reference ? String(last.reference) : null } : null, hasProof: proofs.has(id3), observed: lastObserved?.buyerNote ? String(lastObserved.buyerNote) : null },
         returned: ret ? { status: String(ret.status), reason: String(ret.reason), storeNote: ret.storeNote ? String(ret.storeNote) : null } : null,
         can: {
           charge: side === "store" && price !== null && price > 0 && balance > 0,
+          uploadProof: side === "store" && !!last,
           answerPayment: side === "buyer" && !!last,
           requestReturn: side === "buyer" && delivered && !ret,
           answerReturn: side === "store" && ret?.status === "solicitada"
@@ -121699,6 +121763,26 @@ var PilotPanelStore = class {
         await this.invoiceNotice(conn, orderId, id3);
       return { id: id3 };
     });
+  }
+  /** R4: foto del comprobante del cobro de un repuesto (la sube el almacén; la ven el almacén y quien compró). */
+  async uploadPartProof(userId, role, requestRef, dataUrl) {
+    const photo = photoFromDataUrl(dataUrl);
+    if (!photo)
+      throw new BrokerError("PHOTO_INVALID");
+    return this.run(async (conn) => {
+      await conn.query("START TRANSACTION");
+      try {
+        const done = await savePartProof(conn, userId, role, requestRef, photo);
+        await conn.query("COMMIT");
+        return done;
+      } catch (err) {
+        await conn.query("ROLLBACK").catch(() => void 0);
+        throw err;
+      }
+    });
+  }
+  partProofPhoto(userId, role, requestRef) {
+    return this.run((conn) => partProof(conn, userId, role, requestRef));
   }
   async orderPhotos(userId, role, number2) {
     return this.run(async (conn) => {
@@ -122460,6 +122544,28 @@ async function localAgentRoutes(app2, options = {}) {
       return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
     try {
       return { data: { items: await panel.orderPhotos(request.userId, request.userRole, orderNumber(params2.data.code)) }, error: null };
+    } catch (err) {
+      return error(err, reply);
+    }
+  });
+  const partRef = external_exports.object({ ref: external_exports.string().regex(/^S-[0-9A-Fa-f]{6}$/) });
+  app2.post("/pilot/part-payments/proof", { preHandler: [pilot, authenticate], bodyLimit: 1024 * 1024 }, async (request, reply) => {
+    const parsed = partRef.extend({ dataUrl: external_exports.string().max(8e5) }).strict().safeParse(request.body);
+    if (!parsed.success)
+      return reply.code(422).send({ data: null, error: { code: "INVALID_PHOTO", message: "No pudimos leer la foto." } });
+    try {
+      return { data: await panel.uploadPartProof(request.userId, request.userRole, parsed.data.ref.toUpperCase(), parsed.data.dataUrl), error: null };
+    } catch (err) {
+      return error(err, reply);
+    }
+  });
+  app2.get("/pilot/part-payments/proof", { preHandler: [pilot, authenticate] }, async (request, reply) => {
+    const parsed = partRef.safeParse(request.query ?? {});
+    if (!parsed.success)
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    try {
+      const photo = await panel.partProofPhoto(request.userId, request.userRole, parsed.data.ref.toUpperCase());
+      return reply.header("Content-Type", photo.mime).header("X-Content-Type-Options", "nosniff").send(photo.data);
     } catch (err) {
       return error(err, reply);
     }
@@ -126461,7 +126567,7 @@ var CareDeadlines = class {
   }
   async run(now = /* @__PURE__ */ new Date()) {
     const conn = await this.connect();
-    const result = { findingReminders: 0, findingsExpired: 0, balanceReminders: 0, returnsEscalated: 0, visitReminders: 0, promisesOverdue: 0 };
+    const result = { findingReminders: 0, findingsExpired: 0, balanceReminders: 0, returnsEscalated: 0, visitReminders: 0, promisesOverdue: 0, partRequestsQuiet: 0 };
     try {
       await this.findings(conn, now, result);
       await this.balances(conn, now, result);
@@ -126469,6 +126575,7 @@ var CareDeadlines = class {
       await this.returns(conn, now, result);
       await this.visits(conn, now, result);
       await this.promises(conn, now, result);
+      await this.quietPartRequests(conn, now, result);
       return result;
     } finally {
       await conn.end().catch(() => void 0);
@@ -126561,6 +126668,15 @@ var CareDeadlines = class {
       const text12 = a.status === "confirmed" ? `\u{1F4C5} Recordatorio: tu pr\xF3xima visita en ${String(a.shopName)} es el ${when12} (${code5}). Si no puedes ir, av\xEDsale al taller.` : `\u{1F4C5} ${String(a.shopName)} te propuso la pr\xF3xima visita para el ${when12} y todav\xEDa no respondes. Responde: Aceptar visita ${code5} \xB7 Rechazar visita ${code5}`;
       if (await this.once(conn, String(a.ownerId), `nextvisit-7d:${String(a.id)}`, "care.visit", text12))
         result.visitReminders++;
+    }
+  }
+  // ---------- R1: pedido de repuesto de una orden sin ofertas ----------
+  async quietPartRequests(conn, now, result) {
+    const quiet = await rows40(conn, "SELECT r.id, r.ownerId, r.category, w.number FROM `LocalRequest` r JOIN `WorkOrder` w ON w.id = r.workOrderId WHERE r.kind = 'repuesto' AND r.status = 'open' AND r.createdAt <= ? AND r.expiresAt > ? AND NOT EXISTS (SELECT 1 FROM `LocalOffer` o WHERE o.requestId = r.id AND o.status <> 'invited') ORDER BY r.createdAt LIMIT 100", [hoursAgo(now, 24), now]).catch(skipMissing);
+    for (const r of quiet) {
+      const ref4 = shortCode("S", String(r.id)), code5 = workOrderCode(Number(r.number));
+      if (await this.once(conn, String(r.ownerId), `part-quiet:${String(r.id)}`, "local.request", `\u23F3 El pedido de repuesto ${ref4} (${String(r.category)}) para ${code5} lleva 24 horas sin ofertas. Puedes esperar a que venza o pedirlo de nuevo con m\xE1s detalle (marca, c\xF3digo o foto): Repuesto ${code5} | categor\xEDa | descripci\xF3n`))
+        result.partRequestsQuiet++;
     }
   }
   // ---------- X4: fecha prometida vencida ----------
