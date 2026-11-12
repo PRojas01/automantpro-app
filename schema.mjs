@@ -23078,13 +23078,18 @@ var WORK_ORDER_RECORD_STATEMENTS = [
 // packages/api/src/infrastructure/schema-setup/work-order-claims-statements.ts
 var WORK_ORDER_CLAIM_TABLES = ["WorkOrderClaim"];
 var WORK_ORDER_CLAIM_STATEMENTS = [
-  { kind: "createTable", target: "WorkOrderClaim", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderClaim` (`id` VARCHAR(191) NOT NULL, `workOrderId` VARCHAR(191) NOT NULL, `activeKey` VARCHAR(191) NULL, `source` VARCHAR(20) NOT NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'abierto', `ownerReason` VARCHAR(500) NOT NULL, `openedBy` VARCHAR(191) NOT NULL, `dueAt` DATETIME(3) NOT NULL, `shopResponse` VARCHAR(500) NULL, `shopRespondedBy` VARCHAR(191) NULL, `shopRespondedAt` DATETIME(3) NULL, `agreedAt` DATETIME(3) NULL, `escalatedAt` DATETIME(3) NULL, `escalatedBy` VARCHAR(191) NULL, `escalationReason` VARCHAR(500) NULL, `adminNote` VARCHAR(1000) NULL, `resolvedBy` VARCHAR(191) NULL, `resolvedAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), UNIQUE KEY `WorkOrderClaim_activeKey_key` (`activeKey`), KEY `WorkOrderClaim_workOrderId_idx` (`workOrderId`, `createdAt`), KEY `WorkOrderClaim_status_idx` (`status`, `dueAt`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+  { kind: "createTable", target: "WorkOrderClaim", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderClaim` (`id` VARCHAR(191) NOT NULL, `workOrderId` VARCHAR(191) NOT NULL, `activeKey` VARCHAR(191) NULL, `source` VARCHAR(20) NOT NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'abierto', `ownerReason` VARCHAR(500) NOT NULL, `openedBy` VARCHAR(191) NOT NULL, `dueAt` DATETIME(3) NOT NULL, `shopResponse` VARCHAR(500) NULL, `shopRespondedBy` VARCHAR(191) NULL, `shopRespondedAt` DATETIME(3) NULL, `agreedAt` DATETIME(3) NULL, `escalatedAt` DATETIME(3) NULL, `escalatedBy` VARCHAR(191) NULL, `escalationReason` VARCHAR(500) NULL, `adminNote` VARCHAR(1000) NULL, `resolvedBy` VARCHAR(191) NULL, `resolvedAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), UNIQUE KEY `WorkOrderClaim_activeKey_key` (`activeKey`), KEY `WorkOrderClaim_workOrderId_idx` (`workOrderId`, `createdAt`), KEY `WorkOrderClaim_status_idx` (`status`, `dueAt`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  // F3: compensación que decide el administrador (ninguna, reembolso con su valor o repetir el trabajo sin costo).
+  { kind: "addColumn", target: "WorkOrderClaim.compensationKind", sql: "ALTER TABLE `WorkOrderClaim` ADD COLUMN `compensationKind` VARCHAR(20) NULL" },
+  { kind: "addColumn", target: "WorkOrderClaim.compensationUsd", sql: "ALTER TABLE `WorkOrderClaim` ADD COLUMN `compensationUsd` DECIMAL(10,2) NULL" }
 ];
 
 // packages/api/src/infrastructure/schema-setup/inspection-statements.ts
 var INSPECTION_TABLES = ["VehicleInspection", "VehicleInspectionItem"];
 var INSPECTION_STATEMENTS = [
   { kind: "addColumn", target: "Vehicle.bodyStyle", sql: "ALTER TABLE `Vehicle` ADD COLUMN `bodyStyle` VARCHAR(30) NULL" },
+  // Ficha: transmisión manual o automática; el plan quita el embrague o el filtro de caja que no corresponde.
+  { kind: "addColumn", target: "Vehicle.transmission", sql: "ALTER TABLE `Vehicle` ADD COLUMN `transmission` VARCHAR(12) NULL" },
   { kind: "createTable", target: "VehicleInspection", sql: "CREATE TABLE IF NOT EXISTS `VehicleInspection` (`id` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `appointmentId` VARCHAR(191) NULL, `actorUserId` VARCHAR(191) NOT NULL, `km` INT NULL, `note` VARCHAR(300) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX `VehicleInspection_vehicleId_createdAt_idx` (`vehicleId`, `createdAt`), INDEX `VehicleInspection_shopId_idx` (`shopId`), PRIMARY KEY (`id`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
   { kind: "createTable", target: "VehicleInspectionItem", sql: "CREATE TABLE IF NOT EXISTS `VehicleInspectionItem` (`inspectionId` VARCHAR(191) NOT NULL, `code` VARCHAR(8) NOT NULL, `status` ENUM('ok','observar','cambiar','no_aplica') NOT NULL, `measure` DECIMAL(8,2) NULL, `unit` VARCHAR(8) NULL, PRIMARY KEY (`inspectionId`, `code`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
 ];
@@ -23109,7 +23114,10 @@ var PART_ORDER_STATEMENTS = [
   { kind: "addColumn", target: "PartReturn.escalationReason", sql: "ALTER TABLE `PartReturn` ADD COLUMN `escalationReason` VARCHAR(300) NULL" },
   { kind: "addColumn", target: "PartReturn.adminNote", sql: "ALTER TABLE `PartReturn` ADD COLUMN `adminNote` VARCHAR(1000) NULL" },
   { kind: "addColumn", target: "PartReturn.resolvedBy", sql: "ALTER TABLE `PartReturn` ADD COLUMN `resolvedBy` VARCHAR(191) NULL" },
-  { kind: "addColumn", target: "PartReturn.resolvedAt", sql: "ALTER TABLE `PartReturn` ADD COLUMN `resolvedAt` DATETIME(3) NULL" }
+  { kind: "addColumn", target: "PartReturn.resolvedAt", sql: "ALTER TABLE `PartReturn` ADD COLUMN `resolvedAt` DATETIME(3) NULL" },
+  // R2: foto de la pieza que quien compró quiere devolver (la ven el almacén y el administrador).
+  { kind: "addColumn", target: "PartReturn.photoMime", sql: "ALTER TABLE `PartReturn` ADD COLUMN `photoMime` VARCHAR(20) NULL" },
+  { kind: "addColumn", target: "PartReturn.photoData", sql: "ALTER TABLE `PartReturn` ADD COLUMN `photoData` MEDIUMBLOB NULL" }
 ];
 
 // packages/api/src/infrastructure/schema-setup/catalog-tariff-statements.ts
@@ -23163,11 +23171,13 @@ var COURSES_STATEMENTS = [
 ];
 
 // packages/api/src/infrastructure/schema-setup/comprobante-statements.ts
-var COMPROBANTE_TABLES = ["WorkOrderAssignment", "VehicleTransfer"];
+var COMPROBANTE_TABLES = ["WorkOrderAssignment", "VehicleTransfer", "VehicleRecordPhoto", "InboundMedia"];
 var T4 = "DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 var COMPROBANTE_STATEMENTS = [
   { kind: "createTable", target: "WorkOrderAssignment", sql: `CREATE TABLE IF NOT EXISTS \`WorkOrderAssignment\` (\`workOrderId\` VARCHAR(191) NOT NULL, \`memberUserId\` VARCHAR(191) NOT NULL, \`assignedBy\` VARCHAR(191) NOT NULL, \`assignedAt\` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (\`workOrderId\`), KEY \`WorkOrderAssignment_member_idx\` (\`memberUserId\`, \`assignedAt\`)) ${T4}` },
-  { kind: "createTable", target: "VehicleTransfer", sql: `CREATE TABLE IF NOT EXISTS \`VehicleTransfer\` (\`id\` VARCHAR(191) NOT NULL, \`codeHash\` VARCHAR(64) NOT NULL, \`vehicleId\` VARCHAR(191) NOT NULL, \`fromUserId\` VARCHAR(191) NOT NULL, \`status\` VARCHAR(20) NOT NULL DEFAULT 'pending', \`expiresAt\` DATETIME(3) NOT NULL, \`toUserId\` VARCHAR(191) NULL, \`usedAt\` DATETIME(3) NULL, \`createdAt\` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (\`id\`), UNIQUE KEY \`VehicleTransfer_codeHash_key\` (\`codeHash\`), KEY \`VehicleTransfer_vehicle_idx\` (\`vehicleId\`, \`status\`)) ${T4}` }
+  { kind: "createTable", target: "VehicleTransfer", sql: `CREATE TABLE IF NOT EXISTS \`VehicleTransfer\` (\`id\` VARCHAR(191) NOT NULL, \`codeHash\` VARCHAR(64) NOT NULL, \`vehicleId\` VARCHAR(191) NOT NULL, \`fromUserId\` VARCHAR(191) NOT NULL, \`status\` VARCHAR(20) NOT NULL DEFAULT 'pending', \`expiresAt\` DATETIME(3) NOT NULL, \`toUserId\` VARCHAR(191) NULL, \`usedAt\` DATETIME(3) NULL, \`createdAt\` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (\`id\`), UNIQUE KEY \`VehicleTransfer_codeHash_key\` (\`codeHash\`), KEY \`VehicleTransfer_vehicle_idx\` (\`vehicleId\`, \`status\`)) ${T4}` },
+  { kind: "createTable", target: "VehicleRecordPhoto", sql: `CREATE TABLE IF NOT EXISTS \`VehicleRecordPhoto\` (\`id\` VARCHAR(191) NOT NULL, \`vehicleId\` VARCHAR(191) NOT NULL, \`serviceId\` VARCHAR(80) NOT NULL, \`recordId\` VARCHAR(191) NULL, \`mime\` VARCHAR(20) NOT NULL, \`data\` MEDIUMBLOB NOT NULL, \`createdBy\` VARCHAR(191) NOT NULL, \`createdRole\` VARCHAR(20) NOT NULL, \`createdAt\` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (\`id\`), KEY \`VehicleRecordPhoto_vehicle_idx\` (\`vehicleId\`, \`serviceId\`, \`createdAt\`)) ${T4}` },
+  { kind: "createTable", target: "InboundMedia", sql: `CREATE TABLE IF NOT EXISTS \`InboundMedia\` (\`wamid\` VARCHAR(191) NOT NULL, \`mime\` VARCHAR(20) NOT NULL, \`data\` MEDIUMBLOB NOT NULL, \`createdAt\` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (\`wamid\`), KEY \`InboundMedia_createdAt_idx\` (\`createdAt\`)) ${T4}` }
 ];
 
 // packages/api/src/infrastructure/schema-setup/apply.ts
