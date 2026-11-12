@@ -177,6 +177,7 @@ model Shop {
   zone                String?
   hours               String?
   contactName         String?
+  founder             Boolean            @default(false)
   email               String?
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
@@ -941,4 +942,24 @@ model WorkOrderChange {
  createdAt DateTime @default(now()) @db.DateTime(3)
  decidedAt DateTime? @db.DateTime(3)
  @@index([workOrderId,status], map: "WorkOrderChange_order_idx")
+}
+
+/// Talleres fundadores: borrador privado hasta que el taller acepta por WhatsApp (founder-statements.ts).
+model FounderInvite {
+  id          String    @id
+  userId      String?
+  shopId      String?
+  phone       String?   @db.VarChar(20)
+  status      String    @default("borrador") @db.VarChar(20)
+  tokenHash   String?   @unique @db.Char(64)
+  profile     Json?
+  sends       Int       @default(0)
+  sentAt      DateTime?
+  answeredAt  DateTime?
+  answeredVia String?   @db.VarChar(20)
+  createdBy   String?
+  createdAt   DateTime  @default(now())
+
+  @@index([phone, status])
+  @@index([status, createdAt])
 }
