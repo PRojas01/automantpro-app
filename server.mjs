@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='6cfdd05189712081b48369ca58abe85984ea4d17'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='e95768f4e1c1f439bf0b12fa6a0ce96e56aa2b31'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -94269,7 +94269,10 @@ function recognizedCommand(text12) {
 function fail11(code5) {
   throw new BrokerError(code5);
 }
-var data, digest, BrokerError, WELCOME_MESSAGES, MysqlLocalAgentBroker;
+function signupLinks(site = (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/$/, "")) {
+  return [`\u{1F697} Due\xF1o de veh\xEDculo: ${site}/cuenta?perfil=dueno#crear`, `\u{1F527} Taller: ${site}/cuenta?perfil=taller#crear`, `\u{1F4E6} Almac\xE9n de repuestos: ${site}/cuenta?perfil=almacen#crear`].join("\n");
+}
+var data, digest, BrokerError, SIGNUP_LINKS, WELCOME_MESSAGES, MysqlLocalAgentBroker;
 var init_local_agent_broker = __esm({
   "packages/api/dist/infrastructure/messaging/local-agent-broker.js"() {
     "use strict";
@@ -94298,13 +94301,15 @@ var init_local_agent_broker = __esm({
         this.code = code5;
       }
     };
+    SIGNUP_LINKS = signupLinks();
     WELCOME_MESSAGES = [
-      "Hola, gracias por escribir a AutoMantPro. Este n\xFAmero todav\xEDa no est\xE1 registrado. Una persona del equipo te escribir\xE1 por aqu\xED para crear tu cuenta y pedir tu consentimiento de datos. Si es una emergencia en la v\xEDa, llama al 911.",
-      "\xA1Hola! Recibimos tu mensaje en AutoMantPro. A\xFAn no tienes cuenta con este n\xFAmero; en breve alguien del equipo te escribe para registrarte y pedir tu autorizaci\xF3n de datos. Ante una emergencia en la v\xEDa, llama al 911.",
-      "Hola, soy AutoMantPro. Tu n\xFAmero todav\xEDa no est\xE1 registrado con nosotros. Una persona del equipo te contactar\xE1 por este chat para crear tu cuenta y pedirte el consentimiento de datos. Si est\xE1s en una emergencia en la v\xEDa, llama al 911.",
-      "Gracias por contactar a AutoMantPro. Este n\xFAmero a\xFAn no tiene cuenta. Alguien del equipo te escribir\xE1 aqu\xED para registrarte y pedir tu consentimiento sobre tus datos. En caso de emergencia en la v\xEDa, llama al 911."
+      "Hola, gracias por escribir a AutoMantPro \u{1F697} Este n\xFAmero todav\xEDa no tiene cuenta. Cr\xE9ala gratis en 2 minutos con el enlace de tu perfil:",
+      "\xA1Hola! Recibimos tu mensaje en AutoMantPro. A\xFAn no tienes cuenta con este n\xFAmero; puedes crearla gratis ahora mismo con tu enlace:",
+      "Hola, soy AutoMantPro \u{1F44B} Tu n\xFAmero todav\xEDa no est\xE1 registrado. Elige tu perfil y crea tu cuenta gratis aqu\xED:",
+      "Gracias por contactar a AutoMantPro. Este n\xFAmero a\xFAn no tiene cuenta; reg\xEDstrate gratis con el enlace que te corresponde:"
     ].map((text12) => `${text12}
-Si eres due\xF1o de un veh\xEDculo, puedes registrarte ya escribiendo: Registrarme | nombre y apellido | ciudad | ACEPTO (ACEPTO confirma que aceptas los t\xE9rminos y el tratamiento de tus datos).`);
+${SIGNUP_LINKS}
+Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \xE9l entras, sin contrase\xF1a. Si tienes una emergencia en la v\xEDa, llama al 911.`);
     MysqlLocalAgentBroker = class {
       connect;
       mediaFetch;
@@ -120207,6 +120212,8 @@ function rebuildSignup(){const box=el('signupFields');box.replaceChildren();cons
 // Recordatorios de mantenimiento: casilla sin marcar en el alta de due\xF1o; solo si la marca se encienden.
 function addReminderField(){if(el('signupRole').value!=='dueno')return;const c=field(el('signupFields'),'signupReminders','Recibir recordatorios de mantenimiento por WhatsApp','checkbox',false);c.type='checkbox';c.checked=false;}
 el('signupRole').onchange=()=>{rebuildSignup();addReminderField();};
+// Enlace enviado por WhatsApp (/cuenta?perfil=dueno#crear): el formulario abre con el perfil ya elegido.
+(()=>{const p=new URLSearchParams(location.search).get('perfil');if(['dueno','taller','almacen'].includes(p)){el('signupRole').value=p;rebuildSignup();addReminderField();}})();
 el('signupForm').onsubmit=async e=>{e.preventDefault();if(!el('signupForm').reportValidity())return;const profile=el('signupRole').value;const phone=el('signupPhone').value.trim();try{if(!el('signupCodeLink'))await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'signup'})});signupValues.profile=profile;signupValues.phone=phone;signupValues.fields={};for(const input of el('signupFields').querySelectorAll('input,select'))signupValues.fields[input.id]=input.type==='checkbox'?(input.checked?'on':''):input.value.trim();signupValues.name=el('signupName').value.trim();signupValues.city=el('signupCity').value.trim();signupValues.email=el('signupEmail').value.trim();el('signupForm').classList.add('hidden');el('signupVerifyForm').classList.remove('hidden');status(el('signupCodeLink')?'Pide tu c\xF3digo por WhatsApp y escr\xEDbelo aqu\xED.':'Revisa WhatsApp para ver tu c\xF3digo.');}catch(err){status(err.message);}};
 el('signupVerifyForm').onsubmit=async e=>{e.preventDefault();const f=signupValues.fields;const payload={phone:signupValues.phone,code:el('signupCode').value.trim(),role:signupValues.profile,name:signupValues.name,city:signupValues.city,email:signupValues.email||undefined,consent:true};if(payload.role==='dueno')Object.assign(payload,{vehicleClass:f.signupClass,fuel:f.signupFuel,make:f.signupMake,model:f.signupModel,year:f.signupYear,currentKm:f.signupKm,plate:f.signupPlate,usageProfile:f.signupUsage,reminders:f.signupReminders==='on'?'on':false});else{Object.assign(payload,{businessName:f.signupBusiness,ruc:f.signupRuc,address:f.signupAddress,zone:f.signupZone,hours:f.signupHours});if(payload.role==='taller')payload.services=f.signupServices.split(',').map(x=>x.trim()).filter(Boolean);else Object.assign(payload,{categories:f.signupCategories,delivery:f.signupDelivery==='on'});}const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/web-signup',{method:'POST',body:JSON.stringify(payload)});acceptLogin(data);}catch(err){status(err.message);}finally{button.disabled=false;}};
 el('sendForm').onsubmit=async e=>{e.preventDefault();if(sending||!token)return;const message=el('message').value.trim();if(!message){status('Escribe un mensaje.');return;}if(await sendMessage(message,[e.target.querySelector('button')]))el('message').value='';};
