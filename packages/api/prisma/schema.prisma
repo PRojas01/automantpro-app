@@ -82,6 +82,7 @@ model User {
   name         String
   locale       String   @default("es")
   city           String?
+  zone           String?   @db.VarChar(80)
   consentAt      DateTime?
   consentVersion String?
   source         String?

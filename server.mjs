@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='e95768f4e1c1f439bf0b12fa6a0ce96e56aa2b31'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='9f4981fb020e68bef273f94c69acd6ac3a23b9d6'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -60883,7 +60883,7 @@ var init_schemas2 = __esm({
       hours: req(external_exports.string().trim().max(120, "Horario demasiado largo")).transform((v) => v || null)
     };
     vehicleSchema = external_exports.object(vehicleFields);
-    ownerSchema = external_exports.object({ ...commonFields, ...vehicleFields });
+    ownerSchema = external_exports.object({ ...commonFields, ...vehicleFields, zone: external_exports.string().trim().max(80).optional() });
     shopSchema = external_exports.object({
       ...commonFields,
       ...businessFields,
@@ -62884,6 +62884,8 @@ var init_work_order_records_statements = __esm({
       { kind: "createTable", target: "WorkOrderPartialApproval", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderPartialApproval` (`workOrderId` VARCHAR(191) NOT NULL, `quotedTotal` DECIMAL(10,2) NOT NULL, `approvedTotal` DECIMAL(10,2) NOT NULL, `rejected` JSON NOT NULL, `decidedBy` VARCHAR(191) NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`workOrderId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
       { kind: "createTable", target: "AccountRecovery", sql: "CREATE TABLE IF NOT EXISTS `AccountRecovery` (`id` VARCHAR(191) NOT NULL, `userId` VARCHAR(191) NOT NULL, `newPhone` VARCHAR(20) NOT NULL, `claimantName` VARCHAR(120) NOT NULL, `detail` VARCHAR(500) NOT NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'recibida', `resolutionNote` VARCHAR(300) NULL, `resolvedBy` VARCHAR(191) NULL, `resolvedAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `AccountRecovery_status_idx` (`status`, `createdAt`), KEY `AccountRecovery_userId_idx` (`userId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
       { kind: "createTable", target: "WorkOrderWarranty", sql: "CREATE TABLE IF NOT EXISTS `WorkOrderWarranty` (`id` VARCHAR(191) NOT NULL, `workOrderId` VARCHAR(191) NOT NULL, `status` VARCHAR(20) NOT NULL DEFAULT 'abierta', `reason` VARCHAR(300) NOT NULL, `shopNote` VARCHAR(300) NULL, `requestedBy` VARCHAR(191) NOT NULL, `decidedBy` VARCHAR(191) NULL, `decidedAt` DATETIME(3) NULL, `reentryOrderId` VARCHAR(191) NULL, `resolvedAt` DATETIME(3) NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `WorkOrderWarranty_workOrderId_idx` (`workOrderId`, `status`), KEY `WorkOrderWarranty_reentryOrderId_idx` (`reentryOrderId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+      // D4: sector o barrio del dueño, para ordenar los talleres cercanos.
+      { kind: "addColumn", target: "User.zone", sql: "ALTER TABLE `User` ADD COLUMN `zone` VARCHAR(80) NULL" },
       { kind: "addColumn", target: "User.sessionsValidFrom", sql: "ALTER TABLE `User` ADD COLUMN `sessionsValidFrom` DATETIME(3) NULL" },
       // D8B: valor del diagnóstico que el taller avisa al recibir el vehículo; solo se cobra si el dueño no aprueba el presupuesto.
       { kind: "addColumn", target: "VehicleIntake.diagnosisFeeUsd", sql: "ALTER TABLE `VehicleIntake` ADD COLUMN `diagnosisFeeUsd` DECIMAL(10,2) NULL" }
@@ -84243,6 +84245,12 @@ var init_registration_store = __esm({
         return this.transaction(async (conn) => {
           const userId = await this.insertUser(conn, user, "dueno");
           await this.insertVehicle(conn, userId, vehicle);
+          const zone = user.zone?.trim();
+          if (zone)
+            await conn.query("UPDATE `User` SET zone = ? WHERE id = ?", [zone.slice(0, 80), userId]).catch((err) => {
+              if (err?.code !== "ER_BAD_FIELD_ERROR")
+                throw err;
+            });
           return userId;
         });
       }
@@ -85497,7 +85505,7 @@ var init_theme = __esm({
 
 // packages/api/dist/interfaces/ui/navegacion.js
 function menuSitio() {
-  return `<nav class="menu-sitio" aria-label="Men\xFA del sitio"><a href="/">Inicio</a><a href="/soluciones">Soluciones</a><a href="/planes">Planes</a><a href="/servicios">Servicios</a><a href="/talleres">Talleres</a><a href="/cuenta#entrar">Ingresar</a></nav>`;
+  return `<nav class="menu-sitio" aria-label="Men\xFA del sitio"><a href="/">Inicio</a><a href="/soluciones">Soluciones</a><a href="/planes">Planes</a><a href="/servicios">Servicios</a><a href="/talleres">Talleres</a><a href="/instalar">Instalar app</a><a href="/cuenta#entrar">Ingresar</a></nav>`;
 }
 function cabeceraSitio() {
   return `<header class="cabecera-sitio"><a class="marca" href="/" aria-label="AutoMantPro, inicio">${logoImg()}</a>${menuSitio()}</header>`;
@@ -90308,7 +90316,7 @@ var init_commands = __esm({
       "Flota: Registrar flota | raz\xF3n social | RUC | ciudad | tu nombre y apellido | ACEPTO \xB7 Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km (| c\xF3digo interno) \xB7 Retirar PCD-4521 \xB7 Agregar conductor | nombre \xB7 Agregar supervisor | nombre \xB7 Conductores \xB7 Quitar D-XXXXXX \xB7 Asignar PCD-4521 | D-XXXXXX \xB7 Liberar PCD-4521 \xB7 Flota \xB7 Vencidos \xB7 Plan PCD-4521 \xB7 Kilometraje PCD-4521 | km \xB7 Gasto PCD-4521 | concepto | USD (| AAAA-MM-DD) \xB7 Costos mes \xB7 Costos PCD-4521 \xB7 Convenio | RUC del taller \xB7 Convenios \xB7 Terminar convenio K-XXXXXX \xB7 Agendar PCD-4521 | K-XXXXXX | AAAA-MM-DD | HH:mm | motivo \xB7 Aprobaci\xF3n autom\xE1tica | USD \xB7 L\xEDmite supervisor | USD \xB7 Panel flota",
       "Planes: Planes \xB7 Mi suscripci\xF3n \xB7 Quiero plan Premium (pago anual) \xB7 Quiero plan Flota | 12 veh\xEDculos \xB7 Pago SB-0042 | n\xFAmero de comprobante (| banco) \xB7 Renovar SB-0042",
       "Capacitaci\xF3n: Cursos \xB7 Curso CU-0001 \xB7 Inscribirme CU-0001 \xB7 Pago IN-0001 + foto \xB7 Listo \xB7 A/B/C \xB7 Mis cursos \xB7 Certificado CU-0001 \xB7 Taller: Inscribir t\xE9cnicos CU-0001 \xB7 Avance t\xE9cnicos \xB7 Experto: Soy experto \xB7 Aprobar/Rechazar IN-0001",
-      "Mis datos: Mis datos \xB7 Mis datos | nombre, ciudad o correo | valor \xB7 Corregir veh\xEDculo (o Corregir veh\xEDculo ABC-1234) | marca, modelo, a\xF1o, placa, clase, combustible, uso o transmisi\xF3n | valor \xB7 Mi taller \xB7 Mi almac\xE9n \xB7 Editar taller | nombre, horario, direcci\xF3n, sector, ciudad, servicios, contacto o correo | valor \xB7 Editar almac\xE9n | \u2026 categor\xEDas, entregas s\xED/no \u2026 | valor",
+      "Mis datos: Mis datos \xB7 Mis datos | nombre, ciudad, sector o correo | valor \xB7 Corregir veh\xEDculo (o Corregir veh\xEDculo ABC-1234) | marca, modelo, a\xF1o, placa, clase, combustible, uso o transmisi\xF3n | valor \xB7 Mi taller \xB7 Mi almac\xE9n \xB7 Editar taller | nombre, horario, direcci\xF3n, sector, ciudad, servicios, contacto o correo | valor \xB7 Editar almac\xE9n | \u2026 categor\xEDas, entregas s\xED/no \u2026 | valor",
       "Baja y privacidad: BAJA (dejar de recibir avisos por WhatsApp) \xB7 ALTA (volver a recibirlos) \xB7 Eliminar mi cuenta (pide borrar tus datos personales)",
       "Conductor: Unirme flota J-XXXXXXXX | nombre | ACEPTO \xB7 Mi veh\xEDculo \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n \xB7 Combustible | USD | km \xB7 Gasto | concepto | USD \xB7 Salir de flota \xB7 Taller: Mis flotas \xB7 Aceptar convenio K-XXXXXX \xB7 Rechazar convenio K-XXXXXX"
     ].join("\n");
@@ -92564,7 +92572,7 @@ var init_profile_edit_store = __esm({
     };
     PROFILE_ACTIONS = ["myProfile", "editProfile", "editVehicle", "myBusiness", "editBusiness"];
     fold11 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
-    PROFILE_FIELDS = { nombre: "name", ciudad: "city", correo: "email", email: "email" };
+    PROFILE_FIELDS = { nombre: "name", ciudad: "city", correo: "email", email: "email", sector: "zone", barrio: "zone", "barrio o sector": "zone", "sector o barrio": "zone" };
     VEHICLE_FIELDS = { marca: "make", modelo: "model", ano: "year", a\u00F1o: "year", placa: "plate", clase: "vehicleClass", combustible: "fuel", uso: "usageProfile", transmision: "transmission", caja: "transmission" };
     BUSINESS_FIELDS = { nombre: "name", "nombre comercial": "name", horario: "hours", direccion: "address", sector: "zone", ciudad: "city", servicios: "specialties", categorias: "categories", entregas: "delivery", correo: "email", contacto: "contactName" };
     REVIEWED_BUSINESS_FIELDS = /* @__PURE__ */ new Set(["name", "address", "city"]);
@@ -92589,6 +92597,12 @@ var init_profile_edit_store = __esm({
       /** Data the web panel shows in "Mis datos": profile, own vehicles and the business the user owns. */
       async account(conn, userId, role) {
         const [user] = await rows19(conn, "SELECT name, city, email, role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+        if (user)
+          user.zone = (await rows19(conn, "SELECT zone FROM `User` WHERE id = ?", [userId]).catch((err) => {
+            if (err.code !== "ER_BAD_FIELD_ERROR")
+              throw err;
+            return [];
+          }))[0]?.zone ?? null;
         if (!user)
           fail7("ACCOUNT_UNAVAILABLE");
         const vehicles = role === "dueno" ? (await rows19(conn, "SELECT * FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL ORDER BY createdAt, id", [userId])).map((v) => ({ id: v.id, make: v.make, model: v.model, year: v.year, plate: v.plate, vehicleClass: v.vehicleClass, fuel: v.fuel, usageProfile: v.usageProfile, transmission: v.transmission ?? null, currentKm: v.currentKm })) : [];
@@ -92613,11 +92627,11 @@ var init_profile_edit_store = __esm({
       }
       async myProfile(conn, userId, role) {
         const { profile, vehicles, business } = await this.account(conn, userId, role);
-        const lines = [`\u{1F464} Tus datos`, `Nombre: ${shown(profile.name)} \xB7 Ciudad: ${shown(profile.city)} \xB7 Correo: ${shown(profile.email)}`];
+        const lines = [`\u{1F464} Tus datos`, `Nombre: ${shown(profile.name)} \xB7 Ciudad: ${shown(profile.city)} \xB7 Barrio o sector: ${shown(profile.zone)} \xB7 Correo: ${shown(profile.email)}`];
         vehicles.forEach((v, i) => lines.push(`${i + 1}. ${v.make} ${v.model} ${v.year}${v.plate ? ` (${v.plate})` : ""} \xB7 ${v.vehicleClass ?? "\u2014"} \xB7 ${v.fuel ?? "\u2014"}`));
         if (business)
           lines.push(`${business.kind === "taller" ? "\u{1F527} Taller" : "\u{1F4E6} Almac\xE9n"}: ${business.name}. Ver y editar: ${business.kind === "taller" ? "Mi taller" : "Mi almac\xE9n"}`);
-        lines.push("Corregir: Mis datos | nombre, ciudad o correo | valor");
+        lines.push("Corregir: Mis datos | nombre, ciudad, sector o correo | valor");
         if (vehicles.length)
           lines.push("Veh\xEDculo activo: Corregir veh\xEDculo | marca, modelo, a\xF1o, placa, clase, combustible o uso | valor");
         return { userId, message: lines.join("\n"), data: { profile, vehicles, business } };
@@ -92632,8 +92646,12 @@ var init_profile_edit_store = __esm({
           if (value2 !== null && (await rows19(conn, "SELECT id FROM `User` WHERE email = ? AND id <> ? LIMIT 1", [value2, userId])).length)
             fail7("EMAIL_TAKEN");
         } else
-          value2 = text3(rawValue, column2 === "name" ? 3 : 2, column2 === "name" ? 120 : 120);
-        const [before] = await rows19(conn, `SELECT ${column2} AS v FROM \`User\` WHERE id = ? FOR UPDATE`, [userId]);
+          value2 = text3(rawValue, column2 === "name" ? 3 : 2, column2 === "zone" ? 80 : 120);
+        const [before] = await rows19(conn, `SELECT ${column2} AS v FROM \`User\` WHERE id = ? FOR UPDATE`, [userId]).catch((err) => {
+          if (err.code === "ER_BAD_FIELD_ERROR")
+            fail7("FEATURE_UPDATE_PENDING");
+          throw err;
+        });
         await conn.query(`UPDATE \`User\` SET ${column2} = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?`, [value2, userId]);
         await this.audit(conn, userId, role, "account.profile.edited", "User", userId, { [column2]: before?.v ?? null }, { [column2]: value2 });
         return { userId, message: `Listo: actualizamos ${WITH_ARTICLE[column2]}: ${shown(value2)}. Ver todo: Mis datos`, data: { field: column2, value: value2 } };
@@ -102918,7 +102936,7 @@ function layout(input) {
 <main>${input.body}${pieSitio('<nav class="sitio" aria-label="Sitio p\xFAblico"><a href="/">Ir al sitio p\xFAblico</a></nav>')}</main></div>` : `${cabeceraSitio()}<main>${input.body}</main>${pieSitio()}`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>${escapeHtml(input.title)} \xB7 AutoMantPro Admin</title>
-<style nonce="${nonce2}">${STYLES4}${THEME_ADMIN_LAYER}${SISTEMA}</style></head><body>${shell2}</body></html>`;
+<style nonce="${nonce2}">${STYLES5}${THEME_ADMIN_LAYER}${SISTEMA}</style></head><body>${shell2}</body></html>`;
 }
 function loginView(error) {
   return `<form class="login" method="post" action="/admin/login" autocomplete="on">
@@ -102983,7 +103001,7 @@ function tableView(title, base, page2, columns) {
   const next = page2.items.length === page2.pageSize ? `<a href="${base}?page=${page2.page + 1}">Siguiente \u2192</a>` : "";
   return `<h1>${escapeHtml(title)}</h1><div class="scroll"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div><div class="pager">${prev}${next}</div>`;
 }
-var STYLES4, ICONS2, NAV, ACCOUNT;
+var STYLES5, ICONS2, NAV, ACCOUNT;
 var init_views = __esm({
   "packages/api/dist/interfaces/admin/views.js"() {
     "use strict";
@@ -102994,7 +103012,7 @@ var init_views = __esm({
     init_theme_layers();
     init_brand();
     init_permissions();
-    STYLES4 = `${THEME_TOKENS}
+    STYLES5 = `${THEME_TOKENS}
 :root{--bg:var(--c-bg);--card:var(--c-surface);--text:var(--c-ink);--muted:var(--c-muted);--line:var(--c-line);--cyan:var(--c-accent);--green:var(--c-ok);--red:var(--c-bad)}
 *{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.5 var(--c-font)}
 .brand{font-weight:700;letter-spacing:-.01em}.brand span{color:var(--c-accent)}
@@ -107759,7 +107777,7 @@ var init_views_setup = __esm({
 });
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
-import { randomBytes as randomBytes21 } from "node:crypto";
+import { randomBytes as randomBytes22 } from "node:crypto";
 function qrSvg(text12) {
   return QRCode.toString(text12, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
@@ -107791,7 +107809,7 @@ function registerSetupWizard(app2, deps) {
     return state;
   }
   function newState(reply) {
-    const state = { id: randomBytes21(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
+    const state = { id: randomBytes22(24).toString("base64url"), csrfToken: createCsrfToken(), createdAt: Date.now() };
     states.set(state.id, state);
     reply.header("Set-Cookie", setupCookie(signSessionCookie(state.id, getAdminSessionSecret()), STATE_TTL_MS / 1e3));
     return state;
@@ -112833,7 +112851,7 @@ var init_settings = __esm({
 });
 
 // packages/api/dist/interfaces/admin/local-agent.js
-import { createHash as createHash14, randomBytes as randomBytes22 } from "node:crypto";
+import { createHash as createHash14, randomBytes as randomBytes23 } from "node:crypto";
 function registerLocalAgentAdminRoutes(app2, deps) {
   const tasks = deps.tasks ?? new MysqlLocalAgentTaskStore();
   const recent = async () => tasks.recent(20).catch(() => []);
@@ -112849,7 +112867,7 @@ function registerLocalAgentAdminRoutes(app2, deps) {
       <p>El equipo local consulta la cola por HTTPS y exige aprobaci\xF3n humana. Configurarlo no conecta WhatsApp ni env\xEDa mensajes autom\xE1ticamente.</p>
       ${input.token ? `<div class="card"><h2>Clave del equipo: se muestra una sola vez</h2><code id="local-agent-token">${escapeHtml(input.token)}</code>
       <p>Gu\xE1rdala en LOCAL_AGENT_TOKEN del .env privado del equipo (permiso 0600). No se puede recuperar desde el panel. La clave anterior ha quedado revocada.</p></div>` : ""}
-      <div class="card"><h2>Crear tarea local</h2><form method="post" action="/admin/local-agent/tasks"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><input type="hidden" name="idempotencyKey" value="${escapeHtml(randomBytes22(12).toString("hex"))}"><label>Tipo<select name="type">${LOCAL_TASK_TYPES.map((type) => `<option value="${type}"${type === "reporte_estado" ? " selected" : ""}>${type}</option>`).join("")}</select></label><label>Mensaje (obligatorio para responder o clasificar una consulta)<textarea name="message" maxlength="2000"></textarea></label><button type="submit">Encolar tarea</button></form></div>
+      <div class="card"><h2>Crear tarea local</h2><form method="post" action="/admin/local-agent/tasks"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><input type="hidden" name="idempotencyKey" value="${escapeHtml(randomBytes23(12).toString("hex"))}"><label>Tipo<select name="type">${LOCAL_TASK_TYPES.map((type) => `<option value="${type}"${type === "reporte_estado" ? " selected" : ""}>${type}</option>`).join("")}</select></label><label>Mensaje (obligatorio para responder o clasificar una consulta)<textarea name="message" maxlength="2000"></textarea></label><button type="submit">Encolar tarea</button></form></div>
       <div class="card"><h2>20 tareas recientes</h2><table><thead><tr><th>Tipo</th><th>Estado</th><th>Intentos</th><th>Fechas</th><th>Error</th><th>Resultado</th></tr></thead><tbody>${(input.recent ?? []).map((row2) => `<tr><td>${escapeHtml(String(row2.type ?? ""))}</td><td>${escapeHtml(String(row2.status ?? ""))}</td><td>${escapeHtml(String(row2.attempts ?? ""))}</td><td>${escapeHtml([row2.createdAt, row2.completedAt].filter(Boolean).map(String).join(" / "))}</td><td>${escapeHtml(String(row2.errorCode ?? ""))}</td><td>${escapeHtml(String(row2.result ?? "").slice(0, 500))}</td></tr>`).join("")}</tbody></table></div>
       <div class="card">${form("rotate", "Habilitar equipo y generar nueva clave")}</div>
       <div class="card"><p>Revocar corta solo al equipo local: las personas siguen entrando a su panel y sus mensajes esperan en la cola hasta que conectes una clave nueva.</p>${form("disable", "Revocar acceso del equipo")}</div>
@@ -112920,7 +112938,7 @@ function registerLocalAgentAdminRoutes(app2, deps) {
         recordLoginAttempt(account.email, request.ip, false);
         return render(request, reply, session, { message: "La contrase\xF1a actual no es correcta.", status: 400 });
       }
-      const token2 = action === "rotate" ? randomBytes22(32).toString("base64url") : void 0;
+      const token2 = action === "rotate" ? randomBytes23(32).toString("base64url") : void 0;
       const value2 = JSON.stringify({ enabled: action === "rotate", tokenHash: token2 ? createHash14("sha256").update(token2).digest("hex") : null });
       try {
         await deps.settings.set(LOCAL_AGENT_CONFIG_KEY2, value2, account.id);
@@ -113938,7 +113956,7 @@ var init_views_registrations = __esm({
 });
 
 // packages/api/dist/interfaces/admin/registrations.js
-import { randomBytes as randomBytes23 } from "node:crypto";
+import { randomBytes as randomBytes24 } from "node:crypto";
 function dbError(err) {
   const code5 = err.code;
   if (code5 === "ER_DUP_ENTRY")
@@ -114117,7 +114135,7 @@ function registerRegistrationRoutes(app2, deps) {
       notes: data3.notes,
       consentVersion: CONSENT_VERSION,
       // Las cuentas creadas por el operador no inician sesión con contraseña: se guarda una aleatoria.
-      passwordHash: await hashPassword(randomBytes23(24).toString("hex"))
+      passwordHash: await hashPassword(randomBytes24(24).toString("hex"))
     });
     const operation = deps.platform ? await deps.platform() : null;
     if (operation && typeof body.city === "string" && body.city.trim() && !cityAllowed(body.city.trim(), operation.cities)) {
@@ -116892,7 +116910,7 @@ __export(admin_exports, {
   default: () => admin_default,
   resetEnrollmentsForTests: () => resetEnrollmentsForTests
 });
-import { randomBytes as randomBytes24 } from "node:crypto";
+import { randomBytes as randomBytes25 } from "node:crypto";
 function resetEnrollmentsForTests() {
   enrollments.clear();
 }
@@ -116954,7 +116972,7 @@ async function adminPanelRoutes(app2, options = {}) {
     }
   });
   app2.addHook("onRequest", async (request, reply) => {
-    request.cspNonce = randomBytes24(16).toString("base64");
+    request.cspNonce = randomBytes25(16).toString("base64");
     reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${request.cspNonce}'; img-src 'self' data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`).header("X-Frame-Options", "DENY").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("Cache-Control", "no-store");
     if (!getAdminSessionSecret()) {
       return reply.code(503).type("text/html; charset=utf-8").send(layout({
@@ -117377,6 +117395,23 @@ var import_cors = __toESM(require_cors(), 1);
 var import_jwt = __toESM(require_jwt(), 1);
 var import_dotenv = __toESM(require_main(), 1);
 
+// packages/api/dist/interfaces/ui/menu-sesion.js
+var SESSION_MARK = "amp_sesion";
+var INGRESAR = `<a href="/cuenta#entrar">Ingresar</a>`;
+var MI_PANEL = `<a href="/cuenta">Mi panel</a>`;
+function hasSessionMark(cookieHeader) {
+  return (cookieHeader ?? "").split(";").some((part) => part.trim() === `${SESSION_MARK}=1`);
+}
+async function sessionMenuOnSend(request, reply, payload) {
+  if (typeof payload !== "string" || !payload.includes(INGRESAR))
+    return payload;
+  const type = String(reply.getHeader("content-type") ?? "");
+  if (type && !type.includes("text/html"))
+    return payload;
+  reply.header("Vary", "Cookie");
+  return hasSessionMark(request.headers.cookie) ? payload.split(INGRESAR).join(MI_PANEL) : payload;
+}
+
 // packages/api/dist/infrastructure/prisma.js
 import { createRequire } from "node:module";
 
@@ -117691,6 +117726,10 @@ function webCookie(request, path, value2, maxAge) {
   const secure = request.protocol === "https" || process.env.NODE_ENV === "production" ? "; Secure" : "";
   return `${WEB_COOKIE}=${value2}; Path=${path}; Max-Age=${maxAge}; HttpOnly; SameSite=Strict${secure}`;
 }
+function sessionMarkCookie(request, maxAge) {
+  const secure = request.protocol === "https" || process.env.NODE_ENV === "production" ? "; Secure" : "";
+  return `${SESSION_MARK}=${maxAge > 0 ? "1" : ""}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Lax${secure}`;
+}
 async function webSessionRoutes(app2) {
   const path = `${app2.prefix}/auth/web`;
   const sign = (user) => app2.jwt.sign({ sub: user.id, role: user.role, tokenUse: "web" }, { expiresIn: `${WEB_SESSION_DAYS}d` });
@@ -117707,7 +117746,7 @@ async function webSessionRoutes(app2) {
       const user = await findUserById(decoded.sub);
       if (!user || user.deletedAt || !WEB_ROLES.includes(user.role))
         throw new Error("Inactive user");
-      reply.header("Set-Cookie", webCookie(request, path, sign(user), WEB_SESSION_DAYS * 86400));
+      reply.header("Set-Cookie", [webCookie(request, path, sign(user), WEB_SESSION_DAYS * 86400), sessionMarkCookie(request, WEB_SESSION_DAYS * 86400)]);
       return reply.send({ data: { remembered: true, days: WEB_SESSION_DAYS }, error: null });
     } catch {
       return reply.code(401).send(unauthorized);
@@ -117727,17 +117766,17 @@ async function webSessionRoutes(app2) {
       if (!user || user.deletedAt || !WEB_ROLES.includes(user.role))
         throw new Error("Inactive user");
       const accessToken = app2.jwt.sign({ sub: user.id, role: user.role, email: user.email ?? void 0, tokenUse: "access" }, { expiresIn: process.env.JWT_ACCESS_EXPIRY ?? "15m" });
-      reply.header("Set-Cookie", webCookie(request, path, sign(user), WEB_SESSION_DAYS * 86400));
+      reply.header("Set-Cookie", [webCookie(request, path, sign(user), WEB_SESSION_DAYS * 86400), sessionMarkCookie(request, WEB_SESSION_DAYS * 86400)]);
       return reply.send({ data: { user: { id: user.id, name: user.name, role: user.role, email: user.email }, accessToken }, error: null });
     } catch {
-      reply.header("Set-Cookie", webCookie(request, path, "", 0));
+      reply.header("Set-Cookie", [webCookie(request, path, "", 0), sessionMarkCookie(request, 0)]);
       return reply.send({ data: null, error: null });
     }
   });
   app2.post("/auth/web/logout", async (request, reply) => {
     if (!sameSite(request))
       return reply.code(401).send(unauthorized);
-    reply.header("Set-Cookie", webCookie(request, path, "", 0));
+    reply.header("Set-Cookie", [webCookie(request, path, "", 0), sessionMarkCookie(request, 0)]);
     return reply.send({ data: { remembered: false }, error: null });
   });
 }
@@ -117871,7 +117910,7 @@ async function authRoutes(app2) {
       return reply.code(409).send({ data: null, error: { code: "CONFLICT", message: "Si ya tienes una cuenta, entra con un c\xF3digo." } });
     const v = validated.data;
     const passwordHash = await hashPassword(randomUUID5());
-    const user = { phone, name: p.name, email: v.email ?? null, city: p.city, consentVersion: CONSENT_VERSION, source: "web", notes: null, passwordHash };
+    const user = { phone, name: p.name, email: v.email ?? null, city: p.city, zone: p.role === "dueno" ? v.zone ?? null : null, consentVersion: CONSENT_VERSION, source: "web", notes: null, passwordHash };
     const registrations = new MysqlRegistrationStore(async () => {
       const { openConnection: openConnection2 } = await Promise.resolve().then(() => (init_apply(), apply_exports));
       return openConnection2();
@@ -119764,7 +119803,7 @@ function expertCard(p){
 function accountCard(){const sec=card('Mis datos',null,h('p',{class:'note',text:'Cargando tus datos\u2026'}));
  const send=(target,field,value,vehicleId)=>api('/pilot/account/edit',{method:'POST',body:JSON.stringify(Object.assign({target,field,value},vehicleId?{vehicleId}:{}))});
  api('/pilot/account').then(a=>{const kids=[];const p=a.profile;
-  kids.push(h('div',{class:'list'},editRow('Nombre',p.name,v=>send('perfil','nombre',v)),editRow('Ciudad',p.city,v=>send('perfil','ciudad',v)),editRow('Correo',p.email,v=>send('perfil','correo',v||'ninguno'),{type:'email'})));
+  kids.push(h('div',{class:'list'},editRow('Nombre',p.name,v=>send('perfil','nombre',v)),editRow('Ciudad',p.city,v=>send('perfil','ciudad',v)),editRow('Barrio o sector',p.zone,v=>send('perfil','sector',v)),editRow('Correo',p.email,v=>send('perfil','correo',v||'ninguno'),{type:'email'})));
   for(const v of a.vehicles||[]){kids.push(h('h3',{text:v.make+' '+v.model+' '+v.year}));kids.push(h('div',{class:'list'},editRow('Marca',v.make,x=>send('vehiculo','marca',x,v.id),{reload:true}),editRow('Modelo',v.model,x=>send('vehiculo','modelo',x,v.id),{reload:true}),editRow('A\xF1o',v.year,x=>send('vehiculo','a\xF1o',x,v.id),{type:'number',reload:true}),editRow('Placa',v.plate,x=>send('vehiculo','placa',x,v.id),{reload:true}),editRow('Uso',v.usageProfile,x=>send('vehiculo','uso',x,v.id),{reload:true,choices:[['urbano','Urbano'],['carretera','Carretera'],['severo','Severo']],labels:{urbano:'Urbano',carretera:'Carretera',severo:'Severo'}}),editRow('Transmisi\xF3n',v.transmission,x=>send('vehiculo','transmision',x,v.id),{reload:true,choices:[['manual','Manual'],['automatica','Autom\xE1tica']],labels:{manual:'Manual',automatica:'Autom\xE1tica'}})));}
   const b=a.business;if(b){const shop=b.kind==='taller';kids.push(h('h3',{text:(shop?'Mi taller \xB7 ':'Mi almac\xE9n \xB7 ')+b.name}));const e=(label,field,value,o)=>editRow(label,value,x=>send('negocio',field,x),o);
    kids.push(h('div',{class:'list'},editRow('RUC',b.ruc,null,{locked:'Para cambiarlo, p\xEDdelo al equipo.'}),e('Nombre comercial','nombre',b.name),e('Horario','horario',b.hours),e('Direcci\xF3n','direccion',b.address),e('Sector','sector',b.zone),e('Ciudad','ciudad',b.city),shop?e('Servicios','servicios',(b.specialties||[]).join(', ')):e('Categor\xEDas','categorias',b.categories),shop?null:e('Entregas','entregas',b.delivery?'si':'no',{choices:[['si','S\xED'],['no','No']]}),e('Contacto','contacto',b.contactName),e('Correo del negocio','correo',b.email,{type:'email'})));
@@ -119794,9 +119833,9 @@ function servicesText(list){const l=list||[];return l.length?l.slice(0,4).join('
 function noShopsHelp(){const goBook=()=>{const b=document.getElementById('book');if(b)b.scrollIntoView({block:'start',behavior:'smooth'});};
  return h('div',{class:'stack'},h('p',{class:'note',text:'Todav\xEDa no hay talleres verificados que atiendan ese servicio en tu zona. Puedes pedir ofertas a los talleres o invitar a tu taller de confianza: al solicitar la cita abajo, si no hay talleres revisados, te damos un mensaje para reenviarle desde tu WhatsApp.'}),
   h('div',{class:'chips'},btn('Pedir ofertas','primary',goBook),btn('Invitar a mi taller de confianza','ghost',goBook)));}
-function shopList(out,data,d,run){out.replaceChildren();nearby.last=data;
+function shopList(out,data,d,run){out.replaceChildren();nearby.last=data;if(data.zoneUsed&&!nearby.zone){nearby.zone=data.zoneUsed;const z=document.querySelector('input[aria-label="Tu sector"]');if(z)z.value=data.zoneUsed;}
  if(!data.items.length){out.append(noShopsHelp());return;}
- out.append(h('p',{class:'note',text:(data.order==='distancia'?'Ordenados por distancia desde donde est\xE1s.':'Ordenados por tu sector y tu ciudad'+(data.cityUsed?' ('+data.cityUsed+').':'.'))+(data.service?' Servicio: '+data.service.name+'.':'')}));
+ out.append(h('p',{class:'note',text:(data.order==='distancia'?'Ordenados por distancia desde donde est\xE1s.':'Ordenados por tu sector y tu ciudad'+(data.cityUsed||data.zoneUsed?' ('+[data.zoneUsed,data.cityUsed].filter(Boolean).join(', ')+').':'.'))+(data.service?' Servicio: '+data.service.name+'.':'')}));
  const list=h('div',{class:'list'});
  for(const s of data.items){const where=[s.zone,s.city,s.distanceKm!==null?s.distanceKm.toLocaleString('es-EC')+' km':null].filter(Boolean).join(' \xB7 ');
   list.append(h('div',{class:'line'},h('div',{},h('b',{text:s.name}),s.sameZone?h('span',{class:'tag st-al_dia',text:'En tu sector'}):null,h('small',{text:where}),h('small',{text:ratingText(s)}),h('small',{text:'Servicios: '+servicesText(s.services)})),btn('Ver perfil','ghost',()=>openShop(s.id,out,d,run))));}
@@ -120208,14 +120247,14 @@ el('passwordTab').onclick=()=>{el('codeTab').setAttribute('aria-selected','false
 el('codeRequestForm').onsubmit=async e=>{e.preventDefault();try{const phone=el('codePhone').value.trim();await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'login'})});el('verifyPhone').value=phone;el('codeRequestForm').classList.add('hidden');el('codeVerifyForm').classList.remove('hidden');status('Si el n\xFAmero est\xE1 registrado, llegar\xE1 un c\xF3digo por WhatsApp.');}catch(err){status(err.message);}};
 el('codeVerifyForm').onsubmit=async e=>{e.preventDefault();const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/code/verify',{method:'POST',body:JSON.stringify({phone:el('verifyPhone').value.trim(),code:el('loginCode').value.trim()})});if(!['dueno','taller','almacen'].includes(data.user.role)){status('Esta p\xE1gina es para cuentas de due\xF1o, taller o almac\xE9n.');return;}acceptLogin(data);}catch(err){status(err.message);}finally{button.disabled=false;}};
 const signupValues={};function field(parent,id,label,type='text',required=true,options=null){const l=document.createElement('label');l.htmlFor=id;l.textContent=label;parent.append(l);const input=options?document.createElement('select'):document.createElement('input');input.id=id;input.name=id;input.required=required;if(type==='number'){input.type='number';}else if(!options)input.type=type;if(options){for(const [value,title] of options){const o=document.createElement('option');o.value=value;o.textContent=title;input.append(o);}}parent.append(input);return input;}
-function rebuildSignup(){const box=el('signupFields');box.replaceChildren();const profile=el('signupRole').value;if(!profile)return;field(box,'signupName','Tu nombre');field(box,'signupPhone','Celular de WhatsApp','tel');field(box,'signupCity','Ciudad');field(box,'signupEmail','Correo (opcional)','email',false);if(profile==='dueno'){field(box,'signupClass','Clase de veh\xEDculo','text',true,[['','Elige'],['liviano','Liviano'],['van','Van'],['comercial_liviano','Comercial liviano'],['camion','Cami\xF3n'],['bus','Bus'],['maquinaria_liviana','Maquinaria liviana']]);field(box,'signupFuel','Combustible','text',true,[['','Elige'],['gasolina','Gasolina'],['diesel','Di\xE9sel'],['hev','H\xEDbrido'],['phev','H\xEDbrido enchufable'],['bev','El\xE9ctrico'],['glp_gnv','GLP / GNV']]);field(box,'signupMake','Marca');field(box,'signupModel','Modelo');field(box,'signupYear','A\xF1o','number');field(box,'signupKm','Kilometraje','number');field(box,'signupPlate','Placa (opcional)','text',false);field(box,'signupUsage','Uso','text',false,[['urbano','Urbano'],['carretera','Carretera'],['severo','Severo']]);}else{field(box,'signupBusiness','Nombre comercial');field(box,'signupRuc','RUC');field(box,'signupAddress','Direcci\xF3n');field(box,'signupZone','Sector','text',false);field(box,'signupHours','Horario','text',false);if(profile==='taller'){field(box,'signupServices','Servicios (separa con coma)');}else{field(box,'signupCategories','Categor\xEDas','text',false);const d=field(box,'signupDelivery','\xBFHaces entregas?','checkbox',false);d.type='checkbox';}}}
+function rebuildSignup(){const box=el('signupFields');box.replaceChildren();const profile=el('signupRole').value;if(!profile)return;field(box,'signupName','Tu nombre');field(box,'signupPhone','Celular de WhatsApp','tel');field(box,'signupCity','Ciudad');field(box,'signupEmail','Correo (opcional)','email',false);if(profile==='dueno'){field(box,'signupZone','Sector o barrio (para mostrarte talleres cercanos)');field(box,'signupClass','Clase de veh\xEDculo','text',true,[['','Elige'],['liviano','Liviano'],['van','Van'],['comercial_liviano','Comercial liviano'],['camion','Cami\xF3n'],['bus','Bus'],['maquinaria_liviana','Maquinaria liviana']]);field(box,'signupFuel','Combustible','text',true,[['','Elige'],['gasolina','Gasolina'],['diesel','Di\xE9sel'],['hev','H\xEDbrido'],['phev','H\xEDbrido enchufable'],['bev','El\xE9ctrico'],['glp_gnv','GLP / GNV']]);field(box,'signupMake','Marca');field(box,'signupModel','Modelo');field(box,'signupYear','A\xF1o','number');field(box,'signupKm','Kilometraje','number');field(box,'signupPlate','Placa (opcional)','text',false);field(box,'signupUsage','Uso','text',false,[['urbano','Urbano'],['carretera','Carretera'],['severo','Severo']]);}else{field(box,'signupBusiness','Nombre comercial');field(box,'signupRuc','RUC');field(box,'signupAddress','Direcci\xF3n');field(box,'signupZone','Sector','text',false);field(box,'signupHours','Horario','text',false);if(profile==='taller'){field(box,'signupServices','Servicios (separa con coma)');}else{field(box,'signupCategories','Categor\xEDas','text',false);const d=field(box,'signupDelivery','\xBFHaces entregas?','checkbox',false);d.type='checkbox';}}}
 // Recordatorios de mantenimiento: casilla sin marcar en el alta de due\xF1o; solo si la marca se encienden.
 function addReminderField(){if(el('signupRole').value!=='dueno')return;const c=field(el('signupFields'),'signupReminders','Recibir recordatorios de mantenimiento por WhatsApp','checkbox',false);c.type='checkbox';c.checked=false;}
 el('signupRole').onchange=()=>{rebuildSignup();addReminderField();};
 // Enlace enviado por WhatsApp (/cuenta?perfil=dueno#crear): el formulario abre con el perfil ya elegido.
 (()=>{const p=new URLSearchParams(location.search).get('perfil');if(['dueno','taller','almacen'].includes(p)){el('signupRole').value=p;rebuildSignup();addReminderField();}})();
 el('signupForm').onsubmit=async e=>{e.preventDefault();if(!el('signupForm').reportValidity())return;const profile=el('signupRole').value;const phone=el('signupPhone').value.trim();try{if(!el('signupCodeLink'))await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'signup'})});signupValues.profile=profile;signupValues.phone=phone;signupValues.fields={};for(const input of el('signupFields').querySelectorAll('input,select'))signupValues.fields[input.id]=input.type==='checkbox'?(input.checked?'on':''):input.value.trim();signupValues.name=el('signupName').value.trim();signupValues.city=el('signupCity').value.trim();signupValues.email=el('signupEmail').value.trim();el('signupForm').classList.add('hidden');el('signupVerifyForm').classList.remove('hidden');status(el('signupCodeLink')?'Pide tu c\xF3digo por WhatsApp y escr\xEDbelo aqu\xED.':'Revisa WhatsApp para ver tu c\xF3digo.');}catch(err){status(err.message);}};
-el('signupVerifyForm').onsubmit=async e=>{e.preventDefault();const f=signupValues.fields;const payload={phone:signupValues.phone,code:el('signupCode').value.trim(),role:signupValues.profile,name:signupValues.name,city:signupValues.city,email:signupValues.email||undefined,consent:true};if(payload.role==='dueno')Object.assign(payload,{vehicleClass:f.signupClass,fuel:f.signupFuel,make:f.signupMake,model:f.signupModel,year:f.signupYear,currentKm:f.signupKm,plate:f.signupPlate,usageProfile:f.signupUsage,reminders:f.signupReminders==='on'?'on':false});else{Object.assign(payload,{businessName:f.signupBusiness,ruc:f.signupRuc,address:f.signupAddress,zone:f.signupZone,hours:f.signupHours});if(payload.role==='taller')payload.services=f.signupServices.split(',').map(x=>x.trim()).filter(Boolean);else Object.assign(payload,{categories:f.signupCategories,delivery:f.signupDelivery==='on'});}const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/web-signup',{method:'POST',body:JSON.stringify(payload)});acceptLogin(data);}catch(err){status(err.message);}finally{button.disabled=false;}};
+el('signupVerifyForm').onsubmit=async e=>{e.preventDefault();const f=signupValues.fields;const payload={phone:signupValues.phone,code:el('signupCode').value.trim(),role:signupValues.profile,name:signupValues.name,city:signupValues.city,email:signupValues.email||undefined,consent:true};if(payload.role==='dueno')Object.assign(payload,{zone:f.signupZone,vehicleClass:f.signupClass,fuel:f.signupFuel,make:f.signupMake,model:f.signupModel,year:f.signupYear,currentKm:f.signupKm,plate:f.signupPlate,usageProfile:f.signupUsage,reminders:f.signupReminders==='on'?'on':false});else{Object.assign(payload,{businessName:f.signupBusiness,ruc:f.signupRuc,address:f.signupAddress,zone:f.signupZone,hours:f.signupHours});if(payload.role==='taller')payload.services=f.signupServices.split(',').map(x=>x.trim()).filter(Boolean);else Object.assign(payload,{categories:f.signupCategories,delivery:f.signupDelivery==='on'});}const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/web-signup',{method:'POST',body:JSON.stringify(payload)});acceptLogin(data);}catch(err){status(err.message);}finally{button.disabled=false;}};
 el('sendForm').onsubmit=async e=>{e.preventDefault();if(sending||!token)return;const message=el('message').value.trim();if(!message){status('Escribe un mensaje.');return;}if(await sendMessage(message,[e.target.querySelector('button')]))el('message').value='';};
 el('refresh').onclick=()=>{const epoch=generation;refresh(epoch).catch(err=>{if(epoch===generation)status(err.message);});};
 el('older').onclick=async()=>{if(!cursor)return;const epoch=generation;const before=cursor;try{await loadNotices(epoch,before);if(epoch===generation)loadedOlder=true;}catch(err){if(epoch===generation)status(err.message);}};
@@ -120242,7 +120281,7 @@ async function pilotPageRoutes(app2, options = {}) {
   app2.get("/cuenta", async (_request, reply) => {
     const nonce2 = randomBytes2(18).toString("base64");
     const enabled = await config.webEnabled().catch(() => false);
-    reply.header("Cache-Control", "no-store").header("X-Robots-Tag", "noindex, nofollow").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self' blob:; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; connect-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`);
+    reply.header("Cache-Control", "no-store").header("X-Robots-Tag", "noindex, nofollow").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self' blob:; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`);
     reply.header("Permissions-Policy", "camera=(), microphone=(), geolocation=(self), payment=(), usb=()");
     const configured = await options.resolveNumber?.().catch(() => null);
     const digits = (configured ?? process.env.WA_PUBLIC_NUMBER ?? "").replace(/\D/g, "");
@@ -120814,6 +120853,16 @@ async function verifiedShops(conn, shopId) {
   }
   return result.map(toRecord2);
 }
+async function ownerZone(conn, userId) {
+  try {
+    const [row2] = await rows27(conn, "SELECT zone FROM `User` WHERE id = ?", [userId]);
+    return text5(row2?.zone);
+  } catch (err) {
+    if (String(err.code) === "ER_BAD_FIELD_ERROR")
+      return null;
+    throw err;
+  }
+}
 var ShopDirectoryStore = class {
   connect;
   care = new VehicleCareStore();
@@ -120841,9 +120890,10 @@ var ShopDirectoryStore = class {
     return this.run(async (conn) => {
       const user = await this.owner(conn, userId);
       const city = (query.city ?? "").trim() || text5(user.city) || "";
+      const zone = (query.zone ?? "").trim() || await ownerZone(conn, userId) || "";
       const records = await verifiedShops(conn);
-      const page2 = rankNearby(records, { ...query, city });
-      return { ...page2, cityUsed: city ? placeLabel(city) : null, verifiedTotal: records.length };
+      const page2 = rankNearby(records, { ...query, city, zone });
+      return { ...page2, cityUsed: city ? placeLabel(city) : null, zoneUsed: zone ? placeLabel(zone) : null, verifiedTotal: records.length };
     });
   }
   profile(userId, shopId) {
@@ -124969,12 +125019,14 @@ ${CITY_PAGES.map((city) => `  - ${city.name} (${city.province}): ${site}/tallere
 }
 function webManifest() {
   return JSON.stringify({
+    id: "/cuenta",
     name: "AutoMantPro",
     short_name: "AutoMantPro",
     description: "Mantenimiento automotor por WhatsApp en Ecuador",
     lang: "es-EC",
-    start_url: "/",
-    display: "browser",
+    start_url: "/cuenta",
+    scope: "/",
+    display: "standalone",
     background_color: "#f2f4f7",
     theme_color: "#0a6e80",
     icons: [
@@ -125017,10 +125069,63 @@ async function seoRoutes(app2, options = {}) {
 // packages/api/dist/server.js
 init_brand();
 init_navegacion();
-import { randomBytes as randomBytes25 } from "node:crypto";
+import { randomBytes as randomBytes26 } from "node:crypto";
+
+// packages/api/dist/interfaces/instalar.js
+init_navegacion();
+init_sistema();
+init_theme();
+init_head();
+import { randomBytes as randomBytes12 } from "node:crypto";
+var STYLES3 = `${THEME_TOKENS}${SISTEMA}
+*{box-sizing:border-box}
+body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.6 var(--c-font);padding:16px}
+main{max-width:720px;margin:16px auto;background:var(--c-surface);border-radius:var(--c-r);padding:24px 20px;box-shadow:var(--c-shadow)}
+h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}h2{font-size:18px;margin:22px 0 6px}
+ol{padding-left:22px}li{margin:4px 0}
+.nota{color:var(--c-muted);font-size:14px}
+.listo{background:var(--c-ok-bg,#e7f6ec);border-radius:10px;padding:10px 14px;font-weight:600}
+button{font:700 16px/1 var(--c-font);background:var(--c-accent);color:#fff;border:0;border-radius:10px;padding:14px 20px;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}
+[hidden]{display:none!important}
+`;
+function renderInstallPage(nonce2) {
+  return `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Instalar la app \xB7 AutoMantPro</title><meta name="description" content="Instala AutoMantPro en tu celular o tu computadora y entra a tu cuenta con un toque.">
+<link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#0a6e80">${ICON_LINKS}
+<style nonce="${nonce2}">${STYLES3}</style></head><body>${cabeceraSitio()}<main>
+<h1>Instala AutoMantPro</h1>
+<p>Tenla a mano como una app: se abre en su propia ventana, directo en tu cuenta. No ocupa casi espacio y no pasa por ninguna tienda.</p>
+<p id="ya" class="listo" hidden>Ya est\xE1s usando AutoMantPro instalada. \u2705</p>
+<p id="boton" hidden><button id="instalar" type="button">Instalar ahora</button></p>
+<h2>\u{1F4F1} Android</h2>
+<ol><li>Abre esta p\xE1gina en <b>Chrome</b>.</li><li>Toca <b>Instalar ahora</b> o el men\xFA <b>\u22EE</b> y luego <b>Instalar aplicaci\xF3n</b> (o <b>Agregar a la pantalla principal</b>).</li><li>Confirma con <b>Instalar</b>.</li></ol>
+<h2>\u{1F4F1} iPhone o iPad</h2>
+<ol><li>Abre esta p\xE1gina en <b>Safari</b>.</li><li>Toca <b>Compartir</b> (el cuadrado con la flecha hacia arriba).</li><li>Elige <b>Agregar a inicio</b> y toca <b>Agregar</b>.</li></ol>
+<h2>\u{1F4BB} Computadora (Windows, Mac o Linux)</h2>
+<ol><li>Abre esta p\xE1gina en <b>Chrome</b> o <b>Edge</b>.</li><li>Toca <b>Instalar ahora</b>, o el \xEDcono de instalar en la barra de direcciones (una pantalla con una flecha).</li><li>Confirma con <b>Instalar</b>. Queda en el men\xFA de inicio o en el Dock.</li></ol>
+<p class="nota">Despu\xE9s de instalarla, entra con tu n\xFAmero de WhatsApp y el c\xF3digo que te llega por ah\xED. Para quitarla, desinst\xE1lala como cualquier otra app.</p>
+<p><a href="/cuenta">Ir a mi cuenta</a></p>
+</main>${pieSitio()}
+<script nonce="${nonce2}">
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(()=>{});
+const standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+if(standalone)document.getElementById('ya').hidden=false;
+let pending=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();pending=e;document.getElementById('boton').hidden=false;});
+document.getElementById('instalar').addEventListener('click',async()=>{if(!pending)return;pending.prompt();await pending.userChoice.catch(()=>null);pending=null;document.getElementById('boton').hidden=true;});
+window.addEventListener('appinstalled',()=>{document.getElementById('boton').hidden=true;document.getElementById('ya').hidden=false;});
+</script></body></html>`;
+}
+async function installPageRoutes(app2) {
+  app2.get("/instalar", async (_request, reply) => {
+    const nonce2 = randomBytes12(18).toString("base64");
+    return reply.type("text/html; charset=utf-8").header("Cache-Control", "no-cache").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self' data:; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; manifest-src 'self'; worker-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).send(renderInstallPage(nonce2));
+  });
+}
 
 // packages/api/dist/interfaces/content/index.js
-import { randomBytes as randomBytes12 } from "node:crypto";
+import { randomBytes as randomBytes13 } from "node:crypto";
 
 // packages/api/dist/interfaces/content/page.js
 init_page();
@@ -125243,7 +125348,7 @@ async function contentRoutes(app2, options = {}) {
   app2.get("/servicios", async (request, reply) => {
     const code5 = await visitCode("servicios", request.headers["user-agent"]);
     const lista = SERVICE_PAGES.map((page2) => `<li><a href="/servicios/${page2.slug}">${page2.name}</a>${page2.priceFrom === null ? "" : ` \u2014 desde US$ ${page2.priceFrom.toFixed(0)}`}</li>`).join("");
-    const nonce2 = randomBytes12(16).toString("base64");
+    const nonce2 = randomBytes13(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number2(),
       code: code5,
@@ -125279,7 +125384,7 @@ async function contentRoutes(app2, options = {}) {
       return reply.callNotFound();
     const code5 = await visitCode(`servicio:${page2.id}`, request.headers["user-agent"]);
     const otros = SERVICE_PAGES.filter((p) => p.slug !== page2.slug).slice(0, 5);
-    const nonce2 = randomBytes12(16).toString("base64");
+    const nonce2 = randomBytes13(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number2(),
       code: code5,
@@ -125308,7 +125413,7 @@ async function contentRoutes(app2, options = {}) {
   app2.get("/talleres", async (request, reply) => {
     const code5 = await visitCode("talleres", request.headers["user-agent"]);
     const lista = CITY_PAGES.map((city) => `<li><a href="/talleres/${city.slug}">Talleres mec\xE1nicos en ${city.name}</a> \u2014 ${city.province}</li>`).join("");
-    const nonce2 = randomBytes12(16).toString("base64");
+    const nonce2 = randomBytes13(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number2(),
       code: code5,
@@ -125342,7 +125447,7 @@ async function contentRoutes(app2, options = {}) {
     if (!city)
       return reply.callNotFound();
     const code5 = await visitCode(`ciudad:${city.slug}`, request.headers["user-agent"]);
-    const nonce2 = randomBytes12(16).toString("base64");
+    const nonce2 = randomBytes13(16).toString("base64");
     return send(reply, renderContentPage({
       number: await number2(),
       code: code5,
@@ -125372,7 +125477,7 @@ async function contentRoutes(app2, options = {}) {
 }
 
 // packages/api/dist/interfaces/content/landing.js
-import { randomBytes as randomBytes13 } from "node:crypto";
+import { randomBytes as randomBytes14 } from "node:crypto";
 init_entry();
 init_page();
 init_head();
@@ -125466,7 +125571,7 @@ async function landingRoutes(app2, options = {}) {
   };
   app2.get("/soluciones", async (request, reply) => {
     const code5 = await visitCode(origin("lp:soluciones", request.query), null, request.headers["user-agent"]);
-    const nonce2 = randomBytes13(16).toString("base64");
+    const nonce2 = randomBytes14(16).toString("base64");
     const grupos = PROFILE_ORDER.map((profile) => {
       const pages = LANDING_PAGES.filter((p) => p.profile === profile);
       return `<div><h3>${escapeHtml(PROFILE_NAMES[profile])}</h3><ul class="enlaces">${pages.map((p) => `<li><a href="/${p.slug}">${escapeHtml(p.h1)}</a></li>`).join("")}</ul></div>`;
@@ -125503,7 +125608,7 @@ async function landingRoutes(app2, options = {}) {
     app2.get(`/${page2.slug}`, async (request, reply) => {
       const current = findLanding(page2.slug);
       const code5 = await visitCode(origin(current.ref, request.query), current.profile, request.headers["user-agent"]);
-      const nonce2 = randomBytes13(16).toString("base64");
+      const nonce2 = randomBytes14(16).toString("base64");
       const blocks = current.blocks.map((block) => ({ title: block.title, html: blockHtml(block) }));
       if (current.slug === "tabla-de-mantenimiento-por-kilometraje")
         blocks.push(...kmTablesBlocks());
@@ -125543,7 +125648,7 @@ init_theme();
 init_theme_layers();
 init_head();
 init_brand();
-import { randomBytes as randomBytes14 } from "node:crypto";
+import { randomBytes as randomBytes15 } from "node:crypto";
 
 // packages/api/dist/interfaces/map/leaflet-assets.js
 var LEAFLET_JS_HASH = "db49d009c841";
@@ -126435,7 +126540,7 @@ async function mapRoutes(app2, options = {}) {
   app2.get(LEAFLET_PATH, async (_request, reply) => reply.header("Cache-Control", "public, max-age=31536000, immutable").header("X-Content-Type-Options", "nosniff").header("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'").type("application/javascript; charset=utf-8").send(LEAFLET_JS));
   app2.get("/mapa", async (request, reply) => {
     const q = request.query ?? {};
-    const nonce2 = randomBytes14(16).toString("base64");
+    const nonce2 = randomBytes15(16).toString("base64");
     const html = renderMapPage({
       nonce: nonce2,
       number: await number2(),
@@ -126458,7 +126563,7 @@ init_workshop_map_store();
 init_sistema();
 init_catalog();
 init_page();
-import { randomBytes as randomBytes15 } from "node:crypto";
+import { randomBytes as randomBytes16 } from "node:crypto";
 init_entry();
 init_marketing();
 var PROFILES = ["dueno", "taller", "almacen", "flota"];
@@ -126526,7 +126631,7 @@ async function plansPageRoutes(app2, options = {}) {
     return send(reply, renderContentPage({
       number: phone,
       code: code5,
-      nonce: randomBytes15(16).toString("base64"),
+      nonce: randomBytes16(16).toString("base64"),
       path: "/planes",
       title: "Contratar plan \xB7 AutoMantPro",
       description: "Contrata tu plan de AutoMantPro por WhatsApp: registro gratis con funciones b\xE1sicas sin costo, precios con IVA y pago por transferencia.",
@@ -126579,8 +126684,8 @@ init_documents();
 init_theme();
 init_theme_layers();
 init_brand();
-import { randomBytes as randomBytes16 } from "node:crypto";
-var STYLES3 = `${THEME_TOKENS}
+import { randomBytes as randomBytes17 } from "node:crypto";
+var STYLES4 = `${THEME_TOKENS}
 *{box-sizing:border-box}
 body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.6 var(--c-font);padding:24px 16px}
 main{max-width:760px;margin:0 auto;background:var(--c-surface);border-radius:var(--c-r);padding:28px 24px;box-shadow:var(--c-shadow)}
@@ -126609,7 +126714,7 @@ function renderLegalPage(input) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(input.title)} \xB7 AutoMantPro</title>
 ${input.path ? seoHead({ path: input.path, title: `${input.title} \xB7 AutoMantPro`, description: input.description ?? input.title }) : ICON_LINKS}
-<style nonce="${nonce2}">${STYLES3}${THEME_LEGAL_LAYER}${SISTEMA}</style>
+<style nonce="${nonce2}">${STYLES4}${THEME_LEGAL_LAYER}${SISTEMA}</style>
 </head>
 <body>
 <main>
@@ -126648,7 +126753,7 @@ async function legalRoutes(app2, options = {}) {
       } catch {
         data3 = emptyLegalData();
       }
-      const nonce2 = randomBytes16(16).toString("base64");
+      const nonce2 = randomBytes17(16).toString("base64");
       return reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-cache").type("text/html; charset=utf-8").send(renderLegalPage({ title: page2.title, path: page2.path, description: page2.description, sections: page2.sections(data3), complete: isLegalComplete(data3), nonce: nonce2 }));
     });
   }
@@ -127765,7 +127870,7 @@ init_sistema();
 init_theme();
 init_theme_layers();
 init_brand();
-import { randomBytes as randomBytes17 } from "node:crypto";
+import { randomBytes as randomBytes18 } from "node:crypto";
 function renderAssistantPage(nonce2) {
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Asistente \xB7 AutoMantPro</title>
 <style nonce="${nonce2}">${THEME_TOKENS}
@@ -127782,7 +127887,7 @@ async function assistantPageRoutes(app2, options = {}) {
   app2.get("/asistente", async (_request, reply) => {
     if (!enabled())
       return reply.callNotFound();
-    const nonce2 = randomBytes17(16).toString("base64");
+    const nonce2 = randomBytes18(16).toString("base64");
     return reply.header("Content-Security-Policy", `default-src 'none'; img-src 'self'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(renderAssistantPage(nonce2));
   });
 }
@@ -127799,7 +127904,7 @@ init_vehicle_card_store();
 init_fleet_access();
 init_fleet_store();
 init_workflow();
-import { randomBytes as randomBytes18 } from "node:crypto";
+import { randomBytes as randomBytes19 } from "node:crypto";
 
 // packages/api/dist/interfaces/fleet-panel/soat.js
 init_rtv_calendar();
@@ -127905,7 +128010,7 @@ async function fleetPanelRoutes(app2, options = {}) {
   const expired = '<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Enlace vencido</title><h1>Este enlace ya no es v\xE1lido</h1><p>Pide uno nuevo por WhatsApp escribiendo: Panel flota</p><p><a href="/">Volver al inicio</a></p></html>';
   app2.get("/flota/:token", async (request, reply) => {
     const parsed = token.safeParse(request.params.token);
-    const nonce2 = randomBytes18(16).toString("base64");
+    const nonce2 = randomBytes19(16).toString("base64");
     headers(reply, nonce2);
     const data3 = parsed.success ? await load2(parsed.data) : null;
     if (!data3)
@@ -128050,7 +128155,7 @@ init_domain();
 init_security();
 init_page();
 init_theme();
-import { randomBytes as randomBytes19 } from "node:crypto";
+import { randomBytes as randomBytes20 } from "node:crypto";
 var e3 = (value2) => escapeHtml(String(value2 ?? ""));
 var buckets = /* @__PURE__ */ new Map();
 function defaultSession(request, reply, required = true) {
@@ -128077,7 +128182,7 @@ function page(title, body, nonce2) {
   return `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>${e3(title)} \xB7 AutoMantPro</title><style nonce="${e3(nonce2)}">${THEME_TOKENS}*{box-sizing:border-box}body{max-width:1000px;margin:0 auto;padding:clamp(16px,4vw,36px);background:var(--c-bg);color:var(--c-ink);font:16px/1.55 var(--c-font)}a{color:var(--c-accent);overflow-wrap:anywhere}nav{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px}article,section{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:clamp(14px,3vw,22px);margin:12px 0;min-width:0}h1,h2,h3{overflow-wrap:anywhere}.notice{background:var(--c-warn-bg);color:var(--c-warn);border-left:4px solid var(--c-warn);padding:12px}form{margin:12px 0}label{display:block;margin:10px 0;overflow-wrap:anywhere}input,textarea,button{max-width:100%;font:inherit}input,textarea{width:100%;padding:10px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface);color:var(--c-ink)}input[type=checkbox],input[type=radio]{width:auto}button{padding:10px 16px;border:0;border-radius:var(--c-pill);background:var(--c-promo);color:var(--c-on-promo);cursor:pointer}.locked{color:var(--c-muted)}ol{padding-left:24px}li{overflow-wrap:anywhere}${SISTEMA}</style></head><body>${cabeceraSitio()}<nav aria-label="Capacitaci\xF3n"><a href="/cursos">Cursos</a><a href="/mis-cursos">Mis cursos</a></nav><main>${body}</main>${pieSitio()}</body></html>`;
 }
 function nonce(request) {
-  return String(request.cspNonce ?? randomBytes19(16).toString("base64"));
+  return String(request.cspNonce ?? randomBytes20(16).toString("base64"));
 }
 async function courseWebRoutes(app2, options = {}) {
   const store = options.store ?? new MysqlCoursesStore(() => openConnection());
@@ -128271,7 +128376,7 @@ async function courseWebRoutes(app2, options = {}) {
 var import_multipart = __toESM(require_multipart2(), 1);
 init_navegacion();
 init_zod();
-import { randomBytes as randomBytes20 } from "node:crypto";
+import { randomBytes as randomBytes21 } from "node:crypto";
 init_config();
 init_courses_store();
 init_apply();
@@ -128307,7 +128412,7 @@ async function expertRoutes(app2, options = {}) {
     }
   };
   app2.post("/expert/apply", { preHandler: [pilot, authenticate] }, async (request, reply) => {
-    const token2 = randomBytes20(32).toString("base64url");
+    const token2 = randomBytes21(32).toString("base64url");
     const conn = await openConnection();
     try {
       if (await isVerifiedExpert(conn, request.userId))
@@ -128569,6 +128674,7 @@ var app = (0, import_fastify.default)({
 });
 installSecurity(app);
 installPaletas(app);
+app.addHook("onSend", sessionMenuOnSend);
 await app.register(import_cors.default, {
   origin: process.env.NODE_ENV === "production" ? false : true
 });
@@ -128612,6 +128718,7 @@ await app.register(workOrderRoutes, { prefix: apiPrefix });
 await app.register(localMarketplaceRoutes, { prefix: apiPrefix });
 await app.register(localAgentRoutes, { prefix: apiPrefix });
 await app.register(accountSelfServiceRoutes, { prefix: apiPrefix });
+await app.register(installPageRoutes);
 await app.register(pilotPageRoutes, { resolveNumber: () => whatsappNumber.get() });
 await app.register(fleetPanelRoutes);
 await app.register(localAgentDownloadRoutes);
@@ -128742,7 +128849,7 @@ app.setNotFoundHandler((request, reply) => {
   const browsing = request.method === "GET" && String(request.headers.accept ?? "").includes("text/html") && !request.url.startsWith("/api/");
   if (!browsing)
     return reply.code(404).send({ message: `Route ${request.method}:${request.url} not found`, error: "Not Found", statusCode: 404 });
-  const nonce2 = randomBytes25(16).toString("base64");
+  const nonce2 = randomBytes26(16).toString("base64");
   return reply.code(404).type("text/html; charset=utf-8").header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).send(noEncontradaHtml(nonce2));
 });
 app.setErrorHandler((error, request, reply) => {
