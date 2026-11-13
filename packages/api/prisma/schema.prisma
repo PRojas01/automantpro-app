@@ -178,6 +178,9 @@ model Shop {
   hours               String?
   contactName         String?
   founder             Boolean            @default(false)
+  coverMime           String?            @db.VarChar(20)
+  coverPhoto          Bytes?             @db.MediumBlob
+  coverUpdatedAt      DateTime?
   email               String?
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
