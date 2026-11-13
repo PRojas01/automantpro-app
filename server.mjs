@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='344e4817820ecb7ca5ae2dd6f41729940fa3c83c'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='303d4b7366ca30baa357de59f480b7427eb01695'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -84360,14 +84360,14 @@ var init_registration_store = __esm({
       }
       pendingVerifications() {
         return this.run(async (conn) => {
-          const shops = rows3(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Shop` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("shop"));
-          const stores = rows3(await conn.query("SELECT id, userId, name, city, ruc, createdAt FROM `Store` WHERE verificationStatus = 'pending' ORDER BY createdAt LIMIT 100")).map(pendingItem("store"));
+          const shops = rows3(await conn.query("SELECT b.id, b.userId, b.name, b.city, b.ruc, b.createdAt FROM `Shop` b WHERE b.verificationStatus = 'pending' AND b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL) ORDER BY b.createdAt LIMIT 100")).map(pendingItem("shop"));
+          const stores = rows3(await conn.query("SELECT b.id, b.userId, b.name, b.city, b.ruc, b.createdAt FROM `Store` b WHERE b.verificationStatus = 'pending' AND b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL) ORDER BY b.createdAt LIMIT 100")).map(pendingItem("store"));
           return [...shops, ...stores].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
         });
       }
       setVerification(kind, id3, status) {
         return this.run(async (conn) => {
-          const [result] = kind === "shop" ? await conn.query("UPDATE `Shop` SET verificationStatus = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [status, id3]) : await conn.query("UPDATE `Store` SET verificationStatus = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [status, id3]);
+          const [result] = kind === "shop" ? await conn.query("UPDATE `Shop` b SET b.verificationStatus = ?, b.updatedAt = CURRENT_TIMESTAMP(3) WHERE b.id = ? AND b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL)", [status, id3]) : await conn.query("UPDATE `Store` b SET b.verificationStatus = ?, b.updatedAt = CURRENT_TIMESTAMP(3) WHERE b.id = ? AND b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL)", [status, id3]);
           return Number(result.affectedRows ?? 0) > 0;
         });
       }
@@ -84376,8 +84376,8 @@ var init_registration_store = __esm({
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const shops = Number(rows3(await conn.query("SELECT COUNT(*) AS n FROM `Shop` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
-          const stores = Number(rows3(await conn.query("SELECT COUNT(*) AS n FROM `Store` WHERE verificationStatus = 'pending'"))[0]?.n ?? 0);
+          const shops = Number(rows3(await conn.query("SELECT COUNT(*) AS n FROM `Shop` b WHERE b.verificationStatus = 'pending' AND b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL)"))[0]?.n ?? 0);
+          const stores = Number(rows3(await conn.query("SELECT COUNT(*) AS n FROM `Store` b WHERE b.verificationStatus = 'pending' AND b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL)"))[0]?.n ?? 0);
           return shops + stores;
         });
       }
@@ -91568,223 +91568,6 @@ ${list7.map((c) => `\u2022 ${c.plate} \xB7 ${c.make} ${c.model} ${c.year}: ${sta
   }
 });
 
-// packages/api/dist/application/panel/vehicle-costs.js
-function monthlyCosts(expenses, readings, now, months2 = 6) {
-  const keys = [];
-  let key = monthKey(now);
-  for (let i = 0; i < months2; i++) {
-    keys.unshift(key);
-    const [y, m] = key.split("-").map(Number);
-    key = m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, "0")}`;
-  }
-  const sorted = [...readings].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
-  const kmBefore = (at) => {
-    let best = null;
-    for (const r of sorted)
-      if (r.createdAt < at && (best === null || r.km > best))
-        best = r.km;
-    return best;
-  };
-  return keys.map((k) => {
-    const from = monthStart(k);
-    const to = monthStart(nextKey(k));
-    let fuel2 = 0;
-    let other = 0;
-    for (const e9 of expenses) {
-      if (e9.spentAt < from || e9.spentAt >= to)
-        continue;
-      if (e9.kind === "combustible")
-        fuel2 += e9.amountUsd;
-      else
-        other += e9.amountUsd;
-    }
-    const inMonth = sorted.filter((r) => r.createdAt >= from && r.createdAt < to).map((r) => r.km);
-    const end = kmBefore(to);
-    const start = kmBefore(from) ?? (inMonth.length ? Math.min(...inMonth) : null);
-    const km10 = end !== null && start !== null && inMonth.length ? Math.max(0, end - start) : 0;
-    return { month: k, fuel: round22(fuel2), other: round22(other), km: km10 };
-  });
-}
-function fuelIndicator(months2) {
-  const usable = months2.filter((m) => m.fuel > 0 && m.km > 0);
-  const last = usable[usable.length - 1];
-  const history = usable.slice(0, -1);
-  if (!last || history.length < FUEL_MIN_HISTORY)
-    return null;
-  const current = last.fuel / last.km;
-  const baseline = history.reduce((sum, m) => sum + m.fuel / m.km, 0) / history.length;
-  const ratio = current / baseline;
-  return { level: ratio < FUEL_LOW ? "bajo" : ratio > FUEL_HIGH ? "alto" : "medio", current, baseline };
-}
-function costsText(vehicle, months2) {
-  const withData = months2.filter((m) => m.fuel > 0 || m.other > 0 || m.km > 0);
-  if (!withData.length)
-    return `${vehicle}: todav\xEDa no hay gastos anotados.
-Combustible | USD | km (| galones) \xB7 Gasto | concepto | USD (| AAAA-MM-DD)`;
-  const fuel2 = withData.reduce((s, m) => s + m.fuel, 0);
-  const other = withData.reduce((s, m) => s + m.other, 0);
-  const kms = withData.reduce((s, m) => s + m.km, 0);
-  const indicator = fuelIndicator(months2);
-  const level = indicator ? `${FUEL_LEVEL_LED[indicator.level]} Gasto de combustible: ${FUEL_LEVEL_TEXT[indicator.level]} (${perKm(indicator.current)} frente a tu promedio de ${perKm(indicator.baseline)})` : `\u26AA Gasto de combustible: sin referencia a\xFAn (hacen falta ${FUEL_MIN_HISTORY + 1} meses con cargas y kilometraje)`;
-  return [
-    `\u{1F4B5} ${vehicle}: gasto y recorrido de los \xFAltimos ${months2.length} meses`,
-    `Total: ${formatUsd(fuel2 + other)} (combustible ${formatUsd(fuel2)} \xB7 mantenimiento y otros ${formatUsd(other)})${kms > 0 ? ` \xB7 ${kmText(kms)} \xB7 ${perKm((fuel2 + other) / kms)}` : ""}`,
-    level,
-    ...withData.map((m) => `\u2022 ${monthLabel(m.month)}: ${formatUsd(m.fuel + m.other)}${m.km > 0 ? ` \xB7 ${kmText(m.km)} \xB7 ${perKm((m.fuel + m.other) / m.km)}` : ""}`),
-    "Anotar: Combustible | USD | km (| galones) \xB7 Gasto | concepto | USD"
-  ].join("\n");
-}
-var EC_OFFSET_MS, monthKey, monthStart, nextKey, FUEL_LOW, FUEL_HIGH, FUEL_MIN_HISTORY, MONTH_NAME, monthLabel, kmText, perKm, round22, FUEL_LEVEL_TEXT, FUEL_LEVEL_LED;
-var init_vehicle_costs = __esm({
-  "packages/api/dist/application/panel/vehicle-costs.js"() {
-    "use strict";
-    init_workflow();
-    EC_OFFSET_MS = 5 * 36e5;
-    monthKey = (at) => new Date(at.getTime() - EC_OFFSET_MS).toISOString().slice(0, 7);
-    monthStart = (key) => new Date(Date.parse(`${key}-01T00:00:00Z`) + EC_OFFSET_MS);
-    nextKey = (key) => {
-      const [y, m] = key.split("-").map(Number);
-      return m === 12 ? `${y + 1}-01` : `${y}-${String(m + 1).padStart(2, "0")}`;
-    };
-    FUEL_LOW = 0.9;
-    FUEL_HIGH = 1.15;
-    FUEL_MIN_HISTORY = 2;
-    MONTH_NAME = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
-    monthLabel = (key) => MONTH_NAME[Number(key.slice(5, 7)) - 1] ?? key;
-    kmText = (n3) => `${Math.round(n3).toLocaleString("es-EC")} km`;
-    perKm = (n3) => `USD ${n3.toFixed(2).replace(".", ",")}/km`;
-    round22 = (n3) => Math.round(n3 * 100) / 100;
-    FUEL_LEVEL_TEXT = { bajo: "Bajo", medio: "Medio", alto: "Alto" };
-    FUEL_LEVEL_LED = { bajo: "\u{1F7E2}", medio: "\u{1F7E1}", alto: "\u{1F534}" };
-  }
-});
-
-// packages/api/dist/infrastructure/messaging/vehicle-transfer-cutoff.js
-async function transferCutoff(conn, vehicleId) {
-  const [last] = await rows16(conn, "SELECT MAX(usedAt) AS usedAt FROM `VehicleTransfer` WHERE vehicleId = ? AND status = 'used'", [vehicleId]).catch(whenTableMissing4([]));
-  return last?.usedAt ? new Date(last.usedAt) : null;
-}
-async function hideOrdersBeforeTransfer(conn, orders) {
-  const ids = orders.map((o) => String(o.id));
-  if (!ids.length)
-    return;
-  const hidden = await rows16(conn, "SELECT w.id FROM `WorkOrder` w JOIN (SELECT vehicleId, MAX(usedAt) AS usedAt FROM `VehicleTransfer` WHERE status = 'used' GROUP BY vehicleId) t ON t.vehicleId = w.vehicleId WHERE w.id IN (?) AND w.createdAt < t.usedAt", [ids]).catch(whenTableMissing4([]));
-  const gone = new Set(hidden.map((h) => String(h.id)));
-  for (let i = orders.length - 1; i >= 0; i--)
-    if (gone.has(String(orders[i].id)))
-      orders.splice(i, 1);
-}
-var rows16, whenTableMissing4;
-var init_vehicle_transfer_cutoff = __esm({
-  "packages/api/dist/infrastructure/messaging/vehicle-transfer-cutoff.js"() {
-    "use strict";
-    rows16 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
-    whenTableMissing4 = (value2) => (err) => {
-      if (err.code === "ER_NO_SUCH_TABLE")
-        return value2;
-      throw err;
-    };
-  }
-});
-
-// packages/api/dist/infrastructure/messaging/vehicle-costs-store.js
-async function loadCostMonths(conn, vehicleId, now = /* @__PURE__ */ new Date()) {
-  const since = await transferCutoff(conn, vehicleId) ?? /* @__PURE__ */ new Date(0);
-  const expenses = await rows17(conn, "SELECT kind, amountUsd, spentAt FROM `VehicleExpense` WHERE vehicleId = ? AND spentAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 MONTH) AND createdAt >= ?", [vehicleId, since]);
-  const readings = await rows17(conn, "SELECT km, createdAt FROM `VehicleOdometerReading` WHERE vehicleId = ? AND createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 MONTH) UNION ALL (SELECT km, createdAt FROM `VehicleOdometerReading` WHERE vehicleId = ? AND createdAt <= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 MONTH) ORDER BY createdAt DESC LIMIT 1)", [vehicleId, vehicleId]);
-  return monthlyCosts(expenses.map((e9) => ({ kind: String(e9.kind), amountUsd: Number(e9.amountUsd), spentAt: new Date(e9.spentAt) })), readings.map((r) => ({ km: Number(r.km), createdAt: new Date(r.createdAt) })), now);
-}
-var rows17;
-var init_vehicle_costs_store = __esm({
-  "packages/api/dist/infrastructure/messaging/vehicle-costs-store.js"() {
-    "use strict";
-    init_vehicle_transfer_cutoff();
-    init_vehicle_costs();
-    rows17 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
-  }
-});
-
-// packages/api/dist/application/panel/rtv-calendar.js
-function calendarFor(city, calendars = RTV_CALENDARS) {
-  return calendars[fold9(city ?? "")] ?? calendars.nacional ?? NATIONAL_RTV_CALENDAR;
-}
-function rtvMonth(plate2, city, calendars) {
-  const digits = String(plate2 ?? "").match(/\d/g);
-  if (!digits)
-    return null;
-  return calendarFor(city, calendars)[Number(digits[digits.length - 1])] ?? null;
-}
-function ecMonthYear(now) {
-  const ec = new Date(now.getTime() - 5 * 36e5);
-  return { month: ec.getUTCMonth() + 1, year: ec.getUTCFullYear() };
-}
-function rtvNotice(vehicle, now, label5) {
-  if (!vehicle.remindersOptIn)
-    return null;
-  const month = rtvMonth(vehicle.plate, vehicle.city);
-  if (month === null)
-    return null;
-  const { month: current, year: year3 } = ecMonthYear(now);
-  if (month !== current)
-    return null;
-  return {
-    key: `rtv:${vehicle.id}:${year3}`,
-    message: `\u{1F5D3}\uFE0F Este mes (${MONTH_NAMES[month - 1]}) le toca la revisi\xF3n t\xE9cnica vehicular (RTV) y la matr\xEDcula a tu ${label5}, placa ${vehicle.plate}. El valor a pagar por la matr\xEDcula incluye el SOAT. Este calendario es referencial: confirma la fecha en la ANT o en tu agencia de matriculaci\xF3n. Para dejar de recibir avisos: Alertas no`
-  };
-}
-function parseSoatDate(value2, now = /* @__PURE__ */ new Date()) {
-  const text12 = value2 instanceof Date ? Number.isNaN(value2.getTime()) ? "" : value2.toISOString().slice(0, 10) : String(value2 ?? "").trim();
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(text12);
-  if (!m)
-    return null;
-  const date2 = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
-  if (date2.toISOString().slice(0, 10) !== text12)
-    return null;
-  const year3 = Number(m[1]);
-  return year3 >= 2e3 && year3 <= ecMonthYear(now).year + 15 ? text12 : null;
-}
-function soatDaysLeft(expiresAt, now) {
-  const date2 = expiresAt === null || expiresAt === void 0 || expiresAt === "" ? null : parseSoatDate(expiresAt, now);
-  if (!date2)
-    return null;
-  const today = new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
-  return { date: date2, daysLeft: Math.round((Date.parse(`${date2}T00:00:00Z`) - Date.parse(`${today}T00:00:00Z`)) / 864e5) };
-}
-function soatNotice(vehicle, now, label5) {
-  if (!vehicle.remindersOptIn)
-    return null;
-  const left = soatDaysLeft(vehicle.soatExpiresAt, now);
-  if (!left || left.daysLeft > 30 || left.daysLeft < -7)
-    return null;
-  const stage = left.daysLeft > 7 ? "30" : left.daysLeft > 0 ? "7" : "0";
-  const when13 = left.daysLeft > 0 ? `vence el ${shownDate(left.date)} (${left.daysLeft === 1 ? "ma\xF1ana" : `en ${left.daysLeft} d\xEDas`})` : left.daysLeft === 0 ? `vence hoy (${shownDate(left.date)})` : `venci\xF3 el ${shownDate(left.date)}`;
-  return {
-    key: `soat:${vehicle.id}:${left.date}:${stage}`,
-    message: `\u{1F6E1}\uFE0F El SOAT de tu ${label5} ${when13}. Esta es la fecha que registraste en la ficha del veh\xEDculo: si lo renovaste, actual\xEDzala all\xED. Para dejar de recibir avisos: Alertas no`
-  };
-}
-function soatAlert(expiresAt, now) {
-  const left = soatDaysLeft(expiresAt, now);
-  if (!left || left.daysLeft > 30)
-    return null;
-  return { kind: "soat", title: "SOAT", detail: left.daysLeft < 0 ? `Venci\xF3 el ${shownDate(left.date)}` : left.daysLeft === 0 ? "Vence hoy" : `Vence el ${shownDate(left.date)} (${left.daysLeft} ${left.daysLeft === 1 ? "d\xEDa" : "d\xEDas"})`, state: left.daysLeft <= 7 ? "urgente" : "pronto", when: "" };
-}
-var NATIONAL_RTV_CALENDAR, RTV_CALENDARS, MONTH_NAMES, fold9, shownDate;
-var init_rtv_calendar = __esm({
-  "packages/api/dist/application/panel/rtv-calendar.js"() {
-    "use strict";
-    NATIONAL_RTV_CALENDAR = { 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10, 0: 11 };
-    RTV_CALENDARS = {
-      nacional: NATIONAL_RTV_CALENDAR,
-      quito: NATIONAL_RTV_CALENDAR,
-      guayaquil: NATIONAL_RTV_CALENDAR
-    };
-    MONTH_NAMES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-    fold9 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
-    shownDate = (iso3) => `${iso3.slice(8, 10)}/${iso3.slice(5, 7)}/${iso3.slice(0, 4)}`;
-  }
-});
-
 // packages/api/dist/application/panel/recommendations.js
 function formatKm2(km10) {
   return `${Math.round(Math.abs(km10)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\xA0")}\xA0km`;
@@ -91940,6 +91723,460 @@ var init_recommendations = __esm({
   }
 });
 
+// packages/api/dist/application/panel/ficha.js
+function bodyStyleFor(vehicle) {
+  if (isBodyStyle(vehicle.bodyStyle))
+    return vehicle.bodyStyle;
+  const cls = String(vehicle.vehicleClass ?? "");
+  if (["motocicleta", "cuadron", "bus", "maquinaria_liviana"].includes(cls))
+    return null;
+  if (cls === "camion")
+    return "camion-liviano";
+  const name = fold9(`${String(vehicle.make ?? "")} ${String(vehicle.model ?? "")}`);
+  for (const [style, words] of KEYWORDS2)
+    if (words.test(name))
+      return style;
+  if (cls === "van")
+    return "minivan";
+  if (cls === "comercial_liviano")
+    return "pickup-doble";
+  return "sedan";
+}
+function systemOfService(serviceId) {
+  const n3 = SYSTEM_OF_SERVICE.get(serviceId);
+  const system = SYSTEMS.find((x) => x.n === n3);
+  return system ? { n: system.n, name: system.name } : { n: 9, name: "Otros" };
+}
+function fichaSystems(items, inspection) {
+  const otros = items.filter((i) => !SYSTEM_OF_SERVICE.has(i.serviceId));
+  const systems = SYSTEMS.map((system) => {
+    const services = items.filter((i) => SYSTEM_OF_SERVICE.get(i.serviceId) === system.n);
+    const area = inspection?.areas?.find((a) => a.id === system.id);
+    const states2 = services.map((s) => s.state);
+    if (area && area.state in RANK)
+      states2.push(area.state);
+    const state = states2.length ? [...states2].sort((a, b) => RANK[a] - RANK[b])[0] : "sin_dato";
+    const findings = (area?.items ?? []).filter((i) => i.status === "cambiar" || i.status === "observar").map((i) => `${i.status === "cambiar" ? "Cambiar" : "Observar"}: ${i.name}`);
+    return { n: system.n, id: system.id, name: system.name, state, services, findings, upToDate: services.filter((s) => s.state === "al_dia").length };
+  });
+  return { systems, otros };
+}
+var BODY_STYLES, isBodyStyle, fold9, KEYWORDS2, SYSTEM_POINTS, SYSTEMS, SYSTEM_OF_SERVICE, RANK;
+var init_ficha = __esm({
+  "packages/api/dist/application/panel/ficha.js"() {
+    "use strict";
+    init_catalogs();
+    BODY_STYLES = [
+      { id: "sedan", label: "Sed\xE1n" },
+      { id: "hatchback", label: "Hatchback" },
+      { id: "familiar", label: "Familiar" },
+      { id: "crossover", label: "Crossover" },
+      { id: "suv", label: "SUV" },
+      { id: "minivan", label: "Miniv\xE1n" },
+      { id: "furgoneta", label: "Furgoneta" },
+      { id: "pickup-sencilla", label: "Camioneta sencilla" },
+      { id: "pickup-doble", label: "Camioneta doble cabina" },
+      { id: "camion-liviano", label: "Cami\xF3n liviano" }
+    ];
+    isBodyStyle = (value2) => BODY_STYLES.some((b) => b.id === value2);
+    fold9 = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+    KEYWORDS2 = [
+      ["pickup-doble", /\b(hilux|d-?max|dmax|bt-?50|ranger|frontier|np300|navara|l200|amarok|tacoma|f-?150|poer|wingle|t60|doble cabina)\b/],
+      ["pickup-sencilla", /\b(cabina sencilla|cabina simple|saveiro|strada)\b/],
+      ["furgoneta", /\b(furgon|furgoneta|hiace|transit|sprinter|master|n300|h100|cargo|kangoo)\b/],
+      ["minivan", /\b(minivan|carnival|sienna|odyssey|ertiga|rush|avanza|sedona)\b/],
+      ["suv", /\b(fortuner|prado|land cruiser|4runner|pathfinder|x-?trail|tucson|santa fe|sorento|sportage|rav-?4|cx-?5|cx-?9|grand vitara|tiguan|explorer|montero|outlander|captiva|trailblazer|tahoe)\b/],
+      ["crossover", /\b(kicks|creta|seltos|tracker|hr-?v|cx-?3|cx-?30|ecosport|duster|sonet|venue|qashqai|t-?cross|jimny|vitara|c-?hr|corolla cross)\b/],
+      ["familiar", /\b(wagon|familiar|touring|sportwagen|variant)\b/],
+      ["hatchback", /\b(hatchback|hatch|spark|picanto|swift|i10|grand i10|march|fit|polo|sandero|celerio|morning|baleno|golf|gol|aveo emotion)\b/]
+    ];
+    SYSTEM_POINTS = {
+      sedan: [[20, 45], [17, 70], [72, 55], [33, 61], [12, 49], [82, 44], [75, 73], [50, 30]],
+      "camion-liviano": [[24, 49], [22, 80], [70, 68], [35, 65], [12, 54], [30, 55], [80, 78], [70, 47]],
+      "pickup-sencilla": [[20, 46], [18, 76], [81, 60], [32, 63], [12, 51], [87, 51], [76, 78], [70, 38]],
+      "pickup-doble": [[20, 46], [18, 76], [74, 60], [32, 63], [12, 49], [85, 46], [77, 76], [72, 42]],
+      suv: [[20, 47], [17, 76], [73, 58], [32, 65], [13, 52], [85, 50], [75, 79], [50, 28]],
+      crossover: [[21, 49], [20, 78], [76, 62], [32, 67], [13, 52], [80, 45], [74, 79], [55, 25]],
+      hatchback: [[24, 49], [20, 76], [77, 60], [32, 68], [18, 53], [80, 50], [76, 78], [50, 30]],
+      familiar: [[18, 49], [15, 71], [71, 59], [30, 63], [12, 51], [83, 51], [71, 74], [50, 30]],
+      minivan: [[20, 50], [17, 76], [77, 58], [32, 66], [12, 55], [84, 55], [80, 77], [55, 30]],
+      furgoneta: [[20, 51], [17, 78], [77, 64], [33, 67], [13, 55], [85, 60], [78, 78], [60, 35]]
+    };
+    SYSTEMS = [
+      { n: 1, id: "motor", name: "Motor", categories: ["prevencion", "lubricacion", "motor", "inyeccion", "diesel", "escape", "alto_voltaje", "glp_gnv"] },
+      { n: 2, id: "frenos", name: "Frenos", categories: ["frenos"] },
+      { n: 3, id: "suspension", name: "Suspensi\xF3n", categories: ["suspension"] },
+      { n: 4, id: "transmision", name: "Transmisi\xF3n", categories: ["transmision"] },
+      { n: 5, id: "refrigeracion", name: "Enfriamiento", categories: ["refrigeracion"] },
+      { n: 6, id: "electrico", name: "El\xE9ctrico", categories: ["electrico", "electronica"] },
+      { n: 7, id: "llantas", name: "Llantas", categories: ["neumaticos"] },
+      { n: 8, id: "carroceria", name: "Carrocer\xEDa", categories: ["carroceria", "vidrios", "interior", "lavado", "climatizacion", "rtv"] }
+    ];
+    SYSTEM_OF_SERVICE = /* @__PURE__ */ new Map();
+    for (const c of serviceTaxonomy.categories) {
+      const system = SYSTEMS.find((s) => s.categories.includes(c.id));
+      if (system)
+        for (const sub of c.subservices)
+          SYSTEM_OF_SERVICE.set(sub.id, system.n);
+    }
+    RANK = { urgente: 0, pronto: 1, sin_dato: 2, al_dia: 3 };
+  }
+});
+
+// packages/api/dist/application/panel/structured-plan.js
+function elementOf(serviceId, serviceName5) {
+  const known = ELEMENTS[serviceId];
+  if (known)
+    return { element: known[0], action: known[1] };
+  for (const [pattern, action] of VERBS)
+    if (pattern.test(serviceName5))
+      return { element: capital(serviceName5.replace(pattern, "").trim()) || serviceName5, action };
+  return { element: serviceName5, action: "Realizar" };
+}
+function frequencyText(km10, months2) {
+  const k = km10 ?? null, m = months2 ?? null;
+  const monthsText = m === null ? null : m % 12 === 0 && m >= 12 ? `${m / 12} ${m === 12 ? "a\xF1o" : "a\xF1os"}` : `${Math.round(m * 10) / 10} ${m === 1 ? "mes" : "meses"}`;
+  if (k !== null && monthsText)
+    return `Cada ${formatKm2(k)} o ${monthsText}, lo que ocurra primero`;
+  if (k !== null)
+    return `Cada ${formatKm2(k)}`;
+  if (monthsText)
+    return `Cada ${monthsText}`;
+  return "Seg\xFAn inspecci\xF3n";
+}
+function buildStructuredPlan(items, recommendations, sources) {
+  const recs = new Map(recommendations.map((r) => [r.serviceId, r]));
+  const entries = items.map((item) => {
+    const rec = recs.get(item.serviceId);
+    const state = rec?.state ?? "sin_dato";
+    const { element, action } = elementOf(item.serviceId, item.serviceName);
+    const system = systemOfService(item.serviceId);
+    const known = state !== "sin_dato";
+    const hasKm = (item.intervalKm ?? null) !== null;
+    const hasMonths = (item.intervalMonths ?? null) !== null;
+    const due = known ? [hasKm ? `a los ${formatKm2(item.dueKm)}` : null, hasMonths ? `en ${formatMonth(new Date(item.dueDate))}` : null].filter(Boolean).join(" o ") || null : null;
+    const entry = {
+      serviceId: item.serviceId,
+      system: system.name,
+      element,
+      action,
+      frequency: frequencyText(item.intervalKm, item.intervalMonths),
+      source: SOURCE_LABEL[sources[item.serviceId] ?? "general"],
+      state,
+      label: rec?.label ?? "Sin registro",
+      due,
+      dueKm: known && hasKm ? item.dueKm : null
+    };
+    return { entry, item, n: system.n };
+  });
+  const urgentOrSoon = entries.filter((e9) => e9.entry.state === "urgente" || e9.entry.state === "pronto");
+  const upToDate = entries.filter((e9) => e9.entry.state === "al_dia").sort((a, b) => new Date(a.item.dueDate).getTime() - new Date(b.item.dueDate).getTime() || a.item.dueKm - b.item.dueKm);
+  const first = upToDate[0];
+  const milestone = urgentOrSoon.length || !first ? [] : upToDate.filter((e9) => Math.abs(e9.item.dueKm - first.item.dueKm) <= WINDOW_KM || Math.abs(new Date(e9.item.dueDate).getTime() - new Date(first.item.dueDate).getTime()) <= WINDOW_DAYS * 864e5);
+  const nextList = [...urgentOrSoon, ...milestone];
+  const inNext = new Set(nextList.map((e9) => e9.entry.serviceId));
+  const at = urgentOrSoon.length ? "Lo antes posible" : first ? first.entry.due : null;
+  const systems = /* @__PURE__ */ new Map();
+  for (const e9 of [...entries].sort((a, b) => a.n - b.n || a.entry.element.localeCompare(b.entry.element, "es"))) {
+    const group = systems.get(e9.n) ?? { n: e9.n, name: e9.entry.system, entries: [] };
+    group.entries.push(e9.entry);
+    systems.set(e9.n, group);
+  }
+  return {
+    next: { atKm: urgentOrSoon.length ? null : first?.entry.dueKm ?? null, at, entries: nextList.map((e9) => e9.entry) },
+    verify: entries.filter((e9) => e9.entry.state === "sin_dato").map((e9) => e9.entry),
+    later: upToDate.filter((e9) => !inNext.has(e9.entry.serviceId)).map((e9) => e9.entry),
+    systems: [...systems.values()],
+    fromManufacturer: entries.filter((e9) => sources[e9.item.serviceId] === "fabricante" || sources[e9.item.serviceId] === "marca").length
+  };
+}
+var SOURCE_LABEL, ELEMENTS, VERBS, capital, WINDOW_KM, WINDOW_DAYS;
+var init_structured_plan = __esm({
+  "packages/api/dist/application/panel/structured-plan.js"() {
+    "use strict";
+    init_recommendations();
+    init_ficha();
+    SOURCE_LABEL = {
+      fabricante: "Fabricante",
+      marca: "Marca en Ecuador",
+      ajustado: "Ajustado para este veh\xEDculo",
+      general: "Regla general"
+    };
+    ELEMENTS = {
+      prep_inspeccion: ["Inspecci\xF3n multipunto", "Inspeccionar"],
+      aceite_motor: ["Aceite y filtro de motor", "Cambiar"],
+      motor_bujias: ["Buj\xEDas / kit de encendido", "Cambiar"],
+      motor_filtro_aire: ["Filtro de aire", "Cambiar"],
+      motor_correa: ["Banda de accesorios", "Inspeccionar; cambiar si hace falta"],
+      motor_distribucion: ["Kit de distribuci\xF3n", "Cambiar"],
+      iny_filtro_combustible: ["Filtro de combustible", "Cambiar"],
+      iny_limpieza: ["Inyectores / sistema de combustible", "Limpiar"],
+      ref_antifreeze: ["Refrigerante / anticongelante", "Cambiar"],
+      ref_radiador: ["Radiador / sistema de enfriamiento", "Lavar"],
+      freno_liquido: ["L\xEDquido de frenos", "Cambiar"],
+      freno_pastillas: ["Pastillas de freno", "Inspeccionar; cambiar si hace falta"],
+      freno_discos: ["Discos de freno", "Inspeccionar; rectificar si hace falta"],
+      freno_regulacion: ["Frenos (moto)", "Ajustar"],
+      susp_amortiguadores: ["Amortiguadores", "Inspeccionar; cambiar si hace falta"],
+      susp_direccion: ["Suspensi\xF3n y direcci\xF3n", "Inspeccionar"],
+      trans_aceite_caja: ["Aceite de caja / diferencial", "Cambiar"],
+      trans_filtro_caja: ["Filtro de caja autom\xE1tica", "Cambiar"],
+      trans_embrague: ["Embrague", "Inspeccionar"],
+      trans_cadena: ["Cadena (moto)", "Ajustar y lubricar"],
+      llanta_rotacion: ["Neum\xE1ticos", "Rotar"],
+      llanta_alineacion: ["Alineaci\xF3n y balanceo", "Ajustar"],
+      llanta_presion: ["Presi\xF3n y desgaste de neum\xE1ticos", "Inspeccionar"],
+      llanta_cambio: ["Neum\xE1ticos", "Cambiar"],
+      elec_bateria: ["Bater\xEDa", "Probar y dar mantenimiento"],
+      elec_alternador: ["Alternador / sistema de carga", "Inspeccionar"],
+      elec_luces: ["Luces y se\xF1alizaci\xF3n", "Inspeccionar"],
+      escaner_diagnostico: ["C\xF3digos de falla (esc\xE1ner)", "Escanear"],
+      clima_filtro_cabina: ["Filtro de cabina", "Cambiar"],
+      clima_recarga: ["Aire acondicionado", "Recargar y dar mantenimiento"],
+      clima_desinfeccion: ["Sistema de climatizaci\xF3n", "Desinfectar"],
+      escape_gases: ["Escape y emisiones", "Inspeccionar"],
+      escape_mofle: ["Mofle / silenciador", "Cambiar"],
+      vidrio_parabrisas: ["Parabrisas", "Cambiar o reparar"],
+      vidrio_limpiadores: ["Escobillas / plumillas", "Cambiar"],
+      die_turbo: ["Turbo / admisi\xF3n", "Inspeccionar"],
+      die_inyectores: ["Inyectores di\xE9sel", "Probar"],
+      die_dpf: ["Filtro de part\xEDculas (DPF)", "Limpiar"],
+      hv_inspeccion: ["Sistema de alto voltaje", "Inspeccionar"],
+      hv_bateria_traccion: ["Bater\xEDa de tracci\xF3n", "Probar"],
+      glp_inspeccion: ["Sistema de gas (GLP/GNV)", "Inspeccionar"],
+      glp_filtro: ["Filtro de gas", "Cambiar"],
+      rtv_pretest: ["Pre-revisi\xF3n t\xE9cnica (RTV)", "Revisar"]
+    };
+    VERBS = [
+      [/^(?:cambio|reemplazo) (?:de |del )?/i, "Cambiar"],
+      [/^(?:inspecci[oó]n|revisi[oó]n) (?:de |del )?/i, "Inspeccionar"],
+      [/^(?:limpieza|lavado) (?:de |del )?/i, "Limpiar"],
+      [/^(?:ajuste|regulaci[oó]n) (?:de |del )?/i, "Ajustar"],
+      [/^prueba (?:de |del )?/i, "Probar"]
+    ];
+    capital = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+    WINDOW_KM = 1e3;
+    WINDOW_DAYS = 30;
+  }
+});
+
+// packages/api/dist/application/panel/vehicle-costs.js
+function monthlyCosts(expenses, readings, now, months2 = 6) {
+  const keys = [];
+  let key = monthKey(now);
+  for (let i = 0; i < months2; i++) {
+    keys.unshift(key);
+    const [y, m] = key.split("-").map(Number);
+    key = m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, "0")}`;
+  }
+  const sorted = [...readings].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+  const kmBefore = (at) => {
+    let best = null;
+    for (const r of sorted)
+      if (r.createdAt < at && (best === null || r.km > best))
+        best = r.km;
+    return best;
+  };
+  return keys.map((k) => {
+    const from = monthStart(k);
+    const to = monthStart(nextKey(k));
+    let fuel2 = 0;
+    let other = 0;
+    for (const e9 of expenses) {
+      if (e9.spentAt < from || e9.spentAt >= to)
+        continue;
+      if (e9.kind === "combustible")
+        fuel2 += e9.amountUsd;
+      else
+        other += e9.amountUsd;
+    }
+    const inMonth = sorted.filter((r) => r.createdAt >= from && r.createdAt < to).map((r) => r.km);
+    const end = kmBefore(to);
+    const start = kmBefore(from) ?? (inMonth.length ? Math.min(...inMonth) : null);
+    const km10 = end !== null && start !== null && inMonth.length ? Math.max(0, end - start) : 0;
+    return { month: k, fuel: round22(fuel2), other: round22(other), km: km10 };
+  });
+}
+function fuelIndicator(months2) {
+  const usable = months2.filter((m) => m.fuel > 0 && m.km > 0);
+  const last = usable[usable.length - 1];
+  const history = usable.slice(0, -1);
+  if (!last || history.length < FUEL_MIN_HISTORY)
+    return null;
+  const current = last.fuel / last.km;
+  const baseline = history.reduce((sum, m) => sum + m.fuel / m.km, 0) / history.length;
+  const ratio = current / baseline;
+  return { level: ratio < FUEL_LOW ? "bajo" : ratio > FUEL_HIGH ? "alto" : "medio", current, baseline };
+}
+function costsText(vehicle, months2) {
+  const withData = months2.filter((m) => m.fuel > 0 || m.other > 0 || m.km > 0);
+  if (!withData.length)
+    return `${vehicle}: todav\xEDa no hay gastos anotados.
+Combustible | USD | km (| galones) \xB7 Gasto | concepto | USD (| AAAA-MM-DD)`;
+  const fuel2 = withData.reduce((s, m) => s + m.fuel, 0);
+  const other = withData.reduce((s, m) => s + m.other, 0);
+  const kms = withData.reduce((s, m) => s + m.km, 0);
+  const indicator = fuelIndicator(months2);
+  const level = indicator ? `${FUEL_LEVEL_LED[indicator.level]} Gasto de combustible: ${FUEL_LEVEL_TEXT[indicator.level]} (${perKm(indicator.current)} frente a tu promedio de ${perKm(indicator.baseline)})` : `\u26AA Gasto de combustible: sin referencia a\xFAn (hacen falta ${FUEL_MIN_HISTORY + 1} meses con cargas y kilometraje)`;
+  return [
+    `\u{1F4B5} ${vehicle}: gasto y recorrido de los \xFAltimos ${months2.length} meses`,
+    `Total: ${formatUsd(fuel2 + other)} (combustible ${formatUsd(fuel2)} \xB7 mantenimiento y otros ${formatUsd(other)})${kms > 0 ? ` \xB7 ${kmText(kms)} \xB7 ${perKm((fuel2 + other) / kms)}` : ""}`,
+    level,
+    ...withData.map((m) => `\u2022 ${monthLabel(m.month)}: ${formatUsd(m.fuel + m.other)}${m.km > 0 ? ` \xB7 ${kmText(m.km)} \xB7 ${perKm((m.fuel + m.other) / m.km)}` : ""}`),
+    "Anotar: Combustible | USD | km (| galones) \xB7 Gasto | concepto | USD"
+  ].join("\n");
+}
+var EC_OFFSET_MS, monthKey, monthStart, nextKey, FUEL_LOW, FUEL_HIGH, FUEL_MIN_HISTORY, MONTH_NAME, monthLabel, kmText, perKm, round22, FUEL_LEVEL_TEXT, FUEL_LEVEL_LED;
+var init_vehicle_costs = __esm({
+  "packages/api/dist/application/panel/vehicle-costs.js"() {
+    "use strict";
+    init_workflow();
+    EC_OFFSET_MS = 5 * 36e5;
+    monthKey = (at) => new Date(at.getTime() - EC_OFFSET_MS).toISOString().slice(0, 7);
+    monthStart = (key) => new Date(Date.parse(`${key}-01T00:00:00Z`) + EC_OFFSET_MS);
+    nextKey = (key) => {
+      const [y, m] = key.split("-").map(Number);
+      return m === 12 ? `${y + 1}-01` : `${y}-${String(m + 1).padStart(2, "0")}`;
+    };
+    FUEL_LOW = 0.9;
+    FUEL_HIGH = 1.15;
+    FUEL_MIN_HISTORY = 2;
+    MONTH_NAME = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    monthLabel = (key) => MONTH_NAME[Number(key.slice(5, 7)) - 1] ?? key;
+    kmText = (n3) => `${Math.round(n3).toLocaleString("es-EC")} km`;
+    perKm = (n3) => `USD ${n3.toFixed(2).replace(".", ",")}/km`;
+    round22 = (n3) => Math.round(n3 * 100) / 100;
+    FUEL_LEVEL_TEXT = { bajo: "Bajo", medio: "Medio", alto: "Alto" };
+    FUEL_LEVEL_LED = { bajo: "\u{1F7E2}", medio: "\u{1F7E1}", alto: "\u{1F534}" };
+  }
+});
+
+// packages/api/dist/infrastructure/messaging/vehicle-transfer-cutoff.js
+async function transferCutoff(conn, vehicleId) {
+  const [last] = await rows16(conn, "SELECT MAX(usedAt) AS usedAt FROM `VehicleTransfer` WHERE vehicleId = ? AND status = 'used'", [vehicleId]).catch(whenTableMissing4([]));
+  return last?.usedAt ? new Date(last.usedAt) : null;
+}
+async function hideOrdersBeforeTransfer(conn, orders) {
+  const ids = orders.map((o) => String(o.id));
+  if (!ids.length)
+    return;
+  const hidden = await rows16(conn, "SELECT w.id FROM `WorkOrder` w JOIN (SELECT vehicleId, MAX(usedAt) AS usedAt FROM `VehicleTransfer` WHERE status = 'used' GROUP BY vehicleId) t ON t.vehicleId = w.vehicleId WHERE w.id IN (?) AND w.createdAt < t.usedAt", [ids]).catch(whenTableMissing4([]));
+  const gone = new Set(hidden.map((h) => String(h.id)));
+  for (let i = orders.length - 1; i >= 0; i--)
+    if (gone.has(String(orders[i].id)))
+      orders.splice(i, 1);
+}
+var rows16, whenTableMissing4;
+var init_vehicle_transfer_cutoff = __esm({
+  "packages/api/dist/infrastructure/messaging/vehicle-transfer-cutoff.js"() {
+    "use strict";
+    rows16 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    whenTableMissing4 = (value2) => (err) => {
+      if (err.code === "ER_NO_SUCH_TABLE")
+        return value2;
+      throw err;
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/messaging/vehicle-costs-store.js
+async function loadCostMonths(conn, vehicleId, now = /* @__PURE__ */ new Date()) {
+  const since = await transferCutoff(conn, vehicleId) ?? /* @__PURE__ */ new Date(0);
+  const expenses = await rows17(conn, "SELECT kind, amountUsd, spentAt FROM `VehicleExpense` WHERE vehicleId = ? AND spentAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 MONTH) AND createdAt >= ?", [vehicleId, since]);
+  const readings = await rows17(conn, "SELECT km, createdAt FROM `VehicleOdometerReading` WHERE vehicleId = ? AND createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 MONTH) UNION ALL (SELECT km, createdAt FROM `VehicleOdometerReading` WHERE vehicleId = ? AND createdAt <= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 MONTH) ORDER BY createdAt DESC LIMIT 1)", [vehicleId, vehicleId]);
+  return monthlyCosts(expenses.map((e9) => ({ kind: String(e9.kind), amountUsd: Number(e9.amountUsd), spentAt: new Date(e9.spentAt) })), readings.map((r) => ({ km: Number(r.km), createdAt: new Date(r.createdAt) })), now);
+}
+var rows17;
+var init_vehicle_costs_store = __esm({
+  "packages/api/dist/infrastructure/messaging/vehicle-costs-store.js"() {
+    "use strict";
+    init_vehicle_transfer_cutoff();
+    init_vehicle_costs();
+    rows17 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+  }
+});
+
+// packages/api/dist/application/panel/rtv-calendar.js
+function calendarFor(city, calendars = RTV_CALENDARS) {
+  return calendars[fold10(city ?? "")] ?? calendars.nacional ?? NATIONAL_RTV_CALENDAR;
+}
+function rtvMonth(plate2, city, calendars) {
+  const digits = String(plate2 ?? "").match(/\d/g);
+  if (!digits)
+    return null;
+  return calendarFor(city, calendars)[Number(digits[digits.length - 1])] ?? null;
+}
+function ecMonthYear(now) {
+  const ec = new Date(now.getTime() - 5 * 36e5);
+  return { month: ec.getUTCMonth() + 1, year: ec.getUTCFullYear() };
+}
+function rtvNotice(vehicle, now, label5) {
+  if (!vehicle.remindersOptIn)
+    return null;
+  const month = rtvMonth(vehicle.plate, vehicle.city);
+  if (month === null)
+    return null;
+  const { month: current, year: year3 } = ecMonthYear(now);
+  if (month !== current)
+    return null;
+  return {
+    key: `rtv:${vehicle.id}:${year3}`,
+    message: `\u{1F5D3}\uFE0F Este mes (${MONTH_NAMES[month - 1]}) le toca la revisi\xF3n t\xE9cnica vehicular (RTV) y la matr\xEDcula a tu ${label5}, placa ${vehicle.plate}. El valor a pagar por la matr\xEDcula incluye el SOAT. Este calendario es referencial: confirma la fecha en la ANT o en tu agencia de matriculaci\xF3n. Para dejar de recibir avisos: Alertas no`
+  };
+}
+function parseSoatDate(value2, now = /* @__PURE__ */ new Date()) {
+  const text12 = value2 instanceof Date ? Number.isNaN(value2.getTime()) ? "" : value2.toISOString().slice(0, 10) : String(value2 ?? "").trim();
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(text12);
+  if (!m)
+    return null;
+  const date2 = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
+  if (date2.toISOString().slice(0, 10) !== text12)
+    return null;
+  const year3 = Number(m[1]);
+  return year3 >= 2e3 && year3 <= ecMonthYear(now).year + 15 ? text12 : null;
+}
+function soatDaysLeft(expiresAt, now) {
+  const date2 = expiresAt === null || expiresAt === void 0 || expiresAt === "" ? null : parseSoatDate(expiresAt, now);
+  if (!date2)
+    return null;
+  const today = new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
+  return { date: date2, daysLeft: Math.round((Date.parse(`${date2}T00:00:00Z`) - Date.parse(`${today}T00:00:00Z`)) / 864e5) };
+}
+function soatNotice(vehicle, now, label5) {
+  if (!vehicle.remindersOptIn)
+    return null;
+  const left = soatDaysLeft(vehicle.soatExpiresAt, now);
+  if (!left || left.daysLeft > 30 || left.daysLeft < -7)
+    return null;
+  const stage = left.daysLeft > 7 ? "30" : left.daysLeft > 0 ? "7" : "0";
+  const when13 = left.daysLeft > 0 ? `vence el ${shownDate(left.date)} (${left.daysLeft === 1 ? "ma\xF1ana" : `en ${left.daysLeft} d\xEDas`})` : left.daysLeft === 0 ? `vence hoy (${shownDate(left.date)})` : `venci\xF3 el ${shownDate(left.date)}`;
+  return {
+    key: `soat:${vehicle.id}:${left.date}:${stage}`,
+    message: `\u{1F6E1}\uFE0F El SOAT de tu ${label5} ${when13}. Esta es la fecha que registraste en la ficha del veh\xEDculo: si lo renovaste, actual\xEDzala all\xED. Para dejar de recibir avisos: Alertas no`
+  };
+}
+function soatAlert(expiresAt, now) {
+  const left = soatDaysLeft(expiresAt, now);
+  if (!left || left.daysLeft > 30)
+    return null;
+  return { kind: "soat", title: "SOAT", detail: left.daysLeft < 0 ? `Venci\xF3 el ${shownDate(left.date)}` : left.daysLeft === 0 ? "Vence hoy" : `Vence el ${shownDate(left.date)} (${left.daysLeft} ${left.daysLeft === 1 ? "d\xEDa" : "d\xEDas"})`, state: left.daysLeft <= 7 ? "urgente" : "pronto", when: "" };
+}
+var NATIONAL_RTV_CALENDAR, RTV_CALENDARS, MONTH_NAMES, fold10, shownDate;
+var init_rtv_calendar = __esm({
+  "packages/api/dist/application/panel/rtv-calendar.js"() {
+    "use strict";
+    NATIONAL_RTV_CALENDAR = { 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10, 0: 11 };
+    RTV_CALENDARS = {
+      nacional: NATIONAL_RTV_CALENDAR,
+      quito: NATIONAL_RTV_CALENDAR,
+      guayaquil: NATIONAL_RTV_CALENDAR
+    };
+    MONTH_NAMES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+    fold10 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+    shownDate = (iso3) => `${iso3.slice(8, 10)}/${iso3.slice(5, 7)}/${iso3.slice(0, 4)}`;
+  }
+});
+
 // packages/api/dist/infrastructure/messaging/fleet-store.js
 import { randomBytes as randomBytes4, randomUUID as randomUUID17 } from "node:crypto";
 function ecMonthStart(now = /* @__PURE__ */ new Date()) {
@@ -91957,11 +92194,13 @@ async function fleetSnapshot(conn, fleetId, now = /* @__PURE__ */ new Date(), ci
   const vehicles = await rows18(conn, "SELECT v.* FROM `Vehicle` v WHERE v.fleetId = ? AND v.deletedAt IS NULL ORDER BY COALESCE(v.unitCode, v.plate), v.id", [fleetId]);
   const out = [];
   for (const v of vehicles) {
-    const items = planItemsFor(await care2.planVehicle(conn, v), await vehicleLevel(conn, v));
+    const planned = await care2.planVehicle(conn, v);
+    const items = planItemsFor(planned, await vehicleLevel(conn, v));
     const [order] = await rows18(conn, "SELECT w.number, s.name FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.vehicleId = ? AND w.status NOT IN ('cerrada','cancelada','rechazado') ORDER BY w.number DESC LIMIT 1", [v.id]);
     const [driver] = await rows18(conn, "SELECT m.name FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId WHERE a.vehicleId = ? AND a.endsAt IS NULL AND m.status = 'active' LIMIT 1", [v.id]);
     const [cost] = await rows18(conn, "SELECT COALESCE(SUM(amountUsd), 0) AS total FROM `VehicleExpense` WHERE vehicleId = ? AND spentAt >= ?", [v.id, since]);
-    const recommendation = buildRecommendations(items).items.find((i) => i.state === "urgente" || i.state === "pronto");
+    const recommendations = buildRecommendations(items).items;
+    const recommendation = recommendations.find((i) => i.state === "urgente" || i.state === "pronto");
     out.push({
       ...v,
       overdue: items.filter((i) => i.status === "vencido").map((i) => ({ serviceName: i.serviceName, reason: i.reason })),
@@ -91972,7 +92211,9 @@ async function fleetSnapshot(conn, fleetId, now = /* @__PURE__ */ new Date(), ci
       inShop: order ? `OT-${String(order.number).padStart(5, "0")} en ${order.name}` : null,
       driver: driver ? String(driver.name) : null,
       monthCost: Number(cost?.total ?? 0),
-      monthKm: await kmSince(conn, String(v.id), Number(v.currentKm), since)
+      monthKm: await kmSince(conn, String(v.id), Number(v.currentKm), since),
+      // Plan del fabricante por sistema y elemento, el mismo que ve el conductor en su panel.
+      structuredPlan: buildStructuredPlan(items, recommendations, planSourcesFor(planned))
     });
   }
   return out;
@@ -92008,6 +92249,7 @@ var init_fleet_store = __esm({
     "use strict";
     init_schemas2();
     init_plan_text();
+    init_structured_plan();
     init_entitlements();
     init_workflow();
     init_messages();
@@ -92481,106 +92723,6 @@ async function shopCanAccessVehicle(conn, shopId, vehicleId) {
 var init_shop_vehicle_access = __esm({
   "packages/api/dist/infrastructure/messaging/shop-vehicle-access.js"() {
     "use strict";
-  }
-});
-
-// packages/api/dist/application/panel/ficha.js
-function bodyStyleFor(vehicle) {
-  if (isBodyStyle(vehicle.bodyStyle))
-    return vehicle.bodyStyle;
-  const cls = String(vehicle.vehicleClass ?? "");
-  if (["motocicleta", "cuadron", "bus", "maquinaria_liviana"].includes(cls))
-    return null;
-  if (cls === "camion")
-    return "camion-liviano";
-  const name = fold10(`${String(vehicle.make ?? "")} ${String(vehicle.model ?? "")}`);
-  for (const [style, words] of KEYWORDS2)
-    if (words.test(name))
-      return style;
-  if (cls === "van")
-    return "minivan";
-  if (cls === "comercial_liviano")
-    return "pickup-doble";
-  return "sedan";
-}
-function systemOfService(serviceId) {
-  const n3 = SYSTEM_OF_SERVICE.get(serviceId);
-  const system = SYSTEMS.find((x) => x.n === n3);
-  return system ? { n: system.n, name: system.name } : { n: 9, name: "Otros" };
-}
-function fichaSystems(items, inspection) {
-  const otros = items.filter((i) => !SYSTEM_OF_SERVICE.has(i.serviceId));
-  const systems = SYSTEMS.map((system) => {
-    const services = items.filter((i) => SYSTEM_OF_SERVICE.get(i.serviceId) === system.n);
-    const area = inspection?.areas?.find((a) => a.id === system.id);
-    const states2 = services.map((s) => s.state);
-    if (area && area.state in RANK)
-      states2.push(area.state);
-    const state = states2.length ? [...states2].sort((a, b) => RANK[a] - RANK[b])[0] : "sin_dato";
-    const findings = (area?.items ?? []).filter((i) => i.status === "cambiar" || i.status === "observar").map((i) => `${i.status === "cambiar" ? "Cambiar" : "Observar"}: ${i.name}`);
-    return { n: system.n, id: system.id, name: system.name, state, services, findings, upToDate: services.filter((s) => s.state === "al_dia").length };
-  });
-  return { systems, otros };
-}
-var BODY_STYLES, isBodyStyle, fold10, KEYWORDS2, SYSTEM_POINTS, SYSTEMS, SYSTEM_OF_SERVICE, RANK;
-var init_ficha = __esm({
-  "packages/api/dist/application/panel/ficha.js"() {
-    "use strict";
-    init_catalogs();
-    BODY_STYLES = [
-      { id: "sedan", label: "Sed\xE1n" },
-      { id: "hatchback", label: "Hatchback" },
-      { id: "familiar", label: "Familiar" },
-      { id: "crossover", label: "Crossover" },
-      { id: "suv", label: "SUV" },
-      { id: "minivan", label: "Miniv\xE1n" },
-      { id: "furgoneta", label: "Furgoneta" },
-      { id: "pickup-sencilla", label: "Camioneta sencilla" },
-      { id: "pickup-doble", label: "Camioneta doble cabina" },
-      { id: "camion-liviano", label: "Cami\xF3n liviano" }
-    ];
-    isBodyStyle = (value2) => BODY_STYLES.some((b) => b.id === value2);
-    fold10 = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-    KEYWORDS2 = [
-      ["pickup-doble", /\b(hilux|d-?max|dmax|bt-?50|ranger|frontier|np300|navara|l200|amarok|tacoma|f-?150|poer|wingle|t60|doble cabina)\b/],
-      ["pickup-sencilla", /\b(cabina sencilla|cabina simple|saveiro|strada)\b/],
-      ["furgoneta", /\b(furgon|furgoneta|hiace|transit|sprinter|master|n300|h100|cargo|kangoo)\b/],
-      ["minivan", /\b(minivan|carnival|sienna|odyssey|ertiga|rush|avanza|sedona)\b/],
-      ["suv", /\b(fortuner|prado|land cruiser|4runner|pathfinder|x-?trail|tucson|santa fe|sorento|sportage|rav-?4|cx-?5|cx-?9|grand vitara|tiguan|explorer|montero|outlander|captiva|trailblazer|tahoe)\b/],
-      ["crossover", /\b(kicks|creta|seltos|tracker|hr-?v|cx-?3|cx-?30|ecosport|duster|sonet|venue|qashqai|t-?cross|jimny|vitara|c-?hr|corolla cross)\b/],
-      ["familiar", /\b(wagon|familiar|touring|sportwagen|variant)\b/],
-      ["hatchback", /\b(hatchback|hatch|spark|picanto|swift|i10|grand i10|march|fit|polo|sandero|celerio|morning|baleno|golf|gol|aveo emotion)\b/]
-    ];
-    SYSTEM_POINTS = {
-      sedan: [[20, 45], [17, 70], [72, 55], [33, 61], [12, 49], [82, 44], [75, 73], [50, 30]],
-      "camion-liviano": [[24, 49], [22, 80], [70, 68], [35, 65], [12, 54], [30, 55], [80, 78], [70, 47]],
-      "pickup-sencilla": [[20, 46], [18, 76], [81, 60], [32, 63], [12, 51], [87, 51], [76, 78], [70, 38]],
-      "pickup-doble": [[20, 46], [18, 76], [74, 60], [32, 63], [12, 49], [85, 46], [77, 76], [72, 42]],
-      suv: [[20, 47], [17, 76], [73, 58], [32, 65], [13, 52], [85, 50], [75, 79], [50, 28]],
-      crossover: [[21, 49], [20, 78], [76, 62], [32, 67], [13, 52], [80, 45], [74, 79], [55, 25]],
-      hatchback: [[24, 49], [20, 76], [77, 60], [32, 68], [18, 53], [80, 50], [76, 78], [50, 30]],
-      familiar: [[18, 49], [15, 71], [71, 59], [30, 63], [12, 51], [83, 51], [71, 74], [50, 30]],
-      minivan: [[20, 50], [17, 76], [77, 58], [32, 66], [12, 55], [84, 55], [80, 77], [55, 30]],
-      furgoneta: [[20, 51], [17, 78], [77, 64], [33, 67], [13, 55], [85, 60], [78, 78], [60, 35]]
-    };
-    SYSTEMS = [
-      { n: 1, id: "motor", name: "Motor", categories: ["prevencion", "lubricacion", "motor", "inyeccion", "diesel", "escape", "alto_voltaje", "glp_gnv"] },
-      { n: 2, id: "frenos", name: "Frenos", categories: ["frenos"] },
-      { n: 3, id: "suspension", name: "Suspensi\xF3n", categories: ["suspension"] },
-      { n: 4, id: "transmision", name: "Transmisi\xF3n", categories: ["transmision"] },
-      { n: 5, id: "refrigeracion", name: "Enfriamiento", categories: ["refrigeracion"] },
-      { n: 6, id: "electrico", name: "El\xE9ctrico", categories: ["electrico", "electronica"] },
-      { n: 7, id: "llantas", name: "Llantas", categories: ["neumaticos"] },
-      { n: 8, id: "carroceria", name: "Carrocer\xEDa", categories: ["carroceria", "vidrios", "interior", "lavado", "climatizacion", "rtv"] }
-    ];
-    SYSTEM_OF_SERVICE = /* @__PURE__ */ new Map();
-    for (const c of serviceTaxonomy.categories) {
-      const system = SYSTEMS.find((s) => s.categories.includes(c.id));
-      if (system)
-        for (const sub of c.subservices)
-          SYSTEM_OF_SERVICE.set(sub.id, system.n);
-    }
-    RANK = { urgente: 0, pronto: 1, sin_dato: 2, al_dia: 3 };
   }
 });
 
@@ -113460,7 +113602,7 @@ var init_local_agent = __esm({
 function registerFounderAdminRoutes(app2, deps) {
   const founders = deps.founders ?? new FounderStore();
   const site = () => (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/+$/, "");
-  async function render(request, reply, session, notes = [], status = 200) {
+  async function render(request, reply, session, notes = [], status = 200, draft = "") {
     reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer");
     let list7 = [];
     let pending = false;
@@ -113475,11 +113617,11 @@ function registerFounderAdminRoutes(app2, deps) {
       ${notes.map((n3) => `<p>${escapeHtml(n3)}</p>`).join("")}
       ${pending ? `<p>Falta \xABAplicar actualizaciones\xBB en Ajustes para crear la tabla de fundadores.</p>` : ""}
       <p>Cada fundador tiene la misma ficha de taller, con la etiqueta \xABFundador\xBB y sin costo de plan. La ficha queda privada (no aparece en ninguna lista) hasta que el taller acepta. Si rechaza, se borra.</p>
-      <div class="card"><h2>Fichas</h2>${list7.length ? `<table><thead><tr><th>Taller</th><th>Sector</th><th>Tel\xE9fono</th><th>Estado</th><th>Enviado</th><th></th></tr></thead><tbody>${rows55}</tbody></table>` : "<p>A\xFAn no hay fichas cargadas.</p>"}</div>
+      <div class="card"><h2>Fichas</h2>${list7.length ? `<div class="scroll"><table><thead><tr><th>Taller</th><th>Sector</th><th>Tel\xE9fono</th><th>Estado</th><th>Enviado</th><th></th></tr></thead><tbody>${rows55}</tbody></table></div>` : "<p>A\xFAn no hay fichas cargadas.</p>"}</div>
       <div class="card"><h2>Cargar fichas borrador</h2>
         <p>Pega el contenido del archivo privado de fundadores (JSON con la lista \xABtalleres\xBB). No se env\xEDa ning\xFAn mensaje al cargar.</p>
         <form method="post" action="/admin/fundadores/importar" autocomplete="off"><input type="hidden" name="csrf" value="${csrf}">
-        <label>Archivo de fundadores<textarea name="archivo" rows="10" maxlength="200000" required spellcheck="false"></textarea></label>
+        <label>Archivo de fundadores<textarea name="archivo" rows="10" maxlength="200000" required spellcheck="false">${escapeHtml(draft)}</textarea></label>
         <button type="submit">Crear fichas borrador</button></form></div>
       <div class="card"><h2>Mensaje que recibe cada taller</h2><p>Saludo por su nombre, recuerdo de la reuni\xF3n del a\xF1o pasado, su ficha lista con agenda, t\xE9cnicos, \xF3rdenes y formatos sin costo por ser fundador, el enlace privado a su ficha y la opci\xF3n de responder ACEPTO o RECHAZO.</p></div></div>`;
     return deps.html(reply, request, "Talleres fundadores", body, session, status);
@@ -113498,7 +113640,8 @@ function registerFounderAdminRoutes(app2, deps) {
     const session = authorize(request, reply);
     if (!session)
       return reply;
-    return render(request, reply, session);
+    const sent = request.query?.enviado === "1";
+    return render(request, reply, session, sent ? ["Confirmaci\xF3n en cola de WhatsApp. El enlace anterior, si hab\xEDa, ya no vale."] : []);
   });
   app2.post("/fundadores/importar", async (request, reply) => {
     const session = authorize(request, reply);
@@ -113510,7 +113653,7 @@ function registerFounderAdminRoutes(app2, deps) {
     const text12 = typeof body.archivo === "string" ? body.archivo : "";
     const parsed = parseFounderImport(text12);
     if (!parsed.items.length)
-      return render(request, reply, session, parsed.errors.length ? parsed.errors : ["No hay fichas v\xE1lidas."], 422);
+      return render(request, reply, session, parsed.errors.length ? parsed.errors : ["No hay fichas v\xE1lidas."], 422, text12);
     try {
       const result = await founders.importDrafts(parsed.items, session.userId);
       return render(request, reply, session, [`Fichas borrador creadas: ${result.created}.`, ...result.skipped, ...parsed.errors]);
@@ -113532,7 +113675,7 @@ function registerFounderAdminRoutes(app2, deps) {
       return render(request, reply, session, ["Ficha no encontrada."], 404);
     try {
       await founders.send(request.params.id, site(), session.userId);
-      return render(request, reply, session, ["Confirmaci\xF3n en cola de WhatsApp. El enlace anterior, si hab\xEDa, ya no vale."]);
+      return reply.header("Cache-Control", "no-store").redirect("/admin/fundadores?enviado=1", 303);
     } catch (err) {
       const code5 = err.code;
       if (code5 === "NOT_FOUND")
@@ -117990,17 +118133,23 @@ var import_dotenv = __toESM(require_main(), 1);
 var SESSION_MARK = "amp_sesion";
 var INGRESAR = `<a href="/cuenta#entrar">Ingresar</a>`;
 var MI_PANEL = `<a href="/cuenta">Mi panel</a>`;
+var SWAPS = [
+  [INGRESAR, MI_PANEL],
+  [`<a class="pill" href="/cuenta#crear">Registro gratis</a>`, `<a class="pill" href="/cuenta">Mi panel</a>`],
+  [`<a class="access-btn secondary entrar" href="/cuenta#entrar">Ingresar o crear cuenta</a>`, `<a class="access-btn secondary entrar" href="/cuenta">Mi panel</a>`],
+  [`<a class="access-btn secondary" href="/cuenta#entrar">Ingresar o crear cuenta</a>`, `<a class="access-btn secondary" href="/cuenta">Mi panel</a>`]
+];
 function hasSessionMark(cookieHeader) {
   return (cookieHeader ?? "").split(";").some((part) => part.trim() === `${SESSION_MARK}=1`);
 }
 async function sessionMenuOnSend(request, reply, payload) {
-  if (typeof payload !== "string" || !payload.includes(INGRESAR))
+  if (typeof payload !== "string" || !SWAPS.some(([from]) => payload.includes(from)))
     return payload;
   const type = String(reply.getHeader("content-type") ?? "");
   if (type && !type.includes("text/html"))
     return payload;
   reply.header("Vary", "Cookie");
-  return hasSessionMark(request.headers.cookie) ? payload.split(INGRESAR).join(MI_PANEL) : payload;
+  return hasSessionMark(request.headers.cookie) ? SWAPS.reduce((html, [from, to]) => html.split(from).join(to), payload) : payload;
 }
 
 // packages/api/dist/infrastructure/prisma.js
@@ -120046,6 +120195,7 @@ details.fold{margin:6px 0;padding:0;background:none;border:0;border-top:1px soli
 .shop-cover{display:block;width:100%;max-height:200px;object-fit:cover;border-radius:8px}.shop-thumb{width:64px;height:64px;object-fit:cover;border-radius:8px;flex:none}.line .shop-thumb{margin-right:8px}
 .acts select{flex:1 1 150px;min-height:42px}
 .acts label{display:flex;gap:6px;align-items:center;flex:1 1 100%}
+.acts input[type=checkbox],.acts input[type=radio]{flex:0 0 auto;width:auto;min-height:0}
 .steps{list-style:none;margin:0;padding:0;display:grid}
 .steps li{display:grid;grid-template-columns:28px 1fr;gap:10px;position:relative;padding-bottom:14px}
 .steps li:last-child{padding-bottom:0}
@@ -120347,7 +120497,7 @@ function photosBox(code){const box=h('div',{class:'chips'});const b=btn('Ver fot
 // Portada del taller: se pide con la sesi\xF3n y se muestra desde la memoria del navegador.
 function coverImg(shopId,version,cls,alt){const img=h('img',{class:cls,alt:alt||'Foto del local',hidden:true});fetch(apiUrl('/pilot/shops/'+encodeURIComponent(shopId)+'/cover?v='+encodeURIComponent(version)),{headers:{Authorization:'Bearer '+token}}).then(async r=>{if(r.ok){img.src=URL.createObjectURL(await r.blob());img.hidden=false;}}).catch(()=>{});return img;}
 function coverEditor(b){const box=h('div',{class:'stack'});const draw=()=>{const input=h('input',{type:'file',accept:'image/jpeg,image/png','aria-label':'Foto de portada del taller'});input.onchange=async()=>{const f=input.files[0];if(!f)return;if(!['image/jpeg','image/png'].includes(f.type)){showResult('La foto debe ser JPG o PNG.');return;}input.disabled=true;try{const res=await api('/pilot/shop/cover',{method:'POST',body:JSON.stringify({dataUrl:await shrinkPhoto(f)})});b.cover=res.version;showResult(res.message);draw();}catch(err){showResult(err.message);input.disabled=false;}};
-  box.replaceChildren(b.cover?coverImg(b.id,b.cover,'shop-cover','Portada de tu taller'):h('p',{class:'note',text:'Sin foto de portada. Sube una foto del frente de tu local para que los clientes lo reconozcan.'}),h('label',{class:'note'},b.cover?'Cambiar foto (JPG o PNG)':'Subir foto (JPG o PNG)',input),b.cover?btn('Quitar portada','ghost',async()=>{if(!confirm('\xBFQuitar la foto de portada?'))return;try{const res=await api('/pilot/shop/cover/remove',{method:'POST',body:'{}'});b.cover=null;showResult(res.message);draw();}catch(err){showResult(err.message);}}):null);};draw();return box;}
+  box.replaceChildren(b.cover?coverImg(b.id,b.cover,'shop-cover','Portada de tu taller'):h('p',{class:'note',text:'Sin foto de portada. Sube una foto del frente de tu local para que los clientes lo reconozcan.'}),h('label',{class:'note'},b.cover?'Cambiar foto (JPG o PNG)':'Subir foto (JPG o PNG)',input),b.cover?btn('Quitar portada','ghost',async()=>{if(!confirm('\xBFQuitar la foto de portada?'))return;try{const res=await api('/pilot/shop/cover/remove',{method:'POST',body:'{}'});b.cover=null;showResult(res.message);draw();}catch(err){showResult(err.message);}}):'');};draw();return box;}
 function photoInput(label){return h('label',{class:'note'},label,h('input',{type:'file',accept:'image/jpeg,image/png',multiple:true}));}
 const INTAKE_ZONE_LABELS=[['frente','Frente'],['atras','Atr\xE1s'],['izquierda','Lado izquierdo'],['derecha','Lado derecho'],['techo','Techo'],['interior','Interior']];
 const INTAKE_ITEM_LABELS=['llanta de repuesto','gata','herramientas','radio','documentos','objetos de valor'];
@@ -123008,139 +123158,7 @@ async function withPartMoney(conn, userId, role, panel) {
 // packages/api/dist/infrastructure/messaging/pilot-panel-store.js
 init_apply();
 init_plan_text();
-
-// packages/api/dist/application/panel/structured-plan.js
-init_recommendations();
-init_ficha();
-var SOURCE_LABEL = {
-  fabricante: "Fabricante",
-  marca: "Marca en Ecuador",
-  ajustado: "Ajustado para este veh\xEDculo",
-  general: "Regla general"
-};
-var ELEMENTS = {
-  prep_inspeccion: ["Inspecci\xF3n multipunto", "Inspeccionar"],
-  aceite_motor: ["Aceite y filtro de motor", "Cambiar"],
-  motor_bujias: ["Buj\xEDas / kit de encendido", "Cambiar"],
-  motor_filtro_aire: ["Filtro de aire", "Cambiar"],
-  motor_correa: ["Banda de accesorios", "Inspeccionar; cambiar si hace falta"],
-  motor_distribucion: ["Kit de distribuci\xF3n", "Cambiar"],
-  iny_filtro_combustible: ["Filtro de combustible", "Cambiar"],
-  iny_limpieza: ["Inyectores / sistema de combustible", "Limpiar"],
-  ref_antifreeze: ["Refrigerante / anticongelante", "Cambiar"],
-  ref_radiador: ["Radiador / sistema de enfriamiento", "Lavar"],
-  freno_liquido: ["L\xEDquido de frenos", "Cambiar"],
-  freno_pastillas: ["Pastillas de freno", "Inspeccionar; cambiar si hace falta"],
-  freno_discos: ["Discos de freno", "Inspeccionar; rectificar si hace falta"],
-  freno_regulacion: ["Frenos (moto)", "Ajustar"],
-  susp_amortiguadores: ["Amortiguadores", "Inspeccionar; cambiar si hace falta"],
-  susp_direccion: ["Suspensi\xF3n y direcci\xF3n", "Inspeccionar"],
-  trans_aceite_caja: ["Aceite de caja / diferencial", "Cambiar"],
-  trans_filtro_caja: ["Filtro de caja autom\xE1tica", "Cambiar"],
-  trans_embrague: ["Embrague", "Inspeccionar"],
-  trans_cadena: ["Cadena (moto)", "Ajustar y lubricar"],
-  llanta_rotacion: ["Neum\xE1ticos", "Rotar"],
-  llanta_alineacion: ["Alineaci\xF3n y balanceo", "Ajustar"],
-  llanta_presion: ["Presi\xF3n y desgaste de neum\xE1ticos", "Inspeccionar"],
-  llanta_cambio: ["Neum\xE1ticos", "Cambiar"],
-  elec_bateria: ["Bater\xEDa", "Probar y dar mantenimiento"],
-  elec_alternador: ["Alternador / sistema de carga", "Inspeccionar"],
-  elec_luces: ["Luces y se\xF1alizaci\xF3n", "Inspeccionar"],
-  escaner_diagnostico: ["C\xF3digos de falla (esc\xE1ner)", "Escanear"],
-  clima_filtro_cabina: ["Filtro de cabina", "Cambiar"],
-  clima_recarga: ["Aire acondicionado", "Recargar y dar mantenimiento"],
-  clima_desinfeccion: ["Sistema de climatizaci\xF3n", "Desinfectar"],
-  escape_gases: ["Escape y emisiones", "Inspeccionar"],
-  escape_mofle: ["Mofle / silenciador", "Cambiar"],
-  vidrio_parabrisas: ["Parabrisas", "Cambiar o reparar"],
-  vidrio_limpiadores: ["Escobillas / plumillas", "Cambiar"],
-  die_turbo: ["Turbo / admisi\xF3n", "Inspeccionar"],
-  die_inyectores: ["Inyectores di\xE9sel", "Probar"],
-  die_dpf: ["Filtro de part\xEDculas (DPF)", "Limpiar"],
-  hv_inspeccion: ["Sistema de alto voltaje", "Inspeccionar"],
-  hv_bateria_traccion: ["Bater\xEDa de tracci\xF3n", "Probar"],
-  glp_inspeccion: ["Sistema de gas (GLP/GNV)", "Inspeccionar"],
-  glp_filtro: ["Filtro de gas", "Cambiar"],
-  rtv_pretest: ["Pre-revisi\xF3n t\xE9cnica (RTV)", "Revisar"]
-};
-var VERBS = [
-  [/^(?:cambio|reemplazo) (?:de |del )?/i, "Cambiar"],
-  [/^(?:inspecci[oó]n|revisi[oó]n) (?:de |del )?/i, "Inspeccionar"],
-  [/^(?:limpieza|lavado) (?:de |del )?/i, "Limpiar"],
-  [/^(?:ajuste|regulaci[oó]n) (?:de |del )?/i, "Ajustar"],
-  [/^prueba (?:de |del )?/i, "Probar"]
-];
-var capital = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-function elementOf(serviceId, serviceName5) {
-  const known = ELEMENTS[serviceId];
-  if (known)
-    return { element: known[0], action: known[1] };
-  for (const [pattern, action] of VERBS)
-    if (pattern.test(serviceName5))
-      return { element: capital(serviceName5.replace(pattern, "").trim()) || serviceName5, action };
-  return { element: serviceName5, action: "Realizar" };
-}
-function frequencyText(km10, months2) {
-  const k = km10 ?? null, m = months2 ?? null;
-  const monthsText = m === null ? null : m % 12 === 0 && m >= 12 ? `${m / 12} ${m === 12 ? "a\xF1o" : "a\xF1os"}` : `${Math.round(m * 10) / 10} ${m === 1 ? "mes" : "meses"}`;
-  if (k !== null && monthsText)
-    return `Cada ${formatKm2(k)} o ${monthsText}, lo que ocurra primero`;
-  if (k !== null)
-    return `Cada ${formatKm2(k)}`;
-  if (monthsText)
-    return `Cada ${monthsText}`;
-  return "Seg\xFAn inspecci\xF3n";
-}
-var WINDOW_KM = 1e3;
-var WINDOW_DAYS = 30;
-function buildStructuredPlan(items, recommendations, sources) {
-  const recs = new Map(recommendations.map((r) => [r.serviceId, r]));
-  const entries = items.map((item) => {
-    const rec = recs.get(item.serviceId);
-    const state = rec?.state ?? "sin_dato";
-    const { element, action } = elementOf(item.serviceId, item.serviceName);
-    const system = systemOfService(item.serviceId);
-    const known = state !== "sin_dato";
-    const hasKm = (item.intervalKm ?? null) !== null;
-    const hasMonths = (item.intervalMonths ?? null) !== null;
-    const due = known ? [hasKm ? `a los ${formatKm2(item.dueKm)}` : null, hasMonths ? `en ${formatMonth(new Date(item.dueDate))}` : null].filter(Boolean).join(" o ") || null : null;
-    const entry = {
-      serviceId: item.serviceId,
-      system: system.name,
-      element,
-      action,
-      frequency: frequencyText(item.intervalKm, item.intervalMonths),
-      source: SOURCE_LABEL[sources[item.serviceId] ?? "general"],
-      state,
-      label: rec?.label ?? "Sin registro",
-      due,
-      dueKm: known && hasKm ? item.dueKm : null
-    };
-    return { entry, item, n: system.n };
-  });
-  const urgentOrSoon = entries.filter((e9) => e9.entry.state === "urgente" || e9.entry.state === "pronto");
-  const upToDate = entries.filter((e9) => e9.entry.state === "al_dia").sort((a, b) => new Date(a.item.dueDate).getTime() - new Date(b.item.dueDate).getTime() || a.item.dueKm - b.item.dueKm);
-  const first = upToDate[0];
-  const milestone = urgentOrSoon.length || !first ? [] : upToDate.filter((e9) => Math.abs(e9.item.dueKm - first.item.dueKm) <= WINDOW_KM || Math.abs(new Date(e9.item.dueDate).getTime() - new Date(first.item.dueDate).getTime()) <= WINDOW_DAYS * 864e5);
-  const nextList = [...urgentOrSoon, ...milestone];
-  const inNext = new Set(nextList.map((e9) => e9.entry.serviceId));
-  const at = urgentOrSoon.length ? "Lo antes posible" : first ? first.entry.due : null;
-  const systems = /* @__PURE__ */ new Map();
-  for (const e9 of [...entries].sort((a, b) => a.n - b.n || a.entry.element.localeCompare(b.entry.element, "es"))) {
-    const group = systems.get(e9.n) ?? { n: e9.n, name: e9.entry.system, entries: [] };
-    group.entries.push(e9.entry);
-    systems.set(e9.n, group);
-  }
-  return {
-    next: { atKm: urgentOrSoon.length ? null : first?.entry.dueKm ?? null, at, entries: nextList.map((e9) => e9.entry) },
-    verify: entries.filter((e9) => e9.entry.state === "sin_dato").map((e9) => e9.entry),
-    later: upToDate.filter((e9) => !inNext.has(e9.entry.serviceId)).map((e9) => e9.entry),
-    systems: [...systems.values()],
-    fromManufacturer: entries.filter((e9) => sources[e9.item.serviceId] === "fabricante" || sources[e9.item.serviceId] === "marca").length
-  };
-}
-
-// packages/api/dist/infrastructure/messaging/pilot-panel-store.js
+init_structured_plan();
 init_recommendations();
 init_entitlements();
 init_fleet_access();
@@ -128396,7 +128414,7 @@ var VerificationDeadlines = class {
     try {
       for (const kind of KINDS) {
         const at = (hours2) => new Date(now.getTime() - hours2 * 36e5);
-        const pending = await rows42(conn, `SELECT b.id, b.userId, b.name, b.createdAt FROM \`${kind.table}\` b JOIN \`User\` u ON u.id = b.userId WHERE b.verificationStatus = 'pending' AND u.deletedAt IS NULL AND b.createdAt <= ? ORDER BY b.createdAt LIMIT 100`, [at(VERIFICATION_ADMIN_HOURS)]);
+        const pending = await rows42(conn, `SELECT b.id, b.userId, b.name, b.createdAt FROM \`${kind.table}\` b JOIN \`User\` u ON u.id = b.userId WHERE b.verificationStatus = 'pending' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND b.createdAt <= ? ORDER BY b.createdAt LIMIT 100`, [at(VERIFICATION_ADMIN_HOURS)]);
         for (const business of pending) {
           const id3 = String(business.id);
           const late2 = new Date(business.createdAt).getTime() <= at(VERIFICATION_HOURS).getTime();
@@ -128774,6 +128792,20 @@ function fleetGauge(okPct, cls) {
   const color = cls === "bad" ? "var(--c-bad)" : cls === "warn" ? "var(--c-warn)" : "var(--c-ok)";
   return `<svg viewBox="0 0 104 104" width="96" height="96" role="img" aria-label="${okPct === null ? "Sin veh\xEDculos" : `${okPct} % de veh\xEDculos al d\xEDa`}"><circle cx="52" cy="52" r="44" fill="none" stroke="var(--c-sunk)" stroke-width="8" stroke-dasharray="${arc} 277" transform="rotate(135 52 52)" stroke-linecap="round"/>${val > 0 ? `<circle cx="52" cy="52" r="44" fill="none" stroke="${color}" stroke-width="8" stroke-dasharray="${val.toFixed(1)} 277" transform="rotate(135 52 52)" stroke-linecap="round"/>` : ""}<text x="52" y="58" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="22" font-weight="700" fill="var(--c-ink)">${okPct === null ? "--" : `${okPct}%`}</text><text x="52" y="76" text-anchor="middle" font-size="10" fill="var(--c-muted)">al d\xEDa</text></svg>`;
 }
+var PLAN_STATE = { urgente: "bad", pronto: "warn", sin_dato: "warn", al_dia: "ok" };
+function planSection(list7) {
+  const withPlan = list7.filter((v) => v.structuredPlan);
+  if (!withPlan.length)
+    return "";
+  const entry = (e9) => `<tr class="${PLAN_STATE[e9.state] ?? ""}"><td>${esc(e9.element)}</td><td>${esc(e9.action)}</td><td>${esc(e9.frequency)}</td><td><span class="led"></span> ${esc(e9.due ?? e9.label)}</td></tr>`;
+  const vehicle = (v) => {
+    const p = v.structuredPlan;
+    const next = p.next.entries.length ? `Pr\xF3ximo servicio${p.next.at ? " \xB7 " + esc(p.next.at) : ""}: ${esc(p.next.entries.map((e9) => e9.element).join(", "))}` : "Sin servicios pr\xF3ximos";
+    const systems = p.systems.map((s) => `<h3>${esc(s.name)}</h3><div class="scroll"><table><thead><tr><th>Elemento</th><th>Acci\xF3n</th><th>Frecuencia</th><th>Cu\xE1ndo toca</th></tr></thead><tbody>${s.entries.map(entry).join("")}</tbody></table></div>`).join("");
+    return `<details><summary><b class="mono">${esc(unitLabel(v))}</b> \xB7 ${esc([v.make, v.model, v.year].filter(Boolean).join(" "))} \xB7 ${next}</summary>${systems || '<p class="muted">Sin plan para este veh\xEDculo.</p>'}${p.fromManufacturer ? "" : '<p class="muted">Plan seg\xFAn la regla general: falta el plan del fabricante para este modelo.</p>'}</details>`;
+  };
+  return `<section class="card" id="plan"><h2>Plan de mantenimiento por veh\xEDculo</h2><p class="muted">Pulsa un veh\xEDculo para ver su plan por sistema y elemento.</p>${withPlan.map(vehicle).join("")}</section>`;
+}
 var stateOf = (v) => v.overdue.length ? { cls: "bad", text: "Vencido" } : v.unknown.length ? { cls: "warn", text: "Sin historial" } : v.soon.length ? { cls: "warn", text: "Por vencer" } : { cls: "ok", text: "Al d\xEDa" };
 function fleetCsv(data3) {
   const cell3 = (v) => {
@@ -128817,6 +128849,7 @@ ${SISTEMA}</style></head><body>${cabeceraSitio()}<header><div class="brand">${lo
 <section class="card" id="vehiculos"><h2>Veh\xEDculos</h2><div class="scroll"><table><thead><tr><th>Unidad</th><th>Veh\xEDculo</th><th class="num">Km</th><th>Conductor</th><th>Estado</th><th>Servicios</th><th>Pr\xF3ximo servicio</th><th>En taller</th><th class="num">Costo mes</th><th class="num">USD/km</th></tr></thead><tbody>${list7.map(row2).join("") || `<tr><td colspan="10" class="muted">Todav\xEDa no hay veh\xEDculos. Agr\xE9galos por WhatsApp: Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km</td></tr>`}</tbody></table></div><p><a class="button" href="${esc(csvHref)}">Descargar CSV</a></p></section>
 <section class="card" id="alertas"><h2>Alertas de la flota</h2><ul>${list7.flatMap((v) => [v.overdue.length ? `<li class="bad"><span class="led"></span><b class="mono">${esc(unitLabel(v))}</b> \xB7 Servicios vencidos: ${esc(v.overdue.map((o) => o.serviceName).join(", "))}</li>` : "", v.rtvMonth !== null && v.rtvMonth === new Date(data3.generatedAt.getTime() - 5 * 36e5).getUTCMonth() + 1 ? `<li class="bad"><span class="led"></span><b class="mono">${esc(unitLabel(v))}</b> \xB7 RTV y matr\xEDcula este mes; fecha referencial, confirma en la ANT o en tu agencia de matriculaci\xF3n</li>` : "", v.inShop ? `<li class="warn"><span class="led"></span><b class="mono">${esc(unitLabel(v))}</b> \xB7 ${esc(v.inShop)}</li>` : ""]).concat(unknown ? [`<li class="warn"><span class="led"></span>${unknown} veh\xEDculo${unknown === 1 ? "" : "s"} sin historial: registra su \xFAltimo servicio para saber cu\xE1ndo le toca el pr\xF3ximo.</li>`] : [], soon ? [`<li class="warn"><span class="led"></span>${soon} veh\xEDculo${soon === 1 ? "" : "s"} con servicios por vencer.</li>`] : []).filter(Boolean).join("") || `<li class="muted">Sin alertas para la flota.</li>`}</ul></section>
 ${soatSection(list7, data3.generatedAt)}
+${planSection(list7)}
 <div class="two"><section class="card" id="costos"><h2>Costos de los \xFAltimos meses</h2>${data3.months.length ? `<div class="bars">${data3.months.map((m) => `<div class="bar"><div>${esc(m.month)}</div><div><span class="w${Math.max(1, Math.round(m.total / maxMonth * 20)) * 5}"></span></div><div class="num">${esc(formatUsd(m.total))}</div></div>`).join("")}</div>` : `<p class="muted">Sin gastos registrados. Llegan al cerrar \xF3rdenes en AutoMantPro o con: Gasto PLACA | concepto | USD</p>`}</section>
 <section class="card" id="personas"><h2>Personas y talleres</h2><ul>${data3.members.map((m) => `<li>${esc(m.name)} \xB7 ${esc(roleName[String(m.role)] ?? m.role)}${m.status === "invited" ? " (invitado)" : ""}</li>`).join("") || `<li class="muted">Sin conductores todav\xEDa.</li>`}</ul><h2 class="gap">Talleres con convenio</h2><ul>${data3.agreements.map((a) => `<li>${esc(a.name)} (${esc(a.city)})${Number(a.ratingAvg) ? ` \xB7 ${esc(Number(a.ratingAvg))}/5` : ""}</li>`).join("") || `<li class="muted">Sin convenios. Por WhatsApp: Convenio | RUC del taller</li>`}</ul></section></div>
 <p class="muted">Generado ${esc(new Intl.DateTimeFormat("es-EC", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Guayaquil" }).format(data3.generatedAt))}. Este enlace vence en una hora; pide otro con "Panel flota". Los datos de los conductores se tratan por encargo de la empresa.</p>
