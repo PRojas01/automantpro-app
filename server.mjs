@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='287105bcd0c49f6bcf5435400b0acc3caf8f89d8'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='ca955221e74a6770c4d1a1eda9517e585708088e'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -87549,7 +87549,7 @@ var init_workflow = __esm({
       recepcion: "Recepci\xF3n",
       presupuesto_enviado: "Presupuesto enviado",
       aprobado: "Aprobado",
-      rechazado: "Presupuesto rechazado",
+      rechazado: "En negociaci\xF3n",
       en_ejecucion: "En ejecuci\xF3n",
       esperando_repuesto: "Esperando repuesto",
       cerrada: "Cerrada",
@@ -89996,6 +89996,8 @@ function parseAccountCommand(raw) {
     command = { action: "warrantyAnswer", orderNumber: orderOf(verb), accept: verb.startsWith("aceptar"), note: parts[1] ? parts[1] : null };
   else if (/^(aprobar|rechazar) ot-\d{1,7}$/.test(verb) && parts.length <= 2)
     command = { action: "budgetAnswer", orderNumber: orderOf(verb), approve: verb.startsWith("aprobar"), reason: parts[1] ? parts[1] : null };
+  else if (/^rechazar ot-\d{1,7}$/.test(verb) && parts.length === 3 && OFFER_RE.test(parts[2] ?? ""))
+    command = { action: "budgetAnswer", orderNumber: orderOf(verb), approve: false, reason: parts[1] ? parts[1] : null, offerUsd: offerOf(parts[2] ?? "") };
   else if (/^foto ot-[0-9]{1,7}$/.test(verb) && parts.length <= 2)
     command = { action: "attachPhoto", orderNumber: orderOf(verb), kind: parts[1] || null, appointmentRef: null, service: null };
   else if (/^foto s-[0-9a-f]{6}$/.test(verb) && parts.length === 1)
@@ -90189,7 +90191,7 @@ function parseAccountCommand(raw) {
 function isInvalidAccountCommand(value2) {
   return !!value2 && "invalid" in value2;
 }
-var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref62, plate, vehicleClass, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold5, accepted, orderOf, feeOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, gallonsOf, FUEL_VERBS, money, VISIT_SUFFIX;
+var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref62, plate, vehicleClass, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold5, accepted, orderOf, OFFER_RE, offerOf, feeOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, gallonsOf, FUEL_VERBS, money, VISIT_SUFFIX;
 var init_commands = __esm({
   "packages/api/dist/application/chat-account/commands.js"() {
     "use strict";
@@ -90256,7 +90258,7 @@ var init_commands = __esm({
       external_exports.object({ action: external_exports.literal("claimAgree"), orderNumber: external_exports.number().int().min(1) }).strict(),
       external_exports.object({ action: external_exports.literal("claimEscalate"), orderNumber: external_exports.number().int().min(1), reason: text2(5, 500) }).strict(),
       // `lines`: numeración del presupuesto que se le mostró al dueño; con ella solo aprueba esos renglones.
-      external_exports.object({ action: external_exports.literal("budgetAnswer"), orderNumber: external_exports.number().int().min(1), approve: external_exports.boolean(), reason: external_exports.string().trim().max(191).nullable(), lines: external_exports.array(external_exports.number().int().min(1).max(20)).min(1).max(20).optional() }).strict(),
+      external_exports.object({ action: external_exports.literal("budgetAnswer"), orderNumber: external_exports.number().int().min(1), approve: external_exports.boolean(), reason: external_exports.string().trim().max(191).nullable(), lines: external_exports.array(external_exports.number().int().min(1).max(20)).min(1).max(20).optional(), offerUsd: external_exports.number().positive().max(1e5).optional() }).strict(),
       // Caminos alternos de la orden: fecha prometida, cita a la que el cliente no llegó y cancelación desde el taller.
       external_exports.object({ action: external_exports.literal("shopPromise"), orderNumber: external_exports.number().int().min(1), date: external_exports.string().regex(/^\d{4}-\d{2}-\d{2}$/), reason: external_exports.string().trim().max(191).nullable() }).strict(),
       external_exports.object({ action: external_exports.literal("noShow"), appointmentRef: code2("C") }).strict(),
@@ -90374,7 +90376,7 @@ var init_commands = __esm({
       "\xDAltimo servicio | servicio | km | AAAA-MM \xB7 Kilometraje | km \xB7 S\xEDntoma | descripci\xF3n \xB7 Inspecci\xF3n (la \xFAltima que hizo tu taller, por sistemas)",
       "Gastos: Combustible | USD | km (| galones) \xB7 Gasto | concepto | USD (| AAAA-MM-DD) \xB7 Mis gastos",
       "Alerta | texto | AAAA-MM-DD o km \xB7 Alertas s\xED \xB7 Alertas no \xB7 Aceptar visita C-XXXXXX \xB7 Rechazar visita C-XXXXXX \xB7 Cancelar cita C-XXXXXX (| motivo) \xB7 Historial (servicios hechos a tu veh\xEDculo)",
-      "Aprobar OT-00012 \xB7 Aprobar OT-00012 | 1,3 (solo esos renglones) \xB7 Rechazar OT-00012 | motivo \xB7 Aprobar novedad N-XXXXXX \xB7 Rechazar novedad N-XXXXXX | motivo \xB7 Llamar novedad N-XXXXXX \xB7 Acepto entrega OT-00012 (| observaci\xF3n) \xB7 Rechazo entrega OT-00012 | motivo",
+      "Aprobar OT-00012 \xB7 Aprobar OT-00012 | 1,3 (solo esos renglones) \xB7 Rechazar OT-00012 | motivo (| pagar\xEDa 80 para pedir descuento) \xB7 Aprobar novedad N-XXXXXX \xB7 Rechazar novedad N-XXXXXX | motivo \xB7 Llamar novedad N-XXXXXX \xB7 Acepto entrega OT-00012 (| observaci\xF3n) \xB7 Rechazo entrega OT-00012 | motivo",
       "Garant\xEDa: Garant\xEDa OT-00012 (hasta cu\xE1ndo vale) \xB7 Reclamar garant\xEDa OT-00012 | motivo \xB7 Taller (due\xF1o o administrador): Aceptar garant\xEDa OT-00012 (| nota) \xB7 Rechazar garant\xEDa OT-00012 | motivo",
       "Reclamo de entrega (si observas o rechazas una entrega, el taller tiene 48 horas para responder; si no, o si no hay acuerdo, decide AutoMantPro): Taller: Responder reclamo OT-00012 | respuesta \xB7 Due\xF1o: Acepto soluci\xF3n OT-00012 \xB7 Escalar reclamo OT-00012 | motivo",
       "Calificar OT-00012 | calidad 1-5 | atenci\xF3n 1-5 | plazo 1-5 | costo 1-5 | comentario \xB7 Calificar S-XXXXXX | pieza correcta s\xED/no | calidad | plazo | precio | atenci\xF3n | comentario \xB7 Taller o almac\xE9n: Mi calificaci\xF3n",
@@ -90399,6 +90401,8 @@ var init_commands = __esm({
     fold5 = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
     accepted = (value2) => fold5(value2 ?? "") === "acepto";
     orderOf = (verb) => Number(verb.match(/ot-(\d+)$/)?.[1]);
+    OFFER_RE = /^(pagar[ií]a|ofrezco|oferta)\s+\$?\s*(\d{1,6}(?:[.,]\d{1,2})?)\s*(usd)?$/i;
+    offerOf = (value2) => Number((value2.trim().match(OFFER_RE)?.[2] ?? "").replace(",", "."));
     feeOf = (value2) => Number(fold5(value2).replace(/diagnostico|usd|\$/g, "").trim().replace(",", "."));
     kmOf = (value2) => Number(String(value2 ?? "").replace(/km/i, "").replace(/[.\s,]/g, ""));
     ref2 = (verb) => (verb.match(/[a-z]-[0-9a-f]{6}$/i)?.[0] ?? "").toUpperCase();
@@ -96265,7 +96269,7 @@ var init_vehicle_care_store = __esm({
       recepcion: "recibido, preparando el presupuesto",
       presupuesto_enviado: "presupuesto enviado, espera tu aprobaci\xF3n",
       aprobado: "presupuesto aprobado, trabajo por iniciar",
-      rechazado: "presupuesto rechazado",
+      rechazado: "en negociaci\xF3n: el taller puede enviarte otro presupuesto",
       en_ejecucion: "en reparaci\xF3n",
       esperando_repuesto: "esperando repuestos",
       cerrada: "entregado y cerrado",
@@ -96275,7 +96279,7 @@ var init_vehicle_care_store = __esm({
       recepcion: "recibido, falta el presupuesto",
       presupuesto_enviado: "presupuesto enviado, espera al due\xF1o",
       aprobado: "aprobado, por iniciar",
-      rechazado: "presupuesto rechazado",
+      rechazado: "en negociaci\xF3n: env\xEDa otro presupuesto o cierra con Salida sin trabajo",
       en_ejecucion: "en reparaci\xF3n",
       esperando_repuesto: "esperando repuesto",
       cerrada: "entregado y cerrado",
@@ -96307,7 +96311,7 @@ var init_vehicle_care_store = __esm({
           case "serviceHistory":
             return this.serviceHistory(conn, userId, role, command.plate);
           case "budgetAnswer":
-            return this.budgetAnswer(conn, userId, role, command.orderNumber, command.approve, command.reason, command.lines);
+            return this.budgetAnswer(conn, userId, role, command.orderNumber, command.approve, command.reason, command.lines, command.offerUsd);
           case "shopPromise":
             return this.shopPromise(conn, userId, role, command);
           case "noShow":
@@ -96851,7 +96855,7 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revi
 ${lines.join("\n")}
 Gastos: Mis gastos` };
       }
-      async budgetAnswer(conn, userId, role, number2, approve, reason, lines) {
+      async budgetAnswer(conn, userId, role, number2, approve, reason, lines, offerUsd) {
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
@@ -96868,13 +96872,16 @@ Gastos: Mis gastos` };
         checkLimit(scope, String(order.ownerId), Number(order.total));
         if (!approve && !reason)
           fail14("REASON_REQUIRED");
-        await conn.query("UPDATE `WorkOrder` SET status = ?, rejectionReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [approve ? "aprobado" : "rechazado", approve ? null : reason, order.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, order.id, JSON.stringify({ status: approve ? "aprobado" : "rechazado", channel: "whatsapp" }), approve ? "Presupuesto aprobado por el titular por WhatsApp" : String(reason)]);
+        const offer = !approve && offerUsd && offerUsd > 0 ? Math.round(offerUsd * 100) / 100 : null;
+        const stored = approve ? null : `${String(reason)}${offer ? ` \xB7 pagar\xEDa ${formatUsd(offer)}` : ""}`.slice(0, 191);
+        await conn.query("UPDATE `WorkOrder` SET status = ?, rejectionReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [approve ? "aprobado" : "rechazado", stored, order.id]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, order.id, JSON.stringify({ status: approve ? "aprobado" : "rechazado", channel: "whatsapp", ...approve ? {} : { negotiation: true, offerUsd: offer } }), approve ? "Presupuesto aprobado por el titular por WhatsApp" : String(reason)]);
         const code5 = workOrderCode(number2);
         const [decided] = await rows27(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'workorder.budget.decided'", [order.id]);
-        await this.notify(conn, String(order.shopUserId), `budget:${String(order.id)}:${approve}:${Number(decided?.n ?? 1)}`, "care.budget", approve ? `\u2705 El cliente aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}. Puedes iniciar el trabajo.` : `\u274C El cliente no aprob\xF3 el presupuesto ${code5}: ${reason}.`);
-        await this.notifyFleetTeam(conn, String(order.vehicleId), userId, `budget-team:${String(order.id)}:${approve}`, "care.budget", approve ? `aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}.` : `no aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}: ${reason}.`);
-        return { userId, message: approve ? `Aprobaste el presupuesto ${code5} por ${formatUsd(Number(order.total))}. El taller puede empezar.` : `Registramos que no apruebas el presupuesto ${code5}. El taller no har\xE1 trabajos con costo sin tu aprobaci\xF3n.` };
+        await this.notify(conn, String(order.shopUserId), `budget:${String(order.id)}:${approve}:${Number(decided?.n ?? 1)}`, "care.budget", approve ? `\u2705 El cliente aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}. Puedes iniciar el trabajo.` : `\u{1F91D} El cliente no aprob\xF3 el presupuesto ${code5} de ${formatUsd(Number(order.total))} y quiere negociar: ${reason}.${offer ? ` Pagar\xEDa ${formatUsd(offer)}.` : ""}
+La orden queda en negociaci\xF3n y la cita sigue abierta. Env\xEDa otro presupuesto (Presupuesto ${code5} | \u2026) o, si no hay acuerdo, cierra con \xABSalida sin trabajo ${code5} | motivo\xBB.`);
+        await this.notifyFleetTeam(conn, String(order.vehicleId), userId, `budget-team:${String(order.id)}:${approve}`, "care.budget", approve ? `aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}.` : `no aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))} y est\xE1 negociando: ${reason}.${offer ? ` Pagar\xEDa ${formatUsd(offer)}.` : ""}`);
+        return { userId, message: approve ? `Aprobaste el presupuesto ${code5} por ${formatUsd(Number(order.total))}. El taller puede empezar.` : `Registramos que no apruebas el presupuesto ${code5}${offer ? ` y que pagar\xEDas ${formatUsd(offer)}` : ""}. La orden queda en negociaci\xF3n: el taller puede enviarte otro presupuesto o cerrar sin trabajo. No har\xE1 trabajos con costo sin tu aprobaci\xF3n.` };
       }
       /**
        * El dueño aprueba solo algunos renglones del presupuesto (numerados como se le mostraron). Los demás quedan
@@ -97213,7 +97220,7 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
           fail14("WORK_ORDER_LIMIT");
       }
       async shopVehicle(conn, shopId, ref4) {
-        const [found] = await rows27(conn, "SELECT a.id AS appointmentId, a.ownerId, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND REPLACE(a.id, '-', '') LIKE ? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) LIMIT 2", [shopId, prefixOf2(ref4)]);
+        const [found] = await rows27(conn, "SELECT a.id AS appointmentId, a.ownerId, a.scheduledAt AS appointmentAt, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND REPLACE(a.id, '-', '') LIKE ? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) LIMIT 2", [shopId, prefixOf2(ref4)]);
         if (!found)
           fail14("NOT_FOUND");
         return found;
@@ -97250,9 +97257,14 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
           const feeSaved = await saveIntake(conn, { workOrderId: id3, km: command.km, fuel: command.fuel, requested: command.requested, damages: command.damages ?? { general: command.condition }, inventory: command.items ?? [command.inventory], notes: command.notes ?? null, receivedBy: shop.actor, diagnosisFeeUsd: fee });
           const feeText = fee && feeSaved ? `
 Diagn\xF3stico: si no apruebas el presupuesto, el taller cobra ${formatUsd(fee)} por el diagn\xF3stico.` : "";
-          await this.audit(conn, userId, "care.checkin", "WorkOrder", id3, { shopId: shop.id, by: shop.actor });
+          const ecDay3 = (d) => d.toLocaleDateString("en-CA", { timeZone: "America/Guayaquil" });
+          const booked = vehicle.appointmentAt ? new Date(vehicle.appointmentAt) : null;
+          const early = !!booked && ecDay3(booked) > ecDay3(/* @__PURE__ */ new Date());
+          await this.audit(conn, userId, "care.checkin", "WorkOrder", id3, { shopId: shop.id, by: shop.actor, ...early ? { early: true } : {} });
           const code5 = workOrderCode(Number(next));
-          await this.notifyOwner(conn, owner, String(vehicle.id), `checkin:${id3}`, "care.checkin", `\u{1F697} Tu ${label5} ingres\xF3 a ${shop.name} (${code5}).
+          const earlyText = early ? `\u2139\uFE0F Tu veh\xEDculo ingres\xF3 antes de la cita, que era el ${booked.toLocaleDateString("es-EC", { timeZone: "America/Guayaquil", weekday: "long", day: "numeric", month: "long" })}.
+` : "";
+          await this.notifyOwner(conn, owner, String(vehicle.id), `checkin:${id3}`, "care.checkin", `${earlyText}\u{1F697} Tu ${label5} ingres\xF3 a ${shop.name} (${code5}).
 Kilometraje: ${command.km.toLocaleString("es-EC")} km \xB7 Combustible: ${command.fuel}
 Estado y da\xF1os: ${command.condition}
 Inventario: ${command.inventory}
@@ -97591,14 +97603,18 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
 ${lines.join("\n")}
 Para quitar a alguien: Quitar t\xE9cnico T-XXXXXX` };
         }
-        if (!shop.isOwner)
+        if (!shop.isOwner && !shop.isAdmin)
+          fail14("FORBIDDEN");
+        if (!shop.isOwner && command.action === "addTechnician" && command.role === "admin")
           fail14("FORBIDDEN");
         if (command.action === "removeTechnician") {
-          const [member] = await rows27(conn, "SELECT id, name, userId FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' AND REPLACE(id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf2(command.memberRef)]);
+          const [member] = await rows27(conn, "SELECT id, name, userId, role FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' AND REPLACE(id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf2(command.memberRef)]);
           if (!member)
             fail14("NOT_FOUND");
+          if (!shop.isOwner && member.role === "admin")
+            fail14("FORBIDDEN");
           await conn.query("UPDATE `ShopMember` SET status = 'removed' WHERE id = ?", [member.id]);
-          await this.audit(conn, userId, "care.technician.removed", "ShopMember", String(member.id), { shopId: shop.id });
+          await this.audit(conn, userId, "care.technician.removed", "ShopMember", String(member.id), { shopId: shop.id, by: shop.isOwner ? "dueno" : "admin" });
           if (member.userId)
             await this.notify(conn, String(member.userId), `techremoved:${String(member.id)}`, "care.technician", `${shop.name} te quit\xF3 de su equipo: ya no puedes registrar trabajos ni ver los veh\xEDculos de ese taller.`);
           return { userId, message: `${member.name} ya no puede registrar trabajos de ${shop.name}.` };
@@ -97615,7 +97631,7 @@ Para quitar a alguien: Quitar t\xE9cnico T-XXXXXX` };
         const id3 = randomUUID26();
         const code5 = short4("T", id3);
         await conn.query("INSERT INTO `ShopMember` (id, shopId, name, status, invitedBy, role) VALUES (?, ?, ?, 'invited', ?, ?)", [id3, shop.id, command.name, userId, command.role]);
-        await this.audit(conn, userId, "care.technician.invited", "ShopMember", id3, { shopId: shop.id });
+        await this.audit(conn, userId, "care.technician.invited", "ShopMember", id3, { shopId: shop.id, by: shop.isOwner ? "dueno" : "admin" });
         const text13 = encodeURIComponent(`T\xE9cnico ${code5} | ${command.name} | ACEPTO`);
         const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${text13}` : null;
         return { userId, message: `Listo. Comparte este enlace con ${command.name} para que se una a ${shop.name} como ${command.role === "admin" ? "administrador (recibir\xE1 el reporte diario)" : "t\xE9cnico"} desde su propio WhatsApp:
@@ -116246,6 +116262,7 @@ function registerWorkOrderRoutes(app2, deps) {
     const appointmentId = uuid("appointmentId");
     let id3;
     let order;
+    let overLimit = null;
     try {
       const ctx = await formContext(appointmentId, uuid("ownerId"), uuid("vehicleId"));
       if (!ctx)
@@ -116273,6 +116290,8 @@ function registerWorkOrderRoutes(app2, deps) {
       const intakeKm = wholeNumber(body.intakeKm, 0, 2e6);
       if (intakeKm === null)
         return invalid2("Kilometraje de ingreso no v\xE1lido.");
+      const room = workOrders.monthlyRoom ? await workOrders.monthlyRoom(shopId) : null;
+      overLimit = room && room.used >= room.limit ? room : null;
       id3 = await workOrders.create({
         shopId,
         ownerId: String(ctx.detail.user.id),
@@ -116288,7 +116307,7 @@ function registerWorkOrderRoutes(app2, deps) {
       return errorPage(request, reply, session, "Nueva orden", m.text, m.status);
     }
     if (order)
-      await record(session, "workorder.created", order, { status: "recepcion", shopName: order.shopName });
+      await record(session, "workorder.created", order, { status: "recepcion", shopName: order.shopName, ...overLimit ? { overLimit: true, used: overLimit.used, limit: overLimit.limit, plan: overLimit.planKey } : {} });
     if (order) {
       await deps.linker?.fromWorkOrder({
         workOrderId: order.id,
@@ -116298,8 +116317,8 @@ function registerWorkOrderRoutes(app2, deps) {
         createdBy: session.userId
       });
     }
-    await deps.audit("admin.workorder.create", session.userId, `Orden ${order ? workOrderCode(order.number) : id3} abierta`);
-    return reply.redirect(`/admin/work-orders/${id3}?ok=creada`, 302);
+    await deps.audit("admin.workorder.create", session.userId, `Orden ${order ? workOrderCode(order.number) : id3} abierta${overLimit ? ` sobre el tope del plan (${overLimit.used} de ${overLimit.limit} este mes)` : ""}`);
+    return reply.redirect(`/admin/work-orders/${id3}?ok=${overLimit ? "creada-tope" : "creada"}`, 302);
   });
   app2.get("/work-orders/:id", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -116533,6 +116552,7 @@ var init_work_orders = __esm({
     FILTERS12 = ["abiertas", "por_aprobar", "en_taller", "cerradas", "todas"];
     OK_MESSAGES3 = {
       creada: "Orden abierta. Env\xEDa al due\xF1o el mensaje de recepci\xF3n.",
+      "creada-tope": "Orden abierta, pero el taller pas\xF3 su tope del plan de \xF3rdenes de este mes. Qued\xF3 registrado en la auditor\xEDa. Env\xEDa al due\xF1o el mensaje de recepci\xF3n.",
       item: "Presupuesto actualizado.",
       diagnostico: "Diagn\xF3stico guardado.",
       estado: "Estado actualizado. Env\xEDa el mensaje al due\xF1o.",
@@ -117610,6 +117630,7 @@ var init_work_order_store = __esm({
     "use strict";
     init_vehicle_care_store();
     init_warranty_records();
+    init_entitlements();
     PAGE_SIZE11 = 25;
     care = new VehicleCareStore();
     SELECT_ORDERS2 = "SELECT w.id, w.number, w.status, w.appointmentId, w.intakeKm, w.intakeNotes, w.diagnosis, w.rejectionReason, w.cancelReason, w.exitKm, w.warrantyDays, w.nextService, w.diagnosisOutcome, w.outcomeNote, w.total, w.createdAt, w.closedAt, s.id AS shopId, s.name AS shopName, su.id AS shopUserId, su.phone AS shopPhone, o.id AS ownerId, o.name AS ownerName, o.phone AS ownerPhone, v.id AS vehicleId, v.make, v.model, v.year, v.plate, v.currentKm FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `User` su ON su.id = s.userId JOIN `User` o ON o.id = w.ownerId JOIN `Vehicle` v ON v.id = w.vehicleId";
@@ -117647,6 +117668,18 @@ var init_work_order_store = __esm({
             await conn.query("ROLLBACK").catch(() => void 0);
             throw err;
           }
+        });
+      }
+      monthlyRoom(shopId) {
+        return this.run(async (conn) => {
+          const owner = rows55(await conn.query("SELECT userId FROM `Shop` WHERE id = ?", [shopId]))[0];
+          if (!owner)
+            return null;
+          const limits = await shopLimits(conn, String(owner.userId));
+          if (!limits || limits.workOrdersPerMonth == null)
+            return null;
+          const used = Number(rows55(await conn.query("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND createdAt >= DATE_FORMAT(UTC_TIMESTAMP(3), '%Y-%m-01')", [shopId]))[0]?.n ?? 0);
+          return { used, limit: limits.workOrdersPerMonth, planKey: limits.planKey };
         });
       }
       async create(input) {
@@ -120578,6 +120611,10 @@ function icon(state){const s=h('span',{class:'ic'});s.innerHTML=ICON[state]||ICO
 function km(n){return Math.round(Number(n)||0).toLocaleString('es-EC')+' km';}
 function usd(n){return '$ '+Number(n||0).toLocaleString('es-EC',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function ecDate(d,opts){return new Date(d).toLocaleString('es-EC',Object.assign({timeZone:'America/Guayaquil'},opts));}
+function shopRatingCard(r){const stars=n=>'\u2605'.repeat(Math.round(n))+'\u2606'.repeat(5-Math.round(n));
+ return card('Tu calificaci\xF3n',r.count+(r.count===1?' calificaci\xF3n':' calificaciones'),h('p',{class:'summary'},h('b',{text:String(r.average).replace('.',',')+'/5'}),' '+stars(r.average)),
+  r.comments.length?h('div',{class:'list'},...r.comments.map(c=>h('div',{class:'line'},h('div',{},h('b',{text:stars(c.score)+' '+c.score+'/5'}),h('small',{text:c.comment+' \xB7 '+ecDate(c.at,{day:'numeric',month:'short'})}))))):h('p',{class:'note',text:'A\xFAn no hay comentarios escritos.'}),
+  h('p',{class:'note',text:'Las calificaciones llegan cuando el cliente acepta la entrega.'}));}
 function card(title,aside,...kids){return h('section',{class:'pcard'},h('h2',{},title,aside?h('small',{text:aside}):null),...kids);}
 // Bloque plegable: el resumen siempre visible; el detalle (y su edici\xF3n) solo al abrirlo.
 function fold(title,summary,...kids){return h('details',{class:'fold'},h('summary',{},h('span',{text:title}),h('small',{text:summary||''})),...kids);}
@@ -120816,7 +120853,7 @@ function ordersCard(d){
  if(!d.orders.length)return card('\xD3rdenes de trabajo',null,h('p',{class:'note',text:'No tienes \xF3rdenes abiertas. Cuando un taller reciba tu veh\xEDculo, ver\xE1s aqu\xED cada paso.'}));
  const kids=[];for(const o of d.orders){const steps=h('ol',{class:'steps'});d.steps.forEach((s,i)=>{const cls=i<o.step||o.status==='cerrada'?'done':i===o.step?'now':'';steps.append(h('li',{class:cls},h('span',{class:'n',text:String(i+1)}),h('span',{text:s})));});
   const acts=h('div',{class:'chips'},...(o.canDecide===false?[]:[abtn('Ver estado','ghost',['Estado '+o.code])]));
-  if(o.status==='presupuesto_enviado'&&o.canDecide!==false){acts.append(abtn('Aprobar presupuesto','primary',['Aprobar '+o.code],'\xBFAprobar el presupuesto'+(o.totalUsd?' de '+usd(o.totalUsd):'')+' de '+o.shopName+'? El taller podr\xE1 comenzar el trabajo.'));const no=btn('No aprobar','ghost',()=>{const f=h('form',{class:'acts'});const why=h('input',{required:true,maxlength:'200','aria-label':'Motivo',placeholder:'Motivo'});f.append(why,h('button',{class:'ghost'},'Enviar'));f.onsubmit=e=>{e.preventDefault();void act(['Rechazar '+o.code,why.value.trim()],{btn:sub(e),ask:'\xBFNo aprobar el presupuesto? Se enviar\xE1 tu motivo al taller.'});};no.replaceWith(f);});acts.append(no);}
+  if(o.status==='presupuesto_enviado'&&o.canDecide!==false){acts.append(abtn('Aprobar presupuesto','primary',['Aprobar '+o.code],'\xBFAprobar el presupuesto'+(o.totalUsd?' de '+usd(o.totalUsd):'')+' de '+o.shopName+'? El taller podr\xE1 comenzar el trabajo.'));const no=btn('No aprobar','ghost',()=>{const f=h('form',{class:'acts'});const why=h('input',{required:true,maxlength:'200','aria-label':'Motivo',placeholder:'Motivo'});const offer=h('input',{type:'number',min:'1',step:'0.01',inputmode:'decimal','aria-label':'Cu\xE1nto pagar\xEDas (opcional)',placeholder:'Cu\xE1nto pagar\xEDas, USD (opcional)'});f.append(why,offer,h('button',{class:'ghost'},'Enviar'));f.onsubmit=e=>{e.preventDefault();const cmd=['Rechazar '+o.code,why.value.trim()];if(offer.value)cmd.push('pagar\xEDa '+offer.value);void act(cmd,{btn:sub(e),ask:offer.value?'\xBFPedir descuento? El taller ver\xE1 tu motivo y lo que pagar\xEDas, y podr\xE1 enviarte otro presupuesto.':'\xBFNo aprobar el presupuesto? Se enviar\xE1 tu motivo al taller y podr\xE1 enviarte otro.'});};no.replaceWith(f);});acts.append(no);}
   if(o.status==='presupuesto_enviado'&&o.canDecide!==false){const part=partialForm(o);if(part)acts.append(part);}
   if(o.canDecide!==false&&o.records&&o.records.payment.pending){const q=o.records.payment.pending;acts.append(abtn('Confirmar pago de '+usd(q.amountUsd),'primary',['Confirmo pago '+o.code],'\xBFConfirmar que pagaste '+usd(q.amountUsd)+' por '+q.method+'?'),reasonBtn('Observar cobro',(why,b)=>act(['Observo pago '+o.code,why],{btn:b,ask:'\xBFEnviar tu observaci\xF3n sobre este cobro al taller?'})));}
   if(o.canDecide!==false&&o.records&&o.records.payment.refundPending){const r=o.records.payment.refundPending;acts.append(abtn('Confirmar reembolso de '+usd(r.amountUsd),'primary',['Confirmo reembolso '+o.code],'\xBFConfirmar que recibiste '+usd(r.amountUsd)+' de vuelta por '+r.method+'?'),reasonBtn('Observar reembolso',(why,b)=>act(['Observo reembolso '+o.code,why],{btn:b,ask:'\xBFEnviar tu observaci\xF3n sobre este reembolso al taller?'})));}
@@ -120887,6 +120924,7 @@ function renderShop(root,d){
   kpi(k.budgetsWaiting,'Presupuestos sin respuesta',k.budgetsWaiting?'alert':'idle'),kpi(k.clientsDue,'Clientes con mantenimiento por hacer',k.clientsDue?'alert':'idle')),
   d.today.length?h('div',{class:'list'},...d.today.map(a=>{const st=a.status==='confirmed'?'al_dia':'pronto';return h('div',{class:'line st-'+st},h('div',{class:'who'},h('span',{class:'time',text:ecDate(a.time,{hour:'2-digit',minute:'2-digit'})}),h('div',{},h('b',{text:a.vehicle}),h('small',{class:'mono',text:a.ref+(a.plate?' \xB7 '+a.plate:'')}))),h('span',{class:'pill'},st==='al_dia'?'Confirmada':'Por confirmar'));})):h('p',{class:'note',text:'No hay citas para hoy.'}),
   d.canManage?abtn('Ver resumen del d\xEDa','ghost',['Resumen hoy']):null));
+ if(d.rating)root.append(shopRatingCard(d.rating));
  if(d.appointments?.length)root.append(shopAppointmentsCard(d));
  if(d.orders?.length){const bar=ordersFilterBar(d);if(bar)root.append(bar);root.append(shopOrdersCard(ordersView(d)));}
  const prod=productivityCard(d);if(prod)root.append(prod);
@@ -123894,7 +123932,7 @@ var STEP_OF = { recepcion: 0, presupuesto_enviado: 1, rechazado: 1, aprobado: 2,
 var SHOP_STATUS_TEXT = {
   recepcion: "Falta presupuesto",
   presupuesto_enviado: "Espera al due\xF1o",
-  rechazado: "Presupuesto rechazado",
+  rechazado: "En negociaci\xF3n",
   aprobado: "Por iniciar",
   en_ejecucion: "En reparaci\xF3n",
   esperando_repuesto: "Esperando repuesto",
@@ -123903,7 +123941,7 @@ var SHOP_STATUS_TEXT = {
 var STATUS_TEXT = {
   recepcion: "Recibido",
   presupuesto_enviado: "Espera tu aprobaci\xF3n",
-  rechazado: "Presupuesto no aprobado",
+  rechazado: "En negociaci\xF3n",
   aprobado: "Por iniciar",
   en_ejecucion: "En reparaci\xF3n",
   esperando_repuesto: "Esperando repuesto",
@@ -123916,6 +123954,14 @@ function alertValue(item, currentKm, now = /* @__PURE__ */ new Date()) {
   return due.toISOString().slice(0, 10);
 }
 var REMINDER_STATES = ["urgente", "pronto", "sin_dato"];
+async function shopRating(conn, ownerUserId) {
+  const [sum] = await rows37(conn, "SELECT COUNT(*) AS n, AVG(score) AS avg FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL", [ownerUserId]);
+  const count3 = Number(sum?.n ?? 0);
+  if (!count3)
+    return null;
+  const recent = await rows37(conn, "SELECT score, comment, createdAt FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL AND comment IS NOT NULL AND comment <> '' ORDER BY createdAt DESC LIMIT 3", [ownerUserId]);
+  return { average: Math.round(Number(sum?.avg) * 10) / 10, count: count3, comments: recent.map((r) => ({ score: Number(r.score), comment: String(r.comment), at: new Date(r.createdAt).toISOString() })) };
+}
 var PilotPanelStore = class {
   connect;
   care = new VehicleCareStore();
@@ -124460,6 +124506,7 @@ var PilotPanelStore = class {
       role: "taller",
       shopName: shop.name,
       canManage: shop.isOwner || shop.isAdmin,
+      rating: shop.isOwner || shop.isAdmin ? await shopRating(conn, shop.ownerUserId) : null,
       kpis: { appointmentsToday, openOrders, budgetsWaiting, clientsDue: reminders.length },
       appointments,
       today: today.map((a) => ({ ref: ref3("C", a.id), time: a.scheduledAt, vehicle: vehicleLabel2(a), plate: a.plate ? String(a.plate) : null, status: String(a.status) })),
