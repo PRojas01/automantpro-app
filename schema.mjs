@@ -23196,8 +23196,24 @@ var SHOP_COVER_STATEMENTS = [
   { kind: "addColumn", target: "Shop.coverUpdatedAt", sql: "ALTER TABLE `Shop` ADD COLUMN `coverUpdatedAt` DATETIME(3) NULL" }
 ];
 
+// packages/api/src/infrastructure/schema-setup/plan-record-statements.ts
+var PLAN_RECORD_STATEMENTS = [
+  { kind: "addColumn", target: "VehicleServiceRecord.detail", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `detail` VARCHAR(500) NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.parts", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `parts` JSON NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.costUsd", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `costUsd` DECIMAL(10,2) NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.shopName", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `shopName` VARCHAR(120) NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.technician", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `technician` VARCHAR(80) NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.finding", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `finding` VARCHAR(20) NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.nextDueAt", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `nextDueAt` DATE NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.nextDueKm", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `nextDueKm` INTEGER NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.appointmentId", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `appointmentId` VARCHAR(191) NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.updatedAt", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `updatedAt` DATETIME(3) NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.updatedBy", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `updatedBy` VARCHAR(191) NULL" },
+  { kind: "addColumn", target: "Appointment.planServiceIds", sql: "ALTER TABLE `Appointment` ADD COLUMN `planServiceIds` JSON NULL" }
+];
+
 // packages/api/src/infrastructure/schema-setup/apply.ts
-var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...WORK_ORDER_RECORD_STATEMENTS, ...WORK_ORDER_CLAIM_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS, ...PART_ORDER_STATEMENTS, ...CATALOG_TARIFF_STATEMENTS, ...RECONTACT_STATEMENTS, ...COMPROBANTE_STATEMENTS, ...FOUNDER_STATEMENTS, ...SHOP_COVER_STATEMENTS];
+var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...WORK_ORDER_RECORD_STATEMENTS, ...WORK_ORDER_CLAIM_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS, ...PART_ORDER_STATEMENTS, ...CATALOG_TARIFF_STATEMENTS, ...RECONTACT_STATEMENTS, ...COMPROBANTE_STATEMENTS, ...FOUNDER_STATEMENTS, ...SHOP_COVER_STATEMENTS, ...PLAN_RECORD_STATEMENTS];
 var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...WORK_ORDER_RECORD_TABLES, ...WORK_ORDER_CLAIM_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES, ...PART_ORDER_TABLES, ...CATALOG_TARIFF_TABLES, ...RECONTACT_TABLES, ...COMPROBANTE_TABLES, ...FOUNDER_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));

@@ -249,6 +249,7 @@ model Appointment {
   status      AppointmentStatus @default(pending)
   summary     String?
   services     Json?
+  planServiceIds Json?
   notes        String?   @db.Text
   cancelReason String?
   updatedAt    DateTime?
@@ -906,6 +907,17 @@ model VehicleServiceRecord {
  shopId String? @db.VarChar(191)
  createdBy String? @db.VarChar(191)
  createdAt DateTime @default(now()) @db.DateTime(3)
+ detail String? @db.VarChar(500)
+ parts Json?
+ costUsd Decimal? @db.Decimal(10,2)
+ shopName String? @db.VarChar(120)
+ technician String? @db.VarChar(80)
+ finding String? @db.VarChar(20)
+ nextDueAt DateTime? @db.Date
+ nextDueKm Int?
+ appointmentId String? @db.VarChar(191)
+ updatedAt DateTime? @db.DateTime(3)
+ updatedBy String? @db.VarChar(191)
  @@index([vehicleId,serviceId], map: "VehicleServiceRecord_vehicle_idx")
 }
 model VehicleSymptom {
