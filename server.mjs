@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='ca955221e74a6770c4d1a1eda9517e585708088e'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='f8c2cab183dd3ee95d2d1ca737e20532da8b85bc'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -89829,7 +89829,8 @@ function searchShops(records, query) {
       rating,
       distanceKm: distance,
       reasons,
-      googleMapsUrl: googleMapsSearchUrl({ name: r.name, zone: r.zone ?? "", city: r.city })
+      googleMapsUrl: googleMapsSearchUrl({ name: r.name, zone: r.zone ?? "", city: r.city }),
+      cover: r.cover ? `/mapa/portada/${encodeURIComponent(r.id)}?v=${encodeURIComponent(r.cover)}` : null
     };
     return { shop, offers, inZone };
   }).filter((s) => s.offers && (!zone || s.inZone || origin !== null));
@@ -93282,6 +93283,7 @@ var init_workshop_map_store = __esm({
   "packages/api/dist/infrastructure/map/workshop-map-store.js"() {
     "use strict";
     init_appointment_store();
+    init_shop_cover_store();
     init_workshop_map();
     rows21 = (result) => result[0];
     text4 = (v) => v === null || v === void 0 || String(v).trim() === "" ? null : String(v);
@@ -93309,10 +93311,32 @@ var init_workshop_map_store = __esm({
                 throw err;
               return conn.query(`${LISTED_SQL}ORDER BY sh.city, sh.name LIMIT 2000`);
             });
-            return rows21(result).map(toRecord);
+            const list7 = rows21(result).map(toRecord);
+            const covers = await coverVersions(conn, list7.map((r) => r.id)).catch(() => /* @__PURE__ */ new Map());
+            for (const r of list7)
+              r.cover = covers.get(r.id) ?? null;
+            return list7;
           } catch (err) {
             if (missingColumn(err))
               return [];
+            throw err;
+          }
+        });
+      }
+      listedCover(shopId) {
+        return this.run(async (conn) => {
+          const sql = `SELECT sh.coverMime, sh.coverPhoto FROM \`Shop\` sh JOIN \`User\` u ON u.id = sh.userId AND u.deletedAt IS NULL WHERE sh.verificationStatus = 'verified' AND sh.mapListed = TRUE AND sh.mapConsentAt IS NOT NULL AND sh.id = ? AND sh.coverMime IS NOT NULL `;
+          try {
+            const result = await conn.query(`${sql}${NOT_SANCTIONED("sh")}LIMIT 1`, [shopId]).catch((err) => {
+              if (err.code !== "ER_NO_SUCH_TABLE")
+                throw err;
+              return conn.query(`${sql}LIMIT 1`, [shopId]);
+            });
+            const [r] = rows21(result);
+            return r ? { mime: String(r.coverMime), data: r.coverPhoto } : null;
+          } catch (err) {
+            if (missingColumn(err))
+              return null;
             throw err;
           }
         });
@@ -127854,6 +127878,7 @@ function shopCard(shop, number2, index) {
   const route = shop.point ? `<a href="${escapeHtml(`https://www.google.com/maps/dir/?api=1&destination=${shop.point.lat},${shop.point.lng}`)}" rel="noopener" target="_blank">C\xF3mo llegar</a>` : `<span class="muted">Muestra solo su sector</span>`;
   const turno = number2 ? `<a class="pedir" href="${escapeHtml(`https://wa.me/${number2}?text=${encodeURIComponent(`Hola AutoMantPro, quiero un turno en ${shop.name} (${shop.city}).`)}`)}" rel="noopener">Pedir turno por WhatsApp</a>` : "";
   return `<li class="taller" data-id="${escapeHtml(shop.id)}"${shop.point ? ` data-lat="${shop.point.lat}" data-lng="${shop.point.lng}"` : ""}>
+    ${shop.cover ? `<img class="portada" src="${escapeHtml(shop.cover)}" alt="${escapeHtml(`Foto del local de ${shop.name}`)}" loading="lazy" decoding="async">` : ""}
     <div class="fila"><h3><span class="num">${index + 1}</span> ${escapeHtml(shop.name)}</h3><span class="dist">${shop.distanceKm === null ? "" : `${escapeHtml(shop.distanceKm.toLocaleString("es-EC"))} km`}</span></div>
     <div class="tags">${tags}</div>
     <p class="donde">${escapeHtml(where)}${shop.hours ? ` \xB7 ${escapeHtml(shop.hours)}` : ""}</p>
@@ -127950,6 +127975,7 @@ h1{font-size:26px;margin:10px 0 8px}
 .mapa noscript{display:block;padding:16px}
 .lista{list-style:none;padding:0;margin:0;display:grid;gap:10px}
 .taller{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:14px;display:grid;gap:6px}
+.portada{display:block;width:100%;height:auto;max-height:180px;object-fit:cover;border-radius:var(--c-r-sm);background:var(--c-sunk)}
 .taller.activo{outline:3px solid var(--c-promo);outline-offset:-1px}
 .fila{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
 .fila h3{font:700 16px/1.3 var(--c-font);margin:0}
@@ -128043,6 +128069,21 @@ async function mapRoutes(app2, options = {}) {
     return publicNumber();
   }
   app2.get(LEAFLET_PATH, async (_request, reply) => reply.header("Cache-Control", "public, max-age=31536000, immutable").header("X-Content-Type-Options", "nosniff").header("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'").type("application/javascript; charset=utf-8").send(LEAFLET_JS));
+  app2.get("/mapa/portada/:id", async (request, reply) => {
+    const { id: id3 } = request.params;
+    const notFound = () => reply.code(404).header("X-Content-Type-Options", "nosniff").type("text/plain; charset=utf-8").send("No encontrada");
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id3) || !options.cover)
+      return notFound();
+    let photo = null;
+    try {
+      photo = await options.cover(id3);
+    } catch (err) {
+      app2.log.error({ err }, "mapa: no se pudo leer la portada");
+    }
+    if (!photo || !/^image\/(jpeg|png)$/.test(photo.mime))
+      return notFound();
+    return reply.header("Cache-Control", "public, max-age=3600").header("X-Content-Type-Options", "nosniff").header("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'").type(photo.mime).send(photo.data);
+  });
   app2.get("/mapa", async (request, reply) => {
     const q = request.query ?? {};
     const nonce2 = randomBytes17(16).toString("base64");
@@ -130361,7 +130402,8 @@ await app.register(seoRoutes, { resolveNumber: () => whatsappNumber.get() });
 var workshopMap = new MysqlWorkshopMapStore(() => openConnection());
 await app.register(mapRoutes, {
   resolveNumber: () => whatsappNumber.get(),
-  load: missingDbEnv().length === 0 ? () => workshopMap.listed() : void 0
+  load: missingDbEnv().length === 0 ? () => workshopMap.listed() : void 0,
+  cover: missingDbEnv().length === 0 ? (id3) => workshopMap.listedCover(id3) : void 0
 });
 await app.register(brandRoutes);
 await app.register(legalRoutes, { load: () => legalData.get() });
