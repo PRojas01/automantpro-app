@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='c5d5be4e3e0cbaf900138e1e20be4159ddd2fce9'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='287105bcd0c49f6bcf5435400b0acc3caf8f89d8'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -60446,6 +60446,14 @@ function computeItem(input, serviceId) {
     dueDate2 = monthsActive ? addMonths(baseDate, effMonths) : today;
     remainingKm = kmActive ? dueKm - input.odometerKm : null;
     remainingDays = monthsActive ? daysBetween(today, dueDate2) : null;
+    if (last.nextKm !== void 0 && last.nextKm > baseKm2) {
+      dueKm = last.nextKm;
+      remainingKm = dueKm - input.odometerKm;
+    }
+    if (last.nextDate) {
+      dueDate2 = toDate(last.nextDate);
+      remainingDays = daysBetween(today, dueDate2);
+    }
     status = computeItemStatus(remainingKm, remainingDays);
   } else {
     const interval2 = effKm;
@@ -84245,6 +84253,7 @@ function pendingItem(kind) {
     name: String(r.name),
     city: String(r.city),
     ruc: r.ruc ? String(r.ruc) : null,
+    sharedRuc: Number(r.sharedRuc ?? 0),
     createdAt: r.createdAt
   });
 }
@@ -84383,7 +84392,7 @@ var init_registration_store = __esm({
       }
       pendingVerifications() {
         return this.run(async (conn) => {
-          const shops = rows3(await conn.query("SELECT b.id, b.userId, b.name, b.city, b.ruc, b.createdAt FROM `Shop` b WHERE b.verificationStatus = 'pending' AND b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL) ORDER BY b.createdAt LIMIT 100")).map(pendingItem("shop"));
+          const shops = rows3(await conn.query("SELECT b.id, b.userId, b.name, b.city, b.ruc, b.createdAt, (SELECT COUNT(*) FROM `Shop` o WHERE o.ruc = b.ruc AND o.id <> b.id) AS sharedRuc FROM `Shop` b WHERE b.verificationStatus = 'pending' AND b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL) ORDER BY b.createdAt LIMIT 100")).map(pendingItem("shop"));
           const stores = rows3(await conn.query("SELECT b.id, b.userId, b.name, b.city, b.ruc, b.createdAt FROM `Store` b WHERE b.verificationStatus = 'pending' AND b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL) ORDER BY b.createdAt LIMIT 100")).map(pendingItem("store"));
           return [...shops, ...stores].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
         });
@@ -84671,6 +84680,8 @@ var init_permissions = __esm({
       { method: "POST", pattern: /^\/users\/[^/]+\/notes$/, capability: "notes" },
       { method: "GET", pattern: /^\/users\/[^/]+\/schedule$/, capability: "appointments" },
       { method: "POST", pattern: /^\/verifications(\/|$)/, capability: "verifications" },
+      // Quitar la portada de un taller es moderar su perfil: lo hace quien verifica.
+      { method: "POST", pattern: /^\/users\/[^/]+\/portada\/quitar$/, capability: "verifications" },
       { method: "POST", pattern: /^\/expertos(\/|$)/, capability: "verifications" },
       { method: "POST", pattern: /^\/cursos\/comision$/, capability: "settings" },
       { method: "POST", pattern: /^\/cursos(\/|$)/, capability: "verifications" },
@@ -86810,7 +86821,7 @@ main details.gestionar>.menu{margin-top:8px}
     <li class="ok"><span class="led"></span><span>Suspensi\xF3n y direcci\xF3n</span><span class="pill">Al d\xEDa</span></li>
   </ul>
   <details class="informe-mas"><summary>Ver informe completo</summary>
-  <p class="score-note">Puntaje 78 de 100: baja con cada servicio urgente, pr\xF3ximo o sin dato.</p>
+  <p class="score-note">Puntaje 78 de 100: baja con cada servicio urgente o pr\xF3ximo; lo que no tiene registro se muestra aparte, como \xABsin dato\xBB.</p>
   <section class="details" aria-labelledby="services-title">
     <h3 id="services-title">Pr\xF3ximos servicios</h3>
     <ul>
@@ -89037,7 +89048,7 @@ function fail3(code5) {
 function positions(offers) {
   return new Map([...offers].filter((o) => NUMBERED_OFFER_STATUSES.has(String(o.status))).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime() || String(a.id).localeCompare(String(b.id))).map((o, i) => [String(o.id), i + 1]));
 }
-var rows12, list5, NUMBERED_OFFER_STATUSES, READ_ONLY, ACCEPT_RECEIPT_MATCH, IN_REVIEW_NOTICE, MysqlLocalMarketplaceStore;
+var rows12, list5, NUMBERED_OFFER_STATUSES, READ_ONLY, ACCEPT_RECEIPT_MATCH, IN_REVIEW_NOTICE, SHOP_MANAGER_ACTIONS, MysqlLocalMarketplaceStore;
 var init_local_marketplace_store = __esm({
   "packages/api/dist/infrastructure/messaging/local-marketplace-store.js"() {
     "use strict";
@@ -89066,6 +89077,7 @@ var init_local_marketplace_store = __esm({
     READ_ONLY = /* @__PURE__ */ new Set(["list", "listMine", "invitations", "appointmentsMine"]);
     ACCEPT_RECEIPT_MATCH = "(a.localOfferId = ? OR (a.localOfferId IS NULL AND EXISTS (SELECT 1 FROM `LocalCommandReceipt` r WHERE r.userId = ? AND JSON_UNQUOTE(JSON_EXTRACT(r.response, '$.requestId')) COLLATE utf8mb4_unicode_ci = ? AND JSON_UNQUOTE(JSON_EXTRACT(r.response, '$.offerId')) COLLATE utf8mb4_unicode_ci = ? AND JSON_UNQUOTE(JSON_EXTRACT(r.response, '$.appointmentId')) COLLATE utf8mb4_unicode_ci = a.id)))";
     IN_REVIEW_NOTICE = "Este taller est\xE1 en revisi\xF3n: AutoMantPro todav\xEDa no lo verifica.";
+    SHOP_MANAGER_ACTIONS = /* @__PURE__ */ new Set(["offer", "offerRef", "invitations", "appointmentsMine", "confirm", "confirmRef", "acceptPosition", "accept", "listMine", "list"]);
     MysqlLocalMarketplaceStore = class {
       connect;
       care = new VehicleCareStore();
@@ -89098,7 +89110,8 @@ var init_local_marketplace_store = __esm({
             transaction = false;
             return typeof receipt.response === "string" ? JSON.parse(receipt.response) : receipt.response;
           }
-          const result = await this.apply(conn, userId, String(user.role), command);
+          const actingUser = String(user.role) === "taller" && SHOP_MANAGER_ACTIONS.has(command.action) ? await this.shopManagerOwner(conn, userId) ?? userId : userId;
+          const result = await this.apply(conn, actingUser, String(user.role), command);
           await conn.query("INSERT INTO `LocalCommandReceipt` (id, userId, fingerprint, response) VALUES (?, ?, ?, ?)", [receiptId, userId, fingerprint, JSON.stringify(result)]);
           if (!READ_ONLY.has(command.action))
             await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, 'LocalRequest', ?, ?, UTC_TIMESTAMP(3))", [randomUUID14(), `local.${command.action}`, userId, user.role, result.requestId, JSON.stringify({ action: command.action, offerId: result.offerId ?? null })]);
@@ -89114,6 +89127,11 @@ var init_local_marketplace_store = __esm({
             await conn.query("SELECT RELEASE_LOCK(?)", [lock]).catch(() => void 0);
           await conn.end().catch(() => void 0);
         }
+      }
+      /** Owner of the workshop when this user is its active administrator (not its owner); otherwise null. */
+      async shopManagerOwner(conn, userId) {
+        const [member] = await rows12(conn, "SELECT s.userId FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.userId = ? AND m.status = 'active' AND m.role = 'admin' AND NOT EXISTS (SELECT 1 FROM `Shop` own WHERE own.userId = m.userId) LIMIT 1", [userId]);
+        return member ? String(member.userId) : null;
       }
       /**
        * No verified business in the sector: the owner gets a ready message to forward from their own
@@ -90090,8 +90108,8 @@ function parseAccountCommand(raw) {
     command = { action: "costs", plate: null };
   else if (plateAfter(verb, "costos") && parts.length === 1)
     command = { action: "costs", plate: plateAfter(verb, "costos") };
-  else if (verb === "convenio" && parts.length === 2)
-    command = { action: "proposeAgreement", ruc: parts[1] };
+  else if (verb === "convenio" && (parts.length === 2 || parts.length === 3))
+    command = { action: "proposeAgreement", ruc: parts[1], ...parts[2] ? { branch: parts[2] } : {} };
   else if (/^(aceptar|rechazar) convenio k-[0-9a-f]{6}$/.test(verb) && parts.length === 1)
     command = { action: "agreementAnswer", agreementRef: ref2(verb), accept: verb.startsWith("aceptar") };
   else if (/^terminar convenio k-[0-9a-f]{6}$/.test(verb) && parts.length === 1)
@@ -90309,7 +90327,7 @@ var init_commands = __esm({
       external_exports.object({ action: external_exports.literal("fuel"), amount: usd2.refine((v) => v > 0), km: odometer, gallons: external_exports.number().positive().max(200).nullable(), plate: plate.optional() }).strict(),
       external_exports.object({ action: external_exports.literal("ownerCosts"), plate: plate.optional() }).strict(),
       external_exports.object({ action: external_exports.literal("costs"), plate: plate.nullable() }).strict(),
-      external_exports.object({ action: external_exports.literal("proposeAgreement"), ruc }).strict(),
+      external_exports.object({ action: external_exports.literal("proposeAgreement"), ruc, branch: external_exports.string().trim().min(2).max(60).optional() }).strict(),
       external_exports.object({ action: external_exports.literal("agreementAnswer"), agreementRef: ref62("K"), accept: external_exports.boolean() }).strict(),
       external_exports.object({ action: external_exports.literal("endAgreement"), agreementRef: ref62("K") }).strict(),
       external_exports.object({ action: external_exports.literal("agreements") }).strict(),
@@ -91161,6 +91179,27 @@ async function vehicleLevel(conn, vehicle, catalog) {
     return "avanzado";
   return (await ownerEntitlement(conn, String(vehicle.userId), catalog)).level;
 }
+async function shopLimits(conn, ownerUserId, catalogIn, now = /* @__PURE__ */ new Date()) {
+  try {
+    const catalog = catalogIn ?? await loadCatalog(conn);
+    const subs = await rows13(conn, "SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [ownerUserId]);
+    const roomOf = (o) => o.limits.workOrdersPerMonth ?? Number.POSITIVE_INFINITY;
+    let offer = null;
+    for (const sub of subs) {
+      if (!isRunning({ plan: String(sub.plan), status: String(sub.status), startsAt: sub.startsAt, endsAt: sub.endsAt ?? null }, now))
+        continue;
+      const found = findOfferByKey(String(sub.plan), catalog);
+      if (found?.profile === "taller" && !isFreeOffer(found) && (!offer || roomOf(found) > roomOf(offer)))
+        offer = found;
+    }
+    offer ??= offersFor("taller", catalog, true).find(isFreeOffer) ?? null;
+    if (!offer)
+      return null;
+    return { planKey: offer.key, workOrdersPerMonth: offer.limits.workOrdersPerMonth ?? null, technicians: offer.limits.technicians ?? null };
+  } catch {
+    return null;
+  }
+}
 var rows13, OPEN;
 var init_entitlements = __esm({
   "packages/api/dist/infrastructure/plans/entitlements.js"() {
@@ -91712,7 +91751,8 @@ function buildRecommendations(items, findings) {
   for (const r of sorted)
     counts2[r.state]++;
   const systems = buildSystems(sorted);
-  const score2 = Math.max(0, 100 - counts2.urgente * 25 - counts2.pronto * 10 - counts2.sin_dato * 3);
+  const known = sorted.length - counts2.sin_dato;
+  const score2 = known ? Math.max(0, 100 - counts2.urgente * 25 - counts2.pronto * 10) : null;
   const first = sorted[0];
   const actionable = sorted.find((r) => r.state === "urgente" || r.state === "pronto");
   return {
@@ -92356,7 +92396,7 @@ var init_fleet_store = __esm({
           case "proposeAgreement":
             if (!admin)
               fail6("FORBIDDEN");
-            return this.propose(conn, me, fleet, command.ruc);
+            return this.propose(conn, me, fleet, command.ruc, command.branch);
           case "endAgreement":
             if (!admin)
               fail6("FORBIDDEN");
@@ -92602,10 +92642,20 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
         return { userId, message: [`\u{1F4B5} ${fleet.name}: costos de este mes`, `Total: ${formatUsd(total)}${kms > 0 ? ` \xB7 ${km2(kms)} recorridos \xB7 ${formatUsd(total / kms)}/km` : ""}`, ...lines.length || retired ? [...lines, ...retired ? [`\u2022 Veh\xEDculos retirados: ${formatUsd(retired)}`] : []] : ["Sin gastos registrados este mes."], "Incluye \xF3rdenes cerradas en AutoMantPro y gastos anotados con: Gasto PLACA | concepto | USD"].join("\n") };
       }
       // ---------- workshops ----------
-      async propose(conn, userId, fleet, ruc2) {
-        const [shop] = await rows18(conn, "SELECT s.id, s.name, s.userId, s.verificationStatus FROM `Shop` s JOIN `User` u ON u.id = s.userId WHERE s.ruc = ? AND u.deletedAt IS NULL LIMIT 1", [ruc2]);
-        if (!shop)
+      async propose(conn, userId, fleet, ruc2, branch) {
+        const branches = await rows18(conn, "SELECT s.id, s.name, s.city, s.zone, s.userId, s.verificationStatus FROM `Shop` s JOIN `User` u ON u.id = s.userId WHERE s.ruc = ? AND u.deletedAt IS NULL ORDER BY s.city, s.name LIMIT 10", [ruc2]);
+        if (!branches.length)
           fail6("SHOP_NOT_FOUND");
+        const fold18 = (v) => String(v ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+        const wanted = branch ? fold18(branch) : "";
+        const matches = wanted ? branches.filter((b) => [b.city, b.zone, b.name].some((v) => fold18(v).includes(wanted))) : branches;
+        if (matches.length !== 1) {
+          const list7 = (matches.length ? matches : branches).map((b) => `\u2022 ${b.name} (${b.city}${b.zone ? `, ${b.zone}` : ""})`).join("\n");
+          return { userId, message: `${matches.length ? `El RUC ${ruc2} tiene ${matches.length} sucursales` : `Ninguna sucursal del RUC ${ruc2} coincide con \xAB${branch}\xBB`}:
+${list7}
+Para elegir: Convenio | ${ruc2} | ciudad, sector o nombre` };
+        }
+        const shop = matches[0];
         const [existing] = await rows18(conn, "SELECT id, status FROM `FleetShop` WHERE fleetId = ? AND shopId = ? FOR UPDATE", [fleet.fleetId, shop.id]);
         if (existing && existing.status === "activo")
           fail6("AGREEMENT_EXISTS");
@@ -92622,7 +92672,7 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
       }
       async agreementAnswer(conn, userId, role, ref4, accept) {
         const shop = await this.care.actingShop(conn, userId, role);
-        if (!shop.isOwner)
+        if (!shop.isOwner && !shop.isAdmin)
           fail6("FORBIDDEN");
         const [agreement] = await rows18(conn, "SELECT fs.id, f.id AS fleetId, f.name, f.ownerUserId FROM `FleetShop` fs JOIN `Fleet` f ON f.id = fs.fleetId WHERE fs.shopId = ? AND fs.status = 'propuesto' AND REPLACE(fs.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf(ref4)]);
         if (!agreement)
@@ -92640,7 +92690,7 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
           [agreement] = await rows18(conn, "SELECT fs.id, fs.shopId, fs.fleetId, s.name, s.userId AS notifyUserId FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status IN ('activo','propuesto') AND REPLACE(fs.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [fleet.fleetId, prefixOf(ref4)]);
         else {
           const shop = await this.care.actingShop(conn, userId, role);
-          if (!shop.isOwner)
+          if (!shop.isOwner && !shop.isAdmin)
             fail6("FORBIDDEN");
           [agreement] = await rows18(conn, "SELECT fs.id, fs.shopId, fs.fleetId, f.name, f.ownerUserId AS notifyUserId FROM `FleetShop` fs JOIN `Fleet` f ON f.id = fs.fleetId WHERE fs.shopId = ? AND fs.status IN ('activo','propuesto') AND REPLACE(fs.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf(ref4)]);
         }
@@ -92742,8 +92792,10 @@ async function shopSuspended(conn, shopId) {
   return found.length > 0;
 }
 async function shopCanAccessVehicle(conn, shopId, vehicleId) {
-  if (await shopSuspended(conn, shopId))
-    return false;
+  if (await shopSuspended(conn, shopId)) {
+    const [open] = await conn.query("SELECT w.id FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId = ? AND w.shopId = ? AND v.deletedAt IS NULL AND w.status NOT IN ('cerrada','cancelada') AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = w.shopId) LIMIT 1", [vehicleId, shopId]);
+    return open.length > 0;
+  }
   const [found] = await conn.query("SELECT v.id FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL AND (EXISTS (SELECT 1 FROM `Appointment` a WHERE a.vehicleId = v.id AND a.shopId = ? AND a.status <> 'cancelled' AND (v.fleetId IS NOT NULL OR a.ownerId = v.userId)) OR EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId = v.id AND w.shopId = ? AND (v.fleetId IS NOT NULL OR w.ownerId = v.userId OR w.status NOT IN ('cerrada','cancelada')))) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = ?) LIMIT 1", [vehicleId, shopId, shopId, shopId]);
   return found.length > 0;
 }
@@ -92833,6 +92885,42 @@ var init_shop_cover_store = __esm({
           }
           await audit3(conn, userId, String(shop.id), "business.cover.removed", {});
           return { message: "Portada quitada." };
+        });
+      }
+      /** Moderación en /admin: versión de la portada del taller, o null si no tiene (o la base no está actualizada). */
+      async adminVersion(shopId) {
+        return this.run(async (conn) => (await coverVersions(conn, [shopId])).get(shopId) ?? null);
+      }
+      /** Moderación en /admin: la imagen del taller, verificado o no. */
+      adminPhoto(shopId) {
+        return this.run(async (conn) => {
+          let found;
+          try {
+            [found] = await rows19(conn, "SELECT coverMime, coverPhoto FROM `Shop` WHERE id = ? AND coverMime IS NOT NULL", [shopId]);
+          } catch (err) {
+            if (badField(err))
+              fail7("NOT_FOUND");
+            throw err;
+          }
+          if (!found)
+            return fail7("NOT_FOUND");
+          return { mime: String(found.coverMime), data: found.coverPhoto };
+        });
+      }
+      /** Moderación en /admin: quita la portada con motivo, la audita y avisa al titular del taller. Falso si no tenía. */
+      adminRemove(shopId, actorUserId, reason) {
+        return this.run(async (conn) => {
+          const [shop] = await rows19(conn, "SELECT id, userId FROM `Shop` WHERE id = ? AND coverMime IS NOT NULL", [shopId]).catch((err) => {
+            if (badField(err))
+              return [];
+            throw err;
+          });
+          if (!shop)
+            return false;
+          await conn.query("UPDATE `Shop` SET coverMime = NULL, coverPhoto = NULL, coverUpdatedAt = NULL WHERE id = ?", [shopId]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, 'admin.cover.removed', ?, 'admin', 'Shop', ?, NULL, ?, UTC_TIMESTAMP(3))", [randomUUID18(), actorUserId, shopId, JSON.stringify({ reason })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.cover', ?)", [randomUUID18(), `coverremoved:${shopId}:${Date.now()}`, String(shop.userId), JSON.stringify({ message: `El equipo de AutoMantPro quit\xF3 la foto de portada de tu taller. Motivo: ${reason}. Puedes subir otra desde Mis datos en tu panel.` })]);
+          return true;
         });
       }
       /** La imagen: de un taller verificado y con cuenta activa, o del propio taller del usuario. */
@@ -93087,13 +93175,14 @@ Los datos del negocio los cambia su due\xF1o.` };
       }
       /** The workshop this person works at when they are part of its team, not its owner. */
       async memberShop(conn, userId) {
-        const [member] = await rows20(conn, "SELECT s.name, s.city, s.zone, s.address, s.hours, m.role FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.userId = ? AND m.status = 'active' AND NOT EXISTS (SELECT 1 FROM `Shop` own WHERE own.userId = m.userId) LIMIT 1", [userId]);
+        const [member] = await rows20(conn, "SELECT s.id, s.name, s.city, s.zone, s.address, s.hours, m.role FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.userId = ? AND m.status = 'active' AND NOT EXISTS (SELECT 1 FROM `Shop` own WHERE own.userId = m.userId) LIMIT 1", [userId]);
         return member ?? null;
       }
       async editBusiness(conn, userId, role, rawField, rawValue) {
         if (role !== "taller" && role !== "almacen")
           fail8("FORBIDDEN");
-        if (role === "taller" && await this.memberShop(conn, userId))
+        const member = role === "taller" ? await this.memberShop(conn, userId) : null;
+        if (member && member.role !== "admin")
           fail8("FORBIDDEN");
         const table2 = role === "taller" ? "Shop" : "Store";
         const field2 = fold11(rawField);
@@ -93102,7 +93191,7 @@ Los datos del negocio los cambia su due\xF1o.` };
         const column2 = BUSINESS_FIELDS[field2] ?? fail8("INVALID_EDIT_FIELD");
         if (column2 === "specialties" && table2 !== "Shop" || (column2 === "categories" || column2 === "delivery") && table2 !== "Store")
           fail8("INVALID_EDIT_FIELD");
-        const [business] = await rows20(conn, `SELECT * FROM \`${table2}\` WHERE userId = ? FOR UPDATE`, [userId]);
+        const [business] = member ? await rows20(conn, "SELECT * FROM `Shop` WHERE id = ? FOR UPDATE", [member.id]) : await rows20(conn, `SELECT * FROM \`${table2}\` WHERE userId = ? FOR UPDATE`, [userId]);
         if (!business)
           fail8("BUSINESS_NOT_FOUND");
         let value2;
@@ -93589,7 +93678,8 @@ var init_error_messages = __esm({
       REQUEST_CLOSED_OR_EXPIRED: "La solicitud ya se cerr\xF3 o venci\xF3 y no admite cambios ni ofertas. Si es tuya y a\xFAn la necesitas, crea otra con Buscar servicio o Buscar repuesto.",
       REQUEST_LIMIT: "Ya tienes tres solicitudes abiertas. Espera a que se cierre una antes de crear otra.",
       ROLE_CONFLICT: "La cuenta no puede tener ese rol en esta flota. Pide a quien administra la flota que revise la invitaci\xF3n.",
-      SHOP_SUSPENDED: "Tu taller est\xE1 suspendido en AutoMantPro: por ahora no puede registrar trabajos ni ver veh\xEDculos. Escr\xEDbele al equipo para revisar tu caso.",
+      SHOP_SUSPENDED: "Tu taller est\xE1 suspendido en AutoMantPro: puedes terminar, cobrar y entregar las \xF3rdenes que ya tienes abiertas, pero no recibir solicitudes, citas ni ingresos nuevos. Escr\xEDbele al equipo para revisar tu caso.",
+      WORK_ORDER_LIMIT: "Tu taller lleg\xF3 al tope de \xF3rdenes de trabajo de este mes en su plan. Para seguir registrando ingresos, cambia de plan: escribe Planes.",
       SHOP_NOT_FOUND: "No encontramos ese taller. Revisa el RUC e int\xE9ntalo otra vez con: Convenio | RUC del taller.",
       SHOP_REJECTED: "Tu taller no fue aprobado, as\xED que todav\xEDa no puede crear fichas. Corrige el dato con: Editar taller | campo | valor y volver\xE1 a revisi\xF3n.",
       STOCK_ALREADY_REPORTED: "Ya registraste la disponibilidad de este repuesto. Espera la respuesta del due\xF1o en este chat.",
@@ -95615,7 +95705,7 @@ var init_order_technician_store = __esm({
         try {
           await conn.query("START TRANSACTION");
           try {
-            const shop = await this.care.actingShop(conn, userId, role);
+            const shop = await this.care.actingShop(conn, userId, role, { openOrders: true });
             if (!shop.isOwner && !shop.isAdmin)
               throw new BrokerError("FORBIDDEN");
             const [order] = await rows26(conn, "SELECT w.id, w.status, v.make, v.model, v.year FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.number = ? AND w.shopId = ? FOR UPDATE", [number2, shop.id]);
@@ -96242,7 +96332,7 @@ var init_vehicle_care_store = __esm({
             return this.referral(conn, userId, role, command.requestRef);
           case "finding":
           case "delivery":
-            return this.orderChange(conn, userId, await this.actingShop(conn, userId, role), command);
+            return this.orderChange(conn, userId, await this.actingShop(conn, userId, role, { openOrders: true }), command);
           case "changeAnswer":
             return this.changeAnswer(conn, userId, role, command.changeRef, command.approve, command.reason);
           case "deliveryAnswer":
@@ -96250,7 +96340,7 @@ var init_vehicle_care_store = __esm({
           case "claimRespond":
           case "claimAgree":
           case "claimEscalate":
-            return executeClaimCommand(conn, userId, role, command, { shop: () => this.actingShop(conn, userId, role), fail: fail14 });
+            return executeClaimCommand(conn, userId, role, command, { shop: () => this.actingShop(conn, userId, role, { openOrders: true }), fail: fail14 });
           case "changeCall":
             return this.changeCall(conn, userId, role, command.changeRef);
           case "rateShop":
@@ -96435,7 +96525,7 @@ Observaci\xF3n del due\xF1o: ${note}`, order.id]);
       }
       /** El taller informa lo que cobró. AutoMantPro no mueve dinero: solo deja el registro para que el dueño lo confirme. */
       async shopPayment(conn, userId, role, command) {
-        const shop = await this.actingShop(conn, userId, role);
+        const shop = await this.actingShop(conn, userId, role, { openOrders: true });
         if (!shop.isOwner && !shop.isAdmin)
           fail14("FORBIDDEN");
         const order = await this.openOrder(conn, command.orderNumber, { shopId: shop.id });
@@ -96480,7 +96570,7 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
        * y del plan; queda en la auditoría con sus datos y el motivo, y el dueño recibe el aviso.
        */
       async voidService(conn, userId, role, command) {
-        const shop = await this.actingShop(conn, userId, role);
+        const shop = await this.actingShop(conn, userId, role, { openOrders: true });
         const vehicle = await this.shopVehicle(conn, shop.id, command.appointmentRef);
         const serviceId = matchService(command.service);
         if (!serviceId)
@@ -96499,7 +96589,7 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
        * observa, como un cobro al revés. AutoMantPro no mueve dinero: solo deja el registro. No supera lo pagado.
        */
       async shopRefund(conn, userId, role, command) {
-        const shop = await this.actingShop(conn, userId, role);
+        const shop = await this.actingShop(conn, userId, role, { openOrders: true });
         if (!shop.isOwner && !shop.isAdmin)
           fail14("FORBIDDEN");
         const order = await this.openOrder(conn, command.orderNumber, { shopId: shop.id });
@@ -96534,7 +96624,7 @@ Responde: Confirmo reembolso ${code5} \xB7 Observo reembolso ${code5} | motivo`)
       }
       /** Workshop: its open work orders, or one of them (with its pending answers), and the next step of each. */
       async shopOrders(conn, userId, role, number2) {
-        const shop = await this.actingShop(conn, userId, role);
+        const shop = await this.actingShop(conn, userId, role, { openOrders: true });
         const orders = await rows27(conn, `SELECT w.id, w.number, w.status, w.total, w.intakeKm, w.intakeNotes, v.make, v.model, v.year, v.plate FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId WHERE w.shopId = ? AND ${number2 === null ? "w.status NOT IN ('cerrada','cancelada')" : "w.number = ?"} ORDER BY w.number DESC LIMIT 20`, number2 === null ? [shop.id] : [shop.id, number2]);
         if (number2 !== null && !orders.length)
           fail14("NOT_FOUND");
@@ -96553,7 +96643,7 @@ ${out.join("\n")}` : out.join("\n") };
       }
       /** The workshop moves its own order: starts the approved work, waits for parts or resumes. The owner is told. */
       async orderStage(conn, userId, role, number2, stage) {
-        const shop = await this.actingShop(conn, userId, role);
+        const shop = await this.actingShop(conn, userId, role, { openOrders: true });
         const order = await this.openOrder(conn, number2, { shopId: shop.id });
         const from = stage === "iniciar" ? "aprobado" : stage === "esperando" ? "en_ejecucion" : "esperando_repuesto";
         if (order.status !== from)
@@ -96602,8 +96692,18 @@ ${out.join("\n")}` : out.join("\n") };
       }
       /** Vehicle row enriched with its service history and open symptoms, ready for the plan. */
       async planVehicle(conn, vehicle) {
-        const records = await rows27(conn, "SELECT serviceId, km, doneAt FROM `VehicleServiceRecord` WHERE vehicleId = ? ORDER BY COALESCE(km, 0) DESC, doneAt DESC", [vehicle.id]);
-        const lastServices = records.map((r) => ({ serviceId: String(r.serviceId), ...r.km !== null ? { km: Number(r.km) } : {}, ...r.doneAt ? { date: r.doneAt } : {} }));
+        const records = await rows27(conn, "SELECT serviceId, km, doneAt, nextDueKm, nextDueAt FROM `VehicleServiceRecord` WHERE vehicleId = ? ORDER BY COALESCE(km, 0) DESC, doneAt DESC", [vehicle.id]).catch((err) => {
+          if (err.code !== "ER_BAD_FIELD_ERROR")
+            throw err;
+          return rows27(conn, "SELECT serviceId, km, doneAt FROM `VehicleServiceRecord` WHERE vehicleId = ? ORDER BY COALESCE(km, 0) DESC, doneAt DESC", [vehicle.id]);
+        });
+        const lastServices = records.map((r) => ({
+          serviceId: String(r.serviceId),
+          ...r.km !== null ? { km: Number(r.km) } : {},
+          ...r.doneAt ? { date: r.doneAt } : {},
+          ...r.nextDueKm !== null && r.nextDueKm !== void 0 ? { nextKm: Number(r.nextDueKm) } : {},
+          ...r.nextDueAt ? { nextDate: r.nextDueAt } : {}
+        }));
         const symptoms = await rows27(conn, "SELECT `system`, risk, description FROM `VehicleSymptom` WHERE vehicleId = ? AND resolvedAt IS NULL ORDER BY createdAt DESC LIMIT 3", [vehicle.id]);
         const corrective = symptoms.map((s) => `${s.risk === "no_conducir" ? "No conducir hasta revisar: " : "Revisar "}${String(s.system)} (${String(s.description).slice(0, 80)})`);
         const overrides = await rows27(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]).catch(() => []);
@@ -96878,7 +96978,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
       }
       /** Dueño o administrador del taller cancela una orden que no está cerrada ni entregada. Los pagos registrados no se revierten. */
       async cancelOrder(conn, userId, role, number2, reason) {
-        const shop = await this.actingShop(conn, userId, role);
+        const shop = await this.actingShop(conn, userId, role, { openOrders: true });
         if (!shop.isOwner && !shop.isAdmin)
           fail14("FORBIDDEN");
         const order = await this.openOrder(conn, number2, { shopId: shop.id });
@@ -96909,7 +97009,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
        * único renglón y el cobro sigue el flujo normal. Sin aviso, la orden se cancela sin costo.
        */
       async exitNoWork(conn, userId, role, number2, reason) {
-        const shop = await this.actingShop(conn, userId, role);
+        const shop = await this.actingShop(conn, userId, role, { openOrders: true });
         if (!shop.isOwner && !shop.isAdmin)
           fail14("FORBIDDEN");
         const order = await this.openOrder(conn, number2, { shopId: shop.id });
@@ -97036,7 +97136,7 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
       }
       /** Taller (dueño o administrador): acepta o rechaza el reclamo abierto. Al aceptar se abre la orden de reingreso, sin cobro. */
       async warrantyAnswer(conn, userId, role, number2, accept, note) {
-        const shop = await this.actingShop(conn, userId, role);
+        const shop = await this.actingShop(conn, userId, role, { openOrders: true });
         if (!shop.isOwner && !shop.isAdmin)
           fail14("FORBIDDEN");
         const order = await this.openOrder(conn, number2, { shopId: shop.id });
@@ -97083,22 +97183,34 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
           await this.notify(conn, recipient, `${dedup.slice(0, 150)}:${recipient}`, "care.warranty", message2);
       }
       // ---------- workshop owner or technician ----------
-      /** The workshop this user acts for: its owner, or an active technician. */
-      async actingShop(conn, userId, role) {
+      /**
+       * The workshop this user acts for: its owner, or an active technician. A suspended workshop only
+       * gets through with `openOrders`: it may finish, charge and deliver what it already had open
+       * (decision of 14/11/2026), never take new requests, appointments or intakes.
+       */
+      async actingShop(conn, userId, role, opts = {}) {
         if (role !== "taller")
           fail14("FORBIDDEN");
         const [own2] = await rows27(conn, "SELECT id, name, userId FROM `Shop` WHERE userId = ? LIMIT 1", [userId]);
-        if (own2) {
-          if (await shopSuspended(conn, String(own2.id)))
-            fail14("SHOP_SUSPENDED");
-          return { id: String(own2.id), name: String(own2.name), ownerUserId: userId, isOwner: true, isAdmin: true, actor: String(own2.name) };
-        }
-        const [member] = await rows27(conn, "SELECT s.id, s.name, s.userId, m.name AS memberName, m.role FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.userId = ? AND m.status = 'active' LIMIT 1", [userId]);
-        if (!member)
+        const [member] = own2 ? [] : await rows27(conn, "SELECT s.id, s.name, s.userId, m.name AS memberName, m.role FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.userId = ? AND m.status = 'active' LIMIT 1", [userId]);
+        if (!own2 && !member)
           fail14("FORBIDDEN");
-        if (await shopSuspended(conn, String(member.id)))
+        const shopId = String((own2 ?? member).id);
+        const suspended = await shopSuspended(conn, shopId);
+        if (suspended && !opts.openOrders)
           fail14("SHOP_SUSPENDED");
-        return { id: String(member.id), name: String(member.name), ownerUserId: String(member.userId), isOwner: false, isAdmin: member.role === "admin", actor: `${member.memberName} (${member.name})` };
+        if (own2)
+          return { id: shopId, name: String(own2.name), ownerUserId: userId, isOwner: true, isAdmin: true, actor: String(own2.name), suspended };
+        return { id: shopId, name: String(member.name), ownerUserId: String(member.userId), isOwner: false, isAdmin: member.role === "admin", actor: `${member.memberName} (${member.name})`, suspended };
+      }
+      /** Monthly work-order cap of the workshop's plan (decision of 14/11/2026), counted like «Mi suscripción». */
+      async ensureOrderRoom(conn, shop) {
+        const limits = await shopLimits(conn, shop.ownerUserId);
+        if (limits?.workOrdersPerMonth == null)
+          return;
+        const [used] = await rows27(conn, "SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND createdAt >= DATE_FORMAT(UTC_TIMESTAMP(3), '%Y-%m-01')", [shop.id]);
+        if (Number(used?.n ?? 0) >= limits.workOrdersPerMonth)
+          fail14("WORK_ORDER_LIMIT");
       }
       async shopVehicle(conn, shopId, ref4) {
         const [found] = await rows27(conn, "SELECT a.id AS appointmentId, a.ownerId, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND REPLACE(a.id, '-', '') LIKE ? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) LIMIT 2", [shopId, prefixOf2(ref4)]);
@@ -97127,6 +97239,7 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
             fail14("KM_LOWER_THAN_CURRENT");
           if ((await rows27(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' LIMIT 1 FOR UPDATE", [vehicle.appointmentId])).length)
             fail14("CHECKIN_EXISTS");
+          await this.ensureOrderRoom(conn, shop);
           const next = Number((await rows27(conn, "SELECT COALESCE(MAX(number), 0) + 1 AS next FROM `WorkOrder` FOR UPDATE"))[0]?.next ?? 1);
           const id3 = randomUUID26();
           const notes = [`Combustible: ${command.fuel}`, `Estado y da\xF1os: ${command.condition}`, `Inventario: ${command.inventory}`, `Servicios solicitados: ${command.requested}`, `Registrado por: ${shop.actor}`].join("\n");
@@ -97260,6 +97373,10 @@ El taller no har\xE1 ning\xFAn trabajo con costo sin tu aprobaci\xF3n.`);
             fail14("FINDING_PENDING");
           if (command.exitKm < Number(order.intakeKm ?? 0))
             fail14("KM_LOWER_THAN_CURRENT");
+          if (order.status === "aprobado") {
+            await conn.query("UPDATE `WorkOrder` SET status = 'en_ejecucion', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [order.id]);
+            await this.audit(conn, userId, "care.order.stage", "WorkOrder", String(order.id), { from: "aprobado", to: "en_ejecucion", by: shop.actor, auto: true });
+          }
           const items = await rows27(conn, "SELECT kind, description, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [order.id]);
           const id4 = randomUUID26();
           await conn.query("INSERT INTO `WorkOrderChange` (id, workOrderId, kind, description, payload, total, createdBy) VALUES (?, ?, 'entrega', ?, ?, ?, ?)", [id4, order.id, command.workDone, JSON.stringify({ exitKm: command.exitKm, warrantyDays: command.warrantyDays }), order.total, userId]);
@@ -97489,6 +97606,12 @@ Para quitar a alguien: Quitar t\xE9cnico T-XXXXXX` };
         const count3 = await rows27(conn, "SELECT COUNT(*) AS n FROM `ShopMember` WHERE shopId = ? AND status <> 'removed'", [shop.id]);
         if (Number(count3[0]?.n) >= 20)
           fail14("TECHNICIAN_LIMIT");
+        if (command.role !== "admin") {
+          const limits = await shopLimits(conn, shop.ownerUserId);
+          const [techs] = limits?.technicians == null ? [] : await rows27(conn, "SELECT COUNT(*) AS n FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' AND role <> 'admin'", [shop.id]);
+          if (limits?.technicians != null && Number(techs?.n ?? 0) >= limits.technicians)
+            fail14("TECHNICIAN_LIMIT");
+        }
         const id3 = randomUUID26();
         const code5 = short4("T", id3);
         await conn.query("INSERT INTO `ShopMember` (id, shopId, name, status, invitedBy, role) VALUES (?, ?, ?, 'invited', ?, ?)", [id3, shop.id, command.name, userId, command.role]);
@@ -114675,7 +114798,12 @@ function userDetailView(input) {
     <div>Horario: ${e7(b.hours ?? "\u2014")}</div>${extra}
     <div>Estado: ${verificationPill(String(b.verificationStatus))}</div>
     ${verificationForm(kind, b.id, user.id, input.csrf)}</div>`;
-  const shopCard2 = shop ? business("Taller", shop, `<div>Servicios: ${e7(shop.services.map(categoryName3).join(", ") || "\u2014")}</div>`, "shop") + shopMapCard(user.id, input.shopMap, input.csrf, input.mapValues) : "";
+  const coverCard = shop && input.coverVersion ? `<div class="card"><h2>Portada del taller</h2>
+    <img src="/admin/users/${e7(user.id)}/portada?v=${e7(input.coverVersion)}" alt="Portada de ${e7(shop.name)}" style="max-width:100%;max-height:240px;border-radius:6px">
+    ${input.canModerate ? `<form method="post" action="/admin/users/${e7(user.id)}/portada/quitar">${csrfField12(input.csrf)}
+      <label for="cover-reason">Motivo (lo recibe el taller)</label><input id="cover-reason" name="reason" minlength="5" maxlength="300" required placeholder="La foto no muestra el local">
+      <button class="danger" type="submit">Quitar portada</button></form>` : ""}</div>` : "";
+  const shopCard2 = shop ? business("Taller", shop, `<div>Servicios: ${e7(shop.services.map(categoryName3).join(", ") || "\u2014")}</div>`, "shop") + coverCard + shopMapCard(user.id, input.shopMap, input.csrf, input.mapValues) : "";
   const storeCard = store ? business("Almac\xE9n", store, `<div>Categor\xEDas: ${e7(store.categories ?? "\u2014")}</div><div>Entregas a domicilio: ${store.delivery ? "s\xED" : "no"}</div>`, "store") : "";
   const vehicleCards = vehicles.map((v) => {
     const plan = input.plans[String(v.id)];
@@ -114749,7 +114877,7 @@ function businessReviews(reviews, csrf) {
 }
 function verificationsView(input) {
   const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e7(item.userId)}">${e7(item.name)}</a></td>
-            <td>${e7(item.city)}</td><td><span class="mono">${e7(item.ruc ?? "\u2014")}</span></td><td>${day4(item.createdAt)}</td></tr>`).join("");
+            <td>${e7(item.city)}</td><td><span class="mono">${e7(item.ruc ?? "\u2014")}</span>${item.sharedRuc ? ` <span class="muted">\xB7 RUC compartido con ${item.sharedRuc} ${item.sharedRuc === 1 ? "taller" : "talleres"} (sucursal)</span>` : ""}</td><td>${day4(item.createdAt)}</td></tr>`).join("");
   return `<h1>Verificaciones pendientes</h1>${flashHtml12(input.flash)}
   <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>${businessReviews(input.reviews ?? [], input.csrf ?? "")}`;
@@ -114885,6 +115013,13 @@ function registerRegistrationRoutes(app2, deps) {
       } catch {
       }
     }
+    let coverVersion = null;
+    if (deps.covers && detail.shop) {
+      try {
+        coverVersion = await deps.covers.adminVersion(String(detail.shop.id));
+      } catch {
+      }
+    }
     let shopMap;
     if (deps.map && detail.shop) {
       try {
@@ -114919,7 +115054,9 @@ function registerRegistrationRoutes(app2, deps) {
       usage,
       canPayments: can(session.role, "payments"),
       shopMap,
-      mapValues: extra.mapValues
+      mapValues: extra.mapValues,
+      coverVersion,
+      canModerate: can(session.role, "verifications")
     }), session, extra.status ?? 200);
   }
   app2.get("/users", async (request, reply) => {
@@ -115084,6 +115221,49 @@ function registerRegistrationRoutes(app2, deps) {
     await deps.audit("admin.whatsapp.link", session.userId, `WhatsApp vinculado al usuario ${id3} tras confirmar el chat con ese n\xFAmero`);
     return reply.redirect(`/admin/users/${id3}?ok=whatsapp`, 302);
   });
+  app2.get("/users/:id/portada", async (request, reply) => {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return reply;
+    const { id: id3 } = request.params;
+    if (!UUID9.test(id3) || !deps.covers)
+      return reply.code(404).send("No encontrado");
+    try {
+      const detail = await registrations.getUserDetail(id3);
+      if (!detail?.shop)
+        return reply.code(404).send("No encontrado");
+      const photo = await deps.covers.adminPhoto(String(detail.shop.id));
+      return reply.header("Content-Type", photo.mime).header("X-Content-Type-Options", "nosniff").header("Cache-Control", "private, no-store").send(photo.data);
+    } catch {
+      return reply.code(404).send("No encontrado");
+    }
+  });
+  app2.post("/users/:id/portada/quitar", async (request, reply) => {
+    const ctx = withCsrf(request, reply);
+    if (!ctx)
+      return reply;
+    const { session, body } = ctx;
+    const { id: id3 } = request.params;
+    if (!UUID9.test(id3))
+      return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
+    if (!deps.covers)
+      return errorPage(request, reply, session, "Usuario", "La portada necesita la base de datos.", 503);
+    const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 300) : "";
+    if (reason.length < 5)
+      return renderDetail(request, reply, session, id3, { error: "Para quitar la portada escribe el motivo que recibir\xE1 el taller.", status: 400 });
+    try {
+      const detail = await registrations.getUserDetail(id3);
+      if (!detail?.shop)
+        return errorPage(request, reply, session, "Usuario", "Este usuario no tiene taller.", 404);
+      if (!await deps.covers.adminRemove(String(detail.shop.id), session.userId, reason))
+        return renderDetail(request, reply, session, id3, { error: "Este taller ya no tiene portada.", status: 409 });
+    } catch (err) {
+      const m = dbError(err);
+      return renderDetail(request, reply, session, id3, { error: m.text, status: m.status });
+    }
+    await deps.audit("admin.shop.cover", session.userId, `Portada quitada al taller del usuario ${id3}: ${reason}`);
+    return reply.redirect(`/admin/users/${id3}?ok=portada`, 302);
+  });
   app2.post("/users/:id/shop-map", async (request, reply) => {
     const ctx = withCsrf(request, reply);
     if (!ctx)
@@ -115209,6 +115389,7 @@ var init_registrations = __esm({
       rechazado: "Verificaci\xF3n rechazada.",
       revisado: "Cambio marcado como revisado.",
       mapa: "Ubicaci\xF3n del taller guardada.",
+      portada: "Portada quitada: el taller recibi\xF3 el aviso con el motivo.",
       nota: "Nota agregada a la bit\xE1cora.",
       sancion: "Sanci\xF3n registrada: queda el motivo y el aviso a la entidad.",
       lopdp: "Solicitud de datos registrada con su plazo de respuesta.",
@@ -117859,7 +118040,7 @@ async function adminPanelRoutes(app2, options = {}) {
   }
   registerSetupWizard(app2, { store, connect, dbConfigured: () => !!options.connect || missingDbEnv().length === 0 });
   registerAccountRoutes(app2, { store, requireSession, html, audit: audit5 });
-  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, plans: detailPlans, visits: detailVisits, whatsappLinks: options.whatsappLinks, map: detailMap, requireSession, html, audit: audit5, platform });
+  registerRegistrationRoutes(app2, { registrations, appointments: detailAppointments, workOrders: detailWorkOrders, quotes: detailQuotes, relations: detailRelations, data: detailData, plans: detailPlans, visits: detailVisits, whatsappLinks: options.whatsappLinks, map: detailMap, covers: detailMap ? new ShopCoverStore(connect) : void 0, requireSession, html, audit: audit5, platform });
   registerAppointmentRoutes(app2, { appointments, registrations, workOrders: detailWorkOrders, requireSession, html, audit: audit5, linker, platform });
   registerWorkOrderRoutes(app2, { workOrders, appointments, registrations, requireSession, html, audit: audit5, linker, platform, ratings: detailRatings });
   registerQuoteRoutes(app2, { quotes, registrations, appointments, workOrders, requireSession, html, audit: audit5, linker, platform });
@@ -118199,6 +118380,7 @@ var init_admin = __esm({
     init_settings_store();
     init_entry();
     init_workshop_map_store();
+    init_shop_cover_store();
     init_courses();
     init_courses_store();
     init_local_agent_task_store();
@@ -120219,7 +120401,12 @@ var PANEL_STYLES = `
 .ficha .fic-det li>span:nth-child(2),.ficha .sec-fic li>span:nth-child(2){flex:1;min-width:0;overflow-wrap:anywhere}
 .ficha .led{margin-top:5px}
 .ficha .code{font-family:var(--c-mono);white-space:nowrap;margin-right:6px}
-.ficha .when{display:block;color:var(--c-muted);font-size:12px;margin-top:1px}.plan-it{align-items:flex-start}.plan-it>details{flex:1;min-width:0}.plan-it summary{display:flex;align-items:flex-start;gap:7px;cursor:pointer;list-style:none}.plan-it summary::-webkit-details-marker{display:none}.plan-it summary>span:nth-child(2){flex:1;min-width:0;overflow-wrap:anywhere}.pick{flex:none;padding-top:1px}.pick{padding:0 2px}.pick input{width:22px;height:22px;min-height:0;margin:0}.tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:6px;font-size:11px;font-weight:600;background:var(--c-sunk);color:var(--c-ink);border:1px solid var(--c-line)}.tag-sd{border-style:dashed}.hist{display:grid;gap:8px;margin:8px 0 4px;padding-left:16px;border-left:2px solid var(--c-line)}.hist-it{display:flex;flex-direction:column;gap:2px;min-width:0}.hist-it>*{min-width:0;overflow-wrap:anywhere}.hist-it .acts{display:flex;flex-wrap:wrap;gap:6px}.hist-it small{color:var(--c-muted)}.rec-form{margin-top:8px}
+.ficha .when{display:block;color:var(--c-muted);font-size:12px;margin-top:1px}.plan-it{align-items:flex-start}.plan-it>details{flex:1;min-width:0}.plan-it summary{display:flex;align-items:flex-start;gap:7px;cursor:pointer;list-style:none}.plan-it summary::-webkit-details-marker{display:none}
+.sys-fold{border-top:1px solid var(--c-line);padding:2px 0}
+.sys-fold>summary{cursor:pointer;min-height:44px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font:600 14px/1.2 var(--c-font);color:var(--c-ink)}
+.sys-fold>summary .when{font-weight:400;font-size:.82rem;color:var(--c-muted)}
+.plan-it .hist-link{display:block;margin-top:4px;font-size:.82rem;font-weight:700;color:var(--c-accent);text-decoration:underline}
+.plan-it details[open] .hist-link{text-decoration:none}.plan-it summary>span:nth-child(2){flex:1;min-width:0;overflow-wrap:anywhere}.pick{flex:none;padding-top:1px}.pick{padding:0 2px}.pick input{width:22px;height:22px;min-height:0;margin:0}.tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:6px;font-size:11px;font-weight:600;background:var(--c-sunk);color:var(--c-ink);border:1px solid var(--c-line)}.tag-sd{border-style:dashed}.hist{display:grid;gap:8px;margin:8px 0 4px;padding-left:16px;border-left:2px solid var(--c-line)}.hist-it{display:flex;flex-direction:column;gap:2px;min-width:0}.hist-it>*{min-width:0;overflow-wrap:anywhere}.hist-it .acts{display:flex;flex-wrap:wrap;gap:6px}.hist-it small{color:var(--c-muted)}.rec-form{margin-top:8px}
 .ficha .pill{flex:none;white-space:nowrap}
 .ficha .sec-fic>h2{display:flex;flex-wrap:wrap;gap:0 8px;align-items:baseline}
 .ficha .ins-form{display:grid;gap:8px;margin-top:8px}
@@ -120473,8 +120660,9 @@ function entryHistory(s,e,reload){const recs=(s.records||[]).filter(r=>r.service
   if(r.canEdit)acts.append(btn('Corregir','ghost',()=>{line.replaceWith(recordForm(s,e,r,reload));}),btn('Quitar','ghost',async()=>{if(!window.confirm('\xBFQuitar este registro del historial? El plan se recalcula sin \xE9l.'))return;try{const x=await api('/pilot/plan-records/remove',{method:'POST',body:JSON.stringify({id:r.id})});status(x.message);reload();}catch(err){status(err.message);}}));
   line.append(acts,area);box.append(line);}
  if(!recs.length)box.append(h('p',{class:'note',text:'Sin registros todav\xEDa.'}));
- if(s.editor==='dueno'||s.editor==='taller'){const appt=s.editor==='taller'?((s.shopAppointments||[]).find(a=>a.planServiceIds.includes(e.serviceId))||(s.shopAppointments||[])[0]||null):null;const add=btn('Agregar registro','ghost',()=>{add.replaceWith(recordForm(s,e,null,reload,appt));});box.append(add);}
+ if(s.editor==='dueno'||s.editor==='taller'){const appt=s.editor==='taller'?((s.shopAppointments||[]).find(a=>a.planServiceIds.includes(e.serviceId))||(s.shopAppointments||[]).find(a=>!a.planServiceIds.length)||null):null;const add=btn('Agregar registro','ghost',()=>{add.replaceWith(recordForm(s,e,null,reload,appt));});box.append(add);}
  return box;}
+const sysOpen={};
 function planBlock(s,r,reload){const p=s.structuredPlan;const sec=h('div',{class:'sec-fic',id:'plan-'+s.id},h('h3',{text:'Plan de mantenimiento'}));
  if(!p||!r.items.length){sec.append(h('p',{class:'note',text:r.headline||'Todav\xEDa no hay plan para este veh\xEDculo.'}));return sec;}
  const owner=s.editor==='dueno';const pick=pickSet(s.id);const known=new Set(p.systems.flatMap(g=>g.entries.map(e=>e.serviceId)));for(const id of [...pick])if(!known.has(id))pick.delete(id);
@@ -120483,7 +120671,7 @@ function planBlock(s,r,reload){const p=s.structuredPlan;const sec=h('div',{class
  const appts=s.editor==='taller'?(s.shopAppointments||[]):[];
  const row=e=>{const tags=[];if(e.state==='sin_dato')tags.push(h('span',{class:'tag tag-sd',text:'Por verificar'}));const appt=appts.find(a=>a.planServiceIds.includes(e.serviceId));if(appt)tags.push(h('span',{class:'tag tag-cita',text:'Pedido en '+appt.ref}));
   const n=(s.records||[]).filter(x=>x.serviceId===e.serviceId).length;
-  const head=h('summary',{},h('span',{class:'led'}),h('span',{},h('b',{text:e.element}),' \xB7 '+e.action,...tags,h('span',{class:'when',text:[e.frequency,e.due&&e.state!=='urgente'?'Toca '+e.due:null,e.state==='urgente'||e.state==='pronto'?e.label:null,e.source,n?n+(n===1?' registro':' registros'):'Sin registros'].filter(Boolean).join(' \xB7 ')})),h('span',{class:'pill',text:STATE_NAME[e.state]||'Sin dato'}));
+  const head=h('summary',{},h('span',{class:'led'}),h('span',{},h('b',{text:e.element}),' \xB7 '+e.action,...tags,h('span',{class:'when',text:[e.frequency,e.due&&e.state!=='urgente'?'Toca '+e.due:null,e.state==='urgente'||e.state==='pronto'?e.label:null,e.source].filter(Boolean).join(' \xB7 ')}),h('span',{class:'hist-link',text:n?'Ver historial ('+n+') \u25B8':(s.editor==='dueno'||s.editor==='taller'?'Agregar registro \u25B8':'Sin registros')})),h('span',{class:'pill',text:STATE_NAME[e.state]||'Sin dato'}));
   const det=h('details',{},head);det.addEventListener('toggle',()=>{if(det.open&&det.children.length===1)det.append(entryHistory(s,e,reload));});
   const li=h('li',{class:(SHEET_ST[e.state]||'sd')+' plan-it'});
   if(owner){const box=h('input',{type:'checkbox','aria-label':'Incluir '+e.element+' en la cita'});box.checked=pick.has(e.serviceId);box.onchange=()=>{if(box.checked)pick.add(e.serviceId);else pick.delete(e.serviceId);savePick(s.id);for(const other of sec.querySelectorAll('input[data-svc="'+e.serviceId+'"]'))other.checked=box.checked;refresh();};box.dataset.svc=e.serviceId;li.append(h('label',{class:'pick'},box));}
@@ -120493,7 +120681,7 @@ function planBlock(s,r,reload){const p=s.structuredPlan;const sec=h('div',{class
  sec.append(h('h4',{text:'Pr\xF3ximo servicio'+(p.next.at?' \xB7 '+p.next.at:'')}),p.next.entries.length?list(p.next.entries):h('p',{class:'note',text:'Nada pendiente por ahora.'}));
  if(p.verify.length)sec.append(h('p',{class:'note',text:p.verify.length+(p.verify.length===1?' elemento':' elementos')+' con la etiqueta \xABPor verificar\xBB: no hay registro de cu\xE1ndo se hicieron. Reg\xEDstralos o m\xE1rcalos para que el taller los revise.'}));
  if(p.later.length)sec.append(h('details',{},h('summary',{text:'Lo que viene ('+p.later.length+')'}),list(p.later)));
- const all=h('details',{open:true},h('summary',{text:'Plan completo por sistema'}));for(const g of p.systems)all.append(h('h4',{text:g.name}),list(g.entries));sec.append(all);
+ const all=h('details',{open:true},h('summary',{text:'Plan completo por sistema'}));for(const g of p.systems){const c=st=>g.entries.filter(e=>e.state===st).length;const urg=c('urgente'),pro=c('pronto'),sd=c('sin_dato');const info=[g.entries.length+(g.entries.length===1?' elemento':' elementos'),urg?urg+' urgente'+(urg===1?'':'s'):null,pro?pro+' pronto':null,sd?sd+' por verificar':null].filter(Boolean).join(' \xB7 ');const fold=h('details',{class:'sys-fold'},h('summary',{},h('b',{text:g.name}),h('span',{class:'when',text:info})));const key=s.id+'|'+g.name;if(key in sysOpen?sysOpen[key]:urg)fold.open=true;let built=false;const fill=()=>{if(fold.open&&!built){built=true;fold.append(list(g.entries));}};fold.addEventListener('toggle',()=>{sysOpen[key]=fold.open;fill();});fill();all.append(fold);}sec.append(all);
  sec.append(h('p',{class:'note',text:'Toca un elemento para ver su historial: fecha, km, detalle, repuestos, costo, fotos y pr\xF3ximo servicio.'+(p.fromManufacturer?' Frecuencias del fabricante donde hay dato para este modelo; el resto sigue la regla general.':' Este modelo a\xFAn no tiene el plan del fabricante en la base: se aplica la regla general.')+' Lo que ocurra primero: km o tiempo.'}));
  if(ask)sec.append(ask);refresh();
  return sec;}
@@ -122442,7 +122630,7 @@ var iso2 = (value2) => value2 ? new Date(value2).toISOString() : null;
 async function receiptOrder(conn, userId, role, number2) {
   const select2 = "SELECT w.*, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, s.ruc AS shopRuc, v.make, v.model, v.year, v.plate, u.name AS clientName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId LEFT JOIN `User` u ON u.id = w.ownerId WHERE w.number = ?";
   if (role === "taller") {
-    const shop = await new VehicleCareStore().actingShop(conn, userId, role);
+    const shop = await new VehicleCareStore().actingShop(conn, userId, role, { openOrders: true });
     const [order] = await rows31(conn, `${select2} AND w.shopId = ?`, [number2, shop.id]);
     if (order)
       return { order, viewer: "taller" };
@@ -123774,7 +123962,7 @@ var PilotPanelStore = class {
   /** La orden, si esta persona participa en ella: el taller que la atiende o quien decide por el vehículo. */
   async photoOrder(conn, userId, role, number2) {
     if (role === "taller") {
-      const shop = await this.care.actingShop(conn, userId, role);
+      const shop = await this.care.actingShop(conn, userId, role, { openOrders: true });
       const [order] = await rows37(conn, "SELECT id FROM `WorkOrder` WHERE number = ? AND shopId = ?", [number2, shop.id]);
       if (order)
         return String(order.id);
@@ -124108,7 +124296,7 @@ var PilotPanelStore = class {
         if (String(vehicle.userId) !== userId)
           throw new BrokerError("FORBIDDEN");
       } else {
-        const shop = await this.care.actingShop(conn, userId, "taller");
+        const shop = await this.care.actingShop(conn, userId, "taller", { openOrders: true });
         if (!await shopCanAccessVehicle(conn, shop.id, vehicleId))
           throw new BrokerError("FORBIDDEN");
         return this.sheetOf(conn, vehicle, role, { userId, shopId: String(shop.id) });
@@ -124191,14 +124379,14 @@ var PilotPanelStore = class {
   }
   /** Agrega al panel del taller el técnico de cada orden, las órdenes propias y la productividad de la semana. */
   async withTeam(conn, userId, panel) {
-    const shop = await this.care.actingShop(conn, userId, "taller");
+    const shop = await this.care.actingShop(conn, userId, "taller", { openOrders: true });
     panel.team = await shopTeamView(conn, shop, userId, panel.orders.map((o) => o.code));
     return panel;
   }
   /** Un aviso por orden y por día al dueño cuando el taller sube fotos de avance (no uno por foto). */
   /** C3: el taller subió su factura; el dueño la ve y la descarga desde su panel. */
   async shop(conn, userId, now = /* @__PURE__ */ new Date()) {
-    const shop = await this.care.actingShop(conn, userId, "taller");
+    const shop = await this.care.actingShop(conn, userId, "taller", { openOrders: true });
     const start = ecDayStart(now);
     const end = new Date(start.getTime() + 864e5);
     const count3 = async (sql, args) => Number((await rows37(conn, sql, args))[0]?.n ?? 0);
