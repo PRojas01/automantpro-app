@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='f8c2cab183dd3ee95d2d1ca737e20532da8b85bc'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='fc39a23b63d78b67572de423fa4b4c3b8059653a'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -89844,6 +89844,8 @@ function mapUrl(base, parts) {
     params2.set("sector", parts.zone.trim());
   if (parts.service?.trim())
     params2.set("servicio", parts.service.trim());
+  if (parts.shop?.trim())
+    params2.set("taller", parts.shop.trim());
   const qs = params2.toString();
   return `${base.replace(/\/$/, "")}/mapa${qs ? `?${qs}` : ""}`;
 }
@@ -90823,16 +90825,18 @@ function plansChatMessage(profile, catalog, current) {
     blocks.join("\n\n"),
     "",
     `Para contratar: Quiero plan ${example}`,
-    `Prueba gratuita de ${TRIAL_DAYS} d\xEDas al registrarte. Un solo pago al a\xF1o por transferencia bancaria.`,
+    `Prueba gratuita de ${TRIAL_DAYS} d\xEDas al registrarte (talleres: con los topes de Taller Pro y hasta ${TRIAL_SHOP_CLIENTS} clientes). Un solo pago al a\xF1o por transferencia bancaria.`,
     "Detalle completo: https://automantpro.app/planes"
   ].join("\n");
 }
-var IVA_RATE, TRIAL_DAYS, RENEWAL_NOTICE_DAYS, PROFILE_LABELS, PERIOD_LABELS, GARANTIA, DEFAULT_OFFERS, round2, isFreeOffer, money2, count2, fold8;
+var IVA_RATE, TRIAL_DAYS, TRIAL_SHOP_CLIENTS, TRIAL_SHOP_PLAN, RENEWAL_NOTICE_DAYS, PROFILE_LABELS, PERIOD_LABELS, GARANTIA, DEFAULT_OFFERS, round2, isFreeOffer, money2, count2, fold8;
 var init_catalog = __esm({
   "packages/api/dist/application/plans/catalog.js"() {
     "use strict";
     IVA_RATE = 0.15;
     TRIAL_DAYS = 90;
+    TRIAL_SHOP_CLIENTS = 20;
+    TRIAL_SHOP_PLAN = "taller_pro";
     RENEWAL_NOTICE_DAYS = 5;
     PROFILE_LABELS = {
       dueno: "Due\xF1o de veh\xEDculo",
@@ -91197,10 +91201,18 @@ async function shopLimits(conn, ownerUserId, catalogIn, now = /* @__PURE__ */ ne
       if (found?.profile === "taller" && !isFreeOffer(found) && (!offer || roomOf(found) > roomOf(offer)))
         offer = found;
     }
-    offer ??= offersFor("taller", catalog, true).find(isFreeOffer) ?? null;
-    if (!offer)
+    if (offer)
+      return { planKey: offer.key, workOrdersPerMonth: offer.limits.workOrdersPerMonth ?? null, technicians: offer.limits.technicians ?? null, clients: null, trialEndsAt: null };
+    const [user] = await rows13(conn, "SELECT createdAt FROM `User` WHERE id = ?", [ownerUserId]);
+    const since = user?.createdAt ? new Date(user.createdAt).getTime() : NaN;
+    const trialEndsAt = Number.isFinite(since) ? new Date(since + TRIAL_DAYS * 864e5) : null;
+    const trial = trialEndsAt && trialEndsAt > now ? findOfferByKey(TRIAL_SHOP_PLAN, catalog) : null;
+    if (trial)
+      return { planKey: "prueba", workOrdersPerMonth: trial.limits.workOrdersPerMonth ?? null, technicians: trial.limits.technicians ?? null, clients: TRIAL_SHOP_CLIENTS, trialEndsAt };
+    const free = offersFor("taller", catalog, true).find(isFreeOffer) ?? null;
+    if (!free)
       return null;
-    return { planKey: offer.key, workOrdersPerMonth: offer.limits.workOrdersPerMonth ?? null, technicians: offer.limits.technicians ?? null };
+    return { planKey: free.key, workOrdersPerMonth: free.limits.workOrdersPerMonth ?? null, technicians: free.limits.technicians ?? null, clients: null, trialEndsAt: null };
   } catch {
     return null;
   }
@@ -93711,6 +93723,7 @@ var init_error_messages = __esm({
       SHOP_NOT_FOUND: "No encontramos ese taller. Revisa el RUC e int\xE9ntalo otra vez con: Convenio | RUC del taller.",
       SHOP_REJECTED: "Tu taller no fue aprobado, as\xED que todav\xEDa no puede crear fichas. Corrige el dato con: Editar taller | campo | valor y volver\xE1 a revisi\xF3n.",
       STOCK_ALREADY_REPORTED: "Ya registraste la disponibilidad de este repuesto. Espera la respuesta del due\xF1o en este chat.",
+      TRIAL_CLIENT_LIMIT: "Tu taller est\xE1 en la prueba gratuita y ya atendi\xF3 al tope de clientes de la prueba. Para recibir clientes nuevos, contrata un plan: escribe Planes. Tus clientes actuales siguen igual.",
       TECHNICIAN_LIMIT: "El taller alcanz\xF3 el l\xEDmite de t\xE9cnicos. Revisa el plan o libera un cupo antes de agregar a otra persona.",
       UNKNOWN_SERVICE: "No reconocimos ese servicio. Revisa el nombre y vuelve a buscarlo con: Buscar servicio | categor\xEDa | ciudad | sector | descripci\xF3n.",
       UNSUPPORTED_ACCOUNT_COMMAND: "Esa acci\xF3n de cuenta no est\xE1 disponible por chat. Para agregar un veh\xEDculo escribe: Veh\xEDculo | clase | combustible | marca | modelo | a\xF1o | kilometraje.",
@@ -97235,8 +97248,16 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
         return { id: shopId, name: String(member.name), ownerUserId: String(member.userId), isOwner: false, isAdmin: member.role === "admin", actor: `${member.memberName} (${member.name})`, suspended };
       }
       /** Monthly work-order cap of the workshop's plan (decision of 14/11/2026), counted like «Mi suscripción». */
-      async ensureOrderRoom(conn, shop) {
+      async ensureOrderRoom(conn, shop, clientId) {
         const limits = await shopLimits(conn, shop.ownerUserId);
+        if (limits?.clients != null && clientId) {
+          const [known] = await rows27(conn, "SELECT 1 AS x FROM `WorkOrder` WHERE shopId = ? AND ownerId = ? LIMIT 1", [shop.id, clientId]);
+          if (!known) {
+            const [served] = await rows27(conn, "SELECT COUNT(DISTINCT ownerId) AS n FROM `WorkOrder` WHERE shopId = ?", [shop.id]);
+            if (Number(served?.n ?? 0) >= limits.clients)
+              fail14("TRIAL_CLIENT_LIMIT");
+          }
+        }
         if (limits?.workOrdersPerMonth == null)
           return;
         const [used] = await rows27(conn, "SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND createdAt >= DATE_FORMAT(UTC_TIMESTAMP(3), '%Y-%m-01')", [shop.id]);
@@ -97270,7 +97291,7 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
             fail14("KM_LOWER_THAN_CURRENT");
           if ((await rows27(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' LIMIT 1 FOR UPDATE", [vehicle.appointmentId])).length)
             fail14("CHECKIN_EXISTS");
-          await this.ensureOrderRoom(conn, shop);
+          await this.ensureOrderRoom(conn, shop, owner);
           const next = Number((await rows27(conn, "SELECT COALESCE(MAX(number), 0) + 1 AS next FROM `WorkOrder` FOR UPDATE"))[0]?.next ?? 1);
           const id3 = randomUUID26();
           const notes = [`Combustible: ${command.fuel}`, `Estado y da\xF1os: ${command.condition}`, `Inventario: ${command.inventory}`, `Servicios solicitados: ${command.requested}`, `Registrado por: ${shop.actor}`].join("\n");
@@ -100317,7 +100338,7 @@ function termsSections(data3) {
     {
       title: "8. Prueba gratuita, planes y pagos",
       items: [
-        "Cada perfil tiene una prueba gratuita de 90 d\xEDas o hasta alcanzar los topes de uso de su perfil, lo que ocurra primero.",
+        "Cada perfil tiene una prueba gratuita de 90 d\xEDas o hasta alcanzar los topes de uso de su perfil, lo que ocurra primero. En los talleres, la prueba incluye los topes de Taller Pro y hasta 20 clientes distintos; los clientes ya atendidos siguen siendo atendidos.",
         "Al terminar la prueba, el servicio contin\xFAa con el plan que el usuario elija. Los precios se informan en d\xF3lares, con IVA incluido, antes de contratar.",
         "En esta etapa AutoMantPro no cobra comisi\xF3n a talleres ni almacenes por los servicios o ventas que se generen en la plataforma; solo cobra la suscripci\xF3n del plan elegido.",
         "Los due\xF1os de veh\xEDculo pueden cancelar su plan en cualquier momento, sin permanencia m\xEDnima."
@@ -121014,7 +121035,7 @@ function shopList(out,data,d,run){out.replaceChildren();nearby.last=data;if(data
  out.append(h('p',{class:'note',text:(data.order==='distancia'?'Ordenados por distancia desde donde est\xE1s.':'Ordenados por tu sector y tu ciudad'+(data.cityUsed||data.zoneUsed?' ('+[data.zoneUsed,data.cityUsed].filter(Boolean).join(', ')+').':'.'))+(data.service?' Servicio: '+data.service.name+'.':'')}));
  const list=h('div',{class:'list'});
  for(const s of data.items){const where=[s.zone,s.city,s.distanceKm!==null?s.distanceKm.toLocaleString('es-EC')+' km':null].filter(Boolean).join(' \xB7 ');
-  list.append(h('div',{class:'line'},s.cover?coverImg(s.id,s.cover,'shop-thumb','Foto de '+s.name):null,h('div',{},h('b',{text:s.name}),s.founder?h('span',{class:'tag st-al_dia',text:'Fundador'}):null,s.sameZone?h('span',{class:'tag st-al_dia',text:'En tu sector'}):null,h('small',{text:where}),h('small',{text:ratingText(s)}),h('small',{text:'Servicios: '+servicesText(s.services)})),btn('Ver perfil','ghost',()=>openShop(s.id,out,d,run))));}
+  list.append(h('div',{class:'line'},s.cover?coverImg(s.id,s.cover,'shop-thumb','Foto de '+s.name):null,h('div',{},h('b',{text:s.name}),s.founder?h('span',{class:'tag st-al_dia',text:'Fundador'}):null,s.sameZone?h('span',{class:'tag st-al_dia',text:'En tu sector'}):null,h('small',{text:where}),h('small',{text:ratingText(s)}),h('small',{text:'Servicios: '+servicesText(s.services)}),s.mapUrl?h('small',{},h('a',{href:s.mapUrl,target:'_blank',rel:'noopener',text:'Ver en el mapa'})):null),btn('Ver perfil','ghost',()=>openShop(s.id,out,d,run))));}
  out.append(list);
  if(data.page>1||data.hasMore)out.append(h('div',{class:'chips'},data.page>1?btn('Anteriores','ghost',()=>run(data.page-1)):null,data.hasMore?btn('Ver m\xE1s talleres','ghost',()=>run(data.page+1)):null,h('span',{class:'note',text:'P\xE1gina '+data.page+' de '+Math.ceil(data.total/data.pageSize)})));}
 async function openShop(id,out,d,run){out.replaceChildren(h('p',{class:'note',text:'Abriendo el perfil\u2026'}));
@@ -121643,6 +121664,7 @@ import { createHash as createHash12, randomUUID as randomUUID31 } from "node:cry
 // packages/api/dist/application/map/nearby-shops.js
 init_workshop_map();
 var PAGE_SIZE4 = 8;
+var NEARBY_RADIUS_KM = 25;
 function categoryFor(service) {
   const raw = (service ?? "").trim();
   if (!raw)
@@ -121673,10 +121695,11 @@ function rankNearby(records, query) {
       rating,
       services: categories.map(categoryName),
       sameZone,
-      sameCity
+      sameCity,
+      mapUrl: mapUrl(SITE_URL, { city: r.city, shop: r.id })
     };
     return { shop, offers: !category || categories.includes(category) };
-  }).filter((s) => s.offers).filter((s) => origin !== null || !city || s.shop.sameCity);
+  }).filter((s) => s.offers).filter((s) => origin !== null ? s.shop.distanceKm !== null ? s.shop.distanceKm <= NEARBY_RADIUS_KM : !city || s.shop.sameCity : !city || s.shop.sameCity);
   scored.sort((a, b) => (origin ? (a.shop.distanceKm ?? Infinity) - (b.shop.distanceKm ?? Infinity) : 0) || Number(b.shop.sameZone) - Number(a.shop.sameZone) || Number(b.shop.sameCity) - Number(a.shop.sameCity) || (b.shop.rating?.avg ?? 0) - (a.shop.rating?.avg ?? 0) || a.shop.name.localeCompare(b.shop.name, "es"));
   const page3 = Math.max(1, Math.floor(query.page ?? 1));
   const start = (page3 - 1) * PAGE_SIZE4;
@@ -128026,7 +128049,9 @@ var marcas={},puntos=[];
 function popup(t){var d=document.createElement('div');var b=document.createElement('b');b.textContent=t.name;var s=document.createElement('span');s.textContent=[t.zone,t.city].filter(Boolean).join(' \xB7 ');d.appendChild(b);d.appendChild(s);return d;}
 datos.forEach(function(t,i){if(!t.point)return;var m=L.circleMarker([t.point.lat,t.point.lng],{radius:10,color:borde,weight:2,fillColor:color,fillOpacity:1}).addTo(mapa).bindPopup(popup(t)).bindTooltip(String(i+1),{permanent:true,direction:'center',className:'leaflet-num'});m.on('click',function(){marcar(t.id);});marcas[t.id]=m;puntos.push([t.point.lat,t.point.lng]);});
 if(puntos.length>1)mapa.fitBounds(puntos,{padding:[30,30],maxZoom:15});else if(puntos.length===1)mapa.setView(puntos[0],15);else mapa.setView([-1.45,-78.4],6);
+var elegido=new URLSearchParams(location.search).get('taller');
 function marcar(id){document.querySelectorAll('.taller.activo').forEach(function(n){n.classList.remove('activo');});var n=document.querySelector('.taller[data-id="'+id+'"]');if(n){n.classList.add('activo');n.scrollIntoView({block:'nearest',behavior:'smooth'});}}
+if(elegido){var me=marcas[elegido];if(me){mapa.setView(me.getLatLng(),16);me.openPopup();}marcar(elegido);}
 document.querySelectorAll('.taller[data-lat]').forEach(function(n){n.querySelector('h3').addEventListener('click',function(){var m=marcas[n.getAttribute('data-id')];if(m){mapa.setView(m.getLatLng(),16);m.openPopup();}});});
 if(!navigator.geolocation||!cerca)return;
 cerca.hidden=false;
