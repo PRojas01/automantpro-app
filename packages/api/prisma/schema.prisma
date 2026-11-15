@@ -181,6 +181,7 @@ model Shop {
   coverMime           String?            @db.VarChar(20)
   coverPhoto          Bytes?             @db.MediumBlob
   coverUpdatedAt      DateTime?
+  chargesVat          Boolean            @default(false)
   email               String?
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
@@ -205,6 +206,7 @@ model Store {
   email              String?
   categories         String?            @db.Text
   delivery           Boolean            @default(false)
+  chargesVat         Boolean            @default(false)
   verificationStatus VerificationStatus @default(pending)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -678,6 +680,7 @@ model WorkOrder {
   diagnosisOutcome String?   @db.VarChar(20)
   outcomeNote      String?
   total            Decimal   @default(0) @db.Decimal(10, 2)
+  vatUsd           Decimal   @default(0) @db.Decimal(10, 2)
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @default(now())
   closedAt         DateTime?
@@ -805,6 +808,7 @@ model LocalOffer {
  businessName String @db.VarChar(191)
  status String @default("invited") @db.VarChar(20)
  priceUsd Decimal? @db.Decimal(10,2)
+ vatUsd Decimal @default(0) @db.Decimal(10,2)
  durationMin Int?
  proposedAt DateTime? @db.DateTime(3)
  notes String? @db.VarChar(300)
