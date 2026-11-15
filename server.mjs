@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='18f9aadbea388a72cce1997fb7a73817864c034a'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='c0a0eefe0c12658f8835dbc0dbc5ebe3c423edc8'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -120874,8 +120874,8 @@ function appointmentsCard(d){const list=h('div',{class:'list'});for(const a of d
 function historyCard(d){if(!d.history||!d.history.length)return card('Historial de servicios',null,h('p',{class:'note',text:'Todav\xEDa no hay servicios anotados en este veh\xEDculo. Registra la \xFAltima vez desde la ficha.'}));const ul=h('ul',{class:'sys'});for(const r of d.history)ul.append(h('li',{class:'st-al_dia'},h('span',{class:'led st-al_dia'}),h('span',{class:'nm'},r.serviceName,h('small',{class:'sub',text:ecDate(r.doneAt,{day:'numeric',month:'short',year:'numeric'})+' \xB7 '+r.by})),h('span',{class:'pill',text:km(r.km)})));return card('Historial de servicios',d.history.length+(d.history.length===1?' registro':' registros'),ul);}
 function withId(n){n.id='misSolicitudes';return n;}
 function minText(m){m=Number(m)||0;return m>=1440&&m%1440===0?m/1440+(m===1440?' d\xEDa':' d\xEDas'):m>=60&&m%60===0?m/60+' h':m+' min';}
-function ownerRequestsCard(d){
- const list=d.requests||[];const reload=()=>loadPanel(generation,panelVehicle);
+function ownerRequestsCard(d,shop){
+ const list=(shop?d.partRequests:d.requests)||[];const reload=()=>loadPanel(generation,panelVehicle);
  if(!list.length)return withId(card('Mis solicitudes',null,h('p',{class:'note',text:'No tienes solicitudes abiertas. Crea una desde \xABBuscar servicio o repuesto\xBB.'})));
  const kids=[];
  for(const q of list){
@@ -120887,8 +120887,9 @@ function ownerRequestsCard(d){
    offers.append(h('div',{class:'line'},h('div',{},h('b',{text:o.businessName}),o.inReview?h('small',{text:'Este taller est\xE1 en revisi\xF3n: AutoMantPro todav\xEDa no lo verifica.'}):null,h('small',{text:spec}),part?h('small',{text:part}):null,o.notes?h('small',{text:'Condiciones: '+o.notes}):null),o.chosen?h('span',{class:'tag st-al_dia',text:'Elegida'}):abtn('Elegir esta oferta','primary',['Aceptar',q.id,o.id],'\xBFAceptar esta oferta? Se avisar\xE1 al negocio para que confirme.',reload)));
   }
   if(!q.offers.length)offers.append(h('p',{class:'note',text:'Todav\xEDa no hay ofertas'}));
-  kids.push(head,h('p',{class:'note',text:q.description}),h('small',{text:'Para '+q.vehicle+' \xB7 '+ecDate(q.createdAt,{day:'numeric',month:'short'})}),offers,h('div',{class:'chips'},abtn('Cancelar solicitud','ghost',['Cancelar',q.id],'\xBFCancelar tu solicitud abierta? Ya no recibir\xE1s m\xE1s ofertas.',reload)));
+  kids.push(head,h('p',{class:'note',text:q.description}),h('small',{text:(q.vehicle?'Para '+q.vehicle+' \xB7 ':'')+ecDate(q.createdAt,{day:'numeric',month:'short'})}),offers,h('div',{class:'chips'},abtn('Cancelar solicitud','ghost',['Cancelar',q.id],'\xBFCancelar tu solicitud abierta? Ya no recibir\xE1s m\xE1s ofertas.',reload)));
  }
+ if(shop)return card('Repuestos pedidos',list.length+(list.length===1?' abierto':' abiertos'),...kids,h('p',{class:'note',text:'Al elegir una oferta, el almac\xE9n confirma stock y fecha de entrega o retiro.'}));
  return withId(card('Mis solicitudes',list.length+(list.length===1?' abierta':' abiertas'),...kids,h('p',{class:'note',text:'Aceptar un servicio solicita una cita; el taller confirma despu\xE9s de revisar su agenda. Al aceptar un repuesto, el almac\xE9n confirma stock y fecha de entrega o retiro. Cada decisi\xF3n pasa por revisi\xF3n antes de aplicarse.'})));}
 function claimBlock(o,who){const c=o.records&&o.records.claim;if(!c)return null;const acts=h('div',{class:'chips'});
  if(who==='taller'&&c.status==='abierto')acts.append(reasonBtn('Responder reclamo',(why,b)=>act(['Responder reclamo '+o.code,why],{btn:b,ask:'\xBFEnviar tu respuesta al reclamo? El due\xF1o la ver\xE1 y podr\xE1 aceptarla o pasarlo a AutoMantPro.'})));
@@ -120973,6 +120974,7 @@ function renderShop(root,d){
  if(d.rating)root.append(shopRatingCard(d.rating));
  if(d.appointments?.length)root.append(shopAppointmentsCard(d));
  if(d.orders?.length){const bar=ordersFilterBar(d);if(bar)root.append(bar);root.append(shopOrdersCard(ordersView(d)));}
+ if(d.partRequests&&d.partRequests.length)root.append(ownerRequestsCard(d,true));
  const prod=productivityCard(d);if(prod)root.append(prod);
  if(d.reminders.length){const list=h('div',{class:'list'});const n={urgente:0,pronto:0,sin_dato:0};for(const c of d.reminders){n[c.state]=(n[c.state]||0)+1;list.append(h('div',{class:'line st-'+c.state},h('div',{class:'who'},h('span',{class:'led st-'+c.state}),h('div',{},h('b',{text:c.client+' \xB7 '+c.vehicle}),h('small',{},h('span',{class:'code',text:svcCode(c)}),c.serviceName+': '+c.label.toLowerCase()+(c.plate?' \xB7 '+c.plate:'')))),abtn('Enviar aviso','ghost',['Alerta '+c.ref,'Mantenimiento: '+c.serviceName,c.alertValue],'\xBFEnviar el aviso de '+c.serviceName+' a '+c.client+'?')));}
   root.append(card('Escribir hoy',d.reminders.length+' clientes',h('p',{class:'summary'},n.urgente+' urgente \xB7 '+n.pronto+' pronto \xB7 '+n.sin_dato+' sin dato'),h('p',{class:'note',text:'Clientes que atendiste este a\xF1o y tienen un servicio vencido, pr\xF3ximo o sin registro.'}),list));}
@@ -124561,6 +124563,7 @@ var PilotPanelStore = class {
       orders: orders.map((o) => ({ records: shopRecords.get(String(o.id)), code: orderCode(o.number), status: String(o.status), statusText: SHOP_STATUS_TEXT[String(o.status)] ?? String(o.status), vehicle: vehicleLabel2(o), plate: o.plate ? String(o.plate) : null, totalUsd: Number(o.total ?? 0), waiting: Number(o.waiting) === 1, negotiation: String(o.status) === "rechazado" && o.rejectionReason ? String(o.rejectionReason) : null })),
       reminders: reminders.slice(0, 8),
       requests: await this.requests(conn, userId),
+      partRequests: shop.isOwner ? (await this.ownerRequests(conn, shop.ownerUserId)).map((r) => ({ ...r, vehicle: "" })) : [],
       vehicles: vehicles.map((v) => ({ id: String(v.id), label: vehicleLabel2(v), plate: v.plate ? String(v.plate) : null }))
     };
   }
