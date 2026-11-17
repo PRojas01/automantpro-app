@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='59c91d9a3326523f0a712ced926e7470431e1488'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='dda3af523f689d3ce77ddf9e630116604d789045'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -60734,18 +60734,23 @@ function includesLevel(planLevel, serviceLevelValue) {
 function itemsForLevel(items, level) {
   return items.filter((item) => includesLevel(level, serviceLevel(item.serviceId)));
 }
-function hiddenCount(items, level) {
-  return items.length - itemsForLevel(items, level).length;
+function lockedItems(items, level) {
+  return items.filter((item) => !includesLevel(level, serviceLevel(item.serviceId))).map((item) => ({ ...item, level: serviceLevel(item.serviceId) }));
 }
-var PLAN_LEVELS, PLAN_LEVEL_LABELS, INTERMEDIO, AVANZADO;
+var PLAN_LEVELS, PLAN_LEVEL_LABELS, PLAN_LEVEL_OFFER, INTERMEDIO, AVANZADO;
 var init_levels = __esm({
   "packages/api/dist/domain/maintenance/levels.js"() {
     "use strict";
     PLAN_LEVELS = ["funcional", "intermedio", "avanzado"];
     PLAN_LEVEL_LABELS = {
       funcional: "Funcional",
-      intermedio: "Intermedio",
-      avanzado: "Avanzado (confiabilidad)"
+      intermedio: "Avanzado",
+      avanzado: "Confiabilidad"
+    };
+    PLAN_LEVEL_OFFER = {
+      funcional: "Gratis",
+      intermedio: "Premium",
+      avanzado: "Flota"
     };
     INTERMEDIO = /* @__PURE__ */ new Set([
       "motor_bujias",
@@ -88800,7 +88805,7 @@ var init_catalog = __esm({
         limits: { vehicles: 1, appointmentsPerMonth: 2, quotesPerMonth: 2 },
         level: "funcional",
         extra: null,
-        features: ["1 veh\xEDculo", "Plan de mantenimiento Funcional: lo b\xE1sico preventivo y el correctivo por s\xEDntomas", "Recordatorios de los pr\xF3ximos servicios", "Talleres cercanos (enlace de mapa)", "2 citas y 2 cotizaciones al mes"],
+        features: ["1 veh\xEDculo", "Plan de mantenimiento Funcional: lo b\xE1sico preventivo y el correctivo por s\xEDntomas", "Vista previa de los niveles Avanzado y Confiabilidad", "Recordatorios de los pr\xF3ximos servicios", "Talleres cercanos (enlace de mapa)", "2 citas y 2 cotizaciones al mes"],
         visible: true,
         recommended: false,
         order: 10
@@ -88816,9 +88821,9 @@ var init_catalog = __esm({
         volumeFrom: null,
         volumePrice: null,
         limits: { vehicles: 3 },
-        level: "avanzado",
+        level: "intermedio",
         extra: "USD 8 + IVA al a\xF1o por veh\xEDculo extra",
-        features: ["Todo lo de Gratis", "Hasta 3 veh\xEDculos", "Plan de mantenimiento Avanzado: afinaci\xF3n mayor, intervalos del fabricante cuando los tenemos e inspecciones especializadas (esc\xE1ner, gases, pre-chequeo de RTV, alternador, turbo y alto voltaje)", "Talleres revisados con precio acordado antes de entrar", "Cotizaciones a varios almacenes sin tope", GARANTIA, "Historial exportable"],
+        features: ["Todo lo de Gratis", "Hasta 3 veh\xEDculos", "Plan de mantenimiento Avanzado: afinaci\xF3n mayor e intervalos del fabricante cuando los tenemos", "Vista previa del nivel Confiabilidad (flotas)", "Talleres revisados con precio acordado antes de entrar", "Cotizaciones a varios almacenes sin tope", GARANTIA, "Historial exportable"],
         visible: true,
         recommended: true,
         order: 20
@@ -88921,7 +88926,7 @@ var init_catalog = __esm({
         limits: {},
         level: "avanzado",
         extra: null,
-        features: ["M\xEDnimo 5 veh\xEDculos", "Plan de mantenimiento Avanzado en todos los veh\xEDculos", "Desde 25 veh\xEDculos: USD 12 + IVA por veh\xEDculo al a\xF1o", "Conductores, supervisores, convenios, gastos y vencidos", "Panel web con CSV y reporte mensual"],
+        features: ["M\xEDnimo 5 veh\xEDculos", "Plan de mantenimiento Confiabilidad en todos los veh\xEDculos: todo lo Avanzado m\xE1s inspecciones especializadas (esc\xE1ner, gases, pre-chequeo de RTV, alternador, turbo y alto voltaje)", "Desde 25 veh\xEDculos: USD 12 + IVA por veh\xEDculo al a\xF1o", "Conductores, supervisores, convenios, gastos y vencidos", "Panel web con CSV y reporte mensual"],
         visible: true,
         recommended: true,
         order: 80
@@ -90967,10 +90972,11 @@ function levelNote(vehicle, level) {
   if (!level || level === "avanzado")
     return null;
   const all = planFor(vehicle)?.items ?? [];
-  const hidden = hiddenCount(all, level);
-  if (hidden <= 0)
+  const locked = lockedItems(all, level);
+  if (!locked.length)
     return null;
-  return `Plan ${PLAN_LEVEL_LABELS[level]}: ${hidden} servicio${hidden === 1 ? "" : "s"} m\xE1s ${hidden === 1 ? "aparece" : "aparecen"} en el plan Avanzado de Premium. Escribe Planes para verlo.`;
+  const parts = ["intermedio", "avanzado"].map((l) => [l, locked.filter((i) => i.level === l).length]).filter(([, n3]) => n3 > 0).map(([l, n3]) => `${n3} en ${PLAN_LEVEL_LABELS[l]} (${PLAN_LEVEL_OFFER[l]}${l === "avanzado" ? ", solo flotas" : ""})`);
+  return `Plan ${PLAN_LEVEL_LABELS[level]}. Vista previa de lo que no incluye: ${parts.join(" y ")}. Escribe Planes para verlo.`;
 }
 function planFor(vehicle) {
   const catalogEntry = ecuatorianVehicleFor(vehicle);
@@ -91241,18 +91247,18 @@ async function ownerEntitlement(conn, userId, catalogIn, now = /* @__PURE__ */ n
     }));
     const tier = entitlement(subs, user?.createdAt ?? null, TRIAL_DAYS, now);
     if (tier === "prueba")
-      return { ...OPEN, tier };
+      return { ...OPEN, tier, level: await ownsFleet(conn, userId) ? "avanzado" : "intermedio" };
     if (tier === "gratis") {
       const free = findOfferByKey("dueno_gratis", catalog);
       return { tier, planKey: null, level: "funcional", maxVehicles: free?.limits.vehicles ?? 1 };
     }
     const order = ["funcional", "intermedio", "avanzado"];
-    let best = { tier, planKey: null, level: "avanzado", maxVehicles: 3 };
+    let best = { tier, planKey: null, level: "intermedio", maxVehicles: 3 };
     for (const sub of subs) {
       if (!isRunning(sub, now) || tierOf(sub.plan) !== "premium")
         continue;
       const offer = findOfferByKey(sub.plan, catalog);
-      const level = offer?.level ?? "avanzado";
+      const level = offer?.level ?? "intermedio";
       if (order.indexOf(level) >= order.indexOf(best.level) || !best.planKey) {
         best = { tier, planKey: sub.plan, level: order.indexOf(level) >= order.indexOf(best.level) ? level : best.level, maxVehicles: Math.max(best.maxVehicles, offer?.limits.vehicles ?? 3) };
       }
@@ -91260,6 +91266,15 @@ async function ownerEntitlement(conn, userId, catalogIn, now = /* @__PURE__ */ n
     return best;
   } catch {
     return OPEN;
+  }
+}
+async function ownsFleet(conn, userId) {
+  try {
+    return (await rows14(conn, "SELECT 1 FROM `Fleet` WHERE ownerUserId = ? AND status = 'activa' LIMIT 1", [userId])).length > 0;
+  } catch (err) {
+    if (err.code === "ER_NO_SUCH_TABLE")
+      return false;
+    throw err;
   }
 }
 async function vehicleLevel(conn, vehicle, catalog) {
@@ -92007,6 +92022,9 @@ function frequencyText(km10, months2) {
     return `Cada ${monthsText}`;
   return "Seg\xFAn inspecci\xF3n";
 }
+function lockedPreview(items) {
+  return items.map((item) => ({ serviceId: item.serviceId, ...elementOf(item.serviceId, item.serviceName), frequency: frequencyText(item.intervalKm, item.intervalMonths), level: PLAN_LEVEL_LABELS[item.level], offer: PLAN_LEVEL_OFFER[item.level] }));
+}
 function buildStructuredPlan(items, recommendations, sources) {
   const recs = new Map(recommendations.map((r) => [r.serviceId, r]));
   const entries = items.map((item) => {
@@ -92058,6 +92076,7 @@ var init_structured_plan = __esm({
   "packages/api/dist/application/panel/structured-plan.js"() {
     "use strict";
     init_recommendations();
+    init_levels();
     init_ficha();
     SOURCE_LABEL = {
       fabricante: "Fabricante",
@@ -120864,6 +120883,7 @@ function planBlock(s,r,reload){const p=s.structuredPlan;const sec=h('div',{class
  if(p.verify.length)sec.append(h('p',{class:'note',text:p.verify.length+(p.verify.length===1?' elemento':' elementos')+' con la etiqueta \xABPor verificar\xBB: no hay registro de cu\xE1ndo se hicieron. Reg\xEDstralos o m\xE1rcalos para que el taller los revise.'}));
  if(p.later.length)sec.append(h('details',{},h('summary',{text:'Lo que viene ('+p.later.length+')'}),list(p.later)));
  const all=h('details',{open:true},h('summary',{text:'Plan completo por sistema'}));for(const g of p.systems){const c=st=>g.entries.filter(e=>e.state===st).length;const urg=c('urgente'),pro=c('pronto'),sd=c('sin_dato');const askedN=g.entries.filter(e=>appts.some(a=>a.planServiceIds.includes(e.serviceId))).length;const info=[g.entries.length+(g.entries.length===1?' elemento':' elementos'),urg?urg+' urgente'+(urg===1?'':'s'):null,pro?pro+' pronto':null,sd?sd+' por verificar':null,askedN?askedN+' en la cita':null].filter(Boolean).join(' \xB7 ');const fold=h('details',{class:'sys-fold'},h('summary',{},h('b',{text:g.name}),h('span',{class:'when',text:info})));const key=s.id+'|'+g.name;if(key in sysOpen?sysOpen[key]:urg)fold.open=true;let built=false;const fill=()=>{if(fold.open&&!built){built=true;fold.append(list(g.entries));}};fold.addEventListener('toggle',()=>{sysOpen[key]=fold.open;fill();});fill();all.append(fold);}sec.append(all);
+ if(p.locked&&p.locked.length){const ul=h('ul',{class:'locked'});for(const e of p.locked)ul.append(h('li',{class:'sd plan-it'},h('span',{},h('b',{text:e.element}),' \xB7 '+e.action,h('span',{class:'tag',text:'Disponible en '+e.offer+' \xB7 '+e.level}),h('span',{class:'when',text:e.frequency}))));sec.append(h('details',{class:'plan-locked'},h('summary',{text:'Vista previa: no incluido en tu plan ('+p.locked.length+')'}),h('p',{class:'note',text:'Solo nombre e intervalo. Para ver su estado, registrarlos, recibir recordatorios o pedirlos en una cita, escribe Planes.'}),ul));}
  sec.append(h('p',{class:'note',text:'Toca un elemento para ver su historial: fecha, km, detalle, repuestos, costo, fotos y pr\xF3ximo servicio.'+(p.fromManufacturer?' Frecuencias del fabricante donde hay dato para este modelo; el resto sigue la regla general.':' Este modelo a\xFAn no tiene el plan del fabricante en la base: se aplica la regla general.')+' Lo que ocurra primero: km o tiempo.'}));
  if(ask)sec.append(ask);refresh();
  return sec;}
@@ -123822,6 +123842,7 @@ init_vat();
 init_apply();
 init_plan_text();
 init_structured_plan();
+init_levels();
 init_recommendations();
 init_entitlements();
 init_fleet_access();
@@ -124517,9 +124538,12 @@ var PilotPanelStore = class {
   /** Recomendaciones y plan estructurado del mismo cálculo (nivel contratado, plan del modelo y ajustes). */
   async planDetail(conn, vehicle) {
     const planned = await this.care.planVehicle(conn, vehicle);
-    const items = planItemsFor(planned, await vehicleLevel(conn, vehicle));
+    const level = await vehicleLevel(conn, vehicle);
+    const items = planItemsFor(planned, level);
     const recommendations = buildRecommendations(items, await this.inspectionFindings(conn, vehicle));
-    return { recommendations, structuredPlan: buildStructuredPlan(items, recommendations.items, planSourcesFor(planned)) };
+    const structuredPlan = buildStructuredPlan(items, recommendations.items, planSourcesFor(planned));
+    const locked = lockedItems(planItemsFor(planned), level);
+    return { recommendations, structuredPlan: locked.length ? { ...structuredPlan, locked: lockedPreview(locked) } : structuredPlan };
   }
   /** Lo que la última inspección pidió cambiar u observar, por servicio, hasta que se registre ese servicio después de ella. */
   async inspectionFindings(conn, vehicle) {
