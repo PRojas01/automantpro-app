@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='9cf83ab7d01aed802544b286912142956ae4c272'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='51fd565795775fa8c8d603843e044762c0486e78'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -87669,7 +87669,7 @@ main details.gestionar>.menu{margin-top:8px}
     <li class="ok"><span class="led"></span><span>Suspensi\xF3n y direcci\xF3n</span><span class="pill">Al d\xEDa</span></li>
   </ul>
   <details class="informe-mas"><summary>Ver informe completo</summary>
-  <p class="score-note">Puntaje 78 de 100: baja con cada servicio urgente o pr\xF3ximo; lo que no tiene registro se muestra aparte, como \xABsin dato\xBB.</p>
+  <p class="score-note">Puntaje 78 de 100: baja con cada servicio urgente, pr\xF3ximo o sin registro; lo que no tiene registro se muestra aparte, como \xABsin dato\xBB.</p>
   <section class="details" aria-labelledby="services-title">
     <h3 id="services-title">Pr\xF3ximos servicios</h3>
     <ul>
@@ -92717,8 +92717,7 @@ function buildRecommendations(items, findings) {
   for (const r of sorted)
     counts2[r.state]++;
   const systems = buildSystems(sorted);
-  const known = sorted.length - counts2.sin_dato;
-  const score2 = known ? Math.max(0, 100 - counts2.urgente * 25 - counts2.pronto * 10) : null;
+  const score2 = planScore(counts2);
   const first = sorted[0];
   const actionable = sorted.find((r) => r.state === "urgente" || r.state === "pronto");
   return {
@@ -92729,6 +92728,13 @@ function buildRecommendations(items, findings) {
     score: score2,
     systems
   };
+}
+function planScore(counts2) {
+  const total = counts2.al_dia + counts2.pronto + counts2.sin_dato + counts2.urgente;
+  if (!total || total === counts2.sin_dato)
+    return null;
+  const sum = Object.keys(SCORE_WEIGHT).reduce((acc, k) => acc + SCORE_WEIGHT[k] * counts2[k], 0);
+  return Math.round(sum / total);
 }
 function buildSystems(items) {
   const byCategory = /* @__PURE__ */ new Map();
@@ -92745,7 +92751,7 @@ function buildSystems(items) {
   }
   return [...byCategory.values()].sort((a, b) => ORDER[a.state] - ORDER[b.state] || a.categoryName.localeCompare(b.categoryName, "es"));
 }
-var STATE, ORDER, MONTHS;
+var STATE, ORDER, MONTHS, SCORE_WEIGHT;
 var init_recommendations = __esm({
   "packages/api/dist/application/panel/recommendations.js"() {
     "use strict";
@@ -92753,6 +92759,7 @@ var init_recommendations = __esm({
     STATE = { vencido: "urgente", proximo: "pronto", al_dia: "al_dia", sin_registro: "sin_dato" };
     ORDER = { urgente: 0, pronto: 1, sin_dato: 2, al_dia: 3 };
     MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    SCORE_WEIGHT = { al_dia: 100, pronto: 60, sin_dato: 25, urgente: 0 };
   }
 });
 
@@ -96773,6 +96780,67 @@ var init_order_technician_store = __esm({
   }
 });
 
+// packages/api/dist/infrastructure/messaging/account-links.js
+function sectionFor(kind) {
+  return SECTION_BY_KIND[kind] ?? null;
+}
+function accountLink(section, base) {
+  return `${site(base)}/cuenta#${section}`;
+}
+function withProfileLink(kind, message2, base) {
+  const section = sectionFor(kind);
+  if (!section || HAS_LINK.test(message2) || !ASKS_FOR_ACTION.test(message2))
+    return message2;
+  return `${message2}
+O hazlo en tu perfil: ${accountLink(section, base)}`;
+}
+var SECTION_BY_KIND, ASKS_FOR_ACTION, HAS_LINK, site;
+var init_account_links = __esm({
+  "packages/api/dist/infrastructure/messaging/account-links.js"() {
+    "use strict";
+    SECTION_BY_KIND = {
+      "care.finding": "novedades",
+      "care.budget": "ordenes",
+      "care.checkin": "ordenes",
+      "care.delivery": "ordenes",
+      "care.payment": "ordenes",
+      "care.order": "ordenes",
+      "care.promise": "ordenes",
+      "care.warranty": "ordenes",
+      "care.claim": "ordenes",
+      "care.repair": "ordenes",
+      "care.rating": "ordenes",
+      "order.progress": "ordenes",
+      "order.invoice": "ordenes",
+      "care.visit": "citas",
+      "care.waitlist": "citas",
+      "local.appointment": "citas",
+      "fleet.visit": "citas",
+      "local.invitation": "por-responder",
+      "local.request": "por-responder",
+      "local.offer": "solicitudes",
+      "local.decision": "repuestos",
+      "local.delivered": "repuestos",
+      "local.return": "repuestos",
+      "local.payment": "repuestos",
+      "local.part": "repuestos",
+      "local.cancelled": "repuestos",
+      "ad.decision": "publicidad",
+      "ad.payment": "publicidad",
+      "ad.invoice": "publicidad",
+      "ad.campaign": "promociones",
+      "fleet.agreement": "flota",
+      "fleet.member": "flota",
+      "fleet.assignment": "flota",
+      "fleet.symptom": "flota",
+      "fleet.expense": "flota"
+    };
+    ASKS_FOR_ACTION = /\bresponde\b|\bpara aceptar\b|\bconfirm[ao]\b|\baprobar\b|\brechaz[ao]\b|\bacepto\b/i;
+    HAS_LINK = /https?:\/\/|automantpro\.app\//i;
+    site = (base = process.env.PUBLIC_SITE_URL ?? "https://automantpro.app") => base.replace(/\/+$/, "");
+  }
+});
+
 // packages/api/dist/application/panel/vehicle-status-text.js
 function vehicleStatusText(vehicleLabel3, summary) {
   const head = `\u{1F6A6} Estado de tu ${vehicleLabel3}`;
@@ -97219,6 +97287,7 @@ var init_vehicle_care_store = __esm({
     init_shop_vehicle_access();
     init_plan_text();
     init_recommendations();
+    init_account_links();
     init_vehicle_status_text();
     init_reminder_done();
     init_entitlements();
@@ -97741,6 +97810,25 @@ ${out.join("\n")}` : out.join("\n") };
         return planBriefFor(await this.planVehicle(conn, vehicle));
       }
       /** Resumen del plan con el nivel que tiene contratado el titular del vehículo. */
+      /**
+       * Para el taller al entregar: lo que el plan del vehículo aún no sabe (sin dato) o ya toca. El taller lo revisa
+       * en su panel (Registrar inspección en la ficha) o lo deja para la próxima visita; el agente solo indica dónde.
+       */
+      async pendingReviewNote(conn, vehicleId) {
+        const [vehicle] = await rows28(conn, "SELECT * FROM `Vehicle` WHERE id = ?", [vehicleId]);
+        if (!vehicle)
+          return "";
+        const planned = await this.planVehicle(conn, vehicle);
+        const items = planItemsFor(planned, await vehicleLevel(conn, planned));
+        if (!items.length)
+          return "";
+        const { counts: counts2 } = buildRecommendations(items);
+        const due = counts2.urgente + counts2.pronto;
+        if (!counts2.sin_dato && !due)
+          return "";
+        const parts = [counts2.sin_dato ? `${counts2.sin_dato} sin dato` : "", due ? `${due} por vencer o vencidos` : ""].filter(Boolean).join(" y ");
+        return `\u{1F4CB} El plan de ${vehicle.make} ${vehicle.model} ${vehicle.year} tiene ${parts}. Rev\xEDsalos en tu panel: Fichas de veh\xEDculos \u2192 Abrir ficha \u2192 Registrar inspecci\xF3n (puedes marcar el resto como bien), o d\xE9jalos para la pr\xF3xima visita con \xABProponer pr\xF3xima visita\xBB. ${accountLink("fichas")}`;
+      }
       async ownerSummary(conn, vehicle) {
         return planSummaryFor(await this.planVehicle(conn, vehicle), await vehicleLevel(conn, vehicle));
       }
@@ -98436,7 +98524,8 @@ ${lines2.join("\n")}
 Costo final: ${formatUsd(Number(order.total))}
 Kilometraje de salida: ${command.exitKm.toLocaleString("es-EC")} km \xB7 Garant\xEDa: ${command.warrantyDays} d\xEDas
 Revisa el veh\xEDculo al recibirlo y responde: Acepto entrega ${code5} \xB7 Rechazo entrega ${code5} | motivo`);
-          return { userId, message: `Entrega ${code5} enviada al due\xF1o para su aceptaci\xF3n. Al aceptarla se cierra la orden y se actualiza el plan.` };
+          const review = await this.pendingReviewNote(conn, String(order.vehicleId));
+          return { userId, message: [`Entrega ${code5} enviada al due\xF1o para su aceptaci\xF3n. Al aceptarla se cierra la orden y se actualiza el plan.`, review].filter(Boolean).join("\n\n") };
         }
         const lines = command.lines.map((l) => this.lineText(l));
         const net = Math.round(lines.reduce((a, l) => a + l.subtotal, 0) * 100) / 100;
@@ -98513,7 +98602,8 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
             await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID26(), order.vehicleId, serviceId, payload.exitKm, order.shopId, userId]);
         if (order.appointmentId)
           await conn.query("UPDATE `Appointment` SET status = 'completed', updatedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status IN ('pending','confirmed')", [order.appointmentId]);
-        await this.notify(conn, String(order.shopUserId), `deliverydecision:${String(change.id)}`, "care.delivery", `\u2705 El cliente acept\xF3 la entrega de ${code5} por ${formatUsd(Number(order.total))}. La orden qued\xF3 cerrada.`);
+        const review = await this.pendingReviewNote(conn, String(order.vehicleId));
+        await this.notify(conn, String(order.shopUserId), `deliverydecision:${String(change.id)}`, "care.delivery", [`\u2705 El cliente acept\xF3 la entrega de ${code5} por ${formatUsd(Number(order.total))}. La orden qued\xF3 cerrada.`, review].filter(Boolean).join("\n\n"));
         await this.notifyFleetTeam(conn, String(order.vehicleId), userId, `delivery-team:${String(change.id)}`, "care.delivery", `acept\xF3 la entrega de ${code5} por ${formatUsd(Number(order.total))}. La orden qued\xF3 cerrada.`);
         const [vehicle] = await rows28(conn, "SELECT * FROM `Vehicle` WHERE id = ?", [order.vehicleId]);
         const summary = vehicle ? await this.ownerSummary(conn, vehicle) : null;
@@ -98943,67 +99033,6 @@ var init_preferences = __esm({
     ];
     quoted = (kinds) => kinds.map((kind) => `'${kind}'`).join(",");
     off = (group) => `(o.kind IN (${quoted(group.kinds)}) AND u.${group.column} = 0)`;
-  }
-});
-
-// packages/api/dist/infrastructure/messaging/account-links.js
-function sectionFor(kind) {
-  return SECTION_BY_KIND[kind] ?? null;
-}
-function accountLink(section, base) {
-  return `${site(base)}/cuenta#${section}`;
-}
-function withProfileLink(kind, message2, base) {
-  const section = sectionFor(kind);
-  if (!section || HAS_LINK.test(message2) || !ASKS_FOR_ACTION.test(message2))
-    return message2;
-  return `${message2}
-O hazlo en tu perfil: ${accountLink(section, base)}`;
-}
-var SECTION_BY_KIND, ASKS_FOR_ACTION, HAS_LINK, site;
-var init_account_links = __esm({
-  "packages/api/dist/infrastructure/messaging/account-links.js"() {
-    "use strict";
-    SECTION_BY_KIND = {
-      "care.finding": "novedades",
-      "care.budget": "ordenes",
-      "care.checkin": "ordenes",
-      "care.delivery": "ordenes",
-      "care.payment": "ordenes",
-      "care.order": "ordenes",
-      "care.promise": "ordenes",
-      "care.warranty": "ordenes",
-      "care.claim": "ordenes",
-      "care.repair": "ordenes",
-      "care.rating": "ordenes",
-      "order.progress": "ordenes",
-      "order.invoice": "ordenes",
-      "care.visit": "citas",
-      "care.waitlist": "citas",
-      "local.appointment": "citas",
-      "fleet.visit": "citas",
-      "local.invitation": "por-responder",
-      "local.request": "por-responder",
-      "local.offer": "solicitudes",
-      "local.decision": "repuestos",
-      "local.delivered": "repuestos",
-      "local.return": "repuestos",
-      "local.payment": "repuestos",
-      "local.part": "repuestos",
-      "local.cancelled": "repuestos",
-      "ad.decision": "publicidad",
-      "ad.payment": "publicidad",
-      "ad.invoice": "publicidad",
-      "ad.campaign": "promociones",
-      "fleet.agreement": "flota",
-      "fleet.member": "flota",
-      "fleet.assignment": "flota",
-      "fleet.symptom": "flota",
-      "fleet.expense": "flota"
-    };
-    ASKS_FOR_ACTION = /\bresponde\b|\bpara aceptar\b|\bconfirm[ao]\b|\baprobar\b|\brechaz[ao]\b|\bacepto\b/i;
-    HAS_LINK = /https?:\/\/|automantpro\.app\//i;
-    site = (base = process.env.PUBLIC_SITE_URL ?? "https://automantpro.app") => base.replace(/\/+$/, "");
   }
 });
 
@@ -122936,7 +122965,7 @@ function renderShop(root,d){
 
  // Recontacto de clientes vencidos: solo due\xF1o o administrador del taller.
  if(d.canManage)root.append(recontactCard());
- if(d.vehicles?.length)root.append(shopSheets(d.vehicles));
+ if(d.vehicles?.length)root.append(anchor(shopSheets(d.vehicles),'fichas'));
  if(d.partMoney&&d.partMoney.length)root.append(partMoneyCard(d));
  root.append(tarifarioCard(d));
  if(d.canManage!==false&&typeof adsCard==='function')root.append(anchor(adsCard(d),'publicidad'));
