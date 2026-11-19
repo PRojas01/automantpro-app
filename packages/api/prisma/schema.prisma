@@ -83,6 +83,8 @@ model User {
   locale       String   @default("es")
   city           String?
   zone           String?   @db.VarChar(80)
+  /// Acepta publicidad por WhatsApp (casilla del perfil, vacía por defecto; BAJA la borra). Ver ad-statements.ts.
+  adsOptInAt     DateTime? @db.DateTime(3)
   consentAt      DateTime?
   consentVersion String?
   source         String?
@@ -981,4 +983,43 @@ model FounderInvite {
 
   @@index([phone, status])
   @@index([status, createdAt])
+}
+
+/// Publicidad de talleres y almacenes: anuncio, precio calculado, comprobante y revisión (ad-statements.ts, packages/api/docs/publicidad-tarifas.md).
+/// Estados: borrador → pago_enviado → aprobado | rechazado → activo → vencido.
+model AdCampaign {
+  id             String    @id @db.VarChar(191)
+  ownerUserId    String    @db.VarChar(191)
+  businessKind   String    @db.VarChar(10)
+  businessId     String    @db.VarChar(191)
+  businessName   String    @db.VarChar(191)
+  title          String    @db.VarChar(80)
+  body           String    @db.VarChar(280)
+  linkUrl        String?   @db.VarChar(300)
+  imageMime      String?   @db.VarChar(20)
+  imageData      Bytes?    @db.MediumBlob
+  formats        String    @db.VarChar(60)
+  city           String    @db.VarChar(80)
+  zone           String?   @db.VarChar(80)
+  startDate      DateTime  @db.Date
+  endDate        DateTime  @db.Date
+  days           Int
+  subtotalUsd    Decimal   @db.Decimal(10, 2)
+  ivaUsd         Decimal   @db.Decimal(10, 2)
+  totalUsd       Decimal   @db.Decimal(10, 2)
+  status         String    @default("borrador") @db.VarChar(20)
+  proofMime      String?   @db.VarChar(20)
+  proofData      Bytes?    @db.MediumBlob
+  proofReference String?   @db.VarChar(120)
+  submittedAt    DateTime? @db.DateTime(3)
+  decidedAt      DateTime? @db.DateTime(3)
+  decidedBy      String?   @db.VarChar(191)
+  rejectReason   String?   @db.VarChar(191)
+  paymentSentAt  DateTime? @db.DateTime(3)
+  invoiceNumber  String?   @db.VarChar(40)
+  createdAt      DateTime  @default(now()) @db.DateTime(3)
+  updatedAt      DateTime  @updatedAt @db.DateTime(3)
+
+  @@index([ownerUserId, createdAt], map: "AdCampaign_owner_idx")
+  @@index([status, startDate, endDate], map: "AdCampaign_status_idx")
 }
