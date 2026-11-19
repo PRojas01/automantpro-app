@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='8407f8fb9d731c0701b0da20ffcf1e3058546b7c'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='6e8531fb7f1d69e0c07012effdf7aa4a2a07361f'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -96075,6 +96075,9 @@ function recognizedCommand(text14) {
     return false;
   }
 }
+function welcomesNewContact(message2) {
+  return !recognizedCommand(message2);
+}
 function fail13(code5) {
   throw new BrokerError(code5);
 }
@@ -96392,7 +96395,7 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
               await this.queue.complete(job.wamid, job.leaseToken);
               continue;
             }
-            if (process.env.WHATSAPP_AUTO_WELCOME === "true")
+            if (process.env.WHATSAPP_AUTO_WELCOME === "true" && welcomesNewContact(payload.message))
               await this.welcome(job.phone);
             result.push({ wamid: job.wamid, leaseToken: job.leaseToken, userId: "", role: "nuevo", message: payload.message, channel: payload.channel, attempts: job.attempts, ...payload.category ? { category: payload.category } : {} });
             continue;
