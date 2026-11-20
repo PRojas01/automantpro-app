@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='3d5e5b70ca56e2c97c00ce3065e1aed14e392174'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2af98f1aafa0d5a8d3b30e7c97a6c100dceeab47'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -125277,6 +125277,13 @@ async function accountSelfServiceRoutes(app2, options = {}) {
 init_fleet_access();
 var rows12 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var short = (prefix, id3) => `${prefix}-${String(id3).replace(/-/g, "").slice(0, 6).toUpperCase()}`;
+function fleetWebText(message2) {
+  const SECRET = /\b[JF]-[2-9A-HJKMNP-Z]{8}\b/;
+  const COMMAND = /\||^(para [^:]{0,80}:|escribe|responde|puedes escribir|detalle:)|\b(escribe|responde)\s*:/i;
+  const lines = String(message2).split("\n").map((line2) => line2.split(/(?<=[.!?;])\s+/).filter((s) => SECRET.test(s) || !COMMAND.test(s.trim())).join(" ").replace(/[;,]\s*$/, ".").trim());
+  const out = lines.filter((l, i) => l || i > 0 && lines[i - 1]).join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  return out || String(message2);
+}
 var FLEET_WEB_ACTIONS = ["registerFleet", "fleetVehicle", "retireVehicle", "fleetInvite", "removeFleetMember", "assignVehicle", "unassignVehicle", "proposeAgreement", "endAgreement", "scheduleVisit", "fleetLimit", "odometer", "symptom", "joinFleet", "leaveFleet"];
 var num2 = (v) => v === null || v === void 0 ? null : Number(v);
 async function fleetOverview(conn, userId) {
@@ -128291,6 +128298,11 @@ var PilotPanelStore = class {
   }
   /** FL1–FL4 y CO1: los formularios de flota ejecutan la misma orden que el chat, con sus mismas reglas y avisos. */
   async fleetCommand(userId, role, command) {
+    const done = await this.runAccountCommand(userId, role, command);
+    return { message: fleetWebText(done.message) };
+  }
+  /** La orden tal cual la responde el chat (la carga de fichas lee de ahí el código y el enlace). */
+  async runAccountCommand(userId, role, command) {
     return this.inTransaction(async (conn) => {
       const [user] = (await conn.query("SELECT phone FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]))[0];
       if (!user)
@@ -128315,7 +128327,7 @@ var PilotPanelStore = class {
         continue;
       }
       try {
-        const out = await this.fleetCommand(userId, role, parsed);
+        const out = await this.runAccountCommand(userId, role, parsed);
         results.push({ line: i + 1, plate: parsed.plate, ok: true, code: /F-[2-9A-HJKMNP-Z]{8}/.exec(out.message)?.[0], link: /https?:\/\/\S+/.exec(out.message)?.[0] ?? null });
       } catch (err4) {
         const code5 = err4.code;
