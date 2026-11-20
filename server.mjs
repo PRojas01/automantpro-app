@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='ee9384857f4ee6a7e15417a00b4a7788d9ce5dd1'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2c2a9e93a4f5b5bbf520678368c348bcd6d88d96'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -41992,7 +41992,7 @@ var require_parse_url = __commonJS({
 var require_form_data = __commonJS({
   "node_modules/light-my-request/lib/form-data.js"(exports, module) {
     "use strict";
-    var { randomUUID: randomUUID52 } = __require("node:crypto");
+    var { randomUUID: randomUUID53 } = __require("node:crypto");
     var { Readable } = __require("node:stream");
     var textEncoder;
     function isFormDataLike(payload) {
@@ -42000,7 +42000,7 @@ var require_form_data = __commonJS({
     }
     function formDataToStream(formdata) {
       textEncoder = textEncoder ?? new TextEncoder();
-      const boundary = `----formdata-${randomUUID52()}`;
+      const boundary = `----formdata-${randomUUID53()}`;
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
       const escape2 = (str8) => str8.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
@@ -97247,8 +97247,38 @@ var init_diagnosis = __esm({
   }
 });
 
+// packages/api/dist/infrastructure/messaging/deferred-work.js
+import { randomUUID as randomUUID26 } from "node:crypto";
+function deferredLabel(code5, description) {
+  return `No aprobado en ${code5}: ${description.replace(/^Adicional:\s*/i, "").replace(/\s+/g, " ").trim()}`.slice(0, 191);
+}
+async function addDeferredWork(conn, work, now = /* @__PURE__ */ new Date()) {
+  const due = new Date(now.getTime() + DEFERRED_DAYS * 864e5);
+  const labels2 = [...new Set(work.items.map((d) => d.trim()).filter((d) => d && !DIAGNOSIS.test(d)).map((d) => deferredLabel(work.code, d)))];
+  let created = 0;
+  for (const label5 of labels2) {
+    const [result] = await conn.query("INSERT INTO `Alert` (id, vehicleId, label, dueAt, source, createdBy, shopId, createdAt) SELECT ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3) FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `Alert` WHERE vehicleId = ? AND label = ? AND triggeredAt IS NULL)", [randomUUID26(), work.vehicleId, label5, due, DEFERRED_SOURCE, work.createdBy, work.shopId, work.vehicleId, label5]);
+    created += Number(result.affectedRows ?? 0);
+  }
+  return created;
+}
+function deferredNote(count3) {
+  if (!count3)
+    return "";
+  return count3 === 1 ? ` Lo dejamos como pendiente en tu veh\xEDculo y te lo recordaremos en ${DEFERRED_DAYS} d\xEDas.` : ` Los dejamos como pendientes en tu veh\xEDculo y te los recordaremos en ${DEFERRED_DAYS} d\xEDas.`;
+}
+var DEFERRED_DAYS, DEFERRED_SOURCE, DIAGNOSIS;
+var init_deferred_work = __esm({
+  "packages/api/dist/infrastructure/messaging/deferred-work.js"() {
+    "use strict";
+    DEFERRED_DAYS = 30;
+    DEFERRED_SOURCE = "pendiente";
+    DIAGNOSIS = /^diagn[oó]stico/i;
+  }
+});
+
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
-import { createHash as createHash10, randomUUID as randomUUID26 } from "node:crypto";
+import { createHash as createHash10, randomUUID as randomUUID27 } from "node:crypto";
 function matchService(text14) {
   const f = fold16(text14);
   const exact = SERVICES2.find((s) => s.id === f || fold16(s.name) === f);
@@ -97335,6 +97365,7 @@ var init_vehicle_care_store = __esm({
     init_appointment_capacity();
     init_work_order_claims();
     init_part_order_records();
+    init_deferred_work();
     init_fleet_access();
     DIAGNOSIS_LINE = "Diagn\xF3stico avisado al ingreso";
     rows28 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
@@ -97659,7 +97690,7 @@ Observaci\xF3n del due\xF1o: ${note}`, order.id]);
         const balance = total - before.paid - before.informed;
         if (command.amount > balance + 1e-3)
           fail14("PAYMENT_EXCEEDS_BALANCE");
-        const id3 = randomUUID26();
+        const id3 = randomUUID27();
         await conn.query("INSERT INTO `WorkOrderPayment` (id, workOrderId, amount, method, reference, status, reportedBy) VALUES (?, ?, ?, ?, ?, 'informado', ?)", [id3, order.id, command.amount, command.method, command.reference, shop.actor]);
         await this.audit(conn, userId, "care.payment.reported", "WorkOrder", String(order.id), { paymentId: id3, amount: command.amount, method: command.method, by: shop.actor });
         const code5 = workOrderCode(command.orderNumber);
@@ -97720,7 +97751,7 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
           fail14("NO_PAYMENT_TO_REFUND");
         if (command.amount > available + 1e-3)
           fail14("REFUND_EXCEEDS_PAID");
-        const id3 = randomUUID26();
+        const id3 = randomUUID27();
         await conn.query("INSERT INTO `WorkOrderPayment` (id, workOrderId, amount, method, reference, status, reportedBy) VALUES (?, ?, ?, ?, ?, 'reembolso_informado', ?)", [id3, order.id, command.amount, command.method, command.reference, shop.actor]);
         await this.audit(conn, userId, "care.refund.reported", "WorkOrder", String(order.id), { paymentId: id3, amount: command.amount, method: command.method, by: shop.actor });
         const code5 = workOrderCode(command.orderNumber);
@@ -97802,7 +97833,7 @@ ${out.join("\n")}` : out.join("\n") };
         if (!at || at.getTime() <= Date.now() || at.getTime() > Date.now() + 365 * 864e5)
           fail14("INVALID_PROPOSED_DATE");
         await ensureShopSlot(conn, shop.id, at, 60, String(appointment.id));
-        const id3 = randomUUID26();
+        const id3 = randomUUID27();
         const code5 = short4("C", id3);
         await conn.query("UPDATE `Appointment` SET status = 'cancelled', cancelReason = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [`Reprogramada por el taller (${code5})`, appointment.id]);
         await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, createdAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, UTC_TIMESTAMP(3))", [id3, appointment.ownerId, appointment.vehicleId, shop.id, at, `Visita propuesta por el taller (reprograma ${command.appointmentRef}, ${shop.actor})`]);
@@ -97881,7 +97912,7 @@ ${out.join("\n")}` : out.join("\n") };
         if (pick.kind !== "one")
           return { userId, message: chooseDoneText(pick.items, pick.kind === "unknown") };
         const currentKm = Number(vehicle.currentKm) || 0;
-        await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID26(), vehicle.id, pick.item.serviceId, currentKm, /* @__PURE__ */ new Date(), userId]);
+        await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID27(), vehicle.id, pick.item.serviceId, currentKm, /* @__PURE__ */ new Date(), userId]);
         const next = planItemsFor(await this.planVehicle(conn, vehicle), level).find((i) => i.serviceId === pick.item.serviceId);
         return { userId, message: `Anotado: ${pick.item.serviceName} hecho hoy, a los ${currentKm.toLocaleString("es-EC")} km.${next ? ` Pr\xF3ximo: ${nextMilestone(next)}.` : ""} Ya no te recordaremos este.
 Si tu kilometraje cambi\xF3, actual\xEDzalo con: Kilometraje | km` };
@@ -97897,7 +97928,7 @@ Si tu kilometraje cambi\xF3, actual\xEDzalo con: Kilometraje | km` };
           const doneAt = command.month ? /* @__PURE__ */ new Date(`${command.month}-15T12:00:00Z`) : null;
           if (doneAt && doneAt.getTime() > Date.now())
             fail14("FUTURE_DATE");
-          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID26(), vehicle.id, serviceId, command.km, doneAt, userId]);
+          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID27(), vehicle.id, serviceId, command.km, doneAt, userId]);
           const summary = await this.ownerSummary(conn, vehicle);
           return { userId, message: `Anotado: ${serviceName2(serviceId)} a los ${command.km.toLocaleString("es-EC")} km (declarado por ti).
 
@@ -97915,7 +97946,7 @@ ${summary ?? ""}`.trim() };
         }
         if (command.action === "symptom") {
           const diagnosis = guideDiagnosis({ symptoms: command.description });
-          await conn.query("INSERT INTO `VehicleSymptom` (id, vehicleId, `system`, risk, description, createdBy) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID26(), vehicle.id, diagnosis.systemLabel, diagnosis.risk, command.description, userId]);
+          await conn.query("INSERT INTO `VehicleSymptom` (id, vehicleId, `system`, risk, description, createdBy) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID27(), vehicle.id, diagnosis.systemLabel, diagnosis.risk, command.description, userId]);
           if (vehicle.fleetId) {
             const [fleet] = await rows28(conn, "SELECT ownerUserId, name FROM `Fleet` WHERE id = ?", [vehicle.fleetId]);
             const [who] = await rows28(conn, "SELECT name FROM `User` WHERE id = ?", [userId]);
@@ -97942,7 +97973,7 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revi
         const at = dueAt ? /* @__PURE__ */ new Date(`${dueAt}T13:00:00Z`) : null;
         if (at && (Number.isNaN(at.getTime()) || at.getTime() < Date.now() - 864e5))
           fail14("INVALID_ALERT_DATE");
-        await conn.query("INSERT INTO `Alert` (id, vehicleId, label, dueKm, dueAt, source, createdBy, shopId, createdAt) VALUES (?, ?, ?, ?, ?, 'manual', ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), vehicleId, label5, dueKm, at, createdBy, shopId]);
+        await conn.query("INSERT INTO `Alert` (id, vehicleId, label, dueKm, dueAt, source, createdBy, shopId, createdAt) VALUES (?, ?, ?, ?, ?, 'manual', ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), vehicleId, label5, dueKm, at, createdBy, shopId]);
       }
       async visitAnswer(conn, userId, role, ref4, accept) {
         if (role !== "dueno")
@@ -97974,7 +98005,7 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revi
         if ((await rows28(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [appointment.id])).length)
           fail14("APPOINTMENT_HAS_ORDER");
         await conn.query("UPDATE `Appointment` SET status = 'cancelled', cancelReason = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [`Cancelada por el due\xF1o${reason ? `: ${reason}` : ""}`.slice(0, 191), appointment.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.appointment.cancelled', ?, 'dueno', 'Appointment', ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, appointment.id, JSON.stringify({ from: appointment.status, reason })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.appointment.cancelled', ?, 'dueno', 'Appointment', ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, appointment.id, JSON.stringify({ from: appointment.status, reason })]);
         const when15 = formatEcDateTime(appointment.scheduledAt);
         await this.notify(conn, String(appointment.shopUserId), `cancelled:${String(appointment.id)}`, "care.visit", `El cliente cancel\xF3 la cita ${ref4} del ${when15}${reason ? `: ${reason}` : "."}`);
         return { userId, message: `Cancelaste la cita ${ref4} del ${when15} con ${appointment.shopName}. Ya le avisamos al taller. Puedes pedir otra con: Buscar servicio | categor\xEDa | ciudad | sector | descripci\xF3n` };
@@ -97995,7 +98026,7 @@ Gastos: Mis gastos` };
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [order] = await rows28(conn, "SELECT w.id, w.status, w.total, w.ownerId, w.vehicleId, s.userId AS shopUserId FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " FOR UPDATE", [number2, ...scope.args]);
+        const [order] = await rows28(conn, "SELECT w.id, w.status, w.total, w.ownerId, w.vehicleId, w.shopId, s.userId AS shopUserId FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " FOR UPDATE", [number2, ...scope.args]);
         if (!order)
           fail14("NOT_FOUND");
         if (order.status !== "presupuesto_enviado")
@@ -98011,7 +98042,7 @@ Gastos: Mis gastos` };
         const offer = !approve && offerUsd && offerUsd > 0 ? Math.round(offerUsd * 100) / 100 : null;
         const stored = approve ? null : `${String(reason)}${offer ? ` \xB7 pagar\xEDa ${formatUsd(offer)}` : ""}`.slice(0, 191);
         await conn.query("UPDATE `WorkOrder` SET status = ?, rejectionReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [approve ? "aprobado" : "rechazado", stored, order.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, order.id, JSON.stringify({ status: approve ? "aprobado" : "rechazado", channel: "whatsapp", ...approve ? {} : { negotiation: true, offerUsd: offer } }), approve ? "Presupuesto aprobado por el titular por WhatsApp" : String(reason)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ status: approve ? "aprobado" : "rechazado", channel: "whatsapp", ...approve ? {} : { negotiation: true, offerUsd: offer } }), approve ? "Presupuesto aprobado por el titular por WhatsApp" : String(reason)]);
         const code5 = workOrderCode(number2);
         const [decided] = await rows28(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'workorder.budget.decided'", [order.id]);
         await this.notify(conn, String(order.shopUserId), `budget:${String(order.id)}:${approve}:${Number(decided?.n ?? 1)}`, "care.budget", approve ? `\u2705 El cliente aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}. Puedes iniciar el trabajo.` : `\u{1F91D} El cliente no aprob\xF3 el presupuesto ${code5} de ${formatUsd(Number(order.total))} y quiere negociar: ${reason}.${offer ? ` Pagar\xEDa ${formatUsd(offer)}.` : ""}
@@ -98050,8 +98081,9 @@ La orden queda en negociaci\xF3n y la cita sigue abierta. Env\xEDa otro presupue
         await conn.query("DELETE FROM `WorkOrderItem` WHERE workOrderId = ? AND id IN (?)", [order.id, dropped.map(({ item }) => item.id)]);
         await conn.query("UPDATE `WorkOrder` SET status = 'aprobado', rejectionReason = NULL, total = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [approvedTotal, order.id]);
         await setOrderVat(conn, String(order.id), approvedVat);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, order.id, JSON.stringify({ status: "aprobado", channel: "whatsapp", partial: true, approvedLines: wanted, rejectedLines: dropped.map((d) => d.n), quotedTotal, approvedTotal }), "Presupuesto aprobado en parte por el titular por WhatsApp"]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ status: "aprobado", channel: "whatsapp", partial: true, approvedLines: wanted, rejectedLines: dropped.map((d) => d.n), quotedTotal, approvedTotal }), "Presupuesto aprobado en parte por el titular por WhatsApp"]);
         const code5 = workOrderCode(number2);
+        const deferred = await addDeferredWork(conn, { vehicleId: String(order.vehicleId), shopId: order.shopId ? String(order.shopId) : null, createdBy: userId, code: code5, items: dropped.map(({ item }) => String(item.description)) });
         const describe = (i) => `${i.kind === "mano_obra" ? "Mano de obra: " : ""}${String(i.description)}${i.brand ? ` (${String(i.brand)})` : ""} \u2014 ${formatUsd(subtotal(i))}`;
         const approvedText = items.flatMap((i, index) => wanted.includes(index + 1) ? [`${index + 1}. ${describe(i)}`] : []).join("\n");
         const rejectedText = dropped.map(({ item, n: n3 }) => `${n3}. ${describe(item)}`).join("\n");
@@ -98061,9 +98093,9 @@ Aprobado:
 ${approvedText}
 No aprobado (no lo ejecutes):
 ${rejectedText}
-El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el trabajo aprobado.`);
+El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el trabajo aprobado.${deferred ? ` Lo no aprobado queda como pendiente del veh\xEDculo: en 30 d\xEDas te recordamos ofrecerlo de nuevo.` : ""}`);
         await this.notifyFleetTeam(conn, String(order.vehicleId), userId, `budget-team:${String(order.id)}:partial`, "care.budget", `aprob\xF3 en parte el presupuesto ${code5}: ${formatUsd(approvedTotal)} de ${formatUsd(quotedTotal)}.`);
-        return { userId, message: `Aprobaste en parte el presupuesto ${code5}: ${formatUsd(approvedTotal)} de ${formatUsd(quotedTotal)}. Rechazaste los renglones ${dropped.map((d) => d.n).join(", ")}. El taller solo har\xE1 lo aprobado.` };
+        return { userId, message: `Aprobaste en parte el presupuesto ${code5}: ${formatUsd(approvedTotal)} de ${formatUsd(quotedTotal)}. Rechazaste los renglones ${dropped.map((d) => d.n).join(", ")}. El taller solo har\xE1 lo aprobado.${deferredNote(deferred)}` };
       }
       /** Fecha del calendario de Ecuador (UTC-5) como AAAA-MM-DD. */
       ecToday() {
@@ -98166,9 +98198,11 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
         const fee = await diagnosisFeeOf(conn, String(order.id));
         const code5 = workOrderCode(number2);
         const label5 = `${order.make} ${order.model} ${order.year}`;
+        const quoted2 = await rows28(conn, "SELECT description FROM `WorkOrderItem` WHERE workOrderId = ?", [order.id]);
+        const deferred = await addDeferredWork(conn, { vehicleId: String(order.vehicleId), shopId: String(order.shopId), createdBy: userId, code: code5, items: quoted2.map((q) => String(q.description)) });
         if (fee > 0) {
           await conn.query("DELETE FROM `WorkOrderItem` WHERE workOrderId = ?", [order.id]);
-          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, 'mano_obra', ?, NULL, NULL, 1, ?, CURRENT_TIMESTAMP(3))", [randomUUID26(), order.id, DIAGNOSIS_LINE, fee]);
+          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, 'mano_obra', ?, NULL, NULL, 1, ?, CURRENT_TIMESTAMP(3))", [randomUUID27(), order.id, DIAGNOSIS_LINE, fee]);
           await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', total = ?, warrantyDays = 0, diagnosisOutcome = 'sin_trabajo', outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [fee, reason, order.id]);
           await setOrderVat(conn, String(order.id), 0);
         } else {
@@ -98178,7 +98212,9 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
         await conn.query("UPDATE `Appointment` a JOIN `WorkOrder` w ON w.appointmentId = a.id SET a.status = 'completed', a.updatedAt = UTC_TIMESTAMP(3) WHERE w.id = ? AND a.status IN ('pending','confirmed')", [order.id]);
         await this.audit(conn, userId, "care.order.exit", "WorkOrder", String(order.id), { reason, feeUsd: fee, by: shop.actor });
         const ownerText = fee > 0 ? `\u{1F697} Tu ${label5} puede salir de ${shop.name} sin trabajo (${code5}): ${reason}. Como no aprobaste el presupuesto, el taller cobra el diagn\xF3stico de ${formatUsd(fee)} que te avis\xF3 al recibirlo. Si no est\xE1s de acuerdo, escribe: Objetar diagn\xF3stico ${code5} | motivo` : `\u{1F697} Tu ${label5} puede salir de ${shop.name} sin trabajo y sin costo (${code5}): ${reason}.`;
-        await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `orderexit:${String(order.id)}`, "care.order", ownerText);
+        const ownerFull = `${ownerText}${deferred ? `
+Lo que cotiz\xF3 el taller queda como pendiente en tu veh\xEDculo: te lo recordaremos en 30 d\xEDas.` : ""}`;
+        await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `orderexit:${String(order.id)}`, "care.order", ownerFull);
         await this.notifyDriver(conn, String(order.vehicleId), `orderexit-driver:${String(order.id)}`, `\u{1F697} ${label5} puede salir de ${shop.name} sin trabajo (${code5}). Tu flota te avisar\xE1 los siguientes pasos.`);
         return {
           userId,
@@ -98271,11 +98307,11 @@ Tienes 48 horas para responder: Responder reclamo ${code5} | tu respuesta. Si no
           fail14("WARRANTY_EXPIRED");
         if (!reason || reason.length < 3)
           fail14("REASON_REQUIRED");
-        const id3 = randomUUID26();
+        const id3 = randomUUID27();
         const ref4 = warrantyRef(id3);
         const code5 = workOrderCode(number2);
         await conn.query("INSERT INTO `WorkOrderWarranty` (id, workOrderId, status, reason, requestedBy) VALUES (?, ?, 'abierta', ?, ?)", [id3, order.id, reason, userId]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.claimed', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, order.id, JSON.stringify({ claim: id3, until: window3?.until ?? null, ordered }), reason]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.claimed', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ claim: id3, until: window3?.until ?? null, ordered }), reason]);
         const label5 = `${order.make} ${order.model} ${order.year}`;
         await this.notifyShopTeam(conn, String(order.shopUserId), String(order.shopId), `warranty-claim:${id3}`, `\u{1F6E1}\uFE0F El cliente reclama la garant\xEDa de ${code5} (${label5}, ${ref4}): ${reason}
 Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code5} | motivo`);
@@ -98305,19 +98341,19 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
         const label5 = `${order.make} ${order.model} ${order.year}`;
         if (!accept) {
           await conn.query("UPDATE `WorkOrderWarranty` SET status = 'rechazada', shopNote = ?, decidedBy = ?, decidedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status = 'abierta'", [note, userId, claim.id]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.rejected', ?, 'taller', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, order.id, JSON.stringify({ claim: claim.id, by: shop.actor }), note]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.rejected', ?, 'taller', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ claim: claim.id, by: shop.actor }), note]);
           const text15 = `\u274C ${shop.name} no acept\xF3 tu reclamo de garant\xEDa de ${code5} (${ref4}): ${note}. Si no est\xE1s de acuerdo, habla con el taller.`;
           await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `warranty-answer:${String(claim.id)}`, "care.warranty", text15);
           await this.notifyDriver(conn, String(order.vehicleId), `warranty-answer-driver:${String(claim.id)}`, text15);
           return { userId, message: `Rechazaste el reclamo de garant\xEDa ${ref4} de ${code5}. Avisamos al due\xF1o con tu motivo.` };
         }
         const next = Number((await rows28(conn, "SELECT COALESCE(MAX(number), 0) + 1 AS next FROM `WorkOrder` FOR UPDATE"))[0]?.next ?? 1);
-        const reentryId = randomUUID26();
+        const reentryId = randomUUID27();
         const reentryCode = workOrderCode(next);
         const notes = [`Reingreso por garant\xEDa de ${code5}: ${String(claim.reason)}`, `Registrado por: ${shop.actor}`].join("\n");
         await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, NULL, 'recepcion', ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [reentryId, next, shop.id, order.ownerId, order.vehicleId, Math.max(Number(order.exitKm ?? 0), Number(order.currentKm ?? 0)), notes]);
         await conn.query("UPDATE `WorkOrderWarranty` SET status = 'aceptada', shopNote = ?, decidedBy = ?, decidedAt = UTC_TIMESTAMP(3), reentryOrderId = ? WHERE id = ? AND status = 'abierta'", [note, userId, reentryId, claim.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.accepted', ?, 'taller', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, order.id, JSON.stringify({ claim: claim.id, reentryOrderId: reentryId, reentry: reentryCode, by: shop.actor }), note]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.accepted', ?, 'taller', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ claim: claim.id, reentryOrderId: reentryId, reentry: reentryCode, by: shop.actor }), note]);
         await this.audit(conn, userId, "care.warranty.reentry", "WorkOrder", reentryId, { origin: String(order.id), claim: String(claim.id), by: shop.actor });
         const text14 = `\u2705 ${shop.name} acept\xF3 tu reclamo de garant\xEDa de ${code5} (${ref4}).${note ? ` Nota: ${note}.` : ""} Abri\xF3 la orden ${reentryCode} para atender tu ${label5}, sin costo. Sigue el avance con: Estado ${reentryCode}`;
         await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `warranty-answer:${String(claim.id)}`, "care.warranty", text14);
@@ -98397,7 +98433,7 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
             fail14("CHECKIN_EXISTS");
           await this.ensureOrderRoom(conn, shop, owner);
           const next = Number((await rows28(conn, "SELECT COALESCE(MAX(number), 0) + 1 AS next FROM `WorkOrder` FOR UPDATE"))[0]?.next ?? 1);
-          const id3 = randomUUID26();
+          const id3 = randomUUID27();
           const notes = [`Combustible: ${command.fuel}`, `Estado y da\xF1os: ${command.condition}`, `Inventario: ${command.inventory}`, `Servicios solicitados: ${command.requested}`, `Registrado por: ${shop.actor}`].join("\n");
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, Number(next), shop.id, owner, vehicle.id, vehicle.appointmentId, command.km, notes]);
           await conn.query("UPDATE `Vehicle` SET currentKm = GREATEST(currentKm, ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [command.km, vehicle.id]);
@@ -98430,7 +98466,7 @@ Responde: Confirmo ingreso ${code5} \xB7 Observo ingreso ${code5} | qu\xE9 no co
           const recent = new Set((await rows28(conn, "SELECT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY)", [vehicle.id, shop.id])).map((r) => String(r.serviceId)));
           for (const serviceId of new Set(ids))
             if (!recent.has(serviceId))
-              await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID26(), vehicle.id, serviceId, command.km, shop.id, userId]);
+              await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID27(), vehicle.id, serviceId, command.km, shop.id, userId]);
           const names = [...[...new Set(ids)].map(serviceName2), ...others];
           await conn.query("INSERT INTO `Service` (id, vehicleId, shopId, appointmentId, description, cost, status, createdAt) VALUES (UUID(), ?, ?, ?, ?, NULL, 'done', CURRENT_TIMESTAMP(3))", [vehicle.id, shop.id, vehicle.appointmentId, `${names.join(", ")}${command.detail ? `. ${command.detail}` : ""} (registrado por ${shop.actor})`]);
           await conn.query("UPDATE `Vehicle` SET currentKm = GREATEST(currentKm, ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [command.km, vehicle.id]);
@@ -98448,7 +98484,7 @@ ${summary ?? ""}`.trim());
           if (!at || at.getTime() <= Date.now() || at.getTime() > Date.now() + 365 * 864e5)
             fail14("INVALID_PROPOSED_DATE");
           await ensureShopSlot(conn, shop.id, at, 60);
-          const id3 = randomUUID26();
+          const id3 = randomUUID27();
           await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, createdAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, UTC_TIMESTAMP(3))", [id3, owner, vehicle.id, shop.id, at, `Visita propuesta por el taller (${shop.actor})`]);
           const code5 = short4("C", id3);
           await this.notifyOwner(conn, owner, String(vehicle.id), `nextvisit:${id3}`, "care.visit", `\u{1F4C5} ${shop.name} te propone la pr\xF3xima visita para tu ${label5}: ${formatEcDateTime(at)}. Responde: Aceptar visita ${code5} \xB7 Rechazar visita ${code5}`);
@@ -98471,7 +98507,7 @@ ${summary ?? ""}`.trim());
         for (const [index, l] of command.lines.entries()) {
           const subtotal = Math.round(l.quantity * l.unitPrice * 100) / 100;
           total += subtotal;
-          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP(3), INTERVAL ? MICROSECOND))", [randomUUID26(), order.id, l.kind, l.description, l.brand, l.quality, l.quantity, l.unitPrice, index * 1e3]);
+          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP(3), INTERVAL ? MICROSECOND))", [randomUUID27(), order.id, l.kind, l.description, l.brand, l.quality, l.quantity, l.unitPrice, index * 1e3]);
           lines.push(`${index + 1}. ${l.kind === "mano_obra" ? "Mano de obra: " : "Repuesto: "}${l.description}${l.brand ? ` (${l.brand})` : ""}${l.quality && l.quality !== "nuevo" ? ` \xB7 ${l.quality.toUpperCase()}` : ""} \u2014 ${l.quantity} \xD7 ${formatUsd(l.unitPrice)} = ${formatUsd(subtotal)}`);
         }
         const restored = await restorePartLines(conn, String(order.id), keptParts, command.lines.length);
@@ -98490,7 +98526,7 @@ ${summary ?? ""}`.trim());
             await conn.query("UPDATE `WorkOrder` SET status = 'aprobado', total = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [total, order.id]);
             await setOrderVat(conn, String(order.id), vat);
             await this.audit(conn, userId, "care.budget.sent", "WorkOrder", String(order.id), { total, by: shop.actor });
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', NULL, NULL, 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), order.id, JSON.stringify({ status: "aprobado", channel: "auto", limitUsd: Number(auto.autoApproveUsd) }), `Aprobado autom\xE1ticamente por la flota (hasta ${formatUsd(Number(auto.autoApproveUsd))})`]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', NULL, NULL, 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), order.id, JSON.stringify({ status: "aprobado", channel: "auto", limitUsd: Number(auto.autoApproveUsd) }), `Aprobado autom\xE1ticamente por la flota (hasta ${formatUsd(Number(auto.autoApproveUsd))})`]);
             await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `budgetsent:${String(order.id)}:${total}`, "care.budget", `\u{1F9FE} Presupuesto ${code5} \u2014 ${shop.name}
 \u{1F697} ${order.make} ${order.model} ${order.year}
 ${lines.join("\n")}
@@ -98544,7 +98580,7 @@ El taller no har\xE1 ning\xFAn trabajo con costo sin tu aprobaci\xF3n.`);
             await this.audit(conn, userId, "care.order.stage", "WorkOrder", String(order.id), { from: "aprobado", to: "en_ejecucion", by: shop.actor, auto: true });
           }
           const items = await rows28(conn, "SELECT kind, description, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [order.id]);
-          const id4 = randomUUID26();
+          const id4 = randomUUID27();
           await conn.query("INSERT INTO `WorkOrderChange` (id, workOrderId, kind, description, payload, total, createdBy) VALUES (?, ?, 'entrega', ?, ?, ?, ?)", [id4, order.id, command.workDone, JSON.stringify({ exitKm: command.exitKm, warrantyDays: command.warrantyDays }), order.total, userId]);
           await this.audit(conn, userId, "care.delivery.sent", "WorkOrder", String(order.id), { by: shop.actor });
           await this.notifyDriver(conn, String(order.vehicleId), `delivery-driver:${id4}`, `\u{1F697} ${order.make} ${order.model} ${order.year} est\xE1 listo en ${shop.name} (${workOrderCode(command.orderNumber)}). Coordina el retiro con tu flota.`);
@@ -98562,7 +98598,7 @@ Revisa el veh\xEDculo al recibirlo y responde: Acepto entrega ${code5} \xB7 Rech
         const net = Math.round(lines.reduce((a, l) => a + l.subtotal, 0) * 100) / 100;
         const vat = vatOf(net, await businessVatRate(conn, "Shop", shop.id));
         const total = Math.round((net + vat) * 100) / 100;
-        const id3 = randomUUID26();
+        const id3 = randomUUID27();
         const ref4 = short4("N", id3);
         await conn.query("INSERT INTO `WorkOrderChange` (id, workOrderId, kind, description, payload, total, createdBy) VALUES (?, ?, 'novedad', ?, ?, ?, ?)", [id3, order.id, command.description, JSON.stringify({ lines: command.lines, ...vat > 0 ? { vatUsd: vat } : {} }), total, userId]);
         await this.audit(conn, userId, "care.finding.sent", "WorkOrder", String(order.id), { change: id3, total, by: shop.actor });
@@ -98579,7 +98615,7 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [change] = await rows28(conn, "SELECT c.id, c.workOrderId, c.payload, c.total, w.number, w.ownerId, w.vehicleId, w.total AS orderTotal, w.status AS orderStatus, s.userId AS shopUserId FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND " + scope.where("w") + " AND REPLACE(c.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [...scope.args, prefixOf2(ref4)]);
+        const [change] = await rows28(conn, "SELECT c.id, c.workOrderId, c.description, c.payload, c.total, w.number, w.ownerId, w.vehicleId, w.shopId, w.total AS orderTotal, w.status AS orderStatus, s.userId AS shopUserId FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND " + scope.where("w") + " AND REPLACE(c.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [...scope.args, prefixOf2(ref4)]);
         if (!change)
           fail14("NOT_FOUND");
         checkLimit(scope, String(change.ownerId), Number(change.orderTotal) + Number(change.total));
@@ -98589,15 +98625,16 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         if (approve) {
           const payload = typeof change.payload === "string" ? JSON.parse(String(change.payload)) : change.payload;
           for (const l of payload.lines)
-            await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID26(), change.workOrderId, l.kind, `Adicional: ${String(l.description)}`, l.brand ?? null, l.quality ?? null, l.quantity, l.unitPrice]);
+            await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID27(), change.workOrderId, l.kind, `Adicional: ${String(l.description)}`, l.brand ?? null, l.quality ?? null, l.quantity, l.unitPrice]);
           await conn.query("UPDATE `WorkOrder` SET total = total + ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [change.total, change.workOrderId]);
           await addOrderVat(conn, String(change.workOrderId), Number(payload.vatUsd ?? 0));
         }
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.finding.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, change.workOrderId, JSON.stringify({ change: change.id, approved: approve }), reason]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.finding.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, change.workOrderId, JSON.stringify({ change: change.id, approved: approve }), reason]);
         const code5 = workOrderCode(Number(change.number));
+        const deferred = approve ? 0 : await addDeferredWork(conn, { vehicleId: String(change.vehicleId), shopId: String(change.shopId), createdBy: userId, code: code5, items: [String(change.description)] });
         await this.notify(conn, String(change.shopUserId), `findingdecision:${String(change.id)}`, "care.finding", approve ? `\u2705 El cliente aprob\xF3 la novedad ${ref4} de ${code5} por ${formatUsd(Number(change.total))}. Puedes ejecutarla.` : `\u274C El cliente no aprob\xF3 la novedad ${ref4} de ${code5}: ${reason}. No la ejecutes.`);
         await this.notifyFleetTeam(conn, String(change.vehicleId), userId, `finding-team:${String(change.id)}`, "care.finding", approve ? `aprob\xF3 la novedad ${ref4} de ${code5} por ${formatUsd(Number(change.total))}.` : `no aprob\xF3 la novedad ${ref4} de ${code5}: ${reason}.`);
-        return { userId, message: approve ? `Aprobaste la novedad ${ref4} por ${formatUsd(Number(change.total))}; se sum\xF3 a la orden ${code5}.` : `Registramos que no apruebas la novedad ${ref4}. El taller no la har\xE1.` };
+        return { userId, message: approve ? `Aprobaste la novedad ${ref4} por ${formatUsd(Number(change.total))}; se sum\xF3 a la orden ${code5}.` : `Registramos que no apruebas la novedad ${ref4}. El taller no la har\xE1.${deferredNote(deferred)}` };
       }
       async deliveryAnswer(conn, userId, role, number2, accept, reason) {
         if (role !== "dueno")
@@ -98610,7 +98647,7 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
           fail14("REASON_REQUIRED");
         const code5 = workOrderCode(number2);
         await conn.query("UPDATE `WorkOrderChange` SET status = ?, decidedBy = ?, reason = ?, decidedAt = UTC_TIMESTAMP(3) WHERE id = ?", [accept ? "approved" : "rejected", userId, reason, change.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.delivery.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, order.id, JSON.stringify({ accepted: accept }), reason]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.delivery.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ accepted: accept }), reason]);
         if (!accept) {
           const claim2 = await this.openDeliveryClaim(conn, userId, order, "rechazo", reason);
           await this.notify(conn, String(order.shopUserId), `deliverydecision:${String(change.id)}`, "care.delivery", `\u274C El cliente no acept\xF3 la entrega de ${code5}: ${reason}. La orden sigue abierta.${claim2?.state === "opened" ? ` Se abri\xF3 un reclamo: tienes 48 horas (hasta el ${ecWhen(claim2.dueAt)}) para responder. Escribe: Responder reclamo ${code5} | respuesta` : ""}`);
@@ -98624,13 +98661,13 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         await logOdometer(conn, String(order.vehicleId), payload.exitKm, "entrega", userId);
         await conn.query("UPDATE `VehicleSymptom` SET resolvedAt = UTC_TIMESTAMP(3) WHERE vehicleId = ? AND resolvedAt IS NULL", [order.vehicleId]);
         if (Number(order.total) > 0)
-          await conn.query("INSERT INTO `VehicleExpense` (id, vehicleId, fleetId, kind, amountUsd, description, source, refId, createdBy, spentAt) VALUES (?, ?, ?, 'mantenimiento', ?, ?, 'orden', ?, ?, UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE amountUsd = VALUES(amountUsd)", [randomUUID26(), order.vehicleId, order.fleetId, order.total, `${code5} \xB7 ${String(order.shopName)}`.slice(0, 191), order.id, userId]);
+          await conn.query("INSERT INTO `VehicleExpense` (id, vehicleId, fleetId, kind, amountUsd, description, source, refId, createdBy, spentAt) VALUES (?, ?, ?, 'mantenimiento', ?, ?, 'orden', ?, ?, UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE amountUsd = VALUES(amountUsd)", [randomUUID27(), order.vehicleId, order.fleetId, order.total, `${code5} \xB7 ${String(order.shopName)}`.slice(0, 191), order.id, userId]);
         const items = await rows28(conn, "SELECT description FROM `WorkOrderItem` WHERE workOrderId = ?", [order.id]);
         const serviceIds2 = new Set([String(change.description), ...items.map((i) => String(i.description).replace(/^Adicional: /, ""))].flatMap((t) => t.split(/[,;]/)).map((t) => matchService(t.trim())).filter((x) => !!x));
         const already = new Set((await rows28(conn, "SELECT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND createdAt >= ?", [order.vehicleId, order.shopId, order.createdAt])).map((r) => String(r.serviceId)));
         for (const serviceId of serviceIds2)
           if (!already.has(serviceId))
-            await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID26(), order.vehicleId, serviceId, payload.exitKm, order.shopId, userId]);
+            await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID27(), order.vehicleId, serviceId, payload.exitKm, order.shopId, userId]);
         if (order.appointmentId)
           await conn.query("UPDATE `Appointment` SET status = 'completed', updatedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status IN ('pending','confirmed')", [order.appointmentId]);
         const review = await this.pendingReviewNote(conn, String(order.vehicleId));
@@ -98642,7 +98679,7 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         if (reason) {
           claim = await this.openDeliveryClaim(conn, userId, order, "observacion", reason);
           await this.notify(conn, String(order.shopUserId), `deliveryclaim:${String(change.id)}`, "care.claim", claim?.state === "opened" ? `\u{1F4DD} El cliente recibi\xF3 ${code5} con una observaci\xF3n: ${reason}. Se abri\xF3 un reclamo: tienes 48 horas (hasta el ${ecWhen(claim.dueAt)}) para responder. Escribe: Responder reclamo ${code5} | respuesta. Si no respondes, decide el equipo de AutoMantPro.` : `\u{1F4DD} El cliente recibi\xF3 ${code5} con una observaci\xF3n: ${reason}. Queda registrada como reclamo; el equipo de AutoMantPro le dar\xE1 seguimiento.`);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.claim.opened', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, order.id, JSON.stringify({ source: "delivery" }), reason]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.claim.opened', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ source: "delivery" }), reason]);
         }
         if (!reason)
           await settleClaimOnAcceptance(conn, String(order.id));
@@ -98655,7 +98692,7 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
       async openDeliveryClaim(conn, userId, order, source, reason) {
         const claim = await openClaim(conn, { workOrderId: String(order.id), ownerUserId: userId, source, reason });
         if (claim?.state === "opened" && source === "rechazo")
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.claim.opened', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, order.id, JSON.stringify({ source: "delivery-rejected", claim: claim.id }), reason]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.claim.opened', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ source: "delivery-rejected", claim: claim.id }), reason]);
         return claim;
       }
       /** The owner asks the workshop to call before deciding on a finding; the work still waits. */
@@ -98712,12 +98749,12 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         }
         const values2 = Object.values(details).filter((v) => typeof v === "number");
         const overall = Math.max(1, Math.min(5, Math.round(values2.reduce((a, b) => a + b, 0) / values2.length - (details.piezaCorrecta === false ? 1 : 0))));
-        await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, details, localRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID26(), userId, toId, overall, command.comment || null, kind, workOrderId, JSON.stringify(details), localRequestId]);
+        await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, details, localRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID27(), userId, toId, overall, command.comment || null, kind, workOrderId, JSON.stringify(details), localRequestId]);
         for (const table2 of ["Shop", "Store"])
           await conn.query(`UPDATE \`${table2}\` t SET t.ratingAvg = COALESCE((SELECT ROUND(AVG(r.score), 1) FROM \`Rating\` r WHERE r.toId = ? AND r.hiddenAt IS NULL), 0), t.ratingCount = (SELECT COUNT(*) FROM \`Rating\` r WHERE r.toId = ? AND r.hiddenAt IS NULL) WHERE t.userId = ?`, [toId, toId, toId]);
         await this.notify(conn, toId, `rated:${workOrderId ?? localRequestId}:${userId}`, "care.rating", `\u2B50 Recibiste una calificaci\xF3n de ${overall}/5 de un cliente${command.comment ? `: "${command.comment}"` : ""}. Consulta tu reporte con: Mi calificaci\xF3n`);
         if (overall <= 2)
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.rating.low', ?, 'dueno', 'Rating', ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), userId, workOrderId ?? localRequestId, JSON.stringify({ overall, kind })]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.rating.low', ?, 'dueno', 'Rating', ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, workOrderId ?? localRequestId, JSON.stringify({ overall, kind })]);
         return { userId, message: overall <= 2 ? `Gracias por dec\xEDrnoslo (${overall}/5). Una persona del equipo revisar\xE1 el caso con ${name} y te escribir\xE1.` : `\xA1Gracias! Calificaste a ${name} con ${overall}/5. Tu opini\xF3n ayuda a otros a elegir.` };
       }
       /** Satisfaction report for the workshop or store owner: averages by dimension and recent comments. */
@@ -98787,7 +98824,7 @@ Para quitar a alguien: Quitar t\xE9cnico T-XXXXXX` };
           if (limits?.technicians != null && Number(techs?.n ?? 0) >= limits.technicians)
             fail14("TECHNICIAN_LIMIT");
         }
-        const id3 = randomUUID26();
+        const id3 = randomUUID27();
         const code5 = short4("T", id3);
         await conn.query("INSERT INTO `ShopMember` (id, shopId, name, status, invitedBy, role) VALUES (?, ?, ?, 'invited', ?, ?)", [id3, shop.id, command.name, userId, command.role]);
         await this.audit(conn, userId, "care.technician.invited", "ShopMember", id3, { shopId: shop.id, by: shop.isOwner ? "dueno" : "admin" });
@@ -98812,7 +98849,7 @@ Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Para quitarlo desp
         if (!existing.length) {
           if (Number(count3[0]?.n) >= 5)
             fail14("INVITATION_LIMIT");
-          await conn.query("INSERT INTO `LocalOffer` (id, requestId, businessId, businessUserId, businessName, referred) VALUES (?, ?, ?, ?, ?, TRUE)", [randomUUID26(), request.id, business.id, userId, business.name]);
+          await conn.query("INSERT INTO `LocalOffer` (id, requestId, businessId, businessUserId, businessName, referred) VALUES (?, ?, ?, ?, ?, TRUE)", [randomUUID27(), request.id, business.id, userId, business.name]);
         }
         const [vehicle] = request.kind === "servicio" ? await rows28(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [request.vehicleId]) : [];
         const brief = vehicle ? await this.planBrief(conn, vehicle) : null;
@@ -98829,7 +98866,7 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
         await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), repairNoticeKey(orderId), "care.repair", repairNoticeText(workOrderCode(Number(order.number)), String(order.shopName)));
       }
       async notify(conn, recipient, dedup, kind, message2) {
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID26(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID27(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
       }
       /**
        * A notice for the vehicle's owner. For a fleet vehicle the fleet's administrators and
@@ -98890,7 +98927,7 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
       }
       async recordInspection(conn, userId, shop, vehicle, items, entries, note, order = null) {
         const label5 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
-        const id3 = randomUUID26();
+        const id3 = randomUUID27();
         if (order)
           await conn.query("INSERT INTO `VehicleInspection` (id, vehicleId, shopId, appointmentId, workOrderId, stage, actorUserId, km, note, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [id3, vehicle.id, shop.id, vehicle.appointmentId, order.id, order.stage, userId, Number(vehicle.currentKm) || null, note]).catch((err) => {
             if (err.code === "ER_BAD_FIELD_ERROR")
@@ -98903,7 +98940,7 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
           await conn.query("INSERT INTO `VehicleInspectionItem` (inspectionId, code, status, measure, unit) VALUES (?, ?, ?, ?, ?)", [id3, e9.code, e9.status, e9.measure, e9.unit]);
         const covered = servicesCoveredBy(entries, items);
         for (const serviceId of covered)
-          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) SELECT ?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ? FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `VehicleServiceRecord` WHERE vehicleId = ? AND serviceId = ? AND doneAt >= UTC_DATE())", [randomUUID26(), vehicle.id, serviceId, Number(vehicle.currentKm) || 0, shop.id, userId, vehicle.id, serviceId]);
+          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) SELECT ?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ? FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `VehicleServiceRecord` WHERE vehicleId = ? AND serviceId = ? AND doneAt >= UTC_DATE())", [randomUUID27(), vehicle.id, serviceId, Number(vehicle.currentKm) || 0, shop.id, userId, vehicle.id, serviceId]);
         const name = (code5) => INSPECTION_ITEMS.find((i) => i.code === code5)?.name ?? code5;
         const soon = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
         const today = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
@@ -98955,7 +98992,7 @@ Fecha: ${when15}.` };
             await this.notify(conn, manager, `${dedup.slice(0, 150)}:${manager}`, kind, message2);
       }
       async audit(conn, userId, eventType, entityType, entityId, after) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID26(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
       }
     };
   }
@@ -99089,7 +99126,7 @@ var init_preferences = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/outbox-delivery-store.js
-import { randomUUID as randomUUID27 } from "node:crypto";
+import { randomUUID as randomUUID28 } from "node:crypto";
 function whatsappDelivery(env = process.env) {
   const value2 = env.WHATSAPP_DELIVERY?.trim();
   return value2 === "bridge" || value2 === "cloud" ? value2 : "off";
@@ -99127,7 +99164,7 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
           const base = `verification:${businessId}:${decision}`;
           const [prior] = await conn.query("SELECT COUNT(*) AS n FROM `NotificationOutbox` WHERE dedupKey = ? OR dedupKey LIKE ?", [base, `${base}:%`]);
           const sent = Number(Array.isArray(prior) ? prior[0]?.n ?? 0 : 0);
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID27(), sent ? `${base}:${sent + 1}` : base, userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID28(), sent ? `${base}:${sent + 1}` : base, userId, JSON.stringify({ message: message2 })]);
         });
       }
       claim(limit = 5) {
@@ -99161,7 +99198,7 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
               await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'EMPTY_MESSAGE' WHERE id = ? AND status = 'pending'", [id3]);
               continue;
             }
-            const leaseToken = randomUUID27();
+            const leaseToken = randomUUID28();
             const changed2 = await conn.query("UPDATE `NotificationOutbox` SET status = 'sending', attempts = attempts + 1, leaseToken = ?, lockedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status = 'pending' AND attempts < ?", [leaseToken, id3, MAX_ATTEMPTS2]);
             if (affected3(changed2) !== 1)
               continue;
@@ -99216,7 +99253,7 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
 });
 
 // packages/api/dist/infrastructure/messaging/local-agent-task-store.js
-import { randomBytes as randomBytes9, randomUUID as randomUUID29 } from "node:crypto";
+import { randomBytes as randomBytes9, randomUUID as randomUUID30 } from "node:crypto";
 function validateTask(type, payload) {
   if (typeof type !== "string" || !LOCAL_TASK_TYPES.includes(type) || !own(Object.fromEntries(LOCAL_TASK_TYPES.map((t) => [t, true])), type))
     throw new BrokerError("TASK_TYPE_NOT_ALLOWED");
@@ -99258,7 +99295,7 @@ var init_local_agent_task_store = __esm({
         const type = input.type;
         const payload = input.payload == null ? null : JSON.stringify(input.payload);
         return this.run(async (c) => {
-          const id3 = randomUUID29();
+          const id3 = randomUUID30();
           const [insert] = await c.query("INSERT INTO `LocalAgentTask` (id,type,status,payload,idempotencyKey,createdBy,createdAt,updatedAt) VALUES (?,?, 'queued', ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE id=id", [id3, type, payload, input.idempotencyKey, input.createdBy]);
           const [row2] = await data2(c, "SELECT * FROM `LocalAgentTask` WHERE idempotencyKey = ?", [input.idempotencyKey]);
           if (Number(insert?.affectedRows) === 1)
@@ -99497,7 +99534,7 @@ var init_ads = __esm({
 });
 
 // packages/api/dist/infrastructure/ads/ad-store.js
-import { randomUUID as randomUUID34 } from "node:crypto";
+import { randomUUID as randomUUID35 } from "node:crypto";
 function toSummary(r, today = ecuadorDate()) {
   const startDate = dateText(r.startDate);
   const endDate = dateText(r.endDate);
@@ -99531,7 +99568,7 @@ function toSummary(r, today = ecuadorDate()) {
   };
 }
 async function audit4(conn, eventType, actorUserId, actorRole, entityId, after, entityType = "AdCampaign") {
-  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, NULL, ?, UTC_TIMESTAMP(3))", [randomUUID34(), eventType, actorUserId, actorRole, entityType, entityId, JSON.stringify(after)]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, NULL, ?, UTC_TIMESTAMP(3))", [randomUUID35(), eventType, actorUserId, actorRole, entityType, entityId, JSON.stringify(after)]);
 }
 async function readConsent(conn, userId) {
   const [u] = await rows34(conn, "SELECT adsOptInAt, whatsappOptOutAt FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
@@ -99606,7 +99643,7 @@ var init_ad_store = __esm({
         const price = adPrice(draft.formats, draft.days);
         return this.run(async (conn) => {
           const biz = await this.business(conn, userId, role);
-          const id3 = randomUUID34();
+          const id3 = randomUUID35();
           await conn.query("INSERT INTO `AdCampaign` (id, ownerUserId, businessKind, businessId, businessName, title, body, linkUrl, imageMime, imageData, formats, city, zone, startDate, endDate, days, subtotalUsd, ivaUsd, totalUsd, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'borrador')", [id3, userId, biz.kind, biz.id, biz.name, draft.title, draft.body, draft.linkUrl, image?.mime ?? null, image?.data ?? null, price.formats.join(","), draft.city, draft.zone, draft.startDate, adEndDate(draft.startDate, draft.days), draft.days, price.subtotalUsd, price.ivaUsd, price.totalUsd]);
           await audit4(conn, "ad.created", userId, role, id3, { formats: price.formats, days: price.days, totalUsd: price.totalUsd });
           const ad = toSummary(await this.own(conn, userId, id3), today);
@@ -99751,7 +99788,7 @@ var init_ad_store = __esm({
             `Cuando la hagas, sube la foto del comprobante en tu perfil: ${accountLink("publicidad")}`,
             "Aprobamos el anuncio apenas verifiquemos el pago, normalmente el mismo d\xEDa h\xE1bil."
           ].join("\n");
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.payment', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID34(), `ad:payment:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.payment', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID35(), `ad:payment:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
           await conn.query("UPDATE `AdCampaign` SET paymentSentAt = ? WHERE id = ?", [now, adId]);
           await audit4(conn, "ad.payment_info", adminId, "admin", adId, { accounts: banks.length });
           return true;
@@ -99770,7 +99807,7 @@ var init_ad_store = __esm({
           await conn.query("UPDATE `AdCampaign` SET invoiceNumber = ? WHERE id = ?", [invoice, adId]);
           await audit4(conn, "ad.invoice", adminId, "admin", adId, { invoice });
           const message2 = `\u{1F9FE} Emitimos la factura N\xB0 ${invoice} de tu anuncio ${adCode(adId)} por ${usd4(Number(ad.totalUsd))}. Cons\xE9rvala para tu contabilidad.`;
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.invoice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID34(), `ad:invoice:${adId}:${invoice}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.invoice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID35(), `ad:invoice:${adId}:${invoice}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
           return true;
         });
       }
@@ -99797,7 +99834,7 @@ var init_ad_store = __esm({
             await audit4(conn, to === "aprobado" ? "ad.approved" : "ad.rejected", adminId, "admin", adId, { status, reason });
             const code5 = adCode(adId);
             const message2 = to === "aprobado" ? `\u2705 Aprobamos el pago de tu anuncio ${code5} \xAB${String(ad.title)}\xBB. Se publica desde el ${dateText(ad.startDate)} hasta el ${dateText(ad.endDate)}. M\xEDralo en tu perfil: ${accountLink("publicidad")}` : `No pudimos verificar el pago de tu anuncio ${code5}: ${reason}. Sube otro comprobante en tu perfil: ${accountLink("publicidad")}`;
-            await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.decision', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID34(), `ad:${to}:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
+            await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.decision', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID35(), `ad:${to}:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
             await conn.query("COMMIT");
             return true;
           } catch (err) {
@@ -99812,7 +99849,7 @@ var init_ad_store = __esm({
 });
 
 // packages/api/dist/infrastructure/operator/operator-key-store.js
-import { createHash as createHash13, randomBytes as randomBytes12, randomUUID as randomUUID39 } from "node:crypto";
+import { createHash as createHash13, randomBytes as randomBytes12, randomUUID as randomUUID40 } from "node:crypto";
 var OPERATOR_SCOPES, SCOPE_LABELS, KEY_FORMAT, isOperatorKeyFormat, hashOperatorKey, parseScopes, toRow, MysqlOperatorKeyStore;
 var init_operator_key_store = __esm({
   "packages/api/dist/infrastructure/operator/operator-key-store.js"() {
@@ -99852,11 +99889,11 @@ var init_operator_key_store = __esm({
         }
       }
       create(input) {
-        const id3 = randomUUID39();
+        const id3 = randomUUID40();
         const key = `amp_op_${randomBytes12(32).toString("base64url")}`;
         return this.run(async (conn) => {
           await conn.query("INSERT INTO `OperatorKey` (id, name, keyHash, scopes, createdByUserId) VALUES (?, ?, ?, ?, ?)", [id3, input.name, hashOperatorKey(key), input.scopes.join(","), input.createdByUserId]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.created', ?, 'admin', 'OperatorKey', ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID39(), input.createdByUserId, id3, `${input.name}: ${input.scopes.join(", ")}`]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.created', ?, 'admin', 'OperatorKey', ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID40(), input.createdByUserId, id3, `${input.name}: ${input.scopes.join(", ")}`]);
           return { id: id3, key };
         });
       }
@@ -99868,7 +99905,7 @@ var init_operator_key_store = __esm({
           const [result] = await conn.query("UPDATE `OperatorKey` SET revokedAt = CURRENT_TIMESTAMP(3), revokedByUserId = ? WHERE id = ? AND revokedAt IS NULL", [byUserId, id3]);
           const changed2 = Number(result.affectedRows ?? 0) > 0;
           if (changed2)
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.revoked', ?, 'admin', 'OperatorKey', ?, 'llave revocada', CURRENT_TIMESTAMP(3))", [randomUUID39(), byUserId, id3]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.revoked', ?, 'admin', 'OperatorKey', ?, 'llave revocada', CURRENT_TIMESTAMP(3))", [randomUUID40(), byUserId, id3]);
           return changed2;
         });
       }
@@ -99885,7 +99922,7 @@ var init_operator_key_store = __esm({
       }
       audit(key, eventType, entityType, entityId, reason) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID39(), `operator.${eventType}`, key.createdByUserId, entityType, entityId, `[${key.name}] ${reason}`.slice(0, 500)]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID40(), `operator.${eventType}`, key.createdByUserId, entityType, entityId, `[${key.name}] ${reason}`.slice(0, 500)]);
         });
       }
     };
@@ -100064,7 +100101,7 @@ var init_plan_store = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/billing-store.js
-import { randomUUID as randomUUID40 } from "node:crypto";
+import { randomUUID as randomUUID41 } from "node:crypto";
 function rowsOf2(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
@@ -100143,7 +100180,7 @@ var init_billing_store = __esm({
       }
       addAccount(input, by) {
         return this.run(async (conn) => {
-          const id3 = randomUUID40();
+          const id3 = randomUUID41();
           await conn.query("INSERT INTO `PaymentAccount` (id, bank, accountType, number, holder, holderId, active, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, TRUE, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, input.bank, input.accountType, input.number, input.holder, input.holderId, by]);
           return id3;
         });
@@ -100226,7 +100263,7 @@ var init_billing_store = __esm({
       }
       notify(userId, dedupKey, message2) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID40(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID41(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
         });
       }
       instructions(id3) {
@@ -112398,7 +112435,7 @@ var init_claims = __esm({
 });
 
 // packages/api/dist/interfaces/admin/part-returns.js
-import { randomUUID as randomUUID49 } from "node:crypto";
+import { randomUUID as randomUUID50 } from "node:crypto";
 function partReturnsView(input) {
   const card = (t) => `<div class="card"><h2>${escapeHtml(shortCode("S", t.requestId))} \xB7 ${escapeHtml(t.category)}</h2>
     <div>Almac\xE9n: ${escapeHtml(t.storeName)} \xB7 Quien compr\xF3: ${escapeHtml(t.buyerName)} \xB7 Precio: ${escapeHtml(formatUsd(t.priceUsd))}</div>
@@ -112532,8 +112569,8 @@ var init_part_returns = __esm({
             const ref4 = shortCode("S", String(t.requestId));
             const text14 = `\u2696\uFE0F AutoMantPro decidi\xF3 la devoluci\xF3n del repuesto ${ref4}: ${DECISION_TEXT[input.decision].toLowerCase()}. ${input.note} AutoMantPro no mueve dinero: si corresponde un reembolso, lo acuerdan entre ustedes.`;
             for (const [who, key] of [[String(t.ownerId), "buyer"], [String(t.businessUserId), "store"]])
-              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.return', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID49(), `partreturn-resolved:${input.id}:${key}`, who, JSON.stringify({ message: text14 })]);
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'part.return.resolved', ?, 'admin', 'LocalRequest', ?, ?, UTC_TIMESTAMP(3))", [randomUUID49(), input.adminUserId, t.requestId, JSON.stringify({ returnId: input.id, decision: input.decision })]);
+              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.return', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID50(), `partreturn-resolved:${input.id}:${key}`, who, JSON.stringify({ message: text14 })]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'part.return.resolved', ?, 'admin', 'LocalRequest', ?, ?, UTC_TIMESTAMP(3))", [randomUUID50(), input.adminUserId, t.requestId, JSON.stringify({ returnId: input.id, decision: input.decision })]);
             await conn.query("COMMIT");
             return { ok: true, ref: ref4 };
           } catch (err) {
@@ -112651,7 +112688,7 @@ var init_model_plan_input = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/model-plan-admin-store.js
-import { randomUUID as randomUUID50 } from "node:crypto";
+import { randomUUID as randomUUID51 } from "node:crypto";
 var MODEL_PLAN_PAGE_SIZE, ModelPlanConflictError, toRecord3, COLUMNS2, snapshot, MysqlModelPlanAdminStore;
 var init_model_plan_admin_store = __esm({
   "packages/api/dist/infrastructure/plans/model-plan-admin-store.js"() {
@@ -112695,7 +112732,7 @@ var init_model_plan_admin_store = __esm({
       }
       rows = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
       async audit(conn, eventType, actor, id3, before, after) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'VehicleModelPlan', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID50(), eventType, actor, id3, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'VehicleModelPlan', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID51(), eventType, actor, id3, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
       }
       async tx(conn, work) {
         await conn.query("START TRANSACTION");
@@ -117636,7 +117673,7 @@ var init_registrations = __esm({
 });
 
 // packages/api/dist/infrastructure/admin/admin-manage-store.js
-import { randomUUID as randomUUID51 } from "node:crypto";
+import { randomUUID as randomUUID52 } from "node:crypto";
 function changed(before, after) {
   const out = {};
   for (const [k, v] of Object.entries(after))
@@ -117669,10 +117706,10 @@ var init_admin_manage_store = __esm({
         }
       }
       async audit(conn, actor, eventType, entityType, entityId, after, reason) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, `after`, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID51(), eventType, actor, entityType, entityId, reason, JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, `after`, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID52(), eventType, actor, entityType, entityId, reason, JSON.stringify(after)]);
       }
       async notice(conn, userId, key, kind, message2) {
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID51(), key.slice(0, 191), userId, kind, JSON.stringify({ message: message2 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID52(), key.slice(0, 191), userId, kind, JSON.stringify({ message: message2 })]);
       }
       /** Cuenta con su estado de acceso: la ficha de /admin también abre las dadas de baja. */
       async account(userId) {
@@ -124002,7 +124039,7 @@ init_outbox_delivery_store();
 
 // packages/api/dist/infrastructure/messaging/imported-contact-store.js
 init_apply();
-import { createHash as createHash11, randomUUID as randomUUID28 } from "node:crypto";
+import { createHash as createHash11, randomUUID as randomUUID29 } from "node:crypto";
 var MysqlImportedContactStore = class {
   connect;
   constructor(connect = openConnection) {
@@ -124026,7 +124063,7 @@ var MysqlImportedContactStore = class {
           skipped++;
           continue;
         }
-        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID28(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
+        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID29(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
         if (Number(result.affectedRows) === 1)
           imported++;
         else
@@ -124049,8 +124086,8 @@ Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
           continue;
         }
         await conn.query("UPDATE `ImportedContact` SET status = 'approved', contactedAt = UTC_TIMESTAMP(3) WHERE id = ?", [contact.id]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID28(), `reactivation:${createHash11("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text14 })]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), contact.id, JSON.stringify({ approvedBy })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID29(), `reactivation:${createHash11("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text14 })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID29(), contact.id, JSON.stringify({ approvedBy })]);
         queued++;
       }
       return { queued, skipped };
@@ -124071,7 +124108,7 @@ init_appointment_store();
 init_contracts();
 init_messages();
 init_workshop_map();
-import { createHash as createHash12, randomUUID as randomUUID31 } from "node:crypto";
+import { createHash as createHash12, randomUUID as randomUUID32 } from "node:crypto";
 
 // packages/api/dist/application/map/nearby-shops.js
 init_workshop_map();
@@ -124137,7 +124174,7 @@ init_apply();
 init_contracts();
 init_vehicle_care_store();
 init_weekly_hours();
-import { randomUUID as randomUUID30 } from "node:crypto";
+import { randomUUID as randomUUID31 } from "node:crypto";
 var rows29 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var fail16 = (code5) => {
   throw new LocalMarketplaceError(code5);
@@ -124238,7 +124275,7 @@ var ShopExtrasStore = class {
     });
   }
   async audit(conn, userId, eventType, entityType, entityId, after) {
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID30(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID31(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
   }
   /** Lo que el panel del taller muestra y edita: tarifario completo, horario por día y domicilio. */
   overview(userId) {
@@ -124273,7 +124310,7 @@ var ShopExtrasStore = class {
       const [same] = await rows29(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ?", [shop.id, name]);
       if (same)
         fail16("TARIFF_DUPLICATE");
-      const id3 = randomUUID30();
+      const id3 = randomUUID31();
       await conn.query("INSERT INTO `ShopTariff` (id, shopId, name, priceFromUsd, durationMin) VALUES (?, ?, ?, ?, ?)", [id3, shop.id, name, input.priceFromUsd, input.durationMin ?? null]);
       await this.audit(conn, userId, "tariff.created", "ShopTariff", id3, { shopId: shop.id, name, priceFromUsd: input.priceFromUsd, durationMin: input.durationMin ?? null });
       return { id: id3, name, priceFromUsd: input.priceFromUsd, durationMin: input.durationMin ?? null, active: true };
@@ -124541,7 +124578,7 @@ var ShopDirectoryStore = class {
       if (err.code !== "ER_NO_SUCH_TABLE")
         throw err;
     });
-    const id3 = randomUUID31();
+    const id3 = randomUUID32();
     const ref4 = shortRef(id3);
     const service = input.service.replace(/\s+/g, " ").trim();
     await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, services, directKey, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [id3, userId, input.vehicleId, input.shopId, at, `Cita pedida por el due\xF1o: ${service}`.slice(0, 191), JSON.stringify([service]), directKey]);
@@ -124559,8 +124596,8 @@ var ShopDirectoryStore = class {
     const brief = await this.care.planBrief(conn, vehicle);
     const message2 = `\u{1F4C5} Nueva cita pedida para ${label5}: ${service}, ${formatEcDateTime(at)}.${pickedNames.length ? ` El due\xF1o marc\xF3 del plan: ${pickedNames.slice(0, 8).join(", ")}${pickedNames.length > 8 ? ` y ${pickedNames.length - 8} m\xE1s` : ""}.` : ""}${brief ? ` ${brief}` : ""}
 Conf\xEDrmala o prop\xF3n otra fecha desde tu panel (Citas por atender), o responde: Confirmar ${ref4}.${pickupText(pickup)}`;
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.booking', ?)", [randomUUID31(), `booking:${id3}:shop`, shop.userId, JSON.stringify({ message: message2 })]);
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'booking.direct.requested', ?, 'dueno', 'Appointment', ?, ?, UTC_TIMESTAMP(3))", [randomUUID31(), userId, id3, JSON.stringify({ shopId: input.shopId, vehicleId: input.vehicleId, service, scheduledAt: at.toISOString(), ...pickup ? { pickup: true } : {}, ...picked.length ? { planServiceIds: picked } : {} })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.booking', ?)", [randomUUID32(), `booking:${id3}:shop`, shop.userId, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'booking.direct.requested', ?, 'dueno', 'Appointment', ?, ?, UTC_TIMESTAMP(3))", [randomUUID32(), userId, id3, JSON.stringify({ shopId: input.shopId, vehicleId: input.vehicleId, service, scheduledAt: at.toISOString(), ...pickup ? { pickup: true } : {}, ...picked.length ? { planServiceIds: picked } : {} })]);
     return { appointmentRef: ref4, duplicate: false, message: `Cita ${ref4} pedida a ${shop.name} para ${formatEcDateTime(at)}. El taller la confirma o te propone otra fecha; te avisaremos.` };
   }
 };
@@ -124666,7 +124703,7 @@ init_zod();
 // packages/api/dist/infrastructure/messaging/catalog-store.js
 init_apply();
 init_contracts();
-import { randomUUID as randomUUID32 } from "node:crypto";
+import { randomUUID as randomUUID33 } from "node:crypto";
 var rows31 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var fail18 = (c) => {
   throw new LocalMarketplaceError(c);
@@ -124778,7 +124815,7 @@ var CatalogStore = class {
     });
   }
   audit(conn, userId, eventType, productId, after) {
-    return conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'almacen', 'Product', ?, ?, UTC_TIMESTAMP(3))", [randomUUID32(), eventType, userId, productId, JSON.stringify(after)]);
+    return conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'almacen', 'Product', ?, ?, UTC_TIMESTAMP(3))", [randomUUID33(), eventType, userId, productId, JSON.stringify(after)]);
   }
   /** Desactivar oculta el producto al comprador sin perder su historial; se puede reactivar. */
   setActive(userId, productId, active) {
@@ -124800,7 +124837,7 @@ var CatalogStore = class {
         fail18("FITMENT_LIMIT");
       if (existing.some((f) => String(f.make).toLowerCase() === make.toLowerCase() && String(f.model ?? "").toLowerCase() === (model ?? "").toLowerCase() && (f.yearFrom ?? null) === yearFrom && (f.yearTo ?? null) === yearTo))
         fail18("FITMENT_DUPLICATE");
-      const id3 = randomUUID32();
+      const id3 = randomUUID33();
       await conn.query("INSERT INTO `ProductFitment` (id, productId, make, model, yearFrom, yearTo) VALUES (?, ?, ?, ?, ?, ?)", [id3, productId, make, model, yearFrom, yearTo]);
       await this.audit(conn, userId, "catalog.fitment.added", productId, { make, model, yearFrom, yearTo });
       return { id: id3, make, model, yearFrom, yearTo };
@@ -124827,7 +124864,7 @@ var CatalogStore = class {
             await conn.query("UPDATE `Product` SET price = ?, stock = COALESCE(?, stock), updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [item.price, item.stock, productId]);
             summary.updated++;
           } else {
-            productId = randomUUID32();
+            productId = randomUUID33();
             await conn.query("INSERT INTO `Product` (id, storeId, name, price, stock, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [productId, store.id, item.name, item.price, item.stock ?? 0]);
             byName.set(item.name.toLowerCase(), productId);
             summary.created++;
@@ -124840,10 +124877,10 @@ var CatalogStore = class {
             continue;
           if (fits2.length >= FITMENT_LIMIT)
             fail18("FITMENT_LIMIT");
-          await conn.query("INSERT INTO `ProductFitment` (id, productId, make, model, yearFrom, yearTo) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID32(), productId, item.make, item.model, item.yearFrom, item.yearTo]);
+          await conn.query("INSERT INTO `ProductFitment` (id, productId, make, model, yearFrom, yearTo) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID33(), productId, item.make, item.model, item.yearFrom, item.yearTo]);
           summary.fitments++;
         }
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'catalog.import', ?, 'almacen', 'Store', ?, ?, UTC_TIMESTAMP(3))", [randomUUID32(), userId, store.id, JSON.stringify(summary)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'catalog.import', ?, 'almacen', 'Store', ?, ?, UTC_TIMESTAMP(3))", [randomUUID33(), userId, store.id, JSON.stringify(summary)]);
         await conn.query("COMMIT");
         open = false;
         return summary;
@@ -125222,7 +125259,7 @@ init_commands();
 init_apply();
 init_fleet_access();
 init_vehicle_card_store();
-import { randomBytes as randomBytes10, randomUUID as randomUUID33 } from "node:crypto";
+import { randomBytes as randomBytes10, randomUUID as randomUUID34 } from "node:crypto";
 var rows33 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var fail19 = (code5) => {
   throw new FleetAccessError(code5);
@@ -125284,7 +125321,7 @@ var VehicleTransferStore = class {
       if (vehicle.fleetId)
         return fail19("TRANSFER_FLEET_VEHICLE");
       const code5 = newTransferCode();
-      const id3 = randomUUID33();
+      const id3 = randomUUID34();
       await conn.query("UPDATE `VehicleTransfer` SET status = 'cancelled' WHERE vehicleId = ? AND status = 'pending'", [vehicleId]);
       await conn.query("INSERT INTO `VehicleTransfer` (id, codeHash, vehicleId, fromUserId, status, expiresAt) VALUES (?, ?, ?, ?, 'pending', DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? DAY))", [id3, secretHash(code5), vehicleId, userId, TRANSFER_DAYS]);
       await this.audit(conn, userId, "dueno", "vehicle.transfer.created", "Vehicle", vehicleId, { transferId: id3, days: TRANSFER_DAYS });
@@ -125372,10 +125409,10 @@ var VehicleTransferStore = class {
     return { vehicleId, vehicleLabel: text14, services: Number(services?.n ?? 0) };
   }
   async notify(conn, recipient, dedup, kind, message2) {
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID33(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID34(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
   }
   async audit(conn, userId, role, eventType, entityType, entityId, after) {
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID33(), eventType, userId, role, entityType, entityId, JSON.stringify(after)]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID34(), eventType, userId, role, entityType, entityId, JSON.stringify(after)]);
   }
 };
 
@@ -125651,7 +125688,7 @@ init_preferences();
 
 // packages/api/dist/infrastructure/messaging/flow-extras.js
 init_apply();
-import { randomUUID as randomUUID35 } from "node:crypto";
+import { randomUUID as randomUUID36 } from "node:crypto";
 var rows35 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var ExtraError = class extends Error {
   code;
@@ -125691,13 +125728,13 @@ async function inTransaction(conn, work) {
   }
 }
 async function audit5(conn, eventType, actorUserId, actorRole, entityType, entityId, before, after) {
-  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID35(), eventType, actorUserId, actorRole, entityType, entityId, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID36(), eventType, actorUserId, actorRole, entityType, entityId, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
 }
 async function queueNotice(conn, recipientUserId, dedupKey, kind, message2) {
   const key = dedupKey.slice(0, 191);
   if ((await rows35(conn, "SELECT 1 AS found FROM `NotificationOutbox` WHERE dedupKey = ?", [key])).length)
     return false;
-  await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID35(), key, recipientUserId, kind, JSON.stringify({ message: message2 })]);
+  await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID36(), key, recipientUserId, kind, JSON.stringify({ message: message2 })]);
   return true;
 }
 
@@ -125781,7 +125818,7 @@ init_plan_text();
 init_recommendations();
 init_vehicle_care_store();
 init_shop_vehicle_access();
-import { randomUUID as randomUUID36 } from "node:crypto";
+import { randomUUID as randomUUID37 } from "node:crypto";
 var RECONTACT_DAYS = 30;
 var RECONTACT_KIND = "care.recontact";
 var DAY = 864e5;
@@ -125867,7 +125904,7 @@ var ShopRecontactStore = class {
       const due = await this.topDue(conn, vehicle);
       if (!due)
         return fail22("RECONTACT_NOTHING_DUE", "Este veh\xEDculo ya no tiene servicios vencidos ni pr\xF3ximos.");
-      const id3 = randomUUID36();
+      const id3 = randomUUID37();
       await conn.query("INSERT INTO `ShopRecontact` (id, shopId, vehicleId, sentBy, service, createdAt) VALUES (?, ?, ?, ?, ?, ?)", [id3, shop.id, vehicleId, userId, due.serviceName.slice(0, 120), now]);
       const message2 = `\u{1F514} ${shop.name} te recuerda que tu ${label3(vehicle)} tiene un servicio ${due.state === "urgente" ? "vencido" : "pr\xF3ximo"}: ${due.serviceName} (${due.label.toLowerCase()}). Si quieres pedir tu cita, entra a tu panel en \xABTalleres cerca de ti\xBB. Para dejar de recibir recordatorios: Alertas no`;
       await queueNotice(conn, String(vehicle.userId), `recontact:${id3}`, RECONTACT_KIND, message2);
@@ -125892,7 +125929,7 @@ var ShopRecontactStore = class {
 };
 
 // packages/api/dist/infrastructure/messaging/appointment-waitlist.js
-import { randomUUID as randomUUID37 } from "node:crypto";
+import { randomUUID as randomUUID38 } from "node:crypto";
 var HORIZON_DAYS2 = 90;
 var WAITLIST_KIND = "care.waitlist";
 var ecToday = (now) => new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
@@ -125920,7 +125957,7 @@ var AppointmentWaitlist = class {
       const [waiting] = await rows35(conn, "SELECT id FROM `AppointmentWaitlist` WHERE shopId = ? AND ownerUserId = ? AND wantedDate = ? AND notifiedAt IS NULL", [shopId, userId, date2]);
       if (waiting)
         return { duplicate: true, message: `Ya est\xE1s en la lista de espera de ${shop.name} para el ${shown2(date2)}.` };
-      const id3 = randomUUID37();
+      const id3 = randomUUID38();
       await conn.query("INSERT INTO `AppointmentWaitlist` (id, shopId, ownerUserId, wantedDate, createdAt) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3))", [id3, shopId, userId, date2]);
       await audit5(conn, "booking.waitlist.joined", userId, "dueno", "AppointmentWaitlist", id3, null, { shopId, date: date2 });
       return { duplicate: false, message: `Listo: si se libera un horario en ${shop.name} el ${shown2(date2)}, te avisamos una sola vez. No reservamos nada: si te avisamos, pide tu cita cuanto antes.` };
@@ -126256,7 +126293,7 @@ init_reminder_done();
 init_apply();
 init_shop_vehicle_access();
 init_catalogs();
-import { randomUUID as randomUUID38 } from "node:crypto";
+import { randomUUID as randomUUID39 } from "node:crypto";
 var rows38 = async (c, sql, args = []) => (await c.query(sql, args))[0];
 var PlanOverrideError = class extends Error {
   code;
@@ -126316,7 +126353,7 @@ var VehiclePlanOverrideStore = class {
           throw new PlanOverrideError("NOT_FOUND");
         appointmentId = String(appointment.id);
       }
-      const id3 = randomUUID38();
+      const id3 = randomUUID39();
       const base = [id3, input.vehicleId, input.serviceId, input.km, `${input.doneAt} 12:00:00.000`, role === "taller" ? "taller" : "dueno", shopId, userId, input.recordedAt ? new Date(input.recordedAt).toISOString().slice(0, 23).replace("T", " ") : /* @__PURE__ */ new Date()];
       try {
         await c.query("INSERT INTO `VehicleServiceRecord` (id,vehicleId,serviceId,km,doneAt,source,shopId,createdBy,createdAt,detail,parts,costUsd,shopName,technician,finding,nextDueAt,nextDueKm,appointmentId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [...base, fields.detail, fields.parts.length ? JSON.stringify(fields.parts) : null, fields.costUsd, fields.shopName, fields.technician, fields.finding, fields.nextDueAt, fields.nextDueKm, appointmentId]);
@@ -126329,7 +126366,7 @@ var VehiclePlanOverrideStore = class {
       }
       if (role === "taller") {
         const serviceName5 = serviceTaxonomy.categories.flatMap((cat) => cat.subservices).find((x) => x.id === input.serviceId)?.name ?? "un servicio";
-        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID38(), `plan-record:${input.vehicleId}:${new Date(Date.now() - 5 * 36e5).toISOString().slice(0, 10)}`, String(vehicle.userId), "care.service", JSON.stringify({ message: `\u{1F527} El taller registr\xF3 ${serviceName5.toLowerCase()} en el plan de tu veh\xEDculo. M\xEDralo en la ficha, en el plan de mantenimiento.` })]);
+        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID39(), `plan-record:${input.vehicleId}:${new Date(Date.now() - 5 * 36e5).toISOString().slice(0, 10)}`, String(vehicle.userId), "care.service", JSON.stringify({ message: `\u{1F527} El taller registr\xF3 ${serviceName5.toLowerCase()} en el plan de tu veh\xEDculo. M\xEDralo en la ficha, en el plan de mantenimiento.` })]);
       }
       return { id: id3 };
     });
@@ -126353,7 +126390,7 @@ var VehiclePlanOverrideStore = class {
           throw new PlanOverrideError("FEATURE_UPDATE_PENDING");
         throw err;
       }
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID38(), "vehicle.service-record.update", userId, role, "VehicleServiceRecord", input.id, JSON.stringify({ serviceId: record.serviceId, km: record.km, doneAt: record.doneAt }), JSON.stringify({ ...after, detail: after.detail ? "(texto)" : null })]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), "vehicle.service-record.update", userId, role, "VehicleServiceRecord", input.id, JSON.stringify({ serviceId: record.serviceId, km: record.km, doneAt: record.doneAt }), JSON.stringify({ ...after, detail: after.detail ? "(texto)" : null })]);
     });
   }
   /** Quita un registro con las mismas reglas; sus fotos quedan en la ficha, sin registro. */
@@ -126365,7 +126402,7 @@ var VehiclePlanOverrideStore = class {
           throw err;
       });
       await c.query("DELETE FROM `VehicleServiceRecord` WHERE id = ?", [id3]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID38(), "vehicle.service-record.remove", userId, role, "VehicleServiceRecord", id3, JSON.stringify({ vehicleId: record.vehicleId, serviceId: record.serviceId, km: record.km, doneAt: record.doneAt, source: record.source }), null]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), "vehicle.service-record.remove", userId, role, "VehicleServiceRecord", id3, JSON.stringify({ vehicleId: record.vehicleId, serviceId: record.serviceId, km: record.km, doneAt: record.doneAt, source: record.source }), null]);
     });
   }
   async editable(c, userId, role, id3) {
@@ -126413,14 +126450,14 @@ var VehiclePlanOverrideStore = class {
           throw new PlanOverrideError("FORBIDDEN");
       }
       const [old] = await rows38(c, "SELECT id,intervalKm,intervalMonths,disabled,nota,actorUserId,actorRole,shopId FROM `VehiclePlanOverride` WHERE vehicleId = ? AND serviceId = ?", [input.vehicleId, input.serviceId]);
-      const id3 = String(old?.id ?? randomUUID38());
+      const id3 = String(old?.id ?? randomUUID39());
       const after = { ...input, actorUserId: userId, actorRole: role, shopId };
       await c.query("INSERT INTO `VehiclePlanOverride` (id,vehicleId,serviceId,intervalKm,intervalMonths,disabled,customName,nota,actorUserId,actorRole,shopId,createdAt,updatedAt) VALUES (?,?,?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3),UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE intervalKm=VALUES(intervalKm),intervalMonths=VALUES(intervalMonths),disabled=VALUES(disabled),customName=VALUES(customName),nota=VALUES(nota),actorUserId=VALUES(actorUserId),actorRole=VALUES(actorRole),shopId=VALUES(shopId),updatedAt=UTC_TIMESTAMP(3)", [id3, input.vehicleId, input.serviceId, input.intervalKm, input.intervalMonths, input.disabled ? 1 : 0, input.customName?.trim() || null, input.nota || null, userId, role, shopId]);
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID38(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID38(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
       if (role === "taller" && (String(old?.intervalKm ?? "") !== String(input.intervalKm ?? "") || String(old?.intervalMonths ?? "") !== String(input.intervalMonths ?? ""))) {
         const serviceName5 = input.customName || serviceTaxonomy.categories.flatMap((cat) => cat.subservices).find((s) => s.id === input.serviceId)?.name || input.serviceId;
-        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID38(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName5} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
+        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID39(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName5} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
       }
     });
   }
@@ -126456,8 +126493,8 @@ var VehiclePlanOverrideStore = class {
         if (!shop || !rel)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID38(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID38(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
       await c.query("UPDATE `VehiclePlanOverride` SET intervalKm=NULL,intervalMonths=NULL,disabled=1,nota='Restaurado a f\xE1brica',actorUserId=?,actorRole=?,shopId=?,updatedAt=UTC_TIMESTAMP(3) WHERE vehicleId=? AND serviceId=?", [userId, role, shopId, vehicleId, serviceId]);
     });
   }
@@ -126900,9 +126937,9 @@ var PilotPanelStore = class {
           alerts.push({ kind: "rtv", title: "RTV y matr\xEDcula", detail: `${month === current ? `Este mes (${MES[month - 1]})` : `El pr\xF3ximo mes (${MES[month - 1]})`}, seg\xFAn el \xFAltimo d\xEDgito de la placa; calendario referencial, confirma la fecha en la ANT o en tu agencia de matriculaci\xF3n. El valor a pagar por la matr\xEDcula incluye el SOAT`, state: month === current ? "pronto" : "al_dia", when: String(month) });
         }
       }
-      const scheduled = await rows39(conn, "SELECT label, dueKm, dueAt FROM `Alert` WHERE vehicleId = ? AND triggeredAt IS NULL ORDER BY createdAt DESC", [chosen.id]);
+      const scheduled = await rows39(conn, "SELECT label, dueKm, dueAt, source FROM `Alert` WHERE vehicleId = ? AND triggeredAt IS NULL ORDER BY createdAt DESC", [chosen.id]);
       for (const a of scheduled)
-        alerts.push({ kind: "programada", title: String(a.label), detail: a.dueKm !== null ? `A los ${Number(a.dueKm).toLocaleString("es-EC")} km` : a.dueAt ? `El ${new Date(String(a.dueAt)).toLocaleDateString("es-EC", { timeZone: "America/Guayaquil" })}` : "", state: a.dueAt && new Date(String(a.dueAt)).getTime() <= Date.now() + 864e5 ? "urgente" : "pronto", when: String(a.dueAt ?? a.dueKm ?? "") });
+        alerts.push({ kind: "programada", title: String(a.label), detail: a.dueKm !== null ? `A los ${Number(a.dueKm).toLocaleString("es-EC")} km` : a.dueAt ? `${a.source === "pendiente" ? "Te lo recordamos el" : "El"} ${new Date(String(a.dueAt)).toLocaleDateString("es-EC", { timeZone: "America/Guayaquil" })}` : "", state: a.dueAt && new Date(String(a.dueAt)).getTime() <= Date.now() + 864e5 ? "urgente" : "pronto", when: String(a.dueAt ?? a.dueKm ?? "") });
       const symptoms = await rows39(conn, "SELECT `system`, risk, description FROM `VehicleSymptom` WHERE vehicleId = ? AND resolvedAt IS NULL ORDER BY createdAt DESC LIMIT 3", [chosen.id]);
       for (const x of symptoms)
         alerts.push({ kind: "sintoma", title: `S\xEDntoma: revisar ${String(x.system)}`, detail: String(x.description), state: x.risk === "seguir_con_cuidado" ? "pronto" : "urgente", when: "" });
@@ -127761,7 +127798,7 @@ init_outbox_delivery_store();
 init_plan_store();
 init_billing_store();
 init_claim_store();
-import { randomUUID as randomUUID41 } from "node:crypto";
+import { randomUUID as randomUUID42 } from "node:crypto";
 var UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 var SUB_FILTERS = ["solicitada", "pendiente", "activa", "por_vencer", "vencida", "todas"];
 var CLAIM_FILTERS2 = ["en_admin", "abierto", "respondido", "acordado", "resuelto", "todos"];
@@ -127887,7 +127924,7 @@ async function operatorRoutes(app2, deps = {}) {
     const message2 = text7((request.body ?? {}).text, 1e3);
     if (message2.length < 5)
       return fail24(reply, 400, "TEXT_REQUIRED");
-    await billing.notify(id3, `operator:${randomUUID41()}`, message2);
+    await billing.notify(id3, `operator:${randomUUID42()}`, message2);
     await audit6(request, "support.notice", "User", id3, `aviso de soporte (${message2.length} caracteres)`);
     return { data: { userId: id3, queued: true }, error: null };
   });
@@ -128215,7 +128252,7 @@ var AgentStateError = class extends Error {
 // packages/api/dist/infrastructure/agent/turn-store.js
 init_user_lock();
 init_apply();
-import { createHash as createHash14, randomUUID as randomUUID42 } from "node:crypto";
+import { createHash as createHash14, randomUUID as randomUUID43 } from "node:crypto";
 var digest3 = (text14) => createHash14("sha256").update(text14).digest("hex");
 var rows42 = (result) => result[0];
 var json = (value2) => typeof value2 === "string" ? JSON.parse(value2) : value2;
@@ -128264,7 +128301,7 @@ var MysqlAgentTurnStore = class {
     const next = rows42(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
     const start = new Date(next).getTime();
     for (const [index, message2] of messages.entries()) {
-      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID42(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
+      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID43(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
     }
     await conn.query("UPDATE `Conversation` SET turnCount = turnCount + ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [messages.length, conversationId]);
   }
@@ -128292,7 +128329,7 @@ var MysqlAgentTurnStore = class {
         await conn.query("INSERT INTO `AgentTurn` (id, userId, fingerprint) VALUES (?, ?, ?)", [turnId, userId, fingerprint]);
       let conversationId = rows42(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
       if (!conversationId) {
-        conversationId = randomUUID42();
+        conversationId = randomUUID43();
         await conn.query("INSERT INTO `Conversation` (id, userAId, agent, turnCount, createdAt, updatedAt) VALUES (?, ?, 1, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [conversationId, userId]);
       }
       const historyRows = rows42(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
@@ -128335,11 +128372,11 @@ var MysqlAgentTurnStore = class {
         if (Number(row2.expired))
           throw new AgentStateError("PROPOSAL_EXPIRED", 410, "La propuesta caduc\xF3; solicita una nueva.");
         const vehicle = json(row2.args);
-        const vehicleId = randomUUID42();
+        const vehicleId = randomUUID43();
         await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [vehicleId, userId, vehicle.brand, vehicle.model, vehicle.year, vehicle.mileage, vehicle.vehicleClass, vehicle.fuel, vehicle.plate, vehicle.usageProfile]);
         const result = JSON.stringify({ vehicleId });
         await conn.query("UPDATE `AgentAction` SET result = ? WHERE id = ? AND userId = ?", [result, id3, userId]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID42(), userId, vehicleId, JSON.stringify({ actionId: id3 })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID43(), userId, vehicleId, JSON.stringify({ actionId: id3 })]);
         const conversation = rows42(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
         if (conversation)
           await this.appendMessages(conn, String(conversation.id), userId, [{ role: "assistant", content: `Registro confirmado por el usuario. Veh\xEDculo: ${vehicle.brand} ${vehicle.model} ${vehicle.year}. ID: ${vehicleId}.` }]);
@@ -131267,12 +131304,12 @@ init_plan_text();
 init_catalogs();
 init_entitlements();
 init_catalog_store();
-import { randomUUID as randomUUID44 } from "node:crypto";
+import { randomUUID as randomUUID45 } from "node:crypto";
 
 // packages/api/dist/infrastructure/plans/renewal-notices.js
 init_catalog();
 init_plans();
-import { randomUUID as randomUUID43 } from "node:crypto";
+import { randomUUID as randomUUID44 } from "node:crypto";
 var rows44 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 function ecDate(value2) {
   return new Intl.DateTimeFormat("es-EC", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Guayaquil" }).format(value2);
@@ -131286,7 +131323,7 @@ function expiryText(plan, code5) {
 Para volver a ${plan}: Renovar ${code5}`;
 }
 async function notify3(conn, userId, dedup, message2) {
-  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID43(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID44(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
   return Number(result.affectedRows ?? 0) === 1;
 }
 async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date()) {
@@ -131402,10 +131439,11 @@ Para pedir talleres: Buscar servicio | categor\xEDa | ciudad | sector | descripc
 ${lines.join("\n")}${ref4}`);
         }
       }
-      const dueAlerts = await rows45(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
+      const dueAlerts = await rows45(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.source, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
       for (const a of dueAlerts) {
         const label5 = `${a.make} ${a.model} ${a.year}`;
-        await this.notify(conn, String(a.ownerId), `alert:${String(a.id)}`, `\u{1F514} Alerta de tu ${label5}: ${a.label}`);
+        const deferred = a.source === "pendiente";
+        await this.notify(conn, String(a.ownerId), `alert:${String(a.id)}`, deferred ? `\u{1F514} Pendiente de tu ${label5}: ${a.label}. Si quieres hacerlo, pide la cita al taller desde tu panel o con: Buscar servicio | categor\xEDa | ciudad | sector | descripci\xF3n` : `\u{1F514} Alerta de tu ${label5}: ${a.label}`);
         if (a.fleetId) {
           const driver = await vehicleDriver(conn, String(a.vehicleId));
           for (const recipient of /* @__PURE__ */ new Set([...await fleetManagers(conn, String(a.vehicleId)), ...driver ? [driver] : []]))
@@ -131413,7 +131451,7 @@ ${lines.join("\n")}${ref4}`);
               await this.notify(conn, recipient, `alert:${String(a.id)}:${recipient}`, `\u{1F514} Alerta de ${label5}: ${a.label}`);
         }
         if (a.shopUserId)
-          await this.notify(conn, String(a.shopUserId), `alert-shop:${String(a.id)}`, `\u{1F514} Alerta de tu cliente con ${label5}: ${a.label}`);
+          await this.notify(conn, String(a.shopUserId), `alert-shop:${String(a.id)}`, deferred ? `\u{1F4DE} Recontacta a tu cliente con ${label5}: ${a.label}. Puedes ofrecerle la cita desde tu panel.` : `\u{1F514} Alerta de tu cliente con ${label5}: ${a.label}`);
         await conn.query("UPDATE `Alert` SET triggeredAt = ? WHERE id = ? AND triggeredAt IS NULL", [now, a.id]);
         alerts++;
       }
@@ -131456,7 +131494,7 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
   }
   /** True when the reminder was new; the dedup key makes repeated runs harmless. */
   async notify(conn, recipient, dedup, message2, kind = "care.reminder") {
-    const [result] = await conn.query("INSERT IGNORE INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?)", [randomUUID44(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
+    const [result] = await conn.query("INSERT IGNORE INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?)", [randomUUID45(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
     return Number(result.affectedRows) === 1;
   }
   start(intervalMs = 36e5, onError = () => {
@@ -131483,7 +131521,7 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
 
 // packages/api/dist/infrastructure/messaging/deadline-notices.js
 init_apply();
-import { randomUUID as randomUUID45 } from "node:crypto";
+import { randomUUID as randomUUID46 } from "node:crypto";
 
 // packages/api/dist/application/deadlines/policy.js
 var DEADLINE_NOTICE_KIND = "plazo.aviso";
@@ -131572,7 +131610,7 @@ var DeadlineNotices = class {
     const key = dedup.slice(0, 191);
     if ((await rows46(conn, "SELECT 1 AS found FROM `NotificationOutbox` WHERE dedupKey = ?", [key])).length)
       return false;
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID45(), key, recipient, kind, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID46(), key, recipient, kind, JSON.stringify({ message: message2 })]);
     return true;
   }
   /** Dueño del vehículo y, si es de flota, quienes lo administran (igual que los avisos de la orden). */
@@ -131823,7 +131861,7 @@ var ClaimDeadlines = class {
 // packages/api/dist/infrastructure/messaging/verification-deadlines.js
 init_apply();
 init_admin_alerts();
-import { randomUUID as randomUUID46 } from "node:crypto";
+import { randomUUID as randomUUID47 } from "node:crypto";
 var VERIFICATION_HOURS = 72;
 var VERIFICATION_ADMIN_HOURS = 48;
 var rows47 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
@@ -131853,11 +131891,11 @@ var VerificationDeadlines = class {
             const [done] = await rows47(conn, "SELECT id FROM `AuditLog` WHERE eventType = ? AND entityId = ? LIMIT 1", [event, id3]);
             if (done)
               continue;
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID46(), event, kind.table, id3, JSON.stringify({ hours: step })]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID47(), event, kind.table, id3, JSON.stringify({ hours: step })]);
             adminAlerts++;
             if (step === 72) {
               const message2 = `Tu ${kind.label} ${String(business.name)} sigue en revisi\xF3n despu\xE9s de ${VERIFICATION_HOURS} horas. Ya avisamos al equipo de AutoMantPro para que lo revise cuanto antes. Si te falta alg\xFAn dato, rev\xEDsalo en automantpro.app/cuenta. Mientras tanto puedes ofertar cuando un cliente te invite, con el aviso de que est\xE1s en revisi\xF3n.`;
-              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'verification.overdue', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID46(), `verify-72:${id3}`, String(business.userId), JSON.stringify({ message: message2 })]);
+              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'verification.overdue', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID47(), `verify-72:${id3}`, String(business.userId), JSON.stringify({ message: message2 })]);
               businessNotices++;
             }
           }
@@ -131902,7 +131940,8 @@ init_contracts();
 init_messages();
 init_admin_alerts();
 init_work_order_claims();
-import { randomUUID as randomUUID47 } from "node:crypto";
+init_deferred_work();
+import { randomUUID as randomUUID48 } from "node:crypto";
 var FINDING_REMIND_HOURS = 12;
 var FINDING_EXPIRE_HOURS = 24;
 var BALANCE_DAYS = [3, 7];
@@ -131928,11 +131967,11 @@ var CareDeadlines = class {
   async once(conn, recipient, key, kind, message2) {
     if ((await rows48(conn, "SELECT id FROM `NotificationOutbox` WHERE dedupKey = ? LIMIT 1", [key])).length)
       return false;
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID47(), key, recipient, kind, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID48(), key, recipient, kind, JSON.stringify({ message: message2 })]);
     return true;
   }
   async audit(conn, eventType, entityType, entityId, after) {
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID47(), eventType, entityType, entityId, JSON.stringify(after)]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID48(), eventType, entityType, entityId, JSON.stringify(after)]);
   }
   async run(now = /* @__PURE__ */ new Date()) {
     const conn = await this.connect();
@@ -131953,7 +131992,7 @@ var CareDeadlines = class {
   }
   // ---------- X3: novedad sin respuesta ----------
   async findings(conn, now, result) {
-    const pending = await rows48(conn, "SELECT c.id, c.createdAt, c.total, w.id AS orderId, w.number, w.ownerId, w.status AS orderStatus, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND c.createdAt <= ? ORDER BY c.createdAt LIMIT 100", [hoursAgo(now, FINDING_REMIND_HOURS)]);
+    const pending = await rows48(conn, "SELECT c.id, c.createdAt, c.total, c.description, w.id AS orderId, w.number, w.ownerId, w.vehicleId, w.shopId, w.status AS orderStatus, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND c.createdAt <= ? ORDER BY c.createdAt LIMIT 100", [hoursAgo(now, FINDING_REMIND_HOURS)]);
     for (const c of pending) {
       const ref4 = changeRef(c.id), code5 = workOrderCode(Number(c.number)), amount = formatUsd(Number(c.total ?? 0));
       const created = new Date(c.createdAt).getTime();
@@ -131962,6 +132001,7 @@ var CareDeadlines = class {
         if (Number(changed2.affectedRows) !== 1)
           continue;
         await this.audit(conn, "care.finding.expired", "WorkOrder", String(c.orderId), { change: String(c.id) });
+        await addDeferredWork(conn, { vehicleId: String(c.vehicleId), shopId: String(c.shopId), createdBy: String(c.shopUserId), code: code5, items: [String(c.description ?? "")] }, now);
         await this.once(conn, String(c.ownerId), `finding-expired:${String(c.id)}`, "care.finding", `\u23F0 La novedad ${ref4} de ${code5} por ${amount} qued\xF3 como no aprobada porque pasaron ${FINDING_EXPIRE_HOURS} horas sin tu respuesta. Si la quieres, pide a ${String(c.shopName)} que la env\xEDe de nuevo.`);
         await this.once(conn, String(c.shopUserId), `finding-expired-shop:${String(c.id)}`, "care.finding", `\u23F0 La novedad ${ref4} de ${code5} qued\xF3 como no aprobada: el cliente no respondi\xF3 en ${FINDING_EXPIRE_HOURS} horas. Sigue solo con lo aprobado.`);
         result.findingsExpired++;
@@ -132134,7 +132174,7 @@ function createJobScheduler(jobs2, options = {}) {
 init_apply();
 init_account_links();
 init_ads();
-import { randomUUID as randomUUID48 } from "node:crypto";
+import { randomUUID as randomUUID49 } from "node:crypto";
 var rows49 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var isMissingSchema3 = (err) => ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"].includes(err.code ?? "");
 var AD_CAMPAIGN_KIND = "ad.campaign";
@@ -132182,7 +132222,7 @@ var AdCampaignSender = class {
           progressed = true;
           const at = new Date(now.getTime() + queued * spacingMs);
           const message2 = campaignMessage({ title: String(ad.title), body: String(ad.body), businessName: String(ad.businessName) }, link);
-          const result = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload, nextAttemptAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID48(), `ad:${String(ad.id)}:${String(next.id)}`, String(next.id), AD_CAMPAIGN_KIND, JSON.stringify({ message: message2 }), at]);
+          const result = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload, nextAttemptAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID49(), `ad:${String(ad.id)}:${String(next.id)}`, String(next.id), AD_CAMPAIGN_KIND, JSON.stringify({ message: message2 }), at]);
           if (Number(result[0]?.affectedRows ?? 0) === 1)
             queued++;
         }
