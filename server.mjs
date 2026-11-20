@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2de2aa4729c99963345d996d76b563af0936420a'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='4d64e6b2c13b31e3e21704126755a8c82e141f04'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -90213,6 +90213,21 @@ async function linkRequestToOrder(conn, requestId, shopId, orderNumber) {
     return;
   await conn.query("UPDATE `LocalRequest` SET workOrderId = ? WHERE id = ?", [order.id, requestId]).catch(whenMissing2(void 0));
 }
+async function closeOrderPartRequests(conn, workOrderId, code5) {
+  const open = await rows12(conn, "SELECT id FROM `LocalRequest` WHERE workOrderId = ? AND kind = 'repuesto' AND status = 'open' FOR UPDATE", [workOrderId]).catch(whenMissing2([]));
+  const closed = [];
+  for (const r of open) {
+    const requestId = String(r.id);
+    const offers = await rows12(conn, "SELECT id, businessUserId FROM `LocalOffer` WHERE requestId = ? AND status IN ('invited','offered')", [requestId]);
+    await conn.query("UPDATE `LocalRequest` SET status = 'cancelled' WHERE id = ? AND status = 'open'", [requestId]);
+    await conn.query("UPDATE `LocalOffer` SET status = 'discarded' WHERE requestId = ? AND status IN ('invited','offered')", [requestId]);
+    const ref4 = shortCode("S", requestId);
+    for (const o of offers)
+      await notify2(conn, String(o.businessUserId), `partclosed:${requestId}:${String(o.id)}`, "local.cancelled", `Solicitud ${ref4} cerrada: la orden ${code5} del taller termin\xF3 y ya no necesita el repuesto. No hace falta ofertar.`);
+    closed.push(ref4);
+  }
+  return closed;
+}
 async function releasePartLine(conn, requestId, actorUserId) {
   if (!await tableReady(conn))
     return true;
@@ -97839,7 +97854,7 @@ ${out.join("\n")}` : out.join("\n") };
           return { userId, message: `Orden ${code5} en reparaci\xF3n. Avisamos al due\xF1o. Si encuentras algo m\xE1s: Novedad ${code5} | qu\xE9 se encontr\xF3 | repuesto: \u2026; mano de obra: \u2026` };
         }
         const [{ n: n3 }] = await rows28(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'care.order.stage'", [order.id]);
-        await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `orderstage:${String(order.id)}:${Number(n3)}`, "care.repair", stage === "esperando" ? `\u23F3 Tu orden ${code5} en ${shop.name} est\xE1 esperando repuestos. Te avisamos cuando siga.` : `\u{1F527} Llegaron los repuestos: tu orden ${code5} sigue en reparaci\xF3n en ${shop.name}.`);
+        await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `orderstage:${String(order.id)}:${Number(n3)}`, "care.repair", stage === "esperando" ? `\u23F3 Tu orden ${code5} en ${shop.name} est\xE1 esperando repuestos. Te avisamos cuando siga.` : `\u{1F527} Tu orden ${code5} sigue en reparaci\xF3n en ${shop.name}.`);
         return { userId, message: stage === "esperando" ? `Orden ${code5} esperando repuesto. Avisamos al due\xF1o. Cuando lleguen: Reanudar ${code5}` : `Orden ${code5} de vuelta en reparaci\xF3n. Avisamos al due\xF1o.` };
       }
       /** Workshop: another time for an appointment (the owner accepts or rejects it), or a decline with reason. Not once the vehicle came in. */
@@ -98203,6 +98218,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
         });
         await conn.query("UPDATE `WorkOrder` SET status = 'cancelada', cancelReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [reason, order.id]);
         await conn.query("UPDATE `WorkOrderChange` SET status = 'rejected', decidedBy = ?, reason = 'Orden cancelada por el taller', decidedAt = UTC_TIMESTAMP(3) WHERE workOrderId = ? AND status = 'pending'", [userId, order.id]);
+        await closeOrderPartRequests(conn, String(order.id), workOrderCode(number2));
         await this.audit(conn, userId, "care.order.cancelled", "WorkOrder", String(order.id), { from: order.status, reason, by: shop.actor, paidUsd: payments.paid, informedUsd: payments.informed });
         const code5 = workOrderCode(number2);
         const label5 = `${order.make} ${order.model} ${order.year}`;
@@ -98239,6 +98255,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
           await conn.query("UPDATE `WorkOrder` SET status = 'cancelada', cancelReason = ?, diagnosisOutcome = 'sin_trabajo', outcomeNote = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [`Salida sin trabajo: ${reason}`.slice(0, 191), reason, order.id]);
         }
         await conn.query("UPDATE `WorkOrderChange` SET status = 'rejected', decidedBy = ?, reason = 'Salida sin trabajo', decidedAt = UTC_TIMESTAMP(3) WHERE workOrderId = ? AND status = 'pending'", [userId, order.id]);
+        await closeOrderPartRequests(conn, String(order.id), code5);
         await conn.query("UPDATE `Appointment` a JOIN `WorkOrder` w ON w.appointmentId = a.id SET a.status = 'completed', a.updatedAt = UTC_TIMESTAMP(3) WHERE w.id = ? AND a.status IN ('pending','confirmed')", [order.id]);
         await this.audit(conn, userId, "care.order.exit", "WorkOrder", String(order.id), { reason, feeUsd: fee, by: shop.actor });
         const ownerText = fee > 0 ? `\u{1F697} Tu ${label5} puede salir de ${shop.name} sin trabajo (${code5}): ${reason}. Como no aprobaste el presupuesto, el taller cobra el diagn\xF3stico de ${formatUsd(fee)} que te avis\xF3 al recibirlo. Si no est\xE1s de acuerdo, escribe: Objetar diagn\xF3stico ${code5} | motivo` : `\u{1F697} Tu ${label5} puede salir de ${shop.name} sin trabajo y sin costo (${code5}): ${reason}.`;
@@ -98472,9 +98489,9 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
           const feeSaved = await saveIntake(conn, { workOrderId: id3, km: command.km, fuel: command.fuel, requested: command.requested, damages: command.damages ?? { general: command.condition }, inventory: command.items ?? [command.inventory], notes: command.notes ?? null, receivedBy: shop.actor, diagnosisFeeUsd: fee });
           const feeText = fee && feeSaved ? `
 Diagn\xF3stico: si no apruebas el presupuesto, el taller cobra ${formatUsd(fee)} por el diagn\xF3stico.` : "";
-          const ecDay3 = (d) => d.toLocaleDateString("en-CA", { timeZone: "America/Guayaquil" });
+          const ecDay4 = (d) => d.toLocaleDateString("en-CA", { timeZone: "America/Guayaquil" });
           const booked = vehicle.appointmentAt ? new Date(vehicle.appointmentAt) : null;
-          const early = !!booked && ecDay3(booked) > ecDay3(/* @__PURE__ */ new Date());
+          const early = !!booked && ecDay4(booked) > ecDay4(/* @__PURE__ */ new Date());
           await this.audit(conn, userId, "care.checkin", "WorkOrder", id3, { shopId: shop.id, by: shop.actor, ...early ? { early: true } : {} });
           const code5 = workOrderCode(Number(next));
           const earlyText = early ? `\u2139\uFE0F Tu veh\xEDculo ingres\xF3 antes de la cita, que era el ${booked.toLocaleDateString("es-EC", { timeZone: "America/Guayaquil", weekday: "long", day: "numeric", month: "long" })}.
@@ -98700,8 +98717,9 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
             await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID27(), order.vehicleId, serviceId, payload.exitKm, order.shopId, userId]);
         if (order.appointmentId)
           await conn.query("UPDATE `Appointment` SET status = 'completed', updatedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status IN ('pending','confirmed')", [order.appointmentId]);
+        const partsClosed = await closeOrderPartRequests(conn, String(order.id), code5);
         const review = await this.pendingReviewNote(conn, String(order.vehicleId));
-        await this.notify(conn, String(order.shopUserId), `deliverydecision:${String(change.id)}`, "care.delivery", [`\u2705 El cliente acept\xF3 la entrega de ${code5} por ${formatUsd(Number(order.total))}. La orden qued\xF3 cerrada.`, review].filter(Boolean).join("\n\n"));
+        await this.notify(conn, String(order.shopUserId), `deliverydecision:${String(change.id)}`, "care.delivery", [`\u2705 El cliente acept\xF3 la entrega de ${code5} por ${formatUsd(Number(order.total))}. La orden qued\xF3 cerrada.${partsClosed.length ? ` Cancelamos ${partsClosed.length === 1 ? "el pedido de repuesto" : "los pedidos de repuesto"} ${partsClosed.join(", ")} que segu\xEDa${partsClosed.length === 1 ? "" : "n"} esperando ofertas.` : ""}`, review].filter(Boolean).join("\n\n"));
         await this.notifyFleetTeam(conn, String(order.vehicleId), userId, `delivery-team:${String(change.id)}`, "care.delivery", `acept\xF3 la entrega de ${code5} por ${formatUsd(Number(order.total))}. La orden qued\xF3 cerrada.`);
         const [vehicle] = await rows28(conn, "SELECT * FROM `Vehicle` WHERE id = ?", [order.vehicleId]);
         const summary = vehicle ? await this.ownerSummary(conn, vehicle) : null;
@@ -123414,9 +123432,9 @@ function intakeDetails(o){const i=o.records&&o.records.intake;if(!i)return null;
 function partialForm(o){const lines=(o.records&&o.records.budgetLines)||[];if(lines.length<2)return null;const b=btn('Aprobar solo una parte','ghost',()=>{const f=h('form',{class:'acts'});const boxes=lines.map(l=>({n:l.n,input:h('input',{type:'checkbox','aria-label':l.description})}));f.append(...lines.map((l,i)=>h('label',{class:'note'},boxes[i].input,' '+l.n+'. '+l.description+' \xB7 '+usd(l.totalUsd))),h('button',{class:'primary'},'Aprobar los elegidos'));f.onsubmit=e=>{e.preventDefault();const list=boxes.filter(x=>x.input.checked).map(x=>x.n);if(!list.length){showResult('Elige al menos un rengl\xF3n.');return;}void act(['Aprobar '+o.code,list.join(',')],{btn:sub(e),ask:'\xBFAprobar solo los renglones elegidos? El taller no har\xE1 los dem\xE1s.'});};b.replaceWith(f);});return b;}
 function shopOrdersCard(d){const list=h('div',{class:'list'});for(const o of d.orders){const st=o.status==='rechazado'?'urgente':o.status==='en_ejecucion'?'al_dia':'pronto';const acts=h('div',{class:'chips'},abtn('Ver detalle','ghost',['Estado '+o.code]));
   {const rec=(o.records&&o.records.inspections)||[];if(o.vehicleId&&!['cerrada','cancelada'].includes(o.status)){if(!rec.some(x=>x.stage==='recepcion'))acts.append(stageReviewBtn(o,'recepcion'));if(['en_ejecucion','esperando_repuesto'].includes(o.status)&&!rec.some(x=>x.stage==='entrega'))acts.append(stageReviewBtn(o,'entrega'));}}
-  if(!o.waiting&&o.status!=='cerrada'){if(o.status==='recepcion'||o.status==='rechazado')acts.append(inlineAct('Enviar presupuesto',[{label:'Trabajo (mano de obra)'},{label:'Cantidad',type:'number'},{label:'Precio USD',type:'number'}],v=>['Presupuesto '+o.code,'mano de obra: '+v[0]+', '+v[1]+', '+v[2]],'\xBFEnviar el presupuesto al cliente? \xC9l deber\xE1 aprobarlo.'));if(o.status==='aprobado')acts.append(abtn('Iniciar','ghost',['Iniciar '+o.code],'\xBFMarcar el trabajo como iniciado? El cliente ver\xE1 el avance.'));if(o.status==='en_ejecucion')acts.append(abtn('Esperando repuesto','ghost',['Esperando repuesto '+o.code],'\xBFAvisar que el trabajo espera un repuesto?'),inlineAct('Enviar entrega',[{label:'Km de salida',type:'number'},{label:'Trabajos realizados (separados por coma)',raw:true,max:1500,value:(o.asked||[]).join(', ')},{label:'D\xEDas de garant\xEDa',type:'number'}],v=>['Entrega '+o.code,v[0],v[1],v[2]],'\xBFEnviar la entrega del veh\xEDculo al cliente? \xC9l deber\xE1 aceptarla.'));if(o.status==='esperando_repuesto')acts.append(abtn('Reanudar','ghost',['Reanudar '+o.code],'\xBFReanudar el trabajo?'));if(o.status==='aprobado'||o.status==='en_ejecucion'||o.status==='esperando_repuesto')acts.append(inlineAct('Pedir repuesto',[{label:'Categor\xEDa'},{label:'Qu\xE9 necesitas'}],v=>['Repuesto '+o.code,v[0],v[1]],'\xBFEnviar el pedido de repuesto a los almacenes?'));if(o.status==='aprobado'||o.status==='en_ejecucion'||o.status==='esperando_repuesto')acts.append(inlineAct('Registrar novedad',[{label:'Qu\xE9 encontraste'},{label:'Trabajo adicional'},{label:'Cantidad',type:'number'},{label:'Precio USD',type:'number'}],v=>['Novedad '+o.code,v[0],'mano de obra: '+v[1]+', '+v[2]+', '+v[3]],'\xBFEnviar la novedad al cliente? No hagas ese trabajo hasta que \xE9l lo apruebe.'));}
+  if(!o.waiting&&o.status!=='cerrada'){if(o.status==='recepcion'||o.status==='rechazado')acts.append(inlineAct('Enviar presupuesto',[{label:'Trabajo (mano de obra)'},{label:'Cantidad',type:'number'},{label:'Precio USD',type:'number'}],v=>['Presupuesto '+o.code,'mano de obra: '+v[0]+', '+v[1]+', '+v[2]],'\xBFEnviar el presupuesto al cliente? \xC9l lo aprueba, salvo que su flota tenga un convenio que lo apruebe solo.'));if(o.status==='aprobado')acts.append(abtn('Iniciar','ghost',['Iniciar '+o.code],'\xBFMarcar el trabajo como iniciado? El cliente ver\xE1 el avance.'));if(o.status==='en_ejecucion')acts.append(abtn('Esperando repuesto','ghost',['Esperando repuesto '+o.code],'\xBFAvisar que el trabajo espera un repuesto?'),inlineAct('Enviar entrega',[{label:'Km de salida',type:'number'},{label:'Trabajos realizados (separados por coma)',raw:true,max:1500,value:(o.asked||[]).join(', ')},{label:'D\xEDas de garant\xEDa',type:'number'}],v=>['Entrega '+o.code,v[0],v[1],v[2]],'\xBFEnviar la entrega del veh\xEDculo al cliente? \xC9l deber\xE1 aceptarla.'));if(o.status==='esperando_repuesto')acts.append(abtn('Reanudar','ghost',['Reanudar '+o.code],'\xBFReanudar el trabajo?'));if(o.status==='aprobado'||o.status==='en_ejecucion'||o.status==='esperando_repuesto')acts.append(inlineAct('Pedir repuesto',[{label:'Categor\xEDa'},{label:'Qu\xE9 necesitas'}],v=>['Repuesto '+o.code,v[0],v[1]],'\xBFEnviar el pedido de repuesto a los almacenes?'));if(o.status==='aprobado'||o.status==='en_ejecucion'||o.status==='esperando_repuesto')acts.append(inlineAct('Registrar novedad',[{label:'Qu\xE9 encontraste',raw:true},{label:'Trabajo adicional'},{label:'Cantidad',type:'number'},{label:'Precio USD',type:'number'}],v=>['Novedad '+o.code,v[0],'mano de obra: '+v[1]+', '+v[2]+', '+v[3]],'\xBFEnviar la novedad al cliente? No hagas ese trabajo hasta que \xE9l lo apruebe.'));}
   if(o.status==='cancelada'){const p=o.records&&o.records.payment;const left=p?Math.max(0,p.paidUsd-p.refundedUsd-(p.refundPending?p.refundPending.amountUsd:0)):0;if(d.canManage&&left>0)acts.append(inlineAct('Registrar reembolso',[{label:'Valor devuelto en USD',type:'number'},{label:'Forma (efectivo, transferencia, tarjeta u otra)'},{label:'Referencia (opcional)',optional:true}],v=>['Reembolso '+o.code,v[0],v[1],...(v[2]?[v[2]]:[])],'\xBFRegistrar este reembolso? El cliente lo confirmar\xE1.'));}
-  else if(o.status==='cerrada'){acts.append(...shopWarrantyActs(o,d));if(d.canManage&&o.totalUsd&&balanceOf(o)>0)acts.append(paymentForm(o));}else{acts.append(inlineAct('Fecha de entrega',[{label:'Fecha',type:'date',raw:true},{label:'Motivo (opcional)',optional:true}],v=>['Fecha entrega '+o.code,v[0],...(v[1]?[v[1]]:[])],'\xBFFijar esta fecha de entrega? Avisaremos al cliente.'));if(d.canManage){if(o.totalUsd&&balanceOf(o)>0)acts.append(paymentForm(o));if(o.status==='rechazado')acts.append(reasonBtn('Salida sin trabajo',(why,b)=>act(['Salida sin trabajo '+o.code,why],{btn:b,ask:'\xBFRegistrar que el veh\xEDculo sale sin trabajo? Si avisaste un diagn\xF3stico al recibirlo, se cobra; si no, sale sin costo.'})));acts.append(reasonBtn('Cancelar orden',(why,b)=>act(['Cancelar orden '+o.code,why],{btn:b,ask:'\xBFCancelar esta orden? Avisaremos al cliente con tu motivo.'})));}}
+  else if(o.status==='cerrada'){acts.append(...shopWarrantyActs(o,d));if(d.canManage&&o.totalUsd&&balanceOf(o)>0)acts.append(paymentForm(o));}else{acts.append(inlineAct('Fecha de entrega',[{label:'Fecha',type:'date',raw:true},{label:'Motivo (opcional)',optional:true,raw:true}],v=>['Fecha entrega '+o.code,v[0],...(v[1]?[v[1]]:[])],'\xBFFijar esta fecha de entrega? Avisaremos al cliente.'));if(d.canManage){if(o.totalUsd&&balanceOf(o)>0)acts.append(paymentForm(o));if(o.status==='rechazado')acts.append(reasonBtn('Salida sin trabajo',(why,b)=>act(['Salida sin trabajo '+o.code,why],{btn:b,ask:'\xBFRegistrar que el veh\xEDculo sale sin trabajo? Si avisaste un diagn\xF3stico al recibirlo, se cobra; si no, sale sin costo.'})));acts.append(reasonBtn('Cancelar orden',(why,b)=>act(['Cancelar orden '+o.code,why],{btn:b,ask:'\xBFCancelar esta orden? Avisaremos al cliente con tu motivo.'})));}}
   acts.append(...shopOrderExtras(o,d));
   list.append(...[h('div',{class:'row2'},h('b',{text:o.vehicle+(o.plate?' \xB7 '+o.plate:'')}),h('span',{class:'tag st-'+st,text:o.waiting?'Espera al due\xF1o':o.statusText})),h('p',{class:'note',text:o.code+(o.totalUsd?' \xB7 '+usd(o.totalUsd)+vatNote(o):'')}),o.negotiation?h('p',{class:'note',text:'El cliente dice: '+o.negotiation}):null,o.asked&&o.asked.length?h('details',{},h('summary',{text:'Pedido en la cita \xB7 '+o.asked.length+(o.asked.length===1?' elemento':' elementos')}),h('p',{class:'note',text:o.asked.join(' \xB7 ')})):null,promisedLine(o),assignmentNote(o,d),claimBlock(o,'taller'),warrantyLine(o),paymentLine(o),intakeDetails(o),stageReviewLine(o),acts].filter(Boolean));if(o.records&&o.records.partial)list.append(h('p',{class:'note',text:'Aprobado en parte: '+usd(o.records.partial.approvedUsd)+' de '+usd(o.records.partial.quotedUsd)}));}
  return card('\xD3rdenes de trabajo',d.orders.length+(d.orders.length===1?' orden':' \xF3rdenes'),list);}
@@ -126189,6 +126207,12 @@ var iso3 = (v) => {
   const d = v instanceof Date ? v : /* @__PURE__ */ new Date(String(v).replace(" ", "T") + "Z");
   return Number.isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
 };
+var ecDay3 = (v) => {
+  if (!v)
+    return null;
+  const d = v instanceof Date ? v : /* @__PURE__ */ new Date(String(v).replace(" ", "T") + "Z");
+  return Number.isNaN(d.getTime()) ? null : new Date(d.getTime() - 5 * 36e5).toISOString().slice(0, 10);
+};
 var parseParts = (v) => {
   try {
     const list7 = typeof v === "string" ? JSON.parse(v) : v;
@@ -126210,7 +126234,7 @@ async function listPlanRecords(conn, vehicleId, viewer) {
     id: String(r.id),
     serviceId: String(r.serviceId),
     km: r.km === null || r.km === void 0 ? null : Number(r.km),
-    doneAt: iso3(r.doneAt),
+    doneAt: ecDay3(r.doneAt),
     source: r.source === "taller" ? "taller" : "dueno",
     shopName: r.realShop ? String(r.realShop) : r.shopName ? String(r.shopName) : null,
     detail: r.detail ? String(r.detail) : null,
@@ -126222,7 +126246,7 @@ async function listPlanRecords(conn, vehicleId, viewer) {
     nextDueKm: r.nextDueKm === null || r.nextDueKm === void 0 ? null : Number(r.nextDueKm),
     appointment: r.appointmentId ? `C-${String(r.appointmentId).replace(/-/g, "").slice(0, 6).toUpperCase()}` : null,
     canEdit: canEditRecord(r, viewer),
-    editedAt: iso3(r.updatedAt)
+    editedAt: ecDay3(r.updatedAt)
   }));
 }
 
@@ -131807,9 +131831,9 @@ var DeadlineNotices = class {
   }
   /** 10. Fecha de entrega prometida que ya pasó con la orden abierta: aviso al taller desde el día siguiente (hora de Ecuador). */
   async promesasVencidas(conn, now) {
-    const ecDay3 = (d) => new Date(d.getTime() - 5 * HOUR).toISOString().slice(0, 10);
-    const lastDue = ecDay3(new Date(now.getTime() - DEADLINES.promesaVencidaDias * DAY2));
-    const oldest = ecDay3(new Date(now.getTime() - (DEADLINES.promesaVencidaDias + DEADLINES.ventanaMaximaDias) * DAY2));
+    const ecDay4 = (d) => new Date(d.getTime() - 5 * HOUR).toISOString().slice(0, 10);
+    const lastDue = ecDay4(new Date(now.getTime() - DEADLINES.promesaVencidaDias * DAY2));
+    const oldest = ecDay4(new Date(now.getTime() - (DEADLINES.promesaVencidaDias + DEADLINES.ventanaMaximaDias) * DAY2));
     let n3 = 0;
     for (const p of await rows46(conn, "SELECT w.id, w.number, w.shopId, DATE_FORMAT(p.promisedDate, '%Y-%m-%d') AS promised, v.make, v.model, v.year FROM `WorkOrderPromise` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.status IN (?) AND p.promisedDate <= ? AND p.promisedDate > ? ORDER BY p.promisedDate LIMIT " + LIMIT, [OPEN_STATUSES, lastDue, oldest])) {
       const code5 = workOrderCode(Number(p.number));
