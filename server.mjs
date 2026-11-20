@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='eade89b6e80c0cc97303339b7471aeddeb4c18c8'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='6dcb221b7563e7beabee69103449f2ef7bc450db'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -3161,7 +3161,7 @@ var require_validation = __commonJS({
     }
     function lowerCaseHeadersSchema(schema, insidePropertyNames = false) {
       if (Array.isArray(schema)) {
-        return schema.map((item) => lowerCaseHeadersSchema(item, insidePropertyNames));
+        return schema.map((item2) => lowerCaseHeadersSchema(item2, insidePropertyNames));
       }
       if (schema === null || typeof schema !== "object") {
         return schema;
@@ -3273,7 +3273,7 @@ var require_validation = __commonJS({
           }
           default:
             if (insidePropertyNames && key === "enum" && Array.isArray(value2)) {
-              result[key] = value2.map((item) => typeof item === "string" ? item.toLowerCase() : item);
+              result[key] = value2.map((item2) => typeof item2 === "string" ? item2.toLowerCase() : item2);
             } else if (insidePropertyNames && key === "const" && typeof value2 === "string") {
               result[key] = value2.toLowerCase();
             } else {
@@ -3285,8 +3285,8 @@ var require_validation = __commonJS({
     }
     function findExternalHeaderRef(schema) {
       if (Array.isArray(schema)) {
-        for (const item of schema) {
-          const ref4 = findExternalHeaderRef(item);
+        for (const item2 of schema) {
+          const ref4 = findExternalHeaderRef(item2);
           if (ref4 !== void 0) return ref4;
         }
         return void 0;
@@ -3305,8 +3305,8 @@ var require_validation = __commonJS({
     }
     function findPropertyNamesRef(schema, insidePropertyNames = false) {
       if (Array.isArray(schema)) {
-        for (const item of schema) {
-          const ref4 = findPropertyNamesRef(item, insidePropertyNames);
+        for (const item2 of schema) {
+          const ref4 = findPropertyNamesRef(item2, insidePropertyNames);
           if (ref4 !== void 0) return ref4;
         }
         return void 0;
@@ -3570,31 +3570,31 @@ var require_toad_cache = __commonJS({
       }
       evict() {
         if (this.size > 0) {
-          const item = this.first;
-          this.items.delete(item.key);
+          const item2 = this.first;
+          this.items.delete(item2.key);
           if (this.size === 0) {
             this.first = null;
             this.last = null;
           } else {
-            this.first = item.next;
+            this.first = item2.next;
             this.first.prev = null;
           }
         }
       }
       expiresAt(key) {
-        const item = this.items.get(key);
-        if (item !== void 0) {
-          return item.expiry;
+        const item2 = this.items.get(key);
+        if (item2 !== void 0) {
+          return item2.expiry;
         }
       }
       get(key) {
-        const item = this.items.get(key);
-        if (item !== void 0) {
-          if (this.ttl > 0 && item.expiry <= Date.now()) {
+        const item2 = this.items.get(key);
+        if (item2 !== void 0) {
+          if (this.ttl > 0 && item2.expiry <= Date.now()) {
             this.delete(key);
             return;
           }
-          return item.value;
+          return item2.value;
         }
       }
       getMany(keys) {
@@ -3617,20 +3617,20 @@ var require_toad_cache = __commonJS({
         if (this.max > 0 && this.size >= this.max) {
           this.evict();
         }
-        const item = {
+        const item2 = {
           expiry: this.ttl > 0 ? Date.now() + this.ttl : this.ttl,
           key,
           prev: this.last,
           next: null,
           value: value2
         };
-        this.items.set(key, item);
+        this.items.set(key, item2);
         if (this.size === 1) {
-          this.first = item;
+          this.first = item2;
         } else {
-          this.last.next = item;
+          this.last.next = item2;
         }
-        this.last = item;
+        this.last = item2;
       }
     };
     var FifoObject = class {
@@ -3675,31 +3675,31 @@ var require_toad_cache = __commonJS({
       }
       evict() {
         if (this.size > 0) {
-          const item = this.first;
-          delete this.items[item.key];
+          const item2 = this.first;
+          delete this.items[item2.key];
           if (--this.size === 0) {
             this.first = null;
             this.last = null;
           } else {
-            this.first = item.next;
+            this.first = item2.next;
             this.first.prev = null;
           }
         }
       }
       expiresAt(key) {
-        const item = this.items[key];
-        if (item !== void 0) {
-          return item.expiry;
+        const item2 = this.items[key];
+        if (item2 !== void 0) {
+          return item2.expiry;
         }
       }
       get(key) {
-        const item = this.items[key];
-        if (item !== void 0) {
-          if (this.ttl > 0 && item.expiry <= Date.now()) {
+        const item2 = this.items[key];
+        if (item2 !== void 0) {
+          if (this.ttl > 0 && item2.expiry <= Date.now()) {
             this.delete(key);
             return;
           }
-          return item.value;
+          return item2.value;
         }
       }
       getMany(keys) {
@@ -3722,20 +3722,20 @@ var require_toad_cache = __commonJS({
         if (this.max > 0 && this.size >= this.max) {
           this.evict();
         }
-        const item = {
+        const item2 = {
           expiry: this.ttl > 0 ? Date.now() + this.ttl : this.ttl,
           key,
           prev: this.last,
           next: null,
           value: value2
         };
-        this.items[key] = item;
+        this.items[key] = item2;
         if (++this.size === 1) {
-          this.first = item;
+          this.first = item2;
         } else {
-          this.last.next = item;
+          this.last.next = item2;
         }
-        this.last = item;
+        this.last = item2;
       }
     };
     function createEmptyStatisticsRecord() {
@@ -3785,26 +3785,26 @@ var require_toad_cache = __commonJS({
       get size() {
         return this.items.size;
       }
-      bumpLru(item) {
-        if (this.last === item) {
+      bumpLru(item2) {
+        if (this.last === item2) {
           return;
         }
         const last = this.last;
-        const next = item.next;
-        const prev = item.prev;
-        if (this.first === item) {
+        const next = item2.next;
+        const prev = item2.prev;
+        if (this.first === item2) {
           this.first = next;
         }
-        item.next = null;
-        item.prev = last;
-        last.next = item;
+        item2.next = null;
+        item2.prev = last;
+        last.next = item2;
         if (prev !== null) {
           prev.next = next;
         }
         if (next !== null) {
           next.prev = prev;
         }
-        this.last = item;
+        this.last = item2;
       }
       clear() {
         this.items.clear();
@@ -3812,20 +3812,20 @@ var require_toad_cache = __commonJS({
         this.last = null;
       }
       delete(key) {
-        const item = this.items.get(key);
-        if (item !== void 0) {
+        const item2 = this.items.get(key);
+        if (item2 !== void 0) {
           this.items.delete(key);
-          if (item.prev !== null) {
-            item.prev.next = item.next;
+          if (item2.prev !== null) {
+            item2.prev.next = item2.next;
           }
-          if (item.next !== null) {
-            item.next.prev = item.prev;
+          if (item2.next !== null) {
+            item2.next.prev = item2.prev;
           }
-          if (this.first === item) {
-            this.first = item.next;
+          if (this.first === item2) {
+            this.first = item2.next;
           }
-          if (this.last === item) {
-            this.last = item.prev;
+          if (this.last === item2) {
+            this.last = item2.prev;
           }
         }
       }
@@ -3836,32 +3836,32 @@ var require_toad_cache = __commonJS({
       }
       evict() {
         if (this.size > 0) {
-          const item = this.first;
-          this.items.delete(item.key);
+          const item2 = this.first;
+          this.items.delete(item2.key);
           if (this.size === 0) {
             this.first = null;
             this.last = null;
           } else {
-            this.first = item.next;
+            this.first = item2.next;
             this.first.prev = null;
           }
         }
       }
       expiresAt(key) {
-        const item = this.items.get(key);
-        if (item !== void 0) {
-          return item.expiry;
+        const item2 = this.items.get(key);
+        if (item2 !== void 0) {
+          return item2.expiry;
         }
       }
       get(key) {
-        const item = this.items.get(key);
-        if (item !== void 0) {
-          if (this.ttl > 0 && item.expiry <= Date.now()) {
+        const item2 = this.items.get(key);
+        if (item2 !== void 0) {
+          if (this.ttl > 0 && item2.expiry <= Date.now()) {
             this.delete(key);
             return;
           }
-          this.bumpLru(item);
-          return item.value;
+          this.bumpLru(item2);
+          return item2.value;
         }
       }
       getMany(keys) {
@@ -3885,20 +3885,20 @@ var require_toad_cache = __commonJS({
         if (this.max > 0 && this.size >= this.max) {
           this.evict();
         }
-        const item = {
+        const item2 = {
           expiry: this.ttl > 0 ? Date.now() + this.ttl : this.ttl,
           key,
           prev: this.last,
           next: null,
           value: value2
         };
-        this.items.set(key, item);
+        this.items.set(key, item2);
         if (this.size === 1) {
-          this.first = item;
+          this.first = item2;
         } else {
-          this.last.next = item;
+          this.last.next = item2;
         }
-        this.last = item;
+        this.last = item2;
       }
     };
     var LruObject = class {
@@ -3911,26 +3911,26 @@ var require_toad_cache = __commonJS({
         this.max = max;
         this.ttl = ttlInMsecs;
       }
-      bumpLru(item) {
-        if (this.last === item) {
+      bumpLru(item2) {
+        if (this.last === item2) {
           return;
         }
         const last = this.last;
-        const next = item.next;
-        const prev = item.prev;
-        if (this.first === item) {
+        const next = item2.next;
+        const prev = item2.prev;
+        if (this.first === item2) {
           this.first = next;
         }
-        item.next = null;
-        item.prev = last;
-        last.next = item;
+        item2.next = null;
+        item2.prev = last;
+        last.next = item2;
         if (prev !== null) {
           prev.next = next;
         }
         if (next !== null) {
           next.prev = prev;
         }
-        this.last = item;
+        this.last = item2;
       }
       clear() {
         this.items = /* @__PURE__ */ Object.create(null);
@@ -3939,21 +3939,21 @@ var require_toad_cache = __commonJS({
         this.size = 0;
       }
       delete(key) {
-        const item = this.items[key];
-        if (item !== void 0) {
+        const item2 = this.items[key];
+        if (item2 !== void 0) {
           delete this.items[key];
           this.size--;
-          if (item.prev !== null) {
-            item.prev.next = item.next;
+          if (item2.prev !== null) {
+            item2.prev.next = item2.next;
           }
-          if (item.next !== null) {
-            item.next.prev = item.prev;
+          if (item2.next !== null) {
+            item2.next.prev = item2.prev;
           }
-          if (this.first === item) {
-            this.first = item.next;
+          if (this.first === item2) {
+            this.first = item2.next;
           }
-          if (this.last === item) {
-            this.last = item.prev;
+          if (this.last === item2) {
+            this.last = item2.prev;
           }
         }
       }
@@ -3964,32 +3964,32 @@ var require_toad_cache = __commonJS({
       }
       evict() {
         if (this.size > 0) {
-          const item = this.first;
-          delete this.items[item.key];
+          const item2 = this.first;
+          delete this.items[item2.key];
           if (--this.size === 0) {
             this.first = null;
             this.last = null;
           } else {
-            this.first = item.next;
+            this.first = item2.next;
             this.first.prev = null;
           }
         }
       }
       expiresAt(key) {
-        const item = this.items[key];
-        if (item !== void 0) {
-          return item.expiry;
+        const item2 = this.items[key];
+        if (item2 !== void 0) {
+          return item2.expiry;
         }
       }
       get(key) {
-        const item = this.items[key];
-        if (item !== void 0) {
-          if (this.ttl > 0 && item.expiry <= Date.now()) {
+        const item2 = this.items[key];
+        if (item2 !== void 0) {
+          if (this.ttl > 0 && item2.expiry <= Date.now()) {
             this.delete(key);
             return;
           }
-          this.bumpLru(item);
-          return item.value;
+          this.bumpLru(item2);
+          return item2.value;
         }
       }
       getMany(keys) {
@@ -4013,20 +4013,20 @@ var require_toad_cache = __commonJS({
         if (this.max > 0 && this.size >= this.max) {
           this.evict();
         }
-        const item = {
+        const item2 = {
           expiry: this.ttl > 0 ? Date.now() + this.ttl : this.ttl,
           key,
           prev: this.last,
           next: null,
           value: value2
         };
-        this.items[key] = item;
+        this.items[key] = item2;
         if (++this.size === 1) {
-          this.first = item;
+          this.first = item2;
         } else {
-          this.last.next = item;
+          this.last.next = item2;
         }
-        this.last = item;
+        this.last = item2;
       }
     };
     function getTimestamp(date2) {
@@ -4147,22 +4147,22 @@ var require_toad_cache = __commonJS({
         this.hitStatistics.setCacheSize(this.size);
       }
       get(key) {
-        const item = this.items[key];
-        if (item !== void 0) {
-          if (this.ttl > 0 && item.expiry <= Date.now()) {
+        const item2 = this.items[key];
+        if (item2 !== void 0) {
+          if (this.ttl > 0 && item2.expiry <= Date.now()) {
             this.delete(key, true);
             this.hitStatistics.addExpiration();
             return;
           }
-          this.bumpLru(item);
-          if (!item.value) {
+          this.bumpLru(item2);
+          if (!item2.value) {
             this.hitStatistics.addFalsyHit();
-            if (item.value === void 0 || item.value === null || item.value === "") {
+            if (item2.value === void 0 || item2.value === null || item2.value === "") {
               this.hitStatistics.addEmptyHit();
             }
           }
           this.hitStatistics.addHit();
-          return item.value;
+          return item2.value;
         }
         this.hitStatistics.addMiss();
       }
@@ -8873,14 +8873,14 @@ var require_tools = __commonJS({
       }
       return point < 32 ? JSON.stringify(str8) : '"' + result + '"';
     }
-    function asJson(obj, msg, num6, time3) {
+    function asJson(obj, msg, num7, time3) {
       if (asJsonChan.hasSubscribers === false) {
-        return _asJson.call(this, obj, msg, num6, time3);
+        return _asJson.call(this, obj, msg, num7, time3);
       }
       const store = { instance: this, arguments };
-      return asJsonChan.traceSync(_asJson, store, this, obj, msg, num6, time3);
+      return asJsonChan.traceSync(_asJson, store, this, obj, msg, num7, time3);
     }
-    function _asJson(obj, msg, num6, time3) {
+    function _asJson(obj, msg, num7, time3) {
       const stringify2 = this[stringifySym];
       const stringifySafe = this[stringifySafeSym];
       const stringifiers = this[stringifiersSym];
@@ -8890,7 +8890,7 @@ var require_tools = __commonJS({
       const formatters = this[formattersSym];
       const messageKey = this[messageKeySym];
       const errorKey = this[errorKeySym];
-      let data3 = this[lsCacheSym][num6] + time3;
+      let data3 = this[lsCacheSym][num7] + time3;
       data3 = data3 + chindings;
       let value2;
       if (formatters.log) {
@@ -9515,7 +9515,7 @@ var require_proto = __commonJS({
     function defaultMixinMergeStrategy(mergeObject, mixinObject) {
       return Object.assign(mixinObject, mergeObject);
     }
-    function write(_obj, msg, num6) {
+    function write(_obj, msg, num7) {
       const t = this[timeSym]();
       const mixin = this[mixinSym];
       const errorKey = this[errorKeySym];
@@ -9537,12 +9537,12 @@ var require_proto = __commonJS({
         }
       }
       if (mixin) {
-        obj = mixinMergeStrategy(obj, mixin(obj, num6, this));
+        obj = mixinMergeStrategy(obj, mixin(obj, num7, this));
       }
-      const s = this[asJsonSym](obj, msg, num6, t);
+      const s = this[asJsonSym](obj, msg, num7, t);
       const stream = this[streamSym];
       if (stream[needsMetadataGsym] === true) {
-        stream.lastLevel = num6;
+        stream.lastLevel = num7;
         stream.lastObj = obj;
         stream.lastMsg = msg;
         stream.lastTime = t.slice(this[timeSliceIndexSym]);
@@ -10904,13 +10904,13 @@ var require_serializer = __commonJS({
         return "" + integer;
       }
       asNumber(i) {
-        const num6 = Number(i);
-        if (num6 !== num6) {
+        const num7 = Number(i);
+        if (num7 !== num7) {
           throw new Error(`The value "${i}" cannot be converted to a number.`);
-        } else if (num6 === Infinity || num6 === -Infinity) {
+        } else if (num7 === Infinity || num7 === -Infinity) {
           return "null";
         } else {
-          return "" + num6;
+          return "" + num7;
         }
       }
       asBoolean(bool2) {
@@ -14163,8 +14163,8 @@ var require_code = __commonJS({
       emptyStr() {
         if (this._items.length > 1)
           return false;
-        const item = this._items[0];
-        return item === "" || item === '""';
+        const item2 = this._items[0];
+        return item2 === "" || item2 === '""';
       }
       get str() {
         var _a;
@@ -14337,13 +14337,13 @@ var require_scope = __commonJS({
       }
     };
     exports.ValueScopeName = ValueScopeName;
-    var line = (0, code_1._)`\n`;
+    var line2 = (0, code_1._)`\n`;
     var ValueScope = class extends Scope {
       constructor(opts) {
         super(opts);
         this._values = {};
         this._scope = opts.scope;
-        this.opts = { ...opts, _n: opts.lines ? line : code_1.nil };
+        this.opts = { ...opts, _n: opts.lines ? line2 : code_1.nil };
       }
       get() {
         return this._scope;
@@ -15153,8 +15153,8 @@ var require_util = __commonJS({
     var code_1 = require_code();
     function toHash(arr) {
       const hash2 = {};
-      for (const item of arr)
-        hash2[item] = true;
+      for (const item2 of arr)
+        hash2[item2] = true;
       return hash2;
     }
     exports.toHash = toHash;
@@ -19493,19 +19493,19 @@ var require_uniqueItems = __commonJS({
           return itemTypes.length > 0 && !itemTypes.some((t) => t === "object" || t === "array");
         }
         function loopN(i, j) {
-          const item = gen.name("item");
-          const wrongType = (0, dataType_1.checkDataTypes)(itemTypes, item, it.opts.strictNumbers, dataType_1.DataType.Wrong);
+          const item2 = gen.name("item");
+          const wrongType = (0, dataType_1.checkDataTypes)(itemTypes, item2, it.opts.strictNumbers, dataType_1.DataType.Wrong);
           const indices = gen.const("indices", (0, codegen_1._)`{}`);
           gen.for((0, codegen_1._)`;${i}--;`, () => {
-            gen.let(item, (0, codegen_1._)`${data3}[${i}]`);
+            gen.let(item2, (0, codegen_1._)`${data3}[${i}]`);
             gen.if(wrongType, (0, codegen_1._)`continue`);
             if (itemTypes.length > 1)
-              gen.if((0, codegen_1._)`typeof ${item} == "string"`, (0, codegen_1._)`${item} += "_"`);
-            gen.if((0, codegen_1._)`typeof ${indices}[${item}] == "number"`, () => {
-              gen.assign(j, (0, codegen_1._)`${indices}[${item}]`);
+              gen.if((0, codegen_1._)`typeof ${item2} == "string"`, (0, codegen_1._)`${item2} += "_"`);
+            gen.if((0, codegen_1._)`typeof ${indices}[${item2}] == "number"`, () => {
+              gen.assign(j, (0, codegen_1._)`${indices}[${item2}]`);
               cxt.error();
               gen.assign(valid, false).break();
-            }).code((0, codegen_1._)`${indices}[${item}] = ${i}`);
+            }).code((0, codegen_1._)`${indices}[${item2}] = ${i}`);
           });
         }
         function loopN2(i, j) {
@@ -24819,7 +24819,7 @@ var require_ajv_compiler = __commonJS({
 var require_dist2 = __commonJS({
   "node_modules/dequal/dist/index.js"(exports) {
     var has = Object.prototype.hasOwnProperty;
-    function find(iter, tar, key) {
+    function find2(iter, tar, key) {
       for (key of iter.keys()) {
         if (dequal(key, tar)) return key;
       }
@@ -24843,7 +24843,7 @@ var require_dist2 = __commonJS({
           for (len of foo) {
             tmp = len;
             if (tmp && typeof tmp === "object") {
-              tmp = find(bar, tmp);
+              tmp = find2(bar, tmp);
               if (!tmp) return false;
             }
             if (!bar.has(tmp)) return false;
@@ -24857,7 +24857,7 @@ var require_dist2 = __commonJS({
           for (len of foo) {
             tmp = len[0];
             if (tmp && typeof tmp === "object") {
-              tmp = find(bar, tmp);
+              tmp = find2(bar, tmp);
               if (!tmp) return false;
             }
             if (!dequal(len[1], bar.get(tmp))) {
@@ -25173,13 +25173,13 @@ var require_serializer2 = __commonJS({
         return "" + integer;
       }
       asNumber(i) {
-        const num6 = Number(i);
-        if (num6 !== num6) {
+        const num7 = Number(i);
+        if (num7 !== num7) {
           throw new Error(`The value "${i}" cannot be converted to a number.`);
-        } else if (num6 === Infinity || num6 === -Infinity) {
+        } else if (num7 === Infinity || num7 === -Infinity) {
           return "null";
         } else {
-          return "" + num6;
+          return "" + num7;
         }
       }
       asBoolean(bool2) {
@@ -25293,8 +25293,8 @@ var require_code3 = __commonJS({
       emptyStr() {
         if (this._items.length > 1)
           return false;
-        const item = this._items[0];
-        return item === "" || item === '""';
+        const item2 = this._items[0];
+        return item2 === "" || item2 === '""';
       }
       get str() {
         var _a;
@@ -25467,13 +25467,13 @@ var require_scope2 = __commonJS({
       }
     };
     exports.ValueScopeName = ValueScopeName;
-    var line = (0, code_1._)`\n`;
+    var line2 = (0, code_1._)`\n`;
     var ValueScope = class extends Scope {
       constructor(opts) {
         super(opts);
         this._values = {};
         this._scope = opts.scope;
-        this.opts = { ...opts, _n: opts.lines ? line : code_1.nil };
+        this.opts = { ...opts, _n: opts.lines ? line2 : code_1.nil };
       }
       get() {
         return this._scope;
@@ -26283,8 +26283,8 @@ var require_util2 = __commonJS({
     var code_1 = require_code3();
     function toHash(arr) {
       const hash2 = {};
-      for (const item of arr)
-        hash2[item] = true;
+      for (const item2 of arr)
+        hash2[item2] = true;
       return hash2;
     }
     exports.toHash = toHash;
@@ -30588,19 +30588,19 @@ var require_uniqueItems2 = __commonJS({
           return itemTypes.length > 0 && !itemTypes.some((t) => t === "object" || t === "array");
         }
         function loopN(i, j) {
-          const item = gen.name("item");
-          const wrongType = (0, dataType_1.checkDataTypes)(itemTypes, item, it.opts.strictNumbers, dataType_1.DataType.Wrong);
+          const item2 = gen.name("item");
+          const wrongType = (0, dataType_1.checkDataTypes)(itemTypes, item2, it.opts.strictNumbers, dataType_1.DataType.Wrong);
           const indices = gen.const("indices", (0, codegen_1._)`{}`);
           gen.for((0, codegen_1._)`;${i}--;`, () => {
-            gen.let(item, (0, codegen_1._)`${data3}[${i}]`);
+            gen.let(item2, (0, codegen_1._)`${data3}[${i}]`);
             gen.if(wrongType, (0, codegen_1._)`continue`);
             if (itemTypes.length > 1)
-              gen.if((0, codegen_1._)`typeof ${item} == "string"`, (0, codegen_1._)`${item} += "_"`);
-            gen.if((0, codegen_1._)`typeof ${indices}[${item}] == "number"`, () => {
-              gen.assign(j, (0, codegen_1._)`${indices}[${item}]`);
+              gen.if((0, codegen_1._)`typeof ${item2} == "string"`, (0, codegen_1._)`${item2} += "_"`);
+            gen.if((0, codegen_1._)`typeof ${indices}[${item2}] == "number"`, () => {
+              gen.assign(j, (0, codegen_1._)`${indices}[${item2}]`);
               cxt.error();
               gen.assign(valid, false).break();
-            }).code((0, codegen_1._)`${indices}[${item}] = ${i}`);
+            }).code((0, codegen_1._)`${indices}[${item2}] = ${i}`);
           });
         }
         function loopN2(i, j) {
@@ -34639,18 +34639,18 @@ ${contextFunctionCode}`,
   `;
         if (Array.isArray(itemsSchema)) {
           for (let i = 0, itemsSchemaLength = itemsSchema.length; i < itemsSchemaLength; i++) {
-            let item = itemsSchema[i];
+            let item2 = itemsSchema[i];
             let itemLocation = itemsLocation.getPropertyLocation(i);
             if (itemLocation.schema.$ref) {
               itemLocation = resolveRef(context, itemLocation);
-              item = itemLocation.schema;
+              item2 = itemLocation.schema;
             }
             const value2 = `value_${i}`;
             functionCode += `const ${value2} = obj[${i}]`;
             const tmpRes = buildValue(context, itemLocation, value2);
             functionCode += `
         if (${i} < arrayLength) {
-          if (${buildArrayTypeCondition(item.type, value2)}) {
+          if (${buildArrayTypeCondition(item2.type, value2)}) {
             if (${i}) {
               json += JSON_STR_COMMA
             }
@@ -34720,18 +34720,18 @@ ${contextFunctionCode}`,
         inlinedCode += `let addComma_${localUid} = false
 `;
         for (let i = 0, itemsSchemaLength = itemsSchema.length; i < itemsSchemaLength; i++) {
-          let item = itemsSchema[i];
+          let item2 = itemsSchema[i];
           let itemLocation = itemsLocation.getPropertyLocation(i);
           if (itemLocation.schema.$ref) {
             itemLocation = resolveRef(context, itemLocation);
-            item = itemLocation.schema;
+            item2 = itemLocation.schema;
           }
           const value2 = `value_${i}_${context.uid++}`;
           inlinedCode += `const ${value2} = ${objVar}[${i}]`;
           const tmpRes = buildValue(context, itemLocation, value2);
           inlinedCode += `
         if (${i} < arrayLength_${objVar}) {
-          if (${buildArrayTypeCondition(item.type, value2)}) {
+          if (${buildArrayTypeCondition(item2.type, value2)}) {
             !addComma_${localUid} && (addComma_${localUid} = true) || (json += JSON_STR_COMMA)
             ${tmpRes}
           } else {
@@ -35627,9 +35627,9 @@ var require_semver = __commonJS({
         } else {
           this.prerelease = m[4].split(".").map((id3) => {
             if (/^[0-9]+$/.test(id3)) {
-              const num6 = +id3;
-              if (num6 >= 0 && num6 < MAX_SAFE_INTEGER) {
-                return num6;
+              const num7 = +id3;
+              if (num7 >= 0 && num7 < MAX_SAFE_INTEGER) {
+                return num7;
               }
             }
             return id3;
@@ -40533,7 +40533,7 @@ var require_find_my_way = __commonJS({
       if (handle === null) return this._defaultRoute(req2, res, ctx);
       return ctx === void 0 ? handle.handler(req2, res, handle.params, handle.store, handle.searchParams) : handle.handler.call(ctx, req2, res, handle.params, handle.store, handle.searchParams);
     };
-    Router.prototype.find = function find(method, path, derivedConstraints) {
+    Router.prototype.find = function find2(method, path, derivedConstraints) {
       let currentNode = method === "GET" ? this._treeGET : this.trees[method];
       if (currentNode == null) return null;
       if (path.charCodeAt(0) !== 47) {
@@ -41992,7 +41992,7 @@ var require_parse_url = __commonJS({
 var require_form_data = __commonJS({
   "node_modules/light-my-request/lib/form-data.js"(exports, module) {
     "use strict";
-    var { randomUUID: randomUUID53 } = __require("node:crypto");
+    var { randomUUID: randomUUID54 } = __require("node:crypto");
     var { Readable } = __require("node:stream");
     var textEncoder;
     function isFormDataLike(payload) {
@@ -42000,7 +42000,7 @@ var require_form_data = __commonJS({
     }
     function formDataToStream(formdata) {
       textEncoder = textEncoder ?? new TextEncoder();
-      const boundary = `----formdata-${randomUUID53()}`;
+      const boundary = `----formdata-${randomUUID54()}`;
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
       const escape2 = (str8) => str8.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
@@ -45466,11 +45466,11 @@ var require_bn = __commonJS({
         }
       } catch (e9) {
       }
-      BN.isBN = function isBN(num6) {
-        if (num6 instanceof BN) {
+      BN.isBN = function isBN(num7) {
+        if (num7 instanceof BN) {
           return true;
         }
-        return num6 !== null && typeof num6 === "object" && num6.constructor.wordSize === BN.wordSize && Array.isArray(num6.words);
+        return num7 !== null && typeof num7 === "object" && num7.constructor.wordSize === BN.wordSize && Array.isArray(num7.words);
       };
       BN.max = function max(left, right) {
         if (left.cmp(right) > 0) return left;
@@ -45991,12 +45991,12 @@ var require_bn = __commonJS({
         var hi = this._countBits(w);
         return (this.length - 1) * 26 + hi;
       };
-      function toBitArray(num6) {
-        var w = new Array(num6.bitLength());
+      function toBitArray(num7) {
+        var w = new Array(num7.bitLength());
         for (var bit = 0; bit < w.length; bit++) {
           var off2 = bit / 26 | 0;
           var wbit = bit % 26;
-          w[bit] = (num6.words[off2] & 1 << wbit) >>> wbit;
+          w[bit] = (num7.words[off2] & 1 << wbit) >>> wbit;
         }
         return w;
       }
@@ -46037,60 +46037,60 @@ var require_bn = __commonJS({
         }
         return this;
       };
-      BN.prototype.iuor = function iuor(num6) {
-        while (this.length < num6.length) {
+      BN.prototype.iuor = function iuor(num7) {
+        while (this.length < num7.length) {
           this.words[this.length++] = 0;
         }
-        for (var i = 0; i < num6.length; i++) {
-          this.words[i] = this.words[i] | num6.words[i];
+        for (var i = 0; i < num7.length; i++) {
+          this.words[i] = this.words[i] | num7.words[i];
         }
         return this.strip();
       };
-      BN.prototype.ior = function ior(num6) {
-        assert((this.negative | num6.negative) === 0);
-        return this.iuor(num6);
+      BN.prototype.ior = function ior(num7) {
+        assert((this.negative | num7.negative) === 0);
+        return this.iuor(num7);
       };
-      BN.prototype.or = function or(num6) {
-        if (this.length > num6.length) return this.clone().ior(num6);
-        return num6.clone().ior(this);
+      BN.prototype.or = function or(num7) {
+        if (this.length > num7.length) return this.clone().ior(num7);
+        return num7.clone().ior(this);
       };
-      BN.prototype.uor = function uor(num6) {
-        if (this.length > num6.length) return this.clone().iuor(num6);
-        return num6.clone().iuor(this);
+      BN.prototype.uor = function uor(num7) {
+        if (this.length > num7.length) return this.clone().iuor(num7);
+        return num7.clone().iuor(this);
       };
-      BN.prototype.iuand = function iuand(num6) {
+      BN.prototype.iuand = function iuand(num7) {
         var b;
-        if (this.length > num6.length) {
-          b = num6;
+        if (this.length > num7.length) {
+          b = num7;
         } else {
           b = this;
         }
         for (var i = 0; i < b.length; i++) {
-          this.words[i] = this.words[i] & num6.words[i];
+          this.words[i] = this.words[i] & num7.words[i];
         }
         this.length = b.length;
         return this.strip();
       };
-      BN.prototype.iand = function iand(num6) {
-        assert((this.negative | num6.negative) === 0);
-        return this.iuand(num6);
+      BN.prototype.iand = function iand(num7) {
+        assert((this.negative | num7.negative) === 0);
+        return this.iuand(num7);
       };
-      BN.prototype.and = function and(num6) {
-        if (this.length > num6.length) return this.clone().iand(num6);
-        return num6.clone().iand(this);
+      BN.prototype.and = function and(num7) {
+        if (this.length > num7.length) return this.clone().iand(num7);
+        return num7.clone().iand(this);
       };
-      BN.prototype.uand = function uand(num6) {
-        if (this.length > num6.length) return this.clone().iuand(num6);
-        return num6.clone().iuand(this);
+      BN.prototype.uand = function uand(num7) {
+        if (this.length > num7.length) return this.clone().iuand(num7);
+        return num7.clone().iuand(this);
       };
-      BN.prototype.iuxor = function iuxor(num6) {
+      BN.prototype.iuxor = function iuxor(num7) {
         var a;
         var b;
-        if (this.length > num6.length) {
+        if (this.length > num7.length) {
           a = this;
-          b = num6;
+          b = num7;
         } else {
-          a = num6;
+          a = num7;
           b = this;
         }
         for (var i = 0; i < b.length; i++) {
@@ -46104,17 +46104,17 @@ var require_bn = __commonJS({
         this.length = a.length;
         return this.strip();
       };
-      BN.prototype.ixor = function ixor(num6) {
-        assert((this.negative | num6.negative) === 0);
-        return this.iuxor(num6);
+      BN.prototype.ixor = function ixor(num7) {
+        assert((this.negative | num7.negative) === 0);
+        return this.iuxor(num7);
       };
-      BN.prototype.xor = function xor(num6) {
-        if (this.length > num6.length) return this.clone().ixor(num6);
-        return num6.clone().ixor(this);
+      BN.prototype.xor = function xor(num7) {
+        if (this.length > num7.length) return this.clone().ixor(num7);
+        return num7.clone().ixor(this);
       };
-      BN.prototype.uxor = function uxor(num6) {
-        if (this.length > num6.length) return this.clone().iuxor(num6);
-        return num6.clone().iuxor(this);
+      BN.prototype.uxor = function uxor(num7) {
+        if (this.length > num7.length) return this.clone().iuxor(num7);
+        return num7.clone().iuxor(this);
       };
       BN.prototype.inotn = function inotn(width) {
         assert(typeof width === "number" && width >= 0);
@@ -46151,25 +46151,25 @@ var require_bn = __commonJS({
         }
         return this.strip();
       };
-      BN.prototype.iadd = function iadd(num6) {
+      BN.prototype.iadd = function iadd(num7) {
         var r;
-        if (this.negative !== 0 && num6.negative === 0) {
+        if (this.negative !== 0 && num7.negative === 0) {
           this.negative = 0;
-          r = this.isub(num6);
+          r = this.isub(num7);
           this.negative ^= 1;
           return this._normSign();
-        } else if (this.negative === 0 && num6.negative !== 0) {
-          num6.negative = 0;
-          r = this.isub(num6);
-          num6.negative = 1;
+        } else if (this.negative === 0 && num7.negative !== 0) {
+          num7.negative = 0;
+          r = this.isub(num7);
+          num7.negative = 1;
           return r._normSign();
         }
         var a, b;
-        if (this.length > num6.length) {
+        if (this.length > num7.length) {
           a = this;
-          b = num6;
+          b = num7;
         } else {
-          a = num6;
+          a = num7;
           b = this;
         }
         var carry = 0;
@@ -46194,35 +46194,35 @@ var require_bn = __commonJS({
         }
         return this;
       };
-      BN.prototype.add = function add(num6) {
+      BN.prototype.add = function add(num7) {
         var res;
-        if (num6.negative !== 0 && this.negative === 0) {
-          num6.negative = 0;
-          res = this.sub(num6);
-          num6.negative ^= 1;
+        if (num7.negative !== 0 && this.negative === 0) {
+          num7.negative = 0;
+          res = this.sub(num7);
+          num7.negative ^= 1;
           return res;
-        } else if (num6.negative === 0 && this.negative !== 0) {
+        } else if (num7.negative === 0 && this.negative !== 0) {
           this.negative = 0;
-          res = num6.sub(this);
+          res = num7.sub(this);
           this.negative = 1;
           return res;
         }
-        if (this.length > num6.length) return this.clone().iadd(num6);
-        return num6.clone().iadd(this);
+        if (this.length > num7.length) return this.clone().iadd(num7);
+        return num7.clone().iadd(this);
       };
-      BN.prototype.isub = function isub(num6) {
-        if (num6.negative !== 0) {
-          num6.negative = 0;
-          var r = this.iadd(num6);
-          num6.negative = 1;
+      BN.prototype.isub = function isub(num7) {
+        if (num7.negative !== 0) {
+          num7.negative = 0;
+          var r = this.iadd(num7);
+          num7.negative = 1;
           return r._normSign();
         } else if (this.negative !== 0) {
           this.negative = 0;
-          this.iadd(num6);
+          this.iadd(num7);
           this.negative = 1;
           return this._normSign();
         }
-        var cmp = this.cmp(num6);
+        var cmp = this.cmp(num7);
         if (cmp === 0) {
           this.negative = 0;
           this.length = 1;
@@ -46232,9 +46232,9 @@ var require_bn = __commonJS({
         var a, b;
         if (cmp > 0) {
           a = this;
-          b = num6;
+          b = num7;
         } else {
-          a = num6;
+          a = num7;
           b = this;
         }
         var carry = 0;
@@ -46259,16 +46259,16 @@ var require_bn = __commonJS({
         }
         return this.strip();
       };
-      BN.prototype.sub = function sub(num6) {
-        return this.clone().isub(num6);
+      BN.prototype.sub = function sub(num7) {
+        return this.clone().isub(num7);
       };
-      function smallMulTo(self2, num6, out) {
-        out.negative = num6.negative ^ self2.negative;
-        var len = self2.length + num6.length | 0;
+      function smallMulTo(self2, num7, out) {
+        out.negative = num7.negative ^ self2.negative;
+        var len = self2.length + num7.length | 0;
         out.length = len;
         len = len - 1 | 0;
         var a = self2.words[0] | 0;
-        var b = num6.words[0] | 0;
+        var b = num7.words[0] | 0;
         var r = a * b;
         var lo = r & 67108863;
         var carry = r / 67108864 | 0;
@@ -46276,11 +46276,11 @@ var require_bn = __commonJS({
         for (var k = 1; k < len; k++) {
           var ncarry = carry >>> 26;
           var rword = carry & 67108863;
-          var maxJ = Math.min(k, num6.length - 1);
+          var maxJ = Math.min(k, num7.length - 1);
           for (var j = Math.max(0, k - self2.length + 1); j <= maxJ; j++) {
             var i = k - j | 0;
             a = self2.words[i] | 0;
-            b = num6.words[j] | 0;
+            b = num7.words[j] | 0;
             r = a * b + rword;
             ncarry += r / 67108864 | 0;
             rword = r & 67108863;
@@ -46295,9 +46295,9 @@ var require_bn = __commonJS({
         }
         return out.strip();
       }
-      var comb10MulTo = function comb10MulTo2(self2, num6, out) {
+      var comb10MulTo = function comb10MulTo2(self2, num7, out) {
         var a = self2.words;
-        var b = num6.words;
+        var b = num7.words;
         var o = out.words;
         var c = 0;
         var lo;
@@ -46363,7 +46363,7 @@ var require_bn = __commonJS({
         var b9 = b[9] | 0;
         var bl9 = b9 & 8191;
         var bh9 = b9 >>> 13;
-        out.negative = self2.negative ^ num6.negative;
+        out.negative = self2.negative ^ num7.negative;
         out.length = 19;
         lo = Math.imul(al0, bl0);
         mid = Math.imul(al0, bh0);
@@ -46850,20 +46850,20 @@ var require_bn = __commonJS({
       if (!Math.imul) {
         comb10MulTo = smallMulTo;
       }
-      function bigMulTo(self2, num6, out) {
-        out.negative = num6.negative ^ self2.negative;
-        out.length = self2.length + num6.length;
+      function bigMulTo(self2, num7, out) {
+        out.negative = num7.negative ^ self2.negative;
+        out.length = self2.length + num7.length;
         var carry = 0;
         var hncarry = 0;
         for (var k = 0; k < out.length - 1; k++) {
           var ncarry = hncarry;
           hncarry = 0;
           var rword = carry & 67108863;
-          var maxJ = Math.min(k, num6.length - 1);
+          var maxJ = Math.min(k, num7.length - 1);
           for (var j = Math.max(0, k - self2.length + 1); j <= maxJ; j++) {
             var i = k - j;
             var a = self2.words[i] | 0;
-            var b = num6.words[j] | 0;
+            var b = num7.words[j] | 0;
             var r = a * b;
             var lo = r & 67108863;
             ncarry = ncarry + (r / 67108864 | 0) | 0;
@@ -46884,21 +46884,21 @@ var require_bn = __commonJS({
         }
         return out.strip();
       }
-      function jumboMulTo(self2, num6, out) {
+      function jumboMulTo(self2, num7, out) {
         var fftm = new FFTM();
-        return fftm.mulp(self2, num6, out);
+        return fftm.mulp(self2, num7, out);
       }
-      BN.prototype.mulTo = function mulTo(num6, out) {
+      BN.prototype.mulTo = function mulTo(num7, out) {
         var res;
-        var len = this.length + num6.length;
-        if (this.length === 10 && num6.length === 10) {
-          res = comb10MulTo(this, num6, out);
+        var len = this.length + num7.length;
+        if (this.length === 10 && num7.length === 10) {
+          res = comb10MulTo(this, num7, out);
         } else if (len < 63) {
-          res = smallMulTo(this, num6, out);
+          res = smallMulTo(this, num7, out);
         } else if (len < 1024) {
-          res = bigMulTo(this, num6, out);
+          res = bigMulTo(this, num7, out);
         } else {
-          res = jumboMulTo(this, num6, out);
+          res = jumboMulTo(this, num7, out);
         }
         return res;
       };
@@ -47043,25 +47043,25 @@ var require_bn = __commonJS({
         out.length = x.length + y.length;
         return out.strip();
       };
-      BN.prototype.mul = function mul(num6) {
+      BN.prototype.mul = function mul(num7) {
         var out = new BN(null);
-        out.words = new Array(this.length + num6.length);
-        return this.mulTo(num6, out);
+        out.words = new Array(this.length + num7.length);
+        return this.mulTo(num7, out);
       };
-      BN.prototype.mulf = function mulf(num6) {
+      BN.prototype.mulf = function mulf(num7) {
         var out = new BN(null);
-        out.words = new Array(this.length + num6.length);
-        return jumboMulTo(this, num6, out);
+        out.words = new Array(this.length + num7.length);
+        return jumboMulTo(this, num7, out);
       };
-      BN.prototype.imul = function imul(num6) {
-        return this.clone().mulTo(num6, this);
+      BN.prototype.imul = function imul(num7) {
+        return this.clone().mulTo(num7, this);
       };
-      BN.prototype.imuln = function imuln(num6) {
-        assert(typeof num6 === "number");
-        assert(num6 < 67108864);
+      BN.prototype.imuln = function imuln(num7) {
+        assert(typeof num7 === "number");
+        assert(num7 < 67108864);
         var carry = 0;
         for (var i = 0; i < this.length; i++) {
-          var w = (this.words[i] | 0) * num6;
+          var w = (this.words[i] | 0) * num7;
           var lo = (w & 67108863) + (carry & 67108863);
           carry >>= 26;
           carry += w / 67108864 | 0;
@@ -47072,14 +47072,14 @@ var require_bn = __commonJS({
           this.words[i] = carry;
           this.length++;
         }
-        if (num6 === 0) {
+        if (num7 === 0) {
           this.length = 1;
           this._normSign();
         }
         return this;
       };
-      BN.prototype.muln = function muln(num6) {
-        return this.clone().imuln(num6);
+      BN.prototype.muln = function muln(num7) {
+        return this.clone().imuln(num7);
       };
       BN.prototype.sqr = function sqr() {
         return this.mul(this);
@@ -47087,8 +47087,8 @@ var require_bn = __commonJS({
       BN.prototype.isqr = function isqr() {
         return this.imul(this.clone());
       };
-      BN.prototype.pow = function pow(num6) {
-        var w = toBitArray(num6);
+      BN.prototype.pow = function pow(num7) {
+        var w = toBitArray(num7);
         if (w.length === 0) return new BN(1);
         var res = this;
         for (var i = 0; i < w.length; i++, res = res.sqr()) {
@@ -47231,25 +47231,25 @@ var require_bn = __commonJS({
       BN.prototype.maskn = function maskn(bits) {
         return this.clone().imaskn(bits);
       };
-      BN.prototype.iaddn = function iaddn(num6) {
-        assert(typeof num6 === "number");
-        assert(num6 < 67108864);
-        if (num6 < 0) return this.isubn(-num6);
+      BN.prototype.iaddn = function iaddn(num7) {
+        assert(typeof num7 === "number");
+        assert(num7 < 67108864);
+        if (num7 < 0) return this.isubn(-num7);
         if (this.negative !== 0) {
-          if (this.length === 1 && (this.words[0] | 0) < num6) {
-            this.words[0] = num6 - (this.words[0] | 0);
+          if (this.length === 1 && (this.words[0] | 0) < num7) {
+            this.words[0] = num7 - (this.words[0] | 0);
             this.negative = 0;
             return this;
           }
           this.negative = 0;
-          this.isubn(num6);
+          this.isubn(num7);
           this.negative = 1;
           return this;
         }
-        return this._iaddn(num6);
+        return this._iaddn(num7);
       };
-      BN.prototype._iaddn = function _iaddn(num6) {
-        this.words[0] += num6;
+      BN.prototype._iaddn = function _iaddn(num7) {
+        this.words[0] += num7;
         for (var i = 0; i < this.length && this.words[i] >= 67108864; i++) {
           this.words[i] -= 67108864;
           if (i === this.length - 1) {
@@ -47261,17 +47261,17 @@ var require_bn = __commonJS({
         this.length = Math.max(this.length, i + 1);
         return this;
       };
-      BN.prototype.isubn = function isubn(num6) {
-        assert(typeof num6 === "number");
-        assert(num6 < 67108864);
-        if (num6 < 0) return this.iaddn(-num6);
+      BN.prototype.isubn = function isubn(num7) {
+        assert(typeof num7 === "number");
+        assert(num7 < 67108864);
+        if (num7 < 0) return this.iaddn(-num7);
         if (this.negative !== 0) {
           this.negative = 0;
-          this.iaddn(num6);
+          this.iaddn(num7);
           this.negative = 1;
           return this;
         }
-        this.words[0] -= num6;
+        this.words[0] -= num7;
         if (this.length === 1 && this.words[0] < 0) {
           this.words[0] = -this.words[0];
           this.negative = 1;
@@ -47283,11 +47283,11 @@ var require_bn = __commonJS({
         }
         return this.strip();
       };
-      BN.prototype.addn = function addn(num6) {
-        return this.clone().iaddn(num6);
+      BN.prototype.addn = function addn(num7) {
+        return this.clone().iaddn(num7);
       };
-      BN.prototype.subn = function subn(num6) {
-        return this.clone().isubn(num6);
+      BN.prototype.subn = function subn(num7) {
+        return this.clone().isubn(num7);
       };
       BN.prototype.iabs = function iabs() {
         this.negative = 0;
@@ -47296,15 +47296,15 @@ var require_bn = __commonJS({
       BN.prototype.abs = function abs() {
         return this.clone().iabs();
       };
-      BN.prototype._ishlnsubmul = function _ishlnsubmul(num6, mul, shift) {
-        var len = num6.length + shift;
+      BN.prototype._ishlnsubmul = function _ishlnsubmul(num7, mul, shift) {
+        var len = num7.length + shift;
         var i;
         this._expand(len);
         var w;
         var carry = 0;
-        for (i = 0; i < num6.length; i++) {
+        for (i = 0; i < num7.length; i++) {
           w = (this.words[i + shift] | 0) + carry;
-          var right = (num6.words[i] | 0) * mul;
+          var right = (num7.words[i] | 0) * mul;
           w -= right & 67108863;
           carry = (w >> 26) - (right / 67108864 | 0);
           this.words[i + shift] = w & 67108863;
@@ -47325,10 +47325,10 @@ var require_bn = __commonJS({
         this.negative = 1;
         return this.strip();
       };
-      BN.prototype._wordDiv = function _wordDiv(num6, mode) {
-        var shift = this.length - num6.length;
+      BN.prototype._wordDiv = function _wordDiv(num7, mode) {
+        var shift = this.length - num7.length;
         var a = this.clone();
-        var b = num6;
+        var b = num7;
         var bhi = b.words[b.length - 1] | 0;
         var bhiBits = this._countBits(bhi);
         shift = 26 - bhiBits;
@@ -47382,8 +47382,8 @@ var require_bn = __commonJS({
           mod: a
         };
       };
-      BN.prototype.divmod = function divmod(num6, mode, positive2) {
-        assert(!num6.isZero());
+      BN.prototype.divmod = function divmod(num7, mode, positive2) {
+        assert(!num7.isZero());
         if (this.isZero()) {
           return {
             div: new BN(0),
@@ -47391,15 +47391,15 @@ var require_bn = __commonJS({
           };
         }
         var div, mod, res;
-        if (this.negative !== 0 && num6.negative === 0) {
-          res = this.neg().divmod(num6, mode);
+        if (this.negative !== 0 && num7.negative === 0) {
+          res = this.neg().divmod(num7, mode);
           if (mode !== "mod") {
             div = res.div.neg();
           }
           if (mode !== "div") {
             mod = res.mod.neg();
             if (positive2 && mod.negative !== 0) {
-              mod.iadd(num6);
+              mod.iadd(num7);
             }
           }
           return {
@@ -47407,8 +47407,8 @@ var require_bn = __commonJS({
             mod
           };
         }
-        if (this.negative === 0 && num6.negative !== 0) {
-          res = this.divmod(num6.neg(), mode);
+        if (this.negative === 0 && num7.negative !== 0) {
+          res = this.divmod(num7.neg(), mode);
           if (mode !== "mod") {
             div = res.div.neg();
           }
@@ -47417,12 +47417,12 @@ var require_bn = __commonJS({
             mod: res.mod
           };
         }
-        if ((this.negative & num6.negative) !== 0) {
-          res = this.neg().divmod(num6.neg(), mode);
+        if ((this.negative & num7.negative) !== 0) {
+          res = this.neg().divmod(num7.neg(), mode);
           if (mode !== "div") {
             mod = res.mod.neg();
             if (positive2 && mod.negative !== 0) {
-              mod.isub(num6);
+              mod.isub(num7);
             }
           }
           return {
@@ -47430,74 +47430,74 @@ var require_bn = __commonJS({
             mod
           };
         }
-        if (num6.length > this.length || this.cmp(num6) < 0) {
+        if (num7.length > this.length || this.cmp(num7) < 0) {
           return {
             div: new BN(0),
             mod: this
           };
         }
-        if (num6.length === 1) {
+        if (num7.length === 1) {
           if (mode === "div") {
             return {
-              div: this.divn(num6.words[0]),
+              div: this.divn(num7.words[0]),
               mod: null
             };
           }
           if (mode === "mod") {
             return {
               div: null,
-              mod: new BN(this.modn(num6.words[0]))
+              mod: new BN(this.modn(num7.words[0]))
             };
           }
           return {
-            div: this.divn(num6.words[0]),
-            mod: new BN(this.modn(num6.words[0]))
+            div: this.divn(num7.words[0]),
+            mod: new BN(this.modn(num7.words[0]))
           };
         }
-        return this._wordDiv(num6, mode);
+        return this._wordDiv(num7, mode);
       };
-      BN.prototype.div = function div(num6) {
-        return this.divmod(num6, "div", false).div;
+      BN.prototype.div = function div(num7) {
+        return this.divmod(num7, "div", false).div;
       };
-      BN.prototype.mod = function mod(num6) {
-        return this.divmod(num6, "mod", false).mod;
+      BN.prototype.mod = function mod(num7) {
+        return this.divmod(num7, "mod", false).mod;
       };
-      BN.prototype.umod = function umod(num6) {
-        return this.divmod(num6, "mod", true).mod;
+      BN.prototype.umod = function umod(num7) {
+        return this.divmod(num7, "mod", true).mod;
       };
-      BN.prototype.divRound = function divRound(num6) {
-        var dm = this.divmod(num6);
+      BN.prototype.divRound = function divRound(num7) {
+        var dm = this.divmod(num7);
         if (dm.mod.isZero()) return dm.div;
         var mod = dm.mod.abs();
-        var half = num6.abs().iushrn(1);
-        var r2 = num6.words[0] & 1;
+        var half = num7.abs().iushrn(1);
+        var r2 = num7.words[0] & 1;
         var cmp = mod.cmp(half);
         if (cmp < 0 || r2 === 1 && cmp === 0) return dm.div;
         var up = new BN(1);
-        up.negative = this.negative ^ num6.negative;
+        up.negative = this.negative ^ num7.negative;
         return dm.div.iadd(up);
       };
-      BN.prototype.modn = function modn(num6) {
-        assert(num6 <= 67108863);
-        var p = (1 << 26) % num6;
+      BN.prototype.modn = function modn(num7) {
+        assert(num7 <= 67108863);
+        var p = (1 << 26) % num7;
         var acc = 0;
         for (var i = this.length - 1; i >= 0; i--) {
-          acc = (p * acc + (this.words[i] | 0)) % num6;
+          acc = (p * acc + (this.words[i] | 0)) % num7;
         }
         return acc;
       };
-      BN.prototype.idivn = function idivn(num6) {
-        assert(num6 <= 67108863);
+      BN.prototype.idivn = function idivn(num7) {
+        assert(num7 <= 67108863);
         var carry = 0;
         for (var i = this.length - 1; i >= 0; i--) {
           var w = (this.words[i] | 0) + carry * 67108864;
-          this.words[i] = w / num6 | 0;
-          carry = w % num6;
+          this.words[i] = w / num7 | 0;
+          carry = w % num7;
         }
         return this.strip();
       };
-      BN.prototype.divn = function divn(num6) {
-        return this.clone().idivn(num6);
+      BN.prototype.divn = function divn(num7) {
+        return this.clone().idivn(num7);
       };
       BN.prototype.egcd = function egcd(p) {
         assert(p.negative === 0);
@@ -47615,11 +47615,11 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      BN.prototype.gcd = function gcd(num6) {
-        if (this.isZero()) return num6.abs();
-        if (num6.isZero()) return this.abs();
+      BN.prototype.gcd = function gcd(num7) {
+        if (this.isZero()) return num7.abs();
+        if (num7.isZero()) return this.abs();
         var a = this.clone();
-        var b = num6.clone();
+        var b = num7.clone();
         a.negative = 0;
         b.negative = 0;
         for (var shift = 0; a.isEven() && b.isEven(); shift++) {
@@ -47645,8 +47645,8 @@ var require_bn = __commonJS({
         } while (true);
         return b.iushln(shift);
       };
-      BN.prototype.invm = function invm(num6) {
-        return this.egcd(num6).a.umod(num6);
+      BN.prototype.invm = function invm(num7) {
+        return this.egcd(num7).a.umod(num7);
       };
       BN.prototype.isEven = function isEven() {
         return (this.words[0] & 1) === 0;
@@ -47654,8 +47654,8 @@ var require_bn = __commonJS({
       BN.prototype.isOdd = function isOdd() {
         return (this.words[0] & 1) === 1;
       };
-      BN.prototype.andln = function andln(num6) {
-        return this.words[0] & num6;
+      BN.prototype.andln = function andln(num7) {
+        return this.words[0] & num7;
       };
       BN.prototype.bincn = function bincn(bit) {
         assert(typeof bit === "number");
@@ -47684,8 +47684,8 @@ var require_bn = __commonJS({
       BN.prototype.isZero = function isZero() {
         return this.length === 1 && this.words[0] === 0;
       };
-      BN.prototype.cmpn = function cmpn(num6) {
-        var negative = num6 < 0;
+      BN.prototype.cmpn = function cmpn(num7) {
+        var negative = num7 < 0;
         if (this.negative !== 0 && !negative) return -1;
         if (this.negative === 0 && negative) return 1;
         this.strip();
@@ -47694,29 +47694,29 @@ var require_bn = __commonJS({
           res = 1;
         } else {
           if (negative) {
-            num6 = -num6;
+            num7 = -num7;
           }
-          assert(num6 <= 67108863, "Number is too big");
+          assert(num7 <= 67108863, "Number is too big");
           var w = this.words[0] | 0;
-          res = w === num6 ? 0 : w < num6 ? -1 : 1;
+          res = w === num7 ? 0 : w < num7 ? -1 : 1;
         }
         if (this.negative !== 0) return -res | 0;
         return res;
       };
-      BN.prototype.cmp = function cmp(num6) {
-        if (this.negative !== 0 && num6.negative === 0) return -1;
-        if (this.negative === 0 && num6.negative !== 0) return 1;
-        var res = this.ucmp(num6);
+      BN.prototype.cmp = function cmp(num7) {
+        if (this.negative !== 0 && num7.negative === 0) return -1;
+        if (this.negative === 0 && num7.negative !== 0) return 1;
+        var res = this.ucmp(num7);
         if (this.negative !== 0) return -res | 0;
         return res;
       };
-      BN.prototype.ucmp = function ucmp(num6) {
-        if (this.length > num6.length) return 1;
-        if (this.length < num6.length) return -1;
+      BN.prototype.ucmp = function ucmp(num7) {
+        if (this.length > num7.length) return 1;
+        if (this.length < num7.length) return -1;
         var res = 0;
         for (var i = this.length - 1; i >= 0; i--) {
           var a = this.words[i] | 0;
-          var b = num6.words[i] | 0;
+          var b = num7.words[i] | 0;
           if (a === b) continue;
           if (a < b) {
             res = -1;
@@ -47727,38 +47727,38 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      BN.prototype.gtn = function gtn(num6) {
-        return this.cmpn(num6) === 1;
+      BN.prototype.gtn = function gtn(num7) {
+        return this.cmpn(num7) === 1;
       };
-      BN.prototype.gt = function gt(num6) {
-        return this.cmp(num6) === 1;
+      BN.prototype.gt = function gt(num7) {
+        return this.cmp(num7) === 1;
       };
-      BN.prototype.gten = function gten(num6) {
-        return this.cmpn(num6) >= 0;
+      BN.prototype.gten = function gten(num7) {
+        return this.cmpn(num7) >= 0;
       };
-      BN.prototype.gte = function gte(num6) {
-        return this.cmp(num6) >= 0;
+      BN.prototype.gte = function gte(num7) {
+        return this.cmp(num7) >= 0;
       };
-      BN.prototype.ltn = function ltn(num6) {
-        return this.cmpn(num6) === -1;
+      BN.prototype.ltn = function ltn(num7) {
+        return this.cmpn(num7) === -1;
       };
-      BN.prototype.lt = function lt(num6) {
-        return this.cmp(num6) === -1;
+      BN.prototype.lt = function lt(num7) {
+        return this.cmp(num7) === -1;
       };
-      BN.prototype.lten = function lten(num6) {
-        return this.cmpn(num6) <= 0;
+      BN.prototype.lten = function lten(num7) {
+        return this.cmpn(num7) <= 0;
       };
-      BN.prototype.lte = function lte(num6) {
-        return this.cmp(num6) <= 0;
+      BN.prototype.lte = function lte(num7) {
+        return this.cmp(num7) <= 0;
       };
-      BN.prototype.eqn = function eqn(num6) {
-        return this.cmpn(num6) === 0;
+      BN.prototype.eqn = function eqn(num7) {
+        return this.cmpn(num7) === 0;
       };
-      BN.prototype.eq = function eq(num6) {
-        return this.cmp(num6) === 0;
+      BN.prototype.eq = function eq(num7) {
+        return this.cmp(num7) === 0;
       };
-      BN.red = function red(num6) {
-        return new Red(num6);
+      BN.red = function red(num7) {
+        return new Red(num7);
       };
       BN.prototype.toRed = function toRed(ctx) {
         assert(!this.red, "Already a number in reduction context");
@@ -47777,35 +47777,35 @@ var require_bn = __commonJS({
         assert(!this.red, "Already a number in reduction context");
         return this._forceRed(ctx);
       };
-      BN.prototype.redAdd = function redAdd(num6) {
+      BN.prototype.redAdd = function redAdd(num7) {
         assert(this.red, "redAdd works only with red numbers");
-        return this.red.add(this, num6);
+        return this.red.add(this, num7);
       };
-      BN.prototype.redIAdd = function redIAdd(num6) {
+      BN.prototype.redIAdd = function redIAdd(num7) {
         assert(this.red, "redIAdd works only with red numbers");
-        return this.red.iadd(this, num6);
+        return this.red.iadd(this, num7);
       };
-      BN.prototype.redSub = function redSub(num6) {
+      BN.prototype.redSub = function redSub(num7) {
         assert(this.red, "redSub works only with red numbers");
-        return this.red.sub(this, num6);
+        return this.red.sub(this, num7);
       };
-      BN.prototype.redISub = function redISub(num6) {
+      BN.prototype.redISub = function redISub(num7) {
         assert(this.red, "redISub works only with red numbers");
-        return this.red.isub(this, num6);
+        return this.red.isub(this, num7);
       };
-      BN.prototype.redShl = function redShl(num6) {
+      BN.prototype.redShl = function redShl(num7) {
         assert(this.red, "redShl works only with red numbers");
-        return this.red.shl(this, num6);
+        return this.red.shl(this, num7);
       };
-      BN.prototype.redMul = function redMul(num6) {
+      BN.prototype.redMul = function redMul(num7) {
         assert(this.red, "redMul works only with red numbers");
-        this.red._verify2(this, num6);
-        return this.red.mul(this, num6);
+        this.red._verify2(this, num7);
+        return this.red.mul(this, num7);
       };
-      BN.prototype.redIMul = function redIMul(num6) {
+      BN.prototype.redIMul = function redIMul(num7) {
         assert(this.red, "redMul works only with red numbers");
-        this.red._verify2(this, num6);
-        return this.red.imul(this, num6);
+        this.red._verify2(this, num7);
+        return this.red.imul(this, num7);
       };
       BN.prototype.redSqr = function redSqr() {
         assert(this.red, "redSqr works only with red numbers");
@@ -47832,10 +47832,10 @@ var require_bn = __commonJS({
         this.red._verify1(this);
         return this.red.neg(this);
       };
-      BN.prototype.redPow = function redPow(num6) {
-        assert(this.red && !num6.red, "redPow(normalNum)");
+      BN.prototype.redPow = function redPow(num7) {
+        assert(this.red && !num7.red, "redPow(normalNum)");
         this.red._verify1(this);
-        return this.red.pow(this, num6);
+        return this.red.pow(this, num7);
       };
       var primes = {
         k256: null,
@@ -47855,8 +47855,8 @@ var require_bn = __commonJS({
         tmp.words = new Array(Math.ceil(this.n / 13));
         return tmp;
       };
-      MPrime.prototype.ireduce = function ireduce(num6) {
-        var r = num6;
+      MPrime.prototype.ireduce = function ireduce(num7) {
+        var r = num7;
         var rlen;
         do {
           this.split(r, this.tmp);
@@ -47882,8 +47882,8 @@ var require_bn = __commonJS({
       MPrime.prototype.split = function split2(input, out) {
         input.iushrn(this.n, 0, out);
       };
-      MPrime.prototype.imulK = function imulK(num6) {
-        return num6.imul(this.k);
+      MPrime.prototype.imulK = function imulK(num7) {
+        return num7.imul(this.k);
       };
       function K256() {
         MPrime.call(
@@ -47920,24 +47920,24 @@ var require_bn = __commonJS({
           input.length -= 9;
         }
       };
-      K256.prototype.imulK = function imulK(num6) {
-        num6.words[num6.length] = 0;
-        num6.words[num6.length + 1] = 0;
-        num6.length += 2;
+      K256.prototype.imulK = function imulK(num7) {
+        num7.words[num7.length] = 0;
+        num7.words[num7.length + 1] = 0;
+        num7.length += 2;
         var lo = 0;
-        for (var i = 0; i < num6.length; i++) {
-          var w = num6.words[i] | 0;
+        for (var i = 0; i < num7.length; i++) {
+          var w = num7.words[i] | 0;
           lo += w * 977;
-          num6.words[i] = lo & 67108863;
+          num7.words[i] = lo & 67108863;
           lo = w * 64 + (lo / 67108864 | 0);
         }
-        if (num6.words[num6.length - 1] === 0) {
-          num6.length--;
-          if (num6.words[num6.length - 1] === 0) {
-            num6.length--;
+        if (num7.words[num7.length - 1] === 0) {
+          num7.length--;
+          if (num7.words[num7.length - 1] === 0) {
+            num7.length--;
           }
         }
-        return num6;
+        return num7;
       };
       function P224() {
         MPrime.call(
@@ -47963,19 +47963,19 @@ var require_bn = __commonJS({
         );
       }
       inherits(P25519, MPrime);
-      P25519.prototype.imulK = function imulK(num6) {
+      P25519.prototype.imulK = function imulK(num7) {
         var carry = 0;
-        for (var i = 0; i < num6.length; i++) {
-          var hi = (num6.words[i] | 0) * 19 + carry;
+        for (var i = 0; i < num7.length; i++) {
+          var hi = (num7.words[i] | 0) * 19 + carry;
           var lo = hi & 67108863;
           hi >>>= 26;
-          num6.words[i] = lo;
+          num7.words[i] = lo;
           carry = hi;
         }
         if (carry !== 0) {
-          num6.words[num6.length++] = carry;
+          num7.words[num7.length++] = carry;
         }
-        return num6;
+        return num7;
       };
       BN._prime = function prime(name) {
         if (primes[name]) return primes[name];
@@ -48058,9 +48058,9 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      Red.prototype.shl = function shl(a, num6) {
+      Red.prototype.shl = function shl(a, num7) {
         this._verify1(a);
-        return this.imod(a.ushln(num6));
+        return this.imod(a.ushln(num7));
       };
       Red.prototype.imul = function imul(a, b) {
         this._verify2(a, b);
@@ -48126,9 +48126,9 @@ var require_bn = __commonJS({
           return this.imod(inv);
         }
       };
-      Red.prototype.pow = function pow(a, num6) {
-        if (num6.isZero()) return new BN(1).toRed(this);
-        if (num6.cmpn(1) === 0) return a.clone();
+      Red.prototype.pow = function pow(a, num7) {
+        if (num7.isZero()) return new BN(1).toRed(this);
+        if (num7.cmpn(1) === 0) return a.clone();
         var windowSize = 4;
         var wnd = new Array(1 << windowSize);
         wnd[0] = new BN(1).toRed(this);
@@ -48139,12 +48139,12 @@ var require_bn = __commonJS({
         var res = wnd[0];
         var current = 0;
         var currentLen = 0;
-        var start = num6.bitLength() % 26;
+        var start = num7.bitLength() % 26;
         if (start === 0) {
           start = 26;
         }
-        for (i = num6.length - 1; i >= 0; i--) {
-          var word = num6.words[i];
+        for (i = num7.length - 1; i >= 0; i--) {
+          var word = num7.words[i];
           for (var j = start - 1; j >= 0; j--) {
             var bit = word >> j & 1;
             if (res !== wnd[0]) {
@@ -48166,17 +48166,17 @@ var require_bn = __commonJS({
         }
         return res;
       };
-      Red.prototype.convertTo = function convertTo(num6) {
-        var r = num6.umod(this.m);
-        return r === num6 ? r.clone() : r;
+      Red.prototype.convertTo = function convertTo(num7) {
+        var r = num7.umod(this.m);
+        return r === num7 ? r.clone() : r;
       };
-      Red.prototype.convertFrom = function convertFrom(num6) {
-        var res = num6.clone();
+      Red.prototype.convertFrom = function convertFrom(num7) {
+        var res = num7.clone();
         res.red = null;
         return res;
       };
-      BN.mont = function mont(num6) {
-        return new Mont(num6);
+      BN.mont = function mont(num7) {
+        return new Mont(num7);
       };
       function Mont(m) {
         Red.call(this, m);
@@ -48192,11 +48192,11 @@ var require_bn = __commonJS({
         this.minv = this.r.sub(this.minv);
       }
       inherits(Mont, Red);
-      Mont.prototype.convertTo = function convertTo(num6) {
-        return this.imod(num6.ushln(this.shift));
+      Mont.prototype.convertTo = function convertTo(num7) {
+        return this.imod(num7.ushln(this.shift));
       };
-      Mont.prototype.convertFrom = function convertFrom(num6) {
-        var r = this.imod(num6.mul(this.rinv));
+      Mont.prototype.convertFrom = function convertFrom(num7) {
+        var r = this.imod(num7.mul(this.rinv));
         r.red = null;
         return r;
       };
@@ -48515,11 +48515,11 @@ var require_buffer = __commonJS({
     function EncoderBuffer(value2, reporter) {
       if (Array.isArray(value2)) {
         this.length = 0;
-        this.value = value2.map(function(item) {
-          if (!EncoderBuffer.isEncoderBuffer(item))
-            item = new EncoderBuffer(item, reporter);
-          this.length += item.length;
-          return item;
+        this.value = value2.map(function(item2) {
+          if (!EncoderBuffer.isEncoderBuffer(item2))
+            item2 = new EncoderBuffer(item2, reporter);
+          this.length += item2.length;
+          return item2;
         }, this);
       } else if (typeof value2 === "number") {
         if (!(0 <= value2 && value2 <= 255))
@@ -48552,9 +48552,9 @@ var require_buffer = __commonJS({
       if (this.length === 0)
         return out;
       if (Array.isArray(this.value)) {
-        this.value.forEach(function(item) {
-          item.join(out, offset2);
-          offset2 += item.length;
+        this.value.forEach(function(item2) {
+          item2.join(out, offset2);
+          offset2 += item2.length;
         });
       } else {
         if (typeof this.value === "number")
@@ -48775,11 +48775,11 @@ var require_node2 = __commonJS({
         return this;
       };
     });
-    Node.prototype.use = function use(item) {
-      assert(item);
+    Node.prototype.use = function use(item2) {
+      assert(item2);
       const state = this._baseState;
       assert(state.use === null);
-      state.use = item;
+      state.use = item2;
       return this;
     };
     Node.prototype.optional = function optional4() {
@@ -48794,16 +48794,16 @@ var require_node2 = __commonJS({
       state.optional = true;
       return this;
     };
-    Node.prototype.explicit = function explicit(num6) {
+    Node.prototype.explicit = function explicit(num7) {
       const state = this._baseState;
       assert(state.explicit === null && state.implicit === null);
-      state.explicit = num6;
+      state.explicit = num7;
       return this;
     };
-    Node.prototype.implicit = function implicit(num6) {
+    Node.prototype.implicit = function implicit(num7) {
       const state = this._baseState;
       assert(state.explicit === null && state.implicit === null);
-      state.implicit = num6;
+      state.implicit = num7;
       return this;
     };
     Node.prototype.obj = function obj() {
@@ -48834,10 +48834,10 @@ var require_node2 = __commonJS({
       }));
       return this;
     };
-    Node.prototype.contains = function contains(item) {
+    Node.prototype.contains = function contains(item2) {
       const state = this._baseState;
       assert(state.use === null);
-      state.contains = item;
+      state.contains = item2;
       return this;
     };
     Node.prototype._decode = function decode(input, options) {
@@ -49053,9 +49053,9 @@ var require_node2 = __commonJS({
             return reporter.error("seqof/setof, but data is not Array");
           const child = this.clone();
           child._baseState.implicit = null;
-          content = this._createEncoderBuffer(data3.map(function(item) {
+          content = this._createEncoderBuffer(data3.map(function(item2) {
             const state2 = this._baseState;
-            return this._getUse(state2.args[0], data3)._encode(item, reporter);
+            return this._getUse(state2.args[0], data3)._encode(item2, reporter);
           }, child));
         } else if (state.use !== null) {
           result = this._getUse(state.use, parent)._encode(data3, reporter);
@@ -49282,11 +49282,11 @@ var require_der2 = __commonJS({
       }
       return this._createEncoderBuffer(objid);
     };
-    function two(num6) {
-      if (num6 < 10)
-        return "0" + num6;
+    function two(num7) {
+      if (num7 < 10)
+        return "0" + num7;
       else
-        return num6;
+        return num7;
     }
     DERNode.prototype._encodeTime = function encodeTime(time3, tag) {
       let str8;
@@ -49319,43 +49319,43 @@ var require_der2 = __commonJS({
     DERNode.prototype._encodeNull = function encodeNull() {
       return this._createEncoderBuffer("");
     };
-    DERNode.prototype._encodeInt = function encodeInt(num6, values2) {
-      if (typeof num6 === "string") {
+    DERNode.prototype._encodeInt = function encodeInt(num7, values2) {
+      if (typeof num7 === "string") {
         if (!values2)
           return this.reporter.error("String int or enum given, but no values map");
-        if (!values2.hasOwnProperty(num6)) {
-          return this.reporter.error("Values map doesn't contain: " + JSON.stringify(num6));
+        if (!values2.hasOwnProperty(num7)) {
+          return this.reporter.error("Values map doesn't contain: " + JSON.stringify(num7));
         }
-        num6 = values2[num6];
+        num7 = values2[num7];
       }
-      if (typeof num6 !== "number" && !Buffer2.isBuffer(num6)) {
-        const numArray = num6.toArray();
-        if (!num6.sign && numArray[0] & 128) {
+      if (typeof num7 !== "number" && !Buffer2.isBuffer(num7)) {
+        const numArray = num7.toArray();
+        if (!num7.sign && numArray[0] & 128) {
           numArray.unshift(0);
         }
-        num6 = Buffer2.from(numArray);
+        num7 = Buffer2.from(numArray);
       }
-      if (Buffer2.isBuffer(num6)) {
-        let size2 = num6.length;
-        if (num6.length === 0)
+      if (Buffer2.isBuffer(num7)) {
+        let size2 = num7.length;
+        if (num7.length === 0)
           size2++;
         const out2 = Buffer2.alloc(size2);
-        num6.copy(out2);
-        if (num6.length === 0)
+        num7.copy(out2);
+        if (num7.length === 0)
           out2[0] = 0;
         return this._createEncoderBuffer(out2);
       }
-      if (num6 < 128)
-        return this._createEncoderBuffer(num6);
-      if (num6 < 256)
-        return this._createEncoderBuffer([0, num6]);
+      if (num7 < 128)
+        return this._createEncoderBuffer(num7);
+      if (num7 < 256)
+        return this._createEncoderBuffer([0, num7]);
       let size = 1;
-      for (let i = num6; i >= 256; i >>= 8)
+      for (let i = num7; i >= 256; i >>= 8)
         size++;
       const out = new Array(size);
       for (let i = out.length - 1; i >= 0; i--) {
-        out[i] = num6 & 255;
-        num6 >>= 8;
+        out[i] = num7 & 255;
+        num7 >>= 8;
       }
       if (out[0] & 128) {
         out.unshift(0);
@@ -49697,11 +49697,11 @@ var require_der3 = __commonJS({
       if ((len & 128) === 0) {
         return len;
       }
-      const num6 = len & 127;
-      if (num6 > 4)
+      const num7 = len & 127;
+      if (num7 > 4)
         return buf.error("length octect is too long");
       len = 0;
-      for (let i = 0; i < num6; i++) {
+      for (let i = 0; i < num7; i++) {
         len <<= 8;
         const j = buf.readUInt8(fail24);
         if (buf.isError(j))
@@ -50987,24 +50987,24 @@ var require_dist6 = __commonJS({
     var DAY4 = HOUR2 * 24;
     var YEAR = DAY4 * 365.25;
     function parse2(val) {
-      var num6, arr = val.toLowerCase().match(RGX);
-      if (arr != null && (num6 = parseFloat(arr[1]))) {
-        if (arr[3] != null) return num6 * SEC;
-        if (arr[4] != null) return num6 * MIN;
-        if (arr[5] != null) return num6 * HOUR2;
-        if (arr[6] != null) return num6 * DAY4;
-        if (arr[7] != null) return num6 * DAY4 * 7;
-        if (arr[8] != null) return num6 * YEAR;
-        return num6;
+      var num7, arr = val.toLowerCase().match(RGX);
+      if (arr != null && (num7 = parseFloat(arr[1]))) {
+        if (arr[3] != null) return num7 * SEC;
+        if (arr[4] != null) return num7 * MIN;
+        if (arr[5] != null) return num7 * HOUR2;
+        if (arr[6] != null) return num7 * DAY4;
+        if (arr[7] != null) return num7 * DAY4 * 7;
+        if (arr[8] != null) return num7 * YEAR;
+        return num7;
       }
     }
     function fmt(val, pfx, str8, long) {
-      var num6 = (val | 0) === val ? val : ~~(val + 0.5);
-      return pfx + num6 + (long ? " " + str8 + (num6 != 1 ? "s" : "") : str8[0]);
+      var num7 = (val | 0) === val ? val : ~~(val + 0.5);
+      return pfx + num7 + (long ? " " + str8 + (num7 != 1 ? "s" : "") : str8[0]);
     }
-    function format(num6, long) {
-      var pfx = num6 < 0 ? "-" : "", abs = num6 < 0 ? -num6 : num6;
-      if (abs < SEC) return num6 + (long ? " ms" : "ms");
+    function format(num7, long) {
+      var pfx = num7 < 0 ? "-" : "", abs = num7 < 0 ? -num7 : num7;
+      if (abs < SEC) return num7 + (long ? " ms" : "ms");
       if (abs < MIN) return fmt(abs / SEC, pfx, "second", long);
       if (abs < HOUR2) return fmt(abs / MIN, pfx, "minute", long);
       if (abs < DAY4) return fmt(abs / HOUR2, pfx, "hour", long);
@@ -54623,8 +54623,8 @@ var init_util = __esm({
       util2.assertNever = assertNever;
       util2.arrayToEnum = (items) => {
         const obj = {};
-        for (const item of items) {
-          obj[item] = item;
+        for (const item2 of items) {
+          obj[item2] = item2;
         }
         return obj;
       };
@@ -54651,9 +54651,9 @@ var init_util = __esm({
         return keys;
       };
       util2.find = (arr, checker) => {
-        for (const item of arr) {
-          if (checker(item))
-            return item;
+        for (const item2 of arr) {
+          if (checker(item2))
+            return item2;
         }
         return void 0;
       };
@@ -55242,7 +55242,7 @@ function deepPartialify(schema) {
   } else if (schema instanceof ZodNullable) {
     return ZodNullable.create(deepPartialify(schema.unwrap()));
   } else if (schema instanceof ZodTuple) {
-    return ZodTuple.create(schema.items.map((item) => deepPartialify(item)));
+    return ZodTuple.create(schema.items.map((item2) => deepPartialify(item2)));
   } else {
     return schema;
   }
@@ -56935,14 +56935,14 @@ var init_types = __esm({
           }
         }
         if (ctx.common.async) {
-          return Promise.all([...ctx.data].map((item, i) => {
-            return def.type._parseAsync(new ParseInputLazyPath(ctx, item, ctx.path, i));
+          return Promise.all([...ctx.data].map((item2, i) => {
+            return def.type._parseAsync(new ParseInputLazyPath(ctx, item2, ctx.path, i));
           })).then((result2) => {
             return ParseStatus.mergeArray(status, result2);
           });
         }
-        const result = [...ctx.data].map((item, i) => {
-          return def.type._parseSync(new ParseInputLazyPath(ctx, item, ctx.path, i));
+        const result = [...ctx.data].map((item2, i) => {
+          return def.type._parseSync(new ParseInputLazyPath(ctx, item2, ctx.path, i));
         });
         return ParseStatus.mergeArray(status, result);
       }
@@ -57602,11 +57602,11 @@ var init_types = __esm({
           });
           status.dirty();
         }
-        const items = [...ctx.data].map((item, itemIndex) => {
+        const items = [...ctx.data].map((item2, itemIndex) => {
           const schema = this._def.items[itemIndex] || this._def.rest;
           if (!schema)
             return null;
-          return schema._parse(new ParseInputLazyPath(ctx, item, ctx.path, itemIndex));
+          return schema._parse(new ParseInputLazyPath(ctx, item2, ctx.path, itemIndex));
         }).filter((x) => !!x);
         if (ctx.common.async) {
           return Promise.all(items).then((results) => {
@@ -57806,7 +57806,7 @@ var init_types = __esm({
           }
           return { status: status.value, value: parsedSet };
         }
-        const elements = [...ctx.data.values()].map((item, i) => valueType._parse(new ParseInputLazyPath(ctx, item, ctx.path, i)));
+        const elements = [...ctx.data.values()].map((item2, i) => valueType._parse(new ParseInputLazyPath(ctx, item2, ctx.path, i)));
         if (ctx.common.async) {
           return Promise.all(elements).then((elements2) => finalizeSet(elements2));
         } else {
@@ -61404,9 +61404,9 @@ function alDiaLine(items, budget) {
   };
   if (budget !== void 0) {
     for (let shown3 = names.length; shown3 >= 1; shown3 -= 1) {
-      const line = candidate(shown3);
-      if (line.length <= budget)
-        return line;
+      const line2 = candidate(shown3);
+      if (line2.length <= budget)
+        return line2;
     }
   }
   return candidate(5);
@@ -61426,15 +61426,15 @@ function formatPlanWhatsApp(ctx) {
   const blocks = [];
   if (ctx.corrective?.length) {
     blocks.push("\u{1F6E0}\uFE0F Atenci\xF3n por s\xEDntomas reportados");
-    for (const line of ctx.corrective)
-      blocks.push(`\xB7 ${line}`);
+    for (const line2 of ctx.corrective)
+      blocks.push(`\xB7 ${line2}`);
   }
   const pushGroup = (title, group, withReason = true) => {
     if (group.length === 0)
       return;
     blocks.push(title);
-    for (const item of group) {
-      blocks.push(`\xB7 ${item.serviceName}${withReason ? ` \xB7 ${item.reason}` : ""} \xB7 ${formatCost(item.costRefUsd)}`);
+    for (const item2 of group) {
+      blocks.push(`\xB7 ${item2.serviceName}${withReason ? ` \xB7 ${item2.reason}` : ""} \xB7 ${formatCost(item2.costRefUsd)}`);
     }
   };
   pushGroup("\u{1F534} Vencidos", vencidos);
@@ -61522,10 +61522,10 @@ function includesLevel(planLevel, serviceLevelValue) {
   return PLAN_LEVELS.indexOf(serviceLevelValue) <= PLAN_LEVELS.indexOf(planLevel);
 }
 function itemsForLevel(items, level) {
-  return items.filter((item) => includesLevel(level, serviceLevel(item.serviceId)));
+  return items.filter((item2) => includesLevel(level, serviceLevel(item2.serviceId)));
 }
 function lockedItems(items, level) {
-  return items.filter((item) => !includesLevel(level, serviceLevel(item.serviceId))).map((item) => ({ ...item, level: serviceLevel(item.serviceId) }));
+  return items.filter((item2) => !includesLevel(level, serviceLevel(item2.serviceId))).map((item2) => ({ ...item2, level: serviceLevel(item2.serviceId) }));
 }
 var PLAN_LEVELS, PLAN_LEVEL_LABELS, PLAN_LEVEL_OFFER, INTERMEDIO, AVANZADO;
 var init_levels = __esm({
@@ -63804,6 +63804,21 @@ var init_recontact_statements = __esm({
   }
 });
 
+// packages/api/dist/infrastructure/schema-setup/supply-statements.js
+var SUPPLY_TABLES, SUPPLY_STATEMENTS;
+var init_supply_statements = __esm({
+  "packages/api/dist/infrastructure/schema-setup/supply-statements.js"() {
+    "use strict";
+    SUPPLY_TABLES = ["ShopSupply", "ShopSupplyMove"];
+    SUPPLY_STATEMENTS = [
+      // Existencias actuales por insumo. lowNotifiedAt marca que ya avisamos que bajó del mínimo; se limpia al reponer.
+      { kind: "createTable", target: "ShopSupply", sql: "CREATE TABLE IF NOT EXISTS `ShopSupply` (`id` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `name` VARCHAR(120) NOT NULL, `unit` VARCHAR(30) NOT NULL, `stock` DECIMAL(12,2) NOT NULL DEFAULT 0, `minStock` DECIMAL(12,2) NOT NULL DEFAULT 0, `unitPriceUsd` DECIMAL(10,2) NULL, `lowNotifiedAt` DATETIME(3) NULL, `createdBy` VARCHAR(191) NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), UNIQUE KEY `ShopSupply_shop_name_key` (`shopId`, `name`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+      // Cada movimiento: entrada (+), consumo en una OT (−) o ajuste por conteo (±). Es el historial; no se borra.
+      { kind: "createTable", target: "ShopSupplyMove", sql: "CREATE TABLE IF NOT EXISTS `ShopSupplyMove` (`id` VARCHAR(191) NOT NULL, `supplyId` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `workOrderId` VARCHAR(191) NULL, `kind` VARCHAR(20) NOT NULL, `qty` DECIMAL(12,2) NOT NULL, `note` VARCHAR(200) NULL, `createdBy` VARCHAR(191) NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `ShopSupplyMove_supply_idx` (`supplyId`, `createdAt`), KEY `ShopSupplyMove_order_idx` (`workOrderId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+    ];
+  }
+});
+
 // packages/api/dist/infrastructure/schema-setup/courses-statements.js
 var T3, COURSES_TABLES, COURSES_STATEMENTS;
 var init_courses_statements = __esm({
@@ -64916,23 +64931,23 @@ var require_ring_queue = __commonJS({
       isEmpty() {
         return this._head === this._tail;
       }
-      push(item) {
+      push(item2) {
         if (arguments.length === 0) {
           return this.length;
         }
-        this._list[this._tail] = item;
+        this._list[this._tail] = item2;
         this._tail = this._tail + 1 & this._mask;
         if (this._tail === this._head) {
           this._grow();
         }
         return this.length;
       }
-      unshift(item) {
+      unshift(item2) {
         if (arguments.length === 0) {
           return this.length;
         }
         this._head = this._head - 1 & this._mask;
-        this._list[this._head] = item;
+        this._list[this._head] = item2;
         if (this._tail === this._head) {
           this._grow();
         }
@@ -64943,13 +64958,13 @@ var require_ring_queue = __commonJS({
         if (head === this._tail) {
           return void 0;
         }
-        const item = this._list[head];
+        const item2 = this._list[head];
         this._list[head] = void 0;
         this._head = head + 1 & this._mask;
         if (head < 2 && this._tail > MIN_SHRINK_TAIL && this._tail <= this._list.length >>> 2) {
           this._shrink();
         }
-        return item;
+        return item2;
       }
       pop() {
         const tail = this._tail;
@@ -64958,12 +64973,12 @@ var require_ring_queue = __commonJS({
         }
         const capacity = this._list.length;
         this._tail = tail - 1 & this._mask;
-        const item = this._list[this._tail];
+        const item2 = this._list[this._tail];
         this._list[this._tail] = void 0;
         if (this._head < 2 && tail > MIN_SHRINK_TAIL && tail <= capacity >>> 2) {
           this._shrink();
         }
-        return item;
+        return item2;
       }
       peekAt(index) {
         if (index !== (index | 0)) {
@@ -65009,7 +65024,7 @@ var require_ring_queue = __commonJS({
         }
         const mask = this._mask;
         let slot = this._head + index & mask;
-        const item = this._list[slot];
+        const item2 = this._list[slot];
         const isCloserToHead = index < size / 2;
         if (isCloserToHead) {
           for (let moves = index; moves > 0; moves--) {
@@ -65028,7 +65043,7 @@ var require_ring_queue = __commonJS({
           this._list[slot] = void 0;
           this._tail = this._tail - 1 & mask;
         }
-        return item;
+        return item2;
       }
       remove(index, count3) {
         if (index !== (index | 0)) {
@@ -74256,12 +74271,12 @@ var require_packet = __commonJS({
     var Types = require_types6();
     var ZERO_DATE = "0000-00-00";
     var pad = "000000000000";
-    function leftPad(num6, value2) {
+    function leftPad(num7, value2) {
       const s = value2.toString();
-      if (s.length >= num6) {
+      if (s.length >= num7) {
         return s;
       }
-      return (pad + s).slice(-num6);
+      return (pad + s).slice(-num7);
     }
     var minus = "-".charCodeAt(0);
     var plus = "+".charCodeAt(0);
@@ -74331,8 +74346,8 @@ var require_packet = __commonJS({
       haveMoreData() {
         return this.end > this.offset;
       }
-      skip(num6) {
-        this.offset += num6;
+      skip(num7) {
+        this.offset += num7;
       }
       readInt8() {
         return this.buffer[this.offset++];
@@ -74681,12 +74696,12 @@ var require_packet = __commonJS({
           result += this.buffer[this.offset] - 48;
           this.offset++;
         }
-        const num6 = result * sign;
+        const num7 = result * sign;
         if (!supportBigNumbers) {
-          return num6;
+          return num7;
         }
-        if (Number.isSafeInteger(num6)) {
-          return num6;
+        if (Number.isSafeInteger(num7)) {
+          return num7;
         }
         return this.buffer.toString("ascii", start, end);
       }
@@ -74727,7 +74742,7 @@ var require_packet = __commonJS({
         }
         const bufferLength = buffer.length;
         function parseGeometry() {
-          let x, y, i, j, numPoints, numRings, num6, line;
+          let x, y, i, j, numPoints, numRings, num7, line2;
           let result = null;
           if (offset2 + 5 > bufferLength) {
             return null;
@@ -74784,7 +74799,7 @@ var require_packet = __commonJS({
                 }
                 numPoints = byteOrder ? buffer.readUInt32LE(offset2) : buffer.readUInt32BE(offset2);
                 offset2 += 4;
-                line = [];
+                line2 = [];
                 for (j = numPoints; j > 0; j--) {
                   if (offset2 + 16 > bufferLength) {
                     break;
@@ -74793,9 +74808,9 @@ var require_packet = __commonJS({
                   offset2 += 8;
                   y = byteOrder ? buffer.readDoubleLE(offset2) : buffer.readDoubleBE(offset2);
                   offset2 += 8;
-                  line.push({ x, y });
+                  line2.push({ x, y });
                 }
-                result.push(line);
+                result.push(line2);
               }
               break;
             case 4:
@@ -74808,13 +74823,13 @@ var require_packet = __commonJS({
               if (offset2 + 4 > bufferLength) {
                 return null;
               }
-              num6 = byteOrder ? buffer.readUInt32LE(offset2) : buffer.readUInt32BE(offset2);
+              num7 = byteOrder ? buffer.readUInt32LE(offset2) : buffer.readUInt32BE(offset2);
               offset2 += 4;
-              if (num6 > (bufferLength - offset2) / 9) {
+              if (num7 > (bufferLength - offset2) / 9) {
                 return null;
               }
               result = [];
-              for (i = num6; i > 0; i--) {
+              for (i = num7; i > 0; i--) {
                 result.push(parseGeometry());
               }
               break;
@@ -79480,27 +79495,27 @@ var require_generate_function = __commonJS({
         while (spaces.length < indent * 2) spaces += "  ";
         lines.push(spaces + str8);
       };
-      var pushLine = function(line2) {
-        if (INDENT_END.test(line2.trim()[0]) && INDENT_START.test(line2[line2.length - 1])) {
+      var pushLine = function(line3) {
+        if (INDENT_END.test(line3.trim()[0]) && INDENT_START.test(line3[line3.length - 1])) {
           indent--;
-          push(line2);
+          push(line3);
           indent++;
           return;
         }
-        if (INDENT_START.test(line2[line2.length - 1])) {
-          push(line2);
+        if (INDENT_START.test(line3[line3.length - 1])) {
+          push(line3);
           indent++;
           return;
         }
-        if (INDENT_END.test(line2.trim()[0])) {
+        if (INDENT_END.test(line3.trim()[0])) {
           indent--;
-          push(line2);
+          push(line3);
           return;
         }
-        push(line2);
+        push(line3);
       };
-      var line = function(fmt) {
-        if (!fmt) return line;
+      var line2 = function(fmt) {
+        if (!fmt) return line2;
         if (arguments.length === 1 && fmt.indexOf("\n") > -1) {
           var lines2 = fmt.trim().split("\n");
           for (var i2 = 0; i2 < lines2.length; i2++) {
@@ -79509,16 +79524,16 @@ var require_generate_function = __commonJS({
         } else {
           pushLine(util2.format.apply(util2, arguments));
         }
-        return line;
+        return line2;
       };
-      line.scope = {};
-      line.formats = formats;
-      line.sym = function(name) {
+      line2.scope = {};
+      line2.formats = formats;
+      line2.sym = function(name) {
         if (!name || !isVariable(name)) name = "tmp";
         if (!vars[name]) vars[name] = 0;
         return name + (vars[name]++ || "");
       };
-      line.property = function(obj, name) {
+      line2.property = function(obj, name) {
         if (arguments.length === 1) {
           name = obj;
           obj = "";
@@ -79527,14 +79542,14 @@ var require_generate_function = __commonJS({
         if (isProperty(name)) return obj ? obj + "." + name : name;
         return obj ? obj + "[" + JSON.stringify(name) + "]" : JSON.stringify(name);
       };
-      line.toString = function() {
+      line2.toString = function() {
         return lines.join("\n");
       };
-      line.toFunction = function(scope) {
+      line2.toFunction = function(scope) {
         if (!scope) scope = {};
-        var src = "return (" + line.toString() + ")";
-        Object.keys(line.scope).forEach(function(key) {
-          if (!scope[key]) scope[key] = line.scope[key];
+        var src = "return (" + line2.toString() + ")";
+        Object.keys(line2.scope).forEach(function(key) {
+          if (!scope[key]) scope[key] = line2.scope[key];
         });
         var keys = Object.keys(scope).map(function(key) {
           return key;
@@ -79544,8 +79559,8 @@ var require_generate_function = __commonJS({
         });
         return Function.apply(null, keys.concat(src)).apply(null, vals);
       };
-      if (arguments.length) line.apply(null, arguments);
-      return line;
+      if (arguments.length) line2.apply(null, arguments);
+      return line2;
     };
     genfun.formats = formats;
     module.exports = genfun;
@@ -80430,11 +80445,11 @@ var require_connection_config = __commonJS({
         return defaultFlags;
       }
       static getCharsetNumber(charset) {
-        const num6 = Charsets[charset.toUpperCase()];
-        if (num6 === void 0) {
+        const num7 = Charsets[charset.toUpperCase()];
+        if (num7 === void 0) {
           throw new TypeError(`Unknown charset '${charset}'`);
         }
-        return num6;
+        return num7;
       }
       static getSSLProfile(name) {
         if (!SSLProfiles) {
@@ -80548,21 +80563,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows61, fields;
+          let rows62, fields;
           if (this._resultIndex === 0) {
-            rows61 = this._rows[0];
+            rows62 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows61 = this._rows;
+            rows62 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows61, fields);
+              this.onResult(null, rows62, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows61);
+              this.onResult(null, rows62);
             });
           }
         }
@@ -83119,9 +83134,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column2, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows61, columns, binary = false) {
+      writeTextResult(rows62, columns, binary = false) {
         this.writeColumns(columns);
-        rows61.forEach((row2) => {
+        rows62.forEach((row2) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column2) => {
             arrayRow.push(row2[column2.name]);
@@ -83231,12 +83246,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve2, reject, stackHolder) {
-      return function(err, rows61, fields) {
+      return function(err, rows62, fields) {
         if (err) {
           applyCapturedStack(err, stackHolder);
           reject(err);
         } else {
-          resolve2([rows61, fields]);
+          resolve2([rows62, fields]);
         }
       };
     }
@@ -83844,9 +83859,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err2, rows61, fields) {
+              cmdQuery.onResult = function(err2, rows62, fields) {
                 queryError = err2 || null;
-                origOnResult(err2, rows61, fields);
+                origOnResult(err2, rows62, fields);
               };
             } else {
               cmdQuery.once("error", (err2) => {
@@ -83881,11 +83896,11 @@ var require_pool = __commonJS({
             return cb(err);
           }
           try {
-            conn.execute(sql, values2, (err2, rows61, fields) => {
+            conn.execute(sql, values2, (err2, rows62, fields) => {
               if (isReadOnlyError(err2)) {
                 conn.destroy();
               }
-              cb(err2, rows61, fields);
+              cb(err2, rows62, fields);
             }).once("end", () => {
               conn.release();
             });
@@ -84726,8 +84741,8 @@ async function openConnection(env = process.env) {
   }
 }
 function firstRow(result) {
-  const rows61 = result[0];
-  return Array.isArray(rows61) ? rows61[0] : void 0;
+  const rows62 = result[0];
+  return Array.isArray(rows62) ? rows62[0] : void 0;
 }
 async function count(conn, sql, params2) {
   const row2 = firstRow(await conn.query(sql, params2));
@@ -84756,8 +84771,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows61] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows61) ? rows61.map((r) => String(r.name)) : [];
+  const [rows62] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows62) ? rows62.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row2 = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -84777,9 +84792,9 @@ async function getSchemaStatus(conn) {
   };
 }
 function applySchema(conn, statements = ALL_STATEMENTS) {
-  const run2 = queue.then(() => applySchemaNow(conn, statements));
-  queue = run2.catch(() => void 0);
-  return run2;
+  const run3 = queue.then(() => applySchemaNow(conn, statements));
+  queue = run3.catch(() => void 0);
+  return run3;
 }
 async function applySchemaNow(conn, statements = ALL_STATEMENTS) {
   const info = await serverInfo(conn);
@@ -84842,6 +84857,7 @@ var init_apply = __esm({
     init_part_order_statements();
     init_catalog_tariff_statements();
     init_recontact_statements();
+    init_supply_statements();
     init_courses_statements();
     init_comprobante_statements();
     init_founder_statements();
@@ -84850,8 +84866,8 @@ var init_apply = __esm({
     init_vat_statements();
     init_operator_key_statements();
     init_ad_statements();
-    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...WORK_ORDER_RECORD_STATEMENTS, ...WORK_ORDER_CLAIM_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS, ...PART_ORDER_STATEMENTS, ...CATALOG_TARIFF_STATEMENTS, ...RECONTACT_STATEMENTS, ...COMPROBANTE_STATEMENTS, ...FOUNDER_STATEMENTS, ...SHOP_COVER_STATEMENTS, ...PLAN_RECORD_STATEMENTS, ...VAT_STATEMENTS, ...OPERATOR_KEY_STATEMENTS, ...AD_STATEMENTS];
-    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...WORK_ORDER_RECORD_TABLES, ...WORK_ORDER_CLAIM_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES, ...PART_ORDER_TABLES, ...CATALOG_TARIFF_TABLES, ...RECONTACT_TABLES, ...COMPROBANTE_TABLES, ...FOUNDER_TABLES, ...OPERATOR_KEY_TABLES, ...AD_TABLES];
+    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...WORK_ORDER_RECORD_STATEMENTS, ...WORK_ORDER_CLAIM_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS, ...PART_ORDER_STATEMENTS, ...CATALOG_TARIFF_STATEMENTS, ...RECONTACT_STATEMENTS, ...SUPPLY_STATEMENTS, ...COMPROBANTE_STATEMENTS, ...FOUNDER_STATEMENTS, ...SHOP_COVER_STATEMENTS, ...PLAN_RECORD_STATEMENTS, ...VAT_STATEMENTS, ...OPERATOR_KEY_STATEMENTS, ...AD_STATEMENTS];
+    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...WORK_ORDER_RECORD_TABLES, ...WORK_ORDER_CLAIM_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES, ...PART_ORDER_TABLES, ...CATALOG_TARIFF_TABLES, ...RECONTACT_TABLES, ...SUPPLY_TABLES, ...COMPROBANTE_TABLES, ...FOUNDER_TABLES, ...OPERATOR_KEY_TABLES, ...AD_TABLES];
     DB_ENV = ["DB_HOST", "DB_PORT", "DB_NAME", "DB_USER", "DB_PASSWORD"];
     tableExists = (conn, table2) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?", [table2]);
     columnExists = (conn, table2, column2) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ?", [table2, column2]);
@@ -87753,8 +87769,8 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows61] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row2 = Array.isArray(rows61) ? rows61[0] : void 0;
+          const [rows62] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row2 = Array.isArray(rows62) ? rows62[0] : void 0;
           return row2?.value === void 0 || row2.value === null ? null : String(row2.value);
         });
       }
@@ -88193,39 +88209,39 @@ var init_data_store = __esm({
        */
       async anonymizePilot(conn, userId, phone, name) {
         const digits = phone.replace(/\D/g, "");
-        const run2 = (sql, args) => conn.query(sql, args).catch((err) => {
+        const run3 = (sql, args) => conn.query(sql, args).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE" && err.code !== "ER_BAD_FIELD_ERROR")
             throw err;
         });
-        await run2("DELETE FROM `WhatsAppIdentity` WHERE userId = ?", [userId]);
-        await run2("UPDATE `NotificationOutbox` SET payload = JSON_OBJECT('message', ''), status = IF(status IN ('pending','sending'), 'dead', status), lastError = IF(status IN ('pending','sending'), 'ANONYMIZED', lastError) WHERE recipientUserId = ?", [userId]);
+        await run3("DELETE FROM `WhatsAppIdentity` WHERE userId = ?", [userId]);
+        await run3("UPDATE `NotificationOutbox` SET payload = JSON_OBJECT('message', ''), status = IF(status IN ('pending','sending'), 'dead', status), lastError = IF(status IN ('pending','sending'), 'ANONYMIZED', lastError) WHERE recipientUserId = ?", [userId]);
         if (digits)
-          await run2("UPDATE `NotificationOutbox` SET payload = JSON_OBJECT('message', ''), recipientPhone = NULL, status = IF(status IN ('pending','sending'), 'dead', status) WHERE recipientPhone = ?", [digits]);
+          await run3("UPDATE `NotificationOutbox` SET payload = JSON_OBJECT('message', ''), recipientPhone = NULL, status = IF(status IN ('pending','sending'), 'dead', status) WHERE recipientPhone = ?", [digits]);
         if (digits)
-          await run2("UPDATE `InboundWebhook` SET payload = JSON_OBJECT('channel', JSON_UNQUOTE(JSON_EXTRACT(payload, '$.channel')), 'message', '[anonimizado]'), phone = '000000' WHERE phone = ?", [digits]);
-        await run2("UPDATE `InboundWebhook` SET payload = JSON_OBJECT('channel', 'pilot', 'message', '[anonimizado]', 'userId', ?) WHERE JSON_UNQUOTE(JSON_EXTRACT(payload, '$.userId')) = ?", [userId, userId]);
-        await run2("UPDATE `LocalAgentReply` SET message = '[anonimizado]' WHERE userId = ?", [userId]);
-        await run2("UPDATE `LocalCommandReceipt` SET response = JSON_OBJECT() WHERE userId = ?", [userId]);
-        await run2("UPDATE `LocalRequest` SET description = '[anonimizado]', status = IF(status = 'open', 'cancelled', status) WHERE ownerId = ?", [userId]);
-        await run2("UPDATE `LocalOffer` SET notes = NULL, brand = NULL, stockReason = NULL WHERE businessUserId = ?", [userId]);
-        await run2("UPDATE `VehicleSymptom` s JOIN `Vehicle` v ON v.id = s.vehicleId SET s.description = '[anonimizado]' WHERE v.userId = ?", [userId]);
-        await run2("UPDATE `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId SET a.label = '[anonimizado]', a.triggeredAt = COALESCE(a.triggeredAt, UTC_TIMESTAMP(3)) WHERE v.userId = ?", [userId]);
-        await run2("UPDATE `Vehicle` SET remindersOptIn = FALSE WHERE userId = ?", [userId]);
-        await run2("UPDATE `Rating` SET comment = NULL WHERE fromId = ?", [userId]);
-        await run2("UPDATE `ShopMember` SET name = ?, status = 'removed' WHERE userId = ?", [name.slice(0, 60), userId]);
-        await run2("UPDATE `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId SET c.reason = IF(c.reason IS NULL, NULL, '[anonimizado]') WHERE w.ownerId = ?", [userId]);
-        await run2("UPDATE `WorkOrder` SET intakeNotes = REGEXP_REPLACE(intakeNotes, 'Observaci\xF3n del due\xF1o: [^\\n]*', 'Observaci\xF3n del due\xF1o: [anonimizado]') WHERE ownerId = ?", [userId]);
+          await run3("UPDATE `InboundWebhook` SET payload = JSON_OBJECT('channel', JSON_UNQUOTE(JSON_EXTRACT(payload, '$.channel')), 'message', '[anonimizado]'), phone = '000000' WHERE phone = ?", [digits]);
+        await run3("UPDATE `InboundWebhook` SET payload = JSON_OBJECT('channel', 'pilot', 'message', '[anonimizado]', 'userId', ?) WHERE JSON_UNQUOTE(JSON_EXTRACT(payload, '$.userId')) = ?", [userId, userId]);
+        await run3("UPDATE `LocalAgentReply` SET message = '[anonimizado]' WHERE userId = ?", [userId]);
+        await run3("UPDATE `LocalCommandReceipt` SET response = JSON_OBJECT() WHERE userId = ?", [userId]);
+        await run3("UPDATE `LocalRequest` SET description = '[anonimizado]', status = IF(status = 'open', 'cancelled', status) WHERE ownerId = ?", [userId]);
+        await run3("UPDATE `LocalOffer` SET notes = NULL, brand = NULL, stockReason = NULL WHERE businessUserId = ?", [userId]);
+        await run3("UPDATE `VehicleSymptom` s JOIN `Vehicle` v ON v.id = s.vehicleId SET s.description = '[anonimizado]' WHERE v.userId = ?", [userId]);
+        await run3("UPDATE `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId SET a.label = '[anonimizado]', a.triggeredAt = COALESCE(a.triggeredAt, UTC_TIMESTAMP(3)) WHERE v.userId = ?", [userId]);
+        await run3("UPDATE `Vehicle` SET remindersOptIn = FALSE WHERE userId = ?", [userId]);
+        await run3("UPDATE `Rating` SET comment = NULL WHERE fromId = ?", [userId]);
+        await run3("UPDATE `ShopMember` SET name = ?, status = 'removed' WHERE userId = ?", [name.slice(0, 60), userId]);
+        await run3("UPDATE `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId SET c.reason = IF(c.reason IS NULL, NULL, '[anonimizado]') WHERE w.ownerId = ?", [userId]);
+        await run3("UPDATE `WorkOrder` SET intakeNotes = REGEXP_REPLACE(intakeNotes, 'Observaci\xF3n del due\xF1o: [^\\n]*', 'Observaci\xF3n del due\xF1o: [anonimizado]') WHERE ownerId = ?", [userId]);
         if (digits)
-          await run2("UPDATE `ImportedContact` SET phone = CONCAT('anon-', LEFT(id, 20)), displayName = NULL, reason = NULL, status = 'removed' WHERE phone = ?", [digits]);
+          await run3("UPDATE `ImportedContact` SET phone = CONCAT('anon-', LEFT(id, 20)), displayName = NULL, reason = NULL, status = 'removed' WHERE phone = ?", [digits]);
         if (digits)
-          await run2("DELETE FROM `WebLoginCode` WHERE phone = ?", [digits]);
-        await run2("UPDATE `VehicleCard` SET plate = NULL WHERE claimedBy = ?", [userId]);
-        await run2("DELETE FROM `VehicleCard` WHERE createdBy = ? AND status = 'pending'", [userId]);
-        await run2("UPDATE `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId SET a.endsAt = COALESCE(a.endsAt, UTC_TIMESTAMP(3)) WHERE m.userId = ?", [userId]);
-        await run2("UPDATE `FleetMember` SET name = ?, status = 'removed', inviteHash = NULL WHERE userId = ?", [name.slice(0, 60), userId]);
-        await run2("UPDATE `Fleet` SET status = 'cerrada' WHERE ownerUserId = ?", [userId]);
-        await run2("DELETE FROM `FleetPanelToken` WHERE userId = ?", [userId]);
-        await run2("UPDATE `VehicleExpense` e JOIN `Vehicle` v ON v.id = e.vehicleId SET e.description = '[anonimizado]' WHERE v.userId = ? AND e.source = 'manual'", [userId]);
+          await run3("DELETE FROM `WebLoginCode` WHERE phone = ?", [digits]);
+        await run3("UPDATE `VehicleCard` SET plate = NULL WHERE claimedBy = ?", [userId]);
+        await run3("DELETE FROM `VehicleCard` WHERE createdBy = ? AND status = 'pending'", [userId]);
+        await run3("UPDATE `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId SET a.endsAt = COALESCE(a.endsAt, UTC_TIMESTAMP(3)) WHERE m.userId = ?", [userId]);
+        await run3("UPDATE `FleetMember` SET name = ?, status = 'removed', inviteHash = NULL WHERE userId = ?", [name.slice(0, 60), userId]);
+        await run3("UPDATE `Fleet` SET status = 'cerrada' WHERE ownerUserId = ?", [userId]);
+        await run3("DELETE FROM `FleetPanelToken` WHERE userId = ?", [userId]);
+        await run3("UPDATE `VehicleExpense` e JOIN `Vehicle` v ON v.id = e.vehicleId SET e.description = '[anonimizado]' WHERE v.userId = ? AND e.source = 'manual'", [userId]);
       }
       anonymizeUser(userId, requestId) {
         return this.run(async (conn) => {
@@ -88320,7 +88336,7 @@ function formatUsd(value2) {
   return new Intl.NumberFormat("es-EC", { style: "currency", currency: "USD" }).format(value2);
 }
 function itemsTotal(items) {
-  return Math.round(items.reduce((sum, item) => sum + lineTotal(item), 0) * 100) / 100;
+  return Math.round(items.reduce((sum, item2) => sum + lineTotal(item2), 0) * 100) / 100;
 }
 function itemLines(items) {
   return items.map((i) => {
@@ -88440,7 +88456,7 @@ var init_workflow = __esm({
       ["no_aplica", "No hubo diagn\xF3stico previo"]
     ];
     workOrderCode = (number2) => `OT-${String(number2).padStart(5, "0")}`;
-    lineTotal = (item) => Math.round(item.quantity * item.unitPrice * 100) / 100;
+    lineTotal = (item2) => Math.round(item2.quantity * item2.unitPrice * 100) / 100;
     km = (value2) => `${Number(value2).toLocaleString("es-EC")} km`;
     vehicleText = (o) => `${o.vehicleLabel}${o.plate ? ` \xB7 ${o.plate}` : ""}`;
   }
@@ -88520,7 +88536,7 @@ function parseInspection(text14, items) {
     const code5 = `${m[1].toUpperCase()}${m[2]}`;
     if (!all.has(code5))
       throw new InspectionParseError("INVALID_INSPECTION", raw);
-    const item = byCode.get(code5);
+    const item2 = byCode.get(code5);
     let rest = m[3].trim();
     let status = null;
     for (const [word, value2] of Object.entries(STATUS_WORDS).sort((a, b) => b[0].length - a[0].length)) {
@@ -88530,33 +88546,33 @@ function parseInspection(text14, items) {
         break;
       }
     }
-    if (!item) {
+    if (!item2) {
       if (status === "no_aplica")
         continue;
       throw new InspectionParseError("INSPECTION_ITEM_NOT_APPLICABLE", code5);
     }
     let measure = null;
-    const num6 = rest.match(/^(\d+(?:[.,]\d+)?)\s*(mm|v|%|psi)?$/);
-    if (rest && !num6)
+    const num7 = rest.match(/^(\d+(?:[.,]\d+)?)\s*(mm|v|%|psi)?$/);
+    if (rest && !num7)
       throw new InspectionParseError("INVALID_INSPECTION", raw);
-    if (num6) {
-      if (!item.unit)
+    if (num7) {
+      if (!item2.unit)
         throw new InspectionParseError("INVALID_INSPECTION", raw);
-      measure = Number(num6[1].replace(",", "."));
+      measure = Number(num7[1].replace(",", "."));
       if (!Number.isFinite(measure) || measure < 0 || measure > 1e3)
         throw new InspectionParseError("INVALID_INSPECTION", raw);
     }
     if (status === null) {
-      if (measure === null || !item.thresholds)
+      if (measure === null || !item2.thresholds)
         throw new InspectionParseError("INVALID_INSPECTION", raw);
-      status = statusFromMeasure(item, measure);
+      status = statusFromMeasure(item2, measure);
     }
-    entries.set(code5, { code: code5, status, measure, unit: measure === null ? null : item.unit ?? null });
+    entries.set(code5, { code: code5, status, measure, unit: measure === null ? null : item2.unit ?? null });
   }
   if (restOk) {
-    for (const item of items)
-      if (!entries.has(item.code))
-        entries.set(item.code, { code: item.code, status: "ok", measure: null, unit: null });
+    for (const item2 of items)
+      if (!entries.has(item2.code))
+        entries.set(item2.code, { code: item2.code, status: "ok", measure: null, unit: null });
   }
   if (!entries.size)
     throw new InspectionParseError("INVALID_INSPECTION", text14);
@@ -88566,22 +88582,22 @@ function normalizeInspection(raw, items) {
   const byCode = new Map(items.map((i) => [i.code, i]));
   const entries = /* @__PURE__ */ new Map();
   for (const r of raw) {
-    const item = byCode.get(r.code);
-    if (!item) {
+    const item2 = byCode.get(r.code);
+    if (!item2) {
       if (r.status === "no_aplica" && INSPECTION_ITEMS.some((i) => i.code === r.code))
         continue;
       throw new InspectionParseError("INSPECTION_ITEM_NOT_APPLICABLE", r.code);
     }
     const measure = r.status === "no_aplica" ? null : r.measure;
-    if (measure !== null && (!item.unit || !Number.isFinite(measure) || measure < 0 || measure > 1e3))
+    if (measure !== null && (!item2.unit || !Number.isFinite(measure) || measure < 0 || measure > 1e3))
       throw new InspectionParseError("INVALID_INSPECTION", r.code);
     let status = r.status;
     if (status === null) {
-      if (measure === null || !item.thresholds)
+      if (measure === null || !item2.thresholds)
         throw new InspectionParseError("INVALID_INSPECTION", r.code);
-      status = statusFromMeasure(item, measure);
+      status = statusFromMeasure(item2, measure);
     }
-    entries.set(item.code, { code: item.code, status, measure, unit: measure === null ? null : item.unit ?? null });
+    entries.set(item2.code, { code: item2.code, status, measure, unit: measure === null ? null : item2.unit ?? null });
   }
   if (!entries.size)
     throw new InspectionParseError("INVALID_INSPECTION");
@@ -88709,7 +88725,7 @@ var init_inspection_checklist = __esm({
         this.detail = detail;
       }
     };
-    statusFromMeasure = (item, measure) => item.thresholds.cambiar(measure) ? "cambiar" : item.thresholds.observar(measure) ? "observar" : "ok";
+    statusFromMeasure = (item2, measure) => item2.thresholds.cambiar(measure) ? "cambiar" : item2.thresholds.observar(measure) ? "observar" : "ok";
     fold2 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
     STATUS_WORDS = { ok: "ok", bien: "ok", bueno: "ok", observar: "observar", revisar: "observar", pronto: "observar", cambiar: "cambiar", cambio: "cambiar", urgente: "cambiar", na: "no_aplica", "n/a": "no_aplica", "no aplica": "no_aplica" };
     STATUS_ICON = { ok: "\u{1F7E2}", observar: "\u{1F7E0}", cambiar: "\u{1F534}", no_aplica: "\u26AA" };
@@ -89093,10 +89109,10 @@ async function orderRecords(conn, orderIds) {
   for (const p of promises)
     result.get(String(p.workOrderId)).promised = { date: String(p.promisedDate), reason: p.reason ? String(p.reason) : null, changes: Number(p.changes) };
   const items = await rows8(conn, "SELECT workOrderId, kind, description, partCode, brand, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId IN (?) ORDER BY createdAt, id", [orderIds]);
-  for (const item of items) {
-    const lines = result.get(String(item.workOrderId)).budgetLines;
-    const quantity = Number(item.quantity), unitPriceUsd = Number(item.unitPrice);
-    lines.push({ n: lines.length + 1, kind: String(item.kind), description: String(item.description), brand: item.brand ? String(item.brand) : null, quantity, unitPriceUsd, totalUsd: Math.round(quantity * unitPriceUsd * 100) / 100 });
+  for (const item2 of items) {
+    const lines = result.get(String(item2.workOrderId)).budgetLines;
+    const quantity = Number(item2.quantity), unitPriceUsd = Number(item2.unitPrice);
+    lines.push({ n: lines.length + 1, kind: String(item2.kind), description: String(item2.description), brand: item2.brand ? String(item2.brand) : null, quantity, unitPriceUsd, totalUsd: Math.round(quantity * unitPriceUsd * 100) / 100 });
   }
   const partials = await rows8(conn, "SELECT workOrderId, quotedTotal, approvedTotal, rejected FROM `WorkOrderPartialApproval` WHERE workOrderId IN (?)", [orderIds]).catch(whenTableMissing3([]));
   for (const p of partials) {
@@ -89289,11 +89305,11 @@ function validateEcuadorVehicleCatalog(entries = ecuadorVehicleCatalog) {
   if (!Array.isArray(entries) || entries.length === 0)
     throw new Error("ecuador vehicle catalog must have entries");
   return entries.map((entry, index) => {
-    const item = entry;
-    const valid = item && typeof item.make === "string" && item.make.trim() && typeof item.model === "string" && item.model.trim() && Array.isArray(item.aliases) && item.aliases.every((alias) => typeof alias === "string" && alias.trim()) && Number.isInteger(item.yearFrom) && Number.isInteger(item.yearTo) && item.yearFrom <= item.yearTo && item.classId === "liviano" && (item.fuelId === null || ["gasolina", "diesel", "hev"].includes(item.fuelId)) && Array.isArray(item.evidence) && item.evidence.length > 0;
+    const item2 = entry;
+    const valid = item2 && typeof item2.make === "string" && item2.make.trim() && typeof item2.model === "string" && item2.model.trim() && Array.isArray(item2.aliases) && item2.aliases.every((alias) => typeof alias === "string" && alias.trim()) && Number.isInteger(item2.yearFrom) && Number.isInteger(item2.yearTo) && item2.yearFrom <= item2.yearTo && item2.classId === "liviano" && (item2.fuelId === null || ["gasolina", "diesel", "hev"].includes(item2.fuelId)) && Array.isArray(item2.evidence) && item2.evidence.length > 0;
     if (!valid)
       throw new Error(`Invalid Ecuador vehicle catalog entry at index ${index}`);
-    return item;
+    return item2;
   });
 }
 function ecuatorianVehicleFor(vehicle, entries = ecuadorVehicleCatalog) {
@@ -89453,8 +89469,8 @@ var init_inbound_webhook_store = __esm({
         return this.run(async (conn) => {
           const changed2 = affected(await conn.query("UPDATE `InboundWebhook` SET status = IF(attempts >= ?, 'dead', 'queued'), nextAttemptAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? SECOND), lastError = ?, leaseToken = NULL, lockedAt = NULL, updatedAt = UTC_TIMESTAMP(3) WHERE wamid = ? AND status = 'processing' AND leaseToken = ? AND lockedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ? SECOND)", [MAX_ATTEMPTS, delaySeconds, safeCode, wamid, leaseToken, LEASE_SECONDS])) === 1;
           if (changed2) {
-            const [rows61] = await conn.query("SELECT status FROM `InboundWebhook` WHERE wamid = ?", [wamid]);
-            if (rows61[0]?.status === "dead")
+            const [rows62] = await conn.query("SELECT status FROM `InboundWebhook` WHERE wamid = ?", [wamid]);
+            if (rows62[0]?.status === "dead")
               void new MysqlAdminAlerts().notify("inbound_dead", 1);
           }
           return changed2;
@@ -90293,8 +90309,8 @@ async function releasePartLine(conn, requestId, actorUserId) {
   const ref4 = shortCode("S", requestId);
   if (link.effect === "presupuesto") {
     if (order && !BEFORE_APPROVAL.includes(String(order.status)) && link.itemId) {
-      const [item] = await rows13(conn, "SELECT id FROM `WorkOrderItem` WHERE id = ?", [link.itemId]);
-      if (item)
+      const [item2] = await rows13(conn, "SELECT id FROM `WorkOrderItem` WHERE id = ?", [link.itemId]);
+      if (item2)
         return false;
     }
     if (link.itemId) {
@@ -90360,8 +90376,8 @@ Responde: Aprobar ${code5} \xB7 Rechazar ${code5} | motivo`);
     return `El repuesto (${formatUsd(price)}) qued\xF3 como rengl\xF3n del presupuesto de ${code5}; el total ahora es ${formatUsd(total)}.`;
   }
   const changeId = randomUUID13();
-  const line = { kind: "repuesto", description, brand, quality, quantity: 1, unitPrice: price };
-  await conn.query("INSERT INTO `WorkOrderChange` (id, workOrderId, kind, description, payload, total, createdBy) VALUES (?, ?, 'novedad', ?, ?, ?, ?)", [changeId, workOrderId, `Repuesto del pedido ${ref4}: ${need2}`.slice(0, 500), JSON.stringify({ lines: [line], source: { requestId, offerId: String(offer.id) } }), price, actor]);
+  const line2 = { kind: "repuesto", description, brand, quality, quantity: 1, unitPrice: price };
+  await conn.query("INSERT INTO `WorkOrderChange` (id, workOrderId, kind, description, payload, total, createdBy) VALUES (?, ?, 'novedad', ?, ?, ?, ?)", [changeId, workOrderId, `Repuesto del pedido ${ref4}: ${need2}`.slice(0, 500), JSON.stringify({ lines: [line2], source: { requestId, offerId: String(offer.id) } }), price, actor]);
   await conn.query("INSERT INTO `PartOrderLink` (requestId, workOrderId, offerId, effect, changeId) VALUES (?, ?, ?, 'novedad', ?)", [requestId, workOrderId, offer.id, changeId]);
   await audit2(conn, "part.order.linked", actor, "taller", "WorkOrder", workOrderId, { requestId, offerId: String(offer.id), effect: "novedad", change: changeId, priceUsd: price });
   const changeRef2 = ref6("N", changeId);
@@ -90380,11 +90396,11 @@ async function takeLinkedPartLines(conn, workOrderId) {
 async function restorePartLines(conn, workOrderId, kept, afterLines) {
   let total = 0;
   const lines = [];
-  for (const [index, item] of kept.entries()) {
-    const subtotal = Math.round(n(item.quantity) * n(item.unitPrice) * 100) / 100;
+  for (const [index, item2] of kept.entries()) {
+    const subtotal = Math.round(n(item2.quantity) * n(item2.unitPrice) * 100) / 100;
     total += subtotal;
-    await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP(3), INTERVAL ? MICROSECOND))", [item.id, workOrderId, item.kind, item.description, item.brand, item.partCode, item.quantity, item.unitPrice, (afterLines + index) * 1e3]);
-    lines.push(`${afterLines + index + 1}. Repuesto: ${String(item.description)}${item.brand ? ` (${String(item.brand)})` : ""}${item.partCode && !["nuevo", "original"].includes(String(item.partCode)) ? ` \xB7 ${String(item.partCode).toUpperCase()}` : ""} \u2014 ${n(item.quantity)} \xD7 ${formatUsd(n(item.unitPrice))} = ${formatUsd(subtotal)}`);
+    await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP(3), INTERVAL ? MICROSECOND))", [item2.id, workOrderId, item2.kind, item2.description, item2.brand, item2.partCode, item2.quantity, item2.unitPrice, (afterLines + index) * 1e3]);
+    lines.push(`${afterLines + index + 1}. Repuesto: ${String(item2.description)}${item2.brand ? ` (${String(item2.brand)})` : ""}${item2.partCode && !["nuevo", "original"].includes(String(item2.partCode)) ? ` \xB7 ${String(item2.partCode).toUpperCase()}` : ""} \u2014 ${n(item2.quantity)} \xD7 ${formatUsd(n(item2.unitPrice))} = ${formatUsd(subtotal)}`);
   }
   return { total: Math.round(total * 100) / 100, lines };
 }
@@ -91599,6 +91615,16 @@ function parseAccountCommand(raw) {
     command = { action: "shopCapacity", capacity: Number(parts[1]) };
   else if (/^agenda \d{4}-\d{2}-\d{2}$/.test(verb) && parts.length === 1)
     command = { action: "shopAgenda", date: verb.slice(7) };
+  else if (verb === "insumo" && (parts.length === 5 || parts.length === 6))
+    command = { action: "supplyAdd", name: parts[1], unit: parts[2], stock: qtyOf(parts[3]), minStock: qtyOf(parts[4]), unitPriceUsd: parts[5] ? money2(parts[5]) : null };
+  else if (/^entrada insumo i-[0-9a-f]{6}$/.test(verb) && (parts.length === 2 || parts.length === 3))
+    command = { action: "supplyIn", supplyRef: ref2(verb), qty: qtyOf(parts[1]), note: parts[2] ? parts[2] : null };
+  else if (/^ajustar insumo i-[0-9a-f]{6}$/.test(verb) && (parts.length === 2 || parts.length === 3))
+    command = { action: "supplyAdjust", supplyRef: ref2(verb), stock: qtyOf(parts[1]), note: parts[2] ? parts[2] : null };
+  else if (/^usar insumo i-[0-9a-f]{6}$/.test(verb) && parts.length === 3 && /^ot-\d{1,7}$/i.test(parts[1] ?? ""))
+    command = { action: "supplyUse", supplyRef: ref2(verb), orderNumber: orderOf(fold7(parts[1] ?? "")), qty: qtyOf(parts[2]) };
+  else if (["insumos", "mis insumos", "inventario"].includes(verb) && parts.length === 1)
+    command = { action: "supplyList" };
   else if (/^quitar tecnico [tT]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 1)
     command = { action: "removeTechnician", memberRef: ref2(verb) };
   else if (/^(tecnico|unirme) [tT]-[0-9a-fA-F]{6}$/.test(verb) && parts.length === 3 && accepted(parts[2]))
@@ -91768,7 +91794,7 @@ function parseAccountCommand(raw) {
 function isInvalidAccountCommand(value2) {
   return !!value2 && "invalid" in value2;
 }
-var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref62, plate, vehicleClass, classOf, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold7, accepted, orderOf, OFFER_RE, offerOf, feeOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, gallonsOf, FUEL_VERBS, money2, VISIT_SUFFIX;
+var text2, score, budgetLine, code2, ruc, INVITE_ALPHABET, secretCode, ref62, plate, vehicleClass, classOf, fuel, year, odometer, day, hour, usd2, accountCommandSchema, ACCOUNT_CHAT_HELP, fold7, accepted, orderOf, OFFER_RE, offerOf, feeOf, kmOf, ref2, when, PLATE, withPlate, plateAfter, secretOf, gallonsOf, FUEL_VERBS, qtyOf, money2, VISIT_SUFFIX;
 var init_commands = __esm({
   "packages/api/dist/application/chat-account/commands.js"() {
     "use strict";
@@ -91858,6 +91884,12 @@ var init_commands = __esm({
       external_exports.object({ action: external_exports.literal("shopReport"), period: external_exports.enum(["hoy", "semana"]) }).strict(),
       external_exports.object({ action: external_exports.literal("shopCapacity"), capacity: external_exports.number().int().min(1).max(20) }).strict(),
       external_exports.object({ action: external_exports.literal("shopAgenda"), date: day }).strict(),
+      // B2: inventario de insumos del taller.
+      external_exports.object({ action: external_exports.literal("supplyAdd"), name: text2(2, 120), unit: text2(1, 30), stock: external_exports.number().min(0).max(1e5), minStock: external_exports.number().min(0).max(1e5), unitPriceUsd: usd2.nullable() }).strict(),
+      external_exports.object({ action: external_exports.literal("supplyIn"), supplyRef: code2("I"), qty: external_exports.number().positive().max(1e5), note: text2(2, 200).nullable() }).strict(),
+      external_exports.object({ action: external_exports.literal("supplyAdjust"), supplyRef: code2("I"), stock: external_exports.number().min(0).max(1e5), note: text2(2, 200).nullable() }).strict(),
+      external_exports.object({ action: external_exports.literal("supplyUse"), supplyRef: code2("I"), orderNumber: external_exports.number().int().min(1), qty: external_exports.number().positive().max(1e5) }).strict(),
+      external_exports.object({ action: external_exports.literal("supplyList") }).strict(),
       external_exports.object({ action: external_exports.literal("removeTechnician"), memberRef: code2("T") }).strict(),
       external_exports.object({ action: external_exports.literal("joinAsTechnician"), memberRef: code2("T"), name: text2(3, 60) }).strict(),
       // Ratings: the workshop after a delivered work order, the store after an accepted part.
@@ -91967,7 +91999,7 @@ var init_commands = __esm({
       "Taller: Novedad OT-00012 | qu\xE9 se encontr\xF3 | repuesto: \u2026; mano de obra: \u2026 \xB7 Entrega OT-00012 | km de salida | trabajos realizados | d\xEDas de garant\xEDa",
       "Taller y t\xE9cnicos: Plan C-XXXXXX \xB7 Checklist C-XXXXXX \xB7 Inspecci\xF3n C-XXXXXX | M1 ok; F2 2,5 mm; N2 observar 2 mm; resto ok (| nota) \xB7 Ingreso C-XXXXXX | km | combustible (reserva, 1/4, 1/2, 3/4, lleno) | estado y da\xF1os | inventario | servicios a realizar \xB7 Presupuesto OT-00012 | repuesto: descripci\xF3n, marca, cantidad, precio unitario, calidad; mano de obra: descripci\xF3n, cantidad, precio \xB7 Servicio C-XXXXXX | servicios | km | detalle \xB7 Pr\xF3xima visita C-XXXXXX | AAAA-MM-DD | HH:mm \xB7 Alerta C-XXXXXX | texto | AAAA-MM-DD o km \xB7 Reprogramar cita C-XXXXXX | AAAA-MM-DD | HH:mm \xB7 Rechazar cita C-XXXXXX | motivo \xB7 \xD3rdenes \xB7 Estado OT-00012 \xB7 Iniciar OT-00012 \xB7 Esperando repuesto OT-00012 \xB7 Reanudar OT-00012",
       "Mapa de talleres: Mapa | ubicaci\xF3n (comparte tu ubicaci\xF3n o escribe -0.18065, -78.46784) | ACEPTO \xB7 Mapa | sector | ubicaci\xF3n | ACEPTO (muestra solo tu sector) \xB7 Salir del mapa",
-      "Due\xF1o del taller: Agregar t\xE9cnico | nombre \xB7 Agregar administrador | nombre \xB7 T\xE9cnicos \xB7 Cupos | n\xFAmero \xB7 Resumen hoy \xB7 Resumen semana \xB7 Quitar t\xE9cnico T-XXXXXX \xB7 T\xE9cnico: T\xE9cnico T-XXXXXX | nombre | ACEPTO",
+      "Due\xF1o del taller: Agregar t\xE9cnico | nombre \xB7 Agregar administrador | nombre \xB7 T\xE9cnicos \xB7 Cupos | n\xFAmero \xB7 Resumen hoy \xB7 Resumen semana \xB7 Insumo | nombre | unidad | existencias | m\xEDnimo (| precio) \xB7 Entrada insumo I-XXXXXX | cantidad (| nota) \xB7 Ajustar insumo I-XXXXXX | existencias contadas (| motivo) \xB7 Insumos \xB7 Taller y t\xE9cnicos: Usar insumo I-XXXXXX | OT-00012 | cantidad \xB7 Quitar t\xE9cnico T-XXXXXX \xB7 T\xE9cnico: T\xE9cnico T-XXXXXX | nombre | ACEPTO",
       "Ficha creada por el taller: Ficha | placa | clase | combustible | marca | modelo | a\xF1o | km (| servicios de hoy separados por coma) \xB7 Mis fichas \xB7 Anular ficha F-XXXXXXXX \xB7 Due\xF1o: Ficha F-XXXXXXXX (ver) \xB7 Ficha F-XXXXXXXX | ACEPTO \xB7 Ficha F-XXXXXXXX | nombre y apellido | ciudad | ACEPTO \xB7 Ficha F-XXXXXXXX | flota | ACEPTO \xB7 No es m\xEDo F-XXXXXXXX \xB7 Quitar taller F-XXXXXXXX",
       "Flota: Registrar flota | raz\xF3n social | RUC | ciudad | tu nombre y apellido | ACEPTO \xB7 Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km (| c\xF3digo interno) \xB7 Retirar PCD-4521 \xB7 Agregar conductor | nombre \xB7 Agregar supervisor | nombre \xB7 Conductores \xB7 Quitar D-XXXXXX \xB7 Asignar PCD-4521 | D-XXXXXX \xB7 Liberar PCD-4521 \xB7 Flota \xB7 Vencidos \xB7 Plan PCD-4521 \xB7 Kilometraje PCD-4521 | km \xB7 Gasto PCD-4521 | concepto | USD (| AAAA-MM-DD) \xB7 Costos mes \xB7 Costos PCD-4521 \xB7 Convenio | RUC del taller \xB7 Convenios \xB7 Terminar convenio K-XXXXXX \xB7 Agendar PCD-4521 | K-XXXXXX | AAAA-MM-DD | HH:mm | motivo \xB7 Aprobaci\xF3n autom\xE1tica | USD \xB7 L\xEDmite supervisor | USD \xB7 Panel flota",
       "Planes: Planes \xB7 Mi suscripci\xF3n \xB7 Quiero plan Premium (pago anual) \xB7 Quiero plan Flota | 12 veh\xEDculos \xB7 Pago SB-0042 | n\xFAmero de comprobante (| banco) \xB7 Renovar SB-0042",
@@ -91999,6 +92031,10 @@ var init_commands = __esm({
     secretOf = (verb) => (verb.match(/[fj]-[2-9a-hjkmnp-z]{8}$/i)?.[0] ?? "").toUpperCase();
     gallonsOf = (x) => Number(x.replace(/gal(ones?)?/i, "").trim().replace(",", "."));
     FUEL_VERBS = ["combustible", "tanqueo", "gasolina", "diesel"];
+    qtyOf = (x) => {
+      const t = String(x ?? "").replace(/[^\d.,]/g, "");
+      return t ? Number(t.replace(",", ".")) : Number.NaN;
+    };
     money2 = (x) => Number(String(x ?? "").replace(/(usd|\$)/gi, "").trim().replace(/\.(?=\d{3}\b)/g, "").replace(",", "."));
     VISIT_SUFFIX = /\s*c[oó]digo:?\s*AMP-[A-HJ-NP-Z2-9]{4,6}\s*$/i;
   }
@@ -92092,7 +92128,7 @@ var init_vehicle_specs2 = __esm({
 });
 
 // packages/api/dist/domain/maintenance/model-plan.js
-function matchModelPlanRows(rows61, vehicle) {
+function matchModelPlanRows(rows62, vehicle) {
   const year3 = Number(vehicle.year);
   if (!Number.isFinite(year3))
     return [];
@@ -92103,7 +92139,7 @@ function matchModelPlanRows(rows61, vehicle) {
   if (!make || !model)
     return [];
   const out = [];
-  for (const raw of rows61) {
+  for (const raw of rows62) {
     const r = raw;
     if (!truthy(r.verificado))
       continue;
@@ -92127,9 +92163,9 @@ function matchModelPlanRows(rows61, vehicle) {
   }
   return out;
 }
-function modelPlanIntervals(rows61, vehicle) {
+function modelPlanIntervals(rows62, vehicle) {
   const intervals = {};
-  const matched = matchModelPlanRows(rows61, vehicle);
+  const matched = matchModelPlanRows(rows62, vehicle);
   for (const row2 of [...matched.filter((r) => fold9(r.modelo) === GENERIC), ...matched.filter((r) => fold9(r.modelo) !== GENERIC)]) {
     intervals[row2.serviceId] = { km: row2.intervalKm, months: row2.intervalMonths };
   }
@@ -92158,12 +92194,12 @@ var init_model_plan = __esm({
 function overrideIntervals(overrides) {
   const intervals = {};
   const disabled = /* @__PURE__ */ new Set();
-  for (const item of overrides) {
-    if (item.disabled) {
-      disabled.add(item.serviceId);
+  for (const item2 of overrides) {
+    if (item2.disabled) {
+      disabled.add(item2.serviceId);
       continue;
     }
-    intervals[item.serviceId] = { km: item.intervalKm, months: item.intervalMonths };
+    intervals[item2.serviceId] = { km: item2.intervalKm, months: item2.intervalMonths };
   }
   return { intervals, disabled };
 }
@@ -92197,9 +92233,9 @@ function planFor(vehicle) {
     const modelIntervals = modelPlanIntervals(Array.isArray(vehicle.modelPlan) ? vehicle.modelPlan : [], { ...vehicle, fuel: fuelId });
     const baseIntervals = { ...spec?.intervals ?? {}, ...modelIntervals, ...converted.intervals };
     const plan = buildPlan({ vehicle: { classId, fuelId, transmission: vehicle.transmission === "manual" || vehicle.transmission === "automatica" ? vehicle.transmission : null }, odometerKm: Number(vehicle.currentKm) || 0, usageProfile: usage, lastServices, intervals: baseIntervals });
-    plan.items = plan.items.filter((item) => !converted.disabled.has(item.serviceId)).map((item) => {
-      const override = overrides.find((entry) => entry.serviceId === item.serviceId);
-      return override ? { ...item, reason: `${item.reason} \xB7 ${override.actorRole === "taller" ? "Ajustado por el taller" : "Ajustado por ti"}` } : item;
+    plan.items = plan.items.filter((item2) => !converted.disabled.has(item2.serviceId)).map((item2) => {
+      const override = overrides.find((entry) => entry.serviceId === item2.serviceId);
+      return override ? { ...item2, reason: `${item2.reason} \xB7 ${override.actorRole === "taller" ? "Ajustado por el taller" : "Ajustado por ti"}` } : item2;
     });
     for (const override of overrides)
       if (override.serviceId.startsWith("custom-") && !override.disabled && override.customName)
@@ -92215,8 +92251,8 @@ function planSourcesFor(vehicle) {
   const model = modelPlanIntervals(Array.isArray(vehicle.modelPlan) ? vehicle.modelPlan : [], { ...vehicle, fuel: fuelId });
   const overrides = Array.isArray(vehicle.planOverrides) ? vehicle.planOverrides : [];
   const out = {};
-  for (const item of planFor(vehicle)?.items ?? []) {
-    out[item.serviceId] = overrides.some((o) => o.serviceId === item.serviceId && !o.disabled) ? "ajustado" : model[item.serviceId] ? "fabricante" : spec?.intervals[item.serviceId] ? spec.verification === "oficial" ? "fabricante" : "marca" : "general";
+  for (const item2 of planFor(vehicle)?.items ?? []) {
+    out[item2.serviceId] = overrides.some((o) => o.serviceId === item2.serviceId && !o.disabled) ? "ajustado" : model[item2.serviceId] ? "fabricante" : spec?.intervals[item2.serviceId] ? spec.verification === "oficial" ? "fabricante" : "marca" : "general";
   }
   return out;
 }
@@ -92965,56 +93001,56 @@ function days(n3) {
   }
   return `${d} ${d === 1 ? "d\xEDa" : "d\xEDas"}`;
 }
-function every(item) {
-  const km10 = item.intervalKm ?? null;
-  const months2 = item.intervalMonths ?? null;
+function every(item2) {
+  const km10 = item2.intervalKm ?? null;
+  const months2 = item2.intervalMonths ?? null;
   const parts = [km10 !== null ? formatKm2(km10) : null, months2 !== null ? formatMonths(months2) : null].filter(Boolean);
   return parts.length ? `Cada ${parts.join(" o ")}.` : "";
 }
-function usesKm(item) {
-  if ((item.intervalKm ?? null) === null)
+function usesKm(item2) {
+  if ((item2.intervalKm ?? null) === null)
     return false;
-  if ((item.intervalMonths ?? null) === null)
+  if ((item2.intervalMonths ?? null) === null)
     return true;
-  return item.remainingKm / item.intervalKm <= item.remainingDays / (item.intervalMonths * 30.44);
+  return item2.remainingKm / item2.intervalKm <= item2.remainingDays / (item2.intervalMonths * 30.44);
 }
-function labelOf(item, state) {
+function labelOf(item2, state) {
   if (state === "sin_dato")
     return "Sin registro";
   if (state === "al_dia")
     return "Al d\xEDa";
-  const byKm = usesKm(item);
+  const byKm = usesKm(item2);
   if (state === "urgente") {
-    if (byKm && item.remainingKm < 0)
-      return `Vencido hace ${formatKm2(item.remainingKm)}`;
-    if (!byKm && item.remainingDays < 0)
-      return `Vencido hace ${days(-item.remainingDays)}`;
+    if (byKm && item2.remainingKm < 0)
+      return `Vencido hace ${formatKm2(item2.remainingKm)}`;
+    if (!byKm && item2.remainingDays < 0)
+      return `Vencido hace ${days(-item2.remainingDays)}`;
     return "Vencido";
   }
-  return byKm ? `Faltan ${formatKm2(item.remainingKm)}` : `En ${days(item.remainingDays)}`;
+  return byKm ? `Faltan ${formatKm2(item2.remainingKm)}` : `En ${days(item2.remainingDays)}`;
 }
-function progressOf(item, state) {
+function progressOf(item2, state) {
   if (state === "sin_dato")
     return { progress: null, scale: null };
-  const km10 = item.intervalKm ?? null;
-  if (usesKm(item) && km10 && km10 > 0) {
-    const done = 1 - item.remainingKm / km10;
-    return { progress: Math.min(1, Math.max(0, done)), scale: [formatKm2(item.dueKm - km10), formatKm2(item.dueKm)] };
+  const km10 = item2.intervalKm ?? null;
+  if (usesKm(item2) && km10 && km10 > 0) {
+    const done = 1 - item2.remainingKm / km10;
+    return { progress: Math.min(1, Math.max(0, done)), scale: [formatKm2(item2.dueKm - km10), formatKm2(item2.dueKm)] };
   }
-  const months2 = item.intervalMonths ?? null;
+  const months2 = item2.intervalMonths ?? null;
   if (months2 && months2 > 0) {
     const total = months2 * 30.44;
-    const done = 1 - item.remainingDays / total;
-    const start = new Date(new Date(item.dueDate).getTime() - total * 864e5);
-    return { progress: Math.min(1, Math.max(0, done)), scale: [formatMonth(start), formatMonth(new Date(item.dueDate))] };
+    const done = 1 - item2.remainingDays / total;
+    const start = new Date(new Date(item2.dueDate).getTime() - total * 864e5);
+    return { progress: Math.min(1, Math.max(0, done)), scale: [formatMonth(start), formatMonth(new Date(item2.dueDate))] };
   }
   return { progress: null, scale: null };
 }
-function detailOf(item, state) {
-  const rule = every(item);
+function detailOf(item2, state) {
+  const rule = every(item2);
   if (state === "sin_dato")
     return `${rule} No sabemos cu\xE1ndo se hizo por \xFAltima vez. Reg\xEDstralo para poder recordarte.`.trim();
-  const when15 = (item.intervalKm ?? null) !== null ? `a los ${formatKm2(item.dueKm)}` : `en ${formatMonth(new Date(item.dueDate))}`;
+  const when15 = (item2.intervalKm ?? null) !== null ? `a los ${formatKm2(item2.dueKm)}` : `en ${formatMonth(new Date(item2.dueDate))}`;
   const verb = state === "urgente" ? "Tocaba" : state === "pronto" ? "Toca" : "Pr\xF3ximo";
   return `${rule} ${verb} ${when15}.`.trim();
 }
@@ -93034,31 +93070,31 @@ function headlineOf(first) {
   }
 }
 function buildRecommendations(items, findings) {
-  const list7 = items.map((item) => {
-    const planned = STATE[item.status];
-    const found = findings?.get(item.serviceId);
+  const list7 = items.map((item2) => {
+    const planned = STATE[item2.status];
+    const found = findings?.get(item2.serviceId);
     const state = found === "cambiar" ? "urgente" : found === "observar" && planned !== "urgente" ? "pronto" : planned;
     if (found && state !== planned || found === "cambiar")
       return {
-        serviceId: item.serviceId,
-        serviceName: item.serviceName,
-        categoryName: item.categoryName,
+        serviceId: item2.serviceId,
+        serviceName: item2.serviceName,
+        categoryName: item2.categoryName,
         state,
         label: `La inspecci\xF3n indica ${found}`,
-        detail: `${every(item)} Lo encontr\xF3 el taller en la \xFAltima inspecci\xF3n.`.trim(),
+        detail: `${every(item2)} Lo encontr\xF3 el taller en la \xFAltima inspecci\xF3n.`.trim(),
         progress: null,
         scale: null,
-        costRefUsd: item.costRefUsd
+        costRefUsd: item2.costRefUsd
       };
     return {
-      serviceId: item.serviceId,
-      serviceName: item.serviceName,
-      categoryName: item.categoryName,
+      serviceId: item2.serviceId,
+      serviceName: item2.serviceName,
+      categoryName: item2.categoryName,
       state,
-      label: labelOf(item, state),
-      detail: detailOf(item, state),
-      ...progressOf(item, state),
-      costRefUsd: item.costRefUsd
+      label: labelOf(item2, state),
+      detail: detailOf(item2, state),
+      ...progressOf(item2, state),
+      costRefUsd: item2.costRefUsd
     };
   });
   const sorted = list7.map((r, i) => ({ r, i })).sort((a, b) => ORDER[a.r.state] - ORDER[b.r.state] || a.i - b.i).map((x) => x.r);
@@ -93087,15 +93123,15 @@ function planScore(counts2) {
 }
 function buildSystems(items) {
   const byCategory = /* @__PURE__ */ new Map();
-  for (const item of items) {
-    const categoryName5 = item.categoryName || "Otros";
+  for (const item2 of items) {
+    const categoryName5 = item2.categoryName || "Otros";
     const current = byCategory.get(categoryName5);
     if (!current)
-      byCategory.set(categoryName5, { categoryName: categoryName5, state: item.state, count: 1 });
+      byCategory.set(categoryName5, { categoryName: categoryName5, state: item2.state, count: 1 });
     else {
       current.count++;
-      if (ORDER[item.state] < ORDER[current.state])
-        current.state = item.state;
+      if (ORDER[item2.state] < ORDER[current.state])
+        current.state = item2.state;
     }
   }
   return [...byCategory.values()].sort((a, b) => ORDER[a.state] - ORDER[b.state] || a.categoryName.localeCompare(b.categoryName, "es"));
@@ -93250,32 +93286,32 @@ function frequencyText(km10, months2) {
   return "Seg\xFAn inspecci\xF3n";
 }
 function lockedPreview(items) {
-  return items.map((item) => ({ serviceId: item.serviceId, ...elementOf(item.serviceId, item.serviceName), frequency: frequencyText(item.intervalKm, item.intervalMonths), level: PLAN_LEVEL_LABELS[item.level], offer: PLAN_LEVEL_OFFER[item.level] }));
+  return items.map((item2) => ({ serviceId: item2.serviceId, ...elementOf(item2.serviceId, item2.serviceName), frequency: frequencyText(item2.intervalKm, item2.intervalMonths), level: PLAN_LEVEL_LABELS[item2.level], offer: PLAN_LEVEL_OFFER[item2.level] }));
 }
 function buildStructuredPlan(items, recommendations, sources) {
   const recs = new Map(recommendations.map((r) => [r.serviceId, r]));
-  const entries = items.map((item) => {
-    const rec = recs.get(item.serviceId);
+  const entries = items.map((item2) => {
+    const rec = recs.get(item2.serviceId);
     const state = rec?.state ?? "sin_dato";
-    const { element, action } = elementOf(item.serviceId, item.serviceName);
-    const system = systemOfService(item.serviceId);
+    const { element, action } = elementOf(item2.serviceId, item2.serviceName);
+    const system = systemOfService(item2.serviceId);
     const known = state !== "sin_dato";
-    const hasKm = (item.intervalKm ?? null) !== null;
-    const hasMonths = (item.intervalMonths ?? null) !== null;
-    const due = known ? [hasKm ? `a los ${formatKm2(item.dueKm)}` : null, hasMonths ? `en ${formatMonth(new Date(item.dueDate))}` : null].filter(Boolean).join(" o ") || null : null;
+    const hasKm = (item2.intervalKm ?? null) !== null;
+    const hasMonths = (item2.intervalMonths ?? null) !== null;
+    const due = known ? [hasKm ? `a los ${formatKm2(item2.dueKm)}` : null, hasMonths ? `en ${formatMonth(new Date(item2.dueDate))}` : null].filter(Boolean).join(" o ") || null : null;
     const entry = {
-      serviceId: item.serviceId,
+      serviceId: item2.serviceId,
       system: system.name,
       element,
       action,
-      frequency: frequencyText(item.intervalKm, item.intervalMonths),
-      source: SOURCE_LABEL[sources[item.serviceId] ?? "general"],
+      frequency: frequencyText(item2.intervalKm, item2.intervalMonths),
+      source: SOURCE_LABEL[sources[item2.serviceId] ?? "general"],
       state,
       label: rec?.label ?? "Sin registro",
       due,
-      dueKm: known && hasKm ? item.dueKm : null
+      dueKm: known && hasKm ? item2.dueKm : null
     };
-    return { entry, item, n: system.n };
+    return { entry, item: item2, n: system.n };
   });
   const urgentOrSoon = entries.filter((e9) => e9.entry.state === "urgente" || e9.entry.state === "pronto");
   const upToDate = entries.filter((e9) => e9.entry.state === "al_dia").sort((a, b) => new Date(a.item.dueDate).getTime() - new Date(b.item.dueDate).getTime() || a.item.dueKm - b.item.dueKm);
@@ -95022,6 +95058,10 @@ var init_error_messages = __esm({
       WARRANTY_NOT_PENDING: "Esa orden no tiene un reclamo de garant\xEDa por responder. Revisa el c\xF3digo con el cliente o con: Estado OT-00012.",
       WARRANTY_REENTRY_ORDER: "Esta orden es un reingreso por garant\xEDa y no se califica aparte: ya calificaste el trabajo original.",
       BUDGET_LINES_INVALID: "Los n\xFAmeros no coinciden con los renglones del presupuesto. Usa los que te mostramos, por ejemplo: Aprobar OT-00012 | 1,3.",
+      SUPPLY_EXISTS: "Ya tienes un insumo con ese nombre. Escribe Insumos para ver su c\xF3digo y registra la compra con: Entrada insumo I-XXXXXX | cantidad",
+      SUPPLY_NOT_FOUND: "No encontramos ese insumo en tu taller. Escribe Insumos para ver los c\xF3digos I-XXXXXX.",
+      SUPPLY_ORDER_NOT_FOUND: "No encontramos esa orden abierta en tu taller. Revisa el c\xF3digo OT en \xD3rdenes; una orden cerrada o cancelada ya no suma consumos.",
+      SUPPLY_NOT_ENOUGH: "No alcanzan las existencias registradas. Si lleg\xF3 mercader\xEDa, reg\xEDstrala con Entrada insumo I-XXXXXX | cantidad; si contaste otra cifra, usa Ajustar insumo I-XXXXXX | existencias.",
       FEATURE_UPDATE_PENDING: "Esta funci\xF3n todav\xEDa no est\xE1 activa en el sistema. Avisa al equipo de AutoMantPro para activarla.",
       NO_PAYMENT_PENDING: "No hay ning\xFAn cobro por confirmar en esta orden.",
       PART_WITHOUT_PRICE: "Esta oferta no tiene un precio mayor que cero, as\xED que no hay nada que cobrar.",
@@ -96320,28 +96360,28 @@ var init_founder_store = __esm({
         return this.run(async (conn) => {
           let created = 0;
           const skipped = [];
-          for (const [i, item] of items.entries()) {
-            const phone = `+${item.telefono}`;
+          for (const [i, item2] of items.entries()) {
+            const phone = `+${item2.telefono}`;
             const taken = await rows27(conn, "SELECT id FROM `User` WHERE phone = ? AND deletedAt IS NULL LIMIT 1", [phone]);
-            const linked = await rows27(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? LIMIT 1", [item.telefono]);
+            const linked = await rows27(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? LIMIT 1", [item2.telefono]);
             if (taken.length || linked.length) {
               skipped.push(`Taller ${i + 1}: ese n\xFAmero ya tiene cuenta.`);
               continue;
             }
-            const weekly = item.horarioSemanal ? parseWeeklyHours(item.horarioSemanal) : null;
-            const hours2 = item.horario || (weekly ? hoursSummary(weekly) : null);
+            const weekly = item2.horarioSemanal ? parseWeeklyHours(item2.horarioSemanal) : null;
+            const hours2 = item2.horario || (weekly ? hoursSummary(weekly) : null);
             await this.tx(conn, async () => {
               const userId = randomUUID24();
               const shopId = randomUUID24();
               const inviteId = randomUUID24();
-              await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'taller', ?, 'es', ?, 'fundador', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [userId, phone, await hashPassword(randomBytes7(24).toString("base64url")), item.contacto, item.ciudad]);
-              await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, lat, lng, verificationStatus, founder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', true, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [shopId, userId, item.nombre, item.direccion ?? "", item.ciudad, item.sector || null, item.ruc || null, hours2, item.contacto, item.correo || null, JSON.stringify(serviceIds(item.servicios)), item.lat ?? null, item.lng ?? null]);
+              await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'taller', ?, 'es', ?, 'fundador', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [userId, phone, await hashPassword(randomBytes7(24).toString("base64url")), item2.contacto, item2.ciudad]);
+              await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, lat, lng, verificationStatus, founder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', true, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [shopId, userId, item2.nombre, item2.direccion ?? "", item2.ciudad, item2.sector || null, item2.ruc || null, hours2, item2.contacto, item2.correo || null, JSON.stringify(serviceIds(item2.servicios)), item2.lat ?? null, item2.lng ?? null]);
               if (weekly)
                 await conn.query("UPDATE `Shop` SET weeklyHours = ? WHERE id = ?", [JSON.stringify(weekly), shopId]).catch((err) => {
                   if (err?.code !== "ER_BAD_FIELD_ERROR")
                     throw err;
                 });
-              await conn.query("INSERT INTO `FounderInvite` (id, userId, shopId, phone, status, profile, createdBy) VALUES (?, ?, ?, ?, 'borrador', ?, ?)", [inviteId, userId, shopId, item.telefono, JSON.stringify({ descripcion: item.descripcion ?? null, fuentes: item.fuentes ?? [] }), actorUserId]);
+              await conn.query("INSERT INTO `FounderInvite` (id, userId, shopId, phone, status, profile, createdBy) VALUES (?, ?, ?, ?, 'borrador', ?, ?)", [inviteId, userId, shopId, item2.telefono, JSON.stringify({ descripcion: item2.descripcion ?? null, fuentes: item2.fuentes ?? [] }), actorUserId]);
               await this.audit(conn, "founder.draft.created", actorUserId, inviteId, { shopId });
             });
             created++;
@@ -96622,9 +96662,9 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
           const notifications = await data(conn, "SELECT n.id, n.kind, n.payload, n.createdAt FROM `NotificationOutbox` n JOIN `User` u ON u.id = n.recipientUserId WHERE n.recipientUserId = ? AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND u.role IN ('dueno','taller','almacen') AND n.kind NOT IN ('auth.login_code','agent.reply','agent.after_hours','contact.welcome','contact.reply','admin.alert')" + (cursor ? " AND (n.createdAt < ? OR (n.createdAt = ? AND n.id < ?))" : "") + " ORDER BY n.createdAt DESC, n.id DESC LIMIT 51", cursor ? [userId, cursor.at, cursor.at, cursor.id] : [userId]);
           const page3 = notifications.slice(0, 50);
           const last = page3[page3.length - 1];
-          const items = page3.map((item) => {
-            const payload = typeof item.payload === "string" ? JSON.parse(item.payload) : item.payload;
-            return { id: item.id, kind: item.kind, message: typeof payload?.message === "string" ? payload.message.slice(0, 6e3) : "Aviso pendiente de revisi\xF3n", createdAt: item.createdAt };
+          const items = page3.map((item2) => {
+            const payload = typeof item2.payload === "string" ? JSON.parse(item2.payload) : item2.payload;
+            return { id: item2.id, kind: item2.kind, message: typeof payload?.message === "string" ? payload.message.slice(0, 6e3) : "Aviso pendiente de revisi\xF3n", createdAt: item2.createdAt };
           });
           return { items, nextCursor: notifications.length > 50 && last ? Buffer.from(JSON.stringify({ id: last.id, at: new Date(last.createdAt).toISOString() })).toString("base64url") : null };
         });
@@ -97162,6 +97202,7 @@ var init_account_links = __esm({
       "care.rating": "ordenes",
       "order.progress": "ordenes",
       "order.invoice": "ordenes",
+      "care.supply": "insumos",
       "care.visit": "citas",
       "care.waitlist": "citas",
       "local.appointment": "citas",
@@ -97230,11 +97271,11 @@ var init_vehicle_status_text = __esm({
 function dueItems(items) {
   return items.filter((i) => i.status === "proximo" || i.status === "vencido");
 }
-function reminderLine(item) {
-  if (item.status === "vencido")
-    return `\u2022 ${item.serviceName}: vencido (${item.reason.replace(/^Vencido /, "")})`;
-  const byKm = (item.intervalKm ?? null) !== null;
-  return `\u2022 ${item.serviceName}: ${byKm ? `a los ${km3(item.dueKm, item.unit)}` : `en ${formatMonth(new Date(item.dueDate))}`}`;
+function reminderLine(item2) {
+  if (item2.status === "vencido")
+    return `\u2022 ${item2.serviceName}: vencido (${item2.reason.replace(/^Vencido /, "")})`;
+  const byKm = (item2.intervalKm ?? null) !== null;
+  return `\u2022 ${item2.serviceName}: ${byKm ? `a los ${km3(item2.dueKm, item2.unit)}` : `en ${formatMonth(new Date(item2.dueDate))}`}`;
 }
 function doneHint2(items) {
   if (items.length <= 1)
@@ -97258,9 +97299,9 @@ function chooseDoneText(items, unknown = false) {
   const options = items.slice(0, 5).map((i) => `Hecho ${i.serviceName.toLowerCase()}`);
   return `${unknown ? "No encontr\xE9 ese servicio entre tus recordatorios. " : ""}\xBFCu\xE1l hiciste? Responde: ${options.join(" \xB7 ")}`;
 }
-function nextMilestone(item) {
-  const byKm = (item.intervalKm ?? null) !== null ? `a los ${km3(item.dueKm, item.unit)}` : null;
-  const byDate = (item.intervalMonths ?? null) !== null ? `en ${formatMonth(new Date(item.dueDate))}` : null;
+function nextMilestone(item2) {
+  const byKm = (item2.intervalKm ?? null) !== null ? `a los ${km3(item2.dueKm, item2.unit)}` : null;
+  const byDate = (item2.intervalMonths ?? null) !== null ? `en ${formatMonth(new Date(item2.dueDate))}` : null;
   return [byKm, byDate].filter(Boolean).join(" o ") || "sin fecha calculada";
 }
 var km3, fold15;
@@ -97376,8 +97417,114 @@ var init_deferred_work = __esm({
   }
 });
 
+// packages/api/dist/infrastructure/messaging/supply-store.js
+import { randomUUID as randomUUID27 } from "node:crypto";
+async function shopSupplies(conn, shopId) {
+  try {
+    return (await rows29(conn, "SELECT id, name, unit, stock, minStock, unitPriceUsd FROM `ShopSupply` WHERE shopId = ? ORDER BY (stock <= minStock) DESC, name LIMIT 100", [shopId])).map(item);
+  } catch (err) {
+    if (isMissing(err))
+      return null;
+    throw err;
+  }
+}
+async function executeSupplyCommand(conn, userId, shop, command, deps) {
+  try {
+    return { userId, message: await run2(conn, userId, shop, command, deps) };
+  } catch (err) {
+    if (isMissing(err))
+      deps.fail("FEATURE_UPDATE_PENDING");
+    throw err;
+  }
+}
+async function run2(conn, userId, shop, command, deps) {
+  const manager = shop.isOwner || shop.isAdmin;
+  if (command.action === "supplyList") {
+    const list7 = await shopSupplies(conn, shop.id) ?? deps.fail("FEATURE_UPDATE_PENDING");
+    if (!list7.length)
+      return `${shop.name} a\xFAn no tiene insumos. El due\xF1o o un administrador los agrega con: Insumo | nombre | unidad | existencias | m\xEDnimo`;
+    const low = list7.filter((s) => s.low).length;
+    return `Insumos de ${shop.name}${low ? ` (${low} en el m\xEDnimo o debajo)` : ""}:
+${list7.map(line).join("\n")}`;
+  }
+  if (command.action !== "supplyUse" && !manager)
+    deps.fail("FORBIDDEN");
+  if (command.action === "supplyAdd") {
+    const [exists] = await rows29(conn, "SELECT id FROM `ShopSupply` WHERE shopId = ? AND name = ? LIMIT 1", [shop.id, command.name]);
+    if (exists)
+      deps.fail("SUPPLY_EXISTS");
+    const id3 = randomUUID27();
+    await conn.query("INSERT INTO `ShopSupply` (id, shopId, name, unit, stock, minStock, unitPriceUsd, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [id3, shop.id, command.name, command.unit, command.stock, command.minStock, command.unitPriceUsd, userId]);
+    if (command.stock > 0)
+      await move(conn, id3, shop.id, null, "entrada", command.stock, "Existencias iniciales", userId);
+    await deps.audit("care.supply.created", "ShopSupply", id3, { name: command.name, unit: command.unit, stock: command.stock, minStock: command.minStock });
+    const ref5 = supplyRef(id3);
+    return `Insumo ${ref5} creado: ${command.name}, ${qtyText(command.stock)} ${command.unit} (m\xEDnimo ${qtyText(command.minStock)})${command.unitPriceUsd === null ? "" : `, ${formatUsd(command.unitPriceUsd)} por ${command.unit}`}. Para usarlo en una orden: Usar insumo ${ref5} | OT-00012 | cantidad`;
+  }
+  const supply = await find(conn, shop.id, command.supplyRef, deps);
+  const ref4 = supplyRef(String(supply.id));
+  const before = num2(supply.stock);
+  const min = num2(supply.minStock);
+  const unit = String(supply.unit);
+  if (command.action === "supplyIn" || command.action === "supplyAdjust") {
+    const after2 = command.action === "supplyIn" ? num2(before + command.qty) : num2(command.stock);
+    const delta = num2(after2 - before);
+    await conn.query("UPDATE `ShopSupply` SET stock = ?, lowNotifiedAt = IF(? > minStock, NULL, lowNotifiedAt), updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [after2, after2, supply.id]);
+    const moveId2 = await move(conn, String(supply.id), shop.id, null, command.action === "supplyIn" ? "entrada" : "ajuste", delta, command.note, userId);
+    await deps.audit(command.action === "supplyIn" ? "care.supply.in" : "care.supply.adjusted", "ShopSupply", String(supply.id), { before, after: after2 });
+    if (after2 <= min)
+      await warnLow(conn, shop, supply, after2, moveId2, deps);
+    return command.action === "supplyIn" ? `Entrada de ${qtyText(command.qty)} ${unit} de ${String(supply.name)} (${ref4}). Ahora hay ${qtyText(after2)} ${unit}.` : `Existencias de ${String(supply.name)} (${ref4}) ajustadas de ${qtyText(before)} a ${qtyText(after2)} ${unit}.`;
+  }
+  const [order] = await rows29(conn, `SELECT id, number FROM \`WorkOrder\` WHERE shopId = ? AND number = ? AND status IN (${OPEN_STATUSES.map(() => "?").join(", ")}) LIMIT 1`, [shop.id, command.orderNumber, ...OPEN_STATUSES]);
+  if (!order)
+    deps.fail("SUPPLY_ORDER_NOT_FOUND");
+  const code5 = workOrderCode(Number(order.number));
+  if (command.qty > before)
+    deps.fail("SUPPLY_NOT_ENOUGH");
+  const after = num2(before - command.qty);
+  await conn.query("UPDATE `ShopSupply` SET stock = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [after, supply.id]);
+  const moveId = await move(conn, String(supply.id), shop.id, String(order.id), "consumo", -command.qty, null, userId);
+  await deps.audit("care.supply.used", "ShopSupply", String(supply.id), { workOrderId: String(order.id), qty: command.qty, before, after });
+  if (after <= min)
+    await warnLow(conn, shop, supply, after, moveId, deps);
+  return `Usaste ${qtyText(command.qty)} ${unit} de ${String(supply.name)} en ${code5}. Quedan ${qtyText(after)} ${unit}.${after <= min ? ` \u26A0\uFE0F Est\xE1 en el m\xEDnimo (${qtyText(min)}): conviene reponer.` : ""} Si se cobra al cliente, incl\xFAyelo en el presupuesto o en una novedad.`;
+}
+async function find(conn, shopId, code5, deps) {
+  const [supply] = await rows29(conn, "SELECT id, name, unit, stock, minStock, lowNotifiedAt FROM `ShopSupply` WHERE shopId = ? AND REPLACE(id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shopId, prefixOf2(code5)]);
+  return supply ?? deps.fail("SUPPLY_NOT_FOUND");
+}
+async function move(conn, supplyId, shopId, workOrderId, kind, qty, note, userId) {
+  const id3 = randomUUID27();
+  await conn.query("INSERT INTO `ShopSupplyMove` (id, supplyId, shopId, workOrderId, kind, qty, note, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [id3, supplyId, shopId, workOrderId, kind, qty, note, userId]);
+  return id3;
+}
+async function warnLow(conn, shop, supply, after, moveId, deps) {
+  if (supply.lowNotifiedAt)
+    return;
+  await conn.query("UPDATE `ShopSupply` SET lowNotifiedAt = UTC_TIMESTAMP(3) WHERE id = ?", [supply.id]);
+  const ref4 = supplyRef(String(supply.id));
+  await deps.notifyTeam(`supply-low:${moveId}`, `\u26A0\uFE0F ${shop.name}: quedan ${qtyText(after)} ${String(supply.unit)} de ${String(supply.name)} (${ref4}), en el m\xEDnimo de ${qtyText(num2(supply.minStock))} o debajo. Al reponer escribe: Entrada insumo ${ref4} | cantidad`);
+}
+var rows29, MISSING4, isMissing, supplyRef, prefixOf2, num2, qtyText, item, line;
+var init_supply_store = __esm({
+  "packages/api/dist/infrastructure/messaging/supply-store.js"() {
+    "use strict";
+    init_workflow();
+    rows29 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    MISSING4 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
+    isMissing = (err) => MISSING4.includes(String(err.code));
+    supplyRef = (id3) => `I-${id3.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
+    prefixOf2 = (code5) => `${code5.slice(2).toLowerCase()}%`;
+    num2 = (v) => Math.round(Number(v ?? 0) * 100) / 100;
+    qtyText = (n3) => String(num2(n3)).replace(".", ",");
+    item = (r) => ({ ref: supplyRef(String(r.id)), name: String(r.name), unit: String(r.unit), stock: num2(r.stock), minStock: num2(r.minStock), unitPriceUsd: r.unitPriceUsd === null || r.unitPriceUsd === void 0 ? null : num2(r.unitPriceUsd), low: num2(r.stock) <= num2(r.minStock) });
+    line = (s) => `${s.ref} \xB7 ${s.name}: ${qtyText(s.stock)} ${s.unit}${s.low ? ` \u26A0\uFE0F m\xEDnimo ${qtyText(s.minStock)}` : ""}`;
+  }
+});
+
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
-import { createHash as createHash10, randomUUID as randomUUID27 } from "node:crypto";
+import { createHash as createHash10, randomUUID as randomUUID28 } from "node:crypto";
 function matchService(text14) {
   const f = fold16(text14);
   const exact = SERVICES2.find((s) => s.id === f || fold16(s.name) === f);
@@ -97394,7 +97541,7 @@ async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ 
     start.setUTCDate(start.getUTCDate() - 1);
   if (period === "semana")
     start.setUTCDate(start.getUTCDate() - 6);
-  const one = async (sql, args) => (await rows29(conn, sql, args))[0] ?? {};
+  const one = async (sql, args) => (await rows30(conn, sql, args))[0] ?? {};
   const intake = await one("SELECT COUNT(*) AS orders, COUNT(DISTINCT vehicleId) AS vehicles FROM `WorkOrder` WHERE shopId = ? AND createdAt >= ?", [shopId, start]);
   const closed = await one("SELECT COUNT(*) AS n, COALESCE(SUM(total), 0) AS revenue FROM `WorkOrder` WHERE shopId = ? AND status = 'cerrada' AND closedAt >= ?", [shopId, start]);
   const open = await one("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status NOT IN ('cerrada','cancelada')", [shopId]);
@@ -97403,7 +97550,7 @@ async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ 
   const budgets = await one("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status = 'presupuesto_enviado'", [shopId]);
   const visits = await one("SELECT COUNT(*) AS n FROM `Appointment` WHERE shopId = ? AND status IN ('pending','confirmed') AND scheduledAt BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY)", [shopId, now, now]);
   const rating = await one("SELECT ROUND(AVG(r.score), 1) AS avg, COUNT(*) AS n FROM `Rating` r JOIN `Shop` s ON s.userId = r.toId WHERE s.id = ? AND r.hiddenAt IS NULL AND r.createdAt >= ?", [shopId, start]);
-  const top = await rows29(conn, "SELECT serviceId, COUNT(*) AS n FROM `VehicleServiceRecord` WHERE shopId = ? AND createdAt >= ? GROUP BY serviceId ORDER BY n DESC LIMIT 3", [shopId, start]);
+  const top = await rows30(conn, "SELECT serviceId, COUNT(*) AS n FROM `VehicleServiceRecord` WHERE shopId = ? AND createdAt >= ? GROUP BY serviceId ORDER BY n DESC LIMIT 3", [shopId, start]);
   const lines = [
     `\u{1F4CA} ${shopName} \xB7 ${period === "hoy" ? "resumen de hoy" : "resumen de los \xFAltimos 7 d\xEDas"}`,
     `\u{1F697} Autos ingresados: ${Number(intake.vehicles ?? 0)} (${Number(intake.orders ?? 0)} \xF3rdenes)`,
@@ -97440,7 +97587,7 @@ async function activeVehicle(conn, userId, includeAssigned = false) {
     fail14("VEHICLE_REQUIRED");
   return list7[0];
 }
-var DIAGNOSIS_LINE, rows29, VehicleCareError, fail14, fold16, createHashLike, short4, prefixOf2, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES2, serviceName2, ORDER_STATUS, SHOP_ORDER_STATUS, SHOP_ORDER_NEXT, repairNoticeKey, VehicleCareStore;
+var DIAGNOSIS_LINE, rows30, VehicleCareError, fail14, fold16, createHashLike, short4, prefixOf3, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES2, serviceName2, ORDER_STATUS, SHOP_ORDER_STATUS, SHOP_ORDER_NEXT, repairNoticeKey, VehicleCareStore;
 var init_vehicle_care_store = __esm({
   "packages/api/dist/infrastructure/messaging/vehicle-care-store.js"() {
     "use strict";
@@ -97468,9 +97615,10 @@ var init_vehicle_care_store = __esm({
     init_work_order_claims();
     init_part_order_records();
     init_deferred_work();
+    init_supply_store();
     init_fleet_access();
     DIAGNOSIS_LINE = "Diagn\xF3stico avisado al ingreso";
-    rows29 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    rows30 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     VehicleCareError = class extends Error {
       code;
       constructor(code5) {
@@ -97484,7 +97632,7 @@ var init_vehicle_care_store = __esm({
     fold16 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
     createHashLike = (text14) => createHash10("sha256").update(text14).digest("hex").slice(0, 12);
     short4 = (prefix, id3) => `${prefix}-${id3.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
-    prefixOf2 = (code5) => `${code5.slice(2).toLowerCase()}%`;
+    prefixOf3 = (code5) => `${code5.slice(2).toLowerCase()}%`;
     CARD_ACTIONS = ["createCard", "cardPreview", "claimCard", "declineCard", "listCards", "cancelCard", "revokeShop"];
     FLEET_ACTIONS = ["registerFleet", "fleetVehicle", "retireVehicle", "fleetInvite", "joinFleet", "removeFleetMember", "assignVehicle", "unassignVehicle", "fleetSummary", "fleetMembers", "fleetOverdue", "expense", "fuel", "ownerCosts", "costs", "proposeAgreement", "agreementAnswer", "endAgreement", "agreements", "scheduleVisit", "fleetLimit", "leaveFleet", "panelLink"];
     SYNONYMS = [
@@ -97645,15 +97793,27 @@ var init_vehicle_care_store = __esm({
             const end = start ? new Date(start.getTime() + 24 * 60 * 60 * 1e3) : null;
             if (!start || !end)
               fail14("INVALID_AGENDA_DATE");
-            const list7 = await rows29(conn, "SELECT id, scheduledAt, status FROM `Appointment` WHERE shopId = ? AND scheduledAt >= ? AND scheduledAt < ? AND status NOT IN ('cancelled','rejected') ORDER BY scheduledAt, id", [shop.id, start, end]);
+            const list7 = await rows30(conn, "SELECT id, scheduledAt, status FROM `Appointment` WHERE shopId = ? AND scheduledAt >= ? AND scheduledAt < ? AND status NOT IN ('cancelled','rejected') ORDER BY scheduledAt, id", [shop.id, start, end]);
             const lines = list7.map((a) => `${short4("C", String(a.id))} | ${formatAgendaDate(a.scheduledAt)} | ${a.status === "pending" ? "Pendiente" : a.status === "confirmed" ? "Confirmada" : a.status === "completed" ? "Atendida" : a.status}`);
             return { userId, message: lines.length ? `Agenda ${command.date} | ${lines.join(" | ")}` : `Agenda ${command.date} | Sin citas.` };
+          }
+          case "supplyAdd":
+          case "supplyIn":
+          case "supplyAdjust":
+          case "supplyUse":
+          case "supplyList": {
+            const shop = await this.actingShop(conn, userId, role, { openOrders: command.action === "supplyUse" || command.action === "supplyList" });
+            return executeSupplyCommand(conn, userId, shop, command, {
+              fail: fail14,
+              audit: (event, entity, id3, data3) => this.audit(conn, userId, event, entity, id3, data3),
+              notifyTeam: (dedup, message2) => this.notifyShopTeam(conn, shop.ownerUserId, shop.id, dedup, message2, "care.supply")
+            });
           }
           case "checklist":
           case "inspection":
           case "lastInspection": {
-            const run2 = command.action === "lastInspection" ? this.lastInspection(conn, userId, role, command.plate) : this.inspection(conn, userId, role, command);
-            return run2.catch((err) => {
+            const run3 = command.action === "lastInspection" ? this.lastInspection(conn, userId, role, command.plate) : this.inspection(conn, userId, role, command);
+            return run3.catch((err) => {
               if (err.code === "ER_NO_SUCH_TABLE")
                 fail14("INSPECTION_UNAVAILABLE");
               throw err;
@@ -97686,7 +97846,7 @@ var init_vehicle_care_store = __esm({
           fail14("FORBIDDEN");
         const list7 = await myVehicles(conn, userId, true);
         if (!list7.length) {
-          const fleet = await rows29(conn, "SELECT id FROM `Fleet` WHERE ownerUserId = ? AND status = 'activa'", [userId]);
+          const fleet = await rows30(conn, "SELECT id FROM `Fleet` WHERE ownerUserId = ? AND status = 'activa'", [userId]);
           if (fleet.length)
             return { userId, message: "No tienes veh\xEDculos personales ni asignados. Para los veh\xEDculos de tu flota escribe: Flota" };
           fail14("VEHICLE_NOT_FOUND");
@@ -97707,7 +97867,7 @@ ${lines.join("\n")}${list7.length > 1 ? "\nPara elegir con cu\xE1l trabajar: Usa
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const orders = await rows29(conn, `SELECT w.id, w.number, w.status, w.total, w.updatedAt, v.make, v.model, v.year, s.name AS shopName FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId JOIN \`Shop\` s ON s.id = w.shopId WHERE ${scope.where("w")} AND ${number2 === null ? "w.status NOT IN ('cerrada','cancelada')" : "w.number = ?"} ORDER BY w.number DESC LIMIT ${number2 === null ? 10 : 5}`, number2 === null ? scope.args : [...scope.args, number2]);
+        const orders = await rows30(conn, `SELECT w.id, w.number, w.status, w.total, w.updatedAt, v.make, v.model, v.year, s.name AS shopName FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId JOIN \`Shop\` s ON s.id = w.shopId WHERE ${scope.where("w")} AND ${number2 === null ? "w.status NOT IN ('cerrada','cancelada')" : "w.number = ?"} ORDER BY w.number DESC LIMIT ${number2 === null ? 10 : 5}`, number2 === null ? scope.args : [...scope.args, number2]);
         if (!orders.length && number2 !== null)
           return { userId, message: "No encontramos esa orden en tu cuenta." };
         if (!orders.length) {
@@ -97722,7 +97882,7 @@ ${lines.join("\n")}${list7.length > 1 ? "\nPara elegir con cu\xE1l trabajar: Usa
         const out = [];
         for (const o of orders) {
           const code5 = workOrderCode(Number(o.number));
-          const pending = await rows29(conn, "SELECT id, kind, total FROM `WorkOrderChange` WHERE workOrderId = ? AND status = 'pending' AND kind IN ('novedad','entrega') ORDER BY createdAt", [o.id]);
+          const pending = await rows30(conn, "SELECT id, kind, total FROM `WorkOrderChange` WHERE workOrderId = ? AND status = 'pending' AND kind IN ('novedad','entrega') ORDER BY createdAt", [o.id]);
           const waiting = [
             ...o.status === "presupuesto_enviado" ? [`presupuesto por ${formatUsd(Number(o.total))}: Aprobar ${code5} \xB7 Rechazar ${code5} | motivo`] : [],
             ...pending.map((c) => c.kind === "novedad" ? `novedad ${short4("N", String(c.id))} por ${formatUsd(Number(c.total))}: Aprobar novedad ${short4("N", String(c.id))}` : `entrega lista: Acepto entrega ${code5}`)
@@ -97765,7 +97925,7 @@ Responde: Usar veh\xEDculo 2${example ? ` \xB7 Estado ${String(example)}` : ""}`
           fail14("ORDER_CLOSED");
         if (!confirm && !note)
           fail14("REASON_REQUIRED");
-        const done = await rows29(conn, "SELECT id FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType IN ('care.checkin.confirmed','care.checkin.observed') LIMIT 1", [order.id]);
+        const done = await rows30(conn, "SELECT id FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType IN ('care.checkin.confirmed','care.checkin.observed') LIMIT 1", [order.id]);
         if (done.length)
           fail14("CHECKIN_ALREADY_ANSWERED");
         if (!confirm)
@@ -97792,7 +97952,7 @@ Observaci\xF3n del due\xF1o: ${note}`, order.id]);
         const balance = total - before.paid - before.informed;
         if (command.amount > balance + 1e-3)
           fail14("PAYMENT_EXCEEDS_BALANCE");
-        const id3 = randomUUID27();
+        const id3 = randomUUID28();
         await conn.query("INSERT INTO `WorkOrderPayment` (id, workOrderId, amount, method, reference, status, reportedBy) VALUES (?, ?, ?, ?, ?, 'informado', ?)", [id3, order.id, command.amount, command.method, command.reference, shop.actor]);
         await this.audit(conn, userId, "care.payment.reported", "WorkOrder", String(order.id), { paymentId: id3, amount: command.amount, method: command.method, by: shop.actor });
         const code5 = workOrderCode(command.orderNumber);
@@ -97807,7 +97967,7 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
         const order = await this.openOrder(conn, number2, { scope: await decisionScope(conn, userId) });
         if (!confirm && !note)
           fail14("REASON_REQUIRED");
-        const [payment] = await rows29(conn, "SELECT id, amount FROM `WorkOrderPayment` WHERE workOrderId = ? AND status = 'informado' ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [order.id]);
+        const [payment] = await rows30(conn, "SELECT id, amount FROM `WorkOrderPayment` WHERE workOrderId = ? AND status = 'informado' ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [order.id]);
         if (!payment)
           fail14("NO_PAYMENT_PENDING");
         await conn.query("UPDATE `WorkOrderPayment` SET status = ?, ownerNote = ?, answeredAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [confirm ? "pagado" : "observado", note, payment.id]);
@@ -97829,7 +97989,7 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
         const serviceId = matchService(command.service);
         if (!serviceId)
           fail14("UNKNOWN_SERVICE");
-        const found = await rows29(conn, "SELECT id, km, doneAt, createdBy FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND serviceId = ? AND createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY createdAt DESC FOR UPDATE", [vehicle.id, shop.id, serviceId]);
+        const found = await rows30(conn, "SELECT id, km, doneAt, createdBy FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND serviceId = ? AND createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY createdAt DESC FOR UPDATE", [vehicle.id, shop.id, serviceId]);
         if (!found.length)
           fail14("SERVICE_NOT_VOIDABLE");
         await conn.query("DELETE FROM `VehicleServiceRecord` WHERE id IN (?)", [found.map((r) => r.id)]);
@@ -97847,13 +98007,13 @@ Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide
         if (!shop.isOwner && !shop.isAdmin)
           fail14("FORBIDDEN");
         const order = await this.openOrder(conn, command.orderNumber, { shopId: shop.id });
-        const [sums] = await rows29(conn, "SELECT COALESCE(SUM(CASE WHEN status = 'pagado' THEN amount END), 0) AS paid, COALESCE(SUM(CASE WHEN status IN ('reembolso_informado','reembolso_confirmado') THEN amount END), 0) AS refunded FROM `WorkOrderPayment` WHERE workOrderId = ?", [order.id]);
+        const [sums] = await rows30(conn, "SELECT COALESCE(SUM(CASE WHEN status = 'pagado' THEN amount END), 0) AS paid, COALESCE(SUM(CASE WHEN status IN ('reembolso_informado','reembolso_confirmado') THEN amount END), 0) AS refunded FROM `WorkOrderPayment` WHERE workOrderId = ?", [order.id]);
         const available = Math.round((Number(sums?.paid ?? 0) - Number(sums?.refunded ?? 0)) * 100) / 100;
         if (available <= 0)
           fail14("NO_PAYMENT_TO_REFUND");
         if (command.amount > available + 1e-3)
           fail14("REFUND_EXCEEDS_PAID");
-        const id3 = randomUUID27();
+        const id3 = randomUUID28();
         await conn.query("INSERT INTO `WorkOrderPayment` (id, workOrderId, amount, method, reference, status, reportedBy) VALUES (?, ?, ?, ?, ?, 'reembolso_informado', ?)", [id3, order.id, command.amount, command.method, command.reference, shop.actor]);
         await this.audit(conn, userId, "care.refund.reported", "WorkOrder", String(order.id), { paymentId: id3, amount: command.amount, method: command.method, by: shop.actor });
         const code5 = workOrderCode(command.orderNumber);
@@ -97867,7 +98027,7 @@ Responde: Confirmo reembolso ${code5} \xB7 Observo reembolso ${code5} | motivo`)
         const order = await this.openOrder(conn, number2, { scope: await decisionScope(conn, userId) });
         if (!confirm && !note)
           fail14("REASON_REQUIRED");
-        const [refund] = await rows29(conn, "SELECT id, amount FROM `WorkOrderPayment` WHERE workOrderId = ? AND status = 'reembolso_informado' ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [order.id]);
+        const [refund] = await rows30(conn, "SELECT id, amount FROM `WorkOrderPayment` WHERE workOrderId = ? AND status = 'reembolso_informado' ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [order.id]);
         if (!refund)
           fail14("NO_REFUND_PENDING");
         await conn.query("UPDATE `WorkOrderPayment` SET status = ?, ownerNote = ?, answeredAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [confirm ? "reembolso_confirmado" : "reembolso_observado", note, refund.id]);
@@ -97879,7 +98039,7 @@ Responde: Confirmo reembolso ${code5} \xB7 Observo reembolso ${code5} | motivo`)
       /** Workshop: its open work orders, or one of them (with its pending answers), and the next step of each. */
       async shopOrders(conn, userId, role, number2) {
         const shop = await this.actingShop(conn, userId, role, { openOrders: true });
-        const orders = await rows29(conn, `SELECT w.id, w.number, w.status, w.total, w.intakeKm, w.intakeNotes, v.make, v.model, v.year, v.plate FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId WHERE w.shopId = ? AND ${number2 === null ? "w.status NOT IN ('cerrada','cancelada')" : "w.number = ?"} ORDER BY w.number DESC LIMIT 20`, number2 === null ? [shop.id] : [shop.id, number2]);
+        const orders = await rows30(conn, `SELECT w.id, w.number, w.status, w.total, w.intakeKm, w.intakeNotes, v.make, v.model, v.year, v.plate FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId WHERE w.shopId = ? AND ${number2 === null ? "w.status NOT IN ('cerrada','cancelada')" : "w.number = ?"} ORDER BY w.number DESC LIMIT 20`, number2 === null ? [shop.id] : [shop.id, number2]);
         if (number2 !== null && !orders.length)
           fail14("NOT_FOUND");
         if (!orders.length)
@@ -97887,7 +98047,7 @@ Responde: Confirmo reembolso ${code5} \xB7 Observo reembolso ${code5} | motivo`)
         const out = [];
         for (const o of orders) {
           const code5 = workOrderCode(Number(o.number));
-          const pending = await rows29(conn, "SELECT id, kind FROM `WorkOrderChange` WHERE workOrderId = ? AND status = 'pending' ORDER BY createdAt", [o.id]);
+          const pending = await rows30(conn, "SELECT id, kind FROM `WorkOrderChange` WHERE workOrderId = ? AND status = 'pending' ORDER BY createdAt", [o.id]);
           const waits = pending.map((c) => c.kind === "novedad" ? `novedad ${short4("N", String(c.id))} espera al due\xF1o` : "entrega espera al due\xF1o");
           out.push(`\u2022 ${code5} \xB7 ${o.make} ${o.model} ${o.year}${o.plate ? ` (${o.plate})` : ""} \xB7 ${SHOP_ORDER_STATUS[String(o.status)] ?? String(o.status)}${Number(o.total) ? ` \xB7 ${formatUsd(Number(o.total))}` : ""}${waits.length ? ` \xB7 ${waits.join(", ")}` : ""}${pending.length ? "" : SHOP_ORDER_NEXT[String(o.status)]?.(code5) ?? ""}${number2 !== null && o.intakeNotes ? `
 ${String(o.intakeNotes)}` : ""}`);
@@ -97910,17 +98070,17 @@ ${out.join("\n")}` : out.join("\n") };
           await this.repairStarted(conn, String(order.id));
           return { userId, message: `Orden ${code5} en reparaci\xF3n. Avisamos al due\xF1o. Si encuentras algo m\xE1s: Novedad ${code5} | qu\xE9 se encontr\xF3 | repuesto: \u2026; mano de obra: \u2026` };
         }
-        const [{ n: n3 }] = await rows29(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'care.order.stage'", [order.id]);
+        const [{ n: n3 }] = await rows30(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'care.order.stage'", [order.id]);
         await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `orderstage:${String(order.id)}:${Number(n3)}`, "care.repair", stage === "esperando" ? `\u23F3 Tu orden ${code5} en ${shop.name} est\xE1 esperando repuestos. Te avisamos cuando siga.` : `\u{1F527} Tu orden ${code5} sigue en reparaci\xF3n en ${shop.name}.`);
         return { userId, message: stage === "esperando" ? `Orden ${code5} esperando repuesto. Avisamos al due\xF1o. Cuando lleguen: Reanudar ${code5}` : `Orden ${code5} de vuelta en reparaci\xF3n. Avisamos al due\xF1o.` };
       }
       /** Workshop: another time for an appointment (the owner accepts or rejects it), or a decline with reason. Not once the vehicle came in. */
       async appointmentChange(conn, userId, role, command) {
         const shop = await this.actingShop(conn, userId, role);
-        const [appointment] = await rows29(conn, "SELECT a.id, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending', 'confirmed') AND REPLACE(a.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf2(command.appointmentRef)]);
+        const [appointment] = await rows30(conn, "SELECT a.id, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending', 'confirmed') AND REPLACE(a.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf3(command.appointmentRef)]);
         if (!appointment)
           fail14("NOT_FOUND");
-        if ((await rows29(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' LIMIT 1", [appointment.id])).length)
+        if ((await rows30(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' LIMIT 1", [appointment.id])).length)
           fail14("APPOINTMENT_IN_SHOP");
         const label5 = `${appointment.make} ${appointment.model} ${appointment.year}`;
         const before = formatEcDateTime(appointment.scheduledAt);
@@ -97935,7 +98095,7 @@ ${out.join("\n")}` : out.join("\n") };
         if (!at || at.getTime() <= Date.now() || at.getTime() > Date.now() + 365 * 864e5)
           fail14("INVALID_PROPOSED_DATE");
         await ensureShopSlot(conn, shop.id, at, 60, String(appointment.id));
-        const id3 = randomUUID27();
+        const id3 = randomUUID28();
         const code5 = short4("C", id3);
         await conn.query("UPDATE `Appointment` SET status = 'cancelled', cancelReason = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [`Reprogramada por el taller (${code5})`, appointment.id]);
         await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, createdAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, UTC_TIMESTAMP(3))", [id3, appointment.ownerId, appointment.vehicleId, shop.id, at, `Visita propuesta por el taller (reprograma ${command.appointmentRef}, ${shop.actor})`]);
@@ -97946,10 +98106,10 @@ ${out.join("\n")}` : out.join("\n") };
       }
       /** Vehicle row enriched with its service history and open symptoms, ready for the plan. */
       async planVehicle(conn, vehicle) {
-        const records = await rows29(conn, "SELECT serviceId, km, doneAt, nextDueKm, nextDueAt FROM `VehicleServiceRecord` WHERE vehicleId = ? ORDER BY COALESCE(km, 0) DESC, doneAt DESC", [vehicle.id]).catch((err) => {
+        const records = await rows30(conn, "SELECT serviceId, km, doneAt, nextDueKm, nextDueAt FROM `VehicleServiceRecord` WHERE vehicleId = ? ORDER BY COALESCE(km, 0) DESC, doneAt DESC", [vehicle.id]).catch((err) => {
           if (err.code !== "ER_BAD_FIELD_ERROR")
             throw err;
-          return rows29(conn, "SELECT serviceId, km, doneAt FROM `VehicleServiceRecord` WHERE vehicleId = ? ORDER BY COALESCE(km, 0) DESC, doneAt DESC", [vehicle.id]);
+          return rows30(conn, "SELECT serviceId, km, doneAt FROM `VehicleServiceRecord` WHERE vehicleId = ? ORDER BY COALESCE(km, 0) DESC, doneAt DESC", [vehicle.id]);
         });
         const lastServices = records.map((r) => ({
           serviceId: String(r.serviceId),
@@ -97958,11 +98118,11 @@ ${out.join("\n")}` : out.join("\n") };
           ...r.nextDueKm !== null && r.nextDueKm !== void 0 ? { nextKm: Number(r.nextDueKm) } : {},
           ...r.nextDueAt ? { nextDate: r.nextDueAt } : {}
         }));
-        const symptoms = await rows29(conn, "SELECT `system`, risk, description FROM `VehicleSymptom` WHERE vehicleId = ? AND resolvedAt IS NULL ORDER BY createdAt DESC LIMIT 3", [vehicle.id]);
+        const symptoms = await rows30(conn, "SELECT `system`, risk, description FROM `VehicleSymptom` WHERE vehicleId = ? AND resolvedAt IS NULL ORDER BY createdAt DESC LIMIT 3", [vehicle.id]);
         const corrective = symptoms.map((s) => `${s.risk === "no_conducir" ? "No conducir hasta revisar: " : "Revisar "}${String(s.system)} (${String(s.description).slice(0, 80)})`);
-        const overrides = await rows29(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]).catch(() => []);
+        const overrides = await rows30(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]).catch(() => []);
         const year3 = Number(vehicle.year);
-        const modelPlan = Number.isFinite(year3) ? await rows29(conn, "SELECT marca, modelo, anioDesde, anioHasta, combustible, serviceId, intervalKm, intervalMonths, fuente, verificado FROM `VehicleModelPlan` WHERE verificado = 1 AND anioDesde <= ? AND anioHasta >= ? AND marca = ? AND modelo IN (?, ?, 'GENERICO') AND (combustible IS NULL OR combustible = ?)", [year3, year3, String(vehicle.make ?? ""), String(vehicle.model ?? ""), ecuatorianVehicleFor(vehicle)?.model ?? String(vehicle.model ?? ""), String(vehicle.fuel ?? "")]).catch((err) => {
+        const modelPlan = Number.isFinite(year3) ? await rows30(conn, "SELECT marca, modelo, anioDesde, anioHasta, combustible, serviceId, intervalKm, intervalMonths, fuente, verificado FROM `VehicleModelPlan` WHERE verificado = 1 AND anioDesde <= ? AND anioHasta >= ? AND marca = ? AND modelo IN (?, ?, 'GENERICO') AND (combustible IS NULL OR combustible = ?)", [year3, year3, String(vehicle.make ?? ""), String(vehicle.model ?? ""), ecuatorianVehicleFor(vehicle)?.model ?? String(vehicle.model ?? ""), String(vehicle.fuel ?? "")]).catch((err) => {
           if (err.code === "ER_NO_SUCH_TABLE")
             return [];
           throw err;
@@ -97979,7 +98139,7 @@ ${out.join("\n")}` : out.join("\n") };
        * en su panel (Registrar inspección en la ficha) o lo deja para la próxima visita; el agente solo indica dónde.
        */
       async pendingReviewNote(conn, vehicleId) {
-        const [vehicle] = await rows29(conn, "SELECT * FROM `Vehicle` WHERE id = ?", [vehicleId]);
+        const [vehicle] = await rows30(conn, "SELECT * FROM `Vehicle` WHERE id = ?", [vehicleId]);
         if (!vehicle)
           return "";
         const planned = await this.planVehicle(conn, vehicle);
@@ -98014,7 +98174,7 @@ ${out.join("\n")}` : out.join("\n") };
         if (pick.kind !== "one")
           return { userId, message: chooseDoneText(pick.items, pick.kind === "unknown") };
         const currentKm = Number(vehicle.currentKm) || 0;
-        await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID27(), vehicle.id, pick.item.serviceId, currentKm, /* @__PURE__ */ new Date(), userId]);
+        await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID28(), vehicle.id, pick.item.serviceId, currentKm, /* @__PURE__ */ new Date(), userId]);
         const next = planItemsFor(await this.planVehicle(conn, vehicle), level).find((i) => i.serviceId === pick.item.serviceId);
         return { userId, message: `Anotado: ${pick.item.serviceName} hecho hoy, a los ${currentKm.toLocaleString("es-EC")} km.${next ? ` Pr\xF3ximo: ${nextMilestone(next)}.` : ""} Ya no te recordaremos este.
 Si tu kilometraje cambi\xF3, actual\xEDzalo con: Kilometraje | km` };
@@ -98030,7 +98190,7 @@ Si tu kilometraje cambi\xF3, actual\xEDzalo con: Kilometraje | km` };
           const doneAt = command.month ? /* @__PURE__ */ new Date(`${command.month}-15T12:00:00Z`) : null;
           if (doneAt && doneAt.getTime() > Date.now())
             fail14("FUTURE_DATE");
-          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID27(), vehicle.id, serviceId, command.km, doneAt, userId]);
+          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, createdBy) VALUES (?, ?, ?, ?, ?, 'dueno', ?)", [randomUUID28(), vehicle.id, serviceId, command.km, doneAt, userId]);
           const summary = await this.ownerSummary(conn, vehicle);
           return { userId, message: `Anotado: ${serviceName2(serviceId)} a los ${command.km.toLocaleString("es-EC")} km (declarado por ti).
 
@@ -98048,10 +98208,10 @@ ${summary ?? ""}`.trim() };
         }
         if (command.action === "symptom") {
           const diagnosis = guideDiagnosis({ symptoms: command.description });
-          await conn.query("INSERT INTO `VehicleSymptom` (id, vehicleId, `system`, risk, description, createdBy) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID27(), vehicle.id, diagnosis.systemLabel, diagnosis.risk, command.description, userId]);
+          await conn.query("INSERT INTO `VehicleSymptom` (id, vehicleId, `system`, risk, description, createdBy) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID28(), vehicle.id, diagnosis.systemLabel, diagnosis.risk, command.description, userId]);
           if (vehicle.fleetId) {
-            const [fleet] = await rows29(conn, "SELECT ownerUserId, name FROM `Fleet` WHERE id = ?", [vehicle.fleetId]);
-            const [who] = await rows29(conn, "SELECT name FROM `User` WHERE id = ?", [userId]);
+            const [fleet] = await rows30(conn, "SELECT ownerUserId, name FROM `Fleet` WHERE id = ?", [vehicle.fleetId]);
+            const [who] = await rows30(conn, "SELECT name FROM `User` WHERE id = ?", [userId]);
             const urgent = ["no_conducir", "alto", "alta"].includes(String(diagnosis.risk));
             for (const recipient of new Set([String(fleet?.ownerUserId ?? ""), ...await fleetManagers(conn, String(vehicle.id))].filter((id3) => id3 && id3 !== userId))) {
               await this.notify(conn, recipient, `fleetsymptom:${String(vehicle.id)}:${createHashLike(command.description)}:${recipient}`, "fleet.symptom", `${urgent ? "\u{1F6A8}" : "\u26A0\uFE0F"} ${String(who?.name ?? "").split(/\s+/)[0]} report\xF3 en ${label5}: "${command.description}". Sistema: ${diagnosis.systemLabel}, riesgo ${String(diagnosis.risk).replace(/_/g, " ")}.${vehicle.plate ? ` Para agendar en un taller con convenio: Agendar ${vehicle.plate} | K-XXXXXX | AAAA-MM-DD | HH:mm | motivo` : ""}`);
@@ -98075,18 +98235,18 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revi
         const at = dueAt ? /* @__PURE__ */ new Date(`${dueAt}T13:00:00Z`) : null;
         if (at && (Number.isNaN(at.getTime()) || at.getTime() < Date.now() - 864e5))
           fail14("INVALID_ALERT_DATE");
-        await conn.query("INSERT INTO `Alert` (id, vehicleId, label, dueKm, dueAt, source, createdBy, shopId, createdAt) VALUES (?, ?, ?, ?, ?, 'manual', ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), vehicleId, label5, dueKm, at, createdBy, shopId]);
+        await conn.query("INSERT INTO `Alert` (id, vehicleId, label, dueKm, dueAt, source, createdBy, shopId, createdAt) VALUES (?, ?, ?, ?, ?, 'manual', ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), vehicleId, label5, dueKm, at, createdBy, shopId]);
       }
       async visitAnswer(conn, userId, role, ref4, accept) {
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [visit] = await rows29(conn, `SELECT a.id, a.scheduledAt, a.vehicleId, s.userId AS shopUserId, s.name AS shopName, s.address, v.make, v.model, v.year FROM \`Appointment\` a JOIN \`Shop\` s ON s.id = a.shopId JOIN \`Vehicle\` v ON v.id = a.vehicleId WHERE ${scope.where("a")} AND a.status = 'pending' AND a.summary LIKE 'Visita propuesta por el taller%' AND REPLACE(a.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE`, [...scope.args, prefixOf2(ref4)]);
+        const [visit] = await rows30(conn, `SELECT a.id, a.scheduledAt, a.vehicleId, s.userId AS shopUserId, s.name AS shopName, s.address, v.make, v.model, v.year FROM \`Appointment\` a JOIN \`Shop\` s ON s.id = a.shopId JOIN \`Vehicle\` v ON v.id = a.vehicleId WHERE ${scope.where("a")} AND a.status = 'pending' AND a.summary LIKE 'Visita propuesta por el taller%' AND REPLACE(a.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE`, [...scope.args, prefixOf3(ref4)]);
         if (!visit)
           fail14("NOT_FOUND");
         await conn.query(accept ? "UPDATE `Appointment` SET status = 'confirmed', updatedAt = UTC_TIMESTAMP(3) WHERE id = ?" : "UPDATE `Appointment` SET status = 'cancelled', cancelReason = 'Rechazada por el due\xF1o', updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [visit.id]);
         const when15 = formatEcDateTime(visit.scheduledAt);
-        const [previous] = accept ? [] : await rows29(conn, "SELECT a.id FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.vehicleId = ? AND s.userId = ? AND a.status <> 'cancelled' AND a.id <> ? ORDER BY a.scheduledAt DESC LIMIT 1", [visit.vehicleId, visit.shopUserId, visit.id]);
+        const [previous] = accept ? [] : await rows30(conn, "SELECT a.id FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.vehicleId = ? AND s.userId = ? AND a.status <> 'cancelled' AND a.id <> ? ORDER BY a.scheduledAt DESC LIMIT 1", [visit.vehicleId, visit.shopUserId, visit.id]);
         const again = previous ? ` Si quieres proponer otra fecha: Pr\xF3xima visita ${short4("C", String(previous.id))} | AAAA-MM-DD | HH:mm` : "";
         await this.notify(conn, String(visit.shopUserId), `visit:${String(visit.id)}:${accept}`, "care.visit", accept ? `El cliente confirm\xF3 la visita ${ref4} para ${when15}.` : `El cliente no puede asistir a la visita ${ref4} del ${when15}.${again}`);
         const label5 = `${visit.make} ${visit.model} ${visit.year}`;
@@ -98099,15 +98259,15 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revi
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [appointment] = await rows29(conn, `SELECT a.id, a.status, a.scheduledAt, s.userId AS shopUserId, s.name AS shopName FROM \`Appointment\` a JOIN \`Shop\` s ON s.id = a.shopId WHERE ${scope.where("a")} AND REPLACE(a.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE`, [...scope.args, prefixOf2(ref4)]);
+        const [appointment] = await rows30(conn, `SELECT a.id, a.status, a.scheduledAt, s.userId AS shopUserId, s.name AS shopName FROM \`Appointment\` a JOIN \`Shop\` s ON s.id = a.shopId WHERE ${scope.where("a")} AND REPLACE(a.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE`, [...scope.args, prefixOf3(ref4)]);
         if (!appointment)
           fail14("NOT_FOUND");
         if (!["pending", "confirmed"].includes(String(appointment.status)))
           fail14("APPOINTMENT_CLOSED");
-        if ((await rows29(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [appointment.id])).length)
+        if ((await rows30(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [appointment.id])).length)
           fail14("APPOINTMENT_HAS_ORDER");
         await conn.query("UPDATE `Appointment` SET status = 'cancelled', cancelReason = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [`Cancelada por el due\xF1o${reason ? `: ${reason}` : ""}`.slice(0, 191), appointment.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.appointment.cancelled', ?, 'dueno', 'Appointment', ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, appointment.id, JSON.stringify({ from: appointment.status, reason })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.appointment.cancelled', ?, 'dueno', 'Appointment', ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, appointment.id, JSON.stringify({ from: appointment.status, reason })]);
         const when15 = formatEcDateTime(appointment.scheduledAt);
         await this.notify(conn, String(appointment.shopUserId), `cancelled:${String(appointment.id)}`, "care.visit", `El cliente cancel\xF3 la cita ${ref4} del ${when15}${reason ? `: ${reason}` : "."}`);
         return { userId, message: `Cancelaste la cita ${ref4} del ${when15} con ${appointment.shopName}. Ya le avisamos al taller. Puedes pedir otra con: Buscar servicio | categor\xEDa | ciudad | sector | descripci\xF3n` };
@@ -98116,7 +98276,7 @@ Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revi
       async serviceHistory(conn, userId, role, plate2) {
         const vehicle = await this.ownerVehicle(conn, userId, role, plate2, "read");
         const label5 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
-        const records = await rows29(conn, "SELECT r.serviceId, r.km, r.doneAt, s.name AS shopName, o.customName FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId LEFT JOIN `VehiclePlanOverride` o ON o.vehicleId = r.vehicleId AND o.serviceId = r.serviceId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 15", [vehicle.id]);
+        const records = await rows30(conn, "SELECT r.serviceId, r.km, r.doneAt, s.name AS shopName, o.customName FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId LEFT JOIN `VehiclePlanOverride` o ON o.vehicleId = r.vehicleId AND o.serviceId = r.serviceId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 15", [vehicle.id]);
         if (!records.length)
           return { userId, message: `Tu ${label5} todav\xEDa no tiene servicios anotados. Para anotar uno: \xDAltimo servicio | servicio | km | AAAA-MM` };
         const lines = records.map((r) => `\u2022 ${new Date(r.doneAt).toLocaleDateString("es-EC", { timeZone: "America/Guayaquil", year: "numeric", month: "short", day: "numeric" })} \xB7 ${r.customName ? String(r.customName) : serviceName2(String(r.serviceId))} \xB7 ${Number(r.km).toLocaleString("es-EC")} km \xB7 ${r.shopName ? String(r.shopName) : "anotado por ti"}`);
@@ -98128,7 +98288,7 @@ Gastos: Mis gastos` };
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [order] = await rows29(conn, "SELECT w.id, w.status, w.total, w.ownerId, w.vehicleId, w.shopId, s.userId AS shopUserId FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " FOR UPDATE", [number2, ...scope.args]);
+        const [order] = await rows30(conn, "SELECT w.id, w.status, w.total, w.ownerId, w.vehicleId, w.shopId, s.userId AS shopUserId FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " FOR UPDATE", [number2, ...scope.args]);
         if (!order)
           fail14("NOT_FOUND");
         if (order.status !== "presupuesto_enviado")
@@ -98144,9 +98304,9 @@ Gastos: Mis gastos` };
         const offer = !approve && offerUsd && offerUsd > 0 ? Math.round(offerUsd * 100) / 100 : null;
         const stored = approve ? null : `${String(reason)}${offer ? ` \xB7 pagar\xEDa ${formatUsd(offer)}` : ""}`.slice(0, 191);
         await conn.query("UPDATE `WorkOrder` SET status = ?, rejectionReason = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [approve ? "aprobado" : "rechazado", stored, order.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ status: approve ? "aprobado" : "rechazado", channel: "whatsapp", ...approve ? {} : { negotiation: true, offerUsd: offer } }), approve ? "Presupuesto aprobado por el titular por WhatsApp" : String(reason)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, order.id, JSON.stringify({ status: approve ? "aprobado" : "rechazado", channel: "whatsapp", ...approve ? {} : { negotiation: true, offerUsd: offer } }), approve ? "Presupuesto aprobado por el titular por WhatsApp" : String(reason)]);
         const code5 = workOrderCode(number2);
-        const [decided] = await rows29(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'workorder.budget.decided'", [order.id]);
+        const [decided] = await rows30(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'workorder.budget.decided'", [order.id]);
         await this.notify(conn, String(order.shopUserId), `budget:${String(order.id)}:${approve}:${Number(decided?.n ?? 1)}`, "care.budget", approve ? `\u2705 El cliente aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}. Puedes iniciar el trabajo.` : `\u{1F91D} El cliente no aprob\xF3 el presupuesto ${code5} de ${formatUsd(Number(order.total))} y quiere negociar: ${reason}.${offer ? ` Pagar\xEDa ${formatUsd(offer)}.` : ""}
 La orden queda en negociaci\xF3n y la cita sigue abierta. Env\xEDa otro presupuesto (Presupuesto ${code5} | \u2026) o, si no hay acuerdo, cierra con \xABSalida sin trabajo ${code5} | motivo\xBB.`);
         await this.notifyFleetTeam(conn, String(order.vehicleId), userId, `budget-team:${String(order.id)}:${approve}`, "care.budget", approve ? `aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))}.` : `no aprob\xF3 el presupuesto ${code5} por ${formatUsd(Number(order.total))} y est\xE1 negociando: ${reason}.${offer ? ` Pagar\xEDa ${formatUsd(offer)}.` : ""}`);
@@ -98158,7 +98318,7 @@ La orden queda en negociaci\xF3n y la cita sigue abierta. Env\xEDa otro presupue
        * eligió todos los renglones: entonces es una aprobación completa de siempre.
        */
       async partialApproval(conn, userId, scope, order, number2, lines) {
-        const items = await rows29(conn, "SELECT id, kind, description, brand, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt, id", [order.id]);
+        const items = await rows30(conn, "SELECT id, kind, description, brand, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt, id", [order.id]);
         const wanted = [...new Set(lines)].sort((a, b) => a - b);
         if (!items.length || wanted.some((n3) => n3 < 1 || n3 > items.length))
           fail14("BUDGET_LINES_INVALID");
@@ -98166,13 +98326,13 @@ La orden queda en negociaci\xF3n y la cita sigue abierta. Env\xEDa otro presupue
           return null;
         const subtotal = (i) => Math.round(Number(i.quantity) * Number(i.unitPrice) * 100) / 100;
         const kept = items.filter((_, index) => wanted.includes(index + 1));
-        const dropped = items.map((item, index) => ({ item, n: index + 1 })).filter(({ n: n3 }) => !wanted.includes(n3));
+        const dropped = items.map((item2, index) => ({ item: item2, n: index + 1 })).filter(({ n: n3 }) => !wanted.includes(n3));
         const approvedNet = Math.round(kept.reduce((sum, i) => sum + subtotal(i), 0) * 100) / 100;
         const approvedVat = await orderVat(conn, String(order.id)) > 0 ? vatOf(approvedNet, IVA_RATE) : 0;
         const approvedTotal = Math.round((approvedNet + approvedVat) * 100) / 100;
         const quotedTotal = Number(order.total);
         checkLimit(scope, String(order.ownerId), approvedTotal);
-        const rejected = dropped.map(({ item, n: n3 }) => ({ n: n3, kind: item.kind, description: item.description, brand: item.brand, quantity: Number(item.quantity), unitPrice: Number(item.unitPrice) }));
+        const rejected = dropped.map(({ item: item2, n: n3 }) => ({ n: n3, kind: item2.kind, description: item2.description, brand: item2.brand, quantity: Number(item2.quantity), unitPrice: Number(item2.unitPrice) }));
         try {
           await conn.query("INSERT INTO `WorkOrderPartialApproval` (workOrderId, quotedTotal, approvedTotal, rejected, decidedBy) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE quotedTotal = VALUES(quotedTotal), approvedTotal = VALUES(approvedTotal), rejected = VALUES(rejected), decidedBy = VALUES(decidedBy), createdAt = CURRENT_TIMESTAMP(3)", [order.id, quotedTotal, approvedTotal, JSON.stringify(rejected), userId]);
         } catch (err) {
@@ -98180,16 +98340,16 @@ La orden queda en negociaci\xF3n y la cita sigue abierta. Env\xEDa otro presupue
             fail14("FEATURE_UPDATE_PENDING");
           throw err;
         }
-        await conn.query("DELETE FROM `WorkOrderItem` WHERE workOrderId = ? AND id IN (?)", [order.id, dropped.map(({ item }) => item.id)]);
+        await conn.query("DELETE FROM `WorkOrderItem` WHERE workOrderId = ? AND id IN (?)", [order.id, dropped.map(({ item: item2 }) => item2.id)]);
         await conn.query("UPDATE `WorkOrder` SET status = 'aprobado', rejectionReason = NULL, total = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [approvedTotal, order.id]);
         await setOrderVat(conn, String(order.id), approvedVat);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ status: "aprobado", channel: "whatsapp", partial: true, approvedLines: wanted, rejectedLines: dropped.map((d) => d.n), quotedTotal, approvedTotal }), "Presupuesto aprobado en parte por el titular por WhatsApp"]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, order.id, JSON.stringify({ status: "aprobado", channel: "whatsapp", partial: true, approvedLines: wanted, rejectedLines: dropped.map((d) => d.n), quotedTotal, approvedTotal }), "Presupuesto aprobado en parte por el titular por WhatsApp"]);
         const code5 = workOrderCode(number2);
-        const deferred = await addDeferredWork(conn, { vehicleId: String(order.vehicleId), shopId: order.shopId ? String(order.shopId) : null, createdBy: userId, code: code5, items: dropped.map(({ item }) => String(item.description)) });
+        const deferred = await addDeferredWork(conn, { vehicleId: String(order.vehicleId), shopId: order.shopId ? String(order.shopId) : null, createdBy: userId, code: code5, items: dropped.map(({ item: item2 }) => String(item2.description)) });
         const describe = (i) => `${i.kind === "mano_obra" ? "Mano de obra: " : ""}${String(i.description)}${i.brand ? ` (${String(i.brand)})` : ""} \u2014 ${formatUsd(subtotal(i))}`;
         const approvedText = items.flatMap((i, index) => wanted.includes(index + 1) ? [`${index + 1}. ${describe(i)}`] : []).join("\n");
-        const rejectedText = dropped.map(({ item, n: n3 }) => `${n3}. ${describe(item)}`).join("\n");
-        const [decided] = await rows29(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'workorder.budget.decided'", [order.id]);
+        const rejectedText = dropped.map(({ item: item2, n: n3 }) => `${n3}. ${describe(item2)}`).join("\n");
+        const [decided] = await rows30(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'workorder.budget.decided'", [order.id]);
         await this.notify(conn, String(order.shopUserId), `budget:${String(order.id)}:partial:${Number(decided?.n ?? 1)}`, "care.budget", `\u2705 El cliente aprob\xF3 en parte el presupuesto ${code5}: ${formatUsd(approvedTotal)} de ${formatUsd(quotedTotal)}.
 Aprobado:
 ${approvedText}
@@ -98217,7 +98377,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
           fail14("PROMISE_DATE_INVALID");
         let current;
         try {
-          [current] = await rows29(conn, "SELECT DATE_FORMAT(promisedDate, '%Y-%m-%d') AS promisedDate, changes FROM `WorkOrderPromise` WHERE workOrderId = ? FOR UPDATE", [order.id]);
+          [current] = await rows30(conn, "SELECT DATE_FORMAT(promisedDate, '%Y-%m-%d') AS promisedDate, changes FROM `WorkOrderPromise` WHERE workOrderId = ? FOR UPDATE", [order.id]);
         } catch (err) {
           if (err.code === "ER_NO_SUCH_TABLE")
             fail14("FEATURE_UPDATE_PENDING");
@@ -98238,7 +98398,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
       /** El taller marca una cita confirmada cuya hora ya pasó como «No asistió». Libera el cupo y avisa al dueño; sin penalización. */
       async noShow(conn, userId, role, ref4) {
         const shop = await this.actingShop(conn, userId, role);
-        const [appointment] = await rows29(conn, "SELECT a.id, a.status, a.cancelReason, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND REPLACE(a.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf2(ref4)]);
+        const [appointment] = await rows30(conn, "SELECT a.id, a.status, a.cancelReason, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND REPLACE(a.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf3(ref4)]);
         if (!appointment)
           fail14("NOT_FOUND");
         if (appointment.status === "cancelled" && String(appointment.cancelReason ?? "").startsWith(NO_SHOW_REASON))
@@ -98247,7 +98407,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
           fail14("NO_SHOW_NOT_CONFIRMED");
         if (new Date(appointment.scheduledAt).getTime() > Date.now())
           fail14("NO_SHOW_NOT_YET");
-        if ((await rows29(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' LIMIT 1", [appointment.id])).length)
+        if ((await rows30(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' LIMIT 1", [appointment.id])).length)
           fail14("APPOINTMENT_IN_SHOP");
         await conn.query("UPDATE `Appointment` SET status = 'cancelled', cancelReason = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [NO_SHOW_REASON, appointment.id]);
         await this.audit(conn, userId, "care.appointment.noshow", "Appointment", String(appointment.id), { by: shop.actor });
@@ -98266,7 +98426,7 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
           fail14("ORDER_CLOSED");
         if (!reason)
           fail14("REASON_REQUIRED");
-        if ((await rows29(conn, "SELECT id FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status = 'approved' LIMIT 1", [order.id])).length)
+        if ((await rows30(conn, "SELECT id FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status = 'approved' LIMIT 1", [order.id])).length)
           fail14("ORDER_DELIVERY_ACCEPTED");
         const payments = await paymentTotals(conn, String(order.id)).catch((err) => {
           if (err.code === "ER_NO_SUCH_TABLE")
@@ -98301,11 +98461,11 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
         const fee = await diagnosisFeeOf(conn, String(order.id));
         const code5 = workOrderCode(number2);
         const label5 = `${order.make} ${order.model} ${order.year}`;
-        const quoted2 = await rows29(conn, "SELECT description FROM `WorkOrderItem` WHERE workOrderId = ?", [order.id]);
+        const quoted2 = await rows30(conn, "SELECT description FROM `WorkOrderItem` WHERE workOrderId = ?", [order.id]);
         const deferred = await addDeferredWork(conn, { vehicleId: String(order.vehicleId), shopId: String(order.shopId), createdBy: userId, code: code5, items: quoted2.map((q) => String(q.description)) });
         if (fee > 0) {
           await conn.query("DELETE FROM `WorkOrderItem` WHERE workOrderId = ?", [order.id]);
-          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, 'mano_obra', ?, NULL, NULL, 1, ?, CURRENT_TIMESTAMP(3))", [randomUUID27(), order.id, DIAGNOSIS_LINE, fee]);
+          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, 'mano_obra', ?, NULL, NULL, 1, ?, CURRENT_TIMESTAMP(3))", [randomUUID28(), order.id, DIAGNOSIS_LINE, fee]);
           await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', total = ?, warrantyDays = 0, diagnosisOutcome = 'sin_trabajo', outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [fee, reason, order.id]);
           await setOrderVat(conn, String(order.id), 0);
         } else {
@@ -98349,7 +98509,7 @@ Tienes 48 horas para responder: Responder reclamo ${code5} | tu respuesta. Si no
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [order] = await rows29(conn, "SELECT w.id, w.status, w.warrantyDays, w.closedAt, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " LIMIT 1", [number2, ...scope.args]);
+        const [order] = await rows30(conn, "SELECT w.id, w.status, w.warrantyDays, w.closedAt, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " LIMIT 1", [number2, ...scope.args]);
         if (!order)
           fail14("NOT_FOUND");
         if (order.status !== "cerrada")
@@ -98358,7 +98518,7 @@ Tienes 48 horas para responder: Responder reclamo ${code5} | tu respuesta. Si no
         if (!window3)
           fail14("WARRANTY_NONE");
         const code5 = workOrderCode(number2);
-        const [claim] = await rows29(conn, "SELECT g.id, g.status, g.shopNote, r.number AS reentryNumber FROM `WorkOrderWarranty` g LEFT JOIN `WorkOrder` r ON r.id = g.reentryOrderId WHERE g.workOrderId = ? ORDER BY g.createdAt DESC, g.id DESC LIMIT 1", [order.id]).catch((err) => {
+        const [claim] = await rows30(conn, "SELECT g.id, g.status, g.shopNote, r.number AS reentryNumber FROM `WorkOrderWarranty` g LEFT JOIN `WorkOrder` r ON r.id = g.reentryOrderId WHERE g.workOrderId = ? ORDER BY g.createdAt DESC, g.id DESC LIMIT 1", [order.id]).catch((err) => {
           if (err.code === "ER_NO_SUCH_TABLE")
             return [];
           throw err;
@@ -98383,12 +98543,12 @@ Tienes 48 horas para responder: Responder reclamo ${code5} | tu respuesta. Si no
         if (order.status !== "cerrada")
           fail14("WARRANTY_NOT_CLOSED");
         if (!order.fleetId) {
-          const [holder] = await rows29(conn, "SELECT userId FROM `Vehicle` WHERE id = ?", [order.vehicleId]);
+          const [holder] = await rows30(conn, "SELECT userId FROM `Vehicle` WHERE id = ?", [order.vehicleId]);
           if (!holder || String(holder.userId) !== userId)
             fail14("WARRANTY_NOT_OWNER");
         }
         const window3 = warrantyWindow(order.closedAt, order.warrantyDays);
-        const ordered = (await rows29(conn, "SELECT id FROM `WorkOrderClaim` WHERE workOrderId = ? AND compensationKind = 'repetir_trabajo' LIMIT 1", [order.id]).catch((err) => {
+        const ordered = (await rows30(conn, "SELECT id FROM `WorkOrderClaim` WHERE workOrderId = ? AND compensationKind = 'repetir_trabajo' LIMIT 1", [order.id]).catch((err) => {
           if (err.code === "ER_BAD_FIELD_ERROR" || err.code === "ER_NO_SUCH_TABLE")
             return [];
           throw err;
@@ -98397,7 +98557,7 @@ Tienes 48 horas para responder: Responder reclamo ${code5} | tu respuesta. Si no
           fail14("WARRANTY_NONE");
         let current;
         try {
-          current = await rows29(conn, "SELECT g.id, g.status, r.status AS reentryStatus FROM `WorkOrderWarranty` g LEFT JOIN `WorkOrder` r ON r.id = g.reentryOrderId WHERE g.workOrderId = ? AND g.status IN ('abierta','aceptada') FOR UPDATE", [order.id]);
+          current = await rows30(conn, "SELECT g.id, g.status, r.status AS reentryStatus FROM `WorkOrderWarranty` g LEFT JOIN `WorkOrder` r ON r.id = g.reentryOrderId WHERE g.workOrderId = ? AND g.status IN ('abierta','aceptada') FOR UPDATE", [order.id]);
         } catch (err) {
           if (err.code === "ER_NO_SUCH_TABLE")
             fail14("FEATURE_UPDATE_PENDING");
@@ -98411,11 +98571,11 @@ Tienes 48 horas para responder: Responder reclamo ${code5} | tu respuesta. Si no
           fail14("WARRANTY_EXPIRED");
         if (!reason || reason.length < 3)
           fail14("REASON_REQUIRED");
-        const id3 = randomUUID27();
+        const id3 = randomUUID28();
         const ref4 = warrantyRef(id3);
         const code5 = workOrderCode(number2);
         await conn.query("INSERT INTO `WorkOrderWarranty` (id, workOrderId, status, reason, requestedBy) VALUES (?, ?, 'abierta', ?, ?)", [id3, order.id, reason, userId]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.claimed', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ claim: id3, until: window3?.until ?? null, ordered }), reason]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.claimed', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, order.id, JSON.stringify({ claim: id3, until: window3?.until ?? null, ordered }), reason]);
         const label5 = `${order.make} ${order.model} ${order.year}`;
         await this.notifyShopTeam(conn, String(order.shopUserId), String(order.shopId), `warranty-claim:${id3}`, `\u{1F6E1}\uFE0F El cliente reclama la garant\xEDa de ${code5} (${label5}, ${ref4}): ${reason}
 Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code5} | motivo`);
@@ -98430,7 +98590,7 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
         const order = await this.openOrder(conn, number2, { shopId: shop.id });
         let claim;
         try {
-          [claim] = await rows29(conn, "SELECT id, reason FROM `WorkOrderWarranty` WHERE workOrderId = ? AND status = 'abierta' LIMIT 1 FOR UPDATE", [order.id]);
+          [claim] = await rows30(conn, "SELECT id, reason FROM `WorkOrderWarranty` WHERE workOrderId = ? AND status = 'abierta' LIMIT 1 FOR UPDATE", [order.id]);
         } catch (err) {
           if (err.code === "ER_NO_SUCH_TABLE")
             fail14("FEATURE_UPDATE_PENDING");
@@ -98445,19 +98605,19 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
         const label5 = `${order.make} ${order.model} ${order.year}`;
         if (!accept) {
           await conn.query("UPDATE `WorkOrderWarranty` SET status = 'rechazada', shopNote = ?, decidedBy = ?, decidedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status = 'abierta'", [note, userId, claim.id]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.rejected', ?, 'taller', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ claim: claim.id, by: shop.actor }), note]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.rejected', ?, 'taller', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, order.id, JSON.stringify({ claim: claim.id, by: shop.actor }), note]);
           const text15 = `\u274C ${shop.name} no acept\xF3 tu reclamo de garant\xEDa de ${code5} (${ref4}): ${note}. Si no est\xE1s de acuerdo, habla con el taller.`;
           await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `warranty-answer:${String(claim.id)}`, "care.warranty", text15);
           await this.notifyDriver(conn, String(order.vehicleId), `warranty-answer-driver:${String(claim.id)}`, text15);
           return { userId, message: `Rechazaste el reclamo de garant\xEDa ${ref4} de ${code5}. Avisamos al due\xF1o con tu motivo.` };
         }
-        const next = Number((await rows29(conn, "SELECT COALESCE(MAX(number), 0) + 1 AS next FROM `WorkOrder` FOR UPDATE"))[0]?.next ?? 1);
-        const reentryId = randomUUID27();
+        const next = Number((await rows30(conn, "SELECT COALESCE(MAX(number), 0) + 1 AS next FROM `WorkOrder` FOR UPDATE"))[0]?.next ?? 1);
+        const reentryId = randomUUID28();
         const reentryCode = workOrderCode(next);
         const notes = [`Reingreso por garant\xEDa de ${code5}: ${String(claim.reason)}`, `Registrado por: ${shop.actor}`].join("\n");
         await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, NULL, 'recepcion', ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [reentryId, next, shop.id, order.ownerId, order.vehicleId, Math.max(Number(order.exitKm ?? 0), Number(order.currentKm ?? 0)), notes]);
         await conn.query("UPDATE `WorkOrderWarranty` SET status = 'aceptada', shopNote = ?, decidedBy = ?, decidedAt = UTC_TIMESTAMP(3), reentryOrderId = ? WHERE id = ? AND status = 'abierta'", [note, userId, reentryId, claim.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.accepted', ?, 'taller', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ claim: claim.id, reentryOrderId: reentryId, reentry: reentryCode, by: shop.actor }), note]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.accepted', ?, 'taller', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, order.id, JSON.stringify({ claim: claim.id, reentryOrderId: reentryId, reentry: reentryCode, by: shop.actor }), note]);
         await this.audit(conn, userId, "care.warranty.reentry", "WorkOrder", reentryId, { origin: String(order.id), claim: String(claim.id), by: shop.actor });
         const text14 = `\u2705 ${shop.name} acept\xF3 tu reclamo de garant\xEDa de ${code5} (${ref4}).${note ? ` Nota: ${note}.` : ""} Abri\xF3 la orden ${reentryCode} para atender tu ${label5}, sin costo. Sigue el avance con: Estado ${reentryCode}`;
         await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `warranty-answer:${String(claim.id)}`, "care.warranty", text14);
@@ -98465,10 +98625,10 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
         return { userId, message: `Aceptaste el reclamo de garant\xEDa ${ref4} de ${code5}. Abrimos la orden ${reentryCode} de reingreso, ligada a la original y sin cobro. Env\xEDa el presupuesto en cero: Presupuesto ${reentryCode} | mano de obra: Revisi\xF3n por garant\xEDa, 1, 0` };
       }
       /** Aviso al dueño del taller y a sus administradores activos. */
-      async notifyShopTeam(conn, shopUserId, shopId, dedup, message2) {
-        const admins = await rows29(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND status = 'active' AND role = 'admin' AND userId IS NOT NULL", [shopId]);
+      async notifyShopTeam(conn, shopUserId, shopId, dedup, message2, kind = "care.warranty") {
+        const admins = await rows30(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND status = 'active' AND role = 'admin' AND userId IS NOT NULL", [shopId]);
         for (const recipient of /* @__PURE__ */ new Set([shopUserId, ...admins.map((a) => String(a.userId))]))
-          await this.notify(conn, recipient, `${dedup.slice(0, 150)}:${recipient}`, "care.warranty", message2);
+          await this.notify(conn, recipient, `${dedup.slice(0, 150)}:${recipient}`, kind, message2);
       }
       // ---------- workshop owner or technician ----------
       /**
@@ -98479,8 +98639,8 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
       async actingShop(conn, userId, role, opts = {}) {
         if (role !== "taller")
           fail14("FORBIDDEN");
-        const [own2] = await rows29(conn, "SELECT id, name, userId FROM `Shop` WHERE userId = ? LIMIT 1", [userId]);
-        const [member] = own2 ? [] : await rows29(conn, "SELECT s.id, s.name, s.userId, m.name AS memberName, m.role FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.userId = ? AND m.status = 'active' LIMIT 1", [userId]);
+        const [own2] = await rows30(conn, "SELECT id, name, userId FROM `Shop` WHERE userId = ? LIMIT 1", [userId]);
+        const [member] = own2 ? [] : await rows30(conn, "SELECT s.id, s.name, s.userId, m.name AS memberName, m.role FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.userId = ? AND m.status = 'active' LIMIT 1", [userId]);
         if (!own2 && !member)
           fail14("FORBIDDEN");
         const shopId = String((own2 ?? member).id);
@@ -98495,21 +98655,21 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
       async ensureOrderRoom(conn, shop, clientId) {
         const limits = await shopLimits(conn, shop.ownerUserId);
         if (limits?.clients != null && clientId) {
-          const [known] = await rows29(conn, "SELECT 1 AS x FROM `WorkOrder` WHERE shopId = ? AND ownerId = ? LIMIT 1", [shop.id, clientId]);
+          const [known] = await rows30(conn, "SELECT 1 AS x FROM `WorkOrder` WHERE shopId = ? AND ownerId = ? LIMIT 1", [shop.id, clientId]);
           if (!known) {
-            const [served] = await rows29(conn, "SELECT COUNT(DISTINCT ownerId) AS n FROM `WorkOrder` WHERE shopId = ?", [shop.id]);
+            const [served] = await rows30(conn, "SELECT COUNT(DISTINCT ownerId) AS n FROM `WorkOrder` WHERE shopId = ?", [shop.id]);
             if (Number(served?.n ?? 0) >= limits.clients)
               fail14("TRIAL_CLIENT_LIMIT");
           }
         }
         if (limits?.workOrdersPerMonth == null)
           return;
-        const [used] = await rows29(conn, "SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND createdAt >= DATE_FORMAT(UTC_TIMESTAMP(3), '%Y-%m-01')", [shop.id]);
+        const [used] = await rows30(conn, "SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND createdAt >= DATE_FORMAT(UTC_TIMESTAMP(3), '%Y-%m-01')", [shop.id]);
         if (Number(used?.n ?? 0) >= limits.workOrdersPerMonth)
           fail14("WORK_ORDER_LIMIT");
       }
       async shopVehicle(conn, shopId, ref4) {
-        const [found] = await rows29(conn, "SELECT a.id AS appointmentId, a.ownerId, a.scheduledAt AS appointmentAt, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND REPLACE(a.id, '-', '') LIKE ? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) LIMIT 2", [shopId, prefixOf2(ref4)]);
+        const [found] = await rows30(conn, "SELECT a.id AS appointmentId, a.ownerId, a.scheduledAt AS appointmentAt, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND REPLACE(a.id, '-', '') LIKE ? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) LIMIT 2", [shopId, prefixOf3(ref4)]);
         if (!found)
           fail14("NOT_FOUND");
         return found;
@@ -98526,18 +98686,18 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
           return { userId, message: text14 ?? `${label5}: todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo.` };
         }
         if (command.action === "checkIn") {
-          const [existing] = await rows29(conn, "SELECT number FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY number LIMIT 1 FOR UPDATE", [vehicle.appointmentId]);
+          const [existing] = await rows30(conn, "SELECT number FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY number LIMIT 1 FOR UPDATE", [vehicle.appointmentId]);
           if (existing) {
             const code6 = workOrderCode(Number(existing.number));
             return { userId, message: `Esta cita ya tiene la orden ${code6}; no abrimos otra. Para enviar el presupuesto: Presupuesto ${code6} | repuesto: descripci\xF3n, marca, cantidad, precio unitario, calidad; mano de obra: descripci\xF3n, cantidad, precio` };
           }
           if (command.km < Number(vehicle.currentKm))
             fail14("KM_LOWER_THAN_CURRENT");
-          if ((await rows29(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' LIMIT 1 FOR UPDATE", [vehicle.appointmentId])).length)
+          if ((await rows30(conn, "SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' LIMIT 1 FOR UPDATE", [vehicle.appointmentId])).length)
             fail14("CHECKIN_EXISTS");
           await this.ensureOrderRoom(conn, shop, owner);
-          const next = Number((await rows29(conn, "SELECT COALESCE(MAX(number), 0) + 1 AS next FROM `WorkOrder` FOR UPDATE"))[0]?.next ?? 1);
-          const id3 = randomUUID27();
+          const next = Number((await rows30(conn, "SELECT COALESCE(MAX(number), 0) + 1 AS next FROM `WorkOrder` FOR UPDATE"))[0]?.next ?? 1);
+          const id3 = randomUUID28();
           const notes = [`Combustible: ${command.fuel}`, `Estado y da\xF1os: ${command.condition}`, `Inventario: ${command.inventory}`, `Servicios solicitados: ${command.requested}`, `Registrado por: ${shop.actor}`].join("\n");
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, Number(next), shop.id, owner, vehicle.id, vehicle.appointmentId, command.km, notes]);
           await conn.query("UPDATE `Vehicle` SET currentKm = GREATEST(currentKm, ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [command.km, vehicle.id]);
@@ -98567,10 +98727,10 @@ Responde: Confirmo ingreso ${code5} \xB7 Observo ingreso ${code5} | qu\xE9 no co
           const others = [...new Set(command.services.filter((s) => !matchService(s)).map((s) => s.trim()))];
           if (command.km < Number(vehicle.currentKm) - 100)
             fail14("KM_LOWER_THAN_CURRENT");
-          const recent = new Set((await rows29(conn, "SELECT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY)", [vehicle.id, shop.id])).map((r) => String(r.serviceId)));
+          const recent = new Set((await rows30(conn, "SELECT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY)", [vehicle.id, shop.id])).map((r) => String(r.serviceId)));
           for (const serviceId of new Set(ids))
             if (!recent.has(serviceId))
-              await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID27(), vehicle.id, serviceId, command.km, shop.id, userId]);
+              await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID28(), vehicle.id, serviceId, command.km, shop.id, userId]);
           const names = [...[...new Set(ids)].map(serviceName2), ...others];
           await conn.query("INSERT INTO `Service` (id, vehicleId, shopId, appointmentId, description, cost, status, createdAt) VALUES (UUID(), ?, ?, ?, ?, NULL, 'done', CURRENT_TIMESTAMP(3))", [vehicle.id, shop.id, vehicle.appointmentId, `${names.join(", ")}${command.detail ? `. ${command.detail}` : ""} (registrado por ${shop.actor})`]);
           await conn.query("UPDATE `Vehicle` SET currentKm = GREATEST(currentKm, ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [command.km, vehicle.id]);
@@ -98588,7 +98748,7 @@ ${summary ?? ""}`.trim());
           if (!at || at.getTime() <= Date.now() || at.getTime() > Date.now() + 365 * 864e5)
             fail14("INVALID_PROPOSED_DATE");
           await ensureShopSlot(conn, shop.id, at, 60);
-          const id3 = randomUUID27();
+          const id3 = randomUUID28();
           await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, createdAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, UTC_TIMESTAMP(3))", [id3, owner, vehicle.id, shop.id, at, `Visita propuesta por el taller (${shop.actor})`]);
           const code5 = short4("C", id3);
           await this.notifyOwner(conn, owner, String(vehicle.id), `nextvisit:${id3}`, "care.visit", `\u{1F4C5} ${shop.name} te propone la pr\xF3xima visita para tu ${label5}: ${formatEcDateTime(at)}. Responde: Aceptar visita ${code5} \xB7 Rechazar visita ${code5}`);
@@ -98599,7 +98759,7 @@ ${summary ?? ""}`.trim());
         return { userId, message: `Alerta creada para el ${label5}. El due\xF1o y tu taller la recibir\xE1n por WhatsApp cuando llegue el momento.` };
       }
       async budget(conn, userId, shop, command) {
-        const [order] = await rows29(conn, "SELECT w.id, w.status, w.ownerId, w.vehicleId, v.make, v.model, v.year, v.fleetId FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.number = ? AND w.shopId = ? FOR UPDATE", [command.orderNumber, shop.id]);
+        const [order] = await rows30(conn, "SELECT w.id, w.status, w.ownerId, w.vehicleId, v.make, v.model, v.year, v.fleetId FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.number = ? AND w.shopId = ? FOR UPDATE", [command.orderNumber, shop.id]);
         if (!order)
           fail14("NOT_FOUND");
         if (!["recepcion", "rechazado"].includes(String(order.status)))
@@ -98611,7 +98771,7 @@ ${summary ?? ""}`.trim());
         for (const [index, l] of command.lines.entries()) {
           const subtotal = Math.round(l.quantity * l.unitPrice * 100) / 100;
           total += subtotal;
-          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP(3), INTERVAL ? MICROSECOND))", [randomUUID27(), order.id, l.kind, l.description, l.brand, l.quality, l.quantity, l.unitPrice, index * 1e3]);
+          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP(3), INTERVAL ? MICROSECOND))", [randomUUID28(), order.id, l.kind, l.description, l.brand, l.quality, l.quantity, l.unitPrice, index * 1e3]);
           lines.push(`${index + 1}. ${l.kind === "mano_obra" ? "Mano de obra: " : "Repuesto: "}${l.description}${l.brand ? ` (${l.brand})` : ""}${l.quality && l.quality !== "nuevo" ? ` \xB7 ${l.quality.toUpperCase()}` : ""} \u2014 ${l.quantity} \xD7 ${formatUsd(l.unitPrice)} = ${formatUsd(subtotal)}`);
         }
         const restored = await restorePartLines(conn, String(order.id), keptParts, command.lines.length);
@@ -98625,12 +98785,12 @@ ${summary ?? ""}`.trim());
           fail14("WARRANTY_NO_CHARGE");
         const code5 = workOrderCode(command.orderNumber);
         if (order.fleetId) {
-          const [auto] = await rows29(conn, "SELECT f.autoApproveUsd FROM `Fleet` f JOIN `FleetShop` fs ON fs.fleetId = f.id WHERE f.id = ? AND f.status = 'activa' AND fs.shopId = ? AND fs.status = 'activo' AND f.autoApproveUsd IS NOT NULL AND f.autoApproveUsd > 0", [order.fleetId, shop.id]);
+          const [auto] = await rows30(conn, "SELECT f.autoApproveUsd FROM `Fleet` f JOIN `FleetShop` fs ON fs.fleetId = f.id WHERE f.id = ? AND f.status = 'activa' AND fs.shopId = ? AND fs.status = 'activo' AND f.autoApproveUsd IS NOT NULL AND f.autoApproveUsd > 0", [order.fleetId, shop.id]);
           if (auto && total <= Number(auto.autoApproveUsd)) {
             await conn.query("UPDATE `WorkOrder` SET status = 'aprobado', total = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [total, order.id]);
             await setOrderVat(conn, String(order.id), vat);
             await this.audit(conn, userId, "care.budget.sent", "WorkOrder", String(order.id), { total, by: shop.actor });
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', NULL, NULL, 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), order.id, JSON.stringify({ status: "aprobado", channel: "auto", limitUsd: Number(auto.autoApproveUsd) }), `Aprobado autom\xE1ticamente por la flota (hasta ${formatUsd(Number(auto.autoApproveUsd))})`]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'workorder.budget.decided', NULL, NULL, 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), order.id, JSON.stringify({ status: "aprobado", channel: "auto", limitUsd: Number(auto.autoApproveUsd) }), `Aprobado autom\xE1ticamente por la flota (hasta ${formatUsd(Number(auto.autoApproveUsd))})`]);
             await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `budgetsent:${String(order.id)}:${total}`, "care.budget", `\u{1F9FE} Presupuesto ${code5} \u2014 ${shop.name}
 \u{1F697} ${order.make} ${order.model} ${order.year}
 ${lines.join("\n")}
@@ -98643,7 +98803,7 @@ ${breakdown}Total: ${formatUsd(total)}
         await setOrderVat(conn, String(order.id), vat);
         await this.audit(conn, userId, "care.budget.sent", "WorkOrder", String(order.id), { total, by: shop.actor });
         const notNew = command.lines.some((l) => l.kind === "repuesto" && l.quality && !["nuevo", "original"].includes(l.quality));
-        const [sent] = await rows29(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'care.budget.sent'", [order.id]);
+        const [sent] = await rows30(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'care.budget.sent'", [order.id]);
         await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `budgetsent:${String(order.id)}:${total}:${Number(sent?.n ?? 1)}`, "care.budget", `\u{1F9FE} Presupuesto ${code5} \u2014 ${shop.name}
 \u{1F697} ${order.make} ${order.model} ${order.year}
 ${lines.join("\n")}
@@ -98659,7 +98819,7 @@ El taller no har\xE1 ning\xFAn trabajo con costo sin tu aprobaci\xF3n.`);
         return { subtotal, text: `\u2022 ${l.kind === "mano_obra" ? "Mano de obra: " : "Repuesto: "}${l.description}${l.brand ? ` (${l.brand})` : ""}${l.quality && l.quality !== "nuevo" ? ` \xB7 ${l.quality.toUpperCase()}` : ""} \u2014 ${l.quantity} \xD7 ${formatUsd(l.unitPrice)} = ${formatUsd(subtotal)}` };
       }
       async openOrder(conn, number2, where) {
-        const [order] = await rows29(conn, `SELECT w.*, v.make, v.model, v.year, v.currentKm, v.fleetId, s.name AS shopName, s.userId AS shopUserId FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId JOIN \`Shop\` s ON s.id = w.shopId WHERE w.number = ? AND ${where.shopId ? "w.shopId = ?" : where.scope.where("w")} FOR UPDATE`, where.shopId ? [number2, where.shopId] : [number2, ...where.scope.args]);
+        const [order] = await rows30(conn, `SELECT w.*, v.make, v.model, v.year, v.currentKm, v.fleetId, s.name AS shopName, s.userId AS shopUserId FROM \`WorkOrder\` w JOIN \`Vehicle\` v ON v.id = w.vehicleId JOIN \`Shop\` s ON s.id = w.shopId WHERE w.number = ? AND ${where.shopId ? "w.shopId = ?" : where.scope.where("w")} FOR UPDATE`, where.shopId ? [number2, where.shopId] : [number2, ...where.scope.args]);
         if (!order)
           fail14("NOT_FOUND");
         return order;
@@ -98668,13 +98828,13 @@ El taller no har\xE1 ning\xFAn trabajo con costo sin tu aprobaci\xF3n.`);
         const order = await this.openOrder(conn, command.orderNumber, { shopId: shop.id });
         if (!["aprobado", "en_ejecucion", "esperando_repuesto"].includes(String(order.status)))
           fail14("ORDER_NOT_IN_PROGRESS");
-        const pending = await rows29(conn, "SELECT id FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = ? AND status = 'pending'", [order.id, command.action === "finding" ? "novedad" : "entrega"]);
+        const pending = await rows30(conn, "SELECT id FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = ? AND status = 'pending'", [order.id, command.action === "finding" ? "novedad" : "entrega"]);
         const code5 = workOrderCode(command.orderNumber);
         const label5 = `${order.make} ${order.model} ${order.year}`;
         if (command.action === "delivery") {
           if (pending.length)
             fail14("DELIVERY_PENDING");
-          const waiting = await rows29(conn, "SELECT id FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'novedad' AND status = 'pending'", [order.id]);
+          const waiting = await rows30(conn, "SELECT id FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'novedad' AND status = 'pending'", [order.id]);
           if (waiting.length)
             fail14("FINDING_PENDING");
           if (command.exitKm < Number(order.intakeKm ?? 0))
@@ -98683,8 +98843,8 @@ El taller no har\xE1 ning\xFAn trabajo con costo sin tu aprobaci\xF3n.`);
             await conn.query("UPDATE `WorkOrder` SET status = 'en_ejecucion', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [order.id]);
             await this.audit(conn, userId, "care.order.stage", "WorkOrder", String(order.id), { from: "aprobado", to: "en_ejecucion", by: shop.actor, auto: true });
           }
-          const items = await rows29(conn, "SELECT kind, description, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [order.id]);
-          const id4 = randomUUID27();
+          const items = await rows30(conn, "SELECT kind, description, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [order.id]);
+          const id4 = randomUUID28();
           await conn.query("INSERT INTO `WorkOrderChange` (id, workOrderId, kind, description, payload, total, createdBy) VALUES (?, ?, 'entrega', ?, ?, ?, ?)", [id4, order.id, command.workDone, JSON.stringify({ exitKm: command.exitKm, warrantyDays: command.warrantyDays }), order.total, userId]);
           await this.audit(conn, userId, "care.delivery.sent", "WorkOrder", String(order.id), { by: shop.actor });
           await this.notifyDriver(conn, String(order.vehicleId), `delivery-driver:${id4}`, `\u{1F697} ${order.make} ${order.model} ${order.year} est\xE1 listo en ${shop.name} (${workOrderCode(command.orderNumber)}). Coordina el retiro con tu flota.`);
@@ -98702,7 +98862,7 @@ Revisa el veh\xEDculo al recibirlo y responde: Acepto entrega ${code5} \xB7 Rech
         const net = Math.round(lines.reduce((a, l) => a + l.subtotal, 0) * 100) / 100;
         const vat = vatOf(net, await businessVatRate(conn, "Shop", shop.id));
         const total = Math.round((net + vat) * 100) / 100;
-        const id3 = randomUUID27();
+        const id3 = randomUUID28();
         const ref4 = short4("N", id3);
         await conn.query("INSERT INTO `WorkOrderChange` (id, workOrderId, kind, description, payload, total, createdBy) VALUES (?, ?, 'novedad', ?, ?, ?, ?)", [id3, order.id, command.description, JSON.stringify({ lines: command.lines, ...vat > 0 ? { vatUsd: vat } : {} }), total, userId]);
         await this.audit(conn, userId, "care.finding.sent", "WorkOrder", String(order.id), { change: id3, total, by: shop.actor });
@@ -98719,7 +98879,7 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [change] = await rows29(conn, "SELECT c.id, c.workOrderId, c.description, c.payload, c.total, w.number, w.ownerId, w.vehicleId, w.shopId, w.total AS orderTotal, w.status AS orderStatus, s.userId AS shopUserId FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND " + scope.where("w") + " AND REPLACE(c.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [...scope.args, prefixOf2(ref4)]);
+        const [change] = await rows30(conn, "SELECT c.id, c.workOrderId, c.description, c.payload, c.total, w.number, w.ownerId, w.vehicleId, w.shopId, w.total AS orderTotal, w.status AS orderStatus, s.userId AS shopUserId FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND " + scope.where("w") + " AND REPLACE(c.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [...scope.args, prefixOf3(ref4)]);
         if (!change)
           fail14("NOT_FOUND");
         checkLimit(scope, String(change.ownerId), Number(change.orderTotal) + Number(change.total));
@@ -98729,11 +98889,11 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         if (approve) {
           const payload = typeof change.payload === "string" ? JSON.parse(String(change.payload)) : change.payload;
           for (const l of payload.lines)
-            await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID27(), change.workOrderId, l.kind, `Adicional: ${String(l.description)}`, l.brand ?? null, l.quality ?? null, l.quantity, l.unitPrice]);
+            await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID28(), change.workOrderId, l.kind, `Adicional: ${String(l.description)}`, l.brand ?? null, l.quality ?? null, l.quantity, l.unitPrice]);
           await conn.query("UPDATE `WorkOrder` SET total = total + ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [change.total, change.workOrderId]);
           await addOrderVat(conn, String(change.workOrderId), Number(payload.vatUsd ?? 0));
         }
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.finding.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, change.workOrderId, JSON.stringify({ change: change.id, approved: approve }), reason]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.finding.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, change.workOrderId, JSON.stringify({ change: change.id, approved: approve }), reason]);
         const code5 = workOrderCode(Number(change.number));
         const deferred = approve ? 0 : await addDeferredWork(conn, { vehicleId: String(change.vehicleId), shopId: String(change.shopId), createdBy: userId, code: code5, items: [String(change.description)] });
         await this.notify(conn, String(change.shopUserId), `findingdecision:${String(change.id)}`, "care.finding", approve ? `\u2705 El cliente aprob\xF3 la novedad ${ref4} de ${code5} por ${formatUsd(Number(change.total))}. Puedes ejecutarla.` : `\u274C El cliente no aprob\xF3 la novedad ${ref4} de ${code5}: ${reason}. No la ejecutes.`);
@@ -98744,14 +98904,14 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const order = await this.openOrder(conn, number2, { scope: await decisionScope(conn, userId) });
-        const [change] = await rows29(conn, "SELECT id, description, payload FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status = 'pending' FOR UPDATE", [order.id]);
+        const [change] = await rows30(conn, "SELECT id, description, payload FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status = 'pending' FOR UPDATE", [order.id]);
         if (!change)
           fail14("NOT_FOUND");
         if (!accept && !reason)
           fail14("REASON_REQUIRED");
         const code5 = workOrderCode(number2);
         await conn.query("UPDATE `WorkOrderChange` SET status = ?, decidedBy = ?, reason = ?, decidedAt = UTC_TIMESTAMP(3) WHERE id = ?", [accept ? "approved" : "rejected", userId, reason, change.id]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.delivery.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ accepted: accept }), reason]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.delivery.decided', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, order.id, JSON.stringify({ accepted: accept }), reason]);
         if (!accept) {
           const claim2 = await this.openDeliveryClaim(conn, userId, order, "rechazo", reason);
           await this.notify(conn, String(order.shopUserId), `deliverydecision:${String(change.id)}`, "care.delivery", `\u274C El cliente no acept\xF3 la entrega de ${code5}: ${reason}. La orden sigue abierta.${claim2?.state === "opened" ? ` Se abri\xF3 un reclamo: tienes 48 horas (hasta el ${ecWhen(claim2.dueAt)}) para responder. Escribe: Responder reclamo ${code5} | respuesta` : ""}`);
@@ -98765,26 +98925,26 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         await logOdometer(conn, String(order.vehicleId), payload.exitKm, "entrega", userId);
         await conn.query("UPDATE `VehicleSymptom` SET resolvedAt = UTC_TIMESTAMP(3) WHERE vehicleId = ? AND resolvedAt IS NULL", [order.vehicleId]);
         if (Number(order.total) > 0)
-          await conn.query("INSERT INTO `VehicleExpense` (id, vehicleId, fleetId, kind, amountUsd, description, source, refId, createdBy, spentAt) VALUES (?, ?, ?, 'mantenimiento', ?, ?, 'orden', ?, ?, UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE amountUsd = VALUES(amountUsd)", [randomUUID27(), order.vehicleId, order.fleetId, order.total, `${code5} \xB7 ${String(order.shopName)}`.slice(0, 191), order.id, userId]);
-        const items = await rows29(conn, "SELECT description FROM `WorkOrderItem` WHERE workOrderId = ?", [order.id]);
+          await conn.query("INSERT INTO `VehicleExpense` (id, vehicleId, fleetId, kind, amountUsd, description, source, refId, createdBy, spentAt) VALUES (?, ?, ?, 'mantenimiento', ?, ?, 'orden', ?, ?, UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE amountUsd = VALUES(amountUsd)", [randomUUID28(), order.vehicleId, order.fleetId, order.total, `${code5} \xB7 ${String(order.shopName)}`.slice(0, 191), order.id, userId]);
+        const items = await rows30(conn, "SELECT description FROM `WorkOrderItem` WHERE workOrderId = ?", [order.id]);
         const serviceIds2 = new Set([String(change.description), ...items.map((i) => String(i.description).replace(/^Adicional: /, ""))].flatMap((t) => t.split(/[,;]/)).map((t) => matchService(t.trim())).filter((x) => !!x));
-        const already = new Set((await rows29(conn, "SELECT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND createdAt >= ?", [order.vehicleId, order.shopId, order.createdAt])).map((r) => String(r.serviceId)));
+        const already = new Set((await rows30(conn, "SELECT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND shopId = ? AND createdAt >= ?", [order.vehicleId, order.shopId, order.createdAt])).map((r) => String(r.serviceId)));
         for (const serviceId of serviceIds2)
           if (!already.has(serviceId))
-            await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID27(), order.vehicleId, serviceId, payload.exitKm, order.shopId, userId]);
+            await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ?)", [randomUUID28(), order.vehicleId, serviceId, payload.exitKm, order.shopId, userId]);
         if (order.appointmentId)
           await conn.query("UPDATE `Appointment` SET status = 'completed', updatedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status IN ('pending','confirmed')", [order.appointmentId]);
         const partsClosed = await closeOrderPartRequests(conn, String(order.id), code5);
         const review = await this.pendingReviewNote(conn, String(order.vehicleId));
         await this.notify(conn, String(order.shopUserId), `deliverydecision:${String(change.id)}`, "care.delivery", [`\u2705 El cliente acept\xF3 la entrega de ${code5} por ${formatUsd(Number(order.total))}. La orden qued\xF3 cerrada.${partsClosed.length ? ` Cancelamos ${partsClosed.length === 1 ? "el pedido de repuesto" : "los pedidos de repuesto"} ${partsClosed.join(", ")} que segu\xEDa${partsClosed.length === 1 ? "" : "n"} esperando ofertas.` : ""}`, review].filter(Boolean).join("\n\n"));
         await this.notifyFleetTeam(conn, String(order.vehicleId), userId, `delivery-team:${String(change.id)}`, "care.delivery", `acept\xF3 la entrega de ${code5} por ${formatUsd(Number(order.total))}. La orden qued\xF3 cerrada.`);
-        const [vehicle] = await rows29(conn, "SELECT * FROM `Vehicle` WHERE id = ?", [order.vehicleId]);
+        const [vehicle] = await rows30(conn, "SELECT * FROM `Vehicle` WHERE id = ?", [order.vehicleId]);
         const summary = vehicle ? await this.ownerSummary(conn, vehicle) : null;
         let claim = null;
         if (reason) {
           claim = await this.openDeliveryClaim(conn, userId, order, "observacion", reason);
           await this.notify(conn, String(order.shopUserId), `deliveryclaim:${String(change.id)}`, "care.claim", claim?.state === "opened" ? `\u{1F4DD} El cliente recibi\xF3 ${code5} con una observaci\xF3n: ${reason}. Se abri\xF3 un reclamo: tienes 48 horas (hasta el ${ecWhen(claim.dueAt)}) para responder. Escribe: Responder reclamo ${code5} | respuesta. Si no respondes, decide el equipo de AutoMantPro.` : `\u{1F4DD} El cliente recibi\xF3 ${code5} con una observaci\xF3n: ${reason}. Queda registrada como reclamo; el equipo de AutoMantPro le dar\xE1 seguimiento.`);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.claim.opened', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ source: "delivery" }), reason]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.claim.opened', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, order.id, JSON.stringify({ source: "delivery" }), reason]);
         }
         if (!reason)
           await settleClaimOnAcceptance(conn, String(order.id));
@@ -98797,7 +98957,7 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
       async openDeliveryClaim(conn, userId, order, source, reason) {
         const claim = await openClaim(conn, { workOrderId: String(order.id), ownerUserId: userId, source, reason });
         if (claim?.state === "opened" && source === "rechazo")
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.claim.opened', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, order.id, JSON.stringify({ source: "delivery-rejected", claim: claim.id }), reason]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.claim.opened', ?, 'dueno', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, order.id, JSON.stringify({ source: "delivery-rejected", claim: claim.id }), reason]);
         return claim;
       }
       /** The owner asks the workshop to call before deciding on a finding; the work still waits. */
@@ -98805,10 +98965,10 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         if (role !== "dueno")
           fail14("FORBIDDEN");
         const scope = await decisionScope(conn, userId);
-        const [change] = await rows29(conn, "SELECT c.id, w.number, s.userId AS shopUserId FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND " + scope.where("w") + " AND REPLACE(c.id, '-', '') LIKE ? LIMIT 1", [...scope.args, prefixOf2(ref4)]);
+        const [change] = await rows30(conn, "SELECT c.id, w.number, s.userId AS shopUserId FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND " + scope.where("w") + " AND REPLACE(c.id, '-', '') LIKE ? LIMIT 1", [...scope.args, prefixOf3(ref4)]);
         if (!change)
           fail14("NOT_FOUND");
-        const [owner] = await rows29(conn, "SELECT name, phone FROM `User` WHERE id = ?", [userId]);
+        const [owner] = await rows30(conn, "SELECT name, phone FROM `User` WHERE id = ?", [userId]);
         await this.notify(conn, String(change.shopUserId), `findingcall:${String(change.id)}`, "care.finding", `\u{1F4DE} El cliente pide que lo llames antes de decidir la novedad ${ref4} de ${workOrderCode(Number(change.number))}: ${String(owner?.name ?? "").split(/\s+/)[0]}, ${String(owner?.phone ?? "")}. No ejecutes ese trabajo hasta que la apruebe.`);
         return { userId, message: `Le pedimos al taller que te llame por la novedad ${ref4}. Ese trabajo no se har\xE1 hasta que lo apruebes.` };
       }
@@ -98824,7 +98984,7 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
           fail14("FORBIDDEN");
         if (command.action === "rateShop") {
           const scope = await decisionScope(conn, userId);
-          const [order] = await rows29(conn, "SELECT w.id, s.userId AS shopUserId, s.name FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " AND w.status = 'cerrada' FOR UPDATE", [command.orderNumber, ...scope.args]);
+          const [order] = await rows30(conn, "SELECT w.id, s.userId AS shopUserId, s.name FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND " + scope.where("w") + " AND w.status = 'cerrada' FOR UPDATE", [command.orderNumber, ...scope.args]);
           if (!order)
             fail14("NOT_FOUND");
           if (await isWarrantyReentry(conn, String(order.id)))
@@ -98834,10 +98994,10 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
           kind = "taller";
           name = String(order.name);
           details = { calidad: command.quality, atencion: command.service, plazo: command.timeliness, costo: command.price };
-          if ((await rows29(conn, "SELECT id FROM `Rating` WHERE workOrderId = ?", [workOrderId])).length)
+          if ((await rows30(conn, "SELECT id FROM `Rating` WHERE workOrderId = ?", [workOrderId])).length)
             fail14("ALREADY_RATED");
         } else {
-          const [request] = await rows29(conn, "SELECT r.id, r.status, o.businessUserId, o.businessName, o.stockStatus FROM `LocalRequest` r JOIN `LocalOffer` o ON o.id = r.chosenOfferId WHERE r.kind = 'repuesto' AND r.status IN ('accepted','delivered') AND r.ownerId = ? AND REPLACE(r.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [userId, prefixOf2(command.requestRef)]);
+          const [request] = await rows30(conn, "SELECT r.id, r.status, o.businessUserId, o.businessName, o.stockStatus FROM `LocalRequest` r JOIN `LocalOffer` o ON o.id = r.chosenOfferId WHERE r.kind = 'repuesto' AND r.status IN ('accepted','delivered') AND r.ownerId = ? AND REPLACE(r.id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [userId, prefixOf3(command.requestRef)]);
           if (!request)
             fail14("NOT_FOUND");
           if (request.stockStatus !== "confirmed")
@@ -98849,17 +99009,17 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
           kind = "almacen";
           name = String(request.businessName);
           details = { piezaCorrecta: command.rightPart, calidad: command.quality, plazo: command.timeliness, precio: command.price, atencion: command.service };
-          if ((await rows29(conn, "SELECT id FROM `Rating` WHERE localRequestId = ? AND fromId = ?", [localRequestId, userId])).length)
+          if ((await rows30(conn, "SELECT id FROM `Rating` WHERE localRequestId = ? AND fromId = ?", [localRequestId, userId])).length)
             fail14("ALREADY_RATED");
         }
         const values2 = Object.values(details).filter((v) => typeof v === "number");
         const overall = Math.max(1, Math.min(5, Math.round(values2.reduce((a, b) => a + b, 0) / values2.length - (details.piezaCorrecta === false ? 1 : 0))));
-        await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, details, localRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID27(), userId, toId, overall, command.comment || null, kind, workOrderId, JSON.stringify(details), localRequestId]);
+        await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, details, localRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID28(), userId, toId, overall, command.comment || null, kind, workOrderId, JSON.stringify(details), localRequestId]);
         for (const table2 of ["Shop", "Store"])
           await conn.query(`UPDATE \`${table2}\` t SET t.ratingAvg = COALESCE((SELECT ROUND(AVG(r.score), 1) FROM \`Rating\` r WHERE r.toId = ? AND r.hiddenAt IS NULL), 0), t.ratingCount = (SELECT COUNT(*) FROM \`Rating\` r WHERE r.toId = ? AND r.hiddenAt IS NULL) WHERE t.userId = ?`, [toId, toId, toId]);
         await this.notify(conn, toId, `rated:${workOrderId ?? localRequestId}:${userId}`, "care.rating", `\u2B50 Recibiste una calificaci\xF3n de ${overall}/5 de un cliente${command.comment ? `: "${command.comment}"` : ""}. Consulta tu reporte con: Mi calificaci\xF3n`);
         if (overall <= 2)
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.rating.low', ?, 'dueno', 'Rating', ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), userId, workOrderId ?? localRequestId, JSON.stringify({ overall, kind })]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'care.rating.low', ?, 'dueno', 'Rating', ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), userId, workOrderId ?? localRequestId, JSON.stringify({ overall, kind })]);
         return { userId, message: overall <= 2 ? `Gracias por dec\xEDrnoslo (${overall}/5). Una persona del equipo revisar\xE1 el caso con ${name} y te escribir\xE1.` : `\xA1Gracias! Calificaste a ${name} con ${overall}/5. Tu opini\xF3n ayuda a otros a elegir.` };
       }
       /** Satisfaction report for the workshop or store owner: averages by dimension and recent comments. */
@@ -98873,7 +99033,7 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
             fail14("FORBIDDEN");
           target = shop.ownerUserId;
         }
-        const list7 = await rows29(conn, "SELECT score, comment, details FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL ORDER BY createdAt DESC LIMIT 200", [target]);
+        const list7 = await rows30(conn, "SELECT score, comment, details FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL ORDER BY createdAt DESC LIMIT 200", [target]);
         if (!list7.length)
           return { userId, message: "Todav\xEDa no tienes calificaciones. Llegan cuando un cliente acepta la entrega o recibe su repuesto." };
         const avg = (xs) => xs.length ? Math.round(xs.reduce((a, b) => a + b, 0) / xs.length * 10) / 10 : null;
@@ -98893,7 +99053,7 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         if (command.action === "shopTeam") {
           if (!shop.isOwner && !shop.isAdmin)
             fail14("FORBIDDEN");
-          const team = await rows29(conn, "SELECT id, name, role, status FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' ORDER BY status, name LIMIT 30", [shop.id]);
+          const team = await rows30(conn, "SELECT id, name, role, status FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' ORDER BY status, name LIMIT 30", [shop.id]);
           if (!team.length)
             return { userId, message: `${shop.name} todav\xEDa no tiene t\xE9cnicos. Para invitar: Agregar t\xE9cnico | nombre \xB7 Agregar administrador | nombre` };
           const lines = team.map((m) => {
@@ -98909,7 +99069,7 @@ Para quitar a alguien: Quitar t\xE9cnico T-XXXXXX` };
         if (!shop.isOwner && command.action === "addTechnician" && command.role === "admin")
           fail14("FORBIDDEN");
         if (command.action === "removeTechnician") {
-          const [member] = await rows29(conn, "SELECT id, name, userId, role FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' AND REPLACE(id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf2(command.memberRef)]);
+          const [member] = await rows30(conn, "SELECT id, name, userId, role FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' AND REPLACE(id, '-', '') LIKE ? LIMIT 1 FOR UPDATE", [shop.id, prefixOf3(command.memberRef)]);
           if (!member)
             fail14("NOT_FOUND");
           if (!shop.isOwner && member.role === "admin")
@@ -98920,16 +99080,16 @@ Para quitar a alguien: Quitar t\xE9cnico T-XXXXXX` };
             await this.notify(conn, String(member.userId), `techremoved:${String(member.id)}`, "care.technician", `${shop.name} te quit\xF3 de su equipo: ya no puedes registrar trabajos ni ver los veh\xEDculos de ese taller.`);
           return { userId, message: `${member.name} ya no puede registrar trabajos de ${shop.name}.` };
         }
-        const count3 = await rows29(conn, "SELECT COUNT(*) AS n FROM `ShopMember` WHERE shopId = ? AND status <> 'removed'", [shop.id]);
+        const count3 = await rows30(conn, "SELECT COUNT(*) AS n FROM `ShopMember` WHERE shopId = ? AND status <> 'removed'", [shop.id]);
         if (Number(count3[0]?.n) >= 20)
           fail14("TECHNICIAN_LIMIT");
         if (command.role !== "admin") {
           const limits = await shopLimits(conn, shop.ownerUserId);
-          const [techs] = limits?.technicians == null ? [] : await rows29(conn, "SELECT COUNT(*) AS n FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' AND role <> 'admin'", [shop.id]);
+          const [techs] = limits?.technicians == null ? [] : await rows30(conn, "SELECT COUNT(*) AS n FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' AND role <> 'admin'", [shop.id]);
           if (limits?.technicians != null && Number(techs?.n ?? 0) >= limits.technicians)
             fail14("TECHNICIAN_LIMIT");
         }
-        const id3 = randomUUID27();
+        const id3 = randomUUID28();
         const code5 = short4("T", id3);
         await conn.query("INSERT INTO `ShopMember` (id, shopId, name, status, invitedBy, role) VALUES (?, ?, ?, 'invited', ?, ?)", [id3, shop.id, command.name, userId, command.role]);
         await this.audit(conn, userId, "care.technician.invited", "ShopMember", id3, { shopId: shop.id, by: shop.isOwner ? "dueno" : "admin" });
@@ -98941,22 +99101,22 @@ Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Para quitarlo desp
       }
       async referral(conn, userId, role, ref4) {
         const businessTable = role === "taller" ? "Shop" : role === "almacen" ? "Store" : fail14("FORBIDDEN");
-        const [business] = await rows29(conn, `SELECT id, name FROM \`${businessTable}\` WHERE userId = ? LIMIT 1`, [userId]);
+        const [business] = await rows30(conn, `SELECT id, name FROM \`${businessTable}\` WHERE userId = ? LIMIT 1`, [userId]);
         if (!business)
           fail14("FORBIDDEN");
-        const [request] = await rows29(conn, "SELECT id, vehicleId, kind, category, zone, city, description FROM `LocalRequest` WHERE status = 'open' AND expiresAt > UTC_TIMESTAMP(3) AND REPLACE(id, '-', '') LIKE ? LIMIT 2 FOR UPDATE", [prefixOf2(ref4)]);
+        const [request] = await rows30(conn, "SELECT id, vehicleId, kind, category, zone, city, description FROM `LocalRequest` WHERE status = 'open' AND expiresAt > UTC_TIMESTAMP(3) AND REPLACE(id, '-', '') LIKE ? LIMIT 2 FOR UPDATE", [prefixOf3(ref4)]);
         if (!request)
           fail14("REQUEST_CLOSED_OR_EXPIRED");
         if (request.kind === "servicio" !== (role === "taller"))
           fail14("FORBIDDEN");
-        const existing = await rows29(conn, "SELECT id FROM `LocalOffer` WHERE requestId = ? AND businessId = ?", [request.id, business.id]);
-        const count3 = await rows29(conn, "SELECT COUNT(*) AS n FROM `LocalOffer` WHERE requestId = ?", [request.id]);
+        const existing = await rows30(conn, "SELECT id FROM `LocalOffer` WHERE requestId = ? AND businessId = ?", [request.id, business.id]);
+        const count3 = await rows30(conn, "SELECT COUNT(*) AS n FROM `LocalOffer` WHERE requestId = ?", [request.id]);
         if (!existing.length) {
           if (Number(count3[0]?.n) >= 5)
             fail14("INVITATION_LIMIT");
-          await conn.query("INSERT INTO `LocalOffer` (id, requestId, businessId, businessUserId, businessName, referred) VALUES (?, ?, ?, ?, ?, TRUE)", [randomUUID27(), request.id, business.id, userId, business.name]);
+          await conn.query("INSERT INTO `LocalOffer` (id, requestId, businessId, businessUserId, businessName, referred) VALUES (?, ?, ?, ?, ?, TRUE)", [randomUUID28(), request.id, business.id, userId, business.name]);
         }
-        const [vehicle] = request.kind === "servicio" ? await rows29(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [request.vehicleId]) : [];
+        const [vehicle] = request.kind === "servicio" ? await rows30(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL LIMIT 1", [request.vehicleId]) : [];
         const brief = vehicle ? await this.planBrief(conn, vehicle) : null;
         return { userId, message: `Te invitaron a la solicitud ${ref4}: ${request.kind}, ${request.category}, sector ${request.zone}, ${request.city}. Necesidad: ${String(request.description).slice(0, 200)}.${brief ? `
 ${brief}` : ""}
@@ -98965,13 +99125,13 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
       }
       /** Avisa una sola vez al dueño que la orden entró a reparación (clave repair:<orderId>). */
       async repairStarted(conn, orderId) {
-        const [order] = await rows29(conn, "SELECT w.id, w.number, w.ownerId, w.vehicleId, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.id = ? LIMIT 1", [orderId]);
+        const [order] = await rows30(conn, "SELECT w.id, w.number, w.ownerId, w.vehicleId, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.id = ? LIMIT 1", [orderId]);
         if (!order)
           return;
         await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), repairNoticeKey(orderId), "care.repair", repairNoticeText(workOrderCode(Number(order.number)), String(order.shopName)));
       }
       async notify(conn, recipient, dedup, kind, message2) {
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID27(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID28(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
       }
       /**
        * A notice for the vehicle's owner. For a fleet vehicle the fleet's administrators and
@@ -98999,7 +99159,7 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
       /** Ficha web: el taller o su técnico registra la inspección del vehículo, con o sin cita. */
       async inspectVehicle(conn, userId, role, vehicleId, raw, note, link = null) {
         const shop = await this.actingShop(conn, userId, role);
-        const [vehicle] = await rows29(conn, "SELECT v.*, v.userId AS ownerId, (SELECT a.id FROM `Appointment` a WHERE a.vehicleId = v.id AND a.shopId = ? AND a.status <> 'cancelled' ORDER BY a.scheduledAt DESC LIMIT 1) AS appointmentId FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL", [shop.id, vehicleId]);
+        const [vehicle] = await rows30(conn, "SELECT v.*, v.userId AS ownerId, (SELECT a.id FROM `Appointment` a WHERE a.vehicleId = v.id AND a.shopId = ? AND a.status <> 'cancelled' ORDER BY a.scheduledAt DESC LIMIT 1) AS appointmentId FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL", [shop.id, vehicleId]);
         if (!vehicle)
           fail14("VEHICLE_NOT_FOUND");
         if (!await shopCanAccessVehicle(conn, shop.id, vehicleId))
@@ -99015,7 +99175,7 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
         }
         let order = null;
         if (link) {
-          const [w] = await rows29(conn, "SELECT id, number, status, appointmentId FROM `WorkOrder` WHERE shopId = ? AND vehicleId = ? AND number = ? LIMIT 1", [shop.id, vehicleId, link.orderNumber]);
+          const [w] = await rows30(conn, "SELECT id, number, status, appointmentId FROM `WorkOrder` WHERE shopId = ? AND vehicleId = ? AND number = ? LIMIT 1", [shop.id, vehicleId, link.orderNumber]);
           if (!w)
             fail14("ORDER_NOT_FOUND");
           if (["cerrada", "cancelada"].includes(String(w.status)))
@@ -99032,7 +99192,7 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
       }
       async recordInspection(conn, userId, shop, vehicle, items, entries, note, order = null) {
         const label5 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
-        const id3 = randomUUID27();
+        const id3 = randomUUID28();
         if (order)
           await conn.query("INSERT INTO `VehicleInspection` (id, vehicleId, shopId, appointmentId, workOrderId, stage, actorUserId, km, note, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [id3, vehicle.id, shop.id, vehicle.appointmentId, order.id, order.stage, userId, Number(vehicle.currentKm) || null, note]).catch((err) => {
             if (err.code === "ER_BAD_FIELD_ERROR")
@@ -99045,7 +99205,7 @@ La cita se confirma cuando verifiquemos tu RUC y direcci\xF3n. Tu primer cliente
           await conn.query("INSERT INTO `VehicleInspectionItem` (inspectionId, code, status, measure, unit) VALUES (?, ?, ?, ?, ?)", [id3, e9.code, e9.status, e9.measure, e9.unit]);
         const covered = servicesCoveredBy(entries, items);
         for (const serviceId of covered)
-          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) SELECT ?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ? FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `VehicleServiceRecord` WHERE vehicleId = ? AND serviceId = ? AND doneAt >= UTC_DATE())", [randomUUID27(), vehicle.id, serviceId, Number(vehicle.currentKm) || 0, shop.id, userId, vehicle.id, serviceId]);
+          await conn.query("INSERT INTO `VehicleServiceRecord` (id, vehicleId, serviceId, km, doneAt, source, shopId, createdBy) SELECT ?, ?, ?, ?, UTC_TIMESTAMP(3), 'taller', ?, ? FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `VehicleServiceRecord` WHERE vehicleId = ? AND serviceId = ? AND doneAt >= UTC_DATE())", [randomUUID28(), vehicle.id, serviceId, Number(vehicle.currentKm) || 0, shop.id, userId, vehicle.id, serviceId]);
         const name = (code5) => INSPECTION_ITEMS.find((i) => i.code === code5)?.name ?? code5;
         const soon = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
         const today = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
@@ -99065,10 +99225,10 @@ La ves en tu orden y en la ficha del veh\xEDculo: ${accountLink("fichas")}` : su
       async lastInspection(conn, userId, role, plate2) {
         const vehicle = await this.ownerVehicle(conn, userId, role, plate2, "read");
         const label5 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
-        const [last] = await rows29(conn, "SELECT i.id, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 1", [vehicle.id]);
+        const [last] = await rows30(conn, "SELECT i.id, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 1", [vehicle.id]);
         if (!last)
           return { userId, message: `Tu ${label5} todav\xEDa no tiene una inspecci\xF3n por sistemas. P\xEDdela en tu pr\xF3xima visita al taller: revisa 8 sistemas y te avisamos qu\xE9 cambiar.` };
-        const entries = (await rows29(conn, "SELECT code, status, measure, unit FROM `VehicleInspectionItem` WHERE inspectionId = ?", [last.id])).map((r) => ({ code: String(r.code), status: r.status, measure: r.measure === null ? null : Number(r.measure), unit: r.unit === null ? null : String(r.unit) }));
+        const entries = (await rows30(conn, "SELECT code, status, measure, unit FROM `VehicleInspectionItem` WHERE inspectionId = ?", [last.id])).map((r) => ({ code: String(r.code), status: r.status, measure: r.measure === null ? null : Number(r.measure), unit: r.unit === null ? null : String(r.unit) }));
         const when15 = new Date(last.createdAt).toLocaleDateString("es-EC", { timeZone: "America/Guayaquil", day: "numeric", month: "long", year: "numeric" });
         return { userId, message: `${inspectionSummary(label5, String(last.shopName), entries, last.note ? String(last.note) : null)}
 Fecha: ${when15}.` };
@@ -99081,10 +99241,10 @@ Fecha: ${when15}.` };
       }
       /** When someone of a fleet decides, the rest of its people hear it, the owner above all. A personal vehicle has no team. */
       async notifyFleetTeam(conn, vehicleId, actorId, dedup, kind, what) {
-        const [fleet] = await rows29(conn, "SELECT f.ownerUserId FROM `Vehicle` v JOIN `Fleet` f ON f.id = v.fleetId WHERE v.id = ?", [vehicleId]);
+        const [fleet] = await rows30(conn, "SELECT f.ownerUserId FROM `Vehicle` v JOIN `Fleet` f ON f.id = v.fleetId WHERE v.id = ?", [vehicleId]);
         if (!fleet)
           return;
-        const [who] = await rows29(conn, "SELECT name FROM `User` WHERE id = ?", [actorId]);
+        const [who] = await rows30(conn, "SELECT name FROM `User` WHERE id = ?", [actorId]);
         const name = String(who?.name ?? "").split(/\s+/)[0] || "Alguien de tu flota";
         for (const recipient of /* @__PURE__ */ new Set([String(fleet.ownerUserId), ...await fleetManagers(conn, vehicleId)]))
           if (recipient !== actorId)
@@ -99097,7 +99257,7 @@ Fecha: ${when15}.` };
             await this.notify(conn, manager, `${dedup.slice(0, 150)}:${manager}`, kind, message2);
       }
       async audit(conn, userId, eventType, entityType, entityId, after) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID28(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
       }
     };
   }
@@ -99231,7 +99391,7 @@ var init_preferences = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/outbox-delivery-store.js
-import { randomUUID as randomUUID28 } from "node:crypto";
+import { randomUUID as randomUUID29 } from "node:crypto";
 function whatsappDelivery(env = process.env) {
   const value2 = env.WHATSAPP_DELIVERY?.trim();
   return value2 === "bridge" || value2 === "cloud" ? value2 : "off";
@@ -99269,7 +99429,7 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
           const base = `verification:${businessId}:${decision}`;
           const [prior] = await conn.query("SELECT COUNT(*) AS n FROM `NotificationOutbox` WHERE dedupKey = ? OR dedupKey LIKE ?", [base, `${base}:%`]);
           const sent = Number(Array.isArray(prior) ? prior[0]?.n ?? 0 : 0);
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID28(), sent ? `${base}:${sent + 1}` : base, userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID29(), sent ? `${base}:${sent + 1}` : base, userId, JSON.stringify({ message: message2 })]);
         });
       }
       claim(limit = 5) {
@@ -99303,7 +99463,7 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
               await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'EMPTY_MESSAGE' WHERE id = ? AND status = 'pending'", [id3]);
               continue;
             }
-            const leaseToken = randomUUID28();
+            const leaseToken = randomUUID29();
             const changed2 = await conn.query("UPDATE `NotificationOutbox` SET status = 'sending', attempts = attempts + 1, leaseToken = ?, lockedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status = 'pending' AND attempts < ?", [leaseToken, id3, MAX_ATTEMPTS2]);
             if (affected3(changed2) !== 1)
               continue;
@@ -99345,8 +99505,8 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
             return true;
           const changed2 = affected3(await conn.query("UPDATE `NotificationOutbox` SET status = IF(attempts >= ?, 'dead', 'pending'), nextAttemptAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? SECOND), lastError = ?, leaseToken = NULL, lockedAt = NULL WHERE id = ? AND status = 'sending' AND leaseToken = ?", [MAX_ATTEMPTS2, delaySeconds, code5, id3, leaseToken])) === 1;
           if (changed2) {
-            const [rows61] = await conn.query("SELECT kind,status FROM `NotificationOutbox` WHERE id = ?", [id3]);
-            const row2 = rows61[0];
+            const [rows62] = await conn.query("SELECT kind,status FROM `NotificationOutbox` WHERE id = ?", [id3]);
+            const row2 = rows62[0];
             if (row2?.status === "dead" && row2.kind !== "admin.alert")
               void new MysqlAdminAlerts().notify("outbox_dead", 1);
           }
@@ -99358,7 +99518,7 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
 });
 
 // packages/api/dist/infrastructure/messaging/local-agent-task-store.js
-import { randomBytes as randomBytes9, randomUUID as randomUUID30 } from "node:crypto";
+import { randomBytes as randomBytes9, randomUUID as randomUUID31 } from "node:crypto";
 function validateTask(type, payload) {
   if (typeof type !== "string" || !LOCAL_TASK_TYPES.includes(type) || !own(Object.fromEntries(LOCAL_TASK_TYPES.map((t) => [t, true])), type))
     throw new BrokerError("TASK_TYPE_NOT_ALLOWED");
@@ -99400,7 +99560,7 @@ var init_local_agent_task_store = __esm({
         const type = input.type;
         const payload = input.payload == null ? null : JSON.stringify(input.payload);
         return this.run(async (c) => {
-          const id3 = randomUUID30();
+          const id3 = randomUUID31();
           const [insert] = await c.query("INSERT INTO `LocalAgentTask` (id,type,status,payload,idempotencyKey,createdBy,createdAt,updatedAt) VALUES (?,?, 'queued', ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE id=id", [id3, type, payload, input.idempotencyKey, input.createdBy]);
           const [row2] = await data2(c, "SELECT * FROM `LocalAgentTask` WHERE idempotencyKey = ?", [input.idempotencyKey]);
           if (Number(insert?.affectedRows) === 1)
@@ -99413,9 +99573,9 @@ var init_local_agent_task_store = __esm({
           const max = Math.max(1, Math.min(1, Math.floor(limit) || 1));
           await c.query("START TRANSACTION");
           try {
-            const rows61 = await data2(c, "SELECT id,type,payload,attempts FROM `LocalAgentTask` WHERE status='queued' OR (status='processing' AND leaseUntil < UTC_TIMESTAMP(3)) ORDER BY createdAt,id LIMIT ? FOR UPDATE", [max]);
+            const rows62 = await data2(c, "SELECT id,type,payload,attempts FROM `LocalAgentTask` WHERE status='queued' OR (status='processing' AND leaseUntil < UTC_TIMESTAMP(3)) ORDER BY createdAt,id LIMIT ? FOR UPDATE", [max]);
             const out = [];
-            for (const row2 of rows61) {
+            for (const row2 of rows62) {
               if (Number(row2.attempts) >= 3) {
                 await c.query("UPDATE `LocalAgentTask` SET status='failed',errorCode='MAX_ATTEMPTS',completedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [row2.id]);
                 continue;
@@ -99639,7 +99799,7 @@ var init_ads = __esm({
 });
 
 // packages/api/dist/infrastructure/ads/ad-store.js
-import { randomUUID as randomUUID35 } from "node:crypto";
+import { randomUUID as randomUUID36 } from "node:crypto";
 function toSummary(r, today = ecuadorDate()) {
   const startDate = dateText(r.startDate);
   const endDate = dateText(r.endDate);
@@ -99673,15 +99833,15 @@ function toSummary(r, today = ecuadorDate()) {
   };
 }
 async function audit4(conn, eventType, actorUserId, actorRole, entityId, after, entityType = "AdCampaign") {
-  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, NULL, ?, UTC_TIMESTAMP(3))", [randomUUID35(), eventType, actorUserId, actorRole, entityType, entityId, JSON.stringify(after)]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, NULL, ?, UTC_TIMESTAMP(3))", [randomUUID36(), eventType, actorUserId, actorRole, entityType, entityId, JSON.stringify(after)]);
 }
 async function readConsent(conn, userId) {
-  const [u] = await rows35(conn, "SELECT adsOptInAt, whatsappOptOutAt FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+  const [u] = await rows36(conn, "SELECT adsOptInAt, whatsappOptOutAt FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
   if (!u)
     return fail21("ACCOUNT_UNAVAILABLE", "Tu cuenta no est\xE1 disponible.", 403);
   return { adsOptIn: Boolean(u.adsOptInAt), since: u.adsOptInAt ? new Date(String(u.adsOptInAt)).toISOString() : null, whatsappOptOut: Boolean(u.whatsappOptOutAt) };
 }
-var rows35, affected4, fail21, isMissingSchema, UPDATE_PENDING, adCode, dateText, formatsOf, sameText, SUMMARY_COLUMNS, toPublic, AD_FILTERS, MysqlAdStore, usd4;
+var rows36, affected4, fail21, isMissingSchema, UPDATE_PENDING, adCode, dateText, formatsOf, sameText, SUMMARY_COLUMNS, toPublic, AD_FILTERS, MysqlAdStore, usd4;
 var init_ad_store = __esm({
   "packages/api/dist/infrastructure/ads/ad-store.js"() {
     "use strict";
@@ -99690,7 +99850,7 @@ var init_ad_store = __esm({
     init_account_links();
     init_subscription_chat();
     init_ads();
-    rows35 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    rows36 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     affected4 = (result) => Number(result[0].affectedRows ?? 0);
     fail21 = (code5, message2, status = 409) => {
       throw new AdRuleError(code5, message2, status);
@@ -99726,7 +99886,7 @@ var init_ad_store = __esm({
         if (role !== "taller" && role !== "almacen")
           return fail21("FORBIDDEN", "Solo los talleres y almacenes pueden publicar anuncios.", 403);
         const table2 = role === "taller" ? "`Shop`" : "`Store`";
-        const [found] = await rows35(conn, `SELECT b.id, b.name, b.verificationStatus FROM ${table2} b JOIN \`User\` u ON u.id = b.userId AND u.deletedAt IS NULL WHERE b.userId = ? AND u.role = ?`, [userId, role]);
+        const [found] = await rows36(conn, `SELECT b.id, b.name, b.verificationStatus FROM ${table2} b JOIN \`User\` u ON u.id = b.userId AND u.deletedAt IS NULL WHERE b.userId = ? AND u.role = ?`, [userId, role]);
         if (!found)
           return fail21("FORBIDDEN", "Solo el titular del negocio puede publicar anuncios.", 403);
         if (String(found.verificationStatus) !== "verified")
@@ -99734,7 +99894,7 @@ var init_ad_store = __esm({
         return { kind: role, id: String(found.id), name: String(found.name) };
       }
       async own(conn, userId, adId, lock = false) {
-        const [ad] = await rows35(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ? AND ownerUserId = ?${lock ? " FOR UPDATE" : ""}`, [adId, userId]);
+        const [ad] = await rows36(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ? AND ownerUserId = ?${lock ? " FOR UPDATE" : ""}`, [adId, userId]);
         return ad ?? fail21("NOT_FOUND", "No encontramos ese anuncio.", 404);
       }
       /** Crea el anuncio en borrador con el precio calculado en el servidor. */
@@ -99748,7 +99908,7 @@ var init_ad_store = __esm({
         const price = adPrice(draft.formats, draft.days);
         return this.run(async (conn) => {
           const biz = await this.business(conn, userId, role);
-          const id3 = randomUUID35();
+          const id3 = randomUUID36();
           await conn.query("INSERT INTO `AdCampaign` (id, ownerUserId, businessKind, businessId, businessName, title, body, linkUrl, imageMime, imageData, formats, city, zone, startDate, endDate, days, subtotalUsd, ivaUsd, totalUsd, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'borrador')", [id3, userId, biz.kind, biz.id, biz.name, draft.title, draft.body, draft.linkUrl, image?.mime ?? null, image?.data ?? null, price.formats.join(","), draft.city, draft.zone, draft.startDate, adEndDate(draft.startDate, draft.days), draft.days, price.subtotalUsd, price.ivaUsd, price.totalUsd]);
           await audit4(conn, "ad.created", userId, role, id3, { formats: price.formats, days: price.days, totalUsd: price.totalUsd });
           const ad = toSummary(await this.own(conn, userId, id3), today);
@@ -99759,7 +99919,7 @@ var init_ad_store = __esm({
       mine(userId, role, now = /* @__PURE__ */ new Date()) {
         if (role !== "taller" && role !== "almacen")
           return Promise.resolve([]);
-        return this.run(async (conn) => (await rows35(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE ownerUserId = ? ORDER BY createdAt DESC LIMIT 50`, [userId])).map((r) => toSummary(r, ecuadorDate(now))));
+        return this.run(async (conn) => (await rows36(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE ownerUserId = ? ORDER BY createdAt DESC LIMIT 50`, [userId])).map((r) => toSummary(r, ecuadorDate(now))));
       }
       /** Sube el comprobante (foto o PDF) y deja el anuncio en «pago enviado» para que el equipo lo revise. */
       submitProof(userId, role, adId, dataUrl, reference) {
@@ -99792,7 +99952,7 @@ var init_ad_store = __esm({
       image(userId, adId, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
           const today = ecuadorDate(now);
-          const [ad] = await rows35(conn, "SELECT ownerUserId, status, startDate, endDate, imageMime, imageData FROM `AdCampaign` WHERE id = ? AND imageMime IS NOT NULL", [adId]);
+          const [ad] = await rows36(conn, "SELECT ownerUserId, status, startDate, endDate, imageMime, imageData FROM `AdCampaign` WHERE id = ? AND imageMime IS NOT NULL", [adId]);
           if (!ad)
             return fail21("NOT_FOUND", "Sin imagen.", 404);
           const visible = String(ad.ownerUserId) === userId || effectiveStatus(String(ad.status), dateText(ad.startDate), dateText(ad.endDate), today) === "activo";
@@ -99808,10 +99968,10 @@ var init_ad_store = __esm({
           return Promise.resolve(empty);
         return this.run(async (conn) => {
           const today = ecuadorDate(now);
-          const [user] = await rows35(conn, "SELECT city, zone FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+          const [user] = await rows36(conn, "SELECT city, zone FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
           if (!user?.city)
             return empty;
-          const list7 = (await rows35(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE status IN ('aprobado','activo') AND startDate <= ? AND endDate >= ? ORDER BY submittedAt, id LIMIT 100`, [today, today])).map((r) => toSummary(r, today)).filter((a) => a.status === "activo" && sameText(a.city, user.city) && (!a.zone || sameText(a.zone, user.zone)));
+          const list7 = (await rows36(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE status IN ('aprobado','activo') AND startDate <= ? AND endDate >= ? ORDER BY submittedAt, id LIMIT 100`, [today, today])).map((r) => toSummary(r, today)).filter((a) => a.status === "activo" && sameText(a.city, user.city) && (!a.zone || sameText(a.zone, user.zone)));
           const pick = (f) => list7.filter((a) => a.formats.includes(f)).map(toPublic);
           const inbox = list7.filter((a) => a.formats.includes("interno") || a.formats.includes("whatsapp")).map(toPublic);
           return { banners: pick("banner").slice(0, 3), popups: pick("popup").slice(0, 3), inbox: inbox.slice(0, 10) };
@@ -99848,22 +100008,22 @@ var init_ad_store = __esm({
       list(filter, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
           const where = filter === "todas" ? "" : " WHERE status = ?";
-          return (await rows35(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\`${where} ORDER BY COALESCE(submittedAt, createdAt) DESC LIMIT 100`, filter === "todas" ? [] : [filter])).map((r) => toSummary(r, ecuadorDate(now)));
+          return (await rows36(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\`${where} ORDER BY COALESCE(submittedAt, createdAt) DESC LIMIT 100`, filter === "todas" ? [] : [filter])).map((r) => toSummary(r, ecuadorDate(now)));
         });
       }
       pendingCount() {
-        return this.run(async (conn) => Number((await rows35(conn, "SELECT COUNT(*) AS n FROM `AdCampaign` WHERE status = 'pago_enviado'"))[0]?.n ?? 0));
+        return this.run(async (conn) => Number((await rows36(conn, "SELECT COUNT(*) AS n FROM `AdCampaign` WHERE status = 'pago_enviado'"))[0]?.n ?? 0));
       }
       get(adId) {
         return this.run(async (conn) => {
-          const [r] = await rows35(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ?`, [adId]);
+          const [r] = await rows36(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ?`, [adId]);
           return r ? { ...toSummary(r), ownerUserId: String(r.ownerUserId) } : null;
         });
       }
       adminFile(adId, which) {
         return this.run(async (conn) => {
           const sql = which === "proof" ? "SELECT proofMime AS mime, proofData AS data FROM `AdCampaign` WHERE id = ? AND proofMime IS NOT NULL" : "SELECT imageMime AS mime, imageData AS data FROM `AdCampaign` WHERE id = ? AND imageMime IS NOT NULL";
-          const [r] = await rows35(conn, sql, [adId]);
+          const [r] = await rows36(conn, sql, [adId]);
           if (!r)
             return fail21("NOT_FOUND", "Sin archivo.", 404);
           return { mime: String(r.mime), data: r.data };
@@ -99875,7 +100035,7 @@ var init_ad_store = __esm({
        */
       sendPaymentInfo(adId, adminId, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const [ad] = await rows35(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ?`, [adId]);
+          const [ad] = await rows36(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ?`, [adId]);
           if (!ad)
             return false;
           const a = toSummary(ad, ecuadorDate(now));
@@ -99893,7 +100053,7 @@ var init_ad_store = __esm({
             `Cuando la hagas, sube la foto del comprobante en tu perfil: ${accountLink("publicidad")}`,
             "Aprobamos el anuncio apenas verifiquemos el pago, normalmente el mismo d\xEDa h\xE1bil."
           ].join("\n");
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.payment', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID35(), `ad:payment:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.payment', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID36(), `ad:payment:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
           await conn.query("UPDATE `AdCampaign` SET paymentSentAt = ? WHERE id = ?", [now, adId]);
           await audit4(conn, "ad.payment_info", adminId, "admin", adId, { accounts: banks.length });
           return true;
@@ -99904,7 +100064,7 @@ var init_ad_store = __esm({
         if (!/^\d{3}-\d{3}-\d{1,9}$/.test(invoice))
           return Promise.reject(new AdRuleError("AD_INVOICE_INVALID", "Factura no v\xE1lida: usa el formato 001-001-000000123."));
         return this.run(async (conn) => {
-          const [ad] = await rows35(conn, "SELECT id, ownerUserId, status, totalUsd FROM `AdCampaign` WHERE id = ?", [adId]);
+          const [ad] = await rows36(conn, "SELECT id, ownerUserId, status, totalUsd FROM `AdCampaign` WHERE id = ?", [adId]);
           if (!ad)
             return false;
           if (!["aprobado", "activo", "vencido"].includes(String(ad.status)))
@@ -99912,7 +100072,7 @@ var init_ad_store = __esm({
           await conn.query("UPDATE `AdCampaign` SET invoiceNumber = ? WHERE id = ?", [invoice, adId]);
           await audit4(conn, "ad.invoice", adminId, "admin", adId, { invoice });
           const message2 = `\u{1F9FE} Emitimos la factura N\xB0 ${invoice} de tu anuncio ${adCode(adId)} por ${usd4(Number(ad.totalUsd))}. Cons\xE9rvala para tu contabilidad.`;
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.invoice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID35(), `ad:invoice:${adId}:${invoice}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.invoice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID36(), `ad:invoice:${adId}:${invoice}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
           return true;
         });
       }
@@ -99928,7 +100088,7 @@ var init_ad_store = __esm({
         return this.run(async (conn) => {
           await conn.query("START TRANSACTION");
           try {
-            const [ad] = await rows35(conn, "SELECT id, ownerUserId, title, status, startDate, endDate FROM `AdCampaign` WHERE id = ? FOR UPDATE", [adId]);
+            const [ad] = await rows36(conn, "SELECT id, ownerUserId, title, status, startDate, endDate FROM `AdCampaign` WHERE id = ? FOR UPDATE", [adId]);
             if (!ad || !canTransition(String(ad.status), to)) {
               await conn.query("ROLLBACK");
               return false;
@@ -99939,7 +100099,7 @@ var init_ad_store = __esm({
             await audit4(conn, to === "aprobado" ? "ad.approved" : "ad.rejected", adminId, "admin", adId, { status, reason });
             const code5 = adCode(adId);
             const message2 = to === "aprobado" ? `\u2705 Aprobamos el pago de tu anuncio ${code5} \xAB${String(ad.title)}\xBB. Se publica desde el ${dateText(ad.startDate)} hasta el ${dateText(ad.endDate)}. M\xEDralo en tu perfil: ${accountLink("publicidad")}` : `No pudimos verificar el pago de tu anuncio ${code5}: ${reason}. Sube otro comprobante en tu perfil: ${accountLink("publicidad")}`;
-            await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.decision', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID35(), `ad:${to}:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
+            await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.decision', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID36(), `ad:${to}:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
             await conn.query("COMMIT");
             return true;
           } catch (err) {
@@ -99954,7 +100114,7 @@ var init_ad_store = __esm({
 });
 
 // packages/api/dist/infrastructure/operator/operator-key-store.js
-import { createHash as createHash13, randomBytes as randomBytes12, randomUUID as randomUUID40 } from "node:crypto";
+import { createHash as createHash13, randomBytes as randomBytes12, randomUUID as randomUUID41 } from "node:crypto";
 var OPERATOR_SCOPES, SCOPE_LABELS, KEY_FORMAT, isOperatorKeyFormat, hashOperatorKey, parseScopes, toRow, MysqlOperatorKeyStore;
 var init_operator_key_store = __esm({
   "packages/api/dist/infrastructure/operator/operator-key-store.js"() {
@@ -99994,11 +100154,11 @@ var init_operator_key_store = __esm({
         }
       }
       create(input) {
-        const id3 = randomUUID40();
+        const id3 = randomUUID41();
         const key = `amp_op_${randomBytes12(32).toString("base64url")}`;
         return this.run(async (conn) => {
           await conn.query("INSERT INTO `OperatorKey` (id, name, keyHash, scopes, createdByUserId) VALUES (?, ?, ?, ?, ?)", [id3, input.name, hashOperatorKey(key), input.scopes.join(","), input.createdByUserId]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.created', ?, 'admin', 'OperatorKey', ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID40(), input.createdByUserId, id3, `${input.name}: ${input.scopes.join(", ")}`]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.created', ?, 'admin', 'OperatorKey', ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID41(), input.createdByUserId, id3, `${input.name}: ${input.scopes.join(", ")}`]);
           return { id: id3, key };
         });
       }
@@ -100010,7 +100170,7 @@ var init_operator_key_store = __esm({
           const [result] = await conn.query("UPDATE `OperatorKey` SET revokedAt = CURRENT_TIMESTAMP(3), revokedByUserId = ? WHERE id = ? AND revokedAt IS NULL", [byUserId, id3]);
           const changed2 = Number(result.affectedRows ?? 0) > 0;
           if (changed2)
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.revoked', ?, 'admin', 'OperatorKey', ?, 'llave revocada', CURRENT_TIMESTAMP(3))", [randomUUID40(), byUserId, id3]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.revoked', ?, 'admin', 'OperatorKey', ?, 'llave revocada', CURRENT_TIMESTAMP(3))", [randomUUID41(), byUserId, id3]);
           return changed2;
         });
       }
@@ -100027,7 +100187,7 @@ var init_operator_key_store = __esm({
       }
       audit(key, eventType, entityType, entityId, reason) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID40(), `operator.${eventType}`, key.createdByUserId, entityType, entityId, `[${key.name}] ${reason}`.slice(0, 500)]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID41(), `operator.${eventType}`, key.createdByUserId, entityType, entityId, `[${key.name}] ${reason}`.slice(0, 500)]);
         });
       }
     };
@@ -100035,7 +100195,7 @@ var init_operator_key_store = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/plan-store.js
-function rows41(result) {
+function rows42(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -100048,8 +100208,8 @@ function toRow2(row2) {
     userRole: str2(row2.userRole),
     plan: String(row2.plan),
     status: String(row2.status),
-    months: num2(row2.months),
-    amountUsd: num2(row2.amountUsd),
+    months: num3(row2.months),
+    amountUsd: num3(row2.amountUsd),
     method: str2(row2.method),
     reference: str2(row2.reference),
     notes: str2(row2.notes),
@@ -100059,22 +100219,22 @@ function toRow2(row2) {
     decisionReason: str2(row2.decisionReason),
     createdAt: row2.createdAt,
     period: str2(row2.period),
-    units: num2(row2.units),
-    subtotalUsd: num2(row2.subtotalUsd),
-    ivaUsd: num2(row2.ivaUsd),
+    units: num3(row2.units),
+    subtotalUsd: num3(row2.subtotalUsd),
+    ivaUsd: num3(row2.ivaUsd),
     invoiceNumber: str2(row2.invoiceNumber),
     source: str2(row2.source),
     reportedAt: row2.reportedAt ?? null
   };
 }
-var PAGE_SIZE5, str2, num2, SELECT, MysqlPlanStore;
+var PAGE_SIZE5, str2, num3, SELECT, MysqlPlanStore;
 var init_plan_store = __esm({
   "packages/api/dist/infrastructure/plans/plan-store.js"() {
     "use strict";
     init_plans();
     PAGE_SIZE5 = 25;
     str2 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
-    num2 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
+    num3 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     SELECT = "SELECT s.*, s.expiresAt AS endsAt, u.name AS userName, u.role AS userRole FROM `Subscription` s JOIN `User` u ON u.id = s.userId";
     MysqlPlanStore = class {
       connect;
@@ -100091,9 +100251,9 @@ var init_plan_store = __esm({
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows41(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows42(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
-          const next = rows41(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
+          const next = rows42(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
           await conn.query(
             // `active` se mantiene en falso mientras el pago no esté verificado, para que cualquier
             // lectura antigua de esa columna vea lo mismo que el estado nuevo.
@@ -100119,25 +100279,25 @@ var init_plan_store = __esm({
             params2.push(Math.max(1, Math.floor(soonDays)));
           } else if (filter === "vencida")
             where = "WHERE s.status = 'vencida' OR (s.status = 'activa' AND s.expiresAt IS NOT NULL AND s.expiresAt <= UTC_TIMESTAMP(3))";
-          const items = rows41(await conn.query(`${SELECT} ${where} ORDER BY s.status = 'pendiente' DESC, s.status = 'solicitada' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params2)).map(toRow2);
+          const items = rows42(await conn.query(`${SELECT} ${where} ORDER BY s.status = 'pendiente' DESC, s.status = 'solicitada' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params2)).map(toRow2);
           return { items, page: Math.max(1, Math.floor(page3)), pageSize: PAGE_SIZE5 };
         });
       }
       get(id3) {
         return this.run(async (conn) => {
-          const row2 = rows41(await conn.query(`${SELECT} WHERE s.id = ? LIMIT 1`, [id3]))[0];
+          const row2 = rows42(await conn.query(`${SELECT} WHERE s.id = ? LIMIT 1`, [id3]))[0];
           return row2 ? toRow2(row2) : null;
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows41(await conn.query(`${SELECT} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
+        return this.run(async (conn) => rows42(await conn.query(`${SELECT} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
       }
       verify(id3, months2, verifiedBy) {
         return this.run(async (conn) => {
-          const [self2] = rows41(await conn.query("SELECT userId, plan FROM `Subscription` WHERE id = ? AND status IN ('pendiente','solicitada')", [id3]));
+          const [self2] = rows42(await conn.query("SELECT userId, plan FROM `Subscription` WHERE id = ? AND status IN ('pendiente','solicitada')", [id3]));
           if (!self2)
             return false;
-          const [running] = rows41(await conn.query("SELECT MAX(expiresAt) AS until FROM `Subscription` WHERE userId = ? AND plan = ? AND id <> ? AND status = 'activa' AND expiresAt > UTC_TIMESTAMP(3)", [self2.userId, self2.plan, id3]));
+          const [running] = rows42(await conn.query("SELECT MAX(expiresAt) AS until FROM `Subscription` WHERE userId = ? AND plan = ? AND id <> ? AND status = 'activa' AND expiresAt > UTC_TIMESTAMP(3)", [self2.userId, self2.plan, id3]));
           const from = running?.until ? "?" : "CURRENT_TIMESTAMP(3)";
           const fromParams = running?.until ? [running.until] : [];
           const vence = months2 === null ? "NULL" : `DATE_ADD(${from}, INTERVAL ? MONTH)`;
@@ -100166,7 +100326,7 @@ var init_plan_store = __esm({
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const row2 = rows41(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status IN ('pendiente','solicitada')"))[0];
+          const row2 = rows42(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status IN ('pendiente','solicitada')"))[0];
           return Number(row2?.n ?? 0);
         });
       }
@@ -100174,7 +100334,7 @@ var init_plan_store = __esm({
         return this.run(async (conn) => {
           const cuenta = async (sql, params2) => {
             try {
-              const row2 = rows41(await conn.query(sql, params2))[0];
+              const row2 = rows42(await conn.query(sql, params2))[0];
               return Number(row2?.n ?? 0);
             } catch {
               return 0;
@@ -100192,7 +100352,7 @@ var init_plan_store = __esm({
       }
       planForUser(userId) {
         return this.run(async (conn) => {
-          const list7 = rows41(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
+          const list7 = rows42(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
             plan: String(r.plan),
             status: String(r.status),
             startsAt: r.startsAt,
@@ -100206,7 +100366,7 @@ var init_plan_store = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/billing-store.js
-import { randomUUID as randomUUID41 } from "node:crypto";
+import { randomUUID as randomUUID42 } from "node:crypto";
 function rowsOf2(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
@@ -100243,13 +100403,13 @@ function revenueCsv(report, planLabel) {
   return `\uFEFF${[head.join(";"), ...lines].join("\r\n")}\r
 `;
 }
-var num3, str3, MysqlBillingStore;
+var num4, str3, MysqlBillingStore;
 var init_billing_store = __esm({
   "packages/api/dist/infrastructure/plans/billing-store.js"() {
     "use strict";
     init_catalog_store();
     init_subscription_chat();
-    num3 = (v) => v === null || v === void 0 ? null : Number(v);
+    num4 = (v) => v === null || v === void 0 ? null : Number(v);
     str3 = (v) => v === null || v === void 0 ? null : String(v);
     MysqlBillingStore = class {
       connect;
@@ -100285,7 +100445,7 @@ var init_billing_store = __esm({
       }
       addAccount(input, by) {
         return this.run(async (conn) => {
-          const id3 = randomUUID41();
+          const id3 = randomUUID42();
           await conn.query("INSERT INTO `PaymentAccount` (id, bank, accountType, number, holder, holderId, active, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, TRUE, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, input.bank, input.accountType, input.number, input.holder, input.holderId, by]);
           return id3;
         });
@@ -100311,11 +100471,11 @@ var init_billing_store = __esm({
             plan: String(r.plan),
             status: String(r.status),
             period: str3(r.period),
-            units: num3(r.units),
-            months: num3(r.months),
-            subtotalUsd: num3(r.subtotalUsd),
-            ivaUsd: num3(r.ivaUsd),
-            amountUsd: num3(r.amountUsd),
+            units: num4(r.units),
+            months: num4(r.months),
+            subtotalUsd: num4(r.subtotalUsd),
+            ivaUsd: num4(r.ivaUsd),
+            amountUsd: num4(r.amountUsd),
             method: str3(r.method),
             reference: str3(r.reference),
             notes: str3(r.notes),
@@ -100368,7 +100528,7 @@ var init_billing_store = __esm({
       }
       notify(userId, dedupKey, message2) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID41(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID42(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
         });
       }
       instructions(id3) {
@@ -100384,13 +100544,13 @@ var init_billing_store = __esm({
 });
 
 // packages/api/dist/infrastructure/work-orders/claim-store.js
-var rows42, whenTableMissing7, CLAIM_FILTERS, FILTER_STATUSES, parse, vehicleText3, CLAIM_SELECT, CLAIM_FROM, toRow3, MysqlClaimStore;
+var rows43, whenTableMissing7, CLAIM_FILTERS, FILTER_STATUSES, parse, vehicleText3, CLAIM_SELECT, CLAIM_FROM, toRow3, MysqlClaimStore;
 var init_claim_store = __esm({
   "packages/api/dist/infrastructure/work-orders/claim-store.js"() {
     "use strict";
     init_work_order_claims();
     init_workflow();
-    rows42 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    rows43 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     whenTableMissing7 = (value2) => (err) => {
       if (err.code === "ER_NO_SUCH_TABLE")
         return value2;
@@ -100435,21 +100595,21 @@ var init_claim_store = __esm({
         return this.run(async (conn) => {
           const statuses = FILTER_STATUSES[filter];
           const order = filter === "en_admin" ? "c.escalatedAt, c.createdAt" : "c.createdAt DESC";
-          const list7 = await rows42(conn, `SELECT ${CLAIM_SELECT} ${CLAIM_FROM} ${statuses ? "WHERE c.status IN (?)" : ""} ORDER BY ${order}, c.id LIMIT 100`, statuses ? [statuses] : []);
+          const list7 = await rows43(conn, `SELECT ${CLAIM_SELECT} ${CLAIM_FROM} ${statuses ? "WHERE c.status IN (?)" : ""} ORDER BY ${order}, c.id LIMIT 100`, statuses ? [statuses] : []);
           return list7.map(toRow3);
         });
       }
       get(id3) {
         return this.run(async (conn) => {
-          const [r] = await rows42(conn, `SELECT ${CLAIM_SELECT}, w.id AS orderId, w.status AS orderStatus, w.total, w.intakeKm, w.intakeNotes, w.createdAt AS orderCreatedAt, v.plate ${CLAIM_FROM} WHERE c.id = ?`, [id3]);
+          const [r] = await rows43(conn, `SELECT ${CLAIM_SELECT}, w.id AS orderId, w.status AS orderStatus, w.total, w.intakeKm, w.intakeNotes, w.createdAt AS orderCreatedAt, v.plate ${CLAIM_FROM} WHERE c.id = ?`, [id3]);
           if (!r)
             return null;
           const orderId = String(r.orderId);
-          const items = await rows42(conn, "SELECT kind, description, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt, id", [orderId]);
-          const [intake] = await rows42(conn, "SELECT receivedAt, km, fuel, requested, damages, inventory, notes, ownerAnswer, ownerNote FROM `VehicleIntake` WHERE workOrderId = ?", [orderId]).catch(whenTableMissing7([]));
-          const payments = await rows42(conn, "SELECT amount, method, reference, status, ownerNote, createdAt FROM `WorkOrderPayment` WHERE workOrderId = ? ORDER BY createdAt", [orderId]).catch(whenTableMissing7([]));
-          const [delivery] = await rows42(conn, "SELECT description, reason, createdAt, decidedAt FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status IN ('approved','rejected') ORDER BY decidedAt DESC LIMIT 1", [orderId]);
-          const [comp] = await rows42(conn, "SELECT compensationKind, compensationUsd FROM `WorkOrderClaim` WHERE id = ?", [id3]).catch((err) => {
+          const items = await rows43(conn, "SELECT kind, description, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt, id", [orderId]);
+          const [intake] = await rows43(conn, "SELECT receivedAt, km, fuel, requested, damages, inventory, notes, ownerAnswer, ownerNote FROM `VehicleIntake` WHERE workOrderId = ?", [orderId]).catch(whenTableMissing7([]));
+          const payments = await rows43(conn, "SELECT amount, method, reference, status, ownerNote, createdAt FROM `WorkOrderPayment` WHERE workOrderId = ? ORDER BY createdAt", [orderId]).catch(whenTableMissing7([]));
+          const [delivery] = await rows43(conn, "SELECT description, reason, createdAt, decidedAt FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status IN ('approved','rejected') ORDER BY decidedAt DESC LIMIT 1", [orderId]);
+          const [comp] = await rows43(conn, "SELECT compensationKind, compensationUsd FROM `WorkOrderClaim` WHERE id = ?", [id3]).catch((err) => {
             if (err.code === "ER_BAD_FIELD_ERROR")
               return [];
             throw err;
@@ -100489,7 +100649,7 @@ var init_claim_store = __esm({
             return { ok: false, reason: "COMPENSATION_INVALID" };
           await conn.query("START TRANSACTION");
           try {
-            const [claim] = await rows42(conn, "SELECT c.id, c.status, c.workOrderId, w.number, w.ownerId, w.vehicleId, s.userId AS shopUserId FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.id = ? FOR UPDATE", [input.id]);
+            const [claim] = await rows43(conn, "SELECT c.id, c.status, c.workOrderId, w.number, w.ownerId, w.vehicleId, s.userId AS shopUserId FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.id = ? FOR UPDATE", [input.id]);
             if (!claim) {
               await conn.query("ROLLBACK");
               return { ok: false, reason: "NOT_FOUND" };
@@ -100499,7 +100659,7 @@ var init_claim_store = __esm({
               return { ok: false, reason: "NOT_IN_ADMIN" };
             }
             if (compensation.kind === "reembolso") {
-              const [sums] = await rows42(conn, "SELECT COALESCE(SUM(CASE WHEN status = 'pagado' THEN amount END), 0) AS paid, COALESCE(SUM(CASE WHEN status IN ('reembolso_informado','reembolso_confirmado') THEN amount END), 0) AS refunded FROM `WorkOrderPayment` WHERE workOrderId = ?", [claim.workOrderId]);
+              const [sums] = await rows43(conn, "SELECT COALESCE(SUM(CASE WHEN status = 'pagado' THEN amount END), 0) AS paid, COALESCE(SUM(CASE WHEN status IN ('reembolso_informado','reembolso_confirmado') THEN amount END), 0) AS refunded FROM `WorkOrderPayment` WHERE workOrderId = ?", [claim.workOrderId]);
               if (Number(compensation.amountUsd) > Number(sums?.paid ?? 0) - Number(sums?.refunded ?? 0) + 1e-3) {
                 await conn.query("ROLLBACK");
                 return { ok: false, reason: "COMPENSATION_EXCEEDS_PAID" };
@@ -101096,7 +101256,7 @@ function redactValue(value2, key) {
     return redactPii(value2);
   }
   if (Array.isArray(value2))
-    return value2.map((item, i) => redactValue(item, key));
+    return value2.map((item2, i) => redactValue(item2, key));
   if (value2 !== null && typeof value2 === "object") {
     const out = {};
     for (const [k, v] of Object.entries(value2)) {
@@ -101238,7 +101398,7 @@ function sanitizeToolData(value2, depth = 0) {
   if (depth > 6)
     return null;
   if (Array.isArray(value2))
-    return value2.slice(0, 100).map((item) => sanitizeToolData(item, depth + 1));
+    return value2.slice(0, 100).map((item2) => sanitizeToolData(item2, depth + 1));
   if (value2 && typeof value2 === "object" && !(value2 instanceof Date)) {
     const out = {};
     for (const [k, v] of Object.entries(value2))
@@ -102434,7 +102594,7 @@ var init_platform = __esm({
 });
 
 // packages/api/dist/infrastructure/visits/visit-store.js
-function rows44(result) {
+function rows45(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -102466,13 +102626,13 @@ var init_visit_store = __esm({
       }
       exists(code5) {
         return this.run(async (conn) => {
-          const row2 = rows44(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code5]))[0];
+          const row2 = rows45(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code5]))[0];
           return !!row2;
         });
       }
       find(code5, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const row2 = rows44(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code5, new Date(now.getTime() - MAX_AGE_MS)]))[0];
+          const row2 = rows45(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code5, new Date(now.getTime() - MAX_AGE_MS)]))[0];
           if (!row2)
             return null;
           return {
@@ -102501,7 +102661,7 @@ var init_visit_store = __esm({
       list(page3) {
         const offset2 = (Math.max(1, Math.floor(page3)) - 1) * PAGE_SIZE6;
         return this.run(async (conn) => {
-          const items = rows44(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`)).map((row2) => ({
+          const items = rows45(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`)).map((row2) => ({
             code: String(row2.code),
             ref: text8(row2.ref),
             profile: text8(row2.profile),
@@ -102517,7 +102677,7 @@ var init_visit_store = __esm({
       }
       stats(days2) {
         const window3 = Math.max(1, Math.floor(days2));
-        return this.run(async (conn) => rows44(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window3} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row2) => ({
+        return this.run(async (conn) => rows45(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window3} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row2) => ({
           ref: text8(row2.ref),
           profile: text8(row2.profile),
           visitas: Number(row2.visitas ?? 0),
@@ -102530,21 +102690,21 @@ var init_visit_store = __esm({
         const monday = (column2) => `DATE_FORMAT(DATE_SUB(DATE(${column2}), INTERVAL WEEKDAY(${column2}) DAY), '%Y-%m-%d')`;
         return this.run(async (conn) => {
           const since = `DATE_SUB(DATE_SUB(UTC_DATE(), INTERVAL WEEKDAY(UTC_DATE()) DAY), INTERVAL ${window3 - 1} WEEK)`;
-          const users = rows44(await conn.query(`SELECT ${monday("createdAt")} AS week, COUNT(*) AS n FROM \`User\` WHERE createdAt >= ${since} GROUP BY week`));
-          const visits = rows44(await conn.query(`SELECT ${monday("linkedAt")} AS week, COUNT(*) AS web, SUM(ref LIKE 'lp:%' OR ref LIKE 'servicio:%' OR ref LIKE 'ciudad:%' OR ref IN ('servicios', 'talleres')) AS busqueda FROM \`Visit\` WHERE userId IS NOT NULL AND linkedAt >= ${since} GROUP BY week`));
+          const users = rows45(await conn.query(`SELECT ${monday("createdAt")} AS week, COUNT(*) AS n FROM \`User\` WHERE createdAt >= ${since} GROUP BY week`));
+          const visits = rows45(await conn.query(`SELECT ${monday("linkedAt")} AS week, COUNT(*) AS web, SUM(ref LIKE 'lp:%' OR ref LIKE 'servicio:%' OR ref LIKE 'ciudad:%' OR ref IN ('servicios', 'talleres')) AS busqueda FROM \`Visit\` WHERE userId IS NOT NULL AND linkedAt >= ${since} GROUP BY week`));
           const byWeek = /* @__PURE__ */ new Map();
           const entry = (week) => {
-            let item = byWeek.get(week);
-            if (!item)
-              byWeek.set(week, item = { week, users: 0, fromWeb: 0, fromSearchPages: 0 });
-            return item;
+            let item2 = byWeek.get(week);
+            if (!item2)
+              byWeek.set(week, item2 = { week, users: 0, fromWeb: 0, fromSearchPages: 0 });
+            return item2;
           };
           for (const row2 of users)
             entry(String(row2.week)).users = Number(row2.n ?? 0);
           for (const row2 of visits) {
-            const item = entry(String(row2.week));
-            item.fromWeb = Number(row2.web ?? 0);
-            item.fromSearchPages = Number(row2.busqueda ?? 0);
+            const item2 = entry(String(row2.week));
+            item2.fromWeb = Number(row2.web ?? 0);
+            item2.fromSearchPages = Number(row2.busqueda ?? 0);
           }
           return [...byWeek.values()].sort((a, b) => b.week.localeCompare(a.week));
         });
@@ -102860,8 +103020,8 @@ var init_documents = __esm({
 async function databaseReadinessIssues(connect = openConnection) {
   const conn = await connect();
   try {
-    const [rows61] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-    const present = new Set(rows61.map((row2) => row2.name.toLowerCase()));
+    const [rows62] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+    const present = new Set(rows62.map((row2) => row2.name.toLowerCase()));
     const missingTables = EXPECTED_TABLES2.filter((table2) => !["VehicleModelPlan", "VehicleIntake", "WorkOrderPayment", "WorkOrderPhoto", "WorkOrderPromise", "WorkOrderPartialApproval", "AccountRecovery", "WorkOrderWarranty", "WorkOrderClaim", ...PART_ORDER_TABLES, "ShopTariff", "ProductFitment", ...COMPROBANTE_TABLES, ...OPTIONAL_FLOW_TABLES, ...FOUNDER_TABLES].includes(table2) && !present.has(table2.toLowerCase()));
     if (missingTables.length)
       return missingTables.map((table2) => `tabla ${table2}`);
@@ -103190,8 +103350,8 @@ var require_HeaderParser = __commonJS({
           lineStart = lineEnd + 2;
           continue;
         }
-        const line = buffer.slice(lineStart, lineEnd);
-        if (line.includes("\r") || line.includes("\n")) {
+        const line2 = buffer.slice(lineStart, lineEnd);
+        if (line2.includes("\r") || line2.includes("\n")) {
           return;
         }
         if ((buffer[lineStart] === "	" || buffer[lineStart] === " ") && h) {
@@ -105288,10 +105448,10 @@ var require_generateId = __commonJS({
       return HEX[255 * random() | 0] + HEX[255 * random() | 0] + HEX[255 * random() | 0] + HEX[255 * random() | 0] + HEX[255 * random() | 0] + HEX[255 * random() | 0] + HEX[255 * random() | 0];
     }
     module.exports.generateId = (function generateIdFn() {
-      let num6 = 0;
+      let num7 = 0;
       let str8 = seed();
       return function generateId() {
-        return num6 === 255 ? (str8 = seed()) + HEX[num6 = 0] : str8 + HEX[++num6];
+        return num7 === 255 ? (str8 = seed()) + HEX[num7 = 0] : str8 + HEX[++num7];
       };
     })();
   }
@@ -105554,11 +105714,11 @@ var require_multipart2 = __commonJS({
                 } else if (Array.isArray(field2)) {
                   const items = [];
                   for (let i2 = 0; i2 < field2.length; ++i2) {
-                    const item = field2[i2];
-                    if (item.value !== void 0) {
-                      items.push(item.value);
-                    } else if (item._buf) {
-                      items.push(item._buf);
+                    const item2 = field2[i2];
+                    if (item2.value !== void 0) {
+                      items.push(item2.value);
+                    } else if (item2._buf) {
+                      items.push(item2._buf);
                     }
                   }
                   if (items.length) {
@@ -105576,8 +105736,8 @@ var require_multipart2 = __commonJS({
             for (const key in this.body) {
               const value2 = this.body[key];
               if (Array.isArray(value2)) {
-                for (const item of value2) {
-                  await append(key, item);
+                for (const item2 of value2) {
+                  await append(key, item2);
                 }
               } else {
                 await append(key, value2);
@@ -105970,11 +106130,11 @@ var require_multipart2 = __commonJS({
 });
 
 // packages/api/dist/infrastructure/admin/admin-store.js
-function rows52(result) {
+function rows53(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 async function scalar(conn, sql, params2 = []) {
-  const row2 = rows52(await conn.query(sql, params2))[0];
+  const row2 = rows53(await conn.query(sql, params2))[0];
   return Number(row2?.n ?? 0);
 }
 function grouped(list7) {
@@ -106006,7 +106166,7 @@ var init_admin_store = __esm({
       }
       findAdminByEmail(email) {
         return this.run(async (conn) => {
-          const row2 = rows52(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
+          const row2 = rows53(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
           if (!row2)
             return null;
           return {
@@ -106022,13 +106182,13 @@ var init_admin_store = __esm({
       upsertAdmin(input) {
         return this.run(async (conn) => {
           const email = input.email.toLowerCase();
-          const existing = rows52(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
+          const existing = rows53(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
           let id3;
           if (existing) {
             id3 = String(existing.id);
             await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', staffRole = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id3]);
           } else {
-            const created = rows52(await conn.query("SELECT UUID() AS id"))[0];
+            const created = rows53(await conn.query("SELECT UUID() AS id"))[0];
             id3 = String(created?.id);
             await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, staffRole, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, email, input.phone, input.passwordHash, input.name]);
           }
@@ -106038,7 +106198,7 @@ var init_admin_store = __esm({
       }
       findAdminById(id3) {
         return this.run(async (conn) => {
-          const row2 = rows52(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id3]))[0];
+          const row2 = rows53(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id3]))[0];
           if (!row2)
             return null;
           return {
@@ -106076,9 +106236,9 @@ var init_admin_store = __esm({
       }
       dashboard() {
         return this.run(async (conn) => ({
-          usersByRole: grouped(rows52(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
+          usersByRole: grouped(rows53(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
           vehicles: await scalar(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE deletedAt IS NULL"),
-          shopsByStatus: grouped(rows52(await conn.query("SELECT b.verificationStatus AS k, COUNT(*) AS n FROM `Shop` b WHERE b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL) GROUP BY b.verificationStatus"))),
+          shopsByStatus: grouped(rows53(await conn.query("SELECT b.verificationStatus AS k, COUNT(*) AS n FROM `Shop` b WHERE b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL) GROUP BY b.verificationStatus"))),
           stores: await scalar(conn, "SELECT COUNT(*) AS n FROM `Store`"),
           appointmentsToday: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE scheduledAt >= CURDATE() AND scheduledAt < CURDATE() + INTERVAL 1 DAY"),
           appointmentsPending: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE status = 'pending'"),
@@ -106088,28 +106248,28 @@ var init_admin_store = __esm({
       }
       listUsers(page3) {
         return this.run(async (conn) => ({
-          items: rows52(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
+          items: rows53(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
           page: page3,
           pageSize: PAGE_SIZE7
         }));
       }
       listVehicles(page3) {
         return this.run(async (conn) => ({
-          items: rows52(await conn.query("SELECT id, userId, make, model, year, plate, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
+          items: rows53(await conn.query("SELECT id, userId, make, model, year, plate, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
           page: page3,
           pageSize: PAGE_SIZE7
         }));
       }
       listShops(page3) {
         return this.run(async (conn) => ({
-          items: rows52(await conn.query("SELECT id, userId, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
+          items: rows53(await conn.query("SELECT id, userId, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
           page: page3,
           pageSize: PAGE_SIZE7
         }));
       }
       listAudit(page3) {
         return this.run(async (conn) => ({
-          items: rows52(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
+          items: rows53(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
           page: page3,
           pageSize: PAGE_SIZE7
         }));
@@ -106172,16 +106332,16 @@ function activeHref(current) {
     return null;
   const path = current.split("?")[0]?.replace(/\/+$/, "") || "/";
   const all = [...NAV.flatMap((group) => group.items), ACCOUNT];
-  const matches = all.filter((item) => path === item.href || item.href !== "/admin" && path.startsWith(`${item.href}/`));
+  const matches = all.filter((item2) => path === item2.href || item2.href !== "/admin" && path.startsWith(`${item2.href}/`));
   return matches.sort((a, b) => b.href.length - a.href.length)[0]?.href ?? null;
 }
-function menuLink(item, active) {
-  const current = item.href === active ? ' aria-current="page"' : "";
-  return `<a class="menu-link" href="${escapeHtml(item.href)}"${current}>${navIcon(item.icon)}<span>${escapeHtml(item.label)}</span></a>`;
+function menuLink(item2, active) {
+  const current = item2.href === active ? ' aria-current="page"' : "";
+  return `<a class="menu-link" href="${escapeHtml(item2.href)}"${current}>${navIcon(item2.icon)}<span>${escapeHtml(item2.label)}</span></a>`;
 }
 function menuContents(role, active, csrfToken) {
   const groups = NAV.map((group) => {
-    const links = group.items.filter((item) => item.capability === null || can(role, item.capability)).map((item) => menuLink(item, active)).join("");
+    const links = group.items.filter((item2) => item2.capability === null || can(role, item2.capability)).map((item2) => menuLink(item2, active)).join("");
     return links ? `<div class="nav-group"><div class="nav-title">${escapeHtml(group.label)}</div>${links}</div>` : "";
   }).join("");
   const foot = `<div class="side-foot">${menuLink(ACCOUNT, active)}<form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="${escapeHtml(csrfToken ?? "")}"><button class="logout" type="submit">${navIcon("logout")}<span>Salir</span></button></form></div>`;
@@ -106575,9 +106735,9 @@ var require_bit_buffer = __commonJS({
         const bufIndex = Math.floor(index / 8);
         return (this.buffer[bufIndex] >>> 7 - index % 8 & 1) === 1;
       },
-      put: function(num6, length) {
+      put: function(num7, length) {
         for (let i = 0; i < length; i++) {
-          this.putBit((num6 >>> length - i - 1 & 1) === 1);
+          this.putBit((num7 >>> length - i - 1 & 1) === 1);
         }
       },
       getLengthInBits: function() {
@@ -107779,8 +107939,8 @@ var require_dijkstra = __commonJS({
          * is at the front of the queue.
          */
         push: function(value2, cost) {
-          var item = { value: value2, cost };
-          this.queue.push(item);
+          var item2 = { value: value2, cost };
+          this.queue.push(item2);
           this.queue.sort(this.sorter);
         },
         /**
@@ -111577,8 +111737,8 @@ function toMember(row2) {
   };
 }
 function list6(result) {
-  const [rows61] = result;
-  return Array.isArray(rows61) ? rows61 : [];
+  const [rows62] = result;
+  return Array.isArray(rows62) ? rows62 : [];
 }
 var SELECT2, MysqlStaffStore;
 var init_staff_store = __esm({
@@ -111750,7 +111910,7 @@ function tabs(current, base, options) {
   return `<div class="tabs">${options.map(([key, label5]) => `<a class="${key === current ? "active" : ""}" href="${base}?f=${escapeHtml(key)}">${escapeHtml(label5)}</a>`).join("")}</div>`;
 }
 function relationsListView(input) {
-  const rows61 = input.page.items.map((r) => {
+  const rows62 = input.page.items.map((r) => {
     const waiting = waitingHours(r.waitingSince);
     const late2 = waiting !== null && waiting >= input.waitingHours;
     return `<tr><td><a href="/admin/relations/${escapeHtml(r.id)}">${escapeHtml(relationCode(r.number))}</a></td>
@@ -111767,7 +111927,7 @@ function relationsListView(input) {
   <p class="muted">Las partes hablan solo con AutoMantPro: aqu\xED registras lo que dice cada una y el texto listo para reenviar. El tel\xE9fono de una parte se muestra solo si autoriz\xF3 compartirlo.</p>
   ${empty}
   <div class="scroll"><table><thead><tr><th>V\xEDnculo</th><th>Tipo</th><th>Partes</th><th>Estado</th><th>Canal</th><th>\xDAltimo mensaje</th><th>Espera</th></tr></thead>
-  <tbody>${rows61}</tbody></table></div>
+  <tbody>${rows62}</tbody></table></div>
   <div class="pager">${input.page.page > 1 ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page - 1}">\u2190 Anteriores</a>` : ""}
   ${input.page.items.length === input.page.pageSize ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page + 1}">Siguientes \u2192</a>` : ""}</div></div>`;
 }
@@ -111860,7 +112020,7 @@ function relationDetailView(input) {
   </div>`;
 }
 function disputesListView(input) {
-  const rows61 = input.page.items.map((d) => {
+  const rows62 = input.page.items.map((d) => {
     const resolve2 = input.canResolve && (d.status === "abierta" || d.status === "en_revision") ? `${d.status === "en_revision" && d.resolution ? `<p class="muted">${escapeHtml(d.resolution.slice(0, 160))}</p>` : ""}<form method="post" action="/admin/disputes/${escapeHtml(d.id)}/resolve">${csrfField2(input.csrf)}
             <label for="res-${escapeHtml(d.id)}">Resoluci\xF3n</label><textarea id="res-${escapeHtml(d.id)}" name="resolution" rows="2" maxlength="2000" required></textarea>
             <select name="status"><option value="resuelta">Resuelta</option><option value="en_revision">En revisi\xF3n</option><option value="rechazada">Rechazada</option></select>
@@ -111876,10 +112036,10 @@ function disputesListView(input) {
   ${tabs(input.filter, "/admin/disputes", DISPUTE_FILTERS)}
   ${input.page.items.length === 0 ? `<p class="muted">No hay disputas con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Caso</th><th>V\xEDnculo</th><th>Partes</th><th>Motivo</th><th>Estado</th><th>Resoluci\xF3n</th></tr></thead>
-  <tbody>${rows61}</tbody></table></div></div>`;
+  <tbody>${rows62}</tbody></table></div></div>`;
 }
 function sanctionsListView(input) {
-  const rows61 = input.page.items.map((s) => {
+  const rows62 = input.page.items.map((s) => {
     const state = s.liftedAt ? `<span class="muted">levantada ${escapeHtml(when4(s.liftedAt))}</span>` : isActive(s) ? `<span class="error">vigente${s.endsAt ? ` hasta ${escapeHtml(when4(s.endsAt))}` : ""}</span>` : `<span class="muted">vencida</span>`;
     const lift = input.canLift && !s.liftedAt && isActive(s) ? `<form method="post" action="/admin/sanctions/${escapeHtml(s.id)}/lift">${csrfField2(input.csrf)}
             <label for="lift-${escapeHtml(s.id)}">Motivo para levantarla</label><input id="lift-${escapeHtml(s.id)}" name="reason" maxlength="191" required>
@@ -111894,7 +112054,7 @@ function sanctionsListView(input) {
   <p class="muted">Siempre con motivo, aviso a la entidad y registro en la auditor\xEDa. Se aplican desde el v\xEDnculo o desde la ficha de la persona.</p></div>
   ${input.page.items.length === 0 ? `<p class="muted">Todav\xEDa no hay sanciones registradas.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Entidad</th><th>Paso</th><th>Motivo</th><th>Vigencia</th><th>Levantar</th></tr></thead>
-  <tbody>${rows61}</tbody></table></div></div>`;
+  <tbody>${rows62}</tbody></table></div></div>`;
 }
 var FILTERS, DISPUTE_FILTERS, flashHtml2, csrfField2;
 var init_views_relations = __esm({
@@ -112364,7 +112524,7 @@ var init_relations = __esm({
 
 // packages/api/dist/interfaces/admin/views-claims.js
 function claimsListView(input) {
-  const rows61 = input.items.map((c) => `<tr><td><a href="/admin/claims/${escapeHtml(c.id)}">${escapeHtml(workOrderCode(c.orderNumber))}</a></td>
+  const rows62 = input.items.map((c) => `<tr><td><a href="/admin/claims/${escapeHtml(c.id)}">${escapeHtml(workOrderCode(c.orderNumber))}</a></td>
     <td>${escapeHtml(c.shopName)}<br><span class="muted">${escapeHtml(c.vehicle)}</span></td>
     <td>${escapeHtml(c.ownerReason.slice(0, 160))}<br><span class="muted">${c.source === "rechazo" ? "Entrega rechazada" : "Entrega aceptada con observaci\xF3n"}</span></td>
     <td>${escapeHtml(statusText(c.status))}${c.status === "abierto" ? `<br><span class="muted">Plazo: ${escapeHtml(when5(c.dueAt))}</span>` : ""}</td>
@@ -112374,7 +112534,7 @@ function claimsListView(input) {
   ${tabs2(input.filter)}
   ${input.items.length === 0 ? `<p class="muted">No hay reclamos con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Orden</th><th>Taller y veh\xEDculo</th><th>Motivo del due\xF1o</th><th>Estado</th><th>Abierto</th></tr></thead>
-  <tbody>${rows61}</tbody></table></div></div>`;
+  <tbody>${rows62}</tbody></table></div></div>`;
 }
 function claimDetailView(input) {
   const { claim, order, intake, payments, items, messages } = input.detail;
@@ -112540,7 +112700,7 @@ var init_claims = __esm({
 });
 
 // packages/api/dist/interfaces/admin/part-returns.js
-import { randomUUID as randomUUID50 } from "node:crypto";
+import { randomUUID as randomUUID51 } from "node:crypto";
 function partReturnsView(input) {
   const card = (t) => `<div class="card"><h2>${escapeHtml(shortCode("S", t.requestId))} \xB7 ${escapeHtml(t.category)}</h2>
     <div>Almac\xE9n: ${escapeHtml(t.storeName)} \xB7 Quien compr\xF3: ${escapeHtml(t.buyerName)} \xB7 Precio: ${escapeHtml(formatUsd(t.priceUsd))}</div>
@@ -112609,7 +112769,7 @@ function registerPartReturnRoutes(app2, deps) {
     return page3(request, reply, session, { kind: "ok", text: "Decisi\xF3n registrada. Avisamos a quien compr\xF3 y al almac\xE9n." });
   });
 }
-var RETURN_DECISIONS, DECISION_TEXT, rows53, MysqlPartReturnAdminStore, UUID5, when6;
+var RETURN_DECISIONS, DECISION_TEXT, rows54, MysqlPartReturnAdminStore, UUID5, when6;
 var init_part_returns = __esm({
   "packages/api/dist/interfaces/admin/part-returns.js"() {
     "use strict";
@@ -112620,7 +112780,7 @@ var init_part_returns = __esm({
     init_workflow();
     RETURN_DECISIONS = ["resuelta_comprador", "resuelta_almacen"];
     DECISION_TEXT = { resuelta_comprador: "A favor de quien compr\xF3", resuelta_almacen: "A favor del almac\xE9n" };
-    rows53 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+    rows54 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
     MysqlPartReturnAdminStore = class {
       connect;
       constructor(connect) {
@@ -112637,7 +112797,7 @@ var init_part_returns = __esm({
       /** R2: la foto de la pieza que adjuntó quien compró, si existe. */
       photo(id3) {
         return this.run(async (conn) => {
-          const [p] = await rows53(conn, "SELECT photoMime, photoData FROM `PartReturn` WHERE id = ? AND photoMime IS NOT NULL", [id3]).catch((err) => {
+          const [p] = await rows54(conn, "SELECT photoMime, photoData FROM `PartReturn` WHERE id = ? AND photoMime IS NOT NULL", [id3]).catch((err) => {
             if (err.code === "ER_BAD_FIELD_ERROR")
               return [];
             throw err;
@@ -112646,7 +112806,7 @@ var init_part_returns = __esm({
         });
       }
       list() {
-        return this.run(async (conn) => (await rows53(conn, "SELECT t.id, t.requestId, t.reason, t.storeNote, t.escalationReason, t.status, t.createdAt, t.adminNote, r.category, o.businessName, o.priceUsd, u.name AS buyerName FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId JOIN `User` u ON u.id = r.ownerId WHERE t.status IN ('en_admin','resuelta_comprador','resuelta_almacen') ORDER BY t.status = 'en_admin' DESC, t.createdAt DESC LIMIT 100")).map((r) => ({
+        return this.run(async (conn) => (await rows54(conn, "SELECT t.id, t.requestId, t.reason, t.storeNote, t.escalationReason, t.status, t.createdAt, t.adminNote, r.category, o.businessName, o.priceUsd, u.name AS buyerName FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId JOIN `User` u ON u.id = r.ownerId WHERE t.status IN ('en_admin','resuelta_comprador','resuelta_almacen') ORDER BY t.status = 'en_admin' DESC, t.createdAt DESC LIMIT 100")).map((r) => ({
           id: String(r.id),
           requestId: String(r.requestId),
           category: String(r.category),
@@ -112665,7 +112825,7 @@ var init_part_returns = __esm({
         return this.run(async (conn) => {
           await conn.query("START TRANSACTION");
           try {
-            const [t] = await rows53(conn, "SELECT t.id, t.status, t.requestId, r.ownerId, o.businessUserId FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId WHERE t.id = ? FOR UPDATE", [input.id]);
+            const [t] = await rows54(conn, "SELECT t.id, t.status, t.requestId, r.ownerId, o.businessUserId FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId WHERE t.id = ? FOR UPDATE", [input.id]);
             if (!t || t.status !== "en_admin") {
               await conn.query("ROLLBACK");
               return { ok: false };
@@ -112674,8 +112834,8 @@ var init_part_returns = __esm({
             const ref4 = shortCode("S", String(t.requestId));
             const text14 = `\u2696\uFE0F AutoMantPro decidi\xF3 la devoluci\xF3n del repuesto ${ref4}: ${DECISION_TEXT[input.decision].toLowerCase()}. ${input.note} AutoMantPro no mueve dinero: si corresponde un reembolso, lo acuerdan entre ustedes.`;
             for (const [who, key] of [[String(t.ownerId), "buyer"], [String(t.businessUserId), "store"]])
-              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.return', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID50(), `partreturn-resolved:${input.id}:${key}`, who, JSON.stringify({ message: text14 })]);
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'part.return.resolved', ?, 'admin', 'LocalRequest', ?, ?, UTC_TIMESTAMP(3))", [randomUUID50(), input.adminUserId, t.requestId, JSON.stringify({ returnId: input.id, decision: input.decision })]);
+              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.return', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID51(), `partreturn-resolved:${input.id}:${key}`, who, JSON.stringify({ message: text14 })]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'part.return.resolved', ?, 'admin', 'LocalRequest', ?, ?, UTC_TIMESTAMP(3))", [randomUUID51(), input.adminUserId, t.requestId, JSON.stringify({ returnId: input.id, decision: input.decision })]);
             await conn.query("COMMIT");
             return { ok: true, ref: ref4 };
           } catch (err) {
@@ -112793,7 +112953,7 @@ var init_model_plan_input = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/model-plan-admin-store.js
-import { randomUUID as randomUUID51 } from "node:crypto";
+import { randomUUID as randomUUID52 } from "node:crypto";
 var MODEL_PLAN_PAGE_SIZE, ModelPlanConflictError, toRecord3, COLUMNS2, snapshot, MysqlModelPlanAdminStore;
 var init_model_plan_admin_store = __esm({
   "packages/api/dist/infrastructure/plans/model-plan-admin-store.js"() {
@@ -112837,7 +112997,7 @@ var init_model_plan_admin_store = __esm({
       }
       rows = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
       async audit(conn, eventType, actor, id3, before, after) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'VehicleModelPlan', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID51(), eventType, actor, id3, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'VehicleModelPlan', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID52(), eventType, actor, id3, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
       }
       async tx(conn, work) {
         await conn.query("START TRANSACTION");
@@ -112928,7 +113088,7 @@ var init_model_plan_admin_store = __esm({
 function modelPlansListView(input) {
   const base = (page3) => `/admin/model-plans?${new URLSearchParams({ ...input.q ? { q: input.q } : {}, ...input.marca ? { marca: input.marca } : {}, page: String(page3) }).toString()}`;
   const pages = Math.max(1, Math.ceil(input.total / input.pageSize));
-  const rows61 = input.items.map((r) => `<tr>
+  const rows62 = input.items.map((r) => `<tr>
     <td>${escapeHtml(r.marca)}<br><span class="muted">${escapeHtml(r.modelo)}</span></td>
     <td>${r.anioDesde}\u2013${r.anioHasta}${r.combustible ? `<br><span class="muted">${escapeHtml(r.combustible)}</span>` : ""}</td>
     <td>${escapeHtml(serviceName4(r.serviceId))}<br><span class="muted">${escapeHtml(interval(r))}</span></td>
@@ -112941,7 +113101,7 @@ ${flashHtml4(input.flash)}
 <p class="muted">Cada fila fija el intervalo de un servicio para un modelo y un rango de a\xF1os. Solo las filas que se usan (columna \xABverificado\xBB) entran en el plan de los veh\xEDculos; las dem\xE1s se conservan sin efecto. Al desactivar una fila no se borra.</p>
 <div class="card"><h2>Filas por marca</h2>${input.brands.length ? `<div class="scroll"><table><thead><tr><th>Marca</th><th class="num">Filas</th><th class="num">Se usan</th></tr></thead><tbody>${input.brands.map((b) => `<tr><td><a href="/admin/model-plans?marca=${encodeURIComponent(b.marca)}">${escapeHtml(b.marca)}</a></td><td class="num">${b.total}</td><td class="num">${b.verificadas}</td></tr>`).join("")}</tbody></table></div>` : '<p class="muted">Todav\xEDa no hay filas.</p>'}</div>
 <div class="card"><h2>Buscar</h2><form method="get" action="/admin/model-plans"><label for="mp-q">Marca, modelo, servicio o fuente</label><input id="mp-q" name="q" maxlength="80" value="${escapeHtml(input.q)}"><button type="submit">Buscar</button></form>${input.canEdit ? '<p><a href="/admin/model-plans/new">Agregar una fila</a></p>' : ""}</div>
-<div class="card"><h2>${input.total} ${input.total === 1 ? "fila" : "filas"}${input.marca ? ` de ${escapeHtml(input.marca)}` : ""}</h2>${input.items.length ? `<div class="scroll"><table><thead><tr><th>Marca y modelo</th><th>A\xF1os</th><th>Servicio</th><th>Fuente</th><th>Estado</th><th></th></tr></thead><tbody>${rows61}</tbody></table></div>
+<div class="card"><h2>${input.total} ${input.total === 1 ? "fila" : "filas"}${input.marca ? ` de ${escapeHtml(input.marca)}` : ""}</h2>${input.items.length ? `<div class="scroll"><table><thead><tr><th>Marca y modelo</th><th>A\xF1os</th><th>Servicio</th><th>Fuente</th><th>Estado</th><th></th></tr></thead><tbody>${rows62}</tbody></table></div>
 <p>${input.page > 1 ? `<a href="${escapeHtml(base(input.page - 1))}">Anteriores</a> \xB7 ` : ""}P\xE1gina ${input.page} de ${pages}${input.page < pages ? ` \xB7 <a href="${escapeHtml(base(input.page + 1))}">Siguientes</a>` : ""}</p>` : '<p class="muted">No hay filas con ese criterio.</p>'}</div>`;
 }
 function modelPlanFormView(input) {
@@ -113111,16 +113271,16 @@ var init_model_plans = __esm({
 });
 
 // packages/api/dist/infrastructure/admin/metrics-store.js
-var DAY3, num4, counts, MISSING6, MysqlMetricsStore;
+var DAY3, num5, counts, MISSING7, MysqlMetricsStore;
 var init_metrics_store = __esm({
   "packages/api/dist/infrastructure/admin/metrics-store.js"() {
     "use strict";
     init_apply();
     init_workflow();
     DAY3 = 864e5;
-    num4 = (value2) => Number(value2 ?? 0) || 0;
-    counts = (r) => ({ total: num4(r?.total), last7: num4(r?.last7), last30: num4(r?.last30) });
-    MISSING6 = /* @__PURE__ */ new Set(["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"]);
+    num5 = (value2) => Number(value2 ?? 0) || 0;
+    counts = (r) => ({ total: num5(r?.total), last7: num5(r?.last7), last30: num5(r?.last30) });
+    MISSING7 = /* @__PURE__ */ new Set(["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"]);
     MysqlMetricsStore = class {
       connect;
       constructor(connect = () => openConnection()) {
@@ -113130,36 +113290,36 @@ var init_metrics_store = __esm({
         const conn = await this.connect();
         const d7 = new Date(now.getTime() - 7 * DAY3);
         const d30 = new Date(now.getTime() - 30 * DAY3);
-        const rows61 = async (sql, args = []) => (await conn.query(sql, args))[0];
+        const rows62 = async (sql, args = []) => (await conn.query(sql, args))[0];
         const part = async (work) => {
           try {
             return await work();
           } catch (err) {
-            if (MISSING6.has(err.code ?? ""))
+            if (MISSING7.has(err.code ?? ""))
               return null;
             throw err;
           }
         };
         try {
           await conn.query("START TRANSACTION READ ONLY");
-          const users = await rows61("SELECT role, COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `User` WHERE deletedAt IS NULL GROUP BY role ORDER BY role", [d7, d30]);
-          const requests = await part(async () => counts((await rows61("SELECT COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `LocalRequest`", [d7, d30]))[0]));
+          const users = await rows62("SELECT role, COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `User` WHERE deletedAt IS NULL GROUP BY role ORDER BY role", [d7, d30]);
+          const requests = await part(async () => counts((await rows62("SELECT COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `LocalRequest`", [d7, d30]))[0]));
           const appointments = await part(async () => {
-            const total = counts((await rows61("SELECT COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `Appointment`", [d7, d30]))[0]);
-            const byStatus = Object.fromEntries((await rows61("SELECT status, COUNT(*) AS n FROM `Appointment` GROUP BY status")).map((r) => [String(r.status), num4(r.n)]));
+            const total = counts((await rows62("SELECT COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `Appointment`", [d7, d30]))[0]);
+            const byStatus = Object.fromEntries((await rows62("SELECT status, COUNT(*) AS n FROM `Appointment` GROUP BY status")).map((r) => [String(r.status), num5(r.n)]));
             return { ...total, byStatus };
           });
           const orders = await part(async () => {
-            const [open] = await rows61("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE status IN (?)", [OPEN_STATUSES]);
-            const closed = counts((await rows61("SELECT COUNT(*) AS total, COALESCE(SUM(closedAt >= ?), 0) AS last7, COALESCE(SUM(closedAt >= ?), 0) AS last30 FROM `WorkOrder` WHERE status = 'cerrada'", [d7, d30]))[0]);
-            return { open: num4(open?.n), closed };
+            const [open] = await rows62("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE status IN (?)", [OPEN_STATUSES]);
+            const closed = counts((await rows62("SELECT COUNT(*) AS total, COALESCE(SUM(closedAt >= ?), 0) AS last7, COALESCE(SUM(closedAt >= ?), 0) AS last30 FROM `WorkOrder` WHERE status = 'cerrada'", [d7, d30]))[0]);
+            return { open: num5(open?.n), closed };
           });
           const shopResponse = await part(async () => {
             const base = "SELECT AVG(TIMESTAMPDIFF(MINUTE, r.createdAt, o.createdAt)) AS avgMin, COUNT(*) AS n FROM `LocalOffer` o JOIN `LocalRequest` r ON r.id = o.requestId WHERE r.kind = 'servicio' AND o.priceUsd IS NOT NULL AND o.createdAt >= r.createdAt";
-            const hours2 = (r) => ({ avgHours: r && r.avgMin !== null && r.avgMin !== void 0 && num4(r.n) > 0 ? Math.round(num4(r.avgMin) / 6) / 10 : null, samples: num4(r?.n) });
-            return { overall: hours2((await rows61(base))[0]), last30: hours2((await rows61(`${base} AND o.createdAt >= ?`, [d30]))[0]) };
+            const hours2 = (r) => ({ avgHours: r && r.avgMin !== null && r.avgMin !== void 0 && num5(r.n) > 0 ? Math.round(num5(r.avgMin) / 6) / 10 : null, samples: num5(r?.n) });
+            return { overall: hours2((await rows62(base))[0]), last30: hours2((await rows62(`${base} AND o.createdAt >= ?`, [d30]))[0]) };
           });
-          const claimsOpen = await part(async () => num4((await rows61("SELECT COUNT(*) AS n FROM `WorkOrderClaim` WHERE status IN ('abierto','respondido','en_admin')"))[0]?.n));
+          const claimsOpen = await part(async () => num5((await rows62("SELECT COUNT(*) AS n FROM `WorkOrderClaim` WHERE status IN ('abierto','respondido','en_admin')"))[0]?.n));
           return { generatedAt: now, usersByRole: users.map((r) => ({ role: String(r.role), ...counts(r) })), requests, appointments, orders, shopResponse, claimsOpen };
         } finally {
           await conn.query("ROLLBACK").catch(() => void 0);
@@ -113179,9 +113339,9 @@ function cell2(value2) {
   const safe = /^[=+\-@]/.test(clean4) ? `'${clean4}` : clean4;
   return `"${safe.replace(/"/g, '""')}"`;
 }
-function toCsv(columns, rows61) {
+function toCsv(columns, rows62) {
   const head = columns.map(([, label5]) => cell2(label5)).join(SEPARATOR);
-  const body = rows61.map((row2) => columns.map(([key]) => cell2(row2[key])).join(SEPARATOR));
+  const body = rows62.map((row2) => columns.map(([key]) => cell2(row2[key])).join(SEPARATOR));
   return `\uFEFF${[head, ...body].join("\r\n")}\r
 `;
 }
@@ -113205,7 +113365,7 @@ function when7(value2) {
   return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeZone: "America/Guayaquil" }).format(date2);
 }
 function exportsView(input) {
-  const rows61 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
+  const rows62 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
     <td>${input.counts ? String(input.counts[d.key] ?? 0) : "\u2014"}</td>
     <td>${d.personal ? '<span class="error">datos personales</span>' : '<span class="muted">sin datos personales</span>'}</td>
     <td><a href="/admin/exports/${escapeHtml(d.key)}.csv">Descargar CSV</a></td></tr>`).join("");
@@ -113213,11 +113373,11 @@ function exportsView(input) {
   <div class="card"><h2>C\xF3mo usarlo</h2>
     <p class="muted">Cada archivo se abre en Excel o en Google Sheets. Guarda los respaldos en un lugar cifrado y b\xF3rralos cuando ya no los necesites: los archivos marcados contienen datos personales y su descarga queda en la auditor\xEDa.</p>
     <p class="muted">La descarga trae hasta 5.000 filas por archivo, las m\xE1s recientes primero.</p></div>
-  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows61}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows62}</tbody></table></div></div>`;
 }
 function dataRequestsView(input) {
   const tabs3 = STATUS_FILTERS.map(([key, label5]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/data-requests?f=${escapeHtml(key)}">${escapeHtml(label5)}</a>`).join("");
-  const rows61 = input.items.map((r) => {
+  const rows62 = input.items.map((r) => {
     const left = daysLeft(r.dueAt);
     const plazo = isOverdue(r) ? `<span class="error">vencido hace ${Math.abs(left)} d\xEDas</span>` : r.status === "atendida" || r.status === "rechazada" ? `<span class="muted">cerrado ${when7(r.resolvedAt)}</span>` : `<span class="${left <= 3 ? "error" : "muted"}">${left} d\xEDas</span>`;
     const actions = r.status === "recibida" || r.status === "en_proceso" ? `<a href="/admin/data-requests/${escapeHtml(r.id)}/export.json">Descargar sus datos</a>
@@ -113242,7 +113402,7 @@ function dataRequestsView(input) {
     <ul>${REQUEST_KINDS.map((k) => `<li><strong>${escapeHtml(k.label)}:</strong> ${escapeHtml(k.description)}</li>`).join("")}</ul>
     <p class="muted">Las solicitudes se abren desde la ficha del titular.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay solicitudes con ese filtro.</p>` : ""}
-  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows61}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows62}</tbody></table></div></div>`;
 }
 function userDataRequestsCard(userId, items, csrf) {
   const list7 = items.length ? `<ul>${items.map((r) => `<li>${escapeHtml(dataRequestCode(r.number))} \xB7 ${escapeHtml(kindLabel(r.kind))} \xB7 ${escapeHtml(REQUEST_STATUS_LABELS[r.status] ?? r.status)}${isOverdue(r) ? ' <span class="error">vencido</span>' : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin solicitudes de datos.</p>`;
@@ -113329,15 +113489,15 @@ function registerDataRoutes(app2, deps) {
     const dataset = DATASETS.find((d) => d.key === raw);
     if (!dataset)
       return errorPage(request, reply, session, "Respaldos", "Ese conjunto no existe.", 404);
-    let rows61;
+    let rows62;
     try {
-      rows61 = await data3.exportRows(dataset.key);
+      rows62 = await data3.exportRows(dataset.key);
     } catch (err) {
       const m = dbError2(err);
       return errorPage(request, reply, session, "Respaldos", m.text, m.status);
     }
-    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows61.length} filas${dataset.personal ? ", con datos personales" : ""})`);
-    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows61));
+    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows62.length} filas${dataset.personal ? ", con datos personales" : ""})`);
+    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows62));
   });
   app2.get("/data-requests", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -113470,8 +113630,8 @@ var init_data = __esm({
 
 // packages/api/dist/interfaces/admin/recoveries.js
 function view(items, csrf, filter) {
-  const rows61 = items.map((r) => `<tr><td><a href="/admin/users/${escapeHtml(r.userId)}">${escapeHtml(r.accountName)}</a></td><td>${escapeHtml(r.claimantName)}</td><td class="mono">${escapeHtml(r.newPhone)}</td><td>${escapeHtml(r.detail)}</td><td>${escapeHtml(STATUS2[r.status] ?? r.status)}${r.resolutionNote ? `<br><small>${escapeHtml(r.resolutionNote)}</small>` : ""}</td><td>${r.status === "recibida" ? `<form method="post" action="/admin/recoveries/${escapeHtml(r.id)}/resolve"><input type="hidden" name="csrf" value="${escapeHtml(csrf)}"><input name="note" required minlength="10" maxlength="300" aria-label="C\xF3mo comprobaste la identidad" placeholder="C\xF3mo comprobaste la identidad"><button name="decision" value="approve">Aprobar</button> <button name="decision" value="reject">Rechazar</button></form>` : ""}</td></tr>`).join("");
-  return `<div class="card"><h2>${TITLE2}</h2><p>Personas que perdieron el n\xFAmero de su cuenta. Comprobaron con un c\xF3digo que el n\xFAmero nuevo es suyo, pero <strong>no que la cuenta lo sea</strong>: confirma su identidad por fuera antes de aprobar. Aprobar entrega la cuenta y avisa al n\xFAmero anterior.</p><p><a href="/admin/recoveries">Por revisar</a> \xB7 <a href="/admin/recoveries?f=todas">Todas</a></p>${items.length ? `<table><thead><tr><th>Cuenta</th><th>Dice ser</th><th>N\xFAmero nuevo</th><th>Detalle</th><th>Estado</th><th>Decisi\xF3n</th></tr></thead><tbody>${rows61}</tbody></table>` : `<p>${filter === "todas" ? "No hay solicitudes." : "No hay solicitudes por revisar."}</p>`}</div>`;
+  const rows62 = items.map((r) => `<tr><td><a href="/admin/users/${escapeHtml(r.userId)}">${escapeHtml(r.accountName)}</a></td><td>${escapeHtml(r.claimantName)}</td><td class="mono">${escapeHtml(r.newPhone)}</td><td>${escapeHtml(r.detail)}</td><td>${escapeHtml(STATUS2[r.status] ?? r.status)}${r.resolutionNote ? `<br><small>${escapeHtml(r.resolutionNote)}</small>` : ""}</td><td>${r.status === "recibida" ? `<form method="post" action="/admin/recoveries/${escapeHtml(r.id)}/resolve"><input type="hidden" name="csrf" value="${escapeHtml(csrf)}"><input name="note" required minlength="10" maxlength="300" aria-label="C\xF3mo comprobaste la identidad" placeholder="C\xF3mo comprobaste la identidad"><button name="decision" value="approve">Aprobar</button> <button name="decision" value="reject">Rechazar</button></form>` : ""}</td></tr>`).join("");
+  return `<div class="card"><h2>${TITLE2}</h2><p>Personas que perdieron el n\xFAmero de su cuenta. Comprobaron con un c\xF3digo que el n\xFAmero nuevo es suyo, pero <strong>no que la cuenta lo sea</strong>: confirma su identidad por fuera antes de aprobar. Aprobar entrega la cuenta y avisa al n\xFAmero anterior.</p><p><a href="/admin/recoveries">Por revisar</a> \xB7 <a href="/admin/recoveries?f=todas">Todas</a></p>${items.length ? `<table><thead><tr><th>Cuenta</th><th>Dice ser</th><th>N\xFAmero nuevo</th><th>Detalle</th><th>Estado</th><th>Decisi\xF3n</th></tr></thead><tbody>${rows62}</tbody></table>` : `<p>${filter === "todas" ? "No hay solicitudes." : "No hay solicitudes por revisar."}</p>`}</div>`;
 }
 function registerRecoveryRoutes(app2, deps) {
   const page3 = async (request, reply, session, filter) => {
@@ -113580,7 +113740,7 @@ function contractView(input) {
   </div>`;
 }
 function catalogView(input) {
-  const rows61 = input.catalog.map((o) => {
+  const rows62 = input.catalog.map((o) => {
     const id3 = escapeHtml(o.key);
     const lim = (k) => o.limits[k] === void 0 ? "" : String(o.limits[k]);
     return `<div class="card"><h2>${escapeHtml(PROFILE_LABELS[o.profile])} \xB7 ${escapeHtml(o.name)}</h2>
@@ -113605,7 +113765,7 @@ function catalogView(input) {
   }).join("");
   return `<div class="stack wide"><h1>Cat\xE1logo y precios</h1>${billingTabs("catalogo")}${flashHtml6(input.flash)}
   <div class="card"><p class="muted">Los precios se guardan sin IVA y se muestran con IVA incluido (${escapeHtml(formatUsd2(withIva(1)))} por cada US$ 1). Un cambio de precio vale para contratos nuevos y renovaciones; nunca cambia un per\xEDodo ya pagado. Un tope vac\xEDo significa sin tope.</p></div>
-  ${rows61}</div>`;
+  ${rows62}</div>`;
 }
 function accountsView(input) {
   const list7 = input.accounts.length ? `<div class="scroll"><table><thead><tr><th>Banco</th><th>Cuenta</th><th>Titular</th><th>Estado</th><th></th></tr></thead><tbody>${input.accounts.map((a) => `<tr><td>${escapeHtml(a.bank)}</td><td>${escapeHtml(a.accountType)} N\xB0 ${escapeHtml(a.number)}</td><td>${escapeHtml(a.holder)}<br><span class="muted">${escapeHtml(a.holderId)}</span></td>
@@ -113625,7 +113785,7 @@ function accountsView(input) {
 }
 function revenueView(input) {
   const r = input.report;
-  const rows61 = r.rows.map((x) => `<tr><td>SB-${escapeHtml(String(x.number).padStart(4, "0"))}</td><td>${escapeHtml(when8(x.verifiedAt))}</td><td>${escapeHtml(x.userName ?? "")}</td><td>${escapeHtml(planName(x.plan, input.catalog))}${x.period ? `<br><span class="muted">${escapeHtml(x.period)}</span>` : ""}</td>
+  const rows62 = r.rows.map((x) => `<tr><td>SB-${escapeHtml(String(x.number).padStart(4, "0"))}</td><td>${escapeHtml(when8(x.verifiedAt))}</td><td>${escapeHtml(x.userName ?? "")}</td><td>${escapeHtml(planName(x.plan, input.catalog))}${x.period ? `<br><span class="muted">${escapeHtml(x.period)}</span>` : ""}</td>
       <td>${escapeHtml(money4(x.subtotalUsd))}</td><td>${escapeHtml(money4(x.ivaUsd))}</td><td><strong>${escapeHtml(money4(x.amountUsd))}</strong></td><td>${escapeHtml(x.invoiceNumber ?? "\u2014")}</td></tr>`).join("");
   const [y, m] = r.month.split("-").map(Number);
   const prev = `${m === 1 ? y - 1 : y}-${String(m === 1 ? 12 : m - 1).padStart(2, "0")}`;
@@ -113638,7 +113798,7 @@ function revenueView(input) {
     <div class="card"><h2>Por verificar</h2><div class="big">${escapeHtml(String(r.toVerify))}</div><p class="muted">pagos informados \xB7 <a href="/admin/plans?f=pendiente">ver</a></p></div>
     <div class="card"><h2>Sin renovar</h2><div class="big">${escapeHtml(String(r.lapsed))}</div><p class="muted">planes que vencieron este mes</p></div>
   </div>
-  ${r.rows.length ? `<div class="scroll"><table><thead><tr><th>Contrato</th><th>Verificado</th><th>Cliente</th><th>Plan</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Factura</th></tr></thead><tbody>${rows61}</tbody></table></div>` : `<p class="muted">No hay pagos verificados en este mes.</p>`}
+  ${r.rows.length ? `<div class="scroll"><table><thead><tr><th>Contrato</th><th>Verificado</th><th>Cliente</th><th>Plan</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Factura</th></tr></thead><tbody>${rows62}</tbody></table></div>` : `<p class="muted">No hay pagos verificados en este mes.</p>`}
   </div>`;
 }
 var flashHtml6, csrfField6, money4, statusLabel;
@@ -113672,7 +113832,7 @@ function planBadge(plan, endsAt) {
 function plansListView(input) {
   const catalog = input.catalog ?? DEFAULT_OFFERS;
   const tabs3 = FILTERS4.map(([key, label5]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/plans?f=${escapeHtml(key)}">${escapeHtml(label5)}${key === "pendiente" && input.pending > 0 ? ` (${input.pending})` : ""}</a>`).join("");
-  const rows61 = input.items.map((s) => {
+  const rows62 = input.items.map((s) => {
     const left = daysLeft2(s.endsAt);
     const vigencia = s.status === "activa" ? s.endsAt ? `${when9(s.startsAt)} \u2192 ${when9(s.endsAt)}<br><span class="${left !== null && left <= 7 ? "error" : "muted"}">${left} d\xEDas</span>` : `desde ${when9(s.startsAt)}<br><span class="muted">sin vencimiento</span>` : `<span class="muted">${when9(s.createdAt)}</span>`;
     const acciones = input.canDecide && (s.status === "pendiente" || s.status === "solicitada") ? `<form method="post" action="/admin/subscriptions/${escapeHtml(s.id)}/verify">${csrfField7(input.csrf)}
@@ -113697,7 +113857,7 @@ function plansListView(input) {
     <p class="muted">Premium habilita: ${Object.values(FEATURE_LABELS).slice(2).map((f) => escapeHtml(f)).join(" \xB7 ")}.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay suscripciones con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Titular</th><th>Plan</th><th>Pago</th><th>Vigencia</th><th>Acciones</th></tr></thead>
-  <tbody>${rows61}</tbody></table></div></div>`;
+  <tbody>${rows62}</tbody></table></div></div>`;
 }
 function userPlanCard(userId, subs, csrf, canRegister, role = "dueno", usage = {}) {
   const plan = effectivePlan(subs);
@@ -113926,7 +114086,7 @@ var init_plans2 = __esm({
 // packages/api/dist/interfaces/admin/ads.js
 function adsListView(input) {
   const tabs3 = AD_FILTERS.map((key) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/publicidad?f=${escapeHtml(key)}">${escapeHtml(LABELS2[key])}${key === "pago_enviado" && input.pending > 0 ? ` (${input.pending})` : ""}</a>`).join("");
-  const rows61 = input.items.map((a) => {
+  const rows62 = input.items.map((a) => {
     const files = [a.hasProof ? `<a href="/admin/publicidad/${escapeHtml(a.id)}/comprobante" target="_blank" rel="noopener">Ver comprobante</a>` : "", a.hasImage ? `<a href="/admin/publicidad/${escapeHtml(a.id)}/imagen" target="_blank" rel="noopener">Ver imagen</a>` : ""].filter(Boolean).join(" \xB7 ");
     const actions = input.canDecide && a.status === "pago_enviado" ? `<form method="post" action="/admin/publicidad/${escapeHtml(a.id)}/aprobar">${csrfField8(input.csrf)}<button type="submit">Aprobar el pago y publicar</button></form>
         <form method="post" action="/admin/publicidad/${escapeHtml(a.id)}/rechazar">${csrfField8(input.csrf)}<label for="r-${escapeHtml(a.id)}">Motivo del rechazo</label><input id="r-${escapeHtml(a.id)}" name="reason" maxlength="191" required><button class="danger" type="submit">Rechazar</button></form>` : input.canDecide && (a.status === "borrador" || a.status === "rechazado") ? `${a.rejectReason ? `<span class="muted">${escapeHtml(a.rejectReason)}</span><br>` : ""}${a.paymentSentAt ? `<span class="muted">Datos de pago enviados el ${escapeHtml(when10(a.paymentSentAt))}</span>` : ""}
@@ -113943,7 +114103,7 @@ function adsListView(input) {
   <div class="tabs">${tabs3}</div>
   <div class="card"><h2>C\xF3mo se revisa</h2><p class="muted">Igual que al contratar un plan: el taller o almac\xE9n arma el anuncio en su perfil, ve el precio por formatos y d\xEDas (tarifas en packages/api/docs/publicidad-tarifas.md), recibe por WhatsApp, desde el n\xFAmero de AutoMantPro, los datos de pago que se env\xEDan aqu\xED (\xABPor enviar datos de pago\xBB), transfiere y sube la foto del comprobante. Aqu\xED se verifica que el dinero lleg\xF3 y que el texto y la imagen son aptos: sin datos de terceros, sin precios enga\xF1osos ni marcas ajenas. Al aprobar, el anuncio sale en su fecha de inicio y luego se registra la factura del SRI, que tambi\xE9n le llega por WhatsApp; al rechazar, el negocio recibe el motivo y puede subir otro comprobante.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay anuncios con ese filtro.</p>` : ""}
-  <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Anuncio</th><th>Formatos</th><th>Fechas</th><th>Pago</th><th>Acciones</th></tr></thead><tbody>${rows61}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Anuncio</th><th>Formatos</th><th>Fechas</th><th>Pago</th><th>Acciones</th></tr></thead><tbody>${rows62}</tbody></table></div></div>`;
 }
 function registerAdAdminRoutes(app2, deps) {
   const { ads } = deps;
@@ -114374,7 +114534,7 @@ function invitationMessage(request) {
     `"${request.description.trim()}"`,
     "",
     "\xBFPuedes atenderlo? Resp\xF3ndeme con precio estimado, cu\xE1nto demora y cu\xE1ndo tendr\xEDas espacio."
-  ].filter((line) => line !== null).join("\n");
+  ].filter((line2) => line2 !== null).join("\n");
 }
 function comparisonMessage(request, offers) {
   if (offers.length === 0) {
@@ -114802,7 +114962,7 @@ var init_service_requests = __esm({
 });
 
 // packages/api/dist/infrastructure/service-requests/service-request-store.js
-function rows54(result) {
+function rows55(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -114883,7 +115043,7 @@ var init_service_request_store = __esm({
       }
       candidates(city) {
         const base = "SELECT sh.id, sh.name, sh.city, sh.zone, sh.specialties, sh.ratingAvg FROM `Shop` sh WHERE sh.verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(sh.city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows54(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows55(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY sh.name LIMIT 100`, [city.trim(), city.trim()]);
@@ -114898,9 +115058,9 @@ var init_service_request_store = __esm({
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows54(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows55(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
-          const next = rows54(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
+          const next = rows55(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
           await conn.query("INSERT INTO `ServiceRequest` (id, `number`, ownerId, vehicleId, category, description, city, zone, status, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'abierta', ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, Number(next?.n ?? 1), input.ownerId, input.vehicleId, input.category, input.description, input.city, input.zone, input.createdBy]);
           for (const shopId of input.shopIds) {
             await conn.query("INSERT INTO `ServiceOffer` (id, requestId, shopId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id3, shopId]);
@@ -114918,21 +115078,21 @@ var init_service_request_store = __esm({
             where = "WHERE r.status = 'abierta' AND (SELECT COUNT(*) FROM `ServiceOffer` o WHERE o.requestId = r.id AND o.status = 'ofertado') = 0";
           else if (filter === "cerradas")
             where = "WHERE r.status IN ('cerrada', 'cancelada')";
-          const items = rows54(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`)).map(toRequest2);
+          const items = rows55(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`)).map(toRequest2);
           return { items, page: Math.max(1, Math.floor(page3)), pageSize: PAGE_SIZE8 };
         });
       }
       get(id3) {
         return this.run(async (conn) => {
-          const row2 = rows54(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id3]))[0];
+          const row2 = rows55(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id3]))[0];
           if (!row2)
             return null;
-          const offers = rows54(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id3])).map(toOffer);
+          const offers = rows55(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id3])).map(toOffer);
           return { request: toRequest2(row2), offers };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows54(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
+        return this.run(async (conn) => rows55(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
       }
       saveOffer(requestId, offerId, response) {
         return this.run(async (conn) => {
@@ -114962,7 +115122,7 @@ var init_service_request_store = __esm({
 });
 
 // packages/api/dist/infrastructure/ratings/rating-store.js
-function rows55(result) {
+function rows56(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -115008,7 +115168,7 @@ var init_rating_store = __esm({
       }
       add(input) {
         return this.run(async (conn) => {
-          const created = rows55(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows56(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
           await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [id3, input.fromId, input.toId, input.score, input.comment, input.kind, input.workOrderId, input.quoteRequestId]);
           await this.refresh(conn, input.toId);
@@ -115017,23 +115177,23 @@ var init_rating_store = __esm({
       }
       forUser(userId, limit = 20) {
         const cap = Math.min(Math.max(1, Math.floor(limit)), 100);
-        return this.run(async (conn) => rows55(await conn.query(`${SELECT3} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow4));
+        return this.run(async (conn) => rows56(await conn.query(`${SELECT3} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow4));
       }
       forWorkOrder(workOrderId) {
         return this.run(async (conn) => {
-          const row2 = rows55(await conn.query(`${SELECT3} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
+          const row2 = rows56(await conn.query(`${SELECT3} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
           return row2 ? toRow4(row2) : null;
         });
       }
       get(id3) {
         return this.run(async (conn) => {
-          const row2 = rows55(await conn.query(`${SELECT3} WHERE r.id = ? LIMIT 1`, [id3]))[0];
+          const row2 = rows56(await conn.query(`${SELECT3} WHERE r.id = ? LIMIT 1`, [id3]))[0];
           return row2 ? toRow4(row2) : null;
         });
       }
       hide(id3, reason, hiddenBy) {
         return this.run(async (conn) => {
-          const row2 = rows55(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id3]))[0];
+          const row2 = rows56(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id3]))[0];
           if (!row2)
             return false;
           const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = CURRENT_TIMESTAMP(3), hiddenBy = ?, hiddenReason = ? WHERE id = ? AND hiddenAt IS NULL", [hiddenBy, reason, id3]);
@@ -115045,7 +115205,7 @@ var init_rating_store = __esm({
       }
       show(id3) {
         return this.run(async (conn) => {
-          const row2 = rows55(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id3]))[0];
+          const row2 = rows56(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id3]))[0];
           if (!row2)
             return false;
           const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = NULL, hiddenBy = NULL, hiddenReason = NULL WHERE id = ? AND hiddenAt IS NOT NULL", [id3]);
@@ -115060,7 +115220,7 @@ var init_rating_store = __esm({
 });
 
 // packages/api/dist/infrastructure/relations/relation-store.js
-function rows56(result) {
+function rows57(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -115141,15 +115301,15 @@ var init_relation_store = __esm({
         }
       }
       async nextNumber(conn, table2) {
-        const row2 = rows56(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table2}\``))[0];
+        const row2 = rows57(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table2}\``))[0];
         return Number(row2?.n ?? 1);
       }
       ensureForOrigin(input) {
         return this.run(async (conn) => {
-          const existing = rows56(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
+          const existing = rows57(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
           if (existing)
             return String(existing.id);
-          const created = rows56(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows57(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
           const number2 = await this.nextNumber(conn, "Relationship");
           await conn.query("INSERT INTO `Relationship` (id, `number`, kind, status, channel, originType, originId, subject, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, 'activa', 'mediado', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, number2, input.kind, input.originType, input.originId, input.subject, input.createdBy]);
@@ -115175,16 +115335,16 @@ var init_relation_store = __esm({
           } else if (filter === "cerradas") {
             where = "WHERE r.status IN ('cerrada', 'bloqueada')";
           }
-          const items = rows56(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`, params2)).map(toRelation);
+          const items = rows57(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`, params2)).map(toRelation);
           return { items, page: Math.max(1, Math.floor(page3)), pageSize: PAGE_SIZE9 };
         });
       }
       get(id3) {
         return this.run(async (conn) => {
-          const row2 = rows56(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id3]))[0];
+          const row2 = rows57(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id3]))[0];
           if (!row2)
             return null;
-          const parties = rows56(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id3])).map((p) => ({
+          const parties = rows57(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id3])).map((p) => ({
             id: String(p.id),
             userId: String(p.userId),
             role: String(p.role),
@@ -115194,7 +115354,7 @@ var init_relation_store = __esm({
             consentAt: p.consentAt ?? null,
             mutedAt: p.mutedAt ?? null
           }));
-          const messages = rows56(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id3])).map((m) => ({
+          const messages = rows57(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id3])).map((m) => ({
             id: String(m.id),
             fromUserId: str5(m.fromUserId),
             toUserId: str5(m.toUserId),
@@ -115206,16 +115366,16 @@ var init_relation_store = __esm({
             flagged: bool(m.flagged),
             createdAt: m.createdAt
           }));
-          const disputes = rows56(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id3])).map(toDispute);
+          const disputes = rows57(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id3])).map(toDispute);
           return { relation: toRelation(row2), parties, messages, disputes };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows56(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
+        return this.run(async (conn) => rows57(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
       }
       addMessage(input) {
         return this.run(async (conn) => {
-          const created = rows56(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows57(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
           await conn.query(`INSERT INTO \`RelationshipMessage\` (id, relationshipId, fromUserId, toUserId, body, kind, relayedAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ${input.relayed ? "CURRENT_TIMESTAMP(3)" : "NULL"}, ?, CURRENT_TIMESTAMP(3))`, [id3, input.relationshipId, input.fromUserId, input.toUserId, input.body, input.kind, input.createdBy]);
           await conn.query("UPDATE `Relationship` SET lastMessageAt = CURRENT_TIMESTAMP(3), waitingSince = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.toUserId ? /* @__PURE__ */ new Date() : null, input.relationshipId]);
@@ -115246,7 +115406,7 @@ var init_relation_store = __esm({
       }
       openDispute(input) {
         return this.run(async (conn) => {
-          const created = rows56(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows57(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
           const number2 = await this.nextNumber(conn, "Dispute");
           await conn.query("INSERT INTO `Dispute` (id, `number`, relationshipId, openedBy, claimantUserId, againstUserId, reason, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, number2, input.relationshipId, input.openedBy, input.claimantUserId, input.againstUserId, input.reason]);
@@ -115261,13 +115421,13 @@ var init_relation_store = __esm({
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params2 = status === "todas" ? [] : [status];
-          const items = rows56(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`, params2)).map(toDispute);
+          const items = rows57(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`, params2)).map(toDispute);
           return { items, page: Math.max(1, Math.floor(page3)), pageSize: PAGE_SIZE9 };
         });
       }
       getDispute(id3) {
         return this.run(async (conn) => {
-          const row2 = rows56(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id3]))[0];
+          const row2 = rows57(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id3]))[0];
           return row2 ? toDispute(row2) : null;
         });
       }
@@ -115284,7 +115444,7 @@ var init_relation_store = __esm({
       }
       addSanction(input) {
         return this.run(async (conn) => {
-          const created = rows56(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows57(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
           await conn.query("INSERT INTO `Sanction` (id, userId, level, reason, relationshipId, disputeId, startsAt, endsAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3), ?, ?, CURRENT_TIMESTAMP(3))", [id3, input.userId, input.level, input.reason, input.relationshipId, input.disputeId, input.endsAt, input.createdBy]);
           return id3;
@@ -115293,12 +115453,12 @@ var init_relation_store = __esm({
       listSanctions(page3) {
         const offset2 = (Math.max(1, Math.floor(page3)) - 1) * PAGE_SIZE9;
         return this.run(async (conn) => {
-          const items = rows56(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`)).map(toSanction);
+          const items = rows57(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`)).map(toSanction);
           return { items, page: Math.max(1, Math.floor(page3)), pageSize: PAGE_SIZE9 };
         });
       }
       sanctionsForUser(userId) {
-        return this.run(async (conn) => rows56(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
+        return this.run(async (conn) => rows57(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
       }
       liftSanction(id3, reason, liftedBy) {
         return this.run(async (conn) => {
@@ -115307,7 +115467,7 @@ var init_relation_store = __esm({
         });
       }
       sanctionUser(id3) {
-        return this.run(async (conn) => str5(rows56(await conn.query("SELECT userId FROM `Sanction` WHERE id = ? LIMIT 1", [id3]))[0]?.userId));
+        return this.run(async (conn) => str5(rows57(await conn.query("SELECT userId FROM `Sanction` WHERE id = ? LIMIT 1", [id3]))[0]?.userId));
       }
       notify(userId, dedupKey, kind, message2) {
         return this.run(async (conn) => {
@@ -115315,7 +115475,7 @@ var init_relation_store = __esm({
         });
       }
       searchBlockedUserIds() {
-        return this.run(async (conn) => rows56(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
+        return this.run(async (conn) => rows57(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
       }
     };
   }
@@ -115996,12 +116156,12 @@ function registerFounderAdminRoutes(app2, deps) {
       pending = true;
     }
     const csrf = escapeHtml(session.csrfToken);
-    const rows61 = list7.map((r) => `<tr><td>${escapeHtml(String(r.name ?? "(borrada)"))}</td><td>${escapeHtml([r.zone, r.city].filter(Boolean).join(" \xB7 "))}</td><td>\u2026${escapeHtml(String(r.phoneEnd ?? ""))}</td><td>${escapeHtml(STATUS3[String(r.status)] ?? String(r.status))}${r.answeredVia ? ` (${escapeHtml(String(r.answeredVia))})` : ""}</td><td>${escapeHtml(when12(r.sentAt))}${Number(r.sends) > 1 ? ` \xB7 ${Number(r.sends)} env\xEDos` : ""}</td><td>${["borrador", "enviado"].includes(String(r.status)) ? `<form method="post" action="/admin/fundadores/${escapeHtml(String(r.id))}/enviar"><input type="hidden" name="csrf" value="${csrf}"><button type="submit">${r.status === "borrador" ? "Enviar confirmaci\xF3n" : "Reenviar"}</button></form>` : ""}</td></tr>`).join("");
+    const rows62 = list7.map((r) => `<tr><td>${escapeHtml(String(r.name ?? "(borrada)"))}</td><td>${escapeHtml([r.zone, r.city].filter(Boolean).join(" \xB7 "))}</td><td>\u2026${escapeHtml(String(r.phoneEnd ?? ""))}</td><td>${escapeHtml(STATUS3[String(r.status)] ?? String(r.status))}${r.answeredVia ? ` (${escapeHtml(String(r.answeredVia))})` : ""}</td><td>${escapeHtml(when12(r.sentAt))}${Number(r.sends) > 1 ? ` \xB7 ${Number(r.sends)} env\xEDos` : ""}</td><td>${["borrador", "enviado"].includes(String(r.status)) ? `<form method="post" action="/admin/fundadores/${escapeHtml(String(r.id))}/enviar"><input type="hidden" name="csrf" value="${csrf}"><button type="submit">${r.status === "borrador" ? "Enviar confirmaci\xF3n" : "Reenviar"}</button></form>` : ""}</td></tr>`).join("");
     const body = `<div class="stack"><h1>Talleres fundadores</h1>
       ${notes.map((n3) => `<p${status >= 400 ? ' class="error"' : ""}>${escapeHtml(n3)}</p>`).join("")}${errorNotes.map((n3) => `<p class="error">${escapeHtml(n3)}</p>`).join("")}
       ${pending ? `<p>Falta \xABAplicar actualizaciones\xBB en Ajustes para crear la tabla de fundadores.</p>` : ""}
       <p>Cada fundador tiene la misma ficha de taller, con la etiqueta \xABFundador\xBB y sin costo de plan. La ficha queda privada (no aparece en ninguna lista) hasta que el taller acepta. Si rechaza, se borra.</p>
-      <div class="card"><h2>Fichas</h2>${list7.length ? `<div class="scroll"><table><thead><tr><th>Taller</th><th>Sector</th><th>Tel\xE9fono</th><th>Estado</th><th>Enviado</th><th></th></tr></thead><tbody>${rows61}</tbody></table></div>` : "<p>A\xFAn no hay fichas cargadas.</p>"}</div>
+      <div class="card"><h2>Fichas</h2>${list7.length ? `<div class="scroll"><table><thead><tr><th>Taller</th><th>Sector</th><th>Tel\xE9fono</th><th>Estado</th><th>Enviado</th><th></th></tr></thead><tbody>${rows62}</tbody></table></div>` : "<p>A\xFAn no hay fichas cargadas.</p>"}</div>
       <div class="card"><h2>Cargar fichas borrador</h2>
         <p>Pega el contenido del archivo privado de fundadores (JSON con la lista \xABtalleres\xBB). No se env\xEDa ning\xFAn mensaje al cargar.</p>
         <form method="post" action="/admin/fundadores/importar" autocomplete="off"><input type="hidden" name="csrf" value="${csrf}">
@@ -116118,14 +116278,14 @@ function registerWhatsAppQueueRoutes(app2, deps) {
     }
     const flash = request.query?.ok === "1" ? `<p class="ok">Aviso puesto de nuevo en la cola.</p>` : "";
     const counts2 = Object.entries(LABELS3).map(([k, label5]) => `<li>${escapeHtml(label5)}: <strong>${data3.counts[k] ?? 0}</strong></li>`).join("");
-    const rows61 = data3.attention.map((r) => `<tr><td>${escapeHtml(when13(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when13(r.nextAttemptAt))}`}</td></tr>`).join("");
+    const rows62 = data3.attention.map((r) => `<tr><td>${escapeHtml(when13(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when13(r.nextAttemptAt))}`}</td></tr>`).join("");
     const inbound = data3.inboundDead.map((r) => `<tr><td>${escapeHtml(when13(r.createdAt))}</td><td>\u2026${escapeHtml(String(r.phoneEnd))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td></tr>`).join("");
     const alertLabels = { outbox_dead: "Mensajes salientes fallidos", inbound_dead: "Mensajes entrantes fallidos", reminders_failed: "Ciclo de recordatorios", database_not_ready: "Base de datos" };
     const alerts = (data3.lastAlerts ?? []).map((r) => `<li>${escapeHtml(alertLabels[String(r.type)] ?? String(r.type))}: ${escapeHtml(when13(r.sentAt))}</li>`).join("");
     const body = `<div class="stack"><h1>Cola de WhatsApp</h1>${flash}
       <p>Canal activo: <strong>${escapeHtml({ off: "ninguno (no se env\xEDa nada)", bridge: "puente WhatsApp Web del equipo local", cloud: "API oficial de WhatsApp" }[whatsappDelivery()])}</strong>. Aqu\xED no se muestra el texto de los mensajes.</p>${healthCard}
       <div class="card"><h2>Avisos</h2><ul>${counts2}</ul><h3>\xDAltima alerta enviada por tipo</h3>${alerts ? `<ul>${alerts}</ul>` : "<p>Ninguna alerta enviada.</p>"}</div>
-      <div class="card"><h2>Necesitan atenci\xF3n</h2>${rows61 ? `<table><thead><tr><th>Creado</th><th>Para</th><th>Tipo</th><th>Estado</th><th>Intentos</th><th>\xDAltimo error</th><th></th></tr></thead><tbody>${rows61}</tbody></table>` : "<p>Nada pendiente de revisi\xF3n.</p>"}
+      <div class="card"><h2>Necesitan atenci\xF3n</h2>${rows62 ? `<table><thead><tr><th>Creado</th><th>Para</th><th>Tipo</th><th>Estado</th><th>Intentos</th><th>\xDAltimo error</th><th></th></tr></thead><tbody>${rows62}</tbody></table>` : "<p>Nada pendiente de revisi\xF3n.</p>"}
       <p class="muted">TEMPLATE_REQUIRED: la API oficial necesita una plantilla aprobada porque pasaron m\xE1s de 24 horas desde el \xFAltimo mensaje del contacto. PACING: el puente esper\xF3 por el ritmo humano. CHAT_NOT_AVAILABLE: WhatsApp Web no abri\xF3 el chat de ese n\xFAmero.</p></div>
       <div class="card"><h2>Mensajes entrantes sin procesar</h2>${inbound ? `<table><thead><tr><th>Recibido</th><th>Tel\xE9fono</th><th>Intentos</th><th>\xDAltimo error</th></tr></thead><tbody>${inbound}</tbody></table>` : "<p>Ninguno.</p>"}</div></div>`;
     return deps.html(reply, request, "WhatsApp", body, session);
@@ -116173,8 +116333,8 @@ function chatLink(phone, label5) {
     return "";
   return `<a href="https://wa.me/${e4(digits)}" target="_blank" rel="noopener">${e4(label5)} (${e4(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox(id3, label5, content, rows61 = 8) {
-  return `<label for="${id3}">${e4(label5)}</label><textarea id="${id3}" readonly rows="${rows61}">${e4(content)}</textarea>`;
+function copyBox(id3, label5, content, rows62 = 8) {
+  return `<label for="${id3}">${e4(label5)}</label><textarea id="${id3}" readonly rows="${rows62}">${e4(content)}</textarea>`;
 }
 function appointmentsListView(input) {
   const tabs3 = FILTERS8.map(([id3, label5]) => `<a href="/admin/appointments?f=${id3}"${id3 === input.filter ? ' class="active"' : ""}>${e4(label5)}</a>`).join("");
@@ -116378,8 +116538,8 @@ function chatLink2(phone, label5) {
     return "";
   return `<a href="https://wa.me/${e5(digits)}" target="_blank" rel="noopener">${e5(label5)} (${e5(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox2(id3, label5, content, rows61 = 9) {
-  return `<label for="${id3}">${e5(label5)}</label><textarea id="${id3}" readonly rows="${rows61}">${e5(content)}</textarea>`;
+function copyBox2(id3, label5, content, rows62 = 9) {
+  return `<label for="${id3}">${e5(label5)}</label><textarea id="${id3}" readonly rows="${rows62}">${e5(content)}</textarea>`;
 }
 function workOrdersListView(input) {
   const tabs3 = FILTERS9.map(([id3, label5]) => `<a href="/admin/work-orders?f=${id3}"${id3 === input.filter ? ' class="active"' : ""}>${e5(label5)}</a>`).join("");
@@ -116699,8 +116859,8 @@ function chatLink3(phone, label5) {
     return "";
   return `<a href="https://wa.me/${e6(digits)}" target="_blank" rel="noopener">${e6(label5)} (${e6(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox3(id3, label5, content, rows61 = 8) {
-  return `<label for="${id3}">${e6(label5)}</label><textarea id="${id3}" readonly rows="${rows61}">${e6(content)}</textarea>`;
+function copyBox3(id3, label5, content, rows62 = 8) {
+  return `<label for="${id3}">${e6(label5)}</label><textarea id="${id3}" readonly rows="${rows62}">${e6(content)}</textarea>`;
 }
 function quotesListView(input) {
   const tabs3 = FILTERS10.map(([id3, label5]) => `<a href="/admin/quotes?f=${id3}"${id3 === input.filter ? ' class="active"' : ""}>${e6(label5)}</a>`).join("");
@@ -117058,8 +117218,8 @@ function businessReviews(reviews, csrf) {
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Cambio</th><th>Desde</th><th></th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
 function verificationsView(input) {
-  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item) => `<tr><td>${item.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e7(item.userId)}">${e7(item.name)}</a></td>
-            <td>${e7(item.city)}</td><td><span class="mono">${e7(item.ruc ?? "\u2014")}</span>${item.sharedRuc ? ` <span class="muted">\xB7 RUC compartido con ${item.sharedRuc} ${item.sharedRuc === 1 ? "taller" : "talleres"} (sucursal)</span>` : ""}</td><td>${day4(item.createdAt)}</td></tr>`).join("");
+  const body = input.items.length === 0 ? `<tr><td colspan="5" class="muted">No hay verificaciones pendientes</td></tr>` : input.items.map((item2) => `<tr><td>${item2.kind === "shop" ? "Taller" : "Almac\xE9n"}</td><td><a href="/admin/users/${e7(item2.userId)}">${e7(item2.name)}</a></td>
+            <td>${e7(item2.city)}</td><td><span class="mono">${e7(item2.ruc ?? "\u2014")}</span>${item2.sharedRuc ? ` <span class="muted">\xB7 RUC compartido con ${item2.sharedRuc} ${item2.sharedRuc === 1 ? "taller" : "talleres"} (sucursal)</span>` : ""}</td><td>${day4(item2.createdAt)}</td></tr>`).join("");
   return `<h1>Verificaciones pendientes</h1>${flashHtml12(input.flash)}
   <p class="muted">Revisa RUC, direcci\xF3n y servicios antes de aprobar. Aprobar hace que aparezca en las b\xFAsquedas.</p>
   <div class="scroll"><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Ciudad</th><th>RUC</th><th>Desde</th></tr></thead><tbody>${body}</tbody></table></div>${businessReviews(input.reviews ?? [], input.csrf ?? "")}`;
@@ -117718,7 +117878,7 @@ function registerRegistrationRoutes(app2, deps) {
     if (decision === "rejected" && reason.length < 5)
       return fail24("Para rechazar escribe la observaci\xF3n que recibir\xE1 la entidad.", 400);
     try {
-      const business = (await registrations.pendingVerifications()).find((item) => item.kind === kind && item.id === id3);
+      const business = (await registrations.pendingVerifications()).find((item2) => item2.kind === kind && item2.id === id3);
       const updated = await registrations.setVerification(kind, id3, decision);
       if (!updated)
         return fail24("Registro no encontrado.", 404);
@@ -117778,7 +117938,7 @@ var init_registrations = __esm({
 });
 
 // packages/api/dist/infrastructure/admin/admin-manage-store.js
-import { randomUUID as randomUUID52 } from "node:crypto";
+import { randomUUID as randomUUID53 } from "node:crypto";
 function changed(before, after) {
   const out = {};
   for (const [k, v] of Object.entries(after))
@@ -117786,11 +117946,11 @@ function changed(before, after) {
       out[k] = { antes: before[k] ?? null, despues: v ?? null };
   return out;
 }
-var rows57, AdminManageStore;
+var rows58, AdminManageStore;
 var init_admin_manage_store = __esm({
   "packages/api/dist/infrastructure/admin/admin-manage-store.js"() {
     "use strict";
-    rows57 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    rows58 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     AdminManageStore = class {
       connect;
       constructor(connect) {
@@ -117811,25 +117971,25 @@ var init_admin_manage_store = __esm({
         }
       }
       async audit(conn, actor, eventType, entityType, entityId, after, reason) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, `after`, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID52(), eventType, actor, entityType, entityId, reason, JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, `after`, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID53(), eventType, actor, entityType, entityId, reason, JSON.stringify(after)]);
       }
       async notice(conn, userId, key, kind, message2) {
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID52(), key.slice(0, 191), userId, kind, JSON.stringify({ message: message2 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID53(), key.slice(0, 191), userId, kind, JSON.stringify({ message: message2 })]);
       }
       /** Cuenta con su estado de acceso: la ficha de /admin también abre las dadas de baja. */
       async account(userId) {
         return this.run(async (conn) => {
-          const [u] = await rows57(conn, "SELECT id, role, deletedAt, zone FROM `User` WHERE id = ? LIMIT 1", [userId]);
+          const [u] = await rows58(conn, "SELECT id, role, deletedAt, zone FROM `User` WHERE id = ? LIMIT 1", [userId]);
           return u ? { id: String(u.id), role: String(u.role), deletedAt: u.deletedAt ?? null, zone: u.zone ? String(u.zone) : null } : null;
         });
       }
       /** Vehículos dados de baja de la cuenta, para poder restaurarlos. */
       async removedVehicles(userId) {
-        return this.run((conn) => rows57(conn, "SELECT id, make, model, year, plate, deletedAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NOT NULL ORDER BY deletedAt DESC LIMIT 20", [userId]));
+        return this.run((conn) => rows58(conn, "SELECT id, make, model, year, plate, deletedAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NOT NULL ORDER BY deletedAt DESC LIMIT 20", [userId]));
       }
       async editUser(actor, userId, edit) {
         return this.run(async (conn) => {
-          const [before] = await rows57(conn, "SELECT name, city, zone, role FROM `User` WHERE id = ? FOR UPDATE", [userId]);
+          const [before] = await rows58(conn, "SELECT name, city, zone, role FROM `User` WHERE id = ? FOR UPDATE", [userId]);
           if (!before || before.role === "admin")
             return false;
           const diff = changed(before, { name: edit.name, city: edit.city, zone: edit.zone });
@@ -117848,7 +118008,7 @@ var init_admin_manage_store = __esm({
         if (actor === userId)
           return "self";
         return this.run(async (conn) => {
-          const [u] = await rows57(conn, "SELECT role, deletedAt FROM `User` WHERE id = ? FOR UPDATE", [userId]);
+          const [u] = await rows58(conn, "SELECT role, deletedAt FROM `User` WHERE id = ? FOR UPDATE", [userId]);
           if (!u)
             return "not_found";
           if (u.role === "admin")
@@ -117870,7 +118030,7 @@ var init_admin_manage_store = __esm({
       }
       async editVehicle(actor, vehicleId, edit) {
         return this.run(async (conn) => {
-          const [before] = await rows57(conn, "SELECT userId, make, model, year, plate, currentKm, vehicleClass, fuel FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
+          const [before] = await rows58(conn, "SELECT userId, make, model, year, plate, currentKm, vehicleClass, fuel FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
           if (!before)
             return null;
           const diff = changed(before, { ...edit });
@@ -117884,7 +118044,7 @@ var init_admin_manage_store = __esm({
       /** Baja o restauración del vehículo: con baja deja de verse y de recibir recordatorios; el historial queda. */
       async setVehicleRemoved(actor, vehicleId, removed, reason) {
         return this.run(async (conn) => {
-          const [v] = await rows57(conn, "SELECT userId FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
+          const [v] = await rows58(conn, "SELECT userId FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
           if (!v)
             return null;
           if (removed)
@@ -117898,7 +118058,7 @@ var init_admin_manage_store = __esm({
       async editBusiness(actor, kind, id3, edit) {
         const table2 = kind === "shop" ? "`Shop`" : "`Store`";
         return this.run(async (conn) => {
-          const [before] = await rows57(conn, `SELECT userId, name, address, city, zone, hours FROM ${table2} WHERE id = ? FOR UPDATE`, [id3]);
+          const [before] = await rows58(conn, `SELECT userId, name, address, city, zone, hours FROM ${table2} WHERE id = ? FOR UPDATE`, [id3]);
           if (!before)
             return null;
           const diff = changed(before, { ...edit });
@@ -119421,7 +119581,7 @@ var init_quotes = __esm({
 });
 
 // packages/api/dist/infrastructure/quotes/quote-store.js
-function rows58(result) {
+function rows59(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toRequest3(r) {
@@ -119456,12 +119616,12 @@ function toQuote(r) {
     storeUserId: String(r.storeUserId),
     storePhone: String(r.storePhone),
     status: String(r.status),
-    unitPrice: num5(r.unitPrice),
+    unitPrice: num6(r.unitPrice),
     brand: text12(r.brand),
     availability: text12(r.availability),
-    warrantyDays: num5(r.warrantyDays),
+    warrantyDays: num6(r.warrantyDays),
     deliveryTime: text12(r.deliveryTime),
-    validDays: num5(r.validDays),
+    validDays: num6(r.validDays),
     notes: text12(r.notes),
     lossReason: text12(r.lossReason),
     respondedAt: r.respondedAt ?? null
@@ -119487,12 +119647,12 @@ function toOrder(r) {
     requesterId: String(r.requesterId),
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
-    unitPrice: num5(r.unitPrice),
+    unitPrice: num6(r.unitPrice),
     brand: text12(r.brand),
     deliveryTime: text12(r.deliveryTime)
   };
 }
-var PAGE_SIZE10, SELECT_REQUESTS3, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text12, num5, label4, MysqlQuoteStore;
+var PAGE_SIZE10, SELECT_REQUESTS3, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text12, num6, label4, MysqlQuoteStore;
 var init_quote_store = __esm({
   "packages/api/dist/infrastructure/quotes/quote-store.js"() {
     "use strict";
@@ -119506,7 +119666,7 @@ var init_quote_store = __esm({
     LIST_ORDERED = `${SELECT_REQUESTS3} WHERE q.status = 'con_pedido' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_ALL2 = `${SELECT_REQUESTS3} ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
     text12 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
-    num5 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
+    num6 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     label4 = (r) => {
       const parts = [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "");
       return parts.length > 0 ? parts.join(" ") : null;
@@ -119539,7 +119699,7 @@ var init_quote_store = __esm({
       }
       verifiedStores(city) {
         const base = "SELECT id, name, city, zone, categories, delivery FROM `Store` st WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows58(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
+        return this.run(async (conn) => rows59(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err) => {
           if (err.code !== "ER_NO_SUCH_TABLE")
             throw err;
           return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
@@ -119554,8 +119714,8 @@ var init_quote_store = __esm({
       }
       async createRequest(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id3 = String(rows58(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows58(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
+          const id3 = String(rows59(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows59(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `QuoteRequest` (id, number, requesterId, vehicleId, workOrderId, partName, partCode, quantity, city, notes, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, next, input.requesterId, input.vehicleId, input.workOrderId, input.partName, input.partCode, input.quantity, input.city, input.notes]);
           for (const storeId of input.storeIds) {
             await conn.query("INSERT INTO `Quote` (id, requestId, storeId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id3, storeId]);
@@ -119572,26 +119732,26 @@ var init_quote_store = __esm({
       }
       getRequest(id3) {
         return this.run(async (conn) => {
-          const row2 = rows58(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id3]))[0];
+          const row2 = rows59(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id3]))[0];
           if (!row2)
             return null;
-          const quotes = rows58(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id3])).map(toQuote);
-          const order = rows58(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id3]))[0];
+          const quotes = rows59(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id3])).map(toQuote);
+          const order = rows59(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id3]))[0];
           return { request: toRequest3(row2), quotes, order: order ? toOrder(order) : null };
         });
       }
       listRequests(filter, page3) {
         return this.run(async (conn) => {
           const sql = filter === "abiertas" ? LIST_OPEN : filter === "con_pedido" ? LIST_ORDERED : LIST_ALL2;
-          const items = rows58(await conn.query(sql, [PAGE_SIZE10, (Math.max(1, Math.floor(page3)) - 1) * PAGE_SIZE10])).map(toRequest3);
+          const items = rows59(await conn.query(sql, [PAGE_SIZE10, (Math.max(1, Math.floor(page3)) - 1) * PAGE_SIZE10])).map(toRequest3);
           return { items, page: page3, pageSize: PAGE_SIZE10 };
         });
       }
       listForUser(userId) {
         return this.run(async (conn) => {
-          const requests = rows58(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
-          const storeQuotes = rows58(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
-          const orders = rows58(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
+          const requests = rows59(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
+          const storeQuotes = rows59(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
+          const orders = rows59(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
           return { requests, storeQuotes, orders };
         });
       }
@@ -119614,16 +119774,16 @@ var init_quote_store = __esm({
       }
       choose(requestId, quoteId) {
         return this.transaction(async (conn) => {
-          const request = rows58(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
+          const request = rows59(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
           if (!request || request.status !== "abierta")
             return null;
-          const quote2 = rows58(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
+          const quote2 = rows59(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
           if (!quote2 || quote2.status !== "cotizado" || quote2.unitPrice === null)
             return null;
           const quantity = Number(request.quantity ?? 1);
           const unitPrice = Number(quote2.unitPrice);
           const total = Math.round(unitPrice * quantity * 100) / 100;
-          const orderId = String(rows58(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const orderId = String(rows59(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("UPDATE `Quote` SET status = 'elegida' WHERE id = ?", [quoteId]);
           await conn.query("UPDATE `Quote` SET status = 'descartada' WHERE requestId = ? AND id <> ? AND status IN ('invitado', 'cotizado')", [requestId, quoteId]);
           await conn.query("UPDATE `QuoteRequest` SET status = 'con_pedido', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [requestId]);
@@ -120016,7 +120176,7 @@ ${input.instruction ?? ""}`);
 });
 
 // packages/api/dist/infrastructure/copilot/copilot-store.js
-function rows59(result) {
+function rows60(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 var MysqlCopilotStore;
@@ -120038,7 +120198,7 @@ var init_copilot_store = __esm({
       }
       recordUsage(usage) {
         return this.run(async (conn) => {
-          const id3 = String(rows59(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const id3 = String(rows60(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("INSERT INTO `LlmUsage` (id, agent, `function`, provider, model, promptVersion, inputTokens, outputTokens, cachedTokens, costUsd, latencyMs, outcome, createdAt) VALUES (?, 'copilot', 'draft_reply', ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [
             id3,
             usage.provider,
@@ -120056,7 +120216,7 @@ var init_copilot_store = __esm({
       }
       spentBetween(start, end) {
         return this.run(async (conn) => {
-          const row2 = rows59(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
+          const row2 = rows60(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
           return Number(row2?.n ?? 0);
         });
       }
@@ -120067,7 +120227,7 @@ var init_copilot_store = __esm({
       }
       feedbackSummary(since) {
         return this.run(async (conn) => {
-          const row2 = rows59(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS approved, COALESCE(SUM(score = 3), 0) AS edited, COALESCE(SUM(score <= 2), 0) AS rejected FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
+          const row2 = rows60(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS approved, COALESCE(SUM(score = 3), 0) AS edited, COALESCE(SUM(score <= 2), 0) AS rejected FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
           return { approved: Number(row2?.approved ?? 0), edited: Number(row2?.edited ?? 0), rejected: Number(row2?.rejected ?? 0) };
         });
       }
@@ -120076,7 +120236,7 @@ var init_copilot_store = __esm({
 });
 
 // packages/api/dist/infrastructure/work-orders/work-order-store.js
-function rows60(result) {
+function rows61(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toOrder2(r) {
@@ -120171,20 +120331,20 @@ var init_work_order_store = __esm({
       }
       monthlyRoom(shopId) {
         return this.run(async (conn) => {
-          const owner = rows60(await conn.query("SELECT userId FROM `Shop` WHERE id = ?", [shopId]))[0];
+          const owner = rows61(await conn.query("SELECT userId FROM `Shop` WHERE id = ?", [shopId]))[0];
           if (!owner)
             return null;
           const limits = await shopLimits(conn, String(owner.userId));
           if (!limits || limits.workOrdersPerMonth == null)
             return null;
-          const used = Number(rows60(await conn.query("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND createdAt >= DATE_FORMAT(UTC_TIMESTAMP(3), '%Y-%m-01')", [shopId]))[0]?.n ?? 0);
+          const used = Number(rows61(await conn.query("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND createdAt >= DATE_FORMAT(UTC_TIMESTAMP(3), '%Y-%m-01')", [shopId]))[0]?.n ?? 0);
           return { used, limit: limits.workOrdersPerMonth, planKey: limits.planKey };
         });
       }
       async create(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id3 = String(rows60(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows60(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
+          const id3 = String(rows61(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows61(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, diagnosis, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, next, input.shopId, input.ownerId, input.vehicleId, input.appointmentId, input.intakeKm, input.intakeNotes, input.diagnosis]);
           return id3;
         });
@@ -120198,10 +120358,10 @@ var init_work_order_store = __esm({
       }
       get(id3) {
         return this.run(async (conn) => {
-          const row2 = rows60(await conn.query(GET_ONE2, [id3]))[0];
+          const row2 = rows61(await conn.query(GET_ONE2, [id3]))[0];
           if (!row2)
             return null;
-          const items = rows60(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id3])).map(toItem2);
+          const items = rows61(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id3])).map(toItem2);
           return { order: toOrder2(row2), items };
         });
       }
@@ -120209,21 +120369,21 @@ var init_work_order_store = __esm({
         return this.run(async (conn) => {
           const params2 = [PAGE_SIZE11, (Math.max(1, Math.floor(page3)) - 1) * PAGE_SIZE11];
           const sql = filter === "abiertas" ? LIST_OPEN2 : filter === "por_aprobar" ? LIST_TO_APPROVE : filter === "en_taller" ? LIST_IN_SHOP : filter === "cerradas" ? LIST_CLOSED : LIST_ALL3;
-          return { items: rows60(await conn.query(sql, params2)).map(toOrder2), page: page3, pageSize: PAGE_SIZE11 };
+          return { items: rows61(await conn.query(sql, params2)).map(toOrder2), page: page3, pageSize: PAGE_SIZE11 };
         });
       }
       listForUser(userId) {
-        return this.run(async (conn) => rows60(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
+        return this.run(async (conn) => rows61(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
       }
       findByAppointment(appointmentId) {
         return this.run(async (conn) => {
-          const row2 = rows60(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
+          const row2 = rows61(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
           return row2 ? String(row2.id) : null;
         });
       }
-      addItem(workOrderId, item) {
+      addItem(workOrderId, item2) {
         return this.transaction(async (conn) => {
-          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [workOrderId, item.kind, item.description, item.brand, item.partCode, item.quantity, item.unitPrice]);
+          await conn.query("INSERT INTO `WorkOrderItem` (id, workOrderId, kind, description, brand, partCode, quantity, unitPrice, createdAt) VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [workOrderId, item2.kind, item2.description, item2.brand, item2.partCode, item2.quantity, item2.unitPrice]);
           await conn.query(RECALCULATE_TOTAL2, [workOrderId, workOrderId]);
           await reapplyOrderVat(conn, workOrderId);
         });
@@ -120251,7 +120411,7 @@ var init_work_order_store = __esm({
       }
       close(id3, input) {
         return this.transaction(async (conn) => {
-          const order = rows60(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id3]))[0];
+          const order = rows61(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id3]))[0];
           if (!order)
             return false;
           await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', exitKm = ?, warrantyDays = ?, nextService = ?, diagnosisOutcome = ?, outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.exitKm, input.warrantyDays, input.nextService, input.diagnosisOutcome, input.outcomeNote, id3]);
@@ -120265,7 +120425,7 @@ var init_work_order_store = __esm({
         });
       }
       historyForUser(userId) {
-        return this.run(async (conn) => rows60(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
+        return this.run(async (conn) => rows61(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
           createdAt: r.createdAt,
           shopName: String(r.shopName),
           vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
@@ -120353,8 +120513,8 @@ function registerCourseAdminRoutes(app2, deps) {
     const session = requireSession(request, reply);
     if (!session)
       return reply;
-    const rows61 = await store.adminExperts();
-    const content = rows61.map((row2) => row2.verificationStatus !== "pendiente" || !row2.hasDocument ? `<article><h2>${escapeHtml(text14(row2.name))}</h2><p>${escapeHtml(text14(row2.verificationStatus))}${row2.motivo ? ` \xB7 ${escapeHtml(text14(row2.motivo))}` : ""}${row2.verificationStatus === "pendiente" ? " \xB7 Enlace enviado; todav\xEDa no recibimos su documento." : ` \xB7 ${escapeHtml(text14(row2.especialidades))}`}</p></article>` : `<article><h2>${escapeHtml(text14(row2.name))}</h2><p>${escapeHtml(text14(row2.verificationStatus))} \xB7 ${escapeHtml(text14(row2.especialidades))}</p><p><a href="/admin/expertos/${encodeURIComponent(String(row2.userId))}/documento" target="_blank" rel="noopener">Abrir documento</a></p><form method="post" action="/admin/expertos/${encodeURIComponent(String(row2.userId))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Tipo de documento revisado <input name="documentType" required maxlength="80"></label><label>Motivo (requerido para rechazar) <input name="reason" maxlength="500"></label><button name="decision" value="verificar">Verificar y borrar documento</button><button name="decision" value="rechazar">Rechazar y borrar documento</button></form></article>`).join("");
+    const rows62 = await store.adminExperts();
+    const content = rows62.map((row2) => row2.verificationStatus !== "pendiente" || !row2.hasDocument ? `<article><h2>${escapeHtml(text14(row2.name))}</h2><p>${escapeHtml(text14(row2.verificationStatus))}${row2.motivo ? ` \xB7 ${escapeHtml(text14(row2.motivo))}` : ""}${row2.verificationStatus === "pendiente" ? " \xB7 Enlace enviado; todav\xEDa no recibimos su documento." : ` \xB7 ${escapeHtml(text14(row2.especialidades))}`}</p></article>` : `<article><h2>${escapeHtml(text14(row2.name))}</h2><p>${escapeHtml(text14(row2.verificationStatus))} \xB7 ${escapeHtml(text14(row2.especialidades))}</p><p><a href="/admin/expertos/${encodeURIComponent(String(row2.userId))}/documento" target="_blank" rel="noopener">Abrir documento</a></p><form method="post" action="/admin/expertos/${encodeURIComponent(String(row2.userId))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Tipo de documento revisado <input name="documentType" required maxlength="80"></label><label>Motivo (requerido para rechazar) <input name="reason" maxlength="500"></label><button name="decision" value="verificar">Verificar y borrar documento</button><button name="decision" value="rechazar">Rechazar y borrar documento</button></form></article>`).join("");
     return html(reply, request, "Expertos", `<h1>Expertos</h1>${content || "<p>No hay solicitudes.</p>"}`, session);
   });
   app2.post("/expertos/:id", async (request, reply) => {
@@ -121995,8 +122155,8 @@ async function maintenanceRoutes(app2) {
 // packages/api/dist/application/relations/sanction-guard.js
 async function searchBlockedUserIds() {
   try {
-    const rows61 = await prisma.$queryRaw`SELECT DISTINCT userId FROM \`Sanction\` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')`;
-    return rows61.map((row2) => String(row2.userId));
+    const rows62 = await prisma.$queryRaw`SELECT DISTINCT userId FROM \`Sanction\` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')`;
+    return rows62.map((row2) => String(row2.userId));
   } catch {
     return [];
   }
@@ -122294,8 +122454,8 @@ async function appointmentRoutes(app2) {
 // packages/api/dist/application/inactive-products.js
 async function inactiveProductIds() {
   try {
-    const rows61 = await prisma.$queryRaw`SELECT id FROM \`Product\` WHERE active = 0`;
-    return rows61.map((r) => String(r.id));
+    const rows62 = await prisma.$queryRaw`SELECT id FROM \`Product\` WHERE active = 0`;
+    return rows62.map((r) => String(r.id));
   } catch (err) {
     const e9 = err;
     const text14 = `${e9.message ?? ""} ${e9.meta?.message ?? ""}`;
@@ -123529,6 +123689,19 @@ function shopIndicatorsCard(d){const i=d.indicators;if(!i)return null;const p=v=
   kpi(i.avgDaysToDeliver===null?'\u2014':String(i.avgDaysToDeliver).replace('.',','),'D\xEDas hasta la entrega',i.avgDaysToDeliver===null?'idle':'ok'),
   kpi(i.deferredOpen,'No aprobados por retomar',i.deferredOpen?'alert':'idle')),
   h('p',{class:'note',text:'Calculado con tus \xF3rdenes: ticket promedio de las cerradas con valor, decisiones de los due\xF1os sobre presupuestos, reclamos de garant\xEDa sobre \xF3rdenes cobradas y d\xEDas desde el ingreso hasta el cierre.'}));}
+// B2: insumos del taller. El due\xF1o o administrador los crea, registra entradas y ajusta por conteo; cualquier
+// miembro registra el consumo en una OT abierta. No se suma solo al presupuesto: lo cobrado sigue pasando por el due\xF1o.
+function shopSuppliesCard(d){const list=d.supplies;if(!list)return null;const manage=d.canManage!==false;const low=list.filter(s=>s.low).length;const q=n=>String(n).replace('.',',');
+ const rowsEl=h('div',{class:'list'},...list.map(s=>{const acts=h('div',{class:'chips'});
+  acts.append(inlineAct('Usar en OT',[{label:'Orden (OT-00012)',raw:true},{label:'Cantidad ('+s.unit+')',type:'number'}],v=>['Usar insumo '+s.ref,/^[0-9]+$/.test(v[0])?'OT-'+v[0]:v[0].toUpperCase(),v[1]],'\xBFDescontar este consumo de '+s.name+'? Si se cobra al cliente, incl\xFAyelo en el presupuesto o en una novedad.'));
+  if(manage){acts.append(inlineAct('Entrada',[{label:'Cantidad ('+s.unit+')',type:'number'},{label:'Nota (opcional)',optional:true}],v=>['Entrada insumo '+s.ref,v[0],...(v[1]?[v[1]]:[])],'\xBFRegistrar esta entrada de '+s.name+'?'));
+   acts.append(inlineAct('Ajustar',[{label:'Existencias contadas',type:'number'},{label:'Motivo (opcional)',optional:true}],v=>['Ajustar insumo '+s.ref,v[0],...(v[1]?[v[1]]:[])],'\xBFCambiar las existencias de '+s.name+' a la cifra contada?'));}
+  const st=s.stock<=0?'urgente':s.low?'pronto':'al_dia';
+  return h('div',{class:'line st-'+st},h('div',{class:'who'},h('span',{class:'led st-'+st}),h('div',{},h('b',{text:s.name+' \xB7 '+q(s.stock)+' '+s.unit}),h('small',{class:'mono',text:s.ref+' \xB7 m\xEDnimo '+q(s.minStock)+(s.unitPriceUsd===null?'':' \xB7 '+usd(s.unitPriceUsd)+' por '+s.unit)}))),acts);}));
+ return card('Insumos',list.length?(low?low+(low===1?' en el m\xEDnimo':' en el m\xEDnimo o debajo'):list.length+(list.length===1?' insumo':' insumos')):'Sin insumos',
+  list.length?rowsEl:h('p',{class:'note',text:manage?'Agrega aceites, filtros y consumibles para llevar existencias y recibir un aviso antes de que se acaben.':'El due\xF1o del taller todav\xEDa no agreg\xF3 insumos.'}),
+  manage?inlineAct('Agregar insumo',[{label:'Nombre (ej. Aceite 10W-30)',raw:true},{label:'Unidad (litro, unidad)'},{label:'Existencias',type:'number'},{label:'M\xEDnimo para avisar',type:'number'},{label:'Precio por unidad (opcional)',type:'number',optional:true}],v=>['Insumo',v[0],v[1],v[2],v[3],...(v[4]?[v[4]]:[])],'\xBFAgregar este insumo al inventario del taller?'):null,
+  h('p',{class:'note',text:'Verde: con existencias \xB7 amarillo: en el m\xEDnimo \xB7 rojo: agotado. Al llegar al m\xEDnimo avisamos una vez al due\xF1o y a los administradores.'}));}
 function renderShop(root,d){
  if(d.canManage===false){for(const target of ['offerTools','appointmentTools']){for(const a of document.querySelectorAll('[data-menu-target="'+target+'"]'))a.remove();const tools=el(target);if(tools)tools.hidden=true;}}
  if(d.verificationStatus==='pending'||d.verificationStatus==='rejected')root.append(card('Tu taller',d.verificationStatus==='pending'?'En revisi\xF3n':'No aprobado',h('p',{class:'note',text:d.verificationStatus==='pending'?'Tu taller est\xE1 en revisi\xF3n: verificamos RUC y direcci\xF3n. Mientras tanto no apareces en la lista de talleres; te avisamos aqu\xED cuando est\xE9 listo.':'Tu taller no fue aprobado. Corrige tus datos y escribe al equipo para revisarlo de nuevo.'})));
@@ -123544,6 +123717,7 @@ function renderShop(root,d){
  if(d.partRequests&&d.partRequests.length)root.append(ownerRequestsCard(d,true));
  const prod=productivityCard(d);if(prod)root.append(prod);
  {const ind=shopIndicatorsCard(d);if(ind)root.append(anchor(ind,'indicadores'));}
+ {const sup=shopSuppliesCard(d);if(sup)root.append(anchor(sup,'insumos'));}
  if(d.reminders.length){const list=h('div',{class:'list'});const n={urgente:0,pronto:0,sin_dato:0};for(const c of d.reminders){n[c.state]=(n[c.state]||0)+1;list.append(h('div',{class:'line st-'+c.state},h('div',{class:'who'},h('span',{class:'led st-'+c.state}),h('div',{},h('b',{text:c.client+' \xB7 '+c.vehicle}),h('small',{},h('span',{class:'code',text:svcCode(c)}),c.serviceName+': '+c.label.toLowerCase()+(c.plate?' \xB7 '+c.plate:'')))),abtn('Enviar aviso','ghost',['Alerta '+c.ref,'Mantenimiento: '+c.serviceName,c.alertValue],'\xBFEnviar el aviso de '+c.serviceName+' a '+c.client+'?')));}
   root.append(card('Escribir hoy',d.reminders.length+' clientes',h('p',{class:'summary'},n.urgente+' urgente \xB7 '+n.pronto+' pronto \xB7 '+n.sin_dato+' sin dato'),h('p',{class:'note',text:'Clientes que atendiste este a\xF1o y tienen un servicio vencido, pr\xF3ximo o sin registro.'}),list));}
  else root.append(card('Escribir hoy',null,h('p',{class:'note',text:'Ning\xFAn cliente del \xFAltimo a\xF1o tiene servicios pendientes.'})));
@@ -124172,7 +124346,7 @@ init_outbox_delivery_store();
 
 // packages/api/dist/infrastructure/messaging/imported-contact-store.js
 init_apply();
-import { createHash as createHash11, randomUUID as randomUUID29 } from "node:crypto";
+import { createHash as createHash11, randomUUID as randomUUID30 } from "node:crypto";
 var MysqlImportedContactStore = class {
   connect;
   constructor(connect = openConnection) {
@@ -124196,7 +124370,7 @@ var MysqlImportedContactStore = class {
           skipped++;
           continue;
         }
-        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID29(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
+        const [result] = await conn.query("INSERT INTO `ImportedContact` (id, phone, displayName, category, reason, lastMessageAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE displayName = VALUES(displayName), category = VALUES(category), reason = VALUES(reason), lastMessageAt = VALUES(lastMessageAt)", [randomUUID30(), c.phone, c.name, c.category, c.reason, c.lastMessage]);
         if (Number(result.affectedRows) === 1)
           imported++;
         else
@@ -124219,8 +124393,8 @@ Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
           continue;
         }
         await conn.query("UPDATE `ImportedContact` SET status = 'approved', contactedAt = UTC_TIMESTAMP(3) WHERE id = ?", [contact.id]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID29(), `reactivation:${createHash11("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text14 })]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID29(), contact.id, JSON.stringify({ approvedBy })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID30(), `reactivation:${createHash11("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text14 })]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID30(), contact.id, JSON.stringify({ approvedBy })]);
         queued++;
       }
       return { queued, skipped };
@@ -124241,7 +124415,7 @@ init_appointment_store();
 init_contracts();
 init_messages();
 init_workshop_map();
-import { createHash as createHash12, randomUUID as randomUUID32 } from "node:crypto";
+import { createHash as createHash12, randomUUID as randomUUID33 } from "node:crypto";
 
 // packages/api/dist/application/map/nearby-shops.js
 init_workshop_map();
@@ -124307,8 +124481,8 @@ init_apply();
 init_contracts();
 init_vehicle_care_store();
 init_weekly_hours();
-import { randomUUID as randomUUID31 } from "node:crypto";
-var rows30 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+import { randomUUID as randomUUID32 } from "node:crypto";
+var rows31 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var fail16 = (code5) => {
   throw new LocalMarketplaceError(code5);
 };
@@ -124318,12 +124492,12 @@ var TARIFF_NOTE = "Valor referencial; el presupuesto final lo da el taller.";
 var TARIFF_LIMIT = 50;
 var toItem = (r) => ({ id: String(r.id), name: String(r.name), priceFromUsd: Number(r.priceFromUsd), durationMin: r.durationMin === null || r.durationMin === void 0 ? null : Number(r.durationMin), active: Number(r.active) === 1 });
 async function loadShopExtras(conn, shopId) {
-  const tariff = await rows30(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE shopId = ? AND active = 1 ORDER BY name LIMIT ?", [shopId, TARIFF_LIMIT]).catch((err) => {
+  const tariff = await rows31(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE shopId = ? AND active = 1 ORDER BY name LIMIT ?", [shopId, TARIFF_LIMIT]).catch((err) => {
     if (!missing2(err))
       throw err;
     return [];
   });
-  const [shop] = await rows30(conn, "SELECT weeklyHours, offersPickup FROM `Shop` WHERE id = ?", [shopId]).catch((err) => {
+  const [shop] = await rows31(conn, "SELECT weeklyHours, offersPickup FROM `Shop` WHERE id = ?", [shopId]).catch((err) => {
     if (!missing2(err))
       throw err;
     return [];
@@ -124338,7 +124512,7 @@ async function loadShopExtras(conn, shopId) {
   };
 }
 async function assertShopOpen(conn, shopId, date2, time3) {
-  const [shop] = await rows30(conn, "SELECT weeklyHours FROM `Shop` WHERE id = ?", [shopId]).catch((err) => {
+  const [shop] = await rows31(conn, "SELECT weeklyHours FROM `Shop` WHERE id = ?", [shopId]).catch((err) => {
     if (!missing2(err))
       throw err;
     return [];
@@ -124353,7 +124527,7 @@ async function resolvePickup(conn, shopId, note) {
   const clean4 = note.replace(/\s+/g, " ").trim();
   if (clean4.length < 3 || (clean4.match(/\d/g) ?? []).length > 7)
     fail16("INVALID_PICKUP_NOTE");
-  const [shop] = await rows30(conn, "SELECT offersPickup FROM `Shop` WHERE id = ?", [shopId]).catch((err) => {
+  const [shop] = await rows31(conn, "SELECT offersPickup FROM `Shop` WHERE id = ?", [shopId]).catch((err) => {
     if (missing2(err))
       fail16("FEATURE_UPDATE_PENDING");
     throw err;
@@ -124379,7 +124553,7 @@ var ShopExtrasStore = class {
     }
   }
   async acting(conn, userId) {
-    const [user] = await rows30(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
+    const [user] = await rows31(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
     if (!user)
       return fail16("ACCOUNT_UNAVAILABLE");
     return this.care.actingShop(conn, userId, String(user.role));
@@ -124408,7 +124582,7 @@ var ShopExtrasStore = class {
     });
   }
   async audit(conn, userId, eventType, entityType, entityId, after) {
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID31(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID32(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
   }
   /** Lo que el panel del taller muestra y edita: tarifario completo, horario por día y domicilio. */
   overview(userId) {
@@ -124416,13 +124590,13 @@ var ShopExtrasStore = class {
       const shop = await this.acting(conn, userId);
       const canManage = shop.isOwner || shop.isAdmin;
       let updatePending = false;
-      const items = await rows30(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE shopId = ? ORDER BY active DESC, name LIMIT ?", [shop.id, TARIFF_LIMIT]).catch((err) => {
+      const items = await rows31(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE shopId = ? ORDER BY active DESC, name LIMIT ?", [shop.id, TARIFF_LIMIT]).catch((err) => {
         if (!missing2(err))
           throw err;
         updatePending = true;
         return [];
       });
-      const [row2] = await rows30(conn, "SELECT weeklyHours, offersPickup FROM `Shop` WHERE id = ?", [shop.id]).catch((err) => {
+      const [row2] = await rows31(conn, "SELECT weeklyHours, offersPickup FROM `Shop` WHERE id = ?", [shop.id]).catch((err) => {
         if (!missing2(err))
           throw err;
         updatePending = true;
@@ -124437,13 +124611,13 @@ var ShopExtrasStore = class {
       const name = input.name.replace(/\s+/g, " ").trim();
       if (name.length < 3)
         fail16("INVALID_TARIFF");
-      const [count3] = await rows30(conn, "SELECT COUNT(*) AS n FROM `ShopTariff` WHERE shopId = ? FOR UPDATE", [shop.id]);
+      const [count3] = await rows31(conn, "SELECT COUNT(*) AS n FROM `ShopTariff` WHERE shopId = ? FOR UPDATE", [shop.id]);
       if (Number(count3?.n) >= TARIFF_LIMIT)
         fail16("TARIFF_LIMIT");
-      const [same] = await rows30(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ?", [shop.id, name]);
+      const [same] = await rows31(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ?", [shop.id, name]);
       if (same)
         fail16("TARIFF_DUPLICATE");
-      const id3 = randomUUID31();
+      const id3 = randomUUID32();
       await conn.query("INSERT INTO `ShopTariff` (id, shopId, name, priceFromUsd, durationMin) VALUES (?, ?, ?, ?, ?)", [id3, shop.id, name, input.priceFromUsd, input.durationMin ?? null]);
       await this.audit(conn, userId, "tariff.created", "ShopTariff", id3, { shopId: shop.id, name, priceFromUsd: input.priceFromUsd, durationMin: input.durationMin ?? null });
       return { id: id3, name, priceFromUsd: input.priceFromUsd, durationMin: input.durationMin ?? null, active: true };
@@ -124454,10 +124628,10 @@ var ShopExtrasStore = class {
       const name = input.name.replace(/\s+/g, " ").trim();
       if (name.length < 3)
         fail16("INVALID_TARIFF");
-      const [before] = await rows30(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE id = ? AND shopId = ? FOR UPDATE", [id3, shop.id]);
+      const [before] = await rows31(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE id = ? AND shopId = ? FOR UPDATE", [id3, shop.id]);
       if (!before)
         fail16("NOT_FOUND");
-      const [same] = await rows30(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ? AND id <> ?", [shop.id, name, id3]);
+      const [same] = await rows31(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ? AND id <> ?", [shop.id, name, id3]);
       if (same && Number(before.active) === 1)
         fail16("TARIFF_DUPLICATE");
       await conn.query("UPDATE `ShopTariff` SET name = ?, priceFromUsd = ?, durationMin = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [name, input.priceFromUsd, input.durationMin ?? null, id3]);
@@ -124467,11 +124641,11 @@ var ShopExtrasStore = class {
   }
   setTariffActive(userId, id3, active) {
     return this.write(userId, async (conn, shop) => {
-      const [before] = await rows30(conn, "SELECT id, name, active FROM `ShopTariff` WHERE id = ? AND shopId = ? FOR UPDATE", [id3, shop.id]);
+      const [before] = await rows31(conn, "SELECT id, name, active FROM `ShopTariff` WHERE id = ? AND shopId = ? FOR UPDATE", [id3, shop.id]);
       if (!before)
         fail16("NOT_FOUND");
       if (active) {
-        const [same] = await rows30(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ? AND id <> ?", [shop.id, before.name, id3]);
+        const [same] = await rows31(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ? AND id <> ?", [shop.id, before.name, id3]);
         if (same)
           fail16("TARIFF_DUPLICATE");
       }
@@ -124486,7 +124660,7 @@ var ShopExtrasStore = class {
       const parsed = days2 === null ? null : parseWeeklyHours(days2);
       if (days2 !== null && !parsed)
         fail16("INVALID_HOURS");
-      const [before] = await rows30(conn, "SELECT weeklyHours FROM `Shop` WHERE id = ? FOR UPDATE", [shop.id]);
+      const [before] = await rows31(conn, "SELECT weeklyHours FROM `Shop` WHERE id = ? FOR UPDATE", [shop.id]);
       await conn.query("UPDATE `Shop` SET weeklyHours = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [parsed ? JSON.stringify(parsed) : null, shop.id]);
       await this.audit(conn, userId, "shop.hours.updated", "Shop", shop.id, { before: readWeeklyHours(before?.weeklyHours), after: parsed });
       return { weeklyHours: parsed };
@@ -124502,7 +124676,7 @@ var ShopExtrasStore = class {
 };
 
 // packages/api/dist/infrastructure/messaging/shop-directory-store.js
-var rows31 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+var rows32 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var fail17 = (code5) => {
   throw new LocalMarketplaceError(code5);
 };
@@ -124545,33 +124719,33 @@ var FROM = "FROM `Shop` sh JOIN `User` u ON u.id = sh.userId AND u.deletedAt IS 
 async function verifiedShops(conn, shopId) {
   const extra = shopId ? "AND sh.id = ? " : "";
   const args = shopId ? [shopId] : [];
-  const run2 = async (columns, sanction) => rows31(conn, `SELECT ${columns} ${FROM}${extra}${sanction ? NOT_SANCTIONED("sh") : ""}ORDER BY sh.city, sh.name LIMIT 1000`, args);
+  const run3 = async (columns, sanction) => rows32(conn, `SELECT ${columns} ${FROM}${extra}${sanction ? NOT_SANCTIONED("sh") : ""}ORDER BY sh.city, sh.name LIMIT 1000`, args);
   const code5 = (err) => String(err.code);
   let result;
   try {
     try {
-      result = await run2(COLUMNS, true);
+      result = await run3(COLUMNS, true);
     } catch (err) {
       if (code5(err) !== "ER_NO_SUCH_TABLE")
         throw err;
-      result = await run2(COLUMNS, false);
+      result = await run3(COLUMNS, false);
     }
   } catch (err) {
     if (code5(err) !== "ER_BAD_FIELD_ERROR")
       throw err;
     try {
-      result = await run2(LEGACY_COLUMNS, true);
+      result = await run3(LEGACY_COLUMNS, true);
     } catch (inner) {
       if (code5(inner) !== "ER_NO_SUCH_TABLE")
         throw inner;
-      result = await run2(LEGACY_COLUMNS, false);
+      result = await run3(LEGACY_COLUMNS, false);
     }
   }
   return result.map(toRecord2);
 }
 async function founderIds(conn) {
   try {
-    return new Set((await rows31(conn, "SELECT id FROM `Shop` WHERE founder = true")).map((r) => String(r.id)));
+    return new Set((await rows32(conn, "SELECT id FROM `Shop` WHERE founder = true")).map((r) => String(r.id)));
   } catch (err) {
     if (String(err.code) === "ER_BAD_FIELD_ERROR")
       return /* @__PURE__ */ new Set();
@@ -124580,7 +124754,7 @@ async function founderIds(conn) {
 }
 async function ownerZone(conn, userId) {
   try {
-    const [row2] = await rows31(conn, "SELECT zone FROM `User` WHERE id = ?", [userId]);
+    const [row2] = await rows32(conn, "SELECT zone FROM `User` WHERE id = ?", [userId]);
     return text5(row2?.zone);
   } catch (err) {
     if (String(err.code) === "ER_BAD_FIELD_ERROR")
@@ -124603,7 +124777,7 @@ var ShopDirectoryStore = class {
     }
   }
   async owner(conn, userId, lock = false) {
-    const [user] = await rows31(conn, `SELECT id, role, city FROM \`User\` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL${lock ? " FOR UPDATE" : ""}`, [userId]);
+    const [user] = await rows32(conn, `SELECT id, role, city FROM \`User\` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL${lock ? " FOR UPDATE" : ""}`, [userId]);
     if (!user)
       return fail17("CONSENT_OR_ACCOUNT_REQUIRED");
     if (user.role !== "dueno")
@@ -124619,8 +124793,8 @@ var ShopDirectoryStore = class {
       const records = await verifiedShops(conn);
       const ranked = rankNearby(records, { ...query, city, zone });
       const founders = await founderIds(conn);
-      const covers = await coverVersions(conn, ranked.items.map((item) => item.id));
-      const page3 = { ...ranked, items: ranked.items.map((item) => ({ ...item, founder: founders.has(item.id), cover: covers.get(item.id) ?? null })) };
+      const covers = await coverVersions(conn, ranked.items.map((item2) => item2.id));
+      const page3 = { ...ranked, items: ranked.items.map((item2) => ({ ...item2, founder: founders.has(item2.id), cover: covers.get(item2.id) ?? null })) };
       return { ...page3, cityUsed: city ? placeLabel(city) : null, zoneUsed: zone ? placeLabel(zone) : null, verifiedTotal: records.length };
     });
   }
@@ -124686,22 +124860,22 @@ var ShopDirectoryStore = class {
       fail17("VEHICLE_NOT_FOUND");
     if (vehicle.access === "driver")
       fail17("FORBIDDEN");
-    const [shop] = await rows31(conn, `SELECT sh.id, sh.userId, sh.name FROM \`Shop\` sh JOIN \`User\` u ON u.id = sh.userId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE sh.id = ? AND sh.verificationStatus = 'verified' ${NOT_SANCTIONED("sh")}FOR UPDATE`, [input.shopId]).catch((err) => {
+    const [shop] = await rows32(conn, `SELECT sh.id, sh.userId, sh.name FROM \`Shop\` sh JOIN \`User\` u ON u.id = sh.userId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE sh.id = ? AND sh.verificationStatus = 'verified' ${NOT_SANCTIONED("sh")}FOR UPDATE`, [input.shopId]).catch((err) => {
       if (err.code !== "ER_NO_SUCH_TABLE")
         throw err;
-      return rows31(conn, "SELECT sh.id, sh.userId, sh.name FROM `Shop` sh JOIN `User` u ON u.id = sh.userId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE sh.id = ? AND sh.verificationStatus = 'verified' FOR UPDATE", [input.shopId]);
+      return rows32(conn, "SELECT sh.id, sh.userId, sh.name FROM `Shop` sh JOIN `User` u ON u.id = sh.userId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE sh.id = ? AND sh.verificationStatus = 'verified' FOR UPDATE", [input.shopId]);
     });
     if (!shop)
       return fail17("SHOP_UNAVAILABLE");
     const directKey = createHash12("sha256").update(`${userId}|${input.shopId}|${input.vehicleId}|${at.toISOString()}`).digest("hex");
-    const [same] = await rows31(conn, "SELECT id, status FROM `Appointment` WHERE directKey = ? FOR UPDATE", [directKey]);
+    const [same] = await rows32(conn, "SELECT id, status FROM `Appointment` WHERE directKey = ? FOR UPDATE", [directKey]);
     if (same && ["pending", "confirmed"].includes(String(same.status))) {
       const ref5 = shortRef(String(same.id));
       return { appointmentRef: ref5, duplicate: true, message: `Ya hab\xEDas pedido esa cita: ${ref5}, ${formatEcDateTime(at)} en ${shop.name}. Espera la respuesta del taller.` };
     }
     if (same)
       await conn.query("UPDATE `Appointment` SET directKey = NULL WHERE id = ?", [same.id]);
-    const [pending] = await rows31(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE ownerId = ? AND directKey IS NOT NULL AND status = 'pending' AND scheduledAt > UTC_TIMESTAMP(3)", [userId]);
+    const [pending] = await rows32(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE ownerId = ? AND directKey IS NOT NULL AND status = 'pending' AND scheduledAt > UTC_TIMESTAMP(3)", [userId]);
     if (Number(pending?.n) >= DIRECT_PENDING_LIMIT)
       fail17("DIRECT_BOOKING_LIMIT");
     await assertShopOpen(conn, input.shopId, input.date, input.time);
@@ -124711,7 +124885,7 @@ var ShopDirectoryStore = class {
       if (err.code !== "ER_NO_SUCH_TABLE")
         throw err;
     });
-    const id3 = randomUUID32();
+    const id3 = randomUUID33();
     const ref4 = shortRef(id3);
     const service = input.service.replace(/\s+/g, " ").trim();
     await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, services, directKey, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [id3, userId, input.vehicleId, input.shopId, at, `Cita pedida por el due\xF1o: ${service}`.slice(0, 191), JSON.stringify([service]), directKey]);
@@ -124729,8 +124903,8 @@ var ShopDirectoryStore = class {
     const brief = await this.care.planBrief(conn, vehicle);
     const message2 = `\u{1F4C5} Nueva cita pedida para ${label5}: ${service}, ${formatEcDateTime(at)}.${pickedNames.length ? ` El due\xF1o marc\xF3 del plan: ${pickedNames.slice(0, 8).join(", ")}${pickedNames.length > 8 ? ` y ${pickedNames.length - 8} m\xE1s` : ""}.` : ""}${brief ? ` ${brief}` : ""}
 Conf\xEDrmala o prop\xF3n otra fecha desde tu panel (Citas por atender), o responde: Confirmar ${ref4}.${pickupText(pickup)}`;
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.booking', ?)", [randomUUID32(), `booking:${id3}:shop`, shop.userId, JSON.stringify({ message: message2 })]);
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'booking.direct.requested', ?, 'dueno', 'Appointment', ?, ?, UTC_TIMESTAMP(3))", [randomUUID32(), userId, id3, JSON.stringify({ shopId: input.shopId, vehicleId: input.vehicleId, service, scheduledAt: at.toISOString(), ...pickup ? { pickup: true } : {}, ...picked.length ? { planServiceIds: picked } : {} })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.booking', ?)", [randomUUID33(), `booking:${id3}:shop`, shop.userId, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'booking.direct.requested', ?, 'dueno', 'Appointment', ?, ?, UTC_TIMESTAMP(3))", [randomUUID33(), userId, id3, JSON.stringify({ shopId: input.shopId, vehicleId: input.vehicleId, service, scheduledAt: at.toISOString(), ...pickup ? { pickup: true } : {}, ...picked.length ? { planServiceIds: picked } : {} })]);
     return { appointmentRef: ref4, duplicate: false, message: `Cita ${ref4} pedida a ${shop.name} para ${formatEcDateTime(at)}. El taller la confirma o te propone otra fecha; te avisaremos.` };
   }
 };
@@ -124836,8 +125010,8 @@ init_zod();
 // packages/api/dist/infrastructure/messaging/catalog-store.js
 init_apply();
 init_contracts();
-import { randomUUID as randomUUID33 } from "node:crypto";
-var rows32 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+import { randomUUID as randomUUID34 } from "node:crypto";
+var rows33 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var fail18 = (c) => {
   throw new LocalMarketplaceError(c);
 };
@@ -124856,7 +125030,7 @@ async function compatibleParts(conn, vehicle, limit = 6) {
   for (let attempt = 0; attempt < 3; attempt++) {
     const q = build(active, fitment);
     try {
-      return (await rows32(conn, q.sql, q.args)).map((p) => ({ id: String(p.id), name: String(p.name), price: Number(p.price), stock: p.stock === null ? null : Number(p.stock), storeName: String(p.storeName), city: String(p.city) }));
+      return (await rows33(conn, q.sql, q.args)).map((p) => ({ id: String(p.id), name: String(p.name), price: Number(p.price), stock: p.stock === null ? null : Number(p.stock), storeName: String(p.storeName), city: String(p.city) }));
     } catch (err) {
       if (code4(err) === "ER_NO_SUCH_TABLE" && fitment)
         fitment = false;
@@ -124883,12 +125057,12 @@ var CatalogStore = class {
   }
   /** El almacén de quien entra; cualquier otro rol o cuenta sin almacén no tiene catálogo. */
   async myStore(conn, userId) {
-    const [user] = await rows32(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
+    const [user] = await rows33(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
     if (!user)
       return fail18("ACCOUNT_UNAVAILABLE");
     if (user.role !== "almacen")
       return fail18("FORBIDDEN");
-    const [store] = await rows32(conn, "SELECT id FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
+    const [store] = await rows33(conn, "SELECT id FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
     if (!store)
       return fail18("BUSINESS_NOT_FOUND");
     return { id: String(store.id) };
@@ -124897,10 +125071,10 @@ var CatalogStore = class {
     return this.run(async (conn) => {
       const store = await this.myStore(conn, userId);
       const current = Math.max(1, Math.floor(page3));
-      const [count3] = await rows32(conn, "SELECT COUNT(*) AS n FROM `Product` WHERE storeId = ?", [store.id]);
+      const [count3] = await rows33(conn, "SELECT COUNT(*) AS n FROM `Product` WHERE storeId = ?", [store.id]);
       const total = Number(count3?.n ?? 0);
       let updatePending = false;
-      const query = (select2) => rows32(conn, `SELECT ${select2} FROM \`Product\` WHERE storeId = ? ORDER BY createdAt DESC, id LIMIT ? OFFSET ?`, [store.id, CATALOG_PAGE_SIZE, (current - 1) * CATALOG_PAGE_SIZE]);
+      const query = (select2) => rows33(conn, `SELECT ${select2} FROM \`Product\` WHERE storeId = ? ORDER BY createdAt DESC, id LIMIT ? OFFSET ?`, [store.id, CATALOG_PAGE_SIZE, (current - 1) * CATALOG_PAGE_SIZE]);
       const products = await query("id, name, price, stock, active").catch((err) => {
         if (code4(err) !== "ER_BAD_FIELD_ERROR")
           throw err;
@@ -124908,7 +125082,7 @@ var CatalogStore = class {
         return query("id, name, price, stock, 1 AS active");
       });
       const ids = products.map((p) => String(p.id));
-      const fitments = ids.length ? await rows32(conn, "SELECT id, productId, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId IN (?) ORDER BY createdAt, id", [ids]).catch((err) => {
+      const fitments = ids.length ? await rows33(conn, "SELECT id, productId, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId IN (?) ORDER BY createdAt, id", [ids]).catch((err) => {
         if (!missing3(err))
           throw err;
         updatePending = true;
@@ -124931,7 +125105,7 @@ var CatalogStore = class {
         const store = await this.myStore(conn, userId);
         await conn.query("START TRANSACTION");
         open = true;
-        const [product] = await rows32(conn, "SELECT id, name FROM `Product` WHERE id = ? AND storeId = ? FOR UPDATE", [productId, store.id]);
+        const [product] = await rows33(conn, "SELECT id, name FROM `Product` WHERE id = ? AND storeId = ? FOR UPDATE", [productId, store.id]);
         if (!product)
           fail18("NOT_FOUND");
         const result = await change(conn, product);
@@ -124948,7 +125122,7 @@ var CatalogStore = class {
     });
   }
   audit(conn, userId, eventType, productId, after) {
-    return conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'almacen', 'Product', ?, ?, UTC_TIMESTAMP(3))", [randomUUID33(), eventType, userId, productId, JSON.stringify(after)]);
+    return conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'almacen', 'Product', ?, ?, UTC_TIMESTAMP(3))", [randomUUID34(), eventType, userId, productId, JSON.stringify(after)]);
   }
   /** Desactivar oculta el producto al comprador sin perder su historial; se puede reactivar. */
   setActive(userId, productId, active) {
@@ -124965,12 +125139,12 @@ var CatalogStore = class {
       const validYear = (y) => y === null || Number.isInteger(y) && y >= 1950 && y <= 2100;
       if (make.length < 2 || make.length > 60 || model !== null && model.length > 60 || !validYear(yearFrom) || !validYear(yearTo) || yearFrom !== null && yearTo !== null && yearFrom > yearTo)
         fail18("INVALID_FITMENT");
-      const existing = await rows32(conn, "SELECT id, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId = ?", [productId]);
+      const existing = await rows33(conn, "SELECT id, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId = ?", [productId]);
       if (existing.length >= FITMENT_LIMIT)
         fail18("FITMENT_LIMIT");
       if (existing.some((f) => String(f.make).toLowerCase() === make.toLowerCase() && String(f.model ?? "").toLowerCase() === (model ?? "").toLowerCase() && (f.yearFrom ?? null) === yearFrom && (f.yearTo ?? null) === yearTo))
         fail18("FITMENT_DUPLICATE");
-      const id3 = randomUUID33();
+      const id3 = randomUUID34();
       await conn.query("INSERT INTO `ProductFitment` (id, productId, make, model, yearFrom, yearTo) VALUES (?, ?, ?, ?, ?, ?)", [id3, productId, make, model, yearFrom, yearTo]);
       await this.audit(conn, userId, "catalog.fitment.added", productId, { make, model, yearFrom, yearTo });
       return { id: id3, make, model, yearFrom, yearTo };
@@ -124988,32 +125162,32 @@ var CatalogStore = class {
         const store = await this.myStore(conn, userId);
         await conn.query("START TRANSACTION");
         open = true;
-        const existing = await rows32(conn, "SELECT id, name FROM `Product` WHERE storeId = ? FOR UPDATE", [store.id]);
+        const existing = await rows33(conn, "SELECT id, name FROM `Product` WHERE storeId = ? FOR UPDATE", [store.id]);
         const byName = new Map(existing.map((p) => [String(p.name).toLowerCase(), String(p.id)]));
         const summary = { created: 0, updated: 0, fitments: 0 };
-        for (const item of products) {
-          let productId = byName.get(item.name.toLowerCase());
+        for (const item2 of products) {
+          let productId = byName.get(item2.name.toLowerCase());
           if (productId) {
-            await conn.query("UPDATE `Product` SET price = ?, stock = COALESCE(?, stock), updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [item.price, item.stock, productId]);
+            await conn.query("UPDATE `Product` SET price = ?, stock = COALESCE(?, stock), updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [item2.price, item2.stock, productId]);
             summary.updated++;
           } else {
-            productId = randomUUID33();
-            await conn.query("INSERT INTO `Product` (id, storeId, name, price, stock, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [productId, store.id, item.name, item.price, item.stock ?? 0]);
-            byName.set(item.name.toLowerCase(), productId);
+            productId = randomUUID34();
+            await conn.query("INSERT INTO `Product` (id, storeId, name, price, stock, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [productId, store.id, item2.name, item2.price, item2.stock ?? 0]);
+            byName.set(item2.name.toLowerCase(), productId);
             summary.created++;
           }
-          if (!item.make)
+          if (!item2.make)
             continue;
-          const fits2 = await rows32(conn, "SELECT make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId = ?", [productId]);
-          const same = fits2.some((f) => String(f.make).toLowerCase() === item.make.toLowerCase() && String(f.model ?? "").toLowerCase() === (item.model ?? "").toLowerCase() && (f.yearFrom ?? null) === item.yearFrom && (f.yearTo ?? null) === item.yearTo);
+          const fits2 = await rows33(conn, "SELECT make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId = ?", [productId]);
+          const same = fits2.some((f) => String(f.make).toLowerCase() === item2.make.toLowerCase() && String(f.model ?? "").toLowerCase() === (item2.model ?? "").toLowerCase() && (f.yearFrom ?? null) === item2.yearFrom && (f.yearTo ?? null) === item2.yearTo);
           if (same)
             continue;
           if (fits2.length >= FITMENT_LIMIT)
             fail18("FITMENT_LIMIT");
-          await conn.query("INSERT INTO `ProductFitment` (id, productId, make, model, yearFrom, yearTo) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID33(), productId, item.make, item.model, item.yearFrom, item.yearTo]);
+          await conn.query("INSERT INTO `ProductFitment` (id, productId, make, model, yearFrom, yearTo) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID34(), productId, item2.make, item2.model, item2.yearFrom, item2.yearTo]);
           summary.fitments++;
         }
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'catalog.import', ?, 'almacen', 'Store', ?, ?, UTC_TIMESTAMP(3))", [randomUUID33(), userId, store.id, JSON.stringify(summary)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'catalog.import', ?, 'almacen', 'Store', ?, ?, UTC_TIMESTAMP(3))", [randomUUID34(), userId, store.id, JSON.stringify(summary)]);
         await conn.query("COMMIT");
         open = false;
         return summary;
@@ -125028,7 +125202,7 @@ var CatalogStore = class {
   }
   removeFitment(userId, productId, fitmentId) {
     return this.write(userId, productId, async (conn) => {
-      const [fitment] = await rows32(conn, "SELECT id, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE id = ? AND productId = ? FOR UPDATE", [fitmentId, productId]);
+      const [fitment] = await rows33(conn, "SELECT id, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE id = ? AND productId = ? FOR UPDATE", [fitmentId, productId]);
       if (!fitment)
         fail18("NOT_FOUND");
       await conn.query("DELETE FROM `ProductFitment` WHERE id = ?", [fitmentId]);
@@ -125042,13 +125216,13 @@ var CatalogStore = class {
 var CSV_MAX_ROWS = 500;
 var CSV_MAX_CHARS = 2e5;
 var clean2 = (v) => v.replace(/\s+/g, " ").trim();
-function splitLine(line, sep) {
+function splitLine(line2, sep) {
   const out = [];
   let cur = "", quoted2 = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
+  for (let i = 0; i < line2.length; i++) {
+    const ch = line2[i];
     if (quoted2) {
-      if (ch === '"' && line[i + 1] === '"') {
+      if (ch === '"' && line2[i + 1] === '"') {
         cur += '"';
         i++;
       } else if (ch === '"')
@@ -125083,11 +125257,11 @@ function parseCatalogCsv(text14) {
   const lines = text14.replace(/^﻿/, "").split(/\r?\n/);
   const firstData = lines.find((l) => l.trim() !== "") ?? "";
   const sep = (firstData.match(/;/g)?.length ?? 0) >= (firstData.match(/,/g)?.length ?? 0) && firstData.includes(";") ? ";" : ",";
-  const rows61 = [];
+  const rows62 = [];
   const seen = /* @__PURE__ */ new Map();
   let headerChecked = false;
   lines.forEach((raw, index) => {
-    const line = index + 1;
+    const line2 = index + 1;
     if (raw.trim() === "")
       return;
     const cells = splitLine(raw, sep).map(clean2);
@@ -125098,7 +125272,7 @@ function parseCatalogCsv(text14) {
     }
     const [name = "", priceRaw = "", stockRaw = "", make = "", model = "", fromRaw = "", toRaw = ""] = cells;
     const price = number(priceRaw, sep), stock = number(stockRaw, sep), yearFrom = number(fromRaw, sep), yearTo = number(toRaw, sep);
-    const bad = (reason) => problems.push({ line, reason });
+    const bad = (reason) => problems.push({ line: line2, reason });
     if (name.length < 2 || name.length > 191)
       return void bad("El nombre debe tener de 2 a 191 caracteres.");
     if (price === null || Number.isNaN(price) || price <= 0 || price > 99999999 || Math.abs(price * 100 - Math.round(price * 100)) > 1e-6)
@@ -125117,14 +125291,14 @@ function parseCatalogCsv(text14) {
     const key = name.toLowerCase();
     if (seen.has(key))
       return void bad(`El producto ya aparece en la l\xEDnea ${seen.get(key)}. Cada producto va una sola vez.`);
-    seen.set(key, line);
-    rows61.push({ line, name, price, stock, make: make || null, model: model || null, yearFrom, yearTo });
+    seen.set(key, line2);
+    rows62.push({ line: line2, name, price, stock, make: make || null, model: model || null, yearFrom, yearTo });
   });
-  if (rows61.length > CSV_MAX_ROWS)
+  if (rows62.length > CSV_MAX_ROWS)
     problems.push({ line: 0, reason: `M\xE1ximo ${CSV_MAX_ROWS} productos por carga. Divide el archivo.` });
-  if (!rows61.length && !problems.length)
+  if (!rows62.length && !problems.length)
     problems.push({ line: 0, reason: "El archivo no tiene productos." });
-  return { rows: rows61, problems };
+  return { rows: rows62, problems };
 }
 
 // packages/api/dist/interfaces/catalog-tariff.routes.js
@@ -125287,7 +125461,7 @@ init_local_agent_broker();
 init_fleet_access();
 init_vehicle_care_store();
 init_work_order_records();
-var rows33 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows34 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var whenTableMissing6 = (value2) => (err) => {
   if (err.code === "ER_NO_SUCH_TABLE")
     return value2;
@@ -125299,15 +125473,15 @@ async function receiptOrder(conn, userId, role, number2) {
   const select2 = "SELECT w.*, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, s.ruc AS shopRuc, v.make, v.model, v.year, v.plate, u.name AS clientName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId LEFT JOIN `User` u ON u.id = w.ownerId WHERE w.number = ?";
   if (role === "taller") {
     const shop = await new VehicleCareStore().actingShop(conn, userId, role, { openOrders: true });
-    const [order] = await rows33(conn, `${select2} AND w.shopId = ?`, [number2, shop.id]);
+    const [order] = await rows34(conn, `${select2} AND w.shopId = ?`, [number2, shop.id]);
     if (order)
       return { order, viewer: "taller" };
   } else if (role === "dueno") {
     const scope = await decisionScope(conn, userId);
-    const [order] = await rows33(conn, `${select2} AND ${scope.where("w")}`, [number2, ...scope.args]);
+    const [order] = await rows34(conn, `${select2} AND ${scope.where("w")}`, [number2, ...scope.args]);
     if (order)
       return { order, viewer: "dueno" };
-    const [assigned] = await rows33(conn, `${select2} AND EXISTS (SELECT 1 FROM \`FleetAssignment\` a JOIN \`FleetMember\` m ON m.id = a.memberId WHERE a.vehicleId = w.vehicleId AND m.userId = ? AND m.status = 'active' AND a.endsAt IS NULL)`, [number2, userId]);
+    const [assigned] = await rows34(conn, `${select2} AND EXISTS (SELECT 1 FROM \`FleetAssignment\` a JOIN \`FleetMember\` m ON m.id = a.memberId WHERE a.vehicleId = w.vehicleId AND m.userId = ? AND m.status = 'active' AND a.endsAt IS NULL)`, [number2, userId]);
     if (assigned)
       return { order: assigned, viewer: "conductor" };
   }
@@ -125319,8 +125493,8 @@ async function orderReceipt(conn, userId, role, number2) {
   const records = (await orderRecords(conn, [id3])).get(id3);
   const rejected = new Set((records?.partial?.rejected ?? []).map((r) => r.n));
   const showMoney = viewer !== "conductor";
-  const [delivery] = await rows33(conn, "SELECT description FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status = 'approved' ORDER BY createdAt DESC LIMIT 1", [id3]).catch(whenTableMissing6([]));
-  const paymentRows = showMoney ? await rows33(conn, "SELECT amount, method, reference, status, createdAt FROM `WorkOrderPayment` WHERE workOrderId = ? AND status IN ('pagado','informado') ORDER BY createdAt", [id3]).catch(whenTableMissing6([])) : [];
+  const [delivery] = await rows34(conn, "SELECT description FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status = 'approved' ORDER BY createdAt DESC LIMIT 1", [id3]).catch(whenTableMissing6([]));
+  const paymentRows = showMoney ? await rows34(conn, "SELECT amount, method, reference, status, createdAt FROM `WorkOrderPayment` WHERE workOrderId = ? AND status IN ('pagado','informado') ORDER BY createdAt", [id3]).catch(whenTableMissing6([])) : [];
   const total = Number(order.total ?? 0);
   const paid = records?.payment.paidUsd ?? 0;
   const informed = records?.payment.informedUsd ?? 0;
@@ -125353,12 +125527,12 @@ async function orderReceipt(conn, userId, role, number2) {
 }
 var ODOMETER_SOURCE = { ficha: "Ficha del taller", entrega: "Entrega de una orden", chat: "Aviso del propietario", panel: "Aviso del propietario", ingreso: "Ingreso al taller", manual: "Aviso del propietario" };
 async function historyVehicle(conn, userId, vehicleId) {
-  const [own2] = await rows33(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [vehicleId, userId]);
+  const [own2] = await rows34(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [vehicleId, userId]);
   if (own2)
     return own2;
   const managed = (await fleetRoles(conn, userId)).filter((r) => r.role !== "conductor").map((r) => r.fleetId);
   if (managed.length) {
-    const [fleet] = await rows33(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND fleetId IN (?) AND deletedAt IS NULL", [vehicleId, managed]);
+    const [fleet] = await rows34(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND fleetId IN (?) AND deletedAt IS NULL", [vehicleId, managed]);
     if (fleet)
       return fleet;
   }
@@ -125368,10 +125542,10 @@ async function vehicleHistory(conn, userId, role, vehicleId) {
   if (role !== "dueno")
     throw new BrokerError("FORBIDDEN");
   const vehicle = await historyVehicle(conn, userId, vehicleId);
-  const services = await rows33(conn, "SELECT r.serviceId, r.km, r.doneAt, r.source, s.name AS shopName, o.customName FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId LEFT JOIN `VehiclePlanOverride` o ON o.vehicleId = r.vehicleId AND o.serviceId = r.serviceId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
-  const inspections = await rows33(conn, "SELECT i.id, i.km, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 20", [vehicleId]).catch(whenTableMissing6([]));
-  const items = inspections.length ? await rows33(conn, "SELECT inspectionId, code, status FROM `VehicleInspectionItem` WHERE inspectionId IN (?)", [inspections.map((i) => String(i.id))]).catch(whenTableMissing6([])) : [];
-  const odometer2 = await rows33(conn, "SELECT km, source, createdAt FROM `VehicleOdometerReading` WHERE vehicleId = ? ORDER BY createdAt DESC, id DESC LIMIT 60", [vehicleId]).catch(whenTableMissing6([]));
+  const services = await rows34(conn, "SELECT r.serviceId, r.km, r.doneAt, r.source, s.name AS shopName, o.customName FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId LEFT JOIN `VehiclePlanOverride` o ON o.vehicleId = r.vehicleId AND o.serviceId = r.serviceId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
+  const inspections = await rows34(conn, "SELECT i.id, i.km, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 20", [vehicleId]).catch(whenTableMissing6([]));
+  const items = inspections.length ? await rows34(conn, "SELECT inspectionId, code, status FROM `VehicleInspectionItem` WHERE inspectionId IN (?)", [inspections.map((i) => String(i.id))]).catch(whenTableMissing6([])) : [];
+  const odometer2 = await rows34(conn, "SELECT km, source, createdAt FROM `VehicleOdometerReading` WHERE vehicleId = ? ORDER BY createdAt DESC, id DESC LIMIT 60", [vehicleId]).catch(whenTableMissing6([]));
   return {
     vehicle: { label: [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" "), plate: vehicle.plate ? String(vehicle.plate) : null, currentKm: Number(vehicle.currentKm) || 0 },
     services: services.map((r) => ({ name: r.customName ? String(r.customName) : serviceName3(String(r.serviceId)), km: Number(r.km) || 0, doneAt: iso2(r.doneAt), by: r.shopName ? String(r.shopName) : "Anotado por el propietario" })),
@@ -125392,8 +125566,8 @@ init_commands();
 init_apply();
 init_fleet_access();
 init_vehicle_card_store();
-import { randomBytes as randomBytes10, randomUUID as randomUUID34 } from "node:crypto";
-var rows34 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomBytes as randomBytes10, randomUUID as randomUUID35 } from "node:crypto";
+var rows35 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var fail19 = (code5) => {
   throw new FleetAccessError(code5);
 };
@@ -125448,17 +125622,17 @@ var VehicleTransferStore = class {
     if (role !== "dueno")
       fail19("FORBIDDEN");
     return this.run(async (conn) => {
-      const [vehicle] = await rows34(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId, userId]);
+      const [vehicle] = await rows35(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId, userId]);
       if (!vehicle)
         return fail19("NOT_FOUND");
       if (vehicle.fleetId)
         return fail19("TRANSFER_FLEET_VEHICLE");
       const code5 = newTransferCode();
-      const id3 = randomUUID34();
+      const id3 = randomUUID35();
       await conn.query("UPDATE `VehicleTransfer` SET status = 'cancelled' WHERE vehicleId = ? AND status = 'pending'", [vehicleId]);
       await conn.query("INSERT INTO `VehicleTransfer` (id, codeHash, vehicleId, fromUserId, status, expiresAt) VALUES (?, ?, ?, ?, 'pending', DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? DAY))", [id3, secretHash(code5), vehicleId, userId, TRANSFER_DAYS]);
       await this.audit(conn, userId, "dueno", "vehicle.transfer.created", "Vehicle", vehicleId, { transferId: id3, days: TRANSFER_DAYS });
-      const [saved] = await rows34(conn, "SELECT expiresAt FROM `VehicleTransfer` WHERE id = ?", [id3]);
+      const [saved] = await rows35(conn, "SELECT expiresAt FROM `VehicleTransfer` WHERE id = ?", [id3]);
       return { code: code5, expiresAt: new Date(saved.expiresAt).toISOString(), vehicleLabel: label2(vehicle) };
     }).catch(unavailable);
   }
@@ -125469,7 +125643,7 @@ var VehicleTransferStore = class {
     const code5 = normalizeTransferCode(rawCode);
     const conn = await this.connect();
     try {
-      const [recent] = await rows34(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE eventType = 'vehicle.transfer.failed' AND actorUserId = ? AND createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 HOUR)", [userId]);
+      const [recent] = await rows35(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE eventType = 'vehicle.transfer.failed' AND actorUserId = ? AND createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 HOUR)", [userId]);
       if (Number(recent?.n) >= MAX_FAILED_PER_HOUR)
         fail19("TRANSFER_TOO_MANY_ATTEMPTS");
       try {
@@ -125490,27 +125664,27 @@ var VehicleTransferStore = class {
   async redeemInside(conn, buyerId, code5) {
     if (!code5)
       return fail19("INVALID_TRANSFER_CODE");
-    const [transfer] = await rows34(conn, "SELECT * FROM `VehicleTransfer` WHERE codeHash = ? AND status = 'pending' AND expiresAt > UTC_TIMESTAMP(3) FOR UPDATE", [secretHash(code5)]);
+    const [transfer] = await rows35(conn, "SELECT * FROM `VehicleTransfer` WHERE codeHash = ? AND status = 'pending' AND expiresAt > UTC_TIMESTAMP(3) FOR UPDATE", [secretHash(code5)]);
     if (!transfer)
       return fail19("INVALID_TRANSFER_CODE");
     const vehicleId = String(transfer.vehicleId);
-    const [vehicle] = await rows34(conn, "SELECT * FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
+    const [vehicle] = await rows35(conn, "SELECT * FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
     if (!vehicle || vehicle.deletedAt || vehicle.fleetId || String(vehicle.userId) !== String(transfer.fromUserId))
       return fail19("INVALID_TRANSFER_CODE");
     const sellerId = String(transfer.fromUserId);
     if (sellerId === buyerId)
       return fail19("TRANSFER_OWN_VEHICLE");
-    const open = await rows34(conn, "SELECT number FROM `WorkOrder` WHERE vehicleId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [vehicleId]);
+    const open = await rows35(conn, "SELECT number FROM `WorkOrder` WHERE vehicleId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [vehicleId]);
     if (open.length)
       return fail19("TRANSFER_ORDER_OPEN");
-    const warranty = await rows34(conn, "SELECT g.id FROM `WorkOrderWarranty` g JOIN `WorkOrder` w ON w.id = g.workOrderId WHERE w.vehicleId = ? AND g.status = 'abierta' LIMIT 1", [vehicleId]).catch((err) => {
+    const warranty = await rows35(conn, "SELECT g.id FROM `WorkOrderWarranty` g JOIN `WorkOrder` w ON w.id = g.workOrderId WHERE w.vehicleId = ? AND g.status = 'abierta' LIMIT 1", [vehicleId]).catch((err) => {
       if (err.code !== "ER_NO_SUCH_TABLE")
         throw err;
       return [];
     });
     if (warranty.length)
       return fail19("TRANSFER_WARRANTY_OPEN");
-    const claim = await rows34(conn, "SELECT c.id FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId WHERE w.vehicleId = ? AND c.activeKey IS NOT NULL LIMIT 1", [vehicleId]).catch((err) => {
+    const claim = await rows35(conn, "SELECT c.id FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId WHERE w.vehicleId = ? AND c.activeKey IS NOT NULL LIMIT 1", [vehicleId]).catch((err) => {
       if (err.code !== "ER_NO_SUCH_TABLE")
         throw err;
       return [];
@@ -125519,11 +125693,11 @@ var VehicleTransferStore = class {
       return fail19("TRANSFER_CLAIM_OPEN");
     const key = plateKey(String(vehicle.plate ?? ""));
     if (key) {
-      const elsewhere = await rows34(conn, `SELECT v.id FROM \`Vehicle\` v WHERE v.deletedAt IS NULL AND ${PLATE_SQL} = ? AND v.id <> ? LIMIT 1`, [key, vehicleId]);
+      const elsewhere = await rows35(conn, `SELECT v.id FROM \`Vehicle\` v WHERE v.deletedAt IS NULL AND ${PLATE_SQL} = ? AND v.id <> ? LIMIT 1`, [key, vehicleId]);
       if (elsewhere.length)
         return fail19("PLATE_TAKEN");
     }
-    const [count3] = await rows34(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [buyerId]);
+    const [count3] = await rows35(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [buyerId]);
     if (Number(count3?.n) >= OWN_VEHICLE_LIMIT)
       return fail19("VEHICLE_LIMIT");
     await conn.query("UPDATE `Vehicle` SET userId = ?, remindersOptIn = 0, selectedAt = UTC_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [buyerId, vehicleId]);
@@ -125534,7 +125708,7 @@ var VehicleTransferStore = class {
     });
     await conn.query("UPDATE `VehicleTransfer` SET status = 'used', toUserId = ?, usedAt = UTC_TIMESTAMP(3) WHERE id = ?", [buyerId, transfer.id]);
     await conn.query("UPDATE `VehicleTransfer` SET status = 'cancelled' WHERE vehicleId = ? AND status = 'pending' AND id <> ?", [vehicleId, transfer.id]);
-    const [services] = await rows34(conn, "SELECT COUNT(*) AS n FROM `VehicleServiceRecord` WHERE vehicleId = ?", [vehicleId]);
+    const [services] = await rows35(conn, "SELECT COUNT(*) AS n FROM `VehicleServiceRecord` WHERE vehicleId = ?", [vehicleId]);
     const text14 = label2(vehicle);
     await this.audit(conn, buyerId, "dueno", "vehicle.transfer.completed", "Vehicle", vehicleId, { transferId: String(transfer.id), fromUserId: sellerId, toUserId: buyerId, appointmentsCancelled: Number(upcoming[0].affectedRows ?? 0) });
     await this.notify(conn, sellerId, `transfer:${String(transfer.id)}:from`, "vehicle.transfer", `\u{1F511} Tu ${text14} pas\xF3 a otra cuenta con el c\xF3digo de cambio de propietario. Ya no lo ver\xE1s en tu panel ni podr\xE1s gestionarlo.`);
@@ -125542,10 +125716,10 @@ var VehicleTransferStore = class {
     return { vehicleId, vehicleLabel: text14, services: Number(services?.n ?? 0) };
   }
   async notify(conn, recipient, dedup, kind, message2) {
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID34(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID35(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
   }
   async audit(conn, userId, role, eventType, entityType, entityId, after) {
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID34(), eventType, userId, role, entityType, entityId, JSON.stringify(after)]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID35(), eventType, userId, role, entityType, entityId, JSON.stringify(after)]);
   }
 };
 
@@ -125821,8 +125995,8 @@ init_preferences();
 
 // packages/api/dist/infrastructure/messaging/flow-extras.js
 init_apply();
-import { randomUUID as randomUUID36 } from "node:crypto";
-var rows36 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomUUID as randomUUID37 } from "node:crypto";
+var rows37 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var ExtraError = class extends Error {
   code;
   status;
@@ -125861,13 +126035,13 @@ async function inTransaction(conn, work) {
   }
 }
 async function audit5(conn, eventType, actorUserId, actorRole, entityType, entityId, before, after) {
-  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID36(), eventType, actorUserId, actorRole, entityType, entityId, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID37(), eventType, actorUserId, actorRole, entityType, entityId, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
 }
 async function queueNotice(conn, recipientUserId, dedupKey, kind, message2) {
   const key = dedupKey.slice(0, 191);
-  if ((await rows36(conn, "SELECT 1 AS found FROM `NotificationOutbox` WHERE dedupKey = ?", [key])).length)
+  if ((await rows37(conn, "SELECT 1 AS found FROM `NotificationOutbox` WHERE dedupKey = ?", [key])).length)
     return false;
-  await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID36(), key, recipientUserId, kind, JSON.stringify({ message: message2 })]);
+  await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID37(), key, recipientUserId, kind, JSON.stringify({ message: message2 })]);
   return true;
 }
 
@@ -125879,13 +126053,13 @@ var NotificationPreferencesStore = class {
     this.connect = connect;
   }
   async read(conn, userId, role) {
-    const [user] = await rows36(conn, "SELECT notifyMaintenance, notifyDeadlines, notifyOffers FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+    const [user] = await rows37(conn, "SELECT notifyMaintenance, notifyDeadlines, notifyOffers FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
     if (!user)
       return fail22("ACCOUNT_UNAVAILABLE", "Tu cuenta no est\xE1 disponible.", 403);
-    const [optOut] = await rows36(conn, "SELECT whatsappOptOutAt FROM `User` WHERE id = ?", [userId]).catch(() => [{ whatsappOptOutAt: null }]);
+    const [optOut] = await rows37(conn, "SELECT whatsappOptOutAt FROM `User` WHERE id = ?", [userId]).catch(() => [{ whatsappOptOutAt: null }]);
     let reminders = null;
     if (role === "dueno") {
-      const [own2] = await rows36(conn, "SELECT COUNT(*) AS n, COALESCE(MAX(remindersOptIn), 0) AS on_ FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [userId]);
+      const [own2] = await rows37(conn, "SELECT COUNT(*) AS n, COALESCE(MAX(remindersOptIn), 0) AS on_ FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [userId]);
       reminders = Number(own2?.n) > 0 ? Number(own2?.on_) === 1 : null;
     }
     return {
@@ -125930,7 +126104,7 @@ var VehicleSoatStore = class {
     if (date2 !== null && !clean4)
       fail22("INVALID_SOAT_DATE", "Escribe la fecha de vencimiento del SOAT como d\xEDa, mes y a\xF1o v\xE1lidos.", 422);
     return withConnection(this.connect, (conn) => inTransaction(conn, async () => {
-      const [vehicle] = await rows36(conn, "SELECT id, userId, fleetId, soatExpiresAt FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId]);
+      const [vehicle] = await rows37(conn, "SELECT id, userId, fleetId, soatExpiresAt FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId]);
       if (!vehicle)
         return fail22("VEHICLE_NOT_FOUND", "No encontramos ese veh\xEDculo.", 404);
       const owner = role === "dueno" && String(vehicle.userId) === userId;
@@ -125951,7 +126125,7 @@ init_plan_text();
 init_recommendations();
 init_vehicle_care_store();
 init_shop_vehicle_access();
-import { randomUUID as randomUUID37 } from "node:crypto";
+import { randomUUID as randomUUID38 } from "node:crypto";
 var RECONTACT_DAYS = 30;
 var RECONTACT_KIND = "care.recontact";
 var DAY = 864e5;
@@ -125977,11 +126151,11 @@ var ShopRecontactStore = class {
   }
   /** Mismo criterio que `shopCanAccessVehicle` (cita u orden del dueño actual, u orden abierta en curso, y sin bloqueo), ya filtrado por quien acepta recordatorios. */
   async candidates(conn, shopId) {
-    const found = await rows36(conn, "SELECT v.*, u.name AS ownerName FROM `Vehicle` v JOIN `User` u ON u.id = v.userId WHERE v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND v.remindersOptIn = 1 AND (EXISTS (SELECT 1 FROM `Appointment` a WHERE a.vehicleId = v.id AND a.shopId = ? AND a.status <> 'cancelled' AND (v.fleetId IS NOT NULL OR a.ownerId = v.userId)) OR EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId = v.id AND w.shopId = ? AND (v.fleetId IS NOT NULL OR w.ownerId = v.userId OR w.status NOT IN ('cerrada','cancelada')))) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = ?) ORDER BY v.id LIMIT ?", [shopId, shopId, shopId, LIST_LIMIT]);
+    const found = await rows37(conn, "SELECT v.*, u.name AS ownerName FROM `Vehicle` v JOIN `User` u ON u.id = v.userId WHERE v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND v.remindersOptIn = 1 AND (EXISTS (SELECT 1 FROM `Appointment` a WHERE a.vehicleId = v.id AND a.shopId = ? AND a.status <> 'cancelled' AND (v.fleetId IS NOT NULL OR a.ownerId = v.userId)) OR EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId = v.id AND w.shopId = ? AND (v.fleetId IS NOT NULL OR w.ownerId = v.userId OR w.status NOT IN ('cerrada','cancelada')))) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = ?) ORDER BY v.id LIMIT ?", [shopId, shopId, shopId, LIST_LIMIT]);
     if (!found.length)
       return found;
     const ids = [...new Set(found.map((v) => String(v.userId)))];
-    const silent = await rows36(conn, "SELECT id FROM `User` WHERE id IN (?) AND whatsappOptOutAt IS NOT NULL", [ids]).catch((err) => {
+    const silent = await rows37(conn, "SELECT id FROM `User` WHERE id IN (?) AND whatsappOptOutAt IS NOT NULL", [ids]).catch((err) => {
       if (err.code === "ER_BAD_FIELD_ERROR")
         return [];
       throw err;
@@ -125995,7 +126169,7 @@ var ShopRecontactStore = class {
     return top ? { serviceName: top.serviceName, state: top.state, label: top.label } : null;
   }
   async recentByVehicle(conn, shopId, now) {
-    const sent = await rows36(conn, "SELECT vehicleId, MAX(createdAt) AS last FROM `ShopRecontact` WHERE shopId = ? AND createdAt > ? GROUP BY vehicleId", [shopId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]);
+    const sent = await rows37(conn, "SELECT vehicleId, MAX(createdAt) AS last FROM `ShopRecontact` WHERE shopId = ? AND createdAt > ? GROUP BY vehicleId", [shopId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]);
     return new Map(sent.map((r) => [String(r.vehicleId), new Date(String(r.last))]));
   }
   list(userId, role, now = /* @__PURE__ */ new Date()) {
@@ -126023,21 +126197,21 @@ var ShopRecontactStore = class {
   send(userId, role, vehicleId, now = /* @__PURE__ */ new Date()) {
     return withConnection(this.connect, (conn) => inTransaction(conn, async () => {
       const shop = await this.manager(conn, userId, role);
-      const [vehicle] = await rows36(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId]);
+      const [vehicle] = await rows37(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId]);
       const notAllowed = () => fail22("RECONTACT_NOT_ALLOWED", "Este cliente no puede recibir recordatorios ahora.");
       if (!vehicle || !await shopCanAccessVehicle(conn, shop.id, vehicleId))
         return fail22("VEHICLE_NOT_FOUND", "No encontramos ese veh\xEDculo entre los que atendiste.", 404);
       const eligible = await this.single(conn, vehicle);
       if (!eligible)
         return notAllowed();
-      const [latest] = await rows36(conn, "SELECT MAX(createdAt) AS last FROM `ShopRecontact` WHERE shopId = ? AND vehicleId = ? AND createdAt > ? FOR UPDATE", [shop.id, vehicleId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]).catch(() => rows36(conn, "SELECT createdAt AS last FROM `ShopRecontact` WHERE shopId = ? AND vehicleId = ? AND createdAt > ? ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [shop.id, vehicleId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]));
+      const [latest] = await rows37(conn, "SELECT MAX(createdAt) AS last FROM `ShopRecontact` WHERE shopId = ? AND vehicleId = ? AND createdAt > ? FOR UPDATE", [shop.id, vehicleId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]).catch(() => rows37(conn, "SELECT createdAt AS last FROM `ShopRecontact` WHERE shopId = ? AND vehicleId = ? AND createdAt > ? ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [shop.id, vehicleId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]));
       const last = latest?.last ? new Date(String(latest.last)) : void 0;
       if (last)
         return fail22("RECONTACT_TOO_SOON", `Ya enviaste un recordatorio por este veh\xEDculo. Podr\xE1s enviar otro a partir del ${day3(new Date(last.getTime() + RECONTACT_DAYS * DAY))}.`);
       const due = await this.topDue(conn, vehicle);
       if (!due)
         return fail22("RECONTACT_NOTHING_DUE", "Este veh\xEDculo ya no tiene servicios vencidos ni pr\xF3ximos.");
-      const id3 = randomUUID37();
+      const id3 = randomUUID38();
       await conn.query("INSERT INTO `ShopRecontact` (id, shopId, vehicleId, sentBy, service, createdAt) VALUES (?, ?, ?, ?, ?, ?)", [id3, shop.id, vehicleId, userId, due.serviceName.slice(0, 120), now]);
       const message2 = `\u{1F514} ${shop.name} te recuerda que tu ${label3(vehicle)} tiene un servicio ${due.state === "urgente" ? "vencido" : "pr\xF3ximo"}: ${due.serviceName} (${due.label.toLowerCase()}). Si quieres pedir tu cita, entra a tu panel en \xABTalleres cerca de ti\xBB. Para dejar de recibir recordatorios: Alertas no`;
       await queueNotice(conn, String(vehicle.userId), `recontact:${id3}`, RECONTACT_KIND, message2);
@@ -126049,10 +126223,10 @@ var ShopRecontactStore = class {
   async single(conn, vehicle) {
     if (Number(vehicle.remindersOptIn) !== 1)
       return null;
-    const [owner] = await rows36(conn, "SELECT id FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [vehicle.userId]);
+    const [owner] = await rows37(conn, "SELECT id FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [vehicle.userId]);
     if (!owner)
       return null;
-    const [silent] = await rows36(conn, "SELECT id FROM `User` WHERE id = ? AND whatsappOptOutAt IS NOT NULL", [vehicle.userId]).catch((err) => {
+    const [silent] = await rows37(conn, "SELECT id FROM `User` WHERE id = ? AND whatsappOptOutAt IS NOT NULL", [vehicle.userId]).catch((err) => {
       if (err.code === "ER_BAD_FIELD_ERROR")
         return [];
       throw err;
@@ -126062,7 +126236,7 @@ var ShopRecontactStore = class {
 };
 
 // packages/api/dist/infrastructure/messaging/appointment-waitlist.js
-import { randomUUID as randomUUID38 } from "node:crypto";
+import { randomUUID as randomUUID39 } from "node:crypto";
 var HORIZON_DAYS2 = 90;
 var WAITLIST_KIND = "care.waitlist";
 var ecToday = (now) => new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
@@ -126081,16 +126255,16 @@ var AppointmentWaitlist = class {
     return withConnection(this.connect, (conn) => inTransaction(conn, async () => {
       if (role !== "dueno")
         return fail22("FORBIDDEN", "La lista de espera es para cuentas de due\xF1o.", 403);
-      const [user] = await rows36(conn, "SELECT id FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL FOR UPDATE", [userId]);
+      const [user] = await rows37(conn, "SELECT id FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL FOR UPDATE", [userId]);
       if (!user)
         return fail22("CONSENT_OR_ACCOUNT_REQUIRED", "Tu cuenta no est\xE1 disponible.", 403);
-      const [shop] = await rows36(conn, "SELECT id, name FROM `Shop` WHERE id = ? AND verificationStatus = 'verified'", [shopId]);
+      const [shop] = await rows37(conn, "SELECT id, name FROM `Shop` WHERE id = ? AND verificationStatus = 'verified'", [shopId]);
       if (!shop)
         return fail22("SHOP_UNAVAILABLE", "Ese taller no est\xE1 disponible.", 404);
-      const [waiting] = await rows36(conn, "SELECT id FROM `AppointmentWaitlist` WHERE shopId = ? AND ownerUserId = ? AND wantedDate = ? AND notifiedAt IS NULL", [shopId, userId, date2]);
+      const [waiting] = await rows37(conn, "SELECT id FROM `AppointmentWaitlist` WHERE shopId = ? AND ownerUserId = ? AND wantedDate = ? AND notifiedAt IS NULL", [shopId, userId, date2]);
       if (waiting)
         return { duplicate: true, message: `Ya est\xE1s en la lista de espera de ${shop.name} para el ${shown2(date2)}.` };
-      const id3 = randomUUID38();
+      const id3 = randomUUID39();
       await conn.query("INSERT INTO `AppointmentWaitlist` (id, shopId, ownerUserId, wantedDate, createdAt) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3))", [id3, shopId, userId, date2]);
       await audit5(conn, "booking.waitlist.joined", userId, "dueno", "AppointmentWaitlist", id3, null, { shopId, date: date2 });
       return { duplicate: false, message: `Listo: si se libera un horario en ${shop.name} el ${shown2(date2)}, te avisamos una sola vez. No reservamos nada: si te avisamos, pide tu cita cuanto antes.` };
@@ -126101,7 +126275,7 @@ var AppointmentWaitlist = class {
     const conn = await this.connect();
     let sent = 0;
     try {
-      const waiting = await rows36(conn, "SELECT w.id, w.ownerUserId, w.wantedDate, s.name AS shopName FROM `AppointmentWaitlist` w JOIN `Shop` s ON s.id = w.shopId JOIN `User` u ON u.id = w.ownerUserId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE w.notifiedAt IS NULL AND w.wantedDate >= ? AND EXISTS (SELECT 1 FROM `Appointment` a WHERE a.shopId = w.shopId AND a.status = 'cancelled' AND DATE(DATE_SUB(a.scheduledAt, INTERVAL 5 HOUR)) = w.wantedDate AND a.updatedAt > w.createdAt) ORDER BY w.createdAt LIMIT 200", [ecToday(now)]);
+      const waiting = await rows37(conn, "SELECT w.id, w.ownerUserId, w.wantedDate, s.name AS shopName FROM `AppointmentWaitlist` w JOIN `Shop` s ON s.id = w.shopId JOIN `User` u ON u.id = w.ownerUserId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE w.notifiedAt IS NULL AND w.wantedDate >= ? AND EXISTS (SELECT 1 FROM `Appointment` a WHERE a.shopId = w.shopId AND a.status = 'cancelled' AND DATE(DATE_SUB(a.scheduledAt, INTERVAL 5 HOUR)) = w.wantedDate AND a.updatedAt > w.createdAt) ORDER BY w.createdAt LIMIT 200", [ecToday(now)]);
       for (const entry of waiting) {
         const date2 = entry.wantedDate instanceof Date ? entry.wantedDate.toISOString().slice(0, 10) : String(entry.wantedDate).slice(0, 10);
         await inTransaction(conn, async () => {
@@ -126212,11 +126386,12 @@ function registerPilotExtrasRoutes(app2, deps) {
 
 // packages/api/dist/infrastructure/messaging/pilot-panel-store.js
 init_shop_indicators();
+init_supply_store();
 init_appointment_capacity();
 init_record_photos();
 
 // packages/api/dist/infrastructure/messaging/plan-records.js
-var rows37 = async (c, sql, args = []) => (await c.query(sql, args))[0];
+var rows38 = async (c, sql, args = []) => (await c.query(sql, args))[0];
 var SHOP_EDIT_DAYS = 30;
 var text6 = (v, max) => {
   const s = typeof v === "string" ? v.trim().replace(/\s+/g, " ") : "";
@@ -126292,11 +126467,11 @@ var parseParts = (v) => {
 async function listPlanRecords(conn, vehicleId, viewer) {
   let list7;
   try {
-    list7 = await rows37(conn, "SELECT r.id, r.serviceId, r.km, r.doneAt, r.source, r.shopId, r.createdAt, r.detail, r.parts, r.costUsd, r.shopName, r.technician, r.finding, r.nextDueAt, r.nextDueKm, r.appointmentId, r.updatedAt, s.name AS realShop FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
+    list7 = await rows38(conn, "SELECT r.id, r.serviceId, r.km, r.doneAt, r.source, r.shopId, r.createdAt, r.detail, r.parts, r.costUsd, r.shopName, r.technician, r.finding, r.nextDueAt, r.nextDueKm, r.appointmentId, r.updatedAt, s.name AS realShop FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
   } catch (err) {
     if (err.code !== "ER_BAD_FIELD_ERROR")
       throw err;
-    list7 = await rows37(conn, "SELECT r.id, r.serviceId, r.km, r.doneAt, r.source, r.shopId, r.createdAt, s.name AS realShop FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
+    list7 = await rows38(conn, "SELECT r.id, r.serviceId, r.km, r.doneAt, r.source, r.shopId, r.createdAt, s.name AS realShop FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
   }
   return list7.map((r) => ({
     id: String(r.id),
@@ -126327,10 +126502,10 @@ init_fleet_access();
 // packages/api/dist/infrastructure/messaging/part-order-panel.js
 init_workflow();
 init_contracts();
-var rows38 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
-var MISSING4 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
+var rows39 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var MISSING5 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
 var whenMissing3 = (value2) => (err) => {
-  if (MISSING4.includes(String(err.code)))
+  if (MISSING5.includes(String(err.code)))
     return value2;
   throw err;
 };
@@ -126342,17 +126517,17 @@ async function partMoneyFor(conn, userId, role) {
   if (!side)
     return [];
   try {
-    const list7 = await rows38(conn, `SELECT lr.*, o.id AS offerId, o.businessName, o.priceUsd, o.stockStatus, v.make, v.model, v.year FROM \`LocalRequest\` lr JOIN \`LocalOffer\` o ON o.id = lr.chosenOfferId LEFT JOIN \`Vehicle\` v ON v.id = lr.vehicleId WHERE ${side === "store" ? "o.businessUserId = ?" : "lr.ownerId = ?"} AND lr.kind = 'repuesto' AND lr.status IN ('accepted','delivered') AND o.stockStatus = 'confirmed' ${side === "buyer" ? "AND (lr.status = 'delivered' OR EXISTS (SELECT 1 FROM `PartPayment` pp WHERE pp.requestId = lr.id))" : ""} AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 60 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 8`, [userId]);
+    const list7 = await rows39(conn, `SELECT lr.*, o.id AS offerId, o.businessName, o.priceUsd, o.stockStatus, v.make, v.model, v.year FROM \`LocalRequest\` lr JOIN \`LocalOffer\` o ON o.id = lr.chosenOfferId LEFT JOIN \`Vehicle\` v ON v.id = lr.vehicleId WHERE ${side === "store" ? "o.businessUserId = ?" : "lr.ownerId = ?"} AND lr.kind = 'repuesto' AND lr.status IN ('accepted','delivered') AND o.stockStatus = 'confirmed' ${side === "buyer" ? "AND (lr.status = 'delivered' OR EXISTS (SELECT 1 FROM `PartPayment` pp WHERE pp.requestId = lr.id))" : ""} AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 60 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 8`, [userId]);
     if (!list7.length)
       return [];
     const ids = list7.map((r) => String(r.id));
-    const payments = await rows38(conn, "SELECT requestId, amount, method, reference, status, buyerNote FROM `PartPayment` WHERE requestId IN (?) ORDER BY createdAt", [ids]);
-    const returns = await rows38(conn, "SELECT requestId, status, reason, storeNote FROM `PartReturn` WHERE requestId IN (?) ORDER BY createdAt DESC", [ids]);
-    const returnPhotos = new Set((await rows38(conn, "SELECT DISTINCT requestId FROM `PartReturn` WHERE requestId IN (?) AND photoMime IS NOT NULL", [ids]).catch(whenMissing3([]))).map((p) => String(p.requestId)));
-    const proofs = new Set((await rows38(conn, "SELECT DISTINCT requestId FROM `PartPayment` WHERE requestId IN (?) AND photoMime IS NOT NULL", [ids]).catch(whenMissing3([]))).map((p) => String(p.requestId)));
-    const links = await rows38(conn, "SELECT l.requestId, l.effect, l.changeId, w.number, c.status AS changeStatus FROM `PartOrderLink` l JOIN `WorkOrder` w ON w.id = l.workOrderId LEFT JOIN `WorkOrderChange` c ON c.id = l.changeId WHERE l.requestId IN (?)", [ids]).catch(whenMissing3([]));
+    const payments = await rows39(conn, "SELECT requestId, amount, method, reference, status, buyerNote FROM `PartPayment` WHERE requestId IN (?) ORDER BY createdAt", [ids]);
+    const returns = await rows39(conn, "SELECT requestId, status, reason, storeNote FROM `PartReturn` WHERE requestId IN (?) ORDER BY createdAt DESC", [ids]);
+    const returnPhotos = new Set((await rows39(conn, "SELECT DISTINCT requestId FROM `PartReturn` WHERE requestId IN (?) AND photoMime IS NOT NULL", [ids]).catch(whenMissing3([]))).map((p) => String(p.requestId)));
+    const proofs = new Set((await rows39(conn, "SELECT DISTINCT requestId FROM `PartPayment` WHERE requestId IN (?) AND photoMime IS NOT NULL", [ids]).catch(whenMissing3([]))).map((p) => String(p.requestId)));
+    const links = await rows39(conn, "SELECT l.requestId, l.effect, l.changeId, w.number, c.status AS changeStatus FROM `PartOrderLink` l JOIN `WorkOrder` w ON w.id = l.workOrderId LEFT JOIN `WorkOrderChange` c ON c.id = l.changeId WHERE l.requestId IN (?)", [ids]).catch(whenMissing3([]));
     const orderIds = [...new Set(list7.map((r) => r.workOrderId ? String(r.workOrderId) : "").filter(Boolean))];
-    const orders = orderIds.length ? await rows38(conn, "SELECT id, number FROM `WorkOrder` WHERE id IN (?)", [orderIds]).catch(whenMissing3([])) : [];
+    const orders = orderIds.length ? await rows39(conn, "SELECT id, number FROM `WorkOrder` WHERE id IN (?)", [orderIds]).catch(whenMissing3([])) : [];
     const out = [];
     for (const r of list7) {
       const id3 = String(r.id);
@@ -126399,7 +126574,7 @@ async function partMoneyFor(conn, userId, role) {
     }
     return out;
   } catch (err) {
-    if (MISSING4.includes(String(err.code)))
+    if (MISSING5.includes(String(err.code)))
       return [];
     throw err;
   }
@@ -126434,8 +126609,8 @@ init_reminder_done();
 init_apply();
 init_shop_vehicle_access();
 init_catalogs();
-import { randomUUID as randomUUID39 } from "node:crypto";
-var rows39 = async (c, sql, args = []) => (await c.query(sql, args))[0];
+import { randomUUID as randomUUID40 } from "node:crypto";
+var rows40 = async (c, sql, args = []) => (await c.query(sql, args))[0];
 var PlanOverrideError = class extends Error {
   code;
   constructor(code5) {
@@ -126457,7 +126632,7 @@ var VehiclePlanOverrideStore = class {
     }
   }
   async list(vehicleId) {
-    return this.run(async (c) => rows39(c, "SELECT o.*, s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id = o.shopId WHERE o.vehicleId = ?", [vehicleId]));
+    return this.run(async (c) => rows40(c, "SELECT o.*, s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id = o.shopId WHERE o.vehicleId = ?", [vehicleId]));
   }
   async recordLastService(userId, role, input) {
     const fields = cleanFields(input);
@@ -126466,10 +126641,10 @@ var VehiclePlanOverrideStore = class {
     if (!Number.isInteger(input.km) || input.km < 0 || input.km > 2e6 || !/^\d{4}-\d{2}-\d{2}$/.test(input.doneAt) || !input.serviceId.startsWith("custom-") && !serviceTaxonomy.categories.some((c) => c.subservices.some((s) => s.id === input.serviceId)))
       throw new PlanOverrideError("INVALID_SERVICE_RECORD");
     return this.run(async (c) => {
-      const [actor] = await rows39(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows40(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
-      const [vehicle] = await rows39(c, "SELECT id,userId,currentKm FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [input.vehicleId]);
+      const [vehicle] = await rows40(c, "SELECT id,userId,currentKm FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [input.vehicleId]);
       if (!vehicle)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -126477,7 +126652,7 @@ var VehiclePlanOverrideStore = class {
         if (String(vehicle.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows39(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
+        const [shop] = await rows40(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
         shopId = shop ? String(shop.id) : null;
         const related = shopId ? await shopCanAccessVehicle(c, String(shopId), input.vehicleId) : false;
         if (!shop || !related)
@@ -126489,12 +126664,12 @@ var VehiclePlanOverrideStore = class {
         throw new PlanOverrideError("KM_AHEAD_OF_ODOMETER");
       let appointmentId = null;
       if (input.appointmentId) {
-        const [appointment] = await rows39(c, "SELECT id FROM `Appointment` WHERE id=? AND vehicleId=? AND (? IS NULL OR shopId=?)", [input.appointmentId, input.vehicleId, shopId, shopId]);
+        const [appointment] = await rows40(c, "SELECT id FROM `Appointment` WHERE id=? AND vehicleId=? AND (? IS NULL OR shopId=?)", [input.appointmentId, input.vehicleId, shopId, shopId]);
         if (!appointment)
           throw new PlanOverrideError("NOT_FOUND");
         appointmentId = String(appointment.id);
       }
-      const id3 = randomUUID39();
+      const id3 = randomUUID40();
       const base = [id3, input.vehicleId, input.serviceId, input.km, `${input.doneAt} 12:00:00.000`, role === "taller" ? "taller" : "dueno", shopId, userId, input.recordedAt ? new Date(input.recordedAt).toISOString().slice(0, 23).replace("T", " ") : /* @__PURE__ */ new Date()];
       try {
         await c.query("INSERT INTO `VehicleServiceRecord` (id,vehicleId,serviceId,km,doneAt,source,shopId,createdBy,createdAt,detail,parts,costUsd,shopName,technician,finding,nextDueAt,nextDueKm,appointmentId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [...base, fields.detail, fields.parts.length ? JSON.stringify(fields.parts) : null, fields.costUsd, fields.shopName, fields.technician, fields.finding, fields.nextDueAt, fields.nextDueKm, appointmentId]);
@@ -126507,7 +126682,7 @@ var VehiclePlanOverrideStore = class {
       }
       if (role === "taller") {
         const serviceName5 = serviceTaxonomy.categories.flatMap((cat) => cat.subservices).find((x) => x.id === input.serviceId)?.name ?? "un servicio";
-        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID39(), `plan-record:${input.vehicleId}:${new Date(Date.now() - 5 * 36e5).toISOString().slice(0, 10)}`, String(vehicle.userId), "care.service", JSON.stringify({ message: `\u{1F527} El taller registr\xF3 ${serviceName5.toLowerCase()} en el plan de tu veh\xEDculo. M\xEDralo en la ficha, en el plan de mantenimiento.` })]);
+        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID40(), `plan-record:${input.vehicleId}:${new Date(Date.now() - 5 * 36e5).toISOString().slice(0, 10)}`, String(vehicle.userId), "care.service", JSON.stringify({ message: `\u{1F527} El taller registr\xF3 ${serviceName5.toLowerCase()} en el plan de tu veh\xEDculo. M\xEDralo en la ficha, en el plan de mantenimiento.` })]);
       }
       return { id: id3 };
     });
@@ -126531,7 +126706,7 @@ var VehiclePlanOverrideStore = class {
           throw new PlanOverrideError("FEATURE_UPDATE_PENDING");
         throw err;
       }
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), "vehicle.service-record.update", userId, role, "VehicleServiceRecord", input.id, JSON.stringify({ serviceId: record.serviceId, km: record.km, doneAt: record.doneAt }), JSON.stringify({ ...after, detail: after.detail ? "(texto)" : null })]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID40(), "vehicle.service-record.update", userId, role, "VehicleServiceRecord", input.id, JSON.stringify({ serviceId: record.serviceId, km: record.km, doneAt: record.doneAt }), JSON.stringify({ ...after, detail: after.detail ? "(texto)" : null })]);
     });
   }
   /** Quita un registro con las mismas reglas; sus fotos quedan en la ficha, sin registro. */
@@ -126543,22 +126718,22 @@ var VehiclePlanOverrideStore = class {
           throw err;
       });
       await c.query("DELETE FROM `VehicleServiceRecord` WHERE id = ?", [id3]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), "vehicle.service-record.remove", userId, role, "VehicleServiceRecord", id3, JSON.stringify({ vehicleId: record.vehicleId, serviceId: record.serviceId, km: record.km, doneAt: record.doneAt, source: record.source }), null]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID40(), "vehicle.service-record.remove", userId, role, "VehicleServiceRecord", id3, JSON.stringify({ vehicleId: record.vehicleId, serviceId: record.serviceId, km: record.km, doneAt: record.doneAt, source: record.source }), null]);
     });
   }
   async editable(c, userId, role, id3) {
-    const [actor] = await rows39(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
+    const [actor] = await rows40(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
     if (String(actor?.role) !== role)
       throw new PlanOverrideError("FORBIDDEN");
-    const [record] = await rows39(c, "SELECT id, vehicleId, serviceId, km, doneAt, source, shopId, createdAt FROM `VehicleServiceRecord` WHERE id = ?", [id3]);
+    const [record] = await rows40(c, "SELECT id, vehicleId, serviceId, km, doneAt, source, shopId, createdAt FROM `VehicleServiceRecord` WHERE id = ?", [id3]);
     if (!record)
       throw new PlanOverrideError("NOT_FOUND");
-    const [vehicle] = await rows39(c, "SELECT id, userId, currentKm FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [record.vehicleId]);
+    const [vehicle] = await rows40(c, "SELECT id, userId, currentKm FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [record.vehicleId]);
     if (!vehicle)
       throw new PlanOverrideError("NOT_FOUND");
     let shopId = null;
     if (role === "taller") {
-      const [shop] = await rows39(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
+      const [shop] = await rows40(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
       shopId = shop ? String(shop.id) : null;
     }
     if (!canEditRecord(record, { userId, role, shopId, ownerId: String(vehicle.userId) }))
@@ -126571,10 +126746,10 @@ var VehiclePlanOverrideStore = class {
     if (!custom2 && !names.includes(input.serviceId) || custom2 && (!input.customName?.trim() || input.customName.trim().length > 100) || input.nota.length > 200 || input.intervalKm !== null && (!Number.isInteger(input.intervalKm) || input.intervalKm < 500 || input.intervalKm > 1e5) || input.intervalMonths !== null && (!Number.isInteger(input.intervalMonths) || input.intervalMonths < 1 || input.intervalMonths > 60) || !input.disabled && input.intervalKm === null && input.intervalMonths === null)
       throw new PlanOverrideError("INVALID_OVERRIDE");
     await this.run(async (c) => {
-      const [actor] = await rows39(c, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows40(c, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
-      const [vehicle] = await rows39(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL", [input.vehicleId]);
+      const [vehicle] = await rows40(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL", [input.vehicleId]);
       if (!vehicle)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -126582,7 +126757,7 @@ var VehiclePlanOverrideStore = class {
         if (String(vehicle.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows39(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
+        const [shop] = await rows40(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
         if (!shop)
           throw new PlanOverrideError("FORBIDDEN");
         shopId = String(shop.id);
@@ -126590,37 +126765,37 @@ var VehiclePlanOverrideStore = class {
         if (!rel)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      const [old] = await rows39(c, "SELECT id,intervalKm,intervalMonths,disabled,nota,actorUserId,actorRole,shopId FROM `VehiclePlanOverride` WHERE vehicleId = ? AND serviceId = ?", [input.vehicleId, input.serviceId]);
-      const id3 = String(old?.id ?? randomUUID39());
+      const [old] = await rows40(c, "SELECT id,intervalKm,intervalMonths,disabled,nota,actorUserId,actorRole,shopId FROM `VehiclePlanOverride` WHERE vehicleId = ? AND serviceId = ?", [input.vehicleId, input.serviceId]);
+      const id3 = String(old?.id ?? randomUUID40());
       const after = { ...input, actorUserId: userId, actorRole: role, shopId };
       await c.query("INSERT INTO `VehiclePlanOverride` (id,vehicleId,serviceId,intervalKm,intervalMonths,disabled,customName,nota,actorUserId,actorRole,shopId,createdAt,updatedAt) VALUES (?,?,?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3),UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE intervalKm=VALUES(intervalKm),intervalMonths=VALUES(intervalMonths),disabled=VALUES(disabled),customName=VALUES(customName),nota=VALUES(nota),actorUserId=VALUES(actorUserId),actorRole=VALUES(actorRole),shopId=VALUES(shopId),updatedAt=UTC_TIMESTAMP(3)", [id3, input.vehicleId, input.serviceId, input.intervalKm, input.intervalMonths, input.disabled ? 1 : 0, input.customName?.trim() || null, input.nota || null, userId, role, shopId]);
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID40(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID40(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
       if (role === "taller" && (String(old?.intervalKm ?? "") !== String(input.intervalKm ?? "") || String(old?.intervalMonths ?? "") !== String(input.intervalMonths ?? ""))) {
         const serviceName5 = input.customName || serviceTaxonomy.categories.flatMap((cat) => cat.subservices).find((s) => s.id === input.serviceId)?.name || input.serviceId;
-        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID39(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName5} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
+        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID40(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName5} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
       }
     });
   }
   async reset(userId, role, vehicleId, serviceId) {
     await this.run(async (c) => {
-      const [old] = await rows39(c, "SELECT * FROM `VehiclePlanOverride` WHERE vehicleId=? AND serviceId=?", [vehicleId, serviceId]);
+      const [old] = await rows40(c, "SELECT * FROM `VehiclePlanOverride` WHERE vehicleId=? AND serviceId=?", [vehicleId, serviceId]);
       if (!old)
         return;
-      const [actor] = await rows39(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows40(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
       if (role === "dueno") {
-        const [v] = await rows39(c, "SELECT id FROM `Vehicle` WHERE id=? AND userId=? AND deletedAt IS NULL", [vehicleId, userId]);
+        const [v] = await rows40(c, "SELECT id FROM `Vehicle` WHERE id=? AND userId=? AND deletedAt IS NULL", [vehicleId, userId]);
         if (!v)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows39(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
+        const [shop] = await rows40(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
         const v = shop?.id ? await shopCanAccessVehicle(c, String(shop?.id), vehicleId) : false;
         if (!shop || !v)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      const [vrow] = await rows39(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id=? AND v.deletedAt IS NULL", [vehicleId]);
+      const [vrow] = await rows40(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id=? AND v.deletedAt IS NULL", [vehicleId]);
       if (!vrow)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -126628,14 +126803,14 @@ var VehiclePlanOverrideStore = class {
         if (String(vrow.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows39(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
+        const [shop] = await rows40(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
         shopId = shop ? String(shop.id) : null;
         const rel = shopId ? await shopCanAccessVehicle(c, String(shopId), vehicleId) : false;
         if (!shop || !rel)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID39(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID40(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID40(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
       await c.query("UPDATE `VehiclePlanOverride` SET intervalKm=NULL,intervalMonths=NULL,disabled=1,nota='Restaurado a f\xE1brica',actorUserId=?,actorRole=?,shopId=?,updatedAt=UTC_TIMESTAMP(3) WHERE vehicleId=? AND serviceId=?", [userId, role, shopId, vehicleId, serviceId]);
     });
   }
@@ -126668,7 +126843,7 @@ var VEHICULOS_WEBP_B64 = {
 };
 
 // packages/api/dist/infrastructure/messaging/pilot-panel-store.js
-var rows40 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows41 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var serviceTitle = (id3, custom2) => custom2 ? String(custom2) : serviceTaxonomy.categories.flatMap((c) => c.subservices).find((x) => x.id === id3)?.name ?? id3;
 var ref3 = (prefix, id3) => `${prefix}-${String(id3).replace(/-/g, "").slice(0, 6).toUpperCase()}`;
 var PROPOSED_VISIT = "Visita propuesta por el taller";
@@ -126711,19 +126886,19 @@ var STATUS_TEXT = {
   esperando_repuesto: "Esperando repuesto",
   cerrada: "Entregado"
 };
-function alertValue(item, currentKm, now = /* @__PURE__ */ new Date()) {
-  if ((item.intervalKm ?? null) !== null)
-    return String(Math.max(item.dueKm, currentKm, 1));
-  const due = new Date(Math.max(new Date(item.dueDate).getTime(), now.getTime()) - 5 * 36e5);
+function alertValue(item2, currentKm, now = /* @__PURE__ */ new Date()) {
+  if ((item2.intervalKm ?? null) !== null)
+    return String(Math.max(item2.dueKm, currentKm, 1));
+  const due = new Date(Math.max(new Date(item2.dueDate).getTime(), now.getTime()) - 5 * 36e5);
   return due.toISOString().slice(0, 10);
 }
 var REMINDER_STATES = ["urgente", "pronto", "sin_dato"];
 async function shopRating(conn, ownerUserId) {
-  const [sum] = await rows40(conn, "SELECT COUNT(*) AS n, AVG(score) AS avg FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL", [ownerUserId]);
+  const [sum] = await rows41(conn, "SELECT COUNT(*) AS n, AVG(score) AS avg FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL", [ownerUserId]);
   const count3 = Number(sum?.n ?? 0);
   if (!count3)
     return null;
-  const recent = await rows40(conn, "SELECT score, comment, createdAt FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL AND comment IS NOT NULL AND comment <> '' ORDER BY createdAt DESC LIMIT 3", [ownerUserId]);
+  const recent = await rows41(conn, "SELECT score, comment, createdAt FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL AND comment IS NOT NULL AND comment <> '' ORDER BY createdAt DESC LIMIT 3", [ownerUserId]);
   return { average: Math.round(Number(sum?.avg) * 10) / 10, count: count3, comments: recent.map((r) => ({ score: Number(r.score), comment: String(r.comment), at: new Date(r.createdAt).toISOString() })) };
 }
 var PilotPanelStore = class {
@@ -126743,7 +126918,7 @@ var PilotPanelStore = class {
   }
   async panel(userId, vehicleId) {
     return this.run(async (conn) => {
-      const [user] = await rows40(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
+      const [user] = await rows41(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
       const role = String(user?.role ?? "");
       if (role === "dueno")
         return withPartMoney(conn, userId, role, await this.owner(conn, userId, vehicleId));
@@ -126773,12 +126948,12 @@ var PilotPanelStore = class {
   async photoOrder(conn, userId, role, number2) {
     if (role === "taller") {
       const shop = await this.care.actingShop(conn, userId, role, { openOrders: true });
-      const [order] = await rows40(conn, "SELECT id FROM `WorkOrder` WHERE number = ? AND shopId = ?", [number2, shop.id]);
+      const [order] = await rows41(conn, "SELECT id FROM `WorkOrder` WHERE number = ? AND shopId = ?", [number2, shop.id]);
       if (order)
         return String(order.id);
     } else if (role === "dueno") {
       const scope = await decisionScope(conn, userId);
-      const [order] = await rows40(conn, "SELECT w.id FROM `WorkOrder` w WHERE w.number = ? AND " + scope.where("w"), [number2, ...scope.args]);
+      const [order] = await rows41(conn, "SELECT w.id FROM `WorkOrder` w WHERE w.number = ? AND " + scope.where("w"), [number2, ...scope.args]);
       if (order)
         return String(order.id);
     }
@@ -126878,13 +127053,13 @@ var PilotPanelStore = class {
   async orderPhotos(userId, role, number2) {
     return this.run(async (conn) => {
       const orderId = await this.photoOrder(conn, userId, role, number2);
-      return (await rows40(conn, "SELECT id, kind FROM `WorkOrderPhoto` WHERE workOrderId = ? ORDER BY createdAt", [orderId])).map((p) => ({ id: String(p.id), kind: String(p.kind) }));
+      return (await rows41(conn, "SELECT id, kind FROM `WorkOrderPhoto` WHERE workOrderId = ? ORDER BY createdAt", [orderId])).map((p) => ({ id: String(p.id), kind: String(p.kind) }));
     });
   }
   async orderPhoto(userId, role, number2, photoId) {
     return this.run(async (conn) => {
       const orderId = await this.photoOrder(conn, userId, role, number2);
-      const [photo] = await rows40(conn, "SELECT mime, data FROM `WorkOrderPhoto` WHERE id = ? AND workOrderId = ?", [photoId, orderId]);
+      const [photo] = await rows41(conn, "SELECT mime, data FROM `WorkOrderPhoto` WHERE id = ? AND workOrderId = ?", [photoId, orderId]);
       if (!photo)
         throw new BrokerError("NOT_FOUND");
       return { mime: String(photo.mime), data: photo.data };
@@ -126923,15 +127098,15 @@ var PilotPanelStore = class {
     const recommendations = chosen ? await this.planSummary(conn, chosen) : null;
     const alerts = chosen && recommendations ? await this.vehicleAlerts(conn, chosen, recommendations) : [];
     const ids = list7.map((v) => String(v.id));
-    const orders = ids.length ? await rows40(conn, "SELECT w.id, w.number, w.status, w.intakeKm, w.total, w.updatedAt, w.vehicleId, w.diagnosisOutcome, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND EXISTS (SELECT 1 FROM `WorkOrderPhoto` fp WHERE fp.workOrderId = w.id AND fp.kind = 'factura' AND fp.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY))) OR (w.status = 'cancelada' AND w.updatedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND EXISTS (SELECT 1 FROM `WorkOrderPayment` rp WHERE rp.workOrderId = w.id AND rp.status IN ('pagado','reembolso_informado'))) OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY)) OR (w.status = 'cerrada' AND w.warrantyDays > 0 AND DATE_ADD(w.closedAt, INTERVAL w.warrantyDays DAY) > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY))) ORDER BY w.status = 'cerrada', w.number DESC LIMIT 8", [ids]) : [];
+    const orders = ids.length ? await rows41(conn, "SELECT w.id, w.number, w.status, w.intakeKm, w.total, w.updatedAt, w.vehicleId, w.diagnosisOutcome, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND EXISTS (SELECT 1 FROM `WorkOrderPhoto` fp WHERE fp.workOrderId = w.id AND fp.kind = 'factura' AND fp.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY))) OR (w.status = 'cancelada' AND w.updatedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND EXISTS (SELECT 1 FROM `WorkOrderPayment` rp WHERE rp.workOrderId = w.id AND rp.status IN ('pagado','reembolso_informado'))) OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY)) OR (w.status = 'cerrada' AND w.warrantyDays > 0 AND DATE_ADD(w.closedAt, INTERVAL w.warrantyDays DAY) > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY))) ORDER BY w.status = 'cerrada', w.number DESC LIMIT 8", [ids]) : [];
     orders.push(...await ordersWithActiveClaim(conn, "vehicle", ids, orders.map((o) => String(o.id))));
     await hideOrdersBeforeTransfer(conn, orders);
-    const upcoming = ids.length ? await rows40(conn, "SELECT a.id, a.status, a.scheduledAt, a.vehicleId, a.summary, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.vehicleId IN (?) AND a.status IN ('pending','confirmed') AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY) AND NOT EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id) ORDER BY a.scheduledAt LIMIT 5", [ids]) : [];
+    const upcoming = ids.length ? await rows41(conn, "SELECT a.id, a.status, a.scheduledAt, a.vehicleId, a.summary, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.vehicleId IN (?) AND a.status IN ('pending','confirmed') AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY) AND NOT EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id) ORDER BY a.scheduledAt LIMIT 5", [ids]) : [];
     const orderIds = orders.map((o) => String(o.id));
-    const changes = orderIds.length ? await rows40(conn, "SELECT id, workOrderId, kind, description, total FROM `WorkOrderChange` WHERE workOrderId IN (?) AND status = 'pending' AND kind IN ('novedad','entrega') ORDER BY createdAt", [orderIds]) : [];
-    const answered = orderIds.length ? await rows40(conn, "SELECT DISTINCT entityId FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId IN (?) AND eventType IN ('care.checkin.confirmed','care.checkin.observed')", [orderIds]) : [];
-    const rated = orderIds.length ? await rows40(conn, "SELECT workOrderId FROM `Rating` WHERE fromId = ? AND workOrderId IN (?)", [userId, orderIds]) : [];
-    const history = chosen ? await rows40(conn, "SELECT r.serviceId, r.km, r.doneAt, s.name AS shopName, o.customName FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId LEFT JOIN `VehiclePlanOverride` o ON o.vehicleId = r.vehicleId AND o.serviceId = r.serviceId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 15", [chosen.id]) : [];
+    const changes = orderIds.length ? await rows41(conn, "SELECT id, workOrderId, kind, description, total FROM `WorkOrderChange` WHERE workOrderId IN (?) AND status = 'pending' AND kind IN ('novedad','entrega') ORDER BY createdAt", [orderIds]) : [];
+    const answered = orderIds.length ? await rows41(conn, "SELECT DISTINCT entityId FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId IN (?) AND eventType IN ('care.checkin.confirmed','care.checkin.observed')", [orderIds]) : [];
+    const rated = orderIds.length ? await rows41(conn, "SELECT workOrderId FROM `Rating` WHERE fromId = ? AND workOrderId IN (?)", [userId, orderIds]) : [];
+    const history = chosen ? await rows41(conn, "SELECT r.serviceId, r.km, r.doneAt, s.name AS shopName, o.customName FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId LEFT JOIN `VehiclePlanOverride` o ON o.vehicleId = r.vehicleId AND o.serviceId = r.serviceId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 15", [chosen.id]) : [];
     const parts = chosen ? await compatibleParts(conn, chosen).catch(() => []) : [];
     const sheet = chosen ? await this.sheetOf(conn, chosen, chosen.access === "driver" ? "conductor" : "dueno", { userId, shopId: null }) : null;
     const order = { owner: 0, admin: 1, supervisor: 2, conductor: 3 };
@@ -126991,11 +127166,11 @@ var PilotPanelStore = class {
   /** Solicitudes abiertas del propio dueño (30 días, máx. 10) con sus ofertas reales por precio; sin tabla, lista vacía. */
   async ownerRequests(conn, userId) {
     try {
-      const list7 = await rows40(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.status, lr.createdAt, v.make, v.model, v.year FROM `LocalRequest` lr LEFT JOIN `Vehicle` v ON v.id = lr.vehicleId AND v.userId = lr.ownerId WHERE lr.ownerId = ? AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
+      const list7 = await rows41(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.status, lr.createdAt, v.make, v.model, v.year FROM `LocalRequest` lr LEFT JOIN `Vehicle` v ON v.id = lr.vehicleId AND v.userId = lr.ownerId WHERE lr.ownerId = ? AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
       if (!list7.length)
         return [];
       const ids = list7.map((r) => String(r.id));
-      const offers = await rows40(conn, "SELECT o.id, o.requestId, o.businessName, o.status, o.priceUsd, o.durationMin, o.proposedAt, o.notes, o.brand, o.quality, o.warrantyDays, o.createdAt, EXISTS (SELECT 1 FROM `Shop` b WHERE b.id = o.businessId AND b.verificationStatus = 'pending') AS inReview FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId WHERE lr.ownerId = ? AND o.requestId IN (?) AND o.status IN ('offered','chosen') ORDER BY o.priceUsd, o.id", [userId, ids]);
+      const offers = await rows41(conn, "SELECT o.id, o.requestId, o.businessName, o.status, o.priceUsd, o.durationMin, o.proposedAt, o.notes, o.brand, o.quality, o.warrantyDays, o.createdAt, EXISTS (SELECT 1 FROM `Shop` b WHERE b.id = o.businessId AND b.verificationStatus = 'pending') AS inReview FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId WHERE lr.ownerId = ? AND o.requestId IN (?) AND o.status IN ('offered','chosen') ORDER BY o.priceUsd, o.id", [userId, ids]);
       const offerVat = await vatById(conn, "LocalOffer", offers.map((o) => String(o.id)));
       return list7.map((r) => {
         const mine = offers.filter((o) => o.requestId === r.id && NUMBERED_OFFER_STATUSES.has(String(o.status)));
@@ -127022,7 +127197,7 @@ var PilotPanelStore = class {
   /** Repuestos que el dueño eligió y ya tienen stock confirmado (60 días, máx. 5): por recibir, o recibidos y sin calificar. */
   async ownerPartOrders(conn, userId) {
     try {
-      const list7 = await rows40(conn, "SELECT lr.id, lr.status, lr.category, lr.description, o.businessName, v.make, v.model, v.year, EXISTS (SELECT 1 FROM `Rating` r WHERE r.localRequestId = lr.id AND r.fromId = lr.ownerId) AS rated FROM `LocalRequest` lr JOIN `LocalOffer` o ON o.id = lr.chosenOfferId LEFT JOIN `Vehicle` v ON v.id = lr.vehicleId AND v.userId = lr.ownerId WHERE lr.ownerId = ? AND lr.kind = 'repuesto' AND lr.status IN ('accepted','delivered') AND o.stockStatus = 'confirmed' AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 60 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
+      const list7 = await rows41(conn, "SELECT lr.id, lr.status, lr.category, lr.description, o.businessName, v.make, v.model, v.year, EXISTS (SELECT 1 FROM `Rating` r WHERE r.localRequestId = lr.id AND r.fromId = lr.ownerId) AS rated FROM `LocalRequest` lr JOIN `LocalOffer` o ON o.id = lr.chosenOfferId LEFT JOIN `Vehicle` v ON v.id = lr.vehicleId AND v.userId = lr.ownerId WHERE lr.ownerId = ? AND lr.kind = 'repuesto' AND lr.status IN ('accepted','delivered') AND o.stockStatus = 'confirmed' AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 60 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
       return list7.filter((r) => r.status === "accepted" || Number(r.rated) !== 1).slice(0, 5).map((r) => ({
         ref: ref3("S", r.id),
         category: String(r.category),
@@ -127038,7 +127213,7 @@ var PilotPanelStore = class {
     }
   }
   async requests(conn, userId) {
-    const list7 = await rows40(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.city, lr.zone, lr.expiresAt, lr.vehicleId, o.status, v.make, v.model, v.year, v.fuel, v.vehicleClass, v.currentKm, v.usageProfile FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND o.status NOT IN ('no_stock','discarded') AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
+    const list7 = await rows41(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.city, lr.zone, lr.expiresAt, lr.vehicleId, o.status, v.make, v.model, v.year, v.fuel, v.vehicleClass, v.currentKm, v.usageProfile FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND o.status NOT IN ('no_stock','discarded') AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
     const out = [];
     for (const r of list7) {
       const planBrief = r.kind === "servicio" ? await this.care.planBrief(conn, { id: r.vehicleId, make: r.make, model: r.model, year: r.year, fuel: r.fuel, vehicleClass: r.vehicleClass, currentKm: r.currentKm, usageProfile: r.usageProfile }) : null;
@@ -127078,13 +127253,13 @@ var PilotPanelStore = class {
           alerts.push({ kind: "rtv", title: "RTV y matr\xEDcula", detail: `${month === current ? `Este mes (${MES[month - 1]})` : `El pr\xF3ximo mes (${MES[month - 1]})`}, seg\xFAn el \xFAltimo d\xEDgito de la placa; calendario referencial, confirma la fecha en la ANT o en tu agencia de matriculaci\xF3n. El valor a pagar por la matr\xEDcula incluye el SOAT`, state: month === current ? "pronto" : "al_dia", when: String(month) });
         }
       }
-      const scheduled = await rows40(conn, "SELECT label, dueKm, dueAt, source FROM `Alert` WHERE vehicleId = ? AND triggeredAt IS NULL ORDER BY createdAt DESC", [chosen.id]);
+      const scheduled = await rows41(conn, "SELECT label, dueKm, dueAt, source FROM `Alert` WHERE vehicleId = ? AND triggeredAt IS NULL ORDER BY createdAt DESC", [chosen.id]);
       for (const a of scheduled)
         alerts.push({ kind: "programada", title: String(a.label), detail: a.dueKm !== null ? `A los ${Number(a.dueKm).toLocaleString("es-EC")} km` : a.dueAt ? `${a.source === "pendiente" ? "Te lo recordamos el" : "El"} ${new Date(String(a.dueAt)).toLocaleDateString("es-EC", { timeZone: "America/Guayaquil" })}` : "", state: a.dueAt && new Date(String(a.dueAt)).getTime() <= Date.now() + 864e5 ? "urgente" : "pronto", when: String(a.dueAt ?? a.dueKm ?? "") });
-      const symptoms = await rows40(conn, "SELECT `system`, risk, description FROM `VehicleSymptom` WHERE vehicleId = ? AND resolvedAt IS NULL ORDER BY createdAt DESC LIMIT 3", [chosen.id]);
+      const symptoms = await rows41(conn, "SELECT `system`, risk, description FROM `VehicleSymptom` WHERE vehicleId = ? AND resolvedAt IS NULL ORDER BY createdAt DESC LIMIT 3", [chosen.id]);
       for (const x of symptoms)
         alerts.push({ kind: "sintoma", title: `S\xEDntoma: revisar ${String(x.system)}`, detail: String(x.description), state: x.risk === "seguir_con_cuidado" ? "pronto" : "urgente", when: "" });
-      const repairing = await rows40(conn, "SELECT w.number, w.status, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.vehicleId = ? AND w.status IN ('en_ejecucion','esperando_repuesto') ORDER BY w.number DESC", [chosen.id]);
+      const repairing = await rows41(conn, "SELECT w.number, w.status, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.vehicleId = ? AND w.status IN ('en_ejecucion','esperando_repuesto') ORDER BY w.number DESC", [chosen.id]);
       for (const o of repairing)
         alerts.push({ kind: "reparacion", title: `OT-${String(o.number).padStart(5, "0")} en taller`, detail: String(o.shopName), state: "urgente", when: String(o.number) });
       const due = recommendations?.items.filter((i) => i.state === "urgente" || i.state === "pronto") ?? [];
@@ -127098,11 +127273,11 @@ var PilotPanelStore = class {
   /** Ficha completa: el dueño, o el taller y sus técnicos si tienen una cita u orden con ese vehículo. */
   async vehicleSheet(userId, vehicleId) {
     return this.run(async (conn) => {
-      const [user] = await rows40(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+      const [user] = await rows41(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
       const role = String(user?.role ?? "");
       if (role !== "dueno" && role !== "taller")
         throw new BrokerError("FORBIDDEN");
-      const [vehicle] = await rows40(conn, "SELECT v.*, u.city AS city, u.name AS ownerName FROM `Vehicle` v JOIN `User` u ON u.id = v.userId WHERE v.id = ? AND v.deletedAt IS NULL", [vehicleId]);
+      const [vehicle] = await rows41(conn, "SELECT v.*, u.city AS city, u.name AS ownerName FROM `Vehicle` v JOIN `User` u ON u.id = v.userId WHERE v.id = ? AND v.deletedAt IS NULL", [vehicleId]);
       if (!vehicle)
         throw new BrokerError("VEHICLE_NOT_FOUND");
       if (role === "dueno") {
@@ -127134,11 +127309,11 @@ var PilotPanelStore = class {
   async inspectionFindings(conn, vehicle) {
     const findings = /* @__PURE__ */ new Map();
     try {
-      const [last] = await rows40(conn, "SELECT id, createdAt FROM `VehicleInspection` WHERE vehicleId = ? ORDER BY createdAt DESC, id DESC LIMIT 1", [vehicle.id]);
+      const [last] = await rows41(conn, "SELECT id, createdAt FROM `VehicleInspection` WHERE vehicleId = ? ORDER BY createdAt DESC, id DESC LIMIT 1", [vehicle.id]);
       if (!last)
         return findings;
-      const found = await rows40(conn, "SELECT code, status FROM `VehicleInspectionItem` WHERE inspectionId = ? AND status IN ('cambiar','observar')", [last.id]);
-      const later = new Set((await rows40(conn, "SELECT DISTINCT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND createdAt > DATE_ADD(?, INTERVAL 60 SECOND)", [vehicle.id, last.createdAt])).map((r) => String(r.serviceId)));
+      const found = await rows41(conn, "SELECT code, status FROM `VehicleInspectionItem` WHERE inspectionId = ? AND status IN ('cambiar','observar')", [last.id]);
+      const later = new Set((await rows41(conn, "SELECT DISTINCT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND createdAt > DATE_ADD(?, INTERVAL 60 SECOND)", [vehicle.id, last.createdAt])).map((r) => String(r.serviceId)));
       for (const r of found) {
         const serviceId = INSPECTION_ITEMS.find((i) => i.code === r.code)?.serviceId;
         if (!serviceId || later.has(serviceId))
@@ -127205,32 +127380,32 @@ var PilotPanelStore = class {
     const shop = await this.care.actingShop(conn, userId, "taller", { openOrders: true });
     const start = ecDayStart(now);
     const end = new Date(start.getTime() + 864e5);
-    const count3 = async (sql, args) => Number((await rows40(conn, sql, args))[0]?.n ?? 0);
-    const today = await rows40(conn, "SELECT a.id, a.scheduledAt, a.status, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt LIMIT 20", [shop.id, start, end]);
-    const upcoming = await rows40(conn, "SELECT a.id AS appointmentId, a.scheduledAt, a.status, a.summary, v.*, EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id AND w.status <> 'cancelada') AS hasOrder FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) ORDER BY a.scheduledAt LIMIT 15", [shop.id]);
+    const count3 = async (sql, args) => Number((await rows41(conn, sql, args))[0]?.n ?? 0);
+    const today = await rows41(conn, "SELECT a.id, a.scheduledAt, a.status, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt LIMIT 20", [shop.id, start, end]);
+    const upcoming = await rows41(conn, "SELECT a.id AS appointmentId, a.scheduledAt, a.status, a.summary, v.*, EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id AND w.status <> 'cancelada') AS hasOrder FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) ORDER BY a.scheduledAt LIMIT 15", [shop.id]);
     const appointments = [];
     for (const a of upcoming)
       appointments.push({ ref: ref3("C", a.appointmentId), time: a.scheduledAt, vehicle: vehicleLabel2(a), vehicleId: String(a.id), status: String(a.status), proposed: a.status === "pending" && String(a.summary ?? "").startsWith(PROPOSED_VISIT), hasOrder: Number(a.hasOrder) === 1, planBrief: await this.care.planBrief(conn, a), planPicked: serviceNames2(await pickedOf(conn, [String(a.appointmentId)]).then((m) => m.get(String(a.appointmentId)) ?? [])) });
     const appointmentsToday = await count3("SELECT COUNT(*) AS n FROM `Appointment` WHERE shopId = ? AND status IN ('pending','confirmed') AND scheduledAt >= ? AND scheduledAt < ?", [shop.id, start, end]);
     const openOrders = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status NOT IN ('cerrada','cancelada')", [shop.id]);
     const budgetsWaiting = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status = 'presupuesto_enviado'", [shop.id]);
-    const open = await rows40(conn, "SELECT w.id, w.number, w.status, w.total, w.rejectionReason, w.appointmentId, v.make, v.model, v.year, v.plate, EXISTS (SELECT 1 FROM `WorkOrderChange` c WHERE c.workOrderId = w.id AND c.status = 'pending') AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY w.number DESC LIMIT 20", [shop.id]);
-    const claimed = await rows40(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND EXISTS (SELECT 1 FROM `WorkOrderWarranty` g WHERE g.workOrderId = w.id AND g.status = 'abierta') ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err) => {
+    const open = await rows41(conn, "SELECT w.id, w.number, w.status, w.total, w.rejectionReason, w.appointmentId, v.make, v.model, v.year, v.plate, EXISTS (SELECT 1 FROM `WorkOrderChange` c WHERE c.workOrderId = w.id AND c.status = 'pending') AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY w.number DESC LIMIT 20", [shop.id]);
+    const claimed = await rows41(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND EXISTS (SELECT 1 FROM `WorkOrderWarranty` g WHERE g.workOrderId = w.id AND g.status = 'abierta') ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err) => {
       if (err.code === "ER_NO_SUCH_TABLE")
         return [];
       throw err;
     });
-    const unpaid = await rows40(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.total > 0 AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND w.total > COALESCE((SELECT SUM(p.amount) FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status = 'pagado'), 0) ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err) => {
+    const unpaid = await rows41(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.total > 0 AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND w.total > COALESCE((SELECT SUM(p.amount) FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status = 'pagado'), 0) ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err) => {
       if (err.code === "ER_NO_SUCH_TABLE")
         return [];
       throw err;
     });
-    const toRefund = await rows40(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cancelada' AND w.updatedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND EXISTS (SELECT 1 FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status = 'pagado') ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err) => {
+    const toRefund = await rows41(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cancelada' AND w.updatedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND EXISTS (SELECT 1 FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status = 'pagado') ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err) => {
       if (err.code === "ER_NO_SUCH_TABLE")
         return [];
       throw err;
     });
-    const recentClosed = await rows40(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY w.number DESC LIMIT 10", [shop.id]);
+    const recentClosed = await rows41(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY w.number DESC LIMIT 10", [shop.id]);
     const orders = [...claimed, ...open];
     const shopVat = await vatById(conn, "WorkOrder", orders.map((o) => String(o.id)));
     const askedByAppointment = await pickedOf(conn, open.map((o) => String(o.appointmentId ?? "")).filter(Boolean));
@@ -127239,7 +127414,7 @@ var PilotPanelStore = class {
         orders.push(o);
     orders.push(...await ordersWithActiveClaim(conn, "shop", [shop.id], orders.map((o) => String(o.id))));
     if (!shop.isOwner && !shop.isAdmin && orders.length) {
-      const assigned = await rows40(conn, "SELECT workOrderId, memberUserId FROM `WorkOrderAssignment` WHERE workOrderId IN (?)", [orders.map((o) => String(o.id))]).catch((err) => {
+      const assigned = await rows41(conn, "SELECT workOrderId, memberUserId FROM `WorkOrderAssignment` WHERE workOrderId IN (?)", [orders.map((o) => String(o.id))]).catch((err) => {
         if (err.code === "ER_NO_SUCH_TABLE")
           return [];
         throw err;
@@ -127251,13 +127426,13 @@ var PilotPanelStore = class {
           orders.splice(i, 1);
       }
     }
-    const clients = await rows40(conn, "SELECT a.id AS appointmentId, a.vehicleId, u.name AS ownerName, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = a.ownerId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) AND a.scheduledAt = (SELECT MAX(a2.scheduledAt) FROM `Appointment` a2 WHERE a2.shopId = a.shopId AND a2.vehicleId = a.vehicleId AND a2.status <> 'cancelled') ORDER BY a.scheduledAt DESC LIMIT 60", [shop.id]);
+    const clients = await rows41(conn, "SELECT a.id AS appointmentId, a.vehicleId, u.name AS ownerName, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = a.ownerId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) AND a.scheduledAt = (SELECT MAX(a2.scheduledAt) FROM `Appointment` a2 WHERE a2.shopId = a.shopId AND a2.vehicleId = a.vehicleId AND a2.status <> 'cancelled') ORDER BY a.scheduledAt DESC LIMIT 60", [shop.id]);
     const reminders = [];
     for (const c of clients) {
       const items = planItemsFor(await this.care.planVehicle(conn, c));
       const top = buildRecommendations(items).items.find((r) => REMINDER_STATES.includes(r.state));
-      const item = top && items.find((i) => i.serviceId === top.serviceId);
-      if (!top || !item)
+      const item2 = top && items.find((i) => i.serviceId === top.serviceId);
+      if (!top || !item2)
         continue;
       reminders.push({
         ref: ref3("C", c.appointmentId),
@@ -127267,24 +127442,25 @@ var PilotPanelStore = class {
         serviceName: top.serviceName,
         state: top.state,
         label: top.label,
-        alertValue: alertValue(item, Number(c.currentKm) || 0, now)
+        alertValue: alertValue(item2, Number(c.currentKm) || 0, now)
       });
     }
     const rank = { urgente: 0, pronto: 1, sin_dato: 2, al_dia: 3 };
     reminders.sort((a, b) => rank[a.state] - rank[b.state]);
-    const vehicles = await rows40(conn, "SELECT DISTINCT v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id=a.vehicleId WHERE a.shopId=? AND a.status<>'cancelled' AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId=v.id AND b.shopId=a.shopId) UNION SELECT DISTINCT v.* FROM `WorkOrder` w JOIN `Vehicle` v ON v.id=w.vehicleId WHERE w.shopId=? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId=v.id AND b.shopId=w.shopId) ORDER BY make,model LIMIT 60", [shop.id, shop.id]);
+    const vehicles = await rows41(conn, "SELECT DISTINCT v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id=a.vehicleId WHERE a.shopId=? AND a.status<>'cancelled' AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId=v.id AND b.shopId=a.shopId) UNION SELECT DISTINCT v.* FROM `WorkOrder` w JOIN `Vehicle` v ON v.id=w.vehicleId WHERE w.shopId=? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId=v.id AND b.shopId=w.shopId) ORDER BY make,model LIMIT 60", [shop.id, shop.id]);
     const shopRecords = await orderRecords(conn, orders.map((o) => String(o.id)));
-    const vehicleOf2 = new Map((orders.length ? await rows40(conn, "SELECT id, vehicleId FROM `WorkOrder` WHERE id IN (?)", [orders.map((o) => String(o.id))]) : []).map((w) => [String(w.id), String(w.vehicleId)]));
+    const vehicleOf2 = new Map((orders.length ? await rows41(conn, "SELECT id, vehicleId FROM `WorkOrder` WHERE id IN (?)", [orders.map((o) => String(o.id))]) : []).map((w) => [String(w.id), String(w.vehicleId)]));
     return {
       role: "taller",
       shopName: shop.name,
       canManage: shop.isOwner || shop.isAdmin,
-      verificationStatus: String((await rows40(conn, "SELECT verificationStatus FROM `Shop` WHERE id = ?", [shop.id]))[0]?.verificationStatus ?? "") || null,
+      verificationStatus: String((await rows41(conn, "SELECT verificationStatus FROM `Shop` WHERE id = ?", [shop.id]))[0]?.verificationStatus ?? "") || null,
       rating: shop.isOwner || shop.isAdmin ? await shopRating(conn, shop.ownerUserId) : null,
       kpis: { appointmentsToday, openOrders, budgetsWaiting, clientsDue: reminders.length },
       appointments,
       agenda: await shopAgenda(conn, shop.id, now),
       indicators: shop.isOwner || shop.isAdmin ? await shopIndicators(conn, shop.id, now) : null,
+      supplies: await shopSupplies(conn, shop.id),
       today: today.map((a) => ({ ref: ref3("C", a.id), time: a.scheduledAt, vehicle: vehicleLabel2(a), plate: a.plate ? String(a.plate) : null, status: String(a.status) })),
       orders: orders.map((o) => ({ vatUsd: shopVat.get(String(o.id)) ?? 0, records: shopRecords.get(String(o.id)), vehicleId: vehicleOf2.get(String(o.id)), code: orderCode(o.number), status: String(o.status), statusText: SHOP_STATUS_TEXT[String(o.status)] ?? String(o.status), vehicle: vehicleLabel2(o), plate: o.plate ? String(o.plate) : null, totalUsd: Number(o.total ?? 0), waiting: Number(o.waiting) === 1, negotiation: String(o.status) === "rechazado" && o.rejectionReason ? String(o.rejectionReason) : null, asked: serviceNames2(askedByAppointment.get(String(o.appointmentId ?? "")) ?? []) })),
       reminders: reminders.slice(0, 8),
@@ -127295,10 +127471,10 @@ var PilotPanelStore = class {
     };
   }
   async lastInspection(conn, vehicle) {
-    const [last] = await rows40(conn, "SELECT i.id, i.km, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 1", [vehicle.id]);
+    const [last] = await rows41(conn, "SELECT i.id, i.km, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 1", [vehicle.id]);
     if (!last)
       return null;
-    const entries = (await rows40(conn, "SELECT code, status, measure, unit FROM `VehicleInspectionItem` WHERE inspectionId = ?", [last.id])).map((r) => ({ code: String(r.code), status: r.status, measure: r.measure === null ? null : Number(r.measure), unit: r.unit === null ? null : String(r.unit) }));
+    const entries = (await rows41(conn, "SELECT code, status, measure, unit FROM `VehicleInspectionItem` WHERE inspectionId = ?", [last.id])).map((r) => ({ code: String(r.code), status: r.status, measure: r.measure === null ? null : Number(r.measure), unit: r.unit === null ? null : String(r.unit) }));
     const items = checklistFor(vehicle);
     return {
       date: new Date(last.createdAt).toISOString(),
@@ -127311,7 +127487,7 @@ var PilotPanelStore = class {
   async planServices(conn, vehicle) {
     const planned = await this.care.planVehicle(conn, vehicle);
     const items = planItemsFor(planned);
-    const overrides = await rows40(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]);
+    const overrides = await rows41(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]);
     const byId = new Map(overrides.map((o) => [String(o.serviceId), o]));
     const visible = new Set(items.map((i) => i.serviceId));
     const result = items.map((i) => ({ serviceId: i.serviceId, serviceName: i.serviceName, intervalKm: i.intervalKm ?? null, intervalMonths: i.intervalMonths === null || i.intervalMonths === void 0 ? null : Math.round(i.intervalMonths), reason: i.reason, override: byId.get(i.serviceId) ?? null }));
@@ -127327,11 +127503,11 @@ var PilotPanelStore = class {
     return result;
   }
   async store(conn, userId) {
-    const [store] = await rows40(conn, "SELECT id, name, verificationStatus, zone, categories, ratingAvg, ratingCount FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
-    const [count3] = await rows40(conn, "SELECT COALESCE(SUM(lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND o.status = 'invited'), 0) AS toOffer, COALESCE(SUM(lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND o.status = 'offered'), 0) AS offered, COALESCE(SUM(lr.status = 'accepted' AND lr.chosenOfferId = o.id AND o.stockStatus IS NULL), 0) AS toConfirm, COALESCE(SUM(lr.status = 'accepted' AND lr.chosenOfferId = o.id AND o.stockStatus = 'confirmed'), 0) AS toDeliver, COALESCE(SUM(lr.status = 'delivered' AND lr.chosenOfferId = o.id), 0) AS delivered FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId WHERE o.businessUserId = ?", [userId]);
-    const orders = await rows40(conn, "SELECT lr.id, lr.category, lr.description, o.priceUsd, o.stockStatus, o.deliveryDate, v.make, v.model, v.year FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId AND lr.chosenOfferId = o.id JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND lr.status = 'accepted' ORDER BY lr.createdAt, lr.id LIMIT 10", [userId]);
+    const [store] = await rows41(conn, "SELECT id, name, verificationStatus, zone, categories, ratingAvg, ratingCount FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
+    const [count3] = await rows41(conn, "SELECT COALESCE(SUM(lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND o.status = 'invited'), 0) AS toOffer, COALESCE(SUM(lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND o.status = 'offered'), 0) AS offered, COALESCE(SUM(lr.status = 'accepted' AND lr.chosenOfferId = o.id AND o.stockStatus IS NULL), 0) AS toConfirm, COALESCE(SUM(lr.status = 'accepted' AND lr.chosenOfferId = o.id AND o.stockStatus = 'confirmed'), 0) AS toDeliver, COALESCE(SUM(lr.status = 'delivered' AND lr.chosenOfferId = o.id), 0) AS delivered FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId WHERE o.businessUserId = ?", [userId]);
+    const orders = await rows41(conn, "SELECT lr.id, lr.category, lr.description, o.priceUsd, o.stockStatus, o.deliveryDate, v.make, v.model, v.year FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId AND lr.chosenOfferId = o.id JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND lr.status = 'accepted' ORDER BY lr.createdAt, lr.id LIMIT 10", [userId]);
     const status = store ? String(store.verificationStatus) : null;
-    const [rejected] = store && status === "rejected" ? await rows40(conn, "SELECT reason FROM `AuditLog` WHERE eventType = 'admin.verification.rejected' AND reason LIKE ? ORDER BY createdAt DESC LIMIT 1", [`%${String(store.id)}: %`]) : [];
+    const [rejected] = store && status === "rejected" ? await rows41(conn, "SELECT reason FROM `AuditLog` WHERE eventType = 'admin.verification.rejected' AND reason LIKE ? ORDER BY createdAt DESC LIMIT 1", [`%${String(store.id)}: %`]) : [];
     const toOffer2 = Number(count3?.toOffer ?? 0), offered = Number(count3?.offered ?? 0);
     return {
       role: "almacen",
@@ -127350,7 +127526,7 @@ async function pickedOf(conn, ids) {
   if (!ids.length)
     return out;
   try {
-    for (const r of await rows40(conn, "SELECT id, planServiceIds FROM `Appointment` WHERE id IN (?)", [ids])) {
+    for (const r of await rows41(conn, "SELECT id, planServiceIds FROM `Appointment` WHERE id IN (?)", [ids])) {
       try {
         const list7 = typeof r.planServiceIds === "string" ? JSON.parse(r.planServiceIds) : r.planServiceIds;
         if (Array.isArray(list7))
@@ -127369,7 +127545,7 @@ function serviceNames2(ids) {
   return ids.map((id3) => SERVICE_NAMES.get(id3)).filter((n3) => Boolean(n3));
 }
 async function shopAppointmentsFor(conn, shopId, vehicleId) {
-  const list7 = await rows40(conn, "SELECT id, scheduledAt FROM `Appointment` WHERE shopId = ? AND vehicleId = ? AND status IN ('pending','confirmed','completed') AND scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY scheduledAt DESC LIMIT 5", [shopId, vehicleId]);
+  const list7 = await rows41(conn, "SELECT id, scheduledAt FROM `Appointment` WHERE shopId = ? AND vehicleId = ? AND status IN ('pending','confirmed','completed') AND scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY scheduledAt DESC LIMIT 5", [shopId, vehicleId]);
   const picked = await pickedOf(conn, list7.map((a) => String(a.id)));
   return list7.map((a) => ({ id: String(a.id), ref: `C-${String(a.id).replace(/-/g, "").slice(0, 6).toUpperCase()}`, scheduledAt: a.scheduledAt, planServiceIds: picked.get(String(a.id)) ?? [] }));
 }
@@ -127401,8 +127577,8 @@ async function localAgentRoutes(app2, options = {}) {
         const [insert] = await conn.query("INSERT IGNORE INTO `PilotIdempotencyReceipt` (userId,idempotencyKey,requestHash,response,expiresAt) VALUES (?,?,?,JSON_OBJECT(),DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 30 DAY))", [owner, idempotencyKey, hash2]);
         if (Number(insert.affectedRows) === 1)
           return { status: "new" };
-        const [rows61] = await conn.query("SELECT requestHash,response FROM `PilotIdempotencyReceipt` WHERE userId=? AND idempotencyKey=?", [owner, idempotencyKey]);
-        const receipt = Array.isArray(rows61) ? rows61[0] : void 0;
+        const [rows62] = await conn.query("SELECT requestHash,response FROM `PilotIdempotencyReceipt` WHERE userId=? AND idempotencyKey=?", [owner, idempotencyKey]);
+        const receipt = Array.isArray(rows62) ? rows62[0] : void 0;
         if (!receipt || receipt.requestHash !== hash2)
           return { status: "conflict" };
         const response = typeof receipt.response === "string" ? JSON.parse(receipt.response) : receipt.response;
@@ -127506,8 +127682,8 @@ async function localAgentRoutes(app2, options = {}) {
       try {
         const conn = await (await Promise.resolve().then(() => (init_apply(), apply_exports))).openConnection();
         try {
-          const [rows61] = await conn.query("SELECT verificationStatus,motivo,documento IS NOT NULL AS hasDocument FROM `ExpertProfile` WHERE userId=? LIMIT 1", [request.userId]);
-          const profile = Array.isArray(rows61) ? rows61[0] : void 0;
+          const [rows62] = await conn.query("SELECT verificationStatus,motivo,documento IS NOT NULL AS hasDocument FROM `ExpertProfile` WHERE userId=? LIMIT 1", [request.userId]);
+          const profile = Array.isArray(rows62) ? rows62[0] : void 0;
           isVerifiedExpert2 = profile?.verificationStatus === "verificado";
           if (profile)
             expertProfile = { status: String(profile.verificationStatus), reason: profile.motivo ? String(profile.motivo) : null, hasDocument: Boolean(profile.hasDocument) };
@@ -127941,7 +128117,7 @@ init_outbox_delivery_store();
 init_plan_store();
 init_billing_store();
 init_claim_store();
-import { randomUUID as randomUUID42 } from "node:crypto";
+import { randomUUID as randomUUID43 } from "node:crypto";
 var UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 var SUB_FILTERS = ["solicitada", "pendiente", "activa", "por_vencer", "vencida", "todas"];
 var CLAIM_FILTERS2 = ["en_admin", "abierto", "respondido", "acordado", "resuelto", "todos"];
@@ -127997,7 +128173,7 @@ async function operatorRoutes(app2, deps = {}) {
       return fail24(reply, 400, "DECISION_REQUIRED");
     if (decision === "rejected" && reason.length < 5)
       return fail24(reply, 400, "REASON_REQUIRED");
-    const business = (await registrations.pendingVerifications()).find((item) => item.kind === kind && item.id === id3);
+    const business = (await registrations.pendingVerifications()).find((item2) => item2.kind === kind && item2.id === id3);
     if (!business)
       return fail24(reply, 404, "NOT_PENDING");
     if (!await registrations.setVerification(kind, id3, decision))
@@ -128067,7 +128243,7 @@ async function operatorRoutes(app2, deps = {}) {
     const message2 = text7((request.body ?? {}).text, 1e3);
     if (message2.length < 5)
       return fail24(reply, 400, "TEXT_REQUIRED");
-    await billing.notify(id3, `operator:${randomUUID42()}`, message2);
+    await billing.notify(id3, `operator:${randomUUID43()}`, message2);
     await audit6(request, "support.notice", "User", id3, `aviso de soporte (${message2.length} caracteres)`);
     return { data: { userId: id3, queued: true }, error: null };
   });
@@ -128395,9 +128571,9 @@ var AgentStateError = class extends Error {
 // packages/api/dist/infrastructure/agent/turn-store.js
 init_user_lock();
 init_apply();
-import { createHash as createHash14, randomUUID as randomUUID43 } from "node:crypto";
+import { createHash as createHash14, randomUUID as randomUUID44 } from "node:crypto";
 var digest3 = (text14) => createHash14("sha256").update(text14).digest("hex");
-var rows43 = (result) => result[0];
+var rows44 = (result) => result[0];
 var json = (value2) => typeof value2 === "string" ? JSON.parse(value2) : value2;
 var missing4 = () => new AgentStateError("NOT_FOUND", 404, "Propuesta no disponible.");
 var MysqlAgentTurnStore = class {
@@ -128410,10 +128586,10 @@ var MysqlAgentTurnStore = class {
     const lock = agentUserLock(userId);
     let acquired = false;
     try {
-      acquired = Number(rows43(await conn.query("SELECT GET_LOCK(?, 0) AS acquired", [lock]))[0]?.acquired) === 1;
+      acquired = Number(rows44(await conn.query("SELECT GET_LOCK(?, 0) AS acquired", [lock]))[0]?.acquired) === 1;
       if (!acquired)
         throw new AgentStateError("AGENT_BUSY", 409, "Hay una solicitud en curso. Reintenta con el mismo identificador.");
-      const user = rows43(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL", [userId]))[0];
+      const user = rows44(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL", [userId]))[0];
       if (!user)
         throw new AgentStateError("CONSENT_REQUIRED", 403, "Se requiere una cuenta activa de due\xF1o con consentimiento registrado.");
       return await fn(conn);
@@ -128435,16 +128611,16 @@ var MysqlAgentTurnStore = class {
     };
   }
   async readProposal(conn, userId, id3) {
-    const row2 = rows43(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE id = ? AND userId = ? AND kind = 'register_vehicle'", [id3, userId]))[0];
+    const row2 = rows44(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE id = ? AND userId = ? AND kind = 'register_vehicle'", [id3, userId]))[0];
     if (!row2)
       throw missing4();
     return row2;
   }
   async appendMessages(conn, conversationId, userId, messages) {
-    const next = rows43(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
+    const next = rows44(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
     const start = new Date(next).getTime();
     for (const [index, message2] of messages.entries()) {
-      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID43(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
+      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID44(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
     }
     await conn.query("UPDATE `Conversation` SET turnCount = turnCount + ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [messages.length, conversationId]);
   }
@@ -128453,9 +128629,9 @@ var MysqlAgentTurnStore = class {
   }
   async getState(userId) {
     return this.withUser(userId, async (conn) => {
-      const conversation = rows43(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY updatedAt DESC, id DESC LIMIT 1", [userId]))[0];
-      const history = conversation ? rows43(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversation.id])).reverse().map((row2) => ({ role: row2.direction === "incoming" ? "user" : "assistant", content: String(row2.body ?? "") })) : [];
-      const actions = rows43(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND kind = 'register_vehicle' ORDER BY createdAt DESC, id DESC LIMIT 20", [userId]));
+      const conversation = rows44(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY updatedAt DESC, id DESC LIMIT 1", [userId]))[0];
+      const history = conversation ? rows44(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversation.id])).reverse().map((row2) => ({ role: row2.direction === "incoming" ? "user" : "assistant", content: String(row2.body ?? "") })) : [];
+      const actions = rows44(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND kind = 'register_vehicle' ORDER BY createdAt DESC, id DESC LIMIT 20", [userId]));
       return { history, proposals: actions.map((row2) => this.proposal(row2)) };
     });
   }
@@ -128463,19 +128639,19 @@ var MysqlAgentTurnStore = class {
     return this.withUser(userId, async (conn) => {
       const turnId = digest3(`${userId}:${requestId}`);
       const fingerprint = digest3(message2);
-      const prior = rows43(await conn.query("SELECT fingerprint, response FROM `AgentTurn` WHERE id = ? AND userId = ?", [turnId, userId]))[0];
+      const prior = rows44(await conn.query("SELECT fingerprint, response FROM `AgentTurn` WHERE id = ? AND userId = ?", [turnId, userId]))[0];
       if (prior && prior.fingerprint !== fingerprint)
         throw new AgentStateError("IDEMPOTENCY_CONFLICT", 409, "Ese identificador ya se us\xF3 con otro mensaje.");
       if (prior?.response)
         return json(prior.response);
       if (!prior)
         await conn.query("INSERT INTO `AgentTurn` (id, userId, fingerprint) VALUES (?, ?, ?)", [turnId, userId, fingerprint]);
-      let conversationId = rows43(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
+      let conversationId = rows44(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
       if (!conversationId) {
-        conversationId = randomUUID43();
+        conversationId = randomUUID44();
         await conn.query("INSERT INTO `Conversation` (id, userAId, agent, turnCount, createdAt, updatedAt) VALUES (?, ?, 1, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [conversationId, userId]);
       }
-      const historyRows = rows43(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
+      const historyRows = rows44(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
       const history = historyRows.reverse().map((row2) => ({ role: row2.direction === "incoming" ? "user" : "assistant", content: String(row2.body ?? "") }));
       const reply = await respond({ history, proposeVehicle: async (args) => {
         const parsed = proposedVehicleSchema.safeParse(args);
@@ -128486,7 +128662,7 @@ var MysqlAgentTurnStore = class {
         await conn.query("INSERT IGNORE INTO `AgentAction` (id, userId, turnId, kind, args, expiresAt) VALUES (?, ?, ?, 'register_vehicle', ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 15 MINUTE))", [id3, userId, turnId, encoded]);
         return this.proposal(await this.readProposal(conn, userId, id3));
       } });
-      const actions = rows43(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND turnId = ? ORDER BY createdAt, id", [userId, turnId]));
+      const actions = rows44(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND turnId = ? ORDER BY createdAt, id", [userId, turnId]));
       const response = { reply, proposals: actions.map((row2) => this.proposal(row2)) };
       await conn.query("START TRANSACTION");
       try {
@@ -128504,7 +128680,7 @@ var MysqlAgentTurnStore = class {
     return this.withUser(userId, async (conn) => {
       await conn.query("START TRANSACTION");
       try {
-        const user = rows43(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL FOR UPDATE", [userId]))[0];
+        const user = rows44(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL FOR UPDATE", [userId]))[0];
         if (!user)
           throw new AgentStateError("CONSENT_REQUIRED", 403, "La cuenta no est\xE1 habilitada para esta operaci\xF3n.");
         const row2 = await this.readProposal(conn, userId, id3);
@@ -128515,12 +128691,12 @@ var MysqlAgentTurnStore = class {
         if (Number(row2.expired))
           throw new AgentStateError("PROPOSAL_EXPIRED", 410, "La propuesta caduc\xF3; solicita una nueva.");
         const vehicle = json(row2.args);
-        const vehicleId = randomUUID43();
+        const vehicleId = randomUUID44();
         await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [vehicleId, userId, vehicle.brand, vehicle.model, vehicle.year, vehicle.mileage, vehicle.vehicleClass, vehicle.fuel, vehicle.plate, vehicle.usageProfile]);
         const result = JSON.stringify({ vehicleId });
         await conn.query("UPDATE `AgentAction` SET result = ? WHERE id = ? AND userId = ?", [result, id3, userId]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID43(), userId, vehicleId, JSON.stringify({ actionId: id3 })]);
-        const conversation = rows43(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID44(), userId, vehicleId, JSON.stringify({ actionId: id3 })]);
+        const conversation = rows44(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
         if (conversation)
           await this.appendMessages(conn, String(conversation.id), userId, [{ role: "assistant", content: `Registro confirmado por el usuario. Veh\xEDculo: ${vehicle.brand} ${vehicle.model} ${vehicle.year}. ID: ${vehicleId}.` }]);
         await conn.query("COMMIT");
@@ -129174,21 +129350,21 @@ var findLanding = (slug) => LANDING_PAGES.find((p) => p.slug === slug) ?? null;
 var SUBSERVICE_NAMES = new Map(serviceTaxonomy.categories.flatMap((category) => category.subservices.map((sub) => [sub.id, sub.name])));
 function kmTable(fuelId) {
   const seen = /* @__PURE__ */ new Set();
-  const rows61 = [];
+  const rows62 = [];
   for (const rule of resolveRules("liviano", fuelId)) {
     if (seen.has(rule.serviceId))
       continue;
     seen.add(rule.serviceId);
     const km10 = typeof rule.intervalKm === "number" ? rule.intervalKm : null;
     const factor = typeof rule.severeFactor === "number" ? rule.severeFactor : null;
-    rows61.push({
+    rows62.push({
       name: SUBSERVICE_NAMES.get(rule.serviceId) ?? rule.serviceId,
       km: km10,
       months: typeof rule.intervalMonths === "number" ? rule.intervalMonths : null,
       severeKm: km10 !== null && factor !== null ? Math.round(km10 * factor / 500) * 500 : null
     });
   }
-  return rows61.sort((a, b) => (a.km ?? Number.MAX_SAFE_INTEGER) - (b.km ?? Number.MAX_SAFE_INTEGER) || a.name.localeCompare(b.name, "es"));
+  return rows62.sort((a, b) => (a.km ?? Number.MAX_SAFE_INTEGER) - (b.km ?? Number.MAX_SAFE_INTEGER) || a.name.localeCompare(b.name, "es"));
 }
 
 // packages/api/dist/interfaces/seo/index.js
@@ -129599,18 +129775,18 @@ function structuredData2(input) {
     "@graph": [
       {
         "@type": "BreadcrumbList",
-        itemListElement: input.breadcrumb.map((item, index) => ({
+        itemListElement: input.breadcrumb.map((item2, index) => ({
           "@type": "ListItem",
           position: index + 1,
-          name: item.label,
-          item: `${SITE}${item.href}`
+          name: item2.label,
+          item: `${SITE}${item2.href}`
         }))
       },
       ...input.schema ?? [],
       ...input.faq.length ? [
         {
           "@type": "FAQPage",
-          mainEntity: input.faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } }))
+          mainEntity: input.faq.map((item2) => ({ "@type": "Question", name: item2.q, acceptedAnswer: { "@type": "Answer", text: item2.a } }))
         }
       ] : []
     ]
@@ -129624,10 +129800,10 @@ function renderContentPage(input) {
   const cta = wame ? `<a class="cta" href="${escapeHtml(wame)}" rel="noopener">${escapeHtml(input.ctaLabel ?? "Escribir por WhatsApp")}</a>` : `<p class="soon">Muy pronto disponible por WhatsApp</p>`;
   const bloques = input.blocks.map((b) => `<section class="card"><h2 class="titulo">${escapeHtml(b.title)}</h2>${b.html}</section>`).join("");
   const faq = input.faq.length ? `<section class="card"><h2 class="titulo">Preguntas frecuentes</h2>
-      ${input.faq.map((item) => `<h3 class="pregunta">${escapeHtml(item.q)}</h3><p class="respuesta">${escapeHtml(item.a)}</p>`).join("")}</section>` : "";
+      ${input.faq.map((item2) => `<h3 class="pregunta">${escapeHtml(item2.q)}</h3><p class="respuesta">${escapeHtml(item2.a)}</p>`).join("")}</section>` : "";
   const related = input.related.length ? `<section class="card"><h2 class="titulo">Tambi\xE9n te puede servir</h2>
       <ul class="enlaces">${input.related.map((r) => `<li><a href="${escapeHtml(r.href)}">${escapeHtml(r.label)}</a></li>`).join("")}</ul></section>` : "";
-  const migas = `<nav class="migas">${input.breadcrumb.map((item, index) => index === input.breadcrumb.length - 1 ? `<span>${escapeHtml(item.label)}</span>` : `<a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a> \u203A`).join(" ")}</nav>`;
+  const migas = `<nav class="migas">${input.breadcrumb.map((item2, index) => index === input.breadcrumb.length - 1 ? `<span>${escapeHtml(item2.label)}</span>` : `<a href="${escapeHtml(item2.href)}">${escapeHtml(item2.label)}</a> \u203A`).join(" ")}</nav>`;
   return `<!doctype html>
 <html lang="es-EC">
 <head>
@@ -129688,13 +129864,13 @@ h1{font-size:26px;margin:10px 0 8px}
 .zonas span{font:500 13px/1 var(--c-font);color:var(--c-muted);border:1px solid var(--c-line);padding:6px 9px;border-radius:7px}
 `;
 function serviceBlocks(page3) {
-  const items = page3.items.map((item) => `<article class="servicio"><h3>${escapeHtml(item.name)}</h3>
-      ${item.detail ? `<p>${escapeHtml(item.detail)}</p>` : ""}
+  const items = page3.items.map((item2) => `<article class="servicio"><h3>${escapeHtml(item2.name)}</h3>
+      ${item2.detail ? `<p>${escapeHtml(item2.detail)}</p>` : ""}
       <div class="datos">
-        ${item.durationMin ? `<span>${item.durationMin} min</span>` : ""}
-        ${item.costRefUsd !== null ? `<span>desde US$ ${item.costRefUsd.toFixed(0)}</span>` : ""}
+        ${item2.durationMin ? `<span>${item2.durationMin} min</span>` : ""}
+        ${item2.costRefUsd !== null ? `<span>desde US$ ${item2.costRefUsd.toFixed(0)}</span>` : ""}
       </div>
-      ${item.costNote ? `<p>${escapeHtml(item.costNote)}</p>` : ""}</article>`).join("");
+      ${item2.costNote ? `<p>${escapeHtml(item2.costNote)}</p>` : ""}</article>`).join("");
   return [
     { title: "Qu\xE9 incluye", html: items },
     {
@@ -129923,9 +130099,9 @@ function blockHtml(block) {
   for (const text14 of block.text ?? [])
     parts.push(`<p class="texto">${escapeHtml(text14)}</p>`);
   if (block.list?.length)
-    parts.push(`<ul class="puntos">${block.list.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`);
+    parts.push(`<ul class="puntos">${block.list.map((item2) => `<li>${escapeHtml(item2)}</li>`).join("")}</ul>`);
   if (block.steps?.length)
-    parts.push(`<ol class="steps">${block.steps.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>`);
+    parts.push(`<ol class="steps">${block.steps.map((item2) => `<li>${escapeHtml(item2)}</li>`).join("")}</ol>`);
   return parts.join("");
 }
 var FUEL_TABLES = [
@@ -131447,13 +131623,13 @@ init_plan_text();
 init_catalogs();
 init_entitlements();
 init_catalog_store();
-import { randomUUID as randomUUID45 } from "node:crypto";
+import { randomUUID as randomUUID46 } from "node:crypto";
 
 // packages/api/dist/infrastructure/plans/renewal-notices.js
 init_catalog();
 init_plans();
-import { randomUUID as randomUUID44 } from "node:crypto";
-var rows45 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomUUID as randomUUID45 } from "node:crypto";
+var rows46 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 function ecDate(value2) {
   return new Intl.DateTimeFormat("es-EC", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Guayaquil" }).format(value2);
 }
@@ -131466,14 +131642,14 @@ function expiryText(plan, code5) {
 Para volver a ${plan}: Renovar ${code5}`;
 }
 async function notify3(conn, userId, dedup, message2) {
-  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID44(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID45(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
   return Number(result.affectedRows ?? 0) === 1;
 }
 async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date()) {
   let renewals = 0;
   let expired = 0;
   const soon = new Date(now.getTime() + RENEWAL_NOTICE_DAYS * 864e5);
-  const ending = await rows45(conn, "SELECT s.id, s.userId, s.plan, s.number, s.expiresAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'activa' AND s.renewalNoticeAt IS NULL AND s.expiresAt > ? AND s.expiresAt <= ? AND u.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND (n.status IN ('solicitada','pendiente') OR (n.status = 'activa' AND n.expiresAt > s.expiresAt))) LIMIT 500", [now, soon]);
+  const ending = await rows46(conn, "SELECT s.id, s.userId, s.plan, s.number, s.expiresAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'activa' AND s.renewalNoticeAt IS NULL AND s.expiresAt > ? AND s.expiresAt <= ? AND u.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND (n.status IN ('solicitada','pendiente') OR (n.status = 'activa' AND n.expiresAt > s.expiresAt))) LIMIT 500", [now, soon]);
   for (const sub of ending) {
     const code5 = subscriptionCode(Number(sub.number ?? 0));
     if (await notify3(conn, String(sub.userId), `plan-renewal:${String(sub.id)}`, renewalText(planName(String(sub.plan), catalog), code5, new Date(String(sub.expiresAt)))))
@@ -131481,9 +131657,9 @@ async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date
     await conn.query("UPDATE `Subscription` SET renewalNoticeAt = ? WHERE id = ?", [now, sub.id]);
   }
   await conn.query("UPDATE `Subscription` SET status = 'vencida', active = 0, updatedAt = CURRENT_TIMESTAMP(3) WHERE status = 'activa' AND expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
-  const lapsed = await rows45(conn, "SELECT s.id, s.userId, s.plan, s.number FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'vencida' AND s.expiryNoticeAt IS NULL AND s.expiresAt > DATE_SUB(?, INTERVAL 7 DAY) AND u.deletedAt IS NULL LIMIT 500", [now]);
+  const lapsed = await rows46(conn, "SELECT s.id, s.userId, s.plan, s.number FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'vencida' AND s.expiryNoticeAt IS NULL AND s.expiresAt > DATE_SUB(?, INTERVAL 7 DAY) AND u.deletedAt IS NULL LIMIT 500", [now]);
   for (const sub of lapsed) {
-    const [still] = await rows45(conn, "SELECT 1 AS x FROM `Subscription` WHERE userId = ? AND status = 'activa' AND expiresAt > ? LIMIT 1", [sub.userId, now]);
+    const [still] = await rows46(conn, "SELECT 1 AS x FROM `Subscription` WHERE userId = ? AND status = 'activa' AND expiresAt > ? LIMIT 1", [sub.userId, now]);
     if (!still) {
       const code5 = subscriptionCode(Number(sub.number ?? 0));
       if (await notify3(conn, String(sub.userId), `plan-expired:${String(sub.id)}`, expiryText(planName(String(sub.plan), catalog), code5)))
@@ -131501,7 +131677,7 @@ init_fleet_store();
 init_workshop_map();
 init_reminder_done();
 init_rtv_calendar();
-var rows46 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows47 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var km6 = (n3, vehicleClass2) => `${Math.round(n3).toLocaleString("es-EC")} ${usageUnitOf(String(vehicleClass2 ?? ""))}`;
 var VehicleReminders = class {
   connect;
@@ -131528,7 +131704,7 @@ var VehicleReminders = class {
         await subscriptionNotices(conn, await loadCatalog(conn), now);
       } catch {
       }
-      const vehicles = await rows46(conn, "SELECT v.*, u.city AS ownerCity FROM `Vehicle` v JOIN `User` u ON u.id = v.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE v.remindersOptIn = TRUE AND v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ORDER BY v.id LIMIT 1000");
+      const vehicles = await rows47(conn, "SELECT v.*, u.city AS ownerCity FROM `Vehicle` v JOIN `User` u ON u.id = v.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE v.remindersOptIn = TRUE AND v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ORDER BY v.id LIMIT 1000");
       const levels = /* @__PURE__ */ new Map();
       for (const vehicle of vehicles) {
         const owner = String(vehicle.userId);
@@ -131575,14 +131751,14 @@ Para pedir talleres: Buscar servicio | categor\xEDa | ciudad | sector | descripc
         if (!created)
           continue;
         planReminders++;
-        const [shop] = await rows46(conn, "SELECT s.userId, a.id AS appointmentId FROM `Service` sv JOIN `Shop` s ON s.id = sv.shopId LEFT JOIN `Appointment` a ON a.shopId = s.id AND a.vehicleId = sv.vehicleId AND a.status <> 'cancelled' WHERE sv.vehicleId = ? AND sv.createdAt > DATE_SUB(?, INTERVAL 365 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = sv.vehicleId AND b.shopId = s.id) ORDER BY sv.createdAt DESC, a.scheduledAt DESC LIMIT 1", [vehicle.id, now]);
+        const [shop] = await rows47(conn, "SELECT s.userId, a.id AS appointmentId FROM `Service` sv JOIN `Shop` s ON s.id = sv.shopId LEFT JOIN `Appointment` a ON a.shopId = s.id AND a.vehicleId = sv.vehicleId AND a.status <> 'cancelled' WHERE sv.vehicleId = ? AND sv.createdAt > DATE_SUB(?, INTERVAL 365 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = sv.vehicleId AND b.shopId = s.id) ORDER BY sv.createdAt DESC, a.scheduledAt DESC LIMIT 1", [vehicle.id, now]);
         if (shop) {
           const ref4 = shop.appointmentId ? ` Puedes proponer la visita: Pr\xF3xima visita C-${String(shop.appointmentId).replace(/-/g, "").slice(0, 6).toUpperCase()} | AAAA-MM-DD | HH:mm` : "";
           await this.notify(conn, String(shop.userId), `reminder-shop:${String(vehicle.id)}:${key}`.slice(0, 191), `\u{1F514} Tu cliente con ${label5} tiene mantenimiento pr\xF3ximo:
 ${lines.join("\n")}${ref4}`);
         }
       }
-      const dueAlerts = await rows46(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.source, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
+      const dueAlerts = await rows47(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.source, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
       for (const a of dueAlerts) {
         const label5 = `${a.make} ${a.model} ${a.year}`;
         const deferred = a.source === "pendiente";
@@ -131599,7 +131775,7 @@ ${lines.join("\n")}${ref4}`);
         alerts++;
       }
       const week = Math.floor((now.getTime() - 5 * 36e5) / (7 * 864e5));
-      const silent = await rows46(conn, "SELECT a.vehicleId, m.userId, v.make, v.model, v.plate, v.unitCode FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL AND v.deletedAt IS NULL AND f.status = 'activa' AND a.startsAt < DATE_SUB(?, INTERVAL 14 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleOdometerReading` r WHERE r.vehicleId = a.vehicleId AND r.createdAt > DATE_SUB(?, INTERVAL 14 DAY)) LIMIT 500", [now, now]);
+      const silent = await rows47(conn, "SELECT a.vehicleId, m.userId, v.make, v.model, v.plate, v.unitCode FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL AND v.deletedAt IS NULL AND f.status = 'activa' AND a.startsAt < DATE_SUB(?, INTERVAL 14 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleOdometerReading` r WHERE r.vehicleId = a.vehicleId AND r.createdAt > DATE_SUB(?, INTERVAL 14 DAY)) LIMIT 500", [now, now]);
       for (const d of silent) {
         if (await this.notify(conn, String(d.userId), `kmask:${String(d.vehicleId)}:${week}`, `\u{1F4CF} \xBFCu\xE1ntos kil\xF3metros marca ${unitLabel(d)} ${d.make} ${d.model}? Responde: Kilometraje | km. Con ese dato sabemos cu\xE1ndo le toca mantenimiento.`))
           kmReminders++;
@@ -131608,11 +131784,11 @@ ${lines.join("\n")}${ref4}`);
       if (local.getUTCDate() === 1 && local.getUTCHours() >= 8) {
         const monthEnd = new Date(ecMonthStart(now).getTime() - 1);
         const label5 = new Intl.DateTimeFormat("es-EC", { month: "long", year: "numeric", timeZone: "America/Guayaquil" }).format(monthEnd);
-        const fleets = await rows46(conn, "SELECT f.id, f.name, f.ownerUserId FROM `Fleet` f JOIN `User` u ON u.id = f.ownerUserId WHERE f.status = 'activa' AND u.deletedAt IS NULL LIMIT 500");
+        const fleets = await rows47(conn, "SELECT f.id, f.name, f.ownerUserId FROM `Fleet` f JOIN `User` u ON u.id = f.ownerUserId WHERE f.status = 'activa' AND u.deletedAt IS NULL LIMIT 500");
         for (const f of fleets) {
           const text14 = `\u{1F4CA} Reporte de ${label5}
 ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
-          const managers = await rows46(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role IN ('admin','supervisor') AND status = 'active' AND userId IS NOT NULL", [f.id]);
+          const managers = await rows47(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role IN ('admin','supervisor') AND status = 'active' AND userId IS NOT NULL", [f.id]);
           for (const recipient of /* @__PURE__ */ new Set([String(f.ownerUserId), ...managers.map((m) => String(m.userId))]))
             if (await this.notify(conn, recipient, `fleetreport:${String(f.id)}:${local.toISOString().slice(0, 7)}:${recipient}`.slice(0, 191), text14))
               fleetReports++;
@@ -131621,10 +131797,10 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
       const ecHour2 = (now.getUTCHours() + 19) % 24;
       if (ecHour2 >= 19) {
         const day5 = new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
-        const shops = await rows46(conn, "SELECT s.id, s.name, s.userId FROM `Shop` s JOIN `User` u ON u.id = s.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE s.verificationStatus IN ('verified','pending') AND u.deletedAt IS NULL AND EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.shopId = s.id AND (w.createdAt >= DATE_SUB(?, INTERVAL 1 DAY) OR w.status NOT IN ('cerrada','cancelada'))) LIMIT 500", [now]);
+        const shops = await rows47(conn, "SELECT s.id, s.name, s.userId FROM `Shop` s JOIN `User` u ON u.id = s.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE s.verificationStatus IN ('verified','pending') AND u.deletedAt IS NULL AND EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.shopId = s.id AND (w.createdAt >= DATE_SUB(?, INTERVAL 1 DAY) OR w.status NOT IN ('cerrada','cancelada'))) LIMIT 500", [now]);
         for (const shop of shops) {
           const report = await shopReport(conn, String(shop.id), String(shop.name), "hoy", now);
-          const admins = await rows46(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shop.id]);
+          const admins = await rows47(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shop.id]);
           for (const recipient of /* @__PURE__ */ new Set([String(shop.userId), ...admins.map((a) => String(a.userId))]))
             await this.notify(conn, recipient, `shopreport:${String(shop.id)}:${day5}:${recipient}`.slice(0, 191), report);
           reports++;
@@ -131637,7 +131813,7 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
   }
   /** True when the reminder was new; the dedup key makes repeated runs harmless. */
   async notify(conn, recipient, dedup, message2, kind = "care.reminder") {
-    const [result] = await conn.query("INSERT IGNORE INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?)", [randomUUID45(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
+    const [result] = await conn.query("INSERT IGNORE INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?)", [randomUUID46(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
     return Number(result.affectedRows) === 1;
   }
   start(intervalMs = 36e5, onError = () => {
@@ -131664,7 +131840,7 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
 
 // packages/api/dist/infrastructure/messaging/deadline-notices.js
 init_apply();
-import { randomUUID as randomUUID46 } from "node:crypto";
+import { randomUUID as randomUUID47 } from "node:crypto";
 
 // packages/api/dist/application/deadlines/policy.js
 var DEADLINE_NOTICE_KIND = "plazo.aviso";
@@ -131700,7 +131876,7 @@ init_messages();
 init_contracts();
 init_workflow();
 init_fleet_access();
-var rows47 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows48 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var HOUR = 36e5;
 var DAY2 = 24 * HOUR;
 var PROPOSED_VISIT2 = "Visita propuesta por el taller";
@@ -131751,9 +131927,9 @@ var DeadlineNotices = class {
   /** Verdadero solo si el aviso era nuevo: la dedupKey hace inofensivas las repeticiones (mysql2 cuenta como «encontradas» las filas repetidas, por eso se consulta antes). */
   async notify(conn, recipient, dedup, message2, kind = DEADLINE_NOTICE_KIND) {
     const key = dedup.slice(0, 191);
-    if ((await rows47(conn, "SELECT 1 AS found FROM `NotificationOutbox` WHERE dedupKey = ?", [key])).length)
+    if ((await rows48(conn, "SELECT 1 AS found FROM `NotificationOutbox` WHERE dedupKey = ?", [key])).length)
       return false;
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID46(), key, recipient, kind, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID47(), key, recipient, kind, JSON.stringify({ message: message2 })]);
     return true;
   }
   /** Dueño del vehículo y, si es de flota, quienes lo administran (igual que los avisos de la orden). */
@@ -131766,12 +131942,12 @@ var DeadlineNotices = class {
   }
   /** Dueño del taller y administradores activos. */
   async toShop(conn, shopId, dedup, message2, kind = DEADLINE_NOTICE_KIND) {
-    const [shop] = await rows47(conn, "SELECT userId FROM `Shop` WHERE id = ?", [shopId]);
+    const [shop] = await rows48(conn, "SELECT userId FROM `Shop` WHERE id = ?", [shopId]);
     if (!shop)
       return false;
     const owner = String(shop.userId);
     const created = await this.notify(conn, owner, dedup, message2);
-    const admins = await rows47(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shopId]);
+    const admins = await rows48(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shopId]);
     for (const a of admins)
       if (String(a.userId) !== owner)
         await this.notify(conn, String(a.userId), `${dedup.slice(0, 150)}:${String(a.userId)}`, message2, kind);
@@ -131782,13 +131958,13 @@ var DeadlineNotices = class {
     const out = { citaTaller24: 0, citaDueno48: 0 };
     const base = "SELECT a.id, a.shopId, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year, s.name AS shopName FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Shop` s ON s.id = a.shopId WHERE a.status = 'pending' AND (a.summary IS NULL OR a.summary NOT LIKE ?) AND a.scheduledAt > ? AND a.createdAt <= ? AND a.createdAt > ? ORDER BY a.createdAt LIMIT " + LIMIT;
     const w24 = window2(now, DEADLINES.citaTallerRecordatorioHoras);
-    for (const a of await rows47(conn, base, [`${PROPOSED_VISIT2}%`, now, w24.before, w24.after])) {
+    for (const a of await rows48(conn, base, [`${PROPOSED_VISIT2}%`, now, w24.before, w24.after])) {
       const code5 = shortCode("C", String(a.id));
       if (await this.toShop(conn, String(a.shopId), `plazo:cita-taller-24:${String(a.id)}`, `\u23F0 Recordatorio: la cita ${code5} de un cliente con ${vehicleOf(a)} para el ${formatEcDateTime(a.scheduledAt)} sigue sin tu respuesta. Responde: Confirmar ${code5} \xB7 Reprogramar cita ${code5} | AAAA-MM-DD | HH:mm \xB7 Rechazar cita ${code5} | motivo`))
         out.citaTaller24++;
     }
     const w48 = window2(now, DEADLINES.citaDuenoAvisoHoras);
-    for (const a of await rows47(conn, base, [`${PROPOSED_VISIT2}%`, now, w48.before, w48.after])) {
+    for (const a of await rows48(conn, base, [`${PROPOSED_VISIT2}%`, now, w48.before, w48.after])) {
       const code5 = shortCode("C", String(a.id));
       if (await this.toOwner(conn, String(a.ownerId), String(a.vehicleId), `plazo:cita-dueno-48:${String(a.id)}`, `\u{1F552} ${a.shopName} todav\xEDa no responde tu cita ${code5} para el ${formatEcDateTime(a.scheduledAt)}. Si no quieres seguir esperando, puedes cancelarla con: Cancelar cita ${code5} y buscar otro taller con: ${HOW_TO_AGAIN}`))
         out.citaDueno48++;
@@ -131799,7 +131975,7 @@ var DeadlineNotices = class {
   async fechasPropuestas(conn, now) {
     const w = window2(now, DEADLINES.fechaPropuestaHoras);
     let n3 = 0;
-    for (const a of await rows47(conn, "SELECT a.id, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year, s.name AS shopName FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Shop` s ON s.id = a.shopId WHERE a.status = 'pending' AND a.summary LIKE ? AND a.scheduledAt > ? AND a.createdAt <= ? AND a.createdAt > ? ORDER BY a.createdAt LIMIT " + LIMIT, [`${PROPOSED_VISIT2}%`, now, w.before, w.after])) {
+    for (const a of await rows48(conn, "SELECT a.id, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year, s.name AS shopName FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Shop` s ON s.id = a.shopId WHERE a.status = 'pending' AND a.summary LIKE ? AND a.scheduledAt > ? AND a.createdAt <= ? AND a.createdAt > ? ORDER BY a.createdAt LIMIT " + LIMIT, [`${PROPOSED_VISIT2}%`, now, w.before, w.after])) {
       const code5 = shortCode("C", String(a.id));
       if (await this.toOwner(conn, String(a.ownerId), String(a.vehicleId), `plazo:fecha-propuesta-24:${String(a.id)}`, `\u23F0 ${a.shopName} te propuso el ${formatEcDateTime(a.scheduledAt)} para tu ${vehicleOf(a)} y espera tu respuesta. Responde: Aceptar visita ${code5} \xB7 Rechazar visita ${code5}`))
         n3++;
@@ -131810,7 +131986,7 @@ var DeadlineNotices = class {
   async ingresos(conn, now) {
     const w = window2(now, DEADLINES.ingresoHoras);
     let n3 = 0;
-    for (const o of await rows47(conn, "SELECT w.id, w.number, w.ownerId, w.vehicleId, v.make, v.model, v.year, s.name AS shopName FROM `VehicleIntake` i JOIN `WorkOrder` w ON w.id = i.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE i.ownerAnswer IS NULL AND w.status IN (?) AND i.receivedAt <= ? AND i.receivedAt > ? ORDER BY i.receivedAt LIMIT " + LIMIT, [OPEN_STATUSES, w.before, w.after])) {
+    for (const o of await rows48(conn, "SELECT w.id, w.number, w.ownerId, w.vehicleId, v.make, v.model, v.year, s.name AS shopName FROM `VehicleIntake` i JOIN `WorkOrder` w ON w.id = i.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE i.ownerAnswer IS NULL AND w.status IN (?) AND i.receivedAt <= ? AND i.receivedAt > ? ORDER BY i.receivedAt LIMIT " + LIMIT, [OPEN_STATUSES, w.before, w.after])) {
       const code5 = workOrderCode(Number(o.number));
       if (await this.toOwner(conn, String(o.ownerId), String(o.vehicleId), `plazo:ingreso-24:${String(o.id)}`, `\u23F0 ${o.shopName} registr\xF3 el ingreso de tu ${vehicleOf(o)} (${code5}) y falta tu respuesta. Responde: Confirmo ingreso ${code5} \xB7 Observo ingreso ${code5} | qu\xE9 no coincide`, DEADLINE_ORDER_NOTICE_KIND))
         n3++;
@@ -131821,15 +131997,15 @@ var DeadlineNotices = class {
   async presupuestos(conn, now) {
     const out = { presupuesto24: 0, presupuestoTaller72: 0 };
     const query = "SELECT w.id, w.number, w.ownerId, w.shopId, w.vehicleId, w.total, v.make, v.model, v.year, s.name AS shopName FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE w.status = 'presupuesto_enviado' AND w.updatedAt <= ? AND w.updatedAt > ? ORDER BY w.updatedAt LIMIT " + LIMIT;
-    const sendNo = async (id3) => Math.max(1, Number((await rows47(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'care.budget.sent'", [id3]))[0]?.n ?? 1));
+    const sendNo = async (id3) => Math.max(1, Number((await rows48(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'care.budget.sent'", [id3]))[0]?.n ?? 1));
     const w24 = window2(now, DEADLINES.presupuestoRecordatorioHoras);
-    for (const o of await rows47(conn, query, [w24.before, w24.after])) {
+    for (const o of await rows48(conn, query, [w24.before, w24.after])) {
       const code5 = workOrderCode(Number(o.number));
       if (await this.toOwner(conn, String(o.ownerId), String(o.vehicleId), `plazo:presupuesto-24:${String(o.id)}:${await sendNo(o.id)}`, `\u23F0 ${o.shopName} te envi\xF3 el presupuesto ${code5} de tu ${vehicleOf(o)} por ${usd5(o.total)} y espera tu respuesta. No har\xE1n ning\xFAn trabajo con costo sin tu aprobaci\xF3n. Responde: Aprobar ${code5} \xB7 Aprobar ${code5} | 1,3 \xB7 Rechazar ${code5} | motivo`, DEADLINE_ORDER_NOTICE_KIND))
         out.presupuesto24++;
     }
     const w72 = window2(now, DEADLINES.presupuestoTallerHoras);
-    for (const o of await rows47(conn, query, [w72.before, w72.after])) {
+    for (const o of await rows48(conn, query, [w72.before, w72.after])) {
       const code5 = workOrderCode(Number(o.number));
       if (await this.toShop(conn, String(o.shopId), `plazo:presupuesto-taller-72:${String(o.id)}:${await sendNo(o.id)}`, `\u{1F552} El cliente con ${vehicleOf(o)} todav\xEDa no responde el presupuesto ${code5} (${usd5(o.total)}). Si ya no se har\xE1 el trabajo, puedes cancelar la orden con: Cancelar orden ${code5} | motivo`, DEADLINE_ORDER_NOTICE_KIND))
         out.presupuestoTaller72++;
@@ -131840,7 +132016,7 @@ var DeadlineNotices = class {
   async entregas(conn, now) {
     const w = window2(now, DEADLINES.entregaHoras);
     let n3 = 0;
-    for (const c of await rows47(conn, "SELECT c.id, w.number, w.ownerId, w.vehicleId, v.make, v.model, v.year, s.name AS shopName FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'entrega' AND c.status = 'pending' AND w.status IN (?) AND c.createdAt <= ? AND c.createdAt > ? ORDER BY c.createdAt LIMIT " + LIMIT, [OPEN_STATUSES, w.before, w.after])) {
+    for (const c of await rows48(conn, "SELECT c.id, w.number, w.ownerId, w.vehicleId, v.make, v.model, v.year, s.name AS shopName FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'entrega' AND c.status = 'pending' AND w.status IN (?) AND c.createdAt <= ? AND c.createdAt > ? ORDER BY c.createdAt LIMIT " + LIMIT, [OPEN_STATUSES, w.before, w.after])) {
       const code5 = workOrderCode(Number(c.number));
       if (await this.toOwner(conn, String(c.ownerId), String(c.vehicleId), `plazo:entrega-24:${String(c.id)}`, `\u23F0 Tu ${vehicleOf(c)} est\xE1 listo en ${c.shopName} (${code5}) y falta tu respuesta sobre la entrega. Responde: Acepto entrega ${code5} \xB7 Rechazo entrega ${code5} | motivo`, DEADLINE_ORDER_NOTICE_KIND))
         n3++;
@@ -131851,7 +132027,7 @@ var DeadlineNotices = class {
   async cobros(conn, now) {
     const w = window2(now, DEADLINES.cobroHoras);
     let n3 = 0;
-    for (const p of await rows47(conn, "SELECT p.id, p.amount, w.number, w.ownerId, w.vehicleId, s.name AS shopName FROM `WorkOrderPayment` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE p.status = 'informado' AND w.status <> 'cancelada' AND p.createdAt <= ? AND p.createdAt > ? ORDER BY p.createdAt LIMIT " + LIMIT, [w.before, w.after])) {
+    for (const p of await rows48(conn, "SELECT p.id, p.amount, w.number, w.ownerId, w.vehicleId, s.name AS shopName FROM `WorkOrderPayment` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE p.status = 'informado' AND w.status <> 'cancelada' AND p.createdAt <= ? AND p.createdAt > ? ORDER BY p.createdAt LIMIT " + LIMIT, [w.before, w.after])) {
       const code5 = workOrderCode(Number(p.number));
       if (await this.toOwner(conn, String(p.ownerId), String(p.vehicleId), `plazo:cobro-48:${String(p.id)}`, `\u23F0 ${p.shopName} inform\xF3 un cobro de ${usd5(p.amount)} de la orden ${code5} y falta tu respuesta. Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide`, DEADLINE_ORDER_NOTICE_KIND))
         n3++;
@@ -131862,7 +132038,7 @@ var DeadlineNotices = class {
   async solicitudesVencidas(conn, now) {
     let n3 = 0;
     const since = new Date(now.getTime() - DEADLINES.ventanaMaximaDias * DAY2);
-    for (const r of await rows47(conn, "SELECT lr.id, lr.ownerId, lr.kind, lr.category, (SELECT COUNT(*) FROM `LocalOffer` o WHERE o.requestId = lr.id AND o.status <> 'invited') AS offers FROM `LocalRequest` lr WHERE lr.status = 'open' AND lr.expiresAt <= ? AND lr.expiresAt > ? ORDER BY lr.expiresAt LIMIT " + LIMIT, [now, since])) {
+    for (const r of await rows48(conn, "SELECT lr.id, lr.ownerId, lr.kind, lr.category, (SELECT COUNT(*) FROM `LocalOffer` o WHERE o.requestId = lr.id AND o.status <> 'invited') AS offers FROM `LocalRequest` lr WHERE lr.status = 'open' AND lr.expiresAt <= ? AND lr.expiresAt > ? ORDER BY lr.expiresAt LIMIT " + LIMIT, [now, since])) {
       const code5 = shortCode("S", String(r.id));
       const offers = Number(r.offers);
       const received = offers === 0 ? "No recibi\xF3 ofertas" : offers === 1 ? "Recibi\xF3 1 oferta" : `Recibi\xF3 ${offers} ofertas`;
@@ -131876,8 +132052,8 @@ var DeadlineNotices = class {
   async repuestosSinStock(conn, now) {
     const w = window2(now, DEADLINES.repuestoStockHoras);
     let n3 = 0;
-    for (const r of await rows47(conn, "SELECT lr.id, lr.ownerId, lr.chosenOfferId, o.businessName FROM `LocalRequest` lr JOIN `LocalOffer` o ON o.id = lr.chosenOfferId WHERE lr.kind = 'repuesto' AND lr.status = 'accepted' AND o.stockStatus IS NULL ORDER BY lr.createdAt LIMIT 1000")) {
-      const [accepted2] = await rows47(conn, "SELECT createdAt FROM `NotificationOutbox` WHERE dedupKey = ?", [`decision:${String(r.id)}:${String(r.chosenOfferId)}`]);
+    for (const r of await rows48(conn, "SELECT lr.id, lr.ownerId, lr.chosenOfferId, o.businessName FROM `LocalRequest` lr JOIN `LocalOffer` o ON o.id = lr.chosenOfferId WHERE lr.kind = 'repuesto' AND lr.status = 'accepted' AND o.stockStatus IS NULL ORDER BY lr.createdAt LIMIT 1000")) {
+      const [accepted2] = await rows48(conn, "SELECT createdAt FROM `NotificationOutbox` WHERE dedupKey = ?", [`decision:${String(r.id)}:${String(r.chosenOfferId)}`]);
       const at = accepted2 ? new Date(accepted2.createdAt) : null;
       if (!at || at > w.before || at <= w.after)
         continue;
@@ -131891,7 +132067,7 @@ var DeadlineNotices = class {
   async citasProximas(conn, now) {
     let n3 = 0;
     const until = new Date(now.getTime() + DEADLINES.citaPreviaHoras * HOUR);
-    for (const a of await rows47(conn, "SELECT a.id, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year, s.name AS shopName FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Shop` s ON s.id = a.shopId WHERE a.status = 'confirmed' AND a.scheduledAt > ? AND a.scheduledAt <= ? AND NOT EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id AND w.status <> 'cancelada') ORDER BY a.scheduledAt LIMIT " + LIMIT, [now, until])) {
+    for (const a of await rows48(conn, "SELECT a.id, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year, s.name AS shopName FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Shop` s ON s.id = a.shopId WHERE a.status = 'confirmed' AND a.scheduledAt > ? AND a.scheduledAt <= ? AND NOT EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id AND w.status <> 'cancelada') ORDER BY a.scheduledAt LIMIT " + LIMIT, [now, until])) {
       const code5 = shortCode("C", String(a.id));
       if (await this.toOwner(conn, String(a.ownerId), String(a.vehicleId), `plazo:cita-previa-24:${String(a.id)}`, `\u{1F4C5} Recordatorio: tienes cita ${code5} en ${a.shopName} el ${formatEcDateTime(a.scheduledAt)} para tu ${vehicleOf(a)}. Si no puedes ir, avisa con: Cancelar cita ${code5} | motivo`))
         n3++;
@@ -131904,7 +132080,7 @@ var DeadlineNotices = class {
     const lastDue = ecDay4(new Date(now.getTime() - DEADLINES.promesaVencidaDias * DAY2));
     const oldest = ecDay4(new Date(now.getTime() - (DEADLINES.promesaVencidaDias + DEADLINES.ventanaMaximaDias) * DAY2));
     let n3 = 0;
-    for (const p of await rows47(conn, "SELECT w.id, w.number, w.shopId, DATE_FORMAT(p.promisedDate, '%Y-%m-%d') AS promised, v.make, v.model, v.year FROM `WorkOrderPromise` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.status IN (?) AND p.promisedDate <= ? AND p.promisedDate > ? ORDER BY p.promisedDate LIMIT " + LIMIT, [OPEN_STATUSES, lastDue, oldest])) {
+    for (const p of await rows48(conn, "SELECT w.id, w.number, w.shopId, DATE_FORMAT(p.promisedDate, '%Y-%m-%d') AS promised, v.make, v.model, v.year FROM `WorkOrderPromise` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.status IN (?) AND p.promisedDate <= ? AND p.promisedDate > ? ORDER BY p.promisedDate LIMIT " + LIMIT, [OPEN_STATUSES, lastDue, oldest])) {
       const code5 = workOrderCode(Number(p.number));
       const [y, m, d] = String(p.promised).split("-");
       if (await this.toShop(conn, String(p.shopId), `plazo:promesa-vencida:${String(p.id)}:${String(p.promised)}`, `\u26A0\uFE0F La fecha de entrega prometida para la orden ${code5} (${vehicleOf(p)}) era el ${d}/${m}/${y} y la orden sigue abierta. Si necesitas m\xE1s tiempo, informa la nueva fecha al cliente con: Fecha entrega ${code5} | AAAA-MM-DD | motivo`, DEADLINE_ORDER_NOTICE_KIND))
@@ -132004,10 +132180,10 @@ var ClaimDeadlines = class {
 // packages/api/dist/infrastructure/messaging/verification-deadlines.js
 init_apply();
 init_admin_alerts();
-import { randomUUID as randomUUID47 } from "node:crypto";
+import { randomUUID as randomUUID48 } from "node:crypto";
 var VERIFICATION_HOURS = 72;
 var VERIFICATION_ADMIN_HOURS = 48;
-var rows48 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+var rows49 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var KINDS = [
   { table: "Shop", label: "taller", event: "verification" },
   { table: "Store", label: "almac\xE9n", event: "verification" }
@@ -132025,20 +132201,20 @@ var VerificationDeadlines = class {
     try {
       for (const kind of KINDS) {
         const at = (hours2) => new Date(now.getTime() - hours2 * 36e5);
-        const pending = await rows48(conn, `SELECT b.id, b.userId, b.name, b.createdAt FROM \`${kind.table}\` b JOIN \`User\` u ON u.id = b.userId WHERE b.verificationStatus = 'pending' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND b.createdAt <= ? ORDER BY b.createdAt LIMIT 100`, [at(VERIFICATION_ADMIN_HOURS)]);
+        const pending = await rows49(conn, `SELECT b.id, b.userId, b.name, b.createdAt FROM \`${kind.table}\` b JOIN \`User\` u ON u.id = b.userId WHERE b.verificationStatus = 'pending' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND b.createdAt <= ? ORDER BY b.createdAt LIMIT 100`, [at(VERIFICATION_ADMIN_HOURS)]);
         for (const business of pending) {
           const id3 = String(business.id);
           const late2 = new Date(business.createdAt).getTime() <= at(VERIFICATION_HOURS).getTime();
           for (const step of late2 ? [48, 72] : [48]) {
             const event = `verification.overdue${step}`;
-            const [done] = await rows48(conn, "SELECT id FROM `AuditLog` WHERE eventType = ? AND entityId = ? LIMIT 1", [event, id3]);
+            const [done] = await rows49(conn, "SELECT id FROM `AuditLog` WHERE eventType = ? AND entityId = ? LIMIT 1", [event, id3]);
             if (done)
               continue;
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID47(), event, kind.table, id3, JSON.stringify({ hours: step })]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID48(), event, kind.table, id3, JSON.stringify({ hours: step })]);
             adminAlerts++;
             if (step === 72) {
               const message2 = `Tu ${kind.label} ${String(business.name)} sigue en revisi\xF3n despu\xE9s de ${VERIFICATION_HOURS} horas. Ya avisamos al equipo de AutoMantPro para que lo revise cuanto antes. Si te falta alg\xFAn dato, rev\xEDsalo en automantpro.app/cuenta. Mientras tanto puedes ofertar cuando un cliente te invite, con el aviso de que est\xE1s en revisi\xF3n.`;
-              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'verification.overdue', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID47(), `verify-72:${id3}`, String(business.userId), JSON.stringify({ message: message2 })]);
+              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'verification.overdue', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID48(), `verify-72:${id3}`, String(business.userId), JSON.stringify({ message: message2 })]);
               businessNotices++;
             }
           }
@@ -132084,16 +132260,16 @@ init_messages();
 init_admin_alerts();
 init_work_order_claims();
 init_deferred_work();
-import { randomUUID as randomUUID48 } from "node:crypto";
+import { randomUUID as randomUUID49 } from "node:crypto";
 var FINDING_REMIND_HOURS = 12;
 var FINDING_EXPIRE_HOURS = 24;
 var BALANCE_DAYS = [3, 7];
 var RETURN_HOURS = 48;
 var NEXT_VISIT_DAYS = 7;
-var rows49 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
-var MISSING5 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
+var rows50 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+var MISSING6 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
 var skipMissing = (err) => {
-  if (MISSING5.includes(String(err.code)))
+  if (MISSING6.includes(String(err.code)))
     return [];
   throw err;
 };
@@ -132108,13 +132284,13 @@ var CareDeadlines = class {
   }
   /** Encola un aviso; devuelve true solo si es nuevo. */
   async once(conn, recipient, key, kind, message2) {
-    if ((await rows49(conn, "SELECT id FROM `NotificationOutbox` WHERE dedupKey = ? LIMIT 1", [key])).length)
+    if ((await rows50(conn, "SELECT id FROM `NotificationOutbox` WHERE dedupKey = ? LIMIT 1", [key])).length)
       return false;
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID48(), key, recipient, kind, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID49(), key, recipient, kind, JSON.stringify({ message: message2 })]);
     return true;
   }
   async audit(conn, eventType, entityType, entityId, after) {
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID48(), eventType, entityType, entityId, JSON.stringify(after)]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID49(), eventType, entityType, entityId, JSON.stringify(after)]);
   }
   async run(now = /* @__PURE__ */ new Date()) {
     const conn = await this.connect();
@@ -132135,7 +132311,7 @@ var CareDeadlines = class {
   }
   // ---------- X3: novedad sin respuesta ----------
   async findings(conn, now, result) {
-    const pending = await rows49(conn, "SELECT c.id, c.createdAt, c.total, c.description, w.id AS orderId, w.number, w.ownerId, w.vehicleId, w.shopId, w.status AS orderStatus, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND c.createdAt <= ? ORDER BY c.createdAt LIMIT 100", [hoursAgo(now, FINDING_REMIND_HOURS)]);
+    const pending = await rows50(conn, "SELECT c.id, c.createdAt, c.total, c.description, w.id AS orderId, w.number, w.ownerId, w.vehicleId, w.shopId, w.status AS orderStatus, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND c.createdAt <= ? ORDER BY c.createdAt LIMIT 100", [hoursAgo(now, FINDING_REMIND_HOURS)]);
     for (const c of pending) {
       const ref4 = changeRef(c.id), code5 = workOrderCode(Number(c.number)), amount = formatUsd(Number(c.total ?? 0));
       const created = new Date(c.createdAt).getTime();
@@ -132155,7 +132331,7 @@ var CareDeadlines = class {
   }
   // ---------- C1: saldo de la orden ----------
   async balances(conn, now, result) {
-    const due = await rows49(conn, "SELECT w.id, w.number, w.ownerId, w.total, w.closedAt, s.userId AS shopUserId, s.name AS shopName, COALESCE((SELECT SUM(p.amount) FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status IN ('pagado','informado')), 0) AS covered FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.status = 'cerrada' AND w.total > 0 AND w.closedAt <= ? AND w.closedAt > ? ORDER BY w.closedAt LIMIT 200", [hoursAgo(now, BALANCE_DAYS[0] * 24), hoursAgo(now, 30 * 24)]).catch(skipMissing);
+    const due = await rows50(conn, "SELECT w.id, w.number, w.ownerId, w.total, w.closedAt, s.userId AS shopUserId, s.name AS shopName, COALESCE((SELECT SUM(p.amount) FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status IN ('pagado','informado')), 0) AS covered FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.status = 'cerrada' AND w.total > 0 AND w.closedAt <= ? AND w.closedAt > ? ORDER BY w.closedAt LIMIT 200", [hoursAgo(now, BALANCE_DAYS[0] * 24), hoursAgo(now, 30 * 24)]).catch(skipMissing);
     for (const o of due) {
       const balance = Math.round((Number(o.total) - Number(o.covered)) * 100) / 100;
       if (balance <= 9e-3)
@@ -132173,7 +132349,7 @@ var CareDeadlines = class {
   }
   // ---------- R4: saldo del repuesto ----------
   async partBalances(conn, now, result) {
-    const due = await rows49(conn, "SELECT r.id, r.ownerId, r.category, o.priceUsd, o.businessName, o.businessUserId, (SELECT MIN(a.createdAt) FROM `AuditLog` a WHERE a.entityId = r.id AND a.eventType IN ('local.deliveredRef','local.receivedRef','local.delivered')) AS deliveredAt, COALESCE((SELECT SUM(p.amount) FROM `PartPayment` p WHERE p.requestId = r.id AND p.status IN ('pagado','informado')), 0) AS covered FROM `LocalRequest` r JOIN `LocalOffer` o ON o.id = r.chosenOfferId WHERE r.kind = 'repuesto' AND r.status = 'delivered' AND o.priceUsd > 0 AND r.createdAt > ? ORDER BY r.createdAt LIMIT 200", [hoursAgo(now, 60 * 24)]).catch(skipMissing);
+    const due = await rows50(conn, "SELECT r.id, r.ownerId, r.category, o.priceUsd, o.businessName, o.businessUserId, (SELECT MIN(a.createdAt) FROM `AuditLog` a WHERE a.entityId = r.id AND a.eventType IN ('local.deliveredRef','local.receivedRef','local.delivered')) AS deliveredAt, COALESCE((SELECT SUM(p.amount) FROM `PartPayment` p WHERE p.requestId = r.id AND p.status IN ('pagado','informado')), 0) AS covered FROM `LocalRequest` r JOIN `LocalOffer` o ON o.id = r.chosenOfferId WHERE r.kind = 'repuesto' AND r.status = 'delivered' AND o.priceUsd > 0 AND r.createdAt > ? ORDER BY r.createdAt LIMIT 200", [hoursAgo(now, 60 * 24)]).catch(skipMissing);
     for (const r of due) {
       if (!r.deliveredAt)
         continue;
@@ -132193,11 +132369,11 @@ var CareDeadlines = class {
   }
   // ---------- R2: devolución sin respuesta del almacén ----------
   async returns(conn, now, result) {
-    const due = await rows49(conn, "SELECT t.id, t.requestId, r.ownerId, o.businessUserId FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId WHERE t.status = 'solicitada' AND t.createdAt <= ? ORDER BY t.createdAt LIMIT 50", [hoursAgo(now, RETURN_HOURS)]).catch(skipMissing);
+    const due = await rows50(conn, "SELECT t.id, t.requestId, r.ownerId, o.businessUserId FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId WHERE t.status = 'solicitada' AND t.createdAt <= ? ORDER BY t.createdAt LIMIT 50", [hoursAgo(now, RETURN_HOURS)]).catch(skipMissing);
     let escalated = 0;
     for (const t of due) {
       const [changed2] = await conn.query("UPDATE `PartReturn` SET status = 'en_admin', escalatedAt = UTC_TIMESTAMP(3), escalationReason = 'El almac\xE9n no respondi\xF3 en 48 horas.' WHERE id = ? AND status = 'solicitada'", [t.id]).catch((err) => {
-        if (MISSING5.includes(String(err.code)))
+        if (MISSING6.includes(String(err.code)))
           return [{ affectedRows: 0 }];
         throw err;
       });
@@ -132215,7 +132391,7 @@ var CareDeadlines = class {
   }
   // ---------- P3: próxima visita propuesta por el taller ----------
   async visits(conn, now, result) {
-    const soon = await rows49(conn, "SELECT a.id, a.ownerId, a.status, a.scheduledAt, s.name AS shopName FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.summary LIKE 'Visita propuesta por el taller%' AND a.status IN ('pending','confirmed') AND a.scheduledAt > ? AND a.scheduledAt <= ? AND a.createdAt <= ? ORDER BY a.scheduledAt LIMIT 200", [now, new Date(now.getTime() + NEXT_VISIT_DAYS * 864e5), hoursAgo(now, 24)]);
+    const soon = await rows50(conn, "SELECT a.id, a.ownerId, a.status, a.scheduledAt, s.name AS shopName FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.summary LIKE 'Visita propuesta por el taller%' AND a.status IN ('pending','confirmed') AND a.scheduledAt > ? AND a.scheduledAt <= ? AND a.createdAt <= ? ORDER BY a.scheduledAt LIMIT 200", [now, new Date(now.getTime() + NEXT_VISIT_DAYS * 864e5), hoursAgo(now, 24)]);
     for (const a of soon) {
       const code5 = shortCode("C", String(a.id)), when15 = formatEcDateTime(a.scheduledAt);
       const text14 = a.status === "confirmed" ? `\u{1F4C5} Recordatorio: tu pr\xF3xima visita en ${String(a.shopName)} es el ${when15} (${code5}). Si no puedes ir, av\xEDsale al taller.` : `\u{1F4C5} ${String(a.shopName)} te propuso la pr\xF3xima visita para el ${when15} y todav\xEDa no respondes. Responde: Aceptar visita ${code5} \xB7 Rechazar visita ${code5}`;
@@ -132225,7 +132401,7 @@ var CareDeadlines = class {
   }
   // ---------- F3: reembolso decidido en un reclamo y sin registrar ----------
   async compensations(conn, now, result) {
-    const due = await rows49(conn, "SELECT c.id, c.compensationUsd, w.number, w.ownerId, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.compensationKind = 'reembolso' AND c.resolvedAt <= ? AND NOT EXISTS (SELECT 1 FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status IN ('reembolso_informado','reembolso_confirmado') AND p.createdAt >= c.resolvedAt) ORDER BY c.resolvedAt LIMIT 100", [hoursAgo(now, COMPENSATION_DAYS * 24)]).catch(skipMissing);
+    const due = await rows50(conn, "SELECT c.id, c.compensationUsd, w.number, w.ownerId, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.compensationKind = 'reembolso' AND c.resolvedAt <= ? AND NOT EXISTS (SELECT 1 FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status IN ('reembolso_informado','reembolso_confirmado') AND p.createdAt >= c.resolvedAt) ORDER BY c.resolvedAt LIMIT 100", [hoursAgo(now, COMPENSATION_DAYS * 24)]).catch(skipMissing);
     for (const c of due) {
       const code5 = workOrderCode(Number(c.number)), amount = formatUsd(Number(c.compensationUsd ?? 0));
       if (!await this.once(conn, String(c.shopUserId), `claim-comp:${String(c.id)}`, "care.claim", `\u23F0 Pasaron ${COMPENSATION_DAYS} d\xEDas desde que AutoMantPro decidi\xF3 el reclamo de ${code5} con un reembolso de ${amount} y todav\xEDa no est\xE1 registrado. Cuando lo devuelvas, escribe: Reembolso ${code5} | ${Number(c.compensationUsd ?? 0)} | forma (| referencia)`))
@@ -132236,7 +132412,7 @@ var CareDeadlines = class {
   }
   // ---------- R1: pedido de repuesto de una orden sin ofertas ----------
   async quietPartRequests(conn, now, result) {
-    const quiet = await rows49(conn, "SELECT r.id, r.ownerId, r.category, w.number FROM `LocalRequest` r JOIN `WorkOrder` w ON w.id = r.workOrderId WHERE r.kind = 'repuesto' AND r.status = 'open' AND r.createdAt <= ? AND r.expiresAt > ? AND NOT EXISTS (SELECT 1 FROM `LocalOffer` o WHERE o.requestId = r.id AND o.status <> 'invited') ORDER BY r.createdAt LIMIT 100", [hoursAgo(now, 24), now]).catch(skipMissing);
+    const quiet = await rows50(conn, "SELECT r.id, r.ownerId, r.category, w.number FROM `LocalRequest` r JOIN `WorkOrder` w ON w.id = r.workOrderId WHERE r.kind = 'repuesto' AND r.status = 'open' AND r.createdAt <= ? AND r.expiresAt > ? AND NOT EXISTS (SELECT 1 FROM `LocalOffer` o WHERE o.requestId = r.id AND o.status <> 'invited') ORDER BY r.createdAt LIMIT 100", [hoursAgo(now, 24), now]).catch(skipMissing);
     for (const r of quiet) {
       const ref4 = shortCode("S", String(r.id)), code5 = workOrderCode(Number(r.number));
       if (await this.once(conn, String(r.ownerId), `part-quiet:${String(r.id)}`, "local.request", `\u23F3 El pedido de repuesto ${ref4} (${String(r.category)}) para ${code5} lleva 24 horas sin ofertas. Puedes esperar a que venza o pedirlo de nuevo con m\xE1s detalle (marca, c\xF3digo o foto): Repuesto ${code5} | categor\xEDa | descripci\xF3n`))
@@ -132246,7 +132422,7 @@ var CareDeadlines = class {
   // ---------- X4: fecha prometida vencida ----------
   async promises(conn, now, result) {
     const today = new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
-    const due = await rows49(conn, "SELECT p.workOrderId, DATE_FORMAT(p.promisedDate, '%Y-%m-%d') AS promised, w.number, w.ownerId, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderPromise` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE p.promisedDate < ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY p.promisedDate LIMIT 200", [today]).catch(skipMissing);
+    const due = await rows50(conn, "SELECT p.workOrderId, DATE_FORMAT(p.promisedDate, '%Y-%m-%d') AS promised, w.number, w.ownerId, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderPromise` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE p.promisedDate < ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY p.promisedDate LIMIT 200", [today]).catch(skipMissing);
     for (const p of due) {
       const code5 = workOrderCode(Number(p.number)), key = `${String(p.workOrderId)}:${String(p.promised)}`;
       if (await this.once(conn, String(p.shopUserId), `promise-overdue:${key}`, "care.promise", `\u23F0 Venci\xF3 la fecha de entrega prometida (${String(p.promised)}) de ${code5} y la orden sigue abierta. Fija la nueva fecha con: Fecha entrega ${code5} | AAAA-MM-DD | motivo`)) {
@@ -132317,8 +132493,8 @@ function createJobScheduler(jobs2, options = {}) {
 init_apply();
 init_account_links();
 init_ads();
-import { randomUUID as randomUUID49 } from "node:crypto";
-var rows50 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomUUID as randomUUID50 } from "node:crypto";
+var rows51 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var isMissingSchema3 = (err) => ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"].includes(err.code ?? "");
 var AD_CAMPAIGN_KIND = "ad.campaign";
 var AdCampaignSender = class {
@@ -132333,7 +132509,7 @@ var AdCampaignSender = class {
     const conn = await this.connect();
     try {
       const dayStart = /* @__PURE__ */ new Date(`${ecuadorDate(now)}T05:00:00.000Z`);
-      const [count3] = await rows50(conn, "SELECT COUNT(*) AS n FROM `NotificationOutbox` WHERE kind = ? AND createdAt >= ? AND (lastError IS NULL OR lastError <> 'NO_PRIOR_CHAT')", [AD_CAMPAIGN_KIND, dayStart]);
+      const [count3] = await rows51(conn, "SELECT COUNT(*) AS n FROM `NotificationOutbox` WHERE kind = ? AND createdAt >= ? AND (lastError IS NULL OR lastError <> 'NO_PRIOR_CHAT')", [AD_CAMPAIGN_KIND, dayStart]);
       const queuedToday = Number(count3?.n ?? 0);
       const hour2 = ecuadorHour2(now);
       if (hour2 < AD_CAMPAIGN_HOURS.from || hour2 >= AD_CAMPAIGN_HOURS.to)
@@ -132341,11 +132517,11 @@ var AdCampaignSender = class {
       const batch = campaignBatchSize(cap, queuedToday, hour2);
       if (batch <= 0)
         return { queued: 0, cap, queuedToday, skipped: "cupo_lleno" };
-      const [backlog] = await rows50(conn, "SELECT COUNT(*) AS n FROM `NotificationOutbox` o WHERE o.kind <> ? AND o.status IN ('pending','sending') AND o.attempts < 5 AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND (o.lastError IS NULL OR o.lastError <> 'NO_PRIOR_CHAT') AND (o.recipientPhone IS NOT NULL OR EXISTS (SELECT 1 FROM `WhatsAppIdentity` i WHERE i.userId = o.recipientUserId))", [AD_CAMPAIGN_KIND]);
+      const [backlog] = await rows51(conn, "SELECT COUNT(*) AS n FROM `NotificationOutbox` o WHERE o.kind <> ? AND o.status IN ('pending','sending') AND o.attempts < 5 AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND (o.lastError IS NULL OR o.lastError <> 'NO_PRIOR_CHAT') AND (o.recipientPhone IS NOT NULL OR EXISTS (SELECT 1 FROM `WhatsAppIdentity` i WHERE i.userId = o.recipientUserId))", [AD_CAMPAIGN_KIND]);
       if (Number(backlog?.n ?? 0) > campaignBacklogLimit(this.env))
         return { queued: 0, cap, queuedToday, skipped: "cola_ocupada" };
       const today = ecuadorDate(now);
-      const ads = await rows50(conn, "SELECT id, businessName, title, body, city, zone FROM `AdCampaign` WHERE status IN ('aprobado','activo') AND startDate <= ? AND endDate >= ? AND FIND_IN_SET('whatsapp', formats) > 0 ORDER BY submittedAt, id LIMIT 20", [today, today]);
+      const ads = await rows51(conn, "SELECT id, businessName, title, body, city, zone FROM `AdCampaign` WHERE status IN ('aprobado','activo') AND startDate <= ? AND endDate >= ? AND FIND_IN_SET('whatsapp', formats) > 0 ORDER BY submittedAt, id LIMIT 20", [today, today]);
       if (!ads.length)
         return { queued: 0, cap, queuedToday, skipped: "sin_campanas" };
       const link = accountLink("promociones", this.env.PUBLIC_SITE_URL);
@@ -132365,7 +132541,7 @@ var AdCampaignSender = class {
           progressed = true;
           const at = new Date(now.getTime() + queued * spacingMs);
           const message2 = campaignMessage({ title: String(ad.title), body: String(ad.body), businessName: String(ad.businessName) }, link);
-          const result = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload, nextAttemptAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID49(), `ad:${String(ad.id)}:${String(next.id)}`, String(next.id), AD_CAMPAIGN_KIND, JSON.stringify({ message: message2 }), at]);
+          const result = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload, nextAttemptAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID50(), `ad:${String(ad.id)}:${String(next.id)}`, String(next.id), AD_CAMPAIGN_KIND, JSON.stringify({ message: message2 }), at]);
           if (Number(result[0]?.affectedRows ?? 0) === 1)
             queued++;
         }
@@ -132388,7 +132564,7 @@ var AdCampaignSender = class {
    */
   recipients(conn, ad, limit) {
     const zone = ad.zone ? " AND LOWER(TRIM(u.zone)) = LOWER(TRIM(?))" : "";
-    return rows50(conn, "SELECT u.id FROM `User` u JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE u.role = 'dueno' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND u.whatsappOptOutAt IS NULL AND u.adsOptInAt IS NOT NULL AND EXISTS (SELECT 1 FROM `InboundWebhook` w WHERE w.phone = i.phone) AND LOWER(TRIM(u.city)) = LOWER(TRIM(?))" + zone + " AND NOT EXISTS (SELECT 1 FROM `NotificationOutbox` o WHERE o.dedupKey = CONCAT('ad:', ?, ':', u.id)) ORDER BY u.createdAt, u.id LIMIT ?", ad.zone ? [ad.city, ad.zone, ad.id, limit] : [ad.city, ad.id, limit]);
+    return rows51(conn, "SELECT u.id FROM `User` u JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE u.role = 'dueno' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND u.whatsappOptOutAt IS NULL AND u.adsOptInAt IS NOT NULL AND EXISTS (SELECT 1 FROM `InboundWebhook` w WHERE w.phone = i.phone) AND LOWER(TRIM(u.city)) = LOWER(TRIM(?))" + zone + " AND NOT EXISTS (SELECT 1 FROM `NotificationOutbox` o WHERE o.dedupKey = CONCAT('ad:', ?, ':', u.id)) ORDER BY u.createdAt, u.id LIMIT ?", ad.zone ? [ad.city, ad.zone, ad.id, limit] : [ad.city, ad.id, limit]);
   }
 };
 
@@ -132450,14 +132626,14 @@ function soatSection(vehicles, now) {
 }
 
 // packages/api/dist/interfaces/fleet-panel/index.js
-var rows51 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows52 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 var km7 = (n3) => `${Math.round(n3).toLocaleString("es-EC")} km`;
 var token = external_exports.string().regex(/^[A-Za-z0-9_-]{32}$/);
 async function loadFleetPanel(value2, connect = openConnection) {
   const conn = await connect();
   try {
-    const [link] = await rows51(conn, "SELECT t.fleetId, t.userId, f.name, f.city FROM `FleetPanelToken` t JOIN `Fleet` f ON f.id = t.fleetId WHERE t.tokenHash = ? AND t.expiresAt > UTC_TIMESTAMP(3) AND f.status = 'activa'", [secretHash(value2)]);
+    const [link] = await rows52(conn, "SELECT t.fleetId, t.userId, f.name, f.city FROM `FleetPanelToken` t JOIN `Fleet` f ON f.id = t.fleetId WHERE t.tokenHash = ? AND t.expiresAt > UTC_TIMESTAMP(3) AND f.status = 'activa'", [secretHash(value2)]);
     if (!link)
       return null;
     const roles = await fleetRoles(conn, String(link.userId));
@@ -132465,9 +132641,9 @@ async function loadFleetPanel(value2, connect = openConnection) {
       return null;
     const fleetId = String(link.fleetId);
     const vehicles = await fleetSnapshot(conn, fleetId, /* @__PURE__ */ new Date(), String(link.city));
-    const months2 = (await rows51(conn, "SELECT DATE_FORMAT(DATE_SUB(spentAt, INTERVAL 5 HOUR), '%Y-%m') AS month, SUM(amountUsd) AS total FROM `VehicleExpense` WHERE fleetId = ? AND spentAt >= DATE_SUB(?, INTERVAL 5 MONTH) GROUP BY month ORDER BY month", [fleetId, ecMonthStart()])).map((m) => ({ month: String(m.month), total: Number(m.total) }));
-    const members = await rows51(conn, "SELECT m.id, m.name, m.role, m.status FROM `FleetMember` m WHERE m.fleetId = ? AND m.status <> 'removed' ORDER BY m.role, m.name", [fleetId]);
-    const agreements = await rows51(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status = 'activo' ORDER BY s.name", [fleetId]);
+    const months2 = (await rows52(conn, "SELECT DATE_FORMAT(DATE_SUB(spentAt, INTERVAL 5 HOUR), '%Y-%m') AS month, SUM(amountUsd) AS total FROM `VehicleExpense` WHERE fleetId = ? AND spentAt >= DATE_SUB(?, INTERVAL 5 MONTH) GROUP BY month ORDER BY month", [fleetId, ecMonthStart()])).map((m) => ({ month: String(m.month), total: Number(m.total) }));
+    const members = await rows52(conn, "SELECT m.id, m.name, m.role, m.status FROM `FleetMember` m WHERE m.fleetId = ? AND m.status <> 'removed' ORDER BY m.role, m.name", [fleetId]);
+    const agreements = await rows52(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status = 'activo' ORDER BY s.name", [fleetId]);
     return { fleet: { name: String(link.name), city: String(link.city) }, vehicles, months: months2, members, agreements, generatedAt: /* @__PURE__ */ new Date(), retiredCost: await retiredMonthCost(conn, fleetId, ecMonthStart()) };
   } finally {
     await conn.end().catch(() => void 0);
@@ -132745,15 +132921,15 @@ async function courseWebRoutes(app2, options = {}) {
   const send = (reply, request, title, body, status = 200) => reply.code(status).type("text/html; charset=utf-8").header("Cache-Control", "no-store").send(page2(title, body, nonce(request)));
   app2.get("/cursos", async (req2, reply) => {
     const q = req2.query;
-    let rows61 = [];
+    let rows62 = [];
     try {
       if (!options.store && missingDbEnv().length)
         return send(reply, req2, "Cursos", "<h1>Cursos</h1><p>Cat\xE1logo no disponible por el momento.</p>", 503);
-      rows61 = await store.listPublished({ especialidad: q.esp, nivel: q.nivel });
+      rows62 = await store.listPublished({ especialidad: q.esp, nivel: q.nivel });
     } catch {
       return send(reply, req2, "Cursos", "<h1>Cursos</h1><p>Cat\xE1logo no disponible por el momento.</p>", 503);
     }
-    const cards = rows61.map((c) => `<article><h2><a href="/cursos/${e3(c.slug)}">${e3(c.titulo)}</a></h2><p>${e3(c.especialidad)} \xB7 ${e3(c.nivel)} \xB7 ${e3(c.horas)} horas \xB7 ${c.precioUsd == null || c.precioUsd === 0 ? "Gratis" : `$${e3(c.precioUsd)} USD`}</p><p>Experto: ${e3(c.expertName)}</p>${c.altoVoltajeGas ? `<p class="notice">${e3(HIGH_VOLTAGE_GAS_NOTICE)}</p>` : ""}</article>`).join("");
+    const cards = rows62.map((c) => `<article><h2><a href="/cursos/${e3(c.slug)}">${e3(c.titulo)}</a></h2><p>${e3(c.especialidad)} \xB7 ${e3(c.nivel)} \xB7 ${e3(c.horas)} horas \xB7 ${c.precioUsd == null || c.precioUsd === 0 ? "Gratis" : `$${e3(c.precioUsd)} USD`}</p><p>Experto: ${e3(c.expertName)}</p>${c.altoVoltajeGas ? `<p class="notice">${e3(HIGH_VOLTAGE_GAS_NOTICE)}</p>` : ""}</article>`).join("");
     return send(reply, req2, "Cursos", `<h1>Cursos publicados</h1><form method="get"><label>Especialidad <input name="esp" value="${e3(q.esp ?? "")}"></label><label>Nivel <input name="nivel" value="${e3(q.nivel ?? "")}"></label><button>Filtrar</button></form>${cards || "<p>No hay cursos para estos filtros.</p>"}`);
   });
   app2.get("/cursos/:slug", async (req2, reply) => {
@@ -132836,9 +133012,9 @@ async function courseWebRoutes(app2, options = {}) {
     if (!s)
       return reply;
     try {
-      const rows61 = await store.studentCourses(s.userId);
+      const rows62 = await store.studentCourses(s.userId);
       const cards = [];
-      for (const r of rows61) {
+      for (const r of rows62) {
         const id3 = String(r.enrollmentId), lessons = await store.lessonRecords(String(r.courseId), id3), questions = await store.questionRecords(String(r.courseId));
         const qs = /* @__PURE__ */ new Map();
         for (const q of questions) {
@@ -132950,8 +133126,8 @@ async function expertRoutes(app2, options = {}) {
   const verified = async (request, reply) => {
     const conn = await openConnection();
     try {
-      const [rows61] = await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId=? AND verificationStatus='verificado' LIMIT 1", [request.userId]);
-      if (!Array.isArray(rows61) || !rows61.length)
+      const [rows62] = await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId=? AND verificationStatus='verificado' LIMIT 1", [request.userId]);
+      if (!Array.isArray(rows62) || !rows62.length)
         return reply.code(403).send({ data: null, error: { code: "EXPERT_NOT_VERIFIED" } });
     } finally {
       await conn.end().catch(() => void 0);
