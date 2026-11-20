@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='c5994262d8c806a06245dab36b0330e1cf105a19'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='3d5e5b70ca56e2c97c00ce3065e1aed14e392174'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -124371,7 +124371,7 @@ function renderOwner(root,d){
 async function fleetSend(command,b,after){if(b)b.disabled=true;try{const r=await api('/pilot/fleet/command',{method:'POST',body:JSON.stringify({command})});showResult(r.message);if(after)after(r);}catch(err){showResult(err.message);}finally{if(b)b.disabled=false;}}
 function fInput(label,attrs){return h('input',Object.assign({'aria-label':label,placeholder:label},attrs||{}));}
 function fForm(submit,label,...fields){const f=h('form',{class:'acts'});const b=h('button',{class:'ghost'},label);f.append(...fields,b);f.onsubmit=e=>{e.preventDefault();submit(b,f);};return f;}
-const PLATE_RE='[A-Za-z]{2,3}-?[0-9]{3,4}[A-Za-z]?';
+const PLATE_RE='[A-Za-z]{2,3}[- ]?[0-9]{3,4}[A-Za-z]?';
 const plateOf=v=>{const m=String(v).toUpperCase().replace(/\\s+/g,'').match(/^([A-Z]{2,3})-?([0-9]{3,4}[A-Z]?)$/);return m?m[1]+'-'+m[2]:String(v).toUpperCase();};
 function fleetVehicleForm(reload){const f=h('form',{});f.append(el('vehicleFormTpl').content.cloneNode(true));for(const x of f.querySelectorAll('[id]')){const old=x.id;x.id='fl_'+old;const lab=f.querySelector('label[for="'+old+'"]');if(lab)lab.htmlFor=x.id;}
  const plate=fInput('Placa (ABC-1234)',{required:true,pattern:PLATE_RE,maxlength:'9'});const unit=fInput('C\xF3digo de unidad (opcional)',{maxlength:'20'});const b=h('button',{class:'ghost full'},'Agregar a la flota');f.prepend(h('div',{class:'acts'},plate,unit));f.append(b);
@@ -124617,12 +124617,12 @@ function shopCashCard(d){if(!d.canManage)return null;const body=h('div',{class:'
   const f=h('form',{class:'acts'});const cat=h('select',{'aria-label':'Categor\xEDa del gasto'},...Object.entries(CASH_CATS).map(([k,v])=>h('option',{value:k,text:v})));const desc=h('input',{required:true,minlength:'3',maxlength:'160','aria-label':'Descripci\xF3n del gasto',placeholder:'Descripci\xF3n'});const amt=h('input',{type:'number',required:true,min:'0.01',step:'0.01','aria-label':'Monto en USD',placeholder:'Monto USD'});const day=h('input',{type:'date',required:true,value:x.today,max:x.today,'aria-label':'Fecha del gasto'});const save=h('button',{class:'primary'},'Registrar gasto');f.append(cat,desc,amt,day,save);
   f.onsubmit=async e=>{e.preventDefault();save.disabled=true;try{const r=await api('/pilot/cash/expenses',{method:'POST',body:JSON.stringify({category:cat.value,description:desc.value.trim(),amountUsd:Number(amt.value),spentOn:day.value})});showResult(r.message);fill(mon.value).catch(()=>{});}catch(err){showResult(err.message);save.disabled=false;}};
   const list=h('div',{class:'list'},...x.expenses.map(g=>h('div',{class:'row2'},h('span',{text:g.spentOn+' \xB7 '+(CASH_CATS[g.category]||g.category)+' \xB7 '+g.description+(g.voided?' \xB7 anulado'+(g.voidReason?': '+g.voidReason:''):'')}),h('span',{class:'chips'},h('span',{class:'pill',text:usd(g.amountUsd)}),g.voided?null:reasonBtn('Anular',async why=>{try{const r=await api('/pilot/cash/expenses/'+g.id+'/void',{method:'POST',body:JSON.stringify({reason:why})});showResult(r.message);fill(mon.value).catch(()=>{});}catch(err){showResult(err.message);}})))));
-  body.replaceChildren(mon,h('div',{class:'kpis'},t('Resultado de hoy',x.day),t('Resultado del mes',x.monthTotals),kpi(usd(x.monthTotals.incomeUsd),'Cobros del mes','ok'),kpi(usd(x.monthTotals.expensesUsd),'Gastos del mes',x.monthTotals.expensesUsd?'alert':'idle')),
+  body.replaceChildren(...[mon,h('div',{class:'kpis'},t('Resultado de hoy',x.day),t('Resultado del mes',x.monthTotals),kpi(usd(x.monthTotals.incomeUsd),'Cobros del mes','ok'),kpi(usd(x.monthTotals.expensesUsd),'Gastos del mes',x.monthTotals.expensesUsd?'alert':'idle')),
    x.monthTotals.refundsUsd?h('p',{class:'note',text:'Reembolsos del mes: '+usd(x.monthTotals.refundsUsd)}):null,
    x.byMethod.length?h('p',{class:'note',text:'Cobros por forma de pago: '+x.byMethod.map(m=>m.method+' '+usd(m.amountUsd)).join(' \xB7 ')}):null,
    x.byCategory.length?h('p',{class:'note',text:'Gastos por categor\xEDa: '+x.byCategory.map(m=>(CASH_CATS[m.category]||m.category)+' '+usd(m.amountUsd)).join(' \xB7 ')}):null,
    h('details',{},h('summary',{text:'Registrar un gasto'}),f),x.expenses.length?h('details',{},h('summary',{text:'Gastos del mes \xB7 '+x.expenses.length}),list):h('p',{class:'note',text:'Sin gastos registrados este mes.'}),
-   h('p',{class:'note',text:'Resultado = cobros confirmados \u2212 reembolsos \u2212 gastos. Es un control interno; no reemplaza tu contabilidad ni tus facturas.'}));
+   h('p',{class:'note',text:'Resultado = cobros confirmados \u2212 reembolsos \u2212 gastos. Es un control interno; no reemplaza tu contabilidad ni tus facturas.'})].filter(Boolean));
  }catch(err){body.replaceChildren(h('p',{class:'note',text:err.message}));}};
  body.append(h('p',{class:'note',text:'Gastos, cobros y utilidad del d\xEDa y del mes.'}),btn('Ver caja','ghost',ev=>{ev.currentTarget.disabled=true;body.replaceChildren(h('p',{class:'note',text:'Cargando la caja\u2026'}));fill(null).catch(()=>{});}));return c;}
 // CU1: cursos en el panel: cat\xE1logo, hacerse experto y, para el due\xF1o del taller, el avance de sus t\xE9cnicos.
