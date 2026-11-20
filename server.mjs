@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='6dcb221b7563e7beabee69103449f2ef7bc450db'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2e9e9cb334b7653b3adba1cf5d7c954844aeec92'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -63819,6 +63819,17 @@ var init_supply_statements = __esm({
   }
 });
 
+// packages/api/dist/infrastructure/schema-setup/walkin-statements.js
+var WALKIN_STATEMENTS;
+var init_walkin_statements = __esm({
+  "packages/api/dist/infrastructure/schema-setup/walkin-statements.js"() {
+    "use strict";
+    WALKIN_STATEMENTS = [
+      { kind: "addColumn", target: "VehicleCard.intake", sql: "ALTER TABLE `VehicleCard` ADD COLUMN `intake` JSON NULL" }
+    ];
+  }
+});
+
 // packages/api/dist/infrastructure/schema-setup/courses-statements.js
 var T3, COURSES_TABLES, COURSES_STATEMENTS;
 var init_courses_statements = __esm({
@@ -84858,6 +84869,7 @@ var init_apply = __esm({
     init_catalog_tariff_statements();
     init_recontact_statements();
     init_supply_statements();
+    init_walkin_statements();
     init_courses_statements();
     init_comprobante_statements();
     init_founder_statements();
@@ -84866,7 +84878,7 @@ var init_apply = __esm({
     init_vat_statements();
     init_operator_key_statements();
     init_ad_statements();
-    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...WORK_ORDER_RECORD_STATEMENTS, ...WORK_ORDER_CLAIM_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS, ...PART_ORDER_STATEMENTS, ...CATALOG_TARIFF_STATEMENTS, ...RECONTACT_STATEMENTS, ...SUPPLY_STATEMENTS, ...COMPROBANTE_STATEMENTS, ...FOUNDER_STATEMENTS, ...SHOP_COVER_STATEMENTS, ...PLAN_RECORD_STATEMENTS, ...VAT_STATEMENTS, ...OPERATOR_KEY_STATEMENTS, ...AD_STATEMENTS];
+    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...WORK_ORDER_RECORD_STATEMENTS, ...WORK_ORDER_CLAIM_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS, ...PART_ORDER_STATEMENTS, ...CATALOG_TARIFF_STATEMENTS, ...RECONTACT_STATEMENTS, ...SUPPLY_STATEMENTS, ...WALKIN_STATEMENTS, ...COMPROBANTE_STATEMENTS, ...FOUNDER_STATEMENTS, ...SHOP_COVER_STATEMENTS, ...PLAN_RECORD_STATEMENTS, ...VAT_STATEMENTS, ...OPERATOR_KEY_STATEMENTS, ...AD_STATEMENTS];
     EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...WORK_ORDER_RECORD_TABLES, ...WORK_ORDER_CLAIM_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES, ...PART_ORDER_TABLES, ...CATALOG_TARIFF_TABLES, ...RECONTACT_TABLES, ...SUPPLY_TABLES, ...COMPROBANTE_TABLES, ...FOUNDER_TABLES, ...OPERATOR_KEY_TABLES, ...AD_TABLES];
     DB_ENV = ["DB_HOST", "DB_PORT", "DB_NAME", "DB_USER", "DB_PASSWORD"];
     tableExists = (conn, table2) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?", [table2]);
@@ -92748,6 +92760,39 @@ ${await paymentInstructions(conn, created, catalog)}`;
   }
 });
 
+// packages/api/dist/infrastructure/messaging/walk-in.js
+function checkInCommand(appointmentRef, km10, intake) {
+  const damaged = Object.entries(intake.damages).map(([zone, text14]) => `${zone}: ${text14}`).join("; ");
+  return {
+    action: "checkIn",
+    appointmentRef,
+    km: km10,
+    fuel: intake.fuel,
+    condition: damaged || "Sin da\xF1os a la vista",
+    inventory: intake.items.join(", ").slice(0, 300) || "Sin inventario",
+    requested: intake.requested,
+    damages: intake.damages,
+    items: intake.items,
+    notes: intake.notes,
+    diagnosisFeeUsd: intake.diagnosisFeeUsd ?? null
+  };
+}
+function parseIntake(value2) {
+  if (!value2)
+    return null;
+  try {
+    const v = typeof value2 === "string" ? JSON.parse(value2) : value2;
+    return v && typeof v.requested === "string" && typeof v.fuel === "string" ? v : null;
+  } catch {
+    return null;
+  }
+}
+var init_walk_in = __esm({
+  "packages/api/dist/infrastructure/messaging/walk-in.js"() {
+    "use strict";
+  }
+});
+
 // packages/api/dist/infrastructure/messaging/vehicle-card-store.js
 import { createHash as createHash6, randomBytes as randomBytes3, randomUUID as randomUUID16 } from "node:crypto";
 function newSecretCode(prefix) {
@@ -92764,7 +92809,7 @@ function newSecretCode(prefix) {
     out += INVITE_ALPHABET[randomBytes3(1)[0] % 31];
   return `${prefix}-${out}`;
 }
-var rows17, fail5, hashCode, short2, SERVICES, serviceName, CARD_DAYS, ecDay2, PENDING_LIMIT, OWN_VEHICLE_LIMIT, FLEET_VEHICLE_LIMIT, secretHash, VehicleCardStore, need;
+var rows17, fail5, hashCode, short2, SERVICES, serviceName, CARD_DAYS, ecDay2, PENDING_LIMIT, OWN_VEHICLE_LIMIT, FLEET_VEHICLE_LIMIT, secretHash, MISSING4, isMissing, VehicleCardStore, need, cardLink;
 var init_vehicle_card_store = __esm({
   "packages/api/dist/infrastructure/messaging/vehicle-card-store.js"() {
     "use strict";
@@ -92776,6 +92821,7 @@ var init_vehicle_card_store = __esm({
     init_messages();
     init_fleet_access();
     init_vehicle_care_store();
+    init_walk_in();
     rows17 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     fail5 = (code5) => {
       throw new FleetAccessError(code5);
@@ -92790,12 +92836,14 @@ var init_vehicle_card_store = __esm({
     OWN_VEHICLE_LIMIT = 5;
     FLEET_VEHICLE_LIMIT = 50;
     secretHash = hashCode;
+    MISSING4 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
+    isMissing = (err) => MISSING4.includes(String(err.code));
     VehicleCardStore = class {
       care = new VehicleCareStore();
-      async execute(conn, phone, userId, role, command, publicNumber2, createOwner) {
+      async execute(conn, phone, userId, role, command, publicNumber3, createOwner) {
         switch (command.action) {
           case "createCard":
-            return this.create(conn, need(userId), role ?? "", command, publicNumber2);
+            return this.create(conn, need(userId), role ?? "", command, publicNumber3);
           case "listCards":
             return this.list(conn, need(userId), role ?? "");
           case "cancelCard":
@@ -92810,7 +92858,48 @@ var init_vehicle_card_store = __esm({
             return this.claim(conn, phone, userId, role, command, createOwner);
         }
       }
-      async create(conn, userId, role, command, publicNumber2) {
+      /**
+       * T1B: el taller recibe en la web un vehículo que llegó sin cita. Crea la ficha y guarda el ingreso; al aceptar la
+       * ficha el cliente, se abre la orden con ese ingreso (ver claim).
+       */
+      async receiveWalkIn(conn, userId, role, command, intake, publicNumber3) {
+        return this.create(conn, userId, role, command, publicNumber3, intake);
+      }
+      /** Fichas del taller que esperan al cliente (no vencidas), para el panel. */
+      async walkIns(conn, shopId) {
+        const list7 = await rows17(conn, "SELECT * FROM `VehicleCard` WHERE shopId = ? AND status = 'pending' AND expiresAt > UTC_TIMESTAMP(3) ORDER BY createdAt DESC LIMIT 30", [shopId]).catch((err) => {
+          if (isMissing(err))
+            return [];
+          throw err;
+        });
+        return list7.map((c) => {
+          const intake = parseIntake(c.intake);
+          return { id: String(c.id), plate: String(c.plate ?? ""), vehicle: `${String(c.make)} ${String(c.model)} ${String(c.year)}`, km: Number(c.currentKm), createdAt: c.createdAt, expiresAt: c.expiresAt, intake: !!intake, requested: intake ? intake.requested : null };
+        });
+      }
+      /** Nuevo enlace para una ficha pendiente: el código anterior deja de servir y el plazo vuelve a contar. */
+      async renewWalkInLink(conn, userId, role, cardId, publicNumber3) {
+        const shop = await this.care.actingShop(conn, userId, role);
+        const [card] = await rows17(conn, "SELECT id, make, model, year, plate FROM `VehicleCard` WHERE id = ? AND shopId = ? AND status = 'pending' AND expiresAt > UTC_TIMESTAMP(3) FOR UPDATE", [cardId, shop.id]);
+        if (!card)
+          fail5("CARD_NOT_FOUND_OR_EXPIRED");
+        const code5 = newSecretCode("F");
+        await conn.query("UPDATE `VehicleCard` SET codeHash = ?, expiresAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? DAY) WHERE id = ?", [hashCode(code5), CARD_DAYS, cardId]);
+        await this.audit(conn, userId, "taller", "card.link.renewed", "VehicleCard", cardId, { by: shop.actor });
+        const link = cardLink(publicNumber3, code5);
+        return { userId, cardId, code: code5, link, intakeSaved: true, message: `Nuevo enlace para ${String(card.make)} ${String(card.model)} (${String(card.plate)}). El anterior ya no sirve. Comp\xE1rtelo con el cliente: ${link ?? `que escriba al WhatsApp de AutoMantPro: Ficha ${code5}`}` };
+      }
+      /** El taller anula una ficha pendiente (W3). */
+      async cancelWalkIn(conn, userId, role, cardId) {
+        const shop = await this.care.actingShop(conn, userId, role);
+        const [card] = await rows17(conn, "SELECT id, plate FROM `VehicleCard` WHERE id = ? AND shopId = ? AND status = 'pending' FOR UPDATE", [cardId, shop.id]);
+        if (!card)
+          fail5("NOT_FOUND");
+        await conn.query("DELETE FROM `VehicleCard` WHERE id = ?", [cardId]);
+        await this.audit(conn, userId, "taller", "card.cancelled", "VehicleCard", cardId, { by: shop.actor });
+        return { userId, message: `Ficha de ${String(card.plate)} anulada. El enlace que compartiste ya no sirve.` };
+      }
+      async create(conn, userId, role, command, publicNumber3, intake = null) {
         const shop = await this.care.actingShop(conn, userId, role);
         if (String((await rows17(conn, "SELECT verificationStatus FROM `Shop` WHERE id = ?", [shop.id]))[0]?.verificationStatus) === "rejected")
           fail5("SHOP_REJECTED");
@@ -92825,18 +92914,28 @@ var init_vehicle_card_store = __esm({
         const code5 = newSecretCode("F");
         const services = [...new Set(ids)];
         await conn.query("INSERT INTO `VehicleCard` (id, codeHash, shopId, createdBy, plate, make, model, year, currentKm, vehicleClass, fuel, services, status, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? DAY))", [id3, hashCode(code5), shop.id, userId, command.plate, command.make, command.model, command.year, command.currentKm, command.vehicleClass, command.fuel, JSON.stringify(services), CARD_DAYS]);
-        await this.audit(conn, userId, "taller", "card.created", "VehicleCard", id3, { shopId: shop.id, by: shop.actor, services: services.length });
+        let intakeSaved = false;
+        if (intake) {
+          try {
+            await conn.query("UPDATE `VehicleCard` SET intake = ? WHERE id = ?", [JSON.stringify({ ...intake, receivedBy: userId }), id3]);
+            intakeSaved = true;
+          } catch (err) {
+            if (!isMissing(err))
+              throw err;
+          }
+        }
+        await this.audit(conn, userId, "taller", "card.created", "VehicleCard", id3, { shopId: shop.id, by: shop.actor, services: services.length, ...intake ? { walkIn: true, intakeSaved } : {} });
         const [verified] = await rows17(conn, "SELECT verificationStatus FROM `Shop` WHERE id = ?", [shop.id]);
         const label5 = `${command.make} ${command.model} ${command.year} (${command.plate})`;
         const text14 = `Ficha ${code5}`;
-        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${encodeURIComponent(text14)}` : null;
+        const link = cardLink(publicNumber3, code5);
         const until = new Date(Date.now() + CARD_DAYS * 864e5);
-        return { userId, message: [
+        return { userId, cardId: id3, code: code5, link, intakeSaved, message: [
           `Ficha ${code5} creada para ${label5}${services.length ? ` con ${services.map(serviceName).join(", ")} a los ${command.currentKm.toLocaleString("es-EC")} km` : ""}.`,
           `Reenv\xEDa este enlace al due\xF1o desde tu WhatsApp:
 ${link ?? `que escriba al WhatsApp de AutoMantPro: ${text14}`}`,
           `Al abrirlo ver\xE1 el veh\xEDculo y qu\xE9 acepta. Vence el ${ecDay2(until)}; si no la acepta, se borra.${verified?.verificationStatus === "verified" ? "" : " Tu taller sigue en verificaci\xF3n: se lo diremos al due\xF1o."}`,
-          `Cuando la acepte te enviaremos el c\xF3digo de cita para registrar el ingreso. Para ver tus fichas: Mis fichas`
+          intakeSaved ? `Guardamos el ingreso. Cuando el cliente acepte la ficha abrimos la orden con ese ingreso y te avisamos para enviar el presupuesto.` : `Cuando la acepte te enviaremos el c\xF3digo de cita para registrar el ingreso.${intake ? " El ingreso no se guard\xF3: falta que el equipo pulse \xABAplicar actualizaciones\xBB." : ""} Para ver tus fichas: Mis fichas`
         ].join("\n") };
       }
       /** The pending file for a code, locked. Expired files do not exist for the owner. */
@@ -92940,18 +93039,44 @@ ${list7.map((c) => `\u2022 ${c.plate} \xB7 ${c.make} ${c.model} ${c.year}: ${sta
         await this.audit(conn, actor, "dueno", "card.claimed", "VehicleCard", String(card.id), { vehicleId, shopId: card.shopId, consentVersion: CONSENT_VERSION, shopAccess: true, fleetId, newAccount: created, merged: !!existing });
         const label5 = `${card.make} ${card.model} ${card.year} (${card.plate})`;
         const visit = short2("C", appointmentId);
+        const orderCode2 = await this.openWalkInOrder(conn, card, visit);
         const shopNotice = `\u2705 El due\xF1o acept\xF3 la ficha de ${label5}${fleetName ? ` para la flota ${fleetName}` : ""}. Para registrar el ingreso ahora: Ingreso ${visit} | km | combustible | estado y da\xF1os | inventario | servicios a realizar \xB7 Para ver su plan: Plan ${visit}`;
+        const notice = orderCode2 ? `\u2705 El due\xF1o acept\xF3 la ficha de ${label5}${fleetName ? ` para la flota ${fleetName}` : ""}. Abrimos la orden ${orderCode2} con el ingreso que registraste y le enviamos la ficha de recepci\xF3n. Ya puedes enviar el presupuesto desde la orden en tu panel.` : shopNotice;
         for (const recipient of /* @__PURE__ */ new Set([String(card.shopUserId), String(card.createdBy)]))
-          await this.notify(conn, recipient, `cardclaimed:${String(card.id)}:${recipient}`, "card.claimed", shopNotice);
+          await this.notify(conn, recipient, `cardclaimed:${String(card.id)}:${recipient}`, orderCode2 ? "care.order" : "card.claimed", notice);
         const [vehicle] = await rows17(conn, "SELECT * FROM `Vehicle` WHERE id = ?", [vehicleId]);
         const plan = vehicle ? planSummaryFor(await this.care.planVehicle(conn, vehicle), await vehicleLevel(conn, vehicle)) : null;
         void phone;
         return { userId: actor, message: [
           `Listo${created && command.name ? `, ${command.name.split(/\s+/)[0]}` : ""}: ${existing ? "sumamos la ficha a" : "registramos"} tu ${label5}${fleetName ? ` en la flota ${fleetName}` : ""}.${created ? ` Tu cuenta de AutoMantPro qued\xF3 creada y aceptaste el tratamiento de datos (versi\xF3n ${CONSENT_VERSION}).` : ""}`,
           services.length ? `${card.shopName} registr\xF3 ${services.map(serviceName).join(", ")} a los ${Number(card.currentKm).toLocaleString("es-EC")} km y puede ver el historial de este veh\xEDculo.` : `${card.shopName} puede ver el historial de este veh\xEDculo.`,
+          orderCode2 ? `${card.shopName} ya registr\xF3 el ingreso del veh\xEDculo en la orden ${orderCode2}: te llega la ficha de recepci\xF3n para confirmarla. El presupuesto llega despu\xE9s y nada se hace sin tu aprobaci\xF3n.` : "",
           plan ?? "",
           `${fleetId ? "" : "\xBFQuieres recordatorios por aqu\xED cuando se acerque un servicio? Responde: Alertas s\xED\n"}Para quitarle el acceso al taller: Quitar taller ${command.cardCode}`
         ].filter(Boolean).join("\n\n") };
+      }
+      /**
+       * T1B: si el taller guardó el ingreso con la ficha, se abre la orden en el mismo momento en que el cliente acepta,
+       * a nombre de quien recibió el vehículo (o del dueño del taller si esa persona ya no está). Si no se puede (por
+       * ejemplo, el plan del taller no tiene cupo de órdenes), la ficha queda aceptada y el taller registra el ingreso a mano.
+       */
+      async openWalkInOrder(conn, card, visit) {
+        const intake = parseIntake(card.intake);
+        if (!intake)
+          return null;
+        const command = checkInCommand(visit, Number(card.currentKm), intake);
+        for (const actor of [.../* @__PURE__ */ new Set([String(card.createdBy), String(card.shopUserId)])]) {
+          await conn.query("SAVEPOINT walkin_order");
+          try {
+            const done = await this.care.execute(conn, actor, "taller", command, null);
+            await conn.query("RELEASE SAVEPOINT walkin_order");
+            return done.message.match(/OT-\d+/)?.[0] ?? null;
+          } catch (err) {
+            await conn.query("ROLLBACK TO SAVEPOINT walkin_order").catch(() => void 0);
+            await this.audit(conn, actor, "taller", "card.walkin.order_failed", "VehicleCard", String(card.id), { code: String(err.code ?? "ERROR") });
+          }
+        }
+        return null;
       }
       /** The owner withdraws the workshop's access to this vehicle; open work orders must close first. */
       async revoke(conn, userId, role, code5) {
@@ -92982,6 +93107,7 @@ ${list7.map((c) => `\u2022 ${c.plate} \xB7 ${c.make} ${c.model} ${c.year}: ${sta
       }
     };
     need = (userId) => userId ?? fail5("ACCOUNT_REQUIRED");
+    cardLink = (publicNumber3, code5) => publicNumber3 ? `https://wa.me/${publicNumber3}?text=${encodeURIComponent(`Ficha ${code5}`)}` : null;
   }
 });
 
@@ -93719,7 +93845,7 @@ var init_fleet_store = __esm({
     unitLabel = (v) => `${v.unitCode ? `${v.unitCode} ` : ""}${v.plate ?? ""}`.trim();
     FleetStore = class {
       care = new VehicleCareStore();
-      async execute(conn, phone, userId, role, command, publicNumber2, createOwner) {
+      async execute(conn, phone, userId, role, command, publicNumber3, createOwner) {
         if (command.action === "registerFleet")
           return this.register(conn, userId, role, command, createOwner);
         if (command.action === "joinFleet")
@@ -93756,7 +93882,7 @@ var init_fleet_store = __esm({
           case "fleetInvite":
             if (!admin && command.role !== "conductor")
               fail6("FORBIDDEN");
-            return this.invite(conn, me, fleet, command, publicNumber2);
+            return this.invite(conn, me, fleet, command, publicNumber3);
           case "removeFleetMember":
             return this.removeMember(conn, me, fleet, command.memberRef);
           case "assignVehicle":
@@ -93847,7 +93973,7 @@ Para asignarlo a un conductor: Asignar ${command.plate} | D-XXXXXX` };
           await this.notifyUnassigned(conn, driver, fleet, vehicle);
         return { userId, message: `${unitLabel(vehicle)} ${vehicle.make} ${vehicle.model} sali\xF3 de ${fleet.name}. Su historial y sus costos se conservan en los reportes de meses anteriores.` };
       }
-      async invite(conn, userId, fleet, command, publicNumber2) {
+      async invite(conn, userId, fleet, command, publicNumber3) {
         const count3 = await rows20(conn, "SELECT COUNT(*) AS n FROM `FleetMember` WHERE fleetId = ? AND status <> 'removed' FOR UPDATE", [fleet.fleetId]);
         if (Number(count3[0]?.n) >= MEMBER_LIMIT)
           fail6("MEMBER_LIMIT");
@@ -93856,7 +93982,7 @@ Para asignarlo a un conductor: Asignar ${command.plate} | D-XXXXXX` };
         await conn.query("INSERT INTO `FleetMember` (id, fleetId, userId, name, role, status, inviteHash, invitedBy) VALUES (?, ?, NULL, ?, ?, 'invited', ?, ?)", [id3, fleet.fleetId, command.name, command.role, secretHash(code5), userId]);
         await this.audit(conn, userId, "fleet.member.invited", "FleetMember", id3, { fleetId: fleet.fleetId, role: command.role });
         const text14 = `Unirme flota ${code5} | ${command.name} | ACEPTO`;
-        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${encodeURIComponent(text14)}` : null;
+        const link = publicNumber3 ? `https://wa.me/${publicNumber3}?text=${encodeURIComponent(text14)}` : null;
         const ref4 = short3("D", id3);
         const what = command.role === "conductor" ? "conductor (reportar\xE1 kilometraje, gastos y novedades del veh\xEDculo que le asignes)" : command.role === "supervisor" ? "supervisor (ver\xE1 la flota y aprobar\xE1 gastos hasta el l\xEDmite que fijes)" : "administrador de la flota";
         return { userId, message: `Listo. Comparte este enlace con ${command.name} para que se una a ${fleet.name} como ${what} desde su propio WhatsApp:
@@ -97423,7 +97549,7 @@ async function shopSupplies(conn, shopId) {
   try {
     return (await rows29(conn, "SELECT id, name, unit, stock, minStock, unitPriceUsd FROM `ShopSupply` WHERE shopId = ? ORDER BY (stock <= minStock) DESC, name LIMIT 100", [shopId])).map(item);
   } catch (err) {
-    if (isMissing(err))
+    if (isMissing2(err))
       return null;
     throw err;
   }
@@ -97432,7 +97558,7 @@ async function executeSupplyCommand(conn, userId, shop, command, deps) {
   try {
     return { userId, message: await run2(conn, userId, shop, command, deps) };
   } catch (err) {
-    if (isMissing(err))
+    if (isMissing2(err))
       deps.fail("FEATURE_UPDATE_PENDING");
     throw err;
   }
@@ -97506,14 +97632,14 @@ async function warnLow(conn, shop, supply, after, moveId, deps) {
   const ref4 = supplyRef(String(supply.id));
   await deps.notifyTeam(`supply-low:${moveId}`, `\u26A0\uFE0F ${shop.name}: quedan ${qtyText(after)} ${String(supply.unit)} de ${String(supply.name)} (${ref4}), en el m\xEDnimo de ${qtyText(num2(supply.minStock))} o debajo. Al reponer escribe: Entrada insumo ${ref4} | cantidad`);
 }
-var rows29, MISSING4, isMissing, supplyRef, prefixOf2, num2, qtyText, item, line;
+var rows29, MISSING5, isMissing2, supplyRef, prefixOf2, num2, qtyText, item, line;
 var init_supply_store = __esm({
   "packages/api/dist/infrastructure/messaging/supply-store.js"() {
     "use strict";
     init_workflow();
     rows29 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
-    MISSING4 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
-    isMissing = (err) => MISSING4.includes(String(err.code));
+    MISSING5 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
+    isMissing2 = (err) => MISSING5.includes(String(err.code));
     supplyRef = (id3) => `I-${id3.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf2 = (code5) => `${code5.slice(2).toLowerCase()}%`;
     num2 = (v) => Math.round(Number(v ?? 0) * 100) / 100;
@@ -97692,7 +97818,7 @@ var init_vehicle_care_store = __esm({
     };
     repairNoticeKey = (orderId) => `repair:${orderId}`;
     VehicleCareStore = class {
-      async execute(conn, userId, role, command, publicNumber2) {
+      async execute(conn, userId, role, command, publicNumber3) {
         switch (command.action) {
           case "plan":
             return this.ownerPlan(conn, userId, role, command.full, command.plate);
@@ -97729,7 +97855,7 @@ var init_vehicle_care_store = __esm({
           case "addTechnician":
           case "removeTechnician":
           case "shopTeam":
-            return this.technicians(conn, userId, role, command, publicNumber2);
+            return this.technicians(conn, userId, role, command, publicNumber3);
           case "referral":
             return this.referral(conn, userId, role, command.requestRef);
           case "finding":
@@ -99048,7 +99174,7 @@ Si no respondes en 24 horas, se toma como no aprobada.`);
         const comments = parsed.filter((p) => p.comment).slice(0, 3).map((p) => `"${p.comment}" (${p.score}/5)`);
         return { userId, message: [`\u2B50 Tu calificaci\xF3n: ${avg(parsed.map((p) => p.score))}/5 con ${parsed.length} calificaciones`, `Satisfacci\xF3n: ${Math.round(satisfied / parsed.length * 100)}% de clientes satisfechos (4 o 5)`, ...right !== null ? [`Pieza correcta: ${Math.round(right / parsed.length * 100)}%`] : [], ...lines, ...comments.length ? ["Comentarios recientes:", ...comments] : []].join("\n") };
       }
-      async technicians(conn, userId, role, command, publicNumber2) {
+      async technicians(conn, userId, role, command, publicNumber3) {
         const shop = await this.actingShop(conn, userId, role);
         if (command.action === "shopTeam") {
           if (!shop.isOwner && !shop.isAdmin)
@@ -99094,7 +99220,7 @@ Para quitar a alguien: Quitar t\xE9cnico T-XXXXXX` };
         await conn.query("INSERT INTO `ShopMember` (id, shopId, name, status, invitedBy, role) VALUES (?, ?, ?, 'invited', ?, ?)", [id3, shop.id, command.name, userId, command.role]);
         await this.audit(conn, userId, "care.technician.invited", "ShopMember", id3, { shopId: shop.id, by: shop.isOwner ? "dueno" : "admin" });
         const text14 = encodeURIComponent(`T\xE9cnico ${code5} | ${command.name} | ACEPTO`);
-        const link = publicNumber2 ? `https://wa.me/${publicNumber2}?text=${text14}` : null;
+        const link = publicNumber3 ? `https://wa.me/${publicNumber3}?text=${text14}` : null;
         return { userId, message: `Listo. Comparte este enlace con ${command.name} para que se una a ${shop.name} como ${command.role === "admin" ? "administrador (recibir\xE1 el reporte diario)" : "t\xE9cnico"} desde su propio WhatsApp:
 ${link ?? `escribe al WhatsApp de AutoMantPro: T\xE9cnico ${code5} | ${command.name} | ACEPTO`}
 Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Para quitarlo despu\xE9s: Quitar t\xE9cnico ${code5}` };
@@ -102398,7 +102524,7 @@ function sanitizeRef(ref4) {
     return null;
   return /^[A-Za-z0-9_-]{1,32}$/.test(ref4) ? ref4 : null;
 }
-function publicNumber() {
+function publicNumber2() {
   const digits = (process.env.WA_PUBLIC_NUMBER ?? "").replace(/\D/g, "");
   return digits.length >= 8 && digits.length <= 15 ? digits : null;
 }
@@ -102435,7 +102561,7 @@ async function effectiveNumber(options) {
     } catch {
     }
   }
-  return publicNumber();
+  return publicNumber2();
 }
 async function entryRoutes(app2, options = {}) {
   const marketing = options.marketingSite === void 0 ? marketingSite() : options.marketingSite;
@@ -113271,7 +113397,7 @@ var init_model_plans = __esm({
 });
 
 // packages/api/dist/infrastructure/admin/metrics-store.js
-var DAY3, num5, counts, MISSING7, MysqlMetricsStore;
+var DAY3, num5, counts, MISSING8, MysqlMetricsStore;
 var init_metrics_store = __esm({
   "packages/api/dist/infrastructure/admin/metrics-store.js"() {
     "use strict";
@@ -113280,7 +113406,7 @@ var init_metrics_store = __esm({
     DAY3 = 864e5;
     num5 = (value2) => Number(value2 ?? 0) || 0;
     counts = (r) => ({ total: num5(r?.total), last7: num5(r?.last7), last30: num5(r?.last30) });
-    MISSING7 = /* @__PURE__ */ new Set(["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"]);
+    MISSING8 = /* @__PURE__ */ new Set(["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"]);
     MysqlMetricsStore = class {
       connect;
       constructor(connect = () => openConnection()) {
@@ -113295,7 +113421,7 @@ var init_metrics_store = __esm({
           try {
             return await work();
           } catch (err) {
-            if (MISSING7.has(err.code ?? ""))
+            if (MISSING8.has(err.code ?? ""))
               return null;
             throw err;
           }
@@ -120761,7 +120887,7 @@ async function adminPanelRoutes(app2, options = {}) {
     requireSession,
     html,
     audit: audit6,
-    envNumber: publicNumber,
+    envNumber: publicNumber2,
     copilot: detailCopilot,
     onChanged: () => {
       platformCache = null;
@@ -123519,7 +123645,7 @@ function inspectionCard(x,forShop){if(!x)return card('Inspecci\xF3n por sistemas
  return card('Inspecci\xF3n por sistemas',ecDate(x.date,{day:'numeric',month:'short',year:'numeric'})+' \xB7 '+x.shopName,ul,x.note?h('p',{class:'note',text:'Nota del taller: '+x.note}):null);}
 function renderOwner(root,d){
  const r=d.recommendations;const v=d.vehicles.find(x=>x.id===d.vehicleId);
- if(!d.vehicles.length){if(d.fleet)root.append(fleetCard(d));root.append(card('Tu garaje',null,h('p',{class:'note',text:d.fleet?'No tienes veh\xEDculos propios. Si tienes uno, agr\xE9galo para calcular su plan de mantenimiento.':'Todav\xEDa no tienes veh\xEDculos. Agrega el primero para calcular tu plan de mantenimiento.'}),vehicleForm(),receiveVehicleBox()));return;}
+ if(!d.vehicles.length){if(d.fleet)root.append(fleetCard(d));root.append(card('Tu garaje',null,h('p',{class:'note',text:d.fleet?'No tienes veh\xEDculos propios. Si tienes uno, agr\xE9galo para calcular su plan de mantenimiento.':'Todav\xEDa no tienes veh\xEDculos. Agrega el primero para calcular tu plan de mantenimiento.'}),vehicleForm(),receiveVehicleBox(),acceptCardBox()));return;}
  if(d.fleet)root.append(anchor(fleetCard(d),'flota'));
  root.append(garage(d));
  if(d.sheet)root.append(sheetBoard(d.sheet,()=>loadPanel(generation,panelVehicle)));
@@ -123545,7 +123671,7 @@ function garage(d){const box=h('div',{class:'stack'});
  if(chosen&&!chosen.active)kids.push(abtn('Usar este veh\xEDculo en el chat','ghost',['Usar veh\xEDculo '+chosen.position]));
  const add=h('details',{},h('summary',{text:'Agregar veh\xEDculo'}));add.append(vehicleForm());kids.push(add);
  if(chosen&&!chosen.fleetName)kids.push(vehicleToolsBox(chosen));
- kids.push(receiveVehicleBox());
+ kids.push(receiveVehicleBox(),acceptCardBox());
  return card('Mi garaje',d.vehicles.length+(d.vehicles.length===1?' veh\xEDculo':' veh\xEDculos'),...kids);}
 function vehicleForm(){const f=h('form',{});f.append(el('vehicleFormTpl').content.cloneNode(true));f.append(h('button',{class:'ghost full'},'Agregar veh\xEDculo'));f.onsubmit=e=>{e.preventDefault();const q=id=>f.querySelector('#'+id).value.trim();if(!q('nvMake')||!q('nvModel')||!q('nvYear')||q('nvKm')===''){status('Completa marca, modelo, a\xF1o y kilometraje.');return;}void act(['Veh\xEDculo',q('nvClass'),q('nvFuel'),q('nvMake'),q('nvModel'),q('nvYear'),q('nvKm')],{btn:sub(e),ask:'\xBFAgregar el veh\xEDculo '+q('nvMake')+' '+q('nvModel')+' '+q('nvYear')+' a tu garaje?',ok:()=>{for(const id of ['nvMake','nvModel','nvYear','nvKm'])f.querySelector('#'+id).value='';}});};return f;}
 function nextDays(){const out=[];const now=new Date();for(let i=1;out.length<6&&i<14;i++){const d=new Date(now.getTime()+i*86400000);if(ecDate(d,{weekday:'short'}).startsWith('dom'))continue;out.push({value:ecDate(d,{weekday:'long',day:'numeric',month:'long'}),top:ecDate(d,{weekday:'short'}).replace('.',''),label:ecDate(d,{day:'numeric'})});}return out;}
@@ -123702,6 +123828,22 @@ function shopSuppliesCard(d){const list=d.supplies;if(!list)return null;const ma
   list.length?rowsEl:h('p',{class:'note',text:manage?'Agrega aceites, filtros y consumibles para llevar existencias y recibir un aviso antes de que se acaben.':'El due\xF1o del taller todav\xEDa no agreg\xF3 insumos.'}),
   manage?inlineAct('Agregar insumo',[{label:'Nombre (ej. Aceite 10W-30)',raw:true},{label:'Unidad (litro, unidad)'},{label:'Existencias',type:'number'},{label:'M\xEDnimo para avisar',type:'number'},{label:'Precio por unidad (opcional)',type:'number',optional:true}],v=>['Insumo',v[0],v[1],v[2],v[3],...(v[4]?[v[4]]:[])],'\xBFAgregar este insumo al inventario del taller?'):null,
   h('p',{class:'note',text:'Verde: con existencias \xB7 amarillo: en el m\xEDnimo \xB7 rojo: agotado. Al llegar al m\xEDnimo avisamos una vez al due\xF1o y a los administradores.'}));}
+function acceptCardBox(){const f=h('form',{class:'acts'});const code=h('input',{required:true,maxlength:'12','aria-label':'C\xF3digo de la ficha',placeholder:'C\xF3digo F-XXXXXXXX',autocomplete:'off'});const send=h('button',{class:'ghost'},'Aceptar ficha');f.append(code,send);f.onsubmit=e=>{e.preventDefault();let c=code.value.trim().toUpperCase().replace(/[^A-Z0-9-]/g,'');if(!c.startsWith('F-'))c='F-'+c;void act(['Ficha '+c,'ACEPTO'],{btn:sub(e),ask:'\xBFAceptar la ficha del taller? El veh\xEDculo pasa a tu garaje con el ingreso que registr\xF3 el taller y autorizas que ese taller lo atienda. Nada se hace ni se cobra sin que apruebes el presupuesto.',ok:()=>{code.value='';}});};return h('details',{},h('summary',{text:'Aceptar la ficha que te dio un taller'}),f);}
+function walkInLink(r){const box=h('div',{class:'acts'});box.append(h('p',{class:'note',text:r.message}));if(r.link){const copy=btn('Copiar enlace','ghost',async()=>{try{await navigator.clipboard.writeText(r.link);copy.textContent='Enlace copiado';}catch{showResult(r.link);}});box.append(h('a',{href:r.link,target:'_blank',rel:'noopener',class:'mono',text:r.link}),copy);}return box;}
+function walkInForm(){const key=crypto.randomUUID();const f=h('form',{class:'acts'});const plate=h('input',{required:true,maxlength:'10','aria-label':'Placa',placeholder:'Placa (ABC-1234)',autocomplete:'off'});const veh=el('vehicleFormTpl').content.cloneNode(true);const km=veh.querySelector('#nvKm');
+ const fuel=h('select',{required:true,'aria-label':'Combustible en el tanque'},h('option',{value:'',text:'Combustible en el tanque'}),...['reserva','1/4','1/2','3/4','lleno'].map(x=>h('option',{value:x,text:x})));const requested=h('input',{required:true,minlength:'3',maxlength:'500','aria-label':'Servicios solicitados',placeholder:'Servicios solicitados'});const zones=INTAKE_ZONE_LABELS.map(z=>({id:z[0],input:h('input',{maxlength:'80','aria-label':'Da\xF1os en '+z[1],placeholder:z[1]+': da\xF1o, si hay'})}));const items=INTAKE_ITEM_LABELS.map(x=>({id:x,input:h('input',{type:'checkbox','aria-label':x})}));const notes=h('input',{maxlength:'500','aria-label':'Observaciones',placeholder:'Observaciones (opcional)'});const fee=h('input',{type:'number',min:'0.01',max:'10000',step:'0.01',inputmode:'decimal','aria-label':'Valor del diagn\xF3stico',placeholder:'Diagn\xF3stico en USD (opcional)'});const send=h('button',{class:'primary'},'Guardar y crear ficha');
+ for(const x of veh.querySelectorAll('[id]')){x.dataset.f=x.id;x.removeAttribute('id');}for(const l of veh.querySelectorAll('label'))l.removeAttribute('for');
+ f.append(plate,veh,fuel,requested,...zones.map(z=>z.input),h('p',{class:'note',text:'Inventario que trae:'}),...items.map(i=>h('label',{class:'note'},i.input,' '+i.id)),notes,h('p',{class:'note',text:'Si cobras el diagn\xF3stico cuando el cliente no aprueba el presupuesto, escribe aqu\xED su valor. Solo se puede cobrar si lo avisas ahora.'}),fee,h('p',{class:'note',text:'No pedimos datos del cliente. Le compartes el enlace de la ficha; al aceptarla se abre la orden con este ingreso y pasas al presupuesto.'}),send);
+ f.onsubmit=async e=>{e.preventDefault();const q=n=>f.querySelector('[data-f="'+n+'"]').value.trim();if(!q('nvMake')||!q('nvModel')||!q('nvYear')||q('nvKm')===''){showResult('Completa marca, modelo, a\xF1o y kilometraje.');return;}if(!window.confirm('\xBFCrear la ficha de '+plate.value.trim().toUpperCase()+' con este ingreso? El cliente la acepta con el enlace que le compartas.'))return;send.disabled=true;const damages={};for(const z of zones)if(z.input.value.trim())damages[z.id]=z.input.value.trim();
+  try{const r=await api('/pilot/walk-in',{method:'POST',headers:{'Idempotency-Key':key},body:JSON.stringify({plate:plate.value.trim(),vehicleClass:q('nvClass'),vehicleFuel:q('nvFuel'),make:q('nvMake'),model:q('nvModel'),year:Number(q('nvYear')),km:Number(q('nvKm')),fuel:fuel.value,requested:requested.value.trim(),damages,items:items.filter(i=>i.input.checked).map(i=>i.id),notes:notes.value.trim()||null,diagnosisFeeUsd:fee.value?Number(fee.value):null})});f.replaceWith(walkInLink(r));loadPanel(generation,panelVehicle).catch(()=>{});}catch(err){showResult(err.message);send.disabled=false;}};return f;}
+function shopWalkInCard(d){if(!d.walkIns)return null;const list=d.walkIns;
+ const rowsEl=h('div',{class:'list'},...list.map(w=>{const acts=h('div',{class:'chips'});
+  const renew=btn('Nuevo enlace','ghost',async()=>{if(!window.confirm('\xBFCrear un nuevo enlace para '+w.plate+'? El anterior deja de servir.'))return;renew.disabled=true;try{const r=await api('/pilot/walk-in/'+w.id+'/link',{method:'POST',body:'{}'});acts.replaceWith(walkInLink(r));}catch(err){showResult(err.message);renew.disabled=false;}});
+  const cancel=btn('Anular','ghost',async()=>{if(!window.confirm('\xBFAnular la ficha de '+w.plate+'? El enlace que compartiste deja de servir.'))return;cancel.disabled=true;try{const r=await api('/pilot/walk-in/'+w.id+'/cancel',{method:'POST',body:'{}'});showResult(r.message);loadPanel(generation,panelVehicle).catch(()=>{});}catch(err){showResult(err.message);cancel.disabled=false;}});
+  if(d.canManage!==false)acts.append(renew,cancel);else acts.append(renew);
+  return h('div',{class:'line st-pronto'},h('div',{class:'who'},h('span',{class:'led st-pronto'}),h('div',{},h('b',{text:w.vehicle+' \xB7 '+w.plate}),h('small',{text:(w.intake?'Ingreso guardado':'Sin ingreso')+(w.requested?' \xB7 '+w.requested:'')+' \xB7 vence '+ecDate(w.expiresAt,{day:'numeric',month:'short'})}))),acts);}));
+ const add=h('details',{},h('summary',{text:'Recibir veh\xEDculo'}));add.append(walkInForm());
+ return card('Veh\xEDculos sin cita',list.length?list.length+(list.length===1?' espera al cliente':' esperan al cliente'):null,add,list.length?rowsEl:h('p',{class:'note',text:'Si llega un veh\xEDculo sin cita, reg\xEDstralo aqu\xED con su ingreso. El cliente acepta la ficha con un enlace y la orden se abre sola.'}));}
 function renderShop(root,d){
  if(d.canManage===false){for(const target of ['offerTools','appointmentTools']){for(const a of document.querySelectorAll('[data-menu-target="'+target+'"]'))a.remove();const tools=el(target);if(tools)tools.hidden=true;}}
  if(d.verificationStatus==='pending'||d.verificationStatus==='rejected')root.append(card('Tu taller',d.verificationStatus==='pending'?'En revisi\xF3n':'No aprobado',h('p',{class:'note',text:d.verificationStatus==='pending'?'Tu taller est\xE1 en revisi\xF3n: verificamos RUC y direcci\xF3n. Mientras tanto no apareces en la lista de talleres; te avisamos aqu\xED cuando est\xE9 listo.':'Tu taller no fue aprobado. Corrige tus datos y escribe al equipo para revisarlo de nuevo.'})));
@@ -123712,6 +123854,7 @@ function renderShop(root,d){
   d.canManage?abtn('Ver resumen del d\xEDa','ghost',['Resumen hoy']):null));
  if(d.rating)root.append(shopRatingCard(d.rating));
  {const ag=shopAgendaCard(d);if(ag)root.append(anchor(ag,'agenda'));}
+ {const wi=shopWalkInCard(d);if(wi)root.append(anchor(wi,'sin-cita'));}
  if(d.appointments?.length)root.append(anchor(shopAppointmentsCard(d),'citas'));
  if(d.orders?.length){const bar=ordersFilterBar(d);if(bar)root.append(bar);root.append(anchor(shopOrdersCard(ordersView(d)),'ordenes'));}
  if(d.partRequests&&d.partRequests.length)root.append(ownerRequestsCard(d,true));
@@ -126503,9 +126646,9 @@ init_fleet_access();
 init_workflow();
 init_contracts();
 var rows39 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
-var MISSING5 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
+var MISSING6 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
 var whenMissing3 = (value2) => (err) => {
-  if (MISSING5.includes(String(err.code)))
+  if (MISSING6.includes(String(err.code)))
     return value2;
   throw err;
 };
@@ -126574,7 +126717,7 @@ async function partMoneyFor(conn, userId, role) {
     }
     return out;
   } catch (err) {
-    if (MISSING5.includes(String(err.code)))
+    if (MISSING6.includes(String(err.code)))
       return [];
     throw err;
   }
@@ -126593,6 +126736,8 @@ init_recommendations();
 init_entitlements();
 init_fleet_access();
 init_vehicle_care_store();
+init_vehicle_card_store();
+init_whatsapp_number();
 init_shop_vehicle_access();
 init_order_technician_store();
 init_vehicle_transfer_cutoff();
@@ -126904,6 +127049,7 @@ async function shopRating(conn, ownerUserId) {
 var PilotPanelStore = class {
   connect;
   care = new VehicleCareStore();
+  cards = new VehicleCardStore();
   planOverrides = new VehiclePlanOverrideStore();
   constructor(connect = openConnection) {
     this.connect = connect;
@@ -126938,6 +127084,29 @@ var PilotPanelStore = class {
         const done = await this.care.execute(conn, userId, role, { action: "checkIn", appointmentRef: input.appointmentRef, km: input.km, fuel: input.fuel, condition: damaged || "Sin da\xF1os a la vista", inventory: input.items.join(", ").slice(0, 300) || "Sin inventario", requested: input.requested, damages: input.damages, items: input.items, notes: input.notes, diagnosisFeeUsd: input.diagnosisFeeUsd ?? null }, null);
         await conn.query("COMMIT");
         return { message: done.message };
+      } catch (err) {
+        await conn.query("ROLLBACK").catch(() => void 0);
+        throw err;
+      }
+    });
+  }
+  /** T1B: recibir en la web un vehículo que llegó sin cita (ficha pendiente del cliente con el ingreso). */
+  async receiveWalkIn(userId, role, card, intake) {
+    return this.inTransaction(async (conn) => this.cards.receiveWalkIn(conn, userId, role, card, intake, await publicNumber(conn)));
+  }
+  async renewWalkInLink(userId, role, cardId) {
+    return this.inTransaction(async (conn) => this.cards.renewWalkInLink(conn, userId, role, cardId, await publicNumber(conn)));
+  }
+  async cancelWalkIn(userId, role, cardId) {
+    return this.inTransaction(async (conn) => this.cards.cancelWalkIn(conn, userId, role, cardId));
+  }
+  async inTransaction(fn) {
+    return this.run(async (conn) => {
+      await conn.query("START TRANSACTION");
+      try {
+        const out = await fn(conn);
+        await conn.query("COMMIT");
+        return out;
       } catch (err) {
         await conn.query("ROLLBACK").catch(() => void 0);
         throw err;
@@ -127461,6 +127630,7 @@ var PilotPanelStore = class {
       agenda: await shopAgenda(conn, shop.id, now),
       indicators: shop.isOwner || shop.isAdmin ? await shopIndicators(conn, shop.id, now) : null,
       supplies: await shopSupplies(conn, shop.id),
+      walkIns: await this.cards.walkIns(conn, shop.id),
       today: today.map((a) => ({ ref: ref3("C", a.id), time: a.scheduledAt, vehicle: vehicleLabel2(a), plate: a.plate ? String(a.plate) : null, status: String(a.status) })),
       orders: orders.map((o) => ({ vatUsd: shopVat.get(String(o.id)) ?? 0, records: shopRecords.get(String(o.id)), vehicleId: vehicleOf2.get(String(o.id)), code: orderCode(o.number), status: String(o.status), statusText: SHOP_STATUS_TEXT[String(o.status)] ?? String(o.status), vehicle: vehicleLabel2(o), plate: o.plate ? String(o.plate) : null, totalUsd: Number(o.total ?? 0), waiting: Number(o.waiting) === 1, negotiation: String(o.status) === "rechazado" && o.rejectionReason ? String(o.rejectionReason) : null, asked: serviceNames2(askedByAppointment.get(String(o.appointmentId ?? "")) ?? []) })),
       reminders: reminders.slice(0, 8),
@@ -127549,8 +127719,13 @@ async function shopAppointmentsFor(conn, shopId, vehicleId) {
   const picked = await pickedOf(conn, list7.map((a) => String(a.id)));
   return list7.map((a) => ({ id: String(a.id), ref: `C-${String(a.id).replace(/-/g, "").slice(0, 6).toUpperCase()}`, scheduledAt: a.scheduledAt, planServiceIds: picked.get(String(a.id)) ?? [] }));
 }
+async function publicNumber(conn) {
+  const [setting] = await rows41(conn, "SELECT value FROM `AppSetting` WHERE name = ?", [WHATSAPP_NUMBER_KEY]);
+  return normalizeWhatsappNumber(String(setting?.value ?? process.env.WA_PUBLIC_NUMBER ?? ""));
+}
 
 // packages/api/dist/interfaces/local-agent.routes.js
+init_commands();
 init_error_messages();
 init_apply();
 init_rate_limit();
@@ -127859,6 +128034,55 @@ async function localAgentRoutes(app2, options = {}) {
       return reply.code(422).send({ data: null, error: { code: "INVALID_INTAKE", message: "Revisa los datos del ingreso." } });
     try {
       return { data: await idempotent(request.userId, request.headers["idempotency-key"], parsed.data, () => panel.registerIntake(request.userId, request.userRole, parsed.data)), error: null };
+    } catch (err) {
+      return error(err, reply);
+    }
+  });
+  app2.post("/pilot/walk-in", { preHandler: [pilot, authenticate] }, async (request, reply) => {
+    const parsed = external_exports.object({
+      plate: external_exports.string().trim().min(5).max(10),
+      vehicleClass: external_exports.string().max(40),
+      vehicleFuel: external_exports.string().max(40),
+      make: external_exports.string().trim().min(1).max(60),
+      model: external_exports.string().trim().min(1).max(60),
+      year: external_exports.number().int(),
+      km: external_exports.number().int().min(0).max(2e6),
+      fuel: external_exports.enum(["reserva", "1/4", "1/2", "3/4", "lleno"]),
+      requested: external_exports.string().trim().min(3).max(500),
+      damages: external_exports.record(external_exports.enum(INTAKE_ZONES), external_exports.string().trim().min(1).max(80)),
+      items: external_exports.array(external_exports.enum(INTAKE_ITEMS)).max(INTAKE_ITEMS.length),
+      notes: external_exports.string().trim().max(500).nullable(),
+      diagnosisFeeUsd: external_exports.number().positive().max(1e4).nullable().optional()
+    }).strict().safeParse(request.body);
+    const card = parsed.success ? accountCommandSchema.safeParse({ action: "createCard", plate: normalizePlate2(parsed.data.plate), vehicleClass: parsed.data.vehicleClass, fuel: parsed.data.vehicleFuel, make: parsed.data.make, model: parsed.data.model, year: parsed.data.year, currentKm: parsed.data.km, services: [] }) : null;
+    if (!parsed.success || !card?.success || card.data.action !== "createCard")
+      return reply.code(422).send({ data: null, error: { code: "INVALID_WALK_IN", message: "Revisa la placa, los datos del veh\xEDculo y el ingreso." } });
+    const b = parsed.data;
+    const intake = { fuel: b.fuel, requested: b.requested, damages: b.damages, items: b.items, notes: b.notes, diagnosisFeeUsd: b.diagnosisFeeUsd ?? null };
+    const cardCommand = card.data;
+    try {
+      return { data: await idempotent(request.userId, request.headers["idempotency-key"], b, () => panel.receiveWalkIn(request.userId, request.userRole, cardCommand, intake)), error: null };
+    } catch (err) {
+      return error(err, reply);
+    }
+  });
+  const walkInParam = external_exports.object({ id: external_exports.string().uuid() });
+  app2.post("/pilot/walk-in/:id/link", { preHandler: [pilot, authenticate] }, async (request, reply) => {
+    const params2 = walkInParam.safeParse(request.params);
+    if (!params2.success)
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    try {
+      return { data: await panel.renewWalkInLink(request.userId, request.userRole, params2.data.id), error: null };
+    } catch (err) {
+      return error(err, reply);
+    }
+  });
+  app2.post("/pilot/walk-in/:id/cancel", { preHandler: [pilot, authenticate] }, async (request, reply) => {
+    const params2 = walkInParam.safeParse(request.params);
+    if (!params2.success)
+      return reply.code(404).send({ data: null, error: { code: "NOT_FOUND" } });
+    try {
+      return { data: await panel.cancelWalkIn(request.userId, request.userRole, params2.data.id), error: null };
     } catch (err) {
       return error(err, reply);
     }
@@ -129932,7 +130156,7 @@ async function contentRoutes(app2, options = {}) {
         return digits;
     } catch {
     }
-    return publicNumber();
+    return publicNumber2();
   }
   async function visitCode(ref4, userAgent) {
     const code5 = await uniqueVisitCode(options.codeTaken);
@@ -130152,7 +130376,7 @@ async function landingRoutes(app2, options = {}) {
         return digits;
     } catch {
     }
-    return publicNumber();
+    return publicNumber2();
   }
   async function visitCode(ref4, profile, userAgent) {
     const code5 = await uniqueVisitCode(options.codeTaken);
@@ -131141,7 +131365,7 @@ async function mapRoutes(app2, options = {}) {
         return digits;
     } catch {
     }
-    return publicNumber();
+    return publicNumber2();
   }
   app2.get(LEAFLET_PATH, async (_request, reply) => reply.header("Cache-Control", "public, max-age=31536000, immutable").header("X-Content-Type-Options", "nosniff").header("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'").type("application/javascript; charset=utf-8").send(LEAFLET_JS));
   app2.get("/mapa/portada/:id", async (request, reply) => {
@@ -131226,7 +131450,7 @@ async function plansPageRoutes(app2, options = {}) {
         return digits;
     } catch {
     }
-    return publicNumber();
+    return publicNumber2();
   }
   async function catalog() {
     try {
@@ -132267,9 +132491,9 @@ var BALANCE_DAYS = [3, 7];
 var RETURN_HOURS = 48;
 var NEXT_VISIT_DAYS = 7;
 var rows50 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
-var MISSING6 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
+var MISSING7 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
 var skipMissing = (err) => {
-  if (MISSING6.includes(String(err.code)))
+  if (MISSING7.includes(String(err.code)))
     return [];
   throw err;
 };
@@ -132373,7 +132597,7 @@ var CareDeadlines = class {
     let escalated = 0;
     for (const t of due) {
       const [changed2] = await conn.query("UPDATE `PartReturn` SET status = 'en_admin', escalatedAt = UTC_TIMESTAMP(3), escalationReason = 'El almac\xE9n no respondi\xF3 en 48 horas.' WHERE id = ? AND status = 'solicitada'", [t.id]).catch((err) => {
-        if (MISSING6.includes(String(err.code)))
+        if (MISSING7.includes(String(err.code)))
           return [{ affectedRows: 0 }];
         throw err;
       });
