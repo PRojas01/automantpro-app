@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2c2a9e93a4f5b5bbf520678368c348bcd6d88d96'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2de2aa4729c99963345d996d76b563af0936420a'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -90112,7 +90112,7 @@ async function lockShopCapacity(conn, shopId) {
   return Number(shop.appointmentCapacity ?? 1);
 }
 async function overlaps(conn, shopId, start, durationMin, capacity, excludeId) {
-  const matches = await rows11(conn, "SELECT a.id FROM `Appointment` a LEFT JOIN `LocalOffer` o ON o.id = a.localOfferId WHERE a.shopId = ? AND a.status NOT IN ('cancelled','rejected') AND (? IS NULL OR a.id <> ?) AND a.scheduledAt < DATE_ADD(?, INTERVAL ? MINUTE) AND DATE_ADD(a.scheduledAt, INTERVAL COALESCE(o.durationMin, 60) MINUTE) > ? FOR UPDATE", [shopId, excludeId ?? null, excludeId ?? null, start, durationMin, start]);
+  const matches = await rows11(conn, "SELECT a.id FROM `Appointment` a LEFT JOIN `LocalOffer` o ON o.id = a.localOfferId WHERE a.shopId = ? AND a.status NOT IN ('cancelled','rejected','completed') AND (? IS NULL OR a.id <> ?) AND a.scheduledAt < DATE_ADD(?, INTERVAL ? MINUTE) AND DATE_ADD(a.scheduledAt, INTERVAL COALESCE(o.durationMin, 60) MINUTE) > ? FOR UPDATE", [shopId, excludeId ?? null, excludeId ?? null, start, durationMin, start]);
   return matches.length >= capacity;
 }
 function clock(date2) {
@@ -90147,7 +90147,35 @@ function formatAgendaDate(value2) {
   const date2 = value2 instanceof Date ? value2 : new Date(String(value2));
   return Number.isNaN(date2.getTime()) ? "\u2014" : clock(date2);
 }
-var rows11, AppointmentCapacityError;
+function ecYmd(date2) {
+  return new Date(date2.getTime() - 5 * 36e5).toISOString().slice(0, 10);
+}
+async function shopAgenda(conn, shopId, now = /* @__PURE__ */ new Date(), days2 = 7) {
+  const [shop] = await rows11(conn, "SELECT appointmentCapacity FROM `Shop` WHERE id = ?", [shopId]);
+  const capacity = Math.max(1, Number(shop?.appointmentCapacity ?? 1));
+  const first = ecYmd(now);
+  const from = parseEcDateTime(first, "00:00");
+  const to = new Date(from.getTime() + days2 * 864e5);
+  const booked = await rows11(conn, "SELECT a.id, a.scheduledAt, a.status, COALESCE(o.durationMin, 60) AS durationMin, v.make, v.model, v.year FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId LEFT JOIN `LocalOffer` o ON o.id = a.localOfferId WHERE a.shopId = ? AND a.status NOT IN ('cancelled','rejected','completed') AND a.scheduledAt < ? AND DATE_ADD(a.scheduledAt, INTERVAL COALESCE(o.durationMin, 60) MINUTE) > ? ORDER BY a.scheduledAt LIMIT 500", [shopId, to, from]);
+  const spans = booked.map((b) => {
+    const start = new Date(b.scheduledAt);
+    return { start: start.getTime(), end: start.getTime() + Number(b.durationMin) * 6e4, item: { ref: `C-${String(b.id).replace(/-/g, "").slice(0, 6).toUpperCase()}`, vehicle: `${String(b.make)} ${String(b.model)} ${String(b.year)}`, status: String(b.status), time: clock(start) } };
+  });
+  const result = [];
+  for (let d = 0; d < days2; d++) {
+    const date2 = ecYmd(new Date(from.getTime() + d * 864e5 + 12 * 36e5));
+    const slots = [];
+    for (let hour2 = AGENDA_OPEN; hour2 < AGENDA_CLOSE; hour2++) {
+      const at = parseEcDateTime(date2, `${String(hour2).padStart(2, "0")}:00`).getTime();
+      const end = at + 36e5;
+      const inSlot = spans.filter((s) => s.start < end && s.end > at);
+      slots.push({ time: `${String(hour2).padStart(2, "0")}:00`, used: inSlot.length, past: end <= now.getTime(), items: inSlot.filter((s) => s.start >= at && s.start < end).map((s) => s.item) });
+    }
+    result.push({ date: date2, slots });
+  }
+  return { capacity, days: result };
+}
+var rows11, AppointmentCapacityError, AGENDA_OPEN, AGENDA_CLOSE;
 var init_appointment_capacity = __esm({
   "packages/api/dist/infrastructure/messaging/appointment-capacity.js"() {
     "use strict";
@@ -90163,6 +90191,8 @@ var init_appointment_capacity = __esm({
         this.suggestions = suggestions;
       }
     };
+    AGENDA_OPEN = 8;
+    AGENDA_CLOSE = 18;
   }
 });
 
@@ -123398,6 +123428,23 @@ function shopAppointmentsCard(d){const list=h('div',{class:'list'});for(const a 
   if(a.status==='pending'&&!a.proposed&&!a.hasOrder)acts.append(abtn('Confirmar cita','primary',['Confirmar '+a.ref],'\xBFConfirmar esta cita? Se avisar\xE1 al due\xF1o.'));
   list.append(h('div',{class:'line st-'+(a.status==='confirmed'?'al_dia':'pronto')},h('div',{},h('b',{text:a.vehicle}),h('small',{class:'mono',text:a.ref+' \xB7 '+ecDate(a.time,{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' \xB7 '+(a.proposed?'Espera la respuesta del due\xF1o':a.status==='confirmed'?'Confirmada':'Por confirmar')}),a.planPicked&&a.planPicked.length?h('small',{text:'Del plan, marcado por el due\xF1o: '+a.planPicked.join(', ')}):a.planBrief?h('small',{text:a.planBrief}):null)),acts);}
  return card('Citas por atender',d.appointments.length+(d.appointments.length===1?' cita':' citas'),list);}
+// B3: agenda visual del taller. Ocupaci\xF3n por hora con los cupos simult\xE1neos; en una hora libre se propone al due\xF1o
+// el horario de una cita pendiente (\xABReprogramar cita\xBB, \xE9l la acepta). Las citas completadas liberan su cupo.
+let agendaDay=0;
+function shopAgendaCard(d){const ag=d.agenda;if(!ag||!ag.days||!ag.days.length)return null;if(agendaDay>=ag.days.length)agendaDay=0;
+ const movable=(d.appointments||[]).filter(a=>!a.hasOrder&&!a.proposed&&(a.status==='pending'||a.status==='confirmed'));
+ const wrap=h('div',{});const draw=()=>{wrap.replaceChildren();const day=ag.days[agendaDay];
+  wrap.append(h('div',{class:'chips'},...ag.days.map((x,i)=>btn(ecDate(x.date+'T12:00:00-05:00',{weekday:'short',day:'numeric'}),i===agendaDay?'primary':'ghost',()=>{agendaDay=i;draw();}))));
+  const busy=day.slots.filter(x=>x.used>0).length;
+  wrap.append(h('p',{class:'summary'},busy?busy+(busy===1?' hora con citas':' horas con citas')+' \xB7 cupos: '+ag.capacity+' a la vez':'Sin citas este d\xEDa \xB7 cupos: '+ag.capacity+' a la vez'));
+  const list=h('div',{class:'list'});
+  for(const x of day.slots){if(x.past&&!x.used)continue;const full=x.used>=ag.capacity;const st=x.used===0?'al_dia':full?'urgente':'pronto';
+   const acts=h('div',{class:'chips'});
+   if(!x.past&&!full&&d.canManage!==false&&movable.length)acts.append(btn('Asignar aqu\xED','ghost',ev=>{const box=h('div',{class:'chips'},...movable.map(a=>abtn(a.ref+' \xB7 '+a.vehicle,'ghost',['Reprogramar cita '+a.ref,day.date,x.time],'\xBFProponer al due\xF1o la cita '+a.ref+' para el '+ecDate(day.date+'T12:00:00-05:00',{weekday:'long',day:'numeric',month:'long'})+' a las '+x.time+'? \xC9l deber\xE1 aceptarla.')));ev.currentTarget.replaceWith(box);}));
+   list.append(h('div',{class:'line st-'+st},h('div',{class:'who'},h('span',{class:'time',text:x.time}),h('div',{},h('b',{text:x.used===0?'Libre':full?'Lleno ('+x.used+' de '+ag.capacity+')':x.used+' de '+ag.capacity+' ocupados'}),...x.items.map(i=>h('small',{class:'mono',text:i.ref+' \xB7 '+i.time+' \xB7 '+i.vehicle+' \xB7 '+(i.status==='confirmed'?'Confirmada':'Por confirmar')})))),acts));}
+  wrap.append(list);};
+ draw();
+ return card('Agenda del taller','Pr\xF3ximos 7 d\xEDas',wrap,d.canManage!==false?inlineAct('Cambiar cupos',[{label:'Veh\xEDculos que atiendes a la vez',type:'number'}],v=>['Cupos',v[0]],'\xBFCambiar cu\xE1ntos veh\xEDculos atiendes a la vez? Se usa para ofrecer horarios.'):null,h('p',{class:'note',text:'Verde: libre \xB7 amarillo: con cupo \xB7 rojo: lleno. Al cerrar la orden o completar la visita, su hora se libera.'}));}
 function renderShop(root,d){
  if(d.canManage===false){for(const target of ['offerTools','appointmentTools']){for(const a of document.querySelectorAll('[data-menu-target="'+target+'"]'))a.remove();const tools=el(target);if(tools)tools.hidden=true;}}
  if(d.verificationStatus==='pending'||d.verificationStatus==='rejected')root.append(card('Tu taller',d.verificationStatus==='pending'?'En revisi\xF3n':'No aprobado',h('p',{class:'note',text:d.verificationStatus==='pending'?'Tu taller est\xE1 en revisi\xF3n: verificamos RUC y direcci\xF3n. Mientras tanto no apareces en la lista de talleres; te avisamos aqu\xED cuando est\xE9 listo.':'Tu taller no fue aprobado. Corrige tus datos y escribe al equipo para revisarlo de nuevo.'})));
@@ -123407,6 +123454,7 @@ function renderShop(root,d){
   d.today.length?h('div',{class:'list'},...d.today.map(a=>{const st=a.status==='confirmed'?'al_dia':'pronto';return h('div',{class:'line st-'+st},h('div',{class:'who'},h('span',{class:'time',text:ecDate(a.time,{hour:'2-digit',minute:'2-digit'})}),h('div',{},h('b',{text:a.vehicle}),h('small',{class:'mono',text:a.ref+(a.plate?' \xB7 '+a.plate:'')}))),h('span',{class:'pill'},st==='al_dia'?'Confirmada':'Por confirmar'));})):h('p',{class:'note',text:'No hay citas para hoy.'}),
   d.canManage?abtn('Ver resumen del d\xEDa','ghost',['Resumen hoy']):null));
  if(d.rating)root.append(shopRatingCard(d.rating));
+ {const ag=shopAgendaCard(d);if(ag)root.append(anchor(ag,'agenda'));}
  if(d.appointments?.length)root.append(anchor(shopAppointmentsCard(d),'citas'));
  if(d.orders?.length){const bar=ordersFilterBar(d);if(bar)root.append(bar);root.append(anchor(shopOrdersCard(ordersView(d)),'ordenes'));}
  if(d.partRequests&&d.partRequests.length)root.append(ownerRequestsCard(d,true));
@@ -126078,6 +126126,7 @@ function registerPilotExtrasRoutes(app2, deps) {
 }
 
 // packages/api/dist/infrastructure/messaging/pilot-panel-store.js
+init_appointment_capacity();
 init_record_photos();
 
 // packages/api/dist/infrastructure/messaging/plan-records.js
@@ -127142,6 +127191,7 @@ var PilotPanelStore = class {
       rating: shop.isOwner || shop.isAdmin ? await shopRating(conn, shop.ownerUserId) : null,
       kpis: { appointmentsToday, openOrders, budgetsWaiting, clientsDue: reminders.length },
       appointments,
+      agenda: await shopAgenda(conn, shop.id, now),
       today: today.map((a) => ({ ref: ref3("C", a.id), time: a.scheduledAt, vehicle: vehicleLabel2(a), plate: a.plate ? String(a.plate) : null, status: String(a.status) })),
       orders: orders.map((o) => ({ vatUsd: shopVat.get(String(o.id)) ?? 0, records: shopRecords.get(String(o.id)), vehicleId: vehicleOf2.get(String(o.id)), code: orderCode(o.number), status: String(o.status), statusText: SHOP_STATUS_TEXT[String(o.status)] ?? String(o.status), vehicle: vehicleLabel2(o), plate: o.plate ? String(o.plate) : null, totalUsd: Number(o.total ?? 0), waiting: Number(o.waiting) === 1, negotiation: String(o.status) === "rechazado" && o.rejectionReason ? String(o.rejectionReason) : null, asked: serviceNames2(askedByAppointment.get(String(o.appointmentId ?? "")) ?? []) })),
       reminders: reminders.slice(0, 8),
