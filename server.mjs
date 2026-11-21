@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='a0d2a72d980c073d0ff3ac810318c39ad6d47980'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='00be5da86ddbb9a5563d1214c20e016670ff4fc9'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -6445,11 +6445,11 @@ var require_caller = __commonJS({
       }
       const entries = stack.slice(2);
       const fileNames = [];
-      for (const entry of entries) {
-        if (!entry) {
+      for (const entry2 of entries) {
+        if (!entry2) {
           continue;
         }
-        fileNames.push(entry.getFileName());
+        fileNames.push(entry2.getFileName());
       }
       return fileNames;
     };
@@ -13655,13 +13655,13 @@ var require_context = __commonJS({
       this.server = server;
     }
     function defaultSchemaErrorFormatter(errors, dataVar) {
-      let text15 = "";
+      let text16 = "";
       const separator = ", ";
       for (let i = 0; i !== errors.length; ++i) {
         const e9 = errors[i];
-        text15 += dataVar + (e9.instancePath || "") + " " + e9.message + separator;
+        text16 += dataVar + (e9.instancePath || "") + " " + e9.message + separator;
       }
-      return new Error(text15.slice(0, -separator.length));
+      return new Error(text16.slice(0, -separator.length));
     }
     module.exports = Context;
   }
@@ -13674,20 +13674,20 @@ var require_secure_json_parse = __commonJS({
     var hasBuffer = typeof Buffer !== "undefined";
     var suspectProtoRx = /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
     var suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
-    function _parse(text15, reviver, options) {
+    function _parse(text16, reviver, options) {
       if (options == null) {
         if (reviver !== null && typeof reviver === "object") {
           options = reviver;
           reviver = void 0;
         }
       }
-      if (hasBuffer && Buffer.isBuffer(text15)) {
-        text15 = text15.toString();
+      if (hasBuffer && Buffer.isBuffer(text16)) {
+        text16 = text16.toString();
       }
-      if (text15 && text15.charCodeAt(0) === 65279) {
-        text15 = text15.slice(1);
+      if (text16 && text16.charCodeAt(0) === 65279) {
+        text16 = text16.slice(1);
       }
-      const obj = JSON.parse(text15, reviver);
+      const obj = JSON.parse(text16, reviver);
       if (obj === null || typeof obj !== "object") {
         return obj;
       }
@@ -13697,15 +13697,15 @@ var require_secure_json_parse = __commonJS({
         return obj;
       }
       if (protoAction !== "ignore" && constructorAction !== "ignore") {
-        if (suspectProtoRx.test(text15) === false && suspectConstructorRx.test(text15) === false) {
+        if (suspectProtoRx.test(text16) === false && suspectConstructorRx.test(text16) === false) {
           return obj;
         }
       } else if (protoAction !== "ignore" && constructorAction === "ignore") {
-        if (suspectProtoRx.test(text15) === false) {
+        if (suspectProtoRx.test(text16) === false) {
           return obj;
         }
       } else {
-        if (suspectConstructorRx.test(text15) === false) {
+        if (suspectConstructorRx.test(text16) === false) {
           return obj;
         }
       }
@@ -13743,21 +13743,21 @@ var require_secure_json_parse = __commonJS({
       }
       return obj;
     }
-    function parse2(text15, reviver, options) {
+    function parse2(text16, reviver, options) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       try {
-        return _parse(text15, reviver, options);
+        return _parse(text16, reviver, options);
       } finally {
         Error.stackTraceLimit = stackTraceLimit;
       }
     }
-    function safeParse(text15, reviver) {
+    function safeParse(text16, reviver) {
       const { stackTraceLimit } = Error;
       Error.stackTraceLimit = 0;
       let result;
       try {
-        result = _parse(text15, reviver, { safe: true });
+        result = _parse(text16, reviver, { safe: true });
       } catch {
         result = void 0;
       } finally {
@@ -18772,7 +18772,7 @@ var require_core = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e9) => `${dataVar}${e9.instancePath} ${e9.message}`).reduce((text15, msg) => text15 + separator + msg);
+        return errors.map((e9) => `${dataVar}${e9.instancePath} ${e9.message}`).reduce((text16, msg) => text16 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -29867,7 +29867,7 @@ var require_core3 = __commonJS({
       errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
         if (!errors || errors.length === 0)
           return "No errors";
-        return errors.map((e9) => `${dataVar}${e9.instancePath} ${e9.message}`).reduce((text15, msg) => text15 + separator + msg);
+        return errors.map((e9) => `${dataVar}${e9.instancePath} ${e9.message}`).reduce((text16, msg) => text16 + separator + msg);
       }
       $dataMetaSchema(metaSchema, keywordsJsonPointers) {
         const rules = this.RULES.all;
@@ -41992,7 +41992,7 @@ var require_parse_url = __commonJS({
 var require_form_data = __commonJS({
   "node_modules/light-my-request/lib/form-data.js"(exports, module) {
     "use strict";
-    var { randomUUID: randomUUID60 } = __require("node:crypto");
+    var { randomUUID: randomUUID61 } = __require("node:crypto");
     var { Readable } = __require("node:stream");
     var textEncoder;
     function isFormDataLike(payload) {
@@ -42000,7 +42000,7 @@ var require_form_data = __commonJS({
     }
     function formDataToStream(formdata) {
       textEncoder = textEncoder ?? new TextEncoder();
-      const boundary = `----formdata-${randomUUID60()}`;
+      const boundary = `----formdata-${randomUUID61()}`;
       const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
       const escape2 = (str8) => str8.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
@@ -60985,8 +60985,8 @@ function usageUnitOf(classId) {
 function dailyUsageOf(classId) {
   return vehicleClasses.classes.find((c) => c.id === classId)?.dailyUsage ?? null;
 }
-function resolveClassId(text15) {
-  const key = foldClass(text15);
+function resolveClassId(text16) {
+  const key = foldClass(text16);
   if (classIds.includes(key))
     return key;
   return vehicleClasses.classes.find((c) => c.subtypes.some((s) => foldClass(s) === key))?.id ?? null;
@@ -64837,6 +64837,18 @@ var init_shop_form_statements = __esm({
     SHOP_FORM_STATEMENTS = [
       { kind: "createTable", target: "ShopFormTemplate", sql: "CREATE TABLE IF NOT EXISTS `ShopFormTemplate` (`id` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `name` VARCHAR(60) NOT NULL, `purpose` VARCHAR(10) NOT NULL, `fields` JSON NOT NULL, `active` BOOLEAN NOT NULL DEFAULT true, `createdBy` VARCHAR(191) NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `ShopFormTemplate_shop_idx` (`shopId`, `active`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
       { kind: "createTable", target: "ShopFormEntry", sql: "CREATE TABLE IF NOT EXISTS `ShopFormEntry` (`id` VARCHAR(191) NOT NULL, `templateId` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `vehicleId` VARCHAR(191) NOT NULL, `serviceRecordId` VARCHAR(191) NULL, `templateName` VARCHAR(60) NOT NULL, `values` JSON NOT NULL, `note` VARCHAR(300) NULL, `createdBy` VARCHAR(191) NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `ShopFormEntry_vehicle_idx` (`vehicleId`, `createdAt`), KEY `ShopFormEntry_template_idx` (`templateId`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+    ];
+  }
+});
+
+// packages/api/dist/infrastructure/schema-setup/directory-statements.js
+var DIRECTORY_TABLES, DIRECTORY_STATEMENTS;
+var init_directory_statements = __esm({
+  "packages/api/dist/infrastructure/schema-setup/directory-statements.js"() {
+    "use strict";
+    DIRECTORY_TABLES = ["DirectoryShop"];
+    DIRECTORY_STATEMENTS = [
+      { kind: "createTable", target: "DirectoryShop", sql: "CREATE TABLE IF NOT EXISTS `DirectoryShop` (`id` VARCHAR(191) NOT NULL, `name` VARCHAR(120) NOT NULL, `city` VARCHAR(80) NOT NULL, `zone` VARCHAR(80) NULL, `services` JSON NOT NULL, `source` VARCHAR(120) NOT NULL, `active` BOOLEAN NOT NULL DEFAULT true, `createdBy` VARCHAR(191) NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), UNIQUE KEY `DirectoryShop_place_key` (`name`, `city`), KEY `DirectoryShop_city_idx` (`city`, `active`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
     ];
   }
 });
@@ -75029,12 +75041,12 @@ var require_helpers = __commonJS({
       const REQUIRE_TERMINATOR = "";
       highlightFn = __require(`cardinal${REQUIRE_TERMINATOR}`).highlight;
     } catch {
-      highlightFn = (text15) => {
+      highlightFn = (text16) => {
         if (!cardinalRecommended) {
           console.log("For nicer debug output consider install cardinal@^2.0.0");
           cardinalRecommended = true;
         }
-        return text15;
+        return text16;
       };
     }
     function printDebugWithCode(msg, code5) {
@@ -81492,21 +81504,21 @@ var require_query2 = __commonJS({
           this.queryTimeout = null;
         }
         if (this.onResult) {
-          let rows71, fields;
+          let rows72, fields;
           if (this._resultIndex === 0) {
-            rows71 = this._rows[0];
+            rows72 = this._rows[0];
             fields = this._fields[0];
           } else {
-            rows71 = this._rows;
+            rows72 = this._rows;
             fields = this._fields;
           }
           if (fields) {
             process2.nextTick(() => {
-              this.onResult(null, rows71, fields);
+              this.onResult(null, rows72, fields);
             });
           } else {
             process2.nextTick(() => {
-              this.onResult(null, rows71);
+              this.onResult(null, rows72);
             });
           }
         }
@@ -84063,9 +84075,9 @@ var require_connection = __commonJS({
           Packets.BinaryRow.toPacket(column2, this.serverConfig.encoding)
         );
       }
-      writeTextResult(rows71, columns, binary = false) {
+      writeTextResult(rows72, columns, binary = false) {
         this.writeColumns(columns);
-        rows71.forEach((row2) => {
+        rows72.forEach((row2) => {
           const arrayRow = new Array(columns.length);
           columns.forEach((column2) => {
             arrayRow.push(row2[column2.name]);
@@ -84175,12 +84187,12 @@ var require_make_done_cb = __commonJS({
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
     function makeDoneCb(resolve2, reject, stackHolder) {
-      return function(err4, rows71, fields) {
+      return function(err4, rows72, fields) {
         if (err4) {
           applyCapturedStack(err4, stackHolder);
           reject(err4);
         } else {
-          resolve2([rows71, fields]);
+          resolve2([rows72, fields]);
         }
       };
     }
@@ -84788,9 +84800,9 @@ var require_pool = __commonJS({
             let queryError = null;
             const origOnResult = cmdQuery.onResult;
             if (origOnResult) {
-              cmdQuery.onResult = function(err5, rows71, fields) {
+              cmdQuery.onResult = function(err5, rows72, fields) {
                 queryError = err5 || null;
-                origOnResult(err5, rows71, fields);
+                origOnResult(err5, rows72, fields);
               };
             } else {
               cmdQuery.once("error", (err5) => {
@@ -84825,11 +84837,11 @@ var require_pool = __commonJS({
             return cb(err4);
           }
           try {
-            conn.execute(sql, values2, (err5, rows71, fields) => {
+            conn.execute(sql, values2, (err5, rows72, fields) => {
               if (isReadOnlyError(err5)) {
                 conn.destroy();
               }
-              cb(err5, rows71, fields);
+              cb(err5, rows72, fields);
             }).once("end", () => {
               conn.release();
             });
@@ -85670,8 +85682,8 @@ async function openConnection(env = process.env) {
   }
 }
 function firstRow(result) {
-  const rows71 = result[0];
-  return Array.isArray(rows71) ? rows71[0] : void 0;
+  const rows72 = result[0];
+  return Array.isArray(rows72) ? rows72[0] : void 0;
 }
 async function count(conn, sql, params2) {
   const row2 = firstRow(await conn.query(sql, params2));
@@ -85700,8 +85712,8 @@ async function shouldApply(conn, statement) {
   }
 }
 async function listTables(conn) {
-  const [rows71] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-  return Array.isArray(rows71) ? rows71.map((r) => String(r.name)) : [];
+  const [rows72] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+  return Array.isArray(rows72) ? rows72.map((r) => String(r.name)) : [];
 }
 async function serverInfo(conn) {
   const row2 = firstRow(await conn.query("SELECT DATABASE() AS db, VERSION() AS version"));
@@ -85800,11 +85812,12 @@ var init_apply = __esm({
     init_shop_cover_statements();
     init_plan_record_statements();
     init_shop_form_statements();
+    init_directory_statements();
     init_vat_statements();
     init_operator_key_statements();
     init_ad_statements();
-    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...WORK_ORDER_RECORD_STATEMENTS, ...WORK_ORDER_CLAIM_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS, ...PART_ORDER_STATEMENTS, ...CATALOG_TARIFF_STATEMENTS, ...RECONTACT_STATEMENTS, ...SUPPLY_STATEMENTS, ...WALKIN_STATEMENTS, ...READY_STATEMENTS, ...REVIEW_STATEMENTS, ...SUBSCRIPTION_RECEIPT_STATEMENTS, ...CASH_STATEMENTS, ...REPORT_STATEMENTS, ...IN_PERSON_STATEMENTS, ...COMPROBANTE_STATEMENTS, ...FOUNDER_STATEMENTS, ...SHOP_COVER_STATEMENTS, ...PLAN_RECORD_STATEMENTS, ...VAT_STATEMENTS, ...OPERATOR_KEY_STATEMENTS, ...AD_STATEMENTS, ...SHOP_FORM_STATEMENTS];
-    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...WORK_ORDER_RECORD_TABLES, ...WORK_ORDER_CLAIM_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES, ...PART_ORDER_TABLES, ...CATALOG_TARIFF_TABLES, ...RECONTACT_TABLES, ...SUPPLY_TABLES, "WorkOrderReady", "WorkOrderInPersonApproval", ...REVIEW_TABLES, ...SUBSCRIPTION_RECEIPT_TABLES, ...CASH_TABLES, ...REPORT_TABLES, ...COMPROBANTE_TABLES, ...FOUNDER_TABLES, ...OPERATOR_KEY_TABLES, ...AD_TABLES, ...SHOP_FORM_TABLES];
+    ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...WORK_ORDER_RECORD_STATEMENTS, ...WORK_ORDER_CLAIM_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS, ...PART_ORDER_STATEMENTS, ...CATALOG_TARIFF_STATEMENTS, ...RECONTACT_STATEMENTS, ...SUPPLY_STATEMENTS, ...WALKIN_STATEMENTS, ...READY_STATEMENTS, ...REVIEW_STATEMENTS, ...SUBSCRIPTION_RECEIPT_STATEMENTS, ...CASH_STATEMENTS, ...REPORT_STATEMENTS, ...IN_PERSON_STATEMENTS, ...COMPROBANTE_STATEMENTS, ...FOUNDER_STATEMENTS, ...SHOP_COVER_STATEMENTS, ...PLAN_RECORD_STATEMENTS, ...VAT_STATEMENTS, ...OPERATOR_KEY_STATEMENTS, ...AD_STATEMENTS, ...SHOP_FORM_STATEMENTS, ...DIRECTORY_STATEMENTS];
+    EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...WORK_ORDER_RECORD_TABLES, ...WORK_ORDER_CLAIM_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES, ...PART_ORDER_TABLES, ...CATALOG_TARIFF_TABLES, ...RECONTACT_TABLES, ...SUPPLY_TABLES, "WorkOrderReady", "WorkOrderInPersonApproval", ...REVIEW_TABLES, ...SUBSCRIPTION_RECEIPT_TABLES, ...CASH_TABLES, ...REPORT_TABLES, ...COMPROBANTE_TABLES, ...FOUNDER_TABLES, ...OPERATOR_KEY_TABLES, ...AD_TABLES, ...SHOP_FORM_TABLES, ...DIRECTORY_TABLES];
     DB_ENV = ["DB_HOST", "DB_PORT", "DB_NAME", "DB_USER", "DB_PASSWORD"];
     tableExists = (conn, table2) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?", [table2]);
     columnExists = (conn, table2, column2) => count(conn, "SELECT COUNT(*) AS n FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ?", [table2, column2]);
@@ -87799,6 +87812,77 @@ var init_taller_fondo = __esm({
   }
 });
 
+// packages/api/dist/application/ads/house-ads.js
+function houseAdsFor(role, today) {
+  return HOUSE_ADS.filter((a) => a.roles.includes(role) && today <= a.until).map((a) => ({ id: a.id, businessName: a.businessName, title: a.title, body: a.body, linkUrl: a.linkUrl, hasImage: false }));
+}
+function publicHomeAds(today) {
+  const house = HOUSE_ADS.filter((a) => today <= a.until).map((a) => ({ id: a.id, businessName: a.businessName, title: a.title, body: a.body, linkUrl: a.linkUrl, placeholder: false }));
+  return [...house, ...ADVERTISE_HERE.map((a) => ({ ...a, placeholder: true }))];
+}
+var HOUSE_ADS, ADVERTISE_HERE;
+var init_house_ads = __esm({
+  "packages/api/dist/application/ads/house-ads.js"() {
+    "use strict";
+    HOUSE_ADS = [
+      {
+        id: "casa-solucionespro",
+        businessName: "SolucionesPro",
+        title: "Sistematiza tu negocio",
+        body: "Diagn\xF3stico gratis de tus procesos y sistemas a medida para pymes: inventario, pedidos, clientes y agentes de IA con aprobaci\xF3n humana.",
+        linkUrl: "https://solucionespro.net/guia_pymes/",
+        until: "2027-02-28",
+        roles: ["dueno", "taller", "almacen"]
+      },
+      {
+        id: "casa-redcafeecuador",
+        businessName: "Red Caf\xE9Ecuador",
+        title: "Todo el caf\xE9 ecuatoriano, conectado",
+        body: "Compra caf\xE9 directo de productores ecuatorianos, mira el precio del mes y crea tu perfil gratis en la red del caf\xE9.",
+        linkUrl: "https://redcafeecuador.com/marketplace/",
+        until: "2027-02-28",
+        roles: ["dueno", "taller", "almacen"]
+      }
+    ];
+    ADVERTISE_HERE = [
+      { id: "tu-marca-taller", businessName: "Tu taller", title: "\xBFTienes un taller? Tu marca aqu\xED", body: "Anuncia tus servicios a los due\xF1os de veh\xEDculos de tu ciudad. Crea tu cuenta gratis y publica desde tu panel.", linkUrl: "/cuenta#crear" },
+      { id: "tu-marca-almacen", businessName: "Tu almac\xE9n", title: "\xBFTienes un almac\xE9n de repuestos? Tu marca aqu\xED", body: "Muestra tus repuestos y promociones a due\xF1os y talleres. Crea tu cuenta gratis y publica desde tu panel.", linkUrl: "/cuenta#crear" }
+    ];
+  }
+});
+
+// packages/api/dist/interfaces/entry/home-ads.js
+function ecuadorToday(now) {
+  return new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
+}
+function homeAdsHtml(now = /* @__PURE__ */ new Date()) {
+  const ads = publicHomeAds(ecuadorToday(now));
+  if (!ads.length)
+    return "";
+  const tile = (a) => {
+    const external = a.linkUrl.startsWith("http");
+    const rel = external ? ' target="_blank" rel="noopener nofollow sponsored"' : "";
+    return `<a class="ad${a.placeholder ? " libre" : ""}" href="${escapeHtml(a.linkUrl)}"${rel}><small>${a.placeholder ? "Espacio disponible" : `Publicidad \xB7 ${escapeHtml(a.businessName)}`}</small><b>${escapeHtml(a.title)}</b><span>${escapeHtml(a.body)}</span></a>`;
+  };
+  return `<aside class="home-ads" aria-label="Publicidad">${ads.map(tile).join("")}</aside>`;
+}
+var HOME_ADS_STYLES;
+var init_home_ads = __esm({
+  "packages/api/dist/interfaces/entry/home-ads.js"() {
+    "use strict";
+    init_house_ads();
+    init_page();
+    HOME_ADS_STYLES = `
+.home-ads{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin:8px 0 4px}
+.home-ads .ad{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface);text-decoration:none;color:inherit;min-width:0;overflow-wrap:anywhere}
+.home-ads .ad small{opacity:.75;font-size:.75rem}
+.home-ads .ad b{font-size:.9rem}
+.home-ads .ad span{font-size:.8rem;line-height:1.3}
+.home-ads .ad.libre{border-style:dashed}
+`;
+  }
+});
+
 // packages/api/dist/interfaces/entry/page.js
 function sanitizeProfile(value2) {
   return typeof value2 === "string" && ENTRY_PROFILES.some((p) => p.key === value2) ? value2 : null;
@@ -87808,10 +87892,10 @@ function escapeHtml(value2) {
 }
 function buildLinks(number2, code5, ref4, profile = null) {
   const intent = ENTRY_PROFILES.find((p) => p.key === profile)?.intent ?? null;
-  const text15 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code5}${ref4 ? ` (ref: ${ref4})` : ""}`;
-  const encoded = encodeURIComponent(text15);
+  const text16 = `Hola AutoMantPro, ${intent ?? "quiero empezar"}. C\xF3digo: ${code5}${ref4 ? ` (ref: ${ref4})` : ""}`;
+  const encoded = encodeURIComponent(text16);
   return {
-    text: text15,
+    text: text16,
     app: `whatsapp://send?phone=${number2}&text=${encoded}`,
     wame: `https://wa.me/${number2}?text=${encoded}`,
     web: `https://web.whatsapp.com/send?phone=${number2}&text=${encoded}`
@@ -87930,7 +88014,7 @@ ${seoHead({
   })}
 <meta name="author" content="AutoMantPro">
 <script type="application/ld+json" nonce="${nonce2}">${structuredData(input)}</script>
-<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}${ESCANER_STYLES}${TITULO_REFERENCIA}${HOME_UNA_PANTALLA}</style>
+<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}${ESCANER_STYLES}${TITULO_REFERENCIA}${HOME_UNA_PANTALLA}${HOME_ADS_STYLES}</style>
 <script nonce="${nonce2}">${THEME_BOOT}</script>
 </head>
 <body>
@@ -87958,6 +88042,7 @@ ${seoHead({
   <a class="access-btn secondary entrar" href="/cuenta#entrar">Ingresar o crear cuenta</a>`}
   </div>
   </div>
+  ${homeAdsHtml()}
   <footer class="pie">
   ${siteLinksNav(site2)}
   ${socialLinks()}
@@ -87980,6 +88065,7 @@ var init_page = __esm({
     init_head();
     init_brand();
     init_taller_fondo();
+    init_home_ads();
     init_marketing();
     ENTRY_PROFILES = [
       {
@@ -88706,8 +88792,8 @@ var init_settings_store = __esm({
       }
       get(name) {
         return this.run(async (conn) => {
-          const [rows71] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
-          const row2 = Array.isArray(rows71) ? rows71[0] : void 0;
+          const [rows72] = await conn.query("SELECT `value` FROM `AppSetting` WHERE `name` = ? LIMIT 1", [name]);
+          const row2 = Array.isArray(rows72) ? rows72[0] : void 0;
           return row2?.value === void 0 || row2.value === null ? null : String(row2.value);
         });
       }
@@ -89311,12 +89397,12 @@ function checklistFor(vehicle) {
   const cls = String(vehicle.vehicleClass ?? ""), fuel2 = String(vehicle.fuel ?? "");
   return INSPECTION_ITEMS.filter((i) => !(i.fourWheels && TWO_WHEELS.has(cls)) && !(i.combustion && fuel2 === "bev") && !(i.sparkIgnition && fuel2 && !SPARK.has(fuel2)));
 }
-function parseInspection(text15, items) {
+function parseInspection(text16, items) {
   const byCode = new Map(items.map((i) => [i.code, i]));
   const all = new Map(INSPECTION_ITEMS.map((i) => [i.code, i]));
   const entries = /* @__PURE__ */ new Map();
   let restOk = false;
-  for (const raw of text15.split(/[;\n]+/).map((s) => s.trim()).filter(Boolean)) {
+  for (const raw of text16.split(/[;\n]+/).map((s) => s.trim()).filter(Boolean)) {
     const token2 = fold2(raw);
     if (token2 === "resto ok" || token2 === "todo lo demas ok" || token2 === "demas ok") {
       restOk = true;
@@ -89367,7 +89453,7 @@ function parseInspection(text15, items) {
         entries.set(item2.code, { code: item2.code, status: "ok", measure: null, unit: null });
   }
   if (!entries.size)
-    throw new InspectionParseError("INVALID_INSPECTION", text15);
+    throw new InspectionParseError("INVALID_INSPECTION", text16);
   return [...entries.values()].sort((a, b) => INSPECTION_ITEMS.findIndex((i) => i.code === a.code) - INSPECTION_ITEMS.findIndex((i) => i.code === b.code));
 }
 function normalizeInspection(raw, items) {
@@ -90001,8 +90087,8 @@ var init_ecuador_vehicle_catalog = __esm({
 function validateEcuadorVehicleCatalog(entries = ecuadorVehicleCatalog) {
   if (!Array.isArray(entries) || entries.length === 0)
     throw new Error("ecuador vehicle catalog must have entries");
-  return entries.map((entry, index) => {
-    const item2 = entry;
+  return entries.map((entry2, index) => {
+    const item2 = entry2;
     const valid = item2 && typeof item2.make === "string" && item2.make.trim() && typeof item2.model === "string" && item2.model.trim() && Array.isArray(item2.aliases) && item2.aliases.every((alias) => typeof alias === "string" && alias.trim()) && Number.isInteger(item2.yearFrom) && Number.isInteger(item2.yearTo) && item2.yearFrom <= item2.yearTo && item2.classId === "liviano" && (item2.fuelId === null || ["gasolina", "diesel", "hev"].includes(item2.fuelId)) && Array.isArray(item2.evidence) && item2.evidence.length > 0;
     if (!valid)
       throw new Error(`Invalid Ecuador vehicle catalog entry at index ${index}`);
@@ -90016,7 +90102,7 @@ function ecuatorianVehicleFor(vehicle, entries = ecuadorVehicleCatalog) {
   const year3 = Number(vehicle.year);
   if (!make || !model || !Number.isInteger(year3))
     return null;
-  return entries.find((entry) => fold3(entry.make) === make && year3 >= entry.yearFrom && year3 <= entry.yearTo && [entry.model, ...entry.aliases].some((candidate) => fold3(candidate) === model)) ?? null;
+  return entries.find((entry2) => fold3(entry2.make) === make && year3 >= entry2.yearFrom && year3 <= entry2.yearTo && [entry2.model, ...entry2.aliases].some((candidate) => fold3(candidate) === model)) ?? null;
 }
 var fold3, MAKE_ALIASES, ecuadorVehicleCatalog;
 var init_ecuador_vehicle_catalog2 = __esm({
@@ -90166,8 +90252,8 @@ var init_inbound_webhook_store = __esm({
         return this.run(async (conn) => {
           const changed2 = affected(await conn.query("UPDATE `InboundWebhook` SET status = IF(attempts >= ?, 'dead', 'queued'), nextAttemptAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? SECOND), lastError = ?, leaseToken = NULL, lockedAt = NULL, updatedAt = UTC_TIMESTAMP(3) WHERE wamid = ? AND status = 'processing' AND leaseToken = ? AND lockedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ? SECOND)", [MAX_ATTEMPTS, delaySeconds, safeCode, wamid, leaseToken, LEASE_SECONDS])) === 1;
           if (changed2) {
-            const [rows71] = await conn.query("SELECT status FROM `InboundWebhook` WHERE wamid = ?", [wamid]);
-            if (rows71[0]?.status === "dead")
+            const [rows72] = await conn.query("SELECT status FROM `InboundWebhook` WHERE wamid = ?", [wamid]);
+            if (rows72[0]?.status === "dead")
               void new MysqlAdminAlerts().notify("inbound_dead", 1);
           }
           return changed2;
@@ -90574,8 +90660,8 @@ function offersFor(profile, catalog, includeHidden = false) {
 function findOfferByKey(key, catalog) {
   return catalog.find((o) => o.key === key) ?? null;
 }
-function findOfferByName(text15, catalog, profile) {
-  const wanted = fold4(text15).replace(/^plan /, "");
+function findOfferByName(text16, catalog, profile) {
+  const wanted = fold4(text16).replace(/^plan /, "");
   if (!wanted)
     return null;
   const paid = catalog.filter((o) => !isFreeOffer(o) && o.visible);
@@ -91862,8 +91948,8 @@ ${lines.join("\n")}${hint}` : `Todav\xEDa no hay ofertas para ${code5}.` };
 });
 
 // packages/api/dist/application/local-marketplace/part-money-chat.js
-function parsePartMoney(text15) {
-  const parts = text15.trim().replace(/\s+/g, " ").split("|").map((s) => s.trim());
+function parsePartMoney(text16) {
+  const parts = text16.trim().replace(/\s+/g, " ").split("|").map((s) => s.trim());
   const words = fold5(parts[0] ?? "").split(" ");
   const code5 = (value2) => value2 && REF.test(value2) ? value2.toUpperCase() : void 0;
   const last = words[words.length - 1];
@@ -91904,8 +91990,8 @@ var init_part_money_chat = __esm({
 });
 
 // packages/api/dist/application/local-marketplace/chat.js
-function parseLocalChat(text15) {
-  const parts = text15.split("|").map((s) => s.trim());
+function parseLocalChat(text16) {
+  const parts = text16.split("|").map((s) => s.trim());
   const verb = parts[0]?.toLowerCase();
   let command;
   if ((verb === "buscar servicio" || verb === "buscar repuesto") && parts.length === 6)
@@ -91920,14 +92006,14 @@ function parseLocalChat(text15) {
   else if (verb === "confirmar cita" && parts.length === 3)
     command = { action: "confirm", requestId: parts[1], appointmentId: parts[2] };
   if (command === void 0)
-    command = parseShort(text15);
+    command = parseShort(text16);
   const result = localCommandSchema.safeParse(command);
   if (!result.success)
     throw new LocalMarketplaceError("INVALID_CHAT_COMMAND");
   return result.data;
 }
-function parseShort(text15) {
-  const normalized2 = text15.trim().replace(/\s+/g, " ");
+function parseShort(text16) {
+  const normalized2 = text16.trim().replace(/\s+/g, " ");
   const money8 = parsePartMoney(normalized2);
   if (money8 !== void 0)
     return money8;
@@ -92019,11 +92105,11 @@ function categoryOfService(serviceId) {
 function categoryName(id3) {
   return CATEGORIES.find((c) => c.id === id3)?.name ?? id3;
 }
-function fold6(text15) {
-  return text15.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+function fold6(text16) {
+  return text16.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
 }
-function placeLabel(text15) {
-  const clean4 = text15.replace(/\s+/g, " ").trim();
+function placeLabel(text16) {
+  const clean4 = text16.replace(/\s+/g, " ").trim();
   if (!clean4)
     return "";
   return clean4.toLowerCase().split(" ").map((w, i) => i > 0 && ["de", "del", "la", "las", "los", "el", "y", "a"].includes(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
@@ -92050,8 +92136,8 @@ function categoriesOf(services) {
 function insideEcuador(lat, lng) {
   return Number.isFinite(lat) && Number.isFinite(lng) && lat >= ECUADOR.minLat && lat <= ECUADOR.maxLat && lng >= ECUADOR.minLng && lng <= ECUADOR.maxLng;
 }
-function parsePoint(text15) {
-  const numbers = String(text15).match(/-?\d+(?:[.,]\d+)?/g) ?? [];
+function parsePoint(text16) {
+  const numbers = String(text16).match(/-?\d+(?:[.,]\d+)?/g) ?? [];
   if (numbers.length !== 2)
     return null;
   const [lat, lng] = numbers.map((s) => Math.round(Number(s.replace(",", ".")) * 1e6) / 1e6);
@@ -92076,10 +92162,10 @@ function placesOf(shops) {
     const key = fold6(shop.city);
     if (!key)
       continue;
-    const entry = byCity.get(key) ?? { city: placeLabel(shop.city), zones: /* @__PURE__ */ new Map() };
+    const entry2 = byCity.get(key) ?? { city: placeLabel(shop.city), zones: /* @__PURE__ */ new Map() };
     if (shop.zone && fold6(shop.zone))
-      entry.zones.set(fold6(shop.zone), placeLabel(shop.zone));
-    byCity.set(key, entry);
+      entry2.zones.set(fold6(shop.zone), placeLabel(shop.zone));
+    byCity.set(key, entry2);
   }
   return [...byCity.values()].map((e9) => ({ city: e9.city, zones: [...e9.zones.values()].sort((a, b) => a.localeCompare(b, "es")) })).sort((a, b) => a.city.localeCompare(b.city, "es"));
 }
@@ -92527,7 +92613,7 @@ var init_commands = __esm({
     ref62 = (prefix) => external_exports.string().regex(new RegExp(`^${prefix}-[0-9A-F]{6}$`));
     plate = external_exports.string().regex(/^[A-Z]{2,3}-\d{3,4}[A-Z]?$/);
     vehicleClass = external_exports.string().refine((v) => classIds.includes(v));
-    classOf = (text15) => resolveClassId(text15 ?? "") ?? fold7(text15 ?? "").replace(/\s+/g, "_");
+    classOf = (text16) => resolveClassId(text16 ?? "") ?? fold7(text16 ?? "").replace(/\s+/g, "_");
     fuel = external_exports.string().refine((v) => fuelIds.includes(v));
     year = external_exports.number().int().min(1970).max((/* @__PURE__ */ new Date()).getFullYear() + 1);
     odometer = external_exports.number().int().min(0).max(2e6);
@@ -92851,7 +92937,7 @@ var init_vehicle_specs2 = __esm({
 });
 
 // packages/api/dist/domain/maintenance/model-plan.js
-function matchModelPlanRows(rows71, vehicle) {
+function matchModelPlanRows(rows72, vehicle) {
   const year3 = Number(vehicle.year);
   if (!Number.isFinite(year3))
     return [];
@@ -92862,7 +92948,7 @@ function matchModelPlanRows(rows71, vehicle) {
   if (!make || !model)
     return [];
   const out = [];
-  for (const raw of rows71) {
+  for (const raw of rows72) {
     const r = raw;
     if (!truthy(r.verificado))
       continue;
@@ -92886,9 +92972,9 @@ function matchModelPlanRows(rows71, vehicle) {
   }
   return out;
 }
-function modelPlanIntervals(rows71, vehicle) {
+function modelPlanIntervals(rows72, vehicle) {
   const intervals = {};
-  const matched = matchModelPlanRows(rows71, vehicle);
+  const matched = matchModelPlanRows(rows72, vehicle);
   for (const row2 of [...matched.filter((r) => fold9(r.modelo) === GENERIC), ...matched.filter((r) => fold9(r.modelo) !== GENERIC)]) {
     intervals[row2.serviceId] = { km: row2.intervalKm, months: row2.intervalMonths };
   }
@@ -92957,7 +93043,7 @@ function planFor(vehicle) {
     const baseIntervals = { ...spec?.intervals ?? {}, ...modelIntervals, ...converted.intervals };
     const plan = buildPlan({ vehicle: { classId, fuelId, transmission: vehicle.transmission === "manual" || vehicle.transmission === "automatica" ? vehicle.transmission : null }, odometerKm: Number(vehicle.currentKm) || 0, usageProfile: usage, lastServices, intervals: baseIntervals });
     plan.items = plan.items.filter((item2) => !converted.disabled.has(item2.serviceId)).map((item2) => {
-      const override = overrides.find((entry) => entry.serviceId === item2.serviceId);
+      const override = overrides.find((entry2) => entry2.serviceId === item2.serviceId);
       return override ? { ...item2, reason: `${item2.reason} \xB7 ${override.actorRole === "taller" ? "Ajustado por el taller" : "Ajustado por ti"}` } : item2;
     });
     for (const override of overrides)
@@ -92999,11 +93085,11 @@ function planTextFor(vehicle, level) {
     return null;
   const label5 = [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" ");
   const corrective = Array.isArray(vehicle.corrective) ? vehicle.corrective : [];
-  const text15 = formatPlanWhatsApp({ label: label5, plan, maxLength: 3300, source: sourceLine(vehicle, plan), corrective })[0] ?? null;
+  const text16 = formatPlanWhatsApp({ label: label5, plan, maxLength: 3300, source: sourceLine(vehicle, plan), corrective })[0] ?? null;
   const note = levelNote(vehicle, level);
-  return text15 && note ? `${text15}
+  return text16 && note ? `${text16}
 
-${note}` : text15;
+${note}` : text16;
 }
 function planSummaryFor(vehicle, level) {
   const plan = atLevel(planFor(vehicle), level);
@@ -93011,11 +93097,11 @@ function planSummaryFor(vehicle, level) {
     return null;
   const label5 = [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" ");
   const corrective = Array.isArray(vehicle.corrective) ? vehicle.corrective : [];
-  const text15 = formatPlanSummary({ label: label5, plan, source: sourceLine(vehicle, plan), corrective });
+  const text16 = formatPlanSummary({ label: label5, plan, source: sourceLine(vehicle, plan), corrective });
   const note = levelNote(vehicle, level);
-  return text15 && note ? `${text15}
+  return text16 && note ? `${text16}
 
-${note}` : text15;
+${note}` : text16;
 }
 function planBriefFor(vehicle, level) {
   const items = planItemsFor(vehicle, level);
@@ -93290,6 +93376,24 @@ async function shopLimits(conn, ownerUserId, catalogIn, now = /* @__PURE__ */ ne
     return null;
   }
 }
+async function hasPaidPlan(conn, userId, catalogIn, now = /* @__PURE__ */ new Date()) {
+  try {
+    const subs = await rows22(conn, "SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId]);
+    if (subs.length) {
+      const catalog = catalogIn ?? await loadCatalog(conn);
+      for (const sub of subs) {
+        if (!isRunning({ plan: String(sub.plan), status: String(sub.status), startsAt: sub.startsAt, endsAt: sub.endsAt ?? null }, now))
+          continue;
+        const offer = findOfferByKey(String(sub.plan), catalog);
+        if (!offer || !isFreeOffer(offer))
+          return true;
+      }
+    }
+    return await founderUntil(conn, userId, now) !== null;
+  } catch {
+    return false;
+  }
+}
 var rows22, OPEN;
 var init_entitlements = __esm({
   "packages/api/dist/infrastructure/plans/entitlements.js"() {
@@ -93528,7 +93632,7 @@ ${await paymentInstructions(conn, created, catalog)}`;
 
 // packages/api/dist/infrastructure/messaging/walk-in.js
 function checkInCommand(appointmentRef, km10, intake) {
-  const damaged = Object.entries(intake.damages).map(([zone, text15]) => `${zone}: ${text15}`).join("; ");
+  const damaged = Object.entries(intake.damages).map(([zone, text16]) => `${zone}: ${text16}`).join("; ");
   return {
     action: "checkIn",
     appointmentRef,
@@ -93693,13 +93797,13 @@ var init_vehicle_card_store = __esm({
         await this.audit(conn, userId, "taller", "card.created", "VehicleCard", id3, { shopId: shop.id, by: shop.actor, services: services.length, ...intake ? { walkIn: true, intakeSaved } : {} });
         const [verified] = await rows24(conn, "SELECT verificationStatus FROM `Shop` WHERE id = ?", [shop.id]);
         const label5 = `${command.make} ${command.model} ${command.year} (${command.plate})`;
-        const text15 = `Ficha ${code5}`;
+        const text16 = `Ficha ${code5}`;
         const link = cardLink(publicNumber3, code5);
         const until = new Date(Date.now() + CARD_DAYS * 864e5);
         return { userId, cardId: id3, code: code5, link, intakeSaved, message: [
           `Ficha ${code5} creada para ${label5}${services.length ? ` con ${services.map(serviceName).join(", ")} a los ${command.currentKm.toLocaleString("es-EC")} km` : ""}.`,
           `Reenv\xEDa este enlace al due\xF1o desde tu WhatsApp:
-${link ?? `que escriba al WhatsApp de AutoMantPro: ${text15}`}`,
+${link ?? `que escriba al WhatsApp de AutoMantPro: ${text16}`}`,
           `Al abrirlo ver\xE1 el veh\xEDculo y qu\xE9 acepta. Vence el ${ecDay3(until)}; si no la acepta, se borra.${verified?.verificationStatus === "verified" ? "" : " Tu taller sigue en verificaci\xF3n: se lo diremos al due\xF1o."}`,
           intakeSaved ? `Guardamos el ingreso. Cuando el cliente acepte la ficha abrimos la orden con ese ingreso y te avisamos para enviar el presupuesto.` : `Cuando la acepte te enviaremos el c\xF3digo de cita para registrar el ingreso.${intake ? " El ingreso no se guard\xF3: falta que el equipo pulse \xABAplicar actualizaciones\xBB." : ""} Para ver tus fichas: Mis fichas`
         ].join("\n") };
@@ -94191,7 +94295,7 @@ function buildStructuredPlan(items, recommendations, sources) {
     const hasKm = (item2.intervalKm ?? null) !== null;
     const hasMonths = (item2.intervalMonths ?? null) !== null;
     const due = known ? [hasKm ? `a los ${formatKm2(item2.dueKm)}` : null, hasMonths ? `en ${formatMonth(new Date(item2.dueDate))}` : null].filter(Boolean).join(" o ") || null : null;
-    const entry = {
+    const entry2 = {
       serviceId: item2.serviceId,
       system: system.name,
       element,
@@ -94203,7 +94307,7 @@ function buildStructuredPlan(items, recommendations, sources) {
       due,
       dueKm: known && hasKm ? item2.dueKm : null
     };
-    return { entry, item: item2, n: system.n };
+    return { entry: entry2, item: item2, n: system.n };
   });
   const urgentOrSoon = entries.filter((e9) => e9.entry.state === "urgente" || e9.entry.state === "pronto");
   const upToDate = entries.filter((e9) => e9.entry.state === "al_dia").sort((a, b) => new Date(a.item.dueDate).getTime() - new Date(b.item.dueDate).getTime() || a.item.dueKm - b.item.dueKm);
@@ -94462,15 +94566,15 @@ function rtvNotice(vehicle, now, label5) {
   };
 }
 function parseSoatDate(value2, now = /* @__PURE__ */ new Date()) {
-  const text15 = value2 instanceof Date ? Number.isNaN(value2.getTime()) ? "" : value2.toISOString().slice(0, 10) : String(value2 ?? "").trim();
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(text15);
+  const text16 = value2 instanceof Date ? Number.isNaN(value2.getTime()) ? "" : value2.toISOString().slice(0, 10) : String(value2 ?? "").trim();
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(text16);
   if (!m)
     return null;
   const date2 = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
-  if (date2.toISOString().slice(0, 10) !== text15)
+  if (date2.toISOString().slice(0, 10) !== text16)
     return null;
   const year3 = Number(m[1]);
-  return year3 >= 2e3 && year3 <= ecMonthYear(now).year + 15 ? text15 : null;
+  return year3 >= 2e3 && year3 <= ecMonthYear(now).year + 15 ? text16 : null;
 }
 function soatDaysLeft(expiresAt, now) {
   const date2 = expiresAt === null || expiresAt === void 0 || expiresAt === "" ? null : parseSoatDate(expiresAt, now);
@@ -94747,12 +94851,12 @@ Para asignarlo a un conductor: Asignar ${command.plate} | D-XXXXXX` };
         const code5 = newSecretCode("J");
         await conn.query("INSERT INTO `FleetMember` (id, fleetId, userId, name, role, status, inviteHash, invitedBy) VALUES (?, ?, NULL, ?, ?, 'invited', ?, ?)", [id3, fleet.fleetId, command.name, command.role, secretHash(code5), userId]);
         await this.audit(conn, userId, "fleet.member.invited", "FleetMember", id3, { fleetId: fleet.fleetId, role: command.role });
-        const text15 = `Unirme flota ${code5} | ${command.name} | ACEPTO`;
-        const link = publicNumber3 ? `https://wa.me/${publicNumber3}?text=${encodeURIComponent(text15)}` : null;
+        const text16 = `Unirme flota ${code5} | ${command.name} | ACEPTO`;
+        const link = publicNumber3 ? `https://wa.me/${publicNumber3}?text=${encodeURIComponent(text16)}` : null;
         const ref4 = short4("D", id3);
         const what = command.role === "conductor" ? "conductor (reportar\xE1 kilometraje, gastos y novedades del veh\xEDculo que le asignes)" : command.role === "supervisor" ? "supervisor (ver\xE1 la flota y aprobar\xE1 gastos hasta el l\xEDmite que fijes)" : "administrador de la flota";
         return { userId, message: `Listo. Comparte este enlace con ${command.name} para que se una a ${fleet.name} como ${what} desde su propio WhatsApp:
-${link ?? `que escriba al WhatsApp de AutoMantPro: ${text15}`}
+${link ?? `que escriba al WhatsApp de AutoMantPro: ${text16}`}
 Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Su c\xF3digo en tu flota es ${ref4}${command.role === "conductor" ? `; para asignarle un veh\xEDculo: Asignar PLACA | ${ref4}` : ""}. Para quitarlo: Quitar ${ref4}` };
       }
       async join(conn, userId, role, command, createOwner) {
@@ -94916,9 +95020,9 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
         const branches = await rows27(conn, "SELECT s.id, s.name, s.city, s.zone, s.userId, s.verificationStatus FROM `Shop` s JOIN `User` u ON u.id = s.userId WHERE s.ruc = ? AND u.deletedAt IS NULL ORDER BY s.city, s.name LIMIT 10", [ruc2]);
         if (!branches.length)
           fail6("SHOP_NOT_FOUND");
-        const fold18 = (v) => String(v ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
-        const wanted = branch ? fold18(branch) : "";
-        const matches = wanted ? branches.filter((b) => [b.city, b.zone, b.name].some((v) => fold18(v).includes(wanted))) : branches;
+        const fold19 = (v) => String(v ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+        const wanted = branch ? fold19(branch) : "";
+        const matches = wanted ? branches.filter((b) => [b.city, b.zone, b.name].some((v) => fold19(v).includes(wanted))) : branches;
         if (matches.length !== 1) {
           const list7 = (matches.length ? matches : branches).map((b) => `\u2022 ${b.name} (${b.city}${b.zone ? `, ${b.zone}` : ""})`).join("\n");
           return { userId, message: `${matches.length ? `El RUC ${ruc2} tiene ${matches.length} sucursales` : `Ninguna sucursal del RUC ${ruc2} coincide con \xAB${branch}\xBB`}:
@@ -96697,9 +96801,9 @@ var init_courses_store = __esm({
 
 // packages/api/dist/application/courses/whatsapp.js
 import { randomBytes as randomBytes6 } from "node:crypto";
-async function handleCourseCommand(conn, uid, role, text15, mediaId) {
-  const command = parseAccountCommand(text15);
-  const numeric = role === "taller" && /^\s*\d+(?:[ ,]+\d+)*\s*$/.test(text15);
+async function handleCourseCommand(conn, uid, role, text16, mediaId) {
+  const command = parseAccountCommand(text16);
+  const numeric = role === "taller" && /^\s*\d+(?:[ ,]+\d+)*\s*$/.test(text16);
   if (!numeric && (!command || !("action" in command) || !(command.action.startsWith("course") || ["myCourses", "becomeExpert"].includes(command.action))))
     return null;
   const [rate] = await rows32(conn, "SELECT COUNT(*) n FROM `InboundWebhook` WHERE phone=(SELECT phone FROM `WhatsAppIdentity` WHERE userId=?) AND status='completed' AND completedAt>DATE_SUB(UTC_TIMESTAMP(3),INTERVAL 60 SECOND)", [uid]);
@@ -96729,7 +96833,7 @@ ${options.map((o) => `${o.letra}. ${o.texto}`).join("\n")}`;
     const selection = state.selection;
     if (!selection || selection.expiresAt <= Date.now())
       return null;
-    const selected2 = [...new Set(text15.trim().split(/[ ,]+/).map(Number))];
+    const selected2 = [...new Set(text16.trim().split(/[ ,]+/).map(Number))];
     if (selected2.some((n3) => n3 < 1 || n3 > selection.technicians.length))
       return "Selecciona \xFAnicamente n\xFAmeros de la lista de t\xE9cnicos de tu taller.";
     let count3 = 0;
@@ -96861,14 +96965,14 @@ var init_whatsapp = __esm({
 
 // packages/api/dist/application/chat-account/self-service.js
 function parseSelfService(message2) {
-  const text15 = fold13(String(message2 ?? "").slice(0, 200));
-  if (BAJA.test(text15))
+  const text16 = fold13(String(message2 ?? "").slice(0, 200));
+  if (BAJA.test(text16))
     return "baja";
-  if (ALTA.test(text15))
+  if (ALTA.test(text16))
     return "alta";
-  if (DELETE.test(text15))
+  if (DELETE.test(text16))
     return "eliminar_cuenta";
-  if (HELP.test(text15))
+  if (HELP.test(text16))
     return "ayuda";
   return null;
 }
@@ -97119,12 +97223,12 @@ function hoursSummary(hours2) {
     const h = hours2[day5];
     if (!h)
       continue;
-    const text15 = `${h.from} a ${h.to}`;
+    const text16 = `${h.from} a ${h.to}`;
     const last = groups[groups.length - 1];
-    if (last && last.text === text15 && DAYS.indexOf(last.days[last.days.length - 1]) === DAYS.indexOf(day5) - 1)
+    if (last && last.text === text16 && DAYS.indexOf(last.days[last.days.length - 1]) === DAYS.indexOf(day5) - 1)
       last.days.push(day5);
     else
-      groups.push({ days: [day5], text: text15 });
+      groups.push({ days: [day5], text: text16 });
   }
   const short6 = (d) => DAY_NAMES[d].slice(0, 3);
   return groups.map((g) => `${g.days.length > 1 ? `${short6(g.days[0])} a ${short6(g.days[g.days.length - 1])}` : short6(g.days[0])} ${g.text}`).join("; ");
@@ -97163,10 +97267,10 @@ function founderIssues(issues) {
     parts.push(`sobra${extra.length === 1 ? "" : "n"} ${extra.join(", ")} (qu\xEDtalo${extra.length === 1 ? "" : "s"})`);
   return parts.join("; ") || "datos no v\xE1lidos";
 }
-function parseFounderImport(text15) {
+function parseFounderImport(text16) {
   let data3;
   try {
-    data3 = JSON.parse(text15);
+    data3 = JSON.parse(text16);
   } catch {
     return { items: [], errors: ["El archivo no es JSON v\xE1lido."] };
   }
@@ -97435,8 +97539,8 @@ var init_founder_store = __esm({
             message2 = "Listo, borramos la ficha de tu taller y no te escribiremos m\xE1s. Gracias por tu tiempo. Si alg\xFAn d\xEDa quieres sumarte, escr\xEDbenos.";
           }
           await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'founder.answer', ?)", [randomUUID28(), `founder-answer:${id3}`, phone, JSON.stringify({ message: message2 })]);
-          for (const [i, text15] of guides.entries())
-            await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload, nextAttemptAt) VALUES (?, ?, NULL, ?, 'founder.guide', ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? MINUTE))", [randomUUID28(), `founder-guide:${id3}:${i + 1}`, phone, JSON.stringify({ message: text15 }), i + 1]);
+          for (const [i, text16] of guides.entries())
+            await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload, nextAttemptAt) VALUES (?, ?, NULL, ?, 'founder.guide', ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? MINUTE))", [randomUUID28(), `founder-guide:${id3}:${i + 1}`, phone, JSON.stringify({ message: text16 }), i + 1]);
           await this.audit(conn, decision === "acepto" ? "founder.accepted" : "founder.rejected", null, id3, { via });
           if (decision !== "acepto")
             await conn.query("UPDATE `FounderInvite` SET phone = NULL WHERE id = ?", [id3]);
@@ -97449,14 +97553,14 @@ var init_founder_store = __esm({
 
 // packages/api/dist/infrastructure/messaging/local-agent-broker.js
 import { createHash as createHash9, randomBytes as randomBytes8 } from "node:crypto";
-function recognizedCommand(text15) {
-  if (!text15 || text15.length > 2e3)
+function recognizedCommand(text16) {
+  if (!text16 || text16.length > 2e3)
     return false;
-  const account = parseAccountCommand(text15);
+  const account = parseAccountCommand(text16);
   if (account && !isInvalidAccountCommand(account))
     return true;
   try {
-    parseLocalChat(text15);
+    parseLocalChat(text16);
     return true;
   } catch {
     return false;
@@ -97507,7 +97611,7 @@ var init_local_agent_broker = __esm({
       "\xA1Hola! Recibimos tu mensaje en AutoMantPro. A\xFAn no tienes cuenta con este n\xFAmero; puedes crearla gratis ahora mismo con tu enlace:",
       "Hola, soy AutoMantPro \u{1F44B} Tu n\xFAmero todav\xEDa no est\xE1 registrado. Elige tu perfil y crea tu cuenta gratis aqu\xED:",
       "Gracias por contactar a AutoMantPro. Este n\xFAmero a\xFAn no tiene cuenta; reg\xEDstrate gratis con el enlace que te corresponde:"
-    ].map((text15) => `${text15}
+    ].map((text16) => `${text16}
 ${SIGNUP_LINKS}
 Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \xE9l entras, sin contrase\xF1a. Si tienes una emergencia en la v\xEDa, llama al 911.`);
     MysqlLocalAgentBroker = class {
@@ -97893,8 +97997,8 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
           const vehicles = role === "dueno" ? await data(conn, "SELECT make, model, year, currentKm FROM `Vehicle` WHERE userId = ? AND deletedAt IS NULL ORDER BY createdAt LIMIT 5", [id3]) : [];
           const requests = role === "dueno" ? await data(conn, "SELECT r.id, r.kind, r.category, r.zone, r.status, r.expiresAt, SUM(o.status IN ('offered','chosen')) AS offers FROM `LocalRequest` r LEFT JOIN `LocalOffer` o ON o.requestId = r.id WHERE r.ownerId = ? GROUP BY r.id ORDER BY r.createdAt DESC LIMIT 5", [id3]) : await data(conn, "SELECT r.id, r.kind, r.category, r.zone, r.status, r.expiresAt, o.status AS myOffer FROM `LocalOffer` o JOIN `LocalRequest` r ON r.id = o.requestId WHERE o.businessUserId = ? ORDER BY r.createdAt DESC LIMIT 5", [id3]);
           const recent = await data(conn, "SELECT q.payload, r.message AS reply FROM `LocalAgentReply` r JOIN `InboundWebhook` q ON q.wamid = r.wamid WHERE r.userId = ? ORDER BY r.createdAt DESC LIMIT 4", [id3]);
-          const text15 = String(payload?.message ?? "").trim();
-          const exactCommand = recognizedCommand(text15) ? text15 : null;
+          const text16 = String(payload?.message ?? "").trim();
+          const exactCommand = recognizedCommand(text16) ? text16 : null;
           const hasPhoto = !!payload?.mediaId || (await data(conn, "SELECT 1 FROM `InboundMedia` WHERE wamid = ? LIMIT 1", [wamid]).catch(() => [])).length > 0;
           return {
             exactCommand,
@@ -98329,8 +98433,8 @@ var init_deferred_work = __esm({
 
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
 import { createHash as createHash10, randomUUID as randomUUID31 } from "node:crypto";
-function matchService(text15) {
-  const f = fold16(text15);
+function matchService(text16) {
+  const f = fold16(text16);
   const exact = SERVICES2.find((s) => s.id === f || fold16(s.name) === f);
   if (exact)
     return exact.id;
@@ -98438,7 +98542,7 @@ var init_vehicle_care_store = __esm({
       throw new VehicleCareError(code5);
     };
     fold16 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
-    createHashLike = (text15) => createHash10("sha256").update(text15).digest("hex").slice(0, 12);
+    createHashLike = (text16) => createHash10("sha256").update(text16).digest("hex").slice(0, 12);
     short5 = (prefix, id3) => `${prefix}-${id3.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf3 = (code5) => `${code5.slice(2).toLowerCase()}%`;
     CARD_ACTIONS = ["createCard", "cardPreview", "claimCard", "declineCard", "listCards", "cancelCard", "revokeShop"];
@@ -99009,8 +99113,8 @@ ${out.join("\n")}` : out.join("\n") };
       async ownerPlan(conn, userId, role, full, plate2) {
         const vehicle = await this.planVehicle(conn, await this.ownerVehicle(conn, userId, role, plate2, "read"));
         const level = await vehicleLevel(conn, vehicle);
-        const text15 = full ? planTextFor(vehicle, level) : planSummaryFor(vehicle, level);
-        return { userId, message: text15 ?? "Todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo; una persona del equipo te ayudar\xE1." };
+        const text16 = full ? planTextFor(vehicle, level) : planSummaryFor(vehicle, level);
+        return { userId, message: text16 ?? "Todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo; una persona del equipo te ayudar\xE1." };
       }
       /** "Hecho": records the reminded service today at the current km; the plan then moves to the next milestone. */
       async reminderDone(conn, userId, role, service) {
@@ -99243,9 +99347,9 @@ El total de la orden qued\xF3 en ${formatUsd(approvedTotal)}. Puedes iniciar el 
         await conn.query("INSERT INTO `WorkOrderPromise` (workOrderId, promisedDate, reason, changes, setBy) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE promisedDate = VALUES(promisedDate), reason = VALUES(reason), changes = VALUES(changes), setBy = VALUES(setBy), updatedAt = CURRENT_TIMESTAMP(3)", [order.id, command.date, command.reason, changes, shop.actor]);
         await this.audit(conn, userId, "care.order.promise", "WorkOrder", String(order.id), { date: command.date, ...current ? { previous: String(current.promisedDate) } : {}, ...command.reason ? { reason: command.reason } : {}, by: shop.actor });
         const label5 = `${order.make} ${order.model} ${order.year}`;
-        const text15 = current ? `\u{1F4C5} ${shop.name} cambi\xF3 la fecha de entrega de tu ${label5} (${code5}): antes ${this.longDate(String(current.promisedDate))}, ahora ${this.longDate(command.date)}.${command.reason ? ` Motivo: ${command.reason}.` : ""}` : `\u{1F4C5} ${shop.name} te promete la entrega de tu ${label5} (${code5}) para el ${this.longDate(command.date)}.${command.reason ? ` ${command.reason}.` : ""}`;
-        await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `promise:${String(order.id)}:${changes}`, "care.promise", text15);
-        await this.notifyDriver(conn, String(order.vehicleId), `promise-driver:${String(order.id)}:${changes}`, text15);
+        const text16 = current ? `\u{1F4C5} ${shop.name} cambi\xF3 la fecha de entrega de tu ${label5} (${code5}): antes ${this.longDate(String(current.promisedDate))}, ahora ${this.longDate(command.date)}.${command.reason ? ` Motivo: ${command.reason}.` : ""}` : `\u{1F4C5} ${shop.name} te promete la entrega de tu ${label5} (${code5}) para el ${this.longDate(command.date)}.${command.reason ? ` ${command.reason}.` : ""}`;
+        await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `promise:${String(order.id)}:${changes}`, "care.promise", text16);
+        await this.notifyDriver(conn, String(order.vehicleId), `promise-driver:${String(order.id)}:${changes}`, text16);
         return { userId, message: `Fecha de entrega de ${code5}: ${this.longDate(command.date)}. Avisamos al due\xF1o.` };
       }
       /** El taller marca una cita confirmada cuya hora ya pasó como «No asistió». Libera el cupo y avisa al dueño; sin penalización. */
@@ -99459,9 +99563,9 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
         if (!accept) {
           await conn.query("UPDATE `WorkOrderWarranty` SET status = 'rechazada', shopNote = ?, decidedBy = ?, decidedAt = UTC_TIMESTAMP(3) WHERE id = ? AND status = 'abierta'", [note, userId, claim.id]);
           await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.rejected', ?, 'taller', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID31(), userId, order.id, JSON.stringify({ claim: claim.id, by: shop.actor }), note]);
-          const text16 = `\u274C ${shop.name} no acept\xF3 tu reclamo de garant\xEDa de ${code5} (${ref4}): ${note}. Si no est\xE1s de acuerdo, habla con el taller.`;
-          await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `warranty-answer:${String(claim.id)}`, "care.warranty", text16);
-          await this.notifyDriver(conn, String(order.vehicleId), `warranty-answer-driver:${String(claim.id)}`, text16);
+          const text17 = `\u274C ${shop.name} no acept\xF3 tu reclamo de garant\xEDa de ${code5} (${ref4}): ${note}. Si no est\xE1s de acuerdo, habla con el taller.`;
+          await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `warranty-answer:${String(claim.id)}`, "care.warranty", text17);
+          await this.notifyDriver(conn, String(order.vehicleId), `warranty-answer-driver:${String(claim.id)}`, text17);
           return { userId, message: `Rechazaste el reclamo de garant\xEDa ${ref4} de ${code5}. Avisamos al due\xF1o con tu motivo.` };
         }
         const next = Number((await rows36(conn, "SELECT COALESCE(MAX(number), 0) + 1 AS next FROM `WorkOrder` FOR UPDATE"))[0]?.next ?? 1);
@@ -99472,9 +99576,9 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
         await conn.query("UPDATE `WorkOrderWarranty` SET status = 'aceptada', shopNote = ?, decidedBy = ?, decidedAt = UTC_TIMESTAMP(3), reentryOrderId = ? WHERE id = ? AND status = 'abierta'", [note, userId, reentryId, claim.id]);
         await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'care.warranty.accepted', ?, 'taller', 'WorkOrder', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID31(), userId, order.id, JSON.stringify({ claim: claim.id, reentryOrderId: reentryId, reentry: reentryCode, by: shop.actor }), note]);
         await this.audit(conn, userId, "care.warranty.reentry", "WorkOrder", reentryId, { origin: String(order.id), claim: String(claim.id), by: shop.actor });
-        const text15 = `\u2705 ${shop.name} acept\xF3 tu reclamo de garant\xEDa de ${code5} (${ref4}).${note ? ` Nota: ${note}.` : ""} Abri\xF3 la orden ${reentryCode} para atender tu ${label5}, sin costo. Sigue el avance con: Estado ${reentryCode}`;
-        await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `warranty-answer:${String(claim.id)}`, "care.warranty", text15);
-        await this.notifyDriver(conn, String(order.vehicleId), `warranty-answer-driver:${String(claim.id)}`, text15);
+        const text16 = `\u2705 ${shop.name} acept\xF3 tu reclamo de garant\xEDa de ${code5} (${ref4}).${note ? ` Nota: ${note}.` : ""} Abri\xF3 la orden ${reentryCode} para atender tu ${label5}, sin costo. Sigue el avance con: Estado ${reentryCode}`;
+        await this.notifyOwner(conn, String(order.ownerId), String(order.vehicleId), `warranty-answer:${String(claim.id)}`, "care.warranty", text16);
+        await this.notifyDriver(conn, String(order.vehicleId), `warranty-answer-driver:${String(claim.id)}`, text16);
         return { userId, message: `Aceptaste el reclamo de garant\xEDa ${ref4} de ${code5}. Abrimos la orden ${reentryCode} de reingreso, ligada a la original y sin cobro. Env\xEDa el presupuesto en cero: Presupuesto ${reentryCode} | mano de obra: Revisi\xF3n por garant\xEDa, 1, 0` };
       }
       /** Aviso al dueño del taller y a sus administradores activos. */
@@ -99535,8 +99639,8 @@ Responde: Aceptar garant\xEDa ${code5} (| nota) \xB7 Rechazar garant\xEDa ${code
         const label5 = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
         const owner = String(vehicle.ownerId);
         if (command.action === "shopPlan") {
-          const text15 = planSummaryFor(await this.planVehicle(conn, vehicle));
-          return { userId, message: text15 ?? `${label5}: todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo.` };
+          const text16 = planSummaryFor(await this.planVehicle(conn, vehicle));
+          return { userId, message: text16 ?? `${label5}: todav\xEDa no hay reglas de mantenimiento para este veh\xEDculo.` };
         }
         if (command.action === "checkIn") {
           const [existing] = await rows36(conn, "SELECT number FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY number LIMIT 1 FOR UPDATE", [vehicle.appointmentId]);
@@ -99992,8 +100096,8 @@ Para quitar a alguien: Quitar t\xE9cnico T-XXXXXX` };
         const code5 = short5("T", id3);
         await conn.query("INSERT INTO `ShopMember` (id, shopId, name, status, invitedBy, role) VALUES (?, ?, ?, 'invited', ?, ?)", [id3, shop.id, command.name, userId, command.role]);
         await this.audit(conn, userId, "care.technician.invited", "ShopMember", id3, { shopId: shop.id, by: shop.isOwner ? "dueno" : "admin" });
-        const text15 = encodeURIComponent(`T\xE9cnico ${code5} | ${command.name} | ACEPTO`);
-        const link = publicNumber3 ? `https://wa.me/${publicNumber3}?text=${text15}` : null;
+        const text16 = encodeURIComponent(`T\xE9cnico ${code5} | ${command.name} | ACEPTO`);
+        const link = publicNumber3 ? `https://wa.me/${publicNumber3}?text=${text16}` : null;
         return { userId, message: `Listo. Comparte este enlace con ${command.name} para que se una a ${shop.name} como ${command.role === "admin" ? "administrador (recibir\xE1 el reporte diario)" : "t\xE9cnico"} desde su propio WhatsApp:
 ${link ?? `escribe al WhatsApp de AutoMantPro: T\xE9cnico ${code5} | ${command.name} | ACEPTO`}
 Al enviarlo acepta los t\xE9rminos y el tratamiento de datos. Para quitarlo despu\xE9s: Quitar t\xE9cnico ${code5}` };
@@ -100404,8 +100508,8 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
             return true;
           const changed2 = affected3(await conn.query("UPDATE `NotificationOutbox` SET status = IF(attempts >= ?, 'dead', 'pending'), nextAttemptAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? SECOND), lastError = ?, leaseToken = NULL, lockedAt = NULL WHERE id = ? AND status = 'sending' AND leaseToken = ?", [MAX_ATTEMPTS2, delaySeconds, code5, id3, leaseToken])) === 1;
           if (changed2) {
-            const [rows71] = await conn.query("SELECT kind,status FROM `NotificationOutbox` WHERE id = ?", [id3]);
-            const row2 = rows71[0];
+            const [rows72] = await conn.query("SELECT kind,status FROM `NotificationOutbox` WHERE id = ?", [id3]);
+            const row2 = rows72[0];
             if (row2?.status === "dead" && row2.kind !== "admin.alert")
               void new MysqlAdminAlerts().notify("outbox_dead", 1);
           }
@@ -100472,9 +100576,9 @@ var init_local_agent_task_store = __esm({
           const max = Math.max(1, Math.min(1, Math.floor(limit) || 1));
           await c.query("START TRANSACTION");
           try {
-            const rows71 = await data2(c, "SELECT id,type,payload,attempts FROM `LocalAgentTask` WHERE status='queued' OR (status='processing' AND leaseUntil < UTC_TIMESTAMP(3)) ORDER BY createdAt,id LIMIT ? FOR UPDATE", [max]);
+            const rows72 = await data2(c, "SELECT id,type,payload,attempts FROM `LocalAgentTask` WHERE status='queued' OR (status='processing' AND leaseUntil < UTC_TIMESTAMP(3)) ORDER BY createdAt,id LIMIT ? FOR UPDATE", [max]);
             const out = [];
-            for (const row2 of rows71) {
+            for (const row2 of rows72) {
               if (Number(row2.attempts) >= 3) {
                 await c.query("UPDATE `LocalAgentTask` SET status='failed',errorCode='MAX_ATTEMPTS',completedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [row2.id]);
                 continue;
@@ -100522,6 +100626,111 @@ var init_local_agent_task_store = __esm({
       }
       async recent(limit = 20) {
         return this.run((c) => data2(c, "SELECT id,type,status,attempts,createdAt,updatedAt,completedAt,errorCode,result FROM `LocalAgentTask` ORDER BY createdAt DESC,id DESC LIMIT ?", [Math.max(1, Math.min(20, Math.floor(limit) || 20))]));
+      }
+    };
+  }
+});
+
+// packages/api/dist/infrastructure/directory/directory-store.js
+import { randomUUID as randomUUID35 } from "node:crypto";
+function parseDirectoryImport(raw) {
+  let data3;
+  try {
+    data3 = JSON.parse(raw);
+  } catch {
+    return { items: [], errors: ["El texto no es JSON v\xE1lido."] };
+  }
+  const list7 = Array.isArray(data3) ? data3 : data3?.talleres;
+  if (!Array.isArray(list7))
+    return { items: [], errors: ["Falta la lista \xABtalleres\xBB."] };
+  if (list7.length > MAX_DIRECTORY_IMPORT)
+    return { items: [], errors: [`M\xE1ximo ${MAX_DIRECTORY_IMPORT} talleres por carga.`] };
+  const items = [];
+  const errors = [];
+  list7.forEach((value2, i) => {
+    const parsed = entry.safeParse(value2);
+    if (!parsed.success) {
+      errors.push(`Fila ${i + 1}: revisa nombre, ciudad, fuente y servicios (sin otros campos).`);
+      return;
+    }
+    const all = [parsed.data.nombre, parsed.data.sector ?? "", ...parsed.data.servicios].join(" ");
+    if (CONTACT.test(all)) {
+      errors.push(`Fila ${i + 1}: sin tel\xE9fonos ni correos.`);
+      return;
+    }
+    items.push(parsed.data);
+  });
+  return { items, errors };
+}
+var rows37, fold18, MAX_DIRECTORY_IMPORT, text5, entry, CONTACT, DirectoryStore;
+var init_directory_store = __esm({
+  "packages/api/dist/infrastructure/directory/directory-store.js"() {
+    "use strict";
+    init_zod();
+    init_apply();
+    rows37 = async (c, sql, args = []) => (await c.query(sql, args))[0];
+    fold18 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+    MAX_DIRECTORY_IMPORT = 200;
+    text5 = (min, max) => external_exports.string().trim().min(min).max(max);
+    entry = external_exports.object({
+      nombre: text5(2, 120),
+      ciudad: text5(2, 80),
+      sector: text5(2, 80).optional(),
+      servicios: external_exports.array(text5(2, 40)).max(8).default([]),
+      fuente: text5(2, 120)
+    }).strict();
+    CONTACT = /@|\+?\d[\d\s-]{6,}\d/;
+    DirectoryStore = class _DirectoryStore {
+      connect;
+      constructor(connect = openConnection) {
+        this.connect = connect;
+      }
+      async run(fn) {
+        const c = await this.connect();
+        try {
+          return await fn(c);
+        } finally {
+          await c.end().catch(() => void 0);
+        }
+      }
+      static view(r) {
+        const services = typeof r.services === "string" ? JSON.parse(r.services) : r.services;
+        return { id: String(r.id), name: String(r.name), city: String(r.city), zone: r.zone ? String(r.zone) : null, services: Array.isArray(services) ? services.map(String) : [], source: String(r.source), active: Boolean(Number(r.active)) };
+      }
+      list() {
+        return this.run(async (c) => (await rows37(c, "SELECT id,name,city,zone,services,source,active FROM `DirectoryShop` ORDER BY active DESC, city, name LIMIT 1000")).map(_DirectoryStore.view));
+      }
+      /** Crea los nuevos; si ya existe el mismo nombre en la misma ciudad, lo deja como está. */
+      importMany(items, actorUserId) {
+        return this.run(async (c) => {
+          let created = 0;
+          for (const it of items) {
+            const [res] = await c.query("INSERT IGNORE INTO `DirectoryShop` (id,name,city,zone,services,source,createdBy) VALUES (?,?,?,?,?,?,?)", [randomUUID35(), it.nombre, it.ciudad, it.sector ?? null, JSON.stringify(it.servicios), it.fuente, actorUserId]);
+            created += Number(res.affectedRows ?? 0);
+          }
+          return { created, existing: items.length - created };
+        });
+      }
+      setActive(id3, active) {
+        return this.run(async (c) => {
+          const [res] = await c.query("UPDATE `DirectoryShop` SET active=? WHERE id=?", [active, id3]);
+          return Number(res.affectedRows) === 1;
+        });
+      }
+      /** Talleres no registrados de la ciudad (primero los del sector), sin los que ya están registrados con el mismo nombre. */
+      async nearby(city, zone, limit, registeredNames = []) {
+        if (!city || limit <= 0)
+          return [];
+        try {
+          const list7 = await this.run(async (c) => (await rows37(c, "SELECT id,name,city,zone,services,source,active FROM `DirectoryShop` WHERE active=true AND city=? ORDER BY name LIMIT 200", [city])).map(_DirectoryStore.view));
+          const taken = new Set(registeredNames.map(fold18));
+          const z = fold18(zone);
+          return list7.filter((s) => !taken.has(fold18(s.name))).sort((a, b) => Number(fold18(b.zone ?? "") === z) - Number(fold18(a.zone ?? "") === z)).slice(0, limit);
+        } catch (err4) {
+          if (err4.code === "ER_NO_SUCH_TABLE")
+            return [];
+          throw err4;
+        }
       }
     };
   }
@@ -100579,12 +100788,12 @@ function effectiveStatus(status, startDate, endDate, today) {
   return "aprobado";
 }
 function safeLink(value2) {
-  const text15 = clean3(value2, 300);
-  if (!text15)
+  const text16 = clean3(value2, 300);
+  if (!text16)
     return null;
   let url;
   try {
-    url = new URL(/^https?:\/\//i.test(text15) ? text15 : `https://${text15}`);
+    url = new URL(/^https?:\/\//i.test(text16) ? text16 : `https://${text16}`);
   } catch {
     return fail20("AD_LINK_INVALID", "El enlace no es v\xE1lido: escribe una direcci\xF3n como https://mitaller.ec");
   }
@@ -100598,10 +100807,10 @@ function safeLink(value2) {
 function parseAdDraft(body, today) {
   const b = body && typeof body === "object" ? body : {};
   const title = clean3(b.title, 80);
-  const text15 = clean3(b.body, 280);
+  const text16 = clean3(b.body, 280);
   if (title.length < 4)
     fail20("AD_TITLE_INVALID", "Escribe un t\xEDtulo de al menos 4 letras.");
-  if (text15.length < 10)
+  if (text16.length < 10)
     fail20("AD_BODY_INVALID", "Escribe el texto del anuncio (al menos 10 letras).");
   const formats = normalizeFormats(b.formats);
   const days2 = Number(b.days);
@@ -100615,7 +100824,7 @@ function parseAdDraft(body, today) {
     fail20("AD_START_INVALID", "Elige la fecha de inicio.");
   if (startDate < today || startDate > addDays(today, 60))
     fail20("AD_START_INVALID", "La fecha de inicio debe estar entre hoy y los pr\xF3ximos 60 d\xEDas.");
-  return { title, body: text15, linkUrl: safeLink(b.linkUrl), formats, city, zone, startDate, days: days2 };
+  return { title, body: text16, linkUrl: safeLink(b.linkUrl), formats, city, zone, startDate, days: days2 };
 }
 function campaignMessage(ad, link) {
   const body = ad.body.length > 200 ? `${ad.body.slice(0, 197)}\u2026` : ad.body;
@@ -100697,39 +100906,8 @@ var init_ads = __esm({
   }
 });
 
-// packages/api/dist/application/ads/house-ads.js
-function houseAdsFor(role, today) {
-  return HOUSE_ADS.filter((a) => a.roles.includes(role) && today <= a.until).map((a) => ({ id: a.id, businessName: a.businessName, title: a.title, body: a.body, linkUrl: a.linkUrl, hasImage: false }));
-}
-var HOUSE_ADS;
-var init_house_ads = __esm({
-  "packages/api/dist/application/ads/house-ads.js"() {
-    "use strict";
-    HOUSE_ADS = [
-      {
-        id: "casa-solucionespro",
-        businessName: "SolucionesPro",
-        title: "Sistematiza tu negocio",
-        body: "Diagn\xF3stico gratis de tus procesos y sistemas a medida para pymes: inventario, pedidos, clientes y agentes de IA con aprobaci\xF3n humana.",
-        linkUrl: "https://solucionespro.net/guia_pymes/",
-        until: "2027-02-28",
-        roles: ["dueno", "taller"]
-      },
-      {
-        id: "casa-redcafeecuador",
-        businessName: "Red Caf\xE9Ecuador",
-        title: "Todo el caf\xE9 ecuatoriano, conectado",
-        body: "Compra caf\xE9 directo de productores ecuatorianos, mira el precio del mes y crea tu perfil gratis en la red del caf\xE9.",
-        linkUrl: "https://redcafeecuador.com/marketplace/",
-        until: "2027-02-28",
-        roles: ["dueno", "taller"]
-      }
-    ];
-  }
-});
-
 // packages/api/dist/infrastructure/ads/ad-store.js
-import { randomUUID as randomUUID39 } from "node:crypto";
+import { randomUUID as randomUUID40 } from "node:crypto";
 function toSummary(r, today = ecuadorDate()) {
   const startDate = dateText(r.startDate);
   const endDate = dateText(r.endDate);
@@ -100763,15 +100941,15 @@ function toSummary(r, today = ecuadorDate()) {
   };
 }
 async function audit5(conn, eventType, actorUserId, actorRole, entityId, after, entityType = "AdCampaign") {
-  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, NULL, ?, UTC_TIMESTAMP(3))", [randomUUID39(), eventType, actorUserId, actorRole, entityType, entityId, JSON.stringify(after)]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, NULL, ?, UTC_TIMESTAMP(3))", [randomUUID40(), eventType, actorUserId, actorRole, entityType, entityId, JSON.stringify(after)]);
 }
 async function readConsent(conn, userId) {
-  const [u] = await rows42(conn, "SELECT adsOptInAt, whatsappOptOutAt FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+  const [u] = await rows43(conn, "SELECT adsOptInAt, whatsappOptOutAt FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
   if (!u)
     return fail21("ACCOUNT_UNAVAILABLE", "Tu cuenta no est\xE1 disponible.", 403);
   return { adsOptIn: Boolean(u.adsOptInAt), since: u.adsOptInAt ? new Date(String(u.adsOptInAt)).toISOString() : null, whatsappOptOut: Boolean(u.whatsappOptOutAt) };
 }
-var rows42, affected4, fail21, isMissingSchema, UPDATE_PENDING, adCode, dateText, formatsOf, sameText, SUMMARY_COLUMNS, toPublic, AD_FILTERS, MysqlAdStore, usd4;
+var rows43, affected4, fail21, isMissingSchema, UPDATE_PENDING, adCode, dateText, formatsOf, sameText, SUMMARY_COLUMNS, toPublic, AD_FILTERS, MysqlAdStore, usd4;
 var init_ad_store = __esm({
   "packages/api/dist/infrastructure/ads/ad-store.js"() {
     "use strict";
@@ -100780,8 +100958,9 @@ var init_ad_store = __esm({
     init_account_links();
     init_subscription_chat();
     init_house_ads();
+    init_entitlements();
     init_ads();
-    rows42 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    rows43 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     affected4 = (result) => Number(result[0].affectedRows ?? 0);
     fail21 = (code5, message2, status = 409) => {
       throw new AdRuleError(code5, message2, status);
@@ -100817,7 +100996,7 @@ var init_ad_store = __esm({
         if (role !== "taller" && role !== "almacen")
           return fail21("FORBIDDEN", "Solo los talleres y almacenes pueden publicar anuncios.", 403);
         const table2 = role === "taller" ? "`Shop`" : "`Store`";
-        const [found] = await rows42(conn, `SELECT b.id, b.name, b.verificationStatus FROM ${table2} b JOIN \`User\` u ON u.id = b.userId AND u.deletedAt IS NULL WHERE b.userId = ? AND u.role = ?`, [userId, role]);
+        const [found] = await rows43(conn, `SELECT b.id, b.name, b.verificationStatus FROM ${table2} b JOIN \`User\` u ON u.id = b.userId AND u.deletedAt IS NULL WHERE b.userId = ? AND u.role = ?`, [userId, role]);
         if (!found)
           return fail21("FORBIDDEN", "Solo el titular del negocio puede publicar anuncios.", 403);
         if (String(found.verificationStatus) !== "verified")
@@ -100825,7 +101004,7 @@ var init_ad_store = __esm({
         return { kind: role, id: String(found.id), name: String(found.name) };
       }
       async own(conn, userId, adId, lock = false) {
-        const [ad] = await rows42(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ? AND ownerUserId = ?${lock ? " FOR UPDATE" : ""}`, [adId, userId]);
+        const [ad] = await rows43(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ? AND ownerUserId = ?${lock ? " FOR UPDATE" : ""}`, [adId, userId]);
         return ad ?? fail21("NOT_FOUND", "No encontramos ese anuncio.", 404);
       }
       /** Crea el anuncio en borrador con el precio calculado en el servidor. */
@@ -100839,7 +101018,7 @@ var init_ad_store = __esm({
         const price = adPrice(draft.formats, draft.days);
         return this.run(async (conn) => {
           const biz = await this.business(conn, userId, role);
-          const id3 = randomUUID39();
+          const id3 = randomUUID40();
           await conn.query("INSERT INTO `AdCampaign` (id, ownerUserId, businessKind, businessId, businessName, title, body, linkUrl, imageMime, imageData, formats, city, zone, startDate, endDate, days, subtotalUsd, ivaUsd, totalUsd, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'borrador')", [id3, userId, biz.kind, biz.id, biz.name, draft.title, draft.body, draft.linkUrl, image?.mime ?? null, image?.data ?? null, price.formats.join(","), draft.city, draft.zone, draft.startDate, adEndDate(draft.startDate, draft.days), draft.days, price.subtotalUsd, price.ivaUsd, price.totalUsd]);
           await audit5(conn, "ad.created", userId, role, id3, { formats: price.formats, days: price.days, totalUsd: price.totalUsd });
           const ad = toSummary(await this.own(conn, userId, id3), today);
@@ -100850,7 +101029,7 @@ var init_ad_store = __esm({
       mine(userId, role, now = /* @__PURE__ */ new Date()) {
         if (role !== "taller" && role !== "almacen")
           return Promise.resolve([]);
-        return this.run(async (conn) => (await rows42(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE ownerUserId = ? ORDER BY createdAt DESC LIMIT 50`, [userId])).map((r) => toSummary(r, ecuadorDate(now))));
+        return this.run(async (conn) => (await rows43(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE ownerUserId = ? ORDER BY createdAt DESC LIMIT 50`, [userId])).map((r) => toSummary(r, ecuadorDate(now))));
       }
       /** Sube el comprobante (foto o PDF) y deja el anuncio en «pago enviado» para que el equipo lo revise. */
       submitProof(userId, role, adId, dataUrl, reference) {
@@ -100883,7 +101062,7 @@ var init_ad_store = __esm({
       image(userId, adId, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
           const today = ecuadorDate(now);
-          const [ad] = await rows42(conn, "SELECT ownerUserId, status, startDate, endDate, imageMime, imageData FROM `AdCampaign` WHERE id = ? AND imageMime IS NOT NULL", [adId]);
+          const [ad] = await rows43(conn, "SELECT ownerUserId, status, startDate, endDate, imageMime, imageData FROM `AdCampaign` WHERE id = ? AND imageMime IS NOT NULL", [adId]);
           if (!ad)
             return fail21("NOT_FOUND", "Sin imagen.", 404);
           const visible = String(ad.ownerUserId) === userId || effectiveStatus(String(ad.status), dateText(ad.startDate), dateText(ad.endDate), today) === "activo";
@@ -100897,13 +101076,16 @@ var init_ad_store = __esm({
         const today = ecuadorDate(now);
         const house = houseAdsFor(role, today);
         const empty = { banners: house.slice(0, 3), popups: [], inbox: house };
-        if (role !== "dueno")
-          return Promise.resolve(empty);
+        const none = { banners: [], popups: [], inbox: [] };
         return this.run(async (conn) => {
-          const [user] = await rows42(conn, "SELECT city, zone FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+          if (await hasPaidPlan(conn, userId, void 0, now))
+            return none;
+          if (role !== "dueno")
+            return empty;
+          const [user] = await rows43(conn, "SELECT city, zone FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
           if (!user?.city)
             return empty;
-          const list7 = (await rows42(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE status IN ('aprobado','activo') AND startDate <= ? AND endDate >= ? ORDER BY submittedAt, id LIMIT 100`, [today, today])).map((r) => toSummary(r, today)).filter((a) => a.status === "activo" && sameText(a.city, user.city) && (!a.zone || sameText(a.zone, user.zone)));
+          const list7 = (await rows43(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE status IN ('aprobado','activo') AND startDate <= ? AND endDate >= ? ORDER BY submittedAt, id LIMIT 100`, [today, today])).map((r) => toSummary(r, today)).filter((a) => a.status === "activo" && sameText(a.city, user.city) && (!a.zone || sameText(a.zone, user.zone)));
           const pick = (f) => list7.filter((a) => a.formats.includes(f)).map(toPublic);
           const inbox = list7.filter((a) => a.formats.includes("interno") || a.formats.includes("whatsapp")).map(toPublic);
           return { banners: [...pick("banner"), ...house].slice(0, 3), popups: pick("popup").slice(0, 3), inbox: [...inbox, ...house].slice(0, 10) };
@@ -100940,22 +101122,22 @@ var init_ad_store = __esm({
       list(filter, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
           const where = filter === "todas" ? "" : " WHERE status = ?";
-          return (await rows42(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\`${where} ORDER BY COALESCE(submittedAt, createdAt) DESC LIMIT 100`, filter === "todas" ? [] : [filter])).map((r) => toSummary(r, ecuadorDate(now)));
+          return (await rows43(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\`${where} ORDER BY COALESCE(submittedAt, createdAt) DESC LIMIT 100`, filter === "todas" ? [] : [filter])).map((r) => toSummary(r, ecuadorDate(now)));
         });
       }
       pendingCount() {
-        return this.run(async (conn) => Number((await rows42(conn, "SELECT COUNT(*) AS n FROM `AdCampaign` WHERE status = 'pago_enviado'"))[0]?.n ?? 0));
+        return this.run(async (conn) => Number((await rows43(conn, "SELECT COUNT(*) AS n FROM `AdCampaign` WHERE status = 'pago_enviado'"))[0]?.n ?? 0));
       }
       get(adId) {
         return this.run(async (conn) => {
-          const [r] = await rows42(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ?`, [adId]);
+          const [r] = await rows43(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ?`, [adId]);
           return r ? { ...toSummary(r), ownerUserId: String(r.ownerUserId) } : null;
         });
       }
       adminFile(adId, which) {
         return this.run(async (conn) => {
           const sql = which === "proof" ? "SELECT proofMime AS mime, proofData AS data FROM `AdCampaign` WHERE id = ? AND proofMime IS NOT NULL" : "SELECT imageMime AS mime, imageData AS data FROM `AdCampaign` WHERE id = ? AND imageMime IS NOT NULL";
-          const [r] = await rows42(conn, sql, [adId]);
+          const [r] = await rows43(conn, sql, [adId]);
           if (!r)
             return fail21("NOT_FOUND", "Sin archivo.", 404);
           return { mime: String(r.mime), data: r.data };
@@ -100967,7 +101149,7 @@ var init_ad_store = __esm({
        */
       sendPaymentInfo(adId, adminId, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const [ad] = await rows42(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ?`, [adId]);
+          const [ad] = await rows43(conn, `SELECT ${SUMMARY_COLUMNS} FROM \`AdCampaign\` WHERE id = ?`, [adId]);
           if (!ad)
             return false;
           const a = toSummary(ad, ecuadorDate(now));
@@ -100985,7 +101167,7 @@ var init_ad_store = __esm({
             `Cuando la hagas, sube la foto del comprobante en tu perfil: ${accountLink("publicidad")}`,
             "Aprobamos el anuncio apenas verifiquemos el pago, normalmente el mismo d\xEDa h\xE1bil."
           ].join("\n");
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.payment', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID39(), `ad:payment:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.payment', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID40(), `ad:payment:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
           await conn.query("UPDATE `AdCampaign` SET paymentSentAt = ? WHERE id = ?", [now, adId]);
           await audit5(conn, "ad.payment_info", adminId, "admin", adId, { accounts: banks.length });
           return true;
@@ -100996,7 +101178,7 @@ var init_ad_store = __esm({
         if (!/^\d{3}-\d{3}-\d{1,9}$/.test(invoice))
           return Promise.reject(new AdRuleError("AD_INVOICE_INVALID", "Factura no v\xE1lida: usa el formato 001-001-000000123."));
         return this.run(async (conn) => {
-          const [ad] = await rows42(conn, "SELECT id, ownerUserId, status, totalUsd FROM `AdCampaign` WHERE id = ?", [adId]);
+          const [ad] = await rows43(conn, "SELECT id, ownerUserId, status, totalUsd FROM `AdCampaign` WHERE id = ?", [adId]);
           if (!ad)
             return false;
           if (!["aprobado", "activo", "vencido"].includes(String(ad.status)))
@@ -101004,7 +101186,7 @@ var init_ad_store = __esm({
           await conn.query("UPDATE `AdCampaign` SET invoiceNumber = ? WHERE id = ?", [invoice, adId]);
           await audit5(conn, "ad.invoice", adminId, "admin", adId, { invoice });
           const message2 = `\u{1F9FE} Emitimos la factura N\xB0 ${invoice} de tu anuncio ${adCode(adId)} por ${usd4(Number(ad.totalUsd))}. Cons\xE9rvala para tu contabilidad.`;
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.invoice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID39(), `ad:invoice:${adId}:${invoice}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.invoice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID40(), `ad:invoice:${adId}:${invoice}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
           return true;
         });
       }
@@ -101020,7 +101202,7 @@ var init_ad_store = __esm({
         return this.run(async (conn) => {
           await conn.query("START TRANSACTION");
           try {
-            const [ad] = await rows42(conn, "SELECT id, ownerUserId, title, status, startDate, endDate FROM `AdCampaign` WHERE id = ? FOR UPDATE", [adId]);
+            const [ad] = await rows43(conn, "SELECT id, ownerUserId, title, status, startDate, endDate FROM `AdCampaign` WHERE id = ? FOR UPDATE", [adId]);
             if (!ad || !canTransition(String(ad.status), to)) {
               await conn.query("ROLLBACK");
               return false;
@@ -101031,7 +101213,7 @@ var init_ad_store = __esm({
             await audit5(conn, to === "aprobado" ? "ad.approved" : "ad.rejected", adminId, "admin", adId, { status, reason });
             const code5 = adCode(adId);
             const message2 = to === "aprobado" ? `\u2705 Aprobamos el pago de tu anuncio ${code5} \xAB${String(ad.title)}\xBB. Se publica desde el ${dateText(ad.startDate)} hasta el ${dateText(ad.endDate)}. M\xEDralo en tu perfil: ${accountLink("publicidad")}` : `No pudimos verificar el pago de tu anuncio ${code5}: ${reason}. Sube otro comprobante en tu perfil: ${accountLink("publicidad")}`;
-            await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.decision', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID39(), `ad:${to}:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
+            await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'ad.decision', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID40(), `ad:${to}:${adId}:${now.getTime()}`.slice(0, 191), String(ad.ownerUserId), JSON.stringify({ message: message2 })]);
             await conn.query("COMMIT");
             return true;
           } catch (err4) {
@@ -101046,7 +101228,7 @@ var init_ad_store = __esm({
 });
 
 // packages/api/dist/infrastructure/operator/operator-key-store.js
-import { createHash as createHash13, randomBytes as randomBytes12, randomUUID as randomUUID47 } from "node:crypto";
+import { createHash as createHash13, randomBytes as randomBytes12, randomUUID as randomUUID48 } from "node:crypto";
 var OPERATOR_SCOPES, SCOPE_LABELS, KEY_FORMAT, isOperatorKeyFormat, hashOperatorKey, parseScopes, toRow, MysqlOperatorKeyStore;
 var init_operator_key_store = __esm({
   "packages/api/dist/infrastructure/operator/operator-key-store.js"() {
@@ -101086,11 +101268,11 @@ var init_operator_key_store = __esm({
         }
       }
       create(input) {
-        const id3 = randomUUID47();
+        const id3 = randomUUID48();
         const key = `amp_op_${randomBytes12(32).toString("base64url")}`;
         return this.run(async (conn) => {
           await conn.query("INSERT INTO `OperatorKey` (id, name, keyHash, scopes, createdByUserId) VALUES (?, ?, ?, ?, ?)", [id3, input.name, hashOperatorKey(key), input.scopes.join(","), input.createdByUserId]);
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.created', ?, 'admin', 'OperatorKey', ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID47(), input.createdByUserId, id3, `${input.name}: ${input.scopes.join(", ")}`]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.created', ?, 'admin', 'OperatorKey', ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID48(), input.createdByUserId, id3, `${input.name}: ${input.scopes.join(", ")}`]);
           return { id: id3, key };
         });
       }
@@ -101102,7 +101284,7 @@ var init_operator_key_store = __esm({
           const [result] = await conn.query("UPDATE `OperatorKey` SET revokedAt = CURRENT_TIMESTAMP(3), revokedByUserId = ? WHERE id = ? AND revokedAt IS NULL", [byUserId, id3]);
           const changed2 = Number(result.affectedRows ?? 0) > 0;
           if (changed2)
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.revoked', ?, 'admin', 'OperatorKey', ?, 'llave revocada', CURRENT_TIMESTAMP(3))", [randomUUID47(), byUserId, id3]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.revoked', ?, 'admin', 'OperatorKey', ?, 'llave revocada', CURRENT_TIMESTAMP(3))", [randomUUID48(), byUserId, id3]);
           return changed2;
         });
       }
@@ -101119,7 +101301,7 @@ var init_operator_key_store = __esm({
       }
       audit(key, eventType, entityType, entityId, reason) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID47(), `operator.${eventType}`, key.createdByUserId, entityType, entityId, `[${key.name}] ${reason}`.slice(0, 500)]);
+          await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID48(), `operator.${eventType}`, key.createdByUserId, entityType, entityId, `[${key.name}] ${reason}`.slice(0, 500)]);
         });
       }
     };
@@ -101127,7 +101309,7 @@ var init_operator_key_store = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/plan-store.js
-function rows51(result) {
+function rows52(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -101196,9 +101378,9 @@ var init_plan_store = __esm({
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows51(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows52(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
-          const next = rows51(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
+          const next = rows52(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `Subscription`"))[0];
           await conn.query(
             // `active` se mantiene en falso mientras el pago no esté verificado, para que cualquier
             // lectura antigua de esa columna vea lo mismo que el estado nuevo.
@@ -101224,25 +101406,25 @@ var init_plan_store = __esm({
             params2.push(Math.max(1, Math.floor(soonDays)));
           } else if (filter === "vencida")
             where = "WHERE s.status = 'vencida' OR (s.status = 'activa' AND s.expiresAt IS NOT NULL AND s.expiresAt <= UTC_TIMESTAMP(3))";
-          const items = rows51(await conn.query(`${SELECT} ${where} ORDER BY s.status = 'pendiente' DESC, s.status = 'solicitada' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params2)).map(toRow2);
+          const items = rows52(await conn.query(`${SELECT} ${where} ORDER BY s.status = 'pendiente' DESC, s.status = 'solicitada' DESC, s.createdAt DESC LIMIT ${PAGE_SIZE5} OFFSET ${offset2}`, params2)).map(toRow2);
           return { items, page: Math.max(1, Math.floor(page3)), pageSize: PAGE_SIZE5 };
         });
       }
       get(id3) {
         return this.run(async (conn) => {
-          const row2 = rows51(await conn.query(`${SELECT} WHERE s.id = ? LIMIT 1`, [id3]))[0];
+          const row2 = rows52(await conn.query(`${SELECT} WHERE s.id = ? LIMIT 1`, [id3]))[0];
           return row2 ? toRow2(row2) : null;
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows51(await conn.query(`${SELECT} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
+        return this.run(async (conn) => rows52(await conn.query(`${SELECT} WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 20`, [userId])).map(toRow2));
       }
       verify(id3, months2, verifiedBy) {
         return this.run(async (conn) => {
-          const [self2] = rows51(await conn.query("SELECT userId, plan FROM `Subscription` WHERE id = ? AND status IN ('pendiente','solicitada')", [id3]));
+          const [self2] = rows52(await conn.query("SELECT userId, plan FROM `Subscription` WHERE id = ? AND status IN ('pendiente','solicitada')", [id3]));
           if (!self2)
             return false;
-          const [running] = rows51(await conn.query("SELECT MAX(expiresAt) AS until FROM `Subscription` WHERE userId = ? AND plan = ? AND id <> ? AND status = 'activa' AND expiresAt > UTC_TIMESTAMP(3)", [self2.userId, self2.plan, id3]));
+          const [running] = rows52(await conn.query("SELECT MAX(expiresAt) AS until FROM `Subscription` WHERE userId = ? AND plan = ? AND id <> ? AND status = 'activa' AND expiresAt > UTC_TIMESTAMP(3)", [self2.userId, self2.plan, id3]));
           const from = running?.until ? "?" : "CURRENT_TIMESTAMP(3)";
           const fromParams = running?.until ? [running.until] : [];
           const vence = months2 === null ? "NULL" : `DATE_ADD(${from}, INTERVAL ? MONTH)`;
@@ -101271,7 +101453,7 @@ var init_plan_store = __esm({
       }
       pendingCount() {
         return this.run(async (conn) => {
-          const row2 = rows51(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status IN ('pendiente','solicitada')"))[0];
+          const row2 = rows52(await conn.query("SELECT COUNT(*) AS n FROM `Subscription` WHERE status IN ('pendiente','solicitada')"))[0];
           return Number(row2?.n ?? 0);
         });
       }
@@ -101279,7 +101461,7 @@ var init_plan_store = __esm({
         return this.run(async (conn) => {
           const cuenta = async (sql, params2) => {
             try {
-              const row2 = rows51(await conn.query(sql, params2))[0];
+              const row2 = rows52(await conn.query(sql, params2))[0];
               return Number(row2?.n ?? 0);
             } catch {
               return 0;
@@ -101297,7 +101479,7 @@ var init_plan_store = __esm({
       }
       planForUser(userId) {
         return this.run(async (conn) => {
-          const list7 = rows51(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
+          const list7 = rows52(await conn.query("SELECT plan, status, startsAt, expiresAt AS endsAt FROM `Subscription` WHERE userId = ? AND status = 'activa'", [userId])).map((r) => ({
             plan: String(r.plan),
             status: String(r.status),
             startsAt: r.startsAt,
@@ -101311,7 +101493,7 @@ var init_plan_store = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/billing-store.js
-import { randomUUID as randomUUID48 } from "node:crypto";
+import { randomUUID as randomUUID49 } from "node:crypto";
 function rowsOf2(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
@@ -101326,8 +101508,8 @@ function monthRange(month) {
 }
 function revenueCsv(report, planLabel) {
   const cell3 = (v) => {
-    const text15 = v === null || v === void 0 ? "" : String(v);
-    const safe = /^[=+\-@\t\r]/.test(text15) ? `'${text15}` : text15;
+    const text16 = v === null || v === void 0 ? "" : String(v);
+    const safe = /^[=+\-@\t\r]/.test(text16) ? `'${text16}` : text16;
     return /[;"\n]/.test(safe) ? `"${safe.replace(/"/g, '""')}"` : safe;
   };
   const money8 = (n3) => n3.toFixed(2).replace(".", ",");
@@ -101390,7 +101572,7 @@ var init_billing_store = __esm({
       }
       addAccount(input, by) {
         return this.run(async (conn) => {
-          const id3 = randomUUID48();
+          const id3 = randomUUID49();
           await conn.query("INSERT INTO `PaymentAccount` (id, bank, accountType, number, holder, holderId, active, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, TRUE, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, input.bank, input.accountType, input.number, input.holder, input.holderId, by]);
           return id3;
         });
@@ -101473,7 +101655,7 @@ var init_billing_store = __esm({
       }
       notify(userId, dedupKey, message2) {
         return this.run(async (conn) => {
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID48(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID49(), dedupKey.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
         });
       }
       instructions(id3) {
@@ -101489,13 +101671,13 @@ var init_billing_store = __esm({
 });
 
 // packages/api/dist/infrastructure/work-orders/claim-store.js
-var rows52, whenTableMissing7, CLAIM_FILTERS, FILTER_STATUSES, parse, vehicleText3, CLAIM_SELECT, CLAIM_FROM, toRow3, MysqlClaimStore;
+var rows53, whenTableMissing7, CLAIM_FILTERS, FILTER_STATUSES, parse, vehicleText3, CLAIM_SELECT, CLAIM_FROM, toRow3, MysqlClaimStore;
 var init_claim_store = __esm({
   "packages/api/dist/infrastructure/work-orders/claim-store.js"() {
     "use strict";
     init_work_order_claims();
     init_workflow();
-    rows52 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    rows53 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     whenTableMissing7 = (value2) => (err4) => {
       if (err4.code === "ER_NO_SUCH_TABLE")
         return value2;
@@ -101540,21 +101722,21 @@ var init_claim_store = __esm({
         return this.run(async (conn) => {
           const statuses = FILTER_STATUSES[filter];
           const order = filter === "en_admin" ? "c.escalatedAt, c.createdAt" : "c.createdAt DESC";
-          const list7 = await rows52(conn, `SELECT ${CLAIM_SELECT} ${CLAIM_FROM} ${statuses ? "WHERE c.status IN (?)" : ""} ORDER BY ${order}, c.id LIMIT 100`, statuses ? [statuses] : []);
+          const list7 = await rows53(conn, `SELECT ${CLAIM_SELECT} ${CLAIM_FROM} ${statuses ? "WHERE c.status IN (?)" : ""} ORDER BY ${order}, c.id LIMIT 100`, statuses ? [statuses] : []);
           return list7.map(toRow3);
         });
       }
       get(id3) {
         return this.run(async (conn) => {
-          const [r] = await rows52(conn, `SELECT ${CLAIM_SELECT}, w.id AS orderId, w.status AS orderStatus, w.total, w.intakeKm, w.intakeNotes, w.createdAt AS orderCreatedAt, v.plate ${CLAIM_FROM} WHERE c.id = ?`, [id3]);
+          const [r] = await rows53(conn, `SELECT ${CLAIM_SELECT}, w.id AS orderId, w.status AS orderStatus, w.total, w.intakeKm, w.intakeNotes, w.createdAt AS orderCreatedAt, v.plate ${CLAIM_FROM} WHERE c.id = ?`, [id3]);
           if (!r)
             return null;
           const orderId = String(r.orderId);
-          const items = await rows52(conn, "SELECT kind, description, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt, id", [orderId]);
-          const [intake] = await rows52(conn, "SELECT receivedAt, km, fuel, requested, damages, inventory, notes, ownerAnswer, ownerNote FROM `VehicleIntake` WHERE workOrderId = ?", [orderId]).catch(whenTableMissing7([]));
-          const payments = await rows52(conn, "SELECT amount, method, reference, status, ownerNote, createdAt FROM `WorkOrderPayment` WHERE workOrderId = ? ORDER BY createdAt", [orderId]).catch(whenTableMissing7([]));
-          const [delivery] = await rows52(conn, "SELECT description, reason, createdAt, decidedAt FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status IN ('approved','rejected') ORDER BY decidedAt DESC LIMIT 1", [orderId]);
-          const [comp] = await rows52(conn, "SELECT compensationKind, compensationUsd FROM `WorkOrderClaim` WHERE id = ?", [id3]).catch((err4) => {
+          const items = await rows53(conn, "SELECT kind, description, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt, id", [orderId]);
+          const [intake] = await rows53(conn, "SELECT receivedAt, km, fuel, requested, damages, inventory, notes, ownerAnswer, ownerNote FROM `VehicleIntake` WHERE workOrderId = ?", [orderId]).catch(whenTableMissing7([]));
+          const payments = await rows53(conn, "SELECT amount, method, reference, status, ownerNote, createdAt FROM `WorkOrderPayment` WHERE workOrderId = ? ORDER BY createdAt", [orderId]).catch(whenTableMissing7([]));
+          const [delivery] = await rows53(conn, "SELECT description, reason, createdAt, decidedAt FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status IN ('approved','rejected') ORDER BY decidedAt DESC LIMIT 1", [orderId]);
+          const [comp] = await rows53(conn, "SELECT compensationKind, compensationUsd FROM `WorkOrderClaim` WHERE id = ?", [id3]).catch((err4) => {
             if (err4.code === "ER_BAD_FIELD_ERROR")
               return [];
             throw err4;
@@ -101594,7 +101776,7 @@ var init_claim_store = __esm({
             return { ok: false, reason: "COMPENSATION_INVALID" };
           await conn.query("START TRANSACTION");
           try {
-            const [claim] = await rows52(conn, "SELECT c.id, c.status, c.workOrderId, w.number, w.ownerId, w.vehicleId, s.userId AS shopUserId FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.id = ? FOR UPDATE", [input.id]);
+            const [claim] = await rows53(conn, "SELECT c.id, c.status, c.workOrderId, w.number, w.ownerId, w.vehicleId, s.userId AS shopUserId FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.id = ? FOR UPDATE", [input.id]);
             if (!claim) {
               await conn.query("ROLLBACK");
               return { ok: false, reason: "NOT_FOUND" };
@@ -101604,7 +101786,7 @@ var init_claim_store = __esm({
               return { ok: false, reason: "NOT_IN_ADMIN" };
             }
             if (compensation.kind === "reembolso") {
-              const [sums] = await rows52(conn, "SELECT COALESCE(SUM(CASE WHEN status = 'pagado' THEN amount END), 0) AS paid, COALESCE(SUM(CASE WHEN status IN ('reembolso_informado','reembolso_confirmado') THEN amount END), 0) AS refunded FROM `WorkOrderPayment` WHERE workOrderId = ?", [claim.workOrderId]);
+              const [sums] = await rows53(conn, "SELECT COALESCE(SUM(CASE WHEN status = 'pagado' THEN amount END), 0) AS paid, COALESCE(SUM(CASE WHEN status IN ('reembolso_informado','reembolso_confirmado') THEN amount END), 0) AS refunded FROM `WorkOrderPayment` WHERE workOrderId = ?", [claim.workOrderId]);
               if (Number(compensation.amountUsd) > Number(sums?.paid ?? 0) - Number(sums?.refunded ?? 0) + 1e-3) {
                 await conn.query("ROLLBACK");
                 return { ok: false, reason: "COMPENSATION_EXCEEDS_PAID" };
@@ -101708,14 +101890,14 @@ function mapUsage(usage) {
     cachedTokens: usage?.prompt_tokens_details?.cached_tokens
   };
 }
-function classifyHttpError(status, text15) {
+function classifyHttpError(status, text16) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text15}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text16}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text15}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text16}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text15}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text15}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text16}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text16}`, "other", status);
 }
 function message(err4) {
   return err4 instanceof Error ? err4.message : String(err4);
@@ -101792,8 +101974,8 @@ var init_openai = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err4)}`, "network");
         }
         if (!res.ok) {
-          const text15 = await res.text().catch(() => "");
-          throw classifyHttpError(res.status, text15);
+          const text16 = await res.text().catch(() => "");
+          throw classifyHttpError(res.status, text16);
         }
         const data3 = await res.json();
         return { content: data3.text ?? null };
@@ -101831,8 +102013,8 @@ var init_openai = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${message(err4)}`, "network");
         }
         if (!res.ok) {
-          const text15 = await res.text().catch(() => "");
-          throw classifyHttpError(res.status, text15);
+          const text16 = await res.text().catch(() => "");
+          throw classifyHttpError(res.status, text16);
         }
         const data3 = await res.json();
         const choice = data3.choices?.[0];
@@ -101886,14 +102068,14 @@ function parseArgs(raw) {
     return { _raw: raw };
   }
 }
-function classifyHttpError2(status, text15) {
+function classifyHttpError2(status, text16) {
   if (status === 429)
-    return new AdapterError(`LLM rate limited (429): ${text15}`, "rate_limited", status);
+    return new AdapterError(`LLM rate limited (429): ${text16}`, "rate_limited", status);
   if (status >= 500)
-    return new AdapterError(`LLM server error (${status}): ${text15}`, "server_error", status);
+    return new AdapterError(`LLM server error (${status}): ${text16}`, "server_error", status);
   if (status === 401 || status === 403)
-    return new AdapterError(`LLM auth error (${status}): ${text15}`, "auth", status);
-  return new AdapterError(`LLM API error (${status}): ${text15}`, "other", status);
+    return new AdapterError(`LLM auth error (${status}): ${text16}`, "auth", status);
+  return new AdapterError(`LLM API error (${status}): ${text16}`, "other", status);
 }
 var ANTHROPIC_VERSION, AnthropicAdapter;
 var init_anthropic = __esm({
@@ -101952,8 +102134,8 @@ var init_anthropic = __esm({
           throw new AdapterError(`Fallo de red hacia el proveedor: ${err4 instanceof Error ? err4.message : String(err4)}`, "network");
         }
         if (!res.ok) {
-          const text15 = await res.text().catch(() => "");
-          throw classifyHttpError2(res.status, text15);
+          const text16 = await res.text().catch(() => "");
+          throw classifyHttpError2(res.status, text16);
         }
         const data3 = await res.json();
         const blocks = data3.content ?? [];
@@ -102191,8 +102373,8 @@ var init_fallback = __esm({
 });
 
 // ../codigo/packages/agent/dist/llm-gateway/redact.js
-function redactPii(text15) {
-  return text15.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
+function redactPii(text16) {
+  return text16.replace(EMAIL_RE, EMAIL_MASK).replace(PHONE_RE, PHONE_MASK);
 }
 function redactValue(value2, key) {
   if (typeof value2 === "string") {
@@ -102296,23 +102478,23 @@ var init_authorization = __esm({
 });
 
 // ../codigo/packages/agent/dist/llm-gateway/guard.js
-function sanitizeUntrusted(text15, maxLength = 4e3) {
-  return String(text15 ?? "").normalize("NFKC").replace(INVISIBLE, "").replace(ROLE_MARKERS, " ").replace(/\r\n?/g, "\n").replace(/\n{4,}/g, "\n\n\n").slice(0, maxLength);
+function sanitizeUntrusted(text16, maxLength = 4e3) {
+  return String(text16 ?? "").normalize("NFKC").replace(INVISIBLE, "").replace(ROLE_MARKERS, " ").replace(/\r\n?/g, "\n").replace(/\n{4,}/g, "\n\n\n").slice(0, maxLength);
 }
-function detectInjection(text15) {
-  const raw = String(text15 ?? "");
+function detectInjection(text16) {
+  const raw = String(text16 ?? "");
   const clean4 = raw.normalize("NFKC").replace(INVISIBLE, "");
   const signals = INJECTION_PATTERNS.filter(([, re]) => re.test(clean4)).map(([name]) => name);
   if (raw.length - clean4.length >= 5)
     signals.push("caracteres-ocultos");
   return { suspicious: signals.length > 0, signals };
 }
-function normalizeForLeak(text15) {
-  return text15.toLowerCase().replace(/\s+/g, " ").trim();
+function normalizeForLeak(text16) {
+  return text16.toLowerCase().replace(/\s+/g, " ").trim();
 }
-function guardOutput(text15, options = {}) {
+function guardOutput(text16, options = {}) {
   const signals = [];
-  let out = String(text15 ?? "").replace(INVISIBLE, "");
+  let out = String(text16 ?? "").replace(INVISIBLE, "");
   if (options.systemPrompt) {
     const prompt = normalizeForLeak(options.systemPrompt);
     const answer = normalizeForLeak(out);
@@ -103539,17 +103721,17 @@ var init_platform = __esm({
 });
 
 // packages/api/dist/infrastructure/visits/visit-store.js
-function rows54(result) {
+function rows55(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
-var MAX_AGE_MS, PAGE_SIZE6, text9, MysqlVisitStore;
+var MAX_AGE_MS, PAGE_SIZE6, text10, MysqlVisitStore;
 var init_visit_store = __esm({
   "packages/api/dist/infrastructure/visits/visit-store.js"() {
     "use strict";
     MAX_AGE_MS = 7 * 24 * 60 * 60 * 1e3;
     PAGE_SIZE6 = 50;
-    text9 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text10 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     MysqlVisitStore = class {
       connect;
       constructor(connect) {
@@ -103571,22 +103753,22 @@ var init_visit_store = __esm({
       }
       exists(code5) {
         return this.run(async (conn) => {
-          const row2 = rows54(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code5]))[0];
+          const row2 = rows55(await conn.query("SELECT code FROM `Visit` WHERE code = ? LIMIT 1", [code5]))[0];
           return !!row2;
         });
       }
       find(code5, now = /* @__PURE__ */ new Date()) {
         return this.run(async (conn) => {
-          const row2 = rows54(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code5, new Date(now.getTime() - MAX_AGE_MS)]))[0];
+          const row2 = rows55(await conn.query("SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM `Visit` v LEFT JOIN `User` u ON u.id = v.userId WHERE v.code = ? AND v.createdAt >= ? LIMIT 1", [code5, new Date(now.getTime() - MAX_AGE_MS)]))[0];
           if (!row2)
             return null;
           return {
             code: String(row2.code),
-            ref: text9(row2.ref),
-            profile: text9(row2.profile),
-            phone: text9(row2.phone),
-            userId: text9(row2.userId),
-            userName: text9(row2.userName),
+            ref: text10(row2.ref),
+            profile: text10(row2.profile),
+            phone: text10(row2.phone),
+            userId: text10(row2.userId),
+            userName: text10(row2.userName),
             claimedAt: row2.claimedAt ?? null,
             linkedAt: row2.linkedAt ?? null,
             createdAt: row2.createdAt
@@ -103606,13 +103788,13 @@ var init_visit_store = __esm({
       list(page3) {
         const offset2 = (Math.max(1, Math.floor(page3)) - 1) * PAGE_SIZE6;
         return this.run(async (conn) => {
-          const items = rows54(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`)).map((row2) => ({
+          const items = rows55(await conn.query(`SELECT v.code, v.ref, v.profile, v.phone, v.userId, v.claimedAt, v.linkedAt, v.createdAt, u.name AS userName FROM \`Visit\` v LEFT JOIN \`User\` u ON u.id = v.userId ORDER BY v.createdAt DESC LIMIT ${PAGE_SIZE6} OFFSET ${offset2}`)).map((row2) => ({
             code: String(row2.code),
-            ref: text9(row2.ref),
-            profile: text9(row2.profile),
-            phone: text9(row2.phone),
-            userId: text9(row2.userId),
-            userName: text9(row2.userName),
+            ref: text10(row2.ref),
+            profile: text10(row2.profile),
+            phone: text10(row2.phone),
+            userId: text10(row2.userId),
+            userName: text10(row2.userName),
             claimedAt: row2.claimedAt ?? null,
             linkedAt: row2.linkedAt ?? null,
             createdAt: row2.createdAt
@@ -103622,9 +103804,9 @@ var init_visit_store = __esm({
       }
       stats(days2) {
         const window3 = Math.max(1, Math.floor(days2));
-        return this.run(async (conn) => rows54(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window3} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row2) => ({
-          ref: text9(row2.ref),
-          profile: text9(row2.profile),
+        return this.run(async (conn) => rows55(await conn.query(`SELECT ref, profile, COUNT(*) AS visitas, SUM(phone IS NOT NULL) AS escribieron, SUM(userId IS NOT NULL) AS registrados FROM \`Visit\` WHERE createdAt >= DATE_SUB(UTC_TIMESTAMP(3), INTERVAL ${window3} DAY) GROUP BY ref, profile ORDER BY visitas DESC LIMIT 50`)).map((row2) => ({
+          ref: text10(row2.ref),
+          profile: text10(row2.profile),
           visitas: Number(row2.visitas ?? 0),
           escribieron: Number(row2.escribieron ?? 0),
           registrados: Number(row2.registrados ?? 0)
@@ -103635,19 +103817,19 @@ var init_visit_store = __esm({
         const monday = (column2) => `DATE_FORMAT(DATE_SUB(DATE(${column2}), INTERVAL WEEKDAY(${column2}) DAY), '%Y-%m-%d')`;
         return this.run(async (conn) => {
           const since = `DATE_SUB(DATE_SUB(UTC_DATE(), INTERVAL WEEKDAY(UTC_DATE()) DAY), INTERVAL ${window3 - 1} WEEK)`;
-          const users = rows54(await conn.query(`SELECT ${monday("createdAt")} AS week, COUNT(*) AS n FROM \`User\` WHERE createdAt >= ${since} GROUP BY week`));
-          const visits = rows54(await conn.query(`SELECT ${monday("linkedAt")} AS week, COUNT(*) AS web, SUM(ref LIKE 'lp:%' OR ref LIKE 'servicio:%' OR ref LIKE 'ciudad:%' OR ref IN ('servicios', 'talleres')) AS busqueda FROM \`Visit\` WHERE userId IS NOT NULL AND linkedAt >= ${since} GROUP BY week`));
+          const users = rows55(await conn.query(`SELECT ${monday("createdAt")} AS week, COUNT(*) AS n FROM \`User\` WHERE createdAt >= ${since} GROUP BY week`));
+          const visits = rows55(await conn.query(`SELECT ${monday("linkedAt")} AS week, COUNT(*) AS web, SUM(ref LIKE 'lp:%' OR ref LIKE 'servicio:%' OR ref LIKE 'ciudad:%' OR ref IN ('servicios', 'talleres')) AS busqueda FROM \`Visit\` WHERE userId IS NOT NULL AND linkedAt >= ${since} GROUP BY week`));
           const byWeek = /* @__PURE__ */ new Map();
-          const entry = (week) => {
+          const entry2 = (week) => {
             let item2 = byWeek.get(week);
             if (!item2)
               byWeek.set(week, item2 = { week, users: 0, fromWeb: 0, fromSearchPages: 0 });
             return item2;
           };
           for (const row2 of users)
-            entry(String(row2.week)).users = Number(row2.n ?? 0);
+            entry2(String(row2.week)).users = Number(row2.n ?? 0);
           for (const row2 of visits) {
-            const item2 = entry(String(row2.week));
+            const item2 = entry2(String(row2.week));
             item2.fromWeb = Number(row2.web ?? 0);
             item2.fromSearchPages = Number(row2.busqueda ?? 0);
           }
@@ -103965,8 +104147,8 @@ var init_documents = __esm({
 async function databaseReadinessIssues(connect = openConnection) {
   const conn = await connect();
   try {
-    const [rows71] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
-    const present = new Set(rows71.map((row2) => row2.name.toLowerCase()));
+    const [rows72] = await conn.query("SELECT table_name AS name FROM information_schema.tables WHERE table_schema = DATABASE()");
+    const present = new Set(rows72.map((row2) => row2.name.toLowerCase()));
     const missingTables = EXPECTED_TABLES2.filter((table2) => !["VehicleModelPlan", "VehicleIntake", "WorkOrderPayment", "WorkOrderPhoto", "WorkOrderPromise", "WorkOrderPartialApproval", "AccountRecovery", "WorkOrderWarranty", "WorkOrderClaim", ...PART_ORDER_TABLES, "ShopTariff", "ProductFitment", ...COMPROBANTE_TABLES, ...OPTIONAL_FLOW_TABLES, ...FOUNDER_TABLES].includes(table2) && !present.has(table2.toLowerCase()));
     if (missingTables.length)
       return missingTables.map((table2) => `tabla ${table2}`);
@@ -104675,11 +104857,11 @@ var require_decodeText = __commonJS({
         return typeof data3 === "string" ? data3 : data3.toString();
       }
     };
-    function decodeText(text15, sourceEncoding, destEncoding) {
-      if (text15) {
-        return getDecoder(destEncoding)(text15, sourceEncoding);
+    function decodeText(text16, sourceEncoding, destEncoding) {
+      if (text16) {
+        return getDecoder(destEncoding)(text16, sourceEncoding);
       }
-      return text15;
+      return text16;
     }
     module.exports = decodeText;
   }
@@ -105180,13 +105362,13 @@ var require_parseParams = __commonJS({
     function encodedReplacer(match) {
       return EncodedLookup[match];
     }
-    function decodeUtf8Text(text15) {
-      for (var i = 0, len = text15.length; i < len; ++i) {
-        if (text15.charCodeAt(i) > 127) {
-          return decodeText(text15, "binary", "utf8");
+    function decodeUtf8Text(text16) {
+      for (var i = 0, len = text16.length; i < len; ++i) {
+        if (text16.charCodeAt(i) > 127) {
+          return decodeText(text16, "binary", "utf8");
         }
       }
-      return text15;
+      return text16;
     }
     var STATE_KEY = 0;
     var STATE_VALUE = 1;
@@ -106489,8 +106671,8 @@ var require_deepmerge = __commonJS({
         return typeof value2 !== "object" || value2 === null;
       }
       const mergeArray = options && typeof options.mergeArray === "function" ? options.mergeArray({ clone, deepmerge: _deepmerge, getKeys, isMergeableObject }) : concatArrays;
-      function clone(entry) {
-        return isMergeableObject(entry) ? Array.isArray(entry) ? cloneArray(entry) : cloneObject(entry) : entry;
+      function clone(entry2) {
+        return isMergeableObject(entry2) ? Array.isArray(entry2) ? cloneArray(entry2) : cloneObject(entry2) : entry2;
       }
       function mergeObject(target, source) {
         const result = {};
@@ -106688,13 +106870,13 @@ var require_multipart2 = __commonJS({
                 await append(key, value2);
               }
             }
-            async function append(key, entry) {
-              if (entry.type === "file" || attachFieldsToBody === "keyValues" && Buffer.isBuffer(entry)) {
-                formData.append(key, new Blob([await entry.toBuffer()], {
-                  type: entry.mimetype
-                }), entry.filename);
+            async function append(key, entry2) {
+              if (entry2.type === "file" || attachFieldsToBody === "keyValues" && Buffer.isBuffer(entry2)) {
+                formData.append(key, new Blob([await entry2.toBuffer()], {
+                  type: entry2.mimetype
+                }), entry2.filename);
               } else {
-                formData.append(key, entry.value);
+                formData.append(key, entry2.value);
               }
             }
             return formData;
@@ -107075,11 +107257,11 @@ var require_multipart2 = __commonJS({
 });
 
 // packages/api/dist/infrastructure/admin/admin-store.js
-function rows62(result) {
+function rows63(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 async function scalar(conn, sql, params2 = []) {
-  const row2 = rows62(await conn.query(sql, params2))[0];
+  const row2 = rows63(await conn.query(sql, params2))[0];
   return Number(row2?.n ?? 0);
 }
 function grouped(list7) {
@@ -107111,7 +107293,7 @@ var init_admin_store = __esm({
       }
       findAdminByEmail(email) {
         return this.run(async (conn) => {
-          const row2 = rows62(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
+          const row2 = rows63(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.email = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [email.toLowerCase()]))[0];
           if (!row2)
             return null;
           return {
@@ -107127,13 +107309,13 @@ var init_admin_store = __esm({
       upsertAdmin(input) {
         return this.run(async (conn) => {
           const email = input.email.toLowerCase();
-          const existing = rows62(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
+          const existing = rows63(await conn.query("SELECT id FROM `User` WHERE email = ? LIMIT 1", [email]))[0];
           let id3;
           if (existing) {
             id3 = String(existing.id);
             await conn.query("UPDATE `User` SET name = ?, passwordHash = ?, role = 'admin', staffRole = 'admin', deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.name, input.passwordHash, id3]);
           } else {
-            const created = rows62(await conn.query("SELECT UUID() AS id"))[0];
+            const created = rows63(await conn.query("SELECT UUID() AS id"))[0];
             id3 = String(created?.id);
             await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, staffRole, name, locale, createdAt, updatedAt) VALUES (?, ?, ?, ?, 'admin', 'admin', ?, 'es', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, email, input.phone, input.passwordHash, input.name]);
           }
@@ -107143,7 +107325,7 @@ var init_admin_store = __esm({
       }
       findAdminById(id3) {
         return this.run(async (conn) => {
-          const row2 = rows62(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id3]))[0];
+          const row2 = rows63(await conn.query("SELECT u.id, u.email, u.name, u.passwordHash, u.staffRole, t.secret AS totpSecret FROM `User` u LEFT JOIN `AdminTotp` t ON t.userId = u.id WHERE u.id = ? AND u.role = 'admin' AND u.deletedAt IS NULL LIMIT 1", [id3]))[0];
           if (!row2)
             return null;
           return {
@@ -107181,9 +107363,9 @@ var init_admin_store = __esm({
       }
       dashboard() {
         return this.run(async (conn) => ({
-          usersByRole: grouped(rows62(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
+          usersByRole: grouped(rows63(await conn.query("SELECT role AS k, COUNT(*) AS n FROM `User` WHERE deletedAt IS NULL GROUP BY role"))),
           vehicles: await scalar(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE deletedAt IS NULL"),
-          shopsByStatus: grouped(rows62(await conn.query("SELECT b.verificationStatus AS k, COUNT(*) AS n FROM `Shop` b WHERE b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL) GROUP BY b.verificationStatus"))),
+          shopsByStatus: grouped(rows63(await conn.query("SELECT b.verificationStatus AS k, COUNT(*) AS n FROM `Shop` b WHERE b.userId IN (SELECT id FROM `User` WHERE consentAt IS NOT NULL) GROUP BY b.verificationStatus"))),
           stores: await scalar(conn, "SELECT COUNT(*) AS n FROM `Store`"),
           appointmentsToday: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE scheduledAt >= CURDATE() AND scheduledAt < CURDATE() + INTERVAL 1 DAY"),
           appointmentsPending: await scalar(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE status = 'pending'"),
@@ -107193,28 +107375,28 @@ var init_admin_store = __esm({
       }
       listUsers(page3) {
         return this.run(async (conn) => ({
-          items: rows62(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
+          items: rows63(await conn.query("SELECT id, name, role, locale, createdAt FROM `User` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
           page: page3,
           pageSize: PAGE_SIZE7
         }));
       }
       listVehicles(page3) {
         return this.run(async (conn) => ({
-          items: rows62(await conn.query("SELECT id, userId, make, model, year, plate, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
+          items: rows63(await conn.query("SELECT id, userId, make, model, year, plate, currentKm, createdAt FROM `Vehicle` WHERE deletedAt IS NULL ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
           page: page3,
           pageSize: PAGE_SIZE7
         }));
       }
       listShops(page3) {
         return this.run(async (conn) => ({
-          items: rows62(await conn.query("SELECT id, userId, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
+          items: rows63(await conn.query("SELECT id, userId, name, city, verificationStatus, ratingAvg, createdAt FROM `Shop` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
           page: page3,
           pageSize: PAGE_SIZE7
         }));
       }
       listAudit(page3) {
         return this.run(async (conn) => ({
-          items: rows62(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
+          items: rows63(await conn.query("SELECT eventType, actorUserId, actorRole, reason, createdAt FROM `AuditLog` ORDER BY createdAt DESC LIMIT ? OFFSET ?", [PAGE_SIZE7, offset(page3)])),
           page: page3,
           pageSize: PAGE_SIZE7
         }));
@@ -107318,8 +107500,8 @@ function twoFactorView(error) {
   <label for="code">C\xF3digo</label><input id="code" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="one-time-code">
   <button class="full" type="submit">Entrar</button></form>`;
 }
-function messageView(title, text15) {
-  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text15)}</p></div>`;
+function messageView(title, text16) {
+  return `<div class="card"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(text16)}</p></div>`;
 }
 function kv(record) {
   const entries = Object.entries(record);
@@ -107493,6 +107675,7 @@ main table.pid td:nth-child(2){text-align:right;font-family:var(--c-mono);font-w
         { href: "/admin/vehicles", label: "Veh\xEDculos", capability: "read", icon: "car" },
         { href: "/admin/shops", label: "Talleres", capability: "read", icon: "wrench" },
         { href: "/admin/fundadores", label: "Talleres fundadores", capability: "settings", icon: "wrench" },
+        { href: "/admin/directorio", label: "Directorio no registrados", capability: "settings", icon: "wrench" },
         { href: "/admin/verifications", label: "Verificaciones", capability: "read", icon: "shield" }
       ] },
       { label: "Operaci\xF3n", items: [
@@ -111878,7 +112061,7 @@ var require_browser = __commonJS({
     var QRCode2 = require_qrcode();
     var CanvasRenderer = require_canvas();
     var SvgRenderer = require_svg_tag();
-    function renderCanvas(renderFunc, canvas, text15, opts, cb) {
+    function renderCanvas(renderFunc, canvas, text16, opts, cb) {
       const args = [].slice.call(arguments, 1);
       const argsNum = args.length;
       const isLastArgCb = typeof args[argsNum - 1] === "function";
@@ -111890,8 +112073,8 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 2) {
-          cb = text15;
-          text15 = canvas;
+          cb = text16;
+          text16 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 3) {
           if (canvas.getContext && typeof cb === "undefined") {
@@ -111899,8 +112082,8 @@ var require_browser = __commonJS({
             opts = void 0;
           } else {
             cb = opts;
-            opts = text15;
-            text15 = canvas;
+            opts = text16;
+            text16 = canvas;
             canvas = void 0;
           }
         }
@@ -111909,16 +112092,16 @@ var require_browser = __commonJS({
           throw new Error("Too few arguments provided");
         }
         if (argsNum === 1) {
-          text15 = canvas;
+          text16 = canvas;
           canvas = opts = void 0;
         } else if (argsNum === 2 && !canvas.getContext) {
-          opts = text15;
-          text15 = canvas;
+          opts = text16;
+          text16 = canvas;
           canvas = void 0;
         }
         return new Promise(function(resolve2, reject) {
           try {
-            const data3 = QRCode2.create(text15, opts);
+            const data3 = QRCode2.create(text16, opts);
             resolve2(renderFunc(data3, canvas, opts));
           } catch (e9) {
             reject(e9);
@@ -111926,7 +112109,7 @@ var require_browser = __commonJS({
         });
       }
       try {
-        const data3 = QRCode2.create(text15, opts);
+        const data3 = QRCode2.create(text16, opts);
         cb(null, renderFunc(data3, canvas, opts));
       } catch (e9) {
         cb(e9);
@@ -111950,8 +112133,8 @@ var require_server2 = __commonJS({
     var Utf8Renderer = require_utf8();
     var TerminalRenderer = require_terminal2();
     var SvgRenderer = require_svg();
-    function checkParams(text15, opts, cb) {
-      if (typeof text15 === "undefined") {
+    function checkParams(text16, opts, cb) {
+      if (typeof text16 === "undefined") {
         throw new Error("String required as first argument");
       }
       if (typeof cb === "undefined") {
@@ -111998,11 +112181,11 @@ var require_server2 = __commonJS({
           return Utf8Renderer;
       }
     }
-    function render(renderFunc, text15, params2) {
+    function render(renderFunc, text16, params2) {
       if (!params2.cb) {
         return new Promise(function(resolve2, reject) {
           try {
-            const data3 = QRCode2.create(text15, params2.opts);
+            const data3 = QRCode2.create(text16, params2.opts);
             return renderFunc(data3, params2.opts, function(err4, data4) {
               return err4 ? reject(err4) : resolve2(data4);
             });
@@ -112012,7 +112195,7 @@ var require_server2 = __commonJS({
         });
       }
       try {
-        const data3 = QRCode2.create(text15, params2.opts);
+        const data3 = QRCode2.create(text16, params2.opts);
         return renderFunc(data3, params2.opts, params2.cb);
       } catch (e9) {
         params2.cb(e9);
@@ -112020,43 +112203,43 @@ var require_server2 = __commonJS({
     }
     exports.create = QRCode2.create;
     exports.toCanvas = require_browser().toCanvas;
-    exports.toString = function toString2(text15, opts, cb) {
-      const params2 = checkParams(text15, opts, cb);
+    exports.toString = function toString2(text16, opts, cb) {
+      const params2 = checkParams(text16, opts, cb);
       const type = params2.opts ? params2.opts.type : void 0;
       const renderer = getStringRendererFromType(type);
-      return render(renderer.render, text15, params2);
+      return render(renderer.render, text16, params2);
     };
-    exports.toDataURL = function toDataURL(text15, opts, cb) {
-      const params2 = checkParams(text15, opts, cb);
+    exports.toDataURL = function toDataURL(text16, opts, cb) {
+      const params2 = checkParams(text16, opts, cb);
       const renderer = getRendererFromType(params2.opts.type);
-      return render(renderer.renderToDataURL, text15, params2);
+      return render(renderer.renderToDataURL, text16, params2);
     };
-    exports.toBuffer = function toBuffer(text15, opts, cb) {
-      const params2 = checkParams(text15, opts, cb);
+    exports.toBuffer = function toBuffer(text16, opts, cb) {
+      const params2 = checkParams(text16, opts, cb);
       const renderer = getRendererFromType(params2.opts.type);
-      return render(renderer.renderToBuffer, text15, params2);
+      return render(renderer.renderToBuffer, text16, params2);
     };
-    exports.toFile = function toFile(path, text15, opts, cb) {
-      if (typeof path !== "string" || !(typeof text15 === "string" || typeof text15 === "object")) {
+    exports.toFile = function toFile(path, text16, opts, cb) {
+      if (typeof path !== "string" || !(typeof text16 === "string" || typeof text16 === "object")) {
         throw new Error("Invalid argument");
       }
       if (arguments.length < 3 && !canPromise()) {
         throw new Error("Too few arguments provided");
       }
-      const params2 = checkParams(text15, opts, cb);
+      const params2 = checkParams(text16, opts, cb);
       const type = params2.opts.type || getTypeFromFilename(path);
       const renderer = getRendererFromType(type);
       const renderToFile = renderer.renderToFile.bind(null, path);
-      return render(renderToFile, text15, params2);
+      return render(renderToFile, text16, params2);
     };
-    exports.toFileStream = function toFileStream(stream, text15, opts) {
+    exports.toFileStream = function toFileStream(stream, text16, opts) {
       if (arguments.length < 2) {
         throw new Error("Too few arguments provided");
       }
-      const params2 = checkParams(text15, opts, stream.emit.bind(stream, "error"));
+      const params2 = checkParams(text16, opts, stream.emit.bind(stream, "error"));
       const renderer = getRendererFromType("png");
       const renderToFileStream = renderer.renderToFileStream.bind(null, stream);
-      render(renderToFileStream, text15, params2);
+      render(renderToFileStream, text16, params2);
     };
   }
 });
@@ -112147,8 +112330,8 @@ var init_views_setup = __esm({
 
 // packages/api/dist/interfaces/admin/setup-wizard.js
 import { randomBytes as randomBytes25 } from "node:crypto";
-function qrSvg(text15) {
-  return QRCode.toString(text15, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
+function qrSvg(text16) {
+  return QRCode.toString(text16, { type: "svg", errorCorrectionLevel: "M", margin: 1, width: 220 });
 }
 async function adminCount(store) {
   try {
@@ -112682,8 +112865,8 @@ function toMember(row2) {
   };
 }
 function list6(result) {
-  const [rows71] = result;
-  return Array.isArray(rows71) ? rows71 : [];
+  const [rows72] = result;
+  return Array.isArray(rows72) ? rows72 : [];
 }
 var SELECT2, MysqlStaffStore;
 var init_staff_store = __esm({
@@ -112855,7 +113038,7 @@ function tabs(current, base, options) {
   return `<div class="tabs">${options.map(([key, label5]) => `<a class="${key === current ? "active" : ""}" href="${base}?f=${escapeHtml(key)}">${escapeHtml(label5)}</a>`).join("")}</div>`;
 }
 function relationsListView(input) {
-  const rows71 = input.page.items.map((r) => {
+  const rows72 = input.page.items.map((r) => {
     const waiting = waitingHours(r.waitingSince);
     const late2 = waiting !== null && waiting >= input.waitingHours;
     return `<tr><td><a href="/admin/relations/${escapeHtml(r.id)}">${escapeHtml(relationCode(r.number))}</a></td>
@@ -112872,7 +113055,7 @@ function relationsListView(input) {
   <p class="muted">Las partes hablan solo con AutoMantPro: aqu\xED registras lo que dice cada una y el texto listo para reenviar. El tel\xE9fono de una parte se muestra solo si autoriz\xF3 compartirlo.</p>
   ${empty}
   <div class="scroll"><table><thead><tr><th>V\xEDnculo</th><th>Tipo</th><th>Partes</th><th>Estado</th><th>Canal</th><th>\xDAltimo mensaje</th><th>Espera</th></tr></thead>
-  <tbody>${rows71}</tbody></table></div>
+  <tbody>${rows72}</tbody></table></div>
   <div class="pager">${input.page.page > 1 ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page - 1}">\u2190 Anteriores</a>` : ""}
   ${input.page.items.length === input.page.pageSize ? `<a href="/admin/relations?f=${escapeHtml(input.filter)}&amp;page=${input.page.page + 1}">Siguientes \u2192</a>` : ""}</div></div>`;
 }
@@ -112965,7 +113148,7 @@ function relationDetailView(input) {
   </div>`;
 }
 function disputesListView(input) {
-  const rows71 = input.page.items.map((d) => {
+  const rows72 = input.page.items.map((d) => {
     const resolve2 = input.canResolve && (d.status === "abierta" || d.status === "en_revision") ? `${d.status === "en_revision" && d.resolution ? `<p class="muted">${escapeHtml(d.resolution.slice(0, 160))}</p>` : ""}<form method="post" action="/admin/disputes/${escapeHtml(d.id)}/resolve">${csrfField2(input.csrf)}
             <label for="res-${escapeHtml(d.id)}">Resoluci\xF3n</label><textarea id="res-${escapeHtml(d.id)}" name="resolution" rows="2" maxlength="2000" required></textarea>
             <select name="status"><option value="resuelta">Resuelta</option><option value="en_revision">En revisi\xF3n</option><option value="rechazada">Rechazada</option></select>
@@ -112981,10 +113164,10 @@ function disputesListView(input) {
   ${tabs(input.filter, "/admin/disputes", DISPUTE_FILTERS)}
   ${input.page.items.length === 0 ? `<p class="muted">No hay disputas con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Caso</th><th>V\xEDnculo</th><th>Partes</th><th>Motivo</th><th>Estado</th><th>Resoluci\xF3n</th></tr></thead>
-  <tbody>${rows71}</tbody></table></div></div>`;
+  <tbody>${rows72}</tbody></table></div></div>`;
 }
 function sanctionsListView(input) {
-  const rows71 = input.page.items.map((s) => {
+  const rows72 = input.page.items.map((s) => {
     const state = s.liftedAt ? `<span class="muted">levantada ${escapeHtml(when4(s.liftedAt))}</span>` : isActive(s) ? `<span class="error">vigente${s.endsAt ? ` hasta ${escapeHtml(when4(s.endsAt))}` : ""}</span>` : `<span class="muted">vencida</span>`;
     const lift = input.canLift && !s.liftedAt && isActive(s) ? `<form method="post" action="/admin/sanctions/${escapeHtml(s.id)}/lift">${csrfField2(input.csrf)}
             <label for="lift-${escapeHtml(s.id)}">Motivo para levantarla</label><input id="lift-${escapeHtml(s.id)}" name="reason" maxlength="191" required>
@@ -112999,7 +113182,7 @@ function sanctionsListView(input) {
   <p class="muted">Siempre con motivo, aviso a la entidad y registro en la auditor\xEDa. Se aplican desde el v\xEDnculo o desde la ficha de la persona.</p></div>
   ${input.page.items.length === 0 ? `<p class="muted">Todav\xEDa no hay sanciones registradas.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Entidad</th><th>Paso</th><th>Motivo</th><th>Vigencia</th><th>Levantar</th></tr></thead>
-  <tbody>${rows71}</tbody></table></div></div>`;
+  <tbody>${rows72}</tbody></table></div></div>`;
 }
 var FILTERS, DISPUTE_FILTERS, flashHtml2, csrfField2;
 var init_views_relations = __esm({
@@ -113031,7 +113214,7 @@ var init_views_relations = __esm({
 function registerRelationRoutes(app2, deps) {
   const { relations } = deps;
   const lateAfter = deps.waitingHours ?? 24;
-  const errorPage = (request, reply, session, title, text15, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text16, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
   function dbError2(err4) {
     const code5 = err4.code;
     if (code5 === "ER_NO_SUCH_TABLE" || code5 === "ER_BAD_FIELD_ERROR") {
@@ -113115,8 +113298,8 @@ function registerRelationRoutes(app2, deps) {
     const { id: id3 } = request.params;
     if (!UUID3.test(id3))
       return errorPage(request, reply, session, "Relaci\xF3n", "V\xEDnculo no encontrado.", 404);
-    const text15 = str8(body.body, 2e3);
-    if (text15.length < 2)
+    const text16 = str8(body.body, 2e3);
+    if (text16.length < 2)
       return renderDetail(request, reply, session, id3, { flash: { kind: "error", text: "Escribe el mensaje." }, status: 400 });
     let detail;
     try {
@@ -113144,7 +113327,7 @@ function registerRelationRoutes(app2, deps) {
         relationshipId: id3,
         fromUserId,
         toUserId: isNote ? null : target?.userId ?? null,
-        body: text15,
+        body: text16,
         kind: isNote ? "nota" : "reenvio",
         relayed,
         createdBy: session.userId
@@ -113165,7 +113348,7 @@ function registerRelationRoutes(app2, deps) {
         fromName: source?.name ?? "AutoMantPro",
         code: relationCode(detail.relation.number),
         subject: detail.relation.subject,
-        body: text15
+        body: text16
       })
     };
     const flash = detail.relation.relayPaused ? { kind: "error", text: "El reenv\xEDo est\xE1 en pausa: el mensaje qued\xF3 registrado pero no lo env\xEDes todav\xEDa." } : { kind: "ok", text: "Mensaje registrado. Copia el texto y env\xEDalo por WhatsApp." };
@@ -113469,7 +113652,7 @@ var init_relations = __esm({
 
 // packages/api/dist/interfaces/admin/views-claims.js
 function claimsListView(input) {
-  const rows71 = input.items.map((c) => `<tr><td><a href="/admin/claims/${escapeHtml(c.id)}">${escapeHtml(workOrderCode(c.orderNumber))}</a></td>
+  const rows72 = input.items.map((c) => `<tr><td><a href="/admin/claims/${escapeHtml(c.id)}">${escapeHtml(workOrderCode(c.orderNumber))}</a></td>
     <td>${escapeHtml(c.shopName)}<br><span class="muted">${escapeHtml(c.vehicle)}</span></td>
     <td>${escapeHtml(c.ownerReason.slice(0, 160))}<br><span class="muted">${c.source === "rechazo" ? "Entrega rechazada" : "Entrega aceptada con observaci\xF3n"}</span></td>
     <td>${escapeHtml(statusText(c.status))}${c.status === "abierto" ? `<br><span class="muted">Plazo: ${escapeHtml(when5(c.dueAt))}</span>` : ""}</td>
@@ -113479,7 +113662,7 @@ function claimsListView(input) {
   ${tabs2(input.filter)}
   ${input.items.length === 0 ? `<p class="muted">No hay reclamos con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>Orden</th><th>Taller y veh\xEDculo</th><th>Motivo del due\xF1o</th><th>Estado</th><th>Abierto</th></tr></thead>
-  <tbody>${rows71}</tbody></table></div></div>`;
+  <tbody>${rows72}</tbody></table></div></div>`;
 }
 function claimDetailView(input) {
   const { claim, order, intake, payments, items, messages } = input.detail;
@@ -113493,7 +113676,7 @@ function claimDetailView(input) {
   const conversation = `<div class="card"><h2>Mensajes</h2>${messages.length ? `<ol>${messages.map((m) => `<li><strong>${m.from === "taller" ? "Taller" : m.from === "dueno" ? "Due\xF1o" : "AutoMantPro"}</strong> <span class="muted">${escapeHtml(when5(m.at))}</span><br>${escapeHtml(m.text)}</li>`).join("")}</ol>` : `<p class="muted">Sin mensajes.</p>`}</div>`;
   const intakeHtml = `<div class="card"><h2>Ficha de ingreso</h2>${intake ? `<div>Recibido: ${escapeHtml(when5(intake.receivedAt))} \xB7 ${escapeHtml(intake.km.toLocaleString("es-EC"))} km \xB7 Combustible: ${escapeHtml(intake.fuel)}</div>
        <div>Pedido del cliente: ${escapeHtml(intake.requested)}</div>
-       <div>Da\xF1os: ${Object.keys(intake.damages).length ? escapeHtml(Object.entries(intake.damages).map(([zone, text15]) => `${zone}: ${text15}`).join("; ")) : "sin da\xF1os anotados"}</div>
+       <div>Da\xF1os: ${Object.keys(intake.damages).length ? escapeHtml(Object.entries(intake.damages).map(([zone, text16]) => `${zone}: ${text16}`).join("; ")) : "sin da\xF1os anotados"}</div>
        <div>Inventario: ${intake.inventory.length ? escapeHtml(intake.inventory.join(", ")) : "\u2014"}</div>
        ${intake.notes ? `<div>Notas: ${escapeHtml(intake.notes)}</div>` : ""}
        <div>Respuesta del due\xF1o: ${escapeHtml(intake.ownerAnswer ?? "sin responder")}${intake.ownerNote ? ` \xB7 ${escapeHtml(intake.ownerNote)}` : ""}</div>` : order.intakeKm !== null ? `<div>Ingreso: ${escapeHtml(order.intakeKm.toLocaleString("es-EC"))} km \xB7 ${escapeHtml(when5(order.createdAt))}</div>${order.intakeNotes ? `<div>Observaciones: ${escapeHtml(order.intakeNotes)}</div>` : ""}<p class="muted">Sin ficha de ingreso detallada.</p>` : `<p class="muted">Sin ficha de ingreso.</p>`}</div>`;
@@ -113547,7 +113730,7 @@ var init_views_claims = __esm({
 // packages/api/dist/interfaces/admin/claims.js
 function registerClaimRoutes(app2, deps) {
   const { claims } = deps;
-  const errorPage = (request, reply, session, text15, status) => deps.html(reply, request, "Reclamos de entrega", `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text16, status) => deps.html(reply, request, "Reclamos de entrega", `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
   function dbError2(err4) {
     const code5 = err4.code;
     if (code5 === "ER_NO_SUCH_TABLE" || code5 === "ER_BAD_FIELD_ERROR")
@@ -113645,7 +113828,7 @@ var init_claims = __esm({
 });
 
 // packages/api/dist/interfaces/admin/part-returns.js
-import { randomUUID as randomUUID57 } from "node:crypto";
+import { randomUUID as randomUUID58 } from "node:crypto";
 function partReturnsView(input) {
   const card = (t) => `<div class="card"><h2>${escapeHtml(shortCode("S", t.requestId))} \xB7 ${escapeHtml(t.category)}</h2>
     <div>Almac\xE9n: ${escapeHtml(t.storeName)} \xB7 Quien compr\xF3: ${escapeHtml(t.buyerName)} \xB7 Precio: ${escapeHtml(formatUsd(t.priceUsd))}</div>
@@ -113668,8 +113851,8 @@ function registerPartReturnRoutes(app2, deps) {
       return deps.html(reply, request, "Devoluciones de repuestos", partReturnsView({ csrf: session.csrfToken, items: await deps.returns.list(), canResolve: can(session.role, "disputes"), flash }), session, status);
     } catch (err4) {
       const code5 = err4.code;
-      const text15 = code5 === "ER_NO_SUCH_TABLE" || code5 === "ER_BAD_FIELD_ERROR" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : "No se pudo cargar la lista.";
-      return deps.html(reply, request, "Devoluciones de repuestos", `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, 503);
+      const text16 = code5 === "ER_NO_SUCH_TABLE" || code5 === "ER_BAD_FIELD_ERROR" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : "No se pudo cargar la lista.";
+      return deps.html(reply, request, "Devoluciones de repuestos", `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, 503);
     }
   };
   app2.get("/part-returns", async (request, reply) => {
@@ -113714,7 +113897,7 @@ function registerPartReturnRoutes(app2, deps) {
     return page3(request, reply, session, { kind: "ok", text: "Decisi\xF3n registrada. Avisamos a quien compr\xF3 y al almac\xE9n." });
   });
 }
-var RETURN_DECISIONS, DECISION_TEXT, rows63, MysqlPartReturnAdminStore, UUID5, when6;
+var RETURN_DECISIONS, DECISION_TEXT, rows64, MysqlPartReturnAdminStore, UUID5, when6;
 var init_part_returns = __esm({
   "packages/api/dist/interfaces/admin/part-returns.js"() {
     "use strict";
@@ -113725,7 +113908,7 @@ var init_part_returns = __esm({
     init_workflow();
     RETURN_DECISIONS = ["resuelta_comprador", "resuelta_almacen"];
     DECISION_TEXT = { resuelta_comprador: "A favor de quien compr\xF3", resuelta_almacen: "A favor del almac\xE9n" };
-    rows63 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+    rows64 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
     MysqlPartReturnAdminStore = class {
       connect;
       constructor(connect) {
@@ -113742,7 +113925,7 @@ var init_part_returns = __esm({
       /** R2: la foto de la pieza que adjuntó quien compró, si existe. */
       photo(id3) {
         return this.run(async (conn) => {
-          const [p] = await rows63(conn, "SELECT photoMime, photoData FROM `PartReturn` WHERE id = ? AND photoMime IS NOT NULL", [id3]).catch((err4) => {
+          const [p] = await rows64(conn, "SELECT photoMime, photoData FROM `PartReturn` WHERE id = ? AND photoMime IS NOT NULL", [id3]).catch((err4) => {
             if (err4.code === "ER_BAD_FIELD_ERROR")
               return [];
             throw err4;
@@ -113751,7 +113934,7 @@ var init_part_returns = __esm({
         });
       }
       list() {
-        return this.run(async (conn) => (await rows63(conn, "SELECT t.id, t.requestId, t.reason, t.storeNote, t.escalationReason, t.status, t.createdAt, t.adminNote, r.category, o.businessName, o.priceUsd, u.name AS buyerName FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId JOIN `User` u ON u.id = r.ownerId WHERE t.status IN ('en_admin','resuelta_comprador','resuelta_almacen') ORDER BY t.status = 'en_admin' DESC, t.createdAt DESC LIMIT 100")).map((r) => ({
+        return this.run(async (conn) => (await rows64(conn, "SELECT t.id, t.requestId, t.reason, t.storeNote, t.escalationReason, t.status, t.createdAt, t.adminNote, r.category, o.businessName, o.priceUsd, u.name AS buyerName FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId JOIN `User` u ON u.id = r.ownerId WHERE t.status IN ('en_admin','resuelta_comprador','resuelta_almacen') ORDER BY t.status = 'en_admin' DESC, t.createdAt DESC LIMIT 100")).map((r) => ({
           id: String(r.id),
           requestId: String(r.requestId),
           category: String(r.category),
@@ -113770,17 +113953,17 @@ var init_part_returns = __esm({
         return this.run(async (conn) => {
           await conn.query("START TRANSACTION");
           try {
-            const [t] = await rows63(conn, "SELECT t.id, t.status, t.requestId, r.ownerId, o.businessUserId FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId WHERE t.id = ? FOR UPDATE", [input.id]);
+            const [t] = await rows64(conn, "SELECT t.id, t.status, t.requestId, r.ownerId, o.businessUserId FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId WHERE t.id = ? FOR UPDATE", [input.id]);
             if (!t || t.status !== "en_admin") {
               await conn.query("ROLLBACK");
               return { ok: false };
             }
             await conn.query("UPDATE `PartReturn` SET status = ?, adminNote = ?, resolvedBy = ?, resolvedAt = UTC_TIMESTAMP(3) WHERE id = ?", [input.decision, input.note, input.adminUserId, input.id]);
             const ref4 = shortCode("S", String(t.requestId));
-            const text15 = `\u2696\uFE0F AutoMantPro decidi\xF3 la devoluci\xF3n del repuesto ${ref4}: ${DECISION_TEXT[input.decision].toLowerCase()}. ${input.note} AutoMantPro no mueve dinero: si corresponde un reembolso, lo acuerdan entre ustedes.`;
+            const text16 = `\u2696\uFE0F AutoMantPro decidi\xF3 la devoluci\xF3n del repuesto ${ref4}: ${DECISION_TEXT[input.decision].toLowerCase()}. ${input.note} AutoMantPro no mueve dinero: si corresponde un reembolso, lo acuerdan entre ustedes.`;
             for (const [who, key] of [[String(t.ownerId), "buyer"], [String(t.businessUserId), "store"]])
-              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.return', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID57(), `partreturn-resolved:${input.id}:${key}`, who, JSON.stringify({ message: text15 })]);
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'part.return.resolved', ?, 'admin', 'LocalRequest', ?, ?, UTC_TIMESTAMP(3))", [randomUUID57(), input.adminUserId, t.requestId, JSON.stringify({ returnId: input.id, decision: input.decision })]);
+              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.return', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID58(), `partreturn-resolved:${input.id}:${key}`, who, JSON.stringify({ message: text16 })]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'part.return.resolved', ?, 'admin', 'LocalRequest', ?, ?, UTC_TIMESTAMP(3))", [randomUUID58(), input.adminUserId, t.requestId, JSON.stringify({ returnId: input.id, decision: input.decision })]);
             await conn.query("COMMIT");
             return { ok: true, ref: ref4 };
           } catch (err4) {
@@ -113850,8 +114033,8 @@ var init_metrics = __esm({
 // packages/api/dist/application/plans/model-plan-input.js
 import { createHash as createHash15 } from "node:crypto";
 function parseModelPlanInput(body) {
-  const marca = text10(body.marca, 80);
-  const modelo = text10(body.modelo, 80);
+  const marca = text11(body.marca, 80);
+  const modelo = text11(body.modelo, 80);
   if (marca.length < 2)
     return { ok: false, error: "Escribe la marca." };
   if (!modelo)
@@ -113861,10 +114044,10 @@ function parseModelPlanInput(body) {
   const { min, max } = MODEL_PLAN_LIMITS.year;
   if (typeof from !== "number" || typeof to !== "number" || from < min || to > max || from > to)
     return { ok: false, error: `Escribe el rango de a\xF1os (entre ${min} y ${max}, y \xABdesde\xBB no puede ser mayor que \xABhasta\xBB).` };
-  const combustible = text10(body.combustible, 20).toLowerCase() || null;
+  const combustible = text11(body.combustible, 20).toLowerCase() || null;
   if (combustible && !fuelIds.includes(combustible))
     return { ok: false, error: "Elige un combustible de la lista o d\xE9jalo vac\xEDo para todos." };
-  const serviceId = text10(body.serviceId, 80);
+  const serviceId = text11(body.serviceId, 80);
   if (!findSubservice(serviceId))
     return { ok: false, error: "Elige un servicio del cat\xE1logo." };
   const km10 = whole(body.intervalKm);
@@ -113873,7 +114056,7 @@ function parseModelPlanInput(body) {
     return { ok: false, error: "Los intervalos deben ser n\xFAmeros enteros positivos." };
   if (km10 === null && months2 === null)
     return { ok: false, error: "Escribe el intervalo en kil\xF3metros, en meses o en ambos." };
-  const fuente = text10(body.fuente, MODEL_PLAN_LIMITS.fuenteMax);
+  const fuente = text11(body.fuente, MODEL_PLAN_LIMITS.fuenteMax);
   if (!fuente)
     return { ok: false, error: "La fuente es obligatoria: escribe el manual, la p\xE1gina o el documento de donde sale el intervalo." };
   return { ok: true, value: { marca, modelo, anioDesde: from, anioHasta: to, combustible, serviceId, intervalKm: km10, intervalMonths: months2, fuente, verificado: body.verificado === "on" || body.verificado === true || body.verificado === "1" } };
@@ -113881,15 +114064,15 @@ function parseModelPlanInput(body) {
 function modelPlanId(v) {
   return createHash15("sha256").update([v.marca, v.modelo, v.anioDesde, v.anioHasta, v.combustible ?? "", v.serviceId].join("|").toLowerCase()).digest("hex").slice(0, 36);
 }
-var MODEL_PLAN_LIMITS, text10, whole;
+var MODEL_PLAN_LIMITS, text11, whole;
 var init_model_plan_input = __esm({
   "packages/api/dist/application/plans/model-plan-input.js"() {
     "use strict";
     init_catalogs();
     MODEL_PLAN_LIMITS = { year: { min: 1950, max: 2100 }, maxKm: 5e5, maxMonths: 240, fuenteMax: 1e3 };
-    text10 = (value2, max) => typeof value2 === "string" ? value2.replace(/\s+/g, " ").trim().slice(0, max) : "";
+    text11 = (value2, max) => typeof value2 === "string" ? value2.replace(/\s+/g, " ").trim().slice(0, max) : "";
     whole = (value2) => {
-      const raw = typeof value2 === "number" ? String(value2) : text10(value2, 12);
+      const raw = typeof value2 === "number" ? String(value2) : text11(value2, 12);
       if (raw === "")
         return null;
       return /^\d+$/.test(raw) ? Number(raw) : "bad";
@@ -113898,7 +114081,7 @@ var init_model_plan_input = __esm({
 });
 
 // packages/api/dist/infrastructure/plans/model-plan-admin-store.js
-import { randomUUID as randomUUID58 } from "node:crypto";
+import { randomUUID as randomUUID59 } from "node:crypto";
 var MODEL_PLAN_PAGE_SIZE, ModelPlanConflictError, toRecord3, COLUMNS2, snapshot, MysqlModelPlanAdminStore;
 var init_model_plan_admin_store = __esm({
   "packages/api/dist/infrastructure/plans/model-plan-admin-store.js"() {
@@ -113942,7 +114125,7 @@ var init_model_plan_admin_store = __esm({
       }
       rows = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
       async audit(conn, eventType, actor, id3, before, after) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'VehicleModelPlan', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID58(), eventType, actor, id3, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, 'admin', 'VehicleModelPlan', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID59(), eventType, actor, id3, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
       }
       async tx(conn, work) {
         await conn.query("START TRANSACTION");
@@ -114033,7 +114216,7 @@ var init_model_plan_admin_store = __esm({
 function modelPlansListView(input) {
   const base = (page3) => `/admin/model-plans?${new URLSearchParams({ ...input.q ? { q: input.q } : {}, ...input.marca ? { marca: input.marca } : {}, page: String(page3) }).toString()}`;
   const pages = Math.max(1, Math.ceil(input.total / input.pageSize));
-  const rows71 = input.items.map((r) => `<tr>
+  const rows72 = input.items.map((r) => `<tr>
     <td>${escapeHtml(r.marca)}<br><span class="muted">${escapeHtml(r.modelo)}</span></td>
     <td>${r.anioDesde}\u2013${r.anioHasta}${r.combustible ? `<br><span class="muted">${escapeHtml(r.combustible)}</span>` : ""}</td>
     <td>${escapeHtml(serviceName4(r.serviceId))}<br><span class="muted">${escapeHtml(interval(r))}</span></td>
@@ -114046,7 +114229,7 @@ ${flashHtml4(input.flash)}
 <p class="muted">Cada fila fija el intervalo de un servicio para un modelo y un rango de a\xF1os. Solo las filas que se usan (columna \xABverificado\xBB) entran en el plan de los veh\xEDculos; las dem\xE1s se conservan sin efecto. Al desactivar una fila no se borra.</p>
 <div class="card"><h2>Filas por marca</h2>${input.brands.length ? `<div class="scroll"><table><thead><tr><th>Marca</th><th class="num">Filas</th><th class="num">Se usan</th></tr></thead><tbody>${input.brands.map((b) => `<tr><td><a href="/admin/model-plans?marca=${encodeURIComponent(b.marca)}">${escapeHtml(b.marca)}</a></td><td class="num">${b.total}</td><td class="num">${b.verificadas}</td></tr>`).join("")}</tbody></table></div>` : '<p class="muted">Todav\xEDa no hay filas.</p>'}</div>
 <div class="card"><h2>Buscar</h2><form method="get" action="/admin/model-plans"><label for="mp-q">Marca, modelo, servicio o fuente</label><input id="mp-q" name="q" maxlength="80" value="${escapeHtml(input.q)}"><button type="submit">Buscar</button></form>${input.canEdit ? '<p><a href="/admin/model-plans/new">Agregar una fila</a></p>' : ""}</div>
-<div class="card"><h2>${input.total} ${input.total === 1 ? "fila" : "filas"}${input.marca ? ` de ${escapeHtml(input.marca)}` : ""}</h2>${input.items.length ? `<div class="scroll"><table><thead><tr><th>Marca y modelo</th><th>A\xF1os</th><th>Servicio</th><th>Fuente</th><th>Estado</th><th></th></tr></thead><tbody>${rows71}</tbody></table></div>
+<div class="card"><h2>${input.total} ${input.total === 1 ? "fila" : "filas"}${input.marca ? ` de ${escapeHtml(input.marca)}` : ""}</h2>${input.items.length ? `<div class="scroll"><table><thead><tr><th>Marca y modelo</th><th>A\xF1os</th><th>Servicio</th><th>Fuente</th><th>Estado</th><th></th></tr></thead><tbody>${rows72}</tbody></table></div>
 <p>${input.page > 1 ? `<a href="${escapeHtml(base(input.page - 1))}">Anteriores</a> \xB7 ` : ""}P\xE1gina ${input.page} de ${pages}${input.page < pages ? ` \xB7 <a href="${escapeHtml(base(input.page + 1))}">Siguientes</a>` : ""}</p>` : '<p class="muted">No hay filas con ese criterio.</p>'}</div>`;
 }
 function modelPlanFormView(input) {
@@ -114084,7 +114267,7 @@ var init_views_model_plans = __esm({
 // packages/api/dist/interfaces/admin/model-plans.js
 function registerModelPlanRoutes(app2, deps) {
   const { modelPlans } = deps;
-  const errorPage = (request, reply, session, text15, status) => deps.html(reply, request, "Base de planes", `<div class="card"><p class="error">${escapeHtml(text15)}</p><p><a href="/admin/model-plans">Volver a la base de planes</a></p></div>`, session, status);
+  const errorPage = (request, reply, session, text16, status) => deps.html(reply, request, "Base de planes", `<div class="card"><p class="error">${escapeHtml(text16)}</p><p><a href="/admin/model-plans">Volver a la base de planes</a></p></div>`, session, status);
   const dbError2 = (err4) => {
     const code5 = err4.code;
     return code5 === "ER_NO_SUCH_TABLE" || code5 === "ER_BAD_FIELD_ERROR" ? { status: 503, text: "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." } : { status: 502, text: `No se pudo completar la operaci\xF3n (${code5 ?? "base de datos no disponible"}).` };
@@ -114235,7 +114418,7 @@ var init_metrics_store = __esm({
         const conn = await this.connect();
         const d7 = new Date(now.getTime() - 7 * DAY4);
         const d30 = new Date(now.getTime() - 30 * DAY4);
-        const rows71 = async (sql, args = []) => (await conn.query(sql, args))[0];
+        const rows72 = async (sql, args = []) => (await conn.query(sql, args))[0];
         const part = async (work) => {
           try {
             return await work();
@@ -114247,24 +114430,24 @@ var init_metrics_store = __esm({
         };
         try {
           await conn.query("START TRANSACTION READ ONLY");
-          const users = await rows71("SELECT role, COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `User` WHERE deletedAt IS NULL GROUP BY role ORDER BY role", [d7, d30]);
-          const requests = await part(async () => counts((await rows71("SELECT COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `LocalRequest`", [d7, d30]))[0]));
+          const users = await rows72("SELECT role, COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `User` WHERE deletedAt IS NULL GROUP BY role ORDER BY role", [d7, d30]);
+          const requests = await part(async () => counts((await rows72("SELECT COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `LocalRequest`", [d7, d30]))[0]));
           const appointments = await part(async () => {
-            const total = counts((await rows71("SELECT COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `Appointment`", [d7, d30]))[0]);
-            const byStatus = Object.fromEntries((await rows71("SELECT status, COUNT(*) AS n FROM `Appointment` GROUP BY status")).map((r) => [String(r.status), num6(r.n)]));
+            const total = counts((await rows72("SELECT COUNT(*) AS total, COALESCE(SUM(createdAt >= ?), 0) AS last7, COALESCE(SUM(createdAt >= ?), 0) AS last30 FROM `Appointment`", [d7, d30]))[0]);
+            const byStatus = Object.fromEntries((await rows72("SELECT status, COUNT(*) AS n FROM `Appointment` GROUP BY status")).map((r) => [String(r.status), num6(r.n)]));
             return { ...total, byStatus };
           });
           const orders = await part(async () => {
-            const [open] = await rows71("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE status IN (?)", [OPEN_STATUSES]);
-            const closed = counts((await rows71("SELECT COUNT(*) AS total, COALESCE(SUM(closedAt >= ?), 0) AS last7, COALESCE(SUM(closedAt >= ?), 0) AS last30 FROM `WorkOrder` WHERE status = 'cerrada'", [d7, d30]))[0]);
+            const [open] = await rows72("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE status IN (?)", [OPEN_STATUSES]);
+            const closed = counts((await rows72("SELECT COUNT(*) AS total, COALESCE(SUM(closedAt >= ?), 0) AS last7, COALESCE(SUM(closedAt >= ?), 0) AS last30 FROM `WorkOrder` WHERE status = 'cerrada'", [d7, d30]))[0]);
             return { open: num6(open?.n), closed };
           });
           const shopResponse = await part(async () => {
             const base = "SELECT AVG(TIMESTAMPDIFF(MINUTE, r.createdAt, o.createdAt)) AS avgMin, COUNT(*) AS n FROM `LocalOffer` o JOIN `LocalRequest` r ON r.id = o.requestId WHERE r.kind = 'servicio' AND o.priceUsd IS NOT NULL AND o.createdAt >= r.createdAt";
             const hours2 = (r) => ({ avgHours: r && r.avgMin !== null && r.avgMin !== void 0 && num6(r.n) > 0 ? Math.round(num6(r.avgMin) / 6) / 10 : null, samples: num6(r?.n) });
-            return { overall: hours2((await rows71(base))[0]), last30: hours2((await rows71(`${base} AND o.createdAt >= ?`, [d30]))[0]) };
+            return { overall: hours2((await rows72(base))[0]), last30: hours2((await rows72(`${base} AND o.createdAt >= ?`, [d30]))[0]) };
           });
-          const claimsOpen = await part(async () => num6((await rows71("SELECT COUNT(*) AS n FROM `WorkOrderClaim` WHERE status IN ('abierto','respondido','en_admin')"))[0]?.n));
+          const claimsOpen = await part(async () => num6((await rows72("SELECT COUNT(*) AS n FROM `WorkOrderClaim` WHERE status IN ('abierto','respondido','en_admin')"))[0]?.n));
           return { generatedAt: now, usersByRole: users.map((r) => ({ role: String(r.role), ...counts(r) })), requests, appointments, orders, shopResponse, claimsOpen };
         } finally {
           await conn.query("ROLLBACK").catch(() => void 0);
@@ -114279,14 +114462,14 @@ var init_metrics_store = __esm({
 function cell2(value2) {
   if (value2 === null || value2 === void 0)
     return "";
-  const text15 = value2 instanceof Date ? value2.toISOString() : String(value2);
-  const clean4 = text15.replace(/\r?\n/g, " ").replace(/\t/g, " ");
+  const text16 = value2 instanceof Date ? value2.toISOString() : String(value2);
+  const clean4 = text16.replace(/\r?\n/g, " ").replace(/\t/g, " ");
   const safe = /^[=+\-@]/.test(clean4) ? `'${clean4}` : clean4;
   return `"${safe.replace(/"/g, '""')}"`;
 }
-function toCsv(columns, rows71) {
+function toCsv(columns, rows72) {
   const head = columns.map(([, label5]) => cell2(label5)).join(SEPARATOR);
-  const body = rows71.map((row2) => columns.map(([key]) => cell2(row2[key])).join(SEPARATOR));
+  const body = rows72.map((row2) => columns.map(([key]) => cell2(row2[key])).join(SEPARATOR));
   return `\uFEFF${[head, ...body].join("\r\n")}\r
 `;
 }
@@ -114310,7 +114493,7 @@ function when7(value2) {
   return new Intl.DateTimeFormat("es-EC", { dateStyle: "short", timeZone: "America/Guayaquil" }).format(date2);
 }
 function exportsView(input) {
-  const rows71 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
+  const rows72 = DATASETS.map((d) => `<tr><td>${escapeHtml(d.label)}</td>
     <td>${input.counts ? String(input.counts[d.key] ?? 0) : "\u2014"}</td>
     <td>${d.personal ? '<span class="error">datos personales</span>' : '<span class="muted">sin datos personales</span>'}</td>
     <td><a href="/admin/exports/${escapeHtml(d.key)}.csv">Descargar CSV</a></td></tr>`).join("");
@@ -114318,11 +114501,11 @@ function exportsView(input) {
   <div class="card"><h2>C\xF3mo usarlo</h2>
     <p class="muted">Cada archivo se abre en Excel o en Google Sheets. Guarda los respaldos en un lugar cifrado y b\xF3rralos cuando ya no los necesites: los archivos marcados contienen datos personales y su descarga queda en la auditor\xEDa.</p>
     <p class="muted">La descarga trae hasta 5.000 filas por archivo, las m\xE1s recientes primero.</p></div>
-  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows71}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Conjunto</th><th>Filas</th><th>Contenido</th><th></th></tr></thead><tbody>${rows72}</tbody></table></div></div>`;
 }
 function dataRequestsView(input) {
   const tabs3 = STATUS_FILTERS.map(([key, label5]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/data-requests?f=${escapeHtml(key)}">${escapeHtml(label5)}</a>`).join("");
-  const rows71 = input.items.map((r) => {
+  const rows72 = input.items.map((r) => {
     const left = daysLeft(r.dueAt);
     const plazo = isOverdue(r) ? `<span class="error">vencido hace ${Math.abs(left)} d\xEDas</span>` : r.status === "atendida" || r.status === "rechazada" ? `<span class="muted">cerrado ${when7(r.resolvedAt)}</span>` : `<span class="${left <= 3 ? "error" : "muted"}">${left} d\xEDas</span>`;
     const actions = r.status === "recibida" || r.status === "en_proceso" ? `<a href="/admin/data-requests/${escapeHtml(r.id)}/export.json">Descargar sus datos</a>
@@ -114347,7 +114530,7 @@ function dataRequestsView(input) {
     <ul>${REQUEST_KINDS.map((k) => `<li><strong>${escapeHtml(k.label)}:</strong> ${escapeHtml(k.description)}</li>`).join("")}</ul>
     <p class="muted">Las solicitudes se abren desde la ficha del titular.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay solicitudes con ese filtro.</p>` : ""}
-  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows71}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>Caso</th><th>Titular</th><th>Tipo</th><th>Estado</th><th>Plazo</th><th>Acciones</th></tr></thead><tbody>${rows72}</tbody></table></div></div>`;
 }
 function userDataRequestsCard(userId, items, csrf) {
   const list7 = items.length ? `<ul>${items.map((r) => `<li>${escapeHtml(dataRequestCode(r.number))} \xB7 ${escapeHtml(kindLabel(r.kind))} \xB7 ${escapeHtml(REQUEST_STATUS_LABELS[r.status] ?? r.status)}${isOverdue(r) ? ' <span class="error">vencido</span>' : ""}</li>`).join("")}</ul>` : `<p class="muted">Sin solicitudes de datos.</p>`;
@@ -114383,7 +114566,7 @@ var init_views_data = __esm({
 // packages/api/dist/interfaces/admin/data.js
 function registerDataRoutes(app2, deps) {
   const { data: data3 } = deps;
-  const errorPage = (request, reply, session, title, text15, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text16, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
   function dbError2(err4) {
     const code5 = err4.code;
     if (code5 === "ER_NO_SUCH_TABLE" || code5 === "ER_BAD_FIELD_ERROR") {
@@ -114434,15 +114617,15 @@ function registerDataRoutes(app2, deps) {
     const dataset = DATASETS.find((d) => d.key === raw);
     if (!dataset)
       return errorPage(request, reply, session, "Respaldos", "Ese conjunto no existe.", 404);
-    let rows71;
+    let rows72;
     try {
-      rows71 = await data3.exportRows(dataset.key);
+      rows72 = await data3.exportRows(dataset.key);
     } catch (err4) {
       const m = dbError2(err4);
       return errorPage(request, reply, session, "Respaldos", m.text, m.status);
     }
-    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows71.length} filas${dataset.personal ? ", con datos personales" : ""})`);
-    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows71));
+    await deps.audit("admin.export.download", session.userId, `Export\xF3 ${dataset.label} (${rows72.length} filas${dataset.personal ? ", con datos personales" : ""})`);
+    return reply.header("Content-Type", "text/csv; charset=utf-8").header("Content-Disposition", `attachment; filename="${csvFileName(dataset.key)}"`).header("Cache-Control", "no-store").send(toCsv(dataset.columns, rows72));
   });
   app2.get("/data-requests", async (request, reply) => {
     const session = deps.requireSession(request, reply);
@@ -114575,8 +114758,8 @@ var init_data = __esm({
 
 // packages/api/dist/interfaces/admin/recoveries.js
 function view(items, csrf, filter) {
-  const rows71 = items.map((r) => `<tr><td><a href="/admin/users/${escapeHtml(r.userId)}">${escapeHtml(r.accountName)}</a></td><td>${escapeHtml(r.claimantName)}</td><td class="mono">${escapeHtml(r.newPhone)}</td><td>${escapeHtml(r.detail)}</td><td>${escapeHtml(STATUS3[r.status] ?? r.status)}${r.resolutionNote ? `<br><small>${escapeHtml(r.resolutionNote)}</small>` : ""}</td><td>${r.status === "recibida" ? `<form method="post" action="/admin/recoveries/${escapeHtml(r.id)}/resolve"><input type="hidden" name="csrf" value="${escapeHtml(csrf)}"><input name="note" required minlength="10" maxlength="300" aria-label="C\xF3mo comprobaste la identidad" placeholder="C\xF3mo comprobaste la identidad"><button name="decision" value="approve">Aprobar</button> <button name="decision" value="reject">Rechazar</button></form>` : ""}</td></tr>`).join("");
-  return `<div class="card"><h2>${TITLE2}</h2><p>Personas que perdieron el n\xFAmero de su cuenta. Comprobaron con un c\xF3digo que el n\xFAmero nuevo es suyo, pero <strong>no que la cuenta lo sea</strong>: confirma su identidad por fuera antes de aprobar. Aprobar entrega la cuenta y avisa al n\xFAmero anterior.</p><p><a href="/admin/recoveries">Por revisar</a> \xB7 <a href="/admin/recoveries?f=todas">Todas</a></p>${items.length ? `<table><thead><tr><th>Cuenta</th><th>Dice ser</th><th>N\xFAmero nuevo</th><th>Detalle</th><th>Estado</th><th>Decisi\xF3n</th></tr></thead><tbody>${rows71}</tbody></table>` : `<p>${filter === "todas" ? "No hay solicitudes." : "No hay solicitudes por revisar."}</p>`}</div>`;
+  const rows72 = items.map((r) => `<tr><td><a href="/admin/users/${escapeHtml(r.userId)}">${escapeHtml(r.accountName)}</a></td><td>${escapeHtml(r.claimantName)}</td><td class="mono">${escapeHtml(r.newPhone)}</td><td>${escapeHtml(r.detail)}</td><td>${escapeHtml(STATUS3[r.status] ?? r.status)}${r.resolutionNote ? `<br><small>${escapeHtml(r.resolutionNote)}</small>` : ""}</td><td>${r.status === "recibida" ? `<form method="post" action="/admin/recoveries/${escapeHtml(r.id)}/resolve"><input type="hidden" name="csrf" value="${escapeHtml(csrf)}"><input name="note" required minlength="10" maxlength="300" aria-label="C\xF3mo comprobaste la identidad" placeholder="C\xF3mo comprobaste la identidad"><button name="decision" value="approve">Aprobar</button> <button name="decision" value="reject">Rechazar</button></form>` : ""}</td></tr>`).join("");
+  return `<div class="card"><h2>${TITLE2}</h2><p>Personas que perdieron el n\xFAmero de su cuenta. Comprobaron con un c\xF3digo que el n\xFAmero nuevo es suyo, pero <strong>no que la cuenta lo sea</strong>: confirma su identidad por fuera antes de aprobar. Aprobar entrega la cuenta y avisa al n\xFAmero anterior.</p><p><a href="/admin/recoveries">Por revisar</a> \xB7 <a href="/admin/recoveries?f=todas">Todas</a></p>${items.length ? `<table><thead><tr><th>Cuenta</th><th>Dice ser</th><th>N\xFAmero nuevo</th><th>Detalle</th><th>Estado</th><th>Decisi\xF3n</th></tr></thead><tbody>${rows72}</tbody></table>` : `<p>${filter === "todas" ? "No hay solicitudes." : "No hay solicitudes por revisar."}</p>`}</div>`;
 }
 function registerRecoveryRoutes(app2, deps) {
   const page3 = async (request, reply, session, filter) => {
@@ -114598,7 +114781,7 @@ function registerRecoveryRoutes(app2, deps) {
     const session = deps.requireSession(request, reply);
     if (!session)
       return reply;
-    const fail25 = (text15, status) => deps.html(reply, request, TITLE2, `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, status);
+    const fail25 = (text16, status) => deps.html(reply, request, TITLE2, `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
     const body = request.body ?? {};
     if (!verifyCsrf(session, body.csrf))
       return fail25("Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.", 403);
@@ -114685,7 +114868,7 @@ function contractView(input) {
   </div>`;
 }
 function catalogView(input) {
-  const rows71 = input.catalog.map((o) => {
+  const rows72 = input.catalog.map((o) => {
     const id3 = escapeHtml(o.key);
     const lim = (k) => o.limits[k] === void 0 ? "" : String(o.limits[k]);
     return `<div class="card"><h2>${escapeHtml(PROFILE_LABELS[o.profile])} \xB7 ${escapeHtml(o.name)}</h2>
@@ -114710,7 +114893,7 @@ function catalogView(input) {
   }).join("");
   return `<div class="stack wide"><h1>Cat\xE1logo y precios</h1>${billingTabs("catalogo")}${flashHtml6(input.flash)}
   <div class="card"><p class="muted">Los precios se guardan sin IVA y se muestran con IVA incluido (${escapeHtml(formatUsd2(withIva(1)))} por cada US$ 1). Un cambio de precio vale para contratos nuevos y renovaciones; nunca cambia un per\xEDodo ya pagado. Un tope vac\xEDo significa sin tope.</p></div>
-  ${rows71}</div>`;
+  ${rows72}</div>`;
 }
 function accountsView(input) {
   const list7 = input.accounts.length ? `<div class="scroll"><table><thead><tr><th>Banco</th><th>Cuenta</th><th>Titular</th><th>Estado</th><th></th></tr></thead><tbody>${input.accounts.map((a) => `<tr><td>${escapeHtml(a.bank)}</td><td>${escapeHtml(a.accountType)} N\xB0 ${escapeHtml(a.number)}</td><td>${escapeHtml(a.holder)}<br><span class="muted">${escapeHtml(a.holderId)}</span></td>
@@ -114730,7 +114913,7 @@ function accountsView(input) {
 }
 function revenueView(input) {
   const r = input.report;
-  const rows71 = r.rows.map((x) => `<tr><td>SB-${escapeHtml(String(x.number).padStart(4, "0"))}</td><td>${escapeHtml(when8(x.verifiedAt))}</td><td>${escapeHtml(x.userName ?? "")}</td><td>${escapeHtml(planName(x.plan, input.catalog))}${x.period ? `<br><span class="muted">${escapeHtml(x.period)}</span>` : ""}</td>
+  const rows72 = r.rows.map((x) => `<tr><td>SB-${escapeHtml(String(x.number).padStart(4, "0"))}</td><td>${escapeHtml(when8(x.verifiedAt))}</td><td>${escapeHtml(x.userName ?? "")}</td><td>${escapeHtml(planName(x.plan, input.catalog))}${x.period ? `<br><span class="muted">${escapeHtml(x.period)}</span>` : ""}</td>
       <td>${escapeHtml(money4(x.subtotalUsd))}</td><td>${escapeHtml(money4(x.ivaUsd))}</td><td><strong>${escapeHtml(money4(x.amountUsd))}</strong></td><td>${escapeHtml(x.invoiceNumber ?? "\u2014")}</td></tr>`).join("");
   const [y, m] = r.month.split("-").map(Number);
   const prev = `${m === 1 ? y - 1 : y}-${String(m === 1 ? 12 : m - 1).padStart(2, "0")}`;
@@ -114743,7 +114926,7 @@ function revenueView(input) {
     <div class="card"><h2>Por verificar</h2><div class="big">${escapeHtml(String(r.toVerify))}</div><p class="muted">pagos informados \xB7 <a href="/admin/plans?f=pendiente">ver</a></p></div>
     <div class="card"><h2>Sin renovar</h2><div class="big">${escapeHtml(String(r.lapsed))}</div><p class="muted">planes que vencieron este mes</p></div>
   </div>
-  ${r.rows.length ? `<div class="scroll"><table><thead><tr><th>Contrato</th><th>Verificado</th><th>Cliente</th><th>Plan</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Factura</th></tr></thead><tbody>${rows71}</tbody></table></div>` : `<p class="muted">No hay pagos verificados en este mes.</p>`}
+  ${r.rows.length ? `<div class="scroll"><table><thead><tr><th>Contrato</th><th>Verificado</th><th>Cliente</th><th>Plan</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Factura</th></tr></thead><tbody>${rows72}</tbody></table></div>` : `<p class="muted">No hay pagos verificados en este mes.</p>`}
   </div>`;
 }
 var flashHtml6, csrfField6, money4, statusLabel;
@@ -114777,7 +114960,7 @@ function planBadge(plan, endsAt) {
 function plansListView(input) {
   const catalog = input.catalog ?? DEFAULT_OFFERS;
   const tabs3 = FILTERS4.map(([key, label5]) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/plans?f=${escapeHtml(key)}">${escapeHtml(label5)}${key === "pendiente" && input.pending > 0 ? ` (${input.pending})` : ""}</a>`).join("");
-  const rows71 = input.items.map((s) => {
+  const rows72 = input.items.map((s) => {
     const left = daysLeft2(s.endsAt);
     const vigencia = s.status === "activa" ? s.endsAt ? `${when9(s.startsAt)} \u2192 ${when9(s.endsAt)}<br><span class="${left !== null && left <= 7 ? "error" : "muted"}">${left} d\xEDas</span>` : `desde ${when9(s.startsAt)}<br><span class="muted">sin vencimiento</span>` : `<span class="muted">${when9(s.createdAt)}</span>`;
     const acciones = input.canDecide && (s.status === "pendiente" || s.status === "solicitada") ? `<form method="post" action="/admin/subscriptions/${escapeHtml(s.id)}/verify">${csrfField7(input.csrf)}
@@ -114802,7 +114985,7 @@ function plansListView(input) {
     <p class="muted">Premium habilita: ${Object.values(FEATURE_LABELS).slice(2).map((f) => escapeHtml(f)).join(" \xB7 ")}.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay suscripciones con ese filtro.</p>` : ""}
   <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Titular</th><th>Plan</th><th>Pago</th><th>Vigencia</th><th>Acciones</th></tr></thead>
-  <tbody>${rows71}</tbody></table></div></div>`;
+  <tbody>${rows72}</tbody></table></div></div>`;
 }
 function userPlanCard(userId, subs, csrf, canRegister, role = "dueno", usage = {}) {
   const plan = effectivePlan(subs);
@@ -114854,7 +115037,7 @@ var init_views_plans = __esm({
 // packages/api/dist/interfaces/admin/plans.js
 function registerPlanRoutes(app2, deps) {
   const { plans } = deps;
-  const errorPage = (request, reply, session, text15, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text16, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
   function dbError2(err4) {
     const code5 = err4.code;
     if (code5 === "ER_NO_SUCH_TABLE" || code5 === "ER_BAD_FIELD_ERROR") {
@@ -114875,10 +115058,10 @@ function registerPlanRoutes(app2, deps) {
   }
   const str8 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
   const whole2 = (value2, max) => {
-    const text15 = str8(value2, 6);
-    if (!text15)
+    const text16 = str8(value2, 6);
+    if (!text16)
       return null;
-    const n3 = Number(text15);
+    const n3 = Number(text16);
     return Number.isFinite(n3) && n3 >= 1 && n3 <= max ? Math.floor(n3) : null;
   };
   async function render(request, reply, session, filter, flash, status = 200) {
@@ -115043,7 +115226,7 @@ var init_plans2 = __esm({
 // packages/api/dist/interfaces/admin/ads.js
 function adsListView(input) {
   const tabs3 = AD_FILTERS.map((key) => `<a class="${key === input.filter ? "active" : ""}" href="/admin/publicidad?f=${escapeHtml(key)}">${escapeHtml(LABELS2[key])}${key === "pago_enviado" && input.pending > 0 ? ` (${input.pending})` : ""}</a>`).join("");
-  const rows71 = input.items.map((a) => {
+  const rows72 = input.items.map((a) => {
     const files = [a.hasProof ? `<a href="/admin/publicidad/${escapeHtml(a.id)}/comprobante" target="_blank" rel="noopener">Ver comprobante</a>` : "", a.hasImage ? `<a href="/admin/publicidad/${escapeHtml(a.id)}/imagen" target="_blank" rel="noopener">Ver imagen</a>` : ""].filter(Boolean).join(" \xB7 ");
     const actions = input.canDecide && a.status === "pago_enviado" ? `<form method="post" action="/admin/publicidad/${escapeHtml(a.id)}/aprobar">${csrfField8(input.csrf)}<button type="submit">Aprobar el pago y publicar</button></form>
         <form method="post" action="/admin/publicidad/${escapeHtml(a.id)}/rechazar">${csrfField8(input.csrf)}<label for="r-${escapeHtml(a.id)}">Motivo del rechazo</label><input id="r-${escapeHtml(a.id)}" name="reason" maxlength="191" required><button class="danger" type="submit">Rechazar</button></form>` : input.canDecide && (a.status === "borrador" || a.status === "rechazado") ? `${a.rejectReason ? `<span class="muted">${escapeHtml(a.rejectReason)}</span><br>` : ""}${a.paymentSentAt ? `<span class="muted">Datos de pago enviados el ${escapeHtml(when10(a.paymentSentAt))}</span>` : ""}
@@ -115060,7 +115243,7 @@ function adsListView(input) {
   <div class="tabs">${tabs3}</div>
   <div class="card"><h2>C\xF3mo se revisa</h2><p class="muted">Igual que al contratar un plan: el taller o almac\xE9n arma el anuncio en su perfil, ve el precio por formatos y d\xEDas (tarifas en packages/api/docs/publicidad-tarifas.md), recibe por WhatsApp, desde el n\xFAmero de AutoMantPro, los datos de pago que se env\xEDan aqu\xED (\xABPor enviar datos de pago\xBB), transfiere y sube la foto del comprobante. Aqu\xED se verifica que el dinero lleg\xF3 y que el texto y la imagen son aptos: sin datos de terceros, sin precios enga\xF1osos ni marcas ajenas. Al aprobar, el anuncio sale en su fecha de inicio y luego se registra la factura del SRI, que tambi\xE9n le llega por WhatsApp; al rechazar, el negocio recibe el motivo y puede subir otro comprobante.</p></div>
   ${input.items.length === 0 ? `<p class="muted">No hay anuncios con ese filtro.</p>` : ""}
-  <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Anuncio</th><th>Formatos</th><th>Fechas</th><th>Pago</th><th>Acciones</th></tr></thead><tbody>${rows71}</tbody></table></div></div>`;
+  <div class="scroll"><table><thead><tr><th>C\xF3digo</th><th>Anuncio</th><th>Formatos</th><th>Fechas</th><th>Pago</th><th>Acciones</th></tr></thead><tbody>${rows72}</tbody></table></div></div>`;
 }
 function registerAdAdminRoutes(app2, deps) {
   const { ads } = deps;
@@ -115205,7 +115388,7 @@ function currentMonth(now = /* @__PURE__ */ new Date()) {
 }
 function registerBillingRoutes(app2, deps) {
   const { billing } = deps;
-  const errorPage = (request, reply, session, text15, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text16, status) => deps.html(reply, request, "Planes", `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
   function dbError2(err4) {
     const code5 = err4.code;
     if (code5 === "ER_NO_SUCH_TABLE" || code5 === "ER_BAD_FIELD_ERROR") {
@@ -115669,7 +115852,7 @@ var init_views_service_requests = __esm({
 // packages/api/dist/interfaces/admin/service-requests.js
 function registerServiceRequestRoutes(app2, deps) {
   const store = deps.serviceRequests;
-  const errorPage = (request, reply, session, text15, status) => deps.html(reply, request, "Solicitudes", `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, text16, status) => deps.html(reply, request, "Solicitudes", `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
   function dbError2(err4) {
     const code5 = err4.code;
     if (code5 === "ER_NO_SUCH_TABLE" || code5 === "ER_BAD_FIELD_ERROR") {
@@ -115691,10 +115874,10 @@ function registerServiceRequestRoutes(app2, deps) {
   const str8 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
   const list7 = (value2) => Array.isArray(value2) ? value2.map(String) : typeof value2 === "string" && value2 ? [value2] : [];
   const whole2 = (value2, max) => {
-    const text15 = str8(value2, 6);
-    if (!text15)
+    const text16 = str8(value2, 6);
+    if (!text16)
       return null;
-    const n3 = Number(text15);
+    const n3 = Number(text16);
     return Number.isFinite(n3) && n3 >= 0 && n3 <= max ? Math.floor(n3) : null;
   };
   async function renderDetail(request, reply, session, id3, flash, status = 200) {
@@ -115919,7 +116102,7 @@ var init_service_requests = __esm({
 });
 
 // packages/api/dist/infrastructure/service-requests/service-request-store.js
-function rows64(result) {
+function rows65(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -115945,15 +116128,15 @@ function toRequest2(row2) {
     ownerId: String(row2.ownerId),
     ownerName: String(row2.ownerName ?? ""),
     ownerPhone: String(row2.ownerPhone ?? ""),
-    vehicleId: text11(row2.vehicleId),
+    vehicleId: text12(row2.vehicleId),
     vehicleLabel: label5,
     category: String(row2.category),
     description: String(row2.description ?? ""),
-    city: text11(row2.city),
-    zone: text11(row2.zone),
+    city: text12(row2.city),
+    zone: text12(row2.zone),
     status: String(row2.status),
-    chosenOfferId: text11(row2.chosenOfferId),
-    closeReason: text11(row2.closeReason),
+    chosenOfferId: text12(row2.chosenOfferId),
+    closeReason: text12(row2.closeReason),
     createdAt: row2.createdAt,
     respuestas: Number(row2.respuestas ?? 0)
   };
@@ -115966,23 +116149,23 @@ function toOffer(row2) {
     shopName: String(row2.shopName ?? ""),
     shopUserId: String(row2.shopUserId ?? ""),
     shopCity: String(row2.shopCity ?? ""),
-    shopZone: text11(row2.shopZone),
+    shopZone: text12(row2.shopZone),
     status: String(row2.status),
     priceUsd: numberOrNull(row2.priceUsd),
     durationMin: numberOrNull(row2.durationMin),
-    availability: text11(row2.availability),
+    availability: text12(row2.availability),
     warrantyDays: numberOrNull(row2.warrantyDays),
-    notes: text11(row2.notes),
+    notes: text12(row2.notes),
     respondedAt: row2.respondedAt ?? null
   };
 }
-var PAGE_SIZE8, text11, numberOrNull, SELECT_REQUESTS2, MysqlServiceRequestStore;
+var PAGE_SIZE8, text12, numberOrNull, SELECT_REQUESTS2, MysqlServiceRequestStore;
 var init_service_request_store = __esm({
   "packages/api/dist/infrastructure/service-requests/service-request-store.js"() {
     "use strict";
     init_appointment_store();
     PAGE_SIZE8 = 25;
-    text11 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text12 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     numberOrNull = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     SELECT_REQUESTS2 = "SELECT r.*, u.name AS ownerName, u.phone AS ownerPhone, v.make, v.model, v.year, (SELECT COUNT(*) FROM `ServiceOffer` o WHERE o.requestId = r.id AND o.status = 'ofertado') AS respuestas FROM `ServiceRequest` r JOIN `User` u ON u.id = r.ownerId LEFT JOIN `Vehicle` v ON v.id = r.vehicleId";
     MysqlServiceRequestStore = class {
@@ -116000,7 +116183,7 @@ var init_service_request_store = __esm({
       }
       candidates(city) {
         const base = "SELECT sh.id, sh.name, sh.city, sh.zone, sh.specialties, sh.ratingAvg FROM `Shop` sh WHERE sh.verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(sh.city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows64(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err4) => {
+        return this.run(async (conn) => rows65(await conn.query(`${base}${NOT_SANCTIONED("sh")}ORDER BY sh.ratingAvg DESC, sh.name LIMIT 100`, [city.trim(), city.trim()]).catch((err4) => {
           if (err4.code !== "ER_NO_SUCH_TABLE")
             throw err4;
           return conn.query(`${base}ORDER BY sh.name LIMIT 100`, [city.trim(), city.trim()]);
@@ -116008,16 +116191,16 @@ var init_service_request_store = __esm({
           id: String(row2.id),
           name: String(row2.name),
           city: String(row2.city),
-          zone: text11(row2.zone),
+          zone: text12(row2.zone),
           services: stringList3(row2.specialties),
           ratingAvg: Number(row2.ratingAvg ?? 0)
         })));
       }
       create(input) {
         return this.run(async (conn) => {
-          const created = rows64(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows65(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
-          const next = rows64(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
+          const next = rows65(await conn.query("SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `ServiceRequest`"))[0];
           await conn.query("INSERT INTO `ServiceRequest` (id, `number`, ownerId, vehicleId, category, description, city, zone, status, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'abierta', ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, Number(next?.n ?? 1), input.ownerId, input.vehicleId, input.category, input.description, input.city, input.zone, input.createdBy]);
           for (const shopId of input.shopIds) {
             await conn.query("INSERT INTO `ServiceOffer` (id, requestId, shopId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id3, shopId]);
@@ -116035,21 +116218,21 @@ var init_service_request_store = __esm({
             where = "WHERE r.status = 'abierta' AND (SELECT COUNT(*) FROM `ServiceOffer` o WHERE o.requestId = r.id AND o.status = 'ofertado') = 0";
           else if (filter === "cerradas")
             where = "WHERE r.status IN ('cerrada', 'cancelada')";
-          const items = rows64(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`)).map(toRequest2);
+          const items = rows65(await conn.query(`${SELECT_REQUESTS2} ${where} ORDER BY r.createdAt DESC LIMIT ${PAGE_SIZE8} OFFSET ${offset2}`)).map(toRequest2);
           return { items, page: Math.max(1, Math.floor(page3)), pageSize: PAGE_SIZE8 };
         });
       }
       get(id3) {
         return this.run(async (conn) => {
-          const row2 = rows64(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id3]))[0];
+          const row2 = rows65(await conn.query(`${SELECT_REQUESTS2} WHERE r.id = ? LIMIT 1`, [id3]))[0];
           if (!row2)
             return null;
-          const offers = rows64(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id3])).map(toOffer);
+          const offers = rows65(await conn.query("SELECT o.*, s.name AS shopName, s.city AS shopCity, s.zone AS shopZone, s.userId AS shopUserId FROM `ServiceOffer` o JOIN `Shop` s ON s.id = o.shopId WHERE o.requestId = ? ORDER BY o.status = 'ofertado' DESC, o.priceUsd IS NULL, o.priceUsd ASC, s.name", [id3])).map(toOffer);
           return { request: toRequest2(row2), offers };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows64(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
+        return this.run(async (conn) => rows65(await conn.query(`${SELECT_REQUESTS2} WHERE r.ownerId = ? OR EXISTS (SELECT 1 FROM \`ServiceOffer\` o JOIN \`Shop\` s ON s.id = o.shopId WHERE o.requestId = r.id AND s.userId = ?) ORDER BY r.createdAt DESC LIMIT 20`, [userId, userId])).map(toRequest2));
       }
       saveOffer(requestId, offerId, response) {
         return this.run(async (conn) => {
@@ -116079,7 +116262,7 @@ var init_service_request_store = __esm({
 });
 
 // packages/api/dist/infrastructure/ratings/rating-store.js
-function rows65(result) {
+function rows66(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -116087,22 +116270,22 @@ function toRow4(row2) {
   return {
     id: String(row2.id),
     fromId: String(row2.fromId),
-    fromName: text12(row2.fromName),
+    fromName: text13(row2.fromName),
     toId: String(row2.toId),
     score: Number(row2.score ?? 0),
-    comment: text12(row2.comment),
-    kind: text12(row2.kind),
-    workOrderId: text12(row2.workOrderId),
+    comment: text13(row2.comment),
+    kind: text13(row2.kind),
+    workOrderId: text13(row2.workOrderId),
     hiddenAt: row2.hiddenAt ?? null,
-    hiddenReason: text12(row2.hiddenReason),
+    hiddenReason: text13(row2.hiddenReason),
     createdAt: row2.createdAt
   };
 }
-var text12, SELECT3, MysqlRatingStore;
+var text13, SELECT3, MysqlRatingStore;
 var init_rating_store = __esm({
   "packages/api/dist/infrastructure/ratings/rating-store.js"() {
     "use strict";
-    text12 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text13 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     SELECT3 = "SELECT r.*, u.name AS fromName FROM `Rating` r LEFT JOIN `User` u ON u.id = r.fromId";
     MysqlRatingStore = class {
       connect;
@@ -116125,7 +116308,7 @@ var init_rating_store = __esm({
       }
       add(input) {
         return this.run(async (conn) => {
-          const created = rows65(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows66(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
           await conn.query("INSERT INTO `Rating` (id, fromId, toId, score, comment, kind, workOrderId, quoteRequestId, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [id3, input.fromId, input.toId, input.score, input.comment, input.kind, input.workOrderId, input.quoteRequestId]);
           await this.refresh(conn, input.toId);
@@ -116134,23 +116317,23 @@ var init_rating_store = __esm({
       }
       forUser(userId, limit = 20) {
         const cap = Math.min(Math.max(1, Math.floor(limit)), 100);
-        return this.run(async (conn) => rows65(await conn.query(`${SELECT3} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow4));
+        return this.run(async (conn) => rows66(await conn.query(`${SELECT3} WHERE r.toId = ? ORDER BY r.createdAt DESC LIMIT ${cap}`, [userId])).map(toRow4));
       }
       forWorkOrder(workOrderId) {
         return this.run(async (conn) => {
-          const row2 = rows65(await conn.query(`${SELECT3} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
+          const row2 = rows66(await conn.query(`${SELECT3} WHERE r.workOrderId = ? ORDER BY r.createdAt DESC LIMIT 1`, [workOrderId]))[0];
           return row2 ? toRow4(row2) : null;
         });
       }
       get(id3) {
         return this.run(async (conn) => {
-          const row2 = rows65(await conn.query(`${SELECT3} WHERE r.id = ? LIMIT 1`, [id3]))[0];
+          const row2 = rows66(await conn.query(`${SELECT3} WHERE r.id = ? LIMIT 1`, [id3]))[0];
           return row2 ? toRow4(row2) : null;
         });
       }
       hide(id3, reason, hiddenBy) {
         return this.run(async (conn) => {
-          const row2 = rows65(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id3]))[0];
+          const row2 = rows66(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id3]))[0];
           if (!row2)
             return false;
           const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = CURRENT_TIMESTAMP(3), hiddenBy = ?, hiddenReason = ? WHERE id = ? AND hiddenAt IS NULL", [hiddenBy, reason, id3]);
@@ -116162,7 +116345,7 @@ var init_rating_store = __esm({
       }
       show(id3) {
         return this.run(async (conn) => {
-          const row2 = rows65(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id3]))[0];
+          const row2 = rows66(await conn.query("SELECT toId FROM `Rating` WHERE id = ? LIMIT 1", [id3]))[0];
           if (!row2)
             return false;
           const [result] = await conn.query("UPDATE `Rating` SET hiddenAt = NULL, hiddenBy = NULL, hiddenReason = NULL WHERE id = ? AND hiddenAt IS NOT NULL", [id3]);
@@ -116177,7 +116360,7 @@ var init_rating_store = __esm({
 });
 
 // packages/api/dist/infrastructure/relations/relation-store.js
-function rows66(result) {
+function rows67(result) {
   const [list7] = result;
   return Array.isArray(list7) ? list7 : [];
 }
@@ -116258,15 +116441,15 @@ var init_relation_store = __esm({
         }
       }
       async nextNumber(conn, table2) {
-        const row2 = rows66(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table2}\``))[0];
+        const row2 = rows67(await conn.query(`SELECT COALESCE(MAX(\`number\`), 0) + 1 AS n FROM \`${table2}\``))[0];
         return Number(row2?.n ?? 1);
       }
       ensureForOrigin(input) {
         return this.run(async (conn) => {
-          const existing = rows66(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
+          const existing = rows67(await conn.query("SELECT id FROM `Relationship` WHERE originType = ? AND originId = ? LIMIT 1", [input.originType, input.originId]))[0];
           if (existing)
             return String(existing.id);
-          const created = rows66(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows67(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
           const number2 = await this.nextNumber(conn, "Relationship");
           await conn.query("INSERT INTO `Relationship` (id, `number`, kind, status, channel, originType, originId, subject, createdBy, createdAt, updatedAt) VALUES (?, ?, ?, 'activa', 'mediado', ?, ?, ?, ?, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, number2, input.kind, input.originType, input.originId, input.subject, input.createdBy]);
@@ -116292,16 +116475,16 @@ var init_relation_store = __esm({
           } else if (filter === "cerradas") {
             where = "WHERE r.status IN ('cerrada', 'bloqueada')";
           }
-          const items = rows66(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`, params2)).map(toRelation);
+          const items = rows67(await conn.query(`${SELECT_RELATION} ${where} ORDER BY r.waitingSince IS NULL, r.waitingSince ASC, r.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`, params2)).map(toRelation);
           return { items, page: Math.max(1, Math.floor(page3)), pageSize: PAGE_SIZE9 };
         });
       }
       get(id3) {
         return this.run(async (conn) => {
-          const row2 = rows66(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id3]))[0];
+          const row2 = rows67(await conn.query(`${SELECT_RELATION} WHERE r.id = ? LIMIT 1`, [id3]))[0];
           if (!row2)
             return null;
-          const parties = rows66(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id3])).map((p) => ({
+          const parties = rows67(await conn.query("SELECT p.id, p.userId, p.role, p.consentShareContact, p.consentAt, p.mutedAt, u.name, u.phone FROM `RelationshipParty` p JOIN `User` u ON u.id = p.userId WHERE p.relationshipId = ? ORDER BY p.role ASC", [id3])).map((p) => ({
             id: String(p.id),
             userId: String(p.userId),
             role: String(p.role),
@@ -116311,7 +116494,7 @@ var init_relation_store = __esm({
             consentAt: p.consentAt ?? null,
             mutedAt: p.mutedAt ?? null
           }));
-          const messages = rows66(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id3])).map((m) => ({
+          const messages = rows67(await conn.query("SELECT m.id, m.fromUserId, m.toUserId, m.body, m.kind, m.relayedAt, m.flagged, m.createdAt, f.name AS fromName, t.name AS toName FROM `RelationshipMessage` m LEFT JOIN `User` f ON f.id = m.fromUserId LEFT JOIN `User` t ON t.id = m.toUserId WHERE m.relationshipId = ? ORDER BY m.createdAt ASC LIMIT 200", [id3])).map((m) => ({
             id: String(m.id),
             fromUserId: str5(m.fromUserId),
             toUserId: str5(m.toUserId),
@@ -116323,16 +116506,16 @@ var init_relation_store = __esm({
             flagged: bool(m.flagged),
             createdAt: m.createdAt
           }));
-          const disputes = rows66(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id3])).map(toDispute);
+          const disputes = rows67(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.relationshipId = ? ORDER BY d.createdAt DESC", [id3])).map(toDispute);
           return { relation: toRelation(row2), parties, messages, disputes };
         });
       }
       forUser(userId) {
-        return this.run(async (conn) => rows66(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
+        return this.run(async (conn) => rows67(await conn.query(`${SELECT_RELATION} JOIN \`RelationshipParty\` mp ON mp.relationshipId = r.id AND mp.userId = ? ORDER BY r.createdAt DESC LIMIT 20`, [userId])).map(toRelation));
       }
       addMessage(input) {
         return this.run(async (conn) => {
-          const created = rows66(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows67(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
           await conn.query(`INSERT INTO \`RelationshipMessage\` (id, relationshipId, fromUserId, toUserId, body, kind, relayedAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ${input.relayed ? "CURRENT_TIMESTAMP(3)" : "NULL"}, ?, CURRENT_TIMESTAMP(3))`, [id3, input.relationshipId, input.fromUserId, input.toUserId, input.body, input.kind, input.createdBy]);
           await conn.query("UPDATE `Relationship` SET lastMessageAt = CURRENT_TIMESTAMP(3), waitingSince = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.toUserId ? /* @__PURE__ */ new Date() : null, input.relationshipId]);
@@ -116363,7 +116546,7 @@ var init_relation_store = __esm({
       }
       openDispute(input) {
         return this.run(async (conn) => {
-          const created = rows66(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows67(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
           const number2 = await this.nextNumber(conn, "Dispute");
           await conn.query("INSERT INTO `Dispute` (id, `number`, relationshipId, openedBy, claimantUserId, againstUserId, reason, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, number2, input.relationshipId, input.openedBy, input.claimantUserId, input.againstUserId, input.reason]);
@@ -116378,13 +116561,13 @@ var init_relation_store = __esm({
         return this.run(async (conn) => {
           const where = status === "todas" ? "" : "WHERE d.status = ?";
           const params2 = status === "todas" ? [] : [status];
-          const items = rows66(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`, params2)).map(toDispute);
+          const items = rows67(await conn.query(`SELECT d.*, r.\`number\` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM \`Dispute\` d LEFT JOIN \`Relationship\` r ON r.id = d.relationshipId LEFT JOIN \`User\` c ON c.id = d.claimantUserId LEFT JOIN \`User\` a ON a.id = d.againstUserId ${where} ORDER BY d.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`, params2)).map(toDispute);
           return { items, page: Math.max(1, Math.floor(page3)), pageSize: PAGE_SIZE9 };
         });
       }
       getDispute(id3) {
         return this.run(async (conn) => {
-          const row2 = rows66(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id3]))[0];
+          const row2 = rows67(await conn.query("SELECT d.*, r.`number` AS relationNumber, c.name AS claimantName, a.name AS againstName FROM `Dispute` d LEFT JOIN `Relationship` r ON r.id = d.relationshipId LEFT JOIN `User` c ON c.id = d.claimantUserId LEFT JOIN `User` a ON a.id = d.againstUserId WHERE d.id = ? LIMIT 1", [id3]))[0];
           return row2 ? toDispute(row2) : null;
         });
       }
@@ -116401,7 +116584,7 @@ var init_relation_store = __esm({
       }
       addSanction(input) {
         return this.run(async (conn) => {
-          const created = rows66(await conn.query("SELECT UUID() AS id"))[0];
+          const created = rows67(await conn.query("SELECT UUID() AS id"))[0];
           const id3 = String(created?.id);
           await conn.query("INSERT INTO `Sanction` (id, userId, level, reason, relationshipId, disputeId, startsAt, endsAt, createdBy, createdAt) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3), ?, ?, CURRENT_TIMESTAMP(3))", [id3, input.userId, input.level, input.reason, input.relationshipId, input.disputeId, input.endsAt, input.createdBy]);
           return id3;
@@ -116410,12 +116593,12 @@ var init_relation_store = __esm({
       listSanctions(page3) {
         const offset2 = (Math.max(1, Math.floor(page3)) - 1) * PAGE_SIZE9;
         return this.run(async (conn) => {
-          const items = rows66(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`)).map(toSanction);
+          const items = rows67(await conn.query(`SELECT s.*, u.name AS userName FROM \`Sanction\` s JOIN \`User\` u ON u.id = s.userId ORDER BY s.createdAt DESC LIMIT ${PAGE_SIZE9} OFFSET ${offset2}`)).map(toSanction);
           return { items, page: Math.max(1, Math.floor(page3)), pageSize: PAGE_SIZE9 };
         });
       }
       sanctionsForUser(userId) {
-        return this.run(async (conn) => rows66(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
+        return this.run(async (conn) => rows67(await conn.query("SELECT s.*, u.name AS userName FROM `Sanction` s JOIN `User` u ON u.id = s.userId WHERE s.userId = ? ORDER BY s.createdAt DESC LIMIT 50", [userId])).map(toSanction));
       }
       liftSanction(id3, reason, liftedBy) {
         return this.run(async (conn) => {
@@ -116424,7 +116607,7 @@ var init_relation_store = __esm({
         });
       }
       sanctionUser(id3) {
-        return this.run(async (conn) => str5(rows66(await conn.query("SELECT userId FROM `Sanction` WHERE id = ? LIMIT 1", [id3]))[0]?.userId));
+        return this.run(async (conn) => str5(rows67(await conn.query("SELECT userId FROM `Sanction` WHERE id = ? LIMIT 1", [id3]))[0]?.userId));
       }
       notify(userId, dedupKey, kind, message2) {
         return this.run(async (conn) => {
@@ -116432,7 +116615,7 @@ var init_relation_store = __esm({
         });
       }
       searchBlockedUserIds() {
-        return this.run(async (conn) => rows66(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
+        return this.run(async (conn) => rows67(await conn.query("SELECT DISTINCT userId FROM `Sanction` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')")).map((r) => String(r.userId)));
       }
     };
   }
@@ -116685,14 +116868,14 @@ function platformCard(platform, csrf) {
     return "";
   const quiet = inQuietHours(platform) ? `<p class="error">Ahora mismo est\xE1s en horario silencioso.</p>` : platform.quietFrom && platform.quietTo ? `<p class="ok">Horario silencioso configurado de ${escapeHtml(platform.quietFrom)} a ${escapeHtml(platform.quietTo)}.</p>` : `<p class="muted">Sin horario silencioso: el panel no avisa a ninguna hora.</p>`;
   const switches = FEATURES.map((f) => `<label><input type="checkbox" name="feature_${escapeHtml(f.key)}"${platform.features[f.key] ? " checked" : ""}> ${escapeHtml(f.label)}</label>`).join("");
-  const entry = `<p class="muted">C\xF3mo abre automantpro.app:</p>
+  const entry2 = `<p class="muted">C\xF3mo abre automantpro.app:</p>
     <label class="choice"><input type="radio" name="entryMode" value="menu"${platform.entryMode === "directo" ? "" : " checked"}>
       <span><strong>Men\xFA de perfiles</strong> (recomendado)<br>Muestra la p\xE1gina con \xABtengo un veh\xEDculo\xBB, \xABtengo un taller\xBB, \xABtengo un almac\xE9n\xBB, \xABya tengo cuenta\xBB y \xABsolo quiero escribir\xBB; el chat arranca con esa respuesta escrita.</span></label>
     <label class="choice"><input type="radio" name="entryMode" value="directo"${platform.entryMode === "directo" ? " checked" : ""}>
       <span><strong>Directo al chat</strong><br>Salta el men\xFA: un solo salto a WhatsApp con el mensaje general.</span></label>`;
   return `<div class="card"><h2>Operaci\xF3n</h2>${quiet}
     <form method="post" action="/admin/settings/platform" autocomplete="off">${csrf}
-    ${entry}
+    ${entry2}
     <label for="cities">Ciudades activas (separadas por comas; vac\xEDo = todas)</label>
     <input id="cities" name="cities" value="${escapeHtml(platform.cities.join(", "))}" placeholder="Quito, Guayaquil, Cuenca">
     <label for="quietFrom">Horario silencioso desde</label>
@@ -117113,12 +117296,12 @@ function registerFounderAdminRoutes(app2, deps) {
       pending = true;
     }
     const csrf = escapeHtml(session.csrfToken);
-    const rows71 = list7.map((r) => `<tr><td>${escapeHtml(String(r.name ?? "(borrada)"))}</td><td>${escapeHtml([r.zone, r.city].filter(Boolean).join(" \xB7 "))}</td><td>\u2026${escapeHtml(String(r.phoneEnd ?? ""))}</td><td>${escapeHtml(STATUS4[String(r.status)] ?? String(r.status))}${r.answeredVia ? ` (${escapeHtml(String(r.answeredVia))})` : ""}</td><td>${escapeHtml(when12(r.sentAt))}${Number(r.sends) > 1 ? ` \xB7 ${Number(r.sends)} env\xEDos` : ""}</td><td>${["borrador", "enviado"].includes(String(r.status)) ? `<form method="post" action="/admin/fundadores/${escapeHtml(String(r.id))}/enviar"><input type="hidden" name="csrf" value="${csrf}"><button type="submit">${r.status === "borrador" ? "Enviar confirmaci\xF3n" : "Reenviar"}</button></form>` : ""}</td></tr>`).join("");
+    const rows72 = list7.map((r) => `<tr><td>${escapeHtml(String(r.name ?? "(borrada)"))}</td><td>${escapeHtml([r.zone, r.city].filter(Boolean).join(" \xB7 "))}</td><td>\u2026${escapeHtml(String(r.phoneEnd ?? ""))}</td><td>${escapeHtml(STATUS4[String(r.status)] ?? String(r.status))}${r.answeredVia ? ` (${escapeHtml(String(r.answeredVia))})` : ""}</td><td>${escapeHtml(when12(r.sentAt))}${Number(r.sends) > 1 ? ` \xB7 ${Number(r.sends)} env\xEDos` : ""}</td><td>${["borrador", "enviado"].includes(String(r.status)) ? `<form method="post" action="/admin/fundadores/${escapeHtml(String(r.id))}/enviar"><input type="hidden" name="csrf" value="${csrf}"><button type="submit">${r.status === "borrador" ? "Enviar confirmaci\xF3n" : "Reenviar"}</button></form>` : ""}</td></tr>`).join("");
     const body = `<div class="stack"><h1>Talleres fundadores</h1>
       ${notes.map((n3) => `<p${status >= 400 ? ' class="error"' : ""}>${escapeHtml(n3)}</p>`).join("")}${errorNotes.map((n3) => `<p class="error">${escapeHtml(n3)}</p>`).join("")}
       ${pending ? `<p>Falta \xABAplicar actualizaciones\xBB en Ajustes para crear la tabla de fundadores.</p>` : ""}
       <p>Cada fundador tiene la misma ficha de taller, con la etiqueta \xABFundador\xBB y Taller Pro sin costo de plan durante 12 meses. La ficha queda privada (no aparece en ninguna lista) hasta que el taller acepta. Si rechaza, se borra.</p>
-      <div class="card"><h2>Fichas</h2>${list7.length ? `<div class="scroll"><table><thead><tr><th>Taller</th><th>Sector</th><th>Tel\xE9fono</th><th>Estado</th><th>Enviado</th><th></th></tr></thead><tbody>${rows71}</tbody></table></div>` : "<p>A\xFAn no hay fichas cargadas.</p>"}</div>
+      <div class="card"><h2>Fichas</h2>${list7.length ? `<div class="scroll"><table><thead><tr><th>Taller</th><th>Sector</th><th>Tel\xE9fono</th><th>Estado</th><th>Enviado</th><th></th></tr></thead><tbody>${rows72}</tbody></table></div>` : "<p>A\xFAn no hay fichas cargadas.</p>"}</div>
       <div class="card"><h2>Cargar fichas borrador</h2>
         <p>Pega el contenido del archivo privado de fundadores (JSON con la lista \xABtalleres\xBB). No se env\xEDa ning\xFAn mensaje al cargar.</p>
         <form method="post" action="/admin/fundadores/importar" autocomplete="off"><input type="hidden" name="csrf" value="${csrf}">
@@ -117151,13 +117334,13 @@ function registerFounderAdminRoutes(app2, deps) {
     const body = request.body ?? {};
     if (!verifyCsrf(session, body.csrf))
       return render(request, reply, session, ["Solicitud inv\xE1lida. Abre de nuevo el panel."], 403);
-    const text15 = typeof body.archivo === "string" ? body.archivo : "";
-    const parsed = parseFounderImport(text15);
+    const text16 = typeof body.archivo === "string" ? body.archivo : "";
+    const parsed = parseFounderImport(text16);
     if (!parsed.items.length)
-      return render(request, reply, session, parsed.errors.length ? parsed.errors : ["No hay fichas v\xE1lidas."], 422, text15);
+      return render(request, reply, session, parsed.errors.length ? parsed.errors : ["No hay fichas v\xE1lidas."], 422, text16);
     try {
       const result = await founders.importDrafts(parsed.items, session.userId);
-      return render(request, reply, session, [`Fichas borrador creadas: ${result.created}.`, ...result.skipped], 200, parsed.errors.length ? text15 : "", parsed.errors);
+      return render(request, reply, session, [`Fichas borrador creadas: ${result.created}.`, ...result.skipped], 200, parsed.errors.length ? text16 : "", parsed.errors);
     } catch (err4) {
       const code5 = err4.code;
       if (code5 === "ER_NO_SUCH_TABLE" || code5 === "ER_BAD_FIELD_ERROR")
@@ -117200,6 +117383,97 @@ var init_founders = __esm({
   }
 });
 
+// packages/api/dist/interfaces/admin/directory.js
+function registerDirectoryAdminRoutes(app2, deps) {
+  const directory = deps.directory ?? new DirectoryStore();
+  async function render(request, reply, session, notes = [], status = 200, draft = "") {
+    reply.header("Cache-Control", "no-store");
+    let list7 = [];
+    let pending = false;
+    try {
+      list7 = await directory.list();
+    } catch {
+      pending = true;
+    }
+    const csrf = escapeHtml(session.csrfToken);
+    const rows72 = list7.map((r) => `<tr><td>${escapeHtml(r.name)}</td><td>${escapeHtml([r.zone, r.city].filter(Boolean).join(" \xB7 "))}</td><td>${escapeHtml(r.services.join(", "))}</td><td>${escapeHtml(r.source)}</td><td>${r.active ? "Visible" : "Oculto"}</td><td><form method="post" action="/admin/directorio/${escapeHtml(r.id)}/${r.active ? "ocultar" : "mostrar"}"><input type="hidden" name="csrf" value="${csrf}"><button type="submit">${r.active ? "Ocultar" : "Mostrar"}</button></form></td></tr>`).join("");
+    const body = `<div class="stack"><h1>Directorio de talleres no registrados</h1>
+      ${notes.map((n3) => `<p${status >= 400 ? ' class="error"' : ""}>${escapeHtml(n3)}</p>`).join("")}
+      ${pending ? "<p>Falta \xABAplicar actualizaciones\xBB en Ajustes para crear la tabla del directorio.</p>" : ""}
+      <p>Completan \xABTalleres cerca de ti\xBB del due\xF1o cuando su ciudad tiene menos de 5 talleres registrados. Salen marcados \xABNo registrado en AutoMantPro\xBB, sin cita directa, con un bot\xF3n para que el due\xF1o invite al taller desde su WhatsApp.</p>
+      <p>Solo datos p\xFAblicos del negocio: nombre, ciudad, sector y servicios, y de d\xF3nde sali\xF3 el dato. Sin tel\xE9fonos, correos ni nombres de personas. Si un taller pide salir, oc\xFAltalo.</p>
+      <div class="card"><h2>Talleres</h2>${list7.length ? `<div class="scroll"><table><thead><tr><th>Taller</th><th>Sector</th><th>Servicios</th><th>Fuente</th><th>Estado</th><th></th></tr></thead><tbody>${rows72}</tbody></table></div>` : "<p>A\xFAn no hay talleres en el directorio.</p>"}</div>
+      <div class="card"><h2>Cargar talleres</h2>
+        <p>JSON con la lista \xABtalleres\xBB (hasta ${MAX_DIRECTORY_IMPORT}). Ejemplo: <code>${escapeHtml(EXAMPLE)}</code></p>
+        <form method="post" action="/admin/directorio/importar" autocomplete="off"><input type="hidden" name="csrf" value="${csrf}">
+        <label>Talleres<textarea name="archivo" rows="10" maxlength="200000" required spellcheck="false">${escapeHtml(draft)}</textarea></label>
+        <button type="submit">Cargar al directorio</button></form></div></div>`;
+    return deps.html(reply, request, "Directorio de talleres", body, session, status);
+  }
+  function authorize(request, reply) {
+    const session = deps.requireSession(request, reply);
+    if (!session)
+      return null;
+    if (!can(session.role, "settings")) {
+      void render(request, reply, session, ["Tu rol no permite administrar el directorio."], 403);
+      return null;
+    }
+    return session;
+  }
+  app2.get("/directorio", async (request, reply) => {
+    const session = authorize(request, reply);
+    if (!session)
+      return reply;
+    return render(request, reply, session);
+  });
+  app2.post("/directorio/importar", async (request, reply) => {
+    const session = authorize(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return render(request, reply, session, ["Solicitud inv\xE1lida. Abre de nuevo el panel."], 403);
+    const text16 = typeof body.archivo === "string" ? body.archivo : "";
+    const parsed = parseDirectoryImport(text16);
+    if (!parsed.items.length)
+      return render(request, reply, session, parsed.errors.length ? parsed.errors : ["No hay talleres v\xE1lidos."], 422, text16);
+    try {
+      const r = await directory.importMany(parsed.items, session.userId);
+      return render(request, reply, session, [`Talleres agregados: ${r.created}.${r.existing ? ` Ya estaban: ${r.existing}.` : ""}`, ...parsed.errors], 200, parsed.errors.length ? text16 : "");
+    } catch (err4) {
+      if (err4.code === "ER_NO_SUCH_TABLE")
+        return render(request, reply, session, ["Falta \xABAplicar actualizaciones\xBB en Ajustes antes de cargar el directorio."], 503, text16);
+      throw err4;
+    }
+  });
+  app2.post("/directorio/:id/:action", async (request, reply) => {
+    const session = authorize(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return render(request, reply, session, ["Solicitud inv\xE1lida. Abre de nuevo el panel."], 403);
+    const { id: id3, action } = request.params;
+    if (!/^[0-9a-f-]{36}$/.test(id3) || !["ocultar", "mostrar"].includes(action))
+      return render(request, reply, session, ["Taller no encontrado."], 404);
+    const ok = await directory.setActive(id3, action === "mostrar").catch(() => false);
+    if (!ok)
+      return render(request, reply, session, ["Taller no encontrado."], 404);
+    return reply.header("Cache-Control", "no-store").redirect("/admin/directorio", 303);
+  });
+}
+var EXAMPLE;
+var init_directory = __esm({
+  "packages/api/dist/interfaces/admin/directory.js"() {
+    "use strict";
+    init_security();
+    init_permissions();
+    init_page();
+    init_directory_store();
+    EXAMPLE = '{ "talleres": [ { "nombre": "Taller Ejemplo", "ciudad": "Quito", "sector": "La Carolina", "servicios": ["Frenos", "Lubricaci\xF3n"], "fuente": "Google Maps, 21/11/2026" } ] }';
+  }
+});
+
 // packages/api/dist/interfaces/admin/whatsapp-queue.js
 function registerWhatsAppQueueRoutes(app2, deps) {
   const outbox = () => deps.outbox ?? new MysqlOutboxDeliveryStore();
@@ -117235,14 +117509,14 @@ function registerWhatsAppQueueRoutes(app2, deps) {
     }
     const flash = request.query?.ok === "1" ? `<p class="ok">Aviso puesto de nuevo en la cola.</p>` : "";
     const counts2 = Object.entries(LABELS3).map(([k, label5]) => `<li>${escapeHtml(label5)}: <strong>${data3.counts[k] ?? 0}</strong></li>`).join("");
-    const rows71 = data3.attention.map((r) => `<tr><td>${escapeHtml(when13(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when13(r.nextAttemptAt))}`}</td></tr>`).join("");
+    const rows72 = data3.attention.map((r) => `<tr><td>${escapeHtml(when13(r.createdAt))}</td><td>${escapeHtml(String(r.recipient))} ${r.phoneEnd ? `(\u2026${escapeHtml(String(r.phoneEnd))})` : ""}</td><td>${escapeHtml(String(r.kind))}</td><td>${escapeHtml(String(r.status))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td><td>${r.status === "dead" ? `<form method="post" action="/admin/whatsapp/${encodeURIComponent(String(r.id))}/requeue"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><button type="submit">Reintentar</button></form>` : `pr\xF3ximo intento ${escapeHtml(when13(r.nextAttemptAt))}`}</td></tr>`).join("");
     const inbound = data3.inboundDead.map((r) => `<tr><td>${escapeHtml(when13(r.createdAt))}</td><td>\u2026${escapeHtml(String(r.phoneEnd))}</td><td>${escapeHtml(String(r.attempts))}</td><td>${escapeHtml(String(r.lastError ?? "\u2014"))}</td></tr>`).join("");
     const alertLabels = { outbox_dead: "Mensajes salientes fallidos", inbound_dead: "Mensajes entrantes fallidos", reminders_failed: "Ciclo de recordatorios", database_not_ready: "Base de datos" };
     const alerts = (data3.lastAlerts ?? []).map((r) => `<li>${escapeHtml(alertLabels[String(r.type)] ?? String(r.type))}: ${escapeHtml(when13(r.sentAt))}</li>`).join("");
     const body = `<div class="stack"><h1>Cola de WhatsApp</h1>${flash}
       <p>Canal activo: <strong>${escapeHtml({ off: "ninguno (no se env\xEDa nada)", bridge: "puente WhatsApp Web del equipo local", cloud: "API oficial de WhatsApp" }[whatsappDelivery()])}</strong>. Aqu\xED no se muestra el texto de los mensajes.</p>${healthCard}
       <div class="card"><h2>Avisos</h2><ul>${counts2}</ul><h3>\xDAltima alerta enviada por tipo</h3>${alerts ? `<ul>${alerts}</ul>` : "<p>Ninguna alerta enviada.</p>"}</div>
-      <div class="card"><h2>Necesitan atenci\xF3n</h2>${rows71 ? `<table><thead><tr><th>Creado</th><th>Para</th><th>Tipo</th><th>Estado</th><th>Intentos</th><th>\xDAltimo error</th><th></th></tr></thead><tbody>${rows71}</tbody></table>` : "<p>Nada pendiente de revisi\xF3n.</p>"}
+      <div class="card"><h2>Necesitan atenci\xF3n</h2>${rows72 ? `<table><thead><tr><th>Creado</th><th>Para</th><th>Tipo</th><th>Estado</th><th>Intentos</th><th>\xDAltimo error</th><th></th></tr></thead><tbody>${rows72}</tbody></table>` : "<p>Nada pendiente de revisi\xF3n.</p>"}
       <p class="muted">TEMPLATE_REQUIRED: la API oficial necesita una plantilla aprobada porque pasaron m\xE1s de 24 horas desde el \xFAltimo mensaje del contacto. PACING: el puente esper\xF3 por el ritmo humano. CHAT_NOT_AVAILABLE: WhatsApp Web no abri\xF3 el chat de ese n\xFAmero.</p></div>
       <div class="card"><h2>Mensajes entrantes sin procesar</h2>${inbound ? `<table><thead><tr><th>Recibido</th><th>Tel\xE9fono</th><th>Intentos</th><th>\xDAltimo error</th></tr></thead><tbody>${inbound}</tbody></table>` : "<p>Ninguno.</p>"}</div></div>`;
     return deps.html(reply, request, "WhatsApp", body, session);
@@ -117290,8 +117564,8 @@ function chatLink(phone, label5) {
     return "";
   return `<a href="https://wa.me/${e4(digits)}" target="_blank" rel="noopener">${e4(label5)} (${e4(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox(id3, label5, content, rows71 = 8) {
-  return `<label for="${id3}">${e4(label5)}</label><textarea id="${id3}" readonly rows="${rows71}">${e4(content)}</textarea>`;
+function copyBox(id3, label5, content, rows72 = 8) {
+  return `<label for="${id3}">${e4(label5)}</label><textarea id="${id3}" readonly rows="${rows72}">${e4(content)}</textarea>`;
 }
 function appointmentsListView(input) {
   const tabs3 = FILTERS8.map(([id3, label5]) => `<a href="/admin/appointments?f=${id3}"${id3 === input.filter ? ' class="active"' : ""}>${e4(label5)}</a>`).join("");
@@ -117495,8 +117769,8 @@ function chatLink2(phone, label5) {
     return "";
   return `<a href="https://wa.me/${e5(digits)}" target="_blank" rel="noopener">${e5(label5)} (${e5(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox2(id3, label5, content, rows71 = 9) {
-  return `<label for="${id3}">${e5(label5)}</label><textarea id="${id3}" readonly rows="${rows71}">${e5(content)}</textarea>`;
+function copyBox2(id3, label5, content, rows72 = 9) {
+  return `<label for="${id3}">${e5(label5)}</label><textarea id="${id3}" readonly rows="${rows72}">${e5(content)}</textarea>`;
 }
 function workOrdersListView(input) {
   const tabs3 = FILTERS9.map(([id3, label5]) => `<a href="/admin/work-orders?f=${id3}"${id3 === input.filter ? ' class="active"' : ""}>${e5(label5)}</a>`).join("");
@@ -117816,8 +118090,8 @@ function chatLink3(phone, label5) {
     return "";
   return `<a href="https://wa.me/${e6(digits)}" target="_blank" rel="noopener">${e6(label5)} (${e6(formatWhatsappNumber(digits))})</a>`;
 }
-function copyBox3(id3, label5, content, rows71 = 8) {
-  return `<label for="${id3}">${e6(label5)}</label><textarea id="${id3}" readonly rows="${rows71}">${e6(content)}</textarea>`;
+function copyBox3(id3, label5, content, rows72 = 8) {
+  return `<label for="${id3}">${e6(label5)}</label><textarea id="${id3}" readonly rows="${rows72}">${e6(content)}</textarea>`;
 }
 function quotesListView(input) {
   const tabs3 = FILTERS10.map(([id3, label5]) => `<a href="/admin/quotes?f=${id3}"${id3 === input.filter ? ' class="active"' : ""}>${e6(label5)}</a>`).join("");
@@ -117961,9 +118235,9 @@ function day4(value2) {
   return date2 && !Number.isNaN(date2.getTime()) ? date2.toISOString().slice(0, 10) : "\u2014";
 }
 function phoneLabel(value2) {
-  const text15 = String(value2 ?? "");
-  const digits = text15.replace(/\D/g, "");
-  return text15.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text15;
+  const text16 = String(value2 ?? "");
+  const digits = text16.replace(/\D/g, "");
+  return text16.startsWith("+") && digits.length >= 8 ? formatWhatsappNumber(digits) : text16;
 }
 function value(values2, key) {
   const v = values2[key];
@@ -117974,7 +118248,7 @@ function field(values2, name, label5, attrs = "") {
 }
 function select(values2, name, label5, options, placeholder) {
   const selected2 = String(values2[name] ?? "");
-  const opts = options.map(([id3, text15]) => `<option value="${e7(id3)}"${id3 === selected2 ? " selected" : ""}>${e7(text15)}</option>`).join("");
+  const opts = options.map(([id3, text16]) => `<option value="${e7(id3)}"${id3 === selected2 ? " selected" : ""}>${e7(text16)}</option>`).join("");
   const empty = placeholder ? `<option value="">${e7(placeholder)}</option>` : "";
   return `<label for="f-${name}">${e7(label5)}</label><select id="f-${name}" name="${name}">${empty}${opts}</select>`;
 }
@@ -118274,7 +118548,7 @@ function flashFrom(request) {
 }
 function registerRegistrationRoutes(app2, deps) {
   const { registrations } = deps;
-  const errorPage = (request, reply, session, title, text16, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text17, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text17)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -118431,7 +118705,7 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     const { session, body } = ctx;
     const perfil = PERFILES.includes(body.perfil) ? body.perfil : "dueno";
-    const invalid2 = (text16, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text16 }), session, status);
+    const invalid2 = (text17, status) => deps.html(reply, request, "Nuevo registro", newUserView({ perfil, csrf: session.csrfToken, values: body, error: text17 }), session, status);
     const userFrom = async (data3, keepEmail) => ({
       phone: data3.phone,
       name: data3.name,
@@ -118533,7 +118807,7 @@ function registerRegistrationRoutes(app2, deps) {
     await deps.audit("admin.vehicle.create", session.userId, `Veh\xEDculo agregado al usuario ${id3}`);
     return reply.redirect(`/admin/users/${id3}?ok=vehiculo`, 302);
   });
-  const text15 = (v, max) => String(v ?? "").trim().slice(0, max);
+  const text16 = (v, max) => String(v ?? "").trim().slice(0, max);
   const manageOr503 = (request, reply, session) => {
     if (!deps.manage) {
       errorPage(request, reply, session, "Administraci\xF3n", "Esta instalaci\xF3n no tiene la administraci\xF3n de cuentas.", 503);
@@ -118552,11 +118826,11 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     if (!UUID12.test(id3))
       return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
-    const name = text15(body.name, 120);
+    const name = text16(body.name, 120);
     if (name.length < 2)
       return errorPage(request, reply, session, "Usuario", "Indica el nombre (al menos 2 letras).", 400);
     try {
-      const ok = await manage.editUser(session.userId, id3, { name, city: text15(body.city, 80) || null, zone: text15(body.zone, 80) || null });
+      const ok = await manage.editUser(session.userId, id3, { name, city: text16(body.city, 80) || null, zone: text16(body.zone, 80) || null });
       if (!ok)
         return errorPage(request, reply, session, "Usuario", "No se puede editar esta cuenta aqu\xED: las del equipo se editan en Equipo.", 400);
     } catch (err4) {
@@ -118576,8 +118850,8 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     if (!UUID12.test(id3))
       return errorPage(request, reply, session, "Usuario", "Usuario no encontrado.", 404);
-    const action = text15(body.action, 12);
-    const reason = text15(body.reason, 300);
+    const action = text16(body.action, 12);
+    const reason = text16(body.reason, 300);
     if (action !== "baja" && action !== "reactivar")
       return errorPage(request, reply, session, "Usuario", "Acci\xF3n no v\xE1lida.", 400);
     if (reason.length < 5)
@@ -118605,11 +118879,11 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     if (!UUID12.test(id3))
       return errorPage(request, reply, session, "Veh\xEDculo", "Veh\xEDculo no encontrado.", 404);
-    const make = text15(body.make, 60);
-    const model = text15(body.model, 60);
-    const year3 = Number(text15(body.year, 4));
-    const km10 = Number(text15(body.currentKm, 12).replace(/[.\s,]/g, ""));
-    const rawPlate = text15(body.plate, 12);
+    const make = text16(body.make, 60);
+    const model = text16(body.model, 60);
+    const year3 = Number(text16(body.year, 4));
+    const km10 = Number(text16(body.currentKm, 12).replace(/[.\s,]/g, ""));
+    const rawPlate = text16(body.plate, 12);
     const plate2 = rawPlate ? normalizePlate(rawPlate) : null;
     const maxYear = (/* @__PURE__ */ new Date()).getFullYear() + 1;
     if (make.length < 2 || model.length < 1)
@@ -118622,7 +118896,7 @@ function registerRegistrationRoutes(app2, deps) {
       return errorPage(request, reply, session, "Veh\xEDculo", "Placa no v\xE1lida: usa el formato ABC-1234.", 400);
     let ownerId;
     try {
-      ownerId = await manage.editVehicle(session.userId, id3, { make, model, year: year3, plate: plate2, currentKm: km10, vehicleClass: text15(body.vehicleClass, 30) || null, fuel: text15(body.fuel, 30) || null });
+      ownerId = await manage.editVehicle(session.userId, id3, { make, model, year: year3, plate: plate2, currentKm: km10, vehicleClass: text16(body.vehicleClass, 30) || null, fuel: text16(body.fuel, 30) || null });
     } catch (err4) {
       const m = dbError(err4);
       return errorPage(request, reply, session, "Veh\xEDculo", m.text, m.status);
@@ -118642,8 +118916,8 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     if (!UUID12.test(id3))
       return errorPage(request, reply, session, "Veh\xEDculo", "Veh\xEDculo no encontrado.", 404);
-    const action = text15(body.action, 12);
-    const reason = text15(body.reason, 300);
+    const action = text16(body.action, 12);
+    const reason = text16(body.reason, 300);
     if (action !== "baja" && action !== "restaurar")
       return errorPage(request, reply, session, "Veh\xEDculo", "Acci\xF3n no v\xE1lida.", 400);
     if (reason.length < 5)
@@ -118670,14 +118944,14 @@ function registerRegistrationRoutes(app2, deps) {
       return reply;
     if (kind !== "shop" && kind !== "store" || !UUID12.test(id3))
       return errorPage(request, reply, session, "Negocio", "Negocio no encontrado.", 404);
-    const name = text15(body.name, 120);
-    const address = text15(body.address, 200);
-    const city = text15(body.city, 80);
+    const name = text16(body.name, 120);
+    const address = text16(body.address, 200);
+    const city = text16(body.city, 80);
     if (name.length < 2 || address.length < 5 || city.length < 2)
       return errorPage(request, reply, session, "Negocio", "Indica nombre comercial, direcci\xF3n y ciudad.", 400);
     let ownerId;
     try {
-      ownerId = await manage.editBusiness(session.userId, kind, id3, { name, address, city, zone: text15(body.zone, 120) || null, hours: text15(body.hours, 120) || null });
+      ownerId = await manage.editBusiness(session.userId, kind, id3, { name, address, city, zone: text16(body.zone, 120) || null, hours: text16(body.hours, 120) || null });
     } catch (err4) {
       const m = dbError(err4);
       return errorPage(request, reply, session, "Negocio", m.text, m.status);
@@ -118702,8 +118976,8 @@ function registerRegistrationRoutes(app2, deps) {
     } catch (err4) {
       if (!(err4 instanceof BrokerError))
         throw err4;
-      const text16 = err4.code === "PHONE_ALREADY_LINKED" ? "Ese n\xFAmero o esta cuenta ya est\xE1 vinculado a otra cuenta. Rev\xEDsalo antes de continuar." : err4.code === "INVALID_PHONE" ? "El tel\xE9fono de la cuenta no es v\xE1lido para WhatsApp." : "La cuenta no est\xE1 activa o no tiene consentimiento registrado.";
-      return renderDetail(request, reply, session, id3, { error: text16, status: 409 });
+      const text17 = err4.code === "PHONE_ALREADY_LINKED" ? "Ese n\xFAmero o esta cuenta ya est\xE1 vinculado a otra cuenta. Rev\xEDsalo antes de continuar." : err4.code === "INVALID_PHONE" ? "El tel\xE9fono de la cuenta no es v\xE1lido para WhatsApp." : "La cuenta no est\xE1 activa o no tiene consentimiento registrado.";
+      return renderDetail(request, reply, session, id3, { error: text17, status: 409 });
     }
     await deps.audit("admin.whatsapp.link", session.userId, `WhatsApp vinculado al usuario ${id3} tras confirmar el chat con ese n\xFAmero`);
     return reply.redirect(`/admin/users/${id3}?ok=whatsapp`, 302);
@@ -118829,7 +119103,7 @@ function registerRegistrationRoutes(app2, deps) {
     const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "";
     const returnTo = typeof body.returnTo === "string" && UUID12.test(body.returnTo) ? body.returnTo : null;
-    const fail25 = (text16, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text16 }, status }) : errorPage(request, reply, session, "Verificaciones", text16, status);
+    const fail25 = (text17, status) => returnTo ? renderDetail(request, reply, session, returnTo, { flash: { kind: "error", text: text17 }, status }) : errorPage(request, reply, session, "Verificaciones", text17, status);
     if (!decision)
       return fail25("Elige aprobar o rechazar.", 400);
     if (decision === "rejected" && reason.length < 5)
@@ -118895,7 +119169,7 @@ var init_registrations = __esm({
 });
 
 // packages/api/dist/infrastructure/admin/admin-manage-store.js
-import { randomUUID as randomUUID59 } from "node:crypto";
+import { randomUUID as randomUUID60 } from "node:crypto";
 function changed(before, after) {
   const out = {};
   for (const [k, v] of Object.entries(after))
@@ -118903,11 +119177,11 @@ function changed(before, after) {
       out[k] = { antes: before[k] ?? null, despues: v ?? null };
   return out;
 }
-var rows67, AdminManageStore;
+var rows68, AdminManageStore;
 var init_admin_manage_store = __esm({
   "packages/api/dist/infrastructure/admin/admin-manage-store.js"() {
     "use strict";
-    rows67 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+    rows68 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     AdminManageStore = class {
       connect;
       constructor(connect) {
@@ -118928,25 +119202,25 @@ var init_admin_manage_store = __esm({
         }
       }
       async audit(conn, actor, eventType, entityType, entityId, after, reason) {
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, `after`, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID59(), eventType, actor, entityType, entityId, reason, JSON.stringify(after)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, `after`, createdAt) VALUES (?, ?, ?, 'admin', ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID60(), eventType, actor, entityType, entityId, reason, JSON.stringify(after)]);
       }
       async notice(conn, userId, key, kind, message2) {
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID59(), key.slice(0, 191), userId, kind, JSON.stringify({ message: message2 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID60(), key.slice(0, 191), userId, kind, JSON.stringify({ message: message2 })]);
       }
       /** Cuenta con su estado de acceso: la ficha de /admin también abre las dadas de baja. */
       async account(userId) {
         return this.run(async (conn) => {
-          const [u] = await rows67(conn, "SELECT id, role, deletedAt, zone FROM `User` WHERE id = ? LIMIT 1", [userId]);
+          const [u] = await rows68(conn, "SELECT id, role, deletedAt, zone FROM `User` WHERE id = ? LIMIT 1", [userId]);
           return u ? { id: String(u.id), role: String(u.role), deletedAt: u.deletedAt ?? null, zone: u.zone ? String(u.zone) : null } : null;
         });
       }
       /** Vehículos dados de baja de la cuenta, para poder restaurarlos. */
       async removedVehicles(userId) {
-        return this.run((conn) => rows67(conn, "SELECT id, make, model, year, plate, deletedAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NOT NULL ORDER BY deletedAt DESC LIMIT 20", [userId]));
+        return this.run((conn) => rows68(conn, "SELECT id, make, model, year, plate, deletedAt FROM `Vehicle` WHERE userId = ? AND deletedAt IS NOT NULL ORDER BY deletedAt DESC LIMIT 20", [userId]));
       }
       async editUser(actor, userId, edit) {
         return this.run(async (conn) => {
-          const [before] = await rows67(conn, "SELECT name, city, zone, role FROM `User` WHERE id = ? FOR UPDATE", [userId]);
+          const [before] = await rows68(conn, "SELECT name, city, zone, role FROM `User` WHERE id = ? FOR UPDATE", [userId]);
           if (!before || before.role === "admin")
             return false;
           const diff = changed(before, { name: edit.name, city: edit.city, zone: edit.zone });
@@ -118965,7 +119239,7 @@ var init_admin_manage_store = __esm({
         if (actor === userId)
           return "self";
         return this.run(async (conn) => {
-          const [u] = await rows67(conn, "SELECT role, deletedAt FROM `User` WHERE id = ? FOR UPDATE", [userId]);
+          const [u] = await rows68(conn, "SELECT role, deletedAt FROM `User` WHERE id = ? FOR UPDATE", [userId]);
           if (!u)
             return "not_found";
           if (u.role === "admin")
@@ -118987,7 +119261,7 @@ var init_admin_manage_store = __esm({
       }
       async editVehicle(actor, vehicleId, edit) {
         return this.run(async (conn) => {
-          const [before] = await rows67(conn, "SELECT userId, make, model, year, plate, currentKm, vehicleClass, fuel FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
+          const [before] = await rows68(conn, "SELECT userId, make, model, year, plate, currentKm, vehicleClass, fuel FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
           if (!before)
             return null;
           const diff = changed(before, { ...edit });
@@ -119001,7 +119275,7 @@ var init_admin_manage_store = __esm({
       /** Baja o restauración del vehículo: con baja deja de verse y de recibir recordatorios; el historial queda. */
       async setVehicleRemoved(actor, vehicleId, removed, reason) {
         return this.run(async (conn) => {
-          const [v] = await rows67(conn, "SELECT userId FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
+          const [v] = await rows68(conn, "SELECT userId FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
           if (!v)
             return null;
           if (removed)
@@ -119015,7 +119289,7 @@ var init_admin_manage_store = __esm({
       async editBusiness(actor, kind, id3, edit) {
         const table2 = kind === "shop" ? "`Shop`" : "`Store`";
         return this.run(async (conn) => {
-          const [before] = await rows67(conn, `SELECT userId, name, address, city, zone, hours FROM ${table2} WHERE id = ? FOR UPDATE`, [id3]);
+          const [before] = await rows68(conn, `SELECT userId, name, address, city, zone, hours FROM ${table2} WHERE id = ? FOR UPDATE`, [id3]);
           if (!before)
             return null;
           const diff = changed(before, { ...edit });
@@ -119051,7 +119325,7 @@ function dbErrorText(err4) {
 }
 function registerAppointmentRoutes(app2, deps) {
   const { appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text15, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text16, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -119420,21 +119694,21 @@ function welcomeMessage(ctx, options = {}) {
   return `${intro}${parts.join("\n\n")}`;
 }
 function detectProfileIntent(input) {
-  const text15 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text15))
+  const text16 = input.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  if (/\bya tengo cuenta\b|\bya estoy registrad|\bmi cuenta\b/.test(text16))
     return "cuenta";
-  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text15))
+  if (/\balmacen\b|\brepuester|\bvendo repuestos\b|\btienda de repuestos\b/.test(text16))
     return "almacen";
-  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text15))
+  if (/\btaller\b|\bmecanic|\blubricadora\b/.test(text16))
     return "taller";
-  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text15))
+  if (/\bdueno\b|\bmi (carro|auto|vehiculo|moto|camioneta)\b|\btengo un (vehiculo|carro|auto|moto)\b/.test(text16))
     return "dueno";
   return null;
 }
 function parseContactInput(input) {
-  const text15 = input.slice(0, 2e3);
-  const code5 = /\bAMP-[A-HJ-NP-Z2-9]{4,6}\b/i.exec(text15)?.[0]?.toUpperCase() ?? null;
-  const rest = code5 ? text15.split(new RegExp(code5, "i")).join(" ") : text15;
+  const text16 = input.slice(0, 2e3);
+  const code5 = /\bAMP-[A-HJ-NP-Z2-9]{4,6}\b/i.exec(text16)?.[0]?.toUpperCase() ?? null;
+  const rest = code5 ? text16.split(new RegExp(code5, "i")).join(" ") : text16;
   for (const candidate of rest.match(/\+?\d[\d\s().-]{6,}\d/g) ?? []) {
     const digits = normalizeWhatsappNumber(candidate);
     if (digits)
@@ -119786,7 +120060,7 @@ function dbErrorText2(err4) {
 }
 function registerWorkOrderRoutes(app2, deps) {
   const { workOrders, appointments, registrations } = deps;
-  const errorPage = (request, reply, session, title, text15, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text16, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -119972,7 +120246,7 @@ function registerWorkOrderRoutes(app2, deps) {
       const description = str6(body.description, 191);
       const quantity = parseAmount(body.quantity);
       const unitPrice = parseAmount(body.unitPrice);
-      const fail25 = (text15) => renderOrder(request, reply, session, id3, { kind: "error", text: text15 }, 400);
+      const fail25 = (text16) => renderOrder(request, reply, session, id3, { kind: "error", text: text16 }, 400);
       if (!kind)
         return fail25("Elige si es repuesto o mano de obra.");
       if (description.length < 2)
@@ -120040,7 +120314,7 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail25 = (text15) => renderOrder(request, reply, session, id3, { kind: "error", text: text15 }, 400);
+      const fail25 = (text16) => renderOrder(request, reply, session, id3, { kind: "error", text: text16 }, 400);
       if (next === "cerrada" || !(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes(next))
         return fail25("Ese cambio de estado no es posible.");
       if (next === "presupuesto_enviado" && found.items.length === 0)
@@ -120120,7 +120394,7 @@ function registerWorkOrderRoutes(app2, deps) {
       if (!found)
         return reply;
       order = found.order;
-      const fail25 = (text15) => renderOrder(request, reply, session, id3, { kind: "error", text: text15 }, 400);
+      const fail25 = (text16) => renderOrder(request, reply, session, id3, { kind: "error", text: text16 }, 400);
       if (!(WORK_ORDER_TRANSITIONS[order.status] ?? []).includes("cerrada"))
         return fail25("Solo se cierra una orden en ejecuci\xF3n o esperando repuesto.");
       const exitKm = wholeNumber(body.exitKm, 0, 2e6);
@@ -120197,7 +120471,7 @@ function dbErrorText3(err4) {
 }
 function registerQuoteRoutes(app2, deps) {
   const { quotes, registrations, appointments } = deps;
-  const errorPage = (request, reply, session, title, text15, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text15)}</p></div>`, session, status);
+  const errorPage = (request, reply, session, title, text16, status) => deps.html(reply, request, title, `<div class="card"><p class="error">${escapeHtml(text16)}</p></div>`, session, status);
   function withCsrf(request, reply) {
     const session = deps.requireSession(request, reply);
     if (!session)
@@ -120376,7 +120650,7 @@ function registerQuoteRoutes(app2, deps) {
     const { id: id3, quoteId } = request.params;
     if (!UUID16.test(id3) || !UUID16.test(quoteId))
       return errorPage(request, reply, session, "Cotizaci\xF3n", "Solicitud no encontrada.", 404);
-    const fail25 = (text15) => renderRequest(request, reply, session, id3, { kind: "error", text: text15 }, 400);
+    const fail25 = (text16) => renderRequest(request, reply, session, id3, { kind: "error", text: text16 }, 400);
     const action = body.action === "sin_stock" ? "sin_stock" : "cotizado";
     let unitPrice = null;
     if (action === "cotizado") {
@@ -120538,7 +120812,7 @@ var init_quotes = __esm({
 });
 
 // packages/api/dist/infrastructure/quotes/quote-store.js
-function rows68(result) {
+function rows69(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toRequest3(r) {
@@ -120550,16 +120824,16 @@ function toRequest3(r) {
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
     requesterRole: String(r.requesterRole),
-    vehicleId: text13(r.vehicleId),
+    vehicleId: text14(r.vehicleId),
     vehicleLabel: label4(r),
-    plate: text13(r.plate),
-    workOrderId: text13(r.workOrderId),
+    plate: text14(r.plate),
+    workOrderId: text14(r.workOrderId),
     partName: String(r.partName),
-    partCode: text13(r.partCode),
+    partCode: text14(r.partCode),
     quantity: Number(r.quantity ?? 1),
     city: String(r.city),
-    notes: text13(r.notes),
-    closeReason: text13(r.closeReason),
+    notes: text14(r.notes),
+    closeReason: text14(r.closeReason),
     createdAt: r.createdAt
   };
 }
@@ -120574,13 +120848,13 @@ function toQuote(r) {
     storePhone: String(r.storePhone),
     status: String(r.status),
     unitPrice: num7(r.unitPrice),
-    brand: text13(r.brand),
-    availability: text13(r.availability),
+    brand: text14(r.brand),
+    availability: text14(r.availability),
     warrantyDays: num7(r.warrantyDays),
-    deliveryTime: text13(r.deliveryTime),
+    deliveryTime: text14(r.deliveryTime),
     validDays: num7(r.validDays),
-    notes: text13(r.notes),
-    lossReason: text13(r.lossReason),
+    notes: text14(r.notes),
+    lossReason: text14(r.lossReason),
     respondedAt: r.respondedAt ?? null
   };
 }
@@ -120590,10 +120864,10 @@ function toOrder(r) {
     stage: String(r.stage ?? "confirmado"),
     status: String(r.status),
     total: Number(r.total ?? 0),
-    cancelReason: text13(r.cancelReason),
+    cancelReason: text14(r.cancelReason),
     createdAt: r.createdAt,
     quoteRequestId: String(r.quoteRequestId),
-    quoteId: text13(r.quoteId),
+    quoteId: text14(r.quoteId),
     requestNumber: Number(r.requestNumber),
     partName: String(r.partName),
     quantity: Number(r.quantity ?? 1),
@@ -120605,11 +120879,11 @@ function toOrder(r) {
     requesterName: String(r.requesterName),
     requesterPhone: String(r.requesterPhone),
     unitPrice: num7(r.unitPrice),
-    brand: text13(r.brand),
-    deliveryTime: text13(r.deliveryTime)
+    brand: text14(r.brand),
+    deliveryTime: text14(r.deliveryTime)
   };
 }
-var PAGE_SIZE10, SELECT_REQUESTS3, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text13, num7, label4, MysqlQuoteStore;
+var PAGE_SIZE10, SELECT_REQUESTS3, SELECT_QUOTES, SELECT_ORDERS, LIST_OPEN, LIST_ORDERED, LIST_ALL2, text14, num7, label4, MysqlQuoteStore;
 var init_quote_store = __esm({
   "packages/api/dist/infrastructure/quotes/quote-store.js"() {
     "use strict";
@@ -120622,7 +120896,7 @@ var init_quote_store = __esm({
     LIST_OPEN = `${SELECT_REQUESTS3} WHERE q.status = 'abierta' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_ORDERED = `${SELECT_REQUESTS3} WHERE q.status = 'con_pedido' ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
     LIST_ALL2 = `${SELECT_REQUESTS3} ORDER BY q.createdAt DESC LIMIT ? OFFSET ?`;
-    text13 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text14 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     num7 = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     label4 = (r) => {
       const parts = [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "");
@@ -120656,7 +120930,7 @@ var init_quote_store = __esm({
       }
       verifiedStores(city) {
         const base = "SELECT id, name, city, zone, categories, delivery FROM `Store` st WHERE verificationStatus = 'verified' AND (? = '' OR LOWER(TRIM(city)) = LOWER(TRIM(?))) ";
-        return this.run(async (conn) => rows68(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err4) => {
+        return this.run(async (conn) => rows69(await conn.query(`${base}${NOT_SANCTIONED("st")}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]).catch((err4) => {
           if (err4.code !== "ER_NO_SUCH_TABLE")
             throw err4;
           return conn.query(`${base}ORDER BY name LIMIT 200`, [city.trim(), city.trim()]);
@@ -120664,15 +120938,15 @@ var init_quote_store = __esm({
           id: String(r.id),
           name: String(r.name),
           city: String(r.city),
-          zone: text13(r.zone),
-          categories: text13(r.categories),
+          zone: text14(r.zone),
+          categories: text14(r.categories),
           delivery: !!Number(r.delivery ?? 0)
         })));
       }
       async createRequest(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id3 = String(rows68(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows68(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
+          const id3 = String(rows69(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows69(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `QuoteRequest` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `QuoteRequest` (id, number, requesterId, vehicleId, workOrderId, partName, partCode, quantity, city, notes, status, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'abierta', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, next, input.requesterId, input.vehicleId, input.workOrderId, input.partName, input.partCode, input.quantity, input.city, input.notes]);
           for (const storeId of input.storeIds) {
             await conn.query("INSERT INTO `Quote` (id, requestId, storeId, status, createdAt) VALUES (UUID(), ?, ?, 'invitado', CURRENT_TIMESTAMP(3))", [id3, storeId]);
@@ -120689,26 +120963,26 @@ var init_quote_store = __esm({
       }
       getRequest(id3) {
         return this.run(async (conn) => {
-          const row2 = rows68(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id3]))[0];
+          const row2 = rows69(await conn.query(`${SELECT_REQUESTS3} WHERE q.id = ? LIMIT 1`, [id3]))[0];
           if (!row2)
             return null;
-          const quotes = rows68(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id3])).map(toQuote);
-          const order = rows68(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id3]))[0];
+          const quotes = rows69(await conn.query(`${SELECT_QUOTES} WHERE qt.requestId = ? ORDER BY s.name`, [id3])).map(toQuote);
+          const order = rows69(await conn.query(`${SELECT_ORDERS} WHERE o.quoteRequestId = ? ORDER BY o.createdAt DESC LIMIT 1`, [id3]))[0];
           return { request: toRequest3(row2), quotes, order: order ? toOrder(order) : null };
         });
       }
       listRequests(filter, page3) {
         return this.run(async (conn) => {
           const sql = filter === "abiertas" ? LIST_OPEN : filter === "con_pedido" ? LIST_ORDERED : LIST_ALL2;
-          const items = rows68(await conn.query(sql, [PAGE_SIZE10, (Math.max(1, Math.floor(page3)) - 1) * PAGE_SIZE10])).map(toRequest3);
+          const items = rows69(await conn.query(sql, [PAGE_SIZE10, (Math.max(1, Math.floor(page3)) - 1) * PAGE_SIZE10])).map(toRequest3);
           return { items, page: page3, pageSize: PAGE_SIZE10 };
         });
       }
       listForUser(userId) {
         return this.run(async (conn) => {
-          const requests = rows68(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
-          const storeQuotes = rows68(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
-          const orders = rows68(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
+          const requests = rows69(await conn.query(`${SELECT_REQUESTS3} WHERE q.requesterId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map(toRequest3);
+          const storeQuotes = rows69(await conn.query(`${SELECT_QUOTES.replace(" FROM `Quote` qt", ", q.number AS requestNumber, q.partName, q.status AS requestStatus FROM `Quote` qt")} JOIN \`QuoteRequest\` q ON q.id = qt.requestId WHERE s.userId = ? ORDER BY q.createdAt DESC LIMIT 20`, [userId])).map((r) => ({ ...toQuote(r), requestNumber: Number(r.requestNumber), partName: String(r.partName), requestStatus: String(r.requestStatus) }));
+          const orders = rows69(await conn.query(`${SELECT_ORDERS} WHERE o.fromUserId = ? OR s.userId = ? ORDER BY o.createdAt DESC LIMIT 20`, [userId, userId])).map(toOrder);
           return { requests, storeQuotes, orders };
         });
       }
@@ -120731,16 +121005,16 @@ var init_quote_store = __esm({
       }
       choose(requestId, quoteId) {
         return this.transaction(async (conn) => {
-          const request = rows68(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
+          const request = rows69(await conn.query("SELECT requesterId, partName, quantity, status FROM `QuoteRequest` WHERE id = ? FOR UPDATE", [requestId]))[0];
           if (!request || request.status !== "abierta")
             return null;
-          const quote2 = rows68(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
+          const quote2 = rows69(await conn.query("SELECT qt.storeId, qt.unitPrice, qt.status, s.userId AS storeUserId FROM `Quote` qt JOIN `Store` s ON s.id = qt.storeId WHERE qt.id = ? AND qt.requestId = ? FOR UPDATE", [quoteId, requestId]))[0];
           if (!quote2 || quote2.status !== "cotizado" || quote2.unitPrice === null)
             return null;
           const quantity = Number(request.quantity ?? 1);
           const unitPrice = Number(quote2.unitPrice);
           const total = Math.round(unitPrice * quantity * 100) / 100;
-          const orderId = String(rows68(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const orderId = String(rows69(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("UPDATE `Quote` SET status = 'elegida' WHERE id = ?", [quoteId]);
           await conn.query("UPDATE `Quote` SET status = 'descartada' WHERE requestId = ? AND id <> ? AND status IN ('invitado', 'cotizado')", [requestId, quoteId]);
           await conn.query("UPDATE `QuoteRequest` SET status = 'con_pedido', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [requestId]);
@@ -120868,8 +121142,8 @@ ${redactPii(sanitizeUntrusted(customerText, 2e3))}`];
 ${redactPii(sanitizeUntrusted(instruction, 300))}`);
   return parts.join("\n\n");
 }
-function parseDraft(text15) {
-  const clean4 = text15.trim();
+function parseDraft(text16) {
+  const clean4 = text16.trim();
   const match = /RESPUESTA:\s*([\s\S]*?)(?:\n\s*NOTA PARA EL OPERADOR:\s*([\s\S]*))?$/i.exec(clean4);
   if (!match)
     return { reply: clean4.slice(0, 1500), note: null };
@@ -121133,7 +121407,7 @@ ${input.instruction ?? ""}`);
 });
 
 // packages/api/dist/infrastructure/copilot/copilot-store.js
-function rows69(result) {
+function rows70(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 var MysqlCopilotStore;
@@ -121155,7 +121429,7 @@ var init_copilot_store = __esm({
       }
       recordUsage(usage) {
         return this.run(async (conn) => {
-          const id3 = String(rows69(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const id3 = String(rows70(await conn.query("SELECT UUID() AS id"))[0]?.id);
           await conn.query("INSERT INTO `LlmUsage` (id, agent, `function`, provider, model, promptVersion, inputTokens, outputTokens, cachedTokens, costUsd, latencyMs, outcome, createdAt) VALUES (?, 'copilot', 'draft_reply', ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP(3))", [
             id3,
             usage.provider,
@@ -121173,7 +121447,7 @@ var init_copilot_store = __esm({
       }
       spentBetween(start, end) {
         return this.run(async (conn) => {
-          const row2 = rows69(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
+          const row2 = rows70(await conn.query("SELECT COALESCE(SUM(costUsd), 0) AS n FROM `LlmUsage` WHERE agent = 'copilot' AND createdAt >= ? AND createdAt < ?", [start, end]))[0];
           return Number(row2?.n ?? 0);
         });
       }
@@ -121184,7 +121458,7 @@ var init_copilot_store = __esm({
       }
       feedbackSummary(since) {
         return this.run(async (conn) => {
-          const row2 = rows69(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS approved, COALESCE(SUM(score = 3), 0) AS edited, COALESCE(SUM(score <= 2), 0) AS rejected FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
+          const row2 = rows70(await conn.query("SELECT COALESCE(SUM(score >= 4), 0) AS approved, COALESCE(SUM(score = 3), 0) AS edited, COALESCE(SUM(score <= 2), 0) AS rejected FROM `Feedback` WHERE target LIKE 'copilot:%' AND createdAt >= ?", [since]))[0];
           return { approved: Number(row2?.approved ?? 0), edited: Number(row2?.edited ?? 0), rejected: Number(row2?.rejected ?? 0) };
         });
       }
@@ -121193,7 +121467,7 @@ var init_copilot_store = __esm({
 });
 
 // packages/api/dist/infrastructure/work-orders/work-order-store.js
-function rows70(result) {
+function rows71(result) {
   return Array.isArray(result[0]) ? result[0] : [];
 }
 function toOrder2(r) {
@@ -121210,19 +121484,19 @@ function toOrder2(r) {
     ownerPhone: String(r.ownerPhone),
     vehicleId: String(r.vehicleId),
     vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
-    plate: text14(r.plate),
+    plate: text15(r.plate),
     vehicleKm: Number(r.currentKm ?? 0),
-    appointmentId: text14(r.appointmentId),
+    appointmentId: text15(r.appointmentId),
     intakeKm: int(r.intakeKm),
-    intakeNotes: text14(r.intakeNotes),
-    diagnosis: text14(r.diagnosis),
-    rejectionReason: text14(r.rejectionReason),
-    cancelReason: text14(r.cancelReason),
+    intakeNotes: text15(r.intakeNotes),
+    diagnosis: text15(r.diagnosis),
+    rejectionReason: text15(r.rejectionReason),
+    cancelReason: text15(r.cancelReason),
     exitKm: int(r.exitKm),
     warrantyDays: int(r.warrantyDays),
-    nextService: text14(r.nextService),
-    diagnosisOutcome: text14(r.diagnosisOutcome),
-    outcomeNote: text14(r.outcomeNote),
+    nextService: text15(r.nextService),
+    diagnosisOutcome: text15(r.diagnosisOutcome),
+    outcomeNote: text15(r.outcomeNote),
     total: Number(r.total ?? 0),
     createdAt: r.createdAt,
     closedAt: r.closedAt ?? null
@@ -121233,13 +121507,13 @@ function toItem2(r) {
     id: String(r.id),
     kind: String(r.kind),
     description: String(r.description),
-    brand: text14(r.brand),
-    partCode: text14(r.partCode),
+    brand: text15(r.brand),
+    partCode: text15(r.partCode),
     quantity: Number(r.quantity),
     unitPrice: Number(r.unitPrice)
   };
 }
-var PAGE_SIZE11, care, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL2, text14, int, MysqlWorkOrderStore;
+var PAGE_SIZE11, care, SELECT_ORDERS2, LIST_OPEN2, LIST_TO_APPROVE, LIST_IN_SHOP, LIST_CLOSED, LIST_ALL3, GET_ONE2, FOR_USER2, RECALCULATE_TOTAL2, text15, int, MysqlWorkOrderStore;
 var init_work_order_store = __esm({
   "packages/api/dist/infrastructure/work-orders/work-order-store.js"() {
     "use strict";
@@ -121258,7 +121532,7 @@ var init_work_order_store = __esm({
     GET_ONE2 = `${SELECT_ORDERS2} WHERE w.id = ? LIMIT 1`;
     FOR_USER2 = `${SELECT_ORDERS2} WHERE w.ownerId = ? OR su.id = ? ORDER BY w.createdAt DESC LIMIT 20`;
     RECALCULATE_TOTAL2 = "UPDATE `WorkOrder` SET total = (SELECT COALESCE(SUM(ROUND(quantity * unitPrice, 2)), 0) FROM `WorkOrderItem` WHERE workOrderId = ?), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?";
-    text14 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
+    text15 = (value2) => value2 === null || value2 === void 0 ? null : String(value2);
     int = (value2) => value2 === null || value2 === void 0 ? null : Number(value2);
     MysqlWorkOrderStore = class {
       connect;
@@ -121288,20 +121562,20 @@ var init_work_order_store = __esm({
       }
       monthlyRoom(shopId) {
         return this.run(async (conn) => {
-          const owner = rows70(await conn.query("SELECT userId FROM `Shop` WHERE id = ?", [shopId]))[0];
+          const owner = rows71(await conn.query("SELECT userId FROM `Shop` WHERE id = ?", [shopId]))[0];
           if (!owner)
             return null;
           const limits = await shopLimits(conn, String(owner.userId));
           if (!limits || limits.workOrdersPerMonth == null)
             return null;
-          const used = Number(rows70(await conn.query("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND createdAt >= DATE_FORMAT(UTC_TIMESTAMP(3), '%Y-%m-01')", [shopId]))[0]?.n ?? 0);
+          const used = Number(rows71(await conn.query("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND createdAt >= DATE_FORMAT(UTC_TIMESTAMP(3), '%Y-%m-01')", [shopId]))[0]?.n ?? 0);
           return { used, limit: limits.workOrdersPerMonth, planKey: limits.planKey };
         });
       }
       async create(input) {
         const attempt = () => this.transaction(async (conn) => {
-          const id3 = String(rows70(await conn.query("SELECT UUID() AS id"))[0]?.id);
-          const next = Number(rows70(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
+          const id3 = String(rows71(await conn.query("SELECT UUID() AS id"))[0]?.id);
+          const next = Number(rows71(await conn.query("SELECT COALESCE(MAX(number), 0) + 1 AS n FROM `WorkOrder` FOR UPDATE"))[0]?.n ?? 1);
           await conn.query("INSERT INTO `WorkOrder` (id, number, shopId, ownerId, vehicleId, appointmentId, status, intakeKm, intakeNotes, diagnosis, total, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, 'recepcion', ?, ?, ?, 0, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, next, input.shopId, input.ownerId, input.vehicleId, input.appointmentId, input.intakeKm, input.intakeNotes, input.diagnosis]);
           return id3;
         });
@@ -121315,10 +121589,10 @@ var init_work_order_store = __esm({
       }
       get(id3) {
         return this.run(async (conn) => {
-          const row2 = rows70(await conn.query(GET_ONE2, [id3]))[0];
+          const row2 = rows71(await conn.query(GET_ONE2, [id3]))[0];
           if (!row2)
             return null;
-          const items = rows70(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id3])).map(toItem2);
+          const items = rows71(await conn.query("SELECT id, kind, description, brand, partCode, quantity, unitPrice FROM `WorkOrderItem` WHERE workOrderId = ? ORDER BY createdAt", [id3])).map(toItem2);
           return { order: toOrder2(row2), items };
         });
       }
@@ -121326,15 +121600,15 @@ var init_work_order_store = __esm({
         return this.run(async (conn) => {
           const params2 = [PAGE_SIZE11, (Math.max(1, Math.floor(page3)) - 1) * PAGE_SIZE11];
           const sql = filter === "abiertas" ? LIST_OPEN2 : filter === "por_aprobar" ? LIST_TO_APPROVE : filter === "en_taller" ? LIST_IN_SHOP : filter === "cerradas" ? LIST_CLOSED : LIST_ALL3;
-          return { items: rows70(await conn.query(sql, params2)).map(toOrder2), page: page3, pageSize: PAGE_SIZE11 };
+          return { items: rows71(await conn.query(sql, params2)).map(toOrder2), page: page3, pageSize: PAGE_SIZE11 };
         });
       }
       listForUser(userId) {
-        return this.run(async (conn) => rows70(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
+        return this.run(async (conn) => rows71(await conn.query(FOR_USER2, [userId, userId])).map(toOrder2));
       }
       findByAppointment(appointmentId) {
         return this.run(async (conn) => {
-          const row2 = rows70(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
+          const row2 = rows71(await conn.query("SELECT id FROM `WorkOrder` WHERE appointmentId = ? AND status <> 'cancelada' ORDER BY createdAt DESC LIMIT 1", [appointmentId]))[0];
           return row2 ? String(row2.id) : null;
         });
       }
@@ -121368,7 +121642,7 @@ var init_work_order_store = __esm({
       }
       close(id3, input) {
         return this.transaction(async (conn) => {
-          const order = rows70(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id3]))[0];
+          const order = rows71(await conn.query("SELECT vehicleId, shopId, appointmentId, total FROM `WorkOrder` WHERE id = ? AND status IN ('en_ejecucion', 'esperando_repuesto') FOR UPDATE", [id3]))[0];
           if (!order)
             return false;
           await conn.query("UPDATE `WorkOrder` SET status = 'cerrada', exitKm = ?, warrantyDays = ?, nextService = ?, diagnosisOutcome = ?, outcomeNote = ?, closedAt = CURRENT_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [input.exitKm, input.warrantyDays, input.nextService, input.diagnosisOutcome, input.outcomeNote, id3]);
@@ -121382,7 +121656,7 @@ var init_work_order_store = __esm({
         });
       }
       historyForUser(userId) {
-        return this.run(async (conn) => rows70(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
+        return this.run(async (conn) => rows71(await conn.query("SELECT s.createdAt, sh.name AS shopName, v.make, v.model, v.year, s.description, s.cost FROM `Service` s JOIN `Vehicle` v ON v.id = s.vehicleId JOIN `Shop` sh ON sh.id = s.shopId WHERE v.userId = ? ORDER BY s.createdAt DESC LIMIT 30", [userId])).map((r) => ({
           createdAt: r.createdAt,
           shopName: String(r.shopName),
           vehicleLabel: [r.make, r.model, r.year].filter((v) => v !== null && v !== void 0 && v !== "").join(" "),
@@ -121465,13 +121739,13 @@ var init_views_visits = __esm({
 // packages/api/dist/interfaces/admin/courses.js
 function registerCourseAdminRoutes(app2, deps) {
   const { store, requireSession, html } = deps;
-  const text15 = (value2) => String(value2 ?? "");
+  const text16 = (value2) => String(value2 ?? "");
   app2.get("/expertos", async (request, reply) => {
     const session = requireSession(request, reply);
     if (!session)
       return reply;
-    const rows71 = await store.adminExperts();
-    const content = rows71.map((row2) => row2.verificationStatus !== "pendiente" || !row2.hasDocument ? `<article><h2>${escapeHtml(text15(row2.name))}</h2><p>${escapeHtml(text15(row2.verificationStatus))}${row2.motivo ? ` \xB7 ${escapeHtml(text15(row2.motivo))}` : ""}${row2.verificationStatus === "pendiente" ? " \xB7 Enlace enviado; todav\xEDa no recibimos su documento." : ` \xB7 ${escapeHtml(text15(row2.especialidades))}`}</p></article>` : `<article><h2>${escapeHtml(text15(row2.name))}</h2><p>${escapeHtml(text15(row2.verificationStatus))} \xB7 ${escapeHtml(text15(row2.especialidades))}</p><p><a href="/admin/expertos/${encodeURIComponent(String(row2.userId))}/documento" target="_blank" rel="noopener">Abrir documento</a></p><form method="post" action="/admin/expertos/${encodeURIComponent(String(row2.userId))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Tipo de documento revisado <input name="documentType" required maxlength="80"></label><label>Motivo (requerido para rechazar) <input name="reason" maxlength="500"></label><button name="decision" value="verificar">Verificar y borrar documento</button><button name="decision" value="rechazar">Rechazar y borrar documento</button></form></article>`).join("");
+    const rows72 = await store.adminExperts();
+    const content = rows72.map((row2) => row2.verificationStatus !== "pendiente" || !row2.hasDocument ? `<article><h2>${escapeHtml(text16(row2.name))}</h2><p>${escapeHtml(text16(row2.verificationStatus))}${row2.motivo ? ` \xB7 ${escapeHtml(text16(row2.motivo))}` : ""}${row2.verificationStatus === "pendiente" ? " \xB7 Enlace enviado; todav\xEDa no recibimos su documento." : ` \xB7 ${escapeHtml(text16(row2.especialidades))}`}</p></article>` : `<article><h2>${escapeHtml(text16(row2.name))}</h2><p>${escapeHtml(text16(row2.verificationStatus))} \xB7 ${escapeHtml(text16(row2.especialidades))}</p><p><a href="/admin/expertos/${encodeURIComponent(String(row2.userId))}/documento" target="_blank" rel="noopener">Abrir documento</a></p><form method="post" action="/admin/expertos/${encodeURIComponent(String(row2.userId))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Tipo de documento revisado <input name="documentType" required maxlength="80"></label><label>Motivo (requerido para rechazar) <input name="reason" maxlength="500"></label><button name="decision" value="verificar">Verificar y borrar documento</button><button name="decision" value="rechazar">Rechazar y borrar documento</button></form></article>`).join("");
     return html(reply, request, "Expertos", `<h1>Expertos</h1>${content || "<p>No hay solicitudes.</p>"}`, session);
   });
   app2.post("/expertos/:id", async (request, reply) => {
@@ -121506,15 +121780,15 @@ function registerCourseAdminRoutes(app2, deps) {
     for (const row2 of courses)
       if (row2.estado === "en_revision" && row2.firstPublishedAt == null) {
         const { lessons, questions } = await store.adminCourseContent(String(row2.id));
-        contents.set(String(row2.id), `<h3>Lecciones</h3><ul>${lessons.map((l) => `<li>${escapeHtml(text15(l.orden))}. ${escapeHtml(text15(l.titulo))}${l.texto ? `: ${escapeHtml(text15(l.texto))}` : ""}${l.videoUrl ? ` \xB7 ${escapeHtml(text15(l.videoUrl))}` : ""}${l.pdfUrl ? ` \xB7 ${escapeHtml(text15(l.pdfUrl))}` : ""}</li>`).join("")}</ul><h3>Preguntas</h3><ul>${questions.map((q) => `<li>${escapeHtml(text15(q.orden))}. ${escapeHtml(text15(q.enunciado))} \u2014 ${escapeHtml(text15(q.letra))}: ${escapeHtml(text15(q.texto))}${q.correcta ? " (correcta)" : ""}</li>`).join("")}</ul>`);
+        contents.set(String(row2.id), `<h3>Lecciones</h3><ul>${lessons.map((l) => `<li>${escapeHtml(text16(l.orden))}. ${escapeHtml(text16(l.titulo))}${l.texto ? `: ${escapeHtml(text16(l.texto))}` : ""}${l.videoUrl ? ` \xB7 ${escapeHtml(text16(l.videoUrl))}` : ""}${l.pdfUrl ? ` \xB7 ${escapeHtml(text16(l.pdfUrl))}` : ""}</li>`).join("")}</ul><h3>Preguntas</h3><ul>${questions.map((q) => `<li>${escapeHtml(text16(q.orden))}. ${escapeHtml(text16(q.enunciado))} \u2014 ${escapeHtml(text16(q.letra))}: ${escapeHtml(text16(q.texto))}${q.correcta ? " (correcta)" : ""}</li>`).join("")}</ul>`);
       }
     const reports = await store.adminReports();
     const history = await store.courseHistory();
     const commission = await store.commission();
-    const cRows = courses.map((row2) => `<article><h2>${escapeHtml(text15(row2.titulo))}</h2><p>${escapeHtml(text15(row2.expertName))} \xB7 ${escapeHtml(text15(row2.estado))} \xB7 ${escapeHtml(text15(row2.precioUsd ?? "Gratis"))}</p>${contents.get(String(row2.id)) ?? ""}${row2.estado === "en_revision" && row2.firstPublishedAt == null ? `<form method="post" action="/admin/cursos/${encodeURIComponent(String(row2.id))}/publicacion"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Motivo de devoluci\xF3n <input name="reason" maxlength="500"></label><button name="decision" value="aprobar">Aprobar primera publicaci\xF3n</button><button name="decision" value="devolver">Devolver con motivo</button></form>` : ""}</article>`).join("");
-    const rRows = reports.map((row2) => `<article><h3>${escapeHtml(text15(row2.titulo))}</h3><p>${escapeHtml(text15(row2.motivo))}</p><form method="post" action="/admin/cursos/denuncias/${encodeURIComponent(String(row2.id))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Motivo <input name="reason" maxlength="500"></label><button name="decision" value="ocultar">Ocultar curso</button><button name="decision" value="restaurar">Restaurar curso</button></form></article>`).join("");
-    const hist = history.map((row2) => `<li>${escapeHtml(text15(row2.titulo))} \xB7 ${escapeHtml(text15(row2.campo))}: ${escapeHtml(text15(row2.antes))} \u2192 ${escapeHtml(text15(row2.despues))}</li>`).join("");
-    const commissionForm = session.role === "admin" ? `<form method="post" action="/admin/cursos/comision"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Comisi\xF3n (%) <input name="commission" inputmode="decimal" value="${escapeHtml(text15(commission ?? ""))}"></label><p>Mientras est\xE9 vac\xEDo, solo se publican cursos gratis. Los cursos de pago requieren una comisi\xF3n num\xE9rica.</p><button>Guardar comisi\xF3n</button></form>` : `<p>Comisi\xF3n actual: ${escapeHtml(text15(commission ?? "Vac\xEDa"))}. Mientras est\xE9 vac\xEDa, solo se publican cursos gratis.</p>`;
+    const cRows = courses.map((row2) => `<article><h2>${escapeHtml(text16(row2.titulo))}</h2><p>${escapeHtml(text16(row2.expertName))} \xB7 ${escapeHtml(text16(row2.estado))} \xB7 ${escapeHtml(text16(row2.precioUsd ?? "Gratis"))}</p>${contents.get(String(row2.id)) ?? ""}${row2.estado === "en_revision" && row2.firstPublishedAt == null ? `<form method="post" action="/admin/cursos/${encodeURIComponent(String(row2.id))}/publicacion"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Motivo de devoluci\xF3n <input name="reason" maxlength="500"></label><button name="decision" value="aprobar">Aprobar primera publicaci\xF3n</button><button name="decision" value="devolver">Devolver con motivo</button></form>` : ""}</article>`).join("");
+    const rRows = reports.map((row2) => `<article><h3>${escapeHtml(text16(row2.titulo))}</h3><p>${escapeHtml(text16(row2.motivo))}</p><form method="post" action="/admin/cursos/denuncias/${encodeURIComponent(String(row2.id))}"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Motivo <input name="reason" maxlength="500"></label><button name="decision" value="ocultar">Ocultar curso</button><button name="decision" value="restaurar">Restaurar curso</button></form></article>`).join("");
+    const hist = history.map((row2) => `<li>${escapeHtml(text16(row2.titulo))} \xB7 ${escapeHtml(text16(row2.campo))}: ${escapeHtml(text16(row2.antes))} \u2192 ${escapeHtml(text16(row2.despues))}</li>`).join("");
+    const commissionForm = session.role === "admin" ? `<form method="post" action="/admin/cursos/comision"><input type="hidden" name="csrf" value="${escapeHtml(session.csrfToken)}"><label>Comisi\xF3n (%) <input name="commission" inputmode="decimal" value="${escapeHtml(text16(commission ?? ""))}"></label><p>Mientras est\xE9 vac\xEDo, solo se publican cursos gratis. Los cursos de pago requieren una comisi\xF3n num\xE9rica.</p><button>Guardar comisi\xF3n</button></form>` : `<p>Comisi\xF3n actual: ${escapeHtml(text16(commission ?? "Vac\xEDa"))}. Mientras est\xE9 vac\xEDa, solo se publican cursos gratis.</p>`;
     return html(reply, request, "Cursos", `<h1>Cursos</h1>${commissionForm}<h2>Primera publicaci\xF3n</h2>${cRows || "<p>Sin cursos.</p>"}<h2>Denuncias</h2>${rRows || "<p>Sin denuncias pendientes.</p>"}<h2>Historial</h2><ul>${hist}</ul>`, session);
   });
   app2.post("/cursos/:id/publicacion", async (request, reply) => {
@@ -121710,6 +121984,7 @@ async function adminPanelRoutes(app2, options = {}) {
   });
   registerLocalAgentAdminRoutes(app2, { store, settings, requireSession, html, audit: audit7, tasks: new MysqlLocalAgentTaskStore(connect) });
   registerFounderAdminRoutes(app2, { requireSession, html, founders: new FounderStore(connect) });
+  registerDirectoryAdminRoutes(app2, { requireSession, html, directory: new DirectoryStore(connect) });
   registerWhatsAppQueueRoutes(app2, { outbox: options.whatsappQueue, requireSession, html, audit: audit7 });
   registerSettingsRoutes(app2, {
     store,
@@ -121787,8 +122062,8 @@ async function adminPanelRoutes(app2, options = {}) {
       return html(reply, request, "Origen", visitsView({ items: list7.items, stats, days: days2, weekly }), session);
     } catch (err4) {
       const code5 = err4.code;
-      const text15 = code5 === "ER_NO_SUCH_TABLE" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : `No se pudo consultar el origen de los contactos (${code5 ?? "base de datos no disponible"}).`;
-      return html(reply, request, "Origen", messageView("Origen", text15), session, 503);
+      const text16 = code5 === "ER_NO_SUCH_TABLE" ? "La base de datos necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : `No se pudo consultar el origen de los contactos (${code5 ?? "base de datos no disponible"}).`;
+      return html(reply, request, "Origen", messageView("Origen", text16), session, 503);
     }
   });
   app2.get("/login", async (request, reply) => {
@@ -121829,35 +122104,35 @@ async function adminPanelRoutes(app2, options = {}) {
   });
   app2.get("/login/enroll", async (request, reply) => {
     const pendingId = sessionFromCookie(request);
-    const entry = pendingId ? enrollments.get(pendingId) : void 0;
-    if (!pendingId || !entry || Date.now() - entry.createdAt > ENROLL_TTL_MS) {
+    const entry2 = pendingId ? enrollments.get(pendingId) : void 0;
+    if (!pendingId || !entry2 || Date.now() - entry2.createdAt > ENROLL_TTL_MS) {
       if (pendingId)
         enrollments.delete(pendingId);
       return reply.redirect("/admin/login", 302);
     }
-    const uri = otpauthUri(entry.email, entry.secret);
-    return html(reply, request, "Segundo factor", enrollView({ qrSvg: await qrSvg(uri), secret: entry.secret }));
+    const uri = otpauthUri(entry2.email, entry2.secret);
+    return html(reply, request, "Segundo factor", enrollView({ qrSvg: await qrSvg(uri), secret: entry2.secret }));
   });
   app2.post("/login/enroll", async (request, reply) => {
     const pendingId = sessionFromCookie(request);
-    const entry = pendingId ? enrollments.get(pendingId) : void 0;
-    if (!pendingId || !entry || Date.now() - entry.createdAt > ENROLL_TTL_MS) {
+    const entry2 = pendingId ? enrollments.get(pendingId) : void 0;
+    if (!pendingId || !entry2 || Date.now() - entry2.createdAt > ENROLL_TTL_MS) {
       if (pendingId)
         enrollments.delete(pendingId);
       return reply.redirect("/admin/login", 302);
     }
     const body = request.body ?? {};
     const code5 = typeof body.code === "string" ? body.code.trim() : "";
-    if (!checkRateLimit(entry.email, request.ip).allowed) {
+    if (!checkRateLimit(entry2.email, request.ip).allowed) {
       return html(reply, request, "Ingresar", loginView("Demasiados intentos. Espera unos minutos."), void 0, 429);
     }
-    if (!verifyTotp(entry.secret, code5)) {
-      recordLoginAttempt(entry.email, request.ip, false);
-      const uri = otpauthUri(entry.email, entry.secret);
-      return html(reply, request, "Segundo factor", enrollView({ qrSvg: await qrSvg(uri), secret: entry.secret, error: "C\xF3digo incorrecto. Revisa que la hora del tel\xE9fono sea autom\xE1tica." }), void 0, 401);
+    if (!verifyTotp(entry2.secret, code5)) {
+      recordLoginAttempt(entry2.email, request.ip, false);
+      const uri = otpauthUri(entry2.email, entry2.secret);
+      return html(reply, request, "Segundo factor", enrollView({ qrSvg: await qrSvg(uri), secret: entry2.secret, error: "C\xF3digo incorrecto. Revisa que la hora del tel\xE9fono sea autom\xE1tica." }), void 0, 401);
     }
     try {
-      await staff.setTotp(entry.userId, entry.secret);
+      await staff.setTotp(entry2.userId, entry2.secret);
     } catch {
       return html(reply, request, "Ingresar", loginView("Base de datos no disponible."), void 0, 503);
     }
@@ -121865,7 +122140,7 @@ async function adminPanelRoutes(app2, options = {}) {
     enrollments.delete(pendingId);
     if (!pending)
       return reply.redirect("/admin/login", 302);
-    recordLoginAttempt(entry.email, request.ip, true);
+    recordLoginAttempt(entry2.email, request.ip, true);
     const active = promoteSession(pending);
     await audit7("admin.login.enroll", active.userId, `Segundo factor registrado desde ${request.ip}`);
     const secret2 = getAdminSessionSecret();
@@ -122019,6 +122294,8 @@ var init_admin = __esm({
     init_settings();
     init_local_agent();
     init_founders();
+    init_directory();
+    init_directory_store();
     init_founder_store();
     init_whatsapp_queue();
     init_registrations();
@@ -122283,8 +122560,8 @@ var phoneDigits = (phone) => {
   const d = phone.replace(/\D/g, "");
   return /^0\d{9}$/.test(d) ? `593${d.slice(1)}` : d;
 };
-var fold = (text15) => text15.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
-var isCodeRequest = (text15) => text15.length <= 80 && /codigo de acceso/.test(fold(text15)) && /automantpro/.test(fold(text15));
+var fold = (text16) => text16.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+var isCodeRequest = (text16) => text16.length <= 80 && /codigo de acceso/.test(fold(text16)) && /automantpro/.test(fold(text16));
 
 // packages/api/dist/infrastructure/auth/login-codes.js
 var rows8 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
@@ -123112,8 +123389,8 @@ async function maintenanceRoutes(app2) {
 // packages/api/dist/application/relations/sanction-guard.js
 async function searchBlockedUserIds() {
   try {
-    const rows71 = await prisma.$queryRaw`SELECT DISTINCT userId FROM \`Sanction\` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')`;
-    return rows71.map((row2) => String(row2.userId));
+    const rows72 = await prisma.$queryRaw`SELECT DISTINCT userId FROM \`Sanction\` WHERE liftedAt IS NULL AND startsAt <= UTC_TIMESTAMP(3) AND (endsAt IS NULL OR endsAt > UTC_TIMESTAMP(3)) AND level IN ('suspension_busquedas', 'suspension', 'baja')`;
+    return rows72.map((row2) => String(row2.userId));
   } catch {
     return [];
   }
@@ -123411,12 +123688,12 @@ async function appointmentRoutes(app2) {
 // packages/api/dist/application/inactive-products.js
 async function inactiveProductIds() {
   try {
-    const rows71 = await prisma.$queryRaw`SELECT id FROM \`Product\` WHERE active = 0`;
-    return rows71.map((r) => String(r.id));
+    const rows72 = await prisma.$queryRaw`SELECT id FROM \`Product\` WHERE active = 0`;
+    return rows72.map((r) => String(r.id));
   } catch (err4) {
     const e9 = err4;
-    const text15 = `${e9.message ?? ""} ${e9.meta?.message ?? ""}`;
-    if (String(e9.meta?.code) === "1054" || e9.code === "ER_BAD_FIELD_ERROR" || /unknown column/i.test(text15))
+    const text16 = `${e9.message ?? ""} ${e9.meta?.message ?? ""}`;
+    if (String(e9.meta?.code) === "1054" || e9.code === "ER_BAD_FIELD_ERROR" || /unknown column/i.test(text16))
       return [];
     throw err4;
   }
@@ -126294,10 +126571,15 @@ function renderStore(root,d){
  if(d.partMoney&&d.partMoney.length)root.append(partMoneyCard(d));
  root.append(catalogCard());
  if(typeof adsCard==='function')root.append(anchor(adsCard(d),'publicidad'));
- root.append(anchor(requestsCard(d,'Pedidos de repuestos'+(d.storeName?' \xB7 '+d.storeName:'')),'por-responder'));}
+ root.append(anchor(requestsCard(d,'Pedidos de repuestos'+(d.storeName?' \xB7 '+d.storeName:'')),'por-responder'));
+ if(typeof ownerAds==='function')root.append(ownerAds(root));}
 // Talleres cercanos y cita directa (pasos D4 y D5): lista, perfil del taller y formulario de cita.
 // Talleres no registrados (pedido del 21/11/2026): solo un enlace a Google Maps con la misma b\xFAsqueda; no se guardan datos de terceros.
-function moreShops(out,res){if(res&&res.moreUrl)out.append(h('p',{class:'note'},h('a',{href:res.moreUrl,target:'_blank',rel:'noopener',text:'Ver m\xE1s talleres, tambi\xE9n no registrados, en Google Maps'}),' \xB7 AutoMantPro no los ha revisado.'));}
+function moreShops(out,res){const un=res&&res.unregistered||[];
+ if(un.length){const list=h('div',{class:'list'});
+  for(const s of un)list.append(h('div',{class:'line'},h('div',{},h('b',{text:s.name}),h('span',{class:'tag',text:'No registrado en AutoMantPro'}),h('small',{text:[s.zone,s.city].filter(Boolean).join(' \xB7 ')}),h('small',{text:'Servicios: '+servicesText(s.services)}),h('small',{text:'Sin cita directa ni calificaciones: AutoMantPro no lo ha revisado.'})),h('a',{class:'btn ghost',href:s.inviteUrl,target:'_blank',rel:'noopener',text:'Invitar a este taller'})));
+  out.append(h('p',{class:'note',text:'Otros talleres de tu ciudad que a\xFAn no est\xE1n en AutoMantPro. Inv\xEDtalos desde tu WhatsApp para agendar con ellos aqu\xED.'}),list);}
+ if(res&&res.moreUrl)out.append(h('p',{class:'note'},h('a',{href:res.moreUrl,target:'_blank',rel:'noopener',text:'Ver m\xE1s talleres, tambi\xE9n no registrados, en Google Maps'}),' \xB7 AutoMantPro no los ha revisado.'));}
 let nearby={service:null,zone:'',origin:null,last:null};
 function nearbyServices(r){const out=[];if(r)for(const it of r.items)if((it.state==='urgente'||it.state==='pronto')&&out.length<6&&!out.some(x=>x.value===it.serviceId))out.push({value:it.serviceId,label:it.serviceName+(it.state==='urgente'?' (urgente)':''),name:it.serviceName});return out;}
 function ratingText(s){return s.rating?s.rating.avg.toLocaleString('es-EC')+' de 5 \xB7 '+s.rating.count+' calificaciones':'Nuevo, a\xFAn sin calificaciones';}
@@ -126938,7 +127220,7 @@ var MysqlImportedContactStore = class {
     return this.run(async (conn) => {
       let queued = 0;
       let skipped = 0;
-      const text15 = `${message2}
+      const text16 = `${message2}
 
 Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
       for (const phone of phones) {
@@ -126948,7 +127230,7 @@ Si no quieres recibir m\xE1s mensajes de AutoMantPro, responde: BAJA`;
           continue;
         }
         await conn.query("UPDATE `ImportedContact` SET status = 'approved', contactedAt = UTC_TIMESTAMP(3) WHERE id = ?", [contact.id]);
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID33(), `reactivation:${createHash11("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text15 })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'contact.reactivation', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID33(), `reactivation:${createHash11("sha256").update(phone).digest("hex").slice(0, 40)}`, phone, JSON.stringify({ message: text16 })]);
         await conn.query("INSERT INTO `AuditLog` (id, eventType, entityType, entityId, `after`, createdAt) VALUES (?, 'contact.reactivation.queued', 'ImportedContact', ?, ?, UTC_TIMESTAMP(3))", [randomUUID33(), contact.id, JSON.stringify({ approvedBy })]);
         queued++;
       }
@@ -126970,7 +127252,7 @@ init_appointment_store();
 init_contracts();
 init_messages();
 init_workshop_map();
-import { createHash as createHash12, randomUUID as randomUUID36 } from "node:crypto";
+import { createHash as createHash12, randomUUID as randomUUID37 } from "node:crypto";
 
 // packages/api/dist/application/map/nearby-shops.js
 init_workshop_map();
@@ -127037,6 +127319,7 @@ function rankNearby(records, query) {
 
 // packages/api/dist/infrastructure/messaging/shop-directory-store.js
 init_appointment_capacity();
+init_directory_store();
 init_fleet_access();
 init_vehicle_care_store();
 init_shop_cover_store();
@@ -127046,8 +127329,8 @@ init_apply();
 init_contracts();
 init_vehicle_care_store();
 init_weekly_hours();
-import { randomUUID as randomUUID35 } from "node:crypto";
-var rows37 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+import { randomUUID as randomUUID36 } from "node:crypto";
+var rows38 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var fail16 = (code5) => {
   throw new LocalMarketplaceError(code5);
 };
@@ -127057,12 +127340,12 @@ var TARIFF_NOTE = "Valor referencial; el presupuesto final lo da el taller.";
 var TARIFF_LIMIT = 50;
 var toItem = (r) => ({ id: String(r.id), name: String(r.name), priceFromUsd: Number(r.priceFromUsd), durationMin: r.durationMin === null || r.durationMin === void 0 ? null : Number(r.durationMin), active: Number(r.active) === 1 });
 async function loadShopExtras(conn, shopId) {
-  const tariff = await rows37(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE shopId = ? AND active = 1 ORDER BY name LIMIT ?", [shopId, TARIFF_LIMIT]).catch((err4) => {
+  const tariff = await rows38(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE shopId = ? AND active = 1 ORDER BY name LIMIT ?", [shopId, TARIFF_LIMIT]).catch((err4) => {
     if (!missing2(err4))
       throw err4;
     return [];
   });
-  const [shop] = await rows37(conn, "SELECT weeklyHours, offersPickup FROM `Shop` WHERE id = ?", [shopId]).catch((err4) => {
+  const [shop] = await rows38(conn, "SELECT weeklyHours, offersPickup FROM `Shop` WHERE id = ?", [shopId]).catch((err4) => {
     if (!missing2(err4))
       throw err4;
     return [];
@@ -127077,7 +127360,7 @@ async function loadShopExtras(conn, shopId) {
   };
 }
 async function assertShopOpen(conn, shopId, date2, time3) {
-  const [shop] = await rows37(conn, "SELECT weeklyHours FROM `Shop` WHERE id = ?", [shopId]).catch((err4) => {
+  const [shop] = await rows38(conn, "SELECT weeklyHours FROM `Shop` WHERE id = ?", [shopId]).catch((err4) => {
     if (!missing2(err4))
       throw err4;
     return [];
@@ -127092,7 +127375,7 @@ async function resolvePickup(conn, shopId, note) {
   const clean4 = note.replace(/\s+/g, " ").trim();
   if (clean4.length < 3 || (clean4.match(/\d/g) ?? []).length > 7)
     fail16("INVALID_PICKUP_NOTE");
-  const [shop] = await rows37(conn, "SELECT offersPickup FROM `Shop` WHERE id = ?", [shopId]).catch((err4) => {
+  const [shop] = await rows38(conn, "SELECT offersPickup FROM `Shop` WHERE id = ?", [shopId]).catch((err4) => {
     if (missing2(err4))
       fail16("FEATURE_UPDATE_PENDING");
     throw err4;
@@ -127118,7 +127401,7 @@ var ShopExtrasStore = class {
     }
   }
   async acting(conn, userId) {
-    const [user] = await rows37(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
+    const [user] = await rows38(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
     if (!user)
       return fail16("ACCOUNT_UNAVAILABLE");
     return this.care.actingShop(conn, userId, String(user.role));
@@ -127147,7 +127430,7 @@ var ShopExtrasStore = class {
     });
   }
   async audit(conn, userId, eventType, entityType, entityId, after) {
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID35(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'taller', ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID36(), eventType, userId, entityType, entityId, JSON.stringify(after)]);
   }
   /** Lo que el panel del taller muestra y edita: tarifario completo, horario por día y domicilio. */
   overview(userId) {
@@ -127155,13 +127438,13 @@ var ShopExtrasStore = class {
       const shop = await this.acting(conn, userId);
       const canManage = shop.isOwner || shop.isAdmin;
       let updatePending = false;
-      const items = await rows37(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE shopId = ? ORDER BY active DESC, name LIMIT ?", [shop.id, TARIFF_LIMIT]).catch((err4) => {
+      const items = await rows38(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE shopId = ? ORDER BY active DESC, name LIMIT ?", [shop.id, TARIFF_LIMIT]).catch((err4) => {
         if (!missing2(err4))
           throw err4;
         updatePending = true;
         return [];
       });
-      const [row2] = await rows37(conn, "SELECT weeklyHours, offersPickup FROM `Shop` WHERE id = ?", [shop.id]).catch((err4) => {
+      const [row2] = await rows38(conn, "SELECT weeklyHours, offersPickup FROM `Shop` WHERE id = ?", [shop.id]).catch((err4) => {
         if (!missing2(err4))
           throw err4;
         updatePending = true;
@@ -127176,13 +127459,13 @@ var ShopExtrasStore = class {
       const name = input.name.replace(/\s+/g, " ").trim();
       if (name.length < 3)
         fail16("INVALID_TARIFF");
-      const [count3] = await rows37(conn, "SELECT COUNT(*) AS n FROM `ShopTariff` WHERE shopId = ? FOR UPDATE", [shop.id]);
+      const [count3] = await rows38(conn, "SELECT COUNT(*) AS n FROM `ShopTariff` WHERE shopId = ? FOR UPDATE", [shop.id]);
       if (Number(count3?.n) >= TARIFF_LIMIT)
         fail16("TARIFF_LIMIT");
-      const [same] = await rows37(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ?", [shop.id, name]);
+      const [same] = await rows38(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ?", [shop.id, name]);
       if (same)
         fail16("TARIFF_DUPLICATE");
-      const id3 = randomUUID35();
+      const id3 = randomUUID36();
       await conn.query("INSERT INTO `ShopTariff` (id, shopId, name, priceFromUsd, durationMin) VALUES (?, ?, ?, ?, ?)", [id3, shop.id, name, input.priceFromUsd, input.durationMin ?? null]);
       await this.audit(conn, userId, "tariff.created", "ShopTariff", id3, { shopId: shop.id, name, priceFromUsd: input.priceFromUsd, durationMin: input.durationMin ?? null });
       return { id: id3, name, priceFromUsd: input.priceFromUsd, durationMin: input.durationMin ?? null, active: true };
@@ -127193,10 +127476,10 @@ var ShopExtrasStore = class {
       const name = input.name.replace(/\s+/g, " ").trim();
       if (name.length < 3)
         fail16("INVALID_TARIFF");
-      const [before] = await rows37(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE id = ? AND shopId = ? FOR UPDATE", [id3, shop.id]);
+      const [before] = await rows38(conn, "SELECT id, name, priceFromUsd, durationMin, active FROM `ShopTariff` WHERE id = ? AND shopId = ? FOR UPDATE", [id3, shop.id]);
       if (!before)
         fail16("NOT_FOUND");
-      const [same] = await rows37(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ? AND id <> ?", [shop.id, name, id3]);
+      const [same] = await rows38(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ? AND id <> ?", [shop.id, name, id3]);
       if (same && Number(before.active) === 1)
         fail16("TARIFF_DUPLICATE");
       await conn.query("UPDATE `ShopTariff` SET name = ?, priceFromUsd = ?, durationMin = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [name, input.priceFromUsd, input.durationMin ?? null, id3]);
@@ -127206,11 +127489,11 @@ var ShopExtrasStore = class {
   }
   setTariffActive(userId, id3, active) {
     return this.write(userId, async (conn, shop) => {
-      const [before] = await rows37(conn, "SELECT id, name, active FROM `ShopTariff` WHERE id = ? AND shopId = ? FOR UPDATE", [id3, shop.id]);
+      const [before] = await rows38(conn, "SELECT id, name, active FROM `ShopTariff` WHERE id = ? AND shopId = ? FOR UPDATE", [id3, shop.id]);
       if (!before)
         fail16("NOT_FOUND");
       if (active) {
-        const [same] = await rows37(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ? AND id <> ?", [shop.id, before.name, id3]);
+        const [same] = await rows38(conn, "SELECT id FROM `ShopTariff` WHERE shopId = ? AND active = 1 AND name = ? AND id <> ?", [shop.id, before.name, id3]);
         if (same)
           fail16("TARIFF_DUPLICATE");
       }
@@ -127225,7 +127508,7 @@ var ShopExtrasStore = class {
       const parsed = days2 === null ? null : parseWeeklyHours(days2);
       if (days2 !== null && !parsed)
         fail16("INVALID_HOURS");
-      const [before] = await rows37(conn, "SELECT weeklyHours FROM `Shop` WHERE id = ? FOR UPDATE", [shop.id]);
+      const [before] = await rows38(conn, "SELECT weeklyHours FROM `Shop` WHERE id = ? FOR UPDATE", [shop.id]);
       await conn.query("UPDATE `Shop` SET weeklyHours = ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [parsed ? JSON.stringify(parsed) : null, shop.id]);
       await this.audit(conn, userId, "shop.hours.updated", "Shop", shop.id, { before: readWeeklyHours(before?.weeklyHours), after: parsed });
       return { weeklyHours: parsed };
@@ -127241,11 +127524,11 @@ var ShopExtrasStore = class {
 };
 
 // packages/api/dist/infrastructure/messaging/shop-directory-store.js
-var rows38 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+var rows39 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var fail17 = (code5) => {
   throw new LocalMarketplaceError(code5);
 };
-var text5 = (v) => v === null || v === void 0 || String(v).trim() === "" ? null : String(v);
+var text6 = (v) => v === null || v === void 0 || String(v).trim() === "" ? null : String(v);
 var DIRECT_PENDING_LIMIT = 5;
 var FIRST_MINUTE = 8 * 60;
 var LAST_MINUTE = 17 * 60 + 30;
@@ -127267,8 +127550,8 @@ function toRecord2(r) {
     name: String(r.name),
     address: exact ? String(r.address ?? "") : "",
     city: String(r.city ?? ""),
-    zone: text5(r.zone),
-    hours: text5(r.hours),
+    zone: text6(r.zone),
+    hours: text6(r.hours),
     lat: exact && r.lat !== null && r.lat !== void 0 ? Number(r.lat) : null,
     lng: exact && r.lng !== null && r.lng !== void 0 ? Number(r.lng) : null,
     precision: exact ? "exacta" : "sector",
@@ -127284,7 +127567,7 @@ var FROM = "FROM `Shop` sh JOIN `User` u ON u.id = sh.userId AND u.deletedAt IS 
 async function verifiedShops(conn, shopId) {
   const extra = shopId ? "AND sh.id = ? " : "";
   const args = shopId ? [shopId] : [];
-  const run4 = async (columns, sanction) => rows38(conn, `SELECT ${columns} ${FROM}${extra}${sanction ? NOT_SANCTIONED("sh") : ""}ORDER BY sh.city, sh.name LIMIT 1000`, args);
+  const run4 = async (columns, sanction) => rows39(conn, `SELECT ${columns} ${FROM}${extra}${sanction ? NOT_SANCTIONED("sh") : ""}ORDER BY sh.city, sh.name LIMIT 1000`, args);
   const code5 = (err4) => String(err4.code);
   let result;
   try {
@@ -127310,7 +127593,7 @@ async function verifiedShops(conn, shopId) {
 }
 async function founderIds(conn) {
   try {
-    return new Set((await rows38(conn, "SELECT id FROM `Shop` WHERE founder = true")).map((r) => String(r.id)));
+    return new Set((await rows39(conn, "SELECT id FROM `Shop` WHERE founder = true")).map((r) => String(r.id)));
   } catch (err4) {
     if (String(err4.code) === "ER_BAD_FIELD_ERROR")
       return /* @__PURE__ */ new Set();
@@ -127319,13 +127602,19 @@ async function founderIds(conn) {
 }
 async function ownerZone(conn, userId) {
   try {
-    const [row2] = await rows38(conn, "SELECT zone FROM `User` WHERE id = ?", [userId]);
-    return text5(row2?.zone);
+    const [row2] = await rows39(conn, "SELECT zone FROM `User` WHERE id = ?", [userId]);
+    return text6(row2?.zone);
   } catch (err4) {
     if (String(err4.code) === "ER_BAD_FIELD_ERROR")
       return null;
     throw err4;
   }
+}
+var MIN_LISTED = 5;
+function inviteLink(name) {
+  const site2 = (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/+$/, "");
+  const text16 = "Hola, " + name + ". Uso AutoMantPro para agendar y llevar el historial de mantenimiento de mi veh\xEDculo y me gustar\xEDa encontrarlos ah\xED. El registro del taller es gratis: " + site2 + "/cuenta";
+  return "https://wa.me/?text=" + encodeURIComponent(text16);
 }
 var ShopDirectoryStore = class {
   connect;
@@ -127342,7 +127631,7 @@ var ShopDirectoryStore = class {
     }
   }
   async owner(conn, userId, lock = false) {
-    const [user] = await rows38(conn, `SELECT id, role, city FROM \`User\` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL${lock ? " FOR UPDATE" : ""}`, [userId]);
+    const [user] = await rows39(conn, `SELECT id, role, city FROM \`User\` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL${lock ? " FOR UPDATE" : ""}`, [userId]);
     if (!user)
       return fail17("CONSENT_OR_ACCOUNT_REQUIRED");
     if (user.role !== "dueno")
@@ -127350,10 +127639,17 @@ var ShopDirectoryStore = class {
     return user;
   }
   /** Lista para el dueño. Su ubicación solo ordena esta respuesta: no se escribe en ninguna tabla ni en el registro. */
-  search(userId, query) {
+  async search(userId, query) {
+    const page3 = await this.searchVerified(userId, query);
+    const missing5 = page3.page === 1 ? MIN_LISTED - page3.items.length : 0;
+    const found = missing5 > 0 && page3.cityRaw ? await new DirectoryStore(this.connect).nearby(page3.cityRaw, page3.zoneRaw, missing5, page3.items.map((s) => s.name)) : [];
+    const { cityRaw: _c, zoneRaw: _z, ...rest } = page3;
+    return { ...rest, unregistered: found.map((s) => ({ id: s.id, name: s.name, zone: s.zone, city: s.city, services: s.services, inviteUrl: inviteLink(s.name) })) };
+  }
+  searchVerified(userId, query) {
     return this.run(async (conn) => {
       const user = await this.owner(conn, userId);
-      const city = (query.city ?? "").trim() || text5(user.city) || "";
+      const city = (query.city ?? "").trim() || text6(user.city) || "";
       const zone = (query.zone ?? "").trim() || await ownerZone(conn, userId) || "";
       const records = await verifiedShops(conn);
       const ranked = rankNearby(records, { ...query, city, zone });
@@ -127361,7 +127657,7 @@ var ShopDirectoryStore = class {
       const covers = await coverVersions(conn, ranked.items.map((item2) => item2.id));
       const page3 = { ...ranked, items: ranked.items.map((item2) => ({ ...item2, founder: founders.has(item2.id), cover: covers.get(item2.id) ?? null })) };
       const moreUrl = googleMapsSearchUrl({ service: page3.service?.id, zone: zone || void 0, city: city || void 0 });
-      return { ...page3, cityUsed: city ? placeLabel(city) : null, zoneUsed: zone ? placeLabel(zone) : null, verifiedTotal: records.length, moreUrl };
+      return { ...page3, cityUsed: city ? placeLabel(city) : null, zoneUsed: zone ? placeLabel(zone) : null, verifiedTotal: records.length, moreUrl, cityRaw: city, zoneRaw: zone };
     });
   }
   profile(userId, shopId) {
@@ -127426,22 +127722,22 @@ var ShopDirectoryStore = class {
       fail17("VEHICLE_NOT_FOUND");
     if (vehicle.access === "driver")
       fail17("FORBIDDEN");
-    const [shop] = await rows38(conn, `SELECT sh.id, sh.userId, sh.name FROM \`Shop\` sh JOIN \`User\` u ON u.id = sh.userId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE sh.id = ? AND sh.verificationStatus = 'verified' ${NOT_SANCTIONED("sh")}FOR UPDATE`, [input.shopId]).catch((err4) => {
+    const [shop] = await rows39(conn, `SELECT sh.id, sh.userId, sh.name FROM \`Shop\` sh JOIN \`User\` u ON u.id = sh.userId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE sh.id = ? AND sh.verificationStatus = 'verified' ${NOT_SANCTIONED("sh")}FOR UPDATE`, [input.shopId]).catch((err4) => {
       if (err4.code !== "ER_NO_SUCH_TABLE")
         throw err4;
-      return rows38(conn, "SELECT sh.id, sh.userId, sh.name FROM `Shop` sh JOIN `User` u ON u.id = sh.userId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE sh.id = ? AND sh.verificationStatus = 'verified' FOR UPDATE", [input.shopId]);
+      return rows39(conn, "SELECT sh.id, sh.userId, sh.name FROM `Shop` sh JOIN `User` u ON u.id = sh.userId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE sh.id = ? AND sh.verificationStatus = 'verified' FOR UPDATE", [input.shopId]);
     });
     if (!shop)
       return fail17("SHOP_UNAVAILABLE");
     const directKey = createHash12("sha256").update(`${userId}|${input.shopId}|${input.vehicleId}|${at.toISOString()}`).digest("hex");
-    const [same] = await rows38(conn, "SELECT id, status FROM `Appointment` WHERE directKey = ? FOR UPDATE", [directKey]);
+    const [same] = await rows39(conn, "SELECT id, status FROM `Appointment` WHERE directKey = ? FOR UPDATE", [directKey]);
     if (same && ["pending", "confirmed"].includes(String(same.status))) {
       const ref5 = shortRef(String(same.id));
       return { appointmentRef: ref5, duplicate: true, message: `Ya hab\xEDas pedido esa cita: ${ref5}, ${formatEcDateTime(at)} en ${shop.name}. Espera la respuesta del taller.` };
     }
     if (same)
       await conn.query("UPDATE `Appointment` SET directKey = NULL WHERE id = ?", [same.id]);
-    const [pending] = await rows38(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE ownerId = ? AND directKey IS NOT NULL AND status = 'pending' AND scheduledAt > UTC_TIMESTAMP(3)", [userId]);
+    const [pending] = await rows39(conn, "SELECT COUNT(*) AS n FROM `Appointment` WHERE ownerId = ? AND directKey IS NOT NULL AND status = 'pending' AND scheduledAt > UTC_TIMESTAMP(3)", [userId]);
     if (Number(pending?.n) >= DIRECT_PENDING_LIMIT)
       fail17("DIRECT_BOOKING_LIMIT");
     await assertShopOpen(conn, input.shopId, input.date, input.time);
@@ -127451,7 +127747,7 @@ var ShopDirectoryStore = class {
       if (err4.code !== "ER_NO_SUCH_TABLE")
         throw err4;
     });
-    const id3 = randomUUID36();
+    const id3 = randomUUID37();
     const ref4 = shortRef(id3);
     const service = input.service.replace(/\s+/g, " ").trim();
     await conn.query("INSERT INTO `Appointment` (id, ownerId, vehicleId, shopId, scheduledAt, status, summary, services, directKey, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [id3, userId, input.vehicleId, input.shopId, at, `Cita pedida por el due\xF1o: ${service}`.slice(0, 191), JSON.stringify([service]), directKey]);
@@ -127469,8 +127765,8 @@ var ShopDirectoryStore = class {
     const brief = await this.care.planBrief(conn, vehicle);
     const message2 = `\u{1F4C5} Nueva cita pedida para ${label5}: ${service}, ${formatEcDateTime(at)}.${pickedNames.length ? ` El due\xF1o marc\xF3 del plan: ${pickedNames.slice(0, 8).join(", ")}${pickedNames.length > 8 ? ` y ${pickedNames.length - 8} m\xE1s` : ""}.` : ""}${brief ? ` ${brief}` : ""}
 Conf\xEDrmala o prop\xF3n otra fecha desde tu panel (Citas por atender), o responde: Confirmar ${ref4}.${pickupText(pickup)}`;
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.booking', ?)", [randomUUID36(), `booking:${id3}:shop`, shop.userId, JSON.stringify({ message: message2 })]);
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'booking.direct.requested', ?, 'dueno', 'Appointment', ?, ?, UTC_TIMESTAMP(3))", [randomUUID36(), userId, id3, JSON.stringify({ shopId: input.shopId, vehicleId: input.vehicleId, service, scheduledAt: at.toISOString(), ...pickup ? { pickup: true } : {}, ...picked.length ? { planServiceIds: picked } : {} })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'local.booking', ?)", [randomUUID37(), `booking:${id3}:shop`, shop.userId, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'booking.direct.requested', ?, 'dueno', 'Appointment', ?, ?, UTC_TIMESTAMP(3))", [randomUUID37(), userId, id3, JSON.stringify({ shopId: input.shopId, vehicleId: input.vehicleId, service, scheduledAt: at.toISOString(), ...pickup ? { pickup: true } : {}, ...picked.length ? { planServiceIds: picked } : {} })]);
     return { appointmentRef: ref4, duplicate: false, message: `Cita ${ref4} pedida a ${shop.name} para ${formatEcDateTime(at)}. El taller la confirma o te propone otra fecha; te avisaremos.` };
   }
 };
@@ -127576,8 +127872,8 @@ init_zod();
 // packages/api/dist/infrastructure/messaging/catalog-store.js
 init_apply();
 init_contracts();
-import { randomUUID as randomUUID37 } from "node:crypto";
-var rows39 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+import { randomUUID as randomUUID38 } from "node:crypto";
+var rows40 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var fail18 = (c) => {
   throw new LocalMarketplaceError(c);
 };
@@ -127596,7 +127892,7 @@ async function compatibleParts(conn, vehicle, limit = 6) {
   for (let attempt = 0; attempt < 3; attempt++) {
     const q = build(active, fitment);
     try {
-      return (await rows39(conn, q.sql, q.args)).map((p) => ({ id: String(p.id), name: String(p.name), price: Number(p.price), stock: p.stock === null ? null : Number(p.stock), storeName: String(p.storeName), city: String(p.city) }));
+      return (await rows40(conn, q.sql, q.args)).map((p) => ({ id: String(p.id), name: String(p.name), price: Number(p.price), stock: p.stock === null ? null : Number(p.stock), storeName: String(p.storeName), city: String(p.city) }));
     } catch (err4) {
       if (code4(err4) === "ER_NO_SUCH_TABLE" && fitment)
         fitment = false;
@@ -127623,12 +127919,12 @@ var CatalogStore = class {
   }
   /** El almacén de quien entra; cualquier otro rol o cuenta sin almacén no tiene catálogo. */
   async myStore(conn, userId) {
-    const [user] = await rows39(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
+    const [user] = await rows40(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
     if (!user)
       return fail18("ACCOUNT_UNAVAILABLE");
     if (user.role !== "almacen")
       return fail18("FORBIDDEN");
-    const [store] = await rows39(conn, "SELECT id FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
+    const [store] = await rows40(conn, "SELECT id FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
     if (!store)
       return fail18("BUSINESS_NOT_FOUND");
     return { id: String(store.id) };
@@ -127637,10 +127933,10 @@ var CatalogStore = class {
     return this.run(async (conn) => {
       const store = await this.myStore(conn, userId);
       const current = Math.max(1, Math.floor(page3));
-      const [count3] = await rows39(conn, "SELECT COUNT(*) AS n FROM `Product` WHERE storeId = ?", [store.id]);
+      const [count3] = await rows40(conn, "SELECT COUNT(*) AS n FROM `Product` WHERE storeId = ?", [store.id]);
       const total = Number(count3?.n ?? 0);
       let updatePending = false;
-      const query = (select2) => rows39(conn, `SELECT ${select2} FROM \`Product\` WHERE storeId = ? ORDER BY createdAt DESC, id LIMIT ? OFFSET ?`, [store.id, CATALOG_PAGE_SIZE, (current - 1) * CATALOG_PAGE_SIZE]);
+      const query = (select2) => rows40(conn, `SELECT ${select2} FROM \`Product\` WHERE storeId = ? ORDER BY createdAt DESC, id LIMIT ? OFFSET ?`, [store.id, CATALOG_PAGE_SIZE, (current - 1) * CATALOG_PAGE_SIZE]);
       const products = await query("id, name, price, stock, active").catch((err4) => {
         if (code4(err4) !== "ER_BAD_FIELD_ERROR")
           throw err4;
@@ -127648,7 +127944,7 @@ var CatalogStore = class {
         return query("id, name, price, stock, 1 AS active");
       });
       const ids = products.map((p) => String(p.id));
-      const fitments = ids.length ? await rows39(conn, "SELECT id, productId, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId IN (?) ORDER BY createdAt, id", [ids]).catch((err4) => {
+      const fitments = ids.length ? await rows40(conn, "SELECT id, productId, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId IN (?) ORDER BY createdAt, id", [ids]).catch((err4) => {
         if (!missing3(err4))
           throw err4;
         updatePending = true;
@@ -127671,7 +127967,7 @@ var CatalogStore = class {
         const store = await this.myStore(conn, userId);
         await conn.query("START TRANSACTION");
         open = true;
-        const [product] = await rows39(conn, "SELECT id, name FROM `Product` WHERE id = ? AND storeId = ? FOR UPDATE", [productId, store.id]);
+        const [product] = await rows40(conn, "SELECT id, name FROM `Product` WHERE id = ? AND storeId = ? FOR UPDATE", [productId, store.id]);
         if (!product)
           fail18("NOT_FOUND");
         const result = await change(conn, product);
@@ -127688,7 +127984,7 @@ var CatalogStore = class {
     });
   }
   audit(conn, userId, eventType, productId, after) {
-    return conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'almacen', 'Product', ?, ?, UTC_TIMESTAMP(3))", [randomUUID37(), eventType, userId, productId, JSON.stringify(after)]);
+    return conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, 'almacen', 'Product', ?, ?, UTC_TIMESTAMP(3))", [randomUUID38(), eventType, userId, productId, JSON.stringify(after)]);
   }
   /** Desactivar oculta el producto al comprador sin perder su historial; se puede reactivar. */
   setActive(userId, productId, active) {
@@ -127705,12 +128001,12 @@ var CatalogStore = class {
       const validYear = (y) => y === null || Number.isInteger(y) && y >= 1950 && y <= 2100;
       if (make.length < 2 || make.length > 60 || model !== null && model.length > 60 || !validYear(yearFrom) || !validYear(yearTo) || yearFrom !== null && yearTo !== null && yearFrom > yearTo)
         fail18("INVALID_FITMENT");
-      const existing = await rows39(conn, "SELECT id, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId = ?", [productId]);
+      const existing = await rows40(conn, "SELECT id, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId = ?", [productId]);
       if (existing.length >= FITMENT_LIMIT)
         fail18("FITMENT_LIMIT");
       if (existing.some((f) => String(f.make).toLowerCase() === make.toLowerCase() && String(f.model ?? "").toLowerCase() === (model ?? "").toLowerCase() && (f.yearFrom ?? null) === yearFrom && (f.yearTo ?? null) === yearTo))
         fail18("FITMENT_DUPLICATE");
-      const id3 = randomUUID37();
+      const id3 = randomUUID38();
       await conn.query("INSERT INTO `ProductFitment` (id, productId, make, model, yearFrom, yearTo) VALUES (?, ?, ?, ?, ?, ?)", [id3, productId, make, model, yearFrom, yearTo]);
       await this.audit(conn, userId, "catalog.fitment.added", productId, { make, model, yearFrom, yearTo });
       return { id: id3, make, model, yearFrom, yearTo };
@@ -127728,7 +128024,7 @@ var CatalogStore = class {
         const store = await this.myStore(conn, userId);
         await conn.query("START TRANSACTION");
         open = true;
-        const existing = await rows39(conn, "SELECT id, name FROM `Product` WHERE storeId = ? FOR UPDATE", [store.id]);
+        const existing = await rows40(conn, "SELECT id, name FROM `Product` WHERE storeId = ? FOR UPDATE", [store.id]);
         const byName = new Map(existing.map((p) => [String(p.name).toLowerCase(), String(p.id)]));
         const summary = { created: 0, updated: 0, fitments: 0 };
         for (const item2 of products) {
@@ -127737,23 +128033,23 @@ var CatalogStore = class {
             await conn.query("UPDATE `Product` SET price = ?, stock = COALESCE(?, stock), updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [item2.price, item2.stock, productId]);
             summary.updated++;
           } else {
-            productId = randomUUID37();
+            productId = randomUUID38();
             await conn.query("INSERT INTO `Product` (id, storeId, name, price, stock, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [productId, store.id, item2.name, item2.price, item2.stock ?? 0]);
             byName.set(item2.name.toLowerCase(), productId);
             summary.created++;
           }
           if (!item2.make)
             continue;
-          const fits2 = await rows39(conn, "SELECT make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId = ?", [productId]);
+          const fits2 = await rows40(conn, "SELECT make, model, yearFrom, yearTo FROM `ProductFitment` WHERE productId = ?", [productId]);
           const same = fits2.some((f) => String(f.make).toLowerCase() === item2.make.toLowerCase() && String(f.model ?? "").toLowerCase() === (item2.model ?? "").toLowerCase() && (f.yearFrom ?? null) === item2.yearFrom && (f.yearTo ?? null) === item2.yearTo);
           if (same)
             continue;
           if (fits2.length >= FITMENT_LIMIT)
             fail18("FITMENT_LIMIT");
-          await conn.query("INSERT INTO `ProductFitment` (id, productId, make, model, yearFrom, yearTo) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID37(), productId, item2.make, item2.model, item2.yearFrom, item2.yearTo]);
+          await conn.query("INSERT INTO `ProductFitment` (id, productId, make, model, yearFrom, yearTo) VALUES (?, ?, ?, ?, ?, ?)", [randomUUID38(), productId, item2.make, item2.model, item2.yearFrom, item2.yearTo]);
           summary.fitments++;
         }
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'catalog.import', ?, 'almacen', 'Store', ?, ?, UTC_TIMESTAMP(3))", [randomUUID37(), userId, store.id, JSON.stringify(summary)]);
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'catalog.import', ?, 'almacen', 'Store', ?, ?, UTC_TIMESTAMP(3))", [randomUUID38(), userId, store.id, JSON.stringify(summary)]);
         await conn.query("COMMIT");
         open = false;
         return summary;
@@ -127768,7 +128064,7 @@ var CatalogStore = class {
   }
   removeFitment(userId, productId, fitmentId) {
     return this.write(userId, productId, async (conn) => {
-      const [fitment] = await rows39(conn, "SELECT id, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE id = ? AND productId = ? FOR UPDATE", [fitmentId, productId]);
+      const [fitment] = await rows40(conn, "SELECT id, make, model, yearFrom, yearTo FROM `ProductFitment` WHERE id = ? AND productId = ? FOR UPDATE", [fitmentId, productId]);
       if (!fitment)
         fail18("NOT_FOUND");
       await conn.query("DELETE FROM `ProductFitment` WHERE id = ?", [fitmentId]);
@@ -127816,14 +128112,14 @@ function number(raw, sep) {
     return NaN;
   return Number(t);
 }
-function parseCatalogCsv(text15) {
+function parseCatalogCsv(text16) {
   const problems = [];
-  if (text15.length > CSV_MAX_CHARS)
+  if (text16.length > CSV_MAX_CHARS)
     return { rows: [], problems: [{ line: 0, reason: "El archivo es muy grande. Divide el cat\xE1logo en partes de hasta 500 productos." }] };
-  const lines = text15.replace(/^﻿/, "").split(/\r?\n/);
+  const lines = text16.replace(/^﻿/, "").split(/\r?\n/);
   const firstData = lines.find((l) => l.trim() !== "") ?? "";
   const sep = (firstData.match(/;/g)?.length ?? 0) >= (firstData.match(/,/g)?.length ?? 0) && firstData.includes(";") ? ";" : ",";
-  const rows71 = [];
+  const rows72 = [];
   const seen = /* @__PURE__ */ new Map();
   let headerChecked = false;
   lines.forEach((raw, index) => {
@@ -127858,13 +128154,13 @@ function parseCatalogCsv(text15) {
     if (seen.has(key))
       return void bad2(`El producto ya aparece en la l\xEDnea ${seen.get(key)}. Cada producto va una sola vez.`);
     seen.set(key, line2);
-    rows71.push({ line: line2, name, price, stock, make: make || null, model: model || null, yearFrom, yearTo });
+    rows72.push({ line: line2, name, price, stock, make: make || null, model: model || null, yearFrom, yearTo });
   });
-  if (rows71.length > CSV_MAX_ROWS)
+  if (rows72.length > CSV_MAX_ROWS)
     problems.push({ line: 0, reason: `M\xE1ximo ${CSV_MAX_ROWS} productos por carga. Divide el archivo.` });
-  if (!rows71.length && !problems.length)
+  if (!rows72.length && !problems.length)
     problems.push({ line: 0, reason: "El archivo no tiene productos." });
-  return { rows: rows71, problems };
+  return { rows: rows72, problems };
 }
 
 // packages/api/dist/interfaces/catalog-tariff.routes.js
@@ -128028,7 +128324,7 @@ init_local_agent_broker();
 init_fleet_access();
 init_vehicle_care_store();
 init_work_order_records();
-var rows40 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows41 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var whenTableMissing6 = (value2) => (err4) => {
   if (err4.code === "ER_NO_SUCH_TABLE")
     return value2;
@@ -128040,15 +128336,15 @@ async function receiptOrder(conn, userId, role, number2) {
   const select2 = "SELECT w.*, s.name AS shopName, s.address AS shopAddress, s.city AS shopCity, s.ruc AS shopRuc, v.make, v.model, v.year, v.plate, u.name AS clientName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId LEFT JOIN `User` u ON u.id = w.ownerId WHERE w.number = ?";
   if (role === "taller") {
     const shop = await new VehicleCareStore().actingShop(conn, userId, role, { openOrders: true });
-    const [order] = await rows40(conn, `${select2} AND w.shopId = ?`, [number2, shop.id]);
+    const [order] = await rows41(conn, `${select2} AND w.shopId = ?`, [number2, shop.id]);
     if (order)
       return { order, viewer: "taller" };
   } else if (role === "dueno") {
     const scope = await decisionScope(conn, userId);
-    const [order] = await rows40(conn, `${select2} AND ${scope.where("w")}`, [number2, ...scope.args]);
+    const [order] = await rows41(conn, `${select2} AND ${scope.where("w")}`, [number2, ...scope.args]);
     if (order)
       return { order, viewer: "dueno" };
-    const [assigned] = await rows40(conn, `${select2} AND EXISTS (SELECT 1 FROM \`FleetAssignment\` a JOIN \`FleetMember\` m ON m.id = a.memberId WHERE a.vehicleId = w.vehicleId AND m.userId = ? AND m.status = 'active' AND a.endsAt IS NULL)`, [number2, userId]);
+    const [assigned] = await rows41(conn, `${select2} AND EXISTS (SELECT 1 FROM \`FleetAssignment\` a JOIN \`FleetMember\` m ON m.id = a.memberId WHERE a.vehicleId = w.vehicleId AND m.userId = ? AND m.status = 'active' AND a.endsAt IS NULL)`, [number2, userId]);
     if (assigned)
       return { order: assigned, viewer: "conductor" };
   }
@@ -128060,8 +128356,8 @@ async function orderReceipt(conn, userId, role, number2) {
   const records = (await orderRecords(conn, [id3])).get(id3);
   const rejected = new Set((records?.partial?.rejected ?? []).map((r) => r.n));
   const showMoney = viewer !== "conductor";
-  const [delivery] = await rows40(conn, "SELECT description FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status = 'approved' ORDER BY createdAt DESC LIMIT 1", [id3]).catch(whenTableMissing6([]));
-  const paymentRows = showMoney ? await rows40(conn, "SELECT amount, method, reference, status, createdAt FROM `WorkOrderPayment` WHERE workOrderId = ? AND status IN ('pagado','informado') ORDER BY createdAt", [id3]).catch(whenTableMissing6([])) : [];
+  const [delivery] = await rows41(conn, "SELECT description FROM `WorkOrderChange` WHERE workOrderId = ? AND kind = 'entrega' AND status = 'approved' ORDER BY createdAt DESC LIMIT 1", [id3]).catch(whenTableMissing6([]));
+  const paymentRows = showMoney ? await rows41(conn, "SELECT amount, method, reference, status, createdAt FROM `WorkOrderPayment` WHERE workOrderId = ? AND status IN ('pagado','informado') ORDER BY createdAt", [id3]).catch(whenTableMissing6([])) : [];
   const total = Number(order.total ?? 0);
   const paid = records?.payment.paidUsd ?? 0;
   const informed = records?.payment.informedUsd ?? 0;
@@ -128098,12 +128394,12 @@ async function orderReceipt(conn, userId, role, number2) {
 }
 var ODOMETER_SOURCE = { ficha: "Ficha del taller", entrega: "Entrega de una orden", chat: "Aviso del propietario", panel: "Aviso del propietario", ingreso: "Ingreso al taller", manual: "Aviso del propietario" };
 async function historyVehicle(conn, userId, vehicleId) {
-  const [own2] = await rows40(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [vehicleId, userId]);
+  const [own2] = await rows41(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [vehicleId, userId]);
   if (own2)
     return own2;
   const managed = (await fleetRoles(conn, userId)).filter((r) => r.role !== "conductor").map((r) => r.fleetId);
   if (managed.length) {
-    const [fleet] = await rows40(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND fleetId IN (?) AND deletedAt IS NULL", [vehicleId, managed]);
+    const [fleet] = await rows41(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND fleetId IN (?) AND deletedAt IS NULL", [vehicleId, managed]);
     if (fleet)
       return fleet;
   }
@@ -128113,10 +128409,10 @@ async function vehicleHistory(conn, userId, role, vehicleId) {
   if (role !== "dueno")
     throw new BrokerError("FORBIDDEN");
   const vehicle = await historyVehicle(conn, userId, vehicleId);
-  const services = await rows40(conn, "SELECT r.serviceId, r.km, r.doneAt, r.source, s.name AS shopName, o.customName FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId LEFT JOIN `VehiclePlanOverride` o ON o.vehicleId = r.vehicleId AND o.serviceId = r.serviceId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
-  const inspections = await rows40(conn, "SELECT i.id, i.km, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 20", [vehicleId]).catch(whenTableMissing6([]));
-  const items = inspections.length ? await rows40(conn, "SELECT inspectionId, code, status FROM `VehicleInspectionItem` WHERE inspectionId IN (?)", [inspections.map((i) => String(i.id))]).catch(whenTableMissing6([])) : [];
-  const odometer2 = await rows40(conn, "SELECT km, source, createdAt FROM `VehicleOdometerReading` WHERE vehicleId = ? ORDER BY createdAt DESC, id DESC LIMIT 60", [vehicleId]).catch(whenTableMissing6([]));
+  const services = await rows41(conn, "SELECT r.serviceId, r.km, r.doneAt, r.source, s.name AS shopName, o.customName FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId LEFT JOIN `VehiclePlanOverride` o ON o.vehicleId = r.vehicleId AND o.serviceId = r.serviceId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
+  const inspections = await rows41(conn, "SELECT i.id, i.km, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 20", [vehicleId]).catch(whenTableMissing6([]));
+  const items = inspections.length ? await rows41(conn, "SELECT inspectionId, code, status FROM `VehicleInspectionItem` WHERE inspectionId IN (?)", [inspections.map((i) => String(i.id))]).catch(whenTableMissing6([])) : [];
+  const odometer2 = await rows41(conn, "SELECT km, source, createdAt FROM `VehicleOdometerReading` WHERE vehicleId = ? ORDER BY createdAt DESC, id DESC LIMIT 60", [vehicleId]).catch(whenTableMissing6([]));
   return {
     vehicle: { label: [vehicle.make, vehicle.model, vehicle.year].filter(Boolean).join(" "), plate: vehicle.plate ? String(vehicle.plate) : null, currentKm: Number(vehicle.currentKm) || 0 },
     services: services.map((r) => ({ name: r.customName ? String(r.customName) : serviceName3(String(r.serviceId)), km: Number(r.km) || 0, doneAt: iso3(r.doneAt), by: r.shopName ? String(r.shopName) : "Anotado por el propietario" })),
@@ -128130,14 +128426,14 @@ async function vehicleHistory(conn, userId, role, vehicleId) {
   };
 }
 async function budgetApproval(conn, orderId, ownerId) {
-  const [row2] = await rows40(conn, "SELECT actorUserId, actorRole, `after`, createdAt FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'workorder.budget.decided' ORDER BY createdAt DESC LIMIT 1", [orderId]);
+  const [row2] = await rows41(conn, "SELECT actorUserId, actorRole, `after`, createdAt FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'workorder.budget.decided' ORDER BY createdAt DESC LIMIT 1", [orderId]);
   if (!row2)
     return null;
   const after = typeof row2.after === "string" ? JSON.parse(row2.after) : row2.after ?? {};
   if (after.status && after.status !== "aprobado")
     return null;
   if (after.channel === "presencial") {
-    const [objection] = await rows40(conn, "SELECT objectionReason FROM `WorkOrderInPersonApproval` WHERE workOrderId = ? AND objectedAt IS NOT NULL", [orderId]).catch(whenTableMissing6([]));
+    const [objection] = await rows41(conn, "SELECT objectionReason FROM `WorkOrderInPersonApproval` WHERE workOrderId = ? AND objectedAt IS NOT NULL", [orderId]).catch(whenTableMissing6([]));
     return { by: `${after.approverName ?? "Cliente"}${after.relation === "autorizado" ? " (autorizado por el titular)" : " (titular)"}`, at: iso3(row2.createdAt), channel: "presencial", objected: objection ? String(objection.objectionReason ?? "") : null };
   }
   if (!row2.actorUserId)
@@ -128153,8 +128449,8 @@ init_commands();
 init_apply();
 init_fleet_access();
 init_vehicle_card_store();
-import { randomBytes as randomBytes10, randomUUID as randomUUID38 } from "node:crypto";
-var rows41 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomBytes as randomBytes10, randomUUID as randomUUID39 } from "node:crypto";
+var rows42 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var fail19 = (code5) => {
   throw new FleetAccessError(code5);
 };
@@ -128178,8 +128474,8 @@ function newTransferCode() {
     out += INVITE_ALPHABET[randomBytes10(1)[0] % 31];
   return `V-${out}`;
 }
-function normalizeTransferCode(text15) {
-  const plain = text15.trim().toUpperCase().replace(/^V-?/, "").replace(/\s+/g, "");
+function normalizeTransferCode(text16) {
+  const plain = text16.trim().toUpperCase().replace(/^V-?/, "").replace(/\s+/g, "");
   return plain.length === 8 && [...plain].every((c) => INVITE_ALPHABET.includes(c)) ? `V-${plain}` : null;
 }
 var label2 = (v) => [v.make, v.model, v.year].filter(Boolean).join(" ") + (v.plate ? ` (${String(v.plate)})` : "");
@@ -128209,17 +128505,17 @@ var VehicleTransferStore = class {
     if (role !== "dueno")
       fail19("FORBIDDEN");
     return this.run(async (conn) => {
-      const [vehicle] = await rows41(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId, userId]);
+      const [vehicle] = await rows42(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId, userId]);
       if (!vehicle)
         return fail19("NOT_FOUND");
       if (vehicle.fleetId)
         return fail19("TRANSFER_FLEET_VEHICLE");
       const code5 = newTransferCode();
-      const id3 = randomUUID38();
+      const id3 = randomUUID39();
       await conn.query("UPDATE `VehicleTransfer` SET status = 'cancelled' WHERE vehicleId = ? AND status = 'pending'", [vehicleId]);
       await conn.query("INSERT INTO `VehicleTransfer` (id, codeHash, vehicleId, fromUserId, status, expiresAt) VALUES (?, ?, ?, ?, 'pending', DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? DAY))", [id3, secretHash(code5), vehicleId, userId, TRANSFER_DAYS]);
       await this.audit(conn, userId, "dueno", "vehicle.transfer.created", "Vehicle", vehicleId, { transferId: id3, days: TRANSFER_DAYS });
-      const [saved] = await rows41(conn, "SELECT expiresAt FROM `VehicleTransfer` WHERE id = ?", [id3]);
+      const [saved] = await rows42(conn, "SELECT expiresAt FROM `VehicleTransfer` WHERE id = ?", [id3]);
       return { code: code5, expiresAt: new Date(saved.expiresAt).toISOString(), vehicleLabel: label2(vehicle) };
     }).catch(unavailable);
   }
@@ -128230,7 +128526,7 @@ var VehicleTransferStore = class {
     const code5 = normalizeTransferCode(rawCode);
     const conn = await this.connect();
     try {
-      const [recent] = await rows41(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE eventType = 'vehicle.transfer.failed' AND actorUserId = ? AND createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 HOUR)", [userId]);
+      const [recent] = await rows42(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE eventType = 'vehicle.transfer.failed' AND actorUserId = ? AND createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 HOUR)", [userId]);
       if (Number(recent?.n) >= MAX_FAILED_PER_HOUR)
         fail19("TRANSFER_TOO_MANY_ATTEMPTS");
       try {
@@ -128251,27 +128547,27 @@ var VehicleTransferStore = class {
   async redeemInside(conn, buyerId, code5) {
     if (!code5)
       return fail19("INVALID_TRANSFER_CODE");
-    const [transfer] = await rows41(conn, "SELECT * FROM `VehicleTransfer` WHERE codeHash = ? AND status = 'pending' AND expiresAt > UTC_TIMESTAMP(3) FOR UPDATE", [secretHash(code5)]);
+    const [transfer] = await rows42(conn, "SELECT * FROM `VehicleTransfer` WHERE codeHash = ? AND status = 'pending' AND expiresAt > UTC_TIMESTAMP(3) FOR UPDATE", [secretHash(code5)]);
     if (!transfer)
       return fail19("INVALID_TRANSFER_CODE");
     const vehicleId = String(transfer.vehicleId);
-    const [vehicle] = await rows41(conn, "SELECT * FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
+    const [vehicle] = await rows42(conn, "SELECT * FROM `Vehicle` WHERE id = ? FOR UPDATE", [vehicleId]);
     if (!vehicle || vehicle.deletedAt || vehicle.fleetId || String(vehicle.userId) !== String(transfer.fromUserId))
       return fail19("INVALID_TRANSFER_CODE");
     const sellerId = String(transfer.fromUserId);
     if (sellerId === buyerId)
       return fail19("TRANSFER_OWN_VEHICLE");
-    const open = await rows41(conn, "SELECT number FROM `WorkOrder` WHERE vehicleId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [vehicleId]);
+    const open = await rows42(conn, "SELECT number FROM `WorkOrder` WHERE vehicleId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [vehicleId]);
     if (open.length)
       return fail19("TRANSFER_ORDER_OPEN");
-    const warranty = await rows41(conn, "SELECT g.id FROM `WorkOrderWarranty` g JOIN `WorkOrder` w ON w.id = g.workOrderId WHERE w.vehicleId = ? AND g.status = 'abierta' LIMIT 1", [vehicleId]).catch((err4) => {
+    const warranty = await rows42(conn, "SELECT g.id FROM `WorkOrderWarranty` g JOIN `WorkOrder` w ON w.id = g.workOrderId WHERE w.vehicleId = ? AND g.status = 'abierta' LIMIT 1", [vehicleId]).catch((err4) => {
       if (err4.code !== "ER_NO_SUCH_TABLE")
         throw err4;
       return [];
     });
     if (warranty.length)
       return fail19("TRANSFER_WARRANTY_OPEN");
-    const claim = await rows41(conn, "SELECT c.id FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId WHERE w.vehicleId = ? AND c.activeKey IS NOT NULL LIMIT 1", [vehicleId]).catch((err4) => {
+    const claim = await rows42(conn, "SELECT c.id FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId WHERE w.vehicleId = ? AND c.activeKey IS NOT NULL LIMIT 1", [vehicleId]).catch((err4) => {
       if (err4.code !== "ER_NO_SUCH_TABLE")
         throw err4;
       return [];
@@ -128280,11 +128576,11 @@ var VehicleTransferStore = class {
       return fail19("TRANSFER_CLAIM_OPEN");
     const key = plateKey(String(vehicle.plate ?? ""));
     if (key) {
-      const elsewhere = await rows41(conn, `SELECT v.id FROM \`Vehicle\` v WHERE v.deletedAt IS NULL AND ${PLATE_SQL} = ? AND v.id <> ? LIMIT 1`, [key, vehicleId]);
+      const elsewhere = await rows42(conn, `SELECT v.id FROM \`Vehicle\` v WHERE v.deletedAt IS NULL AND ${PLATE_SQL} = ? AND v.id <> ? LIMIT 1`, [key, vehicleId]);
       if (elsewhere.length)
         return fail19("PLATE_TAKEN");
     }
-    const [count3] = await rows41(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [buyerId]);
+    const [count3] = await rows42(conn, "SELECT COUNT(*) AS n FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [buyerId]);
     if (Number(count3?.n) >= OWN_VEHICLE_LIMIT)
       return fail19("VEHICLE_LIMIT");
     await conn.query("UPDATE `Vehicle` SET userId = ?, remindersOptIn = 0, selectedAt = UTC_TIMESTAMP(3), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [buyerId, vehicleId]);
@@ -128295,18 +128591,18 @@ var VehicleTransferStore = class {
     });
     await conn.query("UPDATE `VehicleTransfer` SET status = 'used', toUserId = ?, usedAt = UTC_TIMESTAMP(3) WHERE id = ?", [buyerId, transfer.id]);
     await conn.query("UPDATE `VehicleTransfer` SET status = 'cancelled' WHERE vehicleId = ? AND status = 'pending' AND id <> ?", [vehicleId, transfer.id]);
-    const [services] = await rows41(conn, "SELECT COUNT(*) AS n FROM `VehicleServiceRecord` WHERE vehicleId = ?", [vehicleId]);
-    const text15 = label2(vehicle);
+    const [services] = await rows42(conn, "SELECT COUNT(*) AS n FROM `VehicleServiceRecord` WHERE vehicleId = ?", [vehicleId]);
+    const text16 = label2(vehicle);
     await this.audit(conn, buyerId, "dueno", "vehicle.transfer.completed", "Vehicle", vehicleId, { transferId: String(transfer.id), fromUserId: sellerId, toUserId: buyerId, appointmentsCancelled: Number(upcoming[0].affectedRows ?? 0) });
-    await this.notify(conn, sellerId, `transfer:${String(transfer.id)}:from`, "vehicle.transfer", `\u{1F511} Tu ${text15} pas\xF3 a otra cuenta con el c\xF3digo de cambio de propietario. Ya no lo ver\xE1s en tu panel ni podr\xE1s gestionarlo.`);
-    await this.notify(conn, buyerId, `transfer:${String(transfer.id)}:to`, "vehicle.transfer", `\u{1F511} Recibiste el ${text15} con su historial de servicios. Est\xE1 en tu panel. Los recordatorios por WhatsApp de este veh\xEDculo empiezan apagados: act\xEDvalos cuando quieras.`);
-    return { vehicleId, vehicleLabel: text15, services: Number(services?.n ?? 0) };
+    await this.notify(conn, sellerId, `transfer:${String(transfer.id)}:from`, "vehicle.transfer", `\u{1F511} Tu ${text16} pas\xF3 a otra cuenta con el c\xF3digo de cambio de propietario. Ya no lo ver\xE1s en tu panel ni podr\xE1s gestionarlo.`);
+    await this.notify(conn, buyerId, `transfer:${String(transfer.id)}:to`, "vehicle.transfer", `\u{1F511} Recibiste el ${text16} con su historial de servicios. Est\xE1 en tu panel. Los recordatorios por WhatsApp de este veh\xEDculo empiezan apagados: act\xEDvalos cuando quieras.`);
+    return { vehicleId, vehicleLabel: text16, services: Number(services?.n ?? 0) };
   }
   async notify(conn, recipient, dedup, kind, message2) {
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID38(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID39(), dedup.slice(0, 191), recipient, kind, JSON.stringify({ message: message2 })]);
   }
   async audit(conn, userId, role, eventType, entityType, entityId, after) {
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID38(), eventType, userId, role, entityType, entityId, JSON.stringify(after)]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID39(), eventType, userId, role, entityType, entityId, JSON.stringify(after)]);
   }
 };
 
@@ -128472,7 +128768,7 @@ async function registerComprobanteRoutes(app2, deps) {
   app2.get("/pilot/print", { preHandler: [pilot] }, async (request, reply) => {
     const nonce2 = randomBytes11(16).toString("base64");
     const headers = (r) => r.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").header("X-Content-Type-Options", "nosniff").header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce2}'; script-src 'nonce-${nonce2}'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).type("text/html; charset=utf-8");
-    const gone = (code5, text15) => headers(reply).code(code5).send(`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="robots" content="noindex"><title>AutoMantPro</title><p>${text15}</p></html>`);
+    const gone = (code5, text16) => headers(reply).code(code5).send(`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="robots" content="noindex"><title>AutoMantPro</title><p>${text16}</p></html>`);
     const ticket = external_exports.string().min(20).max(1500).safeParse(request.query.t);
     let claims;
     try {
@@ -128655,8 +128951,8 @@ init_preferences();
 
 // packages/api/dist/infrastructure/messaging/flow-extras.js
 init_apply();
-import { randomUUID as randomUUID40 } from "node:crypto";
-var rows43 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomUUID as randomUUID41 } from "node:crypto";
+var rows44 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var ExtraError = class extends Error {
   code;
   status;
@@ -128695,13 +128991,13 @@ async function inTransaction(conn, work) {
   }
 }
 async function audit6(conn, eventType, actorUserId, actorRole, entityType, entityId, before, after) {
-  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID40(), eventType, actorUserId, actorRole, entityType, entityId, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `before`, `after`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID41(), eventType, actorUserId, actorRole, entityType, entityId, before === null ? null : JSON.stringify(before), JSON.stringify(after)]);
 }
 async function queueNotice(conn, recipientUserId, dedupKey, kind, message2) {
   const key = dedupKey.slice(0, 191);
-  if ((await rows43(conn, "SELECT 1 AS found FROM `NotificationOutbox` WHERE dedupKey = ?", [key])).length)
+  if ((await rows44(conn, "SELECT 1 AS found FROM `NotificationOutbox` WHERE dedupKey = ?", [key])).length)
     return false;
-  await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID40(), key, recipientUserId, kind, JSON.stringify({ message: message2 })]);
+  await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID41(), key, recipientUserId, kind, JSON.stringify({ message: message2 })]);
   return true;
 }
 
@@ -128713,13 +129009,13 @@ var NotificationPreferencesStore = class {
     this.connect = connect;
   }
   async read(conn, userId, role) {
-    const [user] = await rows43(conn, "SELECT notifyMaintenance, notifyDeadlines, notifyOffers FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+    const [user] = await rows44(conn, "SELECT notifyMaintenance, notifyDeadlines, notifyOffers FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
     if (!user)
       return fail22("ACCOUNT_UNAVAILABLE", "Tu cuenta no est\xE1 disponible.", 403);
-    const [optOut] = await rows43(conn, "SELECT whatsappOptOutAt FROM `User` WHERE id = ?", [userId]).catch(() => [{ whatsappOptOutAt: null }]);
+    const [optOut] = await rows44(conn, "SELECT whatsappOptOutAt FROM `User` WHERE id = ?", [userId]).catch(() => [{ whatsappOptOutAt: null }]);
     let reminders = null;
     if (role === "dueno") {
-      const [own2] = await rows43(conn, "SELECT COUNT(*) AS n, COALESCE(MAX(remindersOptIn), 0) AS on_ FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [userId]);
+      const [own2] = await rows44(conn, "SELECT COUNT(*) AS n, COALESCE(MAX(remindersOptIn), 0) AS on_ FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [userId]);
       reminders = Number(own2?.n) > 0 ? Number(own2?.on_) === 1 : null;
     }
     return {
@@ -128764,7 +129060,7 @@ var VehicleSoatStore = class {
     if (date2 !== null && !clean4)
       fail22("INVALID_SOAT_DATE", "Escribe la fecha de vencimiento del SOAT como d\xEDa, mes y a\xF1o v\xE1lidos.", 422);
     return withConnection(this.connect, (conn) => inTransaction(conn, async () => {
-      const [vehicle] = await rows43(conn, "SELECT id, userId, fleetId, soatExpiresAt FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId]);
+      const [vehicle] = await rows44(conn, "SELECT id, userId, fleetId, soatExpiresAt FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId]);
       if (!vehicle)
         return fail22("VEHICLE_NOT_FOUND", "No encontramos ese veh\xEDculo.", 404);
       const owner = role === "dueno" && String(vehicle.userId) === userId;
@@ -128785,7 +129081,7 @@ init_plan_text();
 init_recommendations();
 init_vehicle_care_store();
 init_shop_vehicle_access();
-import { randomUUID as randomUUID41 } from "node:crypto";
+import { randomUUID as randomUUID42 } from "node:crypto";
 var RECONTACT_DAYS = 30;
 var RECONTACT_KIND = "care.recontact";
 var DAY = 864e5;
@@ -128811,11 +129107,11 @@ var ShopRecontactStore = class {
   }
   /** Mismo criterio que `shopCanAccessVehicle` (cita u orden del dueño actual, u orden abierta en curso, y sin bloqueo), ya filtrado por quien acepta recordatorios. */
   async candidates(conn, shopId) {
-    const found = await rows43(conn, "SELECT v.*, u.name AS ownerName FROM `Vehicle` v JOIN `User` u ON u.id = v.userId WHERE v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND v.remindersOptIn = 1 AND (EXISTS (SELECT 1 FROM `Appointment` a WHERE a.vehicleId = v.id AND a.shopId = ? AND a.status <> 'cancelled' AND (v.fleetId IS NOT NULL OR a.ownerId = v.userId)) OR EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId = v.id AND w.shopId = ? AND (v.fleetId IS NOT NULL OR w.ownerId = v.userId OR w.status NOT IN ('cerrada','cancelada')))) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = ?) ORDER BY v.id LIMIT ?", [shopId, shopId, shopId, LIST_LIMIT]);
+    const found = await rows44(conn, "SELECT v.*, u.name AS ownerName FROM `Vehicle` v JOIN `User` u ON u.id = v.userId WHERE v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND v.remindersOptIn = 1 AND (EXISTS (SELECT 1 FROM `Appointment` a WHERE a.vehicleId = v.id AND a.shopId = ? AND a.status <> 'cancelled' AND (v.fleetId IS NOT NULL OR a.ownerId = v.userId)) OR EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId = v.id AND w.shopId = ? AND (v.fleetId IS NOT NULL OR w.ownerId = v.userId OR w.status NOT IN ('cerrada','cancelada')))) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = ?) ORDER BY v.id LIMIT ?", [shopId, shopId, shopId, LIST_LIMIT]);
     if (!found.length)
       return found;
     const ids = [...new Set(found.map((v) => String(v.userId)))];
-    const silent = await rows43(conn, "SELECT id FROM `User` WHERE id IN (?) AND whatsappOptOutAt IS NOT NULL", [ids]).catch((err4) => {
+    const silent = await rows44(conn, "SELECT id FROM `User` WHERE id IN (?) AND whatsappOptOutAt IS NOT NULL", [ids]).catch((err4) => {
       if (err4.code === "ER_BAD_FIELD_ERROR")
         return [];
       throw err4;
@@ -128829,7 +129125,7 @@ var ShopRecontactStore = class {
     return top ? { serviceName: top.serviceName, state: top.state, label: top.label } : null;
   }
   async recentByVehicle(conn, shopId, now) {
-    const sent = await rows43(conn, "SELECT vehicleId, MAX(createdAt) AS last FROM `ShopRecontact` WHERE shopId = ? AND createdAt > ? GROUP BY vehicleId", [shopId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]);
+    const sent = await rows44(conn, "SELECT vehicleId, MAX(createdAt) AS last FROM `ShopRecontact` WHERE shopId = ? AND createdAt > ? GROUP BY vehicleId", [shopId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]);
     return new Map(sent.map((r) => [String(r.vehicleId), new Date(String(r.last))]));
   }
   list(userId, role, now = /* @__PURE__ */ new Date()) {
@@ -128857,21 +129153,21 @@ var ShopRecontactStore = class {
   send(userId, role, vehicleId, now = /* @__PURE__ */ new Date()) {
     return withConnection(this.connect, (conn) => inTransaction(conn, async () => {
       const shop = await this.manager(conn, userId, role);
-      const [vehicle] = await rows43(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId]);
+      const [vehicle] = await rows44(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND deletedAt IS NULL FOR UPDATE", [vehicleId]);
       const notAllowed = () => fail22("RECONTACT_NOT_ALLOWED", "Este cliente no puede recibir recordatorios ahora.");
       if (!vehicle || !await shopCanAccessVehicle(conn, shop.id, vehicleId))
         return fail22("VEHICLE_NOT_FOUND", "No encontramos ese veh\xEDculo entre los que atendiste.", 404);
       const eligible = await this.single(conn, vehicle);
       if (!eligible)
         return notAllowed();
-      const [latest] = await rows43(conn, "SELECT MAX(createdAt) AS last FROM `ShopRecontact` WHERE shopId = ? AND vehicleId = ? AND createdAt > ? FOR UPDATE", [shop.id, vehicleId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]).catch(() => rows43(conn, "SELECT createdAt AS last FROM `ShopRecontact` WHERE shopId = ? AND vehicleId = ? AND createdAt > ? ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [shop.id, vehicleId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]));
+      const [latest] = await rows44(conn, "SELECT MAX(createdAt) AS last FROM `ShopRecontact` WHERE shopId = ? AND vehicleId = ? AND createdAt > ? FOR UPDATE", [shop.id, vehicleId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]).catch(() => rows44(conn, "SELECT createdAt AS last FROM `ShopRecontact` WHERE shopId = ? AND vehicleId = ? AND createdAt > ? ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [shop.id, vehicleId, new Date(now.getTime() - RECONTACT_DAYS * DAY)]));
       const last = latest?.last ? new Date(String(latest.last)) : void 0;
       if (last)
         return fail22("RECONTACT_TOO_SOON", `Ya enviaste un recordatorio por este veh\xEDculo. Podr\xE1s enviar otro a partir del ${day3(new Date(last.getTime() + RECONTACT_DAYS * DAY))}.`);
       const due = await this.topDue(conn, vehicle);
       if (!due)
         return fail22("RECONTACT_NOTHING_DUE", "Este veh\xEDculo ya no tiene servicios vencidos ni pr\xF3ximos.");
-      const id3 = randomUUID41();
+      const id3 = randomUUID42();
       await conn.query("INSERT INTO `ShopRecontact` (id, shopId, vehicleId, sentBy, service, createdAt) VALUES (?, ?, ?, ?, ?, ?)", [id3, shop.id, vehicleId, userId, due.serviceName.slice(0, 120), now]);
       const message2 = `\u{1F514} ${shop.name} te recuerda que tu ${label3(vehicle)} tiene un servicio ${due.state === "urgente" ? "vencido" : "pr\xF3ximo"}: ${due.serviceName} (${due.label.toLowerCase()}). Si quieres pedir tu cita, entra a tu panel en \xABTalleres cerca de ti\xBB. Para dejar de recibir recordatorios: Alertas no`;
       await queueNotice(conn, String(vehicle.userId), `recontact:${id3}`, RECONTACT_KIND, message2);
@@ -128883,10 +129179,10 @@ var ShopRecontactStore = class {
   async single(conn, vehicle) {
     if (Number(vehicle.remindersOptIn) !== 1)
       return null;
-    const [owner] = await rows43(conn, "SELECT id FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [vehicle.userId]);
+    const [owner] = await rows44(conn, "SELECT id FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [vehicle.userId]);
     if (!owner)
       return null;
-    const [silent] = await rows43(conn, "SELECT id FROM `User` WHERE id = ? AND whatsappOptOutAt IS NOT NULL", [vehicle.userId]).catch((err4) => {
+    const [silent] = await rows44(conn, "SELECT id FROM `User` WHERE id = ? AND whatsappOptOutAt IS NOT NULL", [vehicle.userId]).catch((err4) => {
       if (err4.code === "ER_BAD_FIELD_ERROR")
         return [];
       throw err4;
@@ -128896,7 +129192,7 @@ var ShopRecontactStore = class {
 };
 
 // packages/api/dist/infrastructure/messaging/appointment-waitlist.js
-import { randomUUID as randomUUID42 } from "node:crypto";
+import { randomUUID as randomUUID43 } from "node:crypto";
 var HORIZON_DAYS2 = 90;
 var WAITLIST_KIND = "care.waitlist";
 var ecToday = (now) => new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
@@ -128915,16 +129211,16 @@ var AppointmentWaitlist = class {
     return withConnection(this.connect, (conn) => inTransaction(conn, async () => {
       if (role !== "dueno")
         return fail22("FORBIDDEN", "La lista de espera es para cuentas de due\xF1o.", 403);
-      const [user] = await rows43(conn, "SELECT id FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL FOR UPDATE", [userId]);
+      const [user] = await rows44(conn, "SELECT id FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL FOR UPDATE", [userId]);
       if (!user)
         return fail22("CONSENT_OR_ACCOUNT_REQUIRED", "Tu cuenta no est\xE1 disponible.", 403);
-      const [shop] = await rows43(conn, "SELECT id, name FROM `Shop` WHERE id = ? AND verificationStatus = 'verified'", [shopId]);
+      const [shop] = await rows44(conn, "SELECT id, name FROM `Shop` WHERE id = ? AND verificationStatus = 'verified'", [shopId]);
       if (!shop)
         return fail22("SHOP_UNAVAILABLE", "Ese taller no est\xE1 disponible.", 404);
-      const [waiting] = await rows43(conn, "SELECT id FROM `AppointmentWaitlist` WHERE shopId = ? AND ownerUserId = ? AND wantedDate = ? AND notifiedAt IS NULL", [shopId, userId, date2]);
+      const [waiting] = await rows44(conn, "SELECT id FROM `AppointmentWaitlist` WHERE shopId = ? AND ownerUserId = ? AND wantedDate = ? AND notifiedAt IS NULL", [shopId, userId, date2]);
       if (waiting)
         return { duplicate: true, message: `Ya est\xE1s en la lista de espera de ${shop.name} para el ${shown2(date2)}.` };
-      const id3 = randomUUID42();
+      const id3 = randomUUID43();
       await conn.query("INSERT INTO `AppointmentWaitlist` (id, shopId, ownerUserId, wantedDate, createdAt) VALUES (?, ?, ?, ?, UTC_TIMESTAMP(3))", [id3, shopId, userId, date2]);
       await audit6(conn, "booking.waitlist.joined", userId, "dueno", "AppointmentWaitlist", id3, null, { shopId, date: date2 });
       return { duplicate: false, message: `Listo: si se libera un horario en ${shop.name} el ${shown2(date2)}, te avisamos una sola vez. No reservamos nada: si te avisamos, pide tu cita cuanto antes.` };
@@ -128935,15 +129231,15 @@ var AppointmentWaitlist = class {
     const conn = await this.connect();
     let sent = 0;
     try {
-      const waiting = await rows43(conn, "SELECT w.id, w.ownerUserId, w.wantedDate, s.name AS shopName FROM `AppointmentWaitlist` w JOIN `Shop` s ON s.id = w.shopId JOIN `User` u ON u.id = w.ownerUserId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE w.notifiedAt IS NULL AND w.wantedDate >= ? AND EXISTS (SELECT 1 FROM `Appointment` a WHERE a.shopId = w.shopId AND a.status = 'cancelled' AND DATE(DATE_SUB(a.scheduledAt, INTERVAL 5 HOUR)) = w.wantedDate AND a.updatedAt > w.createdAt) ORDER BY w.createdAt LIMIT 200", [ecToday(now)]);
-      for (const entry of waiting) {
-        const date2 = entry.wantedDate instanceof Date ? entry.wantedDate.toISOString().slice(0, 10) : String(entry.wantedDate).slice(0, 10);
+      const waiting = await rows44(conn, "SELECT w.id, w.ownerUserId, w.wantedDate, s.name AS shopName FROM `AppointmentWaitlist` w JOIN `Shop` s ON s.id = w.shopId JOIN `User` u ON u.id = w.ownerUserId AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL WHERE w.notifiedAt IS NULL AND w.wantedDate >= ? AND EXISTS (SELECT 1 FROM `Appointment` a WHERE a.shopId = w.shopId AND a.status = 'cancelled' AND DATE(DATE_SUB(a.scheduledAt, INTERVAL 5 HOUR)) = w.wantedDate AND a.updatedAt > w.createdAt) ORDER BY w.createdAt LIMIT 200", [ecToday(now)]);
+      for (const entry2 of waiting) {
+        const date2 = entry2.wantedDate instanceof Date ? entry2.wantedDate.toISOString().slice(0, 10) : String(entry2.wantedDate).slice(0, 10);
         await inTransaction(conn, async () => {
-          const claimed = await conn.query("UPDATE `AppointmentWaitlist` SET notifiedAt = UTC_TIMESTAMP(3) WHERE id = ? AND notifiedAt IS NULL", [entry.id]);
+          const claimed = await conn.query("UPDATE `AppointmentWaitlist` SET notifiedAt = UTC_TIMESTAMP(3) WHERE id = ? AND notifiedAt IS NULL", [entry2.id]);
           if (Number(claimed[0].affectedRows) !== 1)
             return;
-          await queueNotice(conn, String(entry.ownerUserId), `waitlist:${String(entry.id)}`, WAITLIST_KIND, `\u{1F4C5} Se liber\xF3 un horario en ${entry.shopName} el ${shown2(date2)}. No te lo reservamos: si todav\xEDa lo quieres, pide tu cita ahora en tu panel (Talleres cerca de ti). Es el \xFAnico aviso que te enviamos por esta espera.`);
-          await audit6(conn, "booking.waitlist.notified", null, null, "AppointmentWaitlist", String(entry.id), null, { date: date2 });
+          await queueNotice(conn, String(entry2.ownerUserId), `waitlist:${String(entry2.id)}`, WAITLIST_KIND, `\u{1F4C5} Se liber\xF3 un horario en ${entry2.shopName} el ${shown2(date2)}. No te lo reservamos: si todav\xEDa lo quieres, pide tu cita ahora en tu panel (Talleres cerca de ti). Es el \xFAnico aviso que te enviamos por esta espera.`);
+          await audit6(conn, "booking.waitlist.notified", null, null, "AppointmentWaitlist", String(entry2.id), null, { date: date2 });
           sent++;
         });
       }
@@ -129051,7 +129347,7 @@ init_error_messages();
 // packages/api/dist/infrastructure/shop-forms/shop-form-store.js
 init_apply();
 init_shop_vehicle_access();
-import { randomUUID as randomUUID43 } from "node:crypto";
+import { randomUUID as randomUUID44 } from "node:crypto";
 
 // packages/api/dist/application/shop-forms/fields.js
 init_zod();
@@ -129059,13 +129355,13 @@ var FIELD_TYPES = ["texto", "numero", "si_no", "opciones", "fecha"];
 var FORM_PURPOSES = ["formato", "plan"];
 var MAX_FIELDS = 20;
 var MAX_ACTIVE_TEMPLATES = 30;
-var text6 = (min, max) => external_exports.string().trim().min(min).max(max);
+var text7 = (min, max) => external_exports.string().trim().min(min).max(max);
 var fieldSchema = external_exports.object({
   id: external_exports.string().regex(/^f[0-9a-z]{1,8}$/),
-  label: text6(1, 40),
+  label: text7(1, 40),
   type: external_exports.enum(FIELD_TYPES),
-  options: external_exports.array(text6(1, 30)).min(2).max(10).optional(),
-  unit: text6(1, 10).optional(),
+  options: external_exports.array(text7(1, 30)).min(2).max(10).optional(),
+  unit: text7(1, 10).optional(),
   required: external_exports.boolean()
 }).strict().superRefine((f, ctx) => {
   if (f.type === "opciones" && !f.options)
@@ -129077,7 +129373,7 @@ var fieldSchema = external_exports.object({
 });
 var templateSchema = external_exports.object({
   id: external_exports.string().uuid().optional(),
-  name: text6(3, 60),
+  name: text7(3, 60),
   purpose: external_exports.enum(FORM_PURPOSES),
   fields: external_exports.array(fieldSchema).min(1).max(MAX_FIELDS)
 }).strict().superRefine((t, ctx) => {
@@ -129136,7 +129432,7 @@ var copy = (f, value2) => ({ id: f.id, label: f.label, type: f.type, ...f.unit ?
 var bad = (f) => ({ ok: false, code: "INVALID_FORM_VALUES", field: f.label });
 
 // packages/api/dist/infrastructure/shop-forms/shop-form-store.js
-var rows44 = async (c, sql, args = []) => (await c.query(sql, args))[0];
+var rows45 = async (c, sql, args = []) => (await c.query(sql, args))[0];
 var json = (v) => typeof v === "string" ? JSON.parse(v) : v;
 var missingTable = (err4) => err4?.code === "ER_NO_SUCH_TABLE";
 var ShopFormError = class extends Error {
@@ -129167,10 +129463,10 @@ var ShopFormStore = class {
   }
   /** Taller del usuario (dueño del taller o miembro activo) y si puede definir formatos. */
   async shopOf(c, userId) {
-    const [own2] = await rows44(c, "SELECT s.id FROM `Shop` s JOIN `User` u ON u.id=s.userId WHERE s.userId=? AND u.role='taller' AND u.deletedAt IS NULL LIMIT 1", [userId]);
+    const [own2] = await rows45(c, "SELECT s.id FROM `Shop` s JOIN `User` u ON u.id=s.userId WHERE s.userId=? AND u.role='taller' AND u.deletedAt IS NULL LIMIT 1", [userId]);
     if (own2)
       return { shopId: String(own2.id), manager: true };
-    const [member] = await rows44(c, "SELECT shopId, role FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId]);
+    const [member] = await rows45(c, "SELECT shopId, role FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId]);
     if (member)
       return { shopId: String(member.shopId), manager: String(member.role) === "admin" };
     throw new ShopFormError("FORBIDDEN");
@@ -129179,7 +129475,7 @@ var ShopFormStore = class {
     const c = await this.connect();
     try {
       const shop = await this.shopOf(c, userId);
-      const list7 = await rows44(c, "SELECT id,name,purpose,fields,updatedAt FROM `ShopFormTemplate` WHERE shopId=? AND active=true ORDER BY purpose DESC, name", [shop.shopId]);
+      const list7 = await rows45(c, "SELECT id,name,purpose,fields,updatedAt FROM `ShopFormTemplate` WHERE shopId=? AND active=true ORDER BY purpose DESC, name", [shop.shopId]);
       return {
         canManage: shop.manager,
         templates: list7.map((t) => ({ id: String(t.id), name: String(t.name), purpose: String(t.purpose), fields: json(t.fields), updatedAt: new Date(String(t.updatedAt)).toISOString() }))
@@ -129202,16 +129498,16 @@ var ShopFormStore = class {
       if (!shop.manager)
         throw new ShopFormError("FORBIDDEN");
       if (input.id) {
-        const [found] = await rows44(c, "SELECT id FROM `ShopFormTemplate` WHERE id=? AND shopId=? AND active=true", [input.id, shop.shopId]);
+        const [found] = await rows45(c, "SELECT id FROM `ShopFormTemplate` WHERE id=? AND shopId=? AND active=true", [input.id, shop.shopId]);
         if (!found)
           throw new ShopFormError("NOT_FOUND");
         await c.query("UPDATE `ShopFormTemplate` SET name=?, purpose=?, fields=?, updatedAt=CURRENT_TIMESTAMP(3) WHERE id=? AND shopId=?", [input.name, input.purpose, JSON.stringify(input.fields), input.id, shop.shopId]);
         return { id: input.id };
       }
-      const [count3] = await rows44(c, "SELECT COUNT(*) AS n FROM `ShopFormTemplate` WHERE shopId=? AND active=true", [shop.shopId]);
+      const [count3] = await rows45(c, "SELECT COUNT(*) AS n FROM `ShopFormTemplate` WHERE shopId=? AND active=true", [shop.shopId]);
       if (Number(count3?.n ?? 0) >= MAX_ACTIVE_TEMPLATES)
         throw new ShopFormError("FORM_TEMPLATE_LIMIT");
-      const id3 = randomUUID43();
+      const id3 = randomUUID44();
       await c.query("INSERT INTO `ShopFormTemplate` (id,shopId,name,purpose,fields,createdBy) VALUES (?,?,?,?,?,?)", [id3, shop.shopId, input.name, input.purpose, JSON.stringify(input.fields), userId]);
       return { id: id3 };
     });
@@ -129230,14 +129526,14 @@ var ShopFormStore = class {
   async addEntry(userId, input) {
     return this.run(async (c) => {
       const shop = await this.shopOf(c, userId);
-      const [tpl] = await rows44(c, "SELECT id,name,fields FROM `ShopFormTemplate` WHERE id=? AND shopId=? AND active=true", [input.templateId, shop.shopId]);
+      const [tpl] = await rows45(c, "SELECT id,name,fields FROM `ShopFormTemplate` WHERE id=? AND shopId=? AND active=true", [input.templateId, shop.shopId]);
       if (!tpl)
         throw new ShopFormError("NOT_FOUND");
       if (!await shopCanAccessVehicle(c, shop.shopId, input.vehicleId))
         throw new ShopFormError("FORBIDDEN");
       let recordId = null;
       if (input.serviceRecordId) {
-        const [rec] = await rows44(c, "SELECT id FROM `VehicleServiceRecord` WHERE id=? AND vehicleId=? AND shopId=?", [input.serviceRecordId, input.vehicleId, shop.shopId]);
+        const [rec] = await rows45(c, "SELECT id FROM `VehicleServiceRecord` WHERE id=? AND vehicleId=? AND shopId=?", [input.serviceRecordId, input.vehicleId, shop.shopId]);
         if (!rec)
           throw new ShopFormError("NOT_FOUND");
         recordId = String(rec.id);
@@ -129246,7 +129542,7 @@ var ShopFormStore = class {
       if (!filled.ok)
         throw new ShopFormError(filled.code, filled.field);
       const note = input.note?.trim().slice(0, 300) || null;
-      const id3 = randomUUID43();
+      const id3 = randomUUID44();
       await c.query("INSERT INTO `ShopFormEntry` (id,templateId,shopId,vehicleId,serviceRecordId,templateName,`values`,note,createdBy) VALUES (?,?,?,?,?,?,?,?,?)", [id3, String(tpl.id), shop.shopId, input.vehicleId, recordId, String(tpl.name), JSON.stringify(filled.values), note, userId]);
       return { id: id3 };
     });
@@ -129257,7 +129553,7 @@ var ShopFormStore = class {
     try {
       let shopId = null;
       if (role === "dueno") {
-        const [v] = await rows44(c, "SELECT id FROM `Vehicle` WHERE id=? AND userId=? AND deletedAt IS NULL", [vehicleId, userId]);
+        const [v] = await rows45(c, "SELECT id FROM `Vehicle` WHERE id=? AND userId=? AND deletedAt IS NULL", [vehicleId, userId]);
         if (!v)
           throw new ShopFormError("FORBIDDEN");
       } else if (role === "taller") {
@@ -129266,7 +129562,7 @@ var ShopFormStore = class {
           throw new ShopFormError("FORBIDDEN");
       } else
         throw new ShopFormError("FORBIDDEN");
-      const list7 = await rows44(c, "SELECT e.id,e.templateName,e.serviceRecordId,e.`values`,e.note,e.createdAt,e.shopId,s.name AS shopName FROM `ShopFormEntry` e LEFT JOIN `Shop` s ON s.id=e.shopId WHERE e.vehicleId=? AND (? IS NULL OR e.shopId=?) ORDER BY e.createdAt DESC LIMIT 50", [vehicleId, shopId, shopId]);
+      const list7 = await rows45(c, "SELECT e.id,e.templateName,e.serviceRecordId,e.`values`,e.note,e.createdAt,e.shopId,s.name AS shopName FROM `ShopFormEntry` e LEFT JOIN `Shop` s ON s.id=e.shopId WHERE e.vehicleId=? AND (? IS NULL OR e.shopId=?) ORDER BY e.createdAt DESC LIMIT 50", [vehicleId, shopId, shopId]);
       return list7.map((e9) => ({
         id: String(e9.id),
         templateName: String(e9.templateName),
@@ -129371,12 +129667,12 @@ init_shop_indicators();
 init_supply_store();
 init_appointment_capacity();
 init_record_photos();
-import { randomUUID as randomUUID46 } from "node:crypto";
+import { randomUUID as randomUUID47 } from "node:crypto";
 
 // packages/api/dist/infrastructure/messaging/plan-records.js
-var rows45 = async (c, sql, args = []) => (await c.query(sql, args))[0];
+var rows46 = async (c, sql, args = []) => (await c.query(sql, args))[0];
 var SHOP_EDIT_DAYS = 30;
-var text7 = (v, max) => {
+var text8 = (v, max) => {
   const s = typeof v === "string" ? v.trim().replace(/\s+/g, " ") : "";
   return s ? s.slice(0, max) : null;
 };
@@ -129387,11 +129683,11 @@ function cleanFields(input) {
     return null;
   const cleanParts = [];
   for (const p of parts) {
-    const name = text7(p?.name, 80);
+    const name = text8(p?.name, 80);
     const qty = Number(p?.qty ?? 1);
     if (!name || !Number.isInteger(qty) || qty < 1 || qty > 99)
       return null;
-    cleanParts.push({ name, brand: text7(p?.brand, 60), code: text7(p?.code, 40), qty });
+    cleanParts.push({ name, brand: text8(p?.brand, 60), code: text8(p?.code, 40), qty });
   }
   const cost = input.costUsd === null || input.costUsd === void 0 ? null : Number(input.costUsd);
   if (cost !== null && (!Number.isFinite(cost) || cost < 0 || cost > 1e5))
@@ -129406,11 +129702,11 @@ function cleanFields(input) {
   if (typeof input.detail === "string" && input.detail.trim().length > 500)
     return null;
   return {
-    detail: text7(input.detail, 500),
+    detail: text8(input.detail, 500),
     parts: cleanParts,
     costUsd: cost === null ? null : Math.round(cost * 100) / 100,
-    shopName: text7(input.shopName, 120),
-    technician: text7(input.technician, 80),
+    shopName: text8(input.shopName, 120),
+    technician: text8(input.technician, 80),
     finding: input.finding ?? null,
     nextDueAt: ymd(input.nextDueAt),
     nextDueKm: nextKm
@@ -129450,11 +129746,11 @@ var parseParts = (v) => {
 async function listPlanRecords(conn, vehicleId, viewer) {
   let list7;
   try {
-    list7 = await rows45(conn, "SELECT r.id, r.serviceId, r.km, r.doneAt, r.source, r.shopId, r.createdAt, r.detail, r.parts, r.costUsd, r.shopName, r.technician, r.finding, r.nextDueAt, r.nextDueKm, r.appointmentId, r.updatedAt, s.name AS realShop FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
+    list7 = await rows46(conn, "SELECT r.id, r.serviceId, r.km, r.doneAt, r.source, r.shopId, r.createdAt, r.detail, r.parts, r.costUsd, r.shopName, r.technician, r.finding, r.nextDueAt, r.nextDueKm, r.appointmentId, r.updatedAt, s.name AS realShop FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
   } catch (err4) {
     if (err4.code !== "ER_BAD_FIELD_ERROR")
       throw err4;
-    list7 = await rows45(conn, "SELECT r.id, r.serviceId, r.km, r.doneAt, r.source, r.shopId, r.createdAt, s.name AS realShop FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
+    list7 = await rows46(conn, "SELECT r.id, r.serviceId, r.km, r.doneAt, r.source, r.shopId, r.createdAt, s.name AS realShop FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 200", [vehicleId]);
   }
   return list7.map((r) => ({
     id: String(r.id),
@@ -129486,7 +129782,7 @@ init_fleet_access();
 // packages/api/dist/infrastructure/messaging/part-order-panel.js
 init_workflow();
 init_contracts();
-var rows46 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows47 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var MISSING11 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
 var whenMissing3 = (value2) => (err4) => {
   if (MISSING11.includes(String(err4.code)))
@@ -129501,17 +129797,17 @@ async function partMoneyFor(conn, userId, role) {
   if (!side)
     return [];
   try {
-    const list7 = await rows46(conn, `SELECT lr.*, o.id AS offerId, o.businessName, o.priceUsd, o.stockStatus, v.make, v.model, v.year FROM \`LocalRequest\` lr JOIN \`LocalOffer\` o ON o.id = lr.chosenOfferId LEFT JOIN \`Vehicle\` v ON v.id = lr.vehicleId WHERE ${side === "store" ? "o.businessUserId = ?" : "lr.ownerId = ?"} AND lr.kind = 'repuesto' AND lr.status IN ('accepted','delivered') AND o.stockStatus = 'confirmed' ${side === "buyer" ? "AND (lr.status = 'delivered' OR EXISTS (SELECT 1 FROM `PartPayment` pp WHERE pp.requestId = lr.id))" : ""} AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 60 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 8`, [userId]);
+    const list7 = await rows47(conn, `SELECT lr.*, o.id AS offerId, o.businessName, o.priceUsd, o.stockStatus, v.make, v.model, v.year FROM \`LocalRequest\` lr JOIN \`LocalOffer\` o ON o.id = lr.chosenOfferId LEFT JOIN \`Vehicle\` v ON v.id = lr.vehicleId WHERE ${side === "store" ? "o.businessUserId = ?" : "lr.ownerId = ?"} AND lr.kind = 'repuesto' AND lr.status IN ('accepted','delivered') AND o.stockStatus = 'confirmed' ${side === "buyer" ? "AND (lr.status = 'delivered' OR EXISTS (SELECT 1 FROM `PartPayment` pp WHERE pp.requestId = lr.id))" : ""} AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 60 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 8`, [userId]);
     if (!list7.length)
       return [];
     const ids = list7.map((r) => String(r.id));
-    const payments = await rows46(conn, "SELECT requestId, amount, method, reference, status, buyerNote FROM `PartPayment` WHERE requestId IN (?) ORDER BY createdAt", [ids]);
-    const returns = await rows46(conn, "SELECT requestId, status, reason, storeNote FROM `PartReturn` WHERE requestId IN (?) ORDER BY createdAt DESC", [ids]);
-    const returnPhotos = new Set((await rows46(conn, "SELECT DISTINCT requestId FROM `PartReturn` WHERE requestId IN (?) AND photoMime IS NOT NULL", [ids]).catch(whenMissing3([]))).map((p) => String(p.requestId)));
-    const proofs = new Set((await rows46(conn, "SELECT DISTINCT requestId FROM `PartPayment` WHERE requestId IN (?) AND photoMime IS NOT NULL", [ids]).catch(whenMissing3([]))).map((p) => String(p.requestId)));
-    const links = await rows46(conn, "SELECT l.requestId, l.effect, l.changeId, w.number, c.status AS changeStatus FROM `PartOrderLink` l JOIN `WorkOrder` w ON w.id = l.workOrderId LEFT JOIN `WorkOrderChange` c ON c.id = l.changeId WHERE l.requestId IN (?)", [ids]).catch(whenMissing3([]));
+    const payments = await rows47(conn, "SELECT requestId, amount, method, reference, status, buyerNote FROM `PartPayment` WHERE requestId IN (?) ORDER BY createdAt", [ids]);
+    const returns = await rows47(conn, "SELECT requestId, status, reason, storeNote FROM `PartReturn` WHERE requestId IN (?) ORDER BY createdAt DESC", [ids]);
+    const returnPhotos = new Set((await rows47(conn, "SELECT DISTINCT requestId FROM `PartReturn` WHERE requestId IN (?) AND photoMime IS NOT NULL", [ids]).catch(whenMissing3([]))).map((p) => String(p.requestId)));
+    const proofs = new Set((await rows47(conn, "SELECT DISTINCT requestId FROM `PartPayment` WHERE requestId IN (?) AND photoMime IS NOT NULL", [ids]).catch(whenMissing3([]))).map((p) => String(p.requestId)));
+    const links = await rows47(conn, "SELECT l.requestId, l.effect, l.changeId, w.number, c.status AS changeStatus FROM `PartOrderLink` l JOIN `WorkOrder` w ON w.id = l.workOrderId LEFT JOIN `WorkOrderChange` c ON c.id = l.changeId WHERE l.requestId IN (?)", [ids]).catch(whenMissing3([]));
     const orderIds = [...new Set(list7.map((r) => r.workOrderId ? String(r.workOrderId) : "").filter(Boolean))];
-    const orders = orderIds.length ? await rows46(conn, "SELECT id, number FROM `WorkOrder` WHERE id IN (?)", [orderIds]).catch(whenMissing3([])) : [];
+    const orders = orderIds.length ? await rows47(conn, "SELECT id, number FROM `WorkOrder` WHERE id IN (?)", [orderIds]).catch(whenMissing3([])) : [];
     const out = [];
     for (const r of list7) {
       const id3 = String(r.id);
@@ -129581,7 +129877,7 @@ init_order_ready();
 init_budget_review();
 
 // packages/api/dist/infrastructure/messaging/operations-board.js
-var rows47 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows48 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var DAY2 = 864e5;
 var STAGE_MAX_DAYS = { recepcion: 1, presupuesto_enviado: 2, rechazado: 3, aprobado: 2, en_ejecucion: 5, esperando_repuesto: 7, lista: 3 };
 async function orderPace(conn, orders, now = /* @__PURE__ */ new Date()) {
@@ -129589,7 +129885,7 @@ async function orderPace(conn, orders, now = /* @__PURE__ */ new Date()) {
   const open = orders.filter((o) => !["cerrada", "cancelada"].includes(o.status));
   if (!open.length)
     return out;
-  const moved = new Map((await rows47(conn, "SELECT entityId, MAX(createdAt) AS at FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId IN (?) GROUP BY entityId", [open.map((o) => o.id)])).map((r) => [String(r.entityId), new Date(String(r.at))]));
+  const moved = new Map((await rows48(conn, "SELECT entityId, MAX(createdAt) AS at FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId IN (?) GROUP BY entityId", [open.map((o) => o.id)])).map((r) => [String(r.entityId), new Date(String(r.at))]));
   const today = now.toISOString().slice(0, 10);
   for (const o of open) {
     const created = o.createdAt ? new Date(String(o.createdAt instanceof Date ? o.createdAt.toISOString() : o.createdAt)) : now;
@@ -129605,12 +129901,12 @@ async function orderPace(conn, orders, now = /* @__PURE__ */ new Date()) {
 }
 
 // packages/api/dist/infrastructure/messaging/vehicle-archive.js
-import { randomUUID as randomUUID44 } from "node:crypto";
-var rows48 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomUUID as randomUUID45 } from "node:crypto";
+var rows49 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var err3 = (code5) => Object.assign(new Error(code5), { code: code5 });
 var archivedSql = "SELECT v.id, v.make, v.model, v.year, v.plate, v.deletedAt, (SELECT a.reason FROM `AuditLog` a WHERE a.entityType = 'Vehicle' AND a.entityId = v.id AND a.eventType = 'vehicle.archived' ORDER BY a.createdAt DESC LIMIT 1) AS reason FROM `Vehicle` v WHERE v.userId = ? AND v.fleetId IS NULL AND v.deletedAt IS NOT NULL AND EXISTS (SELECT 1 FROM `AuditLog` a WHERE a.entityType = 'Vehicle' AND a.entityId = v.id AND a.eventType = 'vehicle.archived' AND a.actorUserId = ?)";
 async function archivedVehicles(conn, userId) {
-  return (await rows48(conn, `${archivedSql} ORDER BY v.deletedAt DESC LIMIT 20`, [userId, userId])).map((v) => ({
+  return (await rows49(conn, `${archivedSql} ORDER BY v.deletedAt DESC LIMIT 20`, [userId, userId])).map((v) => ({
     id: String(v.id),
     label: `${String(v.make)} ${String(v.model)} ${String(v.year)}`,
     plate: v.plate ? String(v.plate) : null,
@@ -129619,21 +129915,21 @@ async function archivedVehicles(conn, userId) {
   }));
 }
 async function archiveVehicle(conn, userId, vehicleId, reason) {
-  const [v] = await rows48(conn, "SELECT id, make, model, year FROM `Vehicle` WHERE id = ? AND userId = ? AND fleetId IS NULL AND deletedAt IS NULL FOR UPDATE", [vehicleId, userId]);
+  const [v] = await rows49(conn, "SELECT id, make, model, year FROM `Vehicle` WHERE id = ? AND userId = ? AND fleetId IS NULL AND deletedAt IS NULL FOR UPDATE", [vehicleId, userId]);
   if (!v)
     throw err3("NOT_FOUND");
-  if ((await rows48(conn, "SELECT id FROM `WorkOrder` WHERE vehicleId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [vehicleId])).length)
+  if ((await rows49(conn, "SELECT id FROM `WorkOrder` WHERE vehicleId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [vehicleId])).length)
     throw err3("ORDER_OPEN");
   await conn.query("UPDATE `Vehicle` SET deletedAt = CURRENT_TIMESTAMP(3), remindersOptIn = FALSE, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [vehicleId]);
-  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'vehicle.archived', ?, 'dueno', 'Vehicle', ?, '{}', ?, UTC_TIMESTAMP(3))", [randomUUID44(), userId, vehicleId, reason]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, reason, createdAt) VALUES (?, 'vehicle.archived', ?, 'dueno', 'Vehicle', ?, '{}', ?, UTC_TIMESTAMP(3))", [randomUUID45(), userId, vehicleId, reason]);
   return { message: `${String(v.make)} ${String(v.model)} ${String(v.year)} archivado. Su historial se conserva; lo reactivas cuando quieras desde \xABVeh\xEDculos archivados\xBB.` };
 }
 async function reactivateVehicle(conn, userId, vehicleId) {
-  const [v] = await rows48(conn, `${archivedSql} AND v.id = ? FOR UPDATE`, [userId, userId, vehicleId]);
+  const [v] = await rows49(conn, `${archivedSql} AND v.id = ? FOR UPDATE`, [userId, userId, vehicleId]);
   if (!v)
     throw err3("NOT_FOUND");
   await conn.query("UPDATE `Vehicle` SET deletedAt = NULL, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [vehicleId]);
-  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'vehicle.reactivated', ?, 'dueno', 'Vehicle', ?, '{}', UTC_TIMESTAMP(3))", [randomUUID44(), userId, vehicleId]);
+  await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'vehicle.reactivated', ?, 'dueno', 'Vehicle', ?, '{}', UTC_TIMESTAMP(3))", [randomUUID45(), userId, vehicleId]);
   return { vehicleId, message: `${String(v.make)} ${String(v.model)} ${String(v.year)} volvi\xF3 a tu garaje con su historial. Activa los recordatorios si los quieres.` };
 }
 
@@ -129664,8 +129960,8 @@ init_reminder_done();
 init_apply();
 init_shop_vehicle_access();
 init_catalogs();
-import { randomUUID as randomUUID45 } from "node:crypto";
-var rows49 = async (c, sql, args = []) => (await c.query(sql, args))[0];
+import { randomUUID as randomUUID46 } from "node:crypto";
+var rows50 = async (c, sql, args = []) => (await c.query(sql, args))[0];
 var PlanOverrideError = class extends Error {
   code;
   constructor(code5) {
@@ -129687,7 +129983,7 @@ var VehiclePlanOverrideStore = class {
     }
   }
   async list(vehicleId) {
-    return this.run(async (c) => rows49(c, "SELECT o.*, s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id = o.shopId WHERE o.vehicleId = ?", [vehicleId]));
+    return this.run(async (c) => rows50(c, "SELECT o.*, s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id = o.shopId WHERE o.vehicleId = ?", [vehicleId]));
   }
   async recordLastService(userId, role, input) {
     const fields = cleanFields(input);
@@ -129696,10 +129992,10 @@ var VehiclePlanOverrideStore = class {
     if (!Number.isInteger(input.km) || input.km < 0 || input.km > 2e6 || !/^\d{4}-\d{2}-\d{2}$/.test(input.doneAt) || !input.serviceId.startsWith("custom-") && !serviceTaxonomy.categories.some((c) => c.subservices.some((s) => s.id === input.serviceId)))
       throw new PlanOverrideError("INVALID_SERVICE_RECORD");
     return this.run(async (c) => {
-      const [actor] = await rows49(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows50(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
-      const [vehicle] = await rows49(c, "SELECT id,userId,currentKm FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [input.vehicleId]);
+      const [vehicle] = await rows50(c, "SELECT id,userId,currentKm FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [input.vehicleId]);
       if (!vehicle)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -129707,7 +130003,7 @@ var VehiclePlanOverrideStore = class {
         if (String(vehicle.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows49(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
+        const [shop] = await rows50(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
         shopId = shop ? String(shop.id) : null;
         const related = shopId ? await shopCanAccessVehicle(c, String(shopId), input.vehicleId) : false;
         if (!shop || !related)
@@ -129719,12 +130015,12 @@ var VehiclePlanOverrideStore = class {
         throw new PlanOverrideError("KM_AHEAD_OF_ODOMETER");
       let appointmentId = null;
       if (input.appointmentId) {
-        const [appointment] = await rows49(c, "SELECT id FROM `Appointment` WHERE id=? AND vehicleId=? AND (? IS NULL OR shopId=?)", [input.appointmentId, input.vehicleId, shopId, shopId]);
+        const [appointment] = await rows50(c, "SELECT id FROM `Appointment` WHERE id=? AND vehicleId=? AND (? IS NULL OR shopId=?)", [input.appointmentId, input.vehicleId, shopId, shopId]);
         if (!appointment)
           throw new PlanOverrideError("NOT_FOUND");
         appointmentId = String(appointment.id);
       }
-      const id3 = randomUUID45();
+      const id3 = randomUUID46();
       const base = [id3, input.vehicleId, input.serviceId, input.km, `${input.doneAt} 12:00:00.000`, role === "taller" ? "taller" : "dueno", shopId, userId, input.recordedAt ? new Date(input.recordedAt).toISOString().slice(0, 23).replace("T", " ") : /* @__PURE__ */ new Date()];
       try {
         await c.query("INSERT INTO `VehicleServiceRecord` (id,vehicleId,serviceId,km,doneAt,source,shopId,createdBy,createdAt,detail,parts,costUsd,shopName,technician,finding,nextDueAt,nextDueKm,appointmentId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [...base, fields.detail, fields.parts.length ? JSON.stringify(fields.parts) : null, fields.costUsd, fields.shopName, fields.technician, fields.finding, fields.nextDueAt, fields.nextDueKm, appointmentId]);
@@ -129737,7 +130033,7 @@ var VehiclePlanOverrideStore = class {
       }
       if (role === "taller") {
         const serviceName5 = serviceTaxonomy.categories.flatMap((cat) => cat.subservices).find((x) => x.id === input.serviceId)?.name ?? "un servicio";
-        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID45(), `plan-record:${input.vehicleId}:${new Date(Date.now() - 5 * 36e5).toISOString().slice(0, 10)}`, String(vehicle.userId), "care.service", JSON.stringify({ message: `\u{1F527} El taller registr\xF3 ${serviceName5.toLowerCase()} en el plan de tu veh\xEDculo. M\xEDralo en la ficha, en el plan de mantenimiento.` })]);
+        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID46(), `plan-record:${input.vehicleId}:${new Date(Date.now() - 5 * 36e5).toISOString().slice(0, 10)}`, String(vehicle.userId), "care.service", JSON.stringify({ message: `\u{1F527} El taller registr\xF3 ${serviceName5.toLowerCase()} en el plan de tu veh\xEDculo. M\xEDralo en la ficha, en el plan de mantenimiento.` })]);
       }
       return { id: id3 };
     });
@@ -129761,7 +130057,7 @@ var VehiclePlanOverrideStore = class {
           throw new PlanOverrideError("FEATURE_UPDATE_PENDING");
         throw err4;
       }
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID45(), "vehicle.service-record.update", userId, role, "VehicleServiceRecord", input.id, JSON.stringify({ serviceId: record.serviceId, km: record.km, doneAt: record.doneAt }), JSON.stringify({ ...after, detail: after.detail ? "(texto)" : null })]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID46(), "vehicle.service-record.update", userId, role, "VehicleServiceRecord", input.id, JSON.stringify({ serviceId: record.serviceId, km: record.km, doneAt: record.doneAt }), JSON.stringify({ ...after, detail: after.detail ? "(texto)" : null })]);
     });
   }
   /** Quita un registro con las mismas reglas; sus fotos quedan en la ficha, sin registro. */
@@ -129773,7 +130069,7 @@ var VehiclePlanOverrideStore = class {
           throw err4;
       });
       await c.query("DELETE FROM `VehicleServiceRecord` WHERE id = ?", [id3]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID45(), "vehicle.service-record.remove", userId, role, "VehicleServiceRecord", id3, JSON.stringify({ vehicleId: record.vehicleId, serviceId: record.serviceId, km: record.km, doneAt: record.doneAt, source: record.source }), null]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID46(), "vehicle.service-record.remove", userId, role, "VehicleServiceRecord", id3, JSON.stringify({ vehicleId: record.vehicleId, serviceId: record.serviceId, km: record.km, doneAt: record.doneAt, source: record.source }), null]);
     });
   }
   /**
@@ -129782,10 +130078,10 @@ var VehiclePlanOverrideStore = class {
    */
   async voidRecord(userId, id3, reason) {
     return this.run(async (c) => {
-      const [shop] = await rows49(c, "SELECT s.id, s.name FROM `Shop` s WHERE s.userId = ? UNION SELECT s.id, s.name FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.userId = ? AND m.status = 'active' AND m.role = 'admin' LIMIT 1", [userId, userId]);
+      const [shop] = await rows50(c, "SELECT s.id, s.name FROM `Shop` s WHERE s.userId = ? UNION SELECT s.id, s.name FROM `ShopMember` m JOIN `Shop` s ON s.id = m.shopId WHERE m.userId = ? AND m.status = 'active' AND m.role = 'admin' LIMIT 1", [userId, userId]);
       if (!shop)
         throw new PlanOverrideError("FORBIDDEN");
-      const [record] = await rows49(c, "SELECT r.id, r.vehicleId, r.serviceId, r.km, r.doneAt, r.createdAt, r.createdBy, v.userId AS ownerId, v.make, v.model, v.year FROM `VehicleServiceRecord` r JOIN `Vehicle` v ON v.id = r.vehicleId WHERE r.id = ? AND r.shopId = ? AND v.deletedAt IS NULL", [id3, shop.id]);
+      const [record] = await rows50(c, "SELECT r.id, r.vehicleId, r.serviceId, r.km, r.doneAt, r.createdAt, r.createdBy, v.userId AS ownerId, v.make, v.model, v.year FROM `VehicleServiceRecord` r JOIN `Vehicle` v ON v.id = r.vehicleId WHERE r.id = ? AND r.shopId = ? AND v.deletedAt IS NULL", [id3, shop.id]);
       if (!record)
         throw new PlanOverrideError("NOT_FOUND");
       await c.query("UPDATE `VehicleRecordPhoto` SET recordId = NULL WHERE recordId = ?", [id3]).catch((err4) => {
@@ -129793,25 +130089,25 @@ var VehiclePlanOverrideStore = class {
           throw err4;
       });
       await c.query("DELETE FROM `VehicleServiceRecord` WHERE id = ?", [id3]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,reason,createdAt) VALUES (?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID45(), "vehicle.service-record.voided", userId, "taller", "VehicleServiceRecord", id3, JSON.stringify({ vehicleId: record.vehicleId, serviceId: record.serviceId, km: record.km, doneAt: record.doneAt, createdAt: record.createdAt, createdBy: record.createdBy }), JSON.stringify({ shopId: shop.id }), reason]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,reason,createdAt) VALUES (?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID46(), "vehicle.service-record.voided", userId, "taller", "VehicleServiceRecord", id3, JSON.stringify({ vehicleId: record.vehicleId, serviceId: record.serviceId, km: record.km, doneAt: record.doneAt, createdAt: record.createdAt, createdBy: record.createdBy }), JSON.stringify({ shopId: shop.id }), reason]);
       const label5 = `${String(record.make)} ${String(record.model)} ${String(record.year)}`;
-      await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID45(), `record-void:${id3}`, String(record.ownerId), "care.service", JSON.stringify({ message: `\u270F\uFE0F ${String(shop.name)} anul\xF3 un registro del historial de tu ${label5} (${String(record.serviceId)}). Motivo: ${reason}. Tu plan se recalcula sin ese registro.` })]);
+      await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID46(), `record-void:${id3}`, String(record.ownerId), "care.service", JSON.stringify({ message: `\u270F\uFE0F ${String(shop.name)} anul\xF3 un registro del historial de tu ${label5} (${String(record.serviceId)}). Motivo: ${reason}. Tu plan se recalcula sin ese registro.` })]);
       return { message: `Registro anulado. Avisamos al due\xF1o del ${label5} con tu motivo.` };
     });
   }
   async editable(c, userId, role, id3) {
-    const [actor] = await rows49(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
+    const [actor] = await rows50(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
     if (String(actor?.role) !== role)
       throw new PlanOverrideError("FORBIDDEN");
-    const [record] = await rows49(c, "SELECT id, vehicleId, serviceId, km, doneAt, source, shopId, createdAt FROM `VehicleServiceRecord` WHERE id = ?", [id3]);
+    const [record] = await rows50(c, "SELECT id, vehicleId, serviceId, km, doneAt, source, shopId, createdAt FROM `VehicleServiceRecord` WHERE id = ?", [id3]);
     if (!record)
       throw new PlanOverrideError("NOT_FOUND");
-    const [vehicle] = await rows49(c, "SELECT id, userId, currentKm FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [record.vehicleId]);
+    const [vehicle] = await rows50(c, "SELECT id, userId, currentKm FROM `Vehicle` WHERE id=? AND deletedAt IS NULL", [record.vehicleId]);
     if (!vehicle)
       throw new PlanOverrideError("NOT_FOUND");
     let shopId = null;
     if (role === "taller") {
-      const [shop] = await rows49(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
+      const [shop] = await rows50(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
       shopId = shop ? String(shop.id) : null;
     }
     if (!canEditRecord(record, { userId, role, shopId, ownerId: String(vehicle.userId) }))
@@ -129824,10 +130120,10 @@ var VehiclePlanOverrideStore = class {
     if (!custom2 && !names.includes(input.serviceId) || custom2 && (!input.customName?.trim() || input.customName.trim().length > 100) || input.nota.length > 200 || input.intervalKm !== null && (!Number.isInteger(input.intervalKm) || input.intervalKm < 500 || input.intervalKm > 1e5) || input.intervalMonths !== null && (!Number.isInteger(input.intervalMonths) || input.intervalMonths < 1 || input.intervalMonths > 60) || !input.disabled && input.intervalKm === null && input.intervalMonths === null)
       throw new PlanOverrideError("INVALID_OVERRIDE");
     await this.run(async (c) => {
-      const [actor] = await rows49(c, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows50(c, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
-      const [vehicle] = await rows49(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL", [input.vehicleId]);
+      const [vehicle] = await rows50(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL", [input.vehicleId]);
       if (!vehicle)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -129835,7 +130131,7 @@ var VehiclePlanOverrideStore = class {
         if (String(vehicle.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows49(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
+        const [shop] = await rows50(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
         if (!shop)
           throw new PlanOverrideError("FORBIDDEN");
         shopId = String(shop.id);
@@ -129843,37 +130139,37 @@ var VehiclePlanOverrideStore = class {
         if (!rel)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      const [old] = await rows49(c, "SELECT id,intervalKm,intervalMonths,disabled,nota,actorUserId,actorRole,shopId FROM `VehiclePlanOverride` WHERE vehicleId = ? AND serviceId = ?", [input.vehicleId, input.serviceId]);
-      const id3 = String(old?.id ?? randomUUID45());
+      const [old] = await rows50(c, "SELECT id,intervalKm,intervalMonths,disabled,nota,actorUserId,actorRole,shopId FROM `VehiclePlanOverride` WHERE vehicleId = ? AND serviceId = ?", [input.vehicleId, input.serviceId]);
+      const id3 = String(old?.id ?? randomUUID46());
       const after = { ...input, actorUserId: userId, actorRole: role, shopId };
       await c.query("INSERT INTO `VehiclePlanOverride` (id,vehicleId,serviceId,intervalKm,intervalMonths,disabled,customName,nota,actorUserId,actorRole,shopId,createdAt,updatedAt) VALUES (?,?,?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3),UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE intervalKm=VALUES(intervalKm),intervalMonths=VALUES(intervalMonths),disabled=VALUES(disabled),customName=VALUES(customName),nota=VALUES(nota),actorUserId=VALUES(actorUserId),actorRole=VALUES(actorRole),shopId=VALUES(shopId),updatedAt=UTC_TIMESTAMP(3)", [id3, input.vehicleId, input.serviceId, input.intervalKm, input.intervalMonths, input.disabled ? 1 : 0, input.customName?.trim() || null, input.nota || null, userId, role, shopId]);
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID45(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID45(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID46(), input.vehicleId, input.serviceId, old ? JSON.stringify(old) : null, JSON.stringify(after), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID46(), "vehicle.plan.override", userId, role, "Vehicle", input.vehicleId, old ? JSON.stringify({ serviceId: input.serviceId, ...old }) : null, JSON.stringify(after)]);
       if (role === "taller" && (String(old?.intervalKm ?? "") !== String(input.intervalKm ?? "") || String(old?.intervalMonths ?? "") !== String(input.intervalMonths ?? ""))) {
         const serviceName5 = input.customName || serviceTaxonomy.categories.flatMap((cat) => cat.subservices).find((s) => s.id === input.serviceId)?.name || input.serviceId;
-        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID45(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName5} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
+        await c.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE id=id", [randomUUID46(), `plan-interval:${input.vehicleId}:${input.serviceId}:${Date.now()}`.slice(0, 191), String(vehicle.userId), "vehicle.plan.interval", JSON.stringify({ message: `El taller ajust\xF3 el intervalo de ${serviceName5} de tu veh\xEDculo. Nuevo intervalo: ${input.intervalKm ? `${input.intervalKm.toLocaleString("es-EC")} km` : "sin intervalo por km"}${input.intervalMonths ? ` / ${input.intervalMonths} meses` : ""}.` })]);
       }
     });
   }
   async reset(userId, role, vehicleId, serviceId) {
     await this.run(async (c) => {
-      const [old] = await rows49(c, "SELECT * FROM `VehiclePlanOverride` WHERE vehicleId=? AND serviceId=?", [vehicleId, serviceId]);
+      const [old] = await rows50(c, "SELECT * FROM `VehiclePlanOverride` WHERE vehicleId=? AND serviceId=?", [vehicleId, serviceId]);
       if (!old)
         return;
-      const [actor] = await rows49(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
+      const [actor] = await rows50(c, "SELECT role FROM `User` WHERE id=? AND deletedAt IS NULL", [userId]);
       if (String(actor?.role) !== role)
         throw new PlanOverrideError("FORBIDDEN");
       if (role === "dueno") {
-        const [v] = await rows49(c, "SELECT id FROM `Vehicle` WHERE id=? AND userId=? AND deletedAt IS NULL", [vehicleId, userId]);
+        const [v] = await rows50(c, "SELECT id FROM `Vehicle` WHERE id=? AND userId=? AND deletedAt IS NULL", [vehicleId, userId]);
         if (!v)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows49(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
+        const [shop] = await rows50(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
         const v = shop?.id ? await shopCanAccessVehicle(c, String(shop?.id), vehicleId) : false;
         if (!shop || !v)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      const [vrow] = await rows49(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id=? AND v.deletedAt IS NULL", [vehicleId]);
+      const [vrow] = await rows50(c, "SELECT v.id,v.userId FROM `Vehicle` v WHERE v.id=? AND v.deletedAt IS NULL", [vehicleId]);
       if (!vrow)
         throw new PlanOverrideError("NOT_FOUND");
       let shopId = null;
@@ -129881,14 +130177,14 @@ var VehiclePlanOverrideStore = class {
         if (String(vrow.userId) !== userId)
           throw new PlanOverrideError("FORBIDDEN");
       } else {
-        const [shop] = await rows49(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
+        const [shop] = await rows50(c, "SELECT id FROM `Shop` WHERE userId=? UNION SELECT shopId AS id FROM `ShopMember` WHERE userId=? AND status='active' LIMIT 1", [userId, userId]);
         shopId = shop ? String(shop.id) : null;
         const rel = shopId ? await shopCanAccessVehicle(c, String(shopId), vehicleId) : false;
         if (!shop || !rel)
           throw new PlanOverrideError("FORBIDDEN");
       }
-      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID45(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
-      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID45(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
+      await c.query("INSERT INTO `VehiclePlanOverrideLog` (id,vehicleId,serviceId,`before`,`after`,actorUserId,actorRole,shopId,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID46(), vehicleId, serviceId, JSON.stringify(old), JSON.stringify({ factory: true }), userId, role, shopId]);
+      await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`before`,`after`,createdAt) VALUES (?,?,?,?,?,?,?,?,UTC_TIMESTAMP(3))", [randomUUID46(), "vehicle.plan.override.reset", userId, role, "Vehicle", vehicleId, JSON.stringify({ serviceId, ...old }), JSON.stringify({ serviceId, factory: true })]);
       await c.query("UPDATE `VehiclePlanOverride` SET intervalKm=NULL,intervalMonths=NULL,disabled=1,nota='Restaurado a f\xE1brica',actorUserId=?,actorRole=?,shopId=?,updatedAt=UTC_TIMESTAMP(3) WHERE vehicleId=? AND serviceId=?", [userId, role, shopId, vehicleId, serviceId]);
     });
   }
@@ -129921,7 +130217,7 @@ var VEHICULOS_WEBP_B64 = {
 };
 
 // packages/api/dist/infrastructure/messaging/pilot-panel-store.js
-var rows50 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows51 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var serviceTitle = (id3, custom2) => custom2 ? String(custom2) : serviceTaxonomy.categories.flatMap((c) => c.subservices).find((x) => x.id === id3)?.name ?? id3;
 var ref3 = (prefix, id3) => `${prefix}-${String(id3).replace(/-/g, "").slice(0, 6).toUpperCase()}`;
 var PROPOSED_VISIT = "Visita propuesta por el taller";
@@ -129972,11 +130268,11 @@ function alertValue(item2, currentKm, now = /* @__PURE__ */ new Date()) {
 }
 var REMINDER_STATES = ["urgente", "pronto", "sin_dato"];
 async function shopRating(conn, ownerUserId) {
-  const [sum] = await rows50(conn, "SELECT COUNT(*) AS n, AVG(score) AS avg FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL", [ownerUserId]);
+  const [sum] = await rows51(conn, "SELECT COUNT(*) AS n, AVG(score) AS avg FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL", [ownerUserId]);
   const count3 = Number(sum?.n ?? 0);
   if (!count3)
     return null;
-  const recent = await rows50(conn, "SELECT score, comment, createdAt FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL AND comment IS NOT NULL AND comment <> '' ORDER BY createdAt DESC LIMIT 3", [ownerUserId]);
+  const recent = await rows51(conn, "SELECT score, comment, createdAt FROM `Rating` WHERE toId = ? AND hiddenAt IS NULL AND comment IS NOT NULL AND comment <> '' ORDER BY createdAt DESC LIMIT 3", [ownerUserId]);
   return { average: Math.round(Number(sum?.avg) * 10) / 10, count: count3, comments: recent.map((r) => ({ score: Number(r.score), comment: String(r.comment), at: new Date(r.createdAt).toISOString() })) };
 }
 var PilotPanelStore = class {
@@ -129997,7 +130293,7 @@ var PilotPanelStore = class {
   }
   async panel(userId, vehicleId) {
     return this.run(async (conn) => {
-      const [user] = await rows50(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
+      const [user] = await rows51(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL", [userId]);
       const role = String(user?.role ?? "");
       if (role === "dueno")
         return withPartMoney(conn, userId, role, await this.owner(conn, userId, vehicleId));
@@ -130010,7 +130306,7 @@ var PilotPanelStore = class {
   }
   /** Ficha de ingreso desde el panel: misma operación que el comando de chat, con los datos por zona. */
   async registerIntake(userId, role, input) {
-    const damaged = Object.entries(input.damages).map(([zone, text15]) => `${zone}: ${text15}`).join("; ");
+    const damaged = Object.entries(input.damages).map(([zone, text16]) => `${zone}: ${text16}`).join("; ");
     return this.run(async (conn) => {
       await conn.query("START TRANSACTION");
       try {
@@ -130059,12 +130355,12 @@ var PilotPanelStore = class {
   async photoOrder(conn, userId, role, number2) {
     if (role === "taller") {
       const shop = await this.care.actingShop(conn, userId, role, { openOrders: true });
-      const [order] = await rows50(conn, "SELECT id FROM `WorkOrder` WHERE number = ? AND shopId = ?", [number2, shop.id]);
+      const [order] = await rows51(conn, "SELECT id FROM `WorkOrder` WHERE number = ? AND shopId = ?", [number2, shop.id]);
       if (order)
         return String(order.id);
     } else if (role === "dueno") {
       const scope = await decisionScope(conn, userId);
-      const [order] = await rows50(conn, "SELECT w.id FROM `WorkOrder` w WHERE w.number = ? AND " + scope.where("w"), [number2, ...scope.args]);
+      const [order] = await rows51(conn, "SELECT w.id FROM `WorkOrder` w WHERE w.number = ? AND " + scope.where("w"), [number2, ...scope.args]);
       if (order)
         return String(order.id);
     }
@@ -130164,13 +130460,13 @@ var PilotPanelStore = class {
   async orderPhotos(userId, role, number2) {
     return this.run(async (conn) => {
       const orderId = await this.photoOrder(conn, userId, role, number2);
-      return (await rows50(conn, "SELECT id, kind FROM `WorkOrderPhoto` WHERE workOrderId = ? ORDER BY createdAt", [orderId])).map((p) => ({ id: String(p.id), kind: String(p.kind) }));
+      return (await rows51(conn, "SELECT id, kind FROM `WorkOrderPhoto` WHERE workOrderId = ? ORDER BY createdAt", [orderId])).map((p) => ({ id: String(p.id), kind: String(p.kind) }));
     });
   }
   async orderPhoto(userId, role, number2, photoId) {
     return this.run(async (conn) => {
       const orderId = await this.photoOrder(conn, userId, role, number2);
-      const [photo] = await rows50(conn, "SELECT mime, data FROM `WorkOrderPhoto` WHERE id = ? AND workOrderId = ?", [photoId, orderId]);
+      const [photo] = await rows51(conn, "SELECT mime, data FROM `WorkOrderPhoto` WHERE id = ? AND workOrderId = ?", [photoId, orderId]);
       if (!photo)
         throw new BrokerError("NOT_FOUND");
       return { mime: String(photo.mime), data: photo.data };
@@ -130201,7 +130497,7 @@ var PilotPanelStore = class {
       const shop = await this.care.actingShop(conn, userId, role, { openOrders: true });
       const r = await saveReport(conn, shop, userId, number2, input);
       if (r.first)
-        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'care.order', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID46(), `report:${r.code}:${shop.id}`, r.ownerId, JSON.stringify({ message: `\u{1F4CB} ${shop.name} dej\xF3 el informe t\xE9cnico de ${r.code} de tu ${r.label}: hallazgos, mediciones, lo hecho y lo pendiente. M\xEDralo en tu perfil: ${accountLink("ordenes")}` })]);
+        await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'care.order', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID47(), `report:${r.code}:${shop.id}`, r.ownerId, JSON.stringify({ message: `\u{1F4CB} ${shop.name} dej\xF3 el informe t\xE9cnico de ${r.code} de tu ${r.label}: hallazgos, mediciones, lo hecho y lo pendiente. M\xEDralo en tu perfil: ${accountLink("ordenes")}` })]);
       return { message: r.message };
     });
   }
@@ -130317,15 +130613,15 @@ var PilotPanelStore = class {
     const recommendations = chosen ? await this.planSummary(conn, chosen) : null;
     const alerts = chosen && recommendations ? await this.vehicleAlerts(conn, chosen, recommendations) : [];
     const ids = list7.map((v) => String(v.id));
-    const orders = ids.length ? await rows50(conn, "SELECT w.id, w.number, w.status, w.intakeKm, w.total, w.updatedAt, w.vehicleId, w.diagnosisOutcome, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND EXISTS (SELECT 1 FROM `WorkOrderPhoto` fp WHERE fp.workOrderId = w.id AND fp.kind = 'factura' AND fp.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY))) OR (w.status = 'cancelada' AND w.updatedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND EXISTS (SELECT 1 FROM `WorkOrderPayment` rp WHERE rp.workOrderId = w.id AND rp.status IN ('pagado','reembolso_informado'))) OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY)) OR (w.status = 'cerrada' AND w.warrantyDays > 0 AND DATE_ADD(w.closedAt, INTERVAL w.warrantyDays DAY) > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY))) ORDER BY w.status = 'cerrada', w.number DESC LIMIT 8", [ids]) : [];
+    const orders = ids.length ? await rows51(conn, "SELECT w.id, w.number, w.status, w.intakeKm, w.total, w.updatedAt, w.vehicleId, w.diagnosisOutcome, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId IN (?) AND (w.status NOT IN ('cerrada','cancelada') OR (w.status = 'cerrada' AND EXISTS (SELECT 1 FROM `WorkOrderPhoto` fp WHERE fp.workOrderId = w.id AND fp.kind = 'factura' AND fp.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY))) OR (w.status = 'cancelada' AND w.updatedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND EXISTS (SELECT 1 FROM `WorkOrderPayment` rp WHERE rp.workOrderId = w.id AND rp.status IN ('pagado','reembolso_informado'))) OR (w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 3 DAY)) OR (w.status = 'cerrada' AND w.warrantyDays > 0 AND DATE_ADD(w.closedAt, INTERVAL w.warrantyDays DAY) > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY))) ORDER BY w.status = 'cerrada', w.number DESC LIMIT 8", [ids]) : [];
     orders.push(...await ordersWithActiveClaim(conn, "vehicle", ids, orders.map((o) => String(o.id))));
     await hideOrdersBeforeTransfer(conn, orders);
-    const upcoming = ids.length ? await rows50(conn, "SELECT a.id, a.status, a.scheduledAt, a.vehicleId, a.summary, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.vehicleId IN (?) AND a.status IN ('pending','confirmed') AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY) AND NOT EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id) ORDER BY a.scheduledAt LIMIT 5", [ids]) : [];
+    const upcoming = ids.length ? await rows51(conn, "SELECT a.id, a.status, a.scheduledAt, a.vehicleId, a.summary, s.name AS shopName, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.vehicleId IN (?) AND a.status IN ('pending','confirmed') AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY) AND NOT EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id) ORDER BY a.scheduledAt LIMIT 5", [ids]) : [];
     const orderIds = orders.map((o) => String(o.id));
-    const changes = orderIds.length ? await rows50(conn, "SELECT id, workOrderId, kind, description, total FROM `WorkOrderChange` WHERE workOrderId IN (?) AND status = 'pending' AND kind IN ('novedad','entrega') ORDER BY createdAt", [orderIds]) : [];
-    const answered = orderIds.length ? await rows50(conn, "SELECT DISTINCT entityId FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId IN (?) AND eventType IN ('care.checkin.confirmed','care.checkin.observed')", [orderIds]) : [];
-    const rated = orderIds.length ? await rows50(conn, "SELECT workOrderId FROM `Rating` WHERE fromId = ? AND workOrderId IN (?)", [userId, orderIds]) : [];
-    const history = chosen ? await rows50(conn, "SELECT r.serviceId, r.km, r.doneAt, s.name AS shopName, o.customName FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId LEFT JOIN `VehiclePlanOverride` o ON o.vehicleId = r.vehicleId AND o.serviceId = r.serviceId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 15", [chosen.id]) : [];
+    const changes = orderIds.length ? await rows51(conn, "SELECT id, workOrderId, kind, description, total FROM `WorkOrderChange` WHERE workOrderId IN (?) AND status = 'pending' AND kind IN ('novedad','entrega') ORDER BY createdAt", [orderIds]) : [];
+    const answered = orderIds.length ? await rows51(conn, "SELECT DISTINCT entityId FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId IN (?) AND eventType IN ('care.checkin.confirmed','care.checkin.observed')", [orderIds]) : [];
+    const rated = orderIds.length ? await rows51(conn, "SELECT workOrderId FROM `Rating` WHERE fromId = ? AND workOrderId IN (?)", [userId, orderIds]) : [];
+    const history = chosen ? await rows51(conn, "SELECT r.serviceId, r.km, r.doneAt, s.name AS shopName, o.customName FROM `VehicleServiceRecord` r LEFT JOIN `Shop` s ON s.id = r.shopId LEFT JOIN `VehiclePlanOverride` o ON o.vehicleId = r.vehicleId AND o.serviceId = r.serviceId WHERE r.vehicleId = ? ORDER BY r.doneAt DESC, r.createdAt DESC LIMIT 15", [chosen.id]) : [];
     const parts = chosen ? await compatibleParts(conn, chosen).catch(() => []) : [];
     const sheet = chosen ? await this.sheetOf(conn, chosen, chosen.access === "driver" ? "conductor" : "dueno", { userId, shopId: null }) : null;
     const order = { owner: 0, admin: 1, supervisor: 2, conductor: 3 };
@@ -130392,11 +130688,11 @@ var PilotPanelStore = class {
   /** Solicitudes abiertas del propio dueño (30 días, máx. 10) con sus ofertas reales por precio; sin tabla, lista vacía. */
   async ownerRequests(conn, userId) {
     try {
-      const list7 = await rows50(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.status, lr.createdAt, v.make, v.model, v.year FROM `LocalRequest` lr LEFT JOIN `Vehicle` v ON v.id = lr.vehicleId AND v.userId = lr.ownerId WHERE lr.ownerId = ? AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
+      const list7 = await rows51(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.status, lr.createdAt, v.make, v.model, v.year FROM `LocalRequest` lr LEFT JOIN `Vehicle` v ON v.id = lr.vehicleId AND v.userId = lr.ownerId WHERE lr.ownerId = ? AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
       if (!list7.length)
         return [];
       const ids = list7.map((r) => String(r.id));
-      const offers = await rows50(conn, "SELECT o.id, o.requestId, o.businessName, o.status, o.priceUsd, o.durationMin, o.proposedAt, o.notes, o.brand, o.quality, o.warrantyDays, o.createdAt, EXISTS (SELECT 1 FROM `Shop` b WHERE b.id = o.businessId AND b.verificationStatus = 'pending') AS inReview FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId WHERE lr.ownerId = ? AND o.requestId IN (?) AND o.status IN ('offered','chosen') ORDER BY o.priceUsd, o.id", [userId, ids]);
+      const offers = await rows51(conn, "SELECT o.id, o.requestId, o.businessName, o.status, o.priceUsd, o.durationMin, o.proposedAt, o.notes, o.brand, o.quality, o.warrantyDays, o.createdAt, EXISTS (SELECT 1 FROM `Shop` b WHERE b.id = o.businessId AND b.verificationStatus = 'pending') AS inReview FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId WHERE lr.ownerId = ? AND o.requestId IN (?) AND o.status IN ('offered','chosen') ORDER BY o.priceUsd, o.id", [userId, ids]);
       const offerVat = await vatById(conn, "LocalOffer", offers.map((o) => String(o.id)));
       return list7.map((r) => {
         const mine = offers.filter((o) => o.requestId === r.id && NUMBERED_OFFER_STATUSES.has(String(o.status)));
@@ -130423,7 +130719,7 @@ var PilotPanelStore = class {
   /** Repuestos que el dueño eligió y ya tienen stock confirmado (60 días, máx. 5): por recibir, o recibidos y sin calificar. */
   async ownerPartOrders(conn, userId) {
     try {
-      const list7 = await rows50(conn, "SELECT lr.id, lr.status, lr.category, lr.description, o.businessName, v.make, v.model, v.year, EXISTS (SELECT 1 FROM `Rating` r WHERE r.localRequestId = lr.id AND r.fromId = lr.ownerId) AS rated FROM `LocalRequest` lr JOIN `LocalOffer` o ON o.id = lr.chosenOfferId LEFT JOIN `Vehicle` v ON v.id = lr.vehicleId AND v.userId = lr.ownerId WHERE lr.ownerId = ? AND lr.kind = 'repuesto' AND lr.status IN ('accepted','delivered') AND o.stockStatus = 'confirmed' AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 60 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
+      const list7 = await rows51(conn, "SELECT lr.id, lr.status, lr.category, lr.description, o.businessName, v.make, v.model, v.year, EXISTS (SELECT 1 FROM `Rating` r WHERE r.localRequestId = lr.id AND r.fromId = lr.ownerId) AS rated FROM `LocalRequest` lr JOIN `LocalOffer` o ON o.id = lr.chosenOfferId LEFT JOIN `Vehicle` v ON v.id = lr.vehicleId AND v.userId = lr.ownerId WHERE lr.ownerId = ? AND lr.kind = 'repuesto' AND lr.status IN ('accepted','delivered') AND o.stockStatus = 'confirmed' AND lr.createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 60 DAY) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
       return list7.filter((r) => r.status === "accepted" || Number(r.rated) !== 1).slice(0, 5).map((r) => ({
         ref: ref3("S", r.id),
         category: String(r.category),
@@ -130439,7 +130735,7 @@ var PilotPanelStore = class {
     }
   }
   async requests(conn, userId) {
-    const list7 = await rows50(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.city, lr.zone, lr.expiresAt, lr.vehicleId, o.status, v.make, v.model, v.year, v.fuel, v.vehicleClass, v.currentKm, v.usageProfile FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND o.status NOT IN ('no_stock','discarded') AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
+    const list7 = await rows51(conn, "SELECT lr.id, lr.kind, lr.category, lr.description, lr.city, lr.zone, lr.expiresAt, lr.vehicleId, o.status, v.make, v.model, v.year, v.fuel, v.vehicleClass, v.currentKm, v.usageProfile FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND o.status NOT IN ('no_stock','discarded') AND lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) ORDER BY lr.createdAt DESC, lr.id LIMIT 10", [userId]);
     const out = [];
     for (const r of list7) {
       const planBrief = r.kind === "servicio" ? await this.care.planBrief(conn, { id: r.vehicleId, make: r.make, model: r.model, year: r.year, fuel: r.fuel, vehicleClass: r.vehicleClass, currentKm: r.currentKm, usageProfile: r.usageProfile }) : null;
@@ -130479,13 +130775,13 @@ var PilotPanelStore = class {
           alerts.push({ kind: "rtv", title: "RTV y matr\xEDcula", detail: `${month === current ? `Este mes (${MES[month - 1]})` : `El pr\xF3ximo mes (${MES[month - 1]})`}, seg\xFAn el \xFAltimo d\xEDgito de la placa; calendario referencial, confirma la fecha en la ANT o en tu agencia de matriculaci\xF3n. El valor a pagar por la matr\xEDcula incluye el SOAT`, state: month === current ? "pronto" : "al_dia", when: String(month) });
         }
       }
-      const scheduled = await rows50(conn, "SELECT label, dueKm, dueAt, source FROM `Alert` WHERE vehicleId = ? AND triggeredAt IS NULL ORDER BY createdAt DESC", [chosen.id]);
+      const scheduled = await rows51(conn, "SELECT label, dueKm, dueAt, source FROM `Alert` WHERE vehicleId = ? AND triggeredAt IS NULL ORDER BY createdAt DESC", [chosen.id]);
       for (const a of scheduled)
         alerts.push({ kind: "programada", title: String(a.label), detail: a.dueKm !== null ? `A los ${Number(a.dueKm).toLocaleString("es-EC")} km` : a.dueAt ? `${a.source === "pendiente" ? "Te lo recordamos el" : "El"} ${new Date(String(a.dueAt)).toLocaleDateString("es-EC", { timeZone: "America/Guayaquil" })}` : "", state: a.dueAt && new Date(String(a.dueAt)).getTime() <= Date.now() + 864e5 ? "urgente" : "pronto", when: String(a.dueAt ?? a.dueKm ?? "") });
-      const symptoms = await rows50(conn, "SELECT `system`, risk, description FROM `VehicleSymptom` WHERE vehicleId = ? AND resolvedAt IS NULL ORDER BY createdAt DESC LIMIT 3", [chosen.id]);
+      const symptoms = await rows51(conn, "SELECT `system`, risk, description FROM `VehicleSymptom` WHERE vehicleId = ? AND resolvedAt IS NULL ORDER BY createdAt DESC LIMIT 3", [chosen.id]);
       for (const x of symptoms)
         alerts.push({ kind: "sintoma", title: `S\xEDntoma: revisar ${String(x.system)}`, detail: String(x.description), state: x.risk === "seguir_con_cuidado" ? "pronto" : "urgente", when: "" });
-      const repairing = await rows50(conn, "SELECT w.number, w.status, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.vehicleId = ? AND w.status IN ('en_ejecucion','esperando_repuesto') ORDER BY w.number DESC", [chosen.id]);
+      const repairing = await rows51(conn, "SELECT w.number, w.status, s.name AS shopName FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.vehicleId = ? AND w.status IN ('en_ejecucion','esperando_repuesto') ORDER BY w.number DESC", [chosen.id]);
       for (const o of repairing)
         alerts.push({ kind: "reparacion", title: `OT-${String(o.number).padStart(5, "0")} en taller`, detail: String(o.shopName), state: "urgente", when: String(o.number) });
       const due = recommendations?.items.filter((i) => i.state === "urgente" || i.state === "pronto") ?? [];
@@ -130499,11 +130795,11 @@ var PilotPanelStore = class {
   /** Ficha completa: el dueño, o el taller y sus técnicos si tienen una cita u orden con ese vehículo. */
   async vehicleSheet(userId, vehicleId) {
     return this.run(async (conn) => {
-      const [user] = await rows50(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
+      const [user] = await rows51(conn, "SELECT role FROM `User` WHERE id = ? AND deletedAt IS NULL", [userId]);
       const role = String(user?.role ?? "");
       if (role !== "dueno" && role !== "taller")
         throw new BrokerError("FORBIDDEN");
-      const [vehicle] = await rows50(conn, "SELECT v.*, u.city AS city, u.name AS ownerName FROM `Vehicle` v JOIN `User` u ON u.id = v.userId WHERE v.id = ? AND v.deletedAt IS NULL", [vehicleId]);
+      const [vehicle] = await rows51(conn, "SELECT v.*, u.city AS city, u.name AS ownerName FROM `Vehicle` v JOIN `User` u ON u.id = v.userId WHERE v.id = ? AND v.deletedAt IS NULL", [vehicleId]);
       if (!vehicle)
         throw new BrokerError("VEHICLE_NOT_FOUND");
       if (role === "dueno") {
@@ -130535,11 +130831,11 @@ var PilotPanelStore = class {
   async inspectionFindings(conn, vehicle) {
     const findings = /* @__PURE__ */ new Map();
     try {
-      const [last] = await rows50(conn, "SELECT id, createdAt FROM `VehicleInspection` WHERE vehicleId = ? ORDER BY createdAt DESC, id DESC LIMIT 1", [vehicle.id]);
+      const [last] = await rows51(conn, "SELECT id, createdAt FROM `VehicleInspection` WHERE vehicleId = ? ORDER BY createdAt DESC, id DESC LIMIT 1", [vehicle.id]);
       if (!last)
         return findings;
-      const found = await rows50(conn, "SELECT code, status FROM `VehicleInspectionItem` WHERE inspectionId = ? AND status IN ('cambiar','observar')", [last.id]);
-      const later = new Set((await rows50(conn, "SELECT DISTINCT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND createdAt > DATE_ADD(?, INTERVAL 60 SECOND)", [vehicle.id, last.createdAt])).map((r) => String(r.serviceId)));
+      const found = await rows51(conn, "SELECT code, status FROM `VehicleInspectionItem` WHERE inspectionId = ? AND status IN ('cambiar','observar')", [last.id]);
+      const later = new Set((await rows51(conn, "SELECT DISTINCT serviceId FROM `VehicleServiceRecord` WHERE vehicleId = ? AND createdAt > DATE_ADD(?, INTERVAL 60 SECOND)", [vehicle.id, last.createdAt])).map((r) => String(r.serviceId)));
       for (const r of found) {
         const serviceId = INSPECTION_ITEMS.find((i) => i.code === r.code)?.serviceId;
         if (!serviceId || later.has(serviceId))
@@ -130601,7 +130897,7 @@ var PilotPanelStore = class {
     panel.isShopOwner = shop.isOwner;
     if (shop.isOwner || shop.isAdmin) {
       const number2 = await publicNumber(conn);
-      const list7 = await rows50(conn, "SELECT id, name, role, status FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' ORDER BY status, name LIMIT 30", [shop.id]);
+      const list7 = await rows51(conn, "SELECT id, name, role, status FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' ORDER BY status, name LIMIT 30", [shop.id]);
       panel.members = list7.map((m) => {
         const code5 = ref3("T", m.id);
         const invite = `T\xE9cnico ${code5} | ${String(m.name)} | ACEPTO`;
@@ -130617,32 +130913,32 @@ var PilotPanelStore = class {
     const shop = await this.care.actingShop(conn, userId, "taller", { openOrders: true });
     const start = ecDayStart(now);
     const end = new Date(start.getTime() + 864e5);
-    const count3 = async (sql, args) => Number((await rows50(conn, sql, args))[0]?.n ?? 0);
-    const today = await rows50(conn, "SELECT a.id, a.scheduledAt, a.status, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt LIMIT 20", [shop.id, start, end]);
-    const upcoming = await rows50(conn, "SELECT a.id AS appointmentId, a.scheduledAt, a.status, a.summary, v.*, EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id AND w.status <> 'cancelada') AS hasOrder FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) ORDER BY a.scheduledAt LIMIT 15", [shop.id]);
+    const count3 = async (sql, args) => Number((await rows51(conn, sql, args))[0]?.n ?? 0);
+    const today = await rows51(conn, "SELECT a.id, a.scheduledAt, a.status, v.make, v.model, v.year, v.plate FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt >= ? AND a.scheduledAt < ? ORDER BY a.scheduledAt LIMIT 20", [shop.id, start, end]);
+    const upcoming = await rows51(conn, "SELECT a.id AS appointmentId, a.scheduledAt, a.status, a.summary, v.*, EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id AND w.status <> 'cancelada') AS hasOrder FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId WHERE a.shopId = ? AND a.status IN ('pending','confirmed') AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) ORDER BY a.scheduledAt LIMIT 15", [shop.id]);
     const appointments = [];
     for (const a of upcoming)
       appointments.push({ ref: ref3("C", a.appointmentId), time: a.scheduledAt, vehicle: vehicleLabel2(a), vehicleId: String(a.id), status: String(a.status), proposed: a.status === "pending" && String(a.summary ?? "").startsWith(PROPOSED_VISIT), hasOrder: Number(a.hasOrder) === 1, planBrief: await this.care.planBrief(conn, a), planPicked: serviceNames2(await pickedOf(conn, [String(a.appointmentId)]).then((m) => m.get(String(a.appointmentId)) ?? [])) });
     const appointmentsToday = await count3("SELECT COUNT(*) AS n FROM `Appointment` WHERE shopId = ? AND status IN ('pending','confirmed') AND scheduledAt >= ? AND scheduledAt < ?", [shop.id, start, end]);
     const openOrders = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status NOT IN ('cerrada','cancelada')", [shop.id]);
     const budgetsWaiting = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status = 'presupuesto_enviado'", [shop.id]);
-    const open = await rows50(conn, "SELECT w.id, w.number, w.status, w.total, w.rejectionReason, w.appointmentId, w.createdAt, v.make, v.model, v.year, v.plate, EXISTS (SELECT 1 FROM `WorkOrderChange` c WHERE c.workOrderId = w.id AND c.status = 'pending') AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY w.number DESC LIMIT 20", [shop.id]);
-    const claimed = await rows50(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND EXISTS (SELECT 1 FROM `WorkOrderWarranty` g WHERE g.workOrderId = w.id AND g.status = 'abierta') ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err4) => {
+    const open = await rows51(conn, "SELECT w.id, w.number, w.status, w.total, w.rejectionReason, w.appointmentId, w.createdAt, v.make, v.model, v.year, v.plate, EXISTS (SELECT 1 FROM `WorkOrderChange` c WHERE c.workOrderId = w.id AND c.status = 'pending') AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY w.number DESC LIMIT 20", [shop.id]);
+    const claimed = await rows51(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND EXISTS (SELECT 1 FROM `WorkOrderWarranty` g WHERE g.workOrderId = w.id AND g.status = 'abierta') ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err4) => {
       if (err4.code === "ER_NO_SUCH_TABLE")
         return [];
       throw err4;
     });
-    const unpaid = await rows50(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.total > 0 AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND w.total > COALESCE((SELECT SUM(p.amount) FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status = 'pagado'), 0) ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err4) => {
+    const unpaid = await rows51(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.total > 0 AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND w.total > COALESCE((SELECT SUM(p.amount) FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status = 'pagado'), 0) ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err4) => {
       if (err4.code === "ER_NO_SUCH_TABLE")
         return [];
       throw err4;
     });
-    const toRefund = await rows50(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cancelada' AND w.updatedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND EXISTS (SELECT 1 FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status = 'pagado') ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err4) => {
+    const toRefund = await rows51(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cancelada' AND w.updatedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 30 DAY) AND EXISTS (SELECT 1 FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status = 'pagado') ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err4) => {
       if (err4.code === "ER_NO_SUCH_TABLE")
         return [];
       throw err4;
     });
-    const recentClosed = await rows50(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY w.number DESC LIMIT 10", [shop.id]);
+    const recentClosed = await rows51(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY w.number DESC LIMIT 10", [shop.id]);
     const orders = [...claimed, ...open];
     const shopVat = await vatById(conn, "WorkOrder", orders.map((o) => String(o.id)));
     const askedByAppointment = await pickedOf(conn, open.map((o) => String(o.appointmentId ?? "")).filter(Boolean));
@@ -130651,7 +130947,7 @@ var PilotPanelStore = class {
         orders.push(o);
     orders.push(...await ordersWithActiveClaim(conn, "shop", [shop.id], orders.map((o) => String(o.id))));
     if (!shop.isOwner && !shop.isAdmin && orders.length) {
-      const assigned = await rows50(conn, "SELECT workOrderId, memberUserId FROM `WorkOrderAssignment` WHERE workOrderId IN (?)", [orders.map((o) => String(o.id))]).catch((err4) => {
+      const assigned = await rows51(conn, "SELECT workOrderId, memberUserId FROM `WorkOrderAssignment` WHERE workOrderId IN (?)", [orders.map((o) => String(o.id))]).catch((err4) => {
         if (err4.code === "ER_NO_SUCH_TABLE")
           return [];
         throw err4;
@@ -130663,7 +130959,7 @@ var PilotPanelStore = class {
           orders.splice(i, 1);
       }
     }
-    const clients = await rows50(conn, "SELECT a.id AS appointmentId, a.vehicleId, u.name AS ownerName, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = a.ownerId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) AND a.scheduledAt = (SELECT MAX(a2.scheduledAt) FROM `Appointment` a2 WHERE a2.shopId = a.shopId AND a2.vehicleId = a.vehicleId AND a2.status <> 'cancelled') ORDER BY a.scheduledAt DESC LIMIT 60", [shop.id]);
+    const clients = await rows51(conn, "SELECT a.id AS appointmentId, a.vehicleId, u.name AS ownerName, v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = a.ownerId WHERE a.shopId = ? AND a.status <> 'cancelled' AND a.scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 365 DAY) AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = a.shopId) AND a.scheduledAt = (SELECT MAX(a2.scheduledAt) FROM `Appointment` a2 WHERE a2.shopId = a.shopId AND a2.vehicleId = a.vehicleId AND a2.status <> 'cancelled') ORDER BY a.scheduledAt DESC LIMIT 60", [shop.id]);
     const reminders = [];
     for (const c of clients) {
       const items = planItemsFor(await this.care.planVehicle(conn, c));
@@ -130684,9 +130980,9 @@ var PilotPanelStore = class {
     }
     const rank = { urgente: 0, pronto: 1, sin_dato: 2, al_dia: 3 };
     reminders.sort((a, b) => rank[a.state] - rank[b.state]);
-    const vehicles = await rows50(conn, "SELECT DISTINCT v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id=a.vehicleId WHERE a.shopId=? AND a.status<>'cancelled' AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId=v.id AND b.shopId=a.shopId) UNION SELECT DISTINCT v.* FROM `WorkOrder` w JOIN `Vehicle` v ON v.id=w.vehicleId WHERE w.shopId=? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId=v.id AND b.shopId=w.shopId) ORDER BY make,model LIMIT 60", [shop.id, shop.id]);
+    const vehicles = await rows51(conn, "SELECT DISTINCT v.* FROM `Appointment` a JOIN `Vehicle` v ON v.id=a.vehicleId WHERE a.shopId=? AND a.status<>'cancelled' AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId=v.id AND b.shopId=a.shopId) UNION SELECT DISTINCT v.* FROM `WorkOrder` w JOIN `Vehicle` v ON v.id=w.vehicleId WHERE w.shopId=? AND v.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId=v.id AND b.shopId=w.shopId) ORDER BY make,model LIMIT 60", [shop.id, shop.id]);
     const shopRecords = await orderRecords(conn, orders.map((o) => String(o.id)));
-    const vehicleOf2 = new Map((orders.length ? await rows50(conn, "SELECT id, vehicleId FROM `WorkOrder` WHERE id IN (?)", [orders.map((o) => String(o.id))]) : []).map((w) => [String(w.id), String(w.vehicleId)]));
+    const vehicleOf2 = new Map((orders.length ? await rows51(conn, "SELECT id, vehicleId FROM `WorkOrder` WHERE id IN (?)", [orders.map((o) => String(o.id))]) : []).map((w) => [String(w.id), String(w.vehicleId)]));
     const shopReady = await readyStates(conn, orders.map((o) => String(o.id)));
     const shopReview = await reviewStates(conn, orders.map((o) => String(o.id)));
     const shopReports = await orderReports(conn, orders.map((o) => String(o.id)));
@@ -130696,7 +130992,7 @@ var PilotPanelStore = class {
       role: "taller",
       shopName: shop.name,
       canManage: shop.isOwner || shop.isAdmin,
-      verificationStatus: String((await rows50(conn, "SELECT verificationStatus FROM `Shop` WHERE id = ?", [shop.id]))[0]?.verificationStatus ?? "") || null,
+      verificationStatus: String((await rows51(conn, "SELECT verificationStatus FROM `Shop` WHERE id = ?", [shop.id]))[0]?.verificationStatus ?? "") || null,
       rating: shop.isOwner || shop.isAdmin ? await shopRating(conn, shop.ownerUserId) : null,
       kpis: { appointmentsToday, openOrders, budgetsWaiting, clientsDue: reminders.length },
       appointments,
@@ -130714,10 +131010,10 @@ var PilotPanelStore = class {
     };
   }
   async lastInspection(conn, vehicle) {
-    const [last] = await rows50(conn, "SELECT i.id, i.km, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 1", [vehicle.id]);
+    const [last] = await rows51(conn, "SELECT i.id, i.km, i.note, i.createdAt, s.name AS shopName FROM `VehicleInspection` i JOIN `Shop` s ON s.id = i.shopId WHERE i.vehicleId = ? ORDER BY i.createdAt DESC, i.id DESC LIMIT 1", [vehicle.id]);
     if (!last)
       return null;
-    const entries = (await rows50(conn, "SELECT code, status, measure, unit FROM `VehicleInspectionItem` WHERE inspectionId = ?", [last.id])).map((r) => ({ code: String(r.code), status: r.status, measure: r.measure === null ? null : Number(r.measure), unit: r.unit === null ? null : String(r.unit) }));
+    const entries = (await rows51(conn, "SELECT code, status, measure, unit FROM `VehicleInspectionItem` WHERE inspectionId = ?", [last.id])).map((r) => ({ code: String(r.code), status: r.status, measure: r.measure === null ? null : Number(r.measure), unit: r.unit === null ? null : String(r.unit) }));
     const items = checklistFor(vehicle);
     return {
       date: new Date(last.createdAt).toISOString(),
@@ -130730,7 +131026,7 @@ var PilotPanelStore = class {
   async planServices(conn, vehicle) {
     const planned = await this.care.planVehicle(conn, vehicle);
     const items = planItemsFor(planned);
-    const overrides = await rows50(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]);
+    const overrides = await rows51(conn, "SELECT o.*,s.name AS shopName FROM `VehiclePlanOverride` o LEFT JOIN `Shop` s ON s.id=o.shopId WHERE o.vehicleId=?", [vehicle.id]);
     const byId = new Map(overrides.map((o) => [String(o.serviceId), o]));
     const visible = new Set(items.map((i) => i.serviceId));
     const result = items.map((i) => ({ serviceId: i.serviceId, serviceName: i.serviceName, intervalKm: i.intervalKm ?? null, intervalMonths: i.intervalMonths === null || i.intervalMonths === void 0 ? null : Math.round(i.intervalMonths), reason: i.reason, override: byId.get(i.serviceId) ?? null }));
@@ -130746,11 +131042,11 @@ var PilotPanelStore = class {
     return result;
   }
   async store(conn, userId) {
-    const [store] = await rows50(conn, "SELECT id, name, verificationStatus, zone, categories, ratingAvg, ratingCount FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
-    const [count3] = await rows50(conn, "SELECT COALESCE(SUM(lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND o.status = 'invited'), 0) AS toOffer, COALESCE(SUM(lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND o.status = 'offered'), 0) AS offered, COALESCE(SUM(lr.status = 'accepted' AND lr.chosenOfferId = o.id AND o.stockStatus IS NULL), 0) AS toConfirm, COALESCE(SUM(lr.status = 'accepted' AND lr.chosenOfferId = o.id AND o.stockStatus = 'confirmed'), 0) AS toDeliver, COALESCE(SUM(lr.status = 'delivered' AND lr.chosenOfferId = o.id), 0) AS delivered FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId WHERE o.businessUserId = ?", [userId]);
-    const orders = await rows50(conn, "SELECT lr.id, lr.category, lr.description, o.priceUsd, o.stockStatus, o.deliveryDate, v.make, v.model, v.year FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId AND lr.chosenOfferId = o.id JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND lr.status = 'accepted' ORDER BY lr.createdAt, lr.id LIMIT 10", [userId]);
+    const [store] = await rows51(conn, "SELECT id, name, verificationStatus, zone, categories, ratingAvg, ratingCount FROM `Store` WHERE userId = ? LIMIT 1", [userId]);
+    const [count3] = await rows51(conn, "SELECT COALESCE(SUM(lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND o.status = 'invited'), 0) AS toOffer, COALESCE(SUM(lr.status = 'open' AND lr.expiresAt > UTC_TIMESTAMP(3) AND o.status = 'offered'), 0) AS offered, COALESCE(SUM(lr.status = 'accepted' AND lr.chosenOfferId = o.id AND o.stockStatus IS NULL), 0) AS toConfirm, COALESCE(SUM(lr.status = 'accepted' AND lr.chosenOfferId = o.id AND o.stockStatus = 'confirmed'), 0) AS toDeliver, COALESCE(SUM(lr.status = 'delivered' AND lr.chosenOfferId = o.id), 0) AS delivered FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId WHERE o.businessUserId = ?", [userId]);
+    const orders = await rows51(conn, "SELECT lr.id, lr.category, lr.description, o.priceUsd, o.stockStatus, o.deliveryDate, v.make, v.model, v.year FROM `LocalOffer` o JOIN `LocalRequest` lr ON lr.id = o.requestId AND lr.chosenOfferId = o.id JOIN `Vehicle` v ON v.id = lr.vehicleId WHERE o.businessUserId = ? AND lr.status = 'accepted' ORDER BY lr.createdAt, lr.id LIMIT 10", [userId]);
     const status = store ? String(store.verificationStatus) : null;
-    const [rejected] = store && status === "rejected" ? await rows50(conn, "SELECT reason FROM `AuditLog` WHERE eventType = 'admin.verification.rejected' AND reason LIKE ? ORDER BY createdAt DESC LIMIT 1", [`%${String(store.id)}: %`]) : [];
+    const [rejected] = store && status === "rejected" ? await rows51(conn, "SELECT reason FROM `AuditLog` WHERE eventType = 'admin.verification.rejected' AND reason LIKE ? ORDER BY createdAt DESC LIMIT 1", [`%${String(store.id)}: %`]) : [];
     const toOffer2 = Number(count3?.toOffer ?? 0), offered = Number(count3?.offered ?? 0);
     return {
       role: "almacen",
@@ -130769,7 +131065,7 @@ async function pickedOf(conn, ids) {
   if (!ids.length)
     return out;
   try {
-    for (const r of await rows50(conn, "SELECT id, planServiceIds FROM `Appointment` WHERE id IN (?)", [ids])) {
+    for (const r of await rows51(conn, "SELECT id, planServiceIds FROM `Appointment` WHERE id IN (?)", [ids])) {
       try {
         const list7 = typeof r.planServiceIds === "string" ? JSON.parse(r.planServiceIds) : r.planServiceIds;
         if (Array.isArray(list7))
@@ -130788,12 +131084,12 @@ function serviceNames2(ids) {
   return ids.map((id3) => SERVICE_NAMES.get(id3)).filter((n3) => Boolean(n3));
 }
 async function shopAppointmentsFor(conn, shopId, vehicleId) {
-  const list7 = await rows50(conn, "SELECT id, scheduledAt FROM `Appointment` WHERE shopId = ? AND vehicleId = ? AND status IN ('pending','confirmed','completed') AND scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY scheduledAt DESC LIMIT 5", [shopId, vehicleId]);
+  const list7 = await rows51(conn, "SELECT id, scheduledAt FROM `Appointment` WHERE shopId = ? AND vehicleId = ? AND status IN ('pending','confirmed','completed') AND scheduledAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY scheduledAt DESC LIMIT 5", [shopId, vehicleId]);
   const picked = await pickedOf(conn, list7.map((a) => String(a.id)));
   return list7.map((a) => ({ id: String(a.id), ref: `C-${String(a.id).replace(/-/g, "").slice(0, 6).toUpperCase()}`, scheduledAt: a.scheduledAt, planServiceIds: picked.get(String(a.id)) ?? [] }));
 }
 async function publicNumber(conn) {
-  const [setting] = await rows50(conn, "SELECT value FROM `AppSetting` WHERE name = ?", [WHATSAPP_NUMBER_KEY]);
+  const [setting] = await rows51(conn, "SELECT value FROM `AppSetting` WHERE name = ?", [WHATSAPP_NUMBER_KEY]);
   return normalizeWhatsappNumber(String(setting?.value ?? process.env.WA_PUBLIC_NUMBER ?? ""));
 }
 
@@ -130825,8 +131121,8 @@ async function localAgentRoutes(app2, options = {}) {
         const [insert] = await conn.query("INSERT IGNORE INTO `PilotIdempotencyReceipt` (userId,idempotencyKey,requestHash,response,expiresAt) VALUES (?,?,?,JSON_OBJECT(),DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 30 DAY))", [owner, idempotencyKey, hash2]);
         if (Number(insert.affectedRows) === 1)
           return { status: "new" };
-        const [rows71] = await conn.query("SELECT requestHash,response FROM `PilotIdempotencyReceipt` WHERE userId=? AND idempotencyKey=?", [owner, idempotencyKey]);
-        const receipt = Array.isArray(rows71) ? rows71[0] : void 0;
+        const [rows72] = await conn.query("SELECT requestHash,response FROM `PilotIdempotencyReceipt` WHERE userId=? AND idempotencyKey=?", [owner, idempotencyKey]);
+        const receipt = Array.isArray(rows72) ? rows72[0] : void 0;
         if (!receipt || receipt.requestHash !== hash2)
           return { status: "conflict" };
         const response = typeof receipt.response === "string" ? JSON.parse(receipt.response) : receipt.response;
@@ -130931,8 +131227,8 @@ async function localAgentRoutes(app2, options = {}) {
       try {
         const conn = await (await Promise.resolve().then(() => (init_apply(), apply_exports))).openConnection();
         try {
-          const [rows71] = await conn.query("SELECT verificationStatus,motivo,documento IS NOT NULL AS hasDocument FROM `ExpertProfile` WHERE userId=? LIMIT 1", [request.userId]);
-          const profile = Array.isArray(rows71) ? rows71[0] : void 0;
+          const [rows72] = await conn.query("SELECT verificationStatus,motivo,documento IS NOT NULL AS hasDocument FROM `ExpertProfile` WHERE userId=? LIMIT 1", [request.userId]);
+          const profile = Array.isArray(rows72) ? rows72[0] : void 0;
           isVerifiedExpert2 = profile?.verificationStatus === "verificado";
           if (profile)
             expertProfile = { status: String(profile.verificationStatus), reason: profile.motivo ? String(profile.motivo) : null, hasDocument: Boolean(profile.hasDocument) };
@@ -131004,8 +131300,8 @@ async function localAgentRoutes(app2, options = {}) {
     }
   });
   app2.post("/pilot/vehicle-sheet/inspection", { preHandler: [pilot, authenticate] }, async (request, reply) => {
-    const entry = external_exports.object({ code: external_exports.string().regex(/^[A-Z][0-9]$/), status: external_exports.enum(["ok", "observar", "cambiar", "no_aplica"]).nullable(), measure: external_exports.number().min(0).max(1e3).nullable() }).strict();
-    const parsed = external_exports.object({ vehicleId: external_exports.string().uuid(), entries: external_exports.array(entry).min(1).max(60), note: external_exports.string().trim().max(300).nullable(), stage: external_exports.enum(["recepcion", "entrega"]).optional(), orderCode: external_exports.string().regex(/^OT-\d{1,8}$/i).optional() }).strict().refine((v) => !v.stage === !v.orderCode).safeParse(request.body);
+    const entry2 = external_exports.object({ code: external_exports.string().regex(/^[A-Z][0-9]$/), status: external_exports.enum(["ok", "observar", "cambiar", "no_aplica"]).nullable(), measure: external_exports.number().min(0).max(1e3).nullable() }).strict();
+    const parsed = external_exports.object({ vehicleId: external_exports.string().uuid(), entries: external_exports.array(entry2).min(1).max(60), note: external_exports.string().trim().max(300).nullable(), stage: external_exports.enum(["recepcion", "entrega"]).optional(), orderCode: external_exports.string().regex(/^OT-\d{1,8}$/i).optional() }).strict().refine((v) => !v.stage === !v.orderCode).safeParse(request.body);
     if (!parsed.success)
       return reply.code(422).send({ data: null, error: { code: "INVALID_INSPECTION", message: chatErrorMessage("INVALID_INSPECTION") } });
     const conn = await openConnection();
@@ -131571,7 +131867,7 @@ init_outbox_delivery_store();
 init_plan_store();
 init_billing_store();
 init_claim_store();
-import { randomUUID as randomUUID49 } from "node:crypto";
+import { randomUUID as randomUUID50 } from "node:crypto";
 var UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 var SUB_FILTERS = ["solicitada", "pendiente", "activa", "por_vencer", "vencida", "todas"];
 var CLAIM_FILTERS2 = ["en_admin", "abierto", "respondido", "acordado", "resuelto", "todos"];
@@ -131579,7 +131875,7 @@ var maskPhone = (value2) => {
   const d = String(value2 ?? "").replace(/\D/g, "");
   return d ? `\u2026${d.slice(-4)}` : null;
 };
-var text8 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
+var text9 = (value2, max) => typeof value2 === "string" ? value2.trim().slice(0, max) : "";
 async function operatorRoutes(app2, deps = {}) {
   const connect = () => openConnection();
   const keys = deps.keys ?? new MysqlOperatorKeyStore(connect);
@@ -131622,7 +131918,7 @@ async function operatorRoutes(app2, deps = {}) {
     if (kind !== "shop" && kind !== "store" || !UUID.test(id3))
       return fail25(reply, 404, "NOT_FOUND");
     const decision = body.decision === "verified" ? "verified" : body.decision === "rejected" ? "rejected" : null;
-    const reason = text8(body.reason, 500);
+    const reason = text9(body.reason, 500);
     if (!decision)
       return fail25(reply, 400, "DECISION_REQUIRED");
     if (decision === "rejected" && reason.length < 5)
@@ -131664,7 +131960,7 @@ async function operatorRoutes(app2, deps = {}) {
     const { id: id3 } = request.params;
     if (!UUID.test(id3))
       return fail25(reply, 404, "NOT_FOUND");
-    const reason = text8((request.body ?? {}).reason, 191);
+    const reason = text9((request.body ?? {}).reason, 191);
     if (reason.length < 5)
       return fail25(reply, 400, "REASON_REQUIRED");
     const sub = await plans.get(id3);
@@ -131683,7 +131979,7 @@ async function operatorRoutes(app2, deps = {}) {
     return { data: (await claims.list(filter)).map((c) => ({ id: c.id, orderNumber: c.orderNumber, status: c.status, shopName: c.shopName, dueAt: c.dueAt, createdAt: c.createdAt })), error: null };
   });
   app2.get("/operator/users", { preHandler: auth("lectura") }, async (request, reply) => {
-    const q = text8((request.query ?? {}).q, 80);
+    const q = text9((request.query ?? {}).q, 80);
     if (q.length < 3)
       return fail25(reply, 400, "QUERY_TOO_SHORT");
     const { items } = await registrations.searchUsers(q, 1);
@@ -131694,10 +131990,10 @@ async function operatorRoutes(app2, deps = {}) {
     const { id: id3 } = request.params;
     if (!UUID.test(id3))
       return fail25(reply, 404, "NOT_FOUND");
-    const message2 = text8((request.body ?? {}).text, 1e3);
+    const message2 = text9((request.body ?? {}).text, 1e3);
     if (message2.length < 5)
       return fail25(reply, 400, "TEXT_REQUIRED");
-    await billing.notify(id3, `operator:${randomUUID49()}`, message2);
+    await billing.notify(id3, `operator:${randomUUID50()}`, message2);
     await audit7(request, "support.notice", "User", id3, `aviso de soporte (${message2.length} caracteres)`);
     return { data: { userId: id3, queued: true }, error: null };
   });
@@ -131898,10 +132194,10 @@ function registerRealReadTools(agent, userId) {
     const vehicle = await prisma.vehicle.findFirst({ where: { id: parsed.data.vehicleId, userId, deletedAt: null } });
     if (!vehicle)
       return fail24("get_maintenance_plan", "Veh\xEDculo no disponible para este usuario.");
-    const text15 = planTextFor(vehicle);
-    if (!text15)
+    const text16 = planTextFor(vehicle);
+    if (!text16)
       return fail24("get_maintenance_plan", "Completa clase y combustible del veh\xEDculo con el equipo de AutoMantPro para generar el plan.");
-    return { toolName: "get_maintenance_plan", success: true, data: { vehicleId: vehicle.id, text: text15, source: "maintenance_catalog", manufacturerSpecific: false } };
+    return { toolName: "get_maintenance_plan", success: true, data: { vehicleId: vehicle.id, text: text16, source: "maintenance_catalog", manufacturerSpecific: false } };
   });
   agent.registerTool("get_alerts", async (args) => {
     const parsed = ownedVehicle.safeParse(args);
@@ -132025,9 +132321,9 @@ var AgentStateError = class extends Error {
 // packages/api/dist/infrastructure/agent/turn-store.js
 init_user_lock();
 init_apply();
-import { createHash as createHash14, randomUUID as randomUUID50 } from "node:crypto";
-var digest3 = (text15) => createHash14("sha256").update(text15).digest("hex");
-var rows53 = (result) => result[0];
+import { createHash as createHash14, randomUUID as randomUUID51 } from "node:crypto";
+var digest3 = (text16) => createHash14("sha256").update(text16).digest("hex");
+var rows54 = (result) => result[0];
 var json2 = (value2) => typeof value2 === "string" ? JSON.parse(value2) : value2;
 var missing4 = () => new AgentStateError("NOT_FOUND", 404, "Propuesta no disponible.");
 var MysqlAgentTurnStore = class {
@@ -132040,10 +132336,10 @@ var MysqlAgentTurnStore = class {
     const lock = agentUserLock(userId);
     let acquired = false;
     try {
-      acquired = Number(rows53(await conn.query("SELECT GET_LOCK(?, 0) AS acquired", [lock]))[0]?.acquired) === 1;
+      acquired = Number(rows54(await conn.query("SELECT GET_LOCK(?, 0) AS acquired", [lock]))[0]?.acquired) === 1;
       if (!acquired)
         throw new AgentStateError("AGENT_BUSY", 409, "Hay una solicitud en curso. Reintenta con el mismo identificador.");
-      const user = rows53(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL", [userId]))[0];
+      const user = rows54(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL", [userId]))[0];
       if (!user)
         throw new AgentStateError("CONSENT_REQUIRED", 403, "Se requiere una cuenta activa de due\xF1o con consentimiento registrado.");
       return await fn(conn);
@@ -132065,16 +132361,16 @@ var MysqlAgentTurnStore = class {
     };
   }
   async readProposal(conn, userId, id3) {
-    const row2 = rows53(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE id = ? AND userId = ? AND kind = 'register_vehicle'", [id3, userId]))[0];
+    const row2 = rows54(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE id = ? AND userId = ? AND kind = 'register_vehicle'", [id3, userId]))[0];
     if (!row2)
       throw missing4();
     return row2;
   }
   async appendMessages(conn, conversationId, userId, messages) {
-    const next = rows53(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
+    const next = rows54(await conn.query("SELECT GREATEST(UTC_TIMESTAMP(3), DATE_ADD(COALESCE(MAX(createdAt), UTC_TIMESTAMP(3)), INTERVAL 1000 MICROSECOND)) AS nextAt FROM `Message` WHERE conversationId = ?", [conversationId]))[0]?.nextAt;
     const start = new Date(next).getTime();
     for (const [index, message2] of messages.entries()) {
-      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID50(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
+      await conn.query("INSERT INTO `Message` (id, conversationId, `from`, direction, type, body, createdAt) VALUES (?, ?, ?, ?, 'text', ?, ?)", [randomUUID51(), conversationId, message2.role === "user" ? userId : "automantpro-agent", message2.role === "user" ? "incoming" : "outgoing", message2.content, new Date(start + index)]);
     }
     await conn.query("UPDATE `Conversation` SET turnCount = turnCount + ?, updatedAt = UTC_TIMESTAMP(3) WHERE id = ?", [messages.length, conversationId]);
   }
@@ -132083,9 +132379,9 @@ var MysqlAgentTurnStore = class {
   }
   async getState(userId) {
     return this.withUser(userId, async (conn) => {
-      const conversation = rows53(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY updatedAt DESC, id DESC LIMIT 1", [userId]))[0];
-      const history = conversation ? rows53(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversation.id])).reverse().map((row2) => ({ role: row2.direction === "incoming" ? "user" : "assistant", content: String(row2.body ?? "") })) : [];
-      const actions = rows53(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND kind = 'register_vehicle' ORDER BY createdAt DESC, id DESC LIMIT 20", [userId]));
+      const conversation = rows54(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY updatedAt DESC, id DESC LIMIT 1", [userId]))[0];
+      const history = conversation ? rows54(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversation.id])).reverse().map((row2) => ({ role: row2.direction === "incoming" ? "user" : "assistant", content: String(row2.body ?? "") })) : [];
+      const actions = rows54(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND kind = 'register_vehicle' ORDER BY createdAt DESC, id DESC LIMIT 20", [userId]));
       return { history, proposals: actions.map((row2) => this.proposal(row2)) };
     });
   }
@@ -132093,19 +132389,19 @@ var MysqlAgentTurnStore = class {
     return this.withUser(userId, async (conn) => {
       const turnId = digest3(`${userId}:${requestId}`);
       const fingerprint = digest3(message2);
-      const prior = rows53(await conn.query("SELECT fingerprint, response FROM `AgentTurn` WHERE id = ? AND userId = ?", [turnId, userId]))[0];
+      const prior = rows54(await conn.query("SELECT fingerprint, response FROM `AgentTurn` WHERE id = ? AND userId = ?", [turnId, userId]))[0];
       if (prior && prior.fingerprint !== fingerprint)
         throw new AgentStateError("IDEMPOTENCY_CONFLICT", 409, "Ese identificador ya se us\xF3 con otro mensaje.");
       if (prior?.response)
         return json2(prior.response);
       if (!prior)
         await conn.query("INSERT INTO `AgentTurn` (id, userId, fingerprint) VALUES (?, ?, ?)", [turnId, userId, fingerprint]);
-      let conversationId = rows53(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
+      let conversationId = rows54(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0]?.id;
       if (!conversationId) {
-        conversationId = randomUUID50();
+        conversationId = randomUUID51();
         await conn.query("INSERT INTO `Conversation` (id, userAId, agent, turnCount, createdAt, updatedAt) VALUES (?, ?, 1, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [conversationId, userId]);
       }
-      const historyRows = rows53(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
+      const historyRows = rows54(await conn.query("SELECT direction, body FROM `Message` WHERE conversationId = ? AND type = 'text' ORDER BY createdAt DESC, id DESC LIMIT 20", [conversationId]));
       const history = historyRows.reverse().map((row2) => ({ role: row2.direction === "incoming" ? "user" : "assistant", content: String(row2.body ?? "") }));
       const reply = await respond({ history, proposeVehicle: async (args) => {
         const parsed = proposedVehicleSchema.safeParse(args);
@@ -132116,7 +132412,7 @@ var MysqlAgentTurnStore = class {
         await conn.query("INSERT IGNORE INTO `AgentAction` (id, userId, turnId, kind, args, expiresAt) VALUES (?, ?, ?, 'register_vehicle', ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 15 MINUTE))", [id3, userId, turnId, encoded]);
         return this.proposal(await this.readProposal(conn, userId, id3));
       } });
-      const actions = rows53(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND turnId = ? ORDER BY createdAt, id", [userId, turnId]));
+      const actions = rows54(await conn.query("SELECT *, expiresAt <= UTC_TIMESTAMP(3) AS expired FROM `AgentAction` WHERE userId = ? AND turnId = ? ORDER BY createdAt, id", [userId, turnId]));
       const response = { reply, proposals: actions.map((row2) => this.proposal(row2)) };
       await conn.query("START TRANSACTION");
       try {
@@ -132134,7 +132430,7 @@ var MysqlAgentTurnStore = class {
     return this.withUser(userId, async (conn) => {
       await conn.query("START TRANSACTION");
       try {
-        const user = rows53(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL FOR UPDATE", [userId]))[0];
+        const user = rows54(await conn.query("SELECT id FROM `User` WHERE id = ? AND role = 'dueno' AND deletedAt IS NULL AND consentAt IS NOT NULL AND consentVersion IS NOT NULL FOR UPDATE", [userId]))[0];
         if (!user)
           throw new AgentStateError("CONSENT_REQUIRED", 403, "La cuenta no est\xE1 habilitada para esta operaci\xF3n.");
         const row2 = await this.readProposal(conn, userId, id3);
@@ -132145,12 +132441,12 @@ var MysqlAgentTurnStore = class {
         if (Number(row2.expired))
           throw new AgentStateError("PROPOSAL_EXPIRED", 410, "La propuesta caduc\xF3; solicita una nueva.");
         const vehicle = json2(row2.args);
-        const vehicleId = randomUUID50();
+        const vehicleId = randomUUID51();
         await conn.query("INSERT INTO `Vehicle` (id, userId, make, model, year, currentKm, vehicleClass, fuel, plate, usageProfile, remindersOptIn, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3))", [vehicleId, userId, vehicle.brand, vehicle.model, vehicle.year, vehicle.mileage, vehicle.vehicleClass, vehicle.fuel, vehicle.plate, vehicle.usageProfile]);
         const result = JSON.stringify({ vehicleId });
         await conn.query("UPDATE `AgentAction` SET result = ? WHERE id = ? AND userId = ?", [result, id3, userId]);
-        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID50(), userId, vehicleId, JSON.stringify({ actionId: id3 })]);
-        const conversation = rows53(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
+        await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'agent.vehicle.confirmed', ?, 'dueno', 'Vehicle', ?, ?, UTC_TIMESTAMP(3))", [randomUUID51(), userId, vehicleId, JSON.stringify({ actionId: id3 })]);
+        const conversation = rows54(await conn.query("SELECT id FROM `Conversation` WHERE userAId = ? AND agent = 1 ORDER BY createdAt DESC LIMIT 1", [userId]))[0];
         if (conversation)
           await this.appendMessages(conn, String(conversation.id), userId, [{ role: "assistant", content: `Registro confirmado por el usuario. Veh\xEDculo: ${vehicle.brand} ${vehicle.model} ${vehicle.year}. ID: ${vehicleId}.` }]);
         await conn.query("COMMIT");
@@ -132334,8 +132630,8 @@ init_entry();
 
 // packages/api/dist/application/content/catalog.js
 init_maintenance();
-function slugify(text15) {
-  return text15.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+function slugify(text16) {
+  return text16.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 var money3 = (value2) => `US$ ${value2.toFixed(0)}`;
 function buildServicePages() {
@@ -132804,21 +133100,21 @@ var findLanding = (slug) => LANDING_PAGES.find((p) => p.slug === slug) ?? null;
 var SUBSERVICE_NAMES = new Map(serviceTaxonomy.categories.flatMap((category) => category.subservices.map((sub) => [sub.id, sub.name])));
 function kmTable(fuelId) {
   const seen = /* @__PURE__ */ new Set();
-  const rows71 = [];
+  const rows72 = [];
   for (const rule of resolveRules("liviano", fuelId)) {
     if (seen.has(rule.serviceId))
       continue;
     seen.add(rule.serviceId);
     const km10 = typeof rule.intervalKm === "number" ? rule.intervalKm : null;
     const factor = typeof rule.severeFactor === "number" ? rule.severeFactor : null;
-    rows71.push({
+    rows72.push({
       name: SUBSERVICE_NAMES.get(rule.serviceId) ?? rule.serviceId,
       km: km10,
       months: typeof rule.intervalMonths === "number" ? rule.intervalMonths : null,
       severeKm: km10 !== null && factor !== null ? Math.round(km10 * factor / 500) * 500 : null
     });
   }
-  return rows71.sort((a, b) => (a.km ?? Number.MAX_SAFE_INTEGER) - (b.km ?? Number.MAX_SAFE_INTEGER) || a.name.localeCompare(b.name, "es"));
+  return rows72.sort((a, b) => (a.km ?? Number.MAX_SAFE_INTEGER) - (b.km ?? Number.MAX_SAFE_INTEGER) || a.name.localeCompare(b.name, "es"));
 }
 
 // packages/api/dist/interfaces/seo/index.js
@@ -133550,8 +133846,8 @@ var km5 = (value2) => value2 === null ? "\u2014" : value2.toLocaleString("es-EC"
 var months = (value2) => value2 === null ? "\u2014" : value2 % 12 === 0 ? `${value2 / 12} ${value2 === 12 ? "a\xF1o" : "a\xF1os"}` : `${value2} m`;
 function blockHtml(block) {
   const parts = [];
-  for (const text15 of block.text ?? [])
-    parts.push(`<p class="texto">${escapeHtml(text15)}</p>`);
+  for (const text16 of block.text ?? [])
+    parts.push(`<p class="texto">${escapeHtml(text16)}</p>`);
   if (block.list?.length)
     parts.push(`<ul class="puntos">${block.list.map((item2) => `<li>${escapeHtml(item2)}</li>`).join("")}</ul>`);
   if (block.steps?.length)
@@ -134961,8 +135257,8 @@ async function whatsappIngressRoutes(app2, options) {
       return reply.code(422).send({ error: "INVALID_NOTIFICATION" });
     const pending = [];
     let notificationCount = 0;
-    for (const entry of parsed.data.entry) {
-      for (const change of entry.changes) {
+    for (const entry2 of parsed.data.entry) {
+      for (const change of entry2.changes) {
         if (change.value.metadata.phone_number_id !== env.WHATSAPP_PHONE_ID)
           return reply.code(422).send({ error: "INVALID_PHONE_ID" });
         notificationCount += (change.value.messages?.length ?? 0) + (change.value.statuses?.length ?? 0);
@@ -135022,11 +135318,11 @@ var WhatsAppCloudSender = class {
   async send(message2) {
     if (!message2.allowedOutsideHours && outsideDeliveryHours(/* @__PURE__ */ new Date(), this.env))
       return { ok: false, code: "OUTSIDE_HOURS", retryAfter: 300 };
-    const text15 = await this.post(message2.phone, { type: "text", text: { preview_url: false, body: message2.message } });
-    if (text15.ok || text15.code !== "TEMPLATE_REQUIRED")
-      return text15;
+    const text16 = await this.post(message2.phone, { type: "text", text: { preview_url: false, body: message2.message } });
+    if (text16.ok || text16.code !== "TEMPLATE_REQUIRED")
+      return text16;
     const template = this.template(message2);
-    return template ? this.post(message2.phone, template) : text15;
+    return template ? this.post(message2.phone, template) : text16;
   }
   /** Plantilla aprobada para el aviso, o null si aún no se configuró su nombre. */
   template(message2) {
@@ -135044,8 +135340,8 @@ var WhatsAppCloudSender = class {
     const name = this.env.WA_TEMPLATE_NOTICE;
     if (!name)
       return null;
-    const text15 = message2.message.replace(/\s*[\r\n\t]+\s*/g, " | ").replace(/ {2,}/g, " ").trim().slice(0, 900);
-    return text15 ? { type: "template", template: { name, language, components: [{ type: "body", parameters: [{ type: "text", text: text15 }] }] } } : null;
+    const text16 = message2.message.replace(/\s*[\r\n\t]+\s*/g, " | ").replace(/ {2,}/g, " ").trim().slice(0, 900);
+    return text16 ? { type: "template", template: { name, language, components: [{ type: "body", parameters: [{ type: "text", text: text16 }] }] } } : null;
   }
   async post(to, content) {
     const controller = new AbortController();
@@ -135110,13 +135406,13 @@ init_plan_text();
 init_catalogs();
 init_entitlements();
 init_catalog_store();
-import { randomUUID as randomUUID52 } from "node:crypto";
+import { randomUUID as randomUUID53 } from "node:crypto";
 
 // packages/api/dist/infrastructure/plans/renewal-notices.js
 init_catalog();
 init_plans();
-import { randomUUID as randomUUID51 } from "node:crypto";
-var rows55 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomUUID as randomUUID52 } from "node:crypto";
+var rows56 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 function ecDate(value2) {
   return new Intl.DateTimeFormat("es-EC", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Guayaquil" }).format(value2);
 }
@@ -135129,14 +135425,14 @@ function expiryText(plan, code5) {
 Para volver a ${plan}: Renovar ${code5}`;
 }
 async function notify4(conn, userId, dedup, message2) {
-  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID51(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
+  const [result] = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'plan.notice', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID52(), dedup.slice(0, 191), userId, JSON.stringify({ message: message2 })]);
   return Number(result.affectedRows ?? 0) === 1;
 }
 async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date()) {
   let renewals = 0;
   let expired = 0;
   const soon = new Date(now.getTime() + RENEWAL_NOTICE_DAYS * 864e5);
-  const ending = await rows55(conn, "SELECT s.id, s.userId, s.plan, s.number, s.expiresAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'activa' AND s.renewalNoticeAt IS NULL AND s.expiresAt > ? AND s.expiresAt <= ? AND u.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND (n.status IN ('solicitada','pendiente') OR (n.status = 'activa' AND n.expiresAt > s.expiresAt))) LIMIT 500", [now, soon]);
+  const ending = await rows56(conn, "SELECT s.id, s.userId, s.plan, s.number, s.expiresAt FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'activa' AND s.renewalNoticeAt IS NULL AND s.expiresAt > ? AND s.expiresAt <= ? AND u.deletedAt IS NULL AND NOT EXISTS (SELECT 1 FROM `Subscription` n WHERE n.userId = s.userId AND n.plan = s.plan AND n.id <> s.id AND (n.status IN ('solicitada','pendiente') OR (n.status = 'activa' AND n.expiresAt > s.expiresAt))) LIMIT 500", [now, soon]);
   for (const sub of ending) {
     const code5 = subscriptionCode(Number(sub.number ?? 0));
     if (await notify4(conn, String(sub.userId), `plan-renewal:${String(sub.id)}`, renewalText(planName(String(sub.plan), catalog), code5, new Date(String(sub.expiresAt)))))
@@ -135144,9 +135440,9 @@ async function subscriptionNotices(conn, catalog, now = /* @__PURE__ */ new Date
     await conn.query("UPDATE `Subscription` SET renewalNoticeAt = ? WHERE id = ?", [now, sub.id]);
   }
   await conn.query("UPDATE `Subscription` SET status = 'vencida', active = 0, updatedAt = CURRENT_TIMESTAMP(3) WHERE status = 'activa' AND expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
-  const lapsed = await rows55(conn, "SELECT s.id, s.userId, s.plan, s.number FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'vencida' AND s.expiryNoticeAt IS NULL AND s.expiresAt > DATE_SUB(?, INTERVAL 7 DAY) AND u.deletedAt IS NULL LIMIT 500", [now]);
+  const lapsed = await rows56(conn, "SELECT s.id, s.userId, s.plan, s.number FROM `Subscription` s JOIN `User` u ON u.id = s.userId WHERE s.status = 'vencida' AND s.expiryNoticeAt IS NULL AND s.expiresAt > DATE_SUB(?, INTERVAL 7 DAY) AND u.deletedAt IS NULL LIMIT 500", [now]);
   for (const sub of lapsed) {
-    const [still] = await rows55(conn, "SELECT 1 AS x FROM `Subscription` WHERE userId = ? AND status = 'activa' AND expiresAt > ? LIMIT 1", [sub.userId, now]);
+    const [still] = await rows56(conn, "SELECT 1 AS x FROM `Subscription` WHERE userId = ? AND status = 'activa' AND expiresAt > ? LIMIT 1", [sub.userId, now]);
     if (!still) {
       const code5 = subscriptionCode(Number(sub.number ?? 0));
       if (await notify4(conn, String(sub.userId), `plan-expired:${String(sub.id)}`, expiryText(planName(String(sub.plan), catalog), code5)))
@@ -135164,7 +135460,7 @@ init_fleet_store();
 init_workshop_map();
 init_reminder_done();
 init_rtv_calendar();
-var rows56 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows57 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var km6 = (n3, vehicleClass2) => `${Math.round(n3).toLocaleString("es-EC")} ${usageUnitOf(String(vehicleClass2 ?? ""))}`;
 var VehicleReminders = class {
   connect;
@@ -135191,7 +135487,7 @@ var VehicleReminders = class {
         await subscriptionNotices(conn, await loadCatalog(conn), now);
       } catch {
       }
-      const vehicles = await rows56(conn, "SELECT v.*, u.city AS ownerCity FROM `Vehicle` v JOIN `User` u ON u.id = v.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE v.remindersOptIn = TRUE AND v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ORDER BY v.id LIMIT 1000");
+      const vehicles = await rows57(conn, "SELECT v.*, u.city AS ownerCity FROM `Vehicle` v JOIN `User` u ON u.id = v.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE v.remindersOptIn = TRUE AND v.deletedAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL ORDER BY v.id LIMIT 1000");
       const levels = /* @__PURE__ */ new Map();
       for (const vehicle of vehicles) {
         const owner = String(vehicle.userId);
@@ -135238,14 +135534,14 @@ Para pedir talleres: Buscar servicio | categor\xEDa | ciudad | sector | descripc
         if (!created)
           continue;
         planReminders++;
-        const [shop] = await rows56(conn, "SELECT s.userId, a.id AS appointmentId FROM `Service` sv JOIN `Shop` s ON s.id = sv.shopId LEFT JOIN `Appointment` a ON a.shopId = s.id AND a.vehicleId = sv.vehicleId AND a.status <> 'cancelled' WHERE sv.vehicleId = ? AND sv.createdAt > DATE_SUB(?, INTERVAL 365 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = sv.vehicleId AND b.shopId = s.id) ORDER BY sv.createdAt DESC, a.scheduledAt DESC LIMIT 1", [vehicle.id, now]);
+        const [shop] = await rows57(conn, "SELECT s.userId, a.id AS appointmentId FROM `Service` sv JOIN `Shop` s ON s.id = sv.shopId LEFT JOIN `Appointment` a ON a.shopId = s.id AND a.vehicleId = sv.vehicleId AND a.status <> 'cancelled' WHERE sv.vehicleId = ? AND sv.createdAt > DATE_SUB(?, INTERVAL 365 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = sv.vehicleId AND b.shopId = s.id) ORDER BY sv.createdAt DESC, a.scheduledAt DESC LIMIT 1", [vehicle.id, now]);
         if (shop) {
           const ref4 = shop.appointmentId ? ` Puedes proponer la visita: Pr\xF3xima visita C-${String(shop.appointmentId).replace(/-/g, "").slice(0, 6).toUpperCase()} | AAAA-MM-DD | HH:mm` : "";
           await this.notify(conn, String(shop.userId), `reminder-shop:${String(vehicle.id)}:${key}`.slice(0, 191), `\u{1F514} Tu cliente con ${label5} tiene mantenimiento pr\xF3ximo:
 ${lines.join("\n")}${ref4}`);
         }
       }
-      const dueAlerts = await rows56(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.source, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
+      const dueAlerts = await rows57(conn, "SELECT a.id, a.label, a.dueKm, a.dueAt, a.source, a.shopId, a.vehicleId, v.fleetId, v.userId AS ownerId, v.make, v.model, v.year, v.currentKm, s.userId AS shopUserId FROM `Alert` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `User` u ON u.id = v.userId LEFT JOIN `Shop` s ON s.id = a.shopId WHERE a.triggeredAt IS NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND ((a.dueAt IS NOT NULL AND a.dueAt <= ?) OR (a.dueKm IS NOT NULL AND v.currentKm >= a.dueKm)) ORDER BY a.createdAt LIMIT 500", [now]);
       for (const a of dueAlerts) {
         const label5 = `${a.make} ${a.model} ${a.year}`;
         const deferred = a.source === "pendiente";
@@ -135262,7 +135558,7 @@ ${lines.join("\n")}${ref4}`);
         alerts++;
       }
       const week = Math.floor((now.getTime() - 5 * 36e5) / (7 * 864e5));
-      const silent = await rows56(conn, "SELECT a.vehicleId, m.userId, v.make, v.model, v.plate, v.unitCode FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL AND v.deletedAt IS NULL AND f.status = 'activa' AND a.startsAt < DATE_SUB(?, INTERVAL 14 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleOdometerReading` r WHERE r.vehicleId = a.vehicleId AND r.createdAt > DATE_SUB(?, INTERVAL 14 DAY)) LIMIT 500", [now, now]);
+      const silent = await rows57(conn, "SELECT a.vehicleId, m.userId, v.make, v.model, v.plate, v.unitCode FROM `FleetAssignment` a JOIN `FleetMember` m ON m.id = a.memberId JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Fleet` f ON f.id = a.fleetId WHERE a.endsAt IS NULL AND m.status = 'active' AND m.userId IS NOT NULL AND v.deletedAt IS NULL AND f.status = 'activa' AND a.startsAt < DATE_SUB(?, INTERVAL 14 DAY) AND NOT EXISTS (SELECT 1 FROM `VehicleOdometerReading` r WHERE r.vehicleId = a.vehicleId AND r.createdAt > DATE_SUB(?, INTERVAL 14 DAY)) LIMIT 500", [now, now]);
       for (const d of silent) {
         if (await this.notify(conn, String(d.userId), `kmask:${String(d.vehicleId)}:${week}`, `\u{1F4CF} \xBFCu\xE1ntos kil\xF3metros marca ${unitLabel(d)} ${d.make} ${d.model}? Responde: Kilometraje | km. Con ese dato sabemos cu\xE1ndo le toca mantenimiento.`))
           kmReminders++;
@@ -135271,23 +135567,23 @@ ${lines.join("\n")}${ref4}`);
       if (local.getUTCDate() === 1 && local.getUTCHours() >= 8) {
         const monthEnd = new Date(ecMonthStart(now).getTime() - 1);
         const label5 = new Intl.DateTimeFormat("es-EC", { month: "long", year: "numeric", timeZone: "America/Guayaquil" }).format(monthEnd);
-        const fleets = await rows56(conn, "SELECT f.id, f.name, f.ownerUserId FROM `Fleet` f JOIN `User` u ON u.id = f.ownerUserId WHERE f.status = 'activa' AND u.deletedAt IS NULL LIMIT 500");
+        const fleets = await rows57(conn, "SELECT f.id, f.name, f.ownerUserId FROM `Fleet` f JOIN `User` u ON u.id = f.ownerUserId WHERE f.status = 'activa' AND u.deletedAt IS NULL LIMIT 500");
         for (const f of fleets) {
-          const text15 = `\u{1F4CA} Reporte de ${label5}
+          const text16 = `\u{1F4CA} Reporte de ${label5}
 ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
-          const managers = await rows56(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role IN ('admin','supervisor') AND status = 'active' AND userId IS NOT NULL", [f.id]);
+          const managers = await rows57(conn, "SELECT userId FROM `FleetMember` WHERE fleetId = ? AND role IN ('admin','supervisor') AND status = 'active' AND userId IS NOT NULL", [f.id]);
           for (const recipient of /* @__PURE__ */ new Set([String(f.ownerUserId), ...managers.map((m) => String(m.userId))]))
-            if (await this.notify(conn, recipient, `fleetreport:${String(f.id)}:${local.toISOString().slice(0, 7)}:${recipient}`.slice(0, 191), text15))
+            if (await this.notify(conn, recipient, `fleetreport:${String(f.id)}:${local.toISOString().slice(0, 7)}:${recipient}`.slice(0, 191), text16))
               fleetReports++;
         }
       }
       const ecHour2 = (now.getUTCHours() + 19) % 24;
       if (ecHour2 >= 19) {
         const day5 = new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
-        const shops = await rows56(conn, "SELECT s.id, s.name, s.userId FROM `Shop` s JOIN `User` u ON u.id = s.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE s.verificationStatus IN ('verified','pending') AND u.deletedAt IS NULL AND EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.shopId = s.id AND (w.createdAt >= DATE_SUB(?, INTERVAL 1 DAY) OR w.status NOT IN ('cerrada','cancelada'))) LIMIT 500", [now]);
+        const shops = await rows57(conn, "SELECT s.id, s.name, s.userId FROM `Shop` s JOIN `User` u ON u.id = s.userId JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE s.verificationStatus IN ('verified','pending') AND u.deletedAt IS NULL AND EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.shopId = s.id AND (w.createdAt >= DATE_SUB(?, INTERVAL 1 DAY) OR w.status NOT IN ('cerrada','cancelada'))) LIMIT 500", [now]);
         for (const shop of shops) {
           const report = await shopReport(conn, String(shop.id), String(shop.name), "hoy", now);
-          const admins = await rows56(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shop.id]);
+          const admins = await rows57(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shop.id]);
           for (const recipient of /* @__PURE__ */ new Set([String(shop.userId), ...admins.map((a) => String(a.userId))]))
             await this.notify(conn, recipient, `shopreport:${String(shop.id)}:${day5}:${recipient}`.slice(0, 191), report);
           reports++;
@@ -135300,7 +135596,7 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
   }
   /** True when the reminder was new; the dedup key makes repeated runs harmless. */
   async notify(conn, recipient, dedup, message2, kind = "care.reminder") {
-    const [result] = await conn.query("INSERT IGNORE INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?)", [randomUUID52(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
+    const [result] = await conn.query("INSERT IGNORE INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?)", [randomUUID53(), dedup, recipient, kind, JSON.stringify({ message: message2 })]);
     return Number(result.affectedRows) === 1;
   }
   start(intervalMs = 36e5, onError = () => {
@@ -135327,7 +135623,7 @@ ${await fleetSummaryText(conn, String(f.id), String(f.name), monthEnd)}`;
 
 // packages/api/dist/infrastructure/messaging/deadline-notices.js
 init_apply();
-import { randomUUID as randomUUID53 } from "node:crypto";
+import { randomUUID as randomUUID54 } from "node:crypto";
 
 // packages/api/dist/application/deadlines/policy.js
 var DEADLINE_NOTICE_KIND = "plazo.aviso";
@@ -135365,7 +135661,7 @@ init_workflow();
 init_fleet_access();
 init_order_ready();
 init_account_links();
-var rows57 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows58 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var HOUR = 36e5;
 var DAY3 = 24 * HOUR;
 var PROPOSED_VISIT2 = "Visita propuesta por el taller";
@@ -135417,9 +135713,9 @@ var DeadlineNotices = class {
   /** Verdadero solo si el aviso era nuevo: la dedupKey hace inofensivas las repeticiones (mysql2 cuenta como «encontradas» las filas repetidas, por eso se consulta antes). */
   async notify(conn, recipient, dedup, message2, kind = DEADLINE_NOTICE_KIND) {
     const key = dedup.slice(0, 191);
-    if ((await rows57(conn, "SELECT 1 AS found FROM `NotificationOutbox` WHERE dedupKey = ?", [key])).length)
+    if ((await rows58(conn, "SELECT 1 AS found FROM `NotificationOutbox` WHERE dedupKey = ?", [key])).length)
       return false;
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID53(), key, recipient, kind, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID54(), key, recipient, kind, JSON.stringify({ message: message2 })]);
     return true;
   }
   /** Dueño del vehículo y, si es de flota, quienes lo administran (igual que los avisos de la orden). */
@@ -135432,12 +135728,12 @@ var DeadlineNotices = class {
   }
   /** Dueño del taller y administradores activos. */
   async toShop(conn, shopId, dedup, message2, kind = DEADLINE_NOTICE_KIND) {
-    const [shop] = await rows57(conn, "SELECT userId FROM `Shop` WHERE id = ?", [shopId]);
+    const [shop] = await rows58(conn, "SELECT userId FROM `Shop` WHERE id = ?", [shopId]);
     if (!shop)
       return false;
     const owner = String(shop.userId);
     const created = await this.notify(conn, owner, dedup, message2);
-    const admins = await rows57(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shopId]);
+    const admins = await rows58(conn, "SELECT userId FROM `ShopMember` WHERE shopId = ? AND role = 'admin' AND status = 'active' AND userId IS NOT NULL", [shopId]);
     for (const a of admins)
       if (String(a.userId) !== owner)
         await this.notify(conn, String(a.userId), `${dedup.slice(0, 150)}:${String(a.userId)}`, message2, kind);
@@ -135448,13 +135744,13 @@ var DeadlineNotices = class {
     const out = { citaTaller24: 0, citaDueno48: 0 };
     const base = "SELECT a.id, a.shopId, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year, s.name AS shopName FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Shop` s ON s.id = a.shopId WHERE a.status = 'pending' AND (a.summary IS NULL OR a.summary NOT LIKE ?) AND a.scheduledAt > ? AND a.createdAt <= ? AND a.createdAt > ? ORDER BY a.createdAt LIMIT " + LIMIT;
     const w24 = window2(now, DEADLINES.citaTallerRecordatorioHoras);
-    for (const a of await rows57(conn, base, [`${PROPOSED_VISIT2}%`, now, w24.before, w24.after])) {
+    for (const a of await rows58(conn, base, [`${PROPOSED_VISIT2}%`, now, w24.before, w24.after])) {
       const code5 = shortCode("C", String(a.id));
       if (await this.toShop(conn, String(a.shopId), `plazo:cita-taller-24:${String(a.id)}`, `\u23F0 Recordatorio: la cita ${code5} de un cliente con ${vehicleOf(a)} para el ${formatEcDateTime(a.scheduledAt)} sigue sin tu respuesta. Responde: Confirmar ${code5} \xB7 Reprogramar cita ${code5} | AAAA-MM-DD | HH:mm \xB7 Rechazar cita ${code5} | motivo`))
         out.citaTaller24++;
     }
     const w48 = window2(now, DEADLINES.citaDuenoAvisoHoras);
-    for (const a of await rows57(conn, base, [`${PROPOSED_VISIT2}%`, now, w48.before, w48.after])) {
+    for (const a of await rows58(conn, base, [`${PROPOSED_VISIT2}%`, now, w48.before, w48.after])) {
       const code5 = shortCode("C", String(a.id));
       if (await this.toOwner(conn, String(a.ownerId), String(a.vehicleId), `plazo:cita-dueno-48:${String(a.id)}`, `\u{1F552} ${a.shopName} todav\xEDa no responde tu cita ${code5} para el ${formatEcDateTime(a.scheduledAt)}. Si no quieres seguir esperando, puedes cancelarla con: Cancelar cita ${code5} y buscar otro taller con: ${HOW_TO_AGAIN}`))
         out.citaDueno48++;
@@ -135465,7 +135761,7 @@ var DeadlineNotices = class {
   async fechasPropuestas(conn, now) {
     const w = window2(now, DEADLINES.fechaPropuestaHoras);
     let n3 = 0;
-    for (const a of await rows57(conn, "SELECT a.id, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year, s.name AS shopName FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Shop` s ON s.id = a.shopId WHERE a.status = 'pending' AND a.summary LIKE ? AND a.scheduledAt > ? AND a.createdAt <= ? AND a.createdAt > ? ORDER BY a.createdAt LIMIT " + LIMIT, [`${PROPOSED_VISIT2}%`, now, w.before, w.after])) {
+    for (const a of await rows58(conn, "SELECT a.id, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year, s.name AS shopName FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Shop` s ON s.id = a.shopId WHERE a.status = 'pending' AND a.summary LIKE ? AND a.scheduledAt > ? AND a.createdAt <= ? AND a.createdAt > ? ORDER BY a.createdAt LIMIT " + LIMIT, [`${PROPOSED_VISIT2}%`, now, w.before, w.after])) {
       const code5 = shortCode("C", String(a.id));
       if (await this.toOwner(conn, String(a.ownerId), String(a.vehicleId), `plazo:fecha-propuesta-24:${String(a.id)}`, `\u23F0 ${a.shopName} te propuso el ${formatEcDateTime(a.scheduledAt)} para tu ${vehicleOf(a)} y espera tu respuesta. Responde: Aceptar visita ${code5} \xB7 Rechazar visita ${code5}`))
         n3++;
@@ -135476,7 +135772,7 @@ var DeadlineNotices = class {
   async ingresos(conn, now) {
     const w = window2(now, DEADLINES.ingresoHoras);
     let n3 = 0;
-    for (const o of await rows57(conn, "SELECT w.id, w.number, w.ownerId, w.vehicleId, v.make, v.model, v.year, s.name AS shopName FROM `VehicleIntake` i JOIN `WorkOrder` w ON w.id = i.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE i.ownerAnswer IS NULL AND w.status IN (?) AND i.receivedAt <= ? AND i.receivedAt > ? ORDER BY i.receivedAt LIMIT " + LIMIT, [OPEN_STATUSES, w.before, w.after])) {
+    for (const o of await rows58(conn, "SELECT w.id, w.number, w.ownerId, w.vehicleId, v.make, v.model, v.year, s.name AS shopName FROM `VehicleIntake` i JOIN `WorkOrder` w ON w.id = i.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE i.ownerAnswer IS NULL AND w.status IN (?) AND i.receivedAt <= ? AND i.receivedAt > ? ORDER BY i.receivedAt LIMIT " + LIMIT, [OPEN_STATUSES, w.before, w.after])) {
       const code5 = workOrderCode(Number(o.number));
       if (await this.toOwner(conn, String(o.ownerId), String(o.vehicleId), `plazo:ingreso-24:${String(o.id)}`, `\u23F0 ${o.shopName} registr\xF3 el ingreso de tu ${vehicleOf(o)} (${code5}) y falta tu respuesta. Responde: Confirmo ingreso ${code5} \xB7 Observo ingreso ${code5} | qu\xE9 no coincide`, DEADLINE_ORDER_NOTICE_KIND))
         n3++;
@@ -135487,15 +135783,15 @@ var DeadlineNotices = class {
   async presupuestos(conn, now) {
     const out = { presupuesto24: 0, presupuestoTaller72: 0 };
     const query = "SELECT w.id, w.number, w.ownerId, w.shopId, w.vehicleId, w.total, v.make, v.model, v.year, s.name AS shopName FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE w.status = 'presupuesto_enviado' AND w.updatedAt <= ? AND w.updatedAt > ? ORDER BY w.updatedAt LIMIT " + LIMIT;
-    const sendNo = async (id3) => Math.max(1, Number((await rows57(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'care.budget.sent'", [id3]))[0]?.n ?? 1));
+    const sendNo = async (id3) => Math.max(1, Number((await rows58(conn, "SELECT COUNT(*) AS n FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId = ? AND eventType = 'care.budget.sent'", [id3]))[0]?.n ?? 1));
     const w24 = window2(now, DEADLINES.presupuestoRecordatorioHoras);
-    for (const o of await rows57(conn, query, [w24.before, w24.after])) {
+    for (const o of await rows58(conn, query, [w24.before, w24.after])) {
       const code5 = workOrderCode(Number(o.number));
       if (await this.toOwner(conn, String(o.ownerId), String(o.vehicleId), `plazo:presupuesto-24:${String(o.id)}:${await sendNo(o.id)}`, `\u23F0 ${o.shopName} te envi\xF3 el presupuesto ${code5} de tu ${vehicleOf(o)} por ${usd5(o.total)} y espera tu respuesta. No har\xE1n ning\xFAn trabajo con costo sin tu aprobaci\xF3n. Responde: Aprobar ${code5} \xB7 Aprobar ${code5} | 1,3 \xB7 Rechazar ${code5} | motivo`, DEADLINE_ORDER_NOTICE_KIND))
         out.presupuesto24++;
     }
     const w72 = window2(now, DEADLINES.presupuestoTallerHoras);
-    for (const o of await rows57(conn, query, [w72.before, w72.after])) {
+    for (const o of await rows58(conn, query, [w72.before, w72.after])) {
       const code5 = workOrderCode(Number(o.number));
       if (await this.toShop(conn, String(o.shopId), `plazo:presupuesto-taller-72:${String(o.id)}:${await sendNo(o.id)}`, `\u{1F552} El cliente con ${vehicleOf(o)} todav\xEDa no responde el presupuesto ${code5} (${usd5(o.total)}). Si ya no se har\xE1 el trabajo, puedes cancelar la orden con: Cancelar orden ${code5} | motivo`, DEADLINE_ORDER_NOTICE_KIND))
         out.presupuestoTaller72++;
@@ -135506,7 +135802,7 @@ var DeadlineNotices = class {
   async entregas(conn, now) {
     const w = window2(now, DEADLINES.entregaHoras);
     let n3 = 0;
-    for (const c of await rows57(conn, "SELECT c.id, w.number, w.ownerId, w.vehicleId, v.make, v.model, v.year, s.name AS shopName FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'entrega' AND c.status = 'pending' AND w.status IN (?) AND c.createdAt <= ? AND c.createdAt > ? ORDER BY c.createdAt LIMIT " + LIMIT, [OPEN_STATUSES, w.before, w.after])) {
+    for (const c of await rows58(conn, "SELECT c.id, w.number, w.ownerId, w.vehicleId, v.make, v.model, v.year, s.name AS shopName FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'entrega' AND c.status = 'pending' AND w.status IN (?) AND c.createdAt <= ? AND c.createdAt > ? ORDER BY c.createdAt LIMIT " + LIMIT, [OPEN_STATUSES, w.before, w.after])) {
       const code5 = workOrderCode(Number(c.number));
       if (await this.toOwner(conn, String(c.ownerId), String(c.vehicleId), `plazo:entrega-24:${String(c.id)}`, `\u23F0 Tu ${vehicleOf(c)} est\xE1 listo en ${c.shopName} (${code5}) y falta tu respuesta sobre la entrega. Responde: Acepto entrega ${code5} \xB7 Rechazo entrega ${code5} | motivo`, DEADLINE_ORDER_NOTICE_KIND))
         n3++;
@@ -135518,7 +135814,7 @@ var DeadlineNotices = class {
     let n3 = 0;
     for (const days2 of PICKUP_REMINDER_DAYS) {
       const w = window2(now, days2 * 24);
-      for (const o of await rows57(conn, "SELECT w.id, w.number, w.ownerId, w.shopId, w.vehicleId, v.make, v.model, v.year, s.name AS shopName FROM `WorkOrderReady` r JOIN `WorkOrder` w ON w.id = r.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE r.qcAt IS NOT NULL AND r.readyAt IS NOT NULL AND w.status IN (?) AND r.qcAt <= ? AND r.qcAt > ? ORDER BY r.qcAt LIMIT " + LIMIT, [OPEN_STATUSES, w.before, w.after])) {
+      for (const o of await rows58(conn, "SELECT w.id, w.number, w.ownerId, w.shopId, w.vehicleId, v.make, v.model, v.year, s.name AS shopName FROM `WorkOrderReady` r JOIN `WorkOrder` w ON w.id = r.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE r.qcAt IS NOT NULL AND r.readyAt IS NOT NULL AND w.status IN (?) AND r.qcAt <= ? AND r.qcAt > ? ORDER BY r.qcAt LIMIT " + LIMIT, [OPEN_STATUSES, w.before, w.after])) {
         const code5 = workOrderCode(Number(o.number));
         if (await this.toOwner(conn, String(o.ownerId), String(o.vehicleId), `plazo:retiro-${days2}:${String(o.id)}`, `\u{1F697} Tu ${vehicleOf(o)} est\xE1 listo en ${o.shopName} (${code5}) desde hace ${days2 === 1 ? "1 d\xEDa" : `${days2} d\xEDas`}. Coordina el retiro con el taller. M\xEDralo en tu perfil: ${accountLink("ordenes")}`, DEADLINE_ORDER_NOTICE_KIND))
           n3++;
@@ -135532,7 +135828,7 @@ var DeadlineNotices = class {
   async cobros(conn, now) {
     const w = window2(now, DEADLINES.cobroHoras);
     let n3 = 0;
-    for (const p of await rows57(conn, "SELECT p.id, p.amount, w.number, w.ownerId, w.vehicleId, s.name AS shopName FROM `WorkOrderPayment` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE p.status = 'informado' AND w.status <> 'cancelada' AND p.createdAt <= ? AND p.createdAt > ? ORDER BY p.createdAt LIMIT " + LIMIT, [w.before, w.after])) {
+    for (const p of await rows58(conn, "SELECT p.id, p.amount, w.number, w.ownerId, w.vehicleId, s.name AS shopName FROM `WorkOrderPayment` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE p.status = 'informado' AND w.status <> 'cancelada' AND p.createdAt <= ? AND p.createdAt > ? ORDER BY p.createdAt LIMIT " + LIMIT, [w.before, w.after])) {
       const code5 = workOrderCode(Number(p.number));
       if (await this.toOwner(conn, String(p.ownerId), String(p.vehicleId), `plazo:cobro-48:${String(p.id)}`, `\u23F0 ${p.shopName} inform\xF3 un cobro de ${usd5(p.amount)} de la orden ${code5} y falta tu respuesta. Responde: Confirmo pago ${code5} \xB7 Observo pago ${code5} | qu\xE9 no coincide`, DEADLINE_ORDER_NOTICE_KIND))
         n3++;
@@ -135543,7 +135839,7 @@ var DeadlineNotices = class {
   async solicitudesVencidas(conn, now) {
     let n3 = 0;
     const since = new Date(now.getTime() - DEADLINES.ventanaMaximaDias * DAY3);
-    for (const r of await rows57(conn, "SELECT lr.id, lr.ownerId, lr.kind, lr.category, (SELECT COUNT(*) FROM `LocalOffer` o WHERE o.requestId = lr.id AND o.status <> 'invited') AS offers FROM `LocalRequest` lr WHERE lr.status = 'open' AND lr.expiresAt <= ? AND lr.expiresAt > ? ORDER BY lr.expiresAt LIMIT " + LIMIT, [now, since])) {
+    for (const r of await rows58(conn, "SELECT lr.id, lr.ownerId, lr.kind, lr.category, (SELECT COUNT(*) FROM `LocalOffer` o WHERE o.requestId = lr.id AND o.status <> 'invited') AS offers FROM `LocalRequest` lr WHERE lr.status = 'open' AND lr.expiresAt <= ? AND lr.expiresAt > ? ORDER BY lr.expiresAt LIMIT " + LIMIT, [now, since])) {
       const code5 = shortCode("S", String(r.id));
       const offers = Number(r.offers);
       const received = offers === 0 ? "No recibi\xF3 ofertas" : offers === 1 ? "Recibi\xF3 1 oferta" : `Recibi\xF3 ${offers} ofertas`;
@@ -135557,8 +135853,8 @@ var DeadlineNotices = class {
   async repuestosSinStock(conn, now) {
     const w = window2(now, DEADLINES.repuestoStockHoras);
     let n3 = 0;
-    for (const r of await rows57(conn, "SELECT lr.id, lr.ownerId, lr.chosenOfferId, o.businessName FROM `LocalRequest` lr JOIN `LocalOffer` o ON o.id = lr.chosenOfferId WHERE lr.kind = 'repuesto' AND lr.status = 'accepted' AND o.stockStatus IS NULL ORDER BY lr.createdAt LIMIT 1000")) {
-      const [accepted2] = await rows57(conn, "SELECT createdAt FROM `NotificationOutbox` WHERE dedupKey = ?", [`decision:${String(r.id)}:${String(r.chosenOfferId)}`]);
+    for (const r of await rows58(conn, "SELECT lr.id, lr.ownerId, lr.chosenOfferId, o.businessName FROM `LocalRequest` lr JOIN `LocalOffer` o ON o.id = lr.chosenOfferId WHERE lr.kind = 'repuesto' AND lr.status = 'accepted' AND o.stockStatus IS NULL ORDER BY lr.createdAt LIMIT 1000")) {
+      const [accepted2] = await rows58(conn, "SELECT createdAt FROM `NotificationOutbox` WHERE dedupKey = ?", [`decision:${String(r.id)}:${String(r.chosenOfferId)}`]);
       const at = accepted2 ? new Date(accepted2.createdAt) : null;
       if (!at || at > w.before || at <= w.after)
         continue;
@@ -135572,7 +135868,7 @@ var DeadlineNotices = class {
   async citasProximas(conn, now) {
     let n3 = 0;
     const until = new Date(now.getTime() + DEADLINES.citaPreviaHoras * HOUR);
-    for (const a of await rows57(conn, "SELECT a.id, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year, s.name AS shopName FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Shop` s ON s.id = a.shopId WHERE a.status = 'confirmed' AND a.scheduledAt > ? AND a.scheduledAt <= ? AND NOT EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id AND w.status <> 'cancelada') ORDER BY a.scheduledAt LIMIT " + LIMIT, [now, until])) {
+    for (const a of await rows58(conn, "SELECT a.id, a.ownerId, a.vehicleId, a.scheduledAt, v.make, v.model, v.year, s.name AS shopName FROM `Appointment` a JOIN `Vehicle` v ON v.id = a.vehicleId JOIN `Shop` s ON s.id = a.shopId WHERE a.status = 'confirmed' AND a.scheduledAt > ? AND a.scheduledAt <= ? AND NOT EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.appointmentId = a.id AND w.status <> 'cancelada') ORDER BY a.scheduledAt LIMIT " + LIMIT, [now, until])) {
       const code5 = shortCode("C", String(a.id));
       if (await this.toOwner(conn, String(a.ownerId), String(a.vehicleId), `plazo:cita-previa-24:${String(a.id)}`, `\u{1F4C5} Recordatorio: tienes cita ${code5} en ${a.shopName} el ${formatEcDateTime(a.scheduledAt)} para tu ${vehicleOf(a)}. Si no puedes ir, avisa con: Cancelar cita ${code5} | motivo`))
         n3++;
@@ -135585,7 +135881,7 @@ var DeadlineNotices = class {
     const lastDue = ecDay5(new Date(now.getTime() - DEADLINES.promesaVencidaDias * DAY3));
     const oldest = ecDay5(new Date(now.getTime() - (DEADLINES.promesaVencidaDias + DEADLINES.ventanaMaximaDias) * DAY3));
     let n3 = 0;
-    for (const p of await rows57(conn, "SELECT w.id, w.number, w.shopId, DATE_FORMAT(p.promisedDate, '%Y-%m-%d') AS promised, v.make, v.model, v.year FROM `WorkOrderPromise` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.status IN (?) AND p.promisedDate <= ? AND p.promisedDate > ? ORDER BY p.promisedDate LIMIT " + LIMIT, [OPEN_STATUSES, lastDue, oldest])) {
+    for (const p of await rows58(conn, "SELECT w.id, w.number, w.shopId, DATE_FORMAT(p.promisedDate, '%Y-%m-%d') AS promised, v.make, v.model, v.year FROM `WorkOrderPromise` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.status IN (?) AND p.promisedDate <= ? AND p.promisedDate > ? ORDER BY p.promisedDate LIMIT " + LIMIT, [OPEN_STATUSES, lastDue, oldest])) {
       const code5 = workOrderCode(Number(p.number));
       const [y, m, d] = String(p.promised).split("-");
       if (await this.toShop(conn, String(p.shopId), `plazo:promesa-vencida:${String(p.id)}:${String(p.promised)}`, `\u26A0\uFE0F La fecha de entrega prometida para la orden ${code5} (${vehicleOf(p)}) era el ${d}/${m}/${y} y la orden sigue abierta. Si necesitas m\xE1s tiempo, informa la nueva fecha al cliente con: Fecha entrega ${code5} | AAAA-MM-DD | motivo`, DEADLINE_ORDER_NOTICE_KIND))
@@ -135685,10 +135981,10 @@ var ClaimDeadlines = class {
 // packages/api/dist/infrastructure/messaging/verification-deadlines.js
 init_apply();
 init_admin_alerts();
-import { randomUUID as randomUUID54 } from "node:crypto";
+import { randomUUID as randomUUID55 } from "node:crypto";
 var VERIFICATION_HOURS = 72;
 var VERIFICATION_ADMIN_HOURS = 48;
-var rows58 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+var rows59 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var KINDS = [
   { table: "Shop", label: "taller", event: "verification" },
   { table: "Store", label: "almac\xE9n", event: "verification" }
@@ -135706,20 +136002,20 @@ var VerificationDeadlines = class {
     try {
       for (const kind of KINDS) {
         const at = (hours2) => new Date(now.getTime() - hours2 * 36e5);
-        const pending = await rows58(conn, `SELECT b.id, b.userId, b.name, b.createdAt FROM \`${kind.table}\` b JOIN \`User\` u ON u.id = b.userId WHERE b.verificationStatus = 'pending' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND b.createdAt <= ? ORDER BY b.createdAt LIMIT 100`, [at(VERIFICATION_ADMIN_HOURS)]);
+        const pending = await rows59(conn, `SELECT b.id, b.userId, b.name, b.createdAt FROM \`${kind.table}\` b JOIN \`User\` u ON u.id = b.userId WHERE b.verificationStatus = 'pending' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND b.createdAt <= ? ORDER BY b.createdAt LIMIT 100`, [at(VERIFICATION_ADMIN_HOURS)]);
         for (const business of pending) {
           const id3 = String(business.id);
           const late2 = new Date(business.createdAt).getTime() <= at(VERIFICATION_HOURS).getTime();
           for (const step of late2 ? [48, 72] : [48]) {
             const event = `verification.overdue${step}`;
-            const [done] = await rows58(conn, "SELECT id FROM `AuditLog` WHERE eventType = ? AND entityId = ? LIMIT 1", [event, id3]);
+            const [done] = await rows59(conn, "SELECT id FROM `AuditLog` WHERE eventType = ? AND entityId = ? LIMIT 1", [event, id3]);
             if (done)
               continue;
-            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID54(), event, kind.table, id3, JSON.stringify({ hours: step })]);
+            await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID55(), event, kind.table, id3, JSON.stringify({ hours: step })]);
             adminAlerts++;
             if (step === 72) {
               const message2 = `Tu ${kind.label} ${String(business.name)} sigue en revisi\xF3n despu\xE9s de ${VERIFICATION_HOURS} horas. Ya avisamos al equipo de AutoMantPro para que lo revise cuanto antes. Si te falta alg\xFAn dato, rev\xEDsalo en automantpro.app/cuenta. Mientras tanto puedes ofertar cuando un cliente te invite, con el aviso de que est\xE1s en revisi\xF3n.`;
-              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'verification.overdue', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID54(), `verify-72:${id3}`, String(business.userId), JSON.stringify({ message: message2 })]);
+              await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'verification.overdue', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID55(), `verify-72:${id3}`, String(business.userId), JSON.stringify({ message: message2 })]);
               businessNotices++;
             }
           }
@@ -135765,13 +136061,13 @@ init_messages();
 init_admin_alerts();
 init_work_order_claims();
 init_deferred_work();
-import { randomUUID as randomUUID55 } from "node:crypto";
+import { randomUUID as randomUUID56 } from "node:crypto";
 var FINDING_REMIND_HOURS = 12;
 var FINDING_EXPIRE_HOURS = 24;
 var BALANCE_DAYS = [3, 7];
 var RETURN_HOURS = 48;
 var NEXT_VISIT_DAYS = 7;
-var rows59 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
+var rows60 = async (conn, sql, params2 = []) => (await conn.query(sql, params2))[0];
 var MISSING12 = ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"];
 var skipMissing = (err4) => {
   if (MISSING12.includes(String(err4.code)))
@@ -135789,13 +136085,13 @@ var CareDeadlines = class {
   }
   /** Encola un aviso; devuelve true solo si es nuevo. */
   async once(conn, recipient, key, kind, message2) {
-    if ((await rows59(conn, "SELECT id FROM `NotificationOutbox` WHERE dedupKey = ? LIMIT 1", [key])).length)
+    if ((await rows60(conn, "SELECT id FROM `NotificationOutbox` WHERE dedupKey = ? LIMIT 1", [key])).length)
       return false;
-    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID55(), key, recipient, kind, JSON.stringify({ message: message2 })]);
+    await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID56(), key, recipient, kind, JSON.stringify({ message: message2 })]);
     return true;
   }
   async audit(conn, eventType, entityType, entityId, after) {
-    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID55(), eventType, entityType, entityId, JSON.stringify(after)]);
+    await conn.query("INSERT INTO `AuditLog` (id, eventType, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, ?, NULL, ?, ?, ?, UTC_TIMESTAMP(3))", [randomUUID56(), eventType, entityType, entityId, JSON.stringify(after)]);
   }
   async run(now = /* @__PURE__ */ new Date()) {
     const conn = await this.connect();
@@ -135816,7 +136112,7 @@ var CareDeadlines = class {
   }
   // ---------- X3: novedad sin respuesta ----------
   async findings(conn, now, result) {
-    const pending = await rows59(conn, "SELECT c.id, c.createdAt, c.total, c.description, w.id AS orderId, w.number, w.ownerId, w.vehicleId, w.shopId, w.status AS orderStatus, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND c.createdAt <= ? ORDER BY c.createdAt LIMIT 100", [hoursAgo(now, FINDING_REMIND_HOURS)]);
+    const pending = await rows60(conn, "SELECT c.id, c.createdAt, c.total, c.description, w.id AS orderId, w.number, w.ownerId, w.vehicleId, w.shopId, w.status AS orderStatus, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.kind = 'novedad' AND c.status = 'pending' AND c.createdAt <= ? ORDER BY c.createdAt LIMIT 100", [hoursAgo(now, FINDING_REMIND_HOURS)]);
     for (const c of pending) {
       const ref4 = changeRef(c.id), code5 = workOrderCode(Number(c.number)), amount = formatUsd(Number(c.total ?? 0));
       const created = new Date(c.createdAt).getTime();
@@ -135836,7 +136132,7 @@ var CareDeadlines = class {
   }
   // ---------- C1: saldo de la orden ----------
   async balances(conn, now, result) {
-    const due = await rows59(conn, "SELECT w.id, w.number, w.ownerId, w.total, w.closedAt, s.userId AS shopUserId, s.name AS shopName, COALESCE((SELECT SUM(p.amount) FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status IN ('pagado','informado')), 0) AS covered FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.status = 'cerrada' AND w.total > 0 AND w.closedAt <= ? AND w.closedAt > ? ORDER BY w.closedAt LIMIT 200", [hoursAgo(now, BALANCE_DAYS[0] * 24), hoursAgo(now, 30 * 24)]).catch(skipMissing);
+    const due = await rows60(conn, "SELECT w.id, w.number, w.ownerId, w.total, w.closedAt, s.userId AS shopUserId, s.name AS shopName, COALESCE((SELECT SUM(p.amount) FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status IN ('pagado','informado')), 0) AS covered FROM `WorkOrder` w JOIN `Shop` s ON s.id = w.shopId WHERE w.status = 'cerrada' AND w.total > 0 AND w.closedAt <= ? AND w.closedAt > ? ORDER BY w.closedAt LIMIT 200", [hoursAgo(now, BALANCE_DAYS[0] * 24), hoursAgo(now, 30 * 24)]).catch(skipMissing);
     for (const o of due) {
       const balance = Math.round((Number(o.total) - Number(o.covered)) * 100) / 100;
       if (balance <= 9e-3)
@@ -135854,7 +136150,7 @@ var CareDeadlines = class {
   }
   // ---------- R4: saldo del repuesto ----------
   async partBalances(conn, now, result) {
-    const due = await rows59(conn, "SELECT r.id, r.ownerId, r.category, o.priceUsd, o.businessName, o.businessUserId, (SELECT MIN(a.createdAt) FROM `AuditLog` a WHERE a.entityId = r.id AND a.eventType IN ('local.deliveredRef','local.receivedRef','local.delivered')) AS deliveredAt, COALESCE((SELECT SUM(p.amount) FROM `PartPayment` p WHERE p.requestId = r.id AND p.status IN ('pagado','informado')), 0) AS covered FROM `LocalRequest` r JOIN `LocalOffer` o ON o.id = r.chosenOfferId WHERE r.kind = 'repuesto' AND r.status = 'delivered' AND o.priceUsd > 0 AND r.createdAt > ? ORDER BY r.createdAt LIMIT 200", [hoursAgo(now, 60 * 24)]).catch(skipMissing);
+    const due = await rows60(conn, "SELECT r.id, r.ownerId, r.category, o.priceUsd, o.businessName, o.businessUserId, (SELECT MIN(a.createdAt) FROM `AuditLog` a WHERE a.entityId = r.id AND a.eventType IN ('local.deliveredRef','local.receivedRef','local.delivered')) AS deliveredAt, COALESCE((SELECT SUM(p.amount) FROM `PartPayment` p WHERE p.requestId = r.id AND p.status IN ('pagado','informado')), 0) AS covered FROM `LocalRequest` r JOIN `LocalOffer` o ON o.id = r.chosenOfferId WHERE r.kind = 'repuesto' AND r.status = 'delivered' AND o.priceUsd > 0 AND r.createdAt > ? ORDER BY r.createdAt LIMIT 200", [hoursAgo(now, 60 * 24)]).catch(skipMissing);
     for (const r of due) {
       if (!r.deliveredAt)
         continue;
@@ -135874,7 +136170,7 @@ var CareDeadlines = class {
   }
   // ---------- R2: devolución sin respuesta del almacén ----------
   async returns(conn, now, result) {
-    const due = await rows59(conn, "SELECT t.id, t.requestId, r.ownerId, o.businessUserId FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId WHERE t.status = 'solicitada' AND t.createdAt <= ? ORDER BY t.createdAt LIMIT 50", [hoursAgo(now, RETURN_HOURS)]).catch(skipMissing);
+    const due = await rows60(conn, "SELECT t.id, t.requestId, r.ownerId, o.businessUserId FROM `PartReturn` t JOIN `LocalRequest` r ON r.id = t.requestId JOIN `LocalOffer` o ON o.id = t.offerId WHERE t.status = 'solicitada' AND t.createdAt <= ? ORDER BY t.createdAt LIMIT 50", [hoursAgo(now, RETURN_HOURS)]).catch(skipMissing);
     let escalated = 0;
     for (const t of due) {
       const [changed2] = await conn.query("UPDATE `PartReturn` SET status = 'en_admin', escalatedAt = UTC_TIMESTAMP(3), escalationReason = 'El almac\xE9n no respondi\xF3 en 48 horas.' WHERE id = ? AND status = 'solicitada'", [t.id]).catch((err4) => {
@@ -135896,17 +136192,17 @@ var CareDeadlines = class {
   }
   // ---------- P3: próxima visita propuesta por el taller ----------
   async visits(conn, now, result) {
-    const soon = await rows59(conn, "SELECT a.id, a.ownerId, a.status, a.scheduledAt, s.name AS shopName FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.summary LIKE 'Visita propuesta por el taller%' AND a.status IN ('pending','confirmed') AND a.scheduledAt > ? AND a.scheduledAt <= ? AND a.createdAt <= ? ORDER BY a.scheduledAt LIMIT 200", [now, new Date(now.getTime() + NEXT_VISIT_DAYS * 864e5), hoursAgo(now, 24)]);
+    const soon = await rows60(conn, "SELECT a.id, a.ownerId, a.status, a.scheduledAt, s.name AS shopName FROM `Appointment` a JOIN `Shop` s ON s.id = a.shopId WHERE a.summary LIKE 'Visita propuesta por el taller%' AND a.status IN ('pending','confirmed') AND a.scheduledAt > ? AND a.scheduledAt <= ? AND a.createdAt <= ? ORDER BY a.scheduledAt LIMIT 200", [now, new Date(now.getTime() + NEXT_VISIT_DAYS * 864e5), hoursAgo(now, 24)]);
     for (const a of soon) {
       const code5 = shortCode("C", String(a.id)), when15 = formatEcDateTime(a.scheduledAt);
-      const text15 = a.status === "confirmed" ? `\u{1F4C5} Recordatorio: tu pr\xF3xima visita en ${String(a.shopName)} es el ${when15} (${code5}). Si no puedes ir, av\xEDsale al taller.` : `\u{1F4C5} ${String(a.shopName)} te propuso la pr\xF3xima visita para el ${when15} y todav\xEDa no respondes. Responde: Aceptar visita ${code5} \xB7 Rechazar visita ${code5}`;
-      if (await this.once(conn, String(a.ownerId), `nextvisit-7d:${String(a.id)}`, "care.visit", text15))
+      const text16 = a.status === "confirmed" ? `\u{1F4C5} Recordatorio: tu pr\xF3xima visita en ${String(a.shopName)} es el ${when15} (${code5}). Si no puedes ir, av\xEDsale al taller.` : `\u{1F4C5} ${String(a.shopName)} te propuso la pr\xF3xima visita para el ${when15} y todav\xEDa no respondes. Responde: Aceptar visita ${code5} \xB7 Rechazar visita ${code5}`;
+      if (await this.once(conn, String(a.ownerId), `nextvisit-7d:${String(a.id)}`, "care.visit", text16))
         result.visitReminders++;
     }
   }
   // ---------- F3: reembolso decidido en un reclamo y sin registrar ----------
   async compensations(conn, now, result) {
-    const due = await rows59(conn, "SELECT c.id, c.compensationUsd, w.number, w.ownerId, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.compensationKind = 'reembolso' AND c.resolvedAt <= ? AND NOT EXISTS (SELECT 1 FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status IN ('reembolso_informado','reembolso_confirmado') AND p.createdAt >= c.resolvedAt) ORDER BY c.resolvedAt LIMIT 100", [hoursAgo(now, COMPENSATION_DAYS * 24)]).catch(skipMissing);
+    const due = await rows60(conn, "SELECT c.id, c.compensationUsd, w.number, w.ownerId, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderClaim` c JOIN `WorkOrder` w ON w.id = c.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE c.compensationKind = 'reembolso' AND c.resolvedAt <= ? AND NOT EXISTS (SELECT 1 FROM `WorkOrderPayment` p WHERE p.workOrderId = w.id AND p.status IN ('reembolso_informado','reembolso_confirmado') AND p.createdAt >= c.resolvedAt) ORDER BY c.resolvedAt LIMIT 100", [hoursAgo(now, COMPENSATION_DAYS * 24)]).catch(skipMissing);
     for (const c of due) {
       const code5 = workOrderCode(Number(c.number)), amount = formatUsd(Number(c.compensationUsd ?? 0));
       if (!await this.once(conn, String(c.shopUserId), `claim-comp:${String(c.id)}`, "care.claim", `\u23F0 Pasaron ${COMPENSATION_DAYS} d\xEDas desde que AutoMantPro decidi\xF3 el reclamo de ${code5} con un reembolso de ${amount} y todav\xEDa no est\xE1 registrado. Cuando lo devuelvas, escribe: Reembolso ${code5} | ${Number(c.compensationUsd ?? 0)} | forma (| referencia)`))
@@ -135917,7 +136213,7 @@ var CareDeadlines = class {
   }
   // ---------- R1: pedido de repuesto de una orden sin ofertas ----------
   async quietPartRequests(conn, now, result) {
-    const quiet = await rows59(conn, "SELECT r.id, r.ownerId, r.category, w.number FROM `LocalRequest` r JOIN `WorkOrder` w ON w.id = r.workOrderId WHERE r.kind = 'repuesto' AND r.status = 'open' AND r.createdAt <= ? AND r.expiresAt > ? AND NOT EXISTS (SELECT 1 FROM `LocalOffer` o WHERE o.requestId = r.id AND o.status <> 'invited') ORDER BY r.createdAt LIMIT 100", [hoursAgo(now, 24), now]).catch(skipMissing);
+    const quiet = await rows60(conn, "SELECT r.id, r.ownerId, r.category, w.number FROM `LocalRequest` r JOIN `WorkOrder` w ON w.id = r.workOrderId WHERE r.kind = 'repuesto' AND r.status = 'open' AND r.createdAt <= ? AND r.expiresAt > ? AND NOT EXISTS (SELECT 1 FROM `LocalOffer` o WHERE o.requestId = r.id AND o.status <> 'invited') ORDER BY r.createdAt LIMIT 100", [hoursAgo(now, 24), now]).catch(skipMissing);
     for (const r of quiet) {
       const ref4 = shortCode("S", String(r.id)), code5 = workOrderCode(Number(r.number));
       if (await this.once(conn, String(r.ownerId), `part-quiet:${String(r.id)}`, "local.request", `\u23F3 El pedido de repuesto ${ref4} (${String(r.category)}) para ${code5} lleva 24 horas sin ofertas. Puedes esperar a que venza o pedirlo de nuevo con m\xE1s detalle (marca, c\xF3digo o foto): Repuesto ${code5} | categor\xEDa | descripci\xF3n`))
@@ -135927,7 +136223,7 @@ var CareDeadlines = class {
   // ---------- X4: fecha prometida vencida ----------
   async promises(conn, now, result) {
     const today = new Date(now.getTime() - 5 * 36e5).toISOString().slice(0, 10);
-    const due = await rows59(conn, "SELECT p.workOrderId, DATE_FORMAT(p.promisedDate, '%Y-%m-%d') AS promised, w.number, w.ownerId, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderPromise` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE p.promisedDate < ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY p.promisedDate LIMIT 200", [today]).catch(skipMissing);
+    const due = await rows60(conn, "SELECT p.workOrderId, DATE_FORMAT(p.promisedDate, '%Y-%m-%d') AS promised, w.number, w.ownerId, s.userId AS shopUserId, s.name AS shopName FROM `WorkOrderPromise` p JOIN `WorkOrder` w ON w.id = p.workOrderId JOIN `Shop` s ON s.id = w.shopId WHERE p.promisedDate < ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY p.promisedDate LIMIT 200", [today]).catch(skipMissing);
     for (const p of due) {
       const code5 = workOrderCode(Number(p.number)), key = `${String(p.workOrderId)}:${String(p.promised)}`;
       if (await this.once(conn, String(p.shopUserId), `promise-overdue:${key}`, "care.promise", `\u23F0 Venci\xF3 la fecha de entrega prometida (${String(p.promised)}) de ${code5} y la orden sigue abierta. Fija la nueva fecha con: Fecha entrega ${code5} | AAAA-MM-DD | motivo`)) {
@@ -135998,8 +136294,8 @@ function createJobScheduler(jobs2, options = {}) {
 init_apply();
 init_account_links();
 init_ads();
-import { randomUUID as randomUUID56 } from "node:crypto";
-var rows60 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+import { randomUUID as randomUUID57 } from "node:crypto";
+var rows61 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var isMissingSchema3 = (err4) => ["ER_NO_SUCH_TABLE", "ER_BAD_FIELD_ERROR"].includes(err4.code ?? "");
 var AD_CAMPAIGN_KIND = "ad.campaign";
 var AdCampaignSender = class {
@@ -136014,7 +136310,7 @@ var AdCampaignSender = class {
     const conn = await this.connect();
     try {
       const dayStart = /* @__PURE__ */ new Date(`${ecuadorDate(now)}T05:00:00.000Z`);
-      const [count3] = await rows60(conn, "SELECT COUNT(*) AS n FROM `NotificationOutbox` WHERE kind = ? AND createdAt >= ? AND (lastError IS NULL OR lastError <> 'NO_PRIOR_CHAT')", [AD_CAMPAIGN_KIND, dayStart]);
+      const [count3] = await rows61(conn, "SELECT COUNT(*) AS n FROM `NotificationOutbox` WHERE kind = ? AND createdAt >= ? AND (lastError IS NULL OR lastError <> 'NO_PRIOR_CHAT')", [AD_CAMPAIGN_KIND, dayStart]);
       const queuedToday = Number(count3?.n ?? 0);
       const hour2 = ecuadorHour2(now);
       if (hour2 < AD_CAMPAIGN_HOURS.from || hour2 >= AD_CAMPAIGN_HOURS.to)
@@ -136022,11 +136318,11 @@ var AdCampaignSender = class {
       const batch = campaignBatchSize(cap, queuedToday, hour2);
       if (batch <= 0)
         return { queued: 0, cap, queuedToday, skipped: "cupo_lleno" };
-      const [backlog] = await rows60(conn, "SELECT COUNT(*) AS n FROM `NotificationOutbox` o WHERE o.kind <> ? AND o.status IN ('pending','sending') AND o.attempts < 5 AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND (o.lastError IS NULL OR o.lastError <> 'NO_PRIOR_CHAT') AND (o.recipientPhone IS NOT NULL OR EXISTS (SELECT 1 FROM `WhatsAppIdentity` i WHERE i.userId = o.recipientUserId))", [AD_CAMPAIGN_KIND]);
+      const [backlog] = await rows61(conn, "SELECT COUNT(*) AS n FROM `NotificationOutbox` o WHERE o.kind <> ? AND o.status IN ('pending','sending') AND o.attempts < 5 AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND (o.lastError IS NULL OR o.lastError <> 'NO_PRIOR_CHAT') AND (o.recipientPhone IS NOT NULL OR EXISTS (SELECT 1 FROM `WhatsAppIdentity` i WHERE i.userId = o.recipientUserId))", [AD_CAMPAIGN_KIND]);
       if (Number(backlog?.n ?? 0) > campaignBacklogLimit(this.env))
         return { queued: 0, cap, queuedToday, skipped: "cola_ocupada" };
       const today = ecuadorDate(now);
-      const ads = await rows60(conn, "SELECT id, businessName, title, body, city, zone FROM `AdCampaign` WHERE status IN ('aprobado','activo') AND startDate <= ? AND endDate >= ? AND FIND_IN_SET('whatsapp', formats) > 0 ORDER BY submittedAt, id LIMIT 20", [today, today]);
+      const ads = await rows61(conn, "SELECT id, businessName, title, body, city, zone FROM `AdCampaign` WHERE status IN ('aprobado','activo') AND startDate <= ? AND endDate >= ? AND FIND_IN_SET('whatsapp', formats) > 0 ORDER BY submittedAt, id LIMIT 20", [today, today]);
       if (!ads.length)
         return { queued: 0, cap, queuedToday, skipped: "sin_campanas" };
       const link = accountLink("promociones", this.env.PUBLIC_SITE_URL);
@@ -136046,7 +136342,7 @@ var AdCampaignSender = class {
           progressed = true;
           const at = new Date(now.getTime() + queued * spacingMs);
           const message2 = campaignMessage({ title: String(ad.title), body: String(ad.body), businessName: String(ad.businessName) }, link);
-          const result = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload, nextAttemptAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID56(), `ad:${String(ad.id)}:${String(next.id)}`, String(next.id), AD_CAMPAIGN_KIND, JSON.stringify({ message: message2 }), at]);
+          const result = await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload, nextAttemptAt) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID57(), `ad:${String(ad.id)}:${String(next.id)}`, String(next.id), AD_CAMPAIGN_KIND, JSON.stringify({ message: message2 }), at]);
           if (Number(result[0]?.affectedRows ?? 0) === 1)
             queued++;
         }
@@ -136069,7 +136365,7 @@ var AdCampaignSender = class {
    */
   recipients(conn, ad, limit) {
     const zone = ad.zone ? " AND LOWER(TRIM(u.zone)) = LOWER(TRIM(?))" : "";
-    return rows60(conn, "SELECT u.id FROM `User` u JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE u.role = 'dueno' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND u.whatsappOptOutAt IS NULL AND u.adsOptInAt IS NOT NULL AND EXISTS (SELECT 1 FROM `InboundWebhook` w WHERE w.phone = i.phone) AND LOWER(TRIM(u.city)) = LOWER(TRIM(?))" + zone + " AND NOT EXISTS (SELECT 1 FROM `NotificationOutbox` o WHERE o.dedupKey = CONCAT('ad:', ?, ':', u.id)) ORDER BY u.createdAt, u.id LIMIT ?", ad.zone ? [ad.city, ad.zone, ad.id, limit] : [ad.city, ad.id, limit]);
+    return rows61(conn, "SELECT u.id FROM `User` u JOIN `WhatsAppIdentity` i ON i.userId = u.id WHERE u.role = 'dueno' AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND u.whatsappOptOutAt IS NULL AND u.adsOptInAt IS NOT NULL AND EXISTS (SELECT 1 FROM `InboundWebhook` w WHERE w.phone = i.phone) AND LOWER(TRIM(u.city)) = LOWER(TRIM(?))" + zone + " AND NOT EXISTS (SELECT 1 FROM `NotificationOutbox` o WHERE o.dedupKey = CONCAT('ad:', ?, ':', u.id)) ORDER BY u.createdAt, u.id LIMIT ?", ad.zone ? [ad.city, ad.zone, ad.id, limit] : [ad.city, ad.id, limit]);
   }
 };
 
@@ -136131,14 +136427,14 @@ function soatSection(vehicles, now) {
 }
 
 // packages/api/dist/interfaces/fleet-panel/index.js
-var rows61 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
+var rows62 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 var km7 = (n3) => `${Math.round(n3).toLocaleString("es-EC")} km`;
 var token = external_exports.string().regex(/^[A-Za-z0-9_-]{32}$/);
 async function loadFleetPanel(value2, connect = openConnection) {
   const conn = await connect();
   try {
-    const [link] = await rows61(conn, "SELECT t.fleetId, t.userId, f.name, f.city FROM `FleetPanelToken` t JOIN `Fleet` f ON f.id = t.fleetId WHERE t.tokenHash = ? AND t.expiresAt > UTC_TIMESTAMP(3) AND f.status = 'activa'", [secretHash(value2)]);
+    const [link] = await rows62(conn, "SELECT t.fleetId, t.userId, f.name, f.city FROM `FleetPanelToken` t JOIN `Fleet` f ON f.id = t.fleetId WHERE t.tokenHash = ? AND t.expiresAt > UTC_TIMESTAMP(3) AND f.status = 'activa'", [secretHash(value2)]);
     if (!link)
       return null;
     const roles = await fleetRoles(conn, String(link.userId));
@@ -136146,9 +136442,9 @@ async function loadFleetPanel(value2, connect = openConnection) {
       return null;
     const fleetId = String(link.fleetId);
     const vehicles = await fleetSnapshot(conn, fleetId, /* @__PURE__ */ new Date(), String(link.city));
-    const months2 = (await rows61(conn, "SELECT DATE_FORMAT(DATE_SUB(spentAt, INTERVAL 5 HOUR), '%Y-%m') AS month, SUM(amountUsd) AS total FROM `VehicleExpense` WHERE fleetId = ? AND spentAt >= DATE_SUB(?, INTERVAL 5 MONTH) GROUP BY month ORDER BY month", [fleetId, ecMonthStart()])).map((m) => ({ month: String(m.month), total: Number(m.total) }));
-    const members = await rows61(conn, "SELECT m.id, m.name, m.role, m.status FROM `FleetMember` m WHERE m.fleetId = ? AND m.status <> 'removed' ORDER BY m.role, m.name", [fleetId]);
-    const agreements = await rows61(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status = 'activo' ORDER BY s.name", [fleetId]);
+    const months2 = (await rows62(conn, "SELECT DATE_FORMAT(DATE_SUB(spentAt, INTERVAL 5 HOUR), '%Y-%m') AS month, SUM(amountUsd) AS total FROM `VehicleExpense` WHERE fleetId = ? AND spentAt >= DATE_SUB(?, INTERVAL 5 MONTH) GROUP BY month ORDER BY month", [fleetId, ecMonthStart()])).map((m) => ({ month: String(m.month), total: Number(m.total) }));
+    const members = await rows62(conn, "SELECT m.id, m.name, m.role, m.status FROM `FleetMember` m WHERE m.fleetId = ? AND m.status <> 'removed' ORDER BY m.role, m.name", [fleetId]);
+    const agreements = await rows62(conn, "SELECT fs.id, fs.status, s.name, s.city, s.ratingAvg FROM `FleetShop` fs JOIN `Shop` s ON s.id = fs.shopId WHERE fs.fleetId = ? AND fs.status = 'activo' ORDER BY s.name", [fleetId]);
     return { fleet: { name: String(link.name), city: String(link.city) }, vehicles, months: months2, members, agreements, generatedAt: /* @__PURE__ */ new Date(), retiredCost: await retiredMonthCost(conn, fleetId, ecMonthStart()) };
   } finally {
     await conn.end().catch(() => void 0);
@@ -136173,11 +136469,11 @@ function planSection(list7) {
   const withPlan = list7.filter((v) => v.structuredPlan);
   if (!withPlan.length)
     return "";
-  const entry = (e9) => `<tr class="${PLAN_STATE[e9.state] ?? ""}"><td>${esc(e9.element)}</td><td>${esc(e9.action)}</td><td>${esc(e9.frequency)}</td><td><span class="led"></span> ${esc(e9.due ?? e9.label)}</td></tr>`;
+  const entry2 = (e9) => `<tr class="${PLAN_STATE[e9.state] ?? ""}"><td>${esc(e9.element)}</td><td>${esc(e9.action)}</td><td>${esc(e9.frequency)}</td><td><span class="led"></span> ${esc(e9.due ?? e9.label)}</td></tr>`;
   const vehicle = (v) => {
     const p = v.structuredPlan;
     const next = p.next.entries.length ? `Pr\xF3ximo servicio${p.next.at ? " \xB7 " + esc(p.next.at) : ""}: ${esc(p.next.entries.map((e9) => e9.element).join(", "))}` : p.verify.length ? `${p.verify.length} ${p.verify.length === 1 ? "elemento" : "elementos"} sin registro: revisar en el pr\xF3ximo servicio` : "Sin servicios pr\xF3ximos";
-    const systems = p.systems.map((s) => `<h3>${esc(s.name)}</h3><div class="scroll"><table><thead><tr><th>Elemento</th><th>Acci\xF3n</th><th>Frecuencia</th><th>Cu\xE1ndo toca</th></tr></thead><tbody>${s.entries.map(entry).join("")}</tbody></table></div>`).join("");
+    const systems = p.systems.map((s) => `<h3>${esc(s.name)}</h3><div class="scroll"><table><thead><tr><th>Elemento</th><th>Acci\xF3n</th><th>Frecuencia</th><th>Cu\xE1ndo toca</th></tr></thead><tbody>${s.entries.map(entry2).join("")}</tbody></table></div>`).join("");
     return `<details><summary><b class="mono">${esc(unitLabel(v))}</b> \xB7 ${esc([v.make, v.model, v.year].filter(Boolean).join(" "))} \xB7 ${next}</summary>${systems || '<p class="muted">Sin plan para este veh\xEDculo.</p>'}${p.fromManufacturer ? "" : '<p class="muted">Plan seg\xFAn la regla general: falta el plan del fabricante para este modelo.</p>'}</details>`;
   };
   return `<section class="card" id="plan"><h2>Plan de mantenimiento por veh\xEDculo</h2><p class="muted">Pulsa un veh\xEDculo para ver su plan por sistema y elemento.</p>${withPlan.map(vehicle).join("")}</section>`;
@@ -136426,15 +136722,15 @@ async function courseWebRoutes(app2, options = {}) {
   const send = (reply, request, title, body, status = 200) => reply.code(status).type("text/html; charset=utf-8").header("Cache-Control", "no-store").send(page2(title, body, nonce(request)));
   app2.get("/cursos", async (req2, reply) => {
     const q = req2.query;
-    let rows71 = [];
+    let rows72 = [];
     try {
       if (!options.store && missingDbEnv().length)
         return send(reply, req2, "Cursos", "<h1>Cursos</h1><p>Cat\xE1logo no disponible por el momento.</p>", 503);
-      rows71 = await store.listPublished({ especialidad: q.esp, nivel: q.nivel });
+      rows72 = await store.listPublished({ especialidad: q.esp, nivel: q.nivel });
     } catch {
       return send(reply, req2, "Cursos", "<h1>Cursos</h1><p>Cat\xE1logo no disponible por el momento.</p>", 503);
     }
-    const cards = rows71.map((c) => `<article><h2><a href="/cursos/${e3(c.slug)}">${e3(c.titulo)}</a></h2><p>${e3(c.especialidad)} \xB7 ${e3(c.nivel)} \xB7 ${e3(c.horas)} horas \xB7 ${c.precioUsd == null || c.precioUsd === 0 ? "Gratis" : `$${e3(c.precioUsd)} USD`}</p><p>Experto: ${e3(c.expertName)}</p>${c.altoVoltajeGas ? `<p class="notice">${e3(HIGH_VOLTAGE_GAS_NOTICE)}</p>` : ""}</article>`).join("");
+    const cards = rows72.map((c) => `<article><h2><a href="/cursos/${e3(c.slug)}">${e3(c.titulo)}</a></h2><p>${e3(c.especialidad)} \xB7 ${e3(c.nivel)} \xB7 ${e3(c.horas)} horas \xB7 ${c.precioUsd == null || c.precioUsd === 0 ? "Gratis" : `$${e3(c.precioUsd)} USD`}</p><p>Experto: ${e3(c.expertName)}</p>${c.altoVoltajeGas ? `<p class="notice">${e3(HIGH_VOLTAGE_GAS_NOTICE)}</p>` : ""}</article>`).join("");
     return send(reply, req2, "Cursos", `<h1>Cursos publicados</h1><form method="get"><label>Especialidad <input name="esp" value="${e3(q.esp ?? "")}"></label><label>Nivel <input name="nivel" value="${e3(q.nivel ?? "")}"></label><button>Filtrar</button></form>${cards || "<p>No hay cursos para estos filtros.</p>"}`);
   });
   app2.get("/cursos/:slug", async (req2, reply) => {
@@ -136517,9 +136813,9 @@ async function courseWebRoutes(app2, options = {}) {
     if (!s)
       return reply;
     try {
-      const rows71 = await store.studentCourses(s.userId);
+      const rows72 = await store.studentCourses(s.userId);
       const cards = [];
-      for (const r of rows71) {
+      for (const r of rows72) {
         const id3 = String(r.enrollmentId), lessons = await store.lessonRecords(String(r.courseId), id3), questions = await store.questionRecords(String(r.courseId));
         const qs = /* @__PURE__ */ new Map();
         for (const q of questions) {
@@ -136631,8 +136927,8 @@ async function expertRoutes(app2, options = {}) {
   const verified = async (request, reply) => {
     const conn = await openConnection();
     try {
-      const [rows71] = await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId=? AND verificationStatus='verificado' LIMIT 1", [request.userId]);
-      if (!Array.isArray(rows71) || !rows71.length)
+      const [rows72] = await conn.query("SELECT userId FROM `ExpertProfile` WHERE userId=? AND verificationStatus='verificado' LIMIT 1", [request.userId]);
+      if (!Array.isArray(rows72) || !rows72.length)
         return reply.code(403).send({ data: null, error: { code: "EXPERT_NOT_VERIFIED" } });
     } finally {
       await conn.end().catch(() => void 0);
