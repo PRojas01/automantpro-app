@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='02e7dafe86ed6ede4a5acfa2d7210c51f0856ced'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='3d823d5b8d0426244dd258a2507c18e1a5a11cf1'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -87277,9 +87277,23 @@ button:not(:disabled):active,.btn:active,.access-btn:active,a.button:active,.but
 @media (hover:hover){button:not(:disabled):hover,.btn:hover,.access-btn:hover,a.button:hover,.button:hover,.cta:not(:disabled):hover,a.pill:hover,.tema:hover,.hero .red a.perfil:hover,.option:hover,.redes a:hover{transform:translateY(-2px)!important;box-shadow:0 4px 10px rgba(0,0,0,.18)!important}}
 @media (prefers-reduced-motion:reduce){button,.btn,.access-btn,a.button,.button,.cta,a.pill,.tema,.hero .red a.perfil,.hero .red a.perfil:hover,.option,.redes a{transform:none!important}}
 /* Cabecera, men\xFA y pie comunes (ui/navegacion.ts). */
-.cabecera-sitio{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:8px 0;margin:0 0 8px}
-.cabecera-sitio .marca{display:inline-flex;line-height:0}
+/* Mismo ajuste que la portada (21/11/2026): logo | t\xEDtulo | Registro gratis + tema; el men\xFA en la fila de abajo. */
+.cabecera-sitio{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:6px 14px;padding:8px 0;margin:0 0 8px}
+.cabecera-sitio .marca{display:inline-flex;line-height:0;grid-column:1;grid-row:1}
 .cabecera-sitio .marca img{height:44px;width:auto}
+.cabecera-sitio .acciones-sitio{grid-column:3;grid-row:1;display:flex;align-items:center;gap:8px;margin:0}
+.cabecera-sitio .titulo-sitio{grid-column:1/-1;grid-row:2;justify-self:center;text-align:center;white-space:nowrap;margin:2px 0 0;font:600 min(21px,calc((100vw - 28px) / 24))/1.25 var(--c-display,var(--c-font));color:var(--c-accent)}
+.cabecera-sitio .titulo-sitio em{font-style:normal}
+.cabecera-sitio .menu-sitio{grid-column:1/-1;grid-row:3}
+@media (min-width:651px){.cabecera-sitio .titulo-sitio{grid-column:2;grid-row:1}.cabecera-sitio .menu-sitio{grid-row:2}}
+.cabecera-sitio a.pill{display:inline-flex;align-items:center;min-height:40px;font:600 14px/1 var(--c-font);white-space:nowrap;color:var(--c-on-accent)!important;background:var(--c-accent);padding:0 14px;text-decoration:none!important}
+@media (max-width:650px){.cabecera-sitio .menu-sitio{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.cabecera-sitio .menu-sitio::-webkit-scrollbar{display:none}.cabecera-sitio .menu-sitio a{flex:none}}
+.cabecera-sitio .tema{width:40px;height:40px;flex:none;display:grid;place-items:center;cursor:pointer;color:var(--c-ink);background:var(--c-surface);border:1px solid var(--c-line);font:inherit;padding:0}
+.cabecera-sitio .tema svg{width:20px;height:20px}
+.cabecera-sitio .tema .luna{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) .cabecera-sitio .tema .sol{display:none}:root:not([data-tema="claro"]) .cabecera-sitio .tema .luna{display:block}}
+:root[data-tema="oscuro"] .cabecera-sitio .tema .sol{display:none}
+:root[data-tema="oscuro"] .cabecera-sitio .tema .luna{display:block}
 .menu-sitio{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0 0 8px;font:600 14px/1.4 var(--c-font)}
 .cabecera-sitio .menu-sitio{margin:0}
 .menu-sitio a{color:var(--c-ink);text-decoration:none}
@@ -87292,8 +87306,12 @@ button:not(:disabled):active,.btn:active,.access-btn:active,a.button:active,.but
 .pie-sitio .redes a{display:inline-flex;align-items:center;gap:6px;color:var(--c-ink)}
 .pie-sitio .legal{margin:6px 0 0}
 .pie-sitio a{color:var(--c-ink)}
-body>.cabecera-sitio,body>.pie-sitio{padding-left:16px;padding-right:16px}
+body>.cabecera-sitio,body>.pie-sitio{padding-left:16px;padding-right:16px;max-width:1272px;margin-left:auto;margin-right:auto}
 .pie-sitio .redes{justify-content:flex-start}
+/* Fondo Grafito de la portada en todas las pantallas (claro #f6f7f8, oscuro #0c0d0f); las paletas lo reemplazan. */
+:root{--c-bg:#f6f7f8}
+@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){--c-bg:#0c0d0f;--c-surface:#15181d;--c-sunk:#1c2026}}
+:root[data-tema="oscuro"]{--c-bg:#0c0d0f;--c-surface:#15181d;--c-sunk:#1c2026}
 ${PALETAS_CSS}`;
   }
 });
@@ -87401,8 +87419,13 @@ var init_theme = __esm({
 function menuSitio() {
   return `<nav class="menu-sitio" aria-label="Men\xFA del sitio"><a href="/">Inicio</a><a href="/soluciones">Soluciones</a><a href="/planes">Planes</a><a href="/servicios">Servicios</a><a href="/talleres">Talleres</a><a href="/instalar">Instalar app</a><a href="/cuenta#entrar">Ingresar</a></nav>`;
 }
-function cabeceraSitio() {
-  return `<header class="cabecera-sitio"><a class="marca" href="/" aria-label="AutoMantPro, inicio">${logoImg()}</a>${menuSitio()}</header>`;
+function temaScript(nonce2) {
+  return `<script nonce="${nonce2}">${TEMA_SCRIPT}</script>`;
+}
+function cabeceraSitio(nonce2 = "", conScript = true) {
+  const tema = nonce2 ? `<button id="tema-sitio" class="tema" type="button" aria-label="Cambiar de tema">${SOL}${LUNA}</button>` : "";
+  const script = nonce2 && conScript ? temaScript(nonce2) : "";
+  return `<header class="cabecera-sitio"><a class="marca" href="/" aria-label="AutoMantPro, inicio">${logoImg()}</a><p class="titulo-sitio">Asistente Inteligente de <em>Mantenimiento Automotriz</em></p><span class="acciones-sitio"><a class="pill" href="/cuenta#crear">Registro gratis</a>${tema}</span>${menuSitio()}</header>${script}`;
 }
 function pieSitio(nav = siteLinksNav(null)) {
   return `<footer class="pie-sitio">${nav}${socialLinks()}<p class="legal">Consulta los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP) \xB7 <a href="/admin/login">Acceso del equipo</a></p></footer>`;
@@ -87410,6 +87433,7 @@ function pieSitio(nav = siteLinksNav(null)) {
 function noEncontradaHtml(nonce2) {
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>P\xE1gina no encontrada \xB7 AutoMantPro</title><style nonce="${nonce2}">${THEME_TOKENS}*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.5 var(--c-font)}main{max-width:760px;margin:auto;padding:16px}${SISTEMA}</style></head><body><main>${cabeceraSitio()}<h1>No encontramos esa p\xE1gina</h1><p>Puede que el enlace haya cambiado. <a href="/">Volver al inicio</a></p>${pieSitio()}</main></body></html>`;
 }
+var SVG, SOL, LUNA, TEMA_SCRIPT;
 var init_navegacion = __esm({
   "packages/api/dist/interfaces/ui/navegacion.js"() {
     "use strict";
@@ -87417,6 +87441,10 @@ var init_navegacion = __esm({
     init_marketing();
     init_sistema();
     init_theme();
+    SVG = (cls, d) => `<svg class="${cls}" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+    SOL = SVG("sol", '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>');
+    LUNA = SVG("luna", '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>');
+    TEMA_SCRIPT = "(function(){var r=document.documentElement;try{if(!r.hasAttribute('data-paleta')){var t=localStorage.getItem('amp-tema');if(t==='claro'||t==='oscuro')r.setAttribute('data-tema',t);}}catch(e){}var b=document.getElementById('tema-sitio');if(!b)return;var os=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;var actual=function(){return r.getAttribute('data-tema')||(os?'oscuro':'claro');};var etiqueta=function(){b.setAttribute('aria-label',actual()==='oscuro'?'Cambiar a tema claro':'Cambiar a tema oscuro');};etiqueta();b.addEventListener('click',function(){var t=actual()==='oscuro'?'claro':'oscuro';r.setAttribute('data-tema',t);etiqueta();try{localStorage.setItem('amp-tema',t);}catch(e){}});})();";
   }
 });
 
@@ -97349,7 +97377,7 @@ function parseFounderImport(text16) {
 function inviteMessage(input) {
   return [
     `Hola, ${input.shop} \u{1F44B} Soy ${FOUNDER_SENDER}, creador de AutoMantPro.`,
-    "Hace un a\xF1o tu taller se sum\xF3 a nuestros talleres fundadores. Este lunes abrimos y tienes un lugar reservado:",
+    "Hace un a\xF1o tu taller se sum\xF3 a nuestros talleres fundadores. Estamos retomando ese proyecto: este lunes abrimos y tienes un lugar reservado:",
     [
       "\u{1F381} Taller Pro sin costo de plan durante 12 meses",
       "\u2B50 Sello \xABTaller fundador\xBB en tu perfil p\xFAblico y en el directorio que ven los due\xF1os de veh\xEDculos de tu zona",
@@ -97572,7 +97600,7 @@ var init_founder_store = __esm({
           let guides = [];
           if (decision === "acepto") {
             await conn.query("UPDATE `User` SET consentAt = UTC_TIMESTAMP(3), consentVersion = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND deletedAt IS NULL", [CONSENT_VERSION, userId]);
-            await conn.query("UPDATE `Shop` SET verificationStatus = 'verified', updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [shopId]);
+            await conn.query("UPDATE `Shop` SET verificationStatus = 'verified', mapListed = true, mapPrecision = IF(mapConsentAt IS NULL, 'sector', mapPrecision), mapConsentAt = COALESCE(mapConsentAt, UTC_TIMESTAMP(3)), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [shopId]);
             const bindings = await rows34(conn, "SELECT userId, phone FROM `WhatsAppIdentity` WHERE userId = ? OR phone = ? FOR UPDATE", [userId, phone]);
             if (!bindings.length)
               await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [userId, phone]);
@@ -127002,7 +127030,7 @@ details{margin:12px 0;background:var(--c-surface);border-radius:var(--c-r);box-s
 details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;cursor:pointer}
 .hidden{display:none}body:has(#chat:not(.hidden)) .intro-cuenta,body:has(#chat:not(.hidden)) .menu-sitio a[href="/cuenta#entrar"]{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}main a.cod-wa{display:flex;align-items:center;justify-content:center;min-height:44px;margin:8px 0;background:var(--c-accent);color:var(--c-on-accent)!important;border-radius:3px;text-decoration:none;font-weight:600}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}${SCAN_STYLES}${SISTEMA}${ESCANER_STYLES}</style>
 ${MENU_MARKUP}
-<main>${cabeceraSitio()}<h1>Mi cuenta</h1><p class="intro-cuenta">Entra o crea tu cuenta gratis. Tus veh\xEDculos, citas y avisos est\xE1n aqu\xED.</p>
+<main>${cabeceraSitio(nonce2, false)}<h1>Mi cuenta</h1><p class="intro-cuenta">Entra o crea tu cuenta gratis. Tus veh\xEDculos, citas y avisos est\xE1n aqu\xED.</p>
 <section id="login"><h2 id="entrar">Entrar con tu cuenta</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true">Con c\xF3digo por WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">Con contrase\xF1a</button></nav>${number2 ? `<div id="codeRequestForm">${codeLink(number2, "codeLink")}</div>` : `<form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form>`}<form id="codeVerifyForm"${number2 ? "" : ' class="hidden"'}><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><details id="recuperar"><summary>Perd\xED mi n\xFAmero</summary><form id="recoveryForm"><p>Comprueba tu n\xFAmero nuevo. Revisaremos tu solicitud y te contactaremos por ese n\xFAmero para confirmar tu identidad.</p><label for="recOld">N\xFAmero anterior</label><input id="recOld" inputmode="tel" required minlength="8" maxlength="20"><label for="recNew">N\xFAmero nuevo</label><input id="recNew" inputmode="tel" required minlength="8" maxlength="20"><button id="recSend" type="button">Enviarme el c\xF3digo</button><label for="recCode">C\xF3digo de WhatsApp</label><input id="recCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required><label for="recName">Tu nombre completo</label><input id="recName" required minlength="3" maxlength="120"><label for="recDetail">Cu\xE9ntanos qu\xE9 pas\xF3</label><textarea id="recDetail" required minlength="10" maxlength="500"></textarea><button>Enviar solicitud</button></form></details><form id="loginForm" class="hidden"><label for="phone">Tel\xE9fono registrado</label><input id="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label><h3 id="crear">Crear cuenta</h3><form id="signupForm"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><div id="signupFields"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Continuar</button></form><form id="signupVerifyForm" class="hidden">${codeLink(number2, "signupCodeLink")}<label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></section>
 <div id="chat" class="hidden"><div class="row2"><h2 id="who">Mi cuenta</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div><section id="offlineStatus" hidden><span id="offlineCount"></span><button id="syncNow" type="button">Subir ahora</button><div id="failedOutbox"></div></section>${PANEL_MARKUP}<section id="studentCourses"><h2>Mis cursos</h2><div id="courseEnrollment"></div><div id="studentCourseItems"></div></section><section id="composer"><h2>Mensaje a AutoMantPro</h2><form id="sendForm"><label for="message">Tu mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
 <section id="expertCourses" class="hidden"><h2>Mis cursos como experto</h2><p id="expertStatus"></p><div id="expertItems"></div><form id="expertCreate"><label>T\xEDtulo <input name="titulo" required maxlength="191"></label><label>Slug <input name="slug" required maxlength="191"></label><label>Especialidad <input name="especialidad" required maxlength="100"></label><label>Nivel <input name="nivel" required maxlength="40"></label><label>Horas <input name="horas" type="number" min="1" required></label><label>Precio USD (vac\xEDo = gratis) <input name="precioUsd" type="number" min="0" step="0.01"></label><label>Nota m\xEDnima <input name="notaMinima" type="number" min="0" max="100" value="70"></label><button>Crear curso</button></form><form id="expertLesson"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>T\xEDtulo de lecci\xF3n <input name="titulo" required maxlength="191"></label><label>Video URL HTTPS <input name="videoUrl" type="url"></label><label>PDF URL HTTPS <input name="pdfUrl" type="url"></label><label>Texto (m\xE1ximo 900 caracteres) <textarea name="texto" maxlength="900"></textarea></label><button>Guardar lecci\xF3n</button></form><form id="expertQuestion"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>Pregunta <input name="enunciado" required maxlength="2000"></label><label>Opci\xF3n A <input name="optionA" required></label><label>Opci\xF3n B <input name="optionB" required></label><label>Respuesta correcta <select name="correcta"><option>A</option><option>B</option></select></label><button>Guardar pregunta</button></form></section>
@@ -127013,7 +127041,8 @@ ${MENU_MARKUP}
 <h3 id="avisos">Avisos para tu cuenta</h3><button id="refresh" type="button">Actualizar avisos y respuestas</button><div id="notices"></div><button id="older" type="button" class="hidden">Ver avisos anteriores</button>
 <h3 id="historial">Mensajes y respuestas recientes</h3><p>El historial se recupera al volver a entrar, incluso despu\xE9s de un corte.</p><div id="messages"></div>
 <details id="cambiarNumero"><summary>Cambiar mi n\xFAmero</summary><form id="phoneForm"><label for="newPhone">N\xFAmero nuevo</label><input id="newPhone" inputmode="tel" autocomplete="tel" required minlength="8" maxlength="20"><button id="phoneSend" type="button">Enviarme el c\xF3digo</button><label for="newPhoneCode">C\xF3digo de WhatsApp</label><input id="newPhoneCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required><button>Cambiar n\xFAmero</button></form></details><details id="vincular"><summary>Vincular mi WhatsApp</summary><button id="link" type="button">Generar c\xF3digo de v\xEDnculo</button><pre id="linkCode"></pre></details></section></div><div id="resultBox" role="status" hidden></div><p id="status" role="status"></p>${pieSitio()}</main>
-<script nonce="${nonce2}">
+<script nonce="${nonce2}">${TEMA_SCRIPT}
+
 const el=id=>document.getElementById(id);${PANEL_SCRIPT}${CATALOG_SCRIPT}${MENU_SCRIPT}let token=null;let generation=0;let role=null;let timer=null;let pendingSend=null;let sending=false;let cursor=null;let loadedOlder=false;let historyFingerprint='';let userId=null;const noticeItems=new Map();
 const OFFLINE_DB='automantpro-offline';let offlineDb=null;if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(()=>{});
 function tokenUser(value){try{return JSON.parse(atob(value.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).sub||null;}catch{return null;}}
@@ -133415,7 +133444,7 @@ function renderInstallPage(nonce2) {
   return `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Instalar la app \xB7 AutoMantPro</title><meta name="description" content="Instala AutoMantPro en tu celular o tu computadora y entra a tu cuenta con un toque.">
 <link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#0a6e80">${ICON_LINKS}
-<style nonce="${nonce2}">${STYLES3}</style></head><body>${cabeceraSitio()}<main>
+<style nonce="${nonce2}">${STYLES3}</style></head><body>${cabeceraSitio(nonce2)}<main>
 <h1>Instala AutoMantPro</h1>
 <p>Tenla a mano como una app: se abre en su propia ventana, directo en tu cuenta. No ocupa casi espacio y no pasa por ninguna tienda.</p>
 <p id="ya" class="listo" hidden>Ya est\xE1s usando AutoMantPro instalada. \u2705</p>
@@ -133468,7 +133497,7 @@ button{font:700 16px/1 var(--c-font);border:0;border-radius:10px;padding:14px 20
 .nota{color:var(--c-muted);font-size:14px}
 `;
 var page = (nonce2, body, script = "") => `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
-<title>Tu ficha de taller fundador \xB7 AutoMantPro</title>${ICON_LINKS}<style nonce="${nonce2}">${STYLES4}</style></head><body>${cabeceraSitio()}<main>${body}</main>${pieSitio()}${script}</body></html>`;
+<title>Tu ficha de taller fundador \xB7 AutoMantPro</title>${ICON_LINKS}<style nonce="${nonce2}">${STYLES4}</style></head><body>${cabeceraSitio(nonce2)}<main>${body}</main>${pieSitio()}${script}</body></html>`;
 function renderFounderPage(nonce2, p) {
   const row2 = (label5, value2) => value2 ? `<dt>${escapeHtml(label5)}</dt><dd>${escapeHtml(value2)}</dd>` : "";
   return page(nonce2, `<span class="sello">Taller fundador</span><h1>${escapeHtml(p.name)}</h1>
@@ -133546,7 +133575,6 @@ init_sistema();
 init_theme();
 init_theme_layers();
 init_head();
-init_brand();
 
 // packages/api/dist/interfaces/content/shop-profiles.js
 init_workshop_map();
@@ -133666,16 +133694,13 @@ ${seoHead({ path: input.path, title: input.title, description: input.description
 </head>
 <body>
 <main>
-  <header><a class="logo" href="/">${logoImg()}<small class="lema">Tu asistente inteligente de mantenimiento automotriz</small></a></header>
-  ${menuSitio()}
+  ${cabeceraSitio(nonce2)}
   ${migas}
   <h1>${escapeHtml(input.h1)}</h1>
   <p class="lead">${escapeHtml(input.intro)}</p>
   ${cta}
-  ${bloques}
-  ${faq}
+  <div class="bloques">${bloques}${faq}${related}</div>
   ${input.ctaBottom && wame ? `<a class="cta" href="${escapeHtml(wame)}" rel="noopener">${escapeHtml(input.ctaLabel ?? "Escribir por WhatsApp")}</a>` : ""}
-  ${related}
   ${pieSitio(input.footerNav)}
 </main>
 </body>
@@ -133683,6 +133708,10 @@ ${seoHead({ path: input.path, title: input.title, description: input.description
 }
 var EXTRA = `${SHOP_PROFILES_STYLES}
 main{max-width:640px}
+/* Mismo ajuste que la portada (21/11/2026): en escritorio el ancho de la portada y las tarjetas en dos columnas,
+   con el t\xEDtulo de cada tarjeta en la franja azul de sus secciones. */
+@media (min-width:900px){main{max-width:1240px}.bloques{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}.bloques>.card{margin:0}.bloques>.card:has(.perfiles){grid-column:1/-1}main>.cta{max-width:560px}.lead{max-width:80ch}}
+.card>.titulo{background:var(--c-accent)!important;color:var(--c-on-accent)!important;font:600 14px/1.3 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important;border:0!important;padding:8px 12px!important;margin:-16px -16px 12px!important;border-radius:3px 3px 0 0}
 header{margin-bottom:12px}
 h1{font-size:26px;margin:10px 0 8px}
 .migas{font:500 13px/1.4 var(--c-font);color:var(--c-muted);margin:0 0 6px}
@@ -134119,7 +134148,6 @@ init_entry();
 init_theme();
 init_theme_layers();
 init_head();
-init_brand();
 import { randomBytes as randomBytes18 } from "node:crypto";
 
 // packages/api/dist/interfaces/map/leaflet-assets.js
@@ -134884,8 +134912,7 @@ ${seoHead({ path: "/mapa", title, description, type: "website" })}
 </head>
 <body>
 <main>
-  <header><a class="logo" href="/">${logoImg()}<small class="lema">Tu asistente inteligente de mantenimiento automotriz</small></a></header>
-  ${menuSitio()}
+  ${cabeceraSitio(nonce2)}
   <nav class="migas"><a href="/">Inicio</a> \u203A <a href="/talleres">Talleres</a> \u203A <span>Mapa</span></nav>
   <h1>Mapa de talleres</h1>
   <p class="lead">Elige ciudad, sector y servicio. Te mostramos primero los talleres que hacen lo que necesitas y te decimos por qu\xE9 aparece cada uno.</p>
@@ -134917,6 +134944,7 @@ ${seoHead({ path: "/mapa", title, description, type: "website" })}
 }
 var MAP_STYLES = `
 main{max-width:760px}
+@media (min-width:900px){main{max-width:1240px}}
 header{margin-bottom:12px}
 h1{font-size:26px;margin:10px 0 8px}
 .migas{font:500 13px/1.4 var(--c-font);color:var(--c-muted);margin:0 0 6px}
@@ -135207,11 +135235,11 @@ init_head();
 init_documents();
 init_theme();
 init_theme_layers();
-init_brand();
 import { randomBytes as randomBytes20 } from "node:crypto";
 var STYLES5 = `${THEME_TOKENS}
 *{box-sizing:border-box}
-body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.6 var(--c-font);padding:24px 16px}
+body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.6 var(--c-font);padding:8px 0 24px}
+body>main{margin:0 16px}@media (min-width:792px){body>main{margin:0 auto}}
 main{max-width:760px;margin:0 auto;background:var(--c-surface);border-radius:var(--c-r);padding:28px 24px;box-shadow:var(--c-shadow)}
 .brand{font-weight:700;font-size:22px;letter-spacing:-.01em;margin:0;text-decoration:none;color:var(--c-ink)}.brand span{color:var(--c-accent)}
 h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:18px 0 4px}h2{font-size:18px;font-weight:700;margin:26px 0 6px}
@@ -135241,15 +135269,14 @@ ${input.path ? seoHead({ path: input.path, title: `${input.title} \xB7 AutoMantP
 <style nonce="${nonce2}">${STYLES5}${THEME_LEGAL_LAYER}${SISTEMA}</style>
 </head>
 <body>
+${cabeceraSitio(nonce2)}
 <main>
-  <a class="brand" href="/">${logoImg()}</a>
-  ${menuSitio()}
   <h1>${escapeHtml(input.title)}</h1>
   <p class="meta">Versi\xF3n ${escapeHtml(LEGAL_VERSION)} \xB7 Vigente desde el ${escapeHtml(LEGAL_EFFECTIVE_DATE)}</p>
   ${notice}
   ${renderSections(input.sections)}
-  ${pieSitio()}
 </main>
+${pieSitio()}
 </body>
 </html>`;
 }
@@ -135278,7 +135305,7 @@ async function legalRoutes(app2, options = {}) {
         data3 = emptyLegalData();
       }
       const nonce2 = randomBytes20(16).toString("base64");
-      return reply.header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-cache").type("text/html; charset=utf-8").send(renderLegalPage({ title: page3.title, path: page3.path, description: page3.description, sections: page3.sections(data3), complete: isLegalComplete(data3), nonce: nonce2 }));
+      return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-cache").type("text/html; charset=utf-8").send(renderLegalPage({ title: page3.title, path: page3.path, description: page3.description, sections: page3.sections(data3), complete: isLegalComplete(data3), nonce: nonce2 }));
     });
   }
 }
