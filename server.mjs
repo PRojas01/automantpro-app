@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='00be5da86ddbb9a5563d1214c20e016670ff4fc9'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='f9a9c64f12a0a70750325020cb8d2a62a3a025bb'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -87814,10 +87814,10 @@ var init_taller_fondo = __esm({
 
 // packages/api/dist/application/ads/house-ads.js
 function houseAdsFor(role, today) {
-  return HOUSE_ADS.filter((a) => a.roles.includes(role) && today <= a.until).map((a) => ({ id: a.id, businessName: a.businessName, title: a.title, body: a.body, linkUrl: a.linkUrl, hasImage: false }));
+  return HOUSE_ADS.filter((a) => a.roles.includes(role) && today <= a.until).map((a) => ({ id: a.id, businessName: a.businessName, title: a.title, body: a.body, linkUrl: a.linkUrl, hasImage: false, theme: a.theme }));
 }
 function publicHomeAds(today) {
-  const house = HOUSE_ADS.filter((a) => today <= a.until).map((a) => ({ id: a.id, businessName: a.businessName, title: a.title, body: a.body, linkUrl: a.linkUrl, placeholder: false }));
+  const house = HOUSE_ADS.filter((a) => today <= a.until).map((a) => ({ id: a.id, businessName: a.businessName, title: a.title, body: a.body, linkUrl: a.linkUrl, placeholder: false, theme: a.theme }));
   return [...house, ...ADVERTISE_HERE.map((a) => ({ ...a, placeholder: true }))];
 }
 var HOUSE_ADS, ADVERTISE_HERE;
@@ -87831,6 +87831,7 @@ var init_house_ads = __esm({
         title: "Sistematiza tu negocio",
         body: "Diagn\xF3stico gratis de tus procesos y sistemas a medida para pymes: inventario, pedidos, clientes y agentes de IA con aprobaci\xF3n humana.",
         linkUrl: "https://solucionespro.net/guia_pymes/",
+        theme: "solucionespro",
         until: "2027-02-28",
         roles: ["dueno", "taller", "almacen"]
       },
@@ -87840,14 +87841,62 @@ var init_house_ads = __esm({
         title: "Todo el caf\xE9 ecuatoriano, conectado",
         body: "Compra caf\xE9 directo de productores ecuatorianos, mira el precio del mes y crea tu perfil gratis en la red del caf\xE9.",
         linkUrl: "https://redcafeecuador.com/marketplace/",
+        theme: "redcafeecuador",
         until: "2027-02-28",
         roles: ["dueno", "taller", "almacen"]
       }
     ];
     ADVERTISE_HERE = [
-      { id: "tu-marca-taller", businessName: "Tu taller", title: "\xBFTienes un taller? Tu marca aqu\xED", body: "Anuncia tus servicios a los due\xF1os de veh\xEDculos de tu ciudad. Crea tu cuenta gratis y publica desde tu panel.", linkUrl: "/cuenta#crear" },
-      { id: "tu-marca-almacen", businessName: "Tu almac\xE9n", title: "\xBFTienes un almac\xE9n de repuestos? Tu marca aqu\xED", body: "Muestra tus repuestos y promociones a due\xF1os y talleres. Crea tu cuenta gratis y publica desde tu panel.", linkUrl: "/cuenta#crear" }
+      { id: "tu-marca-taller", businessName: "Tu taller", title: "\xBFTienes un taller? Tu marca aqu\xED", body: "Anuncia tus servicios a los due\xF1os de veh\xEDculos de tu ciudad. Crea tu cuenta gratis y publica desde tu panel.", linkUrl: "/cuenta#crear", theme: "libre" },
+      { id: "tu-marca-almacen", businessName: "Tu almac\xE9n", title: "\xBFTienes un almac\xE9n de repuestos? Tu marca aqu\xED", body: "Muestra tus repuestos y promociones a due\xF1os y talleres. Crea tu cuenta gratis y publica desde tu panel.", linkUrl: "/cuenta#crear", theme: "libre" }
     ];
+  }
+});
+
+// packages/api/dist/interfaces/ui/ad-strip.js
+var AD_STRIP_STYLES;
+var init_ad_strip = __esm({
+  "packages/api/dist/interfaces/ui/ad-strip.js"() {
+    "use strict";
+    AD_STRIP_STYLES = `
+.ad-strip{position:relative;display:flex;align-items:center;gap:6px;margin:10px 0 6px;padding:4px 6px;border:1px solid var(--c-line);border-radius:999px;background:var(--c-surface);overflow:hidden}
+.ad-strip .ad-tag{flex:none;font-size:10px;opacity:.7;padding:0 4px}
+.ad-strip .ad-pausa{flex:none;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;border:1px solid var(--c-line);cursor:pointer;font-size:11px;line-height:1;user-select:none}
+.ad-strip .ad-pausa input{position:absolute;opacity:0;width:1px;height:1px}
+.ad-strip .ad-pausa:focus-within{outline:2px solid currentColor;outline-offset:2px}
+.ad-strip .ad-pausa .on{display:none}
+.ad-strip:has(.ad-pausa input:checked) .ad-pausa .on{display:inline}
+.ad-strip:has(.ad-pausa input:checked) .ad-pausa .off{display:none}
+.ad-strip .ad-view{flex:1;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
+.ad-strip .ad-track{display:flex;gap:8px;width:max-content;animation:ad-pasar var(--ad-dur,36s) linear infinite!important}
+.ad-strip:hover .ad-track,.ad-strip:focus-within .ad-track,.ad-strip:has(.ad-pausa input:checked) .ad-track{animation-play-state:paused!important}
+.ad-n1 .ad-track{--ad-dur:14s}.ad-n2 .ad-track{--ad-dur:20s}.ad-n3 .ad-track{--ad-dur:28s}.ad-n4 .ad-track{--ad-dur:36s}.ad-n5 .ad-track{--ad-dur:44s}.ad-n6 .ad-track{--ad-dur:52s}
+@keyframes ad-pasar{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 4px))}}
+.ad-chip{display:inline-flex;align-items:center;gap:6px;max-width:320px;padding:5px 12px;border-radius:999px;font-size:12.5px;line-height:1.2;white-space:nowrap;text-decoration:none;color:#fff;border:1px solid transparent;transition:transform .2s ease,box-shadow .2s ease}
+.ad-chip:hover,.ad-chip:focus-visible{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.ad-strip a.ad-chip{color:#fff!important}.ad-strip a.ad-chip.t-base{color:var(--c-surface)!important}.ad-strip a.ad-chip.t-libre{color:inherit!important}
+.ad-strip .ad-chip b,.ad-strip .ad-chip span,.ad-strip .ad-chip i{color:inherit!important}
+.ad-chip b{font-weight:700}
+.ad-strip .ad-set{display:flex;gap:8px;flex:none}
+.ad-chip span:not(.dot){overflow:hidden;text-overflow:ellipsis}
+.ad-chip i{font-style:normal;opacity:.85}
+.ad-strip .ad-chip .dot{width:8px;height:8px;border-radius:50%;flex:none;animation:ad-latir 2.4s ease-in-out infinite!important}
+@keyframes ad-latir{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.75)}}
+.ad-chip.t-solucionespro{background:linear-gradient(110deg,#1f52a9,#2d6fd6 60%,#4eba9a)}
+.ad-chip.t-solucionespro .dot{background:#4eba9a;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
+.ad-chip.t-redcafeecuador{background:linear-gradient(110deg,#5e2402,#8c3604 55%,#c98a0e)}
+.ad-chip.t-redcafeecuador .dot{background:#ffd233;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.ad-chip.t-base{background:var(--c-ink);color:var(--c-surface)}
+.ad-chip.t-base .dot{background:currentColor}
+.ad-chip.t-libre{background:transparent;color:inherit;border:1px dashed var(--c-line)}
+.ad-chip.t-libre .dot{background:#efa20c}
+@media (prefers-reduced-motion:reduce){
+ .ad-strip .ad-track{animation:none!important}
+ .ad-strip .ad-view{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+ .ad-strip .ad-copia,.ad-strip .ad-pausa{display:none}
+ .ad-strip .ad-chip .dot{animation:none!important}
+}
+`;
   }
 });
 
@@ -87859,27 +87908,23 @@ function homeAdsHtml(now = /* @__PURE__ */ new Date()) {
   const ads = publicHomeAds(ecuadorToday(now));
   if (!ads.length)
     return "";
-  const tile = (a) => {
+  const chip = (a, copy2) => {
     const external = a.linkUrl.startsWith("http");
     const rel = external ? ' target="_blank" rel="noopener nofollow sponsored"' : "";
-    return `<a class="ad${a.placeholder ? " libre" : ""}" href="${escapeHtml(a.linkUrl)}"${rel}><small>${a.placeholder ? "Espacio disponible" : `Publicidad \xB7 ${escapeHtml(a.businessName)}`}</small><b>${escapeHtml(a.title)}</b><span>${escapeHtml(a.body)}</span></a>`;
+    const label5 = a.placeholder ? `<b>${escapeHtml(a.title)}</b>` : `<b>${escapeHtml(a.businessName)}</b><span>${escapeHtml(a.title)}</span>`;
+    return `<a class="ad-chip t-${escapeHtml(a.theme)}" href="${escapeHtml(a.linkUrl)}"${rel}${copy2 ? ' tabindex="-1"' : ""} title="${escapeHtml(a.body)}"><span class="dot" aria-hidden="true"></span>${label5}<i aria-hidden="true">\u203A</i></a>`;
   };
-  return `<aside class="home-ads" aria-label="Publicidad">${ads.map(tile).join("")}</aside>`;
+  const n3 = Math.min(ads.length, 6);
+  return `<aside class="ad-strip ad-n${n3}" aria-label="Publicidad"><span class="ad-tag">Publicidad</span><label class="ad-pausa" title="Pausar o seguir"><input type="checkbox" aria-label="Pausar la publicidad"><span class="off" aria-hidden="true">\u275A\u275A</span><span class="on" aria-hidden="true">\u25B6</span></label><div class="ad-view"><div class="ad-track"><span class="ad-set">${ads.map((a) => chip(a, false)).join("")}</span><span class="ad-set ad-copia" aria-hidden="true">${ads.map((a) => chip(a, true)).join("")}</span></div></div></aside>`;
 }
 var HOME_ADS_STYLES;
 var init_home_ads = __esm({
   "packages/api/dist/interfaces/entry/home-ads.js"() {
     "use strict";
     init_house_ads();
+    init_ad_strip();
     init_page();
-    HOME_ADS_STYLES = `
-.home-ads{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin:8px 0 4px}
-.home-ads .ad{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface);text-decoration:none;color:inherit;min-width:0;overflow-wrap:anywhere}
-.home-ads .ad small{opacity:.75;font-size:.75rem}
-.home-ads .ad b{font-size:.9rem}
-.home-ads .ad span{font-size:.8rem;line-height:1.3}
-.home-ads .ad.libre{border-style:dashed}
-`;
+    HOME_ADS_STYLES = AD_STRIP_STYLES;
   }
 });
 
@@ -124364,18 +124409,30 @@ function adsConsentBox(){const box=h('div',{class:'list'},h('p',{class:'note',te
 let adsActive=null;
 function activeAds(){if(!adsActive){try{const k=JSON.parse(sessionStorage.getItem('amp-ads-'+(panelData&&panelData.role))||'null');if(k&&Date.now()-k.at<300000)adsActive={at:k.at,p:Promise.resolve(k.ads)};}catch{}}if(!adsActive||Date.now()-adsActive.at>300000)adsActive={at:Date.now(),p:api('/pilot/ads/active').then(ads=>{try{sessionStorage.setItem('amp-ads-'+(panelData&&panelData.role),JSON.stringify({at:Date.now(),ads}));}catch{}return ads;}).catch(()=>({banners:[],popups:[],inbox:[]}))};return adsActive.p;}
 function adBanner(a){return h('aside',{class:'ad-banner','aria-label':'Publicidad'},a.hasImage?adImg(a.id,'ad-thumb','Imagen de '+a.businessName):null,h('div',{},h('small',{class:'note',text:'Publicidad \xB7 '+a.businessName}),h('b',{text:a.title}),h('small',{text:a.body}),adLink(a)));}
+// Franja animada casi al pie (21/11/2026): anuncios peque\xF1os en bucle con los colores de su marca. Pista duplicada
+// (la copia sin foco ni lectura), pausa con mouse, foco o la casilla, y quieta si el sistema pide menos movimiento.
+function adChip(a,copy){const own=a.linkUrl&&a.linkUrl.charAt(0)!=='#';const at={class:'ad-chip t-'+(a.theme||'base'),href:a.linkUrl||'#promociones',title:a.body||''};if(own){at.target='_blank';at.rel='noopener nofollow sponsored';}if(copy)at.tabindex='-1';
+ return h('a',at,h('span',{class:'dot','aria-hidden':'true'}),h('b',{text:a.businessName}),h('span',{text:a.title}),h('i',{'aria-hidden':'true',text:'\u203A'}));}
+function adStrip(ads){const seen={};const list=[];for(const a of ads.banners.concat(ads.inbox))if(!seen[a.id]){seen[a.id]=1;list.push(a);}
+ const role=panelData&&panelData.role;if(role==='taller'||role==='almacen')list.push({id:'tu-marca',businessName:'Tu marca aqu\xED',title:'An\xFAnciate a los due\xF1os de tu ciudad',body:'Crea tu anuncio en la secci\xF3n Publicidad.',linkUrl:'#publicidad',theme:'libre'});
+ if(!list.length)return null;const n=Math.min(list.length,6);
+ const pause=h('label',{class:'ad-pausa',title:'Pausar o seguir'},h('input',{type:'checkbox','aria-label':'Pausar la publicidad'}),h('span',{class:'off','aria-hidden':'true',text:'\u275A\u275A'}),h('span',{class:'on','aria-hidden':'true',text:'\u25B6'}));
+ return h('aside',{class:'ad-strip fijo ad-n'+n,'aria-label':'Publicidad'},h('span',{class:'ad-tag',text:'Publicidad'}),pause,h('div',{class:'ad-view'},h('div',{class:'ad-track'},h('span',{class:'ad-set'},...list.map(a=>adChip(a,false))),h('span',{class:'ad-set ad-copia','aria-hidden':'true'},...list.map(a=>adChip(a,true))))));}
 function adPopup(a){if(typeof HTMLDialogElement!=='function')return;try{if(sessionStorage.getItem('amp-ad-popup'))return;sessionStorage.setItem('amp-ad-popup','1');}catch{return;}
  const dlg=h('dialog',{class:'ad-pop','aria-label':'Publicidad de '+a.businessName});const close=btn('Cerrar','ghost',()=>{dlg.close();dlg.remove();});
  dlg.append(h('small',{class:'note',text:'Publicidad \xB7 '+a.businessName}),a.hasImage?adImg(a.id,'ad-img','Imagen de '+a.businessName):null,h('h2',{text:a.title}),h('p',{text:a.body}),h('div',{class:'chips'},adLink(a),close));
  dlg.addEventListener('cancel',()=>dlg.remove());document.body.append(dlg);dlg.showModal();}
 function ownerAds(root){const list=h('div',{class:'list'},h('p',{class:'note',text:'Buscando promociones de tu ciudad\u2026'}));const c=anchor(card('Promociones','Publicidad',list),'promociones');
- activeAds().then(ads=>{if(ads.banners.length&&root.isConnected)root.prepend(adBanner(ads.banners[Math.floor(Math.random()*ads.banners.length)]));
+ activeAds().then(ads=>{if(root.isConnected){const s=adStrip(ads);if(s)root.append(s);}
   list.replaceChildren();for(const a of ads.inbox)list.append(h('div',{class:'line'},a.hasImage?adImg(a.id,'shop-thumb','Imagen de '+a.businessName):null,h('div',{},h('b',{text:a.title}),h('small',{text:a.businessName}),h('small',{text:a.body}),adLink(a))));
   if(!ads.inbox.length){if(location.hash==='#promociones')list.append(h('p',{class:'note',text:'No hay promociones activas en tu ciudad ahora.'}));else c.remove();}
   else if(location.hash==='#promociones')goToSection();
   if(ads.popups.length)adPopup(ads.popups[0]);});
  return c;}
 `;
+
+// packages/api/dist/interfaces/pilot-panel-view.js
+init_ad_strip();
 
 // packages/api/dist/interfaces/shop-forms-script.js
 var SHOP_FORMS_SCRIPT = `
@@ -125930,7 +125987,7 @@ details.fold{margin:6px 0;padding:0;background:none;border:0;border-top:1px soli
 .sub{font-size:13.5px;font-weight:600;margin:0}
 .note{font-size:13px;color:var(--c-muted);margin:0}
 .ot-photo{max-width:140px;max-height:140px;border-radius:8px}
-.ad-banner{display:flex;gap:10px;align-items:center;padding:10px 12px;margin:0 0 12px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface)}.ad-banner>div{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}.ad-thumb{width:56px;height:56px;object-fit:cover;border-radius:8px;flex:none}.ad-img{display:block;width:100%;max-height:200px;object-fit:cover;border-radius:8px}.ad-pop{max-width:420px;width:calc(100% - 32px);padding:16px;border:1px solid var(--c-line);border-radius:12px;background:var(--c-surface);color:var(--c-ink)}.ad-pop::backdrop{background:rgba(0,0,0,.45)}.ad-pop h2{font:600 16px/1.3 var(--c-font);margin:8px 0 4px}
+.ad-banner{display:flex;gap:10px;align-items:center;padding:10px 12px;margin:0 0 12px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface)}.ad-banner>div{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}.ad-thumb{width:56px;height:56px;object-fit:cover;border-radius:8px;flex:none}.ad-img{display:block;width:100%;max-height:200px;object-fit:cover;border-radius:8px}.ad-pop{max-width:420px;width:calc(100% - 32px);padding:16px;border:1px solid var(--c-line);border-radius:12px;background:var(--c-surface);color:var(--c-ink)}.ad-pop::backdrop{background:rgba(0,0,0,.45)}.ad-pop h2{font:600 16px/1.3 var(--c-font);margin:8px 0 4px}${AD_STRIP_STYLES}.ad-strip.fijo{position:sticky;bottom:8px;z-index:5;box-shadow:0 6px 20px rgba(0,0,0,.12)}
 .shop-cover{display:block;width:100%;max-height:200px;object-fit:cover;border-radius:8px}.shop-thumb{width:64px;height:64px;object-fit:cover;border-radius:8px;flex:none}.line .shop-thumb{margin-right:8px}
 .acts select{flex:1 1 150px;min-height:42px}
 .acts label{display:flex;gap:6px;align-items:center;flex:1 1 100%}
