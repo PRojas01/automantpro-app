@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='3d823d5b8d0426244dd258a2507c18e1a5a11cf1'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='f4fc675f87a416d2ce81ff013cba5bb0c8a4e919'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -97421,6 +97421,21 @@ function founderGuides(input) {
     ].join("\n\n")
   ];
 }
+function founderCampaignConfig(env = process.env) {
+  if (env.FOUNDER_CAMPAIGN_START === "off")
+    return null;
+  const start = new Date(env.FOUNDER_CAMPAIGN_START || "2026-11-23T09:00:00-05:00");
+  if (Number.isNaN(start.getTime()))
+    return null;
+  const pace = Number(env.FOUNDER_CAMPAIGN_PACE_MIN || 6);
+  return { start, paceMs: Math.max(1, Number.isFinite(pace) ? pace : 6) * 6e4, fromHour: 8, toHour: 18 };
+}
+function campaignOpen(config, now) {
+  if (now.getTime() < config.start.getTime())
+    return false;
+  const hour2 = (now.getUTCHours() + 24 - 5) % 24;
+  return hour2 >= config.fromHour && hour2 < config.toHour;
+}
 function founderDecision(message2) {
   const t = fold14(message2).replace(/[^a-z ]/g, " ").replace(/\s+/g, " ").trim();
   if (t.length > 40)
@@ -97556,6 +97571,23 @@ var init_founder_store = __esm({
           await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'founder.invite', ?)", [randomUUID28(), `founder:${inviteId}:${sends}`, invite.phone, JSON.stringify({ message: message2 })]);
           await this.audit(conn, "founder.invite.sent", actorUserId, inviteId, { sends });
         }));
+      }
+      /** Envía la siguiente invitación en borrador si ya toca (inicio, horario y pausa entre envíos). Devuelve su id o null. */
+      async sendNextScheduled(site2, config, now = /* @__PURE__ */ new Date()) {
+        if (!campaignOpen(config, now))
+          return null;
+        const next = await this.run(async (conn) => {
+          const utcNow = now.toISOString().slice(0, 23).replace("T", " ");
+          const [last] = await rows34(conn, "SELECT TIMESTAMPDIFF(SECOND, MAX(sentAt), ?) AS ago FROM `FounderInvite` WHERE sentAt IS NOT NULL", [utcNow]);
+          if (last?.ago !== null && last?.ago !== void 0 && Number(last.ago) * 1e3 < config.paceMs)
+            return null;
+          const [draft] = await rows34(conn, "SELECT id FROM `FounderInvite` WHERE status = 'borrador' AND COALESCE(sends, 0) = 0 ORDER BY createdAt, id LIMIT 1");
+          return draft ? String(draft.id) : null;
+        });
+        if (!next)
+          return null;
+        await this.send(next, site2, null);
+        return next;
       }
       /** Ficha privada para el enlace del mensaje. No muestra teléfono, RUC ni correo. */
       preview(token2) {
@@ -117359,6 +117391,13 @@ var init_local_agent = __esm({
 });
 
 // packages/api/dist/interfaces/admin/founders.js
+function campaignNote() {
+  const c = founderCampaignConfig(process.env);
+  if (!c)
+    return `<p class="card">Env\xEDo autom\xE1tico apagado. Env\xEDa cada confirmaci\xF3n con su bot\xF3n.</p>`;
+  const desde = c.start.toLocaleString("es-EC", { timeZone: "America/Guayaquil", weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
+  return `<div class="card"><h2>Env\xEDo autom\xE1tico</h2><p>Desde el ${escapeHtml(desde)} el sistema env\xEDa solo las confirmaciones de las fichas en borrador: una cada ${c.paceMs / 6e4} minutos, entre las ${c.fromHour}:00 y las ${c.toHour}:00. Cuando el taller responde ACEPTO, su ficha se publica y recibe las gu\xEDas sin esperar a una persona.</p></div>`;
+}
 function registerFounderAdminRoutes(app2, deps) {
   const founders = deps.founders ?? new FounderStore();
   const site2 = () => (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/+$/, "");
@@ -117377,6 +117416,7 @@ function registerFounderAdminRoutes(app2, deps) {
       ${notes.map((n3) => `<p${status >= 400 ? ' class="error"' : ""}>${escapeHtml(n3)}</p>`).join("")}${errorNotes.map((n3) => `<p class="error">${escapeHtml(n3)}</p>`).join("")}
       ${pending ? `<p>Falta \xABAplicar actualizaciones\xBB en Ajustes para crear la tabla de fundadores.</p>` : ""}
       <p>Cada fundador tiene la misma ficha de taller, con la etiqueta \xABFundador\xBB y Taller Pro sin costo de plan durante 12 meses. La ficha queda privada (no aparece en ninguna lista) hasta que el taller acepta. Si rechaza, se borra.</p>
+      ${campaignNote()}
       <div class="card"><h2>Fichas</h2>${list7.length ? `<div class="scroll"><table><thead><tr><th>Taller</th><th>Sector</th><th>Tel\xE9fono</th><th>Estado</th><th>Enviado</th><th></th></tr></thead><tbody>${rows72}</tbody></table></div>` : "<p>A\xFAn no hay fichas cargadas.</p>"}</div>
       <div class="card"><h2>Cargar fichas borrador</h2>
         <p>Pega el contenido del archivo privado de fundadores (JSON con la lista \xABtalleres\xBB). No se env\xEDa ning\xFAn mensaje al cargar.</p>
@@ -136404,6 +136444,9 @@ var CareDeadlines = class {
   }
 };
 
+// packages/api/dist/server.js
+init_founder_store();
+
 // packages/api/dist/infrastructure/messaging/job-scheduler.js
 var TOUCH_EVERY_MS = 6e4;
 function createJobScheduler(jobs2, options = {}) {
@@ -137465,6 +137508,12 @@ var claimDeadlines = new ClaimDeadlines();
 var verificationDeadlines = new VerificationDeadlines();
 var careDeadlines = new CareDeadlines();
 jobs.push({ name: "claim deadlines", intervalMs: 36e5, firstDelayMs: 9e4, run: () => claimDeadlines.run(), onError: logFail("claim deadlines") }, { name: "verification deadlines", intervalMs: 36e5, firstDelayMs: 12e4, run: () => verificationDeadlines.run(), onError: logFail("verification deadlines") }, { name: "care deadlines", intervalMs: 36e5, firstDelayMs: 15e4, run: () => careDeadlines.run(), onError: logFail("care deadlines") });
+var founderCampaign = founderCampaignConfig(process.env);
+if (founderCampaign) {
+  const founderSender = new FounderStore();
+  const founderSite = (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/+$/, "");
+  jobs.push({ name: "founder campaign", intervalMs: 6e4, firstDelayMs: 6e4, run: () => founderSender.sendNextScheduled(founderSite, founderCampaign), onError: logFail("founder campaign") });
+}
 var scheduler = createJobScheduler(jobs);
 app.addHook("onResponse", async () => {
   scheduler.touch();
