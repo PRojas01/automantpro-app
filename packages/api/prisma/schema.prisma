@@ -1023,3 +1023,34 @@ model AdCampaign {
   @@index([ownerUserId, createdAt], map: "AdCampaign_owner_idx")
   @@index([status, startDate, endDate], map: "AdCampaign_status_idx")
 }
+
+// Formatos y campos propios del taller (shop-form-statements.ts).
+model ShopFormTemplate {
+  id        String   @id @db.VarChar(191)
+  shopId    String   @db.VarChar(191)
+  name      String   @db.VarChar(60)
+  purpose   String   @db.VarChar(10)
+  fields    Json
+  active    Boolean  @default(true)
+  createdBy String   @db.VarChar(191)
+  createdAt DateTime @default(now()) @db.DateTime(3)
+  updatedAt DateTime @default(now()) @db.DateTime(3)
+
+  @@index([shopId, active], map: "ShopFormTemplate_shop_idx")
+}
+
+model ShopFormEntry {
+  id              String   @id @db.VarChar(191)
+  templateId      String   @db.VarChar(191)
+  shopId          String   @db.VarChar(191)
+  vehicleId       String   @db.VarChar(191)
+  serviceRecordId String?  @db.VarChar(191)
+  templateName    String   @db.VarChar(60)
+  values          Json
+  note            String?  @db.VarChar(300)
+  createdBy       String   @db.VarChar(191)
+  createdAt       DateTime @default(now()) @db.DateTime(3)
+
+  @@index([vehicleId, createdAt], map: "ShopFormEntry_vehicle_idx")
+  @@index([templateId], map: "ShopFormEntry_template_idx")
+}
