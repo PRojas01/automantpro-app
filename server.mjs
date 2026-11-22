@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='c5e7d22d2ea816f46779e93e46c638e50d36e7ae'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='b4b702b1ed78c3d7731677678ec425e426e3ef9d'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -94383,7 +94383,10 @@ function levelSummary(items, current) {
   return PLAN_LEVELS.map((id3) => ({ id: id3, label: PLAN_LEVEL_LABELS[id3], offer: PLAN_LEVEL_OFFER[id3], count: items.filter((i) => serviceLevel(i.serviceId) === id3).length, included: includesLevel(current, id3), current: id3 === current }));
 }
 function lockedPreview(items) {
-  return items.map((item2) => ({ serviceId: item2.serviceId, system: systemOfService(item2.serviceId).name, ...elementOf(item2.serviceId, item2.serviceName), frequency: frequencyText(item2.intervalKm, item2.intervalMonths), level: PLAN_LEVEL_LABELS[item2.level], levelId: item2.level, offer: PLAN_LEVEL_OFFER[item2.level] }));
+  return items.map((item2) => {
+    const sys = systemOfService(item2.serviceId);
+    return { serviceId: item2.serviceId, serviceName: item2.serviceName, n: sys.n, sysId: sys.id, system: sys.name, ...elementOf(item2.serviceId, item2.serviceName), frequency: frequencyText(item2.intervalKm, item2.intervalMonths), level: PLAN_LEVEL_LABELS[item2.level], levelId: item2.level, offer: PLAN_LEVEL_OFFER[item2.level] };
+  });
 }
 function buildStructuredPlan(items, recommendations, sources) {
   const recs = new Map(recommendations.map((r) => [r.serviceId, r]));
@@ -94398,6 +94401,7 @@ function buildStructuredPlan(items, recommendations, sources) {
     const due = known ? [hasKm ? `a los ${formatKm2(item2.dueKm)}` : null, hasMonths ? `en ${formatMonth(new Date(item2.dueDate))}` : null].filter(Boolean).join(" o ") || null : null;
     const entry2 = {
       serviceId: item2.serviceId,
+      serviceName: item2.serviceName,
       system: system.name,
       element,
       action,
@@ -126007,7 +126011,7 @@ var PANEL_STYLES = `
 .sys-fold{border-top:1px solid var(--c-line);padding:2px 0}
 .sys-fold>summary{cursor:pointer;min-height:44px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font:600 14px/1.2 var(--c-font);color:var(--c-ink)}
 .sys-fold>summary .when{font-weight:400;font-size:.82rem;color:var(--c-muted)}
-.niveles h5{margin:12px 0 4px;font-size:13px}.niveles .chips{margin:6px 0}.plan-it .hist-link{display:block;margin-top:4px;font-size:.82rem;font-weight:700;color:var(--c-accent);text-decoration:underline}
+.niveles-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}.niveles-tabs button{margin:0;min-height:40px}.plan-lock{opacity:.78}.plan-lock .lock{flex:none}.plan-it .hist-link{display:block;margin-top:4px;font-size:.82rem;font-weight:700;color:var(--c-accent);text-decoration:underline}
 .plan-it details[open] .hist-link{text-decoration:none}.plan-it summary>span:nth-child(2){flex:1;min-width:0;overflow-wrap:anywhere}.pick{flex:none;padding-top:1px}.pick{padding:0 2px}.pick input{width:22px;height:22px;min-height:0;margin:0}.tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:6px;font-size:11px;font-weight:600;background:var(--c-sunk);color:var(--c-ink);border:1px solid var(--c-line)}.tag-sd{border-style:dashed}.hist{display:grid;gap:8px;margin:8px 0 4px;padding-left:16px;border-left:2px solid var(--c-line)}.hist-it{display:flex;flex-direction:column;gap:2px;min-width:0}.hist-it>*{min-width:0;overflow-wrap:anywhere}.hist-it .acts{display:flex;flex-wrap:wrap;gap:6px}.hist-it small{color:var(--c-muted)}.rec-form{margin-top:8px}
 .ficha .pill{flex:none;white-space:nowrap}
 .ficha .sec-fic>h2{display:flex;flex-wrap:wrap;gap:0 8px;align-items:baseline}
@@ -126291,9 +126295,10 @@ function entryHistory(s,e,reload){const recs=(s.records||[]).filter(r=>r.service
  if(!recs.length)box.append(h('p',{class:'note',text:'Sin registros todav\xEDa.'}));
  if(s.editor==='dueno'||s.editor==='taller'){const appt=s.editor==='taller'?((s.shopAppointments||[]).find(a=>a.planServiceIds.includes(e.serviceId))||(s.shopAppointments||[]).find(a=>!a.planServiceIds.length)||null):null;const add=btn('Agregar registro','ghost',()=>{add.replaceWith(recordForm(s,e,null,reload,appt));});box.append(add);}
  return box;}
-const sysOpen={};
+const sysOpen={};const lvSel={};
 function planBlock(s,r,reload){const p=s.structuredPlan;const sec=h('div',{class:'sec-fic',id:'plan-'+s.id},h('h3',{text:'Plan de mantenimiento'}));
  if(!p||!r.items.length){sec.append(h('p',{class:'note',text:r.headline||'Todav\xEDa no hay plan para este veh\xEDculo.'}));return sec;}
+ const tabsBox=h('div',{class:'niveles'});sec.append(tabsBox);
  const owner=s.editor==='dueno';const pick=pickSet(s.id);const known=new Set(p.systems.flatMap(g=>g.entries.map(e=>e.serviceId)));for(const id of [...pick])if(!known.has(id))pick.delete(id);
  const counter=h('b',{});const ask=owner?btn('Pedir cita con lo marcado','primary',()=>{const names=p.systems.flatMap(g=>g.entries).filter(e=>pick.has(e.serviceId)).map(e=>e.element);booking.service=names.length===1?names[0]:'Mantenimiento ('+names.length+' elementos)';booking.planIds=[...pick];renderPanel();const t=el('talleres')||el('book');if(t)t.scrollIntoView({behavior:'smooth',block:'start'});status('Elige el taller: la cita llevar\xE1 los '+names.length+' elementos marcados de tu plan.');}):null;
  const refresh=()=>{counter.textContent=pick.size?pick.size+(pick.size===1?' elemento marcado':' elementos marcados')+' para la cita':'Marca los elementos que quieres hacer o revisar en la cita';if(ask)ask.disabled=!pick.size;};
@@ -126302,7 +126307,7 @@ function planBlock(s,r,reload){const p=s.structuredPlan;const sec=h('div',{class
   const n=(s.records||[]).filter(x=>x.serviceId===e.serviceId).length;
   const head=h('summary',{},h('span',{class:'led'}),h('span',{},h('b',{text:e.element}),' \xB7 '+e.action,...tags,h('span',{class:'when',text:[e.frequency,e.due&&e.state!=='urgente'?'Toca '+e.due:null,e.state==='urgente'||e.state==='pronto'?e.label:null,e.source].filter(Boolean).join(' \xB7 ')}),h('span',{class:'hist-link',text:n?'Ver historial ('+n+') \u25B8':(s.editor==='dueno'||s.editor==='taller'?'Agregar registro \u25B8':'Sin registros')})),h('span',{class:'pill',text:STATE_NAME[e.state]||'Sin dato'}));
   const det=h('details',{},head);det.addEventListener('toggle',()=>{if(det.open&&det.children.length===1)det.append(entryHistory(s,e,reload));});
-  const li=h('li',{class:(SHEET_ST[e.state]||'sd')+' plan-it'});
+  const li=h('li',{class:(SHEET_ST[e.state]||'sd')+' plan-it'});li.dataset.name=e.serviceName||'';
   if(owner){const box=h('input',{type:'checkbox','aria-label':'Incluir '+e.element+' en la cita'});box.checked=pick.has(e.serviceId);box.onchange=()=>{if(box.checked)pick.add(e.serviceId);else pick.delete(e.serviceId);savePick(s.id);for(const other of document.querySelectorAll('input[data-svc="'+e.serviceId+'"]'))other.checked=box.checked;refresh();};box.dataset.svc=e.serviceId;li.append(h('label',{class:'pick'},box));}
   li.append(det);return li;};
  const list=a=>{const ul=h('ul',{});for(const e of a)ul.append(row(e));return ul;};
@@ -126313,25 +126318,31 @@ function planBlock(s,r,reload){const p=s.structuredPlan;const sec=h('div',{class
  sec.append(h('h4',{text:'Pr\xF3ximo servicio'+(p.next.at?' \xB7 '+p.next.at:'')}),p.next.entries.length?list(p.next.entries):h('p',{class:'note',text:'Nada pendiente por ahora.'}));
  if(p.verify.length)sec.append(h('p',{class:'note',text:p.verify.length+(p.verify.length===1?' elemento':' elementos')+' con la etiqueta \xABPor verificar\xBB: no hay registro de cu\xE1ndo se hicieron. Reg\xEDstralos o m\xE1rcalos para que el taller los revise.'}));
  if(p.later.length)sec.append(h('details',{},h('summary',{text:'Lo que viene ('+p.later.length+')'}),list(p.later)));
- const all=h('details',{open:true},h('summary',{text:'Plan completo por sistema'}));for(const g of p.systems){const c=st=>g.entries.filter(e=>e.state===st).length;const urg=c('urgente'),pro=c('pronto'),sd=c('sin_dato');const askedN=g.entries.filter(e=>appts.some(a=>a.planServiceIds.includes(e.serviceId))).length;const info=[g.entries.length+(g.entries.length===1?' elemento':' elementos'),urg?urg+' urgente'+(urg===1?'':'s'):null,pro?pro+' pronto':null,sd?sd+' por verificar':null,askedN?askedN+' en la cita':null].filter(Boolean).join(' \xB7 ');const fold=h('details',{class:'sys-fold'},h('summary',{},h('b',{text:g.name}),h('span',{class:'when',text:info})));const key=s.id+'|'+g.name;if(key in sysOpen?sysOpen[key]:urg)fold.open=true;let built=false;const fill=()=>{if(fold.open&&!built){built=true;fold.append(list(g.entries));if((s.editor==='dueno'||s.editor==='taller')&&g.id&&g.id!=='otros')fold.append(ownItemBtn(s,g.id,g.name,reload));}};fold.addEventListener('toggle',()=>{sysOpen[key]=fold.open;fill();});fill();all.append(fold);}sec.append(all);
- if(p.levels&&p.levels.length)sec.append(levelsBox(p,s.editor==='taller'));
+ // Niveles como pesta\xF1as (22/11/2026): filtran el plan completo; lo no contratado sale con candado en su sistema.
+ const LV=['funcional','intermedio','avanzado'];const shopView=s.editor==='taller';
+ const levels=(p.levels||[]).map(L=>shopView?Object.assign({},L,{offer:L.id==='funcional'?'Taller Gratis':L.id==='intermedio'?'Taller Pro':'Taller Plus'}):L);
+ const curL=levels.find(x=>x.current)||levels[0];if(levels.length&&!(s.id in lvSel))lvSel[s.id]=levels[levels.length-1].id;
+ const lockRow=e=>{const L=levels.find(x=>x.id===e.levelId)||{offer:e.offer,label:e.level};const li=h('li',{class:'sd plan-it plan-lock'},h('span',{class:'lock','aria-hidden':'true',text:'\u{1F512}'}),h('span',{},h('b',{text:e.element}),' \xB7 '+e.action,h('span',{class:'tag',text:'Disponible en '+L.offer+' \xB7 '+L.label}),h('span',{class:'when',text:e.frequency})));li.dataset.name=e.serviceName||'';return li;};
+ const all=h('details',{open:true,class:'plan-all'});
+ const drawAll=()=>{const sel=lvSel[s.id]||'avanzado';const upto=id=>LV.indexOf(id||'funcional')<=LV.indexOf(sel);const groups=new Map();
+  for(const g of p.systems)groups.set(g.n,{n:g.n,id:g.id,name:g.name,inc:g.entries.filter(e=>upto(e.level)),lock:[]});
+  for(const e of (p.locked||[])){if(!upto(e.levelId))continue;if(!groups.has(e.n))groups.set(e.n,{n:e.n,id:e.sysId,name:e.system,inc:[],lock:[]});groups.get(e.n).lock.push(e);}
+  const gs=[...groups.values()].filter(g=>g.inc.length||g.lock.length).sort((a,b)=>a.n-b.n);const total=gs.reduce((a,g)=>a+g.inc.length+g.lock.length,0),nl=gs.reduce((a,g)=>a+g.lock.length,0);
+  all.replaceChildren(h('summary',{text:'Plan completo por sistema \xB7 '+total+(total===1?' elemento':' elementos')+(nl?' \xB7 '+nl+' con candado':'')}));
+  for(const g of gs){const c=st=>g.inc.filter(e=>e.state===st).length;const urg=c('urgente'),pro=c('pronto'),sd=c('sin_dato');const askedN=g.inc.filter(e=>appts.some(a=>a.planServiceIds.includes(e.serviceId))).length;const n=g.inc.length+g.lock.length;
+   const info=[n+(n===1?' elemento':' elementos'),urg?urg+' urgente'+(urg===1?'':'s'):null,pro?pro+' pronto':null,sd?sd+' por verificar':null,askedN?askedN+' en la cita':null,g.lock.length?'\u{1F512} '+g.lock.length:null].filter(Boolean).join(' \xB7 ');
+   const fold=h('details',{class:'sys-fold'},h('summary',{},h('b',{text:g.name}),h('span',{class:'when',text:info})));const key=s.id+'|'+g.name;if(key in sysOpen?sysOpen[key]:urg)fold.open=true;
+   const incBox=h('div',{});fold.append(incBox);if(g.lock.length){const ul=h('ul',{class:'locked'});for(const e of g.lock)ul.append(lockRow(e));fold.append(ul);}
+   if((s.editor==='dueno'||s.editor==='taller')&&g.id&&g.id!=='otros')fold.append(ownItemBtn(s,g.id,g.name,reload));
+   let built=false;const fill=()=>{if(fold.open&&!built){built=true;if(g.inc.length)incBox.append(list(g.inc));}};fold.addEventListener('toggle',()=>{sysOpen[key]=fold.open;fill();});fill();all.append(fold);}};
+ const drawTabs=()=>{if(!levels.length)return;const tabs=h('div',{class:'niveles-tabs',role:'tablist','aria-label':'Niveles del plan'});let cum=0;
+  for(const L of levels){cum+=L.count;const on=lvSel[s.id]===L.id;const b=h('button',{type:'button',role:'tab',class:on?'primary':'ghost','aria-selected':String(on)},(L.included?'':'\u{1F512} ')+L.label+' \xB7 '+cum);b.onclick=()=>{lvSel[s.id]=L.id;drawTabs();drawAll();};tabs.append(b);}
+  const S=levels.find(x=>x.id===lvSel[s.id])||curL;
+  tabsBox.replaceChildren(h('p',{class:'note'},h('b',{text:'Niveles del plan: '}),shopView?'en esta ficha ves '+curL.label+' (el mayor entre el plan del due\xF1o y el de tu taller). ':'tu plan es '+curL.label+' ('+curL.offer+'). ','Cada nivel suma elementos al plan completo por sistema.'),tabs,S.included?null:h('p',{class:'note',text:'Con candado: no incluido en tu plan, disponible en '+S.offer+'. Ves nombre y frecuencia; para ver su estado, registrarlos o pedirlos en una cita, escribe Planes.'}));};
+ drawAll();drawTabs();sec.append(all);
  sec.append(h('p',{class:'note',text:'Toca un elemento para ver su historial: fecha, km, detalle, repuestos, costo, fotos y pr\xF3ximo servicio.'+(p.fromManufacturer?' Frecuencias del fabricante donde hay dato para este modelo; el resto sigue la regla general.':' Este modelo a\xFAn no tiene el plan del fabricante en la base: se aplica la regla general.')+' Lo que ocurra primero: km o tiempo.'}));
  if(ask)sec.append(ask);refresh();
  return sec;}
-// Niveles del plan (22/11/2026): cada nivel suma elementos al anterior; lo no contratado se ve como vista previa.
-function levelsBox(p,shop){const lv=shop?p.levels.map(L=>Object.assign({},L,{offer:L.id==='funcional'?'Taller Gratis':L.id==='intermedio'?'Taller Pro':'Taller Plus'})):p.levels;const cur=lv.find(x=>x.current)||lv[0];const box=h('details',{class:'plan-locked niveles',open:cur.id==='funcional'},h('summary',{text:'Niveles del plan: '+lv.map(x=>x.label).join(', ')+((p.locked||[]).length?' \xB7 Vista previa: no incluido en tu plan ('+p.locked.length+')':'')}));
- box.append(h('p',{class:'note',text:'Cada nivel suma elementos al anterior. '+(shop?'Nivel que ves en esta ficha: '+cur.label+', el mayor entre el plan del due\xF1o y el de tu taller (Taller Pro = Avanzado, Taller Plus = Confiabilidad).':'Tu plan: '+cur.label+' ('+cur.offer+').')+' Toca un nivel para ver sus elementos por sistema.'}));
- const tabs=h('div',{class:'chips',role:'group','aria-label':'Niveles del plan'});const views=[];const btns=[];
- const pick=id=>{views.forEach(v=>{v.hidden=v.dataset.level!==id;});btns.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.level===id)));};
- lv.forEach((L,i)=>{const b=h('button',{type:'button',class:'chip'},L.label+' \xB7 '+(i===0?'':'+')+L.count+(L.current?' \xB7 tu plan':L.included?' \xB7 incluido':''));b.dataset.level=L.id;b.onclick=()=>pick(L.id);btns.push(b);tabs.append(b);
-  const rows=L.included?p.systems.flatMap(g=>g.entries).filter(e=>e.level===L.id):(p.locked||[]).filter(e=>e.levelId===L.id);
-  const v=h('div',{class:'nivel'});v.dataset.level=L.id;
-  const desc=L.id==='funcional'?'Lo b\xE1sico preventivo para andar seguro, m\xE1s el correctivo por s\xEDntomas. ':L.id==='intermedio'?'Todo el plan de tu modelo: afinaci\xF3n mayor y frecuencias del fabricante, seg\xFAn marca, modelo y a\xF1o; puedes agregar elementos en cada sistema. ':'Suma inspecciones que miden el estado real del veh\xEDculo: esc\xE1ner, emisiones, carga y pre-revisi\xF3n RTV. ';v.append(h('p',{class:'note',text:desc+(L.included?'Incluido en tu plan.':'Vista previa: no incluido en tu plan. Disponible en '+L.offer+'. Solo nombre e intervalo; para ver su estado, registrarlos, recibir recordatorios o pedirlos en una cita, escribe Planes.')}));
-  const bySys=new Map();for(const e of rows){if(!bySys.has(e.system))bySys.set(e.system,[]);bySys.get(e.system).push(e);}
-  if(!rows.length)v.append(h('p',{class:'note',text:'Este veh\xEDculo no tiene elementos de este nivel.'}));
-  for(const [name,list] of bySys){const ul=h('ul',{class:'locked'});for(const e of list)ul.append(h('li',{class:'sd plan-it'},h('span',{},h('b',{text:e.element}),' \xB7 '+e.action,L.included?null:h('span',{class:'tag',text:'Disponible en '+L.offer+' \xB7 '+L.label}),h('span',{class:'when',text:e.frequency}))));v.append(h('h5',{text:name+' \xB7 '+list.length}),ul);}
-  views.push(v);});
- box.append(tabs,...views);const firstLocked=lv.find(x=>!x.included);pick((firstLocked||cur).id);return box;}
 // Elemento propio dentro de un sistema: queda en ese sistema del plan, con su frecuencia.
 function ownItemBtn(s,sysId,sysName,reload){const b=btn('Agregar elemento en '+sysName,'ghost',()=>{const f=h('form',{class:'acts'});const name=h('input',{type:'text',maxlength:'100',required:true,placeholder:'Elemento y acci\xF3n (ej.: cambiar filtro de aceite de caja)','aria-label':'Elemento nuevo en '+sysName});const k=h('input',{type:'number',min:'500',max:'100000',placeholder:'Cada cu\xE1ntos km','aria-label':'Intervalo en km'});const m=h('input',{type:'number',min:'1',max:'60',placeholder:'Cada cu\xE1ntos meses','aria-label':'Intervalo en meses'});f.append(name,k,m,h('button',{class:'primary'},'Agregar'));f.onsubmit=e=>{e.preventDefault();if(!k.value&&!m.value){status('Indica km o meses.');return;}api('/pilot/plan-overrides',{method:'POST',body:JSON.stringify({vehicleId:s.id,serviceId:'custom-'+sysId+'-'+crypto.randomUUID(),customName:name.value.trim(),intervalKm:k.value?Number(k.value):null,intervalMonths:m.value?Number(m.value):null,disabled:false,nota:''})}).then(reload).catch(err=>status(err.message));};b.replaceWith(f);name.focus();});return b;}
 const sheetSelected={};
