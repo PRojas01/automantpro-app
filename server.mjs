@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='f4fc675f87a416d2ce81ff013cba5bb0c8a4e919'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2d861c2f7f8a0d45ce3e07085296272546728af5'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -125943,7 +125943,7 @@ function withExamples(root,d){if(!d||(d.role!=='taller'&&d.role!=='dueno'))retur
  const realApi=api,realFetch=window.fetch;const idle=()=>new Promise(()=>{});
  try{window.ownerAds=null;api=idle;window.fetch=idle;(d.role==='taller'?renderShop:renderOwner)(tmp,s);}catch(e){return;}finally{window.ownerAds=ads;api=realApi;window.fetch=realFetch;}
  const key=c=>{const t=c.querySelector('h2,h3');const k=(t&&t.firstChild&&t.firstChild.textContent.trim())||c.id||'';return k==='Mi garaje'?'Tu garaje':k;};
- const also=new Set(d.role==='taller'?(d.reminders&&d.reminders.length?[]:['Escribir hoy']):['Tu garaje'].concat((d.history||[]).length?[]:['Historial de servicios'],(d.orders||[]).length?[]:['\xD3rdenes de trabajo']));
+ const also=new Set(d.role==='taller'?(d.reminders&&d.reminders.length?[]:['Escribir hoy']):((d.vehicles||[]).length?[]:['Tu garaje']).concat((d.history||[]).length?[]:['Historial de servicios'],(d.orders||[]).length?[]:['\xD3rdenes de trabajo']));
  const real=new Map([...root.children].map(c=>[key(c),c]));let prev=null;
  for(const c of [...tmp.children]){const k=key(c);if(!k)continue;const r=real.get(k);if(r&&!also.has(k)){prev=r;continue;}markExample(c);const at=r||prev;if(at)at.after(c);else root.prepend(c);prev=c;}}
 `;
@@ -126133,7 +126133,19 @@ details.fold{margin:6px 0;padding:0;background:none;border:0;border-top:1px soli
  .kpi{padding:10px;gap:4px}
  .days{grid-template-columns:repeat(3,1fr)}
  .grid2{grid-template-columns:1fr}
+ .ficha li.plan-it,.plan-sys li.plan-it{padding:6px 8px;gap:6px}
+ .plan-it>details{margin:0;padding:0;background:none;box-shadow:none;border-radius:0}.plan-it>details[open]{padding-bottom:4px}
+ .plan-it summary{gap:6px;min-height:0}
+ .plan-it summary>span:nth-child(2){font-size:13.5px;line-height:1.3}
+ .ficha .when,.plan-it .when{font-size:11.5px;line-height:1.3}
+ .plan-it .hist-link{display:inline-block;margin:2px 0 0;font-size:12px}
+ .plan-it .pill{font-size:11px;padding:1px 6px}
+ .pick input{width:20px;height:20px}
+ .agenda-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .agenda-slots>.line{grid-column:1/-1}
+ .agenda-slots>.line.slot-free{grid-column:auto;padding:6px 8px;min-height:0;flex-wrap:wrap}
 }
+.veh-switch{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}.veh-switch button{flex:none;white-space:nowrap}
 `;
 var PANEL_MARKUP = `<div id="panel" class="panel" aria-live="polite"></div>
 <template id="vehicleFormTpl"><div class="grid2">
@@ -126189,19 +126201,18 @@ function inspectionForm(s,reload,opts){opts=opts||{};const prior=opts.prior||nul
 function stageReviewBtn(o,stage){const b=btn(stage==='recepcion'?'Revisi\xF3n de recepci\xF3n':'Revisi\xF3n de entrega','ghost',async()=>{b.disabled=true;const full=(panelData&&panelData.orders||[]).find(x=>x.code===o.code)||o;const rec=(full.records&&full.records.inspections)||(o.records&&o.records.inspections)||[];const prior=stage==='entrega'?(rec.find(x=>x.stage==='recepcion')||{}).statuses:null;try{const s=await api('/pilot/vehicle-sheet?vehicleId='+encodeURIComponent(o.vehicleId));if(!s.checklist){status('Este veh\xEDculo no tiene lista de revisi\xF3n.');b.disabled=false;return;}b.replaceWith(h('div',{class:'ficha'},inspectionForm(s,()=>loadPanel(generation,panelVehicle),{stage,orderCode:o.code,prior})));}catch(err){status(err.message);b.disabled=false;}});return b;}
 function stageReviewLine(o){const rec=(o.records&&o.records.inspections)||[];if(!rec.length)return null;return h('div',{class:'note'},...rec.map(x=>h('p',{text:(x.stage==='recepcion'?'Revisi\xF3n de recepci\xF3n':'Revisi\xF3n de entrega')+' \xB7 '+ecDate(x.date,{day:'numeric',month:'short'})+': '+x.ok+' bien, '+x.observar+' observar, '+x.cambiar+' cambiar'+(x.flagged.length?' \xB7 '+x.flagged.join('; '):'')+(x.note?' \xB7 Nota: '+x.note:'')})));}
 function sheetBoard(s,reload){const r=s.recommendations;const b=h('div',{class:'board ficha','aria-label':'Ficha de '+s.label});
- b.append(h('p',{class:'cap'},h('span',{text:'Ficha de '+s.label+(s.ownerName?' \xB7 '+s.ownerName:'')}),h('b',{text:s.plate||'Sin placa'})),gauge(r),h('p',{class:'note'},'${PLAN_TECH_NOTICE} AutoMantPro no responde por su mala aplicaci\xF3n o incumplimiento, seg\xFAn los ',h('a',{href:'/terminos',target:'_blank',rel:'noopener',text:'t\xE9rminos y condiciones'}),'.'));
+ b.append(h('p',{class:'cap'},h('span',{text:'Ficha de '+s.label+(s.ownerName?' \xB7 '+s.ownerName:'')}),h('b',{text:s.plate||'Sin placa'})),gauge(r));const notice=h('p',{class:'note'},'${PLAN_TECH_NOTICE} AutoMantPro no responde por su mala aplicaci\xF3n o incumplimiento, seg\xFAn los ',h('a',{href:'/terminos',target:'_blank',rel:'noopener',text:'t\xE9rminos y condiciones'}),'.');
  if(r.headline)b.append(h('p',{class:'lead2',text:r.headline}));if(r.next&&s.editor==='dueno')b.append(btn('Agendar '+r.next.serviceName.toLowerCase(),'primary full',()=>{booking.service=r.next.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}));
- const order={urgente:0,pronto:1,sin_dato:2,al_dia:3};let selected=sheetSelected[s.id]||[...s.systems].sort((x,y)=>order[x.state]-order[y.state])[0]?.n||1;const det=h('div',{class:'fic-det sec-fic'});const pts=[],rowsBtn=[];
- const show=()=>{sheetSelected[s.id]=selected;pts.forEach(x=>x.el.classList.toggle('sel',x.n===selected));rowsBtn.forEach(x=>x.el.classList.toggle('sel',x.n===selected));const sys=s.systems.find(x=>x.n===selected);det.replaceChildren(h('h3',{text:sys.n+' \xB7 '+sys.name+' \xB7 '+sysState(sys)}));for(const f of sys.findings||[])det.append(h('p',{class:'note',text:f}));if(sys.services.length){const ul=h('ul',{});for(const it of sys.services)ul.append(...svcRow(s,it,reload,true));det.append(ul,h('p',{class:'note',text:'Resumen tomado del historial del plan completo. Para registrar o corregir un servicio, usa el plan completo.'}));}else det.append(h('p',{class:'note',text:'El plan de este veh\xEDculo no tiene servicios en este sistema.'}));};
+ const next=planBlock(s,r,reload);const order={urgente:0,pronto:1,sin_dato:2,al_dia:3};let selected=sheetSelected[s.id]||[...s.systems].sort((x,y)=>order[x.state]-order[y.state])[0]?.n||1;const det=h('div',{class:'fic-det sec-fic'});const pts=[],rowsBtn=[];
+ const show=()=>{sheetSelected[s.id]=selected;pts.forEach(x=>x.el.classList.toggle('sel',x.n===selected));rowsBtn.forEach(x=>x.el.classList.toggle('sel',x.n===selected));const sys=s.systems.find(x=>x.n===selected);det.replaceChildren(h('h3',{text:sys.n+' \xB7 '+sys.name+' \xB7 '+sysState(sys)}));for(const f of sys.findings||[])det.append(h('p',{class:'note',text:f}));if(sys.services.length&&next.rowsFor){det.append(next.rowsFor(new Set(sys.services.map(x=>x.serviceId))));}else if(sys.services.length){const ul=h('ul',{});for(const it of sys.services)ul.append(...svcRow(s,it,reload,true));det.append(ul);}else det.append(h('p',{class:'note',text:'El plan de este veh\xEDculo no tiene servicios en este sistema.'}));};
  const pick=n=>{selected=n;show();};const leg=h('ol',{class:'leyenda'});const NOW=s.systems;for(const sys of NOW){const row=h('button',{type:'button',onclick:()=>pick(sys.n)},h('span',{class:'n',text:String(sys.n)}),h('span',{class:'nm',text:sys.name}),h('b',{text:sysState(sys)}));rowsBtn.push({n:sys.n,el:row});leg.append(h('li',{class:SHEET_PT[sys.state]},row));}
  const scan=h('section',{class:'escaner ficha-auto','aria-label':'Sistemas de '+s.label});if(s.image){const car=h('div',{class:'auto'},h('img',{src:s.image,alt:'',width:'1000',height:'500',decoding:'async'}));const mask=h('span',{class:'mascara'},h('span',{class:'haz'}));const url='url("'+s.image+'")';mask.style.setProperty('mask-image',url);mask.style.setProperty('-webkit-mask-image',url);car.append(mask);NOW.forEach((sys,i)=>{const at=s.points[i];if(!at)return;const pt=h('button',{type:'button',class:'pt '+SHEET_PT[sys.state],'aria-label':sys.n+' '+sys.name+': '+STATE_NAME[sys.state],onclick:()=>pick(sys.n)},String(sys.n));pt.style.setProperty('left',at[0]+'%');pt.style.setProperty('top',at[1]+'%');pt.style.setProperty('--d',(6.4*at[0]/145).toFixed(2)+'s');pts.push({n:sys.n,el:pt});car.append(pt);});scan.append(car);if('IntersectionObserver' in window)new IntersectionObserver(e=>scan.classList.toggle('corre',e[0].isIntersecting&&!document.hidden)).observe(scan);}
  scan.append(h('h3',{text:'Informe por sistemas'}),leg);b.append(scan,det);show();
- const more=h('details',{class:'informe-mas',open:true},h('summary',{text:'Informe completo'}));
+ b.append(next,notice);const more=h('details',{class:'informe-mas'},h('summary',{text:'M\xE1s del veh\xEDculo: datos, alertas, otros servicios e inspecci\xF3n'}));
  const USO={urbano:'Urbano',carretera:'Carretera',severo:'Severo'};const data=h('div',{class:'sec-fic'},fold('Datos del veh\xEDculo',[[s.make,s.model,s.year].filter(Boolean).join(' '),s.plate||'Sin placa',km(s.km),USO[s.usageProfile]].filter(Boolean).join(' \xB7 '),sheetData(s,reload),soatEditor(s,reload)));
- const next=planBlock(s,r,reload);
  const al=h('div',{class:'sec-fic'},h('h3',{text:'Alertas'}));if(s.alerts&&s.alerts.length){const ul=h('ul',{});for(const a of s.alerts)ul.append(h('li',{class:SHEET_ST[a.state]||'sd'},h('span',{class:'led'}),h('span',{},a.title,h('span',{class:'when',text:a.detail})),h('span',{class:'pill',text:STATE_NAME[a.state]||'Sin dato'})));al.append(ul);}else al.append(h('p',{class:'note',text:'Sin alertas.'}));
  const known=new Set(r.items.map(i=>i.serviceId));const extra=[...(s.otros||[]),...(s.planServices||[]).filter(p=>!known.has(p.serviceId)).map(p=>({serviceId:p.serviceId,serviceName:p.serviceName,categoryName:'',state:'sin_dato',label:p.override&&p.override.disabled?'No aplica a este veh\xEDculo':'',detail:p.reason||''}))];const own=fold('Otros servicios',extra.length?(extra.length===1?'1 servicio':extra.length+' servicios'):'Agrega los tuyos');if(extra.length){const ul=h('ul',{});for(const it of extra)ul.append(...svcRow(s,it,reload));own.append(ul);}if(s.editor!=='conductor')own.append(btn('Agregar servicio propio','ghost',()=>{const f=h('form',{class:'acts'});const name=h('input',{type:'text',maxlength:'100',required:true,placeholder:'Nombre del servicio','aria-label':'Nombre del servicio'});const k=h('input',{type:'number',min:'500',max:'100000',placeholder:'Cada cu\xE1ntos km','aria-label':'Intervalo en km'});const m=h('input',{type:'number',min:'1',max:'60',placeholder:'Cada cu\xE1ntos meses','aria-label':'Intervalo en meses'});f.append(name,k,m,h('button',{class:'primary'},'Agregar'));f.onsubmit=e=>{e.preventDefault();if(!k.value&&!m.value){status('Indica km o meses.');return;}api('/pilot/plan-overrides',{method:'POST',body:JSON.stringify({vehicleId:s.id,serviceId:'custom-'+crypto.randomUUID(),customName:name.value.trim(),intervalKm:k.value?Number(k.value):null,intervalMonths:m.value?Number(m.value):null,disabled:false,nota:''})}).then(reload).catch(err=>status(err.message));};own.append(f);}));
- const ins=inspectionCard(s.inspection,Boolean(s.checklist));ins.classList.add('sec-fic');ins.classList.remove('pcard');if(s.checklist){const open=btn('Registrar inspecci\xF3n','primary',()=>{open.replaceWith(inspectionForm(s,reload));});ins.append(open);}const forms=typeof shopFormsBlock==='function'?shopFormsBlock(s):null;more.append(data,next,al,...(extra.length||s.editor!=='conductor'?[own]:[]),ins,...(forms?[forms]:[]));b.append(more);return b;}
+ const ins=inspectionCard(s.inspection,Boolean(s.checklist));ins.classList.add('sec-fic');ins.classList.remove('pcard');if(s.checklist){const open=btn('Registrar inspecci\xF3n','primary',()=>{open.replaceWith(inspectionForm(s,reload));});ins.append(open);}const forms=typeof shopFormsBlock==='function'?shopFormsBlock(s):null;more.append(data,al,...(extra.length||s.editor!=='conductor'?[own]:[]),ins,...(forms?[forms]:[]));b.append(more);return b;}
 // Plan estructurado como el libro del fabricante: sistema \u2192 elemento, acci\xF3n y frecuencia. Cada elemento lleva su
 // etiqueta (por verificar, pedido en una cita), su historial de registros editables y, para el due\xF1o, una casilla
 // para adjuntarlo a la cita.
@@ -126265,9 +126276,11 @@ function planBlock(s,r,reload){const p=s.structuredPlan;const sec=h('div',{class
   const head=h('summary',{},h('span',{class:'led'}),h('span',{},h('b',{text:e.element}),' \xB7 '+e.action,...tags,h('span',{class:'when',text:[e.frequency,e.due&&e.state!=='urgente'?'Toca '+e.due:null,e.state==='urgente'||e.state==='pronto'?e.label:null,e.source].filter(Boolean).join(' \xB7 ')}),h('span',{class:'hist-link',text:n?'Ver historial ('+n+') \u25B8':(s.editor==='dueno'||s.editor==='taller'?'Agregar registro \u25B8':'Sin registros')})),h('span',{class:'pill',text:STATE_NAME[e.state]||'Sin dato'}));
   const det=h('details',{},head);det.addEventListener('toggle',()=>{if(det.open&&det.children.length===1)det.append(entryHistory(s,e,reload));});
   const li=h('li',{class:(SHEET_ST[e.state]||'sd')+' plan-it'});
-  if(owner){const box=h('input',{type:'checkbox','aria-label':'Incluir '+e.element+' en la cita'});box.checked=pick.has(e.serviceId);box.onchange=()=>{if(box.checked)pick.add(e.serviceId);else pick.delete(e.serviceId);savePick(s.id);for(const other of sec.querySelectorAll('input[data-svc="'+e.serviceId+'"]'))other.checked=box.checked;refresh();};box.dataset.svc=e.serviceId;li.append(h('label',{class:'pick'},box));}
+  if(owner){const box=h('input',{type:'checkbox','aria-label':'Incluir '+e.element+' en la cita'});box.checked=pick.has(e.serviceId);box.onchange=()=>{if(box.checked)pick.add(e.serviceId);else pick.delete(e.serviceId);savePick(s.id);for(const other of document.querySelectorAll('input[data-svc="'+e.serviceId+'"]'))other.checked=box.checked;refresh();};box.dataset.svc=e.serviceId;li.append(h('label',{class:'pick'},box));}
   li.append(det);return li;};
  const list=a=>{const ul=h('ul',{});for(const e of a)ul.append(row(e));return ul;};
+ // El detalle de cada punto de control muestra estas mismas filas del plan (marcar, historial, registrar), sin un resumen aparte.
+ sec.rowsFor=ids=>{const ul=list(p.systems.flatMap(g=>g.entries).filter(e=>ids.has(e.serviceId)));ul.classList.add('plan-sys');return ul;};
  if(owner){const quick=h('div',{class:'acts'});quick.append(btn('Marcar el pr\xF3ximo servicio','ghost',()=>{for(const e of p.next.entries)pick.add(e.serviceId);savePick(s.id);reload();}));if(p.verify.length)quick.append(btn('Marcar los por verificar ('+p.verify.length+')','ghost',()=>{for(const e of p.verify)pick.add(e.serviceId);savePick(s.id);reload();}));if(pick.size)quick.append(btn('Desmarcar todo','ghost',()=>{pick.clear();savePick(s.id);reload();}));sec.append(h('p',{class:'note'},counter),quick);}
  for(const a of appts){const asked=p.systems.flatMap(g=>g.entries).filter(e=>a.planServiceIds.includes(e.serviceId));if(asked.length)sec.append(h('h4',{text:'Pedido en la cita '+a.ref+' \xB7 '+asked.length+(asked.length===1?' elemento':' elementos')}),list(asked));}
  sec.append(h('h4',{text:'Pr\xF3ximo servicio'+(p.next.at?' \xB7 '+p.next.at:'')}),p.next.entries.length?list(p.next.entries):h('p',{class:'note',text:'Nada pendiente por ahora.'}));
@@ -126333,24 +126346,28 @@ function inspectionCard(x,forShop){if(!x)return card('Inspecci\xF3n por sistemas
  return card('Inspecci\xF3n por sistemas',ecDate(x.date,{day:'numeric',month:'short',year:'numeric'})+' \xB7 '+x.shopName,ul,x.note?h('p',{class:'note',text:'Nota del taller: '+x.note}):null);}
 function renderOwner(root,d){
  const r=d.recommendations;const v=d.vehicles.find(x=>x.id===d.vehicleId);
- if(!d.vehicles.length){if(d.fleet)root.append(anchor(fleetCard(d),'flota'));else root.append(anchor(fleetNoneCard(),'flota'));root.append(card('Tu garaje',null,h('p',{class:'note',text:d.fleet?'No tienes veh\xEDculos propios. Si tienes uno, agr\xE9galo para calcular su plan de mantenimiento.':'Todav\xEDa no tienes veh\xEDculos. Agrega el primero para calcular tu plan de mantenimiento.'}),vehicleForm(),receiveVehicleBox(),acceptCardBox()));return;}
- if(d.fleet)root.append(anchor(fleetCard(d),'flota'));
- root.append(garage(d));
- if(!d.fleet)root.append(anchor(fleetNoneCard(),'flota'));
+ if(!d.vehicles.length){if(d.fleet)root.append(anchor(fleetCard(d),'flota'));root.append(card('Tu garaje',null,h('p',{class:'note',text:d.fleet?'No tienes veh\xEDculos propios. Si tienes uno, agr\xE9galo para calcular su plan de mantenimiento.':'Todav\xEDa no tienes veh\xEDculos. Agrega el primero para calcular tu plan de mantenimiento.'}),vehicleForm(),receiveVehicleBox(),acceptCardBox()));if(!d.fleet)root.append(anchor(fleetNoneCard(),'flota'));return;}
+ // Orden del panel del due\xF1o (pedido del 22/11/2026): primero la animaci\xF3n con los puntos de control y el plan
+ // de mantenimiento; luego lo que est\xE1 en curso (citas, \xF3rdenes) y las dem\xE1s herramientas; la flota al final.
+ if(d.vehicles.length>1)root.append(vehicleSwitch(d));
  if(d.sheet)root.append(sheetBoard(d.sheet,()=>loadPanel(generation,panelVehicle)));
- if(d.costs)root.append(costsCard(d.costs,v));
  const driving=d.sheet&&d.sheet.editor==='conductor';
- root.append(historyCard(d));
+ if(d.appointments&&d.appointments.length)root.append(anchor(appointmentsCard(d),'citas'));
+ root.append(ordersCard(d));
  if(!driving)root.append(talleresCard(d,r));
  if(!driving)root.append(bookCard(d,r));
- if(d.appointments&&d.appointments.length)root.append(anchor(appointmentsCard(d),'citas'));
  if(!driving)root.append(ownerRequestsCard(d));
  if(!driving&&d.partOrders&&d.partOrders.length)root.append(anchor(partOrdersCard(d),'repuestos'));
  if(!driving&&d.partMoney&&d.partMoney.length)root.append(partMoneyCard(d));
- root.append(ordersCard(d));
+ root.append(historyCard(d));
+ if(d.costs)root.append(costsCard(d.costs,v));
  if(!driving)root.append(partsCard(d,v));
+ root.append(garage(d));
  if(typeof ownerAds==='function')root.append(ownerAds(root));
+ root.append(anchor(d.fleet?fleetCard(d):fleetNoneCard(),'flota'));
 }
+/** Cambio r\xE1pido de veh\xEDculo arriba del tablero cuando hay m\xE1s de uno (el garaje completo va m\xE1s abajo). */
+function vehicleSwitch(d){const row=h('div',{class:'veh-switch',role:'group','aria-label':'Veh\xEDculo'});for(const v of d.vehicles){const on=v.id===d.vehicleId;const b=h('button',{type:'button',class:on?'primary':'ghost','aria-pressed':on?'true':'false'},v.label+(v.plate?' \xB7 '+v.plate:''));b.onclick=()=>{if(on)return;const epoch=generation;loadPanel(epoch,v.id).catch(err=>{if(epoch===generation)status(err.message);});};row.append(b);}return row;}
 // FL1\u2013FL4 y CO1: la flota se administra con formularios; cada uno env\xEDa la misma orden que el chat.
 async function fleetSend(command,b,after){if(b)b.disabled=true;try{const r=await api('/pilot/fleet/command',{method:'POST',body:JSON.stringify({command})});showResult(r.message);if(after)after(r);}catch(err){showResult(err.message);}finally{if(b)b.disabled=false;}}
 function fInput(label,attrs){return h('input',Object.assign({'aria-label':label,placeholder:label},attrs||{}));}
@@ -126365,7 +126382,7 @@ function fleetJoinBox(){const code=fInput('C\xF3digo de invitaci\xF3n (J-\u2026)
  return fForm(b=>fleetSend({action:'joinFleet',inviteCode:code.value.trim().toUpperCase(),name:name.value.trim()},b,()=>loadPanel(generation,panelVehicle)),'Unirme',code,name,h('label',{},ok,' Acepto el tratamiento de mis datos por la empresa'));}
 function fleetRegisterBox(){const name=fInput('Raz\xF3n social',{required:true,minlength:'2',maxlength:'120'});const ruc=fInput('RUC (13 d\xEDgitos)',{required:true,pattern:'[0-9]{10}001',maxlength:'13',inputmode:'numeric'});const city=fInput('Ciudad',{required:true,minlength:'2',maxlength:'120'});const person=fInput('Tu nombre y apellido',{required:true,minlength:'3',maxlength:'60'});const ok=h('input',{type:'checkbox',required:true});
  return fForm(b=>fleetSend({action:'registerFleet',name:name.value.trim(),ruc:ruc.value.trim(),city:city.value.trim(),person:person.value.trim()},b,()=>loadPanel(generation,panelVehicle)),'Registrar flota',name,ruc,city,person,h('label',{},ok,' Acepto el tratamiento de datos'));}
-function fleetNoneCard(){return fold('Flota de empresa','Registra la flota o \xFAnete con tu c\xF3digo',h('div',{class:'stack'},h('p',{class:'note',text:'Si administras los veh\xEDculos de una empresa, reg\xEDstrala. Si te invitaron como conductor o supervisor, \xFAnete con el c\xF3digo que te enviaron.'}),fleetRegisterBox(),fleetJoinBox()));}
+function fleetNoneCard(){return fold('Flota de empresa (opcional)','Requiere el plan Flota \xB7 o \xFAnete con tu c\xF3digo',h('div',{class:'stack'},h('p',{class:'note'},'Para administrar los veh\xEDculos de una empresa necesitas el plan Flota (por veh\xEDculo al mes, desde 5 veh\xEDculos). ',h('a',{href:'/planes#flota',text:'Ver el plan Flota'}),'. Si te invitaron como conductor o supervisor, \xFAnete gratis con el c\xF3digo que te enviaron.'),fleetJoinBox(),h('details',{},h('summary',{text:'Ya tengo el plan Flota: registrar la empresa'}),fleetRegisterBox())));}
 function driverBox(list){const box=h('div',{class:'stack'});if(!list.length){box.append(h('p',{class:'note',text:'Todav\xEDa no tienes un veh\xEDculo asignado. Cuando te asignen uno, aqu\xED reportas su kilometraje y sus s\xEDntomas.'}));return box;}
  for(const v of list){const km=fInput('Kilometraje actual',{type:'number',min:String(v.km),max:'2000000',required:true,inputmode:'numeric'});const sy=h('textarea',{required:true,minlength:'5',maxlength:'500',rows:'2','aria-label':'S\xEDntoma',placeholder:'\xBFQu\xE9 notas? Ruido, luz encendida, vibraci\xF3n\u2026'});
   box.append(h('div',{class:'stack'},h('b',{text:v.plate+' \xB7 '+v.label+' \xB7 '+v.fleet}),h('small',{class:'sub',text:'\xDAltimo kilometraje: '+v.km.toLocaleString('es-EC')+' km'}),
@@ -126541,11 +126558,11 @@ function shopAgendaCard(d){const ag=d.agenda;if(!ag||!ag.days||!ag.days.length)r
   wrap.append(h('div',{class:'chips'},...ag.days.map((x,i)=>btn(ecDate(x.date+'T12:00:00-05:00',{weekday:'short',day:'numeric'}),i===agendaDay?'primary':'ghost',()=>{agendaDay=i;draw();}))));
   const busy=day.slots.filter(x=>x.used>0).length;
   wrap.append(h('p',{class:'summary'},busy?busy+(busy===1?' hora con citas':' horas con citas')+' \xB7 cupos: '+ag.capacity+' a la vez':'Sin citas este d\xEDa \xB7 cupos: '+ag.capacity+' a la vez'));
-  const list=h('div',{class:'list'});
+  const list=h('div',{class:'list agenda-slots'});
   for(const x of day.slots){if(x.past&&!x.used)continue;const full=x.used>=ag.capacity;const st=x.used===0?'al_dia':full?'urgente':'pronto';
    const acts=h('div',{class:'chips'});
    if(!x.past&&!full&&d.canManage!==false&&movable.length)acts.append(btn('Asignar aqu\xED','ghost',ev=>{const box=h('div',{class:'chips'},...movable.map(a=>abtn(a.ref+' \xB7 '+a.vehicle,'ghost',['Reprogramar cita '+a.ref,day.date,x.time],'\xBFProponer al due\xF1o la cita '+a.ref+' para el '+ecDate(day.date+'T12:00:00-05:00',{weekday:'long',day:'numeric',month:'long'})+' a las '+x.time+'? \xC9l deber\xE1 aceptarla.')));ev.currentTarget.replaceWith(box);}));
-   list.append(h('div',{class:'line st-'+st},h('div',{class:'who'},h('span',{class:'time',text:x.time}),h('div',{},h('b',{text:x.used===0?'Libre':full?'Lleno ('+x.used+' de '+ag.capacity+')':x.used+' de '+ag.capacity+' ocupados'}),...x.items.map(i=>h('small',{class:'mono',text:i.ref+' \xB7 '+i.time+' \xB7 '+i.vehicle+' \xB7 '+(i.status==='confirmed'?'Confirmada':'Por confirmar')})))),acts));}
+   list.append(h('div',{class:'line st-'+st+(x.used===0?' slot-free':'')},h('div',{class:'who'},h('span',{class:'time',text:x.time}),h('div',{},h('b',{text:x.used===0?'Libre':full?'Lleno ('+x.used+' de '+ag.capacity+')':x.used+' de '+ag.capacity+' ocupados'}),...x.items.map(i=>h('small',{class:'mono',text:i.ref+' \xB7 '+i.time+' \xB7 '+i.vehicle+' \xB7 '+(i.status==='confirmed'?'Confirmada':'Por confirmar')})))),acts));}
   wrap.append(list);};
  draw();
  return card('Agenda del taller','Pr\xF3ximos 7 d\xEDas',wrap,d.canManage!==false?inlineAct('Cambiar cupos',[{label:'Veh\xEDculos que atiendes a la vez',type:'number'}],v=>['Cupos',v[0]],'\xBFCambiar cu\xE1ntos veh\xEDculos atiendes a la vez? Se usa para ofrecer horarios.'):null,h('p',{class:'note',text:'Verde: libre \xB7 amarillo: con cupo \xB7 rojo: lleno. Al cerrar la orden o completar la visita, su hora se libera.'}));}
@@ -126635,15 +126652,15 @@ function renderShop(root,d){
   kpi(k.budgetsWaiting,'Presupuestos sin respuesta',k.budgetsWaiting?'alert':'idle'),kpi(k.clientsDue,'Clientes con mantenimiento por hacer',k.clientsDue?'alert':'idle')),
   d.today.length?h('div',{class:'list'},...d.today.map(a=>{const st=a.status==='confirmed'?'al_dia':'pronto';return h('div',{class:'line st-'+st},h('div',{class:'who'},h('span',{class:'time',text:ecDate(a.time,{hour:'2-digit',minute:'2-digit'})}),h('div',{},h('b',{text:a.vehicle}),h('small',{class:'mono',text:a.ref+(a.plate?' \xB7 '+a.plate:'')}))),h('span',{class:'pill'},st==='al_dia'?'Confirmada':'Por confirmar'));})):h('p',{class:'note',text:'No hay citas para hoy.'}),
   d.canManage?abtn('Ver resumen del d\xEDa','ghost',['Resumen hoy']):null));
- if(d.rating)root.append(shopRatingCard(d.rating));
- {const ag=shopAgendaCard(d);if(ag)root.append(anchor(ag,'agenda'));}
- {const wi=shopWalkInCard(d);if(wi)root.append(anchor(wi,'sin-cita'));}
  if(d.appointments?.length)root.append(anchor(shopAppointmentsCard(d),'citas'));
+ {const wi=shopWalkInCard(d);if(wi)root.append(anchor(wi,'sin-cita'));}
  {const ops=opsBoardCard(d);if(ops)root.append(anchor(ops,'tablero'));}
  if(d.orders?.length){const bar=ordersFilterBar(d);if(bar)root.append(bar);root.append(anchor(shopOrdersCard(ordersView(d)),'ordenes'));}
+ {const ag=shopAgendaCard(d);if(ag)root.append(anchor(ag,'agenda'));}
  if(d.partRequests&&d.partRequests.length)root.append(ownerRequestsCard(d,true));
  const prod=productivityCard(d);if(prod)root.append(prod);
  {const ind=shopIndicatorsCard(d);if(ind)root.append(anchor(ind,'indicadores'));}
+ if(d.rating)root.append(shopRatingCard(d.rating));
  {const cash=shopCashCard(d);if(cash)root.append(anchor(cash,'caja'));const imp=cardImportCard(d);if(imp)root.append(anchor(imp,'cargar-fichas'));}
  {const sup=shopSuppliesCard(d);if(sup)root.append(anchor(sup,'insumos'));}
  {const eq=shopTeamCard(d);if(eq)root.append(anchor(eq,'equipo'));}
