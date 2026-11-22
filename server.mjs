@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='f2e94866d77e3e08646d044967ee947b40ae6983'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='c5e7d22d2ea816f46779e93e46c638e50d36e7ae'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -90872,8 +90872,9 @@ var init_catalog = __esm({
         volumeFrom: null,
         volumePrice: null,
         limits: { workOrdersPerMonth: 10, quotesPerMonth: 5, technicians: 1 },
+        level: "funcional",
         extra: null,
-        features: ["10 \xF3rdenes de trabajo al mes", "5 cotizaciones al mes", "1 t\xE9cnico", "Perfil sin revisar en b\xFAsquedas"],
+        features: ["10 \xF3rdenes de trabajo al mes", "5 cotizaciones al mes", "1 t\xE9cnico", "Perfil sin revisar en b\xFAsquedas", "Plan Funcional en las fichas de tus clientes"],
         visible: true,
         recommended: false,
         order: 30
@@ -90889,8 +90890,9 @@ var init_catalog = __esm({
         volumeFrom: null,
         volumePrice: null,
         limits: { workOrdersPerMonth: 60, technicians: 3 },
+        level: "intermedio",
         extra: "USD 0,30 + IVA por orden sobre el tope",
-        features: ["60 \xF3rdenes al mes", "Hasta 3 t\xE9cnicos", "Perfil revisado y visible en b\xFAsquedas", "Fichas de veh\xEDculo por enlace", "Tablero web del taller (noviembre)"],
+        features: ["60 \xF3rdenes al mes", "Hasta 3 t\xE9cnicos", "Perfil revisado y visible en b\xFAsquedas", "Fichas de veh\xEDculo por enlace", "Plan Avanzado en las fichas de tus clientes", "Tablero web del taller (noviembre)"],
         visible: true,
         recommended: true,
         order: 40
@@ -90906,8 +90908,9 @@ var init_catalog = __esm({
         volumeFrom: null,
         volumePrice: null,
         limits: { workOrdersPerMonth: 150, technicians: 10 },
+        level: "avanzado",
         extra: "USD 0,25 + IVA por orden sobre el tope",
-        features: ["150 \xF3rdenes al mes", "Hasta 10 t\xE9cnicos", "Todo lo de Taller Pro", "Convenios con flotas", "Reporte mensual del taller"],
+        features: ["150 \xF3rdenes al mes", "Hasta 10 t\xE9cnicos", "Todo lo de Taller Pro", "Plan Confiabilidad en las fichas de tus clientes", "Convenios con flotas", "Reporte mensual del taller"],
         visible: true,
         recommended: false,
         order: 50
@@ -93413,6 +93416,17 @@ async function ownsFleet(conn, userId) {
     throw err4;
   }
 }
+async function shopLevel(conn, ownerUserId, catalog) {
+  const limits = await shopLimits(conn, ownerUserId, catalog);
+  if (!limits)
+    return "intermedio";
+  const offer = catalog ? findOfferByKey(limits.planKey, catalog) : null;
+  return SHOP_PLAN_LEVEL[limits.planKey] ?? offer?.level ?? "intermedio";
+}
+function higherLevel(a, b) {
+  const order = ["funcional", "intermedio", "avanzado"];
+  return order.indexOf(a) >= order.indexOf(b) ? a : b;
+}
 async function vehicleLevel(conn, vehicle, catalog) {
   if (!vehicle.userId)
     return "avanzado";
@@ -93469,7 +93483,7 @@ async function hasPaidPlan(conn, userId, catalogIn, now = /* @__PURE__ */ new Da
     return false;
   }
 }
-var rows22, OPEN;
+var rows22, OPEN, SHOP_PLAN_LEVEL;
 var init_entitlements = __esm({
   "packages/api/dist/infrastructure/plans/entitlements.js"() {
     "use strict";
@@ -93478,6 +93492,7 @@ var init_entitlements = __esm({
     init_catalog_store();
     rows22 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     OPEN = { tier: "prueba", planKey: null, level: "avanzado", maxVehicles: 3 };
+    SHOP_PLAN_LEVEL = { taller_gratis: "funcional", prueba: "intermedio", taller_pro: "intermedio", taller_plus: "avanzado" };
   }
 });
 
@@ -94245,15 +94260,21 @@ function illustrationFor(vehicle) {
   const style = bodyStyleFor(vehicle);
   return style ? { id: style, points: SYSTEM_POINTS[style] } : null;
 }
+function systemNumber(serviceId) {
+  const own2 = /^custom-([a-z]+)-/.exec(serviceId);
+  if (own2 && SYSTEM_BY_ID.has(own2[1]))
+    return SYSTEM_BY_ID.get(own2[1]);
+  return SYSTEM_OF_SERVICE.get(serviceId);
+}
 function systemOfService(serviceId) {
-  const n3 = SYSTEM_OF_SERVICE.get(serviceId);
+  const n3 = systemNumber(serviceId);
   const system = SYSTEMS.find((x) => x.n === n3);
-  return system ? { n: system.n, name: system.name } : { n: 9, name: "Otros" };
+  return system ? { n: system.n, name: system.name, id: system.id } : { n: 9, name: "Otros", id: "otros" };
 }
 function fichaSystems(items, inspection) {
-  const otros = items.filter((i) => !SYSTEM_OF_SERVICE.has(i.serviceId));
+  const otros = items.filter((i) => systemNumber(i.serviceId) === void 0);
   const systems = SYSTEMS.map((system) => {
-    const services = items.filter((i) => SYSTEM_OF_SERVICE.get(i.serviceId) === system.n);
+    const services = items.filter((i) => systemNumber(i.serviceId) === system.n);
     const area = inspection?.areas?.find((a) => a.id === system.id);
     const states2 = services.map((s) => s.state);
     if (area && area.state in RANK)
@@ -94264,7 +94285,7 @@ function fichaSystems(items, inspection) {
   });
   return { systems, otros };
 }
-var BODY_STYLES, isBodyStyle, fold10, KEYWORDS2, SYSTEM_POINTS, CLASS_ILLUSTRATIONS, SYSTEMS, SYSTEM_OF_SERVICE, RANK;
+var BODY_STYLES, isBodyStyle, fold10, KEYWORDS2, SYSTEM_POINTS, CLASS_ILLUSTRATIONS, SYSTEMS, SYSTEM_OF_SERVICE, SYSTEM_BY_ID, FICHA_SYSTEM_IDS, RANK;
 var init_ficha = __esm({
   "packages/api/dist/application/panel/ficha.js"() {
     "use strict";
@@ -94331,6 +94352,8 @@ var init_ficha = __esm({
         for (const sub of c.subservices)
           SYSTEM_OF_SERVICE.set(sub.id, system.n);
     }
+    SYSTEM_BY_ID = new Map(SYSTEMS.map((s) => [s.id, s.n]));
+    FICHA_SYSTEM_IDS = SYSTEMS.map((s) => ({ n: s.n, id: s.id, name: s.name }));
     RANK = { urgente: 0, pronto: 1, sin_dato: 2, al_dia: 3 };
   }
 });
@@ -94356,8 +94379,11 @@ function frequencyText(km10, months2) {
     return `Cada ${monthsText}`;
   return "Seg\xFAn inspecci\xF3n";
 }
+function levelSummary(items, current) {
+  return PLAN_LEVELS.map((id3) => ({ id: id3, label: PLAN_LEVEL_LABELS[id3], offer: PLAN_LEVEL_OFFER[id3], count: items.filter((i) => serviceLevel(i.serviceId) === id3).length, included: includesLevel(current, id3), current: id3 === current }));
+}
 function lockedPreview(items) {
-  return items.map((item2) => ({ serviceId: item2.serviceId, ...elementOf(item2.serviceId, item2.serviceName), frequency: frequencyText(item2.intervalKm, item2.intervalMonths), level: PLAN_LEVEL_LABELS[item2.level], offer: PLAN_LEVEL_OFFER[item2.level] }));
+  return items.map((item2) => ({ serviceId: item2.serviceId, system: systemOfService(item2.serviceId).name, ...elementOf(item2.serviceId, item2.serviceName), frequency: frequencyText(item2.intervalKm, item2.intervalMonths), level: PLAN_LEVEL_LABELS[item2.level], levelId: item2.level, offer: PLAN_LEVEL_OFFER[item2.level] }));
 }
 function buildStructuredPlan(items, recommendations, sources) {
   const recs = new Map(recommendations.map((r) => [r.serviceId, r]));
@@ -94380,9 +94406,10 @@ function buildStructuredPlan(items, recommendations, sources) {
       state,
       label: rec?.label ?? "Sin registro",
       due,
-      dueKm: known && hasKm ? item2.dueKm : null
+      dueKm: known && hasKm ? item2.dueKm : null,
+      level: serviceLevel(item2.serviceId)
     };
-    return { entry: entry2, item: item2, n: system.n };
+    return { entry: entry2, item: item2, n: system.n, sysId: system.id };
   });
   const urgentOrSoon = entries.filter((e9) => e9.entry.state === "urgente" || e9.entry.state === "pronto");
   const upToDate = entries.filter((e9) => e9.entry.state === "al_dia").sort((a, b) => new Date(a.item.dueDate).getTime() - new Date(b.item.dueDate).getTime() || a.item.dueKm - b.item.dueKm);
@@ -94393,7 +94420,7 @@ function buildStructuredPlan(items, recommendations, sources) {
   const at = urgentOrSoon.length ? "Lo antes posible" : first ? first.entry.due : null;
   const systems = /* @__PURE__ */ new Map();
   for (const e9 of [...entries].sort((a, b) => a.n - b.n || a.entry.element.localeCompare(b.entry.element, "es"))) {
-    const group = systems.get(e9.n) ?? { n: e9.n, name: e9.entry.system, entries: [] };
+    const group = systems.get(e9.n) ?? { n: e9.n, id: e9.sysId, name: e9.entry.system, entries: [] };
     group.entries.push(e9.entry);
     systems.set(e9.n, group);
   }
@@ -125980,7 +126007,7 @@ var PANEL_STYLES = `
 .sys-fold{border-top:1px solid var(--c-line);padding:2px 0}
 .sys-fold>summary{cursor:pointer;min-height:44px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font:600 14px/1.2 var(--c-font);color:var(--c-ink)}
 .sys-fold>summary .when{font-weight:400;font-size:.82rem;color:var(--c-muted)}
-.plan-it .hist-link{display:block;margin-top:4px;font-size:.82rem;font-weight:700;color:var(--c-accent);text-decoration:underline}
+.niveles h5{margin:12px 0 4px;font-size:13px}.niveles .chips{margin:6px 0}.plan-it .hist-link{display:block;margin-top:4px;font-size:.82rem;font-weight:700;color:var(--c-accent);text-decoration:underline}
 .plan-it details[open] .hist-link{text-decoration:none}.plan-it summary>span:nth-child(2){flex:1;min-width:0;overflow-wrap:anywhere}.pick{flex:none;padding-top:1px}.pick{padding:0 2px}.pick input{width:22px;height:22px;min-height:0;margin:0}.tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:6px;font-size:11px;font-weight:600;background:var(--c-sunk);color:var(--c-ink);border:1px solid var(--c-line)}.tag-sd{border-style:dashed}.hist{display:grid;gap:8px;margin:8px 0 4px;padding-left:16px;border-left:2px solid var(--c-line)}.hist-it{display:flex;flex-direction:column;gap:2px;min-width:0}.hist-it>*{min-width:0;overflow-wrap:anywhere}.hist-it .acts{display:flex;flex-wrap:wrap;gap:6px}.hist-it small{color:var(--c-muted)}.rec-form{margin-top:8px}
 .ficha .pill{flex:none;white-space:nowrap}
 .ficha .sec-fic>h2{display:flex;flex-wrap:wrap;gap:0 8px;align-items:baseline}
@@ -126286,11 +126313,27 @@ function planBlock(s,r,reload){const p=s.structuredPlan;const sec=h('div',{class
  sec.append(h('h4',{text:'Pr\xF3ximo servicio'+(p.next.at?' \xB7 '+p.next.at:'')}),p.next.entries.length?list(p.next.entries):h('p',{class:'note',text:'Nada pendiente por ahora.'}));
  if(p.verify.length)sec.append(h('p',{class:'note',text:p.verify.length+(p.verify.length===1?' elemento':' elementos')+' con la etiqueta \xABPor verificar\xBB: no hay registro de cu\xE1ndo se hicieron. Reg\xEDstralos o m\xE1rcalos para que el taller los revise.'}));
  if(p.later.length)sec.append(h('details',{},h('summary',{text:'Lo que viene ('+p.later.length+')'}),list(p.later)));
- const all=h('details',{open:true},h('summary',{text:'Plan completo por sistema'}));for(const g of p.systems){const c=st=>g.entries.filter(e=>e.state===st).length;const urg=c('urgente'),pro=c('pronto'),sd=c('sin_dato');const askedN=g.entries.filter(e=>appts.some(a=>a.planServiceIds.includes(e.serviceId))).length;const info=[g.entries.length+(g.entries.length===1?' elemento':' elementos'),urg?urg+' urgente'+(urg===1?'':'s'):null,pro?pro+' pronto':null,sd?sd+' por verificar':null,askedN?askedN+' en la cita':null].filter(Boolean).join(' \xB7 ');const fold=h('details',{class:'sys-fold'},h('summary',{},h('b',{text:g.name}),h('span',{class:'when',text:info})));const key=s.id+'|'+g.name;if(key in sysOpen?sysOpen[key]:urg)fold.open=true;let built=false;const fill=()=>{if(fold.open&&!built){built=true;fold.append(list(g.entries));}};fold.addEventListener('toggle',()=>{sysOpen[key]=fold.open;fill();});fill();all.append(fold);}sec.append(all);
- if(p.locked&&p.locked.length){const ul=h('ul',{class:'locked'});for(const e of p.locked)ul.append(h('li',{class:'sd plan-it'},h('span',{},h('b',{text:e.element}),' \xB7 '+e.action,h('span',{class:'tag',text:'Disponible en '+e.offer+' \xB7 '+e.level}),h('span',{class:'when',text:e.frequency}))));sec.append(h('details',{class:'plan-locked'},h('summary',{text:'Vista previa: no incluido en tu plan ('+p.locked.length+')'}),h('p',{class:'note',text:'Solo nombre e intervalo. Para ver su estado, registrarlos, recibir recordatorios o pedirlos en una cita, escribe Planes.'}),ul));}
+ const all=h('details',{open:true},h('summary',{text:'Plan completo por sistema'}));for(const g of p.systems){const c=st=>g.entries.filter(e=>e.state===st).length;const urg=c('urgente'),pro=c('pronto'),sd=c('sin_dato');const askedN=g.entries.filter(e=>appts.some(a=>a.planServiceIds.includes(e.serviceId))).length;const info=[g.entries.length+(g.entries.length===1?' elemento':' elementos'),urg?urg+' urgente'+(urg===1?'':'s'):null,pro?pro+' pronto':null,sd?sd+' por verificar':null,askedN?askedN+' en la cita':null].filter(Boolean).join(' \xB7 ');const fold=h('details',{class:'sys-fold'},h('summary',{},h('b',{text:g.name}),h('span',{class:'when',text:info})));const key=s.id+'|'+g.name;if(key in sysOpen?sysOpen[key]:urg)fold.open=true;let built=false;const fill=()=>{if(fold.open&&!built){built=true;fold.append(list(g.entries));if((s.editor==='dueno'||s.editor==='taller')&&g.id&&g.id!=='otros')fold.append(ownItemBtn(s,g.id,g.name,reload));}};fold.addEventListener('toggle',()=>{sysOpen[key]=fold.open;fill();});fill();all.append(fold);}sec.append(all);
+ if(p.levels&&p.levels.length)sec.append(levelsBox(p,s.editor==='taller'));
  sec.append(h('p',{class:'note',text:'Toca un elemento para ver su historial: fecha, km, detalle, repuestos, costo, fotos y pr\xF3ximo servicio.'+(p.fromManufacturer?' Frecuencias del fabricante donde hay dato para este modelo; el resto sigue la regla general.':' Este modelo a\xFAn no tiene el plan del fabricante en la base: se aplica la regla general.')+' Lo que ocurra primero: km o tiempo.'}));
  if(ask)sec.append(ask);refresh();
  return sec;}
+// Niveles del plan (22/11/2026): cada nivel suma elementos al anterior; lo no contratado se ve como vista previa.
+function levelsBox(p,shop){const lv=shop?p.levels.map(L=>Object.assign({},L,{offer:L.id==='funcional'?'Taller Gratis':L.id==='intermedio'?'Taller Pro':'Taller Plus'})):p.levels;const cur=lv.find(x=>x.current)||lv[0];const box=h('details',{class:'plan-locked niveles',open:cur.id==='funcional'},h('summary',{text:'Niveles del plan: '+lv.map(x=>x.label).join(', ')+((p.locked||[]).length?' \xB7 Vista previa: no incluido en tu plan ('+p.locked.length+')':'')}));
+ box.append(h('p',{class:'note',text:'Cada nivel suma elementos al anterior. '+(shop?'Nivel que ves en esta ficha: '+cur.label+', el mayor entre el plan del due\xF1o y el de tu taller (Taller Pro = Avanzado, Taller Plus = Confiabilidad).':'Tu plan: '+cur.label+' ('+cur.offer+').')+' Toca un nivel para ver sus elementos por sistema.'}));
+ const tabs=h('div',{class:'chips',role:'group','aria-label':'Niveles del plan'});const views=[];const btns=[];
+ const pick=id=>{views.forEach(v=>{v.hidden=v.dataset.level!==id;});btns.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.level===id)));};
+ lv.forEach((L,i)=>{const b=h('button',{type:'button',class:'chip'},L.label+' \xB7 '+(i===0?'':'+')+L.count+(L.current?' \xB7 tu plan':L.included?' \xB7 incluido':''));b.dataset.level=L.id;b.onclick=()=>pick(L.id);btns.push(b);tabs.append(b);
+  const rows=L.included?p.systems.flatMap(g=>g.entries).filter(e=>e.level===L.id):(p.locked||[]).filter(e=>e.levelId===L.id);
+  const v=h('div',{class:'nivel'});v.dataset.level=L.id;
+  const desc=L.id==='funcional'?'Lo b\xE1sico preventivo para andar seguro, m\xE1s el correctivo por s\xEDntomas. ':L.id==='intermedio'?'Todo el plan de tu modelo: afinaci\xF3n mayor y frecuencias del fabricante, seg\xFAn marca, modelo y a\xF1o; puedes agregar elementos en cada sistema. ':'Suma inspecciones que miden el estado real del veh\xEDculo: esc\xE1ner, emisiones, carga y pre-revisi\xF3n RTV. ';v.append(h('p',{class:'note',text:desc+(L.included?'Incluido en tu plan.':'Vista previa: no incluido en tu plan. Disponible en '+L.offer+'. Solo nombre e intervalo; para ver su estado, registrarlos, recibir recordatorios o pedirlos en una cita, escribe Planes.')}));
+  const bySys=new Map();for(const e of rows){if(!bySys.has(e.system))bySys.set(e.system,[]);bySys.get(e.system).push(e);}
+  if(!rows.length)v.append(h('p',{class:'note',text:'Este veh\xEDculo no tiene elementos de este nivel.'}));
+  for(const [name,list] of bySys){const ul=h('ul',{class:'locked'});for(const e of list)ul.append(h('li',{class:'sd plan-it'},h('span',{},h('b',{text:e.element}),' \xB7 '+e.action,L.included?null:h('span',{class:'tag',text:'Disponible en '+L.offer+' \xB7 '+L.label}),h('span',{class:'when',text:e.frequency}))));v.append(h('h5',{text:name+' \xB7 '+list.length}),ul);}
+  views.push(v);});
+ box.append(tabs,...views);const firstLocked=lv.find(x=>!x.included);pick((firstLocked||cur).id);return box;}
+// Elemento propio dentro de un sistema: queda en ese sistema del plan, con su frecuencia.
+function ownItemBtn(s,sysId,sysName,reload){const b=btn('Agregar elemento en '+sysName,'ghost',()=>{const f=h('form',{class:'acts'});const name=h('input',{type:'text',maxlength:'100',required:true,placeholder:'Elemento y acci\xF3n (ej.: cambiar filtro de aceite de caja)','aria-label':'Elemento nuevo en '+sysName});const k=h('input',{type:'number',min:'500',max:'100000',placeholder:'Cada cu\xE1ntos km','aria-label':'Intervalo en km'});const m=h('input',{type:'number',min:'1',max:'60',placeholder:'Cada cu\xE1ntos meses','aria-label':'Intervalo en meses'});f.append(name,k,m,h('button',{class:'primary'},'Agregar'));f.onsubmit=e=>{e.preventDefault();if(!k.value&&!m.value){status('Indica km o meses.');return;}api('/pilot/plan-overrides',{method:'POST',body:JSON.stringify({vehicleId:s.id,serviceId:'custom-'+sysId+'-'+crypto.randomUUID(),customName:name.value.trim(),intervalKm:k.value?Number(k.value):null,intervalMonths:m.value?Number(m.value):null,disabled:false,nota:''})}).then(reload).catch(err=>status(err.message));};b.replaceWith(f);name.focus();});return b;}
 const sheetSelected={};
 function shopSheets(list){const rows=h('div',{class:'list'});for(const v of list){const box=h('div',{});const open=btn('Abrir ficha','ghost',async()=>{const load=async()=>{try{const data=await api('/pilot/vehicle-sheet?vehicleId='+encodeURIComponent(v.id));box.replaceChildren(sheetBoard(data,load));}catch(err){status(err.message);}};open.disabled=true;await load();open.disabled=false;});rows.append(h('div',{class:'line'},h('div',{class:'who'},h('div',{},h('b',{text:v.label}),h('small',{class:'mono',text:v.plate||'Sin placa'}))),open),box);}return card('Fichas de veh\xEDculos',list.length+(list.length===1?' veh\xEDculo':' veh\xEDculos'),h('p',{class:'note',text:'Veh\xEDculos con cita u orden en tu taller. T\xFA y tus t\xE9cnicos pueden actualizar sus datos y su plan; el due\xF1o recibe un aviso.'}),rows);}
 function lastServiceForm(name){const f=h('form',{class:'acts'});const kmIn=h('input',{type:'number',min:'0',max:'2000000',inputmode:'numeric',required:true,'aria-label':'Kilometraje cuando se hizo',placeholder:'Km cuando se hizo'});const month=h('input',{type:'month','aria-label':'Mes en que se hizo'});f.append(kmIn,month,h('button',{class:'ghost'},'Guardar registro'));f.onsubmit=e=>{e.preventDefault();void act(['\xDAltimo servicio',name,String(Math.round(Number(kmIn.value))),...(month.value?[month.value]:[])],{btn:sub(e),ask:'\xBFAnotar que \xAB'+name+'\xBB se hizo a los '+km(kmIn.value)+'?',ok:()=>f.reset()});};return f;}
@@ -130955,7 +130998,7 @@ var PilotPanelStore = class {
         const shop = await this.care.actingShop(conn, userId, "taller", { openOrders: true });
         if (!await shopCanAccessVehicle(conn, shop.id, vehicleId))
           throw new BrokerError("FORBIDDEN");
-        return this.sheetOf(conn, vehicle, role, { userId, shopId: String(shop.id) });
+        return this.sheetOf(conn, vehicle, role, { userId, shopId: String(shop.id), shopOwnerUserId: shop.ownerUserId });
       }
       return this.sheetOf(conn, vehicle, role, { userId, shopId: null });
     });
@@ -130964,14 +131007,17 @@ var PilotPanelStore = class {
     return (await this.planDetail(conn, vehicle)).recommendations;
   }
   /** Recomendaciones y plan estructurado del mismo cálculo (nivel contratado, plan del modelo y ajustes). */
-  async planDetail(conn, vehicle) {
+  async planDetail(conn, vehicle, shopOwnerUserId) {
     const planned = await this.care.planVehicle(conn, vehicle);
-    const level = await vehicleLevel(conn, vehicle);
+    const ownerLevel = await vehicleLevel(conn, vehicle);
+    const level = shopOwnerUserId ? higherLevel(ownerLevel, await shopLevel(conn, shopOwnerUserId)) : ownerLevel;
     const items = planItemsFor(planned, level);
     const recommendations = buildRecommendations(items, await this.inspectionFindings(conn, vehicle));
     const structuredPlan = buildStructuredPlan(items, recommendations.items, planSourcesFor(planned));
-    const locked = lockedItems(planItemsFor(planned), level);
-    return { recommendations, structuredPlan: locked.length ? { ...structuredPlan, locked: lockedPreview(locked) } : structuredPlan };
+    const all = planItemsFor(planned);
+    const locked = lockedItems(all, level);
+    const levels = levelSummary(all, level);
+    return { recommendations, structuredPlan: locked.length ? { ...structuredPlan, levels, locked: lockedPreview(locked) } : { ...structuredPlan, levels } };
   }
   /** Lo que la última inspección pidió cambiar u observar, por servicio, hasta que se registre ese servicio después de ella. */
   async inspectionFindings(conn, vehicle) {
@@ -130997,7 +131043,7 @@ var PilotPanelStore = class {
     }
   }
   async sheetOf(conn, vehicle, editor, viewer) {
-    const { recommendations, structuredPlan } = await this.planDetail(conn, vehicle);
+    const { recommendations, structuredPlan } = await this.planDetail(conn, vehicle, viewer.shopOwnerUserId);
     const inspection = await this.lastInspection(conn, vehicle).catch((err4) => {
       if (err4.code === "ER_NO_SUCH_TABLE")
         return null;
