@@ -23244,8 +23244,15 @@ var FOUNDER_STATEMENTS = [
 var SHOP_COVER_STATEMENTS = [
   { kind: "addColumn", target: "Shop.coverMime", sql: "ALTER TABLE `Shop` ADD COLUMN `coverMime` VARCHAR(20) NULL" },
   { kind: "addColumn", target: "Shop.coverPhoto", sql: "ALTER TABLE `Shop` ADD COLUMN `coverPhoto` MEDIUMBLOB NULL" },
-  { kind: "addColumn", target: "Shop.coverUpdatedAt", sql: "ALTER TABLE `Shop` ADD COLUMN `coverUpdatedAt` DATETIME(3) NULL" }
+  { kind: "addColumn", target: "Shop.coverUpdatedAt", sql: "ALTER TABLE `Shop` ADD COLUMN `coverUpdatedAt` DATETIME(3) NULL" },
+  // Perfil completo del taller (23/11/2026): descripción, años de experiencia, logotipo y galería de fotos.
+  { kind: "addColumn", target: "Shop.description", sql: "ALTER TABLE `Shop` ADD COLUMN `description` TEXT NULL" },
+  { kind: "addColumn", target: "Shop.experienceYears", sql: "ALTER TABLE `Shop` ADD COLUMN `experienceYears` SMALLINT NULL" },
+  { kind: "createTable", target: "ShopPhoto", sql: "CREATE TABLE IF NOT EXISTS `ShopPhoto` (`id` VARCHAR(191) NOT NULL, `shopId` VARCHAR(191) NOT NULL, `kind` VARCHAR(10) NOT NULL, `mime` VARCHAR(20) NOT NULL, `data` MEDIUMBLOB NOT NULL, `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), PRIMARY KEY (`id`), KEY `ShopPhoto_shop_idx` (`shopId`, `kind`, `createdAt`)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  // La descripción que el equipo cargó en la ficha del fundador pasa a su perfil si aún no tiene una.
+  { kind: "update", target: "Shop.description", sql: "UPDATE `Shop` s JOIN `FounderInvite` f ON f.shopId = s.id SET s.description = JSON_UNQUOTE(JSON_EXTRACT(f.profile, '$.descripcion')) WHERE s.description IS NULL AND JSON_TYPE(JSON_EXTRACT(f.profile, '$.descripcion')) = 'STRING'" }
 ];
+var SHOP_PHOTO_TABLES = ["ShopPhoto"];
 
 // packages/api/src/infrastructure/schema-setup/plan-record-statements.ts
 var PLAN_RECORD_STATEMENTS = [
@@ -23304,7 +23311,7 @@ var AD_STATEMENTS = [
 
 // packages/api/src/infrastructure/schema-setup/apply.ts
 var ALL_STATEMENTS = [...SCHEMA_STATEMENTS, ...EXTRA_STATEMENTS, ...AGENT_STATEMENTS, ...LOCAL_MARKETPLACE_STATEMENTS, ...LOCAL_AGENT_STATEMENTS, ...VEHICLE_CARE_STATEMENTS, ...FLEET_STATEMENTS, ...BILLING_STATEMENTS, ...MAP_STATEMENTS, ...WEB_LOGIN_STATEMENTS, ...PLAN_OVERRIDE_STATEMENTS, ...MODEL_PLAN_STATEMENTS, ...MODEL_PLAN_SEED, ...WORK_ORDER_RECORD_STATEMENTS, ...WORK_ORDER_CLAIM_STATEMENTS, ...COURSES_STATEMENTS, ...INSPECTION_STATEMENTS, ...PART_ORDER_STATEMENTS, ...CATALOG_TARIFF_STATEMENTS, ...RECONTACT_STATEMENTS, ...SUPPLY_STATEMENTS, ...WALKIN_STATEMENTS, ...READY_STATEMENTS, ...REVIEW_STATEMENTS, ...SUBSCRIPTION_RECEIPT_STATEMENTS, ...CASH_STATEMENTS, ...REPORT_STATEMENTS, ...IN_PERSON_STATEMENTS, ...COMPROBANTE_STATEMENTS, ...FOUNDER_STATEMENTS, ...SHOP_COVER_STATEMENTS, ...PLAN_RECORD_STATEMENTS, ...VAT_STATEMENTS, ...OPERATOR_KEY_STATEMENTS, ...AD_STATEMENTS, ...SHOP_FORM_STATEMENTS, ...DIRECTORY_STATEMENTS];
-var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...WORK_ORDER_RECORD_TABLES, ...WORK_ORDER_CLAIM_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES, ...PART_ORDER_TABLES, ...CATALOG_TARIFF_TABLES, ...RECONTACT_TABLES, ...SUPPLY_TABLES, "WorkOrderReady", "WorkOrderInPersonApproval", ...REVIEW_TABLES, ...SUBSCRIPTION_RECEIPT_TABLES, ...CASH_TABLES, ...REPORT_TABLES, ...COMPROBANTE_TABLES, ...FOUNDER_TABLES, ...OPERATOR_KEY_TABLES, ...AD_TABLES, ...SHOP_FORM_TABLES, ...DIRECTORY_TABLES];
+var EXPECTED_TABLES2 = [...EXPECTED_TABLES, ...EXTRA_TABLES, ...AGENT_TABLES, ...LOCAL_MARKETPLACE_TABLES, ...LOCAL_AGENT_TABLES, ...VEHICLE_CARE_TABLES, ...FLEET_TABLES, ...BILLING_TABLES, ...MAP_TABLES, ...WEB_LOGIN_TABLES, ...PLAN_OVERRIDE_TABLES, ...MODEL_PLAN_TABLES, ...WORK_ORDER_RECORD_TABLES, ...WORK_ORDER_CLAIM_TABLES, ...COURSES_TABLES, ...INSPECTION_TABLES, ...PART_ORDER_TABLES, ...CATALOG_TARIFF_TABLES, ...RECONTACT_TABLES, ...SUPPLY_TABLES, "WorkOrderReady", "WorkOrderInPersonApproval", ...REVIEW_TABLES, ...SUBSCRIPTION_RECEIPT_TABLES, ...CASH_TABLES, ...REPORT_TABLES, ...COMPROBANTE_TABLES, ...FOUNDER_TABLES, ...SHOP_PHOTO_TABLES, ...OPERATOR_KEY_TABLES, ...AD_TABLES, ...SHOP_FORM_TABLES, ...DIRECTORY_TABLES];
 async function openConnection(env = process.env) {
   const mysql = await Promise.resolve().then(() => __toESM(require_promise(), 1));
   let conn2;
