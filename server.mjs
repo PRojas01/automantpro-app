@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='1461ec5e889fe478b87a695966fb0b799b636b85'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='1020a74a059f4cce1ce6fbaa1fea56b261d65c0b'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -97705,6 +97705,7 @@ var init_founder_store = __esm({
     FOUNDER_SENDER = process.env.FOUNDER_SENDER_NAME?.trim() || "Pedro Rojas";
     FounderStore = class {
       connect;
+      failedDrafts = /* @__PURE__ */ new Set();
       constructor(connect = openConnection) {
         this.connect = connect;
       }
@@ -97801,12 +97802,18 @@ var init_founder_store = __esm({
           const [last] = await rows35(conn, "SELECT TIMESTAMPDIFF(SECOND, MAX(sentAt), ?) AS ago FROM `FounderInvite` WHERE sentAt IS NOT NULL", [utcNow]);
           if (last?.ago !== null && last?.ago !== void 0 && Number(last.ago) * 1e3 < config.paceMs)
             return null;
-          const [draft] = await rows35(conn, "SELECT id FROM `FounderInvite` WHERE status = 'borrador' AND COALESCE(sends, 0) = 0 ORDER BY createdAt, id LIMIT 1");
+          const skip = [...this.failedDrafts];
+          const [draft] = await rows35(conn, `SELECT f.id FROM \`FounderInvite\` f JOIN \`Shop\` s ON s.id = f.shopId WHERE f.status = 'borrador' AND COALESCE(f.sends, 0) = 0 AND f.phone IS NOT NULL AND f.phone <> ''${skip.length ? " AND f.id NOT IN (?)" : ""} ORDER BY f.createdAt, f.id LIMIT 1`, skip.length ? [skip] : []);
           return draft ? String(draft.id) : null;
         });
         if (!next)
           return null;
-        await this.send(next, site2, null);
+        try {
+          await this.send(next, site2, null);
+        } catch (err4) {
+          this.failedDrafts.add(next);
+          throw err4;
+        }
         return next;
       }
       /** Ficha privada para el enlace del mensaje. No muestra teléfono, RUC ni correo. */
@@ -100871,7 +100878,7 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
             if (err4.code !== "ER_BAD_FIELD_ERROR")
               throw err4;
           }
-          const [found] = await conn.query("SELECT o.id, o.kind, o.payload, COALESCE(i.phone, o.recipientPhone) AS phone FROM `NotificationOutbox` o LEFT JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId LEFT JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts < ? AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND ((o.recipientUserId IS NOT NULL AND i.phone IS NOT NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND (o.kind <> 'admin.alert' OR u.role = 'admin')" + optOut + ") OR (o.recipientUserId IS NULL AND o.recipientPhone IS NOT NULL AND (o.kind IN ('contact.welcome', 'contact.reply', 'auth.phone_changed', 'founder.answer', 'founder.guide') OR (o.kind = 'founder.invite' AND EXISTS (SELECT 1 FROM `FounderInvite` f WHERE f.phone = o.recipientPhone AND f.status = 'enviado')) OR (o.kind = 'auth.login_code' AND JSON_EXTRACT(o.payload, '$.allowedOutsideHours') = TRUE) OR (o.kind = 'contact.reactivation' AND EXISTS (SELECT 1 FROM `ImportedContact` c WHERE c.phone = o.recipientPhone AND c.status = 'approved'))))) ORDER BY (o.kind = 'ad.campaign'), o.createdAt, o.id LIMIT ?", [MAX_ATTEMPTS2, limit]);
+          const [found] = await conn.query("SELECT o.id, o.kind, o.payload, COALESCE(i.phone, o.recipientPhone) AS phone FROM `NotificationOutbox` o LEFT JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId LEFT JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts < ? AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND ((o.recipientUserId IS NOT NULL AND i.phone IS NOT NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND (o.kind <> 'admin.alert' OR u.role = 'admin')" + optOut + ") OR (o.recipientUserId IS NULL AND o.recipientPhone IS NOT NULL AND (o.kind IN ('contact.welcome', 'contact.reply', 'auth.phone_changed', 'founder.answer', 'founder.guide', 'founder.ask') OR (o.kind = 'founder.invite' AND EXISTS (SELECT 1 FROM `FounderInvite` f WHERE f.phone = o.recipientPhone AND f.status = 'enviado')) OR (o.kind = 'auth.login_code' AND JSON_EXTRACT(o.payload, '$.allowedOutsideHours') = TRUE) OR (o.kind = 'contact.reactivation' AND EXISTS (SELECT 1 FROM `ImportedContact` c WHERE c.phone = o.recipientPhone AND c.status = 'approved'))))) ORDER BY (o.kind = 'ad.campaign'), o.createdAt, o.id LIMIT ?", [MAX_ATTEMPTS2, limit]);
           const claimed = [];
           for (const row2 of found) {
             const payload = typeof row2.payload === "string" ? JSON.parse(row2.payload) : row2.payload;
