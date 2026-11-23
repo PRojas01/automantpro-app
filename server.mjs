@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='697ff8d065ae6941f53b57ddd16160a6d27f67c4'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='534f225d2cb91bad9a611858bfdc6540b931e606'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -97649,6 +97649,8 @@ function founderDecision(message2) {
     return "rechazo";
   if (/\b(acepto|aceptamos|aceptar)\b/.test(t))
     return "acepto";
+  if (t.length <= 40 && /^(si+|claro|de acuerdo|ok|okey|okay|dale|listo|por supuesto|bueno|perfecto|vale)\b/.test(t) && !/\b(no|pero|precio|cuanto|cuando|donde|costo)\b/.test(t) && !message2.includes("?"))
+    return "acepto";
   if (/^no\b/.test(t))
     return "rechazo";
   return null;
@@ -97829,8 +97831,8 @@ var init_founder_store = __esm({
         return this.run(async (conn) => (await rows35(conn, "SELECT id FROM `FounderInvite` WHERE phone = ? AND status IN ('enviado', 'respondio') LIMIT 1", [phone]).catch(() => [])).length > 0);
       }
       /**
-       * El taller respondió por WhatsApp algo que no es ACEPTO ni un no: no se le escribe más de forma automática
-       * (pedido del 23/11/2026). Queda «Respondió» en /admin/fundadores para que una persona lo atienda.
+       * El taller respondió por WhatsApp algo que no es ACEPTO ni un no (una pregunta): no se le reenvía la invitación
+       * y el agente responde su pregunta (pedido del 23/11/2026). Queda «Respondió» en /admin/fundadores.
        */
       markReplied(phone) {
         return this.run((conn) => this.tx(conn, async () => {
@@ -98243,15 +98245,17 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
               await this.queue.complete(job.wamid, job.leaseToken);
               continue;
             }
+            let founderQuestion = false;
             if (await this.founders.pendingByPhone(job.phone)) {
               const decision = founderDecision(payload.message);
               const site2 = (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/+$/, "");
-              if (decision)
+              if (decision) {
                 await this.founders.answer({ phone: job.phone }, decision, site2).catch(() => void 0);
-              else
-                await this.founders.markReplied(job.phone).catch(() => void 0);
-              await this.queue.complete(job.wamid, job.leaseToken);
-              continue;
+                await this.queue.complete(job.wamid, job.leaseToken);
+                continue;
+              }
+              await this.founders.markReplied(job.phone).catch(() => void 0);
+              founderQuestion = true;
             }
             if (parseSelfService(payload.message) === "baja") {
               await this.run(async (conn) => {
@@ -98261,9 +98265,10 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
               await this.queue.complete(job.wamid, job.leaseToken);
               continue;
             }
-            if (process.env.WHATSAPP_AUTO_WELCOME === "true" && welcomesNewContact(payload.message))
+            if (!founderQuestion && process.env.WHATSAPP_AUTO_WELCOME === "true" && welcomesNewContact(payload.message))
               await this.welcome(job.phone);
-            result.push({ wamid: job.wamid, leaseToken: job.leaseToken, userId: "", role: "nuevo", message: payload.message, channel: payload.channel, attempts: job.attempts, ...payload.category ? { category: payload.category } : {} });
+            const category = founderQuestion ? "automantpro" : payload.category;
+            result.push({ wamid: job.wamid, leaseToken: job.leaseToken, userId: "", role: "nuevo", message: payload.message, channel: payload.channel, attempts: job.attempts, ...category ? { category } : {} });
             continue;
           }
           const selfService = parseSelfService(payload.message);
@@ -117765,7 +117770,7 @@ var init_founders = __esm({
     init_permissions();
     init_page();
     init_founder_store();
-    STATUS4 = { borrador: "Borrador privado", enviado: "Confirmaci\xF3n enviada", aceptado: "Acept\xF3 \xB7 publicado", rechazado: "Rechaz\xF3 \xB7 ficha borrada", respondio: "Respondi\xF3 \xB7 atender en WhatsApp" };
+    STATUS4 = { borrador: "Borrador privado", enviado: "Confirmaci\xF3n enviada", aceptado: "Acept\xF3 \xB7 publicado", rechazado: "Rechaz\xF3 \xB7 ficha borrada", respondio: "Respondi\xF3 \xB7 el agente lo atiende" };
     when12 = (v) => v ? new Date(String(v)).toLocaleString("es-EC", { timeZone: "America/Guayaquil", dateStyle: "short", timeStyle: "short" }) : "\u2014";
   }
 });
