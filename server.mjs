@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='1020a74a059f4cce1ce6fbaa1fea56b261d65c0b'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='6a1f1203873d9b12b3c54231a39083a39803b038'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -132552,6 +132552,10 @@ async function operatorRoutes(app2, deps = {}) {
     const q = request.query ?? {};
     const filter = CLAIM_FILTERS2.includes(q.status ?? "") ? q.status : "en_admin";
     return { data: (await claims.list(filter)).map((c) => ({ id: c.id, orderNumber: c.orderNumber, status: c.status, shopName: c.shopName, dueAt: c.dueAt, createdAt: c.createdAt })), error: null };
+  });
+  app2.get("/operator/whatsapp-queue", { preHandler: auth("lectura") }, async () => {
+    const o = await (deps.outboxOverview ?? new MysqlOutboxDeliveryStore()).overview();
+    return { data: { counts: o.counts, attention: o.attention.slice(0, 50).map((r) => ({ kind: r.kind, status: r.status, attempts: r.attempts, lastError: r.lastError, createdAt: r.createdAt, nextAttemptAt: r.nextAttemptAt, phoneEnd: r.phoneEnd })) }, error: null };
   });
   app2.get("/operator/users", { preHandler: auth("lectura") }, async (request, reply) => {
     const q = text9((request.query ?? {}).q, 80);
