@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='b4b702b1ed78c3d7731677678ec425e426e3ef9d'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='ab78e7e7b7614cef451a6340e6c79849c2ecebd2'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -95126,9 +95126,9 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
         const branches = await rows27(conn, "SELECT s.id, s.name, s.city, s.zone, s.userId, s.verificationStatus FROM `Shop` s JOIN `User` u ON u.id = s.userId WHERE s.ruc = ? AND u.deletedAt IS NULL ORDER BY s.city, s.name LIMIT 10", [ruc2]);
         if (!branches.length)
           fail6("SHOP_NOT_FOUND");
-        const fold19 = (v) => String(v ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
-        const wanted = branch ? fold19(branch) : "";
-        const matches = wanted ? branches.filter((b) => [b.city, b.zone, b.name].some((v) => fold19(v).includes(wanted))) : branches;
+        const fold20 = (v) => String(v ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+        const wanted = branch ? fold20(branch) : "";
+        const matches = wanted ? branches.filter((b) => [b.city, b.zone, b.name].some((v) => fold20(v).includes(wanted))) : branches;
         if (matches.length !== 1) {
           const list7 = (matches.length ? matches : branches).map((b) => `\u2022 ${b.name} (${b.city}${b.zone ? `, ${b.zone}` : ""})`).join("\n");
           return { userId, message: `${matches.length ? `El RUC ${ruc2} tiene ${matches.length} sucursales` : `Ninguna sucursal del RUC ${ruc2} coincide con \xAB${branch}\xBB`}:
@@ -97407,17 +97407,17 @@ function parseFounderImport(text16) {
 }
 function inviteMessage(input) {
   return [
-    `Hola, ${input.shop} \u{1F44B} Soy ${FOUNDER_SENDER}, creador de AutoMantPro.`,
-    "Hace un a\xF1o tu taller se sum\xF3 a nuestros talleres fundadores. Estamos retomando ese proyecto: este lunes abrimos y tienes un lugar reservado:",
-    [
-      "\u{1F381} Taller Pro sin costo de plan durante 12 meses",
-      "\u2B50 Sello \xABTaller fundador\xBB en tu perfil p\xFAblico y en el directorio que ven los due\xF1os de veh\xEDculos de tu zona",
-      "\u{1F514} Avisos a tus clientes cuando les toca mantenimiento, para que vuelvan a tu taller",
-      "\u{1F9FE} Agenda, \xF3rdenes de trabajo, presupuestos y caja del taller en un solo panel"
-    ].join("\n"),
-    `Ya preparamos la ficha de tu taller. Rev\xEDsala aqu\xED (solo t\xFA tienes este enlace): ${input.link}`,
-    "Responde ACEPTO para publicarla o RECHAZO para borrarla. Nadie ve tus datos hasta que aceptes. Si aceptas, te env\xEDo por aqu\xED la gu\xEDa para activar tu cuenta y empezar."
-  ].join("\n\n");
+    `Hola, ${input.shop} \u{1F44B} Soy ${FOUNDER_SENDER}, de AutoMantPro. \xBFQuieres retomar tu lugar como taller fundador?`,
+    `Tu perfil: ${input.link}`,
+    "Responde ACEPTO o RECHAZO."
+  ].join("\n");
+}
+function compactFounderInvite(message2) {
+  if (!/\n\s*\n/.test(message2))
+    return message2;
+  const shop = /^Hola, (.+?) 👋/.exec(message2)?.[1];
+  const link = /https?:\/\/\S+\/fundador\/[\w-]+/.exec(message2)?.[0];
+  return shop && link ? inviteMessage({ contact: "", shop, link }) : message2;
 }
 function founderGuides(input) {
   const site2 = input.site.replace(/\/+$/, "");
@@ -97469,12 +97469,14 @@ function campaignOpen(config, now) {
 }
 function founderDecision(message2) {
   const t = fold14(message2).replace(/[^a-z ]/g, " ").replace(/\s+/g, " ").trim();
-  if (t.length > 40)
+  if (!t || t.length > 160)
     return null;
-  if (/\b(rechazo|rechazar|no acepto)\b/.test(t))
+  if (/\b(rechazo|rechazamos|rechazar|no acepto|no acepta|no aceptamos|no gracias|no me interesa|no nos interesa|no estoy interesad[oa]|no estamos interesad[oa]s|no deseo|no deseamos|no quiero|no queremos|no por ahora)\b/.test(t))
     return "rechazo";
-  if (/\b(acepto|aceptar|si acepto)\b/.test(t))
+  if (/\b(acepto|aceptamos|aceptar)\b/.test(t))
     return "acepto";
+  if (/^no\b/.test(t))
+    return "rechazo";
   return null;
 }
 var rows34, FounderError, fail12, digest, fold14, CATEGORY_IDS, CATEGORY_NAMES, founderItem, FIELD_NAME, FOUNDER_SENDER, FounderStore;
@@ -97594,6 +97596,8 @@ var init_founder_store = __esm({
             fail12("NOT_FOUND");
           if (!["borrador", "enviado"].includes(String(invite.status)))
             fail12("ALREADY_ANSWERED");
+          if (String(invite.status) === "enviado")
+            fail12("ALREADY_SENT");
           const token2 = randomBytes7(24).toString("base64url");
           const link = `${site2.replace(/\/+$/, "")}/fundador/${token2}`;
           const sends = Number(invite.sends ?? 0) + 1;
@@ -97643,7 +97647,22 @@ var init_founder_store = __esm({
       }
       /** ¿Este número tiene una confirmación de fundador esperando respuesta? */
       pendingByPhone(phone) {
-        return this.run(async (conn) => (await rows34(conn, "SELECT id FROM `FounderInvite` WHERE phone = ? AND status = 'enviado' LIMIT 1", [phone]).catch(() => [])).length > 0);
+        return this.run(async (conn) => (await rows34(conn, "SELECT id FROM `FounderInvite` WHERE phone = ? AND status IN ('enviado', 'respondio') LIMIT 1", [phone]).catch(() => [])).length > 0);
+      }
+      /**
+       * El taller respondió por WhatsApp algo que no es ACEPTO ni un no: no se le escribe más de forma automática
+       * (pedido del 23/11/2026). Queda «Respondió» en /admin/fundadores para que una persona lo atienda.
+       */
+      markReplied(phone) {
+        return this.run((conn) => this.tx(conn, async () => {
+          const [invite] = await rows34(conn, "SELECT id FROM `FounderInvite` WHERE phone = ? AND status = 'enviado' ORDER BY sentAt DESC LIMIT 1 FOR UPDATE", [phone]);
+          if (!invite)
+            return false;
+          await conn.query("UPDATE `FounderInvite` SET status = 'respondio', answeredAt = UTC_TIMESTAMP(3), answeredVia = 'whatsapp' WHERE id = ?", [invite.id]);
+          await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'FOUNDER_REPLIED' WHERE recipientPhone = ? AND status IN ('pending', 'sending')", [phone]);
+          await this.audit(conn, "founder.replied", null, String(invite.id), { via: "whatsapp" });
+          return true;
+        }));
       }
       /**
        * Respuesta del taller, por su enlace privado o desde su número de WhatsApp.
@@ -97651,7 +97670,7 @@ var init_founder_store = __esm({
        */
       answer(by, decision, site2) {
         return this.run((conn) => this.tx(conn, async () => {
-          const [invite] = "token" in by ? await rows34(conn, "SELECT * FROM `FounderInvite` WHERE tokenHash = ? AND status = 'enviado' FOR UPDATE", [digest(by.token)]) : await rows34(conn, "SELECT * FROM `FounderInvite` WHERE phone = ? AND status = 'enviado' ORDER BY sentAt DESC LIMIT 1 FOR UPDATE", [by.phone.replace(/\D/g, "")]);
+          const [invite] = "token" in by ? await rows34(conn, "SELECT * FROM `FounderInvite` WHERE tokenHash = ? AND status IN ('enviado', 'respondio') FOR UPDATE", [digest(by.token)]) : await rows34(conn, "SELECT * FROM `FounderInvite` WHERE phone = ? AND status IN ('enviado', 'respondio') ORDER BY sentAt DESC LIMIT 1 FOR UPDATE", [by.phone.replace(/\D/g, "")]);
           if (!invite)
             return fail12("NOT_FOUND");
           const id3 = String(invite.id);
@@ -97659,7 +97678,7 @@ var init_founder_store = __esm({
           const shopId = String(invite.shopId);
           const phone = String(invite.phone);
           const via = "token" in by ? "enlace" : "whatsapp";
-          let message2;
+          let message2 = null;
           let guides = [];
           if (decision === "acepto") {
             await conn.query("UPDATE `User` SET consentAt = UTC_TIMESTAMP(3), consentVersion = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ? AND deletedAt IS NULL", [CONSENT_VERSION, userId]);
@@ -97675,9 +97694,10 @@ var init_founder_store = __esm({
             await conn.query("DELETE FROM `Shop` WHERE id = ?", [shopId]);
             await conn.query("DELETE FROM `User` WHERE id = ? AND consentAt IS NULL", [userId]);
             await conn.query("UPDATE `FounderInvite` SET status = 'rechazado', tokenHash = NULL, profile = NULL, userId = NULL, shopId = NULL, answeredAt = UTC_TIMESTAMP(3), answeredVia = ? WHERE id = ?", [via, id3]);
-            message2 = "Listo, borramos la ficha de tu taller y no te escribiremos m\xE1s. Gracias por tu tiempo. Si alg\xFAn d\xEDa quieres sumarte, escr\xEDbenos.";
+            await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'FOUNDER_DECLINED' WHERE recipientPhone = ? AND status IN ('pending', 'sending')", [phone]);
           }
-          await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'founder.answer', ?)", [randomUUID28(), `founder-answer:${id3}`, phone, JSON.stringify({ message: message2 })]);
+          if (message2)
+            await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'founder.answer', ?)", [randomUUID28(), `founder-answer:${id3}`, phone, JSON.stringify({ message: message2 })]);
           for (const [i, text16] of guides.entries())
             await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload, nextAttemptAt) VALUES (?, ?, NULL, ?, 'founder.guide', ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? MINUTE))", [randomUUID28(), `founder-guide:${id3}:${i + 1}`, phone, JSON.stringify({ message: text16 }), i + 1]);
           await this.audit(conn, decision === "acepto" ? "founder.accepted" : "founder.rejected", null, id3, { via });
@@ -97687,6 +97707,35 @@ var init_founder_store = __esm({
         }));
       }
     };
+  }
+});
+
+// packages/api/dist/application/chat-account/auto-reply.js
+function isAutoReply(message2) {
+  const t = fold15(String(message2 ?? ""));
+  if (!t)
+    return false;
+  return BOT_PATTERNS.some((p) => p.test(t));
+}
+var fold15, BOT_PATTERNS;
+var init_auto_reply = __esm({
+  "packages/api/dist/application/chat-account/auto-reply.js"() {
+    "use strict";
+    fold15 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    BOT_PATTERNS = [
+      /no puedo ayudarte con eso/,
+      /alguien de (nuestro|mi) equipo te (respondera|contactara|atendera|escribira)/,
+      /(un|uno de nuestros) (asesor|agente)(es)? te (respondera|contactara|atendera)/,
+      /te (responderemos|contactaremos|atenderemos) (a la brevedad|lo antes posible|lo mas pronto|pronto|en breve|en cuanto)/,
+      /(gracias|agradecemos) (por )?(comunicarte|contactarnos|escribirnos|tu mensaje|contactar)/,
+      /(en este momento|ahora mismo|por el momento) no (estamos disponibles|podemos atenderte|podemos responder)/,
+      /(nuestro )?horario de atencion/,
+      /fuera (del|de) horario/,
+      /(mensaje|respuesta) automatic[ao]/,
+      /(selecciona|elige|escribe|digita|marca) (una|el numero de la|la) opcion/,
+      /^(bienvenid[oa]s? a|hola,? bienvenid[oa])/,
+      /en que (podemos|te podemos|puedo|te puedo) ayudar/
+    ];
   }
 });
 
@@ -97735,6 +97784,7 @@ var init_local_agent_broker = __esm({
     init_whatsapp_photo();
     init_record_photos();
     init_founder_store();
+    init_auto_reply();
     data = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     digest2 = (s) => createHash9("sha256").update(s).digest("hex");
     BrokerError = class extends Error {
@@ -98010,10 +98060,17 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
               await this.queue.complete(job.wamid, job.leaseToken);
               continue;
             }
-            const decision = founderDecision(payload.message);
-            if (decision && await this.founders.pendingByPhone(job.phone)) {
+            if (isAutoReply(payload.message)) {
+              await this.queue.complete(job.wamid, job.leaseToken);
+              continue;
+            }
+            if (await this.founders.pendingByPhone(job.phone)) {
+              const decision = founderDecision(payload.message);
               const site2 = (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/+$/, "");
-              await this.founders.answer({ phone: job.phone }, decision, site2).catch(() => void 0);
+              if (decision)
+                await this.founders.answer({ phone: job.phone }, decision, site2).catch(() => void 0);
+              else
+                await this.founders.markReplied(job.phone).catch(() => void 0);
               await this.queue.complete(job.wamid, job.leaseToken);
               continue;
             }
@@ -98438,10 +98495,10 @@ function doneHint2(items) {
 function pickDone(open, query, matchedId = null) {
   if (!open.length)
     return { kind: "none" };
-  const q = query ? fold15(query) : "";
+  const q = query ? fold16(query) : "";
   if (!q)
     return open.length === 1 ? { kind: "one", item: open[0] } : { kind: "choose", items: [...open] };
-  const found = open.filter((i) => i.serviceId === matchedId || fold15(i.serviceName) === q || q.length >= 4 && fold15(i.serviceName).includes(q));
+  const found = open.filter((i) => i.serviceId === matchedId || fold16(i.serviceName) === q || q.length >= 4 && fold16(i.serviceName).includes(q));
   if (found.length === 1)
     return { kind: "one", item: found[0] };
   if (found.length > 1)
@@ -98457,13 +98514,13 @@ function nextMilestone(item2) {
   const byDate = (item2.intervalMonths ?? null) !== null ? `en ${formatMonth(new Date(item2.dueDate))}` : null;
   return [byKm, byDate].filter(Boolean).join(" o ") || "sin fecha calculada";
 }
-var km3, fold15;
+var km3, fold16;
 var init_reminder_done = __esm({
   "packages/api/dist/application/panel/reminder-done.js"() {
     "use strict";
     init_recommendations();
     km3 = (n3, unit = "km") => `${Math.round(n3).toLocaleString("es-EC")} ${unit ?? "km"}`;
-    fold15 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    fold16 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
   }
 });
 
@@ -98573,14 +98630,14 @@ var init_deferred_work = __esm({
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
 import { createHash as createHash10, randomUUID as randomUUID31 } from "node:crypto";
 function matchService(text16) {
-  const f = fold16(text16);
-  const exact = SERVICES2.find((s) => s.id === f || fold16(s.name) === f);
+  const f = fold17(text16);
+  const exact = SERVICES2.find((s) => s.id === f || fold17(s.name) === f);
   if (exact)
     return exact.id;
   for (const [pattern, id3] of SYNONYMS)
     if (pattern.test(f))
       return id3;
-  return SERVICES2.find((s) => fold16(s.name).includes(f) && f.length >= 5)?.id ?? null;
+  return SERVICES2.find((s) => fold17(s.name).includes(f) && f.length >= 5)?.id ?? null;
 }
 async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ new Date()) {
   const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 5));
@@ -98634,7 +98691,7 @@ async function activeVehicle(conn, userId, includeAssigned = false) {
     fail14("VEHICLE_REQUIRED");
   return list7[0];
 }
-var DIAGNOSIS_LINE, rows36, VehicleCareError, fail14, fold16, createHashLike, short5, prefixOf3, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES2, serviceName2, ORDER_STATUS, SHOP_ORDER_STATUS, SHOP_ORDER_NEXT, repairNoticeKey, VehicleCareStore;
+var DIAGNOSIS_LINE, rows36, VehicleCareError, fail14, fold17, createHashLike, short5, prefixOf3, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES2, serviceName2, ORDER_STATUS, SHOP_ORDER_STATUS, SHOP_ORDER_NEXT, repairNoticeKey, VehicleCareStore;
 var init_vehicle_care_store = __esm({
   "packages/api/dist/infrastructure/messaging/vehicle-care-store.js"() {
     "use strict";
@@ -98680,7 +98737,7 @@ var init_vehicle_care_store = __esm({
     fail14 = (code5) => {
       throw new VehicleCareError(code5);
     };
-    fold16 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    fold17 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
     createHashLike = (text16) => createHash10("sha256").update(text16).digest("hex").slice(0, 12);
     short5 = (prefix, id3) => `${prefix}-${id3.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf3 = (code5) => `${code5.slice(2).toLowerCase()}%`;
@@ -99315,7 +99372,7 @@ Lo agregu\xE9 a la atenci\xF3n de ${label5} y avisamos a los responsables de ${S
           }
           return { userId, message: `${diagnosis.message}
 
-Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revise: Buscar servicio | ${fold16(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
+Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revise: Buscar servicio | ${fold17(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
         }
         if (command.action === "reminders") {
           await conn.query("UPDATE `Vehicle` SET remindersOptIn = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [command.on, userId]);
@@ -99851,7 +99908,7 @@ ${summary ?? ""}`.trim());
           return { userId, message: `Propuesta enviada al due\xF1o: visita ${code5} para ${formatEcDateTime(at)}. Te avisaremos cuando responda.` };
         }
         await this.insertAlert(conn, String(vehicle.id), command.label, command.dueAt, command.dueKm, userId, shop.id);
-        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold16(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label5}: "${command.label}" ${command.dueAt ? `el ${(/* @__PURE__ */ new Date(`${command.dueAt}T12:00:00Z`)).toLocaleDateString("es-EC", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
+        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold17(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label5}: "${command.label}" ${command.dueAt ? `el ${(/* @__PURE__ */ new Date(`${command.dueAt}T12:00:00Z`)).toLocaleDateString("es-EC", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
         return { userId, message: `Alerta creada para el ${label5}. El due\xF1o y tu taller la recibir\xE1n por WhatsApp cuando llegue el momento.` };
       }
       async budget(conn, userId, shop, command) {
@@ -100409,7 +100466,7 @@ Fecha: ${when15}.` };
 function photoKindFrom(word, role) {
   if (!word)
     return role === "taller" ? "avance" : role === "dueno" ? "reclamo" : null;
-  const w = fold17(word);
+  const w = fold18(word);
   return KIND_WORDS.find(([pattern]) => pattern.test(w))?.[1] ?? null;
 }
 async function downloadCloudMedia(mediaId, env = process.env, fetchImpl = fetch) {
@@ -100456,7 +100513,7 @@ async function saveInboundPhoto(conn, input, fetchImpl, env) {
   const photo = await inboundPhoto(conn, input.wamid, input.mediaId, fetchImpl, env);
   return `\u{1F4F7} ${(await attachServicePhoto(conn, userId, role, vehicleId, serviceId, photo)).message}`;
 }
-var fail15, KIND_WORDS, fold17, MysqlInboundMediaStore;
+var fail15, KIND_WORDS, fold18, MysqlInboundMediaStore;
 var init_whatsapp_photo = __esm({
   "packages/api/dist/infrastructure/messaging/whatsapp-photo.js"() {
     "use strict";
@@ -100477,7 +100534,7 @@ var init_whatsapp_photo = __esm({
       [/^comprobante|^pago|^transferencia/, "comprobante"],
       [/^factura/, "factura"]
     ];
-    fold17 = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+    fold18 = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
     MysqlInboundMediaStore = class {
       connect;
       constructor(connect = openConnection) {
@@ -100547,6 +100604,7 @@ var init_outbox_delivery_store = __esm({
     init_self_service();
     init_preferences();
     init_account_links();
+    init_founder_store();
     ALLOWED = OPT_OUT_ALLOWED_KINDS.map((kind) => `'${kind}'`).join(",");
     MAX_ATTEMPTS2 = 5;
     LEASE_SECONDS2 = 300;
@@ -100599,7 +100657,8 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
           const claimed = [];
           for (const row2 of found) {
             const payload = typeof row2.payload === "string" ? JSON.parse(row2.payload) : row2.payload;
-            const message2 = typeof payload?.message === "string" && payload.message ? withProfileLink(String(row2.kind), payload.message).slice(0, 4e3) : "";
+            const raw = typeof payload?.message === "string" ? row2.kind === "founder.invite" ? compactFounderInvite(payload.message) : payload.message : "";
+            const message2 = raw ? withProfileLink(String(row2.kind), raw).slice(0, 4e3) : "";
             const id3 = String(row2.id);
             if (!message2) {
               await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'EMPTY_MESSAGE' WHERE id = ? AND status = 'pending'", [id3]);
@@ -100801,14 +100860,14 @@ function parseDirectoryImport(raw) {
   });
   return { items, errors };
 }
-var rows37, fold18, MAX_DIRECTORY_IMPORT, text5, entry, CONTACT, DirectoryStore;
+var rows37, fold19, MAX_DIRECTORY_IMPORT, text5, entry, CONTACT, DirectoryStore;
 var init_directory_store = __esm({
   "packages/api/dist/infrastructure/directory/directory-store.js"() {
     "use strict";
     init_zod();
     init_apply();
     rows37 = async (c, sql, args = []) => (await c.query(sql, args))[0];
-    fold18 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+    fold19 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
     MAX_DIRECTORY_IMPORT = 200;
     text5 = (min, max) => external_exports.string().trim().min(min).max(max);
     entry = external_exports.object({
@@ -100862,9 +100921,9 @@ var init_directory_store = __esm({
           return [];
         try {
           const list7 = await this.run(async (c) => (await rows37(c, "SELECT id,name,city,zone,services,source,active FROM `DirectoryShop` WHERE active=true AND city=? ORDER BY name LIMIT 200", [city])).map(_DirectoryStore.view));
-          const taken = new Set(registeredNames.map(fold18));
-          const z = fold18(zone);
-          return list7.filter((s) => !taken.has(fold18(s.name))).sort((a, b) => Number(fold18(b.zone ?? "") === z) - Number(fold18(a.zone ?? "") === z)).slice(0, limit);
+          const taken = new Set(registeredNames.map(fold19));
+          const z = fold19(zone);
+          return list7.filter((s) => !taken.has(fold19(s.name))).sort((a, b) => Number(fold19(b.zone ?? "") === z) - Number(fold19(a.zone ?? "") === z)).slice(0, limit);
         } catch (err4) {
           if (err4.code === "ER_NO_SUCH_TABLE")
             return [];
@@ -117427,7 +117486,7 @@ function campaignNote() {
   if (!c)
     return `<p class="card">Env\xEDo autom\xE1tico apagado. Env\xEDa cada confirmaci\xF3n con su bot\xF3n.</p>`;
   const desde = c.start.toLocaleString("es-EC", { timeZone: "America/Guayaquil", weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
-  return `<div class="card"><h2>Env\xEDo autom\xE1tico</h2><p>Desde el ${escapeHtml(desde)} el sistema env\xEDa solo las confirmaciones de las fichas en borrador: una cada ${c.paceMs / 6e4} minutos, entre las ${c.fromHour}:00 y las ${c.toHour}:00. Cuando el taller responde ACEPTO, su ficha se publica y recibe las gu\xEDas sin esperar a una persona.</p></div>`;
+  return `<div class="card"><h2>Env\xEDo autom\xE1tico</h2><p>Desde el ${escapeHtml(desde)} el sistema env\xEDa solo las confirmaciones de las fichas en borrador: una cada ${c.paceMs / 6e4} minutos, entre las ${c.fromHour}:00 y las ${c.toHour}:00. Cuando el taller responde ACEPTO, su ficha se publica y recibe la bienvenida y las gu\xEDas sin esperar a una persona.</p></div>`;
 }
 function registerFounderAdminRoutes(app2, deps) {
   const founders = deps.founders ?? new FounderStore();
@@ -117442,7 +117501,7 @@ function registerFounderAdminRoutes(app2, deps) {
       pending = true;
     }
     const csrf = escapeHtml(session.csrfToken);
-    const rows72 = list7.map((r) => `<tr><td>${escapeHtml(String(r.name ?? "(borrada)"))}</td><td>${escapeHtml([r.zone, r.city].filter(Boolean).join(" \xB7 "))}</td><td>\u2026${escapeHtml(String(r.phoneEnd ?? ""))}</td><td>${escapeHtml(STATUS4[String(r.status)] ?? String(r.status))}${r.answeredVia ? ` (${escapeHtml(String(r.answeredVia))})` : ""}</td><td>${escapeHtml(when12(r.sentAt))}${Number(r.sends) > 1 ? ` \xB7 ${Number(r.sends)} env\xEDos` : ""}</td><td>${["borrador", "enviado"].includes(String(r.status)) ? `<form method="post" action="/admin/fundadores/${escapeHtml(String(r.id))}/enviar"><input type="hidden" name="csrf" value="${csrf}"><button type="submit">${r.status === "borrador" ? "Enviar confirmaci\xF3n" : "Reenviar"}</button></form>` : ""}</td></tr>`).join("");
+    const rows72 = list7.map((r) => `<tr><td>${escapeHtml(String(r.name ?? "(borrada)"))}</td><td>${escapeHtml([r.zone, r.city].filter(Boolean).join(" \xB7 "))}</td><td>\u2026${escapeHtml(String(r.phoneEnd ?? ""))}</td><td>${escapeHtml(STATUS4[String(r.status)] ?? String(r.status))}${r.answeredVia ? ` (${escapeHtml(String(r.answeredVia))})` : ""}</td><td>${escapeHtml(when12(r.sentAt))}${Number(r.sends) > 1 ? ` \xB7 ${Number(r.sends)} env\xEDos` : ""}</td><td>${r.status === "borrador" ? `<form method="post" action="/admin/fundadores/${escapeHtml(String(r.id))}/enviar"><input type="hidden" name="csrf" value="${csrf}"><button type="submit">Enviar confirmaci\xF3n</button></form>` : r.status === "enviado" ? "Esperando respuesta" : ""}</td></tr>`).join("");
     const body = `<div class="stack"><h1>Talleres fundadores</h1>
       ${notes.map((n3) => `<p${status >= 400 ? ' class="error"' : ""}>${escapeHtml(n3)}</p>`).join("")}${errorNotes.map((n3) => `<p class="error">${escapeHtml(n3)}</p>`).join("")}
       ${pending ? `<p>Falta \xABAplicar actualizaciones\xBB en Ajustes para crear la tabla de fundadores.</p>` : ""}
@@ -117454,7 +117513,7 @@ function registerFounderAdminRoutes(app2, deps) {
         <form method="post" action="/admin/fundadores/importar" autocomplete="off"><input type="hidden" name="csrf" value="${csrf}">
         <label>Archivo de fundadores<textarea name="archivo" rows="10" maxlength="200000" required spellcheck="false">${escapeHtml(draft)}</textarea></label>
         <button type="submit">Crear fichas borrador</button></form></div>
-      <div class="card"><h2>Mensaje que recibe cada taller</h2><p>Saludo con el nombre del taller, firmado por el creador de la plataforma; recuerdo de hace un a\xF1o y lugar reservado para el lunes; sus beneficios (Taller Pro sin costo de plan durante 12 meses, sello \xABTaller fundador\xBB en el directorio, avisos a sus clientes y el panel con agenda, \xF3rdenes, presupuestos y caja); el enlace privado a su ficha y la opci\xF3n de responder ACEPTO o RECHAZO.</p><p>Solo si acepta recibe por WhatsApp, en orden: bienvenida con la activaci\xF3n de su cuenta, gu\xEDa de uso del panel y sus primeros servicios.</p><p>Consejo: env\xEDa en tandas de 10 a 15 por la ma\xF1ana, para poder atender las respuestas el mismo d\xEDa.</p></div></div>`;
+      <div class="card"><h2>Mensaje que <p>Un solo mensaje corto: saludo con el nombre del taller firmado por el creador de la plataforma, si quiere retomar su lugar como taller fundador, el enlace privado a su perfil y la opci\xF3n de responder ACEPTO o RECHAZO.</p><p>Si acepta, sigue el proceso por WhatsApp: bienvenida con la activaci\xF3n de su cuenta, gu\xEDa de uso del panel y sus primeros servicios (cada uno en un solo mensaje).</p>primeros servicios.</p><p>Consejo: env\xEDa en tandas de 10 a 15 por la ma\xF1ana, para poder atender las respuestas el mismo d\xEDa.</p></div></div>`;
     return deps.html(reply, request, "Talleres fundadores", body, session, status);
   }
   function authorize(request, reply) {
@@ -117513,6 +117572,8 @@ function registerFounderAdminRoutes(app2, deps) {
         return render(request, reply, session, ["Ficha no encontrada."], 404);
       if (code5 === "ALREADY_ANSWERED")
         return render(request, reply, session, ["Este taller ya respondi\xF3."], 409);
+      if (code5 === "ALREADY_SENT")
+        return render(request, reply, session, ["Ya se le envi\xF3: esperamos su respuesta."], 409);
       throw err4;
     }
   });
@@ -117525,7 +117586,7 @@ var init_founders = __esm({
     init_permissions();
     init_page();
     init_founder_store();
-    STATUS4 = { borrador: "Borrador privado", enviado: "Confirmaci\xF3n enviada", aceptado: "Acept\xF3 \xB7 publicado", rechazado: "Rechaz\xF3 \xB7 ficha borrada" };
+    STATUS4 = { borrador: "Borrador privado", enviado: "Confirmaci\xF3n enviada", aceptado: "Acept\xF3 \xB7 publicado", rechazado: "Rechaz\xF3 \xB7 ficha borrada", respondio: "Respondi\xF3 \xB7 atender en WhatsApp" };
     when12 = (v) => v ? new Date(String(v)).toLocaleString("es-EC", { timeZone: "America/Guayaquil", dateStyle: "short", timeStyle: "short" }) : "\u2014";
   }
 });
