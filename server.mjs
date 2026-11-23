@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='6a1f1203873d9b12b3c54231a39083a39803b038'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='61b8e2a44668f99366bb2a92c1bc4e7438c30672'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -97659,7 +97659,7 @@ function founderDecision(message2) {
     return "rechazo";
   return null;
 }
-var rows35, FounderError, fail13, digest, fold14, CATEGORY_IDS, CATEGORY_NAMES, founderItem, FIELD_NAME, FOUNDER_SENDER, FounderStore;
+var rows35, FounderError, fail13, digest, fold14, CATEGORY_IDS, CATEGORY_NAMES, founderItem, FIELD_NAME, FOUNDER_SENDER, founderCampaignState, FounderStore;
 var init_founder_store = __esm({
   "packages/api/dist/infrastructure/founders/founder-store.js"() {
     "use strict";
@@ -97703,6 +97703,7 @@ var init_founder_store = __esm({
     }).strict();
     FIELD_NAME = { nombre: "nombre", contacto: "contacto", telefono: "tel\xE9fono", ciudad: "ciudad", sector: "sector", direccion: "direcci\xF3n", ruc: "RUC", correo: "correo", lat: "latitud", lng: "longitud", servicios: "servicios", horario: "horario", horarioSemanal: "horario semanal", descripcion: "descripci\xF3n", fuentes: "fuentes" };
     FOUNDER_SENDER = process.env.FOUNDER_SENDER_NAME?.trim() || "Pedro Rojas";
+    founderCampaignState = { lastRunAt: null, lastResult: null, lastError: null, lastErrorAt: null };
     FounderStore = class {
       connect;
       failedDrafts = /* @__PURE__ */ new Set();
@@ -97795,6 +97796,40 @@ var init_founder_store = __esm({
       }
       /** Envía la siguiente invitación en borrador si ya toca (inicio, horario y pausa entre envíos). Devuelve su id o null. */
       async sendNextScheduled(site2, config, now = /* @__PURE__ */ new Date()) {
+        founderCampaignState.lastRunAt = now.toISOString();
+        try {
+          const id3 = await this.sendNextScheduledInner(site2, config, now);
+          founderCampaignState.lastResult = id3 ? "enviada" : "nada";
+          return id3;
+        } catch (err4) {
+          founderCampaignState.lastError = String(err4.code ?? err4?.message ?? err4).slice(0, 120);
+          founderCampaignState.lastErrorAt = now.toISOString();
+          founderCampaignState.lastResult = "error";
+          throw err4;
+        }
+      }
+      /** Estado de la campaña para el operador: sin teléfonos ni nombres. */
+      campaignStatus(config, now = /* @__PURE__ */ new Date()) {
+        return this.run(async (conn) => {
+          const utcNow = now.toISOString().slice(0, 23).replace("T", " ");
+          const [last] = await rows35(conn, "SELECT TIMESTAMPDIFF(SECOND, MAX(sentAt), ?) AS ago, MAX(sentAt) AS lastSentAt FROM `FounderInvite` WHERE sentAt IS NOT NULL", [utcNow]);
+          const byStatus = await rows35(conn, "SELECT status, COUNT(*) AS n FROM `FounderInvite` GROUP BY status");
+          const [eligible] = await rows35(conn, "SELECT COUNT(*) AS n FROM `FounderInvite` f JOIN `Shop` s ON s.id = f.shopId WHERE f.status = 'borrador' AND COALESCE(f.sends, 0) = 0 AND f.phone IS NOT NULL AND f.phone <> ''");
+          return {
+            enabled: !!config,
+            open: config ? campaignOpen(config, now) : false,
+            start: config?.start.toISOString() ?? null,
+            paceMin: config ? config.paceMs / 6e4 : null,
+            lastSentAt: last?.lastSentAt ?? null,
+            secondsSinceLastSent: last?.ago ?? null,
+            byStatus: Object.fromEntries(byStatus.map((r) => [String(r.status), Number(r.n)])),
+            eligibleDrafts: Number(eligible?.n ?? 0),
+            skippedInProcess: this.failedDrafts.size,
+            ...founderCampaignState
+          };
+        });
+      }
+      async sendNextScheduledInner(site2, config, now) {
         if (!campaignOpen(config, now))
           return null;
         const next = await this.run(async (conn) => {
@@ -132439,6 +132474,7 @@ init_catalog();
 init_operator_key_store();
 init_registration_store();
 init_outbox_delivery_store();
+init_founder_store();
 init_plan_store();
 init_billing_store();
 init_claim_store();
@@ -132557,6 +132593,7 @@ async function operatorRoutes(app2, deps = {}) {
     const o = await (deps.outboxOverview ?? new MysqlOutboxDeliveryStore()).overview();
     return { data: { counts: o.counts, attention: o.attention.slice(0, 50).map((r) => ({ kind: r.kind, status: r.status, attempts: r.attempts, lastError: r.lastError, createdAt: r.createdAt, nextAttemptAt: r.nextAttemptAt, phoneEnd: r.phoneEnd })) }, error: null };
   });
+  app2.get("/operator/founders-campaign", { preHandler: auth("lectura") }, async () => ({ data: await new FounderStore().campaignStatus(founderCampaignConfig(process.env)), error: null }));
   app2.get("/operator/users", { preHandler: auth("lectura") }, async (request, reply) => {
     const q = text9((request.query ?? {}).q, 80);
     if (q.length < 3)
