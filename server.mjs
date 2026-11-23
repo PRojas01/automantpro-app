@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='534f225d2cb91bad9a611858bfdc6540b931e606'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='1461ec5e889fe478b87a695966fb0b799b636b85'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -97586,6 +97586,9 @@ function inviteMessage(input) {
     "Responde ACEPTO o RECHAZO."
   ].join("\n");
 }
+function askAgainMessage(shop) {
+  return [`${shop}, \xBFquieres retomar tu lugar como taller fundador en AutoMantPro?`, "Responde ACEPTO o RECHAZO."].join("\n");
+}
 function compactFounderInvite(message2) {
   if (!/\n\s*\n/.test(message2))
     return message2;
@@ -97600,11 +97603,12 @@ function founderGuides(input) {
       `\xA1Bienvenido, ${input.shop}! \u{1F527} Tu ficha ya est\xE1 publicada con el sello \xABTaller fundador\xBB y tienes Taller Pro sin costo durante 12 meses.`,
       "1\uFE0F\u20E3 Activa tu cuenta (2 minutos):",
       [`\u2022 Entra a ${site2}/cuenta#entrar`, "\u2022 Escribe este mismo n\xFAmero de WhatsApp", "\u2022 Te llega un c\xF3digo por aqu\xED: escr\xEDbelo y listo"].join("\n"),
-      "\u{1F4F8} Sube la foto del frente de tu local en \xABPortada de tu taller\xBB (Mi panel): as\xED tu ficha sale con foto en la lista de talleres.",
+      ["2\uFE0F\u20E3 Actualiza tu perfil p\xFAblico en \xABMis datos\xBB (Mi panel):", "\u2022 A\xF1os de experiencia y \xABSobre el taller\xBB (qu\xE9 te distingue)", "\u2022 Servicios que haces, horario y direcci\xF3n", "\u2022 Tu logotipo y hasta 8 fotos del taller y de tus trabajos", "\u2022 La foto del frente de tu local en \xABPortada de tu taller\xBB"].join("\n"),
+      "Un perfil completo, con fotos, sale primero y da m\xE1s confianza a los due\xF1os de veh\xEDculos.",
       `Tu taller en la lista que ven los due\xF1os: ${site2}/talleres y en el mapa: ${site2}/mapa`
     ].join("\n\n"),
     [
-      "2\uFE0F\u20E3 Gu\xEDa de uso del panel:",
+      "3\uFE0F\u20E3 Gu\xEDa de uso del panel:",
       [
         "\u2022 Citas por atender: confirma, reprograma o registra el ingreso del veh\xEDculo",
         "\u2022 \xD3rdenes de trabajo: presupuesto, aprobaci\xF3n del cliente por WhatsApp, avance y entrega",
@@ -97615,7 +97619,7 @@ function founderGuides(input) {
       "Cada secci\xF3n trae un ejemplo para que veas c\xF3mo se ver\xE1 con tus datos."
     ].join("\n\n"),
     [
-      "3\uFE0F\u20E3 Tus primeros servicios esta semana:",
+      "4\uFE0F\u20E3 Tus primeros servicios esta semana:",
       [
         "\u2022 Carga 3 clientes en \xABCargar fichas de clientes\xBB: les llegar\xE1 su plan de mantenimiento",
         "\u2022 Revisa tus servicios y horario en tu ficha",
@@ -97767,7 +97771,7 @@ var init_founder_store = __esm({
       }
       /** Lista para /admin (solo el equipo la ve). */
       list() {
-        return this.run((conn) => rows35(conn, "SELECT f.id, f.status, f.sends, f.sentAt, f.answeredAt, f.answeredVia, s.name, s.city, s.zone, RIGHT(f.phone, 4) AS phoneEnd FROM `FounderInvite` f LEFT JOIN `Shop` s ON s.id = f.shopId ORDER BY f.createdAt, s.name LIMIT 200"));
+        return this.run((conn) => rows35(conn, "SELECT f.id, f.status, f.sends, f.sentAt, f.answeredAt, f.answeredVia, s.name, s.city, s.zone, RIGHT(f.phone, 4) AS phoneEnd, (s.verificationStatus = 'verified' AND s.mapListed = TRUE AND s.mapConsentAt IS NOT NULL) AS listed FROM `FounderInvite` f LEFT JOIN `Shop` s ON s.id = f.shopId ORDER BY f.createdAt, s.name LIMIT 200"));
       }
       /** Encola la confirmación por WhatsApp con un enlace privado nuevo (el anterior deja de valer). */
       async send(inviteId, site2, actorUserId) {
@@ -97808,7 +97812,7 @@ var init_founder_store = __esm({
       /** Ficha privada para el enlace del mensaje. No muestra teléfono, RUC ni correo. */
       preview(token2) {
         return this.run(async (conn) => {
-          const [r] = await rows35(conn, "SELECT f.status, f.profile, s.name, s.contactName, s.city, s.zone, s.address, s.hours, s.specialties FROM `FounderInvite` f JOIN `Shop` s ON s.id = f.shopId WHERE f.tokenHash = ? AND f.status = 'enviado'", [digest(token2)]);
+          const [r] = await rows35(conn, "SELECT f.status, f.profile, s.name, s.contactName, s.city, s.zone, s.address, s.hours, s.specialties FROM `FounderInvite` f JOIN `Shop` s ON s.id = f.shopId WHERE f.tokenHash = ? AND f.status IN ('enviado', 'respondio')", [digest(token2)]);
           if (!r)
             return fail13("NOT_FOUND");
           const profile = typeof r.profile === "string" ? JSON.parse(r.profile) : r.profile;
@@ -97826,6 +97830,34 @@ var init_founder_store = __esm({
           };
         });
       }
+      /**
+       * Fundador que aceptó pero su ficha no sale en /talleres (23/11/2026): se vuelve a publicar como en el ACEPTO,
+       * mostrando solo su sector si nunca eligió el punto exacto.
+       */
+      republish(inviteId, actorUserId) {
+        return this.run((conn) => this.tx(conn, async () => {
+          const [invite] = await rows35(conn, "SELECT id, shopId FROM `FounderInvite` WHERE id = ? AND status = 'aceptado' AND shopId IS NOT NULL FOR UPDATE", [inviteId]);
+          if (!invite)
+            return fail13("NOT_FOUND");
+          await conn.query("UPDATE `Shop` SET verificationStatus = 'verified', mapListed = true, mapPrecision = IF(mapConsentAt IS NULL, 'sector', mapPrecision), mapConsentAt = COALESCE(mapConsentAt, UTC_TIMESTAMP(3)), updatedAt = CURRENT_TIMESTAMP(3) WHERE id = ?", [invite.shopId]);
+          await this.audit(conn, "founder.republished", actorUserId, String(invite.id), {});
+        }));
+      }
+      async queueAsk(conn, inviteId, phone, shop, dedupKey, minutes2) {
+        await conn.query("INSERT IGNORE INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload, nextAttemptAt) VALUES (?, ?, NULL, ?, 'founder.ask', ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? MINUTE))", [randomUUID29(), dedupKey, phone, JSON.stringify({ message: askAgainMessage(shop) }), minutes2]);
+        await this.audit(conn, "founder.asked.again", null, inviteId, { minutes: minutes2 });
+      }
+      /** Desde /admin/fundadores: vuelve a preguntar si acepta a quien respondió sin decidir. Una vez por día como máximo. */
+      askAgain(inviteId, actorUserId) {
+        return this.run((conn) => this.tx(conn, async () => {
+          const [invite] = await rows35(conn, "SELECT f.id, f.phone, s.name FROM `FounderInvite` f JOIN `Shop` s ON s.id = f.shopId WHERE f.id = ? AND f.status = 'respondio' FOR UPDATE", [inviteId]);
+          if (!invite)
+            return fail13("NOT_FOUND");
+          const day5 = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+          await this.queueAsk(conn, String(invite.id), String(invite.phone), String(invite.name), `founder-ask:${invite.id}:${day5}`, 0);
+          await this.audit(conn, "founder.asked.again.admin", actorUserId, String(invite.id), {});
+        }));
+      }
       /** ¿Este número tiene una confirmación de fundador esperando respuesta? */
       pendingByPhone(phone) {
         return this.run(async (conn) => (await rows35(conn, "SELECT id FROM `FounderInvite` WHERE phone = ? AND status IN ('enviado', 'respondio') LIMIT 1", [phone]).catch(() => [])).length > 0);
@@ -97836,11 +97868,12 @@ var init_founder_store = __esm({
        */
       markReplied(phone) {
         return this.run((conn) => this.tx(conn, async () => {
-          const [invite] = await rows35(conn, "SELECT id FROM `FounderInvite` WHERE phone = ? AND status = 'enviado' ORDER BY sentAt DESC LIMIT 1 FOR UPDATE", [phone]);
+          const [invite] = await rows35(conn, "SELECT f.id, s.name FROM `FounderInvite` f LEFT JOIN `Shop` s ON s.id = f.shopId WHERE f.phone = ? AND f.status = 'enviado' ORDER BY f.sentAt DESC LIMIT 1 FOR UPDATE", [phone]);
           if (!invite)
             return false;
           await conn.query("UPDATE `FounderInvite` SET status = 'respondio', answeredAt = UTC_TIMESTAMP(3), answeredVia = 'whatsapp' WHERE id = ?", [invite.id]);
           await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'FOUNDER_REPLIED' WHERE recipientPhone = ? AND status IN ('pending', 'sending')", [phone]);
+          await this.queueAsk(conn, String(invite.id), phone, String(invite.name ?? "Tu taller"), `founder-ask:${invite.id}`, 10);
           await this.audit(conn, "founder.replied", null, String(invite.id), { via: "whatsapp" });
           return true;
         }));
@@ -97869,6 +97902,7 @@ var init_founder_store = __esm({
               await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [userId, phone]);
             await conn.query("UPDATE `FounderInvite` SET status = 'aceptado', tokenHash = NULL, answeredAt = UTC_TIMESTAMP(3), answeredVia = ? WHERE id = ?", [via, id3]);
             const [shop] = await rows35(conn, "SELECT name FROM `Shop` WHERE id = ?", [shopId]);
+            await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'FOUNDER_ANSWERED' WHERE recipientPhone = ? AND kind = 'founder.ask' AND status IN ('pending', 'sending')", [phone]);
             guides = founderGuides({ shop: String(shop?.name ?? invite.name ?? "tu taller"), site: site2 });
             message2 = guides.shift();
           } else {
@@ -117685,7 +117719,7 @@ function registerFounderAdminRoutes(app2, deps) {
       pending = true;
     }
     const csrf = escapeHtml(session.csrfToken);
-    const rows73 = list7.map((r) => `<tr><td>${escapeHtml(String(r.name ?? "(borrada)"))}</td><td>${escapeHtml([r.zone, r.city].filter(Boolean).join(" \xB7 "))}</td><td>\u2026${escapeHtml(String(r.phoneEnd ?? ""))}</td><td>${escapeHtml(STATUS4[String(r.status)] ?? String(r.status))}${r.answeredVia ? ` (${escapeHtml(String(r.answeredVia))})` : ""}</td><td>${escapeHtml(when12(r.sentAt))}${Number(r.sends) > 1 ? ` \xB7 ${Number(r.sends)} env\xEDos` : ""}</td><td>${r.status === "borrador" ? `<form method="post" action="/admin/fundadores/${escapeHtml(String(r.id))}/enviar"><input type="hidden" name="csrf" value="${csrf}"><button type="submit">Enviar confirmaci\xF3n</button></form>` : r.status === "enviado" ? "Esperando respuesta" : ""}</td></tr>`).join("");
+    const rows73 = list7.map((r) => `<tr><td>${escapeHtml(String(r.name ?? "(borrada)"))}</td><td>${escapeHtml([r.zone, r.city].filter(Boolean).join(" \xB7 "))}</td><td>\u2026${escapeHtml(String(r.phoneEnd ?? ""))}</td><td>${escapeHtml(STATUS4[String(r.status)] ?? String(r.status))}${r.answeredVia ? ` (${escapeHtml(String(r.answeredVia))})` : ""}</td><td>${escapeHtml(when12(r.sentAt))}${Number(r.sends) > 1 ? ` \xB7 ${Number(r.sends)} env\xEDos` : ""}</td><td>${r.status === "borrador" ? `<form method="post" action="/admin/fundadores/${escapeHtml(String(r.id))}/enviar"><input type="hidden" name="csrf" value="${csrf}"><button type="submit">Enviar confirmaci\xF3n</button></form>` : r.status === "enviado" ? "Esperando respuesta" : r.status === "respondio" ? `<form method="post" action="/admin/fundadores/${escapeHtml(String(r.id))}/preguntar"><input type="hidden" name="csrf" value="${csrf}"><button type="submit" title="Le escribe de nuevo: \xBFquieres retomar tu lugar como taller fundador? Responde ACEPTO o RECHAZO.">Preguntar de nuevo</button></form>` : r.status === "aceptado" && !Number(r.listed) ? `No sale en /talleres <form method="post" action="/admin/fundadores/${escapeHtml(String(r.id))}/publicar"><input type="hidden" name="csrf" value="${csrf}"><button type="submit">Publicar de nuevo</button></form>` : ""}</td></tr>`).join("");
     const body = `<div class="stack"><h1>Talleres fundadores</h1>
       ${notes.map((n3) => `<p${status >= 400 ? ' class="error"' : ""}>${escapeHtml(n3)}</p>`).join("")}${errorNotes.map((n3) => `<p class="error">${escapeHtml(n3)}</p>`).join("")}
       ${pending ? `<p>Falta \xABAplicar actualizaciones\xBB en Ajustes para crear la tabla de fundadores.</p>` : ""}
@@ -117714,8 +117748,9 @@ function registerFounderAdminRoutes(app2, deps) {
     const session = authorize(request, reply);
     if (!session)
       return reply;
-    const sent = request.query?.enviado === "1";
-    return render(request, reply, session, sent ? ["Confirmaci\xF3n en cola de WhatsApp. El enlace anterior, si hab\xEDa, ya no vale."] : []);
+    const q = request.query ?? {};
+    const note = q.enviado === "1" ? "Confirmaci\xF3n en cola de WhatsApp. El enlace anterior, si hab\xEDa, ya no vale." : q.preguntado === "1" ? "Pregunta en cola de WhatsApp: \xBFquieres retomar tu lugar como taller fundador? (ACEPTO o RECHAZO)." : q.publicado === "1" ? "Ficha publicada de nuevo: sale en /talleres y /mapa en un minuto." : "";
+    return render(request, reply, session, note ? [note] : []);
   });
   app2.post("/fundadores/importar", async (request, reply) => {
     const session = authorize(request, reply);
@@ -117758,6 +117793,42 @@ function registerFounderAdminRoutes(app2, deps) {
         return render(request, reply, session, ["Este taller ya respondi\xF3."], 409);
       if (code5 === "ALREADY_SENT")
         return render(request, reply, session, ["Ya se le envi\xF3: esperamos su respuesta."], 409);
+      throw err4;
+    }
+  });
+  app2.post("/fundadores/:id/preguntar", async (request, reply) => {
+    const session = authorize(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return render(request, reply, session, ["Solicitud inv\xE1lida. Abre de nuevo el panel."], 403);
+    if (!/^[0-9a-f-]{36}$/.test(request.params.id))
+      return render(request, reply, session, ["Ficha no encontrada."], 404);
+    try {
+      await founders.askAgain(request.params.id, session.userId);
+      return reply.header("Cache-Control", "no-store").redirect("/admin/fundadores?preguntado=1", 303);
+    } catch (err4) {
+      if (err4.code === "NOT_FOUND")
+        return render(request, reply, session, ["Esta ficha ya no espera respuesta."], 404);
+      throw err4;
+    }
+  });
+  app2.post("/fundadores/:id/publicar", async (request, reply) => {
+    const session = authorize(request, reply);
+    if (!session)
+      return reply;
+    const body = request.body ?? {};
+    if (!verifyCsrf(session, body.csrf))
+      return render(request, reply, session, ["Solicitud inv\xE1lida. Abre de nuevo el panel."], 403);
+    if (!/^[0-9a-f-]{36}$/.test(request.params.id))
+      return render(request, reply, session, ["Ficha no encontrada."], 404);
+    try {
+      await founders.republish(request.params.id, session.userId);
+      return reply.header("Cache-Control", "no-store").redirect("/admin/fundadores?publicado=1", 303);
+    } catch (err4) {
+      if (err4.code === "NOT_FOUND")
+        return render(request, reply, session, ["Ficha no encontrada."], 404);
       throw err4;
     }
   });
