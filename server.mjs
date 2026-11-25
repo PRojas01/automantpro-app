@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='7bc46aef8ac37f51643146116dd60e8f9c19555c'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='627e13885ec24c109ef2635a4005127da2449c53'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -91496,10 +91496,10 @@ var init_catalog = __esm({
         minUnits: 1,
         volumeFrom: null,
         volumePrice: null,
-        limits: { workOrdersPerMonth: 10, quotesPerMonth: 5, technicians: 1 },
+        limits: { workOrdersPerMonth: 3, quotesPerMonth: 3, technicians: 1 },
         level: "funcional",
         extra: null,
-        features: ["10 \xF3rdenes de trabajo al mes", "5 cotizaciones al mes", "1 t\xE9cnico", "Perfil sin revisar en b\xFAsquedas", "Plan Funcional en las fichas de tus clientes"],
+        features: ["3 \xF3rdenes de trabajo al mes", "3 cotizaciones al mes", "1 t\xE9cnico", "Perfil sin revisar en b\xFAsquedas", "Plan Funcional en las fichas de tus clientes"],
         visible: true,
         recommended: false,
         order: 30
@@ -93954,7 +93954,7 @@ var init_plans = __esm({
     };
     FREE_LIMITS = {
       dueno: { vehicles: 1, appointmentsPerMonth: 2, quotesPerMonth: 2 },
-      taller: { workOrdersPerMonth: 10, quotesPerMonth: 5 },
+      taller: { workOrdersPerMonth: 3, quotesPerMonth: 3 },
       almacen: { quotesPerMonth: 15 }
     };
     LIMIT_LABELS = {
@@ -139492,6 +139492,11 @@ function isProbePath(url) {
   return PROBE.test(url.split("?")[0] ?? "/");
 }
 var AUTH_WRITE = /^\/api\/v1\/auth\/(?:login|register|code\/request|code\/verify|link\/verify|web-signup|recovery)$/;
+function scaledRules(scale) {
+  if (!Number.isFinite(scale) || scale <= 1)
+    return {};
+  return Object.fromEntries(Object.entries(DEFAULT_RULES).map(([k, r]) => [k, { ...r, max: Math.ceil(r.max * scale) }]));
+}
 function classify2(method, url, userAgent) {
   const path = url.split("?")[0] ?? "/";
   if (EXEMPT2.test(path))
@@ -139535,6 +139540,7 @@ function trustProxySetting(raw, production) {
   return raw.trim();
 }
 var DEFAULT_BAN = { probes: 3, strikes: 5, windowMs: 10 * 6e4, durationMs: 30 * 6e4 };
+var isLoopback = (ip) => ip === "::1" || /^(?:::ffff:)?127\./.test(ip);
 var TempBans = class {
   now;
   maxKeys;
@@ -139544,6 +139550,8 @@ var TempBans = class {
     this.maxKeys = maxKeys;
   }
   ban(ip, durationMs) {
+    if (isLoopback(ip))
+      return;
     if (this.until.size >= this.maxKeys)
       this.sweep();
     if (this.until.size >= this.maxKeys)
@@ -140189,7 +140197,7 @@ var app = (0, import_fastify.default)({
     level: process.env.NODE_ENV === "production" ? "info" : "debug"
   }
 });
-installSecurity(app);
+installSecurity(app, process.env.NODE_ENV === "production" ? {} : { rules: scaledRules(Number(process.env.RATE_LIMIT_SCALE)) });
 installPaletas(app);
 app.addHook("onSend", sessionMenuOnSend);
 await app.register(import_cors.default, {
