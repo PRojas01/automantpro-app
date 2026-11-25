@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='42625ffaa99e8bf7421d28442c88f68c44284f21'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='d737c11db56c183cc10fe5424e798f6c07f551e9'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -87385,7 +87385,7 @@ var init_apply = __esm({
 });
 
 // packages/api/dist/application/auth/code-request.js
-var phoneDigits, fold2, isCodeRequest, isHomeEntry;
+var phoneDigits, fold2, isCodeRequest, isHomeEntry, isSiteEntry;
 var init_code_request = __esm({
   "packages/api/dist/application/auth/code-request.js"() {
     "use strict";
@@ -87396,6 +87396,7 @@ var init_code_request = __esm({
     fold2 = (text17) => text17.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
     isCodeRequest = (text17) => text17.length <= 80 && /codigo de acceso|quiero entrar|conectar/.test(fold2(text17)) && /automantpro/.test(fold2(text17));
     isHomeEntry = (text17) => text17.length <= 160 && /^hola automantpro\b/.test(fold2(text17)) && /\bcodigo:\s*amp-[a-z0-9]{4,6}\b/.test(fold2(text17));
+    isSiteEntry = (text17) => text17.length <= 200 && (/^hola automantpro\b/.test(fold2(text17)) || /\bcodigo:\s*amp-[a-z0-9]{4,6}\b/.test(fold2(text17)));
   }
 });
 
@@ -89418,6 +89419,123 @@ main details.gestionar>.menu{margin-top:8px}
   </details>
 </div>`;
     HOME_MARGENES = "body{padding-left:calc(14px + env(safe-area-inset-left))!important;padding-right:calc(14px + env(safe-area-inset-right))!important}";
+  }
+});
+
+// packages/api/dist/interfaces/entry/index.js
+import { randomBytes as randomBytes3, randomInt as randomInt2 } from "node:crypto";
+function wantsHtml(accept) {
+  if (!accept)
+    return false;
+  return accept.split(",").some((part) => part.trim().toLowerCase().startsWith("text/html"));
+}
+function wantsPage(accept, userAgent) {
+  if (wantsHtml(accept) || isPreviewBot(userAgent))
+    return true;
+  if (typeof userAgent !== "string" || !/^Mozilla\//.test(userAgent))
+    return false;
+  return !/application\/json/i.test(accept ?? "");
+}
+function sanitizeRef(ref4) {
+  if (typeof ref4 !== "string")
+    return null;
+  return /^[A-Za-z0-9_-]{1,32}$/.test(ref4) ? ref4 : null;
+}
+function publicNumber() {
+  const digits = (process.env.WA_PUBLIC_NUMBER ?? "").replace(/\D/g, "");
+  return digits.length >= 8 && digits.length <= 15 ? digits : null;
+}
+function newVisitCode() {
+  let code5 = "";
+  for (let i = 0; i < CODE_LENGTH; i++)
+    code5 += CODE_ALPHABET[randomInt2(CODE_ALPHABET.length)];
+  return `AMP-${code5}`;
+}
+async function uniqueVisitCode(taken) {
+  let code5 = newVisitCode();
+  if (!taken)
+    return code5;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      if (!await taken(code5))
+        return code5;
+    } catch {
+      return code5;
+    }
+    code5 = newVisitCode();
+  }
+  return code5;
+}
+function isPreviewBot(userAgent) {
+  return typeof userAgent === "string" && PREVIEW_BOTS.test(userAgent);
+}
+async function effectiveNumber(options) {
+  if (options.resolveNumber) {
+    try {
+      const digits = (await options.resolveNumber() ?? "").replace(/\D/g, "");
+      if (digits.length >= 8 && digits.length <= 15)
+        return digits;
+    } catch {
+    }
+  }
+  return publicNumber();
+}
+async function entryRoutes(app2, options = {}) {
+  const marketing = options.marketingSite === void 0 ? marketingSite() : options.marketingSite;
+  const visitWindows = /* @__PURE__ */ new Map();
+  const allowVisit = (ip) => {
+    const now = Date.now();
+    const current = visitWindows.get(ip);
+    if (!current || now - current.start > 60 * 60 * 1e3) {
+      if (visitWindows.size > 5e3)
+        visitWindows.clear();
+      visitWindows.set(ip, { count: 1, start: now });
+      return true;
+    }
+    current.count += 1;
+    return current.count <= VISITS_PER_HOUR;
+  };
+  app2.get("/", async (request, reply) => {
+    reply.header("Vary", "Accept, User-Agent");
+    const bot = isPreviewBot(request.headers["user-agent"]);
+    if (request.method === "HEAD" || !wantsHtml(request.headers.accept) && !bot) {
+      return reply.send(API_STATUS);
+    }
+    const nonce2 = randomBytes3(16).toString("base64");
+    const query = request.query ?? {};
+    const code5 = await uniqueVisitCode(options.codeTaken);
+    const ref4 = sanitizeRef(query.ref);
+    const profile = sanitizeProfile(query.perfil);
+    const number2 = await effectiveNumber(options);
+    if (!bot && options.onVisit && allowVisit(request.ip)) {
+      Promise.resolve().then(() => options.onVisit?.(code5, ref4, profile)).catch(() => void 0);
+    }
+    let mode = "menu";
+    if (options.entryMode && !profile) {
+      try {
+        mode = await options.entryMode() === "directo" ? "directo" : "menu";
+      } catch {
+        mode = "menu";
+      }
+    }
+    if (number2 && !bot && !("pagina" in query) && (mode === "directo" || profile)) {
+      return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number2, code5, ref4, profile).wame, 302);
+    }
+    const html = renderEntryPage({ number: number2, code: code5, ref: ref4, nonce: nonce2, menu: mode === "menu", marketing });
+    return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; manifest-src 'self'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
+  });
+}
+var API_STATUS, CODE_ALPHABET, CODE_LENGTH, VISITS_PER_HOUR, PREVIEW_BOTS;
+var init_entry = __esm({
+  "packages/api/dist/interfaces/entry/index.js"() {
+    "use strict";
+    init_page();
+    init_marketing();
+    API_STATUS = { status: "ok", service: "AutoMantPro API" };
+    CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    CODE_LENGTH = 5;
+    VISITS_PER_HOUR = 30;
+    PREVIEW_BOTS = /facebookexternalhit|facebot|whatsapp|twitterbot|slackbot|telegrambot|linkedinbot|discordbot|googlebot|google-inspectiontool|storebot-google|google-extended|bingbot|bingpreview|applebot|yandex|duckduckbot|baiduspider|pinterest|skypeuripreview|redditbot|embedly|ahrefsbot|semrushbot|gptbot|oai-searchbot|chatgpt-user|claudebot|claude-web|claude-user|claude-searchbot|anthropic-ai|duckassistbot|mistralai-user|perplexitybot|perplexity-user|ccbot|google-cloudvertexbot|bytespider|amazonbot|meta-externalagent|cohere-ai|youbot|diffbot/i;
   }
 });
 
@@ -94385,9 +94503,9 @@ var init_walk_in = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/vehicle-card-store.js
-import { createHash as createHash7, randomBytes as randomBytes4, randomUUID as randomUUID20 } from "node:crypto";
+import { createHash as createHash7, randomBytes as randomBytes5, randomUUID as randomUUID20 } from "node:crypto";
 function newSecretCode(prefix) {
-  const bytes = randomBytes4(16);
+  const bytes = randomBytes5(16);
   let out = "";
   for (const b of bytes) {
     if (b >= 248)
@@ -94397,7 +94515,7 @@ function newSecretCode(prefix) {
       break;
   }
   while (out.length < 8)
-    out += INVITE_ALPHABET[randomBytes4(1)[0] % 31];
+    out += INVITE_ALPHABET[randomBytes5(1)[0] % 31];
   return `${prefix}-${out}`;
 }
 var rows24, fail5, hashCode, short3, SERVICES, serviceName, CARD_DAYS, ecDay3, PENDING_LIMIT, OWN_VEHICLE_LIMIT, FLEET_VEHICLE_LIMIT, secretHash, MISSING10, isMissing6, VehicleCardStore, need, cardLink;
@@ -95356,7 +95474,7 @@ var init_rtv_calendar = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/fleet-store.js
-import { randomBytes as randomBytes5, randomUUID as randomUUID21 } from "node:crypto";
+import { randomBytes as randomBytes6, randomUUID as randomUUID21 } from "node:crypto";
 function ecMonthStart(now = /* @__PURE__ */ new Date()) {
   const local = new Date(now.getTime() - 5 * 36e5);
   return new Date(Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), 1, 5));
@@ -95871,7 +95989,7 @@ Si no puedes: Reprogramar cita ${code5} | AAAA-MM-DD | HH:mm \xB7 Rechazar cita 
         return { userId, message: value2 ? `Listo: los supervisores pueden aprobar presupuestos y novedades hasta ${formatUsd(value2)}.` : "Listo: los supervisores ya no pueden aprobar gastos." };
       }
       async panel(conn, userId, fleet) {
-        const token2 = randomBytes5(24).toString("base64url");
+        const token2 = randomBytes6(24).toString("base64url");
         await conn.query("DELETE FROM `FleetPanelToken` WHERE expiresAt < UTC_TIMESTAMP(3)");
         await conn.query("INSERT INTO `FleetPanelToken` (tokenHash, fleetId, userId, expiresAt) VALUES (?, ?, ?, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL ? MINUTE))", [secretHash(token2), fleet.fleetId, userId, PANEL_MINUTES]);
         await this.audit(conn, userId, "fleet.panel.link", "Fleet", fleet.fleetId, {});
@@ -96254,6 +96372,7 @@ var init_profile_edit_store = __esm({
           }))[0]?.zone ?? null;
         if (!user)
           fail9("ACCOUNT_UNAVAILABLE");
+        user.passwordSet = (await rows30(conn, "SELECT 1 AS ok FROM `AuditLog` WHERE actorUserId = ? AND eventType = 'account.password.changed' LIMIT 1", [userId]).catch(() => [])).length > 0;
         const vehicles = role === "dueno" ? (await rows30(conn, "SELECT * FROM `Vehicle` WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL ORDER BY createdAt, id", [userId])).map((v) => ({ id: v.id, make: v.make, model: v.model, year: v.year, plate: v.plate, vehicleClass: v.vehicleClass, fuel: v.fuel, usageProfile: v.usageProfile, transmission: v.transmission ?? null, currentKm: v.currentKm })) : [];
         return { profile: user, vehicles, business: await this.business(conn, userId, role) };
       }
@@ -96866,7 +96985,7 @@ var init_workshop_map_store = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/chat-account-store.js
-import { randomBytes as randomBytes6, randomUUID as randomUUID27 } from "node:crypto";
+import { randomBytes as randomBytes7, randomUUID as randomUUID27 } from "node:crypto";
 var rows33, ChatAccountError, fail10, ChatAccountStore;
 var init_chat_account_store = __esm({
   "packages/api/dist/infrastructure/messaging/chat-account-store.js"() {
@@ -96912,7 +97031,7 @@ var init_chat_account_store = __esm({
         if ((await rows33(conn, "SELECT userId FROM `WhatsAppIdentity` WHERE phone = ? FOR UPDATE", [phone])).length)
           fail10("ALREADY_REGISTERED");
         const id3 = randomUUID27();
-        const passwordHash = await hashPassword(randomBytes6(24).toString("hex"));
+        const passwordHash = await hashPassword(randomBytes7(24).toString("hex"));
         await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'dueno', ?, 'es', ?, CURRENT_TIMESTAMP(3), ?, 'whatsapp', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, `+${phone}`, passwordHash, name, city, CONSENT_VERSION]);
         await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id3, phone]);
         await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'chat.account.registered', ?, 'dueno', 'User', ?, ?, UTC_TIMESTAMP(3))", [randomUUID27(), id3, id3, JSON.stringify({ role: "dueno", source: "whatsapp", via: source, consentVersion: CONSENT_VERSION })]);
@@ -96943,7 +97062,7 @@ var init_chat_account_store = __esm({
           if (taken.length)
             fail10("PHONE_REGISTERED");
           id3 = randomUUID27();
-          const passwordHash = await hashPassword(randomBytes6(24).toString("hex"));
+          const passwordHash = await hashPassword(randomBytes7(24).toString("hex"));
           await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'taller', ?, 'es', NULL, CURRENT_TIMESTAMP(3), ?, 'whatsapp', 'T\xE9cnico de taller', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, `+${phone}`, passwordHash, name, CONSENT_VERSION]);
           await conn.query("INSERT INTO `WhatsAppIdentity` (userId, phone) VALUES (?, ?)", [id3, phone]);
         }
@@ -96978,7 +97097,7 @@ Luego escribe de nuevo: ${kind === "taller" ? "Taller" : "Almac\xE9n"} ${ref4}` 
             fail10("ALREADY_REGISTERED");
           const id3 = randomUUID27();
           const newRole = command.action === "registerOwner" ? "dueno" : command.action === "registerShop" ? "taller" : "almacen";
-          const passwordHash = await hashPassword(randomBytes6(24).toString("hex"));
+          const passwordHash = await hashPassword(randomBytes7(24).toString("hex"));
           await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, consentAt, consentVersion, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, ?, ?, 'es', ?, CURRENT_TIMESTAMP(3), ?, 'whatsapp', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [id3, stored, passwordHash, newRole, command.name, command.city, CONSENT_VERSION]);
           if (command.action === "registerShop") {
             await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, verificationStatus, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, NULL, ?, 'pending', CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [randomUUID27(), id3, command.name, command.address, command.city, command.zone, command.ruc, command.name, JSON.stringify(command.services)]);
@@ -97912,7 +98031,7 @@ var init_courses_store = __esm({
 });
 
 // packages/api/dist/application/courses/whatsapp.js
-import { randomBytes as randomBytes7 } from "node:crypto";
+import { randomBytes as randomBytes8 } from "node:crypto";
 async function handleCourseCommand(conn, uid, role, text17, mediaId) {
   const command = parseAccountCommand(text17);
   const numeric = role === "taller" && /^\s*\d+(?:[ ,]+\d+)*\s*$/.test(text17);
@@ -98039,7 +98158,7 @@ Responde con los n\xFAmeros para inscribir en ${command.code}.`;
       case "becomeExpert": {
         if (await isVerifiedExpert(conn, uid))
           return "Ya eres experto verificado. Crea y administra tus cursos desde tu panel.";
-        const token2 = randomBytes7(32).toString("hex");
+        const token2 = randomBytes8(32).toString("hex");
         await store.issueExpertLink(uid, token2);
         return `Solicita tu perfil experto aqu\xED: https://automantpro.app/experto/registro/${token2}
 El enlace es de un solo uso y vence en 24 horas. Los documentos se reciben \xFAnicamente en ese formulario.`;
@@ -98358,7 +98477,7 @@ var init_weekly_hours = __esm({
 });
 
 // packages/api/dist/infrastructure/founders/founder-store.js
-import { createHash as createHash9, randomBytes as randomBytes8, randomUUID as randomUUID30 } from "node:crypto";
+import { createHash as createHash9, randomBytes as randomBytes9, randomUUID as randomUUID30 } from "node:crypto";
 function serviceIds(list7) {
   const out = /* @__PURE__ */ new Set();
   for (const raw of list7) {
@@ -98583,7 +98702,7 @@ var init_founder_store = __esm({
               const userId = randomUUID30();
               const shopId = randomUUID30();
               const inviteId = randomUUID30();
-              await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'taller', ?, 'es', ?, 'fundador', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [userId, phone, await hashPassword(randomBytes8(24).toString("base64url")), item2.contacto, item2.ciudad]);
+              await conn.query("INSERT INTO `User` (id, email, phone, passwordHash, role, name, locale, city, source, notes, createdAt, updatedAt) VALUES (?, NULL, ?, ?, 'taller', ?, 'es', ?, 'fundador', NULL, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [userId, phone, await hashPassword(randomBytes9(24).toString("base64url")), item2.contacto, item2.ciudad]);
               await conn.query("INSERT INTO `Shop` (id, userId, name, address, city, zone, ruc, hours, contactName, email, specialties, lat, lng, verificationStatus, founder, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', true, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3))", [shopId, userId, item2.nombre, item2.direccion ?? "", item2.ciudad, item2.sector || null, item2.ruc || null, hours2, item2.contacto, item2.correo || null, JSON.stringify(serviceIds(item2.servicios)), item2.lat ?? null, item2.lng ?? null]);
               if (weekly)
                 await conn.query("UPDATE `Shop` SET weeklyHours = ? WHERE id = ?", [JSON.stringify(weekly), shopId]).catch((err4) => {
@@ -98617,7 +98736,7 @@ var init_founder_store = __esm({
             fail13("ALREADY_ANSWERED");
           if (String(invite.status) === "enviado")
             fail13("ALREADY_SENT");
-          const token2 = randomBytes8(24).toString("base64url");
+          const token2 = randomBytes9(24).toString("base64url");
           const link = `${site3.replace(/\/+$/, "")}/fundador/${token2}`;
           const sends = Number(invite.sends ?? 0) + 1;
           await conn.query("UPDATE `FounderInvite` SET status = 'enviado', tokenHash = ?, sends = ?, sentAt = UTC_TIMESTAMP(3) WHERE id = ?", [digest(token2), sends, inviteId]);
@@ -98829,7 +98948,7 @@ var init_auto_reply = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/local-agent-broker.js
-import { createHash as createHash10, randomBytes as randomBytes9 } from "node:crypto";
+import { createHash as createHash10, randomBytes as randomBytes10 } from "node:crypto";
 function recognizedCommand(text17) {
   if (!text17 || text17.length > 2e3)
     return false;
@@ -99033,7 +99152,7 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
         });
       }
       async linkCode(userId) {
-        const code5 = randomBytes9(16).toString("hex");
+        const code5 = randomBytes10(16).toString("hex");
         return this.run(async (conn) => {
           await this.account(conn, userId);
           await conn.query("UPDATE `WhatsAppLinkCode` SET usedAt = UTC_TIMESTAMP(3) WHERE userId = ? AND usedAt IS NULL", [userId]);
@@ -99089,7 +99208,7 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
       async welcome(phone) {
         const day5 = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
         await this.run(async (conn) => {
-          await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,recipientPhone,kind,payload) VALUES (?, ?, NULL, ?, 'contact.welcome', ?) ON DUPLICATE KEY UPDATE id = id", [randomBytes9(16).toString("hex"), `welcome:${digest2(phone)}:${day5}`, phone, JSON.stringify({ message: WELCOME_MESSAGES[parseInt(digest2(`${phone}:${day5}`).slice(0, 8), 16) % WELCOME_MESSAGES.length] })]);
+          await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,recipientPhone,kind,payload) VALUES (?, ?, NULL, ?, 'contact.welcome', ?) ON DUPLICATE KEY UPDATE id = id", [randomBytes10(16).toString("hex"), `welcome:${digest2(phone)}:${day5}`, phone, JSON.stringify({ message: WELCOME_MESSAGES[parseInt(digest2(`${phone}:${day5}`).slice(0, 8), 16) % WELCOME_MESSAGES.length] })]);
         });
       }
       /**
@@ -99253,9 +99372,9 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
             }
             await conn.query("INSERT INTO `LocalAgentReply` (wamid,userId,leaseToken,message,channel,executedCommand) VALUES (?, ?, ?, ?, ?, true)", [wamid, userId, leaseToken, message2, channel]);
             if (channel === "whatsapp")
-              await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?, ?, ?, 'agent.reply', ?)", [randomBytes9(16).toString("hex"), `reply:${digest2(wamid)}`, userId, JSON.stringify({ message: message2 })]);
+              await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?, ?, ?, 'agent.reply', ?)", [randomBytes10(16).toString("hex"), `reply:${digest2(wamid)}`, userId, JSON.stringify({ message: message2 })]);
             await conn.query("UPDATE `InboundWebhook` SET status = 'completed', leaseToken = NULL, lockedAt = NULL, completedAt = UTC_TIMESTAMP(3), updatedAt = UTC_TIMESTAMP(3) WHERE wamid = ?", [wamid]);
-            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?, 'User', ?, ?, UTC_TIMESTAMP(3))", [randomBytes9(16).toString("hex"), `contact.self-service.${command}`, userId, userId, JSON.stringify({ channel, ...requestCode ? { request: requestCode } : {} })]);
+            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?, 'User', ?, ?, UTC_TIMESTAMP(3))", [randomBytes10(16).toString("hex"), `contact.self-service.${command}`, userId, userId, JSON.stringify({ channel, ...requestCode ? { request: requestCode } : {} })]);
             await conn.query("COMMIT");
           } catch (err4) {
             await conn.query("ROLLBACK").catch(() => void 0);
@@ -99307,7 +99426,7 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
       async dismiss(wamid, leaseToken) {
         const accepted2 = await this.queue.complete(wamid, leaseToken);
         if (accepted2)
-          await this.run((conn) => conn.query("INSERT INTO `AuditLog` (id,eventType,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.dismissed', 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes9(16).toString("hex"), wamid, JSON.stringify({ reason: "operator" })]));
+          await this.run((conn) => conn.query("INSERT INTO `AuditLog` (id,eventType,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.dismissed', 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes10(16).toString("hex"), wamid, JSON.stringify({ reason: "operator" })]));
         return { accepted: accepted2 };
       }
       heartbeat(wamid, token2) {
@@ -99385,12 +99504,12 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
             await conn.query("INSERT INTO `LocalAgentReply` (wamid,userId,leaseToken,message,channel,executedCommand) VALUES (?, ?, ?, ?, ?, ?)", [wamid, recipient, leaseToken, message2, payload.channel, executed]);
             if (payload.channel === "whatsapp") {
               if (recipient)
-                await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?, ?, ?, 'agent.reply', ?)", [randomBytes9(16).toString("hex"), `reply:${digest2(wamid)}`, recipient, JSON.stringify({ message: message2 })]);
+                await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,kind,payload) VALUES (?, ?, ?, 'agent.reply', ?)", [randomBytes10(16).toString("hex"), `reply:${digest2(wamid)}`, recipient, JSON.stringify({ message: message2 })]);
               else
-                await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,recipientPhone,kind,payload) VALUES (?, ?, NULL, ?, 'contact.reply', ?)", [randomBytes9(16).toString("hex"), `reply:${digest2(wamid)}`, String(owned.phone), JSON.stringify({ message: message2 })]);
+                await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,recipientPhone,kind,payload) VALUES (?, ?, NULL, ?, 'contact.reply', ?)", [randomBytes10(16).toString("hex"), `reply:${digest2(wamid)}`, String(owned.phone), JSON.stringify({ message: message2 })]);
             }
             await conn.query("UPDATE `InboundWebhook` SET status = 'completed', leaseToken = NULL, lockedAt = NULL, completedAt = UTC_TIMESTAMP(3), updatedAt = UTC_TIMESTAMP(3) WHERE wamid = ?", [wamid]);
-            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?, ?, 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes9(16).toString("hex"), auditEvent, recipient, active?.role ?? null, wamid, JSON.stringify({ executedCommand: executed, channel: payload.channel, newContact: !user, commandSource: "contact" })]);
+            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?, ?, 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes10(16).toString("hex"), auditEvent, recipient, active?.role ?? null, wamid, JSON.stringify({ executedCommand: executed, channel: payload.channel, newContact: !user, commandSource: "contact" })]);
             await conn.query("COMMIT");
             return { accepted: true };
           } catch (err4) {
@@ -99401,7 +99520,7 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
               err4.message = chatErrorMessage(code5, capacity);
             }
             if (err4.code === "COMMAND_MISMATCH")
-              await conn.query("INSERT INTO `AuditLog` (id,eventType,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.command-mismatch', NULL, 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes9(16).toString("hex"), wamid, JSON.stringify({ rejected: true, commandSource: "operator" })]);
+              await conn.query("INSERT INTO `AuditLog` (id,eventType,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.command-mismatch', NULL, 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes10(16).toString("hex"), wamid, JSON.stringify({ rejected: true, commandSource: "operator" })]);
             throw err4;
           }
         });
@@ -101816,7 +101935,7 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
 });
 
 // packages/api/dist/infrastructure/messaging/local-agent-task-store.js
-import { randomBytes as randomBytes10, randomUUID as randomUUID36 } from "node:crypto";
+import { randomBytes as randomBytes11, randomUUID as randomUUID36 } from "node:crypto";
 function validateTask(type, payload) {
   if (typeof type !== "string" || !LOCAL_TASK_TYPES.includes(type) || !own(Object.fromEntries(LOCAL_TASK_TYPES.map((t) => [t, true])), type))
     throw new BrokerError("TASK_TYPE_NOT_ALLOWED");
@@ -101862,7 +101981,7 @@ var init_local_agent_task_store = __esm({
           const [insert] = await c.query("INSERT INTO `LocalAgentTask` (id,type,status,payload,idempotencyKey,createdBy,createdAt,updatedAt) VALUES (?,?, 'queued', ?, ?, ?, UTC_TIMESTAMP(3), UTC_TIMESTAMP(3)) ON DUPLICATE KEY UPDATE id=id", [id3, type, payload, input.idempotencyKey, input.createdBy]);
           const [row2] = await data2(c, "SELECT * FROM `LocalAgentTask` WHERE idempotencyKey = ?", [input.idempotencyKey]);
           if (Number(insert?.affectedRows) === 1)
-            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.task.enqueued', ?, 'LocalAgentTask', ?, ?, UTC_TIMESTAMP(3))", [randomBytes10(16).toString("hex"), input.createdBy, String(row2.id), JSON.stringify({ type, status: row2.status })]);
+            await c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,entityType,entityId,`after`,createdAt) VALUES (?, 'local-agent.task.enqueued', ?, 'LocalAgentTask', ?, ?, UTC_TIMESTAMP(3))", [randomBytes11(16).toString("hex"), input.createdBy, String(row2.id), JSON.stringify({ type, status: row2.status })]);
           return row2;
         });
       }
@@ -101878,7 +101997,7 @@ var init_local_agent_task_store = __esm({
                 await c.query("UPDATE `LocalAgentTask` SET status='failed',errorCode='MAX_ATTEMPTS',completedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [row2.id]);
                 continue;
               }
-              const leaseToken = randomBytes10(32).toString("hex");
+              const leaseToken = randomBytes11(32).toString("hex");
               await c.query("UPDATE `LocalAgentTask` SET status='processing',leaseToken=?,leaseUntil=DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 10 MINUTE),attempts=attempts+1,updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [leaseToken, row2.id]);
               out.push({ ...row2, payload: typeof row2.payload === "string" ? JSON.parse(row2.payload) : row2.payload, leaseToken });
             }
@@ -101910,7 +102029,7 @@ var init_local_agent_task_store = __esm({
               return false;
             }
             await c.query("UPDATE `LocalAgentTask` SET status=?,result=?,errorCode=?,completedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3),leaseToken=NULL,leaseUntil=NULL WHERE id=? AND leaseToken=?", [status, result, errorCode, id3, leaseToken]);
-            await c.query("INSERT INTO `AuditLog` (id,eventType,entityType,entityId,`after`,createdAt) VALUES (?, ?, 'LocalAgentTask', ?, ?, UTC_TIMESTAMP(3))", [randomBytes10(16).toString("hex"), `local-agent.task.${status}`, id3, JSON.stringify({ status, errorCode })]);
+            await c.query("INSERT INTO `AuditLog` (id,eventType,entityType,entityId,`after`,createdAt) VALUES (?, ?, 'LocalAgentTask', ?, ?, UTC_TIMESTAMP(3))", [randomBytes11(16).toString("hex"), `local-agent.task.${status}`, id3, JSON.stringify({ status, errorCode })]);
             await c.query("COMMIT");
             return true;
           } catch (error) {
@@ -101966,7 +102085,7 @@ var init_risk = __esm({
 });
 
 // packages/api/dist/infrastructure/messaging/agent-instruction-store.js
-import { randomBytes as randomBytes11, randomUUID as randomUUID37 } from "node:crypto";
+import { randomBytes as randomBytes12, randomUUID as randomUUID37 } from "node:crypto";
 var InstructionError, data3, audit5, MysqlAgentInstructionStore;
 var init_agent_instruction_store = __esm({
   "packages/api/dist/infrastructure/messaging/agent-instruction-store.js"() {
@@ -101981,7 +102100,7 @@ var init_agent_instruction_store = __esm({
       }
     };
     data3 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
-    audit5 = (c, eventType, actor, id3, after) => c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,entityType,entityId,`after`,createdAt) VALUES (?,?,?,'AgentInstruction',?,?,UTC_TIMESTAMP(3))", [randomBytes11(16).toString("hex"), eventType, actor, id3, JSON.stringify(after)]);
+    audit5 = (c, eventType, actor, id3, after) => c.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,entityType,entityId,`after`,createdAt) VALUES (?,?,?,'AgentInstruction',?,?,UTC_TIMESTAMP(3))", [randomBytes12(16).toString("hex"), eventType, actor, id3, JSON.stringify(after)]);
     MysqlAgentInstructionStore = class {
       connect;
       constructor(connect = openConnection) {
@@ -102033,7 +102152,7 @@ var init_agent_instruction_store = __esm({
                 await c.query("UPDATE `AgentInstruction` SET status='fallida',errorCode='MAX_ATTEMPTS',completedAt=UTC_TIMESTAMP(3),updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [row2.id]);
                 continue;
               }
-              const leaseToken = randomBytes11(32).toString("hex");
+              const leaseToken = randomBytes12(32).toString("hex");
               await c.query("UPDATE `AgentInstruction` SET status='procesando',leaseToken=?,leaseUntil=DATE_ADD(UTC_TIMESTAMP(3),INTERVAL 10 MINUTE),attempts=attempts+1,updatedAt=UTC_TIMESTAMP(3) WHERE id=?", [leaseToken, row2.id]);
               out.push({ id: row2.id, kind: row2.kind, text: row2.text, leaseToken });
             }
@@ -107459,7 +107578,7 @@ var require_lib6 = __commonJS({
 });
 
 // packages/api/dist/infrastructure/operator/operator-key-store.js
-import { createHash as createHash15, randomBytes as randomBytes15, randomUUID as randomUUID52 } from "node:crypto";
+import { createHash as createHash15, randomBytes as randomBytes16, randomUUID as randomUUID52 } from "node:crypto";
 var OPERATOR_SCOPES, SCOPE_LABELS, KEY_FORMAT, isOperatorKeyFormat, hashOperatorKey, parseScopes, toRow, MysqlOperatorKeyStore;
 var init_operator_key_store = __esm({
   "packages/api/dist/infrastructure/operator/operator-key-store.js"() {
@@ -107500,7 +107619,7 @@ var init_operator_key_store = __esm({
       }
       create(input) {
         const id3 = randomUUID52();
-        const key2 = `amp_op_${randomBytes15(32).toString("base64url")}`;
+        const key2 = `amp_op_${randomBytes16(32).toString("base64url")}`;
         return this.run(async (conn) => {
           await conn.query("INSERT INTO `OperatorKey` (id, name, keyHash, scopes, createdByUserId) VALUES (?, ?, ?, ?, ?)", [id3, input.name, hashOperatorKey(key2), input.scopes.join(","), input.createdByUserId]);
           await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, reason, createdAt) VALUES (?, 'admin.operator_key.created', ?, 'admin', 'OperatorKey', ?, ?, CURRENT_TIMESTAMP(3))", [randomUUID52(), input.createdByUserId, id3, `${input.name}: ${input.scopes.join(", ")}`]);
@@ -109734,123 +109853,6 @@ var init_dist = __esm({
     init_webhook();
     init_loader();
     init_llm_gateway();
-  }
-});
-
-// packages/api/dist/interfaces/entry/index.js
-import { randomBytes as randomBytes16, randomInt as randomInt2 } from "node:crypto";
-function wantsHtml(accept) {
-  if (!accept)
-    return false;
-  return accept.split(",").some((part) => part.trim().toLowerCase().startsWith("text/html"));
-}
-function wantsPage(accept, userAgent) {
-  if (wantsHtml(accept) || isPreviewBot(userAgent))
-    return true;
-  if (typeof userAgent !== "string" || !/^Mozilla\//.test(userAgent))
-    return false;
-  return !/application\/json/i.test(accept ?? "");
-}
-function sanitizeRef(ref4) {
-  if (typeof ref4 !== "string")
-    return null;
-  return /^[A-Za-z0-9_-]{1,32}$/.test(ref4) ? ref4 : null;
-}
-function publicNumber2() {
-  const digits = (process.env.WA_PUBLIC_NUMBER ?? "").replace(/\D/g, "");
-  return digits.length >= 8 && digits.length <= 15 ? digits : null;
-}
-function newVisitCode() {
-  let code5 = "";
-  for (let i = 0; i < CODE_LENGTH; i++)
-    code5 += CODE_ALPHABET[randomInt2(CODE_ALPHABET.length)];
-  return `AMP-${code5}`;
-}
-async function uniqueVisitCode(taken) {
-  let code5 = newVisitCode();
-  if (!taken)
-    return code5;
-  for (let attempt = 0; attempt < 5; attempt++) {
-    try {
-      if (!await taken(code5))
-        return code5;
-    } catch {
-      return code5;
-    }
-    code5 = newVisitCode();
-  }
-  return code5;
-}
-function isPreviewBot(userAgent) {
-  return typeof userAgent === "string" && PREVIEW_BOTS.test(userAgent);
-}
-async function effectiveNumber(options) {
-  if (options.resolveNumber) {
-    try {
-      const digits = (await options.resolveNumber() ?? "").replace(/\D/g, "");
-      if (digits.length >= 8 && digits.length <= 15)
-        return digits;
-    } catch {
-    }
-  }
-  return publicNumber2();
-}
-async function entryRoutes(app2, options = {}) {
-  const marketing = options.marketingSite === void 0 ? marketingSite() : options.marketingSite;
-  const visitWindows = /* @__PURE__ */ new Map();
-  const allowVisit = (ip) => {
-    const now = Date.now();
-    const current = visitWindows.get(ip);
-    if (!current || now - current.start > 60 * 60 * 1e3) {
-      if (visitWindows.size > 5e3)
-        visitWindows.clear();
-      visitWindows.set(ip, { count: 1, start: now });
-      return true;
-    }
-    current.count += 1;
-    return current.count <= VISITS_PER_HOUR;
-  };
-  app2.get("/", async (request, reply) => {
-    reply.header("Vary", "Accept, User-Agent");
-    const bot = isPreviewBot(request.headers["user-agent"]);
-    if (request.method === "HEAD" || !wantsHtml(request.headers.accept) && !bot) {
-      return reply.send(API_STATUS);
-    }
-    const nonce2 = randomBytes16(16).toString("base64");
-    const query = request.query ?? {};
-    const code5 = await uniqueVisitCode(options.codeTaken);
-    const ref4 = sanitizeRef(query.ref);
-    const profile = sanitizeProfile(query.perfil);
-    const number2 = await effectiveNumber(options);
-    if (!bot && options.onVisit && allowVisit(request.ip)) {
-      Promise.resolve().then(() => options.onVisit?.(code5, ref4, profile)).catch(() => void 0);
-    }
-    let mode = "menu";
-    if (options.entryMode && !profile) {
-      try {
-        mode = await options.entryMode() === "directo" ? "directo" : "menu";
-      } catch {
-        mode = "menu";
-      }
-    }
-    if (number2 && !bot && !("pagina" in query) && (mode === "directo" || profile)) {
-      return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number2, code5, ref4, profile).wame, 302);
-    }
-    const html = renderEntryPage({ number: number2, code: code5, ref: ref4, nonce: nonce2, menu: mode === "menu", marketing });
-    return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; manifest-src 'self'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
-  });
-}
-var API_STATUS, CODE_ALPHABET, CODE_LENGTH, VISITS_PER_HOUR, PREVIEW_BOTS;
-var init_entry = __esm({
-  "packages/api/dist/interfaces/entry/index.js"() {
-    "use strict";
-    init_page();
-    init_marketing();
-    API_STATUS = { status: "ok", service: "AutoMantPro API" };
-    CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    CODE_LENGTH = 5;
-    VISITS_PER_HOUR = 30;
-    PREVIEW_BOTS = /facebookexternalhit|facebot|whatsapp|twitterbot|slackbot|telegrambot|linkedinbot|discordbot|googlebot|google-inspectiontool|storebot-google|google-extended|bingbot|bingpreview|applebot|yandex|duckduckbot|baiduspider|pinterest|skypeuripreview|redditbot|embedly|ahrefsbot|semrushbot|gptbot|oai-searchbot|chatgpt-user|claudebot|claude-web|claude-user|claude-searchbot|anthropic-ai|duckassistbot|mistralai-user|perplexitybot|perplexity-user|ccbot|google-cloudvertexbot|bytespider|amazonbot|meta-externalagent|cohere-ai|youbot|diffbot/i;
   }
 });
 
@@ -123969,7 +123971,7 @@ async function adminPanelRoutes(app2, options = {}) {
     requireSession,
     html,
     audit: audit8,
-    envNumber: publicNumber2,
+    envNumber: publicNumber,
     copilot: detailCopilot,
     onChanged: () => {
       platformCache = null;
@@ -124443,6 +124445,17 @@ async function validateCredentials(input) {
     return null;
   return user;
 }
+async function activePhoneByLogin(login) {
+  const value2 = login.trim();
+  if (value2.includes("@")) {
+    const user2 = await prisma.user.findFirst({ where: { email: value2.toLowerCase(), deletedAt: null }, select: { phone: true } });
+    return user2?.phone ?? null;
+  }
+  const digits = value2.replace(/\D/g, "");
+  const local = /^0\d{9}$/.test(digits) ? `593${digits.slice(1)}` : digits;
+  const user = await prisma.user.findFirst({ where: { phone: { in: [value2, `+${local}`, local] }, deletedAt: null }, select: { phone: true } });
+  return user?.phone ?? null;
+}
 async function findUserById(id3) {
   return prisma.user.findUnique({
     where: { id: id3 },
@@ -124663,6 +124676,27 @@ async function authRoutes(app2) {
         const user = await findActiveUserByPhone(phone);
         if (user)
           await loginCodes.create(phone, "login");
+      }
+    } catch {
+    }
+    return reply.send({ data: { sent: true } });
+  });
+  app2.post("/auth/password/forgot", async (request, reply) => {
+    if (honeypotTripped(request.body))
+      return reply.send({ data: { sent: true } });
+    const parsed = external_exports.object({ login: external_exports.string().trim().min(3).max(120) }).safeParse(request.body);
+    if (!parsed.success)
+      return reply.send({ data: { sent: true } });
+    const key2 = parsed.data.login.includes("@") ? parsed.data.login.toLowerCase() : phoneDigits(parsed.data.login);
+    const limits = [loginCodePerMinute.hit(key2), loginCodePerHour.hit(key2), loginCodePerIpHour.hit(request.ip)];
+    if (!limits.every((limit) => limit.allowed))
+      return reply.send({ data: { sent: true } });
+    try {
+      const phone = await activePhoneByLogin(parsed.data.login);
+      if (phone) {
+        const site3 = (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/+$/, "");
+        const link = `${site3}/cuenta?ir=contrasena#enlace=${await loginLinks.create(phone, LOGIN_LINK_HOURS)}`;
+        await loginCodes.create(phone, "login", false, link);
       }
     } catch {
     }
@@ -126268,10 +126302,11 @@ ${P2}[data-rol="taller"] .sec-ico{background:#0d1116}
 `;
 
 // packages/api/dist/interfaces/pilot-page.js
+init_entry();
 init_config();
 init_theme();
 init_theme_layers();
-import { createHash as createHash4, randomBytes as randomBytes3 } from "node:crypto";
+import { createHash as createHash4, randomBytes as randomBytes4 } from "node:crypto";
 
 // packages/api/dist/interfaces/pilot-panel-view.js
 init_catalogs();
@@ -128186,7 +128221,8 @@ function foldSummary(d,text){const s=d.querySelector('summary small');if(s)s.tex
 function btn(label,cls,fn){return h('button',{type:'button',class:cls||'ghost',onclick:fn},label);}
 function chipGroup(values,current,onPick,cls){const g=h('div',{class:cls&&cls.includes('day')?'days':'chips',role:'group'});for(const v of values){const b=h('button',{type:'button',class:cls||'chip','aria-pressed':String(v.value===current),onclick:()=>{for(const x of g.children)x.setAttribute('aria-pressed','false');b.setAttribute('aria-pressed','true');onPick(v.value);}});if(v.top){b.append(h('span',{text:v.top}),h('b',{text:v.label}));}else b.textContent=v.label;g.append(b);}return g;}
 async function loadPanel(epoch,vehicleId){let data;try{data=await api('/pilot/panel'+(vehicleId?'?vehicleId='+encodeURIComponent(vehicleId):''));}catch(err){if(err.httpStatus===403&&epoch===generation){panelData=null;el('panel').replaceChildren();}throw err;}if(epoch!==generation||!token)return;panelData=data;panelVehicle=data.vehicleId||null;renderPanel();renderExpertCourses(Boolean(data.isVerifiedExpert));}
-function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);if(typeof qrScanBox==='function'){const qs=qrScanBox();if(qs)root.prepend(qs);}if(typeof withExamples==='function')withExamples(root,panelData);if(typeof qrLinkCard==='function'){const ql=qrLinkCard(panelData);if(ql)root.append(anchor(ql,'vinculo-qr'));}if(panelData.expertProfile)root.append(expertCard(panelData.expertProfile));root.append(anchor(myPlanCard(),'mi-plan'));root.append(anchor(coursesCard(panelData),'cursos'));root.append(accountCard());if(typeof renderOutbox==='function')renderOutbox();if(typeof decorarPanel==='function')decorarPanel(root,panelData);if(typeof installCard==='function'){const ic=installCard();if(ic)root.prepend(ic);}goToSection();}
+function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);if(typeof qrScanBox==='function'){const qs=qrScanBox();if(qs)root.prepend(qs);}if(typeof withExamples==='function')withExamples(root,panelData);if(typeof qrLinkCard==='function'){const ql=qrLinkCard(panelData);if(ql)root.append(anchor(ql,'vinculo-qr'));}if(panelData.expertProfile)root.append(expertCard(panelData.expertProfile));root.append(anchor(myPlanCard(),'mi-plan'));root.append(anchor(coursesCard(panelData),'cursos'));root.append(accountCard());if(typeof renderOutbox==='function')renderOutbox();if(typeof decorarPanel==='function')decorarPanel(root,panelData);if(typeof installCard==='function'){const ic=installCard();if(ic)root.prepend(ic);}goToSection();openPasswordFromLink();}
+function openPasswordFromLink(tries=0){if(new URLSearchParams(location.search).get('ir')!=='contrasena')return;const b=[...document.querySelectorAll('#panel button')].find(x=>x.textContent==='Crear o cambiar contrase\xF1a');if(!b){if(tries<20)setTimeout(()=>openPasswordFromLink(tries+1),300);return;}history.replaceState(null,'',location.pathname);b.scrollIntoView({block:'center'});b.click();}
 // Enlace de los avisos de WhatsApp (/cuenta#seccion): lleva una sola vez a la secci\xF3n donde se toma la misma decisi\xF3n.
 function anchor(n,id){if(n&&!n.id)n.id=id;return n;}
 function goToSection(){const m=/^#([a-z-]{3,20})$/.exec(location.hash);if(!m)return;const t=el({novedades:'ordenes',solicitudes:'misSolicitudes'}[m[1]]||m[1]);if(!t)return;history.replaceState(null,'',location.pathname);t.scrollIntoView({behavior:'smooth',block:'start'});}
@@ -128747,6 +128783,7 @@ function expertCard(p){
 function accountCard(){const sec=card('Mis datos',null,h('p',{class:'note',text:'Cargando tus datos\u2026'}));
  const send=(target,field,value,vehicleId)=>api('/pilot/account/edit',{method:'POST',body:JSON.stringify(Object.assign({target,field,value},vehicleId?{vehicleId}:{}))});
  api('/pilot/account').then(a=>{const kids=[];const p=a.profile;
+  if((!p.passwordSet||!p.email)&&!document.getElementById('crear-acceso')){const acc=card('Crea tu usuario y contrase\xF1a',null,h('p',{class:'note',text:'As\xED entras de las dos formas: con WhatsApp o con tu correo (o celular) y contrase\xF1a.'}));acc.id='crear-acceso';if(!p.email)acc.append(editRow('Usuario (tu correo)',p.email,v=>send('perfil','correo',v),{type:'email'}));if(!p.passwordSet)acc.append(passwordBtn());const top=el('panel');const ins=document.getElementById('instalar-app');if(ins)ins.after(acc);else top.prepend(acc);}
   const pSum=()=>[p.name,p.zone,p.city].filter(Boolean).join(' \xB7 ');const pf=fold('Mi perfil',pSum(),h('div',{class:'list'}));const ps=(field,key,fallback)=>v=>send('perfil',field,v||fallback).then(r=>{p[key]=r&&r.value!==undefined?r.value:v;foldSummary(pf,pSum());return r;});
   pf.lastChild.append(editRow('Nombre',p.name,ps('nombre','name')),editRow('Ciudad',p.city,ps('ciudad','city')),editRow('Barrio o sector',p.zone,ps('sector','zone')),editRow('Correo',p.email,ps('correo','email','ninguno'),{type:'email'}));kids.push(pf);
   for(const v of a.vehicles||[]){kids.push(fold(v.make+' '+v.model+' '+v.year,[v.plate||'Sin placa',{urbano:'Urbano',carretera:'Carretera',severo:'Severo'}[v.usageProfile]||v.usageProfile].filter(Boolean).join(' \xB7 '),h('div',{class:'list'},editRow('Marca',v.make,x=>send('vehiculo','marca',x,v.id),{reload:true}),editRow('Modelo',v.model,x=>send('vehiculo','modelo',x,v.id),{reload:true}),editRow('A\xF1o',v.year,x=>send('vehiculo','a\xF1o',x,v.id),{type:'number',reload:true}),editRow('Placa',v.plate,x=>send('vehiculo','placa',x,v.id),{reload:true}),editRow('Uso',v.usageProfile,x=>send('vehiculo','uso',x,v.id),{reload:true,choices:[['urbano','Urbano'],['carretera','Carretera'],['severo','Severo']],labels:{urbano:'Urbano',carretera:'Carretera',severo:'Severo'}}),editRow('Transmisi\xF3n',v.transmission,x=>send('vehiculo','transmision',x,v.id),{reload:true,choices:[['manual','Manual'],['automatica','Autom\xE1tica']],labels:{manual:'Manual',automatica:'Autom\xE1tica'}}))));}
@@ -129121,10 +129158,12 @@ var OFFLINE_HTML = `<!doctype html><html lang="es-EC"><head><meta charset="utf-8
 var OFFLINE_CSP = `default-src 'none'; style-src 'sha256-${createHash4("sha256").update(OFFLINE_STYLE).digest("base64")}'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`;
 var SIGNUP_CLASSES = vehicleClasses.classes.map((c) => `['${c.id}',${JSON.stringify(c.name)}]`).join(",");
 var SIGNUP_SERVICES = JSON.stringify(serviceTaxonomy.categories.map((c) => [c.id, c.name]));
+var connectText = (code5) => `Hola AutoMantPro, quiero entrar. C\xF3digo: ${code5}`;
 var CONNECT_TEXT = "Quiero entrar a AutoMantPro";
 var WA_ICON = `<svg class="wa-ico" viewBox="0 0 24 24" aria-hidden="true" width="28" height="28"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>`;
-var codeLink = (number2, id3) => number2 ? `<a id="${id3}" class="cod-wa" href="https://wa.me/${number2}?text=${encodeURIComponent(CONNECT_TEXT)}" target="_blank" rel="noopener">${WA_ICON}<span>Conectar con WhatsApp</span></a><p class="ayuda-wa">Se abre WhatsApp con el mensaje listo. Env\xEDalo y te llega un <b>enlace para entrar</b>: t\xF3calo y listo.</p>` : "";
-function renderPilotPage(nonce2, number2 = null) {
+var codeLink = (number2, id3, text17 = CONNECT_TEXT) => number2 ? `<a id="${id3}" class="cod-wa" href="https://wa.me/${number2}?text=${encodeURIComponent(text17)}" target="_blank" rel="noopener">${WA_ICON}<span>Conectar con WhatsApp</span></a><p class="ayuda-wa">Se abre WhatsApp con el mensaje listo. Env\xEDalo y te llega un <b>enlace para entrar</b>: t\xF3calo y listo.</p>` : "";
+function renderPilotPage(nonce2, number2 = null, visitCode = newVisitCode()) {
+  const connect = connectText(visitCode);
   return `<!doctype html><html lang="es-EC"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="manifest" href="/site.webmanifest"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="AutoMantPro"><meta name="apple-mobile-web-app-status-bar-style" content="default">${THEME_COLOR_META}<title>Mi cuenta \xB7 AutoMantPro</title>
 <style nonce="${nonce2}">${THEME_TOKENS}
 #resultBox{position:fixed;left:16px;right:16px;bottom:16px;max-width:560px;margin:0 auto;max-height:60vh;overflow:auto;background:var(--c-surface);border:1px solid var(--c-line);border-radius:12px;padding:16px;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.25)}
@@ -129145,7 +129184,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.45 var(--c-mono)}article{border-bottom:1px solid var(--c-line);padding:8px 0}
 details{margin:12px 0;background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:0 14px}details[open]{padding-bottom:14px}
 details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;cursor:pointer}
-.hidden{display:none}.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}body:has(#chat:not(.hidden)) .intro-cuenta,body:has(#chat:not(.hidden)) .menu-sitio a[href="/cuenta#entrar"]{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button{display:inline-flex;align-items:center;gap:6px}.auth-tabs .ico{width:18px;height:18px;flex:none}.auth-tabs button.hidden{display:none}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}main a.cod-wa{display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px;margin:12px 0 6px;background:#1fa855;color:#fff!important;border-radius:3px;text-decoration:none;font-weight:700;font-size:18px;box-shadow:none;transition:transform .15s}.cod-wa:hover{transform:translateY(-1px)}.cod-wa:active{transform:translateY(1px)}
+.hidden{display:none}.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}body:has(#chat:not(.hidden)) .intro-cuenta,body:has(#chat:not(.hidden)) .menu-sitio a[href="/cuenta#entrar"]{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button{display:inline-flex;align-items:center;gap:6px}.auth-tabs .ico{width:18px;height:18px;flex:none}.auth-tabs button.hidden{display:none}.enlace-olvido{background:none;border:0;padding:8px 0;color:var(--c-ink);text-decoration:underline;cursor:pointer;font:inherit}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:11px}}main a.cod-wa{display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px;margin:12px 0 6px;background:#1fa855;color:#fff!important;border-radius:3px;text-decoration:none;font-weight:700;font-size:18px;box-shadow:none;transition:transform .15s}.cod-wa:hover{transform:translateY(-1px)}.cod-wa:active{transform:translateY(1px)}
 .ayuda-wa{margin:0 0 14px;color:var(--c-muted);font-size:14px;text-align:center}
 .sub-codigo{margin:16px 0 4px;font-weight:600;color:var(--c-muted);font-size:14px;border-top:1px solid var(--c-line);padding-top:12px}
 .auth-tabs{display:grid!important;grid-template-columns:1fr 1fr;gap:8px}.auth-tabs button{min-height:48px;font-size:16px;font-weight:700;border-radius:12px}
@@ -129166,7 +129205,7 @@ main #login>div>h2,main #login h2#entrar,main #login h2#crear{margin:0 0 12px!im
 @media (prefers-reduced-motion:reduce){.cod-wa{transition:none}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}${SCAN_STYLES}${SISTEMA}${ESCANER_STYLES}${INTERFAZ_SIMPLE_CSS}</style>
 ${MENU_MARKUP}
 <main id="contenido">${cabeceraSitio(nonce2, false)}<h1>Mi cuenta</h1><p class="intro-cuenta">Entra o crea tu cuenta gratis. Tus veh\xEDculos, citas y avisos est\xE1n aqu\xED.</p>
-<section id="login"><div class="col-crear"><h2 id="crear">Crear cuenta</h2><ol class="pasos" aria-label="Pasos para crear tu cuenta"><li id="signupPaso1Tag" aria-current="step"><span>1</span>Perfil</li><li id="signupPaso2Tag"><span>2</span>Tus datos</li><li id="signupPaso3Tag"><span>3</span>Confirmar por WhatsApp</li></ol><p id="signupPasoTxt" class="paso-txt" aria-live="polite">Paso 1 de 3: elige tu perfil.</p><form id="signupForm"><div id="signupPaso1"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><button id="signupNext" type="button">Siguiente</button></div><div id="signupPaso2" class="hidden"><div id="signupFields"></div><div class="hp" aria-hidden="true"><label for="signupSitio">Sitio web</label><input id="signupSitio" tabindex="-1" autocomplete="off"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Continuar</button><button id="signupBack" class="atras" type="button">Atr\xE1s</button></div></form><form id="signupVerifyForm" class="hidden">${codeLink(number2, "signupCodeLink")}<label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></div><div class="col-entrar"><h2 id="entrar">Ingresar</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true" class="hidden">${iconoLinea("chat")} WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">${iconoLinea("llave")} Usuario o correo</button></nav>${number2 ? `<div id="codeRequestForm">${codeLink(number2, "codeLink")}</div>` : `<form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form>`}<form id="codeVerifyForm"${number2 ? "" : ' class="hidden"'}><p class="sub-codigo">\xBFTe lleg\xF3 un c\xF3digo de 6 d\xEDgitos? Escr\xEDbelo aqu\xED.</p><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><details id="recuperar"><summary>Perd\xED mi n\xFAmero</summary><form id="recoveryForm"><p>Comprueba tu n\xFAmero nuevo. Revisaremos tu solicitud y te contactaremos por ese n\xFAmero para confirmar tu identidad.</p><label for="recOld">N\xFAmero anterior</label><input id="recOld" inputmode="tel" required minlength="8" maxlength="20"><label for="recNew">N\xFAmero nuevo</label><input id="recNew" inputmode="tel" required minlength="8" maxlength="20"><button id="recSend" type="button">Enviarme el c\xF3digo</button><label for="recCode">C\xF3digo de WhatsApp</label><input id="recCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required><label for="recName">Tu nombre completo</label><input id="recName" required minlength="3" maxlength="120"><label for="recDetail">Cu\xE9ntanos qu\xE9 pas\xF3</label><textarea id="recDetail" required minlength="10" maxlength="500"></textarea><button>Enviar solicitud</button></form></details><form id="loginForm" class="hidden"><label for="phone">Celular o correo</label><input id="phone" autocomplete="username" required minlength="3" maxlength="120"><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label></div></section>
+<section id="login"><div class="col-crear"><h2 id="crear">Crear cuenta</h2><ol class="pasos" aria-label="Pasos para crear tu cuenta"><li id="signupPaso1Tag" aria-current="step"><span>1</span>Perfil</li><li id="signupPaso2Tag"><span>2</span>Tus datos</li><li id="signupPaso3Tag"><span>3</span>Confirmar por WhatsApp</li></ol><p id="signupPasoTxt" class="paso-txt" aria-live="polite">Paso 1 de 3: elige tu perfil.</p><form id="signupForm"><div id="signupPaso1"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><button id="signupNext" type="button">Siguiente</button></div><div id="signupPaso2" class="hidden"><div id="signupFields"></div><div class="hp" aria-hidden="true"><label for="signupSitio">Sitio web</label><input id="signupSitio" tabindex="-1" autocomplete="off"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Continuar</button><button id="signupBack" class="atras" type="button">Atr\xE1s</button></div></form><form id="signupVerifyForm" class="hidden">${codeLink(number2, "signupCodeLink", connect)}<label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></div><div class="col-entrar"><h2 id="entrar">Ingresar</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true" class="hidden">${iconoLinea("chat")} WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">${iconoLinea("llave")} Usuario o correo</button></nav>${number2 ? `<div id="codeRequestForm">${codeLink(number2, "codeLink", connect)}</div>` : `<form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form>`}<form id="codeVerifyForm"${number2 ? "" : ' class="hidden"'}><p class="sub-codigo">\xBFTe lleg\xF3 un c\xF3digo de 6 d\xEDgitos? Escr\xEDbelo aqu\xED.</p><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><details id="recuperar"><summary>Perd\xED mi n\xFAmero</summary><form id="recoveryForm"><p>Comprueba tu n\xFAmero nuevo. Revisaremos tu solicitud y te contactaremos por ese n\xFAmero para confirmar tu identidad.</p><label for="recOld">N\xFAmero anterior</label><input id="recOld" inputmode="tel" required minlength="8" maxlength="20"><label for="recNew">N\xFAmero nuevo</label><input id="recNew" inputmode="tel" required minlength="8" maxlength="20"><button id="recSend" type="button">Enviarme el c\xF3digo</button><label for="recCode">C\xF3digo de WhatsApp</label><input id="recCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required><label for="recName">Tu nombre completo</label><input id="recName" required minlength="3" maxlength="120"><label for="recDetail">Cu\xE9ntanos qu\xE9 pas\xF3</label><textarea id="recDetail" required minlength="10" maxlength="500"></textarea><button>Enviar solicitud</button></form></details><form id="loginForm" class="hidden"><label for="phone">Celular o correo</label><input id="phone" autocomplete="username" required minlength="3" maxlength="120"><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button><button type="button" id="forgotBtn" class="enlace-olvido">\xBFOlvidaste tu contrase\xF1a o nunca creaste una?</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label></div></section>
 <div id="chat" class="hidden"><div class="row2"><h2 id="who">Mi cuenta</h2><span class="chips"><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div><section id="offlineStatus" hidden><span id="offlineCount"></span><button id="syncNow" type="button">Subir ahora</button><div id="failedOutbox"></div></section>${PANEL_MARKUP}<section id="studentCourses"><h2>Mis cursos</h2><div id="courseEnrollment"></div><div id="studentCourseItems"></div></section><section id="composer"><h2>Mensaje a AutoMantPro</h2><form id="sendForm"><label for="message">Tu mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
 <section id="expertCourses" class="hidden"><h2>Mis cursos como experto</h2><p id="expertStatus"></p><div id="expertItems"></div><form id="expertCreate"><label>T\xEDtulo <input name="titulo" required maxlength="191"></label><label>Slug <input name="slug" required maxlength="191"></label><label>Especialidad <input name="especialidad" required maxlength="100"></label><label>Nivel <input name="nivel" required maxlength="40"></label><label>Horas <input name="horas" type="number" min="1" required></label><label>Precio USD (vac\xEDo = gratis) <input name="precioUsd" type="number" min="0" step="0.01"></label><label>Nota m\xEDnima <input name="notaMinima" type="number" min="0" max="100" value="70"></label><button>Crear curso</button></form><form id="expertLesson"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>T\xEDtulo de lecci\xF3n <input name="titulo" required maxlength="191"></label><label>Video URL HTTPS <input name="videoUrl" type="url"></label><label>PDF URL HTTPS <input name="pdfUrl" type="url"></label><label>Texto (m\xE1ximo 900 caracteres) <textarea name="texto" maxlength="900"></textarea></label><button>Guardar lecci\xF3n</button></form><form id="expertQuestion"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>Pregunta <input name="enunciado" required maxlength="2000"></label><label>Opci\xF3n A <input name="optionA" required></label><label>Opci\xF3n B <input name="optionB" required></label><label>Respuesta correcta <select name="correcta"><option>A</option><option>B</option></select></label><button>Guardar pregunta</button></form></section>
 <details id="requestTools"><summary>Buscar un servicio o repuesto</summary><form id="requestForm"><label for="vehicle">Veh\xEDculo</label><select id="vehicle" required></select><button type="button" id="loadVehicles">Cargar mis veh\xEDculos</button><label for="kind">Necesidad</label><select id="kind"><option value="servicio">Servicio</option><option value="repuesto">Repuesto</option></select><label for="category">Categor\xEDa registrada (por ejemplo frenos)</label><input id="category" required maxlength="120"><label for="city">Ciudad</label><input id="city" required maxlength="120"><label for="zone">Sector</label><input id="zone" required maxlength="120"><label for="description">Descripci\xF3n</label><input id="description" required minlength="5" maxlength="1000"><button>Enviar solicitud</button></form></details>
@@ -129244,6 +129283,7 @@ const PASO_TXT=['Paso 1 de 3: elige tu perfil.','Paso 2 de 3: completa tus datos
 (()=>{const m=/^#enlace=([A-Za-z0-9_-]{43})$/.exec(location.hash);if(!m)return;history.replaceState(null,'',location.pathname+location.search);status('Entrando con tu enlace seguro\u2026');api('/auth/link/verify',{method:'POST',body:JSON.stringify({token:m[1]})}).then(data=>{if(!['dueno','taller','almacen'].includes(data.user.role)){status('Esta p\xE1gina es para cuentas de due\xF1o, taller o almac\xE9n.');return;}acceptLogin(data);}).catch(err=>status(err.message));})();
 (()=>{const p=new URLSearchParams(location.search).get('perfil');if(['dueno','taller','almacen'].includes(p)){el('signupRole').value=p;rebuildSignup();addReminderField();signupStep(2);}})();
 el('signupForm').onsubmit=async e=>{e.preventDefault();if(!el('signupForm').reportValidity())return;const profile=el('signupRole').value;const phone=el('signupPhone').value.trim();if(profile==='taller'&&!el('signupFields').querySelector('#signupServices input:checked')){status('Elige al menos un servicio que ofrece tu taller.');return;}try{if(!el('signupCodeLink'))await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'signup'})});signupValues.profile=profile;signupValues.phone=phone;signupValues.fields={};for(const input of el('signupFields').querySelectorAll('input,select'))signupValues.fields[input.id]=input.type==='checkbox'?(input.checked?'on':''):input.value.trim();signupValues.name=el('signupName').value.trim();signupValues.city=el('signupCity').value.trim();signupValues.email=el('signupEmail').value.trim();el('signupForm').classList.add('hidden');el('signupVerifyForm').classList.remove('hidden');signupStep(3);status(el('signupCodeLink')?'Pide tu c\xF3digo por WhatsApp y escr\xEDbelo aqu\xED.':'Revisa WhatsApp para ver tu c\xF3digo.');}catch(err){status(err.message);}};
+el('forgotBtn').onclick=async()=>{const login=el('phone').value.trim();if(login.length<3){status('Escribe tu celular o correo arriba y vuelve a tocar aqu\xED.');el('phone').focus();return;}el('forgotBtn').disabled=true;try{await api('/auth/password/forgot',{method:'POST',body:JSON.stringify({login,sitio:''})});status('Si hay una cuenta con ese dato, te lleg\xF3 por WhatsApp un enlace seguro (vale 3 d\xEDas). \xC1brelo y crea tu contrase\xF1a nueva.');}catch(err){status(err.message);}finally{el('forgotBtn').disabled=false;}};
 el('signupVerifyForm').onsubmit=async e=>{e.preventDefault();const f=signupValues.fields;const payload={phone:signupValues.phone,code:el('signupCode').value.trim(),role:signupValues.profile,name:signupValues.name,city:signupValues.city,email:signupValues.email||undefined,consent:true};if(payload.role==='dueno')Object.assign(payload,{zone:f.signupZone,vehicleClass:f.signupClass,fuel:f.signupFuel,make:f.signupMake,model:f.signupModel,year:f.signupYear,currentKm:f.signupKm,plate:f.signupPlate,usageProfile:f.signupUsage,reminders:f.signupReminders==='on'?'on':false});else{Object.assign(payload,{businessName:f.signupBusiness,ruc:f.signupRuc,address:f.signupAddress,zone:f.signupZone,hours:f.signupHours});if(payload.role==='taller')payload.services=Object.keys(f).filter(k=>k.startsWith('signupSvc_')&&f[k]==='on').map(k=>k.slice(10));else Object.assign(payload,{categories:f.signupCategories,delivery:f.signupDelivery==='on'});}payload.sitio=el('signupSitio').value;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/web-signup',{method:'POST',body:JSON.stringify(payload)});try{sessionStorage.setItem('amp-recien-registrado','1');}catch{}acceptLogin(data);}catch(err){status(err.message);}finally{button.disabled=false;}};
 el('sendForm').onsubmit=async e=>{e.preventDefault();if(sending||!token)return;const message=el('message').value.trim();if(!message){status('Escribe un mensaje.');return;}if(await sendMessage(message,[e.target.querySelector('button')]))el('message').value='';};
 el('refresh').onclick=()=>{const epoch=generation;refresh(epoch).catch(err=>{if(epoch===generation)status(err.message);});};
@@ -129272,7 +129312,7 @@ async function pilotPageRoutes(app2, options = {}) {
     return reply.redirect(`/cuenta${q < 0 ? "" : request.url.slice(q)}`, 301);
   });
   app2.get("/cuenta", async (_request, reply) => {
-    const nonce2 = randomBytes3(18).toString("base64");
+    const nonce2 = randomBytes4(18).toString("base64");
     const enabled = await config.webEnabled().catch(() => false);
     reply.header("Cache-Control", "no-store").header("X-Robots-Tag", "noindex, nofollow").header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Content-Security-Policy", `default-src 'none'; img-src 'self' blob:; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`);
     reply.header("Permissions-Policy", "camera=(), microphone=(), geolocation=(self), payment=(), usb=()");
@@ -130584,7 +130624,7 @@ function registerCatalogTariffRoutes(app2, deps) {
 
 // packages/api/dist/interfaces/comprobante.routes.js
 init_zod();
-import { randomBytes as randomBytes13 } from "node:crypto";
+import { randomBytes as randomBytes14 } from "node:crypto";
 init_error_messages();
 init_apply();
 
@@ -130724,7 +130764,7 @@ init_commands();
 init_apply();
 init_fleet_access();
 init_vehicle_card_store();
-import { randomBytes as randomBytes12, randomUUID as randomUUID42 } from "node:crypto";
+import { randomBytes as randomBytes13, randomUUID as randomUUID42 } from "node:crypto";
 var rows44 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var fail20 = (code5) => {
   throw new FleetAccessError(code5);
@@ -130738,7 +130778,7 @@ var TRANSFER_DAYS = 7;
 var MAX_FAILED_PER_HOUR = 10;
 function newTransferCode() {
   let out = "";
-  for (const b of randomBytes12(16)) {
+  for (const b of randomBytes13(16)) {
     if (b >= 248)
       continue;
     out += INVITE_ALPHABET[b % 31];
@@ -130746,7 +130786,7 @@ function newTransferCode() {
       break;
   }
   while (out.length < 8)
-    out += INVITE_ALPHABET[randomBytes12(1)[0] % 31];
+    out += INVITE_ALPHABET[randomBytes13(1)[0] % 31];
   return `V-${out}`;
 }
 function normalizeTransferCode(text17) {
@@ -131041,7 +131081,7 @@ async function registerComprobanteRoutes(app2, deps) {
     }
   });
   app2.get("/pilot/print", { preHandler: [pilot] }, async (request, reply) => {
-    const nonce2 = randomBytes13(16).toString("base64");
+    const nonce2 = randomBytes14(16).toString("base64");
     const headers = (r) => r.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").header("X-Content-Type-Options", "nosniff").header("Content-Security-Policy", `default-src 'none'; style-src 'nonce-${nonce2}'; script-src 'nonce-${nonce2}'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`).type("text/html; charset=utf-8");
     const gone = (code5, text17) => headers(reply).code(code5).send(`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="robots" content="noindex"><title>AutoMantPro</title><p>${text17}</p></html>`);
     const ticket = external_exports.string().min(20).max(1500).safeParse(request.query.t);
@@ -131667,7 +131707,7 @@ import { randomUUID as randomUUID47 } from "node:crypto";
 
 // packages/api/dist/infrastructure/qr/qr-token.js
 var QRCode = __toESM(require_lib6(), 1);
-import { createHmac as createHmac3, randomBytes as randomBytes14, timingSafeEqual as timingSafeEqual4 } from "node:crypto";
+import { createHmac as createHmac3, randomBytes as randomBytes15, timingSafeEqual as timingSafeEqual4 } from "node:crypto";
 var secret2 = () => {
   const key2 = process.env.QR_LINK_SECRET ?? process.env.LOGIN_CODE_SECRET ?? process.env.JWT_SECRET;
   if (!key2)
@@ -131678,7 +131718,7 @@ var sign = (payload) => createHmac3("sha256", secret2()).update(`qr:${payload}`)
 var qrTokenHash = (token2) => createHmac3("sha256", secret2()).update(`qrhash:${token2}`).digest("hex");
 var QR_TOKEN_SHAPE = /^[A-Za-z0-9_-]{20,300}\.[A-Za-z0-9_-]{43}$/;
 function signQrToken(kind, subjectId, expiresAtMs) {
-  const payload = Buffer.from(`${kind}|${subjectId}|${Math.floor(expiresAtMs / 1e3)}|${randomBytes14(12).toString("hex")}`).toString("base64url");
+  const payload = Buffer.from(`${kind}|${subjectId}|${Math.floor(expiresAtMs / 1e3)}|${randomBytes15(12).toString("hex")}`).toString("base64url");
   return `${payload}.${sign(payload)}`;
 }
 function readQrToken(token2, nowMs = Date.now()) {
@@ -133001,7 +133041,7 @@ var PilotPanelStore = class {
   }
   /** T1B: recibir en la web un vehículo que llegó sin cita (ficha pendiente del cliente con el ingreso). */
   async receiveWalkIn(userId, role, card2, intake) {
-    return this.inTransaction(async (conn) => this.cards.receiveWalkIn(conn, userId, role, card2, intake, await publicNumber(conn)));
+    return this.inTransaction(async (conn) => this.cards.receiveWalkIn(conn, userId, role, card2, intake, await publicNumber2(conn)));
   }
   /** D8P: el cliente aprobó el presupuesto en persona; el taller lo registra con la foto del papel firmado. */
   async recordInPersonApproval(userId, role, number2, input) {
@@ -133013,7 +133053,7 @@ var PilotPanelStore = class {
     }));
   }
   async renewWalkInLink(userId, role, cardId) {
-    return this.inTransaction(async (conn) => this.cards.renewWalkInLink(conn, userId, role, cardId, await publicNumber(conn)));
+    return this.inTransaction(async (conn) => this.cards.renewWalkInLink(conn, userId, role, cardId, await publicNumber2(conn)));
   }
   async cancelWalkIn(userId, role, cardId, reason = null) {
     return this.inTransaction(async (conn) => this.cards.cancelWalkIn(conn, userId, role, cardId, reason));
@@ -133582,7 +133622,7 @@ var PilotPanelStore = class {
     panel.team = await shopTeamView(conn, shop, userId, panel.orders.map((o) => o.code));
     panel.isShopOwner = shop.isOwner;
     if (shop.isOwner || shop.isAdmin) {
-      const number2 = await publicNumber(conn);
+      const number2 = await publicNumber2(conn);
       const list7 = await rows54(conn, "SELECT id, name, role, status FROM `ShopMember` WHERE shopId = ? AND status <> 'removed' ORDER BY status, name LIMIT 30", [shop.id]);
       panel.members = list7.map((m) => {
         const code5 = ref3("T", m.id);
@@ -133774,7 +133814,7 @@ async function shopAppointmentsFor(conn, shopId, vehicleId) {
   const picked = await pickedOf(conn, list7.map((a) => String(a.id)));
   return list7.map((a) => ({ id: String(a.id), ref: `C-${String(a.id).replace(/-/g, "").slice(0, 6).toUpperCase()}`, scheduledAt: a.scheduledAt, planServiceIds: picked.get(String(a.id)) ?? [] }));
 }
-async function publicNumber(conn) {
+async function publicNumber2(conn) {
   const [setting] = await rows54(conn, "SELECT value FROM `AppSetting` WHERE name = ?", [WHATSAPP_NUMBER_KEY]);
   return normalizeWhatsappNumber(String(setting?.value ?? process.env.WA_PUBLIC_NUMBER ?? ""));
 }
@@ -134521,6 +134561,11 @@ async function localAgentRoutes(app2, options = {}) {
       if (loginCodePerMinute.hit(digits).allowed && loginCodePerHour.hit(digits).allowed)
         await answerCode(digits);
       return { data: { accepted: true, duplicate: false }, error: null };
+    }
+    if (isSiteEntry(parsed.data.text) && await hasAccount(phoneDigits(parsed.data.phone))) {
+      const digits = phoneDigits(parsed.data.phone);
+      if (loginCodePerMinute.hit(digits).allowed && loginCodePerHour.hit(digits).allowed)
+        await answerCode(digits).catch(() => void 0);
     }
     if (parsed.data.image) {
       const photo = /^foto\s+(ot-\d|[cs]-[0-9a-f])/i.test(parsed.data.text) ? photoFromDataUrl(parsed.data.image) : null;
@@ -136586,7 +136631,7 @@ async function contentRoutes(app2, options = {}) {
         return digits;
     } catch {
     }
-    return publicNumber2();
+    return publicNumber();
   }
   async function visitCode(ref4, userAgent) {
     const code5 = await uniqueVisitCode(options.codeTaken);
@@ -136813,7 +136858,7 @@ async function landingRoutes(app2, options = {}) {
         return digits;
     } catch {
     }
-    return publicNumber2();
+    return publicNumber();
   }
   async function visitCode(ref4, profile, userAgent) {
     const code5 = await uniqueVisitCode(options.codeTaken);
@@ -137836,7 +137881,7 @@ async function mapRoutes(app2, options = {}) {
         return digits;
     } catch {
     }
-    return publicNumber2();
+    return publicNumber();
   }
   app2.get(LEAFLET_PATH, async (_request, reply) => reply.header("Cache-Control", "public, max-age=31536000, immutable").header("X-Content-Type-Options", "nosniff").header("Content-Security-Policy", "default-src 'none'; manifest-src 'self'; frame-ancestors 'none'").type("application/javascript; charset=utf-8").send(LEAFLET_JS));
   app2.get("/mapa/portada/:id", async (request, reply) => {
@@ -137938,7 +137983,7 @@ async function plansPageRoutes(app2, options = {}) {
         return digits;
     } catch {
     }
-    return publicNumber2();
+    return publicNumber();
   }
   async function catalog() {
     try {
