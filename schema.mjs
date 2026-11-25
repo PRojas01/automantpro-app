@@ -22046,9 +22046,10 @@ var MAP_STATEMENTS = [
 ];
 
 // packages/api/src/infrastructure/schema-setup/web-login-statements.ts
-var WEB_LOGIN_TABLES = ["WebLoginCode"];
+var WEB_LOGIN_TABLES = ["WebLoginCode", "WebLoginLink"];
 var WEB_LOGIN_STATEMENTS = [
-  { kind: "createTable", target: "WebLoginCode", sql: "CREATE TABLE IF NOT EXISTS `WebLoginCode` (id VARCHAR(191) PRIMARY KEY, phone VARCHAR(15) NOT NULL, purpose ENUM('login','signup') NOT NULL, codeHash CHAR(64) NOT NULL, attempts INT NOT NULL DEFAULT 0, expiresAt DATETIME(3) NOT NULL, usedAt DATETIME(3) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX WebLoginCode_phone_created_idx(phone, createdAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
+  { kind: "createTable", target: "WebLoginCode", sql: "CREATE TABLE IF NOT EXISTS `WebLoginCode` (id VARCHAR(191) PRIMARY KEY, phone VARCHAR(15) NOT NULL, purpose ENUM('login','signup') NOT NULL, codeHash CHAR(64) NOT NULL, attempts INT NOT NULL DEFAULT 0, expiresAt DATETIME(3) NOT NULL, usedAt DATETIME(3) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX WebLoginCode_phone_created_idx(phone, createdAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" },
+  { kind: "createTable", target: "WebLoginLink", sql: "CREATE TABLE IF NOT EXISTS `WebLoginLink` (id VARCHAR(191) PRIMARY KEY, phone VARCHAR(15) NOT NULL, tokenHash CHAR(64) NOT NULL UNIQUE, expiresAt DATETIME(3) NOT NULL, usedAt DATETIME(3) NULL, createdBy VARCHAR(191) NULL, createdAt DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3), INDEX WebLoginLink_phone_created_idx(phone, createdAt)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" }
 ];
 
 // packages/api/src/infrastructure/schema-setup/plan-override-statements.ts
