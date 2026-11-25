@@ -1055,6 +1055,35 @@ model ShopFormEntry {
   @@index([templateId], map: "ShopFormEntry_template_idx")
 }
 
+// Catálogo de servicios y sucursales del taller (shop-catalog-statements.ts).
+model ShopService {
+  id          String   @id @db.VarChar(191)
+  shopId      String   @db.VarChar(191)
+  name        String   @db.VarChar(80)
+  description String?  @db.VarChar(200)
+  priceUsd    Decimal? @db.Decimal(10, 2)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now()) @db.DateTime(3)
+  updatedAt   DateTime @default(now()) @db.DateTime(3)
+
+  @@index([shopId, active], map: "ShopService_shop_idx")
+}
+
+model ShopBranch {
+  id        String   @id @db.VarChar(191)
+  shopId    String   @db.VarChar(191)
+  name      String   @db.VarChar(80)
+  address   String   @db.VarChar(200)
+  phone     String?  @db.VarChar(20)
+  hours     String?  @db.VarChar(120)
+  mapUrl    String?  @db.VarChar(300)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @db.DateTime(3)
+  updatedAt DateTime @default(now()) @db.DateTime(3)
+
+  @@index([shopId, active], map: "ShopBranch_shop_idx")
+}
+
 // Directorio de talleres no registrados (directory-statements.ts).
 model DirectoryShop {
   id        String   @id @db.VarChar(191)
