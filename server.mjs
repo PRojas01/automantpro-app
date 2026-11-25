@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='627e13885ec24c109ef2635a4005127da2449c53'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='42625ffaa99e8bf7421d28442c88f68c44284f21'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -87419,10 +87419,10 @@ async function findActiveUserByPhone(digits, connect = openConnection) {
 async function answerCodeRequest(phone) {
   const user = await findActiveUserByPhone(phone);
   const site3 = (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/+$/, "");
-  const link = user ? `${site3}/cuenta#enlace=${await loginLinks.create(phone, 1)}` : void 0;
+  const link = user ? `${site3}/cuenta#enlace=${await loginLinks.create(phone, LOGIN_LINK_HOURS)}` : void 0;
   await loginCodes.create(phone, user ? "login" : "signup", true, link);
 }
-var rows8, secret, hash, LoginCodes, loginCodes, tokenHash, LoginLinks, loginLinks;
+var rows8, secret, hash, LoginCodes, loginCodes, tokenHash, LOGIN_LINK_HOURS, LoginLinks, loginLinks;
 var init_login_codes = __esm({
   "packages/api/dist/infrastructure/auth/login-codes.js"() {
     "use strict";
@@ -87450,7 +87450,7 @@ var init_login_codes = __esm({
         try {
           await conn.query("INSERT INTO `WebLoginCode` (id, phone, purpose, codeHash, attempts, expiresAt) VALUES (?, ?, ?, ?, 0, DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 1 HOUR))", [id3, digits, purpose, hash(code5)]);
           const message2 = `Tu c\xF3digo de AutoMantPro es ${code5}. Vence en 1 hora. No lo compartas.${link ? `
-O entra sin escribir nada, con este enlace de un solo uso: ${link}` : ""}`;
+O entra sin escribir nada, con este enlace de un solo uso (vale 3 d\xEDas): ${link}` : ""}`;
           await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'auth.login_code', ?)", [randomUUID6(), `web-code:${id3}`, digits, JSON.stringify({ message: message2, ...answersInbound ? { allowedOutsideHours: true } : {} })]);
           return code5;
         } finally {
@@ -87489,6 +87489,7 @@ O entra sin escribir nada, con este enlace de un solo uso: ${link}` : ""}`;
     };
     loginCodes = new LoginCodes();
     tokenHash = (token2) => createHmac2("sha256", secret()).update(`link:${token2}`).digest("hex");
+    LOGIN_LINK_HOURS = 72;
     LoginLinks = class {
       connect;
       constructor(connect = openConnection) {
@@ -120951,7 +120952,7 @@ function registerRegistrationRoutes(app2, deps) {
     if (!detail || detail.user.deletedAt || phone.length < 8)
       return renderDetail(request, reply, session, id3, { error: "La cuenta no est\xE1 activa o no tiene un celular v\xE1lido.", status: 409 });
     const site3 = (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/+$/, "");
-    const code5 = await loginCodes.create(phone, "login", true, `${site3}/cuenta#enlace=${await loginLinks.create(phone, 1, session.userId)}`);
+    const code5 = await loginCodes.create(phone, "login", true, `${site3}/cuenta#enlace=${await loginLinks.create(phone, LOGIN_LINK_HOURS, session.userId)}`);
     await deps.audit("admin.access_code", session.userId, `c\xF3digo de acceso manual para el usuario ${id3}`);
     return renderDetail(request, reply, session, id3, { accessCode: code5 });
   });
@@ -124885,7 +124886,8 @@ async function authRoutes(app2) {
         loginLock.fail(phoneKey, request.ip);
         return reply.code(401).send({
           data: null,
-          error: { code: "UNAUTHORIZED", message: "Invalid credentials" }
+          // Quien se registró por WhatsApp o con código no tiene contraseña: se le dice cómo entrar y crearla.
+          error: { code: "UNAUTHORIZED", message: "Celular, correo o contrase\xF1a no coinciden. Si te registraste por WhatsApp o con c\xF3digo, entra con \xABConectar con WhatsApp\xBB y crea tu contrase\xF1a en Mi cuenta \u2192 Contrase\xF1a." }
         });
       }
       loginLock.success(phoneKey, request.ip);
@@ -127935,6 +127937,25 @@ function withExamples(root,d){if(!d||(d.role!=='taller'&&d.role!=='dueno'))retur
  for(const c of [...tmp.children]){const k=key(c);if(!k)continue;const r=real.get(k);if(r&&!also.has(k)){prev=r;continue;}markExample(c);const at=r||prev;if(at)at.after(c);else root.prepend(c);prev=c;}}
 `;
 
+// packages/api/dist/interfaces/install-card.js
+var INSTALL_CARD_SCRIPT = `
+let installEvt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;});
+window.addEventListener('appinstalled',()=>{try{localStorage.setItem('amp-app-instalada','1');}catch{}const c=document.getElementById('instalar-app');if(c)c.remove();});
+function appInstalled(){try{if(localStorage.getItem('amp-app-instalada')==='1')return true;}catch{}return (window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;}
+function installCard(){
+ if(appInstalled())return null;
+ let fresh=false,hidden=false;try{fresh=sessionStorage.getItem('amp-recien-registrado')==='1';hidden=localStorage.getItem('amp-instalar-oculto')==='1';}catch{}
+ if(hidden&&!fresh)return null;
+ const go=h('button',{type:'button',class:'grande',onclick:async()=>{if(installEvt){installEvt.prompt();const r=await installEvt.userChoice.catch(()=>null);installEvt=null;if(r&&r.outcome==='accepted'){try{localStorage.setItem('amp-app-instalada','1');}catch{}box.remove();}}else location.href='/instalar';}},'Instalar la app');
+ const later=h('button',{type:'button',class:'ghost',onclick:()=>{try{localStorage.setItem('amp-instalar-oculto','1');sessionStorage.removeItem('amp-recien-registrado');}catch{}box.remove();}},'Ahora no');
+ const box=h('section',{class:'pcard instalar-app',id:'instalar-app'},
+  h('h2',{},fresh?'Tu cuenta est\xE1 lista: instala la app':'Instala la app'),
+  h('p',{text:'\xC1brela desde la pantalla de inicio como cualquier app: entras directo a tu panel, sin buscar el enlace ni escribir c\xF3digos.'}),
+  h('div',{class:'acciones'},go,later));
+ return box;}
+`;
+
 // packages/api/dist/interfaces/pilot-panel-view.js
 var option = (id3, name) => `<option value="${id3}">${name.replace(/[<>&"]/g, "")}</option>`;
 var PANEL_STYLES = `
@@ -128165,7 +128186,7 @@ function foldSummary(d,text){const s=d.querySelector('summary small');if(s)s.tex
 function btn(label,cls,fn){return h('button',{type:'button',class:cls||'ghost',onclick:fn},label);}
 function chipGroup(values,current,onPick,cls){const g=h('div',{class:cls&&cls.includes('day')?'days':'chips',role:'group'});for(const v of values){const b=h('button',{type:'button',class:cls||'chip','aria-pressed':String(v.value===current),onclick:()=>{for(const x of g.children)x.setAttribute('aria-pressed','false');b.setAttribute('aria-pressed','true');onPick(v.value);}});if(v.top){b.append(h('span',{text:v.top}),h('b',{text:v.label}));}else b.textContent=v.label;g.append(b);}return g;}
 async function loadPanel(epoch,vehicleId){let data;try{data=await api('/pilot/panel'+(vehicleId?'?vehicleId='+encodeURIComponent(vehicleId):''));}catch(err){if(err.httpStatus===403&&epoch===generation){panelData=null;el('panel').replaceChildren();}throw err;}if(epoch!==generation||!token)return;panelData=data;panelVehicle=data.vehicleId||null;renderPanel();renderExpertCourses(Boolean(data.isVerifiedExpert));}
-function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);if(typeof qrScanBox==='function'){const qs=qrScanBox();if(qs)root.prepend(qs);}if(typeof withExamples==='function')withExamples(root,panelData);if(typeof qrLinkCard==='function'){const ql=qrLinkCard(panelData);if(ql)root.append(anchor(ql,'vinculo-qr'));}if(panelData.expertProfile)root.append(expertCard(panelData.expertProfile));root.append(anchor(myPlanCard(),'mi-plan'));root.append(anchor(coursesCard(panelData),'cursos'));root.append(accountCard());if(typeof renderOutbox==='function')renderOutbox();if(typeof decorarPanel==='function')decorarPanel(root,panelData);goToSection();}
+function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelData)return;if(panelData.role==='dueno')renderOwner(root,panelData);else if(panelData.role==='taller')renderShop(root,panelData);else renderStore(root,panelData);if(typeof qrScanBox==='function'){const qs=qrScanBox();if(qs)root.prepend(qs);}if(typeof withExamples==='function')withExamples(root,panelData);if(typeof qrLinkCard==='function'){const ql=qrLinkCard(panelData);if(ql)root.append(anchor(ql,'vinculo-qr'));}if(panelData.expertProfile)root.append(expertCard(panelData.expertProfile));root.append(anchor(myPlanCard(),'mi-plan'));root.append(anchor(coursesCard(panelData),'cursos'));root.append(accountCard());if(typeof renderOutbox==='function')renderOutbox();if(typeof decorarPanel==='function')decorarPanel(root,panelData);if(typeof installCard==='function'){const ic=installCard();if(ic)root.prepend(ic);}goToSection();}
 // Enlace de los avisos de WhatsApp (/cuenta#seccion): lleva una sola vez a la secci\xF3n donde se toma la misma decisi\xF3n.
 function anchor(n,id){if(n&&!n.id)n.id=id;return n;}
 function goToSection(){const m=/^#([a-z-]{3,20})$/.exec(location.hash);if(!m)return;const t=el({novedades:'ordenes',solicitudes:'misSolicitudes'}[m[1]]||m[1]);if(!t)return;history.replaceState(null,'',location.pathname);t.scrollIntoView({behavior:'smooth',block:'start'});}
@@ -128847,7 +128868,7 @@ function recontactCard(){const out=h('div',{class:'list'},h('p',{class:'note',te
 function waitlistBtn(p,date){const b=btn('Av\xEDsame si se libera','ghost',async()=>{b.disabled=true;try{const r=await api('/pilot/shops/'+encodeURIComponent(p.id)+'/waitlist',{method:'POST',body:JSON.stringify({date})});showResult(r.message);b.remove();}catch(err){b.disabled=false;status(err.message);}});return b;}
 function offerWaitlist(f,msg,err,p,date){const old=f.querySelector('.wl');if(old)old.remove();if(err.httpStatus!==409||!/ocupad/i.test(err.message)||!date)return;msg.after(h('div',{class:'chips wl'},waitlistBtn(p,date),h('span',{class:'note',text:'Te avisamos una sola vez si ese d\xEDa se cancela una cita de este taller. No reservamos nada.'})));}
 `;
-var PANEL_SCRIPT = PANEL_SCRIPT_BASE + COMPROBANTE_SCRIPT + ADS_SCRIPT + QR_LINK_SCRIPT + SHOP_FORMS_SCRIPT + SHOP_CATALOG_SCRIPT + EXAMPLES_SCRIPT;
+var PANEL_SCRIPT = PANEL_SCRIPT_BASE + COMPROBANTE_SCRIPT + ADS_SCRIPT + QR_LINK_SCRIPT + SHOP_FORMS_SCRIPT + SHOP_CATALOG_SCRIPT + EXAMPLES_SCRIPT + INSTALL_CARD_SCRIPT;
 
 // packages/api/dist/interfaces/pilot-page.js
 init_catalogs();
@@ -129223,7 +129244,7 @@ const PASO_TXT=['Paso 1 de 3: elige tu perfil.','Paso 2 de 3: completa tus datos
 (()=>{const m=/^#enlace=([A-Za-z0-9_-]{43})$/.exec(location.hash);if(!m)return;history.replaceState(null,'',location.pathname+location.search);status('Entrando con tu enlace seguro\u2026');api('/auth/link/verify',{method:'POST',body:JSON.stringify({token:m[1]})}).then(data=>{if(!['dueno','taller','almacen'].includes(data.user.role)){status('Esta p\xE1gina es para cuentas de due\xF1o, taller o almac\xE9n.');return;}acceptLogin(data);}).catch(err=>status(err.message));})();
 (()=>{const p=new URLSearchParams(location.search).get('perfil');if(['dueno','taller','almacen'].includes(p)){el('signupRole').value=p;rebuildSignup();addReminderField();signupStep(2);}})();
 el('signupForm').onsubmit=async e=>{e.preventDefault();if(!el('signupForm').reportValidity())return;const profile=el('signupRole').value;const phone=el('signupPhone').value.trim();if(profile==='taller'&&!el('signupFields').querySelector('#signupServices input:checked')){status('Elige al menos un servicio que ofrece tu taller.');return;}try{if(!el('signupCodeLink'))await api('/auth/code/request',{method:'POST',body:JSON.stringify({phone,purpose:'signup'})});signupValues.profile=profile;signupValues.phone=phone;signupValues.fields={};for(const input of el('signupFields').querySelectorAll('input,select'))signupValues.fields[input.id]=input.type==='checkbox'?(input.checked?'on':''):input.value.trim();signupValues.name=el('signupName').value.trim();signupValues.city=el('signupCity').value.trim();signupValues.email=el('signupEmail').value.trim();el('signupForm').classList.add('hidden');el('signupVerifyForm').classList.remove('hidden');signupStep(3);status(el('signupCodeLink')?'Pide tu c\xF3digo por WhatsApp y escr\xEDbelo aqu\xED.':'Revisa WhatsApp para ver tu c\xF3digo.');}catch(err){status(err.message);}};
-el('signupVerifyForm').onsubmit=async e=>{e.preventDefault();const f=signupValues.fields;const payload={phone:signupValues.phone,code:el('signupCode').value.trim(),role:signupValues.profile,name:signupValues.name,city:signupValues.city,email:signupValues.email||undefined,consent:true};if(payload.role==='dueno')Object.assign(payload,{zone:f.signupZone,vehicleClass:f.signupClass,fuel:f.signupFuel,make:f.signupMake,model:f.signupModel,year:f.signupYear,currentKm:f.signupKm,plate:f.signupPlate,usageProfile:f.signupUsage,reminders:f.signupReminders==='on'?'on':false});else{Object.assign(payload,{businessName:f.signupBusiness,ruc:f.signupRuc,address:f.signupAddress,zone:f.signupZone,hours:f.signupHours});if(payload.role==='taller')payload.services=Object.keys(f).filter(k=>k.startsWith('signupSvc_')&&f[k]==='on').map(k=>k.slice(10));else Object.assign(payload,{categories:f.signupCategories,delivery:f.signupDelivery==='on'});}payload.sitio=el('signupSitio').value;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/web-signup',{method:'POST',body:JSON.stringify(payload)});acceptLogin(data);}catch(err){status(err.message);}finally{button.disabled=false;}};
+el('signupVerifyForm').onsubmit=async e=>{e.preventDefault();const f=signupValues.fields;const payload={phone:signupValues.phone,code:el('signupCode').value.trim(),role:signupValues.profile,name:signupValues.name,city:signupValues.city,email:signupValues.email||undefined,consent:true};if(payload.role==='dueno')Object.assign(payload,{zone:f.signupZone,vehicleClass:f.signupClass,fuel:f.signupFuel,make:f.signupMake,model:f.signupModel,year:f.signupYear,currentKm:f.signupKm,plate:f.signupPlate,usageProfile:f.signupUsage,reminders:f.signupReminders==='on'?'on':false});else{Object.assign(payload,{businessName:f.signupBusiness,ruc:f.signupRuc,address:f.signupAddress,zone:f.signupZone,hours:f.signupHours});if(payload.role==='taller')payload.services=Object.keys(f).filter(k=>k.startsWith('signupSvc_')&&f[k]==='on').map(k=>k.slice(10));else Object.assign(payload,{categories:f.signupCategories,delivery:f.signupDelivery==='on'});}payload.sitio=el('signupSitio').value;const button=e.target.querySelector('button');button.disabled=true;try{const data=await api('/auth/web-signup',{method:'POST',body:JSON.stringify(payload)});try{sessionStorage.setItem('amp-recien-registrado','1');}catch{}acceptLogin(data);}catch(err){status(err.message);}finally{button.disabled=false;}};
 el('sendForm').onsubmit=async e=>{e.preventDefault();if(sending||!token)return;const message=el('message').value.trim();if(!message){status('Escribe un mensaje.');return;}if(await sendMessage(message,[e.target.querySelector('button')]))el('message').value='';};
 el('refresh').onclick=()=>{const epoch=generation;refresh(epoch).catch(err=>{if(epoch===generation)status(err.message);});};
 el('older').onclick=async()=>{if(!cursor)return;const epoch=generation;const before=cursor;try{await loadNotices(epoch,before);if(epoch===generation)loadedOlder=true;}catch(err){if(epoch===generation)status(err.message);}};
@@ -134697,7 +134718,7 @@ async function operatorRoutes(app2, deps = {}) {
       if (!dryRun) {
         const createdBy = request.operatorKey.createdByUserId;
         for (const phone of phones) {
-          const token2 = await loginLinks.create(phone, 24, createdBy);
+          const token2 = await loginLinks.create(phone, LOGIN_LINK_HOURS, createdBy);
           await conn.query("INSERT IGNORE INTO `NotificationOutbox` (id, dedupKey, recipientUserId, recipientPhone, kind, payload) VALUES (?, ?, NULL, ?, 'auth.login_link', ?)", [randomUUID54(), `login-apology:${phone}:${since.toISOString().slice(0, 10)}`, phone, JSON.stringify({ message: template(`${site3}/cuenta#enlace=${token2}`) })]);
         }
         await audit8(request, "auth.login_link.apology", null, null, `enlaces de disculpa (${phones.length})`);
