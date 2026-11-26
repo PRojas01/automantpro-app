@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='a19cb2b72705b237d5741c81537c60894a9e2c2d'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='750e21492fd11ab3631175dda86922c0601799f6'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -89700,8 +89700,10 @@ header.cabecera h1 em{background:none!important;padding:0!important;font-style:n
  .col-b{grid-column:2;grid-row:1}
  .col-a>p.section:first-of-type{grid-column:2;grid-row:2;margin:6px 0 4px}
  .escaner{grid-column:2;grid-row:3;align-self:stretch;margin:0}
- /* Con el informe completo abierto la izquierda crece: la inspecci\xF3n no se estira con ella. */
- .home:has(.informe-mas[open]) .escaner{align-self:start}
+ /* Con el informe completo abierto la izquierda crece: la inspecci\xF3n se ampl\xEDa a esa altura, con el auto grande y la leyenda debajo. */
+ .home:has(.informe-mas[open]) .escaner{display:flex!important;flex-direction:column;align-self:stretch;justify-content:flex-start;gap:10px}
+ .home:has(.informe-mas[open]) .escaner .auto{max-width:100%!important;width:100%;margin:0 auto}
+ .home:has(.informe-mas[open]) .escaner .auto img{width:100%;height:auto;max-height:min(52vh,420px);object-fit:contain}
  .col-a>p.section:last-of-type{grid-column:1/-1;grid-row:4;margin:8px 0 4px}
  .beneficios{grid-column:1/-1;grid-row:5;margin:0}
  .pie{margin-top:4px;padding-top:4px}
@@ -139830,7 +139832,15 @@ async function runIdempotent(repository, userId, key2, body, action) {
     throw Object.assign(new Error("IDEMPOTENCY_IN_PROGRESS"), { code: "IDEMPOTENCY_IN_PROGRESS" });
   if (claim.status === "saved")
     return claim.response;
-  const response = await action();
+  let response;
+  try {
+    response = await action();
+  } catch (err4) {
+    const code5 = err4.code;
+    if (typeof code5 === "string" && /^[A-Z][A-Z0-9_]+$/.test(code5) && !code5.startsWith("ER_"))
+      await repository.release?.(userId, key2).catch(() => void 0);
+    throw err4;
+  }
   await repository.complete(userId, key2, response);
   return response;
 }
@@ -143949,7 +143959,8 @@ function renderExpertCourses(visible){const epoch=generation;const section=el('e
 el('expertCreate').onsubmit=async event=>{event.preventDefault();const form=new FormData(event.target);const price=String(form.get('precioUsd')||'').trim();try{await api('/expert/courses',{method:'POST',body:JSON.stringify({titulo:String(form.get('titulo')),slug:String(form.get('slug')),especialidad:String(form.get('especialidad')),nivel:String(form.get('nivel')),horas:Number(form.get('horas')),precioUsd:price?Number(price):null,notaMinima:Number(form.get('notaMinima'))})});event.target.reset();status('Curso creado.');renderExpertCourses(true);}catch(error){status(error.message);}};
 el('expertLesson').onsubmit=async event=>{event.preventDefault();const form=new FormData(event.target);try{await api('/expert/courses/'+encodeURIComponent(String(form.get('courseId')) )+'/lessons',{method:'POST',body:JSON.stringify({orden:Number(form.get('orden')),titulo:String(form.get('titulo')),videoUrl:String(form.get('videoUrl')||'').trim()||null,pdfUrl:String(form.get('pdfUrl')||'').trim()||null,texto:String(form.get('texto')||'').trim()||null})});event.target.reset();status('Lecci\xF3n guardada.');}catch(error){status(error.message);}};
 el('expertQuestion').onsubmit=async event=>{event.preventDefault();const form=new FormData(event.target);const correct=String(form.get('correcta'));try{await api('/expert/courses/'+encodeURIComponent(String(form.get('courseId')) )+'/questions',{method:'POST',body:JSON.stringify({orden:Number(form.get('orden')),enunciado:String(form.get('enunciado')),options:[{letra:'A',texto:String(form.get('optionA')),correcta:correct==='A'},{letra:'B',texto:String(form.get('optionB')),correcta:correct==='B'}]})});event.target.reset();status('Pregunta guardada.');}catch(error){status(error.message);}};
-function status(text){el('status').textContent=text;}function text(parent,value){const p=document.createElement('pre');p.textContent=value;parent.append(p);}
+function webText(t){const cmd=/\\b(escribe|responde)\\b[^.]*(:|\\|)|\\S ?\\| ?\\S|para ver todo, escribe|para cambiar escribe/i;const nl=String.fromCharCode(10);return String(t??'').split(nl).map(l=>l.split(/(?<=[.!?])\\s+/).filter(x=>!cmd.test(x)).join(' ')).filter((l,i,a)=>l.trim()||(i>0&&a[i-1].trim())).join(nl).trim()||String(t??'');}
+function status(text){el('status').textContent=webText(text);}function text(parent,value){const p=document.createElement('pre');p.textContent=value;parent.append(p);}
 async function clearOffline(){offlineDb?.close();offlineDb=null;await new Promise(resolve=>{const req=indexedDB.deleteDatabase(OFFLINE_DB);req.onsuccess=req.onerror=req.onblocked=resolve;});}
 async function leave(){const items=userId?(await dbAll('outbox').catch(()=>[])).filter(x=>x.userId===userId):[];if(items.length&&!window.confirm('Hay registros pendientes sin subir. Al salir se perder\xE1n. \xBFQuieres continuar?'))return;webSession('logout').catch(()=>{});await clearOffline();localStorage.removeItem('automantpro-offline-user');token=null;userId=null;role=null;generation++;clearTimeout(timer);timer=null;pendingSend=null;sending=false;cursor=null;loadedOlder=false;historyFingerprint='';noticeItems.clear();clearMenu();el('chat').classList.add('hidden');el('login').classList.remove('hidden');for(const id of ['messages','notices','appointments','appointment','vehicle','panel','studentCourseItems','courseEnrollment','expertItems'])el(id).replaceChildren();el('expertCourses').classList.add('hidden');panelData=null;panelVehicle=null;booking={service:'',day:'',time:''};el('linkCode').textContent='';el('message').value='';el('sendForm').querySelector('button').disabled=false;for(const id of ['sendForm','requestForm','offerForm','appointmentForm'])el(id).reset();status('Sesi\xF3n cerrada. Vuelve a entrar para continuar.');}
 el('logout').onclick=()=>{void leave();};async function restoreOfflineSession(){if(navigator.onLine)return;let saved;try{saved=JSON.parse(localStorage.getItem('automantpro-offline-user')||'null');}catch{return;}if(!saved?.id||!['dueno','taller','almacen'].includes(saved.role))return;userId=saved.id;role=saved.role;try{await openOffline();const historyData=await dbGet('cache',userId+':/pilot/history');const noticesData=await dbGet('cache',userId+':/pilot/notices');const appointmentData=await dbGet('cache',userId+':/pilot/appointments');const panel=await dbGet('cache',userId+':/pilot/panel');if(!historyData&&!noticesData&&!appointmentData&&!panel)return;const savedAt=[historyData,noticesData,appointmentData,panel].filter(Boolean).map(x=>x.savedAt).sort().at(-1);generation++;buildMenu(saved.name||'Cuenta');el('login').classList.add('hidden');el('chat').classList.remove('hidden');el('who').textContent='Sin conexi\xF3n: '+(saved.name||'Cuenta');status('Sin conexi\xF3n \xB7 se muestran los \xFAltimos datos guardados.');if(savedAt)offlineNotice(savedAt);if(historyData){for(const m of historyData.data.items||[]){const a=document.createElement('article');text(a,'T\xFA: '+m.message);text(a,m.reply?'AutoMantPro: '+m.reply:m.status==='dead'?'Nuestro equipo lo est\xE1 revisando':'Recibido; te respondemos pronto');el('messages').append(a);}offlineNotice(historyData.savedAt);}if(noticesData){for(const n of noticesData.data.items||[])noticeItems.set(n.id,n);showNotices();}if(appointmentData){for(const a of appointmentData.data.items||[])text(el('appointments'),'Cita C-'+String(a.id).replace(/-/g,'').slice(0,6).toUpperCase()+' \xB7 '+a.shopName+' \xB7 '+new Date(a.scheduledAt).toLocaleString('es-EC',{timeZone:'America/Guayaquil',dateStyle:'medium',timeStyle:'short'})+' \xB7 '+({pending:'por confirmar',confirmed:'confirmada',completed:'completada',cancelled:'cancelada'}[a.status]||'por confirmar'));}if(panel){panelData=panel.data;panelVehicle=panel.data.vehicleId||null;renderPanel();}renderOutbox();}catch{}}
@@ -148652,6 +148663,14 @@ async function localAgentRoutes(app2, options = {}) {
       } finally {
         await conn.end().catch(() => void 0);
       }
+    },
+    async release(owner, idempotencyKey) {
+      const conn = await openConnection();
+      try {
+        await conn.query("DELETE FROM `PilotIdempotencyReceipt` WHERE userId=? AND idempotencyKey=? AND JSON_LENGTH(response)=0", [owner, idempotencyKey]);
+      } finally {
+        await conn.end().catch(() => void 0);
+      }
     }
   }, userId, key2, body, action);
   const enabled = async () => (await config.read()).enabled;
@@ -148664,6 +148683,9 @@ async function localAgentRoutes(app2, options = {}) {
       return reply.code(401).send({ error: { code: "UNAUTHORIZED" } });
   };
   const error = (err4, reply) => {
+    const repeated = err4?.code;
+    if (repeated === "IDEMPOTENCY_CONFLICT" || repeated === "IDEMPOTENCY_IN_PROGRESS")
+      return reply.code(409).send({ data: null, error: { code: repeated, message: "Esa solicitud ya se est\xE1 procesando. Vuelve a abrir el formulario e int\xE9ntalo de nuevo." } });
     if (!(err4 instanceof BrokerError) && !(err4 instanceof LocalMarketplaceError) && !(err4 instanceof ChatAccountError) && !(err4 instanceof VehicleCareError) && !(err4 instanceof FleetAccessError) && !(err4 instanceof ProfileEditError) && !(err4 instanceof AppointmentCapacityError))
       throw err4;
     const code5 = err4.code;
@@ -151202,7 +151224,7 @@ function card(s, number2) {
   return `<li class="perfil">${photo}<div class="cuerpo"><div class="cabeza">${logo}<h3>${escapeHtml(s.name)}</h3></div><div class="sellos">${sellos}</div>${about}${gallery}
     <p class="donde">${escapeHtml([s.zone, s.city].filter(Boolean).join(" \xB7 "))}${s.hours ? ` \xB7 ${escapeHtml(s.hours)}` : ""}</p>
     ${services ? `<p class="servicios">${escapeHtml(services)}</p>` : ""}${sedes}
-    <p class="acciones">${turno}<a href="${escapeHtml(`/mapa?ciudad=${encodeURIComponent(s.city)}`)}">Ver en el mapa</a><a href="/cuenta#crear">Agendar en la web</a></p></div></li>`;
+    <p class="acciones">${turno}<a href="${escapeHtml(`/mapa?ciudad=${encodeURIComponent(s.city)}`)}">Ver en el mapa</a><a href="/cuenta#talleres">Agendar en la web</a></p></div></li>`;
 }
 function shopProfilesHtml(records, number2, city = "", limit = 24) {
   const shops = searchShops(records, { city, zone: "", service: "" }).sort((a, b) => Number(b.founder) - Number(a.founder) || Number(!!b.cover) - Number(!!a.cover) || (b.rating?.avg ?? 0) - (a.rating?.avg ?? 0) || a.name.localeCompare(b.name, "es")).slice(0, limit);
