@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='3fc81d6f380b4c2cfff51f899fed74470ffea902'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='9963c2444275d775c32c6e24b8be4fb007c3daf1'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -66161,14 +66161,30 @@ function sectionFor(kind) {
 function accountLink(section, base) {
   return `${site(base)}/cuenta#${section}`;
 }
-function withProfileLink(kind, message2, base) {
+function sectionForRole(kind, role) {
+  const info = INFO_SECTION_BY_PREFIX.find(([prefix]) => kind.startsWith(prefix))?.[1][role];
+  if (info)
+    return info;
   const section = sectionFor(kind);
-  if (!section || HAS_LINK.test(message2) || !ASKS_FOR_ACTION.test(message2))
-    return message2;
-  return `${message2}
-O hazlo en tu perfil: ${accountLink(section, base)}`;
+  if (role === "dueno" && section === "citas")
+    return "book";
+  return section;
 }
-var SECTION_BY_KIND, ASKS_FOR_ACTION, HAS_LINK, site;
+function withProfileLink(kind, message2, base, role) {
+  if (kind.startsWith("auth.") || kind === "ad.campaign")
+    return message2;
+  const registered = role === "dueno" || role === "taller" || role === "almacen";
+  const text18 = registered ? message2.replace(/(https:\/\/)?(www\.)?automantpro\.app\/planes\b/g, accountLink("mi-plan", base)) : message2;
+  const section = registered ? sectionForRole(kind, role) : sectionFor(kind);
+  if (!section || HAS_LINK.test(text18))
+    return text18;
+  if (ASKS_FOR_ACTION.test(text18))
+    return `${text18}
+O hazlo en tu perfil: ${accountLink(section, base)}`;
+  return registered ? `${text18}
+M\xEDralo en tu panel: ${accountLink(section, base)}` : text18;
+}
+var SECTION_BY_KIND, ASKS_FOR_ACTION, HAS_LINK, site, INFO_SECTION_BY_PREFIX;
 var init_account_links = __esm({
   "packages/api/dist/infrastructure/messaging/account-links.js"() {
     "use strict";
@@ -66213,6 +66229,23 @@ var init_account_links = __esm({
     ASKS_FOR_ACTION = /\bresponde\b|\bpara aceptar\b|\bconfirm[ao]\b|\baprobar\b|\brechaz[ao]\b|\bacepto\b/i;
     HAS_LINK = /https?:\/\/|automantpro\.app\//i;
     site = (base = process.env.PUBLIC_SITE_URL ?? "https://automantpro.app") => base.replace(/\/+$/, "");
+    INFO_SECTION_BY_PREFIX = [
+      ["care.appointment", { dueno: "book", taller: "citas" }],
+      ["care.claim", { dueno: "ordenes", taller: "ordenes" }],
+      ["care.service", { dueno: "ordenes", taller: "fichas" }],
+      ["care.report", { dueno: "ordenes", taller: "ordenes" }],
+      ["care.inspection", { dueno: "ordenes", taller: "fichas" }],
+      ["care.alert", { dueno: "book", taller: "fichas" }],
+      ["care.reminder", { dueno: "book" }],
+      ["care.rtv", { dueno: "book" }],
+      ["care.soat", { dueno: "book" }],
+      ["care.technician", { taller: "equipo" }],
+      ["care.refund", { dueno: "ordenes", taller: "ordenes" }],
+      ["care.shop.capacity", { taller: "mi-plan" }],
+      ["course.", { dueno: "cursos", taller: "cursos", almacen: "cursos" }],
+      ["business.verification", { taller: "mi-plan", almacen: "mi-plan" }],
+      ["fleet.", { dueno: "flota" }]
+    ];
   }
 });
 
@@ -89321,6 +89354,7 @@ function renderEntryPage(input) {
       <li><a class="perfil" href="${acceso("almacen")}">${icon("caja")}Almacenes</a></li>
     </ul>`;
   const beneficios = `<p class="section">Lo que ganas</p>
+    <p class="ganas">Sabes qu\xE9 toca hacerle a tu veh\xEDculo, qui\xE9n lo hace y cu\xE1nto cuesta antes de pagar. Todo queda en su historial.</p>
     <ul class="beneficios">${BENEFICIOS.map((b) => links ? `<li class="luz-${b.icono}"><a class="beneficio" href="${acceso(b.perfil)}" rel="noopener"><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span><span class="ir">Escribir por WhatsApp \u203A</span></a></li>` : `<li class="luz-${b.icono}"><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span></li>`).join("")}</ul>`;
   const button = links ? `<button id="abrir" class="cta" type="button" data-app="${escapeHtml(links.app)}" data-wame="${escapeHtml(links.wame)}" data-web="${escapeHtml(links.web)}">Abrir WhatsApp</button>
     <p class="small spaced">Escr\xEDbenos al <strong>${number2}</strong> \xB7 <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> \xB7 <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a> \xB7 <a href="${escapeHtml(links.web)}" rel="noopener">WhatsApp Web</a></p>` : `<button id="abrir" class="cta" type="button" disabled>Abrir WhatsApp</button>
@@ -89494,6 +89528,7 @@ h1 em{font-style:normal;color:var(--c-accent)}
 .red li{display:flex;align-items:center;gap:6px;font:600 13px/1 var(--c-font);color:var(--c-ink);background:var(--c-sunk);border-radius:999px;padding:7px 11px 7px 8px}
 .red li .ico{width:17px;height:17px;color:var(--c-accent)}
 .red .enlace{background:none;padding:0;color:var(--c-muted);font-weight:400}
+.ganas{margin:0 0 10px;font-size:15px;line-height:1.45;color:var(--c-ink)}
 .beneficios{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px;padding:0;list-style:none}
 .beneficios li{background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:12px 14px}
 .beneficios b{display:flex;align-items:center;gap:8px;font:700 15px/1.25 var(--c-font);color:var(--c-ink);margin:0 0 4px}
@@ -103030,12 +103065,12 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
             if (err4.code !== "ER_BAD_FIELD_ERROR")
               throw err4;
           }
-          const [found] = await conn.query("SELECT o.id, o.kind, o.payload, COALESCE(i.phone, o.recipientPhone) AS phone FROM `NotificationOutbox` o LEFT JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId LEFT JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts < ? AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND ((o.recipientUserId IS NOT NULL AND i.phone IS NOT NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND (o.kind <> 'admin.alert' OR u.role = 'admin')" + optOut + ") OR (o.recipientUserId IS NULL AND o.recipientPhone IS NOT NULL AND (o.kind IN ('contact.welcome', 'contact.reply', 'auth.phone_changed', 'founder.answer', 'founder.guide', 'founder.ask', 'auth.login_link') OR (o.kind = 'founder.invite' AND EXISTS (SELECT 1 FROM `FounderInvite` f WHERE f.phone = o.recipientPhone AND f.status = 'enviado')) OR (o.kind = 'auth.login_code' AND JSON_EXTRACT(o.payload, '$.allowedOutsideHours') = TRUE) OR (o.kind = 'contact.reactivation' AND EXISTS (SELECT 1 FROM `ImportedContact` c WHERE c.phone = o.recipientPhone AND c.status = 'approved'))))) ORDER BY (o.kind = 'ad.campaign'), (o.kind NOT IN ('auth.login_code', 'auth.login_link')), o.createdAt, o.id LIMIT ?", [MAX_ATTEMPTS2, limit]);
+          const [found] = await conn.query("SELECT o.id, o.kind, o.payload, u.role AS role, COALESCE(i.phone, o.recipientPhone) AS phone FROM `NotificationOutbox` o LEFT JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId LEFT JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts < ? AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND ((o.recipientUserId IS NOT NULL AND i.phone IS NOT NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND (o.kind <> 'admin.alert' OR u.role = 'admin')" + optOut + ") OR (o.recipientUserId IS NULL AND o.recipientPhone IS NOT NULL AND (o.kind IN ('contact.welcome', 'contact.reply', 'auth.phone_changed', 'founder.answer', 'founder.guide', 'founder.ask', 'auth.login_link') OR (o.kind = 'founder.invite' AND EXISTS (SELECT 1 FROM `FounderInvite` f WHERE f.phone = o.recipientPhone AND f.status = 'enviado')) OR (o.kind = 'auth.login_code' AND JSON_EXTRACT(o.payload, '$.allowedOutsideHours') = TRUE) OR (o.kind = 'contact.reactivation' AND EXISTS (SELECT 1 FROM `ImportedContact` c WHERE c.phone = o.recipientPhone AND c.status = 'approved'))))) ORDER BY (o.kind = 'ad.campaign'), (o.kind NOT IN ('auth.login_code', 'auth.login_link')), o.createdAt, o.id LIMIT ?", [MAX_ATTEMPTS2, limit]);
           const claimed = [];
           for (const row2 of found) {
             const payload = typeof row2.payload === "string" ? JSON.parse(row2.payload) : row2.payload;
             const raw = typeof payload?.message === "string" ? row2.kind === "founder.invite" ? compactFounderInvite(payload.message) : payload.message : "";
-            const message2 = raw ? withProfileLink(String(row2.kind), raw).slice(0, 4e3) : "";
+            const message2 = raw ? withProfileLink(String(row2.kind), raw, void 0, row2.role ? String(row2.role) : null).slice(0, 4e3) : "";
             const id3 = String(row2.id);
             if (!message2) {
               await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'EMPTY_MESSAGE' WHERE id = ? AND status = 'pending'", [id3]);
@@ -142616,7 +142651,9 @@ function withExamples(root,d){if(!d||(d.role!=='taller'&&d.role!=='dueno'))retur
  // Copia de muestra: ninguna tarjeta debe pedir datos al servidor al crearse (doblar\xEDa las solicitudes de cada recarga).
  const realApi=api,realFetch=window.fetch;const idle=()=>new Promise(()=>{});
  try{window.ownerAds=null;api=idle;window.fetch=idle;(d.role==='taller'?renderShop:renderOwner)(tmp,s);}catch(e){return;}finally{window.ownerAds=ads;api=realApi;window.fetch=realFetch;}
- const key=c=>{const t=c.querySelector('h2,h3');const k=(t&&t.firstChild&&t.firstChild.textContent.trim())||c.id||'';return k==='Mi garaje'?'Tu garaje':k;};
+ // La ficha del veh\xEDculo se reconoce por su clase: su primer t\xEDtulo cambia (p. ej. con elementos cr\xEDticos) y
+ // compararlo agregaba la ficha de ejemplo encima de la real (26/11/2026).
+ const key=c=>{if(c.classList.contains('ficha'))return 'Ficha';const t=c.querySelector('h2,h3');const k=(t&&t.firstChild&&t.firstChild.textContent.trim())||c.id||'';return k==='Mi garaje'?'Tu garaje':k;};
  const also=new Set(d.role==='taller'?(d.reminders&&d.reminders.length?[]:['Escribir hoy']):((d.vehicles||[]).length?[]:['Tu garaje']).concat((d.history||[]).length?[]:['Historial de servicios'],(d.orders||[]).length?[]:['\xD3rdenes de trabajo']));
  const real=new Map([...root.children].map(c=>[key(c),c]));let prev=null;
  for(const c of [...tmp.children]){const k=key(c);if(!k)continue;const r=real.get(k);if(r&&!also.has(k)){prev=r;continue;}markExample(c);const at=r||prev;if(at)at.after(c);else root.prepend(c);prev=c;}}
@@ -143281,7 +143318,7 @@ function shopOrdersCard(d){const list=h('div',{class:'list'});for(const o of d.o
   if(o.status==='cancelada'){const p=o.records&&o.records.payment;const left=p?Math.max(0,p.paidUsd-p.refundedUsd-(p.refundPending?p.refundPending.amountUsd:0)):0;if(d.canManage&&left>0)acts.append(inlineAct('Registrar reembolso',[{label:'Valor devuelto en USD',type:'number'},{label:'Forma (efectivo, transferencia, tarjeta u otra)'},{label:'Referencia (opcional)',optional:true}],v=>['Reembolso '+o.code,v[0],v[1],...(v[2]?[v[2]]:[])],'\xBFRegistrar este reembolso? El cliente lo confirmar\xE1.'));}
   else if(o.status==='cerrada'){acts.append(...shopWarrantyActs(o,d));if(d.canManage&&o.totalUsd&&balanceOf(o)>0)acts.append(paymentForm(o));}else{acts.append(inlineAct('Fecha de entrega',[{label:'Fecha',type:'date',raw:true},{label:'Motivo (opcional)',optional:true,raw:true}],v=>['Fecha entrega '+o.code,v[0],...(v[1]?[v[1]]:[])],'\xBFFijar esta fecha de entrega? Avisaremos al cliente.'));if(d.canManage){if(o.totalUsd&&balanceOf(o)>0)acts.append(paymentForm(o));if(o.status==='rechazado')acts.append(reasonBtn('Salida sin trabajo',(why,b)=>act(['Salida sin trabajo '+o.code,why],{btn:b,ask:'\xBFRegistrar que el veh\xEDculo sale sin trabajo? Si avisaste un diagn\xF3stico al recibirlo, se cobra; si no, sale sin costo.'})));acts.append(reasonBtn('Cancelar orden',(why,b)=>act(['Cancelar orden '+o.code,why],{btn:b,ask:'\xBFCancelar esta orden? Avisaremos al cliente con tu motivo.'})));}}
   acts.append(...shopOrderExtras(o,d));
-  list.append(...[h('div',{class:'row2'},h('b',{text:o.vehicle+(o.plate?' \xB7 '+o.plate:'')}),h('span',{class:'tag st-'+st,text:o.waiting?'Espera al due\xF1o':o.ready==='revisada'?'Lista para entregar':o.ready==='lista'?'Lista \xB7 falta calidad':o.review&&o.review.status==='pendiente'?'Presupuesto en revisi\xF3n':o.statusText})),h('p',{class:'note',text:o.code+(o.totalUsd?' \xB7 '+usd(o.totalUsd)+vatNote(o):'')}),o.review?h('p',{class:'note',text:o.review.status==='pendiente'?'Presupuesto de '+o.review.by+' por '+usd(o.review.totalUsd)+': espera la revisi\xF3n del due\xF1o o un administrador; todav\xEDa no llega al cliente.':'Presupuesto devuelto al t\xE9cnico'+(o.review.note?': '+o.review.note:'')+'. Corr\xEDgelo y env\xEDalo de nuevo.'}):null,o.negotiation?h('p',{class:'note',text:'El cliente dice: '+o.negotiation}):null,o.asked&&o.asked.length?h('details',{},h('summary',{text:'Pedido en la cita \xB7 '+o.asked.length+(o.asked.length===1?' elemento':' elementos')}),h('p',{class:'note',text:o.asked.join(' \xB7 ')})):null,promisedLine(o),assignmentNote(o,d),claimBlock(o,'taller'),warrantyLine(o),paymentLine(o),intakeDetails(o),stageReviewLine(o),acts].filter(Boolean));if(o.records&&o.records.partial)list.append(h('p',{class:'note',text:'Aprobado en parte: '+usd(o.records.partial.approvedUsd)+' de '+usd(o.records.partial.quotedUsd)}));}
+  list.append(...[h('div',{class:'row2'},h('b',{text:o.vehicle+(o.plate?' \xB7 '+o.plate:'')}),h('span',{class:'tag st-'+st,text:o.waiting?'Espera al due\xF1o':o.status==='cerrada'||o.status==='cancelada'?o.statusText:o.ready==='revisada'?'Lista para entregar':o.ready==='lista'?'Lista \xB7 falta calidad':o.review&&o.review.status==='pendiente'?'Presupuesto en revisi\xF3n':o.statusText})),h('p',{class:'note',text:o.code+(o.totalUsd?' \xB7 '+usd(o.totalUsd)+vatNote(o):'')}),o.review?h('p',{class:'note',text:o.review.status==='pendiente'?'Presupuesto de '+o.review.by+' por '+usd(o.review.totalUsd)+': espera la revisi\xF3n del due\xF1o o un administrador; todav\xEDa no llega al cliente.':'Presupuesto devuelto al t\xE9cnico'+(o.review.note?': '+o.review.note:'')+'. Corr\xEDgelo y env\xEDalo de nuevo.'}):null,o.negotiation?h('p',{class:'note',text:'El cliente dice: '+o.negotiation}):null,o.asked&&o.asked.length?h('details',{},h('summary',{text:'Pedido en la cita \xB7 '+o.asked.length+(o.asked.length===1?' elemento':' elementos')}),h('p',{class:'note',text:o.asked.join(' \xB7 ')})):null,promisedLine(o),assignmentNote(o,d),claimBlock(o,'taller'),warrantyLine(o),paymentLine(o),intakeDetails(o),stageReviewLine(o),acts].filter(Boolean));if(o.records&&o.records.partial)list.append(h('p',{class:'note',text:'Aprobado en parte: '+usd(o.records.partial.approvedUsd)+' de '+usd(o.records.partial.quotedUsd)}));}
  return card('\xD3rdenes de trabajo',d.orders.length+(d.orders.length===1?' orden':' \xF3rdenes'),list);}
 // Citas por atender del taller: cada bot\xF3n prepara el comando de esa cita; el estado decide cu\xE1les se ven.
 function shopAppointmentsCard(d){const list=h('div',{class:'list'});for(const a of d.appointments){const when=[{label:'Nuevo d\xEDa',type:'date',raw:true},{label:'Nueva hora',type:'time',raw:true}];const acts=h('div',{class:'chips'});
@@ -148090,7 +148127,7 @@ var PilotPanelStore = class {
         records: records.get(String(o.id)),
         code: orderCode(o.number),
         status: String(o.status),
-        statusText: ownerReady.get(String(o.id))?.state === "revisada" ? "Listo para retirar" : STATUS_TEXT[String(o.status)] ?? String(o.status),
+        statusText: ownerReady.get(String(o.id))?.state === "revisada" && !["cerrada", "cancelada"].includes(String(o.status)) ? "Listo para retirar" : STATUS_TEXT[String(o.status)] ?? String(o.status),
         step: STEP_OF[String(o.status)] ?? 0,
         vehicle: vehicleLabel2(o),
         plate: o.plate ? String(o.plate) : null,
