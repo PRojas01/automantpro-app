@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='341e13f8a593d1564770de46eeb1bf46997a9a2a'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='c95a2c7c47554dfb1ed3a5e65b517e40a6ea2ab2'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -116913,18 +116913,130 @@ var init_model_plans = __esm({
   }
 });
 
+// packages/api/dist/domain/maintenance/plan-package.js
+import { inflateRawSync } from "node:zlib";
+function zipCsvEntries(buffer) {
+  let end = -1;
+  for (let i = buffer.length - 22; i >= Math.max(0, buffer.length - 66e3); i--)
+    if (buffer.readUInt32LE(i) === 101010256) {
+      end = i;
+      break;
+    }
+  if (end < 0)
+    throw new Error("El zip est\xE1 da\xF1ado o no es un zip.");
+  const total = buffer.readUInt16LE(end + 10);
+  let at = buffer.readUInt32LE(end + 16);
+  const out = [];
+  for (let n3 = 0; n3 < total; n3++) {
+    if (at + 46 > buffer.length || buffer.readUInt32LE(at) !== 33639248)
+      throw new Error("El zip est\xE1 da\xF1ado.");
+    const method = buffer.readUInt16LE(at + 10), packed = buffer.readUInt32LE(at + 20), size = buffer.readUInt32LE(at + 24);
+    const nameLength = buffer.readUInt16LE(at + 28), extra = buffer.readUInt16LE(at + 30), comment = buffer.readUInt16LE(at + 32);
+    const local = buffer.readUInt32LE(at + 42), name = buffer.toString("utf8", at + 46, at + 46 + nameLength);
+    at += 46 + nameLength + extra + comment;
+    if (!/\.csv$/i.test(name))
+      continue;
+    if (size > PACKAGE_LIMITS.csvBytes)
+      throw new Error(`\xAB${name}\xBB es demasiado grande.`);
+    if (method !== 0 && method !== 8)
+      throw new Error(`\xAB${name}\xBB usa una compresi\xF3n no admitida.`);
+    const start = local + 30 + buffer.readUInt16LE(local + 26) + buffer.readUInt16LE(local + 28);
+    const raw = buffer.subarray(start, start + packed);
+    out.push({ name, text: (method === 8 ? inflateRawSync(raw, { maxOutputLength: PACKAGE_LIMITS.csvBytes }) : raw).toString("utf8") });
+    if (out.length > PACKAGE_LIMITS.files)
+      throw new Error("Demasiados archivos en el paquete.");
+  }
+  return out;
+}
+function plansFrom(uploads) {
+  const all = [];
+  const skipped = [];
+  for (const u of uploads) {
+    if (/\.zip$/i.test(u.name))
+      all.push(...zipCsvEntries(u.data).map((f) => ({ name: `${u.name} \u203A ${f.name}`, text: f.text })));
+    else if (/\.csv$/i.test(u.name))
+      all.push({ name: u.name, text: u.data.toString("utf8") });
+    else
+      skipped.push(u.name);
+  }
+  if (all.length > PACKAGE_LIMITS.files)
+    throw new Error("Demasiados archivos en el paquete.");
+  const plans = all.filter((f) => HEADER.test(f.text));
+  if (plans.reduce((n3, f) => n3 + Buffer.byteLength(f.text), 0) > PACKAGE_LIMITS.totalBytes)
+    throw new Error("El paquete supera 2 MB de planes: s\xFAbelo en partes.");
+  return { plans, skipped: [...skipped, ...all.filter((f) => !HEADER.test(f.text)).map((f) => f.name)] };
+}
+function previewPackage(plans, existing) {
+  const out = { lines: [], counts: { nueva: 0, actualizada: 0, sin_cambio: 0, error: 0 }, fatal: null };
+  let known = [...existing];
+  const failed = [];
+  for (const plan of plans) {
+    const p = previewImport(plan.text, known);
+    if (p.fatal) {
+      failed.push(`${plan.name}: ${p.fatal}`);
+      continue;
+    }
+    out.lines.push(...p.lines.map((l) => ({ ...l, file: plan.name })));
+    for (const k of Object.keys(out.counts))
+      out.counts[k] += p.counts[k];
+    known = [...known, ...p.lines.flatMap((l) => l.row ? [l.row] : [])];
+  }
+  if (!out.lines.length)
+    out.fatal = failed.join(" \xB7 ") || "El paquete no trae ning\xFAn plan (CSV con t\xEDtulos sistema,item,marca,modelo,\u2026).";
+  else if (failed.length)
+    out.warnings = failed;
+  return out;
+}
+function manualCsv(body) {
+  const [sistema = "", item2 = ""] = String(body.componente ?? "").split("|");
+  const values2 = { ...body, sistema, item: item2 };
+  const cell3 = (v) => `"${String(v ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, IMPORT_LIMITS.maxCell).replace(/"/g, '""')}"`;
+  return `${MANUAL_FIELDS.join(",")}
+${MANUAL_FIELDS.map((f) => cell3(values2[f])).join(",")}
+`;
+}
+var PACKAGE_LIMITS, HEADER, MANUAL_FIELDS, COMPONENT_OPTIONS;
+var init_plan_package = __esm({
+  "packages/api/dist/domain/maintenance/plan-package.js"() {
+    "use strict";
+    init_component_import();
+    init_system_components();
+    PACKAGE_LIMITS = { fileBytes: 5 * 1024 * 1024, csvBytes: 2 * 1024 * 1024, files: 40, totalBytes: 2 * 1024 * 1024 };
+    HEADER = /^﻿?sistema[,;]item[,;]marca[,;]modelo/i;
+    MANUAL_FIELDS = ["sistema", "item", "marca", "modelo", "anio_desde", "anio_hasta", "combustible", "intervalo_km", "intervalo_meses", "fuente", "url", "fecha", "codigo_sistema", "sistema_fabricante", "codigo_item", "item_fabricante"];
+    COMPONENT_OPTIONS = COMPONENT_SYSTEMS.map((s) => ({ system: s.name, items: s.components.map((c) => ({ value: `${s.id}|${c.id}`, name: c.name })) }));
+  }
+});
+
 // packages/api/dist/interfaces/admin/component-import.js
+function uploadAndManual(csrf) {
+  const options = COMPONENT_OPTIONS.map((s) => `<optgroup label="${escapeHtml(s.system)}">${s.items.map((i) => `<option value="${escapeHtml(i.value)}">${escapeHtml(i.name)}</option>`).join("")}</optgroup>`).join("");
+  const field2 = (name, label5, attrs = "") => `<label for="cm-${name}">${label5}</label><input id="cm-${name}" name="${name}" ${attrs}>`;
+  return `<div class="card"><h2>Subir un paquete</h2><p class="muted">Uno o varios archivos .csv o .zip (hasta 5 MB cada uno). Se agrega a lo ya cargado: no borra nada.</p>
+<form method="post" action="/admin/component-import/upload" enctype="multipart/form-data"><input type="hidden" name="csrf" value="${escapeHtml(csrf)}"><input type="file" name="files" accept=".csv,.zip" multiple required><button type="submit">Ver vista previa del paquete</button></form></div>
+<div class="card"><h2>Agregar una operaci\xF3n a mano</h2><form method="post" action="/admin/component-import"><input type="hidden" name="csrf" value="${escapeHtml(csrf)}"><input type="hidden" name="action" value="manual">
+<label for="cm-componente">Componente</label><select id="cm-componente" name="componente"><option value="|">Fuera del cat\xE1logo (usa los campos del fabricante)</option>${options}</select>
+${field2("marca", "Marca", 'required maxlength="60"')}${field2("modelo", "Modelo (varias con \xAB|\xBB, familia con \xAB*\xBB)", 'required maxlength="80"')}
+${field2("anio_desde", "A\xF1o desde", 'required type="number" min="1950" max="2100"')}${field2("anio_hasta", "A\xF1o hasta", 'required type="number" min="1950" max="2100"')}
+<label for="cm-combustible">Combustible</label><select id="cm-combustible" name="combustible"><option value="">Todos</option>${["gasolina", "diesel", "hev", "phev", "bev", "glp_gnv"].map((f) => `<option>${f}</option>`).join("")}</select>
+${field2("intervalo_km", "Cada cu\xE1ntos km", 'type="number" min="1" max="2000000"')}${field2("intervalo_meses", "Cada cu\xE1ntos meses", 'type="number" min="1" max="600"')}
+${field2("fuente", "Fuente (manual y p\xE1gina)", 'maxlength="300"')}${field2("url", "Direcci\xF3n de la fuente (https://\u2026)", 'type="url" maxlength="300"')}${field2("fecha", "Fecha de consulta", 'type="date"')}
+${field2("sistema_fabricante", "Sistema seg\xFAn el fabricante (opcional)", 'maxlength="100"')}${field2("codigo_sistema", "C\xF3digo del sistema (opcional)", 'maxlength="40"')}${field2("item_fabricante", "Operaci\xF3n seg\xFAn el fabricante (opcional)", 'maxlength="120"')}${field2("codigo_item", "C\xF3digo de la operaci\xF3n (opcional)", 'maxlength="40"')}
+<button type="submit">Ver vista previa</button></form></div>`;
+}
 function componentImportView(input) {
   const p = input.preview;
   const summary = p && !p.fatal ? `<p>${p.counts.nueva} nuevas \xB7 ${p.counts.actualizada} actualizadas \xB7 ${p.counts.sin_cambio} sin cambio \xB7 ${p.counts.error} con error</p>` : "";
-  const table2 = p && !p.fatal && p.lines.length ? `<div class="scroll"><table><thead><tr><th>L\xEDnea</th><th>Estado</th><th>Componente</th><th>Intervalo</th><th>Origen</th><th>Detalle</th></tr></thead><tbody>${p.lines.slice(0, 300).map((l) => `<tr><td>${l.line}</td><td>${LABEL2[l.status]}</td>${l.row ? `<td>${escapeHtml(l.row.marca)} ${escapeHtml(l.row.modelo)} ${l.row.anioDesde}\u2013${l.row.anioHasta}<br><span class="muted">${escapeHtml([l.row.extra.codigo_item, l.row.extra.item_fabricante].filter(Boolean).join(" \xB7 ") || l.row.componentId)}</span></td><td>${[l.row.intervalKm !== null ? `${l.row.intervalKm} km` : "", l.row.intervalMonths !== null ? `${l.row.intervalMonths} meses` : ""].filter(Boolean).join(" \xB7 ")}</td><td>${l.row.referencial ? "Referencial" : "Fabricante"}</td><td class="muted">${escapeHtml(Object.entries(l.row.extra).map(([k, v]) => `${k}: ${v}`).join("; "))}</td>` : `<td colspan="3"></td><td class="error">${l.errors.map(escapeHtml).join("; ")}</td>`}</tr>`).join("")}</tbody></table></div>${p.lines.length > 300 ? `<p class="muted">Se muestran las primeras 300 l\xEDneas.</p>` : ""}` : "";
-  const save = p && !p.fatal && input.canEdit && p.counts.nueva + p.counts.actualizada > 0 ? `<form method="post" action="/admin/component-import"><input type="hidden" name="csrf" value="${escapeHtml(input.csrf)}"><input type="hidden" name="action" value="save"><textarea name="csv" hidden>${escapeHtml(input.csv)}</textarea><button type="submit">Guardar ${p.counts.nueva + p.counts.actualizada} filas (las filas con error se omiten)</button></form>` : "";
+  const table2 = p && !p.fatal && p.lines.length ? `<div class="scroll"><table><thead><tr><th>L\xEDnea</th><th>Estado</th><th>Componente</th><th>Intervalo</th><th>Origen</th><th>Detalle</th></tr></thead><tbody>${p.lines.slice(0, 300).map((l) => `<tr><td>${l.file ? `<span class="muted">${escapeHtml(l.file)}</span><br>` : ""}${l.line}</td><td>${LABEL2[l.status]}</td>${l.row ? `<td>${escapeHtml(l.row.marca)} ${escapeHtml(l.row.modelo)} ${l.row.anioDesde}\u2013${l.row.anioHasta}<br><span class="muted">${escapeHtml([l.row.extra.codigo_item, l.row.extra.item_fabricante].filter(Boolean).join(" \xB7 ") || l.row.componentId)}</span></td><td>${[l.row.intervalKm !== null ? `${l.row.intervalKm} km` : "", l.row.intervalMonths !== null ? `${l.row.intervalMonths} meses` : ""].filter(Boolean).join(" \xB7 ")}</td><td>${l.row.referencial ? "Referencial" : "Fabricante"}</td><td class="muted">${escapeHtml(Object.entries(l.row.extra).map(([k, v]) => `${k}: ${v}`).join("; "))}</td>` : `<td colspan="3"></td><td class="error">${l.errors.map(escapeHtml).join("; ")}</td>`}</tr>`).join("")}</tbody></table></div>${p.lines.length > 300 ? `<p class="muted">Se muestran las primeras 300 l\xEDneas.</p>` : ""}` : "";
+  const save = p && !p.fatal && input.canEdit && p.counts.nueva + p.counts.actualizada > 0 ? `<form method="post" action="/admin/component-import"><input type="hidden" name="csrf" value="${escapeHtml(input.csrf)}"><input type="hidden" name="action" value="save">${(input.package?.length ? input.package.map((f) => f.text) : [input.csv]).map((text18) => `<textarea name="csv" hidden>${escapeHtml(text18)}</textarea>`).join("")}<button type="submit">Guardar ${p.counts.nueva + p.counts.actualizada} filas (las filas con error se omiten)</button></form>` : "";
   return `<h1>Importar plan por componentes</h1>
 ${input.flash ? `<p class="${input.flash.kind === "ok" ? "ok" : "error"}" role="status">${escapeHtml(input.flash.text)}</p>` : ""}
 <p class="muted">Pega un CSV (coma o punto y coma, m\xE1ximo ${IMPORT_LIMITS.maxBytes / 1e3} KB y ${IMPORT_LIMITS.maxRows} filas). Columnas: sistema, item, marca, modelo, anio (o anio_desde y anio_hasta), intervalo_km, intervalo_meses, fuente, url, fecha. Las filas sin fuente, URL y fecha quedan \xABreferencial\xBB y no cuentan como dato del fabricante. Las columnas que no son del esquema se guardan como campos propios. Las celdas que empiezan con = + - @ se neutralizan.</p>
 <div class="card"><form method="post" action="/admin/component-import"><input type="hidden" name="csrf" value="${escapeHtml(input.csrf)}"><input type="hidden" name="action" value="preview">
 <label for="ci-csv">Contenido del CSV</label><textarea id="ci-csv" name="csv" rows="10" maxlength="${IMPORT_LIMITS.maxBytes}" required>${escapeHtml(input.csv || TEMPLATE)}</textarea>
 <button type="submit">Ver vista previa</button></form></div>
+${input.canEdit ? uploadAndManual(input.csrf) : ""}
+${p?.warnings?.length ? `<p class="error">No se leyeron: ${escapeHtml(p.warnings.join(" \xB7 "))}</p>` : ""}
 ${p?.fatal ? `<p class="error">${escapeHtml(p.fatal)}</p>` : `<div class="card">${summary}${table2}${save}</div>`}`;
 }
 function registerComponentImportRoutes(app2, deps) {
@@ -116935,7 +117047,7 @@ function registerComponentImportRoutes(app2, deps) {
       return reply;
     return page3(request, reply, session, { csv: "", preview: null });
   });
-  app2.post("/component-import", { bodyLimit: IMPORT_LIMITS.maxBytes * 2 }, async (request, reply) => {
+  app2.post("/component-import", { bodyLimit: PACKAGE_LIMITS.totalBytes * 4 }, async (request, reply) => {
     const session = deps.requireSession(request, reply);
     if (!session)
       return reply;
@@ -116944,9 +117056,11 @@ function registerComponentImportRoutes(app2, deps) {
       return page3(request, reply, session, { csv: "", preview: null, flash: { kind: "error", text: "Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina." } }, 403);
     if (!can(session.role, "settings"))
       return page3(request, reply, session, { csv: "", preview: null, flash: { kind: "error", text: "Solo el administrador puede importar." } }, 403);
-    const csv = typeof body.csv === "string" ? body.csv : "";
+    const many = Array.isArray(body.csv) ? body.csv.filter((t) => typeof t === "string") : [];
+    const csv = body.action === "manual" ? manualCsv(body) : typeof body.csv === "string" ? body.csv : "";
+    const pack = many.map((text18, i) => ({ name: `archivo ${i + 1}`, text: text18 }));
     try {
-      const preview = previewImport(csv, await deps.components.list());
+      const preview = pack.length ? previewPackage(pack, await deps.components.list()) : previewImport(csv, await deps.components.list());
       if (body.action !== "save")
         return page3(request, reply, session, { csv, preview });
       const rows75 = rowsToSave(preview);
@@ -116959,11 +117073,47 @@ function registerComponentImportRoutes(app2, deps) {
       return page3(request, reply, session, { csv, preview: null, flash: { kind: "error", text: code5 === "ER_NO_SUCH_TABLE" ? "La base necesita actualizarse: ve a Ajustes y pulsa \xABAplicar actualizaciones\xBB." : `No se pudo completar la operaci\xF3n (${code5 ?? "base de datos no disponible"}).` } }, code5 === "ER_NO_SUCH_TABLE" ? 503 : 502);
     }
   });
+  void app2.register(async (scope) => {
+    await scope.register(import_multipart2.default, { limits: { fileSize: PACKAGE_LIMITS.fileBytes, files: PACKAGE_LIMITS.files, fields: 2, parts: PACKAGE_LIMITS.files + 2, fieldSize: 500 } });
+    scope.post("/component-import/upload", async (request, reply) => {
+      const session = deps.requireSession(request, reply);
+      if (!session)
+        return reply;
+      const uploads = [];
+      let csrf = "";
+      const bad2 = (text18, status = 422) => page3(request, reply, session, { csv: "", preview: null, flash: { kind: "error", text: text18 } }, status);
+      try {
+        for await (const part of request.parts()) {
+          if (part.type === "file")
+            uploads.push({ name: String(part.filename ?? "archivo"), data: await part.toBuffer() });
+          else if (part.fieldname === "csrf")
+            csrf = String(part.value ?? "");
+        }
+      } catch {
+        return bad2(`No se pudo leer la carga (m\xE1ximo ${PACKAGE_LIMITS.fileBytes / 1048576} MB por archivo y ${PACKAGE_LIMITS.files} archivos).`, 413);
+      }
+      if (!verifyCsrf(session, csrf))
+        return bad2("Solicitud inv\xE1lida: vuelve a abrir la p\xE1gina.", 403);
+      if (!can(session.role, "settings"))
+        return bad2("Solo el administrador puede importar.", 403);
+      try {
+        const { plans, skipped } = plansFrom(uploads);
+        const preview = previewPackage(plans, await deps.components.list());
+        if (skipped.length)
+          preview.warnings = [...preview.warnings ?? [], `no son planes: ${skipped.join(", ")}`];
+        return page3(request, reply, session, { csv: "", package: plans, preview });
+      } catch (err4) {
+        return bad2(err4.message.slice(0, 200));
+      }
+    });
+  });
 }
-var TEMPLATE, LABEL2;
+var import_multipart2, TEMPLATE, LABEL2;
 var init_component_import2 = __esm({
   "packages/api/dist/interfaces/admin/component-import.js"() {
     "use strict";
+    import_multipart2 = __toESM(require_multipart2(), 1);
+    init_plan_package();
     init_page();
     init_security();
     init_permissions();
