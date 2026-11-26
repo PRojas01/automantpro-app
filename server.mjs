@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2545e099d81a64b0d533b5b5119acae28f56aee1'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='cbfaa193c1b163f1b7080b02e2ea232a85635e48'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -91061,31 +91061,31 @@ var init_inspection_checklist = __esm({
       { code: "M5", area: "motor", name: "Filtro de combustible", hint: "externo o en el tanque", serviceId: "iny_filtro_combustible", combustion: true },
       { code: "M6", area: "motor", name: "Banda de accesorios", hint: "tensi\xF3n y grietas (alternador, direcci\xF3n, A/C)", serviceId: "motor_correa", fourWheels: true },
       { code: "M7", area: "motor", name: "Kit de distribuci\xF3n", hint: "correa o cadena, tensores y bomba de agua seg\xFAn manual", serviceId: "motor_distribucion", combustion: true },
-      { code: "M8", area: "motor", name: "Soportes de motor y transmisi\xF3n", hint: "gomas y holguras", fourWheels: true },
+      { code: "M8", area: "motor", name: "Soportes de motor y transmisi\xF3n", hint: "gomas y holguras", serviceId: "motor_soportes", fourWheels: true },
       { code: "F1", area: "frenos", name: "L\xEDquido de frenos", hint: "nivel y humedad (cambiar desde 3 %)", unit: "%", thresholds: { cambiar: (v) => v >= 3, observar: (v) => v >= 2 }, serviceId: "freno_liquido" },
       { code: "F2", area: "frenos", name: "Pastillas de freno", hint: "grosor del material (cambiar bajo 3 mm)", unit: "mm", thresholds: { cambiar: (v) => v < 3, observar: (v) => v < 4 }, serviceId: "freno_pastillas" },
       { code: "F3", area: "frenos", name: "Discos de freno", hint: "desgaste, ceja o alabeo", serviceId: "freno_discos" },
-      { code: "F4", area: "frenos", name: "Balatas y tambores traseros", hint: "limpieza, regulaci\xF3n y desgaste", fourWheels: true },
-      { code: "F5", area: "frenos", name: "L\xEDneas y mangueras de freno", hint: "fugas, grietas o deformaciones" },
-      { code: "F6", area: "frenos", name: "Freno de mano", hint: "tensi\xF3n del cable o calibraci\xF3n electr\xF3nica", fourWheels: true },
+      { code: "F4", area: "frenos", name: "Balatas y tambores traseros", hint: "limpieza, regulaci\xF3n y desgaste", serviceId: "freno_tambores", fourWheels: true },
+      { code: "F5", area: "frenos", name: "L\xEDneas y mangueras de freno", hint: "fugas, grietas o deformaciones", serviceId: "freno_mangueras" },
+      { code: "F6", area: "frenos", name: "Freno de mano", hint: "tensi\xF3n del cable o calibraci\xF3n electr\xF3nica", serviceId: "freno_mano", fourWheels: true },
       { code: "S1", area: "suspension", name: "Amortiguadores y puntales", hint: "fugas y rebote", serviceId: "susp_amortiguadores" },
       { code: "S2", area: "suspension", name: "Terminales y r\xF3tulas", hint: "juego mec\xE1nico y guardapolvos", serviceId: "susp_direccion", fourWheels: true },
       { code: "S3", area: "suspension", name: "Bujes y barras estabilizadoras", hint: "desgaste del caucho", serviceId: "susp_direccion", fourWheels: true },
-      { code: "S4", area: "suspension", name: "L\xEDquido de direcci\xF3n hidr\xE1ulica", hint: "nivel y estado, si aplica", fourWheels: true },
+      { code: "S4", area: "suspension", name: "L\xEDquido de direcci\xF3n hidr\xE1ulica", hint: "nivel y estado, si aplica", serviceId: "susp_cremallera", fourWheels: true },
       { code: "S5", area: "suspension", name: "Alineaci\xF3n y balanceo", hint: "geometr\xEDa y equilibrado de ruedas", serviceId: "llanta_alineacion", fourWheels: true },
       { code: "T1", area: "transmision", name: "Aceite de caja de cambios", hint: "manual, ATF, CVT o DSG seg\xFAn manual", serviceId: "trans_aceite_caja" },
       { code: "T2", area: "transmision", name: "Filtro de transmisi\xF3n autom\xE1tica", hint: "con el fluido, si el dise\xF1o lo permite", serviceId: "trans_filtro_caja", fourWheels: true },
-      { code: "T3", area: "transmision", name: "Semiejes y juntas homocin\xE9ticas", hint: "fuelles y grasa", fourWheels: true },
+      { code: "T3", area: "transmision", name: "Semiejes y juntas homocin\xE9ticas", hint: "fuelles y grasa", serviceId: "trans_homocineticas", fourWheels: true },
       { code: "T4", area: "transmision", name: "Diferencial y caja de transferencia", hint: "aceite en 4WD o AWD", fourWheels: true },
       { code: "T5", area: "transmision", name: "Card\xE1n y crucetas", hint: "engrase y holguras en tracci\xF3n trasera", fourWheels: true },
       { code: "R1", area: "refrigeracion", name: "L\xEDquido refrigerante", hint: "nivel, punto de congelaci\xF3n y ebullici\xF3n", serviceId: "ref_antifreeze" },
       { code: "R2", area: "refrigeracion", name: "Radiador y tapa", hint: "panal limpio y prueba de presi\xF3n de la tapa", serviceId: "ref_radiador" },
-      { code: "R3", area: "refrigeracion", name: "Mangueras y abrazaderas", hint: "rigidez, fugas o cuarteaduras" },
-      { code: "R4", area: "refrigeracion", name: "Termostato y motoventilador", hint: "apertura y encendido del ventilador" },
+      { code: "R3", area: "refrigeracion", name: "Mangueras y abrazaderas", hint: "rigidez, fugas o cuarteaduras", serviceId: "ref_mangueras" },
+      { code: "R4", area: "refrigeracion", name: "Termostato y motoventilador", hint: "apertura y encendido del ventilador", serviceId: "ref_termostato" },
       { code: "E1", area: "electrico", name: "Bater\xEDa", hint: "bornes y voltaje en reposo (observar bajo 12,4 V)", unit: "V", thresholds: { cambiar: (v) => v < 12, observar: (v) => v < 12.4 }, serviceId: "elec_bateria" },
       { code: "E2", area: "electrico", name: "Alternador y motor de arranque", hint: "carga y consumo", serviceId: "elec_alternador" },
       { code: "E3", area: "electrico", name: "Sistema de luces", hint: "altas, bajas, direccionales, stop, reversa y sal\xF3n", serviceId: "elec_luces" },
-      { code: "E4", area: "electrico", name: "Fusibles y rel\xE9s", hint: "continuidad en la caja de fusibles" },
+      { code: "E4", area: "electrico", name: "Fusibles y rel\xE9s", hint: "continuidad en la caja de fusibles", serviceId: "elec_fusibles" },
       { code: "E5", area: "electrico", name: "Escaneo electr\xF3nico (OBD-II)", hint: "c\xF3digos de error en la ECU", serviceId: "escaner_diagnostico" },
       { code: "N1", area: "llantas", name: "Presi\xF3n de inflado", hint: "seg\xFAn la etiqueta, incluida la de emergencia", unit: "psi", serviceId: "llanta_presion" },
       { code: "N2", area: "llantas", name: "Profundidad de labrado", hint: "m\xEDnimo legal 1,6 mm", unit: "mm", thresholds: { cambiar: (v) => v < 1.6, observar: (v) => v < 3 }, serviceId: "llanta_presion" },
@@ -91114,7 +91114,29 @@ var init_inspection_checklist = __esm({
     STATUS_WORDS = { ok: "ok", bien: "ok", bueno: "ok", observar: "observar", revisar: "observar", pronto: "observar", cambiar: "cambiar", cambio: "cambiar", urgente: "cambiar", na: "no_aplica", "n/a": "no_aplica", "no aplica": "no_aplica" };
     STATUS_ICON = { ok: "\u{1F7E2}", observar: "\u{1F7E0}", cambiar: "\u{1F534}", no_aplica: "\u26AA" };
     formatMeasure = (e9) => e9.measure === null ? "" : ` (${String(e9.measure).replace(".", ",")} ${e9.unit ?? ""})`.replace(" )", ")");
-    INSPECTION_SERVICES = /* @__PURE__ */ new Set(["freno_pastillas", "freno_discos", "susp_direccion", "susp_amortiguadores", "llanta_presion", "motor_correa", "elec_bateria", "elec_alternador", "elec_luces", "escaner_diagnostico", "escape_gases"]);
+    INSPECTION_SERVICES = /* @__PURE__ */ new Set([
+      "freno_pastillas",
+      "freno_discos",
+      "susp_direccion",
+      "susp_amortiguadores",
+      "llanta_presion",
+      "motor_correa",
+      "elec_bateria",
+      "elec_alternador",
+      "elec_luces",
+      "escaner_diagnostico",
+      "escape_gases",
+      // Componentes (26/11/2026): piezas que se revisan; una revisión «bien» las deja al día. Los cambios de fluidos o piezas no.
+      "motor_soportes",
+      "freno_tambores",
+      "freno_mangueras",
+      "freno_mano",
+      "susp_cremallera",
+      "trans_homocineticas",
+      "ref_mangueras",
+      "ref_termostato",
+      "elec_fusibles"
+    ]);
   }
 });
 
@@ -101569,7 +101591,7 @@ ${out.join("\n")}` : out.join("\n") };
         return { userId, message: `Nueva hora propuesta al due\xF1o: ${code5} para ${formatEcDateTime(at)}. La cita ${command.appointmentRef} qued\xF3 reemplazada; te avisaremos cuando responda.` };
       }
       /** Vehicle row enriched with its service history and open symptoms, ready for the plan. */
-      async planVehicle(conn, vehicle) {
+      async planVehicle(conn, vehicle, viewerLevel) {
         const records = await rows38(conn, "SELECT serviceId, km, doneAt, nextDueKm, nextDueAt FROM `VehicleServiceRecord` WHERE vehicleId = ? ORDER BY COALESCE(km, 0) DESC, doneAt DESC", [vehicle.id]).catch((err4) => {
           if (err4.code !== "ER_BAD_FIELD_ERROR")
             throw err4;
@@ -101592,7 +101614,7 @@ ${out.join("\n")}` : out.join("\n") };
           throw err4;
         }) : [];
         const imported = Number.isFinite(year3) ? await verifiedComponentRows(conn, String(vehicle.make ?? "")) : [];
-        const makerItemList = imported.length && await vehicleLevel(conn, vehicle) !== "funcional" ? makerItems(vehicle, imported) : [];
+        const makerItemList = imported.length && higherLevel(await vehicleLevel(conn, vehicle), viewerLevel ?? "funcional") !== "funcional" ? makerItems(vehicle, imported) : [];
         return { ...vehicle, lastServices, corrective, planOverrides: overrides, modelPlan, makerItems: makerItemList };
       }
       /** Resumen corto (urgentes y próximos) para el taller que recibe la solicitud o la cita; sin placa. */
@@ -144252,6 +144274,8 @@ init_error_messages();
 init_apply();
 
 // packages/api/dist/infrastructure/messaging/receipt-store.js
+init_plan_text();
+init_critical_items();
 init_work_order_report();
 init_inspection_checklist();
 init_vat();
@@ -144288,6 +144312,18 @@ async function receiptOrder(conn, userId, role, number2) {
   }
   throw new BrokerError("NOT_FOUND");
 }
+async function planSummary(conn, vehicleId) {
+  try {
+    const [vehicle] = await rows43(conn, "SELECT * FROM `Vehicle` WHERE id = ?", [vehicleId]);
+    if (!vehicle)
+      return null;
+    const items = planItemsFor(await new VehicleCareStore().planVehicle(conn, vehicle));
+    const names = (status) => items.filter((i) => i.status === status).map((i) => i.serviceName).slice(0, 12);
+    return { critical: criticalWarnings(items).map((c) => c.name), due: names("vencido"), soon: names("proximo") };
+  } catch {
+    return null;
+  }
+}
 async function orderReceipt(conn, userId, role, number2) {
   const { order, viewer } = await receiptOrder(conn, userId, role, number2);
   const id3 = String(order.id);
@@ -144315,6 +144351,7 @@ async function orderReceipt(conn, userId, role, number2) {
     warranty: days2 > 0 ? { days: days2, until: window3?.until ?? null } : null,
     worksDone: delivery?.description ? String(delivery.description) : null,
     approval: await budgetApproval(conn, id3, String(order.ownerId ?? "")),
+    plan: await planSummary(conn, String(order.vehicleId)),
     report: (await orderReports(conn, [id3])).get(id3) ?? null,
     intake: records?.intake ? { at: iso3(records.intake.receivedAt), km: records.intake.km, fuel: records.intake.fuel, requested: records.intake.requested, damages: records.intake.damages, inventory: records.intake.inventory, notes: records.intake.notes, ownerAnswer: records.intake.ownerAnswer } : null,
     inspections: (records?.inspections ?? []).map((i) => ({ stage: i.stage, date: i.date, ok: i.ok, observar: i.observar, cambiar: i.cambiar, flagged: i.flagged, note: i.note })),
@@ -144548,6 +144585,7 @@ var VehicleTransferStore = class {
 init_account_phone_store();
 
 // packages/api/dist/interfaces/comprobante-pages.js
+init_plan_formatter();
 init_page();
 var STYLES2 = `
 *{box-sizing:border-box}body{margin:0;padding:16px;font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1c2024;background:#fff}
@@ -144600,6 +144638,13 @@ function renderHistoryPage(h, nonce2) {
 <p class="muted">Emitido el ${escapeHtml(when2((/* @__PURE__ */ new Date()).toISOString(), true))} por AutoMantPro.</p>`;
   return shell(`Historial de ${h.vehicle.label} \xB7 AutoMantPro`, nonce2, body);
 }
+function planSection(plan) {
+  if (!plan)
+    return "";
+  const row2 = (label5, list7) => list7.length ? `<dt>${label5}</dt><dd>${list7.map((x) => escapeHtml(x)).join(", ")}</dd>` : "";
+  const body = row2("Elementos cr\xEDticos por revisar", plan.critical) + row2("Vencidos", plan.due) + row2("Pr\xF3ximos", plan.soon);
+  return `<h2>Plan de mantenimiento del veh\xEDculo</h2>${body ? `<dl>${body}</dl>` : "<p>Sin pendientes registrados.</p>"}<p class="muted">${escapeHtml(PLAN_TECH_NOTICE)} ${escapeHtml(PLAN_REFERENCE_NOTICE)}</p>`;
+}
 function renderWorkOrderPage(r, nonce2) {
   const money8 = r.money;
   const i = r.intake;
@@ -144617,6 +144662,7 @@ function renderWorkOrderPage(r, nonce2) {
 ${inspection("recepcion")}${sign2("Conformidad del cliente con la recepci\xF3n")}
 <h2>Presupuesto</h2><p>Aprobado por: ${escapeHtml(approvalText(r.approval))}</p>${r.lines.length ? `<table><thead><tr><th class="n">#</th><th>Detalle</th><th class="n">Cant.</th>${money8 ? '<th class="n">Total</th>' : ""}</tr></thead><tbody>${lines}${money8 ? `<tr class="tot"><td></td><td>Total de la orden${money8.vatUsd ? " (IVA incluido)" : ""}</td><td></td><td class="n">${escapeHtml(usd3(money8.totalUsd))}</td></tr>` : ""}</tbody></table>` : '<p class="muted">Todav\xEDa no hay presupuesto.</p>'}
 ${r.report ? `<h2>Informe t\xE9cnico</h2><dl><dt>Hallazgos</dt><dd>${escapeHtml(r.report.findings)}</dd>${r.report.measurements.length ? `<dt>Mediciones</dt><dd>${r.report.measurements.map((m) => `${escapeHtml(m.name)}: ${escapeHtml(m.value)}`).join("<br>")}</dd>` : ""}<dt>Lo hecho</dt><dd>${escapeHtml(r.report.done)}</dd>${r.report.pending ? `<dt>Pendiente</dt><dd>${escapeHtml(r.report.pending)}</dd>` : ""}<dt>Por</dt><dd>${escapeHtml(r.report.author)}</dd></dl>` : ""}
+${planSection(r.plan)}
 <h2>Entrega</h2><dl><dt>Km de salida</dt><dd>${r.exitKm === null ? "\u2014" : escapeHtml(km4(r.exitKm))}</dd><dt>Trabajos realizados</dt><dd>${r.worksDone ? escapeHtml(r.worksDone) : "\u2014"}</dd><dt>Garant\xEDa</dt><dd>${r.warranty ? `${escapeHtml(String(r.warranty.days))} d\xEDas${r.warranty.until ? `, hasta el ${escapeHtml(day2(r.warranty.until))}` : ""}` : "\u2014"}</dd><dt>Fecha</dt><dd>${escapeHtml(when2(r.closedAt))}</dd></dl>
 ${inspection("entrega")}${sign2("Conformidad del cliente con la entrega")}${sign2("Responsable del taller")}
 <p class="muted">Generado el ${escapeHtml(when2((/* @__PURE__ */ new Date()).toISOString(), true))} por AutoMantPro a partir de los datos de la orden. No es una factura ni un documento tributario autorizado por el SRI.</p>`;
@@ -147164,9 +147210,9 @@ var PilotPanelStore = class {
   }
   /** Recomendaciones y plan estructurado del mismo cálculo (nivel contratado, plan del modelo y ajustes). */
   async planDetail(conn, vehicle, shopOwnerUserId, shopId) {
-    const planned = await this.care.planVehicle(conn, vehicle);
     const ownerLevel = await vehicleLevel(conn, vehicle);
     const level = shopOwnerUserId ? higherLevel(ownerLevel, await shopLevel(conn, shopOwnerUserId)) : ownerLevel;
+    const planned = await this.care.planVehicle(conn, vehicle, level);
     const items = planItemsFor(planned, level);
     const recommendations = buildRecommendations(items, await this.inspectionFindings(conn, vehicle));
     const structuredPlan = buildStructuredPlan(items, recommendations.items, planSourcesFor(planned));
@@ -153113,7 +153159,7 @@ function fleetGauge(okPct, cls) {
   return `<svg viewBox="0 0 104 104" width="96" height="96" role="img" aria-label="${okPct === null ? "Sin veh\xEDculos" : `${okPct} % de veh\xEDculos al d\xEDa`}"><circle cx="52" cy="52" r="44" fill="none" stroke="var(--c-sunk)" stroke-width="8" stroke-dasharray="${arc} 277" transform="rotate(135 52 52)" stroke-linecap="round"/>${val > 0 ? `<circle cx="52" cy="52" r="44" fill="none" stroke="${color}" stroke-width="8" stroke-dasharray="${val.toFixed(1)} 277" transform="rotate(135 52 52)" stroke-linecap="round"/>` : ""}<text x="52" y="58" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="22" font-weight="700" fill="var(--c-ink)">${okPct === null ? "--" : `${okPct}%`}</text><text x="52" y="76" text-anchor="middle" font-size="10" fill="var(--c-muted)">al d\xEDa</text></svg>`;
 }
 var PLAN_STATE = { urgente: "bad", pronto: "warn", sin_dato: "warn", al_dia: "ok" };
-function planSection(list7) {
+function planSection2(list7) {
   const withPlan = list7.filter((v) => v.structuredPlan);
   if (!withPlan.length)
     return "";
@@ -153169,7 +153215,7 @@ ${SISTEMA}</style></head><body>${cabeceraSitio()}<header><div class="brand">${lo
 <section class="card" id="vehiculos"><h2>Veh\xEDculos</h2><div class="scroll"><table><thead><tr><th>Unidad</th><th>Veh\xEDculo</th><th class="num">Km</th><th>Conductor</th><th>Estado</th><th>Servicios</th><th>Pr\xF3ximo servicio</th><th>En taller</th><th class="num">Costo mes</th><th class="num">USD/km</th></tr></thead><tbody>${list7.map(row2).join("") || `<tr><td colspan="10" class="muted">Todav\xEDa no hay veh\xEDculos. Agr\xE9galos por WhatsApp: Veh\xEDculo flota | placa | clase | combustible | marca | modelo | a\xF1o | km</td></tr>`}</tbody></table></div><p><a class="button" href="${esc(csvHref)}">Descargar CSV</a></p></section>
 <section class="card" id="alertas"><h2>Alertas de la flota</h2><ul>${list7.flatMap((v) => [v.overdue.length ? `<li class="bad"><span class="led"></span><b class="mono">${esc(unitLabel(v))}</b> \xB7 Servicios vencidos: ${esc(v.overdue.map((o) => o.serviceName).join(", "))}</li>` : "", v.rtvMonth !== null && v.rtvMonth === new Date(data4.generatedAt.getTime() - 5 * 36e5).getUTCMonth() + 1 ? `<li class="bad"><span class="led"></span><b class="mono">${esc(unitLabel(v))}</b> \xB7 RTV y matr\xEDcula este mes; fecha referencial, confirma en la ANT o en tu agencia de matriculaci\xF3n</li>` : "", v.inShop ? `<li class="warn"><span class="led"></span><b class="mono">${esc(unitLabel(v))}</b> \xB7 ${esc(v.inShop)}</li>` : ""]).concat(unknown ? [`<li class="warn"><span class="led"></span>${unknown} veh\xEDculo${unknown === 1 ? "" : "s"} sin historial: registra su \xFAltimo servicio para saber cu\xE1ndo le toca el pr\xF3ximo.</li>`] : [], soon ? [`<li class="warn"><span class="led"></span>${soon} veh\xEDculo${soon === 1 ? "" : "s"} con servicios por vencer.</li>`] : []).filter(Boolean).join("") || `<li class="muted">Sin alertas para la flota.</li>`}</ul></section>
 ${soatSection(list7, data4.generatedAt)}
-${planSection(list7)}
+${planSection2(list7)}
 <div class="two"><section class="card" id="costos"><h2>Costos de los \xFAltimos meses</h2>${data4.months.length ? `<div class="bars">${data4.months.map((m) => `<div class="bar"><div>${esc(m.month)}</div><div><span class="w${Math.max(1, Math.round(m.total / maxMonth * 20)) * 5}"></span></div><div class="num">${esc(formatUsd(m.total))}</div></div>`).join("")}</div>` : `<p class="muted">Sin gastos registrados. Llegan al cerrar \xF3rdenes en AutoMantPro o con: Gasto PLACA | concepto | USD</p>`}</section>
 <section class="card" id="personas"><h2>Personas y talleres</h2><ul>${data4.members.map((m) => `<li>${esc(m.name)} \xB7 ${esc(roleName[String(m.role)] ?? m.role)}${m.status === "invited" ? " (invitado)" : ""}</li>`).join("") || `<li class="muted">Sin conductores todav\xEDa.</li>`}</ul><h2 class="gap">Talleres con convenio</h2><ul>${data4.agreements.map((a) => `<li>${esc(a.name)} (${esc(a.city)})${Number(a.ratingAvg) ? ` \xB7 ${esc(Number(a.ratingAvg))}/5` : ""}</li>`).join("") || `<li class="muted">Sin convenios. Por WhatsApp: Convenio | RUC del taller</li>`}</ul></section></div>
 <p class="muted">Generado ${esc(new Intl.DateTimeFormat("es-EC", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Guayaquil" }).format(data4.generatedAt))}. Este enlace vence en una hora; pide otro con "Panel flota". Los datos de los conductores se tratan por encargo de la empresa.</p>
