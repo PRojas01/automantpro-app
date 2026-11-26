@@ -23278,6 +23278,8 @@ var PLAN_RECORD_STATEMENTS = [
   { kind: "addColumn", target: "VehicleServiceRecord.appointmentId", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `appointmentId` VARCHAR(191) NULL" },
   { kind: "addColumn", target: "VehicleServiceRecord.updatedAt", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `updatedAt` DATETIME(3) NULL" },
   { kind: "addColumn", target: "VehicleServiceRecord.updatedBy", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `updatedBy` VARCHAR(191) NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.operation", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `operation` VARCHAR(600) NULL" },
+  { kind: "addColumn", target: "VehicleServiceRecord.procedureRef", sql: "ALTER TABLE `VehicleServiceRecord` ADD COLUMN `procedureRef` VARCHAR(200) NULL" },
   { kind: "addColumn", target: "Appointment.planServiceIds", sql: "ALTER TABLE `Appointment` ADD COLUMN `planServiceIds` JSON NULL" }
 ];
 
