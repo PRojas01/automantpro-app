@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='cf94f59a94e3872afae089b07f7f05649f3f86af'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='a19cb2b72705b237d5741c81537c60894a9e2c2d'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -89759,8 +89759,12 @@ header.cabecera h1 em{background:none!important;padding:0!important;font-style:n
 }
 @media (max-width:650px){
  .hero .lead{font-size:12px}
- .escaner .leyenda{gap:0 12px}
+ /* La columna izquierda lleva los nombres largos (\xABEnfriamiento\xBB): algo m\xE1s ancha y sin cortar. */
+ .escaner .leyenda{gap:0 8px;grid-template-columns:minmax(0,1.14fr) minmax(0,1fr)}
  .escaner .leyenda li{padding:1px 0;line-height:1.2}
+ .escaner .leyenda>li{gap:4px;font-size:12px}
+ /* En celulares angostos queda el n\xFAmero y se omite el testigo para que entren los nombres completos. */
+ @media (max-width:380px){.escaner .leyenda>li .tg{display:none}}
  /* El auto escaneado entra en la primera pantalla y sigue justo antes de \xABLo que ganas\xBB; el informe de ejemplo baja. */
  header.cabecera{margin-bottom:6px}
  .col-a{display:flex;flex-direction:column}
