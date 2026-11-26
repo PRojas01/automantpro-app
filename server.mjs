@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='cbfaa193c1b163f1b7080b02e2ea232a85635e48'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='86cde0545318bfccd04e42c9d4bb68d59ed32ebd'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -103349,6 +103349,7 @@ var rows39, fold23, MAX_DIRECTORY_IMPORT, text7, entry, CONTACT, DirectoryStore;
 var init_directory_store = __esm({
   "packages/api/dist/infrastructure/directory/directory-store.js"() {
     "use strict";
+    init_workshop_map();
     init_zod();
     init_apply();
     rows39 = async (c, sql, args = []) => (await c.query(sql, args))[0];
@@ -103400,15 +103401,18 @@ var init_directory_store = __esm({
           return Number(res.affectedRows) === 1;
         });
       }
-      /** Talleres no registrados de la ciudad (primero los del sector), sin los que ya están registrados con el mismo nombre. */
-      async nearby(city, zone, limit, registeredNames = []) {
+      /**
+       * Referencias de talleres no registrados de la ciudad y del servicio pedido: primero los del sector. Sin los que
+       * ya están registrados con el mismo nombre.
+       */
+      async nearby(city, zone, limit, registeredNames = [], opts = {}) {
         if (!city || limit <= 0)
           return [];
         try {
-          const list7 = await this.run(async (c) => (await rows39(c, "SELECT id,name,city,zone,services,source,active FROM `DirectoryShop` WHERE active=true AND city=? ORDER BY name LIMIT 200", [city])).map(_DirectoryStore.view));
+          const list7 = await this.run(async (c) => (await rows39(c, "SELECT id,name,city,zone,services,source,active FROM `DirectoryShop` WHERE active=true AND city=? ORDER BY name LIMIT 500", [city])).map(_DirectoryStore.view));
           const taken = new Set(registeredNames.map(fold23));
           const z = fold23(zone);
-          return list7.filter((s) => !taken.has(fold23(s.name))).sort((a, b) => Number(fold23(b.zone ?? "") === z) - Number(fold23(a.zone ?? "") === z)).slice(0, limit);
+          return list7.filter((s) => !taken.has(fold23(s.name)) && (!opts.service || categoriesOf(s.services).includes(opts.service))).map((s) => ({ ...s, sameZone: Boolean(z) && fold23(s.zone ?? "") === z })).sort((x, y) => Number(y.sameZone) - Number(x.sameZone) || x.name.localeCompare(y.name, "es")).slice(0, limit);
         } catch (err4) {
           if (err4.code === "ER_NO_SUCH_TABLE")
             return [];
@@ -140244,7 +140248,7 @@ function shopCatalogCard(){const sBox=h('div',{class:'stack'});const bBox=h('div
  const c=anchor(card('Cat\xE1logo de servicios','Tu oferta',h('div',{class:'stack'},h('p',{class:'note',text:'Lista lo que haces, con precio si quieres. El due\xF1o la ve en tu perfil y pide un servicio con la cita directa.'}),sBox)),'catalogo');
  const c2=anchor(card('Sucursales','Tus locales',h('div',{class:'stack'},h('p',{class:'note',text:'Cada sucursal sale en tu perfil p\xFAblico y en el mapa de talleres.'}),bBox)),'sucursales');
  loadShopCatalog(false).then(d=>{
-  scList(sBox,()=>shopCatalog.services,()=>shopCatalog.canManage,'A\xFAn no tienes servicios en el cat\xE1logo.',s=>[h('p',{},h('b',{text:s.name}),' ',h('span',{class:'tag st-al_dia',text:scPrice(s.priceUsd)})),s.description?h('p',{class:'note',text:s.description}):null],scServiceForm,'/pilot/shop-catalog/services/archive','Servicio archivado.','Agregar servicio');
+  scList(sBox,()=>shopCatalog.services,()=>shopCatalog.canManage,'Publica tus servicios: as\xED los due\xF1os los eligen al pedirte cita. Mientras tanto solo ven las categor\xEDas que diste al registrarte.',s=>[h('p',{},h('b',{text:s.name}),' ',h('span',{class:'tag st-al_dia',text:scPrice(s.priceUsd)})),s.description?h('p',{class:'note',text:s.description}):null],scServiceForm,'/pilot/shop-catalog/services/archive','Servicio archivado.','Agregar servicio');
   scList(bBox,()=>shopCatalog.branches,()=>shopCatalog.canManage,'A\xFAn no tienes sucursales.',b=>[h('p',{},h('b',{text:b.name})),h('p',{class:'note',text:[b.address,b.phone,b.hours].filter(Boolean).join(' \xB7 ')}),b.mapUrl?h('a',{href:b.mapUrl,target:'_blank',rel:'noopener noreferrer',text:'Ver en el mapa'}):null],scBranchForm,'/pilot/shop-catalog/branches/archive','Sucursal archivada.','Agregar sucursal');
   if(!d.canManage)sBox.append(h('p',{class:'note',text:'Solo el due\xF1o del taller o un administrador edita el cat\xE1logo y las sucursales.'}));});
  return h('div',{class:'stack'},c,c2);}
@@ -141895,7 +141899,7 @@ function sheetBoard(s,reload){const r=s.recommendations;const b=h('div',{class:'
  b.append(h('p',{class:'cap'},h('span',{text:'Ficha de '+s.label+(s.ownerName?' \xB7 '+s.ownerName:'')}),h('b',{text:s.plate||'Sin placa'})),gauge(r));const notice=h('p',{class:'note'},'${PLAN_TECH_NOTICE} ${PLAN_REFERENCE_NOTICE} AutoMantPro no responde por su mala aplicaci\xF3n o incumplimiento, seg\xFAn los ',h('a',{href:'/terminos',target:'_blank',rel:'noopener',text:'t\xE9rminos y condiciones'}),'.');
  if(r.headline)b.append(h('p',{class:'lead2',text:r.headline}));
  if(s.critical&&s.critical.length){const ul=h('ul',{});for(const c of s.critical)ul.append(h('li',{},h('b',{text:c.name}),': '+c.risk));b.append(h('div',{class:'criticos',role:'note'},h('h3',{text:'\u26A0\uFE0F Revisar primero: elementos cr\xEDticos ('+s.critical.length+')'}),h('p',{class:'note',text:'${CRITICAL_NOTICE}'}),ul));}
-if(r.next&&s.editor==='dueno')b.append(btn('Agendar '+r.next.serviceName.toLowerCase(),'primary full',()=>{booking.service=r.next.serviceName;renderPanel();el('book').scrollIntoView({behavior:'smooth',block:'start'});}));
+if(r.next&&s.editor==='dueno')b.append(btn('Agendar '+r.next.serviceName.toLowerCase(),'primary full',()=>{booking.service=r.next.serviceName;renderPanel();(el('talleres')||el('book')).scrollIntoView({behavior:'smooth',block:'start'});status('Elige el taller para agendar '+r.next.serviceName.toLowerCase()+'.');}));
  const next=planBlock(s,r,reload);const order={urgente:0,pronto:1,sin_dato:2,al_dia:3};let selected=sheetSelected[s.id]||[...s.systems].sort((x,y)=>order[x.state]-order[y.state])[0]?.n||1;const det=h('div',{class:'fic-det sec-fic'});const pts=[],rowsBtn=[];
  const show=()=>{sheetSelected[s.id]=selected;pts.forEach(x=>x.el.classList.toggle('sel',x.n===selected));rowsBtn.forEach(x=>x.el.classList.toggle('sel',x.n===selected));const sys=s.systems.find(x=>x.n===selected);det.replaceChildren(h('h3',{text:(sys.code||sys.n)+' \xB7 '+sys.name+' \xB7 '+sysState(sys)}));for(const f of sys.findings||[])det.append(h('p',{class:'note',text:f}));if(next.rowsFor){det.append(next.rowsFor(sys));}else if(sys.services.length){const ul=h('ul',{});for(const it of sys.services)ul.append(...svcRow(s,it,reload,true));det.append(ul);}else det.append(h('p',{class:'note',text:'El plan de este veh\xEDculo no tiene servicios en este sistema.'}));};
  const pick=n=>{selected=n;show();};const leg=h('ol',{class:'leyenda'});const NOW=s.systems;for(const sys of NOW){const row=h('button',{type:'button',onclick:()=>pick(sys.n)},h('span',{class:'n',text:String(sys.n)}),h('span',{class:'nm',text:(sys.code?sys.code+' \xB7 ':'')+sys.name}),h('b',{text:sysState(sys)}));rowsBtn.push({n:sys.n,el:row});leg.append(h('li',{class:SHEET_PT[sys.state]},row));}
@@ -142161,9 +142165,11 @@ function bookCard(d,r){
  const f=h('form',{},h('p',{class:'sub',text:'Servicio'}),chipGroup(names.map(n=>({value:n,label:n})),booking.service,x=>{booking.service=x;}),
   h('p',{class:'sub',text:'D\xEDa que prefieres'}),chipGroup(nextDays(),booking.day,x=>{booking.day=x;},'day chip'),
   h('p',{class:'sub',text:'Hora que prefieres'}),chipGroup(['08:00','09:30','11:00','14:00','15:30','17:00'].map(t=>({value:t,label:t})),booking.time,x=>{booking.time=x;}),
-  h('div',{class:'grid2'},city,zone),h('button',{class:'primary full'},'Solicitar cita'));
- f.onsubmit=e=>{e.preventDefault();if(!d.vehicleId){status('Elige un veh\xEDculo.');return;}const when=[booking.day,booking.time?'a las '+booking.time:''].filter(Boolean).join(' ');void act(['Buscar servicio',d.vehicleId,booking.service,city.value.trim(),zone.value.trim(),booking.service+(when?'. Prefiero '+when+'.':'.')],{btn:sub(e),ask:'\xBFSolicitar cita para \xAB'+booking.service+'\xBB'+(when?' ('+when+')':'')+'? Los talleres podr\xE1n responderte.'});};
- const c=card('Agendar cita',null,f,h('p',{class:'note',text:'Los talleres de tu zona responden con precio y hora. T\xFA eliges la oferta y el taller confirma.'}));c.id='book';return c;}
+  h('div',{class:'grid2'},city,zone),h('button',{class:'ghost full'},'Pedir ofertas'));
+ f.onsubmit=e=>{e.preventDefault();if(!d.vehicleId){status('Elige un veh\xEDculo.');return;}const when=[booking.day,booking.time?'a las '+booking.time:''].filter(Boolean).join(' ');void act(['Buscar servicio',d.vehicleId,booking.service,city.value.trim(),zone.value.trim(),booking.service+(when?'. Prefiero '+when+'.':'.')],{btn:sub(e),ask:'\xBFPedir ofertas para \xAB'+booking.service+'\xBB'+(when?' ('+when+')':'')+'? Los talleres responden con precio y hora; la cita se confirma al elegir uno.'});};
+ const choose=btn('Elegir taller','primary full',()=>{const t=el('talleres');if(!t)return;t.scrollIntoView({behavior:'smooth',block:'start'});const b=[...t.querySelectorAll('button')].find(x=>x.textContent==='Buscar talleres');if(b&&!nearby.last)b.click();});
+ const c=card('Agendar cita',null,h('p',{class:'note',text:'Primero elige el taller: abre su perfil, escoge uno de sus servicios y el d\xEDa. La cita llega a su panel y \xE9l la confirma.'}),choose,inviteMine(),
+  fold('\xBFNo sabes a cu\xE1l ir? Pide ofertas','Los talleres de tu zona responden con precio y hora',f,h('p',{class:'note',text:'T\xFA eliges la oferta y el taller confirma la cita.'})));c.id='book';return c;}
 function reasonBtn(label,done){const b=btn(label,'ghost',()=>{const f=h('form',{class:'acts'});const why=h('input',{required:true,maxlength:'190','aria-label':'Motivo',placeholder:'Motivo'});f.append(why,h('button',{class:'ghost'},'Enviar'));f.onsubmit=e=>{e.preventDefault();done(why.value.trim(),sub(e));};b.replaceWith(f);why.focus();});return b;}
 function inlineAct(label,fields,build,ask){const b=btn(label,'ghost',()=>{const f=h('form',{class:'acts'});const ins=fields.map(x=>h('input',{type:x.type||'text',required:x.optional?null:true,maxlength:(x.type||'text')==='text'?String(x.max||160):null,value:x.value||null,min:x.type==='number'?'0':null,step:x.type==='number'?'any':null,inputmode:x.type==='number'?'decimal':null,'aria-label':x.label,placeholder:x.label}));f.append(...ins,h('button',{class:'ghost'},'Enviar'));f.onsubmit=e=>{e.preventDefault();void act(build(ins.map((i,k)=>fields[k].raw?i.value.trim():i.value.trim().replace(/[,;:]+/g,' '))),{btn:sub(e),ask});};b.replaceWith(f);ins[0].focus();});return b;}
 function rateForm(o){const b=btn('Calificar '+o.shopName,'ghost',()=>{const f=h('form',{class:'acts'});const ask=(label)=>h('input',{type:'number',min:'1',max:'5',required:true,inputmode:'numeric','aria-label':label+' de 1 a 5',placeholder:label+' 1-5'});const q=ask('Calidad'),s=ask('Atenci\xF3n'),t=ask('Plazo'),c=ask('Costo');const note=h('input',{maxlength:'150','aria-label':'Comentario',placeholder:'Comentario (opcional)'});f.append(q,s,t,c,note,h('button',{class:'ghost'},'Enviar calificaci\xF3n'));f.onsubmit=e=>{e.preventDefault();void act(['Calificar '+o.code,q.value,s.value,t.value,c.value,...(note.value.trim()?[note.value.trim()]:[])],{btn:sub(e),ask:'\xBFEnviar tu calificaci\xF3n de '+o.shopName+'?'});};b.replaceWith(f);});return b;}
@@ -142455,16 +142461,19 @@ function renderStore(root,d){
 // Talleres no registrados (pedido del 21/11/2026): solo un enlace a Google Maps con la misma b\xFAsqueda; no se guardan datos de terceros.
 function moreShops(out,res){const un=res&&res.unregistered||[];
  if(un.length){const list=h('div',{class:'list'});
-  for(const s of un)list.append(h('div',{class:'line'},h('div',{},h('b',{text:s.name}),h('span',{class:'tag',text:'No registrado en AutoMantPro'}),h('small',{text:[s.zone,s.city].filter(Boolean).join(' \xB7 ')}),h('small',{text:'Servicios: '+servicesText(s.services)}),h('small',{text:'Sin cita directa ni calificaciones: AutoMantPro no lo ha revisado.'})),h('a',{class:'btn ghost',href:s.inviteUrl,target:'_blank',rel:'noopener',text:'Invitar a este taller'})));
+  for(const s of un)list.append(h('div',{class:'line'},h('div',{},h('b',{text:s.name}),h('span',{class:'tag',text:'No registrado en AutoMantPro'}),s.sameZone?h('span',{class:'tag st-al_dia',text:'En tu sector'}):null,h('small',{text:[s.zone,s.city].filter(Boolean).join(' \xB7 ')}),h('small',{text:'Servicios: '+servicesText(s.services)}),h('small',{text:'Sin cita directa ni calificaciones: AutoMantPro no lo ha revisado.'})),h('a',{class:'btn ghost',href:s.inviteUrl,target:'_blank',rel:'noopener',text:'Invitar a este taller'})));
   out.append(h('p',{class:'note',text:'Otros talleres de tu ciudad que a\xFAn no est\xE1n en AutoMantPro. Inv\xEDtalos desde tu WhatsApp para agendar con ellos aqu\xED.'}),list);}
+ if(nearby.origin)out.append(h('p',{class:'note'},h('a',{href:'https://www.google.com/maps/search/taller+mec%C3%A1nico+cerca+de+m%C3%AD',target:'_blank',rel:'noopener',text:'Buscar talleres cerca de m\xED en Google Maps'}),' \xB7 Google usa su propia ubicaci\xF3n; AutoMantPro no los ha revisado.'));
  if(res&&res.moreUrl)out.append(h('p',{class:'note'},h('a',{href:res.moreUrl,target:'_blank',rel:'noopener',text:'Ver m\xE1s talleres, tambi\xE9n no registrados, en Google Maps'}),' \xB7 AutoMantPro no los ha revisado.'));}
 let nearby={service:null,zone:'',origin:null,last:null};
 function nearbyServices(r){const out=[];if(r)for(const it of r.items)if((it.state==='urgente'||it.state==='pronto')&&out.length<6&&!out.some(x=>x.value===it.serviceId))out.push({value:it.serviceId,label:it.serviceName+(it.state==='urgente'?' (urgente)':''),name:it.serviceName});return out;}
 function ratingText(s){return s.rating?s.rating.avg.toLocaleString('es-EC')+' de 5 \xB7 '+s.rating.count+' calificaciones':'Nuevo, a\xFAn sin calificaciones';}
 function servicesText(list){const l=list||[];return l.length?l.slice(0,4).join(', ')+(l.length>4?' y '+(l.length-4)+' m\xE1s':''):'Sin servicios anotados';}
+function inviteMine(){const text='Hola. Quiero agendar una cita para mi veh\xEDculo'+(booking.service?' ('+booking.service+')':'')+' y gestionarla con ustedes por automantpro.app (cita, presupuesto que apruebo, orden de trabajo e historial). El registro del taller es gratis: '+location.origin+'/cuenta#crear';
+ return h('a',{class:'btn ghost',href:'https://api.whatsapp.com/send?text='+encodeURIComponent(text),target:'_blank',rel:'noopener',text:'Invitar a mi taller'});}
 function noShopsHelp(){const goBook=()=>{const b=document.getElementById('book');if(b)b.scrollIntoView({block:'start',behavior:'smooth'});};
- return h('div',{class:'stack'},h('p',{class:'note',text:'Todav\xEDa no hay talleres verificados que atiendan ese servicio en tu zona. Puedes pedir ofertas a los talleres o invitar a tu taller de confianza: al solicitar la cita abajo, si no hay talleres revisados, te damos un mensaje para reenviarle desde tu WhatsApp.'}),
-  h('div',{class:'chips'},btn('Pedir ofertas','primary',goBook),btn('Invitar a mi taller de confianza','ghost',goBook)));}
+ return h('div',{class:'stack'},h('p',{class:'note',text:'Todav\xEDa no hay talleres verificados que atiendan ese servicio en tu zona. Puedes pedir ofertas a los talleres o invitar a tu taller de confianza para que gestione la cita por AutoMantPro.'}),
+  h('div',{class:'chips'},btn('Pedir ofertas','primary',goBook),inviteMine()));}
 function shopList(out,data,d,run){out.replaceChildren();nearby.last=data;if(data.zoneUsed&&!nearby.zone){nearby.zone=data.zoneUsed;const z=document.querySelector('input[aria-label="Tu sector"]');if(z)z.value=data.zoneUsed;}
  if(!data.items.length){out.append(noShopsHelp());return;}
  out.append(h('p',{class:'note',text:(data.order==='distancia'?'Ordenados por distancia desde donde est\xE1s.':'Ordenados por tu sector y tu ciudad'+(data.cityUsed||data.zoneUsed?' ('+[data.zoneUsed,data.cityUsed].filter(Boolean).join(', ')+').':'.'))+(data.service?' Servicio: '+data.service.name+'.':'')}));
@@ -142485,8 +142494,8 @@ function shopBookingForm(p,d){
  const mine=(d.vehicles||[]).filter(v=>!v.fleetName);
  if(!mine.length)return h('p',{class:'note',text:'Solo quien administra el veh\xEDculo puede pedir la cita. Si eres conductor, p\xEDdesela a quien lo administra.'});
  const veh=h('select',{'aria-label':'Veh\xEDculo'},...mine.map(v=>h('option',{value:v.id,text:v.label})));if(mine.some(v=>v.id===d.vehicleId))veh.value=d.vehicleId;
- const names=nearbyServices(d.recommendations).map(x=>x.name);for(const extra of ['Diagn\xF3stico','Revisi\xF3n general','Otro'])if(!names.includes(extra))names.push(extra);
- if(booking.service&&!names.includes(booking.service))names.unshift(booking.service);const svc=h('select',{'aria-label':'Servicio'},...names.map(n=>h('option',{value:n,text:n})));if(booking.service)svc.value=booking.service;
+ const published=[...new Set([...(p.catalog||[]).map(x=>x.name),...(p.services||[])])];const extras=['Diagn\xF3stico','Revisi\xF3n general','Otro'].filter(x=>!published.includes(x));if(booking.service&&!published.includes(booking.service)&&!extras.includes(booking.service))extras.unshift(booking.service);
+ const group=(label,list)=>list.length?h('optgroup',{label},...list.map(n=>h('option',{value:n,text:n}))):null;const svc=h('select',{'aria-label':'Servicio'},...[group('Servicios de '+p.name,published),group('Otros',extras)].filter(Boolean));if(booking.service&&[...published,...extras].includes(booking.service))svc.value=booking.service;
  const planNote=h('p',{class:'note'});const syncPlan=()=>{const n=pickSet(veh.value).size;planNote.textContent=n?'Adjuntas '+n+(n===1?' elemento':' elementos')+' de tu plan (marcados en la ficha). El taller los ver\xE1 en la cita.':'Puedes marcar en tu plan los elementos que quieres hacer o revisar: viajan con la cita.';};veh.addEventListener('change',syncPlan);syncPlan();
  const today=new Date(Date.now()-5*3600000);const iso=t=>new Date(t).toISOString().slice(0,10);
  const day=h('input',{type:'date',required:true,min:iso(today),max:iso(today.getTime()+90*86400000),'aria-label':'D\xEDa de la cita'});
@@ -142516,7 +142525,7 @@ function talleresCard(d,r){
  const geo=navigator.geolocation?btn('Usar mi ubicaci\xF3n','ghost',()=>{where.textContent='Buscando tu ubicaci\xF3n\u2026';navigator.geolocation.getCurrentPosition(pos=>{nearby.origin={lat:pos.coords.latitude,lng:pos.coords.longitude};where.textContent='Ordenado por distancia. Tu ubicaci\xF3n no se guarda.';void run(1);},()=>{nearby.origin=null;where.textContent='No pudimos leer tu ubicaci\xF3n. Ordenamos por tu sector y tu ciudad.';},{enableHighAccuracy:false,timeout:10000,maximumAge:300000});}):null;
  if(nearby.last){shopList(out,nearby.last,d,run);moreShops(out,nearby.last);}else out.append(h('p',{class:'note',text:'Elige el servicio y toca \xABBuscar talleres\xBB para ver los talleres verificados cerca de ti.'}));
  const c=card('Talleres cerca de ti',null,h('div',{class:'stack'},svc,zone,h('div',{class:'chips'},btn('Buscar talleres','primary',()=>run(1)),geo),where),out,
-  h('p',{class:'note'},'Tambi\xE9n puedes pedir ofertas abajo, o ',h('a',{href:'/mapa',target:'_blank',rel:'noopener',text:'ver el mapa de talleres'}),'.'),h('p',{class:'note',text:'${SHOP_REFERRAL_NOTICE}'}));c.id='talleres';return c;}
+  h('p',{class:'note'},'Tambi\xE9n puedes pedir ofertas abajo, o ',h('a',{href:'/mapa',target:'_blank',rel:'noopener',text:'ver el mapa de talleres'}),'.'),h('p',{class:'note',text:'\xBFTu taller no aparece? Inv\xEDtalo a gestionar tu cita en AutoMantPro:'}),inviteMine(),h('p',{class:'note',text:'${SHOP_REFERRAL_NOTICE}'}));c.id='talleres';return c;}
 ${PART_MONEY_SCRIPT}
 // Recordatorios, SOAT, recontacto de clientes vencidos y lista de espera. Todo se arma con h() y textContent.
 function toggleRow(label,help,on,change){const row=h('div',{class:'kv'});const b=btn(on?'Apagar':'Encender','ghost',async()=>{b.disabled=true;try{await change(!on);}finally{b.disabled=false;}});row.append(h('small',{text:label}),h('span',{text:on?'S\xED':'No'}),h('small',{text:help}),b);return row;}
@@ -143531,7 +143540,7 @@ async function ownerZone(conn, userId) {
 var MIN_LISTED = 5;
 function inviteLink(name) {
   const site3 = (process.env.PUBLIC_SITE_URL ?? "https://automantpro.app").replace(/\/+$/, "");
-  const text18 = "Hola, " + name + ". Uso AutoMantPro para agendar y llevar el historial de mantenimiento de mi veh\xEDculo y me gustar\xEDa encontrarlos ah\xED. El registro del taller es gratis: " + site3 + "/cuenta";
+  const text18 = "Hola, " + name + ". Quiero agendar una cita para mi veh\xEDculo y gestionarla con ustedes por automantpro.app (cita, presupuesto que apruebo, orden de trabajo e historial). El registro del taller es gratis: " + site3 + "/cuenta#crear";
   return "https://wa.me/?text=" + encodeURIComponent(text18);
 }
 var ShopDirectoryStore = class {
@@ -143560,9 +143569,9 @@ var ShopDirectoryStore = class {
   async search(userId, query) {
     const page3 = await this.searchVerified(userId, query);
     const missing6 = page3.page === 1 ? MIN_LISTED - page3.items.length : 0;
-    const found = missing6 > 0 && page3.cityRaw ? await new DirectoryStore(this.connect).nearby(page3.cityRaw, page3.zoneRaw, missing6, page3.items.map((s) => s.name)) : [];
+    const found = missing6 > 0 && page3.cityRaw ? await new DirectoryStore(this.connect).nearby(page3.cityRaw, page3.zoneRaw, missing6, page3.items.map((s) => s.name), { service: page3.service?.id }) : [];
     const { cityRaw: _c, zoneRaw: _z, ...rest } = page3;
-    return { ...rest, unregistered: found.map((s) => ({ id: s.id, name: s.name, zone: s.zone, city: s.city, services: s.services, inviteUrl: inviteLink(s.name) })) };
+    return { ...rest, unregistered: found.map((s) => ({ id: s.id, name: s.name, zone: s.zone, city: s.city, services: s.services, inviteUrl: inviteLink(s.name), sameZone: s.sameZone })) };
   }
   searchVerified(userId, query) {
     return this.run(async (conn) => {
