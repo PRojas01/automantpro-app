@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='48682e22553d6fb818697292c360db3b61d08e98'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='698b18dbf20aa59b346c44dc330db79cc296145a'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -67413,6 +67413,63 @@ ${P}a.saltar:focus{background:var(--c-ink)!important;color:var(--c-bg)!important
   }
 });
 
+// packages/api/dist/interfaces/ui/armonia.js
+var ORO, MATE, TARJETAS2, oscuro, SUPERFICIE, ARMONIA;
+var init_armonia = __esm({
+  "packages/api/dist/interfaces/ui/armonia.js"() {
+    "use strict";
+    ORO = "--c-cta:#f5b01c!important;--c-cta-hover:#ffc13d!important;--c-on-cta:#14100a!important;--c-accent:#f5b01c!important;--c-on-accent:#14100a!important;--oro-1:#ffd567!important;--oro-2:#f5b01c!important;--oro-3:#c98a06!important;--c-surface:#141311!important;--c-sunk:#1d1b17!important;--c-ink:#ffffff!important;--c-title:#ffffff!important;--c-muted:#b9b4aa!important";
+    MATE = "background:linear-gradient(180deg,#191815 0,#121110 100%)!important;border:1px solid rgba(245,176,28,.16)!important;box-shadow:0 10px 26px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05)!important";
+    TARJETAS2 = ".card,.option,.pcard,.beneficios li,.escaner,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.veh,.kpi,.profile-card,.board,details.gestionar";
+    oscuro = (sel2) => `
+${sel2},${sel2} *{${ORO}}
+${sel2} :is(${TARJETAS2}){${MATE}}
+${sel2} :is(.board .board,.card .card,.pcard .pcard){background:transparent!important;box-shadow:none!important}
+${sel2} .beneficios b .ico,${sel2} .pcard>h2 .sec-ico{color:#f5b01c!important}
+${sel2} .pcard>h2 .sec-ico{border-color:rgba(245,176,28,.55)!important;background:#14110a!important}
+${sel2} p.section.ganas{color:#fff!important}`;
+    SUPERFICIE = "background:color-mix(in srgb,var(--c-surface) 84%,transparent)!important;border:1px solid color-mix(in srgb,var(--c-ink) 11%,transparent)!important;box-shadow:none!important";
+    ARMONIA = `
+html:root{--amp-r-control:10px;--amp-r-tarjeta:14px}
+button,.btn,.access-btn,a.button,.cta,.pill-btn,input,select,textarea,.panel{border-radius:var(--amp-r-control)!important}
+.card,.option,.pcard,.beneficios li,.board,.escaner,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.veh,.kpi,.profile-card,details.gestionar{border-radius:var(--amp-r-tarjeta)!important}
+.card,.option,.pcard,.beneficios li,.escaner,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.veh,.kpi,.profile-card,.board,details.gestionar{${SUPERFICIE}}
+.board .board,.card .card,.pcard .pcard{background:transparent!important}
+.beneficios li:hover,.card:hover,.profile-card:hover{border-color:color-mix(in srgb,var(--c-accent) 45%,transparent)!important}
+
+html:not(#a):not(#b) p.section.section,html:not(#a):not(#b) .section.section,html:not(#a):not(#b) .board .cap{background:transparent!important;color:var(--c-ink)!important;border:0!important;padding:0!important;border-radius:0!important;box-shadow:none!important;background-image:none!important;font:600 14px/1.35 var(--c-font)!important}
+html:not(#a):not(#b) p.section.section::before,html:not(#a):not(#b) .section.section::before,html:not(#a):not(#b) .board .cap::before{content:""!important;display:inline-block!important;flex:none;width:14px;height:3px;border-radius:2px;background:var(--c-accent)!important}
+html:not(#a):not(#b) .board .cap{justify-content:flex-start!important;gap:8px}
+html:not(#a):not(#b) .board .cap>b{margin-left:auto}
+html p.section.ganas{font-size:15px!important;line-height:1.45!important;align-items:flex-start!important}
+html p.section.ganas::before{margin-top:9px}
+
+.escaner .leyenda b,.escaner .leyenda li,.beneficios span,.access-note,.red li,.pie,.pie a,.board li,.board li b,.board p{font-weight:400!important}
+.beneficios b,.red a.perfil,.access-note b,.board .big{font-weight:600!important}
+
+details.gestionar{padding:10px 12px!important}
+details.gestionar>summary .section{font-weight:600!important}
+details.gestionar>summary .section::before{display:none!important}
+details.gestionar>summary .ver{color:var(--c-muted)!important}
+
+html .access-btn.secondary{background:transparent!important;color:var(--c-ink)!important;border:1px solid color-mix(in srgb,var(--c-ink) 38%,transparent)!important}
+html .access-btn.secondary:hover{border-color:var(--c-ink)!important;box-shadow:none!important}
+
+.pie .redes a{width:40px;min-width:40px;height:40px;min-height:40px;padding:0!important;justify-content:center;gap:0!important;font-size:0!important;background:transparent!important;border-color:color-mix(in srgb,var(--c-ink) 14%,transparent)!important}
+.pie .redes a svg{width:18px;height:18px}
+.ad-strip{background:transparent!important;border-color:color-mix(in srgb,var(--c-ink) 10%,transparent)!important}
+
+/* Texto n\xEDtido (27/11/2026, \xABse ven borrosos\xBB): sin desenfoque de vidrio detr\xE1s del texto, sin suavizado
+   forzado ni desplazamientos de medio p\xEDxel. */
+html:not(#a):not(#b) body,html:not(#a):not(#b) body *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;-webkit-font-smoothing:auto!important;text-shadow:none!important;text-rendering:auto!important}
+.red li.enlace,.red li{transform:none!important}
+html #panel button.principal{background:var(--c-cta)!important;color:var(--c-on-cta)!important;border-color:transparent!important}
+@media (prefers-color-scheme:dark){${oscuro('html:not(#a):not(#b):root:not([data-tema="claro"])')}}
+${oscuro('html:not(#a):not(#b):root[data-tema="oscuro"]')}
+`;
+  }
+});
+
 // packages/api/dist/interfaces/ui/sistema.js
 var SISTEMA;
 var init_sistema = __esm({
@@ -67421,6 +67478,7 @@ var init_sistema = __esm({
     init_auto_escaner_livianos();
     init_paletas();
     init_negro_ambar();
+    init_armonia();
     SISTEMA = `
 /* Fondo (3/11/2026): la ilustraci\xF3n del auto, muy tenue arriba a la derecha y desvanecida hacia abajo.
    Encima va el color de fondo del tema al 92 %, as\xED funciona igual en claro y oscuro y el texto
@@ -67537,7 +67595,8 @@ body>.cabecera-sitio{padding-top:max(8px,env(safe-area-inset-top))}
 /* Tableta (651\u20131000 px): el t\xEDtulo va en la fila del logo pero puede partir en dos l\xEDneas, as\xED no se monta sobre el logo. */
 @media (min-width:651px) and (max-width:1000px){.cabecera-sitio .titulo-sitio{white-space:normal;font-size:15px;justify-self:stretch}}
 ${PALETAS_CSS}
-${NEGRO_AMBAR_CSS}`;
+${NEGRO_AMBAR_CSS}
+${ARMONIA}`;
   }
 });
 
@@ -104937,7 +104996,7 @@ var init_intro_video = __esm({
 .intro-cerrar{flex:none;background:var(--c-sunk);color:var(--c-ink);border:1px solid var(--c-line)}
 .intro-marco{position:relative;display:grid;place-items:center;aspect-ratio:16/9;max-height:calc(100dvh - 110px);margin:0 auto;overflow:hidden;background:var(--c-sunk);border-radius:var(--c-r)}
 .intro-marco img,.intro-marco video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.intro-ver{position:relative;border:0;background:var(--c-cta);color:var(--c-on-cta)}
+.intro-ver{position:absolute;left:50%;top:68%;transform:translateX(-50%);white-space:nowrap;border:0;background:var(--c-cta);color:var(--c-on-cta)}
 .intro-cerrar:focus-visible,.intro-ver:focus-visible{outline:3px solid var(--c-accent);outline-offset:2px}
 .intro.vertical{width:min(420px,calc(100vw - 24px))}
 .intro.vertical .intro-marco{aspect-ratio:9/16;height:calc(100dvh - 110px);max-width:100%}
@@ -105115,7 +105174,7 @@ ${seoHead({
   })}
 <meta name="author" content="AutoMantPro">
 <script type="application/ld+json" nonce="${nonce2}">${structuredData(input)}</script>
-<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}${ESCANER_STYLES}${TITULO_REFERENCIA}${HOME_UNA_PANTALLA}${HOME_ADS_STYLES}${HOME_MARGENES}${input.intro ? INTRO_STYLES : ""}</style>
+<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}${ESCANER_STYLES}${TITULO_REFERENCIA}${HOME_UNA_PANTALLA}${HOME_ADS_STYLES}${HOME_MARGENES}${input.intro ? INTRO_STYLES : ""}${ARMONIA}</style>
 <script nonce="${nonce2}">${THEME_BOOT}</script>
 </head>
 <body><a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -105161,6 +105220,7 @@ var ENTRY_PROFILES, PERFIL_NOMBRE, BENEFICIOS, ICONS, icon, STYLES, THEME_BOOT, 
 var init_page = __esm({
   "packages/api/dist/interfaces/entry/page.js"() {
     "use strict";
+    init_armonia();
     init_sobrio();
     init_sistema();
     init_escaner();
@@ -105505,7 +105565,7 @@ header.cabecera h1 em{background:none!important;padding:0!important;font-style:n
  .escaner .leyenda>li{gap:4px;font-size:12px}
  /* En celulares angostos queda el n\xFAmero y se omite el testigo para que entren los nombres completos. */
  @media (max-width:380px){.escaner .leyenda>li .tg{display:none}}
- /* El auto escaneado entra en la primera pantalla y sigue justo antes de \xABLo que ganas\xBB; el informe de ejemplo baja. */
+ /* El auto escaneado entra en la primera pantalla y sigue justo antes de \xABLo que ganas\xBB; y el informe de ejemplo va antes de la frase de valor y sus tarjetas. */
  header.cabecera{margin-bottom:6px}
  .col-a{display:flex;flex-direction:column}
  .hero{display:contents}
@@ -105514,9 +105574,9 @@ header.cabecera h1 em{background:none!important;padding:0!important;font-style:n
  .hero>.red{order:2;margin:8px 0 0}
  .col-a>p.section:first-of-type{order:3;margin:10px 0 4px}
  .escaner{order:4;gap:6px;padding:8px 12px;margin:0}
- .col-a>p.section:last-of-type{order:5}
- .beneficios{order:6}
- .hero>.board{order:7;margin:0 0 12px;background:var(--c-surface)}
+ .col-a>p.section:last-of-type{order:6;margin-top:4px}
+ .beneficios{order:7}
+ .hero>.board{order:5;margin:0 0 12px;background:var(--c-surface)}
 }
 @media (max-width:380px){
  .escaner{padding:6px 10px}
@@ -146181,6 +146241,7 @@ async function localAgentDownloadRoutes(app2) {
 
 // packages/api/dist/interfaces/pilot-page.js
 init_sobrio();
+init_armonia();
 init_theme();
 init_navegacion();
 init_sistema();
@@ -146269,11 +146330,21 @@ body{background-color:var(--c-bg);background-image:linear-gradient(var(--esc-gri
 init_escaner();
 init_negro_ambar();
 var ICONOS = [
-  ["repuesto|insumo|almac|inventario|oferta|solicitud|catalogo|producto", 7],
-  ["cita|agenda|escribir|recontact|aviso|mensaje|promoci|publicidad", 6],
-  ["orden|trabajo|inspecc|ficha|vehic|garaje|historial", 8],
-  ["caja|plan|tarif|calificaci|pago|gasto|curso|equipo|mis datos", 4],
-  ["hoy|tablero|indicador|productividad|resumen", 1]
+  ["instala", "app"],
+  ["contrase|usuario|seguridad|privacidad", "candado"],
+  ["repuesto|insumo|almac|inventario|catalogo|producto|pedido", "repuesto"],
+  ["cita|agenda|agendar", "cita"],
+  ["aviso|mensaje|alerta|escribir|recontact|notific", "aviso"],
+  ["promoci|publicidad|oferta", "promo"],
+  ["orden|trabajo|inspecc|tablero|solicitud", "orden"],
+  ["historial|recorrido|hoy|resumen", "historial"],
+  ["gasto|caja|pago|tarif|combustible", "gasto"],
+  ["curso|capacit", "curso"],
+  ["datos|equipo|perfil|calificaci", "datos"],
+  ["taller|cerca", "lugar"],
+  ["vinculo|invitaci", "vinculo"],
+  ["vehic|garaje|ficha|flota", "vehiculo"],
+  ["plan|indicador|productividad", "plan"]
 ];
 var SISTEMAS2 = [
   ["motor", 1],
@@ -146285,17 +146356,24 @@ var SISTEMAS2 = [
   ["llanta|neumat", 7],
   ["carroc|luces|vidrio", 8]
 ];
+var TRAZOS = { "app": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M12 8v6M9.500 11.500l2.500 2.500 2.500-2.500"/></svg>', "candado": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>', "cita": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>', "orden": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5a3.8 3.8 0 0 0-5 4.7L4 16.7 7.3 20l5.5-5.5a3.8 3.8 0 0 0 4.7-5l-2.4 2.4-2.6-.7-.7-2.6z"/></svg>', "repuesto": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l8-4 8 4-8 4zM4 8v8l8 4 8-4V8M12 12v8"/></svg>', "aviso": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/></svg>', "vehiculo": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v-4l2-5h12l2 5v4zM4 12h16M7 16v2M17 16v2"/></svg>', "historial": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>', "gasto": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.5c-.4-1-1.4-1.5-2.5-1.5-1.5 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1 2-2.5 2c-1.100 0-2.100-.5-2.500-1.500M12 6.500v1.500M12 16v1.500"/></svg>', "curso": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-4 9 4-9 4zM7 11v5c3 2 7 2 10 0v-5"/></svg>', "datos": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-5.500 7-5.500s6 1.500 7 5.500"/></svg>', "plan": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>', "lugar": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.500 6-11a6 6 0 0 0-12 0c0 5.500 6 11 6 11z"/><circle cx="12" cy="10" r="2"/></svg>', "vinculo": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>', "promo": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12V5h7l9 9-7 7zM8.500 8.500h.1"/></svg>' };
 var SVGS = JSON.stringify(Object.fromEntries([1, 2, 3, 4, 5, 6, 7, 8].map((n3) => [n3, testigo(n3).replace("<svg ", `<svg xmlns="http://www.w3.org/2000/svg" `)])));
 var INTERFAZ_SIMPLE_SCRIPT = `
 (function(){
-const SVGS=${SVGS};const ICONOS=${JSON.stringify(ICONOS)};const SISTEMAS=${JSON.stringify(SISTEMAS2)};
+const SVGS=Object.assign(${SVGS},${JSON.stringify(TRAZOS)});const ICONOS=${JSON.stringify(ICONOS)};const SISTEMAS=${JSON.stringify(SISTEMAS2)};
 const plano=t=>String(t||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
 const pick=(tabla,t,por)=>{const s=plano(t);for(const [re,n] of tabla)if(new RegExp(re).test(s))return n;return por;};
 const icono=(n,cls)=>{const d=new DOMParser().parseFromString(SVGS[n],'image/svg+xml').documentElement;const s=document.importNode(d,true);const w=document.createElement('span');w.className=cls;w.setAttribute('aria-hidden','true');w.append(s);return w;};
 let rol='';
 function decorar(root){
  if(!root)return;
- for(const c of root.querySelectorAll('.pcard:not([data-ico])')){c.dataset.ico='1';const h=c.querySelector(':scope > h2');if(!h)continue;h.append(icono(pick(ICONOS,h.firstChild&&h.firstChild.textContent,1),'sec-ico'));}
+ for(const c of root.querySelectorAll('.pcard:not([data-ico])')){c.dataset.ico='1';const h=c.querySelector(':scope > h2');if(!h)continue;h.append(icono(pick(ICONOS,h.firstChild&&h.firstChild.textContent,'plan'),'sec-ico'));}
+ // Un solo bot\xF3n relleno por tarjeta: la primera acci\xF3n que avanza; nunca cancelar, rechazar ni archivar.
+ for(const c of root.querySelectorAll('.pcard')){
+  if(c.querySelector('button.principal,button.cta'))continue;
+  const b=[...c.querySelectorAll('button:not(.ghost):not([disabled]), button.ghost:not([disabled])')].find(x=>/^(agendar|pedir|registrar|aprobar|confirmar|agregar|buscar|enviar|crear|recibir|ver mi plan|subir|instalar)/i.test(x.textContent.trim())&&x.offsetParent);
+  if(b)b.classList.add('principal');
+ }
  for(const li of root.querySelectorAll('.sys > li:not(.sub):not([data-tg])')){li.dataset.tg='1';const nm=li.querySelector('.nm');const n=pick(SISTEMAS,nm&&nm.textContent,0);if(n)li.append(icono(n,'sys-ico'));}
 }
 window.decorarPanel=function(root,data){rol=(data&&data.role)||rol;root.dataset.rol=rol;decorar(root);};
@@ -149323,7 +149401,7 @@ main #login>div>h2,main #login h2#entrar,main #login h2#crear{margin:0 0 12px!im
 .pasos li[aria-current="step"] span,.pasos li.hecho span{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-on-accent)}
 .paso-txt{margin:0 0 4px;color:var(--c-muted);font-size:13px}
 #login button.atras{background:transparent;color:var(--c-accent);border:1px solid var(--c-line);margin-top:0}
-@media (prefers-reduced-motion:reduce){.cod-wa{transition:none}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}${SCAN_STYLES}${SISTEMA}${ESCANER_STYLES}${INTERFAZ_SIMPLE_CSS}</style>
+@media (prefers-reduced-motion:reduce){.cod-wa{transition:none}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}${SCAN_STYLES}${SISTEMA}${ESCANER_STYLES}${INTERFAZ_SIMPLE_CSS}${ARMONIA}</style>
 ${MENU_MARKUP}
 <main id="contenido">${cabeceraSitio(nonce2, false)}<h1>Mi cuenta</h1><p class="intro-cuenta">Entra o crea tu cuenta gratis. Tus veh\xEDculos, citas y avisos est\xE1n aqu\xED.</p>
 <section id="login"><div class="col-crear"><h2 id="crear">Crear cuenta</h2><ol class="pasos" aria-label="Pasos para crear tu cuenta"><li id="signupPaso1Tag" aria-current="step"><span>1</span>Perfil</li><li id="signupPaso2Tag"><span>2</span>Tus datos</li><li id="signupPaso3Tag"><span>3</span>Confirmar por WhatsApp</li></ol><p id="signupPasoTxt" class="paso-txt" aria-live="polite">Paso 1 de 3: elige tu perfil.</p><form id="signupForm"><div id="signupPaso1"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><button id="signupNext" type="button">Siguiente</button></div><div id="signupPaso2" class="hidden"><div id="signupFields"></div><div class="hp" aria-hidden="true"><label for="signupSitio">Sitio web</label><input id="signupSitio" tabindex="-1" autocomplete="off"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Continuar</button><button id="signupBack" class="atras" type="button">Atr\xE1s</button></div></form><form id="signupVerifyForm" class="hidden">${codeLink(number2, "signupCodeLink", connect)}<label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></div><div class="col-entrar"><h2 id="entrar">Ingresar</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true" class="hidden">${iconoLinea("chat")} WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">${iconoLinea("llave")} Usuario o correo</button></nav>${number2 ? `<div id="codeRequestForm">${codeLink(number2, "codeLink", connect)}</div>` : `<form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form>`}<form id="codeVerifyForm"${number2 ? "" : ' class="hidden"'}><p class="sub-codigo">\xBFTe lleg\xF3 un c\xF3digo de 6 d\xEDgitos? Escr\xEDbelo aqu\xED.</p><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><details id="recuperar"><summary>Perd\xED mi n\xFAmero</summary><form id="recoveryForm"><p>Comprueba tu n\xFAmero nuevo. Revisaremos tu solicitud y te contactaremos por ese n\xFAmero para confirmar tu identidad.</p><label for="recOld">N\xFAmero anterior</label><input id="recOld" inputmode="tel" required minlength="8" maxlength="20"><label for="recNew">N\xFAmero nuevo</label><input id="recNew" inputmode="tel" required minlength="8" maxlength="20"><button id="recSend" type="button">Enviarme el c\xF3digo</button><label for="recCode">C\xF3digo de WhatsApp</label><input id="recCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required><label for="recName">Tu nombre completo</label><input id="recName" required minlength="3" maxlength="120"><label for="recDetail">Cu\xE9ntanos qu\xE9 pas\xF3</label><textarea id="recDetail" required minlength="10" maxlength="500"></textarea><button>Enviar solicitud</button></form></details><form id="loginForm" class="hidden"><label for="phone">Celular o correo</label><input id="phone" autocomplete="username" required minlength="3" maxlength="120"><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button><button type="button" id="forgotBtn" class="enlace-olvido">\xBFOlvidaste tu contrase\xF1a o nunca creaste una?</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label></div></section>
