@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='dbf2b7437ea8ecf463126bb6c719829eb91b55ca'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='3eaf81b5ee05166b94be501f39d2ee5be3c2e440'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -77011,7 +77011,7 @@ var init_plan_formatter = __esm({
     "use strict";
     DEFAULT_MAX_LENGTH = 1024;
     PLAN_TECH_NOTICE = "Importante: un t\xE9cnico debe revisar y validar este plan antes de hacer cualquier trabajo.";
-    PLAN_REFERENCE_NOTICE = "El plan es referencial: due\xF1os y talleres deben revisar los documentos oficiales del fabricante.";
+    PLAN_REFERENCE_NOTICE = "El plan es referencial: revisen los documentos oficiales del fabricante; lo valida el taller.";
     SHOP_REFERRAL_NOTICE = "AutoMantPro solo refiere talleres: no garantiza las transacciones ni los servicios entre el taller y el due\xF1o.";
     PLAN_TERMS_NOTICE = "AutoMantPro no responde por su mala aplicaci\xF3n o incumplimiento. T\xE9rminos: automantpro.app/terminos";
     readingHint = (unit = "km") => unit === "h" ? "Kilometraje | horas del hor\xF3metro" : "Kilometraje | km";
@@ -78786,7 +78786,502 @@ var init_system_components = __esm({
 var component_sources_default;
 var init_component_sources = __esm({
   "packages/api/dist/domain/maintenance/component-sources.json"() {
-    component_sources_default = [];
+    component_sources_default = [
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_aceite",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 166 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "cambiar",
+          pagina: "166",
+          cita: "Sustituci\xF3n de aceite y filtro del aceite del motor (R)",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses). Marcas R en las 11 columnas: primer cambio a los 5.000 km o 6 meses y luego cada 10.000 km o 12 meses"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_filtro_aire",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 169 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "cambiar",
+          pagina: "169",
+          cita: "Sustituya el elemento del filtro de aire. R R R R R R R R R R",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses). Menor intervalo con mucho polvo"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_filtro_comb",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 169 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "cambiar",
+          pagina: "169",
+          cita: "Sustituya el filtro de combustible y la junta t\xF3rica. R R R R R R R R R R",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "car_filtro_cabina",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 169 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "cambiar",
+          pagina: "169",
+          cita: "Sustituya el elemento del sistema de ventilaci\xF3n de A/A. R R R R R R R R R R",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses). Menor intervalo con mucho polvo"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "car_cerraduras",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 169 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "lubricar",
+          pagina: "169",
+          cita: "Limpie y lubrique los accesorios de la carrocer\xEDa del veh\xEDculo, como seguros, bisagras y rieles de las puertas.",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_distribucion",
+        intervalKm: 9e4,
+        intervalMonths: 60,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 169 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "cambiar",
+          pagina: "169",
+          cita: "Sustituya la correa de distribuci\xF3n, los tensores y las poleas cada 5 a\xF1os o 90.000 km (lo que ocurra primero).",
+          nota: "elemento especial"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "fre_liquido",
+        intervalKm: 6e4,
+        intervalMonths: 24,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 169 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "cambiar",
+          pagina: "169",
+          cita: "Sustituya el l\xEDquido de frenos cada 2 a\xF1os o 60.000 km (lo que ocurra primero).",
+          nota: "elemento especial"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "enf_refrigerante",
+        intervalKm: 8e4,
+        intervalMonths: 48,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 169 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "cambiar",
+          pagina: "169",
+          cita: "Sustituya el refrigerante cada 4 a\xF1os u 80.000 km (lo que ocurra primero).",
+          nota: "elemento especial"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "sus_cremallera",
+        intervalKm: 8e4,
+        intervalMonths: 36,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 169 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "cambiar",
+          pagina: "169",
+          cita: "Sustituya el l\xEDquido de la servodirecci\xF3n cada 3 a\xF1os u 80.000 km (lo que ocurra primero).",
+          nota: "elemento especial: l\xEDquido de direcci\xF3n"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "tra_aceite",
+        intervalKm: 8e4,
+        intervalMonths: null,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 169 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "cambiar",
+          pagina: "169",
+          cita: "Sustituya el lubricante de la transmisi\xF3n manual de 6 velocidades a los 10.000 km y luego cada 80.000 km.",
+          nota: "primer cambio a los 10.000 km; solo transmisi\xF3n manual de 6 velocidades"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "tra_diferencial",
+        intervalKm: 8e4,
+        intervalMonths: 36,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 169 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "cambiar",
+          pagina: "169",
+          cita: "Sustituya el lubricante del eje delantero (4x4) y el lubricante del eje trasero a los 10.000 km y cada 3 a\xF1os u 80.000 km.",
+          nota: "primer cambio a los 10.000 km"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_banda",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 168 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "168",
+          cita: "Compruebe la correa auxiliar del motor, si la fuerza de tensi\xF3n no es la requerida, ajuste seg\xFAn corresponda.",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_bomba_comb",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 166 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "166",
+          cita: "Revise la conexi\xF3n de la tuber\xEDa del sistema de combustible y su fijaci\xF3n. (I)",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "enf_deposito",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 166 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "166",
+          cita: "Verifique el nivel de refrigerante y la tuber\xEDa del sistema de refrigeraci\xF3n (I)",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "fre_mangueras",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 166 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "166",
+          cita: "Compruebe el nivel de l\xEDquido de frenos y la tuber\xEDa del sistema de frenos (I)",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "fre_mano",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 168 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "168",
+          cita: "Compruebe el juego de frenos delantero y trasero y que el freno de mano no est\xE9 obstruido",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "sus_bujes",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 166 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "166",
+          cita: "Compruebe que las sujeciones y retenciones de la suspensi\xF3n delantera y trasera sean adecuadas y seguras. (I)",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "sus_resortes",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 168 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "168",
+          cita: "Revise si hay desgaste o agrietamiento en la almohadilla del extremo de la ballesta",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "tra_homocineticas",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 168 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "168",
+          cita: "Compruebe que no haya da\xF1os en la uni\xF3n universal del semieje.",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "lla_rodamientos",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 167 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "167",
+          cita: "Neum\xE1ticos: compruebe los cojinetes de las ruedas traseras, la presi\xF3n y el desgaste de los neum\xE1ticos",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "lla_rotacion",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 170 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "rotar",
+          pagina: "170",
+          cita: "Rotaci\xF3n de neum\xE1ticos cada 5.000 km o 10.000 km en funci\xF3n del desgaste",
+          nota: "el manual da 5.000 o 10.000 seg\xFAn desgaste"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "ele_bateria",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 167 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "167",
+          cita: "Revise el nivel y la carga de la bater\xEDa y verifique que los terminales est\xE9n despejados y apretados",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "ele_luces",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 167 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "167",
+          cita: "Compruebe que las se\xF1ales luminosas, la pantalla de instrumentos y las funciones del dispositivo el\xE9ctrico funcionen",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "ele_cables",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 168 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "168",
+          cita: "Compruebe que el mazo de cables del compartimiento del motor est\xE9 sujetado eficazmente",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "car_aire",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 167 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "167",
+          cita: "Revise que la conexi\xF3n y la fijaci\xF3n de la tuber\xEDa de aire acondicionado sea correcta",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX HI RIDE CRDI AC 2.0*|D-MAX PREMIER CRDI AC 2.0*",
+        anioDesde: 2025,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "car_escape",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Chevrolet D-Max, manual del propietario 2025 (Ecuador), p\xE1g. 167 del PDF \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://www.chevrolet.com.ec/mantenimiento/manuales",
+        verifiedAt: "2026-11-26",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "167",
+          cita: "Verifique que la conexi\xF3n del tubo de escape est\xE9 sujetada firmemente",
+          nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      }
+    ];
   }
 });
 
@@ -116369,6 +116864,8 @@ var init_vehicle_care_store = __esm({
   "packages/api/dist/infrastructure/messaging/vehicle-care-store.js"() {
     "use strict";
     init_component_source_store();
+    init_component_sources2();
+    init_system_components();
     init_maker_plan();
     init_order_ready();
     init_budget_review();
@@ -116952,7 +117449,7 @@ ${out.join("\n")}` : out.join("\n") };
             return [];
           throw err4;
         }) : [];
-        const imported = Number.isFinite(year3) ? await verifiedComponentRows(conn, String(vehicle.make ?? "")) : [];
+        const imported = Number.isFinite(year3) ? [...await verifiedComponentRows(conn, String(vehicle.make ?? "")), ...matchingComponentRows(COMPONENT_SOURCES, vehicle)] : [];
         const makerItemList = imported.length && higherLevel(await vehicleLevel(conn, vehicle), viewerLevel ?? "funcional") !== "funcional" ? makerItems(vehicle, imported) : [];
         return { ...vehicle, lastServices, corrective, planOverrides: overrides, modelPlan, makerItems: makerItemList };
       }
