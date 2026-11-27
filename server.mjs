@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='68f872d0223205811b0e88bcd8fdf7b863f80ad7'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='48682e22553d6fb818697292c360db3b61d08e98'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -315,41 +315,41 @@ var require_queue = __commonJS({
       queue3.drained = drained;
       return queue3;
       function push(value2) {
-        var p = new Promise(function(resolve2, reject) {
+        var p = new Promise(function(resolve3, reject) {
           pushCb(value2, function(err4, result) {
             if (err4) {
               reject(err4);
               return;
             }
-            resolve2(result);
+            resolve3(result);
           });
         });
         p.catch(noop);
         return p;
       }
       function unshift(value2) {
-        var p = new Promise(function(resolve2, reject) {
+        var p = new Promise(function(resolve3, reject) {
           unshiftCb(value2, function(err4, result) {
             if (err4) {
               reject(err4);
               return;
             }
-            resolve2(result);
+            resolve3(result);
           });
         });
         p.catch(noop);
         return p;
       }
       function drained() {
-        var p = new Promise(function(resolve2) {
+        var p = new Promise(function(resolve3) {
           process.nextTick(function() {
             if (queue3.idle()) {
-              resolve2();
+              resolve3();
             } else {
               var previousDrain = queue3.drain;
               queue3.drain = function() {
                 if (typeof previousDrain === "function") previousDrain();
-                resolve2();
+                resolve3();
                 queue3.drain = previousDrain;
               };
             }
@@ -692,8 +692,8 @@ var require_create_promise = __commonJS({
         reject: null,
         promise: null
       };
-      obj.promise = new Promise((resolve2, reject) => {
-        obj.resolve = resolve2;
+      obj.promise = new Promise((resolve3, reject) => {
+        obj.resolve = resolve3;
         obj.reject = reject;
       });
       return obj;
@@ -962,11 +962,11 @@ var require_thenify = __commonJS({
         return;
       }
       debug("thenify");
-      return (resolve2, reject) => {
+      return (resolve3, reject) => {
         const p = this._loadRegistered();
         return p.then(() => {
           this[kThenifyDoNotWrap] = true;
-          return resolve2(this._server);
+          return resolve3(this._server);
         }, reject);
       };
     }
@@ -1103,12 +1103,12 @@ var require_avvio = __commonJS({
     inherits(Boot, EE);
     if ("asyncDispose" in Symbol) {
       Boot.prototype[Symbol.asyncDispose] = function() {
-        return new Promise((resolve2, reject) => {
+        return new Promise((resolve3, reject) => {
           this.close((err4) => {
             if (err4) {
               return reject(err4);
             }
-            resolve2();
+            resolve3();
           });
         });
       };
@@ -1255,12 +1255,12 @@ var require_avvio = __commonJS({
           throw new AVV_ERR_CALLBACK_NOT_FN("close", typeof func);
         }
       } else {
-        promise = new Promise(function(resolve2, reject) {
+        promise = new Promise(function(resolve3, reject) {
           func = function(err4) {
             if (err4) {
               return reject(err4);
             }
-            resolve2();
+            resolve3();
           };
         });
       }
@@ -1280,7 +1280,7 @@ var require_avvio = __commonJS({
         queueMicrotask(this.start.bind(this));
         return;
       }
-      return new Promise((resolve2, reject) => {
+      return new Promise((resolve3, reject) => {
         this._readyQ.push(readyPromiseCB);
         this.start();
         const relativeContext = this._current[0].server;
@@ -1288,7 +1288,7 @@ var require_avvio = __commonJS({
           if (err4) {
             reject(err4);
           } else {
-            resolve2(relativeContext);
+            resolve3(relativeContext);
           }
           process.nextTick(done);
         }
@@ -2683,8 +2683,8 @@ var require_promise = __commonJS({
     var { kTestInternals } = require_symbols2();
     function withResolvers() {
       let res, rej;
-      const promise = new Promise((resolve2, reject) => {
-        res = resolve2;
+      const promise = new Promise((resolve3, reject) => {
+        res = resolve3;
         rej = reject;
       });
       return { promise, resolve: res, reject: rej };
@@ -2783,15 +2783,15 @@ var require_server = __commonJS({
         if (cb === void 0) {
           const listening = listenPromise.call(this, server, listenOptions);
           return listening.then((address) => {
-            const { promise, resolve: resolve2 } = PonyPromise.withResolvers();
+            const { promise, resolve: resolve3 } = PonyPromise.withResolvers();
             if (host === "localhost") {
               multipleBindings.call(this, server, httpHandler, options, listenOptions, () => {
                 this[kState].listening = true;
-                resolve2(address);
+                resolve3(address);
                 onListenHookRunner(this);
               });
             } else {
-              resolve2(address);
+              resolve3(address);
               onListenHookRunner(this);
             }
             return promise;
@@ -2918,7 +2918,7 @@ var require_server = __commonJS({
       }
       return this.ready().then(() => {
         if (this[kState].aborted) return;
-        const { promise, resolve: resolve2, reject } = PonyPromise.withResolvers();
+        const { promise, resolve: resolve3, reject } = PonyPromise.withResolvers();
         const errEventHandler = (err4) => {
           cleanup();
           this[kState].listening = false;
@@ -2927,7 +2927,7 @@ var require_server = __commonJS({
         const listeningEventHandler = () => {
           cleanup();
           this[kState].listening = true;
-          resolve2(logServerAddress.call(
+          resolve3(logServerAddress.call(
             this,
             server,
             listenOptions.listenTextResolver || defaultResolveServerListeningText
@@ -8045,7 +8045,7 @@ var require_thread_stream = __commonJS({
     var { version } = require_package();
     var { EventEmitter } = __require("events");
     var { Worker } = __require("worker_threads");
-    var { join } = __require("path");
+    var { join: join2 } = __require("path");
     var { pathToFileURL } = __require("url");
     var { wait } = require_wait();
     var {
@@ -8096,7 +8096,7 @@ var require_thread_stream = __commonJS({
     function createWorker(stream, opts) {
       const { filename, workerData } = opts;
       const bundlerOverrides = "__bundlerPathsOverrides" in globalThis ? globalThis.__bundlerPathsOverrides : {};
-      const toExecute = bundlerOverrides["thread-stream-worker"] || join(__dirname, "lib", "worker.js");
+      const toExecute = bundlerOverrides["thread-stream-worker"] || join2(__dirname, "lib", "worker.js");
       const worker = new Worker(toExecute, {
         ...opts.workerOpts,
         name: opts.workerOpts?.name || "thread-stream",
@@ -8562,9 +8562,9 @@ var require_transport = __commonJS({
   "node_modules/fastify/node_modules/pino/lib/transport.js"(exports, module) {
     "use strict";
     var { createRequire: createRequire2 } = __require("module");
-    var { existsSync } = __require("node:fs");
+    var { existsSync: existsSync2 } = __require("node:fs");
     var getCallers = require_caller();
-    var { join, isAbsolute, sep } = __require("node:path");
+    var { join: join2, isAbsolute, sep } = __require("node:path");
     var { fileURLToPath } = __require("node:url");
     var sleep = require_atomic_sleep();
     var onExit = require_on_exit_leak_free();
@@ -8636,7 +8636,7 @@ var require_transport = __commonJS({
           return false;
         }
       }
-      return isAbsolute(path) && !existsSync(path);
+      return isAbsolute(path) && !existsSync2(path);
     }
     function stripQuotes(value2) {
       const first = value2[0];
@@ -8717,7 +8717,7 @@ var require_transport = __commonJS({
         throw new Error("only one of target or targets can be specified");
       }
       if (targets) {
-        target = bundlerOverrides["pino-worker"] || join(__dirname, "worker.js");
+        target = bundlerOverrides["pino-worker"] || join2(__dirname, "worker.js");
         options.targets = targets.filter((dest) => dest.target).map((dest) => {
           return {
             ...dest,
@@ -8735,7 +8735,7 @@ var require_transport = __commonJS({
           });
         });
       } else if (pipeline) {
-        target = bundlerOverrides["pino-worker"] || join(__dirname, "worker.js");
+        target = bundlerOverrides["pino-worker"] || join2(__dirname, "worker.js");
         options.pipelines = [pipeline.map((dest) => {
           return {
             ...dest,
@@ -8758,7 +8758,7 @@ var require_transport = __commonJS({
           return origin;
         }
         if (origin === "pino/file") {
-          return join(__dirname, "..", "file.js");
+          return join2(__dirname, "..", "file.js");
         }
         let fixTarget2;
         for (const filePath of callers) {
@@ -9738,7 +9738,7 @@ var require_safe_stable_stringify = __commonJS({
               return circularValue;
             }
             let res = "";
-            let join = ",";
+            let join2 = ",";
             const originalIndentation = indentation;
             if (Array.isArray(value2)) {
               if (value2.length === 0) {
@@ -9752,7 +9752,7 @@ var require_safe_stable_stringify = __commonJS({
                 indentation += spacer;
                 res += `
 ${indentation}`;
-                join = `,
+                join2 = `,
 ${indentation}`;
               }
               const maximumValuesToStringify = Math.min(value2.length, maximumBreadth);
@@ -9760,13 +9760,13 @@ ${indentation}`;
               for (; i < maximumValuesToStringify - 1; i++) {
                 const tmp2 = stringifyFnReplacer(String(i), value2, stack, replacer, spacer, indentation);
                 res += tmp2 !== void 0 ? tmp2 : "null";
-                res += join;
+                res += join2;
               }
               const tmp = stringifyFnReplacer(String(i), value2, stack, replacer, spacer, indentation);
               res += tmp !== void 0 ? tmp : "null";
               if (value2.length - 1 > maximumBreadth) {
                 const removedKeys = value2.length - maximumBreadth - 1;
-                res += `${join}"... ${getItemCount(removedKeys)} not stringified"`;
+                res += `${join2}"... ${getItemCount(removedKeys)} not stringified"`;
               }
               if (spacer !== "") {
                 res += `
@@ -9787,7 +9787,7 @@ ${originalIndentation}`;
             let separator = "";
             if (spacer !== "") {
               indentation += spacer;
-              join = `,
+              join2 = `,
 ${indentation}`;
               whitespace = " ";
             }
@@ -9801,13 +9801,13 @@ ${indentation}`;
               const tmp = stringifyFnReplacer(key3, value2, stack, replacer, spacer, indentation);
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key3)}:${whitespace}${tmp}`;
-                separator = join;
+                separator = join2;
               }
             }
             if (keyLength > maximumBreadth) {
               const removedKeys = keyLength - maximumBreadth;
               res += `${separator}"...":${whitespace}"${getItemCount(removedKeys)} not stringified"`;
-              separator = join;
+              separator = join2;
             }
             if (spacer !== "" && separator.length > 1) {
               res = `
@@ -9848,7 +9848,7 @@ ${originalIndentation}`;
             }
             const originalIndentation = indentation;
             let res = "";
-            let join = ",";
+            let join2 = ",";
             if (Array.isArray(value2)) {
               if (value2.length === 0) {
                 return "[]";
@@ -9861,7 +9861,7 @@ ${originalIndentation}`;
                 indentation += spacer;
                 res += `
 ${indentation}`;
-                join = `,
+                join2 = `,
 ${indentation}`;
               }
               const maximumValuesToStringify = Math.min(value2.length, maximumBreadth);
@@ -9869,13 +9869,13 @@ ${indentation}`;
               for (; i < maximumValuesToStringify - 1; i++) {
                 const tmp2 = stringifyArrayReplacer(String(i), value2[i], stack, replacer, spacer, indentation);
                 res += tmp2 !== void 0 ? tmp2 : "null";
-                res += join;
+                res += join2;
               }
               const tmp = stringifyArrayReplacer(String(i), value2[i], stack, replacer, spacer, indentation);
               res += tmp !== void 0 ? tmp : "null";
               if (value2.length - 1 > maximumBreadth) {
                 const removedKeys = value2.length - maximumBreadth - 1;
-                res += `${join}"... ${getItemCount(removedKeys)} not stringified"`;
+                res += `${join2}"... ${getItemCount(removedKeys)} not stringified"`;
               }
               if (spacer !== "") {
                 res += `
@@ -9888,7 +9888,7 @@ ${originalIndentation}`;
             let whitespace = "";
             if (spacer !== "") {
               indentation += spacer;
-              join = `,
+              join2 = `,
 ${indentation}`;
               whitespace = " ";
             }
@@ -9897,7 +9897,7 @@ ${indentation}`;
               const tmp = stringifyArrayReplacer(key3, value2[key3], stack, replacer, spacer, indentation);
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key3)}:${whitespace}${tmp}`;
-                separator = join;
+                separator = join2;
               }
             }
             if (spacer !== "" && separator.length > 1) {
@@ -9955,20 +9955,20 @@ ${originalIndentation}`;
               indentation += spacer;
               let res2 = `
 ${indentation}`;
-              const join2 = `,
+              const join3 = `,
 ${indentation}`;
               const maximumValuesToStringify = Math.min(value2.length, maximumBreadth);
               let i = 0;
               for (; i < maximumValuesToStringify - 1; i++) {
                 const tmp2 = stringifyIndent(String(i), value2[i], stack, spacer, indentation);
                 res2 += tmp2 !== void 0 ? tmp2 : "null";
-                res2 += join2;
+                res2 += join3;
               }
               const tmp = stringifyIndent(String(i), value2[i], stack, spacer, indentation);
               res2 += tmp !== void 0 ? tmp : "null";
               if (value2.length - 1 > maximumBreadth) {
                 const removedKeys = value2.length - maximumBreadth - 1;
-                res2 += `${join2}"... ${getItemCount(removedKeys)} not stringified"`;
+                res2 += `${join3}"... ${getItemCount(removedKeys)} not stringified"`;
               }
               res2 += `
 ${originalIndentation}`;
@@ -9984,16 +9984,16 @@ ${originalIndentation}`;
               return '"[Object]"';
             }
             indentation += spacer;
-            const join = `,
+            const join2 = `,
 ${indentation}`;
             let res = "";
             let separator = "";
             let maximumPropertiesToStringify = Math.min(keyLength, maximumBreadth);
             if (isTypedArrayWithEntries(value2)) {
-              res += stringifyTypedArray(value2, join, maximumBreadth);
+              res += stringifyTypedArray(value2, join2, maximumBreadth);
               keys = keys.slice(value2.length);
               maximumPropertiesToStringify -= value2.length;
-              separator = join;
+              separator = join2;
             }
             if (deterministic) {
               keys = sort(keys, comparator);
@@ -10004,13 +10004,13 @@ ${indentation}`;
               const tmp = stringifyIndent(key3, value2[key3], stack, spacer, indentation);
               if (tmp !== void 0) {
                 res += `${separator}${strEscape(key3)}: ${tmp}`;
-                separator = join;
+                separator = join2;
               }
             }
             if (keyLength > maximumBreadth) {
               const removedKeys = keyLength - maximumBreadth;
               res += `${separator}"...": "${getItemCount(removedKeys)} not stringified"`;
-              separator = join;
+              separator = join2;
             }
             if (separator !== "") {
               res = `
@@ -17075,7 +17075,7 @@ var require_compile = __commonJS({
       const schOrFunc = root.refs[ref4];
       if (schOrFunc)
         return schOrFunc;
-      let _sch = resolve2.call(this, root, ref4);
+      let _sch = resolve3.call(this, root, ref4);
       if (_sch === void 0) {
         const schema = (_a = root.localRefs) === null || _a === void 0 ? void 0 : _a[ref4];
         const { schemaId } = this.opts;
@@ -17102,7 +17102,7 @@ var require_compile = __commonJS({
     function sameSchemaEnv(s1, s2) {
       return s1.schema === s2.schema && s1.root === s2.root && s1.baseId === s2.baseId;
     }
-    function resolve2(root, ref4) {
+    function resolve3(root, ref4) {
       let sch;
       while (typeof (sch = this.refs[ref4]) == "string")
         ref4 = sch;
@@ -17966,7 +17966,7 @@ var require_fast_uri = __commonJS({
       }
       return uri;
     }
-    function resolve2(baseURI, relativeURI, options) {
+    function resolve3(baseURI, relativeURI, options) {
       const schemelessOptions = options ? Object.assign({ scheme: "null" }, options) : { scheme: "null" };
       const {
         parsed: baseParsed,
@@ -18357,7 +18357,7 @@ var require_fast_uri = __commonJS({
     var fastUri = {
       SCHEMES,
       normalize: normalize4,
-      resolve: resolve2,
+      resolve: resolve3,
       resolveComponent,
       equal,
       serialize,
@@ -23794,7 +23794,7 @@ var require_fast_uri2 = __commonJS({
       }
       return uri;
     }
-    function resolve2(baseURI, relativeURI, options) {
+    function resolve3(baseURI, relativeURI, options) {
       const schemelessOptions = options ? Object.assign({ scheme: "null" }, options) : { scheme: "null" };
       const {
         parsed: baseParsed,
@@ -24221,7 +24221,7 @@ var require_fast_uri2 = __commonJS({
     var fastUri = {
       SCHEMES,
       normalize: normalize4,
-      resolve: resolve2,
+      resolve: resolve3,
       resolveComponent,
       equal,
       serialize,
@@ -28170,7 +28170,7 @@ var require_compile2 = __commonJS({
       const schOrFunc = root.refs[ref4];
       if (schOrFunc)
         return schOrFunc;
-      let _sch = resolve2.call(this, root, ref4);
+      let _sch = resolve3.call(this, root, ref4);
       if (_sch === void 0) {
         const schema = (_a = root.localRefs) === null || _a === void 0 ? void 0 : _a[ref4];
         const { schemaId } = this.opts;
@@ -28197,7 +28197,7 @@ var require_compile2 = __commonJS({
     function sameSchemaEnv(s1, s2) {
       return s1.schema === s2.schema && s1.root === s2.root && s1.baseId === s2.baseId;
     }
-    function resolve2(root, ref4) {
+    function resolve3(root, ref4) {
       let sch;
       while (typeof (sch = this.refs[ref4]) == "string")
         ref4 = sch;
@@ -29061,7 +29061,7 @@ var require_fast_uri3 = __commonJS({
       }
       return uri;
     }
-    function resolve2(baseURI, relativeURI, options) {
+    function resolve3(baseURI, relativeURI, options) {
       const schemelessOptions = options ? Object.assign({ scheme: "null" }, options) : { scheme: "null" };
       const {
         parsed: baseParsed,
@@ -29452,7 +29452,7 @@ var require_fast_uri3 = __commonJS({
     var fastUri = {
       SCHEMES,
       normalize: normalize4,
-      resolve: resolve2,
+      resolve: resolve3,
       resolveComponent,
       equal,
       serialize,
@@ -43503,9 +43503,9 @@ var require_light_my_request = __commonJS({
         const res = new Response(req2, callback);
         return makeRequest(dispatchFunc, server, req2, res);
       } else {
-        return new Promise((resolve2, reject) => {
+        return new Promise((resolve3, reject) => {
           const req2 = new RequestConstructor(options);
-          const res = new Response(req2, resolve2, reject);
+          const res = new Response(req2, resolve3, reject);
           makeRequest(dispatchFunc, server, req2, res);
         });
       }
@@ -48544,7 +48544,7 @@ var require_buffer = __commonJS({
       const isCompatible = typeof data4 === "object" && data4.constructor.name === "EncoderBuffer" && typeof data4.length === "number" && typeof data4.join === "function";
       return isCompatible;
     };
-    EncoderBuffer.prototype.join = function join(out, offset2) {
+    EncoderBuffer.prototype.join = function join2(out, offset2) {
       if (!out)
         out = Buffer2.alloc(this.length);
       if (!offset2)
@@ -50433,8 +50433,8 @@ var require_utils4 = __commonJS({
         return [callback];
       }
       let promiseResolve, promiseReject;
-      const promise = new Promise((resolve2, reject) => {
-        promiseResolve = resolve2;
+      const promise = new Promise((resolve3, reject) => {
+        promiseResolve = resolve3;
         promiseReject = reject;
       });
       return [
@@ -52236,9 +52236,9 @@ var require_jwt = __commonJS({
         }
         const reply = this;
         if (next2 === void 0) {
-          return new Promise(function(resolve2, reject) {
+          return new Promise(function(resolve3, reject) {
             reply[jwtSignName](payload, options2, function(err4, val) {
-              err4 ? reject(err4) : resolve2(val);
+              err4 ? reject(err4) : resolve3(val);
             });
           });
         }
@@ -52292,9 +52292,9 @@ var require_jwt = __commonJS({
         };
         const request = this;
         if (next2 === void 0) {
-          return new Promise(function(resolve2, reject) {
+          return new Promise(function(resolve3, reject) {
             request[jwtDecodeName](options2, function(err4, val) {
-              err4 ? reject(err4) : resolve2(val);
+              err4 ? reject(err4) : resolve3(val);
             });
           });
         }
@@ -52309,9 +52309,9 @@ var require_jwt = __commonJS({
       function requestVerify(options2, next2) {
         const request = this;
         if (next2 === void 0) {
-          return new Promise(function(resolve2, reject) {
+          return new Promise(function(resolve3, reject) {
             request[jwtVerifyName](options2, function(err4, val) {
-              err4 ? reject(err4) : resolve2(val);
+              err4 ? reject(err4) : resolve3(val);
             });
           });
         }
@@ -67432,9 +67432,9 @@ body::before,body::after{content:none!important;display:none!important;backgroun
 .js-anim .aparece,.aparece{opacity:1!important;transform:none!important}
 body{font-family:var(--c-font);line-height:1.47}
 h1,h2,h3,h4,.big,.word,.price,.kpi b,.tile b,.card .big{font-family:var(--c-display)!important;letter-spacing:0!important}
-h1{font-size:24px!important;font-weight:600!important;line-height:1.25!important;letter-spacing:-.02em!important}
-@media (max-width:640px){h1{font-size:20px!important}}
-h2{font-size:18px;font-weight:600!important;line-height:1.3}
+h1{font-size:20px!important;font-weight:600!important;line-height:1.25!important;letter-spacing:-.02em!important}
+@media (max-width:640px){h1{font-size:18px!important}}
+h2{font-size:16px;font-weight:600!important;line-height:1.3}
 h3{font-weight:600!important;line-height:1.35}
 h1 em,h2 em{font-style:normal;background:none!important;color:inherit!important;padding:0!important}
 .big,.word,.price,.kpi b,.tile b,.card .big{font-weight:700!important}
@@ -67448,9 +67448,9 @@ a,button,.btn,.access-btn,.cta,input,select,textarea,summary{transition:backgrou
 main a:not(.button):not(.access-btn):not(.option):not(.menu-link):not(.side-link):not(.btn):not(.cta):not(.pill):not(.perfil):not(.logo){text-decoration-color:var(--c-link-line)!important;text-decoration-thickness:1px!important;text-underline-offset:3px}
 .code,code,kbd{font-family:var(--c-mono)}
 main h2,main h3{text-transform:none!important;letter-spacing:0!important;border-left:0!important;padding-left:0!important}
-main h2{font-size:16px!important}
+main h2{font-size:15px!important}
 main h3{font-size:14px!important}
-.titulo{font-size:16px!important;font-weight:600!important;letter-spacing:0!important}
+.titulo{font-size:15px!important;font-weight:600!important;letter-spacing:0!important}
 .cta:not(:disabled){background-color:var(--c-cta);color:var(--c-on-cta)!important}
 .cta:not(:disabled):hover{background-color:var(--c-cta-hover)}
 /* Como las listas agrupadas de iOS: el grupo se separa del fondo por el color, sin l\xEDnea. */
@@ -67535,7 +67535,7 @@ body>.cabecera-sitio{padding-top:max(8px,env(safe-area-inset-top))}
 /* Tel\xE9fonos de 320\u2013360 px (25/11/2026): la cabecera cabe sin desbordar; el t\xEDtulo baja a dos l\xEDneas si hace falta. */
 @media (max-width:360px){.cabecera-sitio{column-gap:8px}.cabecera-sitio .marca img{height:30px;padding:3px 5px}.cabecera-sitio a.pill{padding:0 10px;font-size:13px}.cabecera-sitio .acciones-sitio{gap:6px}.cabecera-sitio .titulo-sitio{white-space:normal}}
 /* Tableta (651\u20131000 px): el t\xEDtulo va en la fila del logo pero puede partir en dos l\xEDneas, as\xED no se monta sobre el logo. */
-@media (min-width:651px) and (max-width:1000px){.cabecera-sitio .titulo-sitio{white-space:normal;font-size:16px;justify-self:stretch}}
+@media (min-width:651px) and (max-width:1000px){.cabecera-sitio .titulo-sitio{white-space:normal;font-size:15px;justify-self:stretch}}
 ${PALETAS_CSS}
 ${NEGRO_AMBAR_CSS}`;
   }
@@ -67672,7 +67672,7 @@ function pieSitio(nav = siteLinksNav(null)) {
   return `<footer class="pie-sitio">${nav}${socialLinks()}<p class="legal">Consulta los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP) \xB7 <a href="/admin/login">Acceso del equipo</a></p>${copyrightLine()}</footer>`;
 }
 function noEncontradaHtml(nonce2) {
-  return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>P\xE1gina no encontrada \xB7 AutoMantPro</title><style nonce="${nonce2}">${THEME_TOKENS}*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.5 var(--c-font)}main a{color:var(--c-link)}main{max-width:1272px;margin:auto;padding:16px}${SISTEMA}</style></head><body><main>${cabeceraSitio(nonce2)}<h1>No encontramos esa p\xE1gina</h1><p>Puede que el enlace haya cambiado. <a href="/">Volver al inicio</a></p>${pieSitio()}</main></body></html>`;
+  return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>P\xE1gina no encontrada \xB7 AutoMantPro</title><style nonce="${nonce2}">${THEME_TOKENS}*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.5 var(--c-font)}main a{color:var(--c-link)}main{max-width:1272px;margin:auto;padding:16px}${SISTEMA}</style></head><body><main>${cabeceraSitio(nonce2)}<h1>No encontramos esa p\xE1gina</h1><p>Puede que el enlace haya cambiado. <a href="/">Volver al inicio</a></p>${pieSitio()}</main></body></html>`;
 }
 var ICONOS_LINEA, SVG, SOL, LUNA, TEMA_SCRIPT;
 var init_navegacion = __esm({
@@ -67781,13 +67781,13 @@ var require_bcrypt = __commonJS({
             throw Error("Illegal callback: " + typeof callback);
           _async(callback);
         } else
-          return new Promise(function(resolve2, reject) {
+          return new Promise(function(resolve3, reject) {
             _async(function(err4, res) {
               if (err4) {
                 reject(err4);
                 return;
               }
-              resolve2(res);
+              resolve3(res);
             });
           });
       };
@@ -67816,13 +67816,13 @@ var require_bcrypt = __commonJS({
             throw Error("Illegal callback: " + typeof callback);
           _async(callback);
         } else
-          return new Promise(function(resolve2, reject) {
+          return new Promise(function(resolve3, reject) {
             _async(function(err4, res) {
               if (err4) {
                 reject(err4);
                 return;
               }
-              resolve2(res);
+              resolve3(res);
             });
           });
       };
@@ -67867,13 +67867,13 @@ var require_bcrypt = __commonJS({
             throw Error("Illegal callback: " + typeof callback);
           _async(callback);
         } else
-          return new Promise(function(resolve2, reject) {
+          return new Promise(function(resolve3, reject) {
             _async(function(err4, res) {
               if (err4) {
                 reject(err4);
                 return;
               }
-              resolve2(res);
+              resolve3(res);
             });
           });
       };
@@ -100956,7 +100956,7 @@ var require_named_placeholders = __commonJS({
         }
         return s;
       }
-      function join(tree) {
+      function join2(tree) {
         if (tree.length === 1) {
           return tree;
         }
@@ -100982,7 +100982,7 @@ var require_named_placeholders = __commonJS({
         if (cache && (tree = cache.get(query))) {
           return toArrayParams(tree, paramsObj);
         }
-        tree = join(parse2(query));
+        tree = join2(parse2(query));
         if (cache) {
           cache.set(query, tree);
         }
@@ -101173,11 +101173,11 @@ var require_connection = __commonJS({
             const config = this.config;
             tracePromise(
               connectChannel,
-              () => new Promise((resolve2, reject) => {
+              () => new Promise((resolve3, reject) => {
                 let onConnect, onError;
                 onConnect = (param) => {
                   this.removeListener("error", onError);
-                  resolve2(param);
+                  resolve3(param);
                 };
                 onError = (err4) => {
                   this.removeListener("connect", onConnect);
@@ -101624,9 +101624,9 @@ var require_connection = __commonJS({
         } else if (shouldTrace(queryChannel)) {
           tracePromise(
             queryChannel,
-            () => new Promise((resolve2, reject) => {
+            () => new Promise((resolve3, reject) => {
               cmdQuery.once("error", reject);
-              cmdQuery.once("end", () => resolve2());
+              cmdQuery.once("end", () => resolve3());
               this.addCommand(cmdQuery);
             }),
             () => {
@@ -101773,12 +101773,12 @@ var require_connection = __commonJS({
         } else if (shouldTrace(executeChannel)) {
           tracePromise(
             executeChannel,
-            () => new Promise((resolve2, reject) => {
+            () => new Promise((resolve3, reject) => {
               prepareAndExecute((err4) => {
                 executeCommand.emit("error", err4);
               });
               executeCommand.once("error", reject);
-              executeCommand.once("end", () => resolve2());
+              executeCommand.once("end", () => resolve3());
             }),
             () => {
               const server = getServerContext(this.config);
@@ -102045,13 +102045,13 @@ var require_make_done_cb = __commonJS({
   "node_modules/mysql2/lib/promise/make_done_cb.js"(exports, module) {
     "use strict";
     var { applyCapturedStack } = require_capture_local_err();
-    function makeDoneCb(resolve2, reject, stackHolder) {
+    function makeDoneCb(resolve3, reject, stackHolder) {
       return function(err4, rows75, fields) {
         if (err4) {
           applyCapturedStack(err4, stackHolder);
           reject(err4);
         } else {
-          resolve2([rows75, fields]);
+          resolve3([rows75, fields]);
         }
       };
     }
@@ -102073,8 +102073,8 @@ var require_prepared_statement_info = __commonJS({
       execute(parameters) {
         const s = this.statement;
         const stackHolder = s._connection.config.trace ? captureStackHolder(_PromisePreparedStatementInfo.prototype.execute) : void 0;
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           if (parameters) {
             s.execute(parameters, done);
           } else {
@@ -102083,9 +102083,9 @@ var require_prepared_statement_info = __commonJS({
         });
       }
       close() {
-        return new this.Promise((resolve2) => {
+        return new this.Promise((resolve3) => {
           this.statement.close();
-          resolve2();
+          resolve3();
         });
       }
     };
@@ -102158,8 +102158,8 @@ var require_connection2 = __commonJS({
             "Callback function is not available with promise clients."
           );
         }
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           if (params2 !== void 0) {
             c.query(query, params2, done);
           } else {
@@ -102175,8 +102175,8 @@ var require_connection2 = __commonJS({
             "Callback function is not available with promise clients."
           );
         }
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           if (params2 !== void 0) {
             c.execute(query, params2, done);
           } else {
@@ -102185,8 +102185,8 @@ var require_connection2 = __commonJS({
         });
       }
       end() {
-        return new this.Promise((resolve2) => {
-          this.connection.end(resolve2);
+        return new this.Promise((resolve3) => {
+          this.connection.end(resolve3);
         });
       }
       async [Symbol.asyncDispose]() {
@@ -102197,37 +102197,37 @@ var require_connection2 = __commonJS({
       beginTransaction() {
         const c = this.connection;
         const stackHolder = c.config.trace ? captureStackHolder(_PromiseConnection.prototype.beginTransaction) : void 0;
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           c.beginTransaction(done);
         });
       }
       commit() {
         const c = this.connection;
         const stackHolder = c.config.trace ? captureStackHolder(_PromiseConnection.prototype.commit) : void 0;
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           c.commit(done);
         });
       }
       rollback() {
         const c = this.connection;
         const stackHolder = c.config.trace ? captureStackHolder(_PromiseConnection.prototype.rollback) : void 0;
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           c.rollback(done);
         });
       }
       ping() {
         const c = this.connection;
         const stackHolder = c.config.trace ? captureStackHolder(_PromiseConnection.prototype.ping) : void 0;
-        return new this.Promise((resolve2, reject) => {
+        return new this.Promise((resolve3, reject) => {
           c.ping((err4) => {
             if (err4) {
               applyCapturedStack(err4, stackHolder);
               reject(err4);
             } else {
-              resolve2(true);
+              resolve3(true);
             }
           });
         });
@@ -102235,13 +102235,13 @@ var require_connection2 = __commonJS({
       reset() {
         const c = this.connection;
         const stackHolder = c.config.trace ? captureStackHolder(_PromiseConnection.prototype.reset) : void 0;
-        return new this.Promise((resolve2, reject) => {
+        return new this.Promise((resolve3, reject) => {
           c.reset((err4) => {
             if (err4) {
               applyCapturedStack(err4, stackHolder);
               reject(err4);
             } else {
-              resolve2();
+              resolve3();
             }
           });
         });
@@ -102249,13 +102249,13 @@ var require_connection2 = __commonJS({
       connect() {
         const c = this.connection;
         const stackHolder = c.config.trace ? captureStackHolder(_PromiseConnection.prototype.connect) : void 0;
-        return new this.Promise((resolve2, reject) => {
+        return new this.Promise((resolve3, reject) => {
           c.connect((err4, param) => {
             if (err4) {
               applyCapturedStack(err4, stackHolder);
               reject(err4);
             } else {
-              resolve2(param);
+              resolve3(param);
             }
           });
         });
@@ -102264,7 +102264,7 @@ var require_connection2 = __commonJS({
         const c = this.connection;
         const promiseImpl = this.Promise;
         const stackHolder = c.config.trace ? captureStackHolder(_PromiseConnection.prototype.prepare) : void 0;
-        return new this.Promise((resolve2, reject) => {
+        return new this.Promise((resolve3, reject) => {
           c.prepare(options, (err4, statement) => {
             if (err4) {
               applyCapturedStack(err4, stackHolder);
@@ -102274,7 +102274,7 @@ var require_connection2 = __commonJS({
                 statement,
                 promiseImpl
               );
-              resolve2(wrappedStatement);
+              resolve3(wrappedStatement);
             }
           });
         });
@@ -102282,13 +102282,13 @@ var require_connection2 = __commonJS({
       changeUser(options) {
         const c = this.connection;
         const stackHolder = c.config.trace ? captureStackHolder(_PromiseConnection.prototype.changeUser) : void 0;
-        return new this.Promise((resolve2, reject) => {
+        return new this.Promise((resolve3, reject) => {
           c.changeUser(options, (err4) => {
             if (err4) {
               applyCapturedStack(err4, stackHolder);
               reject(err4);
             } else {
-              resolve2();
+              resolve3();
             }
           });
         });
@@ -102778,12 +102778,12 @@ var require_pool2 = __commonJS({
       }
       getConnection() {
         const corePool = this.pool;
-        return new this.Promise((resolve2, reject) => {
+        return new this.Promise((resolve3, reject) => {
           corePool.getConnection((err4, coreConnection) => {
             if (err4) {
               reject(err4);
             } else {
-              resolve2(new PromisePoolConnection(coreConnection, this.Promise));
+              resolve3(new PromisePoolConnection(coreConnection, this.Promise));
             }
           });
         });
@@ -102799,8 +102799,8 @@ var require_pool2 = __commonJS({
             "Callback function is not available with promise clients."
           );
         }
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           if (args !== void 0) {
             corePool.query(sql, args, done);
           } else {
@@ -102816,8 +102816,8 @@ var require_pool2 = __commonJS({
             "Callback function is not available with promise clients."
           );
         }
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           if (args) {
             corePool.execute(sql, args, done);
           } else {
@@ -102828,13 +102828,13 @@ var require_pool2 = __commonJS({
       end() {
         const corePool = this.pool;
         const stackHolder = corePool.config.connectionConfig.trace ? captureStackHolder(_PromisePool.prototype.end) : void 0;
-        return new this.Promise((resolve2, reject) => {
+        return new this.Promise((resolve3, reject) => {
           corePool.end((err4) => {
             if (err4) {
               applyCapturedStack(err4, stackHolder);
               reject(err4);
             } else {
-              resolve2();
+              resolve3();
             }
           });
         });
@@ -103276,12 +103276,12 @@ var require_pool_cluster2 = __commonJS({
       }
       getConnection() {
         const corePoolNamespace = this.poolNamespace;
-        return new this.Promise((resolve2, reject) => {
+        return new this.Promise((resolve3, reject) => {
           corePoolNamespace.getConnection((err4, coreConnection) => {
             if (err4) {
               reject(err4);
             } else {
-              resolve2(new PromisePoolConnection(coreConnection, this.Promise));
+              resolve3(new PromisePoolConnection(coreConnection, this.Promise));
             }
           });
         });
@@ -103294,8 +103294,8 @@ var require_pool_cluster2 = __commonJS({
             "Callback function is not available with promise clients."
           );
         }
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           corePoolNamespace.query(sql, values2, done);
         });
       }
@@ -103307,8 +103307,8 @@ var require_pool_cluster2 = __commonJS({
             "Callback function is not available with promise clients."
           );
         }
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           corePoolNamespace.execute(sql, values2, done);
         });
       }
@@ -103347,9 +103347,9 @@ var require_promise2 = __commonJS({
           "no Promise implementation available.Use promise-enabled node version or pass userland Promise implementation as parameter, for example: { Promise: require('bluebird') }"
         );
       }
-      return new thePromise((resolve2, reject) => {
+      return new thePromise((resolve3, reject) => {
         coreConnection.once("connect", () => {
-          resolve2(new PromiseConnection(coreConnection, thePromise));
+          resolve3(new PromiseConnection(coreConnection, thePromise));
         });
         coreConnection.once("error", (err4) => {
           applyCapturedStack(err4, stackHolder);
@@ -103376,7 +103376,7 @@ var require_promise2 = __commonJS({
       }
       getConnection(pattern, selector) {
         const corePoolCluster = this.poolCluster;
-        return new this.Promise((resolve2, reject) => {
+        return new this.Promise((resolve3, reject) => {
           corePoolCluster.getConnection(
             pattern,
             selector,
@@ -103384,7 +103384,7 @@ var require_promise2 = __commonJS({
               if (err4) {
                 reject(err4);
               } else {
-                resolve2(new PromisePoolConnection(coreConnection, this.Promise));
+                resolve3(new PromisePoolConnection(coreConnection, this.Promise));
               }
             }
           );
@@ -103398,8 +103398,8 @@ var require_promise2 = __commonJS({
             "Callback function is not available with promise clients."
           );
         }
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           corePoolCluster.query(sql, args, done);
         });
       }
@@ -103413,8 +103413,8 @@ var require_promise2 = __commonJS({
             "Callback function is not available with promise clients."
           );
         }
-        return new this.Promise((resolve2, reject) => {
-          const done = makeDoneCb(resolve2, reject, stackHolder);
+        return new this.Promise((resolve3, reject) => {
+          const done = makeDoneCb(resolve3, reject, stackHolder);
           corePoolCluster.execute(sql, args, done);
         });
       }
@@ -103427,13 +103427,13 @@ var require_promise2 = __commonJS({
       end() {
         const corePoolCluster = this.poolCluster;
         const stackHolder = captureStackHolder(_PromisePoolCluster.prototype.end);
-        return new this.Promise((resolve2, reject) => {
+        return new this.Promise((resolve3, reject) => {
           corePoolCluster.end((err4) => {
             if (err4) {
               applyCapturedStack(err4, stackHolder);
               reject(err4);
             } else {
-              resolve2();
+              resolve3();
             }
           });
         });
@@ -103945,8 +103945,8 @@ var init_account_phone_store = __esm({
           const [user] = identity ? await rows9(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL", [identity.userId]) : await rows9(conn, "SELECT id, role FROM `User` WHERE phone IN (?, ?) AND deletedAt IS NULL", [`+${input.oldPhone}`, input.oldPhone]);
           if (!user || user.role === "admin")
             return false;
-          const open = await rows9(conn, "SELECT newPhone FROM `AccountRecovery` WHERE userId = ? AND status = 'recibida' FOR UPDATE", [user.id]);
-          if (open.length >= 5 || open.some((r) => r.newPhone === input.newPhone))
+          const open2 = await rows9(conn, "SELECT newPhone FROM `AccountRecovery` WHERE userId = ? AND status = 'recibida' FOR UPDATE", [user.id]);
+          if (open2.length >= 5 || open2.some((r) => r.newPhone === input.newPhone))
             return false;
           await conn.query("INSERT INTO `AccountRecovery` (id, userId, newPhone, claimantName, detail) VALUES (?, ?, ?, ?, ?)", [randomUUID7(), user.id, input.newPhone, input.name, input.detail]);
           return true;
@@ -104267,9 +104267,9 @@ header.cabecera h1,header.cabecera h1 em,.beneficios .ico,.cta,.access-btn,.boar
 body{background:var(--v-bg)!important;color:var(--v-ink)}
 body::before{opacity:.06!important}
 body::after{display:none!important}
-header.cabecera h1{font:600 20px/1.25 var(--c-display)!important;letter-spacing:-.02em!important;color:var(--v-ink)!important}
+header.cabecera h1{font:600 18px/1.25 var(--c-display)!important;letter-spacing:-.02em!important;color:var(--v-ink)!important}
 header.cabecera h1 em{font-style:normal;background:none!important;color:inherit!important;padding:0!important;text-shadow:none!important}
-@media (max-width:760px){header.cabecera h1{font-size:18px!important}}
+@media (max-width:760px){header.cabecera h1{font-size:16px!important}}
 .section{font:400 13px/1.3 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important;color:var(--c-muted)!important;border-left:0!important;padding-left:0!important}
 .section::before{display:none!important}
 .hero,.beneficios li,.profile-card,main details.gestionar>summary,.board{background:var(--v-surface)!important;background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:1px solid transparent!important;border-radius:12px!important;box-shadow:none!important}
@@ -104289,7 +104289,7 @@ main a:not(.access-btn):not(.pill):not(.perfil):not(.logo){text-decoration-color
 /* Ejemplo del informe con el mismo gr\xE1fico de estado que el panel: medidor, palabra y conteo. */
 .board .estado{grid-column:1/-1;display:flex;align-items:center;gap:16px}
 .board .estado small{display:block;font-size:13px;line-height:1.35;color:var(--c-muted)}
-.board .estado .word{display:block;font:700 20px/1.2 var(--c-font);color:var(--v-ink);margin:2px 0}
+.board .estado .word{display:block;font:700 18px/1.2 var(--c-font);color:var(--v-ink);margin:2px 0}
 .board>ul{grid-column:1/-1}
 /* Beneficios como botones de WhatsApp: toda la tarjeta abre el chat. */
 .beneficios li{position:relative}
@@ -104306,7 +104306,7 @@ main a:not(.access-btn):not(.pill):not(.perfil):not(.logo){text-decoration-color
     PANEL_SOBRIO = `
 :root{${PANEL_CLARO}}@media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){${PANEL_OSCURO}}}:root[data-tema="oscuro"]{${PANEL_OSCURO}}
 body{background-image:none!important}
-main>h1{font-size:24px!important;font-weight:700!important;letter-spacing:-.01em!important}
+main>h1{font-size:20px!important;font-weight:700!important;letter-spacing:-.01em!important}
 main h2,main h3,.pcard>h2,main section>h2,#login h2#entrar{font:600 14px/1.3 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important;border-left:0!important;padding-left:0!important;color:var(--c-ink)!important}
 section,.pcard,.kpi,details{border-radius:10px!important;box-shadow:none!important}
 #chat>.row2{background:var(--c-surface)!important;color:var(--c-ink)!important;border:1px solid var(--c-line)!important;box-shadow:none!important}
@@ -104453,7 +104453,7 @@ th,.section,p.section,.informe-cap{text-transform:uppercase}
 th{background:var(--c-sunk)}
 .big,.kpi b,.tile b,.price,.counts b,.num,.mono,.word{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 .big,.kpi b,.tile b{font-weight:800;font-size:1.08em;letter-spacing:-.02em}
-.card .big,.kpi b,.tile b{font-size:clamp(32px,8vw,36px);font-weight:800;font-variant-numeric:tabular-nums}
+.card .big,.kpi b,.tile b{font-size:clamp(26.2px,6.6vw,29.5px);font-weight:800;font-variant-numeric:tabular-nums}
 th,.section,p.section,.informe-cap{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--c-muted)}
 .card .kh,.card .kpi span,.card .tile span,.tile .kh{font-size:12px;letter-spacing:.06em;font-variant-caps:all-small-caps;color:var(--c-muted)}
 main a:not(.button):not(.access-btn):not(.option):not(.menu-link):not(.side-link):not(.btn){color:var(--c-ink);text-decoration-color:var(--c-link-line);text-decoration-thickness:2px;text-underline-offset:3px}
@@ -104495,13 +104495,13 @@ ${CARD_SURFACES}{background:var(--c-surface);-webkit-backdrop-filter:none;backdr
 .hero{background:var(--c-hero);color:var(--c-hero-ink);border:1px solid var(--c-hero-line);padding:22px 18px 20px}
 .hero .lead{color:var(--c-hero-muted)}
 .hero .silueta{color:var(--c-head-brand);opacity:.1;width:170px}
-h1{font-family:var(--c-display);font-size:clamp(26px,7.4vw,32px)}
+h1{font-family:var(--c-display);font-size:clamp(21.3px,6.1vw,26.2px)}
 .hero h1 em{color:var(--c-hero-ink);background:linear-gradient(transparent 88%,#fcf622 88%)}
 @media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) .hero{background:var(--c-surface);color:var(--c-hero-ink);border-color:var(--c-line)}}
 :root[data-tema="oscuro"] .hero{background:var(--c-surface);color:var(--c-hero-ink);border-color:var(--c-line)}
 .lead,.muted,.note,small,.detail,.meta dt,.scale,.kh,.kpi span,.tile span,.option i{color:var(--c-muted)}
 .hero>.lead{color:var(--c-hero-muted)}
-.lead{font-size:16px;line-height:1.5}
+.lead{font-size:15px;line-height:1.5}
 .trust{border:1px solid var(--c-line);padding:14px 16px}
 .trust li{flex-direction:column;align-items:flex-start;gap:4px}
 .trust b{font:800 clamp(22px,6.4vw,26px)/1 var(--c-display);letter-spacing:-.03em}
@@ -104514,7 +104514,7 @@ h1{font-family:var(--c-display);font-size:clamp(26px,7.4vw,32px)}
 .option:hover{border-color:var(--c-accent)}
 .option:focus-visible,.tema:focus-visible,.cta:focus-visible,.card>summary:focus-visible{outline-color:var(--c-focus)}
 .badge{border-radius:50%;background:var(--c-promo);color:var(--c-on-promo);width:44px;height:44px}
-.option b{font-family:var(--c-display);font-weight:700;font-size:16px;letter-spacing:-.015em}
+.option b{font-family:var(--c-display);font-weight:700;font-size:15px;letter-spacing:-.015em}
 .option i{font-size:14px;line-height:1.35}
 .option.ghost{border-color:var(--c-line)}
 .option.ghost .badge{background:transparent;color:var(--c-muted)}
@@ -104522,31 +104522,31 @@ h1{font-family:var(--c-display);font-size:clamp(26px,7.4vw,32px)}
 .board{background:var(--c-surface)}
 .board .pill{font-weight:700}
 .board .details h3{border:0;padding:0;font-size:12px;letter-spacing:0;text-transform:none;color:var(--c-muted)}
-.cta{${PILL_BUTTON};font-size:16px;min-height:56px;transition:background .2s ease}
+.cta{${PILL_BUTTON};font-size:15px;min-height:56px;transition:background .2s ease}
 .cta:hover{background:var(--c-cta-hover)}
 .cta:disabled:hover{background:var(--c-sunk)}
 .card{border:1px solid var(--c-line);margin-bottom:12px}
 .card>summary{font-family:var(--c-display);font-weight:700;letter-spacing:-.01em;min-height:56px}
-.steps li{font-size:16px;line-height:1.5}
+.steps li{font-size:15px;line-height:1.5}
 .steps li::before{background:var(--c-promo);color:var(--c-on-promo);font-family:var(--c-display)}
-.pregunta{font-family:var(--c-display);font-weight:700;letter-spacing:-.01em;font-size:16px}
+.pregunta{font-family:var(--c-display);font-weight:700;letter-spacing:-.01em;font-size:15px}
 .respuesta{font-size:14px;line-height:1.55}
 .small,.nota,.legal{font-size:14px}
 .small a,.legal a,.respuesta a{color:var(--c-link)}
 .code{border-radius:6px;padding:5px 9px;font-family:var(--c-mono)}
 .cap{text-transform:none;letter-spacing:0;font-size:12px}
 @media (max-width:360px){.trust{padding:12px}.option{padding:14px}}
-@media (max-height:700px){h1{font-size:24px}}
+@media (max-height:700px){h1{font-size:20px}}
 /* P\xE1ginas de contenido */
 .migas{font-size:13px;font-weight:500}
 .migas a,.enlaces a{color:var(--c-link)}
-.titulo{font-family:var(--c-display);font-size:20px}
-.servicio h3{font-family:var(--c-display);font-weight:700;font-size:16px}
+.titulo{font-family:var(--c-display);font-size:18px}
+.servicio h3{font-family:var(--c-display);font-weight:700;font-size:15px}
 .servicio p{font-size:14px;line-height:1.55}
 .datos span,.zonas span{border-radius:6px;padding:6px 10px}
 .enlaces a{display:inline-block;padding:6px 0}
 @media (max-width:640px){
- h1{font-size:clamp(24px,6.4vw,30px)}
+ h1{font-size:clamp(19.7px,5.2vw,24.6px)}
 .hero{padding:14px;margin-bottom:8px}
  .trust,.card,.option,.servicio,.taller,.mas,.vacio{padding:12px}
  .option{min-height:0;gap:8px}
@@ -104557,7 +104557,7 @@ h1{font-family:var(--c-display);font-size:clamp(26px,7.4vw,32px)}
  .card{margin-bottom:8px}
  .card>summary{min-height:44px;font-size:14px}
  .card[open]{padding-bottom:12px}
- .card>summary::after{font-size:18px}
+ .card>summary::after{font-size:16px}
  .option b,.pregunta,.titulo{font-size:calc(100% - 2px)}
  .option i,.beneficios span,.servicio p,.respuesta,.steps li{font-size:max(14px,calc(100% - 2px))}
  .small,.nota,.legal,.migas,.section,.subtitulo{font-size:max(12px,calc(100% - 2px))}
@@ -104573,13 +104573,13 @@ header .logo-img{height:36px;padding:3px 8px}
 form.login .logo-img,.brand .logo-img{flex:none}
 nav a{font-size:14px;font-weight:500;padding:9px 12px;min-height:40px;border-radius:8px}
 main{padding:20px 16px 40px}
-h1{font-family:var(--c-display);font-size:clamp(24px,6.4vw,32px)}
+h1{font-family:var(--c-display);font-size:clamp(19.7px,5.2vw,26.2px)}
 .shell main>h1,.shell main>.stack>h1{padding:0 0 12px;border-bottom:1px solid var(--c-line);margin:0 0 16px}
 h2,h3{font-family:var(--c-display);letter-spacing:-.01em}
 .grid{gap:14px}
 .card{border:1px solid var(--c-line);padding:20px;box-shadow:var(--c-shadow)}
 .card h2{font-family:var(--c-font);font-size:14px}
-.big{font-family:var(--c-display);font-weight:700;font-size:clamp(30px,8vw,38px);letter-spacing:-.03em;color:var(--c-ink)}
+.big{font-family:var(--c-display);font-weight:700;font-size:clamp(24.6px,6.6vw,31.2px);letter-spacing:-.03em;color:var(--c-ink)}
 button,a.button{${PILL_BUTTON};padding:10px 22px}
 header button{text-transform:none;letter-spacing:0;font-size:14px}
 input,select,textarea,.choice{border-radius:var(--c-r-sm)}
@@ -104603,9 +104603,9 @@ td.num,th.num{text-align:right}
 `;
     THEME_PILOT_LAYER = `${BASE2}
 main>.logo-img{margin:4px 0 8px}
-h1{font-family:var(--c-display);font-size:clamp(26px,7vw,34px)}
+h1{font-family:var(--c-display);font-size:clamp(21.3px,5.7vw,27.9px)}
 h2,h3{font-family:var(--c-display);letter-spacing:-.015em}
-main>p{font-size:16px;max-width:65ch}
+main>p{font-size:15px;max-width:65ch}
 section,details{border:1px solid var(--c-line);border-radius:12px;box-shadow:none}
 main>h1{padding:0 0 12px;border-bottom:1px solid var(--c-line);margin:0 0 12px}
 main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}
@@ -104617,8 +104617,8 @@ details>summary{font-family:var(--c-display);font-weight:700}
 @media (max-width:640px){
  main{padding:16px 12px 32px}
  section{padding:12px;margin:8px 0}
- h1{font-size:24px}
- h2{font-size:16px}
+ h1{font-size:20px}
+ h2{font-size:15px}
  h3{font-size:14px;margin-top:14px}
  label{font-size:12px;margin-top:8px}
  input,textarea,select{font-size:16px;min-height:44px}
@@ -104646,7 +104646,7 @@ body>header>div:last-child{color:var(--c-muted)}
 :root[data-tema="oscuro"] .index{background:#0f1216;border-color:#2c323b}:root[data-tema="oscuro"] .index-mobile nav{background:#0f1216;border-color:#2c323b}:root[data-tema="oscuro"] .index-mobile summary{border-color:#2c323b}
 .tile{padding:20px;border-radius:12px}
 .tile .kh{font-size:12px;font-variant-caps:all-small-caps;letter-spacing:.06em;color:var(--c-muted)}
-.tile b{font-size:clamp(32px,8vw,36px);font-weight:800}
+.tile b{font-size:clamp(26.2px,6.6vw,29.5px);font-weight:800}
 @media(max-width:560px){.tile{padding:16px}}
 main h2{font-size:12px;font-weight:700;letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}
 .tiles{gap:12px}
@@ -104675,7 +104675,7 @@ button{${PILL_BUTTON}}
 main{border:1px solid var(--c-line)}
 .brand{font-family:var(--c-display);font-weight:800;letter-spacing:-.02em}
 .brand{display:inline-block}
-h1{font-family:var(--c-display);font-size:clamp(26px,7vw,32px)}
+h1{font-family:var(--c-display);font-size:clamp(21.3px,5.7vw,26.2px)}
 h2{font-family:var(--c-display)}
 p,li{max-width:68ch}
 a{color:var(--c-link)}
@@ -104869,6 +104869,121 @@ var init_home_ads = __esm({
   }
 });
 
+// packages/api/dist/interfaces/entry/intro-video.js
+import { existsSync } from "node:fs";
+import { open, stat } from "node:fs/promises";
+import { join, resolve as resolve2 } from "node:path";
+function defaultMediaDir(cwd = process.cwd()) {
+  const dirs = [resolve2(cwd, "public/media"), resolve2(cwd, "packages/api/media"), resolve2(cwd, "media")];
+  return dirs.find((dir) => existsSync(join(dir, "intro-16x9.mp4"))) ?? dirs[0];
+}
+function introAvailable(dir) {
+  return Object.keys(FILES).every((name) => existsSync(join(dir, name)));
+}
+function parseRange(header, size) {
+  const match = /^bytes=(\d*)-(\d*)$/.exec(header.trim());
+  if (!match || match[1] === "" && match[2] === "")
+    return null;
+  const start = match[1] === "" ? Math.max(0, size - Number(match[2])) : Number(match[1]);
+  const end = match[1] === "" || match[2] === "" ? size - 1 : Math.min(size - 1, Number(match[2]));
+  return start <= end && start < size ? { start, end } : null;
+}
+function introMediaRoutes(app2, dir) {
+  for (const [name, type] of Object.entries(FILES)) {
+    app2.get(`/media/${name}`, async (request, reply) => {
+      const path = join(dir, name);
+      let size;
+      try {
+        size = (await stat(path)).size;
+      } catch {
+        return reply.code(404).send({ error: { code: "MEDIA_NOT_AVAILABLE" } });
+      }
+      reply.header("X-Content-Type-Options", "nosniff").header("Cache-Control", "public, max-age=3600").header("Accept-Ranges", "bytes").type(type);
+      const wanted = request.headers.range;
+      const range = wanted ? parseRange(wanted, size) : { start: 0, end: size - 1 };
+      if (!range)
+        return reply.code(416).header("Content-Range", `bytes */${size}`).send();
+      const body = Buffer.alloc(range.end - range.start + 1);
+      const file = await open(path, "r");
+      try {
+        await file.read(body, 0, body.length, range.start);
+      } finally {
+        await file.close();
+      }
+      if (wanted)
+        reply.code(206).header("Content-Range", `bytes ${range.start}-${range.end}/${size}`);
+      return reply.send(body);
+    });
+  }
+}
+var INTRO_DELAY_MS, INTRO_SEEN_KEY, FILES, INTRO_STYLES, introHtml, INTRO_SCRIPT;
+var init_intro_video = __esm({
+  "packages/api/dist/interfaces/entry/intro-video.js"() {
+    "use strict";
+    INTRO_DELAY_MS = 6e3;
+    INTRO_SEEN_KEY = "amp-intro";
+    FILES = {
+      "intro-16x9.mp4": "video/mp4",
+      "intro-9x16.mp4": "video/mp4",
+      "intro-16x9.jpg": "image/jpeg",
+      "intro-9x16.jpg": "image/jpeg"
+    };
+    INTRO_STYLES = `
+.intro{width:min(880px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:14px;border:1px solid var(--c-line);border-radius:var(--c-r);background:var(--c-surface);color:var(--c-ink);box-shadow:var(--c-shadow);font-family:var(--c-font)}
+.intro::backdrop{background:rgba(0,0,0,.65)}
+.intro-barra{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px}
+.intro-barra h2{margin:0;font:700 16px/1.3 var(--c-font);color:var(--c-ink)}
+.intro-cerrar,.intro-ver{min-height:44px;padding:9px 16px;border-radius:999px;cursor:pointer;font:700 14px/1.2 var(--c-font)}
+.intro-cerrar{flex:none;background:var(--c-sunk);color:var(--c-ink);border:1px solid var(--c-line)}
+.intro-marco{position:relative;display:grid;place-items:center;aspect-ratio:16/9;max-height:calc(100dvh - 110px);margin:0 auto;overflow:hidden;background:var(--c-sunk);border-radius:var(--c-r)}
+.intro-marco img,.intro-marco video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.intro-ver{position:relative;border:0;background:var(--c-cta);color:var(--c-on-cta)}
+.intro-cerrar:focus-visible,.intro-ver:focus-visible{outline:3px solid var(--c-accent);outline-offset:2px}
+.intro.vertical{width:min(420px,calc(100vw - 24px))}
+.intro.vertical .intro-marco{aspect-ratio:9/16;height:calc(100dvh - 110px);max-width:100%}
+`;
+    introHtml = `<dialog class="intro" id="intro" aria-labelledby="intro-titulo">
+  <div class="intro-barra"><h2 id="intro-titulo">Bienvenido a AutoMantPro</h2><button type="button" class="intro-cerrar" id="intro-cerrar" autofocus>Cerrar</button></div>
+  <div class="intro-marco" id="intro-marco"><button type="button" class="intro-ver" id="intro-ver">Ver video</button></div>
+</dialog>`;
+    INTRO_SCRIPT = `
+(function(){
+  var d=document.getElementById('intro');
+  if(!d||typeof d.showModal!=='function'||/[?&]perfil=/.test(location.search))return;
+  var clave='${INTRO_SEEN_KEY}';
+  // Sin almacenamiento no se puede recordar la visita: mejor no mostrarlo que repetirlo.
+  try{if(localStorage.getItem(clave))return;}catch(e){return;}
+  var marco=document.getElementById('intro-marco'),ver=document.getElementById('intro-ver'),nombre='';
+  var abrir=function(){
+    if(document.visibilityState!=='visible'){document.addEventListener('visibilitychange',abrir,{once:true});return;}
+    try{if(localStorage.getItem(clave))return;localStorage.setItem(clave,'1');}catch(e){return;}
+    var vertical=!!(window.matchMedia&&window.matchMedia('(max-width:650px) and (orientation:portrait)').matches);
+    nombre=vertical?'intro-9x16':'intro-16x9';
+    d.classList.toggle('vertical',vertical);
+    var img=document.createElement('img');img.alt='';img.src='/media/'+nombre+'.jpg';
+    marco.insertBefore(img,ver);
+    d.showModal();
+  };
+  setTimeout(abrir,${INTRO_DELAY_MS});
+  ver.addEventListener('click',function(){
+    var v=document.createElement('video');
+    v.controls=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';
+    v.setAttribute('aria-label','Video de presentaci\xF3n de AutoMantPro, con subt\xEDtulos');
+    v.poster='/media/'+nombre+'.jpg';v.src='/media/'+nombre+'.mp4';
+    marco.appendChild(v);ver.hidden=true;v.focus();
+    var p=v.play();if(p&&p.catch)p.catch(function(){});
+  });
+  document.getElementById('intro-cerrar').addEventListener('click',function(){d.close();});
+  d.addEventListener('click',function(ev){if(ev.target===d)d.close();});
+  d.addEventListener('close',function(){
+    var v=marco.querySelector('video');
+    if(v){v.pause();v.removeAttribute('src');v.load();v.remove();}
+  });
+})();
+`;
+  }
+});
+
 // packages/api/dist/interfaces/entry/page.js
 function sanitizeProfile(value2) {
   return typeof value2 === "string" && ENTRY_PROFILES.some((p) => p.key === value2) ? value2 : null;
@@ -105000,7 +105115,7 @@ ${seoHead({
   })}
 <meta name="author" content="AutoMantPro">
 <script type="application/ld+json" nonce="${nonce2}">${structuredData(input)}</script>
-<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}${ESCANER_STYLES}${TITULO_REFERENCIA}${HOME_UNA_PANTALLA}${HOME_ADS_STYLES}${HOME_MARGENES}</style>
+<style nonce="${nonce2}">${STYLES}${SCAN_STYLES}${SITE_LINKS_STYLES}${THEME_ENTRY_LAYER}${PORTADA_STYLES}${COMPACTO_STYLES}${sobrioStyles()}${SISTEMA}${ESCANER_STYLES}${TITULO_REFERENCIA}${HOME_UNA_PANTALLA}${HOME_ADS_STYLES}${HOME_MARGENES}${input.intro ? INTRO_STYLES : ""}</style>
 <script nonce="${nonce2}">${THEME_BOOT}</script>
 </head>
 <body><a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -105037,6 +105152,8 @@ ${seoHead({
   </footer>
 </main>
 <script nonce="${nonce2}">${SCRIPT}</script>
+${input.intro ? `${introHtml}
+<script nonce="${nonce2}">${INTRO_SCRIPT}</script>` : ""}
 </body>
 </html>`;
 }
@@ -105053,6 +105170,7 @@ var init_page = __esm({
     init_brand();
     init_taller_fondo();
     init_home_ads();
+    init_intro_video();
     init_marketing();
     ENTRY_PROFILES = [
       {
@@ -105119,7 +105237,7 @@ var init_page = __esm({
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
-  margin:0;min-height:100vh;color:var(--c-ink);background:var(--c-bg);font:16px/1.5 var(--c-font);
+  margin:0;min-height:100vh;color:var(--c-ink);background:var(--c-bg);font:15px/1.5 var(--c-font);
   display:flex;flex-direction:column;align-items:center;overflow-x:hidden;-webkit-tap-highlight-color:transparent;
   padding:calc(12px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left))
 }
@@ -105131,7 +105249,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:10px;fl
   clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%)
 }
 .mark svg{width:23px;height:23px;stroke-width:1.9}
-.brand{font-weight:700;font-size:18px;letter-spacing:-.01em;margin:0;line-height:1.1}
+.brand{font-weight:700;font-size:16px;letter-spacing:-.01em;margin:0;line-height:1.1}
 .brand span{color:var(--c-accent)}
 .brand small{display:block;font:400 13px/1.35 var(--c-font);color:var(--c-muted);margin-top:3px;max-width:24ch}
 .acciones{display:flex;align-items:center;gap:8px;margin-left:auto}
@@ -105146,7 +105264,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:10px;fl
 :root[data-tema="oscuro"] .tema .sol{display:none}
 :root[data-tema="oscuro"] .tema .luna{display:block}
 .pill{font:600 13px/1 var(--c-font);white-space:nowrap;color:var(--c-on-promo);background:var(--c-promo);padding:8px 12px;border-radius:999px}
-h1{font-size:24px;line-height:1.16;font-weight:800;letter-spacing:-.02em;margin:0 0 8px;text-wrap:balance}
+h1{font-size:20px;line-height:1.16;font-weight:800;letter-spacing:-.02em;margin:0 0 8px;text-wrap:balance}
 h1 em{font-style:normal;color:var(--c-accent)}
 .lead{font-size:14px;color:var(--c-muted);margin:0;max-width:46ch}
 .hero{position:relative;overflow:hidden;background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:16px;margin:0 0 10px}
@@ -105156,7 +105274,7 @@ h1 em{font-style:normal;color:var(--c-accent)}
 .red li{display:flex;align-items:center;gap:6px;font:600 13px/1 var(--c-font);color:var(--c-ink);background:var(--c-sunk);border-radius:999px;padding:7px 11px 7px 8px}
 .red li .ico{width:17px;height:17px;color:var(--c-accent)}
 .red .enlace{background:none;padding:0;color:var(--c-muted);font-weight:400}
-.section.ganas{display:block;margin:14px 0 10px;font:700 18px/1.35 var(--c-font);text-wrap:balance}
+.section.ganas{display:block;margin:14px 0 10px;font:700 16px/1.35 var(--c-font);text-wrap:balance}
 .beneficios{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px;padding:0;list-style:none}
 .beneficios li{background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:12px 14px}
 .beneficios b{display:flex;align-items:center;gap:8px;font:700 14px/1.25 var(--c-font);color:var(--c-ink);margin:0 0 4px}
@@ -105177,7 +105295,7 @@ h1 em{font-style:normal;color:var(--c-accent)}
 .option:focus-visible,.tema:focus-visible,.cta:focus-visible,.card>summary:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}
 .badge{width:42px;height:42px;flex:none;display:grid;place-items:center;color:var(--c-accent);background:var(--c-sunk);border-radius:var(--c-r)}
 .option .ico{width:23px;height:23px}
-.option b{display:block;font-size:16px;line-height:1.25;font-weight:600;letter-spacing:-.01em}
+.option b{display:block;font-size:15px;line-height:1.25;font-weight:600;letter-spacing:-.01em}
 .option i{display:block;font-style:normal;font-size:14px;color:var(--c-muted);margin-top:2px}
 .option .go{display:none}
 .access{margin:0 0 12px;min-width:0}
@@ -105198,16 +105316,16 @@ h1 em{font-style:normal;color:var(--c-accent)}
 .option.ghost .badge{background:transparent;color:var(--c-muted)}
 .cta{
   display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;border:0;border-radius:var(--c-r);cursor:pointer;
-  background:var(--c-cta);color:var(--c-on-cta);font:700 16px/1 var(--c-font)
+  background:var(--c-cta);color:var(--c-on-cta);font:700 15px/1 var(--c-font)
 }
 .cta:disabled{background:var(--c-sunk);color:var(--c-muted);cursor:not-allowed}
 .card{background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:0 16px;margin:0 0 10px}
 .card>summary{
   list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:52px;
-  font:600 16px/1.3 var(--c-font);color:var(--c-ink)
+  font:600 15px/1.3 var(--c-font);color:var(--c-ink)
 }
 .card>summary::-webkit-details-marker{display:none}
-.card>summary::after{content:"+";font-size:20px;line-height:1;color:var(--c-muted)}
+.card>summary::after{content:"+";font-size:18px;line-height:1;color:var(--c-muted)}
 .card[open]>summary::after{content:"\u2212"}
 .card[open]{padding-bottom:14px}
 .card[open]>summary{margin-bottom:6px}
@@ -105217,7 +105335,7 @@ h1 em{font-style:normal;color:var(--c-accent)}
   content:counter(s);flex:none;width:26px;height:26px;display:grid;place-items:center;border-radius:999px;
   font:700 13px/1 var(--c-font);color:var(--c-accent);background:var(--c-sunk)
 }
-.pregunta{font-size:16px;font-weight:600;margin:12px 0 4px;line-height:1.3}
+.pregunta{font-size:15px;font-weight:600;margin:12px 0 4px;line-height:1.3}
 .respuesta{font-size:14px;color:var(--c-muted);margin:0}
 .respuesta.spaced{margin-top:12px}
 .small{font-size:13px;color:var(--c-muted);margin:0 0 8px}
@@ -105229,9 +105347,9 @@ h1 em{font-style:normal;color:var(--c-accent)}
 .soon{margin-top:14px;font-weight:600;text-align:center;color:var(--c-warn)}
 .legal{font-size:13px;color:var(--c-muted);margin:6px 0 0;text-align:center}
 @media (prefers-reduced-motion:reduce){.option{transition:none}}
-@media (max-width:390px){h1{font-size:24px}.menu,.beneficios{grid-template-columns:1fr}.option{min-height:0}}
+@media (max-width:390px){h1{font-size:20px}.menu,.beneficios{grid-template-columns:1fr}.option{min-height:0}}
 /* Pantallas bajas: se recorta lo accesorio para que lo principal quepa sin desplazar. */
-@media (max-height:700px){h1{font-size:24px}.lead{font-size:14px}.hero{padding:12px 14px}}
+@media (max-height:700px){h1{font-size:20px}.lead{font-size:14px}.hero{padding:12px 14px}}
 `;
     THEME_BOOT = `
 (function(){try{if(document.documentElement.hasAttribute('data-paleta'))return;var t=null;try{t=localStorage.getItem('amp-tema');}catch(e){}document.documentElement.setAttribute('data-tema',t==='claro'?'claro':'oscuro');}catch(e){}})();
@@ -105459,13 +105577,13 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
 @media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) .hero{background:radial-gradient(110% 70% at 100% 0%,var(--amp-wash),transparent 62%),var(--c-surface)}}
 :root[data-tema="oscuro"] .hero{background:radial-gradient(110% 70% at 100% 0%,var(--amp-wash),transparent 62%),var(--c-surface)}
 .hero .silueta{top:14px;right:14px;bottom:auto;width:96px;opacity:.09;color:var(--c-hero-ink)}
-.hero h1{font-size:clamp(34px,9.6vw,54px);line-height:.98;letter-spacing:-.045em;margin:0 0 14px;max-width:13ch;padding-right:8px;font-weight:900}
+.hero h1{font-size:clamp(27.9px,7.9vw,44.3px);line-height:.98;letter-spacing:-.045em;margin:0 0 14px;max-width:13ch;padding-right:8px;font-weight:900}
 .hero h1 .pre{display:block;font-size:.5em;line-height:1.2;font-weight:650;letter-spacing:-.01em;color:var(--c-hero-muted);margin:0 0 .28em}
 .hero h1 .pre::before{content:"";display:inline-block;width:.9em;height:.16em;margin:0 .45em .22em 0;border-radius:2px;background:var(--amp-yellow);vertical-align:middle}
 .hero h1 em{position:relative;z-index:0;display:inline;font-style:normal;color:var(--c-hero-ink);background:linear-gradient(100deg,transparent .1em,var(--amp-yellow) .1em,var(--amp-yellow) calc(100% - .1em),transparent calc(100% - .1em)) no-repeat 0 88%/100% .34em;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .06em}
 @media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) .hero h1 em{background-size:100% .16em;text-shadow:0 0 28px rgba(252,246,34,.18)}}
 :root[data-tema="oscuro"] .hero h1 em{background-size:100% .16em;text-shadow:0 0 28px rgba(252,246,34,.18)}
-.hero .lead{font-size:16px;line-height:1.55;max-width:44ch}
+.hero .lead{font-size:15px;line-height:1.55;max-width:44ch}
 .red{justify-content:flex-start;margin-top:16px;gap:6px}
 .red li{background:var(--c-surface);border:1px solid var(--c-line);font-weight:600}
 .red li .ico{color:var(--c-ink)}
@@ -105493,14 +105611,14 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
 .access-btn:active,.cta:active{transform:scale(.97)}
 .profile-card{border-radius:14px;padding:12px 14px;transition:border-color .2s ease,box-shadow .25s ease}
 .profile-card:hover,.profile-card:focus-within{border-color:var(--c-ink);box-shadow:0 1px 2px rgba(13,17,23,.08),0 10px 26px rgba(13,17,23,.10)}
-.profile-card b,.option b{font-family:var(--c-display);font-weight:700;letter-spacing:-.015em;font-size:16px}
+.profile-card b,.option b{font-family:var(--c-display);font-weight:700;letter-spacing:-.015em;font-size:15px}
 .profile-card .badge,.option .badge{transition:transform .3s var(--amp-ease)}
 .profile-card:hover .badge{transform:rotate(-8deg)}
 .option.ghost{border-radius:14px;transition:border-color .2s ease}
 .option.ghost:hover{border-color:var(--c-ink)}
 .card{border-radius:14px;transition:border-color .2s ease}
 .card:hover{border-color:var(--c-muted)}
-.card>summary{font-size:16px}
+.card>summary{font-size:15px}
 .card>summary::after{transition:transform .3s var(--amp-ease)}
 .card[open]>summary::after{transform:rotate(180deg)}
 .card[open] .ganas{animation:amp-baja .35s var(--amp-ease) both}
@@ -105508,7 +105626,7 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
 .ganas li::before{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--c-ok-bg);font-size:12px;margin-top:2px}
 .beneficios li{border-radius:14px;padding:14px 16px;transition:border-color .2s ease}
 .beneficios li:hover{border-color:var(--c-muted)}
-.beneficios b{font-family:var(--c-display);font-size:16px;letter-spacing:-.015em;margin-bottom:6px}
+.beneficios b{font-family:var(--c-display);font-size:15px;letter-spacing:-.015em;margin-bottom:6px}
 .beneficios b .ico{width:30px;height:30px;padding:5px;border-radius:9px;background:var(--c-sunk);color:var(--c-ink)}
 .beneficios span{font-size:14px;line-height:1.45}
 /* Lo que ganas: iconos como luces del tablero (\xE1mbar aviso, verde ahorro, azul agenda, cian recursos) */
@@ -105570,14 +105688,14 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
 }
 @media (min-width:600px){.hero{padding:30px 28px 24px}.hero .silueta{width:120px}}
 @media (max-width:420px){.hero .silueta{display:none}}
-@media (max-width:640px){.hero h1{font-size:clamp(34px,10.4vw,44px)}}
+@media (max-width:640px){.hero h1{font-size:clamp(27.9px,8.5vw,36.1px)}}
 @media (max-width:390px){.hero{padding:18px 14px 16px}.hero h1{font-size:38px}}
-@media (max-height:700px){.hero h1{font-size:30px}}
+@media (max-height:700px){.hero h1{font-size:24px}}
 `;
     COMPACTO_STYLES = `
 .hero{padding:18px 16px 16px}
-.hero h1{font-size:clamp(28px,7.4vw,44px);line-height:1.04;max-width:none;margin:0 0 10px;letter-spacing:-.035em}
-.hero .lead{font-size:16px;line-height:1.45;margin:0}
+.hero h1{font-size:clamp(23px,6.1vw,36.1px);line-height:1.04;max-width:none;margin:0 0 10px;letter-spacing:-.035em}
+.hero .lead{font-size:15px;line-height:1.45;margin:0}
 .red{margin-top:12px}
 .board{margin-top:12px;padding:12px}
 .board details.informe-mas{grid-column:1/-1;background:none;border:0;box-shadow:none;padding:0;margin:4px 0 0;border-radius:0}
@@ -105637,7 +105755,7 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
  main{max-width:1160px}
  .home{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:0 28px;align-items:start}
  .col-b>.access>.section:first-child,.col-b>.cta:first-child{margin-top:4px}
- .hero h1{font-size:clamp(30px,3.4vw,46px)}
+ .hero h1{font-size:clamp(24.6px,2.8vw,37.7px)}
  .pie{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px}
  .pie .sitio,.pie .redes{margin:0}
  .pie .legal{flex-basis:100%}
@@ -105647,7 +105765,7 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
  body{padding-top:8px}
  header{margin-bottom:8px}
  .hero{padding:14px 16px}
- .hero h1{font-size:30px}
+ .hero h1{font-size:24px}
  .hero .lead{font-size:12px}
  .hero .silueta{display:none}
  .board{margin-top:8px}
@@ -105660,20 +105778,20 @@ header .acciones a.pill:hover{transform:translateY(-1px)}
 header.cabecera{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px 14px;margin:2px 0 12px}
 header.cabecera .logo{grid-column:1}
 header.cabecera .acciones{grid-column:3;margin-left:0}
-header.cabecera h1{grid-column:2;margin:0;font-size:clamp(20px,2.2vw,28px);line-height:1.1;letter-spacing:-.025em;font-weight:850;font-family:var(--c-display);color:var(--c-ink);text-wrap:balance}
+header.cabecera h1{grid-column:2;margin:0;font-size:clamp(16.4px,1.8vw,23px);line-height:1.1;letter-spacing:-.025em;font-weight:850;font-family:var(--c-display);color:var(--c-ink);text-wrap:balance}
 header.cabecera h1 em{font-style:normal;background:linear-gradient(var(--amp-yellow),var(--amp-yellow)) no-repeat 0 90%/100% .28em;padding:0 .04em}
 @media (prefers-color-scheme:dark){:root:not([data-tema="claro"]) header.cabecera h1 em{background-size:100% .14em}}
 :root[data-tema="oscuro"] header.cabecera h1 em{background-size:100% .14em}
 @media (max-width:760px){
  header.cabecera{grid-template-columns:auto 1fr}
  header.cabecera .acciones{grid-column:2;justify-self:end}
- header.cabecera h1{grid-column:1/-1;grid-row:2;font-size:clamp(22px,6.4vw,30px)}
+ header.cabecera h1{grid-column:1/-1;grid-row:2;font-size:clamp(18px,5.2vw,24.6px)}
 }
 .hero{padding-top:16px}
-.hero .lead{font-size:16px;line-height:1.45;color:var(--c-hero-ink);font-weight:500;max-width:46ch;padding-right:90px}
-@media (max-width:640px){.hero .lead{font-size:16px;padding-right:0}}
+.hero .lead{font-size:15px;line-height:1.45;color:var(--c-hero-ink);font-weight:500;max-width:46ch;padding-right:90px}
+@media (max-width:640px){.hero .lead{font-size:15px;padding-right:0}}
 @media (prefers-reduced-motion:no-preference){header.cabecera h1{animation:amp-sube .6s .05s var(--amp-ease) both}header.cabecera h1 em{animation:amp-revela .8s .15s cubic-bezier(.6,0,.2,1) both,amp-subraya .7s .85s var(--amp-ease) both}}
-@media (min-width:700px) and (max-height:620px) and (orientation:landscape){header.cabecera h1{font-size:24px}}
+@media (min-width:700px) and (max-height:620px) and (orientation:landscape){header.cabecera h1{font-size:20px}}
 
 /* Due\xF1os \u21C4 Talleres \u21C4 Almacenes como botones de acceso (31/10). */
 .red li:not(.enlace){padding:0;background:none;border:0}
@@ -105800,6 +105918,9 @@ async function effectiveNumber(options) {
 }
 async function entryRoutes(app2, options = {}) {
   const marketing = options.marketingSite === void 0 ? marketingSite() : options.marketingSite;
+  const mediaDir = options.mediaDir ?? defaultMediaDir();
+  const intro = introAvailable(mediaDir);
+  introMediaRoutes(app2, mediaDir);
   const visitWindows = /* @__PURE__ */ new Map();
   const allowVisit = (ip) => {
     const now = Date.now();
@@ -105839,8 +105960,8 @@ async function entryRoutes(app2, options = {}) {
     if (number2 && !bot && !("pagina" in query) && (mode === "directo" || profile)) {
       return reply.header("Cache-Control", "no-store").header("Referrer-Policy", "no-referrer").redirect(buildLinks(number2, code6, ref4, profile).wame, 302);
     }
-    const html = renderEntryPage({ number: number2, code: code6, ref: ref4, nonce: nonce2, menu: mode === "menu", marketing });
-    return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; img-src 'self' data:; base-uri 'none'; form-action 'none'; manifest-src 'self'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
+    const html = renderEntryPage({ number: number2, code: code6, ref: ref4, nonce: nonce2, menu: mode === "menu", marketing, intro });
+    return reply.header("Content-Security-Policy", `default-src 'none'; script-src 'nonce-${nonce2}'; style-src 'nonce-${nonce2}'; img-src 'self' data:;${intro ? " media-src 'self';" : ""} base-uri 'none'; form-action 'none'; manifest-src 'self'; frame-ancestors 'none'`).header("X-Content-Type-Options", "nosniff").header("Referrer-Policy", "no-referrer").header("X-Frame-Options", "DENY").header("Cache-Control", "no-store").type("text/html; charset=utf-8").send(html);
   });
 }
 var API_STATUS, CODE_ALPHABET, CODE_LENGTH, VISITS_PER_HOUR, PREVIEW_BOTS;
@@ -105849,6 +105970,7 @@ var init_entry = __esm({
     "use strict";
     init_page();
     init_marketing();
+    init_intro_video();
     API_STATUS = { status: "ok", service: "AutoMantPro API" };
     CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     CODE_LENGTH = 5;
@@ -108689,9 +108811,9 @@ async function linkRequestToOrder(conn, requestId, shopId, orderNumber2) {
   await conn.query("UPDATE `LocalRequest` SET workOrderId = ? WHERE id = ?", [order.id, requestId]).catch(whenMissing2(void 0));
 }
 async function closeOrderPartRequests(conn, workOrderId, code6) {
-  const open = await rows20(conn, "SELECT id FROM `LocalRequest` WHERE workOrderId = ? AND kind = 'repuesto' AND status = 'open' FOR UPDATE", [workOrderId]).catch(whenMissing2([]));
+  const open2 = await rows20(conn, "SELECT id FROM `LocalRequest` WHERE workOrderId = ? AND kind = 'repuesto' AND status = 'open' FOR UPDATE", [workOrderId]).catch(whenMissing2([]));
   const closed = [];
-  for (const r of open) {
+  for (const r of open2) {
     const requestId = String(r.id);
     const offers = await rows20(conn, "SELECT id, businessUserId FROM `LocalOffer` WHERE requestId = ? AND status IN ('invited','offered')", [requestId]);
     await conn.query("UPDATE `LocalRequest` SET status = 'cancelled' WHERE id = ? AND status = 'open'", [requestId]);
@@ -109307,8 +109429,8 @@ ${lines.join("\n")}${toConfirm ? "\nPara confirmar: Confirmar C-XXXXXX" : ""}` :
         const [order] = await rows21(conn, "SELECT w.number, w.vehicleId, v.make, v.model, v.year, s.city, s.zone FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId JOIN `Shop` s ON s.id = w.shopId WHERE w.number = ? AND w.shopId = ? AND w.status NOT IN ('cerrada','cancelada') LIMIT 1", [command.orderNumber, shop.id]);
         if (!order)
           fail3("NOT_FOUND");
-        const open = (await rows21(conn, "SELECT COUNT(*) AS n FROM `LocalRequest` WHERE ownerId = ? AND status = 'open' AND expiresAt > UTC_TIMESTAMP(3)", [shop.ownerUserId]))[0];
-        if (Number(open?.n) >= 10)
+        const open2 = (await rows21(conn, "SELECT COUNT(*) AS n FROM `LocalRequest` WHERE ownerId = ? AND status = 'open' AND expiresAt > UTC_TIMESTAMP(3)", [shop.ownerUserId]))[0];
+        if (Number(open2?.n) >= 10)
           fail3("REQUEST_LIMIT");
         const city = String(order.city);
         const zone = String(order.zone ?? order.city);
@@ -109361,11 +109483,11 @@ ${lines.join("\n")}${toConfirm ? "\nPara confirmar: Confirmar C-XXXXXX" : ""}` :
           const vehicle = (await rows21(conn, "SELECT * FROM `Vehicle` WHERE id = ? AND userId = ? AND deletedAt IS NULL", [command.vehicleId, userId]))[0];
           if (!vehicle)
             fail3("VEHICLE_NOT_FOUND");
-          const open = (await rows21(conn, "SELECT COUNT(*) AS n FROM `LocalRequest` WHERE ownerId = ? AND status = 'open' AND expiresAt > UTC_TIMESTAMP(3)", [userId]))[0];
+          const open2 = (await rows21(conn, "SELECT COUNT(*) AS n FROM `LocalRequest` WHERE ownerId = ? AND status = 'open' AND expiresAt > UTC_TIMESTAMP(3)", [userId]))[0];
           const repeated = (await rows21(conn, "SELECT id FROM `LocalRequest` WHERE ownerId = ? AND vehicleId = ? AND kind = ? AND category = ? AND city = ? AND zone = ? AND description = ? AND status = 'open' AND expiresAt > UTC_TIMESTAMP(3) ORDER BY createdAt DESC LIMIT 1", [userId, command.vehicleId, command.kind, command.category, command.city, command.zone, command.description]))[0];
           if (repeated)
             return { requestId: String(repeated.id), invitations: 0, message: `Ya tienes esta solicitud abierta: ${shortCode("S", String(repeated.id))}. No la enviamos otra vez. Para ver sus ofertas: Ofertas ${shortCode("S", String(repeated.id))}` };
-          if (Number(open?.n) >= 3)
+          if (Number(open2?.n) >= 3)
             fail3("REQUEST_LIMIT");
           const table3 = command.kind === "servicio" ? "Shop" : "Store";
           const categoryField = command.kind === "servicio" ? "specialties" : "categories";
@@ -111131,8 +111253,8 @@ var init_subscription_chat = __esm({
         }
         const profile = await billingProfile(conn, userId, role);
         const subs = await this.subs(conn, userId);
-        const open = subs.find((s) => s.status === "solicitada" || s.status === "pendiente");
-        const renewable = open ? void 0 : subs.find((s) => ["activa", "vencida"].includes(String(s.status)) && tierOf(String(s.plan)) === "premium");
+        const open2 = subs.find((s) => s.status === "solicitada" || s.status === "pendiente");
+        const renewable = open2 ? void 0 : subs.find((s) => ["activa", "vencida"].includes(String(s.status)) && tierOf(String(s.plan)) === "premium");
         const iso5 = (v) => v ? new Date(v instanceof Date ? v.getTime() : `${String(v).replace(" ", "T")}${String(v).endsWith("Z") ? "" : "Z"}`).toISOString() : null;
         return {
           canManage: true,
@@ -111140,7 +111262,7 @@ var init_subscription_chat = __esm({
           summary: (await this.mine(conn, userId, profile, catalog)).split("\n").filter((l) => l.trim() && !/^(Para ver los planes|Para renovar):/.test(l)),
           offers: offersFor(profile, catalog).filter((o) => !isFreeOffer(o)).map((o) => ({ name: o.name, priceYearly: o.priceYearly, priceMonthly: o.priceMonthly, perVehicle: o.perVehicle, features: o.features.slice(0, 6), recommended: o.recommended })),
           contracts: subs.slice(0, 10).map((s) => ({ number: Number(s.number), code: subscriptionCode(Number(s.number)), plan: planName(String(s.plan), catalog), status: String(s.status), statusText: s.status === "solicitada" ? "Esperando tu pago" : STATUS_LABELS2[String(s.status)] ?? String(s.status), amountUsd: s.amountUsd === null || s.amountUsd === void 0 ? null : Number(s.amountUsd), expiresAt: iso5(s.expiresAt), reference: s.reference ? String(s.reference) : null })),
-          open: open ? { number: Number(open.number), code: subscriptionCode(Number(open.number)), status: open.status === "pendiente" ? "pendiente" : "solicitada" } : null,
+          open: open2 ? { number: Number(open2.number), code: subscriptionCode(Number(open2.number)), status: open2.status === "pendiente" ? "pendiente" : "solicitada" } : null,
           renewable: renewable ? { number: Number(renewable.number), code: subscriptionCode(Number(renewable.number)) } : null
         };
       }
@@ -111211,10 +111333,10 @@ var init_subscription_chat = __esm({
           if (limits.length)
             lines.push("Uso de este mes:", ...limits.map(([key2, limit]) => `\u2022 ${usage[key2] ?? 0} de ${limit} ${LIMIT_LABELS[key2]}`));
         }
-        const open = subs.find((s) => s.status === "solicitada" || s.status === "pendiente");
-        if (open) {
+        const open2 = subs.find((s) => s.status === "solicitada" || s.status === "pendiente");
+        if (open2) {
           lines.push("");
-          lines.push(open.status === "pendiente" ? `Tu pago de ${subscriptionCode(Number(open.number))} est\xE1 en verificaci\xF3n.` : await paymentInstructions(conn, open, catalog));
+          lines.push(open2.status === "pendiente" ? `Tu pago de ${subscriptionCode(Number(open2.number))} est\xE1 en verificaci\xF3n.` : await paymentInstructions(conn, open2, catalog));
         } else if (!running) {
           lines.push("", "Para ver los planes: Planes");
         } else {
@@ -111232,11 +111354,11 @@ ${plansChatMessage(profile, catalog, null)}`;
         if (offer.profile !== profile) {
           return `El plan ${offer.name} es para ${offer.profile === "flota" ? "flotas" : offer.profile === "dueno" ? "due\xF1os de veh\xEDculo" : `${offer.profile}s`}. Para ver los de tu cuenta escribe: Planes`;
         }
-        const open = (await rows23(conn, "SELECT * FROM `Subscription` WHERE userId = ? AND status IN ('solicitada','pendiente') ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [userId]))[0];
-        if (open) {
-          return open.status === "pendiente" ? `Ya tienes el contrato ${subscriptionCode(Number(open.number))} con el pago en verificaci\xF3n. Te avisamos apenas quede activo.` : `Ya tienes un contrato pendiente de pago:
+        const open2 = (await rows23(conn, "SELECT * FROM `Subscription` WHERE userId = ? AND status IN ('solicitada','pendiente') ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [userId]))[0];
+        if (open2) {
+          return open2.status === "pendiente" ? `Ya tienes el contrato ${subscriptionCode(Number(open2.number))} con el pago en verificaci\xF3n. Te avisamos apenas quede activo.` : `Ya tienes un contrato pendiente de pago:
 
-${await paymentInstructions(conn, open, catalog)}`;
+${await paymentInstructions(conn, open2, catalog)}`;
         }
         let count3 = 1;
         if (offer.perVehicle) {
@@ -111277,11 +111399,11 @@ ${await paymentInstructions(conn, sub, catalog)}`;
         const offer = findOfferByKey(String(sub.plan), catalog);
         if (!offer || isFreeOffer(offer))
           return "Ese plan ya no se ofrece. Para ver los vigentes escribe: Planes";
-        const open = (await rows23(conn, "SELECT * FROM `Subscription` WHERE userId = ? AND status IN ('solicitada','pendiente') LIMIT 1 FOR UPDATE", [userId]))[0];
-        if (open)
-          return `Ya tienes la renovaci\xF3n ${subscriptionCode(Number(open.number))} en curso.
+        const open2 = (await rows23(conn, "SELECT * FROM `Subscription` WHERE userId = ? AND status IN ('solicitada','pendiente') LIMIT 1 FOR UPDATE", [userId]))[0];
+        if (open2)
+          return `Ya tienes la renovaci\xF3n ${subscriptionCode(Number(open2.number))} en curso.
 
-${await paymentInstructions(conn, open, catalog)}`;
+${await paymentInstructions(conn, open2, catalog)}`;
         const period = "anual";
         const id3 = await this.create(conn, userId, offer.key, period, quote(offer, period, Number(sub.units ?? 1)));
         const [created] = await rows23(conn, "SELECT * FROM `Subscription` WHERE id = ?", [id3]);
@@ -111623,8 +111745,8 @@ ${list7.map((c) => `\u2022 ${c.plate} \xB7 ${c.make} ${c.model} ${c.year}: ${sta
           allowed = (await managedFleet(conn, userId, false).catch(() => null))?.fleetId === card2.fleetId;
         if (!allowed)
           fail5("NOT_FOUND");
-        const open = await rows24(conn, "SELECT number FROM `WorkOrder` WHERE vehicleId = ? AND shopId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [card2.vehicleId, card2.shopId]);
-        if (open.length)
+        const open2 = await rows24(conn, "SELECT number FROM `WorkOrder` WHERE vehicleId = ? AND shopId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [card2.vehicleId, card2.shopId]);
+        if (open2.length)
           fail5("ORDER_OPEN");
         await conn.query("INSERT INTO `VehicleShopBlock` (id, vehicleId, shopId, createdBy) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE createdBy = VALUES(createdBy)", [randomUUID20(), card2.vehicleId, card2.shopId, userId]);
         await conn.query("UPDATE `Appointment` SET status = 'cancelled', cancelReason = 'El due\xF1o retir\xF3 el acceso del taller', updatedAt = UTC_TIMESTAMP(3) WHERE vehicleId = ? AND shopId = ? AND status IN ('pending','confirmed')", [card2.vehicleId, card2.shopId]);
@@ -112910,8 +113032,8 @@ async function shopSuspended(conn, shopId) {
 }
 async function shopCanAccessVehicle(conn, shopId, vehicleId) {
   if (await shopSuspended(conn, shopId)) {
-    const [open] = await conn.query("SELECT w.id FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId = ? AND w.shopId = ? AND v.deletedAt IS NULL AND w.status NOT IN ('cerrada','cancelada') AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = w.shopId) LIMIT 1", [vehicleId, shopId]);
-    return open.length > 0;
+    const [open2] = await conn.query("SELECT w.id FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.vehicleId = ? AND w.shopId = ? AND v.deletedAt IS NULL AND w.status NOT IN ('cerrada','cancelada') AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = w.shopId) LIMIT 1", [vehicleId, shopId]);
+    return open2.length > 0;
   }
   const [found] = await conn.query("SELECT v.id FROM `Vehicle` v WHERE v.id = ? AND v.deletedAt IS NULL AND (EXISTS (SELECT 1 FROM `Appointment` a WHERE a.vehicleId = v.id AND a.shopId = ? AND a.status <> 'cancelled' AND (v.fleetId IS NOT NULL OR a.ownerId = v.userId)) OR EXISTS (SELECT 1 FROM `WorkOrder` w WHERE w.vehicleId = v.id AND w.shopId = ? AND (v.fleetId IS NOT NULL OR w.ownerId = v.userId OR w.status NOT IN ('cerrada','cancelada')))) AND NOT EXISTS (SELECT 1 FROM `VehicleShopBlock` b WHERE b.vehicleId = v.id AND b.shopId = ?) LIMIT 1", [vehicleId, shopId, shopId, shopId]);
   return found.length > 0;
@@ -116315,9 +116437,9 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
               await conn.query(`UPDATE \`NotificationOutbox\` SET status = 'dead', lastError = 'OPTED_OUT' WHERE recipientUserId = ? AND status = 'pending' AND kind NOT IN (${OPT_OUT_ALLOWED_KINDS.map(() => "?").join(",")})`, [userId, ...OPT_OUT_ALLOWED_KINDS]);
               message2 = SELF_SERVICE_MESSAGES.baja;
               if (command === "eliminar_cuenta") {
-                const [open] = await data(conn, "SELECT `number` FROM `DataRequest` WHERE userId = ? AND kind = 'eliminacion' AND status IN ('recibida','en_proceso') ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [userId]);
-                if (open) {
-                  requestCode = dataRequestCode(Number(open.number));
+                const [open2] = await data(conn, "SELECT `number` FROM `DataRequest` WHERE userId = ? AND kind = 'eliminacion' AND status IN ('recibida','en_proceso') ORDER BY createdAt DESC LIMIT 1 FOR UPDATE", [userId]);
+                if (open2) {
+                  requestCode = dataRequestCode(Number(open2.number));
                   message2 = SELF_SERVICE_MESSAGES.eliminarAbierta(requestCode);
                 } else {
                   const [next] = await data(conn, "SELECT COALESCE(MAX(`number`), 0) + 1 AS n FROM `DataRequest` FOR UPDATE");
@@ -116676,18 +116798,18 @@ function doneHint2(items) {
     return "Responde Hecho cuando lo hagas.";
   return `Responde Hecho cuando lo hagas, con el servicio si es uno solo (por ejemplo: Hecho ${items[0].serviceName.toLowerCase()}).`;
 }
-function pickDone(open, query, matchedId = null) {
-  if (!open.length)
+function pickDone(open2, query, matchedId = null) {
+  if (!open2.length)
     return { kind: "none" };
   const q = query ? fold21(query) : "";
   if (!q)
-    return open.length === 1 ? { kind: "one", item: open[0] } : { kind: "choose", items: [...open] };
-  const found = open.filter((i) => i.serviceId === matchedId || fold21(i.serviceName) === q || q.length >= 4 && fold21(i.serviceName).includes(q));
+    return open2.length === 1 ? { kind: "one", item: open2[0] } : { kind: "choose", items: [...open2] };
+  const found = open2.filter((i) => i.serviceId === matchedId || fold21(i.serviceName) === q || q.length >= 4 && fold21(i.serviceName).includes(q));
   if (found.length === 1)
     return { kind: "one", item: found[0] };
   if (found.length > 1)
     return { kind: "choose", items: found };
-  return { kind: "unknown", items: [...open] };
+  return { kind: "unknown", items: [...open2] };
 }
 function chooseDoneText(items, unknown = false) {
   const options = items.slice(0, 5).map((i) => `Hecho ${i.serviceName.toLowerCase()}`);
@@ -116832,7 +116954,7 @@ async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ 
   const one = async (sql, args) => (await rows38(conn, sql, args))[0] ?? {};
   const intake = await one("SELECT COUNT(*) AS orders, COUNT(DISTINCT vehicleId) AS vehicles FROM `WorkOrder` WHERE shopId = ? AND createdAt >= ?", [shopId, start]);
   const closed = await one("SELECT COUNT(*) AS n, COALESCE(SUM(total), 0) AS revenue FROM `WorkOrder` WHERE shopId = ? AND status = 'cerrada' AND closedAt >= ?", [shopId, start]);
-  const open = await one("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status NOT IN ('cerrada','cancelada')", [shopId]);
+  const open2 = await one("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status NOT IN ('cerrada','cancelada')", [shopId]);
   const services = await one("SELECT COUNT(*) AS n, COUNT(DISTINCT vehicleId) AS vehicles FROM `VehicleServiceRecord` WHERE shopId = ? AND source = 'taller' AND createdAt >= ?", [shopId, start]);
   const pending = await one("SELECT COUNT(*) AS n FROM `WorkOrderChange` c JOIN `WorkOrder` w ON w.id = c.workOrderId WHERE w.shopId = ? AND c.status = 'pending'", [shopId]);
   const budgets = await one("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status = 'presupuesto_enviado'", [shopId]);
@@ -116844,7 +116966,7 @@ async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ 
     `\u{1F697} Autos ingresados: ${Number(intake.vehicles ?? 0)} (${Number(intake.orders ?? 0)} \xF3rdenes)`,
     `\u{1F527} Servicios registrados: ${Number(services.n ?? 0)} en ${Number(services.vehicles ?? 0)} autos${top.length ? ` \xB7 m\xE1s frecuentes: ${top.map((t) => `${serviceName2(String(t.serviceId))} (${Number(t.n)})`).join(", ")}` : ""}`,
     `\u2705 \xD3rdenes cerradas: ${Number(closed.n ?? 0)} \xB7 facturado en \xF3rdenes cerradas: ${formatUsd(Number(closed.revenue ?? 0))}`,
-    `\u{1F4C2} \xD3rdenes abiertas: ${Number(open.n ?? 0)} \xB7 presupuestos esperando al cliente: ${Number(budgets.n ?? 0)} \xB7 novedades o entregas esperando aprobaci\xF3n: ${Number(pending.n ?? 0)}`,
+    `\u{1F4C2} \xD3rdenes abiertas: ${Number(open2.n ?? 0)} \xB7 presupuestos esperando al cliente: ${Number(budgets.n ?? 0)} \xB7 novedades o entregas esperando aprobaci\xF3n: ${Number(pending.n ?? 0)}`,
     `\u{1F4C5} Visitas en las pr\xF3ximas 24 horas: ${Number(visits.n ?? 0)}`,
     `\u2B50 Calificaci\xF3n del periodo: ${rating.avg ? `${rating.avg}/5 (${Number(rating.n)})` : "sin calificaciones"}`
   ];
@@ -121216,11 +121338,11 @@ var require_dijkstra = __commonJS({
         var predecessors = {};
         var costs = {};
         costs[s] = 0;
-        var open = dijkstra.PriorityQueue.make();
-        open.push(s, 0);
+        var open2 = dijkstra.PriorityQueue.make();
+        open2.push(s, 0);
         var closest, u, v, cost_of_s_to_u, adjacent_nodes, cost_of_e, cost_of_s_to_u_plus_cost_of_e, cost_of_s_to_v, first_visit;
-        while (!open.empty()) {
-          closest = open.pop();
+        while (!open2.empty()) {
+          closest = open2.pop();
           u = closest.value;
           cost_of_s_to_u = closest.cost;
           adjacent_nodes = graph[u] || {};
@@ -121232,7 +121354,7 @@ var require_dijkstra = __commonJS({
               first_visit = typeof costs[v] === "undefined";
               if (first_visit || cost_of_s_to_v > cost_of_s_to_u_plus_cost_of_e) {
                 costs[v] = cost_of_s_to_u_plus_cost_of_e;
-                open.push(v, cost_of_s_to_u_plus_cost_of_e);
+                open2.push(v, cost_of_s_to_u_plus_cost_of_e);
                 predecessors[v] = u;
               }
             }
@@ -124319,10 +124441,10 @@ var require_browser = __commonJS({
           text18 = canvas;
           canvas = void 0;
         }
-        return new Promise(function(resolve2, reject) {
+        return new Promise(function(resolve3, reject) {
           try {
             const data4 = QRCode3.create(text18, opts);
-            resolve2(renderFunc(data4, canvas, opts));
+            resolve3(renderFunc(data4, canvas, opts));
           } catch (e9) {
             reject(e9);
           }
@@ -124403,11 +124525,11 @@ var require_server2 = __commonJS({
     }
     function render(renderFunc, text18, params2) {
       if (!params2.cb) {
-        return new Promise(function(resolve2, reject) {
+        return new Promise(function(resolve3, reject) {
           try {
             const data4 = QRCode3.create(text18, params2.opts);
             return renderFunc(data4, params2.opts, function(err4, data5) {
-              return err4 ? reject(err4) : resolve2(data5);
+              return err4 ? reject(err4) : resolve3(data5);
             });
           } catch (e9) {
             reject(e9);
@@ -126568,8 +126690,8 @@ var require_helpers2 = __commonJS({
     function req2(url, opts = {}) {
       const href = typeof url === "string" ? url : url.href;
       const req3 = (href.startsWith("https:") ? https : http).request(url, opts);
-      const promise = new Promise((resolve2, reject) => {
-        req3.once("response", resolve2).once("error", reject).end();
+      const promise = new Promise((resolve3, reject) => {
+        req3.once("response", resolve3).once("error", reject).end();
       });
       req3.then = promise.then.bind(promise);
       return req3;
@@ -126746,7 +126868,7 @@ var require_parse_proxy_response = __commonJS({
     var debug_1 = __importDefault(require_src2());
     var debug = (0, debug_1.default)("https-proxy-agent:parse-proxy-response");
     function parseProxyResponse(socket) {
-      return new Promise((resolve2, reject) => {
+      return new Promise((resolve3, reject) => {
         let buffersLength = 0;
         const buffers = [];
         function read() {
@@ -126812,7 +126934,7 @@ var require_parse_proxy_response = __commonJS({
           }
           debug("got proxy server response: %o %o", firstLine, headers);
           cleanup();
-          resolve2({
+          resolve3({
             connect: {
               statusCode,
               statusText: statusText2,
@@ -127208,7 +127330,7 @@ var require_web_push_lib = __commonJS({
       } catch (err4) {
         return Promise.reject(err4);
       }
-      return new Promise(function(resolve2, reject) {
+      return new Promise(function(resolve3, reject) {
         const httpsOptions = {};
         const urlParts = url.parse(requestDetails.endpoint);
         httpsOptions.hostname = urlParts.hostname;
@@ -127241,7 +127363,7 @@ var require_web_push_lib = __commonJS({
                 requestDetails.endpoint
               ));
             } else {
-              resolve2({
+              resolve3({
                 statusCode: pushResponse.statusCode,
                 body: responseText,
                 headers: pushResponse.headers
@@ -128696,7 +128818,7 @@ var init_call_cycle = __esm({
       constructor(deps) {
         this.deps = deps;
         this.config = deps.config ?? buildConfig();
-        this.delay = deps.delay ?? ((ms) => new Promise((resolve2) => setTimeout(resolve2, ms)));
+        this.delay = deps.delay ?? ((ms) => new Promise((resolve3) => setTimeout(resolve3, ms)));
         this.circuit = deps.circuitBreaker ?? new ProviderCircuitBreaker(this.config.circuitThreshold, this.config.circuitOpenMs, deps.now);
         this.provider = this.config.provider;
         this.model = this.config.models[this.config.provider === "mock" ? "fast" : "fast"] ?? null;
@@ -132537,14 +132659,14 @@ var require_stream_consumer = __commonJS({
   "node_modules/@fastify/multipart/lib/stream-consumer.js"(exports, module) {
     "use strict";
     module.exports = function streamToNull(stream) {
-      return new Promise((resolve2, reject) => {
+      return new Promise((resolve3, reject) => {
         stream.on("data", () => {
         });
         stream.on("close", () => {
-          resolve2();
+          resolve3();
         });
         stream.on("end", () => {
-          resolve2();
+          resolve3();
         });
         stream.on("error", (error) => {
           reject(error);
@@ -132901,10 +133023,10 @@ var require_multipart2 = __commonJS({
           }
         };
         const parts = () => {
-          return new Promise((resolve2, reject) => {
+          return new Promise((resolve3, reject) => {
             handle((val) => {
               if (val instanceof Error) return reject(val);
-              resolve2(val);
+              resolve3(val);
             });
           });
         };
@@ -133509,12 +133631,12 @@ var init_views = __esm({
     init_permissions();
     STYLES6 = `${THEME_TOKENS}
 :root{--bg:var(--c-bg);--card:var(--c-surface);--text:var(--c-ink);--muted:var(--c-muted);--line:var(--c-line);--cyan:var(--c-accent);--green:var(--c-ok);--red:var(--c-bad)}
-*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.5 var(--c-font)}
+*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:14px/1.5 var(--c-font)}
 .brand{font-weight:700;letter-spacing:-.01em}.brand span{color:var(--c-accent)}
 .side{position:fixed;top:0;left:0;bottom:0;width:248px;background:var(--c-surface);color:var(--c-ink);border-right:1px solid var(--c-line);display:flex;flex-direction:column;gap:4px;padding:20px 12px;overflow-y:auto;z-index:20}
 .side-brand{display:flex;align-items:center;gap:10px;padding:0 10px 14px;font-family:var(--c-display);font-weight:800;letter-spacing:-.02em;min-height:48px}
 .side-brand .logo-img{height:36px;padding:3px 8px;background:transparent;border-color:transparent}
-.side-brand b{font-size:18px}.side-brand small{font:600 10px/1 var(--c-font);letter-spacing:.12em;text-transform:uppercase;opacity:.55}
+.side-brand b{font-size:16px}.side-brand small{font:600 10px/1 var(--c-font);letter-spacing:.12em;text-transform:uppercase;opacity:.55}
 .side-nav{display:flex;flex-direction:column;gap:14px;flex:1}
 .nav-group{display:flex;flex-direction:column;gap:2px}
 .nav-title{padding:0 10px 4px;font:700 11px/1.2 var(--c-font);letter-spacing:.12em;text-transform:uppercase;color:var(--c-muted)}
@@ -133532,7 +133654,7 @@ var init_views = __esm({
 .logout svg{color:var(--c-muted)}
 .logout:hover,.logout:focus-visible{background:var(--c-sunk);color:var(--c-ink)}
 .mobile-bar{display:none}
-.mobile-brand{display:flex;align-items:center;gap:8px;color:var(--c-ink);font:800 17px/1 var(--c-display);letter-spacing:-.02em}
+.mobile-brand{display:flex;align-items:center;gap:8px;color:var(--c-ink);font:800 15px/1 var(--c-display);letter-spacing:-.02em}
 .mobile-menu{position:relative}
 .mobile-menu summary{list-style:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:1px solid var(--c-line);border-radius:var(--c-pill);color:var(--c-ink);font:600 14px/1 var(--c-font);cursor:pointer}
 .mobile-menu summary::-webkit-details-marker{display:none}
@@ -133546,10 +133668,10 @@ main{min-width:0;width:100%;box-sizing:border-box;max-width:1100px;margin:0 auto
 .card select,.card textarea,.card input{max-width:100%;box-sizing:border-box}
 @media (min-width:900px){main{width:auto;margin:0 0 0 248px;padding:22px 28px 40px}}
 @media (max-width:899.98px){.side{display:none}.mobile-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:20;padding:8px 12px;background:var(--c-surface);border-bottom:1px solid var(--c-line)}.mobile-bar .logo-img{height:40px;padding:3px 8px;background:transparent;border-color:transparent}}
-h1{font-size:24px;font-weight:700;letter-spacing:-.01em;margin:6px 0 14px}
+h1{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:6px 0 14px}
 .grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .card{background:var(--c-surface);border-radius:12px;box-shadow:var(--c-shadow);padding:20px;border:1px solid var(--c-line)}
-.card h2{margin:0 0 8px;font-size:11px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--c-muted)}.big{font-size:clamp(32px,8vw,36px);font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.card h2{margin:0 0 8px;font-size:11px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--c-muted)}.big{font-size:clamp(26.2px,6.6vw,29.5px);font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .card strong{font-variant-numeric:tabular-nums}
 table{width:100%;max-width:100%;border-collapse:collapse;background:var(--c-surface);border-radius:12px;box-shadow:var(--c-shadow)}
 @media (max-width:640px){table{display:block;overflow-x:auto}}
@@ -133559,7 +133681,7 @@ th,td{padding:10px 12px;border-bottom:1px solid var(--c-line);text-align:left;fo
 form.login{max-width:380px;margin:10vh auto;background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:24px}
 label{display:block;margin:12px 0 4px;font-weight:600}
 input{width:100%;min-height:48px;padding:8px 12px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-field);color:var(--c-ink);font-size:16px}
-button{min-height:48px;padding:8px 18px;border:0;border-radius:var(--c-r);background:var(--c-accent);color:var(--c-on-accent);font:600 15px/1.2 var(--c-font);cursor:pointer}
+button{min-height:48px;padding:8px 18px;border:0;border-radius:var(--c-r);background:var(--c-accent);color:var(--c-on-accent);font:600 14px/1.2 var(--c-font);cursor:pointer}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}
 .full{width:100%;margin-top:18px}.error{color:var(--c-bad);font-weight:600}.muted{color:var(--c-muted)}
 .pager{margin:12px 0;display:flex;gap:12px}.pager a{color:var(--c-accent);font-weight:600}
@@ -134566,7 +134688,7 @@ function relationDetailView(input) {
 }
 function disputesListView(input) {
   const rows75 = input.page.items.map((d) => {
-    const resolve2 = input.canResolve && (d.status === "abierta" || d.status === "en_revision") ? `${d.status === "en_revision" && d.resolution ? `<p class="muted">${escapeHtml(d.resolution.slice(0, 160))}</p>` : ""}<form method="post" action="/admin/disputes/${escapeHtml(d.id)}/resolve">${csrfField2(input.csrf)}
+    const resolve3 = input.canResolve && (d.status === "abierta" || d.status === "en_revision") ? `${d.status === "en_revision" && d.resolution ? `<p class="muted">${escapeHtml(d.resolution.slice(0, 160))}</p>` : ""}<form method="post" action="/admin/disputes/${escapeHtml(d.id)}/resolve">${csrfField2(input.csrf)}
             <label for="res-${escapeHtml(d.id)}">Resoluci\xF3n</label><textarea id="res-${escapeHtml(d.id)}" name="resolution" rows="2" maxlength="2000" required></textarea>
             <select name="status"><option value="resuelta">Resuelta</option><option value="en_revision">En revisi\xF3n</option><option value="rechazada">Rechazada</option></select>
             <button type="submit">Guardar</button></form>` : d.resolution ? `<span class="muted">${escapeHtml(d.resolution.slice(0, 160))}</span>` : "";
@@ -134575,7 +134697,7 @@ function disputesListView(input) {
       <td>${escapeHtml(d.claimantName ?? "\u2014")} \u2192 ${escapeHtml(d.againstName ?? "\u2014")}</td>
       <td>${escapeHtml(d.reason.slice(0, 200))}</td>
       <td>${escapeHtml(d.status)}<br><span class="muted">${escapeHtml(when4(d.createdAt))}</span></td>
-      <td>${resolve2}</td></tr>`;
+      <td>${resolve3}</td></tr>`;
   }).join("");
   return `<div class="stack wide"><h1>Disputas</h1>${flashHtml2(input.flash)}
   ${tabs(input.filter, "/admin/disputes", DISPUTE_FILTERS)}
@@ -136123,9 +136245,9 @@ var init_metrics_store = __esm({
             return { ...total, byStatus };
           });
           const orders = await part(async () => {
-            const [open] = await rows75("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE status IN (?)", [OPEN_STATUSES]);
+            const [open2] = await rows75("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE status IN (?)", [OPEN_STATUSES]);
             const closed = counts((await rows75("SELECT COUNT(*) AS total, COALESCE(SUM(closedAt >= ?), 0) AS last7, COALESCE(SUM(closedAt >= ?), 0) AS last30 FROM `WorkOrder` WHERE status = 'cerrada'", [d7, d30]))[0]);
-            return { open: num6(open?.n), closed };
+            return { open: num6(open2?.n), closed };
           });
           const shopResponse = await part(async () => {
             const base = "SELECT AVG(TIMESTAMPDIFF(MINUTE, r.createdAt, o.createdAt)) AS avgMin, COUNT(*) AS n FROM `LocalOffer` o JOIN `LocalRequest` r ON r.id = o.requestId WHERE r.kind = 'servicio' AND o.priceUsd IS NOT NULL AND o.createdAt >= r.createdAt";
@@ -140022,15 +140144,15 @@ function responseForm(requestId, q, csrf) {
 function quoteDetailView(input) {
   const { request, quotes, order, csrf } = input;
   const code6 = quoteRequestCode(request.number);
-  const open = request.status === "abierta";
+  const open2 = request.status === "abierta";
   const ranked = rankQuotes(quotes);
   const invited = quotes.map((q) => `<tr><td>${e6(q.storeName)}</td><td>${e6(QUOTE_LABELS[q.status] ?? q.status)}</td><td>${q.unitPrice !== null ? e6(formatUsd(q.unitPrice)) : "\u2014"}</td>
       <td>${e6([q.brand, q.availability, q.deliveryTime ? `entrega ${q.deliveryTime}` : null, q.warrantyDays ? `garant\xEDa ${q.warrantyDays} d\xEDas` : null].filter(Boolean).join(" \xB7 ") || q.notes || "\u2014")}</td>
       <td>${chatLink3(q.storePhone, "Chat")}</td></tr>`).join("");
-  const responses = open ? quotes.map((q) => responseForm(request.id, q, csrf)).join("") : "";
-  const chooseForms = open && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e6(request.id)}/choose" class="row">${csrfField12(csrf)}<input type="hidden" name="quoteId" value="${e6(q.id)}">
+  const responses = open2 ? quotes.map((q) => responseForm(request.id, q, csrf)).join("") : "";
+  const chooseForms = open2 && ranked.length > 0 ? `<h2>Elegir la opci\xF3n del cliente</h2>${ranked.map((q, i) => `<form method="post" action="/admin/quotes/${e6(request.id)}/choose" class="row">${csrfField12(csrf)}<input type="hidden" name="quoteId" value="${e6(q.id)}">
             <span>${i + 1}) <strong>${e6(q.storeName)}</strong> \xB7 ${e6(formatUsd(q.unitPrice ?? 0))} c/u</span><button type="submit">Eligi\xF3 esta</button></form>`).join("")}` : "";
-  const closeForm = open ? `<form method="post" action="/admin/quotes/${e6(request.id)}/close">${csrfField12(csrf)}
+  const closeForm = open2 ? `<form method="post" action="/admin/quotes/${e6(request.id)}/close">${csrfField12(csrf)}
       <label for="close-reason">Si el cliente no pidi\xF3 ninguna, \xBFpor qu\xE9?</label><input id="close-reason" name="reason" maxlength="191" required>
       <button class="danger" type="submit">Cerrar sin pedido</button></form>` : "";
   const lost = order ? quotes.filter((q) => q.status === "descartada").map((q) => `<form method="post" action="/admin/quotes/${e6(request.id)}/quotes/${e6(q.id)}/loss" class="row">${csrfField12(csrf)}
@@ -140059,11 +140181,11 @@ function quoteDetailView(input) {
     ${request.notes ? `<div>Notas: ${e6(request.notes)}</div>` : ""}
     ${request.closeReason ? `<div>Cerrada sin pedido: ${e6(request.closeReason)}</div>` : ""}
   </div>
-  ${open ? `<div class="card"><h2>1. Enviar a los almacenes</h2>${copyBox3("msg-stores", "Mensaje para cada almac\xE9n", storeRequestMessage(request))}</div>` : ""}
-  <div class="card"><h2>${open ? "2. Respuestas de los almacenes" : "Respuestas"}</h2>
+  ${open2 ? `<div class="card"><h2>1. Enviar a los almacenes</h2>${copyBox3("msg-stores", "Mensaje para cada almac\xE9n", storeRequestMessage(request))}</div>` : ""}
+  <div class="card"><h2>${open2 ? "2. Respuestas de los almacenes" : "Respuestas"}</h2>
     <div class="scroll"><table><thead><tr><th>Almac\xE9n</th><th>Estado</th><th>Precio c/u</th><th>Detalle</th><th></th></tr></thead><tbody>${invited}</tbody></table></div>
     ${responses}</div>
-  ${open ? `<div class="card"><h2>3. Comparativa para el cliente</h2>${copyBox3("msg-compare", "Mensaje con la comparativa", comparisonMessage2(request, quotes), 9)}<p>${chatLink3(request.requesterPhone, "Abrir chat del solicitante")}</p>${chooseForms}${closeForm}</div>` : ""}
+  ${open2 ? `<div class="card"><h2>3. Comparativa para el cliente</h2>${copyBox3("msg-compare", "Mensaje con la comparativa", comparisonMessage2(request, quotes), 9)}<p>${chatLink3(request.requesterPhone, "Abrir chat del solicitante")}</p>${chooseForms}${closeForm}</div>` : ""}
   ${orderCard}
   </div>`;
 }
@@ -141551,9 +141673,9 @@ function pendingTasks(ctx) {
     }
   }
   if (role === "taller") {
-    const open = orders.filter((o) => o.shopUserId === userId && OPEN_STATUSES.includes(o.status)).length;
-    if (open > 0)
-      tasks.push({ text: `\u{1F9FE} Tienes ${plural(open, "orden de trabajo abierta", "\xF3rdenes de trabajo abiertas")}.`, forCustomer: true });
+    const open2 = orders.filter((o) => o.shopUserId === userId && OPEN_STATUSES.includes(o.status)).length;
+    if (open2 > 0)
+      tasks.push({ text: `\u{1F9FE} Tienes ${plural(open2, "orden de trabajo abierta", "\xF3rdenes de trabajo abiertas")}.`, forCustomer: true });
   }
   const quotes = ctx.quotes;
   if (quotes) {
@@ -141763,7 +141885,7 @@ function registerAttendRoutes(app2, deps) {
   async function operation() {
     return deps.platform ? deps.platform().catch(() => null) : null;
   }
-  async function resolve2(query, intro) {
+  async function resolve3(query, intro) {
     const { phone, code: code6 } = parseContactInput(query);
     let detail = null;
     let appointments = [];
@@ -141844,7 +141966,7 @@ function registerAttendRoutes(app2, deps) {
     const op = await operation();
     let resolved;
     try {
-      resolved = await resolve2(query, op?.welcomeIntro ?? null);
+      resolved = await resolve3(query, op?.welcomeIntro ?? null);
     } catch (err4) {
       return databaseError(request, reply, session, query, err4);
     }
@@ -141868,7 +141990,7 @@ function registerAttendRoutes(app2, deps) {
     const op = await operation();
     let resolved;
     try {
-      resolved = await resolve2(query, op?.welcomeIntro ?? null);
+      resolved = await resolve3(query, op?.welcomeIntro ?? null);
     } catch (err4) {
       return databaseError(request, reply, session, query, err4);
     }
@@ -141909,7 +142031,7 @@ function registerAttendRoutes(app2, deps) {
     const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 191) || null : null;
     let resolved;
     try {
-      resolved = await resolve2(query);
+      resolved = await resolve3(query);
     } catch (err4) {
       return databaseError(request, reply, session, query, err4);
     }
@@ -146187,12 +146309,12 @@ var INTERFAZ_SIMPLE_CSS = `
 /* F7 interfaz simple (ui/interfaz-simple.ts): \xEDconos grandes, una acci\xF3n por grupo, sem\xE1foro por sistema. */
 #login.hidden{display:none!important}
 ${P2} .pcard{border:1px solid var(--c-line)!important;padding:16px;gap:14px}
-${P2} .pcard>h2{display:flex;justify-content:flex-start!important;align-items:center;flex-wrap:wrap;gap:6px 12px;font-size:18px!important;line-height:1.25}
+${P2} .pcard>h2{display:flex;justify-content:flex-start!important;align-items:center;flex-wrap:wrap;gap:6px 12px;font-size:16px!important;line-height:1.25}
 ${P2} .pcard>h2 small{margin-left:auto;font-size:13px}
 ${P2} .sec-ico{order:-1;flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:${NEGRO};color:${AMBAR};border:1px solid ${AMBAR}}
 ${P2} .sec-ico .tg{width:26px;height:26px}
 /* Botones grandes con texto siempre visible; una sola acci\xF3n principal (\xE1mbar) por grupo, el resto en contorno. */
-${P2} .pcard :is(button,a.btn,summary.btn):not(.hidden){min-height:48px;padding:10px 18px;font-size:16px;line-height:1.25;border-radius:10px!important;opacity:1}
+${P2} .pcard :is(button,a.btn,summary.btn):not(.hidden){min-height:48px;padding:10px 18px;font-size:15px;line-height:1.25;border-radius:10px!important;opacity:1}
 ${P2} .pcard :is(button.primary,.cta){background:var(--c-cta)!important;color:var(--c-on-cta)!important;border:1px solid var(--c-cta)!important;font-weight:600}
 ${P2} .pcard :is(.chips,.acts)>button.primary~button.primary{background:transparent!important;color:var(--c-ink)!important;border:2px solid var(--c-ink)!important}
 ${P2} .pcard :is(button.ghost,button:not(.primary):not(.cta):not(:disabled)){color:var(--c-ink)}
@@ -146203,12 +146325,12 @@ ${P2} .pcard :is(.chips,.acts){gap:10px}
 ${P2} .pcard button:is(.chip,.day,[aria-pressed],[role=tab]):not(:disabled){background:var(--c-surface)!important;color:var(--c-ink)!important;border:2px solid var(--c-ink)!important}
 ${P2} .pcard button:is(.chip,.day,[aria-pressed],[role=tab]) *{color:inherit!important}
 ${P2} .pcard button:is([aria-pressed=true],[aria-selected=true]):not(:disabled){background:var(--c-cta)!important;color:var(--c-on-cta)!important;border-color:var(--c-cta)!important}
-${P2} .pcard summary{min-height:48px;display:flex;align-items:center;font-size:16px}
+${P2} .pcard summary{min-height:48px;display:flex;align-items:center;font-size:15px}
 ${P2} .pcard :is(input,select,textarea){min-height:48px;font-size:16px}
 /* Tablero: n\xFAmeros grandes y testigo de color por indicador. */
 ${P2} .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 ${P2} .kpi{border:1px solid var(--c-line);border-top:4px solid var(--st,var(--c-line));padding:12px}
-${P2} .kpi b{font-size:30px}
+${P2} .kpi b{font-size:24px}
 ${P2} .kpi .led{width:14px;height:14px}
 ${P2} .kpi .kh{font-size:14px;color:var(--c-ink)}
 /* Sem\xE1foro por sistema: verde bien, \xE1mbar observar, rojo cambiar (clases st-* del panel). */
@@ -147996,13 +148118,13 @@ details.fold{margin:6px 0;padding:0;background:none;border:0;border-top:1px soli
 .board.ficha .informe-mas>summary{cursor:pointer;min-height:40px;display:flex;align-items:center;border-top:1px solid var(--c-line);font:600 13px/1.2 var(--c-font);color:var(--c-ink)}
 .panel{display:grid;gap:16px;margin:16px 0}
 .pcard{background:var(--c-surface);border:1px solid var(--c-line);border-radius:12px;padding:16px;display:grid;gap:12px;margin:0;box-shadow:var(--c-shadow)}
-.pcard>h2{font-size:16px;margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.pcard>h2{font-size:15px;margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
 .pcard>h2 small{font:400 13px/1.3 var(--c-font);color:var(--c-muted)}
-.lead2{font:600 16px/1.35 var(--c-display);letter-spacing:-.01em;margin:0}
+.lead2{font:600 15px/1.35 var(--c-display);letter-spacing:-.01em;margin:0}
 .counts{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--c-line);border-radius:8px;overflow:hidden}
 .counts span{display:grid;gap:2px;padding:8px 10px;border-left:1px solid var(--c-line);font-size:13px;color:var(--c-muted)}
 .counts span:first-child{border-left:0}
-.counts b{font:700 20px/1 var(--c-display);font-variant-numeric:tabular-nums}
+.counts b{font:700 18px/1 var(--c-display);font-variant-numeric:tabular-nums}
 .st-urgente{--st:var(--c-bad);--st-bg:var(--c-bad-bg)}.st-pronto{--st:var(--c-warn);--st-bg:var(--c-warn-bg)}
 .st-al_dia{--st:var(--c-ok);--st-bg:var(--c-ok-bg)}.st-sin_dato{--st:var(--c-muted);--st-bg:var(--c-sunk)}
 .counts .st b{color:var(--st)}
@@ -148042,12 +148164,12 @@ details.fold{margin:6px 0;padding:0;background:none;border:0;border-top:1px soli
 .panel .chip[aria-pressed="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}
 .days{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .panel .day{display:grid;gap:2px;justify-items:center;padding:6px 0;min-height:52px;font-size:12px;font-weight:500;color:var(--c-muted)}
-.panel .day b{font:700 16px/1 var(--c-display);color:var(--c-ink);font-variant-numeric:tabular-nums}
+.panel .day b{font:700 15px/1 var(--c-display);color:var(--c-ink);font-variant-numeric:tabular-nums}
 .panel .day[aria-pressed="true"] b{color:var(--c-on-accent)}
 .sub{font-size:14px;font-weight:600;margin:0}
 .note{font-size:13px;color:var(--c-muted);margin:0}
 .ot-photo{max-width:140px;max-height:140px;border-radius:8px}
-.ad-banner{display:flex;gap:10px;align-items:center;padding:10px 12px;margin:0 0 12px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface)}.ad-banner>div{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}.ad-thumb{width:56px;height:56px;object-fit:cover;border-radius:8px;flex:none}.ad-img{display:block;width:100%;max-height:200px;object-fit:cover;border-radius:8px}.ad-pop{max-width:420px;width:calc(100% - 32px);padding:16px;border:1px solid var(--c-line);border-radius:12px;background:var(--c-surface);color:var(--c-ink)}.ad-pop::backdrop{background:rgba(0,0,0,.45)}.ad-pop h2{font:600 16px/1.3 var(--c-font);margin:8px 0 4px}${AD_STRIP_STYLES}.ad-strip.fijo{position:sticky;bottom:8px;z-index:5;box-shadow:0 6px 20px rgba(0,0,0,.12)}@media (max-width:899px){body.pilot-menu .ad-strip.fijo{bottom:calc(78px + env(safe-area-inset-bottom))}}
+.ad-banner{display:flex;gap:10px;align-items:center;padding:10px 12px;margin:0 0 12px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface)}.ad-banner>div{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}.ad-thumb{width:56px;height:56px;object-fit:cover;border-radius:8px;flex:none}.ad-img{display:block;width:100%;max-height:200px;object-fit:cover;border-radius:8px}.ad-pop{max-width:420px;width:calc(100% - 32px);padding:16px;border:1px solid var(--c-line);border-radius:12px;background:var(--c-surface);color:var(--c-ink)}.ad-pop::backdrop{background:rgba(0,0,0,.45)}.ad-pop h2{font:600 15px/1.3 var(--c-font);margin:8px 0 4px}${AD_STRIP_STYLES}.ad-strip.fijo{position:sticky;bottom:8px;z-index:5;box-shadow:0 6px 20px rgba(0,0,0,.12)}@media (max-width:899px){body.pilot-menu .ad-strip.fijo{bottom:calc(78px + env(safe-area-inset-bottom))}}
 .shop-logo{width:72px;height:72px;object-fit:contain;border-radius:8px;background:var(--c-sunk,#eee)}.shop-cover{display:block;width:100%;max-height:200px;object-fit:cover;border-radius:8px}.shop-thumb{width:64px;height:64px;object-fit:cover;border-radius:8px;flex:none}.line .shop-thumb{margin-right:8px}
 .acts select{flex:1 1 150px;min-height:42px}
 .acts label{display:flex;gap:6px;align-items:center;flex:1 1 100%}
@@ -148061,7 +148183,7 @@ details.fold{margin:6px 0;padding:0;background:none;border:0;border-top:1px soli
 .done .n{background:var(--c-ok);border-color:var(--c-ok);color:var(--c-surface)}.now .n{border-color:var(--c-ink);color:var(--c-ink)}
 .steps span{font-size:14px;align-self:center}.now span{font-weight:600}
 .row2{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.price{font:700 16px var(--c-display);font-variant-numeric:tabular-nums}
+.price{font:700 15px var(--c-display);font-variant-numeric:tabular-nums}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .kpi{border:1px solid var(--c-line);border-radius:12px;padding:12px;display:grid;gap:4px}
 .kpi b{font:700 24px/1 var(--c-display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
@@ -148912,23 +149034,23 @@ init_catalogs();
 var MENU_STYLES = `
 #accountMenu[hidden],#mobileMenu[hidden],#mobileMore[hidden]{display:none!important}
 #accountMenu{display:none;position:sticky;top:0;height:100vh;overflow:auto;background:var(--c-surface);border-right:1px solid var(--c-line);padding:20px 12px;box-sizing:border-box;flex-direction:column;gap:6px}
-.side-brand{padding:0 10px;font:800 20px/1.2 var(--c-display);letter-spacing:-.02em;color:var(--c-ink)}
+.side-brand{padding:0 10px;font:800 18px/1.2 var(--c-display);letter-spacing:-.02em;color:var(--c-ink)}
 .side-brand span{color:var(--c-on-promo);background:var(--c-promo);padding:0 2px;border-radius:4px}
 .side-who{margin:0;padding:4px 10px 16px;font-size:14px;color:var(--c-muted);overflow-wrap:anywhere}
 .side-nav{display:flex;flex-direction:column;gap:2px;flex:1}
-.side-link{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border-radius:var(--c-pill);color:var(--c-ink);font:500 15px/1.2 var(--c-font);text-decoration:none}
+.side-link{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border-radius:var(--c-pill);color:var(--c-ink);font:500 14px/1.2 var(--c-font);text-decoration:none}
 .side-link span{flex:1;min-width:0}
 .side-link svg,.mobile-link svg,.more-link svg{flex:none;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .side-link:hover,.side-action:hover{background:var(--c-sunk)}
 .side-link[aria-current="page"],.mobile-link[aria-current="page"],.more-link[aria-current="page"]{position:relative;background:var(--c-sunk);color:var(--c-ink);font-weight:650}
 .side-link[aria-current="page"]::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:3px;background:#a99c00}
 .side-foot{border-top:1px solid var(--c-line);padding-top:10px;display:flex;flex-direction:column;gap:2px}
-.side-action{display:flex;align-items:center;width:100%;min-height:44px;margin:0;padding:0 12px;border:0;border-radius:var(--c-pill);background:transparent;color:var(--c-ink);font:500 15px/1.2 var(--c-font);text-align:left;cursor:pointer}
+.side-action{display:flex;align-items:center;width:100%;min-height:44px;margin:0;padding:0 12px;border:0;border-radius:var(--c-pill);background:transparent;color:var(--c-ink);font:500 14px/1.2 var(--c-font);text-align:left;cursor:pointer}
 #mobileMenu{display:none;position:fixed;left:0;right:0;bottom:0;z-index:40;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;padding:6px 4px calc(6px + env(safe-area-inset-bottom));background:var(--c-surface);border-top:1px solid var(--c-line);box-shadow:var(--c-shadow)}
 .mobile-link{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:56px;margin:0;padding:4px 2px;border:0;border-radius:12px;background:transparent;color:var(--c-ink);font:600 12px/1.1 var(--c-font);text-align:center;text-decoration:none;cursor:pointer}
 .mobile-link svg{width:20px;height:20px}
 #mobileMore{position:fixed;left:0;right:0;bottom:calc(76px + env(safe-area-inset-bottom));z-index:39;max-height:60vh;overflow:auto;background:var(--c-surface);border-top:1px solid var(--c-line);box-shadow:var(--c-shadow);padding:6px}
-.more-link{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;margin:0;padding:0 14px;border:0;border-bottom:1px solid var(--c-line);border-radius:0;background:transparent;color:var(--c-ink);font:600 15px/1.2 var(--c-font);text-align:left;text-decoration:none;cursor:pointer}
+.more-link{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;margin:0;padding:0 14px;border:0;border-bottom:1px solid var(--c-line);border-radius:0;background:transparent;color:var(--c-ink);font:600 14px/1.2 var(--c-font);text-align:left;text-decoration:none;cursor:pointer}
 .more-link:last-child{border-bottom:0}
 #chat,#composer,#requestTools,#offerTools,#misSolicitudes,#appointmentTools,#citas,#avisos,#historial,#vincular{scroll-margin-top:16px}
 @media (min-width:900px){
@@ -149151,7 +149273,7 @@ function pickupBody(f){const x=pickupFields.get(f);return x&&x.on.checked&&x.not
 // packages/api/dist/interfaces/pilot-page.js
 init_catalogs();
 var SW_CACHE = "automantpro-static-v2";
-var OFFLINE_STYLE = "body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f6f7f8;color:#1c1c1e;display:grid;place-items:center;min-height:100vh;padding:16px;box-sizing:border-box}main{background:#fff;border-radius:12px;padding:24px;max-width:420px;text-align:center}h1{font-size:20px;color:#1f3a5f;margin:12px 0 8px}p{margin:0 0 16px;color:#3a3a3c}a{display:inline-block;background:#1f3a5f;color:#fff;border-radius:3px;padding:12px 18px;text-decoration:none;font-weight:600}svg{color:#1f3a5f}";
+var OFFLINE_STYLE = "body{margin:0;font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f6f7f8;color:#1c1c1e;display:grid;place-items:center;min-height:100vh;padding:16px;box-sizing:border-box}main{background:#fff;border-radius:12px;padding:24px;max-width:420px;text-align:center}h1{font-size:18px;color:#1f3a5f;margin:12px 0 8px}p{margin:0 0 16px;color:#3a3a3c}a{display:inline-block;background:#1f3a5f;color:#fff;border-radius:3px;padding:12px 18px;text-decoration:none;font-weight:600}svg{color:#1f3a5f}";
 var OFFLINE_HTML = `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Sin conexi\xF3n \xB7 AutoMantPro</title><style>${OFFLINE_STYLE}</style></head><body><main><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.8a15 15 0 0 1 4.2-2.6M10.7 5.1A15 15 0 0 1 22 8.8M5 12.5a10 10 0 0 1 3.4-2M15.4 10.6A10 10 0 0 1 19 12.5M8.5 16a5 5 0 0 1 7 0M12 20h.01M3 3l18 18"/></svg><h1>Est\xE1s sin conexi\xF3n</h1><p>Esta p\xE1gina necesita internet. Tu cuenta y tus veh\xEDculos guardados se pueden ver sin conexi\xF3n.</p><a href="/cuenta">Abrir mi cuenta</a></main></body></html>`;
 var OFFLINE_CSP = `default-src 'none'; style-src 'sha256-${createHash4("sha256").update(OFFLINE_STYLE).digest("base64")}'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`;
 var SIGNUP_CLASSES = vehicleClasses.classes.map((c) => `['${c.id}',${JSON.stringify(c.name)}]`).join(",");
@@ -149168,8 +149290,8 @@ function renderPilotPage(nonce2, number2 = null, visitCode = newVisitCode()) {
 #resultBox p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 12px}
 #resultBox[hidden]{display:none}
 #noticeTools{margin:0 0 8px}#noticeTools button[aria-pressed="true"]{outline:3px solid var(--c-promo)}#notices article small{display:block;color:var(--c-muted);font-size:13px;margin:4px 0}#notices article.unread{border-left:4px solid var(--c-promo)}
-*{box-sizing:border-box}body{font:16px/1.5 var(--c-font);background:var(--c-bg);color:var(--c-ink);margin:0}main{max-width:1272px;margin:auto;padding:20px 16px 40px}@media (min-width:900px){#login{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 40px;align-items:start}#login .col-crear{border-left:1px solid var(--c-line);padding-left:40px}#login .col-crear>h3{margin-top:0}}
-h1{font-size:24px;line-height:1.15;font-weight:800;letter-spacing:-.035em}h2{font-size:12px;font-weight:700}h3{font-size:12px;font-weight:700;margin-top:22px}main>p{color:var(--c-muted)}
+*{box-sizing:border-box}body{font:15px/1.5 var(--c-font);background:var(--c-bg);color:var(--c-ink);margin:0}main{max-width:1272px;margin:auto;padding:20px 16px 40px}@media (min-width:900px){#login{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 40px;align-items:start}#login .col-crear{border-left:1px solid var(--c-line);padding-left:40px}#login .col-crear>h3{margin-top:0}}
+h1{font-size:20px;line-height:1.15;font-weight:800;letter-spacing:-.035em}h2{font-size:12px;font-weight:700}h3{font-size:12px;font-weight:700;margin-top:22px}main>p{color:var(--c-muted)}
 section{background:var(--c-surface);border:1px solid var(--c-line);border-radius:12px;box-shadow:var(--c-shadow);padding:20px;margin:16px 0}
 label{display:block;margin:12px 0 4px;font-size:14px;font-weight:600}
 input,textarea,select,button{font:inherit;padding:10px 12px;border:1px solid var(--c-line);border-radius:10px;min-height:48px}
@@ -149183,14 +149305,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.45 var(--c-mono)}article{border-bottom:1px solid var(--c-line);padding:8px 0}
 details{margin:12px 0;background:var(--c-surface);border-radius:var(--c-r);box-shadow:var(--c-shadow);padding:0 14px}details[open]{padding-bottom:14px}
 details>summary{min-height:52px;display:flex;align-items:center;font-weight:600;cursor:pointer}
-.hidden{display:none}.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}body:has(#chat:not(.hidden)) .intro-cuenta,body:has(#chat:not(.hidden)) .menu-sitio a[href="/cuenta#entrar"]{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button{display:inline-flex;align-items:center;gap:6px}.auth-tabs .ico{width:18px;height:18px;flex:none}.auth-tabs button.hidden{display:none}.enlace-olvido{background:none;border:0;padding:8px 0;color:var(--c-ink);text-decoration:underline;cursor:pointer;font:inherit}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:12px}}main a.cod-wa{display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px;margin:12px 0 6px;background:#1fa855;color:#fff!important;border-radius:3px;text-decoration:none;font-weight:700;font-size:18px;box-shadow:none;transition:transform .15s}.cod-wa:hover{transform:translateY(-1px)}.cod-wa:active{transform:translateY(1px)}
+.hidden{display:none}.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}body:has(#chat:not(.hidden)) .intro-cuenta,body:has(#chat:not(.hidden)) .menu-sitio a[href="/cuenta#entrar"]{display:none}.consent{display:flex;gap:8px;align-items:center;font-weight:400}.consent input{width:auto;min-height:0}.auth-tabs{display:flex;gap:8px;flex-wrap:wrap}.auth-tabs button{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}.auth-tabs button{display:inline-flex;align-items:center;gap:6px}.auth-tabs .ico{width:18px;height:18px;flex:none}.auth-tabs button.hidden{display:none}.enlace-olvido{background:none;border:0;padding:8px 0;color:var(--c-ink);text-decoration:underline;cursor:pointer;font:inherit}.auth-tabs button[aria-selected="true"]{background:var(--c-accent);color:var(--c-on-accent);border-color:var(--c-accent)}a{color:var(--c-ink);font-weight:600}main>h1{padding-bottom:12px;border-bottom:1px solid var(--c-line);margin-bottom:12px}main>h1~p:first-of-type{margin-top:-4px;margin-bottom:16px}main h2,main h3{letter-spacing:.075em;text-transform:uppercase;color:var(--c-ink);border-left:3px solid #a99c00;padding-left:8px}input,textarea,select,button{min-height:44px;border-radius:8px}@media(max-width:640px){section{padding:16px}h2,h3{font-size:12px}}main a.cod-wa{display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px;margin:12px 0 6px;background:#1fa855;color:#fff!important;border-radius:3px;text-decoration:none;font-weight:700;font-size:16px;box-shadow:none;transition:transform .15s}.cod-wa:hover{transform:translateY(-1px)}.cod-wa:active{transform:translateY(1px)}
 .ayuda-wa{margin:0 0 14px;color:var(--c-muted);font-size:14px;text-align:center}
 .sub-codigo{margin:16px 0 4px;font-weight:600;color:var(--c-muted);font-size:14px;border-top:1px solid var(--c-line);padding-top:12px}
-.auth-tabs{display:grid!important;grid-template-columns:1fr 1fr;gap:8px}.auth-tabs button{min-height:48px;font-size:16px;font-weight:700;border-radius:12px}
+.auth-tabs{display:grid!important;grid-template-columns:1fr 1fr;gap:8px}.auth-tabs button{min-height:48px;font-size:15px;font-weight:700;border-radius:12px}
 /* /cuenta (25/11/2026): \xABCrear cuenta\xBB primero y \xABIngresar\xBB despu\xE9s, cada uno en su tarjeta; el registro como gu\xEDa de 3 pasos. */
 #login{background:none!important;border:0!important;padding:0!important;box-shadow:none!important;display:grid;gap:16px}
 #login>.col-crear,#login>.col-entrar{background:var(--c-surface);border-radius:12px;padding:20px}
-main #login>div>h2,main #login h2#entrar,main #login h2#crear{margin:0 0 12px!important;font:600 18px/1.25 var(--c-display,var(--c-font))!important;color:var(--c-title)!important;text-transform:none!important;letter-spacing:0!important;border:0!important;padding:0!important}
+main #login>div>h2,main #login h2#entrar,main #login h2#crear{margin:0 0 12px!important;font:600 16px/1.25 var(--c-display,var(--c-font))!important;color:var(--c-title)!important;text-transform:none!important;letter-spacing:0!important;border:0!important;padding:0!important}
 @media (max-width:420px){.pasos li{font-size:12px}}
 @media (min-width:900px){#login{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:16px!important}#login .col-crear{border-left:0!important;padding-left:20px!important}}
 .pasos{list-style:none;margin:0 0 6px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
@@ -149692,19 +149814,19 @@ var ShopExtrasStore = class {
   /** Cambia datos dentro de una transacción y deja la auditoría en la misma. */
   write(userId, change) {
     return this.run(async (conn) => {
-      let open = false;
+      let open2 = false;
       try {
         const shop = await this.acting(conn, userId);
         if (!shop.isOwner && !shop.isAdmin)
           fail17("FORBIDDEN");
         await conn.query("START TRANSACTION");
-        open = true;
+        open2 = true;
         const result = await change(conn, shop);
         await conn.query("COMMIT");
-        open = false;
+        open2 = false;
         return result;
       } catch (err4) {
-        if (open)
+        if (open2)
           await conn.query("ROLLBACK").catch(() => void 0);
         if (missing3(err4))
           fail17("FEATURE_UPDATE_PENDING");
@@ -150299,20 +150421,20 @@ var CatalogStore = class {
   }
   write(userId, productId, change) {
     return this.run(async (conn) => {
-      let open = false;
+      let open2 = false;
       try {
         const store = await this.myStore(conn, userId);
         await conn.query("START TRANSACTION");
-        open = true;
+        open2 = true;
         const [product] = await rows42(conn, "SELECT id, name FROM `Product` WHERE id = ? AND storeId = ? FOR UPDATE", [productId, store.id]);
         if (!product)
           fail19("NOT_FOUND");
         const result = await change(conn, product);
         await conn.query("COMMIT");
-        open = false;
+        open2 = false;
         return result;
       } catch (err4) {
-        if (open)
+        if (open2)
           await conn.query("ROLLBACK").catch(() => void 0);
         if (missing4(err4))
           fail19("FEATURE_UPDATE_PENDING");
@@ -150356,11 +150478,11 @@ var CatalogStore = class {
    */
   importCsv(userId, products) {
     return this.run(async (conn) => {
-      let open = false;
+      let open2 = false;
       try {
         const store = await this.myStore(conn, userId);
         await conn.query("START TRANSACTION");
-        open = true;
+        open2 = true;
         const existing = await rows42(conn, "SELECT id, name FROM `Product` WHERE storeId = ? FOR UPDATE", [store.id]);
         const byName = new Map(existing.map((p) => [String(p.name).toLowerCase(), String(p.id)]));
         const summary = { created: 0, updated: 0, fitments: 0 };
@@ -150391,10 +150513,10 @@ var CatalogStore = class {
         }
         await conn.query("INSERT INTO `AuditLog` (id, eventType, actorUserId, actorRole, entityType, entityId, `after`, createdAt) VALUES (?, 'catalog.import', ?, 'almacen', 'Store', ?, ?, UTC_TIMESTAMP(3))", [randomUUID41(), userId, store.id, JSON.stringify(summary)]);
         await conn.query("COMMIT");
-        open = false;
+        open2 = false;
         return summary;
       } catch (err4) {
-        if (open)
+        if (open2)
           await conn.query("ROLLBACK").catch(() => void 0);
         if (missing4(err4))
           fail19("FEATURE_UPDATE_PENDING");
@@ -150926,8 +151048,8 @@ var VehicleTransferStore = class {
     const sellerId = String(transfer.fromUserId);
     if (sellerId === buyerId)
       return fail20("TRANSFER_OWN_VEHICLE");
-    const open = await rows44(conn, "SELECT number FROM `WorkOrder` WHERE vehicleId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [vehicleId]);
-    if (open.length)
+    const open2 = await rows44(conn, "SELECT number FROM `WorkOrder` WHERE vehicleId = ? AND status NOT IN ('cerrada','cancelada') LIMIT 1", [vehicleId]);
+    if (open2.length)
       return fail20("TRANSFER_ORDER_OPEN");
     const warranty = await rows44(conn, "SELECT g.id FROM `WorkOrderWarranty` g JOIN `WorkOrder` w ON w.id = g.workOrderId WHERE w.vehicleId = ? AND g.status = 'abierta' LIMIT 1", [vehicleId]).catch((err4) => {
       if (err4.code !== "ER_NO_SUCH_TABLE")
@@ -150982,8 +151104,8 @@ init_account_phone_store();
 init_plan_formatter();
 init_page();
 var STYLES2 = `
-*{box-sizing:border-box}body{margin:0;padding:16px;font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1c2024;background:#fff}
-main{max-width:760px;margin:0 auto}h1{font-size:22px;margin:0 0 4px}h2{font-size:16px;margin:22px 0 8px;border-bottom:1px solid #c9ced3;padding-bottom:4px}
+*{box-sizing:border-box}body{margin:0;padding:16px;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1c2024;background:#fff}
+main{max-width:760px;margin:0 auto}h1{font-size:19px;margin:0 0 4px}h2{font-size:15px;margin:22px 0 8px;border-bottom:1px solid #c9ced3;padding-bottom:4px}
 .notice{border:2px solid #1c2024;padding:10px 12px;margin:12px 0;font-weight:600}
 .muted{color:#4d555c;font-size:13px}dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:0}dt{color:#4d555c}dd{margin:0}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:6px 4px;border-bottom:1px solid #dde1e5;vertical-align:top}th{font-weight:600}td.n,th.n{text-align:right;white-space:nowrap}
@@ -153274,12 +153396,12 @@ var DAY2 = 864e5;
 var STAGE_MAX_DAYS = { recepcion: 1, presupuesto_enviado: 2, rechazado: 3, aprobado: 2, en_ejecucion: 5, esperando_repuesto: 7, lista: 3 };
 async function orderPace(conn, orders, now = /* @__PURE__ */ new Date()) {
   const out = /* @__PURE__ */ new Map();
-  const open = orders.filter((o) => !["cerrada", "cancelada"].includes(o.status));
-  if (!open.length)
+  const open2 = orders.filter((o) => !["cerrada", "cancelada"].includes(o.status));
+  if (!open2.length)
     return out;
-  const moved = new Map((await rows51(conn, "SELECT entityId, MAX(createdAt) AS at FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId IN (?) GROUP BY entityId", [open.map((o) => o.id)])).map((r) => [String(r.entityId), new Date(String(r.at))]));
+  const moved = new Map((await rows51(conn, "SELECT entityId, MAX(createdAt) AS at FROM `AuditLog` WHERE entityType = 'WorkOrder' AND entityId IN (?) GROUP BY entityId", [open2.map((o) => o.id)])).map((r) => [String(r.entityId), new Date(String(r.at))]));
   const today = now.toISOString().slice(0, 10);
-  for (const o of open) {
+  for (const o of open2) {
     const created = o.createdAt ? new Date(String(o.createdAt instanceof Date ? o.createdAt.toISOString() : o.createdAt)) : now;
     const last = moved.get(o.id);
     const since = last && last > created ? last : created;
@@ -154361,7 +154483,7 @@ var PilotPanelStore = class {
     const appointmentsToday = await count3("SELECT COUNT(*) AS n FROM `Appointment` WHERE shopId = ? AND status IN ('pending','confirmed') AND scheduledAt >= ? AND scheduledAt < ?", [shop.id, start, end]);
     const openOrders = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status NOT IN ('cerrada','cancelada')", [shop.id]);
     const budgetsWaiting = await count3("SELECT COUNT(*) AS n FROM `WorkOrder` WHERE shopId = ? AND status = 'presupuesto_enviado'", [shop.id]);
-    const open = await rows54(conn, "SELECT w.id, w.number, w.status, w.total, w.rejectionReason, w.appointmentId, w.createdAt, v.make, v.model, v.year, v.plate, EXISTS (SELECT 1 FROM `WorkOrderChange` c WHERE c.workOrderId = w.id AND c.status = 'pending') AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY w.number DESC LIMIT 20", [shop.id]);
+    const open2 = await rows54(conn, "SELECT w.id, w.number, w.status, w.total, w.rejectionReason, w.appointmentId, w.createdAt, v.make, v.model, v.year, v.plate, EXISTS (SELECT 1 FROM `WorkOrderChange` c WHERE c.workOrderId = w.id AND c.status = 'pending') AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status NOT IN ('cerrada','cancelada') ORDER BY w.number DESC LIMIT 20", [shop.id]);
     const claimed = await rows54(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND EXISTS (SELECT 1 FROM `WorkOrderWarranty` g WHERE g.workOrderId = w.id AND g.status = 'abierta') ORDER BY w.number DESC LIMIT 10", [shop.id]).catch((err4) => {
       if (err4.code === "ER_NO_SUCH_TABLE")
         return [];
@@ -154378,9 +154500,9 @@ var PilotPanelStore = class {
       throw err4;
     });
     const recentClosed = await rows54(conn, "SELECT w.id, w.number, w.status, w.total, v.make, v.model, v.year, v.plate, 0 AS waiting FROM `WorkOrder` w JOIN `Vehicle` v ON v.id = w.vehicleId WHERE w.shopId = ? AND w.status = 'cerrada' AND w.closedAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 7 DAY) ORDER BY w.number DESC LIMIT 10", [shop.id]);
-    const orders = [...claimed, ...open];
+    const orders = [...claimed, ...open2];
     const shopVat = await vatById(conn, "WorkOrder", orders.map((o) => String(o.id)));
-    const askedByAppointment = await pickedOf(conn, open.map((o) => String(o.appointmentId ?? "")).filter(Boolean));
+    const askedByAppointment = await pickedOf(conn, open2.map((o) => String(o.appointmentId ?? "")).filter(Boolean));
     for (const o of [...unpaid, ...toRefund, ...recentClosed])
       if (!orders.some((x) => x.id === o.id))
         orders.push(o);
@@ -154425,7 +154547,7 @@ var PilotPanelStore = class {
     const shopReady = await readyStates(conn, orders.map((o) => String(o.id)));
     const shopReview = await reviewStates(conn, orders.map((o) => String(o.id)));
     const shopReports = await orderReports(conn, orders.map((o) => String(o.id)));
-    const shopPace = shop.isOwner || shop.isAdmin ? await orderPace(conn, open.map((o) => ({ id: String(o.id), status: String(o.status), createdAt: o.createdAt, ready: shopReady.get(String(o.id))?.state ?? null, promised: shopRecords.get(String(o.id))?.promised?.date ?? null })), now) : /* @__PURE__ */ new Map();
+    const shopPace = shop.isOwner || shop.isAdmin ? await orderPace(conn, open2.map((o) => ({ id: String(o.id), status: String(o.status), createdAt: o.createdAt, ready: shopReady.get(String(o.id))?.state ?? null, promised: shopRecords.get(String(o.id))?.promised?.date ?? null })), now) : /* @__PURE__ */ new Map();
     const shopInPerson = await inPersonStates(conn, orders.map((o) => String(o.id)));
     return {
       role: "taller",
@@ -156908,21 +157030,21 @@ init_head();
 import { randomBytes as randomBytes17 } from "node:crypto";
 var STYLES3 = `${THEME_TOKENS}${SISTEMA}
 *{box-sizing:border-box}
-body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.6 var(--c-font);padding:0 0 16px}
+body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.6 var(--c-font);padding:0 0 16px}
 main{max-width:1240px;margin:16px auto;background:var(--c-surface);border-radius:var(--c-r);padding:24px 20px;box-shadow:var(--c-shadow)}@media (max-width:1271px){main{margin-left:16px;margin-right:16px}}
 main a{color:var(--c-link)}
-h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}h2{font-size:18px;margin:22px 0 6px}
+h1{font-size:21px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}h2{font-size:16px;margin:22px 0 6px}
 ol{padding-left:22px}li{margin:4px 0}
 .nota{color:var(--c-muted);font-size:14px}
 .listo{background:var(--c-ok-bg,#e7f6ec);border-radius:10px;padding:10px 14px;font-weight:600}
-button{font:700 16px/1 var(--c-font);background:var(--c-accent);color:#fff;border:0;border-radius:10px;padding:14px 20px;cursor:pointer}
+button{font:700 15px/1 var(--c-font);background:var(--c-accent);color:#fff;border:0;border-radius:10px;padding:14px 20px;cursor:pointer}
 button:focus-visible,a:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}
 [hidden]{display:none!important}
 .grande .ico{width:24px;height:24px;flex:none}
-.grande{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:20px;padding:18px 28px;border-radius:3px;width:100%;max-width:420px;min-height:56px}
+.grande{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:18px;padding:18px 28px;border-radius:3px;width:100%;max-width:420px;min-height:56px}
 .guia{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:20px}
 .guia .tarjeta{background:var(--c-surface);color:var(--c-ink);border-radius:16px;padding:20px;max-width:380px;text-align:center}
-.guia .paso{font-size:18px;margin:0 0 8px}
+.guia .paso{font-size:16px;margin:0 0 8px}
 .icono-compartir{display:inline-block;border:2px solid currentColor;border-radius:6px;padding:0 6px;font-weight:700}
 .flecha{position:fixed;left:50%;transform:translateX(-50%);font-size:44px;color:#fff;animation:rebote 1s ease-in-out infinite}
 .flecha.abajo{bottom:max(10px,env(safe-area-inset-bottom))}.flecha.arriba{top:max(10px,env(safe-area-inset-top));transform:translateX(-50%) rotate(180deg)}
@@ -157016,12 +157138,12 @@ import { randomBytes as randomBytes18 } from "node:crypto";
 var TOKEN = /^[A-Za-z0-9_-]{32}$/;
 var STYLES4 = `${THEME_TOKENS}${SISTEMA}
 *{box-sizing:border-box}
-body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.6 var(--c-font);padding:16px}
+body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.6 var(--c-font);padding:16px}
 main{max-width:1240px;margin:16px auto;background:var(--c-surface);border-radius:var(--c-r);padding:24px 20px;box-shadow:var(--c-shadow)}@media (min-width:760px) and (max-width:1271px){main{margin-left:16px;margin-right:16px}}
-h1{font-size:24px;font-weight:800;margin:0 0 4px}.sello{display:inline-block;background:var(--c-accent);color:#fff;border-radius:999px;padding:2px 12px;font-weight:700;font-size:13px}
+h1{font-size:20px;font-weight:800;margin:0 0 4px}.sello{display:inline-block;background:var(--c-accent);color:#fff;border-radius:999px;padding:2px 12px;font-weight:700;font-size:13px}
 dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px}dt{font-weight:700}dd{margin:0}
 .acciones{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
-button{font:700 16px/1 var(--c-font);border:0;border-radius:10px;padding:14px 20px;cursor:pointer}
+button{font:700 15px/1 var(--c-font);border:0;border-radius:10px;padding:14px 20px;cursor:pointer}
 .si{background:var(--c-accent);color:#fff}.no{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}
 .nota{color:var(--c-muted);font-size:14px}
 `;
@@ -157116,7 +157238,7 @@ var SHOP_PROFILES_STYLES = `
 .perfil .foto{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--c-sunk)}
 .perfil .inicial{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:16/9;background:var(--c-sunk);color:var(--c-muted);font-size:42px;font-weight:700}
 .perfil .cuerpo{display:flex;flex-direction:column;gap:6px;padding:10px 12px 12px}
-.perfil h3{margin:0;font-size:16px;line-height:1.25}
+.perfil h3{margin:0;font-size:15px;line-height:1.25}
 .perfil .donde,.perfil .servicios{margin:0;font-size:13px;color:var(--c-muted)}
 .perfil .sedes{font-size:13px;color:var(--c-muted)}.perfil .sedes b{color:var(--c-ink)}.perfil .sedes ul{margin:4px 0 0;padding-left:18px}
 .perfil .sellos{display:flex;flex-wrap:wrap;gap:4px}
@@ -157124,7 +157246,7 @@ var SHOP_PROFILES_STYLES = `
 .perfil .sello.ok{background:var(--c-ok-bg);color:var(--c-ok)}
 .perfil .cabeza{display:flex;align-items:center;gap:8px}.perfil .logo{width:40px;height:40px;object-fit:contain;border-radius:8px;background:var(--c-sunk);flex:none}
 .perfil .sello .ico{width:13px;height:13px;flex:none}
-.perfil .sobre{margin:0;font-size:16px;line-height:1.4}
+.perfil .sobre{margin:0;font-size:15px;line-height:1.4}
 .perfil .galeria{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.perfil .galeria img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;background:var(--c-sunk)}
 .perfil .acciones{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px;font-size:13px}
 .perfil .acciones a{display:inline-flex;align-items:center;min-height:40px;padding:0 12px;border:1px solid var(--c-line);border-radius:3px;background:var(--c-surface);color:var(--c-ink)!important;text-decoration:none!important;font-weight:600}
@@ -157259,16 +157381,16 @@ main{max-width:640px}
 @media (min-width:900px){main{max-width:1240px}.bloques{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}.bloques>.card{margin:0}.bloques>.card:has(.perfiles){grid-column:1/-1}main>.cta{max-width:560px}.lead{max-width:80ch}}
 .card>.titulo{background:var(--c-accent)!important;color:var(--c-on-accent)!important;font:600 14px/1.3 var(--c-font)!important;letter-spacing:0!important;text-transform:none!important;border:0!important;padding:8px 12px!important;margin:-16px -16px 12px!important;border-radius:3px 3px 0 0}
 header{margin-bottom:12px}
-h1{font-size:26px;margin:10px 0 8px}
+h1{font-size:21px;margin:10px 0 8px}
 .migas{font:500 13px/1.4 var(--c-font);color:var(--c-muted);margin:0 0 6px}
 .migas a{color:var(--c-accent);text-decoration:underline;text-underline-offset:2px}
 .lead{margin:0 0 16px}
 .card{padding:16px}
-.titulo{font:700 18px/1.25 var(--c-font);letter-spacing:-.01em;color:var(--c-ink);margin:0 0 12px}
+.titulo{font:700 16px/1.25 var(--c-font);letter-spacing:-.01em;color:var(--c-ink);margin:0 0 12px}
 .cta{display:flex;text-decoration:none;margin-bottom:10px}
 .servicio{border-top:1px solid var(--c-line);padding:12px 0 0;margin:12px 0 0}
 .servicio:first-of-type{border-top:0;padding-top:0;margin-top:0}
-.servicio h3{font-size:16px;font-weight:600;margin:0 0 4px}
+.servicio h3{font-size:15px;font-weight:600;margin:0 0 4px}
 .servicio p{font-size:14.5px;color:var(--c-muted);margin:0 0 6px}
 .datos{display:flex;gap:8px;flex-wrap:wrap;font:600 13px/1 var(--c-font);font-variant-numeric:tabular-nums}
 .datos span{background:var(--c-sunk);border:1px solid var(--c-line);color:var(--c-ink);padding:6px 9px;border-radius:7px}
@@ -157281,10 +157403,10 @@ h1{font-size:26px;margin:10px 0 8px}
 .km th{font-weight:700;color:var(--c-ink)}
 .km td+td,.km th+th{text-align:right;white-space:nowrap}
 .tabla{overflow-x:auto}
-.puntos{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px}
+.puntos{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px}
 .perfiles{display:grid;gap:14px}
-.perfiles h3{font:700 15px/1.3 var(--c-font);margin:0 0 6px}
-.texto{font-size:15px;margin:0 0 10px}
+.perfiles h3{font:700 14px/1.3 var(--c-font);margin:0 0 6px}
+.texto{font-size:14px;margin:0 0 10px}
 .zonas span{font:500 13px/1 var(--c-font);color:var(--c-muted);border:1px solid var(--c-line);padding:6px 9px;border-radius:7px}
 /* Tanda 2 de dise\xF1o (25/11/2026), mismo lenguaje que el home: tarjetas blancas de 12 px sin borde, franjas azules
    de 13 px con esquinas de 3 px, listas agrupadas con \u203A y dos tama\xF1os de texto (16 px cuerpo, 13 px notas). */
@@ -157295,15 +157417,15 @@ h1{margin:16px 0 8px}
 .card:has(>.plan),.card:has(.perfil){background:none!important;padding:0!important}
 .card:has(>.plan)>.titulo,.card:has(.perfil)>.titulo{margin:0 0 12px!important}
 .enlaces{display:block}
-.enlaces li{position:relative;display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 0;border-top:1px solid var(--c-line);font-size:16px;line-height:1.35}
+.enlaces li{position:relative;display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 0;border-top:1px solid var(--c-line);font-size:15px;line-height:1.35}
 .enlaces li:first-child{border-top:0}
 .enlaces a{flex:1;color:var(--c-ink)!important;text-decoration:none!important;font-weight:600}
 .enlaces a::before{content:"";position:absolute;inset:0}
-.enlaces li:has(>a)::after{content:"\u203A";flex:none;color:var(--c-muted);font-size:20px;line-height:1}
+.enlaces li:has(>a)::after{content:"\u203A";flex:none;color:var(--c-muted);font-size:18px;line-height:1}
 .enlaces li:has(>a):hover a{color:var(--c-accent)!important}
 .enlaces .precio,.enlaces .prov{flex:none;color:var(--c-muted);font-size:13px;white-space:nowrap}
 .perfiles>div>h3{font:600 13px/1.3 var(--c-font)!important;color:var(--c-muted)!important;margin:8px 0 0}
-.lead,.texto,.puntos,.respuesta,.servicio p{font-size:16px}
+.lead,.texto,.puntos,.respuesta,.servicio p{font-size:15px}
 .respuesta{color:var(--c-ink)}
 `;
 function serviceBlocks(page3) {
@@ -158071,7 +158193,7 @@ svg.leaflet-image-layer.leaflet-interactive path {\r
 	}\r
 \r
 .leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {\r
-	font-size: 22px;\r
+	font-size: 19px;\r
 	}\r
 \r
 \r
@@ -158515,15 +158637,15 @@ var MAP_STYLES = `
 main{max-width:760px}
 @media (min-width:900px){main{max-width:1240px}}
 header{margin-bottom:12px}
-h1{font-size:26px;margin:10px 0 8px}
+h1{font-size:21px;margin:10px 0 8px}
 .migas{font:500 13px/1.4 var(--c-font);color:var(--c-muted);margin:0 0 6px}
 .migas a,.mas a,.vacio a,.acciones a{color:var(--c-link);text-decoration:underline;text-decoration-color:var(--c-link-line);text-underline-offset:2px;font-weight:600}
 .lead{margin:0 0 14px}
-.titulo{font:700 18px/1.25 var(--c-font);color:var(--c-ink);margin:16px 0 10px}
+.titulo{font:700 16px/1.25 var(--c-font);color:var(--c-ink);margin:16px 0 10px}
 .filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end;margin:0 0 10px}
 .filtros label{display:flex;flex-direction:column;gap:4px;font:600 13px/1.2 var(--c-font);color:var(--c-muted)}
 .filtros select{font:600 15px/1.2 var(--c-font);padding:10px;border:1px solid var(--c-line);border-radius:var(--c-r-sm);background:var(--c-field);color:var(--c-ink);width:100%;min-width:0}
-.filtros button,#cerca{font:700 15px/1 var(--c-font);padding:12px 16px;border-radius:999px;border:0;background:var(--c-accent);color:var(--c-on-accent);cursor:pointer}
+.filtros button,#cerca{font:700 14px/1 var(--c-font);padding:12px 16px;border-radius:999px;border:0;background:var(--c-accent);color:var(--c-on-accent);cursor:pointer}
 #cerca{background:var(--c-sunk);color:var(--c-ink);border:1px solid var(--c-line);padding:9px 14px}
 .filtros select:focus-visible,.filtros button:focus-visible,#cerca:focus-visible,main a:focus-visible{outline:3px solid var(--c-focus);outline-offset:2px}
 .ubic{margin:0 0 10px;font-size:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -158535,7 +158657,7 @@ h1{font-size:26px;margin:10px 0 8px}
 .portada{display:block;width:100%;height:auto;max-height:180px;object-fit:cover;border-radius:var(--c-r-sm);background:var(--c-sunk)}
 .taller.activo{outline:3px solid var(--c-promo);outline-offset:-1px}
 .fila{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.fila h3{font:700 16px/1.3 var(--c-font);margin:0}
+.fila h3{font:700 15px/1.3 var(--c-font);margin:0}
 .num{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:999px;background:var(--c-cta);color:var(--c-on-cta);font-size:12px;margin-right:4px}
 .dist{font:600 13px/1 var(--c-font);color:var(--c-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .tags{display:flex;flex-wrap:wrap;gap:6px}
@@ -158557,8 +158679,8 @@ h1{font-size:26px;margin:10px 0 8px}
 .leaflet-tooltip.leaflet-num:before{display:none}
 @media (max-width:640px){
  main{padding-left:12px;padding-right:12px}
- h1{font-size:24px}
- .titulo{font-size:16px;margin:12px 0 8px}
+ h1{font-size:20px}
+ .titulo{font-size:15px;margin:12px 0 8px}
  .filtros{grid-template-columns:1fr;gap:8px}
  .filtros select{font-size:16px;min-height:44px}
  .filtros button,#cerca{min-height:44px}
@@ -158792,7 +158914,7 @@ async function plansPageRoutes(app2, options = {}) {
 var PLAN_STYLES = `
 /* Cada plan en su propia tarjeta blanca y \xABQuiero plan \u2026\xBB como bot\xF3n azul (25/11/2026); mismo texto y enlace. */
 .plan,.plan.recomendado{background:var(--c-surface);border:0!important;border-radius:12px;padding:16px!important;margin:0 0 12px!important}
-.plan .incluye{margin:6px 0 8px;padding-left:18px;font-size:16px}
+.plan .incluye{margin:6px 0 8px;padding-left:18px;font-size:15px}
 .plan .sello{font:600 12px/1 var(--c-font);background:var(--c-ok-bg);color:var(--c-ok);padding:4px 7px;border-radius:3px;vertical-align:middle}
 .contratar{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;margin:8px 0 0;background:var(--c-accent);color:var(--c-on-accent)!important;border-radius:3px;text-decoration:none!important;font-weight:600}
 .contratar:hover{background:var(--c-ink)}
@@ -158823,11 +158945,11 @@ init_theme_layers();
 import { randomBytes as randomBytes23 } from "node:crypto";
 var STYLES5 = `${THEME_TOKENS}
 *{box-sizing:border-box}
-body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.6 var(--c-font);padding:8px 0 24px}
+body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.6 var(--c-font);padding:8px 0 24px}
 body>main{margin:0 16px}@media (min-width:1272px){body>main{margin:0 auto}}
 @media (min-width:1000px){.secciones{column-count:2;column-gap:48px}.secciones h2{break-after:avoid}.secciones p,.secciones li{break-inside:avoid}.secciones>h2:first-child{margin-top:0}}main{max-width:1240px;margin:0 auto;background:var(--c-surface);border-radius:var(--c-r);padding:28px 24px;box-shadow:var(--c-shadow)}
-.brand{font-weight:700;font-size:22px;letter-spacing:-.01em;margin:0;text-decoration:none;color:var(--c-ink)}.brand span{color:var(--c-accent)}
-h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:18px 0 4px}h2{font-size:18px;font-weight:700;margin:26px 0 6px}
+.brand{font-weight:700;font-size:19px;letter-spacing:-.01em;margin:0;text-decoration:none;color:var(--c-ink)}.brand span{color:var(--c-accent)}
+h1{font-size:21px;font-weight:800;letter-spacing:-.02em;margin:18px 0 4px}h2{font-size:16px;font-weight:700;margin:26px 0 6px}
 p,li{color:var(--c-ink)}ul{padding-left:22px}li{margin:6px 0}
 .meta{color:var(--c-muted);font-size:14px;margin:0 0 12px}
 .notice{background:var(--c-warn-bg);color:var(--c-warn);border-radius:10px;padding:10px 14px;font-weight:600}
@@ -160119,7 +160241,7 @@ import { randomBytes as randomBytes24 } from "node:crypto";
 function renderAssistantPage(nonce2) {
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Asistente \xB7 AutoMantPro</title>
 <style nonce="${nonce2}">${THEME_TOKENS}
-:root{--ink:var(--c-ink);--muted:var(--c-muted);--brand:var(--c-accent);--bg:var(--c-bg);--card:var(--c-surface);--line:var(--c-line);--danger:var(--c-bad);--ok:var(--c-ok)}*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:16px/1.45 var(--c-font)}.shell{max-width:920px;margin:auto;padding:24px 16px 48px}header{margin-bottom:18px}.brand{color:var(--c-accent);font-weight:700;letter-spacing:-.01em}h1{font-size:clamp(1.55rem,4vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin:.25rem 0}h2{font-size:1.05rem;margin:0 0 8px}.muted{color:var(--c-muted)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:18px;box-shadow:var(--c-shadow)}.hidden{display:none!important}label{display:block;font-weight:600;margin:12px 0 5px}input,textarea,button{font:inherit}input,textarea{width:100%;min-height:48px;border:1px solid var(--c-line);border-radius:10px;padding:11px;background:var(--c-field);color:var(--c-ink)}textarea{min-height:88px;resize:vertical}button{min-height:48px;border:0;border-radius:var(--c-r);background:var(--c-accent);color:var(--c-on-accent);font-weight:600;padding:11px 18px;cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.secondary{background:transparent;color:var(--c-accent);border:1px solid var(--c-line)}.danger{color:var(--c-bad)}.notice{min-height:1.5em;margin:10px 0}.chat{display:grid;gap:12px;margin:18px 0}.message{max-width:82%;padding:11px 13px;border-radius:13px;background:var(--c-sunk);white-space:pre-wrap}.message.user{justify-self:end;background:var(--c-ok-bg)}.message.assistant{justify-self:start}.proposal{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:14px;margin:12px 0}.proposal dl{display:grid;grid-template-columns:minmax(120px,1fr) 2fr;gap:5px 12px;margin:12px 0}.proposal dt{color:var(--c-muted)}.proposal dd{margin:0;font-weight:600}.confirm{display:flex;gap:9px;align-items:flex-start;margin:13px 0}.confirm input{width:20px;height:20px;min-height:0;flex:0 0 auto;margin-top:2px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row button{margin-left:auto}@media(max-width:560px){.shell{padding:18px 12px}.card{padding:14px}.message{max-width:92%}.proposal dl{grid-template-columns:1fr}.proposal dt{margin-top:6px}.row button{width:100%;margin-left:0}}${THEME_ASSISTANT_LAYER}
+:root{--ink:var(--c-ink);--muted:var(--c-muted);--brand:var(--c-accent);--bg:var(--c-bg);--card:var(--c-surface);--line:var(--c-line);--danger:var(--c-bad);--ok:var(--c-ok)}*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.45 var(--c-font)}.shell{max-width:920px;margin:auto;padding:24px 16px 48px}header{margin-bottom:18px}.brand{color:var(--c-accent);font-weight:700;letter-spacing:-.01em}h1{font-size:clamp(1.55rem,3.3vw,2.2rem);font-weight:800;letter-spacing:-.02em;margin:.25rem 0}h2{font-size:1.05rem;margin:0 0 8px}.muted{color:var(--c-muted)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:18px;box-shadow:var(--c-shadow)}.hidden{display:none!important}label{display:block;font-weight:600;margin:12px 0 5px}input,textarea,button{font:inherit}input,textarea{width:100%;min-height:48px;border:1px solid var(--c-line);border-radius:10px;padding:11px;background:var(--c-field);color:var(--c-ink)}textarea{min-height:88px;resize:vertical}button{min-height:48px;border:0;border-radius:var(--c-r);background:var(--c-accent);color:var(--c-on-accent);font-weight:600;padding:11px 18px;cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.secondary{background:transparent;color:var(--c-accent);border:1px solid var(--c-line)}.danger{color:var(--c-bad)}.notice{min-height:1.5em;margin:10px 0}.chat{display:grid;gap:12px;margin:18px 0}.message{max-width:82%;padding:11px 13px;border-radius:13px;background:var(--c-sunk);white-space:pre-wrap}.message.user{justify-self:end;background:var(--c-ok-bg)}.message.assistant{justify-self:start}.proposal{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:14px;margin:12px 0}.proposal dl{display:grid;grid-template-columns:minmax(120px,1fr) 2fr;gap:5px 12px;margin:12px 0}.proposal dt{color:var(--c-muted)}.proposal dd{margin:0;font-weight:600}.confirm{display:flex;gap:9px;align-items:flex-start;margin:13px 0}.confirm input{width:20px;height:20px;min-height:0;flex:0 0 auto;margin-top:2px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row button{margin-left:auto}@media(max-width:560px){.shell{padding:18px 12px}.card{padding:14px}.message{max-width:92%}.proposal dl{grid-template-columns:1fr}.proposal dt{margin-top:6px}.row button{width:100%;margin-left:0}}${THEME_ASSISTANT_LAYER}
 ${SISTEMA}</style></head><body><main class="shell">${cabeceraSitio()}<header><div class="brand">${logoImg()}</div><h1>Asistente de mantenimiento</h1><p class="muted">Las propuestas se revisan antes de registrar cualquier veh\xEDculo.</p></header>
 <section id="login" class="card"><h2>Ingresar</h2><p class="muted">Usa las credenciales de tu cuenta de due\xF1o. \xBFSin contrase\xF1a? <a href="/cuenta#entrar">Con\xE9ctate con WhatsApp</a> y recibe un enlace seguro para entrar.</p><form id="login-form"><label for="phone">Celular o correo</label><input id="phone" name="phone" autocomplete="username" required><label for="password">Contrase\xF1a</label><input id="password" name="password" type="password" autocomplete="current-password" required><p id="login-notice" class="notice" role="status"></p><button type="submit">Continuar</button></form></section>
 <section id="workspace" class="hidden"><div class="card"><div id="chat" class="chat" aria-live="polite"></div><form id="chat-form"><label for="message">\xBFEn qu\xE9 necesitas ayuda?</label><textarea id="message" maxlength="2000" required placeholder="Describe tu veh\xEDculo o la consulta de mantenimiento."></textarea><p id="chat-notice" class="notice" role="status"></p><div class="row"><button id="send" type="submit">Enviar</button><button id="logout" class="secondary" type="button">Salir</button></div></form></div><section id="proposals" aria-live="polite"></section></section>
@@ -160245,8 +160367,8 @@ function renderFleetPanel(data4, nonce2, csvHref) {
   const roleName = { admin: "Administrador", supervisor: "Supervisor", conductor: "Conductor" };
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${esc(data4.fleet.name)} \xB7 Flota \xB7 AutoMantPro</title>
 <style nonce="${nonce2}">${THEME_TOKENS}
-*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.45 var(--c-font)}header{background:var(--c-head);color:var(--c-head-ink);padding:16px max(16px,env(safe-area-inset-left))}header .brand{color:var(--c-head-brand);font-weight:800}header h1{margin:.2rem 0 0;font-size:clamp(1.3rem,4vw,1.8rem)}main{max-width:1180px;margin:auto;padding:18px max(16px,env(safe-area-inset-left)) 48px;display:grid;gap:18px}.muted{color:var(--c-muted)}.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.tile{background:var(--c-surface);border-radius:var(--c-r);padding:14px;box-shadow:var(--c-shadow)}.tile b{display:block;font-size:1.6rem;font-variant-numeric:tabular-nums}.tile.bad b{color:var(--c-bad)}.tile.warn b{color:var(--c-warn)}.tile.ok b{color:var(--c-ok)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:16px;box-shadow:var(--c-shadow);min-width:0}.card h2{margin:0 0 10px;font-size:1.05rem}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:860px}#plan table{min-width:0}#plan td,#plan th{white-space:normal;overflow-wrap:normal;word-break:normal}@media(max-width:640px){#plan thead{display:none}#plan tr{display:block;padding:8px 0;border-bottom:1px solid var(--c-line)}#plan td{display:block;border:0;padding:2px 0}#plan td:first-child{font-weight:600}}ul:has(> li > .led){list-style:none;padding-left:0}th,td{padding:8px 10px;border-bottom:1px solid var(--c-line);text-align:left;vertical-align:top}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--c-muted)}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.8rem;font-weight:600}.pill.ok{background:var(--c-ok-bg);color:var(--c-ok)}.pill.warn{background:var(--c-warn-bg);color:var(--c-warn)}.pill.bad{background:var(--c-bad-bg);color:var(--c-bad)}.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.bars{display:grid;gap:8px}.bar{display:grid;grid-template-columns:70px 1fr 90px;gap:8px;align-items:center;font-variant-numeric:tabular-nums}.bar span{display:block;height:12px;border-radius:6px;background:var(--c-accent)}ul{margin:0;padding-left:1.1em}a.button{display:inline-block;background:var(--c-cta);color:var(--c-on-cta);padding:10px 16px;border-radius:var(--c-r);text-decoration:none;font-weight:600}a.button:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.gap{margin-top:14px!important}.mono,.num,.tile b,.bar{font-family:var(--c-mono);font-variant-numeric:tabular-nums}.led{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:1px}.tile{display:grid;gap:4px}.tile .kh{display:flex;align-items:center;font-size:.85rem;color:var(--c-muted)}.tile.ok .led{background:var(--c-ok)}.tile.warn .led{background:var(--c-warn)}.tile.bad .led{background:var(--c-bad)}.tile.idle .led{background:transparent;border:1.5px solid var(--c-muted)}.tile.gauge{grid-template-columns:auto 1fr;align-items:center;gap:12px;grid-column:span 2}.pill{display:inline-flex;align-items:center;white-space:nowrap}th:first-child,td:first-child{min-width:140px}.tile.gauge strong{display:block;font-size:1.1rem}.svc{white-space:nowrap;margin:0 0 3px}.code{font:700 .72rem/1 var(--c-mono);padding:3px 5px;border-radius:5px;border:1px solid currentColor;margin-right:6px}.code.bad{color:var(--c-bad)}.code.warn{color:var(--c-warn)}.bar span{background:var(--c-muted)!important;border-radius:2px}.shell{display:flex;align-items:flex-start}.index{position:sticky;top:0;width:220px;flex:none;min-height:calc(100vh - 96px);background:var(--c-head);color:var(--c-head-ink);padding:20px 12px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box}.index-brand .logo-img{height:36px;padding:3px 8px}.index-fleet{padding:2px 10px 14px;font-size:14px;color:var(--c-head-ink);opacity:.75}.index-fleet b{display:block;font-family:var(--c-display);font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--c-head-ink)}.index-fleet span{display:block}.index nav{display:flex;flex-direction:column;gap:2px}.index nav a{display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:var(--c-pill);color:var(--c-head-ink);text-decoration:none;font-size:15px;font-weight:500}.index nav a:hover,.index nav a:focus-visible{background:var(--c-head-line);color:var(--c-head-ink)}.index-mobile{display:none}.index-mobile summary{list-style:none;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--c-head-line);border-radius:var(--c-pill);color:var(--c-head-ink);font-weight:600;cursor:pointer}.index-mobile summary::-webkit-details-marker{display:none}.index-mobile nav{margin-top:8px}
-.index-note{margin-top:auto;padding:14px 10px 0;font-size:13px;color:var(--c-head-ink);opacity:.55}.shell main{flex:1;min-width:0}section[id]{scroll-margin-top:16px}@media (max-width:900px){.shell{display:block}.index{position:static;width:auto;min-height:0;padding:10px 12px;gap:8px;border-bottom:1px solid var(--c-head-line)}.index-brand{display:none}.index-fleet{padding:0 2px;font-size:12px}.index-fleet b{font-size:15px}.index-desk{display:none!important}.index-mobile{display:block}.index-note{display:none}}${Array.from({ length: 20 }, (_, i) => `.w${(i + 1) * 5}{width:${(i + 1) * 5}%}`).join("")}${THEME_FLEET_LAYER}
+*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:14px/1.45 var(--c-font)}header{background:var(--c-head);color:var(--c-head-ink);padding:16px max(16px,env(safe-area-inset-left))}header .brand{color:var(--c-head-brand);font-weight:800}header h1{margin:.2rem 0 0;font-size:clamp(1.3rem,3.3vw,1.8rem)}main{max-width:1180px;margin:auto;padding:18px max(16px,env(safe-area-inset-left)) 48px;display:grid;gap:18px}.muted{color:var(--c-muted)}.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.tile{background:var(--c-surface);border-radius:var(--c-r);padding:14px;box-shadow:var(--c-shadow)}.tile b{display:block;font-size:1.6rem;font-variant-numeric:tabular-nums}.tile.bad b{color:var(--c-bad)}.tile.warn b{color:var(--c-warn)}.tile.ok b{color:var(--c-ok)}.card{background:var(--c-surface);border-radius:var(--c-r);padding:16px;box-shadow:var(--c-shadow);min-width:0}.card h2{margin:0 0 10px;font-size:1.05rem}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:860px}#plan table{min-width:0}#plan td,#plan th{white-space:normal;overflow-wrap:normal;word-break:normal}@media(max-width:640px){#plan thead{display:none}#plan tr{display:block;padding:8px 0;border-bottom:1px solid var(--c-line)}#plan td{display:block;border:0;padding:2px 0}#plan td:first-child{font-weight:600}}ul:has(> li > .led){list-style:none;padding-left:0}th,td{padding:8px 10px;border-bottom:1px solid var(--c-line);text-align:left;vertical-align:top}th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--c-muted)}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.8rem;font-weight:600}.pill.ok{background:var(--c-ok-bg);color:var(--c-ok)}.pill.warn{background:var(--c-warn-bg);color:var(--c-warn)}.pill.bad{background:var(--c-bad-bg);color:var(--c-bad)}.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.bars{display:grid;gap:8px}.bar{display:grid;grid-template-columns:70px 1fr 90px;gap:8px;align-items:center;font-variant-numeric:tabular-nums}.bar span{display:block;height:12px;border-radius:6px;background:var(--c-accent)}ul{margin:0;padding-left:1.1em}a.button{display:inline-block;background:var(--c-cta);color:var(--c-on-cta);padding:10px 16px;border-radius:var(--c-r);text-decoration:none;font-weight:600}a.button:focus-visible{outline:3px solid var(--c-ink);outline-offset:2px}.gap{margin-top:14px!important}.mono,.num,.tile b,.bar{font-family:var(--c-mono);font-variant-numeric:tabular-nums}.led{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:1px}.tile{display:grid;gap:4px}.tile .kh{display:flex;align-items:center;font-size:.85rem;color:var(--c-muted)}.tile.ok .led{background:var(--c-ok)}.tile.warn .led{background:var(--c-warn)}.tile.bad .led{background:var(--c-bad)}.tile.idle .led{background:transparent;border:1.5px solid var(--c-muted)}.tile.gauge{grid-template-columns:auto 1fr;align-items:center;gap:12px;grid-column:span 2}.pill{display:inline-flex;align-items:center;white-space:nowrap}th:first-child,td:first-child{min-width:140px}.tile.gauge strong{display:block;font-size:1.1rem}.svc{white-space:nowrap;margin:0 0 3px}.code{font:700 .72rem/1 var(--c-mono);padding:3px 5px;border-radius:5px;border:1px solid currentColor;margin-right:6px}.code.bad{color:var(--c-bad)}.code.warn{color:var(--c-warn)}.bar span{background:var(--c-muted)!important;border-radius:2px}.shell{display:flex;align-items:flex-start}.index{position:sticky;top:0;width:220px;flex:none;min-height:calc(100vh - 96px);background:var(--c-head);color:var(--c-head-ink);padding:20px 12px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box}.index-brand .logo-img{height:36px;padding:3px 8px}.index-fleet{padding:2px 10px 14px;font-size:14px;color:var(--c-head-ink);opacity:.75}.index-fleet b{display:block;font-family:var(--c-display);font-weight:800;font-size:16px;letter-spacing:-.02em;color:var(--c-head-ink)}.index-fleet span{display:block}.index nav{display:flex;flex-direction:column;gap:2px}.index nav a{display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:var(--c-pill);color:var(--c-head-ink);text-decoration:none;font-size:14px;font-weight:500}.index nav a:hover,.index nav a:focus-visible{background:var(--c-head-line);color:var(--c-head-ink)}.index-mobile{display:none}.index-mobile summary{list-style:none;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--c-head-line);border-radius:var(--c-pill);color:var(--c-head-ink);font-weight:600;cursor:pointer}.index-mobile summary::-webkit-details-marker{display:none}.index-mobile nav{margin-top:8px}
+.index-note{margin-top:auto;padding:14px 10px 0;font-size:13px;color:var(--c-head-ink);opacity:.55}.shell main{flex:1;min-width:0}section[id]{scroll-margin-top:16px}@media (max-width:900px){.shell{display:block}.index{position:static;width:auto;min-height:0;padding:10px 12px;gap:8px;border-bottom:1px solid var(--c-head-line)}.index-brand{display:none}.index-fleet{padding:0 2px;font-size:12px}.index-fleet b{font-size:14px}.index-desk{display:none!important}.index-mobile{display:block}.index-note{display:none}}${Array.from({ length: 20 }, (_, i) => `.w${(i + 1) * 5}{width:${(i + 1) * 5}%}`).join("")}${THEME_FLEET_LAYER}
 ${SISTEMA}</style></head><body>${cabeceraSitio()}<header><div class="brand">${logoImg()}</div><h1>${esc(data4.fleet.name)}</h1><div>${esc(data4.fleet.city)} \xB7 ${list7.length} veh\xEDculos \xB7 solo lectura</div></header>
 <div class="shell"><aside class="index" aria-label="\xCDndice de la p\xE1gina">
 <div class="index-fleet"><b>${esc(data4.fleet.name)}</b><span>${esc(data4.fleet.city)}</span></div>
@@ -160515,7 +160637,7 @@ function defaultSession(request, reply, required = true) {
   return null;
 }
 function page2(title, body, nonce2) {
-  return `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>${e3(title)} \xB7 AutoMantPro</title><style nonce="${e3(nonce2)}">${THEME_TOKENS}*{box-sizing:border-box}body>.cabecera-sitio,body>.pie-sitio{padding-left:0!important;padding-right:0!important}@media (min-width:760px){form[method=get]{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}form[method=get] button{margin:0}}body{max-width:1272px;margin:0 auto;padding:16px;background:var(--c-bg);color:var(--c-ink);font:16px/1.55 var(--c-font)}a{color:var(--c-accent);overflow-wrap:anywhere}nav{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px}article,section{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:clamp(14px,3vw,22px);margin:12px 0;min-width:0}h1,h2,h3{overflow-wrap:anywhere}.notice{background:var(--c-warn-bg);color:var(--c-warn);border-left:4px solid var(--c-warn);padding:12px}form{margin:12px 0}label{display:block;margin:10px 0;overflow-wrap:anywhere}input,textarea,button{max-width:100%;font:inherit}input,textarea{width:100%;padding:10px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface);color:var(--c-ink)}input[type=checkbox],input[type=radio]{width:auto}button{padding:10px 16px;border:0;border-radius:var(--c-pill);background:var(--c-promo);color:var(--c-on-promo);cursor:pointer}.locked{color:var(--c-muted)}ol{padding-left:24px}li{overflow-wrap:anywhere}${SISTEMA}body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}body>.cabecera-sitio,body>.pie-sitio{padding-left:0;padding-right:0}</style></head><body>${cabeceraSitio(nonce2)}<nav aria-label="Capacitaci\xF3n"><a href="/cursos">Cursos</a><a href="/mis-cursos">Mis cursos</a></nav><main id="contenido">${body}</main>${pieSitio()}</body></html>`;
+  return `<!doctype html><html lang="es-EC"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>${e3(title)} \xB7 AutoMantPro</title><style nonce="${e3(nonce2)}">${THEME_TOKENS}*{box-sizing:border-box}body>.cabecera-sitio,body>.pie-sitio{padding-left:0!important;padding-right:0!important}@media (min-width:760px){form[method=get]{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}form[method=get] button{margin:0}}body{max-width:1272px;margin:0 auto;padding:16px;background:var(--c-bg);color:var(--c-ink);font:15px/1.55 var(--c-font)}a{color:var(--c-accent);overflow-wrap:anywhere}nav{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px}article,section{background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--c-r);padding:clamp(14px,3vw,22px);margin:12px 0;min-width:0}h1,h2,h3{overflow-wrap:anywhere}.notice{background:var(--c-warn-bg);color:var(--c-warn);border-left:4px solid var(--c-warn);padding:12px}form{margin:12px 0}label{display:block;margin:10px 0;overflow-wrap:anywhere}input,textarea,button{max-width:100%;font:inherit}input,textarea{width:100%;padding:10px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface);color:var(--c-ink)}input[type=checkbox],input[type=radio]{width:auto}button{padding:10px 16px;border:0;border-radius:var(--c-pill);background:var(--c-promo);color:var(--c-on-promo);cursor:pointer}.locked{color:var(--c-muted)}ol{padding-left:24px}li{overflow-wrap:anywhere}${SISTEMA}body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}body>.cabecera-sitio,body>.pie-sitio{padding-left:0;padding-right:0}</style></head><body>${cabeceraSitio(nonce2)}<nav aria-label="Capacitaci\xF3n"><a href="/cursos">Cursos</a><a href="/mis-cursos">Mis cursos</a></nav><main id="contenido">${body}</main>${pieSitio()}</body></html>`;
 }
 function nonce(request) {
   return String(request.cspNonce ?? randomBytes26(16).toString("base64"));
@@ -160720,11 +160842,11 @@ init_page();
 init_sistema();
 init_theme();
 var EXPERT_STYLES = `${THEME_TOKENS}
-*{box-sizing:border-box}body{margin:0;color:var(--c-ink);font:16px/1.5 var(--c-font);padding:24px 16px}
+*{box-sizing:border-box}body{margin:0;color:var(--c-ink);font:15px/1.5 var(--c-font);padding:24px 16px}
 main{max-width:560px;margin:0 auto;background:var(--c-surface);border-radius:12px;padding:24px}
 form{display:grid;gap:14px;margin-top:12px}label{display:grid;gap:6px;font-size:14px;color:var(--c-muted)}
 input{font:inherit;color:var(--c-ink);background:var(--c-sunk);border:1px solid var(--c-line);border-radius:10px;padding:10px 12px}
-button{font:600 16px/1 var(--c-font);color:var(--c-on-accent);background:var(--c-accent);border:0;border-radius:10px;padding:14px;cursor:pointer}
+button{font:600 15px/1 var(--c-font);color:var(--c-on-accent);background:var(--c-accent);border:0;border-radius:10px;padding:14px;cursor:pointer}
 ${SISTEMA}`;
 var COURSE_SLUG = external_exports.string().trim().min(1).max(191).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 var COURSE_INVALID_MESSAGE = "Revisa los datos del curso. El identificador solo admite min\xFAsculas, n\xFAmeros y guiones, sin espacios.";
