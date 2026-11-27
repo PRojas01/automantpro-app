@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='698b18dbf20aa59b346c44dc330db79cc296145a'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='371a0957b35054d8550f49551974637972ad9b1a'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -148371,7 +148371,9 @@ function renderPanel(){const root=el('panel');root.replaceChildren();if(!panelDa
 function openPasswordFromLink(tries=0){if(new URLSearchParams(location.search).get('ir')!=='contrasena')return;const b=[...document.querySelectorAll('#panel button')].find(x=>x.textContent==='Crear o cambiar contrase\xF1a');if(!b){if(tries<20)setTimeout(()=>openPasswordFromLink(tries+1),300);return;}history.replaceState(null,'',location.pathname);b.scrollIntoView({block:'center'});b.click();}
 // Enlace de los avisos de WhatsApp (/cuenta#seccion): lleva una sola vez a la secci\xF3n donde se toma la misma decisi\xF3n.
 function anchor(n,id){if(n&&!n.id)n.id=id;return n;}
-function goToSection(){const m=/^#([a-z-]{3,20})$/.exec(location.hash);if(!m)return;const t=el({novedades:'ordenes',solicitudes:'misSolicitudes'}[m[1]]||m[1]);if(!t)return;history.replaceState(null,'',location.pathname);t.scrollIntoView({behavior:'smooth',block:'start'});}
+function goToSection(){const m=/^#([a-z-]{3,20})$/.exec(location.hash);if(!m)return;const t=el({novedades:'ordenes',solicitudes:'misSolicitudes'}[m[1]]||m[1]);if(!t)return;history.replaceState(null,'',location.pathname);t.scrollIntoView({behavior:'smooth',block:'start'});if(typeof keepSection==='function')keepSection(t);}
+// Las tarjetas de arriba terminan de cargar despu\xE9s y empujan la secci\xF3n: se vuelve a alinear mientras la persona no mueva la p\xE1gina.
+function keepSection(t){let movio=false;const stop=()=>{movio=true;};['wheel','touchstart','keydown','pointerdown'].forEach(e=>addEventListener(e,stop,{once:true,passive:true}));[800,2000,4000,7000,11000].forEach(ms=>setTimeout(()=>{if(!movio&&t.isConnected)t.scrollIntoView({block:'start'});},ms));}
 const SHEET_ST={urgente:'bad',pronto:'warn',al_dia:'ok',sin_dato:'sd'};const SHEET_PT={urgente:'e-cambiar',pronto:'e-observar',al_dia:'e-ok',sin_dato:'e-sd'};
 function svcActions(s,it,reload){const box=h('div',{class:'fic-acc'});const plan=(s.planServices||[]).find(x=>x.serviceId===it.serviceId)||{serviceId:it.serviceId,serviceName:it.serviceName,intervalKm:null,intervalMonths:null,override:null};const send=(path,body)=>api(path,{method:'POST',body:JSON.stringify(body)}).then(reload).catch(err=>status(err.message));
  const last=btn('Registrar \xFAltima vez','ghost',()=>{const f=h('form',{});const kmDone=h('input',{type:'number',min:'0',max:'2000000',required:true,placeholder:'Km cuando se hizo','aria-label':'Km cuando se hizo'});const dateDone=h('input',{type:'date',required:true,'aria-label':'Fecha en que se hizo'});f.append(kmDone,dateDone,h('button',{class:'primary'},'Guardar'));f.onsubmit=e=>{e.preventDefault();send('/pilot/plan-last-service',{vehicleId:s.id,serviceId:it.serviceId,km:Number(kmDone.value),doneAt:dateDone.value});};box.replaceChildren(f);});
