@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='371a0957b35054d8550f49551974637972ad9b1a'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='af98a9c34f51a6c574563b7a85905a61a12d6e41'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -116039,7 +116039,9 @@ var init_confirmation = __esm({
       [/^(confirmar|confirmo)\b/, "CONFIRMAR"],
       [/^cobro\b/, "REGISTRAR UN COBRO"],
       [/^acepto entrega\b/, "ACEPTAR LA ENTREGA"],
-      [/^(entrega|entregado)\b/, "REGISTRAR LA ENTREGA"]
+      [/^(entrega|entregado)\b/, "REGISTRAR LA ENTREGA"],
+      [/^(aceptar|acepto)\b/, "ACEPTAR"],
+      [/^fecha entrega\b/, "CAMBIAR LA FECHA DE ENTREGA"]
     ];
     CONFIRMATION_MESSAGES = {
       ask: (action, command) => `Todav\xEDa no se hizo nada. Vas a ${action}: \xAB${command.trim()}\xBB. La otra parte lo ver\xE1.
