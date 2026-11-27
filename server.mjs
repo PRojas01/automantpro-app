@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='3eaf81b5ee05166b94be501f39d2ee5be3c2e440'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='68f872d0223205811b0e88bcd8fdf7b863f80ad7'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -76766,6 +76766,19 @@ function computeItem(input, serviceId) {
     remainingDays = kmActive ? daysBetween(today, dueDate2) : null;
     const passed = !kmActive || input.odometerKm >= interval2;
     status = passed ? "sin_registro" : computeItemStatus(remainingKm, monthsActive && !kmActive ? 0 : null, window3);
+    const year3 = Number(input.vehicle.year);
+    if (monthsActive && Number.isInteger(year3) && year3 > 1900) {
+      const start = new Date(Date.UTC(year3, 0, 1));
+      const every3 = Math.max(1, Math.round(effMonths));
+      const age = Math.max(0, (today.getUTCFullYear() - year3) * 12 + today.getUTCMonth());
+      const byTime = addMonths(start, (Math.floor(age / every3) + 1) * every3);
+      if (!kmActive || kmPerDay <= 0 || byTime.getTime() < dueDate2.getTime()) {
+        dueDate2 = byTime;
+        remainingDays = daysBetween(today, byTime);
+      }
+      if (age >= every3 && status === "al_dia")
+        status = "sin_registro";
+    }
   }
   return {
     serviceId: ref4.subservice.id,
@@ -76774,6 +76787,7 @@ function computeItem(input, serviceId) {
     categoryName: ref4.category.name,
     dueKm,
     dueDate: dueDate2,
+    ...last ? {} : { estimated: true },
     remainingKm,
     remainingDays,
     effKm,
@@ -76802,6 +76816,7 @@ function buildPlan(input) {
           serviceName: computation.serviceName,
           dueKm: computation.dueKm,
           dueDate: computation.dueDate,
+          ...computation.estimated ? { estimated: true } : {},
           status: computation.status,
           priority: priorityFor(computation.status),
           costRefUsd: subservice.costRefUsd,
@@ -110668,7 +110683,7 @@ function planFor(vehicle) {
     const maker = makerOf(vehicle);
     const makerIntervals = Object.fromEntries(maker.filter((m) => m.catalog).map((m) => [m.serviceId, { km: m.intervalKm, months: m.intervalMonths, severeKm: m.severeKm ?? null, severeMonths: m.severeMonths ?? null }]));
     const baseIntervals = { ...spec?.intervals ?? {}, ...modelIntervals, ...makerIntervals, ...converted.intervals };
-    const plan = buildPlan({ vehicle: { classId, fuelId, transmission: vehicle.transmission === "manual" || vehicle.transmission === "automatica" ? vehicle.transmission : null }, odometerKm: Number(vehicle.currentKm) || 0, usageProfile: usage, lastServices, intervals: baseIntervals });
+    const plan = buildPlan({ vehicle: { classId, fuelId, year: Number(vehicle.year) || null, transmission: vehicle.transmission === "manual" || vehicle.transmission === "automatica" ? vehicle.transmission : null }, odometerKm: Number(vehicle.currentKm) || 0, usageProfile: usage, lastServices, intervals: baseIntervals });
     plan.items = plan.items.filter((item2) => !converted.disabled.has(item2.serviceId)).map((item2) => {
       const override = overrides.find((entry2) => entry2.serviceId === item2.serviceId);
       return override ? { ...item2, reason: `${item2.reason} \xB7 ${override.actorRole === "taller" ? "Ajustado por el taller" : "Ajustado por ti"}` } : item2;
@@ -111975,6 +111990,7 @@ function buildStructuredPlan(items, recommendations, sources) {
     const hasKm = (item2.intervalKm ?? null) !== null;
     const hasMonths = (item2.intervalMonths ?? null) !== null;
     const due = known ? [hasKm ? `a los ${formatKm2(item2.dueKm)}` : null, hasMonths ? `en ${formatMonth(new Date(item2.dueDate))}` : null].filter(Boolean).join(" o ") || null : null;
+    const shown3 = due && item2.estimated ? `${due} (estimado, sin historial)` : due;
     const entry2 = {
       serviceId: item2.serviceId,
       serviceName: item2.serviceName,
@@ -111985,7 +112001,7 @@ function buildStructuredPlan(items, recommendations, sources) {
       source: SOURCE_LABEL[sources[item2.serviceId] ?? "general"],
       state,
       label: rec?.label ?? "Sin registro",
-      due,
+      due: shown3,
       dueKm: known && hasKm ? item2.dueKm : null,
       level: serviceLevel(item2.serviceId)
     };
