@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='750e21492fd11ab3631175dda86922c0601799f6'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='01c88e14f629b4c3e7c05f19a72ffdbd26733f08'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -97087,9 +97087,9 @@ Para mandar uno a un taller con convenio: Agendar PLACA | K-XXXXXX | AAAA-MM-DD 
         const branches = await rows27(conn, "SELECT s.id, s.name, s.city, s.zone, s.userId, s.verificationStatus FROM `Shop` s JOIN `User` u ON u.id = s.userId WHERE s.ruc = ? AND u.deletedAt IS NULL ORDER BY s.city, s.name LIMIT 10", [ruc2]);
         if (!branches.length)
           fail6("SHOP_NOT_FOUND");
-        const fold24 = (v) => String(v ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
-        const wanted = branch ? fold24(branch) : "";
-        const matches = wanted ? branches.filter((b) => [b.city, b.zone, b.name].some((v) => fold24(v).includes(wanted))) : branches;
+        const fold25 = (v) => String(v ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+        const wanted = branch ? fold25(branch) : "";
+        const matches = wanted ? branches.filter((b) => [b.city, b.zone, b.name].some((v) => fold25(v).includes(wanted))) : branches;
         if (matches.length !== 1) {
           const list7 = (matches.length ? matches : branches).map((b) => `\u2022 ${b.name} (${b.city}${b.zone ? `, ${b.zone}` : ""})`).join("\n");
           return { userId, message: `${matches.length ? `El RUC ${ruc2} tiene ${matches.length} sucursales` : `Ninguna sucursal del RUC ${ruc2} coincide con \xAB${branch}\xBB`}:
@@ -100159,6 +100159,39 @@ var init_auto_reply = __esm({
   }
 });
 
+// packages/api/dist/application/chat-account/confirmation.js
+function actionToConfirm(command) {
+  const text18 = fold20(command);
+  return ACTIONS.find(([pattern]) => pattern.test(text18))?.[1] ?? null;
+}
+function confirmationAnswer(message2) {
+  const text18 = fold20(String(message2 ?? "").slice(0, 20)).replace(/[.!¡¿?]+/g, "").trim();
+  return text18 === "si" || text18 === "no" ? text18 : null;
+}
+var CONFIRMATION_MINUTES, fold20, ACTIONS, CONFIRMATION_MESSAGES;
+var init_confirmation = __esm({
+  "packages/api/dist/application/chat-account/confirmation.js"() {
+    "use strict";
+    CONFIRMATION_MINUTES = 30;
+    fold20 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim().replace(/\s+/g, " ");
+    ACTIONS = [
+      [/^aprobar\b/, "APROBAR"],
+      [/^(rechazar|rechazo)\b/, "RECHAZAR"],
+      [/^cancelar\b/, "CANCELAR"],
+      [/^(confirmar|confirmo)\b/, "CONFIRMAR"],
+      [/^cobro\b/, "REGISTRAR UN COBRO"],
+      [/^acepto entrega\b/, "ACEPTAR LA ENTREGA"],
+      [/^(entrega|entregado)\b/, "REGISTRAR LA ENTREGA"]
+    ];
+    CONFIRMATION_MESSAGES = {
+      ask: (action, command) => `Todav\xEDa no se hizo nada. Vas a ${action}: \xAB${command.trim()}\xBB. La otra parte lo ver\xE1.
+Responde S\xCD en los pr\xF3ximos ${CONFIRMATION_MINUTES} minutos para hacerlo, o NO para dejarlo.`,
+      cancelled: (command) => `Listo: no se hizo \xAB${command.trim()}\xBB.`,
+      expired: (command) => `Pasaron m\xE1s de ${CONFIRMATION_MINUTES} minutos y no se hizo \xAB${command.trim()}\xBB. Si a\xFAn lo quieres, escr\xEDbelo de nuevo.`
+    };
+  }
+});
+
 // packages/api/dist/infrastructure/messaging/local-agent-broker.js
 import { createHash as createHash12, randomBytes as randomBytes10 } from "node:crypto";
 function recognizedCommand(text18) {
@@ -100205,6 +100238,7 @@ var init_local_agent_broker = __esm({
     init_record_photos();
     init_founder_store();
     init_auto_reply();
+    init_confirmation();
     data = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
     digest2 = (s) => createHash12("sha256").update(s).digest("hex");
     BrokerError = class extends Error {
@@ -100226,14 +100260,16 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
     MysqlLocalAgentBroker = class {
       connect;
       mediaFetch;
+      options;
       queue;
       marketplace;
       accounts = new ChatAccountStore();
       care = new VehicleCareStore();
       founders;
-      constructor(connect = openConnection, mediaFetch) {
+      constructor(connect = openConnection, mediaFetch, options = {}) {
         this.connect = connect;
         this.mediaFetch = mediaFetch;
+        this.options = options;
         this.queue = new MysqlInboundWebhookStore(connect);
         this.marketplace = new MysqlLocalMarketplaceStore(connect);
         this.founders = new FounderStore(connect);
@@ -100510,6 +100546,11 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
             result.push({ wamid: job.wamid, leaseToken: job.leaseToken, userId: "", role: "nuevo", message: payload.message, channel: payload.channel, attempts: job.attempts, ...category ? { category } : {} });
             continue;
           }
+          if (this.options.confirmWhatsApp && payload.channel === "whatsapp") {
+            const answer = confirmationAnswer(payload.message);
+            if (answer && await this.answerConfirmation(job, String(account.id), answer))
+              continue;
+          }
           const selfService = parseSelfService(payload.message);
           if (selfService) {
             try {
@@ -100523,6 +100564,36 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
           result.push({ wamid: job.wamid, leaseToken: job.leaseToken, userId: String(account.id), role: String(account.role), message: payload.message, channel: payload.channel, attempts: job.attempts, ...payload.category ? { category: payload.category } : {} });
         }
         return result;
+      }
+      /**
+       * Responde a la última confirmación que se le pidió a esta persona. Devuelve false si no hay ninguna
+       * pendiente: entonces el «SÍ» o «NO» sigue su camino normal hacia la bandeja.
+       */
+      async answerConfirmation(job, userId, answer) {
+        const [asked] = await this.run((conn) => data(conn, "SELECT wamid, payload FROM `InboundWebhook` WHERE phone = ? AND createdAt > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY) AND JSON_EXTRACT(payload, '$.confirm.askedAt') IS NOT NULL ORDER BY CAST(JSON_EXTRACT(payload, '$.confirm.askedAt') AS UNSIGNED) DESC LIMIT 1", [job.phone]));
+        if (!asked)
+          return false;
+        const original = typeof asked.payload === "string" ? JSON.parse(asked.payload) : asked.payload;
+        if (original.confirm?.state !== "pendiente" || original.confirm.userId !== userId)
+          return false;
+        const expired = Date.now() - original.confirm.askedAt > CONFIRMATION_MINUTES * 6e4;
+        try {
+          if (!expired && answer === "si")
+            await this.complete(job.wamid, job.leaseToken, "", true, null, "local-agent.confirmed", String(asked.wamid));
+          else
+            await this.closeConfirmation(job, String(asked.wamid), expired ? "vencida" : "anulada", expired ? CONFIRMATION_MESSAGES.expired(original.message) : CONFIRMATION_MESSAGES.cancelled(original.message));
+        } catch (err4) {
+          const code5 = err4?.code;
+          if (typeof code5 === "string" && chatErrorCodes.includes(code5) && err4 instanceof Error)
+            await this.closeConfirmation(job, String(asked.wamid), "anulada", err4.message);
+          else
+            await this.queue.retry(job.wamid, job.leaseToken, "CONFIRM_FAILED", 60);
+        }
+        return true;
+      }
+      async closeConfirmation(job, originalWamid, state, reply) {
+        await this.run((conn) => conn.query("UPDATE `InboundWebhook` SET payload = JSON_SET(payload, '$.confirm.state', ?) WHERE wamid = ?", [state, originalWamid]));
+        await this.complete(job.wamid, job.leaseToken, reply, false, null, "local-agent.confirmation-closed");
       }
       /**
        * Baja de una persona con cuenta. "BAJA" apaga los avisos y recordatorios por WhatsApp (solo sale la
@@ -100651,7 +100722,7 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
        * `command` lets the operator execute what the contact asked in their own words, written as an
        * explicit command; it still runs only on the contact's own account and is audited as the operator's.
        */
-      async complete(wamid, leaseToken, reply, executeCommand, command = null, auditEvent = "local-agent.approved") {
+      async complete(wamid, leaseToken, reply, executeCommand, command = null, auditEvent = "local-agent.approved", confirmedWamid = null) {
         return this.run(async (conn) => {
           await conn.query("START TRANSACTION");
           try {
@@ -100672,21 +100743,35 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
               fail14("ACCOUNT_UNAVAILABLE");
             if (executeCommand && command !== null && command.trim() !== payload.message.trim())
               fail14("COMMAND_MISMATCH");
-            const commandText = payload.message;
-            const accountCommand = executeCommand ? parseAccountCommand(commandText) : null;
+            let commandText = payload.message;
+            if (confirmedWamid) {
+              const [asked] = await data(conn, "SELECT payload FROM `InboundWebhook` WHERE wamid = ? AND phone = ? FOR UPDATE", [confirmedWamid, incoming.phone]);
+              const original = typeof asked?.payload === "string" ? JSON.parse(asked.payload) : asked?.payload;
+              if (!original || original.confirm?.state !== "pendiente" || original.confirm.userId !== user?.id)
+                fail14("NOT_FOUND");
+              commandText = original.message;
+              await conn.query("UPDATE `InboundWebhook` SET payload = JSON_SET(payload, '$.confirm.state', 'hecha') WHERE wamid = ?", [confirmedWamid]);
+            }
+            const action = this.options.confirmWhatsApp && !confirmedWamid && executeCommand && user && payload.channel === "whatsapp" && recognizedCommand(commandText) ? actionToConfirm(commandText) : null;
+            const execute = executeCommand && !action;
+            const accountCommand = execute ? parseAccountCommand(commandText) : null;
             if (isInvalidAccountCommand(accountCommand))
               fail14("INVALID_ACCOUNT_COMMAND");
             let recipient = user ? String(user.id) : null;
             let message2 = reply;
             let executed = false;
-            if (executeCommand && user) {
+            if (execute && user) {
               const result = await handleCourseCommand(conn, String(user.id), String(user.role), commandText, payload.mediaId);
               if (result !== null) {
                 message2 = result;
                 executed = true;
               }
             }
-            if (executed) {
+            if (action) {
+              message2 = CONFIRMATION_MESSAGES.ask(action, commandText);
+              const confirm = { userId: String(user.id), askedAt: Date.now(), state: "pendiente" };
+              await conn.query("UPDATE `InboundWebhook` SET payload = ? WHERE wamid = ?", [JSON.stringify({ ...payload, confirm }), wamid]);
+            } else if (executed) {
             } else if (accountCommand?.action === "attachPhoto" && user && payload.channel === "whatsapp") {
               try {
                 message2 = await saveInboundPhoto(conn, { wamid, mediaId: payload.mediaId, userId: String(user.id), role: String(user.role), command: accountCommand }, this.mediaFetch);
@@ -100705,10 +100790,10 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
               const key2 = `job_${digest2(wamid)}`;
               const [receipt] = await data(conn, "SELECT response FROM `LocalCommandReceipt` WHERE id = ?", [digest2(`${String(user.id)}:${key2}`)]);
               const recovered = receipt ? typeof receipt.response === "string" ? JSON.parse(receipt.response) : receipt.response : null;
-              const result = recovered ?? (executeCommand ? await this.marketplace.execute(String(user.id), key2, parseLocalChat(commandText)) : null);
+              const result = recovered ?? (execute ? await this.marketplace.execute(String(user.id), key2, parseLocalChat(commandText)) : null);
               executed = !!result;
               message2 = result?.message ?? reply;
-            } else if (executeCommand)
+            } else if (execute)
               fail14("ACCOUNT_REQUIRED");
             const [active] = recipient ? await data(conn, "SELECT id, role FROM `User` WHERE id = ? AND deletedAt IS NULL AND consentAt IS NOT NULL FOR UPDATE", [recipient]) : [];
             if (recipient && (!active || !["dueno", "taller", "almacen"].includes(String(active.role))))
@@ -100721,9 +100806,9 @@ Usa este mismo n\xFAmero de WhatsApp: te llega un c\xF3digo por aqu\xED y con \x
                 await conn.query("INSERT INTO `NotificationOutbox` (id,dedupKey,recipientUserId,recipientPhone,kind,payload) VALUES (?, ?, NULL, ?, 'contact.reply', ?)", [randomBytes10(16).toString("hex"), `reply:${digest2(wamid)}`, String(owned.phone), JSON.stringify({ message: message2 })]);
             }
             await conn.query("UPDATE `InboundWebhook` SET status = 'completed', leaseToken = NULL, lockedAt = NULL, completedAt = UTC_TIMESTAMP(3), updatedAt = UTC_TIMESTAMP(3) WHERE wamid = ?", [wamid]);
-            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?, ?, 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes10(16).toString("hex"), auditEvent, recipient, active?.role ?? null, wamid, JSON.stringify({ executedCommand: executed, channel: payload.channel, newContact: !user, commandSource: "contact" })]);
+            await conn.query("INSERT INTO `AuditLog` (id,eventType,actorUserId,actorRole,entityType,entityId,`after`,createdAt) VALUES (?, ?, ?, ?, 'InboundWebhook', ?, ?, UTC_TIMESTAMP(3))", [randomBytes10(16).toString("hex"), action ? "local-agent.confirmation-requested" : auditEvent, recipient, active?.role ?? null, wamid, JSON.stringify({ ...confirmedWamid ? { confirms: confirmedWamid } : {}, executedCommand: executed, channel: payload.channel, newContact: !user, commandSource: "contact" })]);
             await conn.query("COMMIT");
-            return { accepted: true };
+            return { accepted: true, ...action ? { confirmationPending: true } : {} };
           } catch (err4) {
             await conn.query("ROLLBACK");
             const code5 = err4?.code;
@@ -100918,10 +101003,10 @@ function doneHint2(items) {
 function pickDone(open, query, matchedId = null) {
   if (!open.length)
     return { kind: "none" };
-  const q = query ? fold20(query) : "";
+  const q = query ? fold21(query) : "";
   if (!q)
     return open.length === 1 ? { kind: "one", item: open[0] } : { kind: "choose", items: [...open] };
-  const found = open.filter((i) => i.serviceId === matchedId || fold20(i.serviceName) === q || q.length >= 4 && fold20(i.serviceName).includes(q));
+  const found = open.filter((i) => i.serviceId === matchedId || fold21(i.serviceName) === q || q.length >= 4 && fold21(i.serviceName).includes(q));
   if (found.length === 1)
     return { kind: "one", item: found[0] };
   if (found.length > 1)
@@ -100937,13 +101022,13 @@ function nextMilestone(item2) {
   const byDate = (item2.intervalMonths ?? null) !== null ? `en ${formatMonth(new Date(item2.dueDate))}` : null;
   return [byKm, byDate].filter(Boolean).join(" o ") || "sin fecha calculada";
 }
-var km3, fold20;
+var km3, fold21;
 var init_reminder_done = __esm({
   "packages/api/dist/application/panel/reminder-done.js"() {
     "use strict";
     init_recommendations();
     km3 = (n3, unit = "km") => `${Math.round(n3).toLocaleString("es-EC")} ${unit ?? "km"}`;
-    fold20 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    fold21 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
   }
 });
 
@@ -101053,14 +101138,14 @@ var init_deferred_work = __esm({
 // packages/api/dist/infrastructure/messaging/vehicle-care-store.js
 import { createHash as createHash13, randomUUID as randomUUID33 } from "node:crypto";
 function matchService(text18) {
-  const f = fold21(text18);
-  const exact = SERVICES2.find((s) => s.id === f || fold21(s.name) === f);
+  const f = fold22(text18);
+  const exact = SERVICES2.find((s) => s.id === f || fold22(s.name) === f);
   if (exact)
     return exact.id;
   for (const [pattern, id3] of SYNONYMS)
     if (pattern.test(f))
       return id3;
-  return SERVICES2.find((s) => fold21(s.name).includes(f) && f.length >= 5)?.id ?? null;
+  return SERVICES2.find((s) => fold22(s.name).includes(f) && f.length >= 5)?.id ?? null;
 }
 async function shopReport(conn, shopId, shopName, period, now = /* @__PURE__ */ new Date()) {
   const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 5));
@@ -101114,7 +101199,7 @@ async function activeVehicle(conn, userId, includeAssigned = false) {
     fail15("VEHICLE_REQUIRED");
   return list7[0];
 }
-var DIAGNOSIS_LINE, rows38, VehicleCareError, fail15, fold21, createHashLike, short5, prefixOf3, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES2, serviceName2, ORDER_STATUS, SHOP_ORDER_STATUS, SHOP_ORDER_NEXT, repairNoticeKey, VehicleCareStore;
+var DIAGNOSIS_LINE, rows38, VehicleCareError, fail15, fold22, createHashLike, short5, prefixOf3, CARD_ACTIONS, FLEET_ACTIONS, SYNONYMS, SERVICES2, serviceName2, ORDER_STATUS, SHOP_ORDER_STATUS, SHOP_ORDER_NEXT, repairNoticeKey, VehicleCareStore;
 var init_vehicle_care_store = __esm({
   "packages/api/dist/infrastructure/messaging/vehicle-care-store.js"() {
     "use strict";
@@ -101162,7 +101247,7 @@ var init_vehicle_care_store = __esm({
     fail15 = (code5) => {
       throw new VehicleCareError(code5);
     };
-    fold21 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
+    fold22 = (s) => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/\s+/g, " ");
     createHashLike = (text18) => createHash13("sha256").update(text18).digest("hex").slice(0, 12);
     short5 = (prefix, id3) => `${prefix}-${id3.replace(/-/g, "").slice(0, 6).toUpperCase()}`;
     prefixOf3 = (code5) => `${code5.slice(2).toLowerCase()}%`;
@@ -101799,7 +101884,7 @@ Lo agregu\xE9 a la atenci\xF3n de ${label5} y avisamos a los responsables de ${S
           }
           return { userId, message: `${diagnosis.message}
 
-Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revise: Buscar servicio | ${fold21(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
+Lo agregu\xE9 a la atenci\xF3n de tu ${label5}. Si quieres que un taller lo revise: Buscar servicio | ${fold22(diagnosis.systemLabel)} | ciudad | sector | ${command.description.slice(0, 60)}` };
         }
         if (command.action === "reminders") {
           await conn.query("UPDATE `Vehicle` SET remindersOptIn = ?, updatedAt = CURRENT_TIMESTAMP(3) WHERE userId = ? AND fleetId IS NULL AND deletedAt IS NULL", [command.on, userId]);
@@ -102335,7 +102420,7 @@ ${summary ?? ""}`.trim());
           return { userId, message: `Propuesta enviada al due\xF1o: visita ${code5} para ${formatEcDateTime(at)}. Te avisaremos cuando responda.` };
         }
         await this.insertAlert(conn, String(vehicle.id), command.label, command.dueAt, command.dueKm, userId, shop.id);
-        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold21(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label5}: "${command.label}" ${command.dueAt ? `el ${(/* @__PURE__ */ new Date(`${command.dueAt}T12:00:00Z`)).toLocaleDateString("es-EC", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
+        await this.notifyOwner(conn, owner, String(vehicle.id), `shopalert:${String(vehicle.id)}:${fold22(command.label)}:${command.dueAt ?? command.dueKm}`, "care.alert", `\u{1F514} ${shop.name} program\xF3 un recordatorio para tu ${label5}: "${command.label}" ${command.dueAt ? `el ${(/* @__PURE__ */ new Date(`${command.dueAt}T12:00:00Z`)).toLocaleDateString("es-EC", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}` : `a los ${Number(command.dueKm).toLocaleString("es-EC")} km`}.`);
         return { userId, message: `Alerta creada para el ${label5}. El due\xF1o y tu taller la recibir\xE1n por WhatsApp cuando llegue el momento.` };
       }
       async budget(conn, userId, shop, command) {
@@ -102893,7 +102978,7 @@ Fecha: ${when15}.` };
 function photoKindFrom(word, role) {
   if (!word)
     return role === "taller" ? "avance" : role === "dueno" ? "reclamo" : null;
-  const w = fold22(word);
+  const w = fold23(word);
   return KIND_WORDS.find(([pattern]) => pattern.test(w))?.[1] ?? null;
 }
 async function downloadCloudMedia(mediaId, env = process.env, fetchImpl = fetch) {
@@ -102940,7 +103025,7 @@ async function saveInboundPhoto(conn, input, fetchImpl, env) {
   const photo = await inboundPhoto(conn, input.wamid, input.mediaId, fetchImpl, env);
   return `\u{1F4F7} ${(await attachServicePhoto(conn, userId, role, vehicleId, serviceId, photo)).message}`;
 }
-var fail16, KIND_WORDS, fold22, MysqlInboundMediaStore;
+var fail16, KIND_WORDS, fold23, MysqlInboundMediaStore;
 var init_whatsapp_photo = __esm({
   "packages/api/dist/infrastructure/messaging/whatsapp-photo.js"() {
     "use strict";
@@ -102961,7 +103046,7 @@ var init_whatsapp_photo = __esm({
       [/^comprobante|^pago|^transferencia/, "comprobante"],
       [/^factura/, "factura"]
     ];
-    fold22 = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+    fold23 = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
     MysqlInboundMediaStore = class {
       connect;
       constructor(connect = openConnection) {
@@ -102979,6 +103064,39 @@ var init_whatsapp_photo = __esm({
         }
       }
     };
+  }
+});
+
+// packages/api/dist/infrastructure/messaging/notice-digest.js
+function groupNoticesEnabled(env = process.env) {
+  return env.WHATSAPP_GROUP_NOTICES !== "off";
+}
+function infoDailyCap(env = process.env) {
+  const value2 = Number(env.WHATSAPP_INFO_DAILY_CAP);
+  return Number.isInteger(value2) && value2 >= 1 && value2 <= 50 ? value2 : DEFAULT_INFO_DAILY_CAP;
+}
+function isInformative(kind, message2) {
+  return !!message2 && message2.length <= MAX_ITEM && !NEVER2.test(kind) && !WAITS.test(message2) && !COMMAND.test(message2) && !HAS_LINK2.test(message2);
+}
+function digestMessage(items, base, role) {
+  const shown3 = items.slice(0, MAX_ITEMS).map((item2) => `\u2022 ${item2.message.replace(/\s+/g, " ").trim()}`);
+  const rest = items.length - shown3.length;
+  const sections = new Set(items.map((item2) => role ? sectionForRole(item2.kind, role) : sectionFor(item2.kind)));
+  const section = sections.size === 1 ? [...sections][0] : null;
+  return [`Tienes ${items.length} avisos:`, ...shown3, ...rest > 0 ? [`y ${rest} m\xE1s.`] : [], `Detalle en tu panel: ${accountLink(section ?? "avisos", base)}`].join("\n");
+}
+var DEFAULT_INFO_DAILY_CAP, NEVER2, WAITS, COMMAND, HAS_LINK2, MAX_ITEMS, MAX_ITEM;
+var init_notice_digest = __esm({
+  "packages/api/dist/infrastructure/messaging/notice-digest.js"() {
+    "use strict";
+    init_account_links();
+    DEFAULT_INFO_DAILY_CAP = 3;
+    NEVER2 = /^(auth\.|agent\.|contact\.|founder\.|admin\.|plazo\.|verification\.|qr\.|account\.|ad\.campaign$)/;
+    WAITS = /\bresponde|\bpara (aceptar|confirmar|aprobar)\b|\bconfirm[ao](?![a-zá-ú])|\bapr(obar|ueba)\b|\brechaz[ao](?![a-zá-ú])|\bacept(o|a|ar)(?![a-zá-ú])|\bescrib|\bc[oó]digo\b|\?/i;
+    COMMAND = /\b[Pp]ara [a-zá-ú ]{3,30}:| \| |\b(Confirmar|Aceptar|Revisar|Calificar|Calidad|Responder|Recibido|Entregado|Reclamar|Ofertar|Cobro|Devolver|Escalar|Stock) (OT|[SCNKI])-/;
+    HAS_LINK2 = /https?:\/\/|automantpro\.app\//i;
+    MAX_ITEMS = 8;
+    MAX_ITEM = 400;
   }
 });
 
@@ -103032,14 +103150,17 @@ var init_outbox_delivery_store = __esm({
     init_preferences();
     init_account_links();
     init_founder_store();
+    init_notice_digest();
     ALLOWED = OPT_OUT_ALLOWED_KINDS.map((kind) => `'${kind}'`).join(",");
     MAX_ATTEMPTS2 = 5;
     LEASE_SECONDS2 = 300;
     affected3 = (result) => Number(result[0].affectedRows ?? 0);
     MysqlOutboxDeliveryStore = class {
       connect;
-      constructor(connect = openConnection) {
+      options;
+      constructor(connect = openConnection, options = {}) {
         this.connect = connect;
+        this.options = options;
       }
       async run(work) {
         const conn = await this.connect();
@@ -103058,6 +103179,35 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
           const sent = Number(Array.isArray(prior) ? prior[0]?.n ?? 0 : 0);
           await conn.query("INSERT INTO `NotificationOutbox` (id, dedupKey, recipientUserId, kind, payload) VALUES (?, ?, ?, 'business.verification', ?) ON DUPLICATE KEY UPDATE id = id", [randomUUID34(), sent ? `${base}:${sent + 1}` : base, userId, JSON.stringify({ message: message2 })]);
         });
+      }
+      /**
+       * Junta lo informativo pendiente de cada persona en el aviso más antiguo y respeta el tope diario.
+       * Los demás quedan «expired» (COALESCED), nunca se borran, y se siguen viendo en su panel.
+       */
+      async coalesce(conn) {
+        const [found] = await conn.query("SELECT o.recipientUserId, o.id, o.kind, o.payload, u.role FROM `NotificationOutbox` o JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts = 0 AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND JSON_EXTRACT(o.payload, '$.digest') IS NULL ORDER BY o.createdAt, o.id LIMIT 500 /* informativos */");
+        const byUser = /* @__PURE__ */ new Map();
+        for (const row2 of Array.isArray(found) ? found : []) {
+          const payload = typeof row2.payload === "string" ? JSON.parse(row2.payload) : row2.payload;
+          const message2 = typeof payload?.message === "string" ? payload.message : "";
+          if (!payload || !row2.recipientUserId || !isInformative(String(row2.kind), message2))
+            continue;
+          const user = String(row2.recipientUserId);
+          byUser.set(user, [...byUser.get(user) ?? [], { id: String(row2.id), kind: String(row2.kind), message: message2, payload, role: String(row2.role ?? "") }]);
+        }
+        for (const [user, items] of byUser) {
+          const [counted] = await conn.query("SELECT COUNT(*) AS n FROM `NotificationOutbox` WHERE recipientUserId = ? AND status IN ('sending', 'sent') AND JSON_EXTRACT(payload, '$.info') = TRUE AND COALESCE(sentAt, lockedAt) > DATE_SUB(UTC_TIMESTAMP(3), INTERVAL 1 DAY)", [user]);
+          if (Number(counted[0]?.n ?? 0) >= infoDailyCap()) {
+            await conn.query(`UPDATE \`NotificationOutbox\` SET nextAttemptAt = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 1 HOUR) WHERE status = 'pending' AND id IN (${items.map(() => "?").join(",")})`, items.map((item2) => item2.id));
+            continue;
+          }
+          const [first, ...others] = items;
+          const payload = { ...first.payload, info: true, ...others.length ? { digest: digestMessage(items, void 0, first.role) } : {} };
+          if (affected3(await conn.query("UPDATE `NotificationOutbox` SET payload = ? WHERE id = ? AND status = 'pending'", [JSON.stringify(payload), first.id])) !== 1)
+            continue;
+          if (others.length)
+            await conn.query(`UPDATE \`NotificationOutbox\` SET status = 'expired', lastError = 'COALESCED' WHERE status = 'pending' AND id IN (${others.map(() => "?").join(",")})`, others.map((item2) => item2.id));
+        }
       }
       claim(limit = 5) {
         if (!Number.isInteger(limit) || limit < 1 || limit > 20)
@@ -103081,12 +103231,16 @@ Corrige el dato con: Editar taller | campo | valor (o Editar almac\xE9n) y volve
             if (err4.code !== "ER_BAD_FIELD_ERROR")
               throw err4;
           }
-          const [found] = await conn.query("SELECT o.id, o.kind, o.payload, u.role AS role, COALESCE(i.phone, o.recipientPhone) AS phone FROM `NotificationOutbox` o LEFT JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId LEFT JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts < ? AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND ((o.recipientUserId IS NOT NULL AND i.phone IS NOT NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND (o.kind <> 'admin.alert' OR u.role = 'admin')" + optOut + ") OR (o.recipientUserId IS NULL AND o.recipientPhone IS NOT NULL AND (o.kind IN ('contact.welcome', 'contact.reply', 'auth.phone_changed', 'founder.answer', 'founder.guide', 'founder.ask', 'auth.login_link') OR (o.kind = 'founder.invite' AND EXISTS (SELECT 1 FROM `FounderInvite` f WHERE f.phone = o.recipientPhone AND f.status = 'enviado')) OR (o.kind = 'auth.login_code' AND JSON_EXTRACT(o.payload, '$.allowedOutsideHours') = TRUE) OR (o.kind = 'contact.reactivation' AND EXISTS (SELECT 1 FROM `ImportedContact` c WHERE c.phone = o.recipientPhone AND c.status = 'approved'))))) ORDER BY (o.kind = 'ad.campaign'), (o.kind NOT IN ('auth.login_code', 'auth.login_link')), o.createdAt, o.id LIMIT ?", [MAX_ATTEMPTS2, limit]);
+          if (this.options.groupNotices)
+            await this.coalesce(conn);
+          const infoLast = this.options.groupNotices ? " (JSON_EXTRACT(o.payload, '$.info') IS NOT NULL)," : "";
+          const [found] = await conn.query("SELECT o.id, o.kind, o.payload, u.role AS role, COALESCE(i.phone, o.recipientPhone) AS phone FROM `NotificationOutbox` o LEFT JOIN `WhatsAppIdentity` i ON i.userId = o.recipientUserId LEFT JOIN `User` u ON u.id = o.recipientUserId WHERE o.status = 'pending' AND o.attempts < ? AND (o.nextAttemptAt IS NULL OR o.nextAttemptAt <= UTC_TIMESTAMP(3)) AND ((o.recipientUserId IS NOT NULL AND i.phone IS NOT NULL AND u.deletedAt IS NULL AND u.consentAt IS NOT NULL AND (o.kind <> 'admin.alert' OR u.role = 'admin')" + optOut + ") OR (o.recipientUserId IS NULL AND o.recipientPhone IS NOT NULL AND (o.kind IN ('contact.welcome', 'contact.reply', 'auth.phone_changed', 'founder.answer', 'founder.guide', 'founder.ask', 'auth.login_link') OR (o.kind = 'founder.invite' AND EXISTS (SELECT 1 FROM `FounderInvite` f WHERE f.phone = o.recipientPhone AND f.status = 'enviado')) OR (o.kind = 'auth.login_code' AND JSON_EXTRACT(o.payload, '$.allowedOutsideHours') = TRUE) OR (o.kind = 'contact.reactivation' AND EXISTS (SELECT 1 FROM `ImportedContact` c WHERE c.phone = o.recipientPhone AND c.status = 'approved'))))) ORDER BY (o.kind = 'ad.campaign'), (o.kind NOT IN ('auth.login_code', 'auth.login_link'))," + infoLast + " o.createdAt, o.id LIMIT ?", [MAX_ATTEMPTS2, limit]);
           const claimed = [];
           for (const row2 of found) {
             const payload = typeof row2.payload === "string" ? JSON.parse(row2.payload) : row2.payload;
             const raw = typeof payload?.message === "string" ? row2.kind === "founder.invite" ? compactFounderInvite(payload.message) : payload.message : "";
-            const message2 = raw ? withProfileLink(String(row2.kind), raw, void 0, row2.role ? String(row2.role) : null).slice(0, 4e3) : "";
+            const digest4 = typeof payload?.digest === "string" ? payload.digest : "";
+            const message2 = digest4 || (raw ? withProfileLink(String(row2.kind), raw, void 0, row2.role ? String(row2.role) : null).slice(0, 4e3) : "");
             const id3 = String(row2.id);
             if (!message2) {
               await conn.query("UPDATE `NotificationOutbox` SET status = 'dead', lastError = 'EMPTY_MESSAGE' WHERE id = ? AND status = 'pending'", [id3]);
@@ -103434,7 +103588,7 @@ function parseDirectoryImport(raw) {
   });
   return { items, errors };
 }
-var rows39, fold23, MAX_DIRECTORY_IMPORT, text7, entry, CONTACT, DirectoryStore;
+var rows39, fold24, MAX_DIRECTORY_IMPORT, text7, entry, CONTACT, DirectoryStore;
 var init_directory_store = __esm({
   "packages/api/dist/infrastructure/directory/directory-store.js"() {
     "use strict";
@@ -103442,7 +103596,7 @@ var init_directory_store = __esm({
     init_zod();
     init_apply();
     rows39 = async (c, sql, args = []) => (await c.query(sql, args))[0];
-    fold23 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+    fold24 = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
     MAX_DIRECTORY_IMPORT = 200;
     text7 = (min, max) => external_exports.string().trim().min(min).max(max);
     entry = external_exports.object({
@@ -103499,9 +103653,9 @@ var init_directory_store = __esm({
           return [];
         try {
           const list7 = await this.run(async (c) => (await rows39(c, "SELECT id,name,city,zone,services,source,active FROM `DirectoryShop` WHERE active=true AND city=? ORDER BY name LIMIT 500", [city])).map(_DirectoryStore.view));
-          const taken = new Set(registeredNames.map(fold23));
-          const z = fold23(zone);
-          return list7.filter((s) => !taken.has(fold23(s.name)) && (!opts.service || categoriesOf(s.services).includes(opts.service))).map((s) => ({ ...s, sameZone: Boolean(z) && fold23(s.zone ?? "") === z })).sort((x, y) => Number(y.sameZone) - Number(x.sameZone) || x.name.localeCompare(y.name, "es")).slice(0, limit);
+          const taken = new Set(registeredNames.map(fold24));
+          const z = fold24(zone);
+          return list7.filter((s) => !taken.has(fold24(s.name)) && (!opts.service || categoriesOf(s.services).includes(opts.service))).map((s) => ({ ...s, sameZone: Boolean(z) && fold24(s.zone ?? "") === z })).sort((x, y) => Number(y.sameZone) - Number(x.sameZone) || x.name.localeCompare(y.name, "es")).slice(0, limit);
         } catch (err4) {
           if (err4.code === "ER_NO_SUCH_TABLE")
             return [];
@@ -144134,8 +144288,8 @@ var rows12 = async (conn, sql, args = []) => (await conn.query(sql, args))[0];
 var short = (prefix, id3) => `${prefix}-${String(id3).replace(/-/g, "").slice(0, 6).toUpperCase()}`;
 function fleetWebText(message2) {
   const SECRET = /\b[JF]-[2-9A-HJKMNP-Z]{8}\b/;
-  const COMMAND = /\||^(para [^:]{0,80}:|escribe|responde|puedes escribir|detalle:)|\b(escribe|responde)\s*:/i;
-  const lines = String(message2).split("\n").map((line2) => line2.split(/(?<=[.!?;])\s+/).filter((s) => SECRET.test(s) || !COMMAND.test(s.trim())).join(" ").replace(/[;,]\s*$/, ".").trim());
+  const COMMAND2 = /\||^(para [^:]{0,80}:|escribe|responde|puedes escribir|detalle:)|\b(escribe|responde)\s*:/i;
+  const lines = String(message2).split("\n").map((line2) => line2.split(/(?<=[.!?;])\s+/).filter((s) => SECRET.test(s) || !COMMAND2.test(s.trim())).join(" ").replace(/[;,]\s*$/, ".").trim());
   const out = lines.filter((l, i) => l || i > 0 && lines[i - 1]).join("\n").replace(/\n{3,}/g, "\n\n").trim();
   return out || String(message2);
 }
@@ -144170,6 +144324,7 @@ init_fleet_access();
 init_profile_edit_store();
 init_appointment_capacity();
 init_inbound_webhook_store();
+init_notice_digest();
 init_outbox_delivery_store();
 
 // packages/api/dist/infrastructure/messaging/imported-contact-store.js
@@ -148624,14 +148779,14 @@ init_rate_limit();
 var lease = external_exports.string().uuid();
 var params = external_exports.object({ wamid: external_exports.string().min(1).max(191) });
 async function localAgentRoutes(app2, options = {}) {
-  const broker = options.broker ?? new MysqlLocalAgentBroker();
+  const broker = options.broker ?? new MysqlLocalAgentBroker(void 0, void 0, { confirmWhatsApp: (options.env ?? process.env).WHATSAPP_CONFIRM_ACTIONS !== "off" });
   const tasks = options.tasks ?? new MysqlLocalAgentTaskStore();
   const instructions = options.instructions ?? new MysqlAgentInstructionStore();
   const env = options.env ?? process.env;
   const config = options.config ?? new LocalAgentConfig(void 0, env);
   const inbound = options.inbound ?? new MysqlInboundWebhookStore();
   const inboundMedia = options.inboundMedia ?? new MysqlInboundMediaStore();
-  const outbox = options.outbox ?? new MysqlOutboxDeliveryStore();
+  const outbox = options.outbox ?? new MysqlOutboxDeliveryStore(void 0, { groupNotices: groupNoticesEnabled(options.env ?? process.env) });
   const imports = new MysqlImportedContactStore();
   const panel = options.panel ?? new PilotPanelStore();
   const answerCode = options.answerCode ?? answerCodeRequest;
@@ -153095,6 +153250,7 @@ init_outbox_delivery_store();
 
 // packages/api/dist/infrastructure/messaging/whatsapp-cloud-sender.js
 init_delivery_hours();
+init_notice_digest();
 init_outbox_delivery_store();
 function classify(status, providerCode) {
   if (status >= 200 && status < 300)
@@ -153116,7 +153272,7 @@ var WhatsAppCloudSender = class {
   apiVersion;
   constructor(options = {}) {
     this.env = options.env ?? process.env;
-    this.outbox = options.outbox ?? new MysqlOutboxDeliveryStore();
+    this.outbox = options.outbox ?? new MysqlOutboxDeliveryStore(void 0, { groupNotices: groupNoticesEnabled() });
     this.fetchImpl = options.fetchImpl ?? fetch;
     this.apiVersion = options.apiVersion ?? this.env.WHATSAPP_API_VERSION ?? "v21.0";
   }
