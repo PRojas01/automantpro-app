@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='9e26c3e9462cc4d350b1cae2895b4deac038e5e2'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='31f9c9baef7debb0f4158e15fe3e4dffb44a9f94'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -67274,7 +67274,7 @@ ${MUESTRAS}
 });
 
 // packages/api/dist/interfaces/ui/negro-ambar.js
-var AMBAR, NEGRO, BLANCO, NA_CLARO, NA_OSCURO, vars, P, OSCURO_SEL, OSCURO_FORZADO, NEGRO_AMBAR_CSS;
+var AMBAR, NEGRO, BLANCO, NA_CLARO, GRIS_FONDO, NA_OSCURO, vars, P, OSCURO_SEL, OSCURO_FORZADO, NEGRO_AMBAR_CSS;
 var init_negro_ambar = __esm({
   "packages/api/dist/interfaces/ui/negro-ambar.js"() {
     "use strict";
@@ -67314,8 +67314,9 @@ var init_negro_ambar = __esm({
       shadow: "none",
       grid: "rgba(0,0,0,0)"
     };
+    GRIS_FONDO = "#2a2b2e";
     NA_OSCURO = {
-      bg: "#0b0b0b",
+      bg: GRIS_FONDO,
       surface: "#1a1a1a",
       sunk: "#242424",
       field: "#1a1a1a",
@@ -67414,15 +67415,24 @@ ${P}a.saltar:focus{background:var(--c-ink)!important;color:var(--c-bg)!important
 });
 
 // packages/api/dist/interfaces/ui/armonia.js
-var ORO, MATE, TARJETAS2, oscuro, SUPERFICIE, ARMONIA;
+var TEXTURA, ORO, MATE, TARJETAS2, oscuro, SUPERFICIE, ARMONIA;
 var init_armonia = __esm({
   "packages/api/dist/interfaces/ui/armonia.js"() {
     "use strict";
+    init_negro_ambar();
+    TEXTURA = [
+      "repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px)",
+      "repeating-linear-gradient(-45deg,rgba(0,0,0,.12) 0 1px,transparent 1px 4px)",
+      "radial-gradient(120% 80% at 50% 0%,rgba(255,255,255,.05),transparent 70%)",
+      "radial-gradient(90% 55% at 100% 0%,rgba(245,176,28,.08),transparent 60%)",
+      GRIS_FONDO
+    ].join(",");
     ORO = "--c-cta:#f5b01c!important;--c-cta-hover:#ffc13d!important;--c-on-cta:#14100a!important;--c-accent:#f5b01c!important;--c-on-accent:#14100a!important;--oro-1:#ffd567!important;--oro-2:#f5b01c!important;--oro-3:#c98a06!important;--c-surface:#141311!important;--c-sunk:#1d1b17!important;--c-ink:#ffffff!important;--c-title:#ffffff!important;--c-muted:#b9b4aa!important";
     MATE = "background:linear-gradient(180deg,#191815 0,#121110 100%)!important;border:1px solid rgba(245,176,28,.16)!important;box-shadow:0 10px 26px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05)!important";
     TARJETAS2 = ".card,.option,.pcard,.beneficios li,.escaner,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.veh,.kpi,.profile-card,.board,details.gestionar";
     oscuro = (sel2) => `
 ${sel2},${sel2} *{${ORO}}
+${sel2},${sel2} body{background:${TEXTURA}!important;background-attachment:fixed!important}
 ${sel2} :is(${TARJETAS2}){${MATE}}
 ${sel2} :is(.board .board,.card .card,.pcard .pcard){background:transparent!important;box-shadow:none!important}
 ${sel2} .beneficios b .ico,${sel2} .pcard>h2 .sec-ico{color:#f5b01c!important}
@@ -67701,7 +67711,7 @@ var init_theme = __esm({
 @media (prefers-color-scheme:dark){:root:not([data-tema="claro"]){${DARK}}}
 :root[data-tema="oscuro"]{${DARK}}
 `;
-    THEME_COLOR = "#000000";
+    THEME_COLOR = "#2a2b2e";
     THEME_COLOR_LIGHT = "#f5f5f5";
     THEME_COLOR_META = `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${THEME_COLOR_LIGHT}"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="${THEME_COLOR}">`;
   }
@@ -67722,10 +67732,10 @@ function temaScript(nonce2) {
   const marcarActual = "document.querySelectorAll('.menu-sitio a').forEach(function(a){if(a.pathname===location.pathname&&!a.hash)a.setAttribute('aria-current','page');});document.querySelectorAll('.menu-desliza').forEach(function(d){var marca=function(){d.classList.toggle('desp',d.scrollLeft>2);d.classList.toggle('fin',d.scrollLeft+d.clientWidth>=d.scrollWidth-2);};var a=d.querySelector('[aria-current]');if(a){var sobra=a.getBoundingClientRect().right-(d.getBoundingClientRect().right-32);if(sobra>0)d.scrollLeft+=sobra;}marca();d.addEventListener('scroll',marca,{passive:true});});";
   return `<script nonce="${nonce2}">${TEMA_SCRIPT}${marcarActual}</script>`;
 }
-function cabeceraSitio(nonce2 = "", conScript = true) {
+function cabeceraSitio(nonce2 = "", conScript = true, extra = "") {
   const tema = nonce2 ? `<button id="tema-sitio" class="tema" type="button" aria-label="Cambiar de tema">${SOL}${LUNA}</button>` : "";
   const script = nonce2 && conScript ? temaScript(nonce2) : "";
-  return `<a class="saltar" href="#contenido">Saltar al contenido</a><header class="cabecera-sitio"><a class="marca" href="/" aria-label="AutoMantPro, inicio">${logoImg()}</a><p class="titulo-sitio">Asistente Inteligente de <em>Mantenimiento Automotriz</em></p><span class="acciones-sitio"><a class="pill" href="/cuenta#crear">Registro gratis</a>${tema}</span>${menuSitio()}</header>${script}`;
+  return `<a class="saltar" href="#contenido">Saltar al contenido</a><header class="cabecera-sitio"><a class="marca" href="/" aria-label="AutoMantPro, inicio">${logoImg()}</a><p class="titulo-sitio">Asistente Inteligente de <em>Mantenimiento Automotriz</em></p><span class="acciones-sitio"><a class="pill" href="/cuenta#crear">Registro gratis</a>${extra}${tema}</span>${menuSitio()}</header>${script}`;
 }
 function pieSitio(nav = siteLinksNav(null)) {
   return `<footer class="pie-sitio">${nav}${socialLinks()}<p class="legal">Consulta los <a href="/terminos">t\xE9rminos</a> y la <a href="/privacidad">privacidad</a> (LOPDP) \xB7 <a href="/admin/login">Acceso del equipo</a></p>${copyrightLine()}</footer>`;
@@ -67733,7 +67743,7 @@ function pieSitio(nav = siteLinksNav(null)) {
 function noEncontradaHtml(nonce2) {
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>P\xE1gina no encontrada \xB7 AutoMantPro</title><style nonce="${nonce2}">${THEME_TOKENS}*{box-sizing:border-box}body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.5 var(--c-font)}main a{color:var(--c-link)}main{max-width:1272px;margin:auto;padding:16px}${SISTEMA}</style></head><body><main>${cabeceraSitio(nonce2)}<h1>No encontramos esa p\xE1gina</h1><p>Puede que el enlace haya cambiado. <a href="/">Volver al inicio</a></p>${pieSitio()}</main></body></html>`;
 }
-var ICONOS_LINEA, SVG, SOL, LUNA, TEMA_SCRIPT;
+var ICONOS_LINEA, SVG, SOL, LUNA, TEMA_SCRIPT, CAMPANA_AVISOS, CAMPANA_CSS;
 var init_navegacion = __esm({
   "packages/api/dist/interfaces/ui/navegacion.js"() {
     "use strict";
@@ -67751,12 +67761,23 @@ var init_navegacion = __esm({
       persona: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 20c.9-3.4 3.5-5 6.5-5s5.6 1.6 6.5 5"/>',
       chat: '<path d="M4.5 6.5h15v9h-9l-4 3.5v-3.5h-2z"/>',
       estrella: '<path d="m12 3.8 2.5 5.1 5.6.8-4 4 .9 5.6-5-2.7-5 2.7.9-5.6-4-4 5.6-.8z"/>',
-      llave: '<circle cx="8" cy="8" r="3.5"/><path d="M10.5 10.5 20 20M16 16l2-2M13.5 13.5l2-2"/>'
+      llave: '<circle cx="8" cy="8" r="3.5"/><path d="M10.5 10.5 20 20M16 16l2-2M13.5 13.5l2-2"/>',
+      campana: '<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>'
     };
     SVG = (cls, d) => `<svg class="${cls}" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
     SOL = SVG("sol", '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>');
     LUNA = SVG("luna", '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>');
     TEMA_SCRIPT = "(function(){var r=document.documentElement;try{if(!r.hasAttribute('data-paleta')){var t=null;try{t=localStorage.getItem('amp-tema');}catch(e){}r.setAttribute('data-tema',t==='claro'?'claro':'oscuro');}}catch(e){}var b=document.getElementById('tema-sitio');if(!b)return;var os=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;var actual=function(){return r.getAttribute('data-tema')||(os?'oscuro':'claro');};var etiqueta=function(){b.setAttribute('aria-label',actual()==='oscuro'?'Cambiar a tema claro':'Cambiar a tema oscuro');};etiqueta();b.addEventListener('click',function(){var t=actual()==='oscuro'?'claro':'oscuro';r.setAttribute('data-tema',t);etiqueta();try{localStorage.setItem('amp-tema',t);}catch(e){}});})();";
+    CAMPANA_AVISOS = `<button id="campana" class="campana hidden" type="button" aria-label="Notificaciones">${iconoLinea("campana")}<span id="campanaN" class="campana-n hidden" aria-hidden="true"></span></button>`;
+    CAMPANA_CSS = `
+.campana{position:relative;display:inline-flex;align-items:center;justify-content:center;width:40px;min-width:40px;height:40px;min-height:40px;padding:0!important;margin:0!important;background:transparent!important;color:var(--c-ink)!important;border:1px solid color-mix(in srgb,var(--c-ink) 22%,transparent)!important;cursor:pointer}
+.campana .ico{width:22px;height:22px}
+.campana:hover,.campana:focus-visible{border-color:var(--c-cta)!important;color:var(--c-cta)!important}
+.campana-n{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--c-bad);color:#fff;font:600 12px/20px var(--c-font);text-align:center;box-shadow:0 0 0 2px var(--c-bg)}
+.campana.flota{position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:60;background:var(--c-surface)!important;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.campana.hidden,.campana-n.hidden{display:none!important}
+.acciones-sitio:has(.campana:not(.hidden)) .pill{display:none!important}
+@media (prefers-reduced-motion:no-preference){.campana-n:not(.hidden){animation:campana-n .3s ease-out}@keyframes campana-n{from{transform:scale(.6)}to{transform:scale(1)}}}`;
   }
 });
 
@@ -150587,9 +150608,9 @@ main #login>div>h2,main #login h2#entrar,main #login h2#crear{margin:0 0 12px!im
 .pasos li[aria-current="step"] span,.pasos li.hecho span{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-on-accent)}
 .paso-txt{margin:0 0 4px;color:var(--c-muted);font-size:13px}
 #login button.atras{background:transparent;color:var(--c-accent);border:1px solid var(--c-line);margin-top:0}
-@media (prefers-reduced-motion:reduce){.cod-wa{transition:none}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}${SCAN_STYLES}${SISTEMA}${ESCANER_STYLES}${INTERFAZ_SIMPLE_CSS}${ARMONIA}</style>
+@media (prefers-reduced-motion:reduce){.cod-wa{transition:none}}${PANEL_STYLES}${MENU_STYLES}${THEME_PILOT_LAYER}${SCANNER_LAYER}${PANEL_SOBRIO}${SCAN_STYLES}${SISTEMA}${ESCANER_STYLES}${INTERFAZ_SIMPLE_CSS}${ARMONIA}${CAMPANA_CSS}</style>
 ${MENU_MARKUP}
-<main id="contenido">${cabeceraSitio(nonce2, false)}<h1>Mi cuenta</h1><p class="intro-cuenta">Entra o crea tu cuenta gratis. Tus veh\xEDculos, citas y avisos est\xE1n aqu\xED.</p>
+<main id="contenido">${cabeceraSitio(nonce2, false, CAMPANA_AVISOS)}<h1>Mi cuenta</h1><p class="intro-cuenta">Entra o crea tu cuenta gratis. Tus veh\xEDculos, citas y avisos est\xE1n aqu\xED.</p>
 <section id="login"><div class="col-crear"><h2 id="crear">Crear cuenta</h2><ol class="pasos" aria-label="Pasos para crear tu cuenta"><li id="signupPaso1Tag" aria-current="step"><span>1</span>Perfil</li><li id="signupPaso2Tag"><span>2</span>Tus datos</li><li id="signupPaso3Tag"><span>3</span>Confirmar por WhatsApp</li></ol><p id="signupPasoTxt" class="paso-txt" aria-live="polite">Paso 1 de 3: elige tu perfil.</p><form id="signupForm"><div id="signupPaso1"><label for="signupRole">Perfil</label><select id="signupRole" required><option value="">Elige tu perfil</option><option value="dueno">Due\xF1o de veh\xEDculo</option><option value="taller">Taller</option><option value="almacen">Almac\xE9n de repuestos</option></select><button id="signupNext" type="button">Siguiente</button></div><div id="signupPaso2" class="hidden"><div id="signupFields"></div><div class="hp" aria-hidden="true"><label for="signupSitio">Sitio web</label><input id="signupSitio" tabindex="-1" autocomplete="off"></div><label class="consent"><input id="signupConsent" type="checkbox" required> Acepto los <a href="/terminos" target="_blank" rel="noopener">t\xE9rminos</a> y la <a href="/privacidad" target="_blank" rel="noopener">privacidad</a> (LOPDP)</label><button type="submit">Continuar</button><button id="signupBack" class="atras" type="button">Atr\xE1s</button></div></form><form id="signupVerifyForm" class="hidden">${codeLink(number2, "signupCodeLink", connect)}<label for="signupCode">C\xF3digo de WhatsApp</label><input id="signupCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Confirmar y crear cuenta</button></form></div><div class="col-entrar"><h2 id="entrar">Ingresar</h2><nav class="auth-tabs" aria-label="Forma de ingreso"><button id="codeTab" type="button" aria-selected="true" class="hidden">${iconoLinea("chat")} WhatsApp</button><button id="passwordTab" type="button" aria-selected="false">${iconoLinea("llave")} Usuario o correo</button></nav>${number2 ? `<div id="codeRequestForm">${codeLink(number2, "codeLink", connect)}</div>` : `<form id="codeRequestForm"><label for="codePhone">Tu celular</label><input id="codePhone" autocomplete="tel" required minlength="8" maxlength="20"><button>Pedir c\xF3digo</button></form>`}<form id="codeVerifyForm"${number2 ? "" : ' class="hidden"'}><p class="sub-codigo">\xBFTe lleg\xF3 un c\xF3digo de 6 d\xEDgitos? Escr\xEDbelo aqu\xED.</p><label for="verifyPhone">Tu celular</label><input id="verifyPhone" autocomplete="tel" required minlength="8" maxlength="20"><label for="loginCode">C\xF3digo de WhatsApp</label><input id="loginCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button>Entrar</button></form><details id="recuperar"><summary>Perd\xED mi n\xFAmero</summary><form id="recoveryForm"><p>Comprueba tu n\xFAmero nuevo. Revisaremos tu solicitud y te contactaremos por ese n\xFAmero para confirmar tu identidad.</p><label for="recOld">N\xFAmero anterior</label><input id="recOld" inputmode="tel" required minlength="8" maxlength="20"><label for="recNew">N\xFAmero nuevo</label><input id="recNew" inputmode="tel" required minlength="8" maxlength="20"><button id="recSend" type="button">Enviarme el c\xF3digo</button><label for="recCode">C\xF3digo de WhatsApp</label><input id="recCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required><label for="recName">Tu nombre completo</label><input id="recName" required minlength="3" maxlength="120"><label for="recDetail">Cu\xE9ntanos qu\xE9 pas\xF3</label><textarea id="recDetail" required minlength="10" maxlength="500"></textarea><button>Enviar solicitud</button></form></details><form id="loginForm" class="hidden"><label for="phone">Celular o correo</label><input id="phone" autocomplete="username" required minlength="3" maxlength="120"><label for="password">Contrase\xF1a</label><input id="password" type="password" autocomplete="current-password" required><button>Entrar</button><button type="button" id="forgotBtn" class="enlace-olvido">\xBFOlvidaste tu contrase\xF1a o nunca creaste una?</button></form><label class="consent remember"><input id="remember" type="checkbox" checked> Mantener la sesi\xF3n abierta en este equipo</label></div></section>
 <div id="chat" class="hidden"><div class="row2"><h2 id="who">Mi cuenta</h2><span class="chips"><button id="bell" type="button" class="hidden">Notificaciones</button><button id="reloadPanel" type="button">Actualizar panel</button><button id="logout">Salir</button></span></div><section id="offlineStatus" hidden><span id="offlineCount"></span><button id="syncNow" type="button">Subir ahora</button><div id="failedOutbox"></div></section>${PANEL_MARKUP}<section id="studentCourses"><h2>Mis cursos</h2><div id="courseEnrollment"></div><div id="studentCourseItems"></div></section><section id="composer"><h2>Mensaje a AutoMantPro</h2><form id="sendForm"><label for="message">Tu mensaje</label><textarea id="message" maxlength="2000" required></textarea><button>Enviar</button></form></section><section id="tools"><h2>M\xE1s herramientas</h2>
 <section id="expertCourses" class="hidden"><h2>Mis cursos como experto</h2><p id="expertStatus"></p><div id="expertItems"></div><form id="expertCreate"><label>T\xEDtulo <input name="titulo" required maxlength="191"></label><label>Slug <input name="slug" required maxlength="191"></label><label>Especialidad <input name="especialidad" required maxlength="100"></label><label>Nivel <input name="nivel" required maxlength="40"></label><label>Horas <input name="horas" type="number" min="1" required></label><label>Precio USD (vac\xEDo = gratis) <input name="precioUsd" type="number" min="0" step="0.01"></label><label>Nota m\xEDnima <input name="notaMinima" type="number" min="0" max="100" value="70"></label><button>Crear curso</button></form><form id="expertLesson"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>T\xEDtulo de lecci\xF3n <input name="titulo" required maxlength="191"></label><label>Video URL HTTPS <input name="videoUrl" type="url"></label><label>PDF URL HTTPS <input name="pdfUrl" type="url"></label><label>Texto (m\xE1ximo 900 caracteres) <textarea name="texto" maxlength="900"></textarea></label><button>Guardar lecci\xF3n</button></form><form id="expertQuestion"><label>Curso <select name="courseId" required></select></label><label>Orden <input name="orden" type="number" min="1" required></label><label>Pregunta <input name="enunciado" required maxlength="2000"></label><label>Opci\xF3n A <input name="optionA" required></label><label>Opci\xF3n B <input name="optionB" required></label><label>Respuesta correcta <select name="correcta"><option>A</option><option>B</option></select></label><button>Guardar pregunta</button></form></section>
@@ -150645,7 +150666,10 @@ const FRIENDLY=[[/^responder reclamo\\b/i,()=>'Respond\xED un reclamo de entrega
 FRIENDLY.unshift([/^cobro s-/i,()=>'Registr\xE9 el cobro de un repuesto'],[/^confirmo pago s-/i,()=>'Confirm\xE9 el pago de un repuesto'],[/^observo pago s-/i,()=>'Observ\xE9 el cobro de un repuesto'],[/^devolver s-/i,()=>'Ped\xED devolver un repuesto'],[/^aceptar devoluci[o\xF3]n/i,()=>'Acept\xE9 una devoluci\xF3n de repuesto'],[/^rechazar devoluci[o\xF3]n/i,()=>'Rechac\xE9 una devoluci\xF3n de repuesto']);
 function friendly(msg){const s=String(msg||'');for(const [re,fn] of FRIENDLY){const m=s.match(re);if(m)return fn(m);}return s;}
 let inboxOn=false,unreadCount=0,unreadOnly=false;
-function showUnread(){el('avisos').textContent=inboxOn?'Notificaciones'+(unreadCount?' \xB7 '+unreadCount+' sin leer':''):'Avisos para tu cuenta';el('noticeTools').classList.toggle('hidden',!inboxOn);el('bell').classList.toggle('hidden',!inboxOn);el('bell').textContent='Notificaciones'+(unreadCount?' ('+unreadCount+')':'');for(const span of document.querySelectorAll('[data-menu-target="avisos"] span'))span.textContent='Avisos'+(unreadCount?' ('+unreadCount+')':'');el('noticeAll').setAttribute('aria-pressed',String(!unreadOnly));el('noticeUnread').setAttribute('aria-pressed',String(unreadOnly));}
+function showUnread(){el('avisos').textContent=inboxOn?'Notificaciones'+(unreadCount?' \xB7 '+unreadCount+' sin leer':''):'Avisos para tu cuenta';el('noticeTools').classList.toggle('hidden',!inboxOn);el('bell').classList.toggle('hidden',!inboxOn);el('bell').textContent='Notificaciones'+(unreadCount?' ('+unreadCount+')':'');for(const span of document.querySelectorAll('[data-menu-target="avisos"] span'))span.textContent='Avisos'+(unreadCount?' ('+unreadCount+')':'');el('noticeAll').setAttribute('aria-pressed',String(!unreadOnly));el('noticeUnread').setAttribute('aria-pressed',String(unreadOnly));syncCampana();}
+// Campana de la cabecera: visible con la sesi\xF3n iniciada (no espera a los avisos), con el n\xFAmero sin leer; fija al bajar.
+function syncCampana(){const c=el('campana'),n=el('campanaN');if(!c||!n)return;c.classList.toggle('hidden',el('chat').classList.contains('hidden'));n.textContent=unreadCount>99?'99+':String(unreadCount);n.classList.toggle('hidden',!unreadCount);c.setAttribute('aria-label','Notificaciones'+(unreadCount?', '+unreadCount+' sin leer':''));}
+if(el('campana')){el('campana').onclick=()=>menuGo('avisos');new MutationObserver(syncCampana).observe(el('chat'),{attributes:true,attributeFilter:['class']});const cab=document.querySelector('.cabecera-sitio');if(cab&&'IntersectionObserver' in window)new IntersectionObserver(([e])=>el('campana').classList.toggle('flota',!e.isIntersecting)).observe(cab);}
 async function markNotices(body,read){try{const r=await api('/pilot/notices/read',{method:'POST',body:JSON.stringify(Object.assign({read},body))});unreadCount=r.unread;for(const n of noticeItems.values())if(body.all||body.ids.includes(n.id))n.read=read;showNotices();}catch(err){status(err.message);}}
 function noticeCard(n){const article=document.createElement('article');article.className=inboxOn&&n.read===false?'unread':'';text(article,webText(n.message));if(!inboxOn)return article;const meta=document.createElement('small');meta.textContent=[n.read===false?'\u25CF Sin leer':'Le\xEDda',new Date(n.createdAt).toLocaleString('es-EC',{timeZone:'America/Guayaquil',dateStyle:'medium',timeStyle:'short'}),(n.channels||['panel']).join(' y ')].join(' \xB7 ');const acts=document.createElement('span');acts.className='chips';const add=(label,fn)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=fn;acts.append(b);};if(n.section)add('Abrir',()=>{if(n.read===false)void markNotices({ids:[n.id]},true);history.replaceState(null,'','#'+n.section);goToSection();});add(n.read===false?'Le\xEDda':'No le\xEDda',()=>void markNotices({ids:[n.id]},n.read===false));article.append(meta,acts);return article;}
 function showNotices(){el('notices').replaceChildren();showUnread();const items=[...noticeItems.values()].filter(n=>!unreadOnly||n.read===false).sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))||String(b.id).localeCompare(String(a.id)));if(!items.length)text(el('notices'),unreadOnly?'No tienes avisos sin leer.':'Todav\xEDa no hay avisos para tu cuenta.');for(const n of items)el('notices').append(noticeCard(n));el('older').classList.toggle('hidden',!cursor);}
