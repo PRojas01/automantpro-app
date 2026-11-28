@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='af98a9c34f51a6c574563b7a85905a61a12d6e41'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='9e26c3e9462cc4d350b1cae2895b4deac038e5e2'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -78663,11 +78663,13 @@ function componentSourceError(r) {
     return "intervalo inv\xE1lido";
   if (!r.fuente?.trim())
     return "falta la fuente (manual)";
-  try {
-    if (!/^https?:$/.test(new URL(String(r.sourceUrl)).protocol))
+  if (!/^urn:manual:[a-z0-9.-]+$/.test(String(r.sourceUrl))) {
+    try {
+      if (!/^https?:$/.test(new URL(String(r.sourceUrl)).protocol))
+        return "URL inv\xE1lida";
+    } catch {
       return "URL inv\xE1lida";
-  } catch {
-    return "URL inv\xE1lida";
+    }
   }
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(r.verifiedAt)) || Number.isNaN(Date.parse(String(r.verifiedAt))))
     return "fecha de verificaci\xF3n inv\xE1lida";
@@ -79353,6 +79355,1186 @@ var init_component_sources = __esm({
           pagina: "167",
           cita: "Verifique que la conexi\xF3n del tubo de escape est\xE9 sujetada firmemente",
           nota: "tabla de mantenimiento programado: marcas en cada columna (10.000 km / 12 meses)"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_filtro_aire",
+        intervalKm: 4e4,
+        intervalMonths: 48,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "20",
+          inspeccion_km: "5000",
+          inspeccion_meses: "6",
+          item_fabricante: "Air cleaner element",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_aceite",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "20",
+          item_fabricante: "Engine oil",
+          nota: "el filtro de aceite, cada 20.000 km (fila aparte del manual); manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_bomba_comb",
+        intervalKm: 4e4,
+        intervalMonths: 48,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "20",
+          item_fabricante: "Fuel pump in fuel tank",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_banda",
+        intervalKm: 5e3,
+        intervalMonths: 6,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "20",
+          item_fabricante: "Fan belt tension and damage",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "car_escape",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "20",
+          item_fabricante: "Exhaust system",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller; intervalo irregular en la tabla",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "enf_refrigerante",
+        intervalKm: null,
+        intervalMonths: 24,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "20",
+          inspeccion_km: "10000",
+          inspeccion_meses: "12",
+          item_fabricante: "Engine coolant",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "enf_mangueras",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "20",
+          item_fabricante: "Cooling system for water leakage",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "tra_embrague",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Clutch fluid",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller; intervalo irregular en la tabla",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "tra_aceite",
+        intervalKm: 3e4,
+        intervalMonths: 36,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "21",
+          item_fabricante: "Manual transmission fluid",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller; intervalo irregular en la tabla",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "tra_homocineticas",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Universal joints and splines for wear",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "tra_diferencial",
+        intervalKm: 3e4,
+        intervalMonths: 36,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "21",
+          item_fabricante: "Differential gear oil",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller; intervalo irregular en la tabla",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "sus_cremallera",
+        intervalKm: 4e4,
+        intervalMonths: 48,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "21",
+          inspeccion_km: "5000",
+          inspeccion_meses: "6",
+          item_fabricante: "Power steering fluid",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "lla_alineacion",
+        intervalKm: 2e4,
+        intervalMonths: 24,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Wheel alignment",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "fre_liquido",
+        intervalKm: 2e4,
+        intervalMonths: 24,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Brake fluid",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "fre_tambores",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Rear brake lining and drum wear",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "fre_pastillas",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Front disc brake pads and discs wear",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "fre_mano",
+        intervalKm: 5e3,
+        intervalMonths: 6,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "22",
+          item_fabricante: "Parking brake function",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "ele_cables",
+        intervalKm: 5e3,
+        intervalMonths: 6,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "22",
+          item_fabricante: "Cables for looseness or damage",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "sus_amortiguadores",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "22",
+          item_fabricante: "Shock absorbers for oil leakage",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "sus_resortes",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "22",
+          item_fabricante: "Rubber bushes of suspension for",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX CRDI 3.0*|D-MAX CRDI FULL AC 3.0*|D-MAX CRDI AC 3.0*|D-MAX CRDI HIGH COUNTRY AC 3.0*",
+        anioDesde: 2014,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "lla_presion",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "22",
+          item_fabricante: "Tire pressure and damage",
+          nota: "manual de la versi\xF3n 2010-2012 del mismo motor 4JJ1; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_filtro_aire",
+        intervalKm: 4e4,
+        intervalMonths: 48,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "20",
+          inspeccion_km: "5000",
+          inspeccion_meses: "6",
+          item_fabricante: "Air cleaner element",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_aceite",
+        intervalKm: 5e3,
+        intervalMonths: 6,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "20",
+          item_fabricante: "Engine oil",
+          nota: "aceite cada 5.000 km; el filtro de aceite, cada 10.000 km (fila aparte del manual); manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_filtro_comb",
+        intervalKm: 15e3,
+        intervalMonths: 18,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "20",
+          item_fabricante: "Fuel filter",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_banda",
+        intervalKm: 5e3,
+        intervalMonths: 6,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "20",
+          item_fabricante: "Fan belt tension and damage",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "car_escape",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "20",
+          item_fabricante: "Exhaust system",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller; intervalo irregular en la tabla",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "enf_refrigerante",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "20",
+          item_fabricante: "Engine coolant concentration",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "enf_mangueras",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "20",
+          item_fabricante: "Cooling system for water leakage",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "tra_embrague",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Clutch fluid",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller; intervalo irregular en la tabla",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "tra_aceite",
+        intervalKm: 3e4,
+        intervalMonths: 36,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "21",
+          item_fabricante: "Manual transmission fluid",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller; intervalo irregular en la tabla",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "tra_homocineticas",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Universal joints and splines for wear",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "tra_diferencial",
+        intervalKm: 3e4,
+        intervalMonths: 36,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "21",
+          item_fabricante: "Differential gear oil",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller; intervalo irregular en la tabla",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "sus_cremallera",
+        intervalKm: 4e4,
+        intervalMonths: 48,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "21",
+          inspeccion_km: "5000",
+          inspeccion_meses: "6",
+          item_fabricante: "Power steering fluid",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "lla_alineacion",
+        intervalKm: 2e4,
+        intervalMonths: 24,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Wheel alignment",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "fre_liquido",
+        intervalKm: 2e4,
+        intervalMonths: 24,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Brake fluid",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "fre_tambores",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Rear brake lining and drum wear",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "fre_pastillas",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "21",
+          item_fabricante: "Front disc brake pads and discs wear",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "fre_mano",
+        intervalKm: 5e3,
+        intervalMonths: 6,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "22",
+          item_fabricante: "Parking brake function",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "ele_cables",
+        intervalKm: 5e3,
+        intervalMonths: 6,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "22",
+          item_fabricante: "Cables for looseness or damage",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "sus_amortiguadores",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "22",
+          item_fabricante: "Shock absorbers for oil leakage",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "sus_resortes",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "22",
+          item_fabricante: "Rubber bushes of suspension for",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "CHEVROLET",
+        modelo: "D-MAX TD 2.5*",
+        anioDesde: 2017,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "lla_presion",
+        intervalKm: 1e4,
+        intervalMonths: 12,
+        fuente: "Isuzu KB (D-Max) MY2010-2012, manual de taller, secci\xF3n 0B, exportaci\xF3n general \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "urn:manual:isuzu-kb-dmax-my2010-2012",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "22",
+          item_fabricante: "Tire pressure and damage",
+          nota: "manual de la versi\xF3n 2010-2012; motor 4JA1-T por confirmar; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 5 AC 2.0*|WINGLE AC 2.0*",
+        anioDesde: 2015,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_aceite",
+        intervalKm: 8e3,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "45",
+          severo_km: "5000",
+          severo_meses: "6",
+          item_fabricante: "Diesel engine oil / Oil filter",
+          nota: "aceite y filtro de aceite, cada 8.000 a 10.000 km; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 5 AC 2.0*|WINGLE AC 2.0*",
+        anioDesde: 2015,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_filtro_comb",
+        intervalKm: 2e4,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "45",
+          item_fabricante: "Fuel (diesel) filter",
+          nota: "GW4D20: 20.000 a 25.000 km; GW4D20B: 8.000 a 10.000 km; antes si el di\xE9sel trae impurezas; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 5 AC 2.0*|WINGLE AC 2.0*",
+        anioDesde: 2015,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_filtro_aire",
+        intervalKm: 3e4,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "45",
+          inspeccion_km: "4000",
+          severo_km: "5000",
+          severo_meses: "6",
+          item_fabricante: "Air cleaner",
+          nota: "limpiar cada 4.000 a 5.000 km; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 5 AC 2.0*|WINGLE AC 2.0*",
+        anioDesde: 2015,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_banda",
+        intervalKm: 4e3,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "45",
+          item_fabricante: "Belt of generator",
+          nota: "revisar, ajustar o cambiar; cada 4.000 a 5.000 km; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 5 AC 2.0*|WINGLE AC 2.0*",
+        anioDesde: 2015,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "mot_distribucion",
+        intervalKm: 8e4,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "49",
+          item_fabricante: "Timing driving belt",
+          nota: "normalmente 80.000 km; el manual da 50.000 a 100.000 seg\xFAn uso; revisar tensor y poleas; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 5 AC 2.0*|WINGLE AC 2.0*",
+        anioDesde: 2015,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "ele_bateria",
+        intervalKm: 4e3,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "47",
+          item_fabricante: "Battery electrolyte / voltage",
+          nota: "cada 4.000 a 5.000 km; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 5 AC 2.0*|WINGLE AC 2.0*",
+        anioDesde: 2015,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "enf_bomba",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "48",
+          item_fabricante: "Water pump overflow",
+          nota: "cada 10.000 a 12.500 km; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 5 AC 2.0*|WINGLE AC 2.0*",
+        anioDesde: 2015,
+        anioHasta: 2019,
+        combustible: "diesel",
+        componentId: "enf_radiador",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "49",
+          item_fabricante: "Cooling system and radiator wash",
+          nota: "lavar incrustaciones; cada 10.000 a 12.500 km; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 7 AC 2.0*|WINGLE STEED AC 2.0*",
+        anioDesde: 2020,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_aceite",
+        intervalKm: 8e3,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "45",
+          severo_km: "5000",
+          severo_meses: "6",
+          item_fabricante: "Diesel engine oil / Oil filter",
+          nota: "aceite y filtro de aceite, cada 8.000 a 10.000 km; manual de la Wingle 5 2016, motor por confirmar en este modelo; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 7 AC 2.0*|WINGLE STEED AC 2.0*",
+        anioDesde: 2020,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_filtro_comb",
+        intervalKm: 2e4,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "45",
+          item_fabricante: "Fuel (diesel) filter",
+          nota: "GW4D20: 20.000 a 25.000 km; GW4D20B: 8.000 a 10.000 km; antes si el di\xE9sel trae impurezas; manual de la Wingle 5 2016, motor por confirmar en este modelo; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 7 AC 2.0*|WINGLE STEED AC 2.0*",
+        anioDesde: 2020,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_filtro_aire",
+        intervalKm: 3e4,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "45",
+          inspeccion_km: "4000",
+          severo_km: "5000",
+          severo_meses: "6",
+          item_fabricante: "Air cleaner",
+          nota: "limpiar cada 4.000 a 5.000 km; manual de la Wingle 5 2016, motor por confirmar en este modelo; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 7 AC 2.0*|WINGLE STEED AC 2.0*",
+        anioDesde: 2020,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_banda",
+        intervalKm: 4e3,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "45",
+          item_fabricante: "Belt of generator",
+          nota: "revisar, ajustar o cambiar; cada 4.000 a 5.000 km; manual de la Wingle 5 2016, motor por confirmar en este modelo; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 7 AC 2.0*|WINGLE STEED AC 2.0*",
+        anioDesde: 2020,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "mot_distribucion",
+        intervalKm: 8e4,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "cambiar",
+          pagina: "49",
+          item_fabricante: "Timing driving belt",
+          nota: "normalmente 80.000 km; el manual da 50.000 a 100.000 seg\xFAn uso; revisar tensor y poleas; manual de la Wingle 5 2016, motor por confirmar en este modelo; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 7 AC 2.0*|WINGLE STEED AC 2.0*",
+        anioDesde: 2020,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "ele_bateria",
+        intervalKm: 4e3,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "47",
+          item_fabricante: "Battery electrolyte / voltage",
+          nota: "cada 4.000 a 5.000 km; manual de la Wingle 5 2016, motor por confirmar en este modelo; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 7 AC 2.0*|WINGLE STEED AC 2.0*",
+        anioDesde: 2020,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "enf_bomba",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "48",
+          item_fabricante: "Water pump overflow",
+          nota: "cada 10.000 a 12.500 km; manual de la Wingle 5 2016, motor por confirmar en este modelo; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
+        }
+      },
+      {
+        marca: "GREAT WALL",
+        modelo: "WINGLE 7 AC 2.0*|WINGLE STEED AC 2.0*",
+        anioDesde: 2020,
+        anioHasta: 2026,
+        combustible: "diesel",
+        componentId: "enf_radiador",
+        intervalKm: 1e4,
+        intervalMonths: null,
+        fuente: "Great Wall, manual de mantenimiento del motor GW4D20/GW4D20B \xB7 pendiente de validaci\xF3n del taller",
+        sourceUrl: "https://manuals.opinautos.com/published/Great-Wall-Wingle-5_2016_EN__manual_de_taller_76a3f09b84.pdf",
+        verifiedAt: "2026-11-27",
+        extra: {
+          accion: "inspeccionar",
+          pagina: "49",
+          item_fabricante: "Cooling system and radiator wash",
+          nota: "lavar incrustaciones; cada 10.000 a 12.500 km; manual de la Wingle 5 2016, motor por confirmar en este modelo; solo motor; pendiente de validaci\xF3n del taller",
+          tipo_manual: "taller"
         }
       }
     ];
