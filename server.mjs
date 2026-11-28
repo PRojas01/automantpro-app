@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='4c7079030a564b0bf6dd461df9cf14281133b3d8'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='d033e7e56deac659c5210217fd1bbe1511becba9'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -67627,8 +67627,8 @@ var init_tipografia = __esm({
   "packages/api/dist/interfaces/ui/tipografia.js"() {
     "use strict";
     TODO = "html:not(#a):not(#b):not(#c)";
-    FUENTES_CSS = '@font-face{font-family:"Inter";src:url(/fonts/inter.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}@font-face{font-family:"Figtree";src:url(/fonts/figtree.woff2) format("woff2");font-weight:300 900;font-style:normal;font-display:swap}';
-    FAMILIAS = '--c-font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;--c-display:"Figtree","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;--c-mono:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif';
+    FUENTES_CSS = '@font-face{font-family:"Inter";src:url(/fonts/inter.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}';
+    FAMILIAS = '--c-font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;--c-display:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;--c-mono:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif';
     ESCALA_CSS = `
 ${TODO},${TODO} body,${TODO} body *,${TODO} body *::before,${TODO} body *::after{font-weight:400!important;font-synthesis:none}
 ${TODO} body,${TODO} body :is(p,li,a,span,div,td,th,label,input,select,textarea,button,summary,small,b,strong){font-family:var(--c-font)!important}
@@ -67650,6 +67650,16 @@ ${TODO}:root:root body :where(small,.small,.muted,.hint,.note,.access-note,figca
 ${TODO}:root:root body :where(input,select,textarea){font-size:16px!important}
 /* Dentro de un t\xEDtulo, el texto suelto toma el tama\xF1o del t\xEDtulo (las etiquetas con clase conservan el suyo). */
 ${TODO}:root body :where(h1,h2,h3,h4,.section,.cap) :where(span,strong,em,a):where(:not([class]),[class=""]){font-size:inherit!important}
+/* Diferenciaci\xF3n comercial / sistema (29/11/2026, pedido de Pedro): el texto comercial (lema y
+   beneficios) conserva la escala \xFAnica; el texto del sistema (instrucciones de acceso, notas,
+   ejemplo del informe y legal) va un nivel menor y en tono apagado. Misma familia (Inter), sin
+   negritas. El ejemplo del informe se marca con .txt-sistema para que quede claro que es una
+   muestra del sistema, no un dato real. */
+${TODO}:root:root body :where(.txt-comercial,.hero .lead,.beneficios li,.beneficios span){font-size:13px!important;line-height:1.5!important}
+${TODO}:root:root body :where(.txt-sistema,.access-note,.score-note,.small,.hint,.note,.muted){font-size:12px!important;line-height:1.45!important;color:var(--c-muted)!important;letter-spacing:.005em!important}
+${TODO}:root:root body .board :where(li,span,p,small,b,code,.pill,.when,.num,.cap){font-size:11px!important;line-height:1.4!important}
+${TODO}:root:root body .board :where(h3){font-size:12px!important;line-height:1.3!important}
+${TODO}:root:root body :where(.legal){font-size:11px!important;line-height:1.4!important;color:var(--c-muted)!important}
 `;
   }
 });
@@ -106391,7 +106401,7 @@ function renderEntryPage(input) {
   const access = links ? `<section class="access" aria-labelledby="access-title">
     <p class="section" id="access-title">C\xF3mo quieres entrar</p>
     <div class="access-actions"><a class="access-btn" href="${escapeHtml(links.wame)}" rel="noopener">Conectar con WhatsApp</a><a class="access-btn secondary" href="/cuenta#entrar">Ingresar o crear cuenta</a></div>
-    <p class="access-note"><b>WhatsApp:</b> se abre con el mensaje listo; env\xEDalo y, si ya tienes cuenta, te llega un enlace seguro para entrar a tu panel. Si eres nuevo, te atendemos en el chat.</p>
+    <p class="access-note txt-sistema"><b>WhatsApp:</b> se abre con el mensaje listo; env\xEDalo y, si ya tienes cuenta, te llega un enlace seguro para entrar a tu panel. Si eres nuevo, te atendemos en el chat.</p>
   </section>` : "";
   const menu = links ? `${access}<details class="gestionar"><summary><span class="section">\xBFQu\xE9 quieres gestionar?</span><span class="ver">Saber m\xE1s</span></summary>
     <div class="menu perfiles">${ENTRY_PROFILES.map((profile) => `<article class="profile-card">
@@ -106406,7 +106416,7 @@ function renderEntryPage(input) {
       <li><a class="perfil" href="${acceso("taller")}">${icon("taller")}Talleres</a></li><li class="enlace" aria-hidden="true">\u21C4</li>
       <li><a class="perfil" href="${acceso("almacen")}">${icon("caja")}Almacenes</a></li>
     </ul>`;
-  const beneficios = `<p class="section ganas">Sabes qu\xE9 toca hacerle a tu veh\xEDculo, qui\xE9n lo hace y cu\xE1nto cuesta antes de pagar. Todo queda en su historial.</p>
+  const beneficios = `<p class="section ganas txt-comercial">Sabes qu\xE9 toca hacerle a tu veh\xEDculo, qui\xE9n lo hace y cu\xE1nto cuesta antes de pagar. Todo queda en su historial.</p>
     <ul class="beneficios">${BENEFICIOS.map((b) => links ? `<li class="luz-${b.icono}"><a class="beneficio" href="${acceso(b.perfil)}" rel="noopener"><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span><span class="ir">Escribir por WhatsApp \u203A</span></a></li>` : `<li class="luz-${b.icono}"><b>${icon(b.icono)}${escapeHtml(b.titulo)}</b><span>${escapeHtml(b.texto)}</span></li>`).join("")}</ul>`;
   const button = links ? `<button id="abrir" class="cta" type="button" data-app="${escapeHtml(links.app)}" data-wame="${escapeHtml(links.wame)}" data-web="${escapeHtml(links.web)}">Abrir WhatsApp</button>
     <p class="small spaced">Escr\xEDbenos al <strong>${number2}</strong> \xB7 <a href="${escapeHtml(links.wame)}" rel="noopener">abrir enlace</a> \xB7 <a href="${escapeHtml(links.app)}">WhatsApp Desktop</a> \xB7 <a href="${escapeHtml(links.web)}" rel="noopener">WhatsApp Web</a></p>` : `<button id="abrir" class="cta" type="button" disabled>Abrir WhatsApp</button>
@@ -106441,7 +106451,7 @@ ${seoHead({
   <div class="col-a">
   <section class="hero">
     <svg class="silueta" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS.auto_hero}</svg>
-    <p class="lead">Plan de mantenimiento, recordatorios, talleres y repuestos en un solo chat de WhatsApp.</p>
+    <p class="lead txt-comercial">Plan de mantenimiento, recordatorios, talleres y repuestos en un solo chat de WhatsApp.</p>
     ${red}
     ${BOARD}
   </section>
@@ -107129,7 +107139,7 @@ main details.gestionar>.menu{margin-top:8px}
 }
 @media (max-width:350px){.red a.perfil .ico{display:none}}
 `;
-    BOARD = `<div class="board" aria-label="Ejemplo del informe de tu veh\xEDculo">
+    BOARD = `<div class="board txt-sistema" aria-label="Ejemplo del informe de tu veh\xEDculo">
   <p class="cap"><span>As\xED se ve el informe de tu veh\xEDculo</span><b>Ejemplo</b></p>
   <div class="estado">
   <svg viewBox="0 0 104 104" width="96" height="96" role="img" aria-label="Puntaje del plan: 78 de 100">
@@ -107146,7 +107156,7 @@ main details.gestionar>.menu{margin-top:8px}
     <li class="ok"><span class="led"></span><span>Suspensi\xF3n y direcci\xF3n</span><span class="pill">Al d\xEDa</span></li>
   </ul>
   <details class="informe-mas"><summary>Ver informe completo</summary>
-  <p class="score-note">Puntaje 78 de 100: baja con cada servicio urgente, pr\xF3ximo o sin registro; lo que no tiene registro se muestra aparte, como \xABsin dato\xBB.</p>
+  <p class="score-note txt-sistema">Puntaje 78 de 100: baja con cada servicio urgente, pr\xF3ximo o sin registro; lo que no tiene registro se muestra aparte, como \xABsin dato\xBB.</p>
   <section class="details" aria-labelledby="services-title">
     <h3 id="services-title">Pr\xF3ximos servicios</h3>
     <ul>
