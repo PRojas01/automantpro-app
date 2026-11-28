@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='0254e563ba321538869598a8f725536792b4e1cb'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='4c7079030a564b0bf6dd461df9cf14281133b3d8'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -67635,14 +67635,16 @@ ${TODO} body,${TODO} body :is(p,li,a,span,div,td,th,label,input,select,textarea,
 ${TODO} body :is(h1,h2,h3,h4,.section,.cap,.big),${TODO} body :is(h1,h2,h3,h4,.section,.cap) *{font-family:var(--c-display)!important}
 ${TODO} body svg text{font-family:var(--c-font)!important}
 /* Escala \xFAnica (28/11/2026, \xABestandarizar t\xEDtulos, subt\xEDtulos y p\xE1rrafos, mismas fuentes y tama\xF1os en cada nivel\xBB;
-   y \xABreduce 2 puntos a todos\xBB): cada nivel tiene una sola fuente y un solo tama\xF1o en todas las p\xE1ginas. */
-${TODO} body h1{font-size:clamp(25px,5.4vw,34px)!important;line-height:1.15!important;letter-spacing:-.02em!important}
+   y \xABreduce 2 puntos a todos\xBB): cada nivel tiene una sola fuente y un solo tama\xF1o en todas las p\xE1ginas.
+   Re-optimizaci\xF3n (29/11/2026, pedido de Pedro): reducir un poco m\xE1s los t\xEDtulos y el texto, manteniendo la
+   misma escala \xFAnica por nivel. */
+${TODO} body h1{font-size:clamp(24px,5.0vw,32px)!important;line-height:1.15!important;letter-spacing:-.02em!important}
 /* El lema del encabezado no es un t\xEDtulo de p\xE1gina: conserva su tama\xF1o y puede partirse en dos l\xEDneas. */
 ${TODO} body header.cabecera h1{font-size:clamp(13px,1.8vw,21px)!important;line-height:1.2!important;white-space:normal!important;min-width:0}
-${TODO} body h2{font-size:clamp(19px,3.6vw,24px)!important;line-height:1.2!important;letter-spacing:-.015em!important}
-${TODO}:root body :where(h3,h4,p.section,.section,.board .cap){font-size:16px!important;line-height:1.3!important}
+${TODO} body h2{font-size:clamp(18px,3.3vw,21px)!important;line-height:1.2!important;letter-spacing:-.015em!important}
+${TODO}:root body :where(h3,h4,p.section,.section,.board .cap){font-size:15px!important;line-height:1.3!important}
 /* Prioridad por nivel (:where no suma): p\xE1rrafo < t\xEDtulo de secci\xF3n < texto peque\xF1o. */
-${TODO} body :where(p,li,dd,dt,td,th,label,summary,blockquote,button,.btn,a.button,.access-btn,.cta){font-size:14px!important;line-height:1.5!important}
+${TODO} body :where(p,li,dd,dt,td,th,label,summary,blockquote,button,.btn,a.button,.access-btn,.cta){font-size:13px!important;line-height:1.5!important}
 ${TODO}:root:root body :where(small,.small,.muted,.hint,.note,.access-note,figcaption,.legal){font-size:12px!important;line-height:1.45!important}
 /* Campos en 16 px: con menos, el iPhone acerca la pantalla al escribir. */
 ${TODO}:root:root body :where(input,select,textarea){font-size:16px!important}
@@ -106384,7 +106386,7 @@ function renderEntryPage(input) {
     const href = saberMas(key2, site3);
     return href ? `<a class="mas" href="${escapeHtml(href)}"${href.startsWith("http") ? ' rel="noopener"' : ""}>${label5}<span class="sr"> \xB7 ${escapeHtml(PERFIL_NOMBRE[key2] ?? key2)}</span></a>` : "";
   };
-  const logo = `<a class="logo" href="/?pagina=1" aria-label="AutoMantPro, inicio">${logoImg()}</a>`;
+  const logo = `<a class="logo" href="/" aria-label="AutoMantPro, inicio">${logoImg()}</a>`;
   const contact = links ? `<p class="small linea"><a href="${escapeHtml(links.wame)}" rel="noopener">${number2}</a></p>` : "";
   const access = links ? `<section class="access" aria-labelledby="access-title">
     <p class="section" id="access-title">C\xF3mo quieres entrar</p>
