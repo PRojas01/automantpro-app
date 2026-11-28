@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='88d301441d46a713756de4f38a27376d9f1d3a97'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='49f9c432ec3707848c1456951b9be9ab3edb6a16'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -67453,12 +67453,49 @@ ${P}a.saltar:focus{background:var(--c-ink)!important;color:var(--c-bg)!important
   }
 });
 
+// packages/api/dist/interfaces/ui/acabado.js
+var P2, PRINCIPAL, BOTON, TARJETA, ANIDADA, oscuro, ACABADO;
+var init_acabado = __esm({
+  "packages/api/dist/interfaces/ui/acabado.js"() {
+    "use strict";
+    P2 = "html:not(#a):not(#b):not(#c):not(#d):not(#e)";
+    PRINCIPAL = ":is(.cod-wa,.cta:not(:disabled),.access-btn:not(.secondary),button[type=submit]:not(:disabled):not(.secondary),a.button,.btn-primario,a.pill,button.grande,button.principal):not(.ghost):not(.secondary)";
+    BOTON = ":is(button:not(.tema):not([role=tab]),.btn,.access-btn,a.button,.cta,a.pill,.pill-btn)";
+    TARJETA = ":is(.card,.option,.pcard,.beneficios li,.escaner,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.veh,.kpi,.profile-card,.board,details.gestionar)";
+    ANIDADA = ":is(.board .board,.card .card,.pcard .pcard)";
+    oscuro = (raiz) => `
+${raiz} ${TARJETA}{background:#161514!important;border-color:#2c2a27!important}
+${raiz} ${ANIDADA}{background:transparent!important}
+${raiz} .pcard>h2 .sec-ico{color:#e3b04b!important;background:transparent!important;border:0!important}`;
+    ACABADO = `
+${P2} ${BOTON}{border-radius:8px!important;box-shadow:none!important;text-shadow:none!important;font-weight:500!important;letter-spacing:0!important;transform:none!important}
+${P2} ${PRINCIPAL}{background:var(--c-cta)!important;border:1px solid var(--c-cta)!important}
+${P2} ${PRINCIPAL}:hover{background:color-mix(in srgb,var(--c-cta) 88%,#000)!important}
+${P2} :is(button.ghost,button.secondary,.access-btn.secondary){border:1px solid color-mix(in srgb,var(--c-ink) 26%,transparent)!important}
+${P2} :is(button.ghost,button.secondary,.access-btn.secondary):hover{border-color:color-mix(in srgb,var(--c-ink) 55%,transparent)!important;box-shadow:none!important}
+${P2} ${BOTON}:active:not(:disabled){filter:brightness(.92)!important}
+${P2} :is(input,select,textarea){border-radius:8px!important}
+${P2} ${TARJETA}{border-radius:10px!important;box-shadow:none!important}
+${P2} .pcard>h2 .sec-ico{width:24px!important;height:24px!important;border:0!important;border-radius:0!important;background:transparent!important;color:var(--c-ink)!important}
+${P2} .pcard>h2 .sec-ico .tg{width:22px!important;height:22px!important}
+${P2} :is(.menu-sitio a,.menu-sitio a .ico,.pcard>h2 .sec-ico,button svg,a.pill svg) {stroke-width:1.6px}
+${P2} .menu-sitio a:not(.ingresar){background:transparent!important;border:0!important;border-bottom:2px solid transparent!important;border-radius:0!important;box-shadow:none!important}
+${P2} .menu-sitio a:not(.ingresar):hover{border-bottom-color:color-mix(in srgb,var(--c-ink) 35%,transparent)!important}
+${P2} .menu-sitio a:not(.ingresar)[aria-current=page]{border-bottom-color:#e3b04b!important}
+${P2} .menu-sitio a.ingresar{border-radius:8px!important;box-shadow:none!important}
+${P2} :is(header.cabecera,.cabecera-sitio,.titulo-sitio) *{text-shadow:none!important}
+@media (prefers-color-scheme:dark){${oscuro(`${P2}:root:not([data-tema="claro"])`)}}
+${oscuro(`${P2}:root[data-tema="oscuro"]`)}`;
+  }
+});
+
 // packages/api/dist/interfaces/ui/armonia.js
-var TEXTURA, TEXTURA_CLARA, ORO, MATE, TARJETAS2, oscuro, SUPERFICIE, SKIN_SAAS, ARMONIA;
+var TEXTURA, TEXTURA_CLARA, ORO, MATE, TARJETAS2, oscuro2, SUPERFICIE, AJUSTES, ARMONIA;
 var init_armonia = __esm({
   "packages/api/dist/interfaces/ui/armonia.js"() {
     "use strict";
     init_negro_ambar();
+    init_acabado();
     TEXTURA = [
       "repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px)",
       "repeating-linear-gradient(-45deg,rgba(0,0,0,.12) 0 1px,transparent 1px 4px)",
@@ -67475,7 +67512,7 @@ var init_armonia = __esm({
     ORO = "--c-cta:#f5b01c!important;--c-cta-hover:#ffc13d!important;--c-on-cta:#14100a!important;--c-accent:#f5b01c!important;--c-on-accent:#14100a!important;--oro-1:#ffd567!important;--oro-2:#f5b01c!important;--oro-3:#c98a06!important;--c-surface:#141311!important;--c-sunk:#1d1b17!important;--c-ink:#ffffff!important;--c-title:#ffffff!important;--c-muted:#b9b4aa!important";
     MATE = "background:linear-gradient(180deg,#191815 0,#121110 100%)!important;border:1px solid rgba(245,176,28,.16)!important;box-shadow:0 10px 26px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05)!important";
     TARJETAS2 = ".card,.option,.pcard,.beneficios li,.escaner,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.veh,.kpi,.profile-card,.board,details.gestionar";
-    oscuro = (sel2) => `
+    oscuro2 = (sel2) => `
 ${sel2},${sel2} *{${ORO}}
 ${sel2},${sel2} body{background:${TEXTURA}!important;background-attachment:fixed!important}
 ${sel2} :is(${TARJETAS2}){${MATE}}
@@ -67484,23 +67521,11 @@ ${sel2} .beneficios b .ico,${sel2} .pcard>h2 .sec-ico{color:#f5b01c!important}
 ${sel2} .pcard>h2 .sec-ico{border-color:rgba(245,176,28,.55)!important;background:#14110a!important}
 ${sel2} p.section.ganas{color:#fff!important}`;
     SUPERFICIE = "background:color-mix(in srgb,var(--c-surface) 84%,transparent)!important;border:1px solid color-mix(in srgb,var(--c-ink) 11%,transparent)!important;box-shadow:none!important";
-    SKIN_SAAS = `
-html:root{--amp-bg:rgb(247,249,252);--amp-surface:rgb(255,255,255);--amp-sunk:rgb(238,242,248);--amp-line:rgb(226,232,240);--amp-ink:rgb(23,32,46);--amp-body:rgb(60,70,85);--amp-muted:rgb(92,104,120);--amp-primary:rgb(30,94,255);--amp-accent:rgb(14,165,164);--amp-ok:rgb(11,125,87);--amp-ok-bg:rgb(230,245,238);--amp-warn:rgb(154,91,0);--amp-warn-bg:rgb(255,243,223);--amp-bad:rgb(184,50,62);--amp-bad-bg:rgb(253,236,238);--amp-shadow:0 1px 2px rgba(23,32,46,.05),0 8px 24px rgba(23,32,46,.06);--amp-radius-card:14px;--amp-radius-control:10px}
-html:not(#a):not(#b):not(#c):root,html:not(#a):not(#b):not(#c):root body{background-color:var(--amp-bg)!important}
-html:not(#a):not(#b):not(#c):root,html:not(#a):not(#b):not(#c) *{--c-bg:var(--amp-bg)!important;--c-surface:var(--amp-surface)!important;--c-sunk:var(--amp-sunk)!important;--c-line:var(--amp-line)!important;--c-ink:var(--amp-ink)!important;--c-muted:var(--amp-muted)!important;--c-accent:var(--amp-primary)!important;--c-cta:var(--amp-primary)!important;--c-on-cta:rgb(255,255,255)!important;--c-link:var(--amp-primary)!important;--c-ok:var(--amp-ok)!important;--c-ok-bg:var(--amp-ok-bg)!important;--c-warn:var(--amp-warn)!important;--c-warn-bg:var(--amp-warn-bg)!important;--c-bad:var(--amp-bad)!important;--c-bad-bg:var(--amp-bad-bg)!important}
-@media (prefers-color-scheme:dark){html:not(#a):not(#b):not(#c):root:not([data-tema="claro"]){--amp-bg:rgb(17,22,30);--amp-surface:rgb(24,31,41);--amp-sunk:rgb(32,40,51);--amp-line:rgb(48,58,72);--amp-ink:rgb(233,238,245);--amp-body:rgb(203,212,224);--amp-muted:rgb(154,166,181);--amp-primary:rgb(96,154,255);--amp-accent:rgb(45,196,189);--amp-ok:rgb(63,200,144);--amp-ok-bg:rgb(17,52,38);--amp-warn:rgb(240,183,87);--amp-warn-bg:rgb(58,41,17);--amp-bad:rgb(240,122,132);--amp-bad-bg:rgb(61,24,29);--amp-shadow:0 10px 30px rgba(0,0,0,.28)}}
-html:not(#a):not(#b):not(#c):root[data-tema="oscuro"]{--amp-bg:rgb(17,22,30);--amp-surface:rgb(24,31,41);--amp-sunk:rgb(32,40,51);--amp-line:rgb(48,58,72);--amp-ink:rgb(233,238,245);--amp-body:rgb(203,212,224);--amp-muted:rgb(154,166,181);--amp-primary:rgb(96,154,255);--amp-accent:rgb(45,196,189);--amp-ok:rgb(63,200,144);--amp-ok-bg:rgb(17,52,38);--amp-warn:rgb(240,183,87);--amp-warn-bg:rgb(58,41,17);--amp-bad:rgb(240,122,132);--amp-bad-bg:rgb(61,24,29);--amp-shadow:0 10px 30px rgba(0,0,0,.28)}
-html:not(#a):not(#b):not(#c) :is(.card,.option,.pcard,.beneficios li,.board,.escaner,.trust,.tile,.proposal,.taller,.vacio,.choice,form.login,.reco,.veh,.kpi,.profile-card,details.gestionar){border:1px solid var(--amp-line)!important;box-shadow:var(--amp-shadow)!important;border-radius:var(--amp-radius-card)!important;background:var(--amp-surface)!important}
-html:not(#a):not(#b):not(#c) :is(button,.btn,.access-btn,a.button,.cta,.pill-btn):not(:disabled){border-radius:var(--amp-radius-control)!important;transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease!important}
-html:not(#a):not(#b):not(#c) :is(button,.btn,.access-btn,a.button,.cta,.pill-btn):not(:disabled):hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(30,94,255,.18)!important}
-html:not(#a):not(#b):not(#c) :is(input,select,textarea){border-radius:var(--amp-radius-control)!important;border:1px solid var(--amp-line)!important;transition:border-color .16s ease,box-shadow .16s ease!important}
-html:not(#a):not(#b):not(#c) :is(input,select,textarea):focus{outline:none!important;border-color:var(--amp-primary)!important;box-shadow:0 0 0 3px rgba(30,94,255,.16)!important}
-html:not(#a):not(#b):not(#c) :is(.badge,.pill,.chip,.ad-chip){border-radius:999px!important;box-shadow:inset 0 0 0 1px var(--amp-line)!important}
-html:not(#a):not(#b):not(#c) :is(.badge,.pill,.chip,.ad-chip) svg{stroke-width:1.75px}
+    AJUSTES = `
 /* Men\xFA del sitio en m\xF3vil (pedido de Pedro, 28/11/2026): mismo men\xFA, menos altura. De 2 filas de 56 px a 2 de 38 px. */
 @media (max-width:760px){html:not(#a):not(#b):not(#c) .menu-sitio{gap:4px!important;padding:2px 0!important}html:not(#a):not(#b):not(#c) .menu-sitio a{min-height:38px!important;padding:2px 2px!important;font-size:11px!important;line-height:1.05!important;gap:2px!important}html:not(#a):not(#b):not(#c) .menu-sitio a .ico{width:17px!important;height:17px!important}}
 /* Accesibilidad (28/11/2026): el foco del teclado se ve en todo control y se respeta \xABreducir movimiento\xBB. */
-html:not(#a):not(#b):not(#c) :is(a,button,summary,input,select,textarea,[tabindex]):focus-visible{outline:2px solid var(--amp-primary)!important;outline-offset:2px!important}
+html:not(#a):not(#b):not(#c) :is(a,button,summary,input,select,textarea,[tabindex]):focus-visible{outline:2px solid var(--c-accent)!important;outline-offset:2px!important}
 @media (prefers-reduced-motion:reduce){html:not(#a):not(#b):not(#c) :is(button,.btn,.access-btn,a,a.button,.cta,.pill-btn,input,select,textarea){transition:none!important}html:not(#a):not(#b):not(#c) :is(button,.btn,.access-btn,a.button,.cta,.pill-btn):not(:disabled):hover{transform:none!important}}
 `;
     ARMONIA = `
@@ -67542,9 +67567,10 @@ html:not(#a):not(#b) body,html:not(#a):not(#b) body *{backdrop-filter:none!impor
 .red li.enlace,.red li{transform:none!important}
 html #panel button.principal{background:var(--c-cta)!important;color:var(--c-on-cta)!important;border-color:transparent!important}
 html:not(#a):not(#b):root,html:not(#a):not(#b):root body{background:${TEXTURA_CLARA}!important;background-attachment:fixed!important}
-@media (prefers-color-scheme:dark){${oscuro('html:not(#a):not(#b):root:not([data-tema="claro"])')}}
-${oscuro('html:not(#a):not(#b):root[data-tema="oscuro"]')}
-${SKIN_SAAS}`;
+@media (prefers-color-scheme:dark){${oscuro2('html:not(#a):not(#b):root:not([data-tema="claro"])')}}
+${oscuro2('html:not(#a):not(#b):root[data-tema="oscuro"]')}
+${AJUSTES}
+${ACABADO}`;
   }
 });
 
@@ -69464,90 +69490,90 @@ var require_bcrypt = __commonJS({
         1668446532,
         1869963892
       ];
-      function _encipher(lr, off2, P3, S) {
+      function _encipher(lr, off2, P4, S) {
         var n3, l = lr[off2], r = lr[off2 + 1];
-        l ^= P3[0];
+        l ^= P4[0];
         n3 = S[l >>> 24];
         n3 += S[256 | l >> 16 & 255];
         n3 ^= S[512 | l >> 8 & 255];
         n3 += S[768 | l & 255];
-        r ^= n3 ^ P3[1];
+        r ^= n3 ^ P4[1];
         n3 = S[r >>> 24];
         n3 += S[256 | r >> 16 & 255];
         n3 ^= S[512 | r >> 8 & 255];
         n3 += S[768 | r & 255];
-        l ^= n3 ^ P3[2];
+        l ^= n3 ^ P4[2];
         n3 = S[l >>> 24];
         n3 += S[256 | l >> 16 & 255];
         n3 ^= S[512 | l >> 8 & 255];
         n3 += S[768 | l & 255];
-        r ^= n3 ^ P3[3];
+        r ^= n3 ^ P4[3];
         n3 = S[r >>> 24];
         n3 += S[256 | r >> 16 & 255];
         n3 ^= S[512 | r >> 8 & 255];
         n3 += S[768 | r & 255];
-        l ^= n3 ^ P3[4];
+        l ^= n3 ^ P4[4];
         n3 = S[l >>> 24];
         n3 += S[256 | l >> 16 & 255];
         n3 ^= S[512 | l >> 8 & 255];
         n3 += S[768 | l & 255];
-        r ^= n3 ^ P3[5];
+        r ^= n3 ^ P4[5];
         n3 = S[r >>> 24];
         n3 += S[256 | r >> 16 & 255];
         n3 ^= S[512 | r >> 8 & 255];
         n3 += S[768 | r & 255];
-        l ^= n3 ^ P3[6];
+        l ^= n3 ^ P4[6];
         n3 = S[l >>> 24];
         n3 += S[256 | l >> 16 & 255];
         n3 ^= S[512 | l >> 8 & 255];
         n3 += S[768 | l & 255];
-        r ^= n3 ^ P3[7];
+        r ^= n3 ^ P4[7];
         n3 = S[r >>> 24];
         n3 += S[256 | r >> 16 & 255];
         n3 ^= S[512 | r >> 8 & 255];
         n3 += S[768 | r & 255];
-        l ^= n3 ^ P3[8];
+        l ^= n3 ^ P4[8];
         n3 = S[l >>> 24];
         n3 += S[256 | l >> 16 & 255];
         n3 ^= S[512 | l >> 8 & 255];
         n3 += S[768 | l & 255];
-        r ^= n3 ^ P3[9];
+        r ^= n3 ^ P4[9];
         n3 = S[r >>> 24];
         n3 += S[256 | r >> 16 & 255];
         n3 ^= S[512 | r >> 8 & 255];
         n3 += S[768 | r & 255];
-        l ^= n3 ^ P3[10];
+        l ^= n3 ^ P4[10];
         n3 = S[l >>> 24];
         n3 += S[256 | l >> 16 & 255];
         n3 ^= S[512 | l >> 8 & 255];
         n3 += S[768 | l & 255];
-        r ^= n3 ^ P3[11];
+        r ^= n3 ^ P4[11];
         n3 = S[r >>> 24];
         n3 += S[256 | r >> 16 & 255];
         n3 ^= S[512 | r >> 8 & 255];
         n3 += S[768 | r & 255];
-        l ^= n3 ^ P3[12];
+        l ^= n3 ^ P4[12];
         n3 = S[l >>> 24];
         n3 += S[256 | l >> 16 & 255];
         n3 ^= S[512 | l >> 8 & 255];
         n3 += S[768 | l & 255];
-        r ^= n3 ^ P3[13];
+        r ^= n3 ^ P4[13];
         n3 = S[r >>> 24];
         n3 += S[256 | r >> 16 & 255];
         n3 ^= S[512 | r >> 8 & 255];
         n3 += S[768 | r & 255];
-        l ^= n3 ^ P3[14];
+        l ^= n3 ^ P4[14];
         n3 = S[l >>> 24];
         n3 += S[256 | l >> 16 & 255];
         n3 ^= S[512 | l >> 8 & 255];
         n3 += S[768 | l & 255];
-        r ^= n3 ^ P3[15];
+        r ^= n3 ^ P4[15];
         n3 = S[r >>> 24];
         n3 += S[256 | r >> 16 & 255];
         n3 ^= S[512 | r >> 8 & 255];
         n3 += S[768 | r & 255];
-        l ^= n3 ^ P3[16];
-        lr[off2] = r ^ P3[BLOWFISH_NUM_ROUNDS + 1];
+        l ^= n3 ^ P4[16];
+        lr[off2] = r ^ P4[BLOWFISH_NUM_ROUNDS + 1];
         lr[off2 + 1] = l;
         return lr;
       }
@@ -69556,24 +69582,24 @@ var require_bcrypt = __commonJS({
           word = word << 8 | data4[offp] & 255, offp = (offp + 1) % data4.length;
         return { key: word, offp };
       }
-      function _key(key2, P3, S) {
-        var offset2 = 0, lr = [0, 0], plen = P3.length, slen = S.length, sw;
+      function _key(key2, P4, S) {
+        var offset2 = 0, lr = [0, 0], plen = P4.length, slen = S.length, sw;
         for (var i = 0; i < plen; i++)
-          sw = _streamtoword(key2, offset2), offset2 = sw.offp, P3[i] = P3[i] ^ sw.key;
+          sw = _streamtoword(key2, offset2), offset2 = sw.offp, P4[i] = P4[i] ^ sw.key;
         for (i = 0; i < plen; i += 2)
-          lr = _encipher(lr, 0, P3, S), P3[i] = lr[0], P3[i + 1] = lr[1];
+          lr = _encipher(lr, 0, P4, S), P4[i] = lr[0], P4[i + 1] = lr[1];
         for (i = 0; i < slen; i += 2)
-          lr = _encipher(lr, 0, P3, S), S[i] = lr[0], S[i + 1] = lr[1];
+          lr = _encipher(lr, 0, P4, S), S[i] = lr[0], S[i + 1] = lr[1];
       }
-      function _ekskey(data4, key2, P3, S) {
-        var offp = 0, lr = [0, 0], plen = P3.length, slen = S.length, sw;
+      function _ekskey(data4, key2, P4, S) {
+        var offp = 0, lr = [0, 0], plen = P4.length, slen = S.length, sw;
         for (var i = 0; i < plen; i++)
-          sw = _streamtoword(key2, offp), offp = sw.offp, P3[i] = P3[i] ^ sw.key;
+          sw = _streamtoword(key2, offp), offp = sw.offp, P4[i] = P4[i] ^ sw.key;
         offp = 0;
         for (i = 0; i < plen; i += 2)
-          sw = _streamtoword(data4, offp), offp = sw.offp, lr[0] ^= sw.key, sw = _streamtoword(data4, offp), offp = sw.offp, lr[1] ^= sw.key, lr = _encipher(lr, 0, P3, S), P3[i] = lr[0], P3[i + 1] = lr[1];
+          sw = _streamtoword(data4, offp), offp = sw.offp, lr[0] ^= sw.key, sw = _streamtoword(data4, offp), offp = sw.offp, lr[1] ^= sw.key, lr = _encipher(lr, 0, P4, S), P4[i] = lr[0], P4[i + 1] = lr[1];
         for (i = 0; i < slen; i += 2)
-          sw = _streamtoword(data4, offp), offp = sw.offp, lr[0] ^= sw.key, sw = _streamtoword(data4, offp), offp = sw.offp, lr[1] ^= sw.key, lr = _encipher(lr, 0, P3, S), S[i] = lr[0], S[i + 1] = lr[1];
+          sw = _streamtoword(data4, offp), offp = sw.offp, lr[0] ^= sw.key, sw = _streamtoword(data4, offp), offp = sw.offp, lr[1] ^= sw.key, lr = _encipher(lr, 0, P4, S), S[i] = lr[0], S[i + 1] = lr[1];
       }
       function _crypt(b, salt, rounds, callback, progressCallback) {
         var cdata = C_ORIG.slice(), clen = cdata.length, err4;
@@ -69594,15 +69620,15 @@ var require_bcrypt = __commonJS({
             throw err4;
         }
         rounds = 1 << rounds >>> 0;
-        var P3, S, i = 0, j;
+        var P4, S, i = 0, j;
         if (Int32Array) {
-          P3 = new Int32Array(P_ORIG);
+          P4 = new Int32Array(P_ORIG);
           S = new Int32Array(S_ORIG);
         } else {
-          P3 = P_ORIG.slice();
+          P4 = P_ORIG.slice();
           S = S_ORIG.slice();
         }
-        _ekskey(salt, b, P3, S);
+        _ekskey(salt, b, P4, S);
         function next() {
           if (progressCallback)
             progressCallback(i / rounds);
@@ -69610,15 +69636,15 @@ var require_bcrypt = __commonJS({
             var start = Date.now();
             for (; i < rounds; ) {
               i = i + 1;
-              _key(b, P3, S);
-              _key(salt, P3, S);
+              _key(b, P4, S);
+              _key(salt, P4, S);
               if (Date.now() - start > MAX_EXECUTION_TIME)
                 break;
             }
           } else {
             for (i = 0; i < 64; i++)
               for (j = 0; j < clen >> 1; j++)
-                _encipher(cdata, j << 1, P3, S);
+                _encipher(cdata, j << 1, P4, S);
             var ret = [];
             for (i = 0; i < clen; i++)
               ret.push((cdata[i] >> 24 & 255) >>> 0), ret.push((cdata[i] >> 16 & 255) >>> 0), ret.push((cdata[i] >> 8 & 255) >>> 0), ret.push((cdata[i] & 255) >>> 0);
@@ -147750,63 +147776,63 @@ if(root&&'MutationObserver' in window){let t=0;new MutationObserver(()=>{if(t)re
 })();
 `;
 var PANTALLA_IMP = PANTALLA.split(";").map((v) => `${v}!important`).join(";");
-var P2 = "html:not(#f7) #panel";
+var P3 = "html:not(#f7) #panel";
 var INTERFAZ_SIMPLE_CSS = `
 /* F7 interfaz simple (ui/interfaz-simple.ts): \xEDconos grandes, una acci\xF3n por grupo, sem\xE1foro por sistema. */
 #login.hidden{display:none!important}
-${P2} .pcard{border:1px solid var(--c-line)!important;padding:16px;gap:14px}
-${P2} .pcard>h2{display:flex;justify-content:flex-start!important;align-items:center;flex-wrap:wrap;gap:6px 12px;font-size:16px!important;line-height:1.25}
-${P2} .pcard>h2 small{margin-left:auto;font-size:13px}
-${P2} .sec-ico{order:-1;flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:${NEGRO};color:${AMBAR};border:1px solid ${AMBAR}}
-${P2} .sec-ico .tg{width:26px;height:26px}
+${P3} .pcard{border:1px solid var(--c-line)!important;padding:16px;gap:14px}
+${P3} .pcard>h2{display:flex;justify-content:flex-start!important;align-items:center;flex-wrap:wrap;gap:6px 12px;font-size:16px!important;line-height:1.25}
+${P3} .pcard>h2 small{margin-left:auto;font-size:13px}
+${P3} .sec-ico{order:-1;flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:${NEGRO};color:${AMBAR};border:1px solid ${AMBAR}}
+${P3} .sec-ico .tg{width:26px;height:26px}
 /* Botones grandes con texto siempre visible; una sola acci\xF3n principal (\xE1mbar) por grupo, el resto en contorno. */
-${P2} .pcard :is(button,a.btn,summary.btn):not(.hidden){min-height:48px;padding:10px 18px;font-size:15px;line-height:1.25;border-radius:10px!important;opacity:1}
-${P2} .pcard :is(button.primary,.cta){background:var(--c-cta)!important;color:var(--c-on-cta)!important;border:1px solid var(--c-cta)!important;font-weight:600}
-${P2} .pcard :is(.chips,.acts)>button.primary~button.primary{background:transparent!important;color:var(--c-ink)!important;border:2px solid var(--c-ink)!important}
-${P2} .pcard :is(button.ghost,button:not(.primary):not(.cta):not(:disabled)){color:var(--c-ink)}
-${P2} .pcard button.ghost{background:transparent!important;border:2px solid var(--c-ink)!important;color:var(--c-ink)!important}
-${P2} .pcard button:disabled{background:var(--c-sunk)!important;color:var(--c-muted)!important;border:1px solid var(--c-line)!important}
-${P2} .pcard :is(.chips,.acts){gap:10px}
+${P3} .pcard :is(button,a.btn,summary.btn):not(.hidden){min-height:48px;padding:10px 18px;font-size:15px;line-height:1.25;border-radius:10px!important;opacity:1}
+${P3} .pcard :is(button.primary,.cta){background:var(--c-cta)!important;color:var(--c-on-cta)!important;border:1px solid var(--c-cta)!important;font-weight:600}
+${P3} .pcard :is(.chips,.acts)>button.primary~button.primary{background:transparent!important;color:var(--c-ink)!important;border:2px solid var(--c-ink)!important}
+${P3} .pcard :is(button.ghost,button:not(.primary):not(.cta):not(:disabled)){color:var(--c-ink)}
+${P3} .pcard button.ghost{background:transparent!important;border:2px solid var(--c-ink)!important;color:var(--c-ink)!important}
+${P3} .pcard button:disabled{background:var(--c-sunk)!important;color:var(--c-muted)!important;border:1px solid var(--c-line)!important}
+${P3} .pcard :is(.chips,.acts){gap:10px}
 /* Selectores (d\xEDas, filtros, pesta\xF1as): contorno con texto en tinta; el elegido va en \xE1mbar. Sin esto el n\xFAmero del d\xEDa quedaba negro sobre negro. */
-${P2} .pcard button:is(.chip,.day,[aria-pressed],[role=tab]):not(:disabled){background:var(--c-surface)!important;color:var(--c-ink)!important;border:2px solid var(--c-ink)!important}
-${P2} .pcard button:is(.chip,.day,[aria-pressed],[role=tab]) *{color:inherit!important}
-${P2} .pcard button:is([aria-pressed=true],[aria-selected=true]):not(:disabled){background:var(--c-cta)!important;color:var(--c-on-cta)!important;border-color:var(--c-cta)!important}
-${P2} .pcard summary{min-height:48px;display:flex;align-items:center;font-size:15px}
-${P2} .pcard :is(input,select,textarea){min-height:48px;font-size:16px}
+${P3} .pcard button:is(.chip,.day,[aria-pressed],[role=tab]):not(:disabled){background:var(--c-surface)!important;color:var(--c-ink)!important;border:2px solid var(--c-ink)!important}
+${P3} .pcard button:is(.chip,.day,[aria-pressed],[role=tab]) *{color:inherit!important}
+${P3} .pcard button:is([aria-pressed=true],[aria-selected=true]):not(:disabled){background:var(--c-cta)!important;color:var(--c-on-cta)!important;border-color:var(--c-cta)!important}
+${P3} .pcard summary{min-height:48px;display:flex;align-items:center;font-size:15px}
+${P3} .pcard :is(input,select,textarea){min-height:48px;font-size:16px}
 /* Tablero: n\xFAmeros grandes y testigo de color por indicador. */
-${P2} .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-${P2} .kpi{border:1px solid var(--c-line);border-top:4px solid var(--st,var(--c-line));padding:12px}
-${P2} .kpi b{font-size:24px}
-${P2} .kpi .led{width:14px;height:14px}
-${P2} .kpi .kh{font-size:14px;color:var(--c-ink)}
+${P3} .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+${P3} .kpi{border:1px solid var(--c-line);border-top:4px solid var(--st,var(--c-line));padding:12px}
+${P3} .kpi b{font-size:24px}
+${P3} .kpi .led{width:14px;height:14px}
+${P3} .kpi .kh{font-size:14px;color:var(--c-ink)}
 /* Sem\xE1foro por sistema: verde bien, \xE1mbar observar, rojo cambiar (clases st-* del panel). */
-${P2} .sys{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
-${P2} .sys>li{border:2px solid var(--st,var(--c-line));border-bottom:2px solid var(--st,var(--c-line));border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:auto auto minmax(0,1fr);grid-template-areas:"i l n" "i c p";align-items:center;gap:2px 8px;min-width:0}
-${P2} .sys>li:last-child{border-bottom:2px solid var(--st,var(--c-line))}
-${P2} .sys>li.sub{display:block;border:0!important;border-radius:0;padding:0 4px;margin:-4px 0 0;font-size:14px;color:var(--c-ink)}
-${P2} .sys>li:not(.sub)>.sys-ico{grid-area:i;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--st-bg,var(--c-sunk));color:var(--st,var(--c-ink))}
-${P2} .sys>li:not(.sub)>.sys-ico .tg{width:24px;height:24px}
-${P2} .sys>li:not(.sub)>.led{grid-area:l;width:14px;height:14px}
-${P2} .sys>li:not(.sub)>.nm{grid-area:n;font-size:14px;font-weight:600;white-space:normal}
-${P2} .sys>li:not(.sub)>.cnt{grid-area:c;font-size:13px}
-${P2} .sys>li:not(.sub)>.pill{grid-area:p;justify-self:start;font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--st-bg,var(--c-sunk));color:var(--st,var(--c-ink));border:1px solid var(--st,var(--c-line))}
-${P2} .sys>li:not(.sub):not([data-tg])>.led{grid-column:1}
-${P2} .line[class*="st-"]{border-left:6px solid var(--st)!important;padding-left:12px}
+${P3} .sys{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+${P3} .sys>li{border:2px solid var(--st,var(--c-line));border-bottom:2px solid var(--st,var(--c-line));border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:auto auto minmax(0,1fr);grid-template-areas:"i l n" "i c p";align-items:center;gap:2px 8px;min-width:0}
+${P3} .sys>li:last-child{border-bottom:2px solid var(--st,var(--c-line))}
+${P3} .sys>li.sub{display:block;border:0!important;border-radius:0;padding:0 4px;margin:-4px 0 0;font-size:14px;color:var(--c-ink)}
+${P3} .sys>li:not(.sub)>.sys-ico{grid-area:i;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--st-bg,var(--c-sunk));color:var(--st,var(--c-ink))}
+${P3} .sys>li:not(.sub)>.sys-ico .tg{width:24px;height:24px}
+${P3} .sys>li:not(.sub)>.led{grid-area:l;width:14px;height:14px}
+${P3} .sys>li:not(.sub)>.nm{grid-area:n;font-size:14px;font-weight:600;white-space:normal}
+${P3} .sys>li:not(.sub)>.cnt{grid-area:c;font-size:13px}
+${P3} .sys>li:not(.sub)>.pill{grid-area:p;justify-self:start;font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--st-bg,var(--c-sunk));color:var(--st,var(--c-ink));border:1px solid var(--st,var(--c-line))}
+${P3} .sys>li:not(.sub):not([data-tg])>.led{grid-column:1}
+${P3} .line[class*="st-"]{border-left:6px solid var(--st)!important;padding-left:12px}
 /* Taller: pantalla del esc\xE1ner (oscura en claro y en oscuro, texto \u2265 7:1). */
-${P2}[data-rol="taller"] :is(.sys>li:not(.sub),.kpi),${P2}[data-rol="taller"] :is(.sys>li:not(.sub),.kpi) *{${PANTALLA_IMP}}
-${P2}[data-rol="taller"] :is(.sys>li:not(.sub),.kpi){color:var(--c-ink);background:var(--c-surface)!important;border-color:var(--st,var(--c-line))!important}
-${P2}[data-rol="taller"] :is(.sys>li:not(.sub),.kpi) :is(.nm,.kh,b){color:var(--c-ink)}
-${P2}[data-rol="taller"] :is(.sys>li:not(.sub),.kpi) :is(.cnt,.led.st-sin_dato){color:var(--c-muted)}
-${P2}[data-rol="taller"] .kpi.alert b{color:var(--c-warn)}
-${P2}[data-rol="taller"] .sys>li.st-urgente:not(.sub){box-shadow:0 0 0 3px var(--c-bad-bg)!important}
-${P2}[data-rol="taller"] .sec-ico{background:#0d1116}
+${P3}[data-rol="taller"] :is(.sys>li:not(.sub),.kpi),${P3}[data-rol="taller"] :is(.sys>li:not(.sub),.kpi) *{${PANTALLA_IMP}}
+${P3}[data-rol="taller"] :is(.sys>li:not(.sub),.kpi){color:var(--c-ink);background:var(--c-surface)!important;border-color:var(--st,var(--c-line))!important}
+${P3}[data-rol="taller"] :is(.sys>li:not(.sub),.kpi) :is(.nm,.kh,b){color:var(--c-ink)}
+${P3}[data-rol="taller"] :is(.sys>li:not(.sub),.kpi) :is(.cnt,.led.st-sin_dato){color:var(--c-muted)}
+${P3}[data-rol="taller"] .kpi.alert b{color:var(--c-warn)}
+${P3}[data-rol="taller"] .sys>li.st-urgente:not(.sub){box-shadow:0 0 0 3px var(--c-bad-bg)!important}
+${P3}[data-rol="taller"] .sec-ico{background:#0d1116}
 @media (max-width:560px){
- ${P2} .pcard :is(.chips,.acts)>:is(button,a){flex:1 1 100%}
- ${P2} .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
- ${P2} .pcard{padding:14px}
- ${P2} .pcard>h2 small{margin-left:0;flex-basis:100%}
+ ${P3} .pcard :is(.chips,.acts)>:is(button,a){flex:1 1 100%}
+ ${P3} .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ ${P3} .pcard{padding:14px}
+ ${P3} .pcard>h2 small{margin-left:0;flex-basis:100%}
 }
-@media (prefers-reduced-motion:reduce){${P2} *{transition:none!important}}
+@media (prefers-reduced-motion:reduce){${P3} *{transition:none!important}}
 `;
 
 // packages/api/dist/interfaces/pilot-page.js
