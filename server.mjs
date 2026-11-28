@@ -1,4 +1,4 @@
-import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='2163988c2c72687d6148dbf84a943e0d0d1d513f'; process.env.APP_RELEASE_CHANNEL='pilot';
+import {createRequire as __cr} from 'node:module'; const require=__cr(import.meta.url); process.env.APP_VERSION='0254e563ba321538869598a8f725536792b4e1cb'; process.env.APP_RELEASE_CHANNEL='pilot';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -67274,15 +67274,16 @@ ${MUESTRAS}
 });
 
 // packages/api/dist/interfaces/ui/negro-ambar.js
-var AMBAR, NEGRO, BLANCO, NA_CLARO, GRIS_FONDO, NA_OSCURO, vars, P, OSCURO_SEL, OSCURO_FORZADO, NEGRO_AMBAR_CSS;
+var AMBAR, NEGRO, BLANCO, GRIS_CLARO, NA_CLARO, GRIS_FONDO, NA_OSCURO, vars, P, OSCURO_SEL, OSCURO_FORZADO, NEGRO_AMBAR_CSS;
 var init_negro_ambar = __esm({
   "packages/api/dist/interfaces/ui/negro-ambar.js"() {
     "use strict";
     AMBAR = "#e0b050";
     NEGRO = "#111111";
     BLANCO = "#ffffff";
+    GRIS_CLARO = "#e6e7ea";
     NA_CLARO = {
-      bg: "#f5f5f5",
+      bg: GRIS_CLARO,
       surface: BLANCO,
       sunk: "#efefef",
       field: BLANCO,
@@ -67415,7 +67416,7 @@ ${P}a.saltar:focus{background:var(--c-ink)!important;color:var(--c-bg)!important
 });
 
 // packages/api/dist/interfaces/ui/armonia.js
-var TEXTURA, ORO, MATE, TARJETAS2, oscuro, SUPERFICIE, ARMONIA;
+var TEXTURA, TEXTURA_CLARA, ORO, MATE, TARJETAS2, oscuro, SUPERFICIE, ARMONIA;
 var init_armonia = __esm({
   "packages/api/dist/interfaces/ui/armonia.js"() {
     "use strict";
@@ -67426,6 +67427,12 @@ var init_armonia = __esm({
       "radial-gradient(120% 80% at 50% 0%,rgba(255,255,255,.05),transparent 70%)",
       "radial-gradient(90% 55% at 100% 0%,rgba(245,176,28,.08),transparent 60%)",
       GRIS_FONDO
+    ].join(",");
+    TEXTURA_CLARA = [
+      "repeating-linear-gradient(45deg,rgba(0,0,0,.035) 0 1px,transparent 1px 4px)",
+      "repeating-linear-gradient(-45deg,rgba(255,255,255,.45) 0 1px,transparent 1px 4px)",
+      "radial-gradient(120% 80% at 50% 0%,rgba(255,255,255,.55),transparent 70%)",
+      GRIS_CLARO
     ].join(",");
     ORO = "--c-cta:#f5b01c!important;--c-cta-hover:#ffc13d!important;--c-on-cta:#14100a!important;--c-accent:#f5b01c!important;--c-on-accent:#14100a!important;--oro-1:#ffd567!important;--oro-2:#f5b01c!important;--oro-3:#c98a06!important;--c-surface:#141311!important;--c-sunk:#1d1b17!important;--c-ink:#ffffff!important;--c-title:#ffffff!important;--c-muted:#b9b4aa!important";
     MATE = "background:linear-gradient(180deg,#191815 0,#121110 100%)!important;border:1px solid rgba(245,176,28,.16)!important;box-shadow:0 10px 26px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05)!important";
@@ -67461,6 +67468,9 @@ details.gestionar{padding:10px 12px!important}
 details.gestionar>summary .section{font-weight:600!important}
 details.gestionar>summary .section::before{display:none!important}
 details.gestionar>summary .ver{color:var(--c-muted)!important}
+/* \xAB\xBFQu\xE9 quieres gestionar?\xBB toma el color de su bot\xF3n (28/11/2026): la regla de t\xEDtulos lo dejaba negro sobre negro
+   en claro y blanco sobre \xE1mbar en oscuro. */
+html:not(#a):not(#b) details.gestionar>summary .section.section,html:not(#a):not(#b) details.gestionar>summary .ver{color:inherit!important}
 
 html .access-btn.secondary{background:transparent!important;color:var(--c-ink)!important;border:1px solid color-mix(in srgb,var(--c-ink) 38%,transparent)!important}
 html .access-btn.secondary:hover{border-color:var(--c-ink)!important;box-shadow:none!important}
@@ -67474,6 +67484,7 @@ html .access-btn.secondary:hover{border-color:var(--c-ink)!important;box-shadow:
 html:not(#a):not(#b) body,html:not(#a):not(#b) body *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;-webkit-font-smoothing:auto!important;text-shadow:none!important;text-rendering:auto!important}
 .red li.enlace,.red li{transform:none!important}
 html #panel button.principal{background:var(--c-cta)!important;color:var(--c-on-cta)!important;border-color:transparent!important}
+html:not(#a):not(#b):root,html:not(#a):not(#b):root body{background:${TEXTURA_CLARA}!important;background-attachment:fixed!important}
 @media (prefers-color-scheme:dark){${oscuro('html:not(#a):not(#b):root:not([data-tema="claro"])')}}
 ${oscuro('html:not(#a):not(#b):root[data-tema="oscuro"]')}
 `;
@@ -67623,12 +67634,20 @@ ${TODO},${TODO} body,${TODO} body *,${TODO} body *::before,${TODO} body *::after
 ${TODO} body,${TODO} body :is(p,li,a,span,div,td,th,label,input,select,textarea,button,summary,small,b,strong){font-family:var(--c-font)!important}
 ${TODO} body :is(h1,h2,h3,h4,.section,.cap,.big),${TODO} body :is(h1,h2,h3,h4,.section,.cap) *{font-family:var(--c-display)!important}
 ${TODO} body svg text{font-family:var(--c-font)!important}
-${TODO} body h1{font-size:clamp(27px,5.4vw,36px)!important;line-height:1.15!important;letter-spacing:-.02em!important}
+/* Escala \xFAnica (28/11/2026, \xABestandarizar t\xEDtulos, subt\xEDtulos y p\xE1rrafos, mismas fuentes y tama\xF1os en cada nivel\xBB;
+   y \xABreduce 2 puntos a todos\xBB): cada nivel tiene una sola fuente y un solo tama\xF1o en todas las p\xE1ginas. */
+${TODO} body h1{font-size:clamp(25px,5.4vw,34px)!important;line-height:1.15!important;letter-spacing:-.02em!important}
 /* El lema del encabezado no es un t\xEDtulo de p\xE1gina: conserva su tama\xF1o y puede partirse en dos l\xEDneas. */
-${TODO} body header.cabecera h1{font-size:clamp(15px,1.8vw,23px)!important;line-height:1.2!important;white-space:normal!important;min-width:0}
-${TODO} body h2{font-size:clamp(21px,3.6vw,26px)!important;line-height:1.2!important;letter-spacing:-.015em!important}
-${TODO} body h3{font-size:18px!important;line-height:1.3!important}
-${TODO} body :is(p.section,.section.section,.board .cap){font-size:18px!important;line-height:1.3!important}
+${TODO} body header.cabecera h1{font-size:clamp(13px,1.8vw,21px)!important;line-height:1.2!important;white-space:normal!important;min-width:0}
+${TODO} body h2{font-size:clamp(19px,3.6vw,24px)!important;line-height:1.2!important;letter-spacing:-.015em!important}
+${TODO}:root body :where(h3,h4,p.section,.section,.board .cap){font-size:16px!important;line-height:1.3!important}
+/* Prioridad por nivel (:where no suma): p\xE1rrafo < t\xEDtulo de secci\xF3n < texto peque\xF1o. */
+${TODO} body :where(p,li,dd,dt,td,th,label,summary,blockquote,button,.btn,a.button,.access-btn,.cta){font-size:14px!important;line-height:1.5!important}
+${TODO}:root:root body :where(small,.small,.muted,.hint,.note,.access-note,figcaption,.legal){font-size:12px!important;line-height:1.45!important}
+/* Campos en 16 px: con menos, el iPhone acerca la pantalla al escribir. */
+${TODO}:root:root body :where(input,select,textarea){font-size:16px!important}
+/* Dentro de un t\xEDtulo, el texto suelto toma el tama\xF1o del t\xEDtulo (las etiquetas con clase conservan el suyo). */
+${TODO}:root body :where(h1,h2,h3,h4,.section,.cap) :where(span,strong,em,a):where(:not([class]),[class=""]){font-size:inherit!important}
 `;
   }
 });
@@ -67737,7 +67756,7 @@ ${FUENTES_CSS}
 :root[data-tema="oscuro"]{${DARK}}
 ${ESCALA_CSS}`;
     THEME_COLOR = "#2a2b2e";
-    THEME_COLOR_LIGHT = "#f5f5f5";
+    THEME_COLOR_LIGHT = "#e6e7ea";
     THEME_COLOR_META = `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${THEME_COLOR_LIGHT}"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="${THEME_COLOR}">`;
   }
 });
@@ -106224,10 +106243,12 @@ var init_intro_video = __esm({
 .intro-cerrar{flex:none;background:var(--c-sunk);color:var(--c-ink);border:1px solid var(--c-line)}
 .intro-marco{position:relative;display:grid;place-items:center;aspect-ratio:16/9;max-height:calc(100dvh - 110px);margin:0 auto;overflow:hidden;background:var(--c-sunk);border-radius:var(--c-r)}
 .intro-marco img,.intro-marco video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.intro-ver{position:absolute;left:50%;top:68%;transform:translateX(-50%);white-space:nowrap;border:0;background:var(--c-cta);color:var(--c-on-cta)}
+.intro-ver{position:absolute;left:50%;top:70%;transform:translateX(-50%);white-space:nowrap;border:0;background:var(--c-cta);color:var(--c-on-cta)}
 .intro-cerrar:focus-visible,.intro-ver:focus-visible{outline:3px solid var(--c-accent);outline-offset:2px}
 .intro.vertical{width:min(420px,calc(100vw - 24px))}
-.intro.vertical .intro-marco{aspect-ratio:9/16;height:calc(100dvh - 110px);max-width:100%}
+.intro.vertical .intro-marco{aspect-ratio:9/16;height:auto;width:min(100%,calc((100dvh - 110px) * 9 / 16))}
+/* El bot\xF3n va en el espacio libre del p\xF3ster, entre el lema y el r\xF3tulo (27/11/2026: lo tapaba). */
+.intro.vertical .intro-ver{top:62%}
 `;
     introHtml = `<dialog class="intro" id="intro" aria-labelledby="intro-titulo">
   <div class="intro-barra"><h2 id="intro-titulo">Bienvenido a AutoMantPro</h2><button type="button" class="intro-cerrar" id="intro-cerrar" autofocus>Cerrar</button></div>
@@ -158305,8 +158326,8 @@ function webManifest() {
     start_url: "/cuenta",
     scope: "/",
     display: "standalone",
-    background_color: "#f5f5f5",
-    theme_color: "#f5f5f5",
+    background_color: "#e6e7ea",
+    theme_color: "#e6e7ea",
     icons: [
       { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
